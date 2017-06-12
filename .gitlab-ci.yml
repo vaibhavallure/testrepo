@@ -25,9 +25,9 @@ stage:
   script:
     - mage-deploy mt
     - echo 'Deployed on Staging'
-bugfixes:
+bugfix:
   environment: bugfixes
-  stage: bugfixes
+  stage: bugfix
   tags:
     - staging
   only:
