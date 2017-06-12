@@ -1,63 +1,47 @@
 before_script:
   - echo 'Start Deployment'
 stages:
-  - devel
+  - develop
   - stage
-  - alpha
-  - multistore
-  - bugfixes
+  - bugfix
   - deploy
-devel:
-  stage: devel
+develop:
+  environment: development
+  stage: develop
   tags:
     - development
   only:
     - development
   script:
-    - deploy
+    - mage-deploy mariatash
     - echo 'Deployed on Allure Local Dev'
 stage:
+  environment: staging
   stage: stage
-  tags:
-    - staging
-  only:
-    - staging
-  script:
-    - deploy
-    - echo 'Deployed on Staging'
-alpha:
-  stage: alpha
   tags:
     - staging
   only:
     - master
   script:
-    - deploy mt
-    - echo 'Deployed on Alpha Staging'
-multistore:
-  stage: multistore
-  tags:
-    - staging
-  only:
-    - multistore
-  script:
-    - deploy mt-multistore
-    - echo 'Deployed on Multi-Store'
+    - mage-deploy mt
+    - echo 'Deployed on Staging'
 bugfixes:
+  environment: bugfixes
   stage: bugfixes
   tags:
     - staging
   only:
     - bugfixes
   script:
-    - deploy mt-bugfixes
+    - mage-deploy mt-bugfixes
     - echo 'Deployed on Bugfixes Staging'
 deploy:
+  environment: production
   stage: deploy
   tags:
     - production
   only:
     - production
   script:
-    - deploy
+    - mage-deploy
     - echo 'Deployed on Production'
