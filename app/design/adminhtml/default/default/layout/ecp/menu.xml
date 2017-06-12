@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_menu_adminhtml_menu_index>
+        <reference name="content">
+            <block type="ecp_menu/adminhtml_menu" name="ecp_menu" />
+        </reference>
+    </ecp_menu_adminhtml_menu_index>
+</layout>

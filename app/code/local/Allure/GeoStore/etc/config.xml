@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_GeoStore>
+			<name>Allure - GeoLocation Based Stores</name>
+			<version>1.0.0</version>
+			<depends>
+				<Allure_Core />
+				<Allure_GeoLocation />
+			</depends>
+		</Allure_GeoStore>
+	</modules>
+	<global>
+		<helpers>
+			<allure_geostore>
+				<class>Allure_GeoStore_Helper</class>
+			</allure_geostore>
+		</helpers>
+		<blocks>
+			<allure_geostore>
+				<class>Allure_GeoStore_Block</class>
+			</allure_geostore>
+		</blocks>
+		<models>
+			<allure_geostore>
+				<class>Allure_GeoStore_Model</class>
+			</allure_geostore>
+		</models>
+	</global>
+	<frontend>
+		<events>
+			<controller_action_predispatch>
+				<observers>
+					<allure_geostore>
+						<class>allure_geostore/observer</class>
+						<method>updateGeoStore</method>
+					</allure_geostore>
+				</observers>
+			</controller_action_predispatch>
+		</events>
+	</frontend>
+	<default>
+		<allure_geolocation>
+			<switch_store>
+				<enable>0</enable>
+				<mapping></mapping>
+				<debug>0</debug>
+			</switch_store>
+		</allure_geolocation>
+	</default>
+</config>

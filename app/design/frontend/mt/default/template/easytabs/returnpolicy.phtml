@@ -1,0 +1,33 @@
+<?php
+$_helper = $this->helper('catalog/output');
+$attrCode = 'return_policy';
+$hasCategory = false;
+
+if ($attrCode) {
+    $product = $this->getProduct();
+    $categories = $product->getCategoryIds();
+
+    foreach ($categories as $id) {
+        $model = Mage::getModel('catalog/category')->load($id);
+        if ($model->getCatReturnPolicy()) {
+            $hasCategory = true;
+            $catValue = $model->getCatReturnPolicy();
+            break;
+        }
+    }
+
+    $attribute = $product->getResource()->getAttribute($attrCode);
+    if ($attribute) {
+        $content = $attribute->getFrontend()->getValue($product);
+        $content = trim($content);
+        if (!empty($content)) {
+            echo '<div class="product-specs">'
+                . $_helper->productAttribute($this->getProduct(), $content, $attrCode)
+                . '</div>';
+        } elseif ($hasCategory) {
+            echo $catValue;
+        } else {
+            echo $this->getLayout()->createBlock('cms/block')->setBlockId('return_policy')->toHtml();
+        }
+    }
+}

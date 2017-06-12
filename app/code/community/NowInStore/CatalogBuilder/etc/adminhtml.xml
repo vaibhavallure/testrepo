@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <catalogbuilder>
+            <title>Now In Store</title>
+            <sort_order>300</sort_order>
+            <children>
+                <example>
+                    <title>Automatic Catalog Builder</title>
+                    <action>catalogbuilder/auth/</action>
+                </example>
+            </children>
+        </catalogbuilder>
+    </menu>
+</config>

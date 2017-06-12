@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magnify_Catalogproduct>
+            <version>1.0.0</version>
+        </Magnify_Catalogproduct>
+    </modules>
+    <global>
+    </global>
+    <frontend>
+        <routers>
+            <catalog>
+                <args>
+                    <modules>
+                        <Magnify_Catalogproduct before="Mage_Catalog">Magnify_Catalogproduct</Magnify_Catalogproduct>
+                    </modules>
+                </args>
+            </catalog>
+        </routers>
+    </frontend>
+</config>

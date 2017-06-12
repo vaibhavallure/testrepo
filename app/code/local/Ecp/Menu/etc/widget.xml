@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<widgets>
+    <menu_ecp type="ecp_menu/menu" module="ecp_menu">
+        <name>Ecp Menu</name>
+        <description>Add a dinamyc menu</description>
+        <parameters />
+    </menu_ecp>
+</widgets>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<sections>
+		<allure_geolocation>
+			<groups>
+				<switch_store translate="label" module="allure_geostore">
+					<label>Store Switching</label>
+					<sort_order>50</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<status translate="label">
+							<label>Enable Geolocation Based Store Switching</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>51</sort_order>
+						</status>
+						<mapping translate="label">
+							<label>Store GeoIP Pairing</label>
+							<frontend_model>Allure_GeoStore_Block_StoreMap</frontend_model>
+							<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>52</sort_order>
+						</mapping>
+						<debug translate="label">
+							<label>Debug</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>53</sort_order>
+						</debug>
+					</fields>
+				</switch_store>
+			</groups>
+		</allure_geolocation>
+	</sections>
+</config>

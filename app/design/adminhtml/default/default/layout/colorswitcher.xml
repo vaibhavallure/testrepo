@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_catalog_product_options>
+                <reference name="root">
+                        <action method="unsetChild"><name>admin.product.options</name></action>
+                        <block type="colorswitcher/adminhtml_catalog_product_edit_tab_options" name="admin.product.options"/>
+                </reference>
+        </adminhtml_catalog_product_options>
+</layout>

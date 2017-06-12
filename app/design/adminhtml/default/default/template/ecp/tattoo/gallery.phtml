@@ -1,0 +1,135 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for block Mage_Adminhtml_Block_Catalog_Product_Helper_Form_Gallery_Content
+ */
+?>
+<?php
+$_block = $this;
+/* @var $_block Mage_Adminhtml_Block_Catalog_Product_Helper_Form_Gallery_Content */
+?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) ?>jquery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)?>jquery/jquery-ui-1.9.1.custom.min.js"></script>
+<div id="<?php echo $_block->getHtmlId() ?>" >
+<ul class="messages">
+    <li class="notice-msg">
+        <ul>
+            <li>
+            <?php echo Mage::helper('catalog')->__('Image type and information need to be specified for each store view.'); ?>
+            </li>
+        </ul>
+    </li>
+</ul>
+<div class="grid">
+<table cellspacing="0" class="data border" id="<?php echo $_block->getHtmlId() ?>_grid" width="100%">
+    <col width="1" />
+    <col />
+    <col width="70" />
+    <col /><!--// IMAGE //-->
+    <col /><!--// CATEGORY //-->
+    <col width="70" />
+    <col width="70" />
+    <thead>
+        <tr class="headings">
+            <th><?php echo Mage::helper('catalog')->__('Image') ?></th>
+            <th><?php echo Mage::helper('catalog')->__('Label') ?></th>
+            <th><?php echo Mage::helper('catalog')->__('Sort Order') ?></th>
+            <th><?php echo Mage::helper('catalog')->__('Image') ?></th>
+            <th><?php echo Mage::helper('catalog')->__('Category') ?></th>
+            <th><?php echo Mage::helper('catalog')->__('Exclude') ?></th>
+            <th class="last"><?php echo Mage::helper('catalog')->__('Remove') ?></th>
+        </tr>
+    </thead>
+    <tbody id="<?php echo $_block->getHtmlId() ?>_list">
+        <tr id="<?php echo $_block->getHtmlId() ?>_template" class="template no-display">
+                <td class="cell-image"><div class="place-holder" onmouseover="<?php echo $_block->getJsObjectName(); ?>.loadImage('__file__')"><span><?php echo Mage::helper('catalog')->__('Roll Over for preview') ?></span></div><img src="<?php echo $this->getSkinUrl('images/spacer.gif')?>" width="100" style="display:none;" alt="" /></td>
+                <td class="cell-label"><input type="text" class="input-text" onkeyup="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" onchange="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" /></td>
+                <td class="cell-position"><input type="text" class="input-text validate-number" onkeyup="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" onchange="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" /></td>
+                <!--//IMAGE//--><td class="cell-image a-center"><input type="radio" name="tattoo[image]" onclick="<?php echo $_block->getJsObjectName(); ?>.setProductImages('__file__')" value="__file__" /></td>
+                <!--//CATEGORY//-->
+                <td class="cell-category a-center">
+                        <select name="tattoo[category][]">
+                            <?php foreach(explode(',',Mage::getStoreConfig('ecp_tattoo/Categories/categoriestattoos')) as $key => $item): ?>
+                            <option value="<?php echo $item ?>"><?php echo $item ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <!--input type="radio" name="tattoo[image]" onclick="<?php echo $_block->getJsObjectName(); ?>.setProductImages('__file__')" value="__file__" /-->
+                </td>
+                <td class="cell-disable a-center"><input type="checkbox" onclick="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" /></td>
+                <td class="cell-remove a-center last"><input type="checkbox" onclick="<?php echo $_block->getJsObjectName(); ?>.updateImage('__file__')" /></td>
+        </tr>
+        <tr id="<?php echo $_block->getHtmlId() ?>-image-0">
+                <td class="cell-image"><?php echo Mage::helper('catalog')->__('No image') ?></td>
+                <td class="cell-label"><input type="hidden" />&nbsp;</td>
+                <td class="cell-position"><input type="hidden" />&nbsp;</td>
+                <td class="cell-image a-center"><input type="radio" name="tattoo[image]" onclick="<?php echo $_block->getJsObjectName(); ?>.setProductImages('no_selection')" value="no_selection" /></td>
+                <!--//CATEGORY//-->
+                <td class="cell-category a-center">
+                        <select name="tattoo[category]">
+                            <?php foreach(explode(',',Mage::getStoreConfig('ecp_tattoo/Categories/categoriestattoos')) as $key => $item): ?>
+                            <option value="strtolower(trim"><?php echo $item ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <!--input type="radio" name="tattoo[image]" onclick="<?php echo $_block->getJsObjectName(); ?>.setProductImages('__file__')" value="__file__" /-->
+                </td>
+                <td class="cell-disable"><input type="hidden" />&nbsp;</td>
+                <td class="cell-remove last"><input type="hidden" />&nbsp;</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="100" class="last" style="padding:8px">
+                <?php echo $_block->getUploaderHtml() ?>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+</div>
+</div>
+
+<input type="hidden" id="<?php echo $_block->getHtmlId() ?>_save" name="tattoo[media_gallery][images]" value='<?php echo $_block->getImagesJson() ?>' />
+<input type="hidden" id="<?php echo $_block->getHtmlId() ?>_save_image" name="tattoo[media_gallery][values]" value='<?php echo $_block->getImagesValuesJson() ?>' />
+
+<script type="text/javascript">
+//<![CDATA[
+    var <?php echo $_block->getJsObjectName(); ?> = new Product.Gallery('<?php echo $_block->getHtmlId() ?>', <?php echo $_block/* ->getUploader() allure comment*/->getJsObjectName() ?>, {"image":{"label":"Base Image ","field":"tattoo[image]"}});
+//]]>
+
+<?php 
+
+$tmp = Mage::getModel('ecp_tattoo/tattoo_artist_work')
+        ->getCollection()
+        ->addFieldToFilter('tattoo_artist_id',$this->getRequest()->getParam('id'));
+
+$i = 2;
+foreach($tmp as $item): ?>
+    jQuery(jQuery('td.cell-category select')[<?php echo $i++ ?>]).val('<?php echo $item->getCategoryartist() ?>');
+<?php endforeach;
+
+?>
+</script>

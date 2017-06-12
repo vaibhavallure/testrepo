@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_Counterpoint>
+            <version>0.0.1</version>
+        </Allure_Counterpoint>
+    </modules>
+    
+    <global>
+    
+    	<blocks>
+			<adminhtml>
+				<rewrite>
+					<customer_grid>Allure_Counterpoint_Block_Adminhtml_Customer_Grid</customer_grid>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+    
+	    <resources>
+			<allure_counterpoint_setup>
+				<setup>
+					<module>Allure_Counterpoint</module>
+					<class>Mage_Sales_Model_Mysql4_Setup</class>
+				</setup>
+				<connection>
+					<use>default_setup</use>
+				</connection>
+			 </allure_counterpoint_setup>
+	     </resources>  
+	      	
+	     <fieldsets>
+	        <sales_convert_quote>
+	            <create_order_method>
+	                <to_order>*</to_order>
+	             </create_order_method>
+	             <counterpoint_order_id>
+	                <to_order>*</to_order>
+	             </counterpoint_order_id>
+	    	</sales_convert_quote>
+	    </fieldsets>
+        
+    </global>
+    
+    
+</config>

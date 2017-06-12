@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Allure_CurrencyServices>
+            <name>Allure - Currency Services</name>
+            <version>1.0.0</version>
+			<depends>
+				<Allure_Core />
+			</depends>
+        </Allure_CurrencyServices>
+    </modules>
+    <global>
+        <currency>
+            <import>
+                <services>
+                    <yahoofinance>
+                        <name>Yahoo Finance</name>
+                        <model>Allure_CurrencyServices_Model_Yahoo</model>
+                    </yahoofinance>
+                    <googlefinance>
+                        <name>Google Finance</name>
+                        <model>Allure_CurrencyServices_Model_Google</model>
+                    </googlefinance>
+                </services>
+            </import>
+        </currency>
+        <models>
+            <allure_currencyservices>
+                <class>Allure_CurrencyServices_Model_Yahoo</class>
+            </allure_currencyservices>
+        </models>
+    </global>
+</config>

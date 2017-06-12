@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_shippingtext_adminhtml_shippingtext_index>
+        <reference name="content">
+            <block type="ecp_shippingtext/adminhtml_shippingtext" name="ecp_shippingtext" />
+        </reference>
+    </ecp_shippingtext_adminhtml_shippingtext_index>
+    <ecp_shippingtext_adminhtml_shippingtext_edit>
+        <update handle="editor"/>
+    </ecp_shippingtext_adminhtml_shippingtext_edit>
+</layout>

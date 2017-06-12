@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <ecp module="ecp_tattoo">
+            <label>ECP</label>
+            <sort_order>101</sort_order>
+        </ecp>
+    </tabs>
+    <sections>
+        <ecp_tattoo translate="label">
+            <label>Ecp Tattoo</label>
+            <tab>ecp</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <Categories translate="label">
+                    <label>Categories</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <categoriestattoos translate="label comment">
+                            <label>Categories Tattoo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </categoriestattoos>
+                    </fields>
+                </Categories>
+                <mails translate="label">
+                    <label>Emails recieve</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>31</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <mail1 translate="label comment">
+                            <label>Email 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mail1>
+                        <mail2 translate="label comment">
+                            <label>Email 2</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mail2>
+                    </fields>
+                </mails>
+                <!--Banner translate="label">
+                    <label>Banner</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <banner_image translate="label comment">
+                            <label>Banner Image</label>
+                            <comment>Allowed file types: ICO, PNG, GIF, JPG, JPEG, APNG, SVG. Not all browsers support all these formats!</comment>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>ecp_tattoo/banner</backend_model>
+                            <base_url type="media" scope_info="1">tattoo/banner</base_url>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </banner_image>
+                    </fields>
+                </Banner-->
+            </groups>
+        </ecp_tattoo>
+    </sections>
+</config>

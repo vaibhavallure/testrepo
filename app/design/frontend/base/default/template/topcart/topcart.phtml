@@ -1,0 +1,84 @@
+<script>
+    jQuery.noConflict();
+    jQuery(document).ready(function(){
+        //TIPPED PLUGIN////////////////////////////////////////////////////////////////////
+        Tipped.create(jQuery('.top-cart'),jQuery('#content-cart')[0],{
+            skin: 'white',
+            onShow: function(content, element){
+                Tipped.refresh(element);
+            }
+        });
+    });    
+
+////////////////////////////////////////////////////////////////////////////////
+</script>
+<div class="top-cart" id="top-cart" data-tooltip-id="content-cart">
+    <div id="tab-top-cart" data-icon="&#x28;" aria-hidden="true" class="fs1">Shopping Cart(<span><?php echo $this->getQtyItems() ?></span>)</div>
+    <div id="content-cart" style="display:none">
+        <div id="header-content-cart">
+            <?php /* ?><!-- <h1><a id="top-link"><?php echo $this->getTitle() ?></a></h1>--><?php */ ?>
+        </div>
+        <div id="body-content-cart">
+            <?php if ($this->isEmpty): ?>
+            <div class="cart-empty">
+                <?php echo $this->__('You have no items in your shopping cart.') ?>
+            </div>
+            <?php else: foreach ($this->items as $item): $attributes = $this->getProductAndAttributes($item->getProduct()->getId()); ?>
+                <div class="carttop-products">
+                    <div class="cart-product" id='cart-item-<?php echo $item->getSku() ?>'>
+                        <span class="product-cart-image">
+                            <a href="<?php echo $item->getProduct()->getProductUrl() ?>">
+                                <img src="<?php echo Mage::helper('catalog/image')->init($item->getProduct(), 'thumbnail')->resize(60); ?>"/>
+                            </a>
+                            <div class="product-cancel" >
+                                <a href="<?php echo Mage::getUrl('checkout/cart/delete', array('id' => $item->getId())); ?>">
+                                    <span >X</span>
+                                </a>
+                            </div>
+                        </span>
+                        <h4 class="product-cart-name">
+                            <span>
+                                <a href="<?php echo $item->getProduct()->getProductUrl() ?>"><?php echo $item->getName() ?></a>
+                            </span>
+                        </h4>
+                        <?php $size = $attributes->getSize(); if(!empty($size)): ?><span class="product-cart-talla">Talla: <?php echo $attributes->getSize() ?></span><?php endif; ?>
+                        <?php $color = $attributes->getColor(); if(!empty($color)): ?><span class="product-cart-color">Color: <?php echo $attributes->getColor() ?></span><?php endif; ?>
+                        <span class="product-cart-qty">Cant. <span id="itemQty"><?php echo $this->itemQty($item) ?></span></span>
+                        <span class="cart-price"><?php echo Mage::helper('core')->currency(($item->getQty() * $item->getProduct()->getFinalPrice()), true, false); ?></span>
+                    </div>
+                    <!--div class="top-total">
+                        <?php echo $this->addToTotal($item); ?>
+                    </div-->
+                </div>
+            <?php endforeach; endif; ?>
+        </div>
+        <div id="buttons-content-cart" style="display:<?php if ($this->isEmpty) echo 'none' ?>">
+            <!--// BUTTONS //-->
+        </div>
+
+        <div class="num-prod">
+            <span id='cartQtyItems'><?php echo $this->getQtyItems() ?> Productos en tu bolsa</span>
+            <button type="button" title="Seguir comprando" class="button-top" id="button-close-cart">
+                <span>
+                    <span><?php echo $this->__('Seguir comprando') ?></span>
+                </span>
+            </button>
+        </div>
+        <div class="top-total">
+            <div id="total-content-cart" style="display:<?php if ($this->isEmpty)echo 'none' ?>">
+                <span id="total-cart"> Subtotal: <?php echo $this->getSubtotal() ?></span>
+            </div>
+            <div class="button-top-cart">
+                <div class="productos-carrito"></div>
+                <button style="display:<?php if ($this->isEmpty): ?>none<?php endif; ?>" id="buyBtn" class="top-cart-pagar" type="button" onClick="location.href='<?php echo Mage::getUrl('checkout/cart') ?>';">
+                        <span>
+                            <span><?php echo $this->__('Comprar') ?></span>
+                        </span>
+                    </button>
+                <div class="spinner" style="display:none">
+                    <span>Actualizando…</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<modules>
+		<Allure_Customer>
+            <name>Allure Customer</name>
+			<version>1.0.0</version>
+		</Allure_Customer>
+	</modules>
+	<global>
+		<models>
+				<allure_customer>
+					<class>Allure_Customer_Model</class>
+				</allure_customer>
+		</models>
+		<events>
+            <admin_system_config_changed_section_customer>
+                <observers>
+                    <allure_customer>
+                        <type>singleton</type>
+                        <class>allure_customer/observer</class>
+                        <method>saveDefaultCustomerWebsite</method>
+                    </allure_customer>
+                </observers>
+            </admin_system_config_changed_section_customer>
+        </events>
+	</global>
+	<frontend>
+		<layout>
+            <updates>
+                <customer module="Mage_Customer">
+                    <file>allure/customer.xml</file>
+                </customer>
+            </updates>
+        </layout>
+	</frontend>
+	 <adminhtml>
+        
+    </adminhtml>
+</config>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_GeoCurrency>
+			<name>Allure - GeoLocation Based Currency</name>
+			<version>1.0.0</version>
+			<depends>
+				<Allure_Core />
+				<Allure_GeoLocation />
+			</depends>
+		</Allure_GeoCurrency>
+	</modules>
+	<global>
+		<helpers>
+			<allure_geocurrency>
+				<class>Allure_GeoCurrency_Helper</class>
+			</allure_geocurrency>
+		</helpers>
+		<blocks>
+			<allure_geocurrency>
+				<class>Allure_GeoCurrency_Block</class>
+			</allure_geocurrency>
+		</blocks>
+		<models>
+			<allure_geocurrency>
+				<class>Allure_GeoCurrency_Model</class>
+			</allure_geocurrency>
+		</models>
+	</global>
+	<frontend>
+		<events>
+			<controller_action_predispatch>
+				<observers>
+					<allure_geocurrency>
+						<class>allure_geocurrency/observer</class>
+						<method>updateGeoCurrency</method>
+					</allure_geocurrency>
+				</observers>
+			</controller_action_predispatch>
+		</events>
+	</frontend>
+	<default>
+		<allure_geolocation>
+			<switch_currency>
+				<status>0</status>
+				<mapping></mapping>
+				<debug>0</debug>
+			</switch_currency>
+		</allure_geolocation>
+	</default>
+</config>

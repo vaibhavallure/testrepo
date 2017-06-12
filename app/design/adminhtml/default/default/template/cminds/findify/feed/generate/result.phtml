@@ -1,0 +1,14 @@
+<div class="entry-edit" id="feed_generation_validation_container">
+    <div id="feed-status-text"></div>
+    <div id="messages-wrapper"></div>
+</div>
+<script type='text/javascript'>
+    //<![CDATA[
+        document.observe('dom:loaded', function() {
+            findifyFeed.poll(
+                'messages-wrapper',
+                '<?php echo $this->getFeedId(); ?>'
+            );
+        });
+    //]]>
+</script>

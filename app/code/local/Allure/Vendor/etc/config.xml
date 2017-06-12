@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_Vendor>
+			<name>Allure - Vendor Settings</name>
+			<version>1.0.0</version>
+			<depends>
+				<Allure_Core />
+			</depends>
+		</Allure_Vendor>
+	</modules>
+	<global>
+		<helpers>
+			<allure_vendor>
+				<class>Allure_Vendor_Helper</class>
+			</allure_vendor>
+		</helpers>
+		<blocks>
+			<allure_vendor>
+				<class>Allure_Vendor_Block</class>
+			</allure_vendor>
+		</blocks>
+		<models>
+			<allure_vendor>
+				<class>Allure_Vendor_Model</class>
+			</allure_vendor>
+		</models>
+	</global>
+</config>

@@ -1,0 +1,208 @@
+.try-on-mt h1 {
+    color: #3F4048;
+    font-family: dinmittelschriftregular;
+    font-size: 32px;
+    font-weight: normal;
+    text-transform: uppercase;
+	margin:0;
+}
+.try-on-mt  {
+	 margin:0 auto 0; width: 990px; height:auto;
+}
+.try-on-mt .img-product-try-on , .try-on-mt .img-product-try-on img{
+	float:left; width: 396px; height:519px;
+}
+.try-on-mt  .img-product-try-on {
+	/*margin-right:18px;*/
+}
+.try-on-mt .combos-try-on {
+	float:right; width: 544px; height:36px;
+	background:none repeat scroll 0 0 #cfcfd1;
+}
+.try-on-mt .detail-product-try-on {
+	float:right; width: 544px; height:29px;
+}
+.try-on-mt ul.product-list-try-on1 {
+	float:right; width: 544px; height:458px;
+}
+.try-on-mt ul.product-list-try-on1 li{
+	float:left; width: 131px; height:144px;
+	margin: 4px 4px 4px 0;
+}
+.try-on-mt ul.product-list-try-on1 .img-product-list1 {
+	float:left; width: 131px; height:95px;
+	margin: 0 0px 2px 0;
+}
+.try-on-mt ul.product-list-try-on1 .img-product-list1 img {
+	float:left; width: 131px; height:95px;
+}
+.try-on-mt ul.product-list-try-on1 .details-img-product-list1 {
+	float:left; width: 131px; height:50px;
+	background:#cfcfcf;
+	margin:0;
+	padding:0;
+}
+.try-on-mt ul.product-list-try-on1 .details-img-product-list1 p {
+	float:left; width: 100%; height:auto;
+	text-align: center;
+	font: normal 12px/12px Arial, Helvetica, sans-serif;
+	margin: 4px 0 0;
+}
+
+.try-on-mt .social-media-try-on {
+	float:left; width: 396px; height:29px;
+	margin:4px 0;
+}
+.try-on-mt .social-media-try-on a {
+	font:12px/12px Arial, Helvetica, sans-serif;
+	text-decoration:underline;
+}
+.try-on-mt h3 {
+    font: 17px/37px dinmittelschriftregular;
+	margin:0;
+	float:left; width:952px; height:35px;
+	background:none repeat scroll 0 0 #CFCFCF;
+	padding-left:10px;
+}
+.try-on-mt ul.product-list-selection1 {
+	float:left; width: 806px; height:300px;
+	margin: 10px 0 49px 0;
+	border-right: 1px solid #CCCCCC;
+	padding:9px 0 0 0;
+}
+.try-on-mt ul.product-list-selection1 li {
+	float:left; width: 264px; height:134px;
+	margin: 0 0 31px 0;
+}
+.try-on-mt .product-selection1 img {
+	float: left; width: 101px; height:133px;
+}
+.try-on-mt .product-selection1 h4 {
+	float:left; width:137px; height:37px;
+	overflow:hidden;
+	font: bold 12px/12px Arial, Helvetica, sans-serif;
+	clear:none;
+	margin: 0 0 12px 10px;
+}
+.try-on-mt .product-selection1 input {
+	float:left; width:30px; height:23px;
+	border:0;
+	font: 12px/12px Arial, Helvetica, sans-serif;
+	text-align:center;
+}
+.try-on-mt .product-selection1 p {
+	float:left; width:137px; height:auto;
+	overflow:hidden;
+	font:normal 12px/10px Arial, Helvetica, sans-serif;
+	margin: 0 0 9px 10px;
+}
+.try-on-mt .product-selection1 .remove2 {
+	float:left; width:137px; height:20px;
+	overflow:hidden;
+	font:normal 12px/17px Arial, Helvetica, sans-serif;
+	margin: 0 0 9px 10px;
+}
+.try-on-mt .product-selection1 p.qty-try-on {
+	float:left; width:25px; height:auto;
+	overflow:hidden;
+	font:normal 12px/24px Arial, Helvetica, sans-serif;
+	margin: 0 0 9px 10px;
+}
+.try-on-mt .product-selection1 .close2 {
+	float:left; 
+	background-image: url("../images/close-icon2.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 18px;
+    width: 22px;
+    display: block;}
+.try-on-mt  button {
+	background: linear-gradient(to bottom, #5E5D62 0%, #38383A 100%) repeat scroll 0 0 transparent;
+    color: #FFFFFF;}
+ .try-on-mt  button:hover {   background: linear-gradient(to bottom, #38383A 0%, #5E5D62 100%) repeat scroll 0 0 transparent;
+ 	color:#FFFFFF;}
+ 	
+ 	
+.try-on-mt .social-media-try-on .buttons {
+    float: right;
+    width: auto;
+}
+.try-on-mt .social-media-try-on .button {
+    background: none repeat scroll 0 0 transparent;
+    float: left;
+    height: 20px;
+    padding: 0;
+    text-align: center;
+    width: 80px;
+}
+.try-on-mt .social-media-try-on .button.pinterest {
+    margin-left: 1px;
+    margin-top: 0;
+    width: 40px;
+}
+.try-on-mt .social-media-try-on .button.print {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 50px;
+}
+.try-on-mt .social-media-try-on .button.mail {
+    cursor: pointer;
+    margin-left: 5px;
+    width: 55px;
+}
+.try-on-mt .social-media-try-on .button.mail a:hover, .try-on-mt .social-media-try-on .button.print a:hover {
+    text-decoration: none;
+}
+
+
+.try-on-mt .design-look {
+    float: left;
+    height: 485px;
+    margin-bottom: 5px;
+    width: 564px;
+}
+    
+.try-on-mt .try-balloon {
+	float:left; width:50%; height:100%;
+}
+.try-on-mt .design-tips {
+	float:left; width:50%; height:100%;
+}
+.try-on-mt .design-tips h2 {
+   color: #303136;
+    float: right;
+    font-family: dinmittelschriftregular;
+    font-size: 17px;
+    font-weight: normal;
+    line-height: 1.28571;
+    margin: 65px 0 15px;
+    text-transform: uppercase;
+    width: 243px;
+}
+.try-on-mt .design-tips > ul {
+    float: right;
+    height: auto;
+    width: 243px;
+}
+.try-on-mt .design-tips > ul > li {
+    float: right; height: auto; width: 243px;
+    font:normal 11px/16px Arial, Helvetica, sans-serif;
+    list-style: square;
+    margin:6px 0;
+    text-align: justify;
+}
+.try-on-mt .design-tips > p {
+    float: right;
+    height: auto;
+    width: 243px;
+}
+.try-on-mt .design-tips h5 {
+    float: right;
+    margin: 68px 0 0;
+    width: 243px;
+}
+.category-try-on-studio .category-description {
+    display: none;
+}
+.category-try-on-studio .page-title h1 { margin:0 auto 0; width:990px; }

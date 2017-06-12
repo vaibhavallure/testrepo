@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<widgets>
+    <yelp_ecp type="ecp_yelp/yelp" module="ecp_yelp">
+        <name>Ecp Widget - Yelp</name>
+        <description>Add a Yelp reviews</description>
+        <parameters>
+            <yelp_account>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Yelp Place</label>
+                <type>select</type>
+                <source_model>ecp_yelp/system_config_yelp</source_model>
+            </yelp_account>
+        </parameters>
+    </yelp_ecp>
+</widgets>

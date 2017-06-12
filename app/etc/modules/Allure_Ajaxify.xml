@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_Ajaxify>
+      <active>false</active>
+      <codePool>local</codePool>
+      <depends>
+      	<ECP_Ajaxify/>
+      </depends>
+    </Allure_Ajaxify>
+  </modules>
+</config>

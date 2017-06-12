@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<widgets>
+    <citysearch_ecp type="ecp_citysearch/citysearch" module="ecp_citysearch">
+        <name>Ecp Widget - CitySearch</name>
+        <description>Add a CiySearch reviews</description>
+	<parameters>
+            <citysearch_account>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Citysearch account</label>
+                <type>select</type>
+                <source_model>ecp_citysearch/system_config_citysearch</source_model>
+            </citysearch_account>
+        </parameters>
+    </citysearch_ecp>
+</widgets>

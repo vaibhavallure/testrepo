@@ -1,0 +1,9 @@
+<script type="text/javascript">
+    //<![CDATA[
+        var feedGenerationUrl = '<?php echo $this->getFeedGenerationUrl(); ?>';
+        var feedStopUrl = '<?php echo $this->getFeedStopUrl(); ?>';
+        var ajaxUrl = '<?php echo $this->getFeedAjaxUrl(); ?>';
+
+        var findifyFeed = new findifyFeed(feedGenerationUrl, feedStopUrl, ajaxUrl);
+    //]]>
+</script>

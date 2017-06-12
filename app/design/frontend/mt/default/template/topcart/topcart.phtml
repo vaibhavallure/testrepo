@@ -1,0 +1,161 @@
+<script>
+	(function($) {
+            $.extend(Tipped.Skins, {
+                'customcart' : $.extend(true, { }, Tipped.Skins.white, {
+                    /*spinner: { padding: 10 },
+                    background: {
+                            color: [
+                            { position: 0, color: '#DEDEDE'}
+                            ]
+                    }*/
+                })
+            });
+	})(jQuery);
+
+	jQuery.noConflict();
+        jQuery(document).ready(function(){
+
+        //TIPPED PLUGIN////////////////////////////////////////////////////////////////////
+            Tipped.create(jQuery(".top-cart"), jQuery(".content-cart")[0], {
+                    skin: 'customcart',
+                    showOn: ['click', 'mouseover'],
+//                    hideOn: 'false',
+                    showDelay: 500,
+                    hideDelay: 500,
+//                    target: 'tab-top-cart',
+//                    stem: {height:5,width:10},
+                    onShow: function(content, element){
+                        Tipped.refresh(element);
+                    },
+                    onHide: function(content, element){
+                        jQuery('div.content-cart div.bottom div.padder div#body-content-cart').show();
+                        jQuery('div.content-cart div.bottom div.padder div.recently-added').hide();
+                        jQuery('button.close-tooltip').hide();
+                        jQuery('div.content-cart div.top div.padder').html(jQuery('<a><h1>VIEW YOUR CART</h1></a>').attr('href','<?php echo Mage::getUrl('checkout/cart')?>')).append(jQuery("<div />").addClass("close close-tooltip"));
+                        jQuery('.just-added-to-cart').remove();
+                    }
+            });
+        });
+
+</script>
+
+<div class="top-cart" >
+    <div id="tab-top-cart" data-icon="&#x28;" aria-hidden="true" class="fs1">
+        <a href="<?php echo Mage::getUrl('checkout/cart') ?>">Shopping Cart (<span><?php echo $this->getQtyItems() ?></span>)</a>
+    </div>
+    <div class="content-cart" style="display:block">
+    	<div class="top">
+			<div class="padder">
+				<a href="<?php echo Mage::getUrl('checkout/cart') ?>" ><h1>VIEW YOUR CART</h1></a>
+				<div class="close close-tooltip"></div>
+			</div>
+		</div>
+		<div class="bottom">
+                    <div class="padder">
+        		<div id="body-content-cart">
+		            <?php if ($this->isEmpty): ?>
+		            <div class="cart-empty">
+		                <?php echo $this->__('You have no items in your shopping cart.') ?>
+		            </div>
+		            <?php else: foreach ($this->items as $key => $item):
+                                if($key<3):
+                                    $simpleProduct = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
+                                    $url = $item->getProduct()->getProductUrl();
+                                    ?>
+                                    <?php
+                                    $parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($item->getProduct()->getId());
+                                    if(is_array($parentIds) && isset($parentIds[0]) && (int)$parentIds[0] > 0) {
+                                        $product = Mage::getModel('catalog/product')->load($parentIds[0]);
+                                        $url = $product->getProductUrl();
+                                    }
+                                    ?>
+		                    <div class="cart-product" id='cart-item-<?php echo $item->getSku() ?>'>
+		                        <span class="product-cart-image" >
+		                            <a href="<?php echo $url ?>">
+                                                <?php $parentId = $item->getParentItemId();
+                                                if(Mage::getStoreConfig('ecp_shoppingcart/shoppingcart/thumbnails')): ?>
+                                                    <img src="<?php echo Mage::helper('catalog/image')->init($item->getProduct(), 'thumbnail')->resize(55,65); ?>"/>
+                                                <?php elseif($parentId!=null && !Mage::getStoreConfig('ecp_shoppingcart/shoppingcart/thumbnails')):
+                                                    foreach (Mage::getSingleton('checkout/session')->getQuote()->getAllItems() as $configurable) {
+                                                        if ($configurable->getItemId() == $parentId && $item->getSku() == $configurable->getSku()){
+                                                            $configProduct = Mage::getModel('catalog/product')->load($configurable->getProduct()->getId());
+                                                        }
+                                                    }?>
+                                                    <img src="<?php echo Mage::helper('catalog/image')->init($configProduct, 'thumbnail')->resize(55,65); ?>"/>
+                                                <?php else: ?>
+                                                    <img src="<?php echo Mage::helper('catalog/image')->init($item->getProduct(), 'thumbnail')->resize(55,65); ?>"/>
+                                                <?php endif; ?>
+		                            </a>
+		                        </span>
+		                        <span class="product-cart-information" >
+			                        <h4 class="product-cart-name">
+			                        	<a href="<?php echo $url ?>"><?php echo $item->getName() ?></a>
+			                        </h4>
+                                                <?php
+                                                $colours = Mage::getStoreconfig('ecp_color/color_attr');
+                                                $colours = explode(',', $colours);
+                                                //@TODO chech what is with the colour in cart, because it was only one item in xml and we converted to multiple by comma. check if can be adjusted
+                                                //http://magnimine.magnify.ro/issues/2459 was the purpose to change it to multiple options
+                                                $jsonArr = Mage::helper('shoppingcart')->attributesAction(); 
+                                                $arrAttributes = json_decode($jsonArr,true);
+                                                foreach($arrAttributes as $attrCode => $attrText) {
+                                                        $attrTextValue = $simpleProduct->getAttributeText($attrCode);
+                                                        if(!empty($attrTextValue)) 
+                                                                echo '<p class="product-cart-color">'.$attrText.': '.$attrTextValue.'</p>';
+                                                }
+                                                ?>
+			                        <p class="product-cart-qty">Qty. <span id="itemQty"><?php echo $this->itemQty($item) ?></span></p>
+			                        <p class="product-cart-price">
+                                        Price: <span id="productPrice">
+                                            <?php
+                                                $options_prices = Mage::getSingleton('core/session')->getOptionPricesP();
+                                                $plus = 0;
+                                                if(is_array($options_prices) && isset($options_prices[$simpleProduct->getId()])) {
+                                                    $plus = $options_prices[$simpleProduct->getId()];
+                                                }
+                                            ?>
+                                            <?php echo $this->helper('core')->currency(($plus + $item->getProduct()->getFinalPrice())); ?>
+                                        </span>
+                                    </p>
+			                    	<p class="product-cancel" >
+			                        	<a href="<?php echo Mage::getUrl('checkout/cart/delete', array('id' => $item->getId())); ?>">
+			                            <span>Remove</span>
+			                            </a>
+			                        </p>
+		                        </span>
+		                    </div>
+		                <!-- </div> -->
+		            <?php endif; endforeach; endif; ?>
+                        </div><!-- End body-content-cart -->
+                        <div class="recently-added" style="display: none">
+
+                        </div>
+                    </div><!-- End padder -->
+        </div>
+        <div class="subtotal">
+        	<div class="padder">
+		        <!--<div class="num-prod">
+		            <span id='cartQtyItems'>Total items in car: <?php // echo $this->getQtyItems() ?></span>
+		        </div>-->
+		        <div class="top-total">
+		            <div class="total-content-cart">
+		                <span id="total-cart"> SUBTOTAL:
+                            <?php $currency = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol() ? Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol() : Mage::app()->getStore()->getCurrentCurrencyCode(); 
+                            $totals = Mage::getSingleton('checkout/cart')->getQuote()->getTotals();
+                            $subtotal = $totals["subtotal"]->getValue();
+                            echo $currency . round($subtotal,2) ?>
+		                </span>
+		            </div>
+		            <div class="button-top-cart">
+                                <?php /*?><!--<button class="close close-tooltip" style="display: none">
+                                    <span><?php echo $this->__('Continue Shopping'); ?></span>
+                                </button>--><?php */?>
+		                <button style="display:<?php if ($this->isEmpty): ?>none<?php endif; ?>" id="buyBtn" class="button btn-cart" type="button" onClick="location.href='<?php echo Mage::getUrl('checkout/onepage') ?>';">
+			                	<span><?php echo $this->__('CHECKOUT') ?></span>
+			        </button>
+		            </div>
+		        </div>
+	        </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<?php
+    
+    $_helper = Mage::helper('restrictcustomergroup');
+    $ruleCollection = $this->getRulesCollection();
+    $data = $ruleCollection->getData();
+?>
+<?php if (!empty($data)): ?>
+    <?php echo $_helper->filterWhiswigContents($data[0]['description']); ?>
+
+    <a href="<?php echo Mage::helper('core/http')->getHttpReferer();?>"><?php echo $_helper->__('Back << ')?></a>
+<?php endif; ?>

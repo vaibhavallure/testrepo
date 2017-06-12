@@ -1,0 +1,40 @@
+<div class="tatoo_right_form">
+    <div id='success' style="display:none">
+        <span>Your message was send it to <?php echo $this->getTattooerName() ?>.</span>
+    </div>
+    <form id="contact_tattoo_form" method="get" name="forma" class="tatoo_form">
+        <h6>setup a free consultation with <?php echo $this->getTattooerName() ?></h6>
+        <span>Name*</span>
+        <input type="hidden" name="tattooer" id="tattooer" value='<?php echo $this->getTattooerId() ?>' />
+        <input name="name" id="name" class="input-text" type="text" value='<?php echo Mage::getSingleton('customer/session')->getCustomer()->getName() ?>' />
+        <span>E-mail*</span>
+        <input id="email" name="email" class="input-text" type="text" value='<?php echo Mage::getSingleton('customer/session')->getCustomer()->getEmail() ?>' />
+        <span>Message*</span>
+        <textarea id="message" name="message" class="multi"></textarea>
+        <span class="mini">20 out of 250 characters</span>
+        <span class="mini2">*Required Fields</span>
+        <input name="send" class="button" type="submit" value="SEND">
+    </form>
+</div>
+<script>
+    jQuery.noConflict();
+    jQuery('#contact_tattoo_form').submit(function(event){
+        event.preventDefault();
+        
+        jQuery.post('<?php echo $this->getUrl('ecp_tattoo/index/contact') ?>', 
+            { 
+                tattooer: jQuery('#tattooer').val(),
+                name: jQuery('#name').val(),
+                email: jQuery('#email').val(),
+                message: jQuery('#message').val()
+            },
+            function( data ) {
+                var response = jQuery.parseJSON(data);
+                if(response.success){
+                    jQuery('#contact_tattoo_form').css('display','none');
+                    jQuery('#success').css('display','block');
+                }else alert(response.message);
+            }
+        );
+    });
+</script>

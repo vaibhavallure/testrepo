@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_sizechart_adminhtml_sizechart_index>
+        <reference name="content">
+            <block type="ecp_sizechart/adminhtml_sizechart" name="ecp_sizechart" />
+        </reference>
+    </ecp_sizechart_adminhtml_sizechart_index>
+    <ecp_sizechart_adminhtml_sizechart_edit>
+        <update handle="editor"/>
+    </ecp_sizechart_adminhtml_sizechart_edit>
+</layout>

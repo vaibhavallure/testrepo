@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <!-- <appointments_adminhtml_appointmentservice_index>
+	<reference name="content">
+	  <block type="appointments/adminhtml_appointmentservice" name="appointmentservice" />
+	</reference>
+  </appointments_adminhtml_appointmentservice_index> -->
+  
+  <appointments_adminhtml_appointmentpiercers_edit>
+	<reference name="head">
+	 	<!-- <action method="addItem"><type>skin_js</type><name>js/appointmentjs/jquery-ui.multidatespicker.js</name></action> -->
+	 	<action method="addItem"><type>skin_js</type><name>js/appointmentjs/prettify.js</name></action>
+	 	<action method="addCss"><stylesheet>css/appointmentcss/mdp.css</stylesheet></action>
+	</reference>
+  </appointments_adminhtml_appointmentpiercers_edit>
+  
+  <appointments_adminhtml_appointmentpiercers_new>
+	<reference name="head">
+	 	<!-- <action method="addItem"><type>skin_js</type><name>js/appointmentjs/jquery-ui.multidatespicker.js</name></action> -->
+	 	<action method="addItem"><type>skin_js</type><name>js/appointmentjs/prettify.js</name></action>
+	 	<action method="addCss"><stylesheet>css/appointmentcss/mdp.css</stylesheet></action>
+	</reference>
+  </appointments_adminhtml_appointmentpiercers_new>
+  
+    
+  <appointments_adminhtml_adminhtml_appointments_viewCalender>
+	<reference name="content">
+	  <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+            <action method="setUseConfirm">
+                <params>0</params>
+            </action>
+        </block>
+      <!-- <block type="core/template" name="appointment_store" as="appointment_store" template="appointment/appointment_store.phtml" ></block> -->
+	</reference>
+  </appointments_adminhtml_adminhtml_appointments_viewCalender>
+</layout>

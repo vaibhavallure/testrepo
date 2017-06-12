@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_NewCategoryAttribute>
+            <version>0.1.0</version>
+        </Ecp_NewCategoryAttribute>
+    </modules>
+    <global>
+        <resources>
+            <ecp_newcategoryattribute_setup>
+              <setup>
+                <module>Ecp_NewCategoryAttribute</module>
+                <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+              </setup>
+              <connection>
+                <use>core_setup</use>
+              </connection>
+            </ecp_newcategoryattribute_setup>
+            <ecp_newcategoryattribute_write>
+              <connection>
+                <use>core_write</use>
+              </connection>
+            </ecp_newcategoryattribute_write>
+            <ecp_newcategoryattribute_read>
+              <connection>
+                <use>core_read</use>
+              </connection>
+            </ecp_newcategoryattribute_read>
+        </resources>
+    </global>
+</config>

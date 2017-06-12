@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_GeoTax>
+			<name>Allure - GeoLocation Based Taxes</name>
+			<version>1.0.0</version>
+			<depends>
+				<Allure_Core />
+				<Allure_GeoLocation />
+			</depends>
+		</Allure_GeoTax>
+	</modules>
+	<global>
+		<helpers>
+			<allure_geotax>
+				<class>Allure_GeoTax_Helper</class>
+			</allure_geotax>
+		</helpers>
+		<models>
+			<allure_geotax>
+				<class>Allure_GeoTax_Model</class>
+			</allure_geotax>
+			<tax>
+				<rewrite>
+					<calculation>Allure_GeoTax_Model_Tax_Calculation</calculation>
+				</rewrite>
+			</tax>
+		</models>
+	</global>
+	<default>
+		<allure_geolocation>
+			<tax_calculation>
+				<status>0</status>
+				<ignore_default>0</ignore_default>
+				<debug>0</debug>
+			</tax_calculation>
+		</allure_geolocation>
+	</default>
+</config>

@@ -1,0 +1,20 @@
+<div id="success" style="display:none">
+    <span>Your message was send</span>
+</div>
+<form id="contact_tattoo_form" method="get" name="forma" class="tatoo_form">
+    <h6 id="tattooer-name">setup a free consultation</h6>
+    <span>Name*</span>
+    <input type="hidden" name="tattooer" id="tattooer" value="" />
+    <input type="text" name="name" id="name" class="input-text required-entry" value='<?=Mage::getSingleton('customer/session')->getCustomer()->getName();?>' />
+    <span>E-mail*</span>
+    <input type="text" name="email" id="email" class="input-text required-entry validate-email" value='<?=Mage::getSingleton('customer/session')->getCustomer()->getEmail();?>' />
+    <span>Message*</span>
+    <textarea id="message" name="message" class="multi required-entry"></textarea>
+    <span class="mini"><span>0</span> out of 1000 characters</span>
+    <span class="mini2">*Required Fields</span>
+    <input name="send" class="button" type="submit" value="SEND">
+</form>
+
+<script>
+jQuery('#message').live('keyup', function(){ maxLong('#message', 1000); });
+</script>

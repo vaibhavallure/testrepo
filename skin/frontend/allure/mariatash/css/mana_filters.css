@@ -1,0 +1,287 @@
+.m-more-less {
+    font-size: 11px;
+    text-align: right;
+}
+.m-expandable-filter {
+    overflow: hidden;
+}
+.m-scrollable-filter {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.5);
+    border: 1px solid #CCCCCC;
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+    padding: 2px 0 2px 5px;
+}
+.m-scrollable-filter li {
+    white-space: nowrap;
+}
+.m-filter-popup {
+    padding: 10px;
+}
+.m-filter-popup .m-columns {
+    overflow: hidden;
+}
+.m-filter-popup .m-columns > li {
+    float: left;
+    text-align: left;
+    width: 200px;
+}
+.m-filter-popup .buttons-set {
+    margin: 8px 0 0;
+}
+.m-filter-popup .m-filter-colors {
+    margin: 0;
+}
+.m-showmore-popup-container {
+    box-shadow: 15px 15px 25px 5px rgba(0, 0, 0, 0.4);
+}
+
+.mb-mana-catalogsearch-leftnav .block-title {
+    float: left;
+}
+.mb-mana-catalog-leftnav {
+    position: relative;
+    }
+.catalog-category-view .block-layered-nav {
+     z-index: 100;
+  top: 25px;
+  position: absolute;
+      right: 0;
+    left: 0;
+
+}
+.lt-ie9 .block-layered-nav {
+
+}
+.catalogsearch-result-index .block-layered-nav {
+    top: 232px;
+	padding:8px 0 0 0;
+}
+
+.block-layered-nav-bg {
+    background: #cfcfd1;
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    height: 37px;
+    z-index: 105;
+}
+.isBleed .block-layered-nav-bg {
+    background: #cfcfd1;
+    position: absolute;
+    top: -75px !important;
+    width: 100%;
+    height: 37px;
+    z-index: 10;
+}
+.lt-ie9 .isBleed .block-layered-nav-bg {
+    top: -70px !important;
+}
+.catalogsearch-result-index .block-layered-nav-bg {
+    top: 232px;
+    width: 98%;
+}
+
+
+.block-title strong {
+    padding: 0;
+}
+.block-title  {
+    background: none;
+}
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterAjax
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+.m-overlay {
+    position: absolute;
+    background: white; /*url('../images/manapro_filterajax/overlay.gif');*/
+    filter:alpha(opacity=0);/* percent */
+    -moz-opacity:0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    z-index: 10000;
+}
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterCheckboxes
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+ol.m-filter-css-checkboxes li a.m-checkbox-unchecked { background: url(../images/manapro_filtercheckboxes/checkbox_unchecked.png) 0 0 no-repeat; }
+ol.m-filter-css-checkboxes li a.m-checkbox-checked { background: url(../images/manapro_filtercheckboxes/checkbox_checked.png) 0 0 no-repeat; }
+ol.m-filter-css-checkboxes li a.m-checkbox-unchecked:hover { background: url(../images/manapro_filtercheckboxes/checkbox_unchecked_hover.png) 0 0 no-repeat; }
+ol.m-filter-css-checkboxes li a.m-checkbox-checked:hover { background: url(../images/manapro_filtercheckboxes/checkbox_checked_hover.png) 0 0 no-repeat; }
+ol.m-filter-css-checkboxes li a.m-checkbox-unchecked,
+ol.m-filter-css-checkboxes li a.m-checkbox-checked { padding-left: 20px; text-decoration: none; }
+
+.m-filter-checkboxes li input { margin-right: 4px; position: relative; top: 2px; }
+
+ul#narrow-by-list {margin:0 20px 0 0; padding:0; }
+ul#narrow-by-list li { float: left; max-width: 300px; padding-left: 8px; min-height: 20px; }
+ul#narrow-by-list li ol li {float: none}
+ul#narrow-by-list li label {  }
+.block .block-title strong {
+    text-transform: none;
+}
+
+/*li.filtru-metals_and_gemstones { width: 300px; }*/
+li.filtru-metals_and_gemstones li { min-width: 134px; }
+/*li.filtru-finger_ring_size { width: 184px; }*/
+li.filtru-finger_ring_size li { min-width: 84px; }
+/*li.filtru-category { width: 228px; }*/
+li.filtru-category li { min-width: 106px; }
+li.filtru-category li a { font-size: 11px !important; }
+
+ul#narrow-by-list li dd .m-more-less {
+    position: relative;
+}
+ul#narrow-by-list li dd .m-more-less .m-show-less-action { color: #3F4048; padding-right: 8px; text-decoration: none; }
+ul#narrow-by-list li dd .m-more-less a.m-show-more-action{
+    background: url(../images/down-arrow.png) no-repeat center center;
+	height: 20px;
+	position: absolute;
+	right: 8px;
+	top: -21px;
+	width: 20px;
+}
+.filtru-price {
+    /*width: 300px !important;*/
+}
+.filtru-price dt {
+     display: none;
+}
+.filtru-price dd {
+   position: relative;
+}
+.filtru-price #price-applied .fromprice {float: left; width: 43px; text-align: right;}
+.filtru-price #price-applied .toprice {float: right;}
+.filtru-price .m-filter-slider {    position: absolute;
+  width: 185px;
+  margin-left: 40px;
+  margin-top: 2px;}
+.m-slider-selected-value { height: 20px;
+  width: 285px;
+  display: block;
+  margin-left: -50px;}
+.mb-mana-catalogsearch-leftnav .currently {
+    float: left;
+}
+#selected_filters_actives {
+    overflow: hidden;
+}
+#selected_filters_actives li {
+    float: left;
+	color: #38393c;
+	margin-right: 15px;
+}
+.block-layered-nav .currently #selected_filters_actives .btn-remove,.block-layered-nav .currently #selected_filters_actives span {
+    float: left;
+}
+.mb-category-products .toolbar, .mb-search-result .toolbar {
+  position: relative;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+}
+
+.mb-category-products .toolbar-bottom .toolbar, .mb-search-result .toolbar-bottom .toolbar {
+}
+#productsContainer-wrapper {
+    margin-top: 10px;
+}
+.lt-ie9 #productsContainer-wrapper {
+
+}
+.mb-mana-catalogsearch-leftnav .currently {
+	float: left;
+  display: none;
+}
+.mb-mana-catalogsearch-leftnav .selected-filters {
+	  position: absolute;
+  bottom: 0;
+  z-index: 999;
+  right: 10px;
+}
+.mb-mana-catalogsearch-leftnav .actions {
+    float: left;
+}
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterColors
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+.m-filter-colors {overflow: hidden; width: 100%; margin-bottom: 10px;}
+.horizontal .m-color {float: left; margin: 2px;}
+.vertical .m-color { margin:  4px 0 0; }
+.state.m-color { display:  inline-block; margin-left: 3px; }
+
+.m-filter-colors.labels li { overflow: hidden; margin: 4px 0 0; }
+.m-filter-colors.labels .m-color { float: left; margin: 0 4px 0; }
+.m-filter-colors.labels li a { text-decoration: none; }
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterDropdown
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+.m-filter-dropdown { width: 100%; margin-top: 3px; }
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterRadios
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+
+.m-filter-radios li input { margin-right: 5px; position: relative; bottom: 2px; }
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterShowMore
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+.m-more-less { font-size: 12px; text-align: right; font-weight: bold; }
+.m-expandable-filter { overflow: hidden; font-size: 11px; }
+.m-scrollable-filter { overflow-x: hidden !important; overflow-y: scroll !important; border: 1px solid #ccc; padding: 2px 0 2px 5px; background: rgba(255,255,255,0.5); }
+.m-scrollable-filter li { white-space: nowrap; }
+
+.m-filter-popup { padding: 10px; }
+.m-filter-popup .m-columns { overflow: hidden; }
+.m-filter-popup .m-columns > li { float: left; width: 200px; text-align: left; }
+.m-filter-popup .buttons-set { margin: 8px 0 0; }
+.m-filter-popup .m-filter-colors { margin: 0; }
+.m-showmore-popup-container { box-shadow : 15px 15px 25px 5px rgba( 0, 0, 0, 0.4 ); }
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterSlider
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+.m-filter-slider { height: 17px; position: relative; background: none; }
+.m-filter-slider > .m-slider-from, .m-filter-slider > .m-slider-to { height: 10px; width: 6px; position: absolute; top: 3px; }
+.m-filter-slider > .m-slider-span { height: 9px;
+  position: absolute;
+  background: none;
+  border-bottom: 1px solid #787882;
+  left: 0px !important;
+  width: 179px !important;}
+.m-filter-slider > .m-slider-from { background: transparent url(../images/classic-map.png) -585px -10px no-repeat; cursor: e-resize; }
+.m-filter-slider > .m-slider-to { background: transparent url(../images/classic-map.png) -504px -10px no-repeat; cursor: w-resize;}
+
+
+
+.m-slider-values {text-align: center; margin-top: 3px; } 
+.m-slider-values .m-slider-min-value { float: left; }
+.m-slider-values .m-slider-max-value { float: right;}
+.m-slider-selected-value {}
+
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterSuperSlider
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+input.m-slider { width: 30px; }

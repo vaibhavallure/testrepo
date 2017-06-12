@@ -1,0 +1,99 @@
+<?php
+$_element = $this->getElement();
+$_note    = $_element->getNote();
+$_trId    = $_element->getHtmlContainerId();
+$_class   = $_element->getFieldsetHtmlClass();
+?>
+<?php if (!$_element->getNoDisplay()): ?>
+    <tr<?php if($_trId): ?> id="<?php echo $_trId ?>"<?php endif; ?>>
+        <?php if ($_element->getType()=='hidden'): ?>
+            <td colspan="2" class="hidden"><?php echo trim($_element->getElementHtml()) ?></td>
+        <?php else: ?>
+            <script type="text/javascript">
+                var attributeForm = new findifyAttributeForm('findify_form');
+            </script>
+            <td>
+                <?php echo $this->getInsertAttributeButtonHtml() ?>
+            </td>
+            <td>
+                <div class="grid">
+                    <span class="field-row">
+                        <table class="data" cellpadding="0" cellspacing="0" id="findify_form">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="findify_tag"><?php echo $this->__('Attribute Tag')?></th>
+                                    <th class="findify_value"><?php echo $this->__('Value')?></th>
+                                    <th class="findify_format"><?php echo $this->__('Format')?></th>
+                                    <th><?php echo $this->__('Max Length')?></th>
+                                    <th><?php echo $this->__('Optional')?></th>
+                                    <th><?php echo $this->__('Parent')?></th>
+                                    <th><?php echo $this->__('Delete')?></th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>
+                                    <input class="attribute_tag" class="input-text" name="attribute_tag[]"/>
+                                </td>
+                                <td id="attribute_values">
+                                    <select name="insert_attr_attribute[]">
+                                        <?php foreach ($this->getProductAttributes() as $_value => $_label): ?>
+                                            <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                    <input name="insert_attr_text[]" class="input-text" style="display:none"/>
+                                    <select name="insert_attr_meta_tags[]" style="display:none">
+                                        <?php foreach ($this->getMetaTags() as $_value => $_label): ?>
+                                            <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                    <select name="insert_attr_images[]" style="display:none">
+                                        <?php foreach ($this->getImagesFields() as $_value => $_label): ?>
+                                            <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </td>
+
+                                <td class="xml_image_format">
+
+                                    <select name="insert_format[]">
+                                        <?php foreach ($this->getFormats() as $_value => $_label): ?>
+                                            <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+
+                                    <select name="insert_image_format[]" style=" display: none;" >
+                                        <?php foreach ($this->getProductImageFormats() as $_value => $_label): ?>
+                                            <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="insert_length[]" class="input-text" style=""/>
+                                </td>
+                                <td>
+                                    <select name="insert_optional[]" style="">
+                                        <option value="no"><?php echo $this->__('No')?></option>
+                                        <option value="yes"><?php echo $this->__('Yes')?></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="use_parent[]">
+                                        <option value="no"><?php echo $this->__('No')?></option>
+                                        <option value="yes"><?php echo $this->__('Yes')?></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <?php echo $this->getDeleteButtonHtml() ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </span>
+                </div>
+
+                <?php if ($_note): ?>
+                    <p class="note<?php echo $_class ? " {$_class}-note" : ''?>" id="note_<?php echo $_element->getId()?>"><span><?php echo $_note ?></span></p>
+                <?php endif ?>
+            </td>
+        <?php endif; ?>
+    </tr>
+<?php endif; ?>

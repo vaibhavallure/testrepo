@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Ecp_Quickview>
+            <vesion>0.1.0</vesion>
+        </Ecp_Quickview>
+    </modules>
+    <frontend>
+        <layout>
+            <updates>
+                <ecp_quickview>
+                    <file>ecp/quickview.xml</file>
+                </ecp_quickview>
+            </updates>
+        </layout>
+        <routers>
+            <quickview>
+                <use>standard</use>
+                <args>
+                    <module>Ecp_Quickview</module>
+                    <frontName>quickview</frontName>
+                </args>
+            </quickview>
+        </routers>
+    </frontend>
+    <global>
+        <blocks>
+            <Ecp_quickview>
+                <class>Ecp_Quickview_Block</class>
+            </Ecp_quickview>
+        </blocks>
+        <helpers>
+            <ecp_quickview>
+                <class>Ecp_Quickview_Helper</class>
+            </ecp_quickview>
+        </helpers>
+    </global>
+</config>

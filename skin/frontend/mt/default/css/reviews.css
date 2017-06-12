@@ -1,0 +1,189 @@
+/*================================= START REVIEW STYLES ===================================
+===========================================================================================*/
+.review-wrapper {
+	font-size:13px;
+	margin:0 auto;
+	padding:0;
+	width:960px;
+}
+
+.review-wrapper h3  {
+	padding:3px 10px;
+	text-transform:uppercase;
+	color: #3F4048;
+	font-family: dinmittelschriftregular;
+	font-weight:normal;
+	font-size:17px;
+	text-align:left;
+	margin: 0 0 16px;	
+}
+
+.review-wrapper p  {
+	text-align:justify;
+	float:left;
+	margin-top:25px;
+	line-height:18px;
+	width:100%;	
+}
+
+.review-wrapper .review-col-left span  {
+	clear:left;
+	float:left;
+	margin-top:7px;
+	width:100%;	
+}
+
+.review-col-left {
+	width:480px;
+	float:left;
+	margin-top: 0;
+	padding-top: 0;
+	margin: 0;
+}
+
+
+.review-col-right {
+	width:410px;
+	float:right;
+}
+
+.category-reviews .review-col-left p.note-msg{display:block;}
+.category-reviews .block-rating-tattoo-1 .rate .note-msg{display:none !important;}
+/*============ FORM ===============*/
+.reviews-form-base {
+	width:410px;
+	background:#d1d1d1;
+	margin:20px 0;	
+}
+
+.reviews-form {
+	padding:0 30px 45px;
+	display:block;
+	background:#d1d1d1;
+	float:left;
+	height:auto;
+	margin-bottom:20px;
+
+	
+}
+ .reviews-form h6 {
+		padding:21px 0 0;
+		text-transform:uppercase;
+		color: #3F4048;
+   		font-family: dinmittelschriftregular;
+		font-weight:normal;
+		font-size:17px;
+		text-align:left;
+}
+	.reviews-form .input-text {
+		width:257px;
+		margin:5px 0 5px 10px;
+		float: right;
+		padding:0 0 0 5px;
+		height:20px;
+		border:none;
+}
+		.reviews-form .multi {
+		width:250px;
+		height:135px;
+		margin:5px 0;
+		clear:right;
+		float: right;
+		resize:none;
+}
+	.reviews-form .button {
+		float:left;
+		background: linear-gradient(to bottom, #5E5D62 0%, #38383A 100%) repeat scroll 0 0 transparent;
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5E5D62), color-stop(100%, #38383A));/*chrome*/
+		background: -o-linear-gradient(#000, #fff);/*opera*/
+/*		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#ffffff');/*IE6*/
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#5E5D62', endColorstr='#38383A')";/*IE8*/
+		-ms-border-radius: 2px;
+
+		border: medium none;
+    	-moz-border-radius:2px;
+		-webkit-border-radius:2px;
+		border-radius:2px;
+		padding: 6px 14px 5px 13px;
+		font-family: dinmittelschriftregular;
+		font-weight:normal;
+		font-size:14px;
+		cursor: pointer;
+		margin-top:5px;
+		margin-left: 58px;
+	color: #fff;
+}
+
+.reviews-form .button:hover {
+background: linear-gradient(to bottom, #38383A 0%, #5E5D62 100%) repeat scroll 0 0 transparent;
+
+}
+
+	.reviews-form span {
+		font-size:12px;
+		float:left;
+		margin: 7px 0 5px;
+		width: 65px;
+		vertical-align: bottom;
+		clear:right;
+	
+}
+
+.reviews-form .validation-advice {
+	color: #906E39;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 13px;
+    margin: 0;
+    min-height: 13px;
+    width: 200px;
+	float:right;
+	text-align:right;
+}
+		
+
+	span.mini {
+		font-size:11px;
+		float:left;
+		clear:left;
+		margin:5px 0 0 88px;
+		margin-top: 5px;
+	width: 142px;
+}
+
+/*============ CitySearch ===============*/
+
+.review-wrapper .citysearch {
+	/*margin-top:20px;*/
+}
+.review-wrapper .citysearch h4{
+	/*color:#0081c5;
+	font-size:13px;
+	margin:10px 0;*/
+}
+
+.review-wrapper .citysearch span {
+	font-size:11px;
+	margin:0;
+}
+
+.review-wrapper .citysearch p {
+	/*color:#a1a1a1;
+	font-size:11px;
+	margin:-1px;*/
+	float:none;
+}
+.review-col-right .address-tattoo-1 .city-search .city-search-rating p{text-align:right;padding-right:5px;}
+.review-wrapper .address-tattoo-1 .city-search-rating {
+	right: 0;
+}
+.review-wrappere p.citysearch-address {
+	color:#3F4048;
+	font-size:11px;
+	margin:0;
+}
+/*============ Yelp ===============*/
+.review-wrappere .yelp h4 {
+	line-height: 24px;
+    padding-bottom: 8px;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_tattoo_adminhtml_tattoo_index>
+        <reference name="content">
+            <block type="ecp_tattoo/adminhtml_tattoo" name="ecp_tattoo" />
+        </reference>
+    </ecp_tattoo_adminhtml_tattoo_index>
+    <ecp_tattoo_adminhtml_tattoo_edit>
+    <update handle="editor"/><!-- Allure add -->
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="addJs"><script>mage/adminhtml/variables.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
+            <action method="addJs"><script>lib/flex.js</script></action>
+            <action method="addJs"><script>lib/FABridge.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+            <action method="addJs"><script>mage/adminhtml/browser.js</script></action>
+            <action method="addJs"><script>prototype/window.js</script></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addCss"><name>lib/prototype/windows/themes/magento.css</name></action>
+        </reference>
+    </ecp_tattoo_adminhtml_tattoo_edit>
+    <ecp_tattoo_adminhtml_tattoo_consultations>
+        <reference name="content">
+            <block type="ecp_tattoo/adminhtml_consultations" name="ecp_tattoo_consultations" />
+        </reference>
+    </ecp_tattoo_adminhtml_tattoo_consultations>
+</layout>

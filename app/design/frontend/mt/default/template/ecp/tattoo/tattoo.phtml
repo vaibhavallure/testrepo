@@ -1,0 +1,354 @@
+<?php $tattooArtist = $this->getTattooArtist(); ?>
+<script type="text/javascript">// <![CDATA[
+    (function (w, d, load) {
+        var script,
+            first = d.getElementsByTagName('SCRIPT')[0],
+            n = load.length,
+            i = 0,
+            go = function () {
+                for (i = 0; i < n; i = i + 1) {
+                    script = d.createElement('SCRIPT');
+                    script.type = 'text/javascript';
+                    script.async = true;
+                    script.src = load[i];
+                    first.parentNode.insertBefore(script, first);
+                }
+            }
+        if (w.attachEvent) {
+            w.attachEvent('onload', go);
+        } else {
+            w.addEventListener('load', go, false);
+        }
+    }(window, document,
+            ['//assets.pinterest.com/js/pinit.js']
+        ));
+    // ]]></script>
+<script type="text/javascript">
+
+jQuery('document').ready(function(){
+
+    jQuery("a.iframe").fancybox({
+            'transitionIn':'elastic',
+            'transitionOut':'elastic',
+            'type':'iframe',
+            'scrolling':'no',
+            'speedIn':600,
+            'speedOut':200,
+            'overlayShow':false,
+            'padding': 0,
+            'width': 380,
+            'height': 470,
+            'fitToView': false,
+            'autoSize': false,
+            'wrapCSS': 'send-email-popup'
+    });
+})
+
+
+function windowOpn(url){
+    window.open (url,"mywindow","menubar=1,resizable=1,width=700,height=350");
+}
+</script>
+<script>!function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + '://platform.twitter.com/widgets.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }
+}(document, 'script', 'twitter-wjs');</script>
+
+<div class="top-bar">
+    <div class="breadcrumbs">
+        <ul>
+            <li class="home">
+                <a title="Tattoos" href="/tattoos.html"><?php echo $this->__('Tattoos'); ?></a>
+                <span>/ </span>
+            </li>
+            <li class="category3">
+                <strong><?php echo ucwords($tattooArtist->getName()); ?></strong>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="tatoo_wrapper">
+    <h1><?php echo strtoupper($tattooArtist->getName()) ?></h1>
+    <div id="tatoo_col_left">
+        <img src="<?php echo $this->getImage() ?>" width="234"/>
+        <div class="block"><h3>hours and location</h3></div>
+        <!--/BLOCK ARTIST/-->
+        <?php echo $this->getHourBlock() ?>
+        <div class="social-mt">
+
+            <div class="fb-share-button" data-href="<?=$this->helper('core/url')->getCurrentUrl();?>" data-width="45"></div>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url=" " data-text="Tattoos by <?=$tattooArtist->getName();?> at Venus Body Arts in NYC http://<?=Mage::helper('ecp_productview')->curPageURL();?> #mariatash via @venus_mariatash">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+            <div id="pinit<?php echo $tattooArtist->getTattooArtistId();?>" class="tatoo_pint">
+                <a id='pinBtn' data-pin-config='beside' data-pin-do="buttonPin" href="//pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl(); ?>&media=<?php echo $this->getImage();?>&description=<?php echo $tattooArtist->getName()?> tattoo artist at Venus Body Arts in NYC">Pin it</a>
+            </div>
+            <div id="mail<?php echo $tattooArtist->getTattooArtistId();?>" class="tatoo_email">
+                <div class="button mail">
+                    <?php $mailLink = Mage::getUrl('tattoo/index/send').'?page='.urlencode($tattooArtist->getUrl()).'&type=tattoo&img='.urlencode($this->getImage()); ?>
+                    <a class="iframe" href="<?=$mailLink;?>">
+                        <div class="emailBtn">
+                            <img id="imgMail" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png');?>" />
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div id="print<?php echo $tattooArtist->getTattooArtistId();?>" class="tatoo_print"><div class="button print"><a href="#" onclick="javascript:print();"><div class="printBtn"><img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg');?>" /></div></a></div></div>
+        </div>
+    </div>
+    <div id="tatoo_col_main">
+        <div class="block"><h3>Credentials</h3></div>
+        <?php echo $tattooArtist->getDescription() ?>
+        <?php echo $this->getBannerBlock() ?>
+    </div>
+    <div id="tatoo_col_right">
+        <?php
+            $other = $this->getOtherArtist();
+            $data = $other->getData();
+        ?>
+        <div class="block">
+            <?php if(!empty($data)):?>
+            	<div class="tattoo-crop-image">
+                    <a href="<?php echo Mage::getBaseUrl().$other->getUrl()?>">
+                        <img src="<?php echo $this->getOtherImage($other); ?>" >
+                    </a>
+                </div>
+            <a class="view-other-artists" href='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).$other->getUrl() ?>'><h3><span>View other artists</span></h3></a>
+            <?php endif ?>
+        </div>
+    </div>
+    <div class="tatoo_right_form">
+        <div style="text-align:center;padding:50px 0 40px;">Loading ...</div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="tatoo_banner">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('tattoo-artist')->toHtml() ?>
+</div>
+<div id="tatoo_wrapper_tabs">
+    <ul class="tabs">
+        <?php $tabs = $this->getTabs(); ?>
+        <?php foreach($tabs as $key => $tab):?>
+        <li><a href="#<?php echo str_replace(" ","_",$tab->getCategoryartist()) ?>"><?php echo ($tab->getCategoryartist())?></a></li>
+        <?php endforeach;?>
+    </ul>
+        <?php $tabIndex = 1; foreach($tabs as $key=>$tab): ?>
+        <ul class="tatto_grid" id="<?php echo str_replace(" ","_",$tab->getCategoryartist()) ?>">
+            <?php foreach($this->getWorksInTab($tab->getCategoryartist()) as $index => $work): ?>
+                <?php $imageURL = Mage::getBaseUrl().$tattooArtist->getUrl().'?tattoo-img='.$index; ?>
+                <li>
+                    <a class="tattoo-image-artist" id="image<?php echo $index ?>" data="<?php echo $index ?>"  href="<?php echo $work->getImage() ?>" rel="gallery<?php echo $tabIndex ?>">
+                    	<span class="tattoo-image-holder">
+                            <img id="zoom-image<?php echo $index ?>" src="<?php echo $work->getImage(); ?>" height="100%"/>
+                        </span>
+                    </a>
+
+                    <div class="social-mt" id="social-mt-<?php echo str_replace(" ", "_", $tab->getCategoryartist()) ?>-<?php echo $index; ?>" style="display:none">
+
+                        <div id="fb-<?=$index;?>" class="fb-share-button" data-layout="icon_link" data-href="<?=$imageURL;?>" data-width="450"></div>
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo Mage::helper('ecp_productview')->curPageURL(); ?>" data-text="Tattoo by <?=$this->getTattooerName();?> at Venus Body Arts in NYC http://<?=Mage::helper('ecp_productview')->curPageURL();?> <?=$work->getImage();?> #mariatash via @venus_mariatash">Tweet</a>
+                        <div id="pinit<?php echo str_replace(" ", "_", $tab->getCategoryartist()) ?>-<?php echo $index; ?>">
+                            <a id='pinBtn<?php echo $work->getId() ?>' data-pin-config='beside' data-pin-do="buttonPin" href="//pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl(); ?>&media=<?php echo $work->getImage(); ?>&description=Tattoo by <?=$tattooArtist->getName();?> at Venus Body Arts in NYC">Pin it</a>
+                        </div>
+                        <div id="mail<?php echo str_replace(" ", "_", $tab->getCategoryartist()) ?>-<?php echo $index; ?>">
+                            <div class="button mail">
+                                <?php $mailLink = Mage::getUrl('tattoo/index/send').'?page='.urlencode($imageURL).'&type=tattoo&img='.urlencode($work->getImage()); ?>
+                                <a href="<?= $mailLink ?>" class="iframe">
+                                    <div class="emailBtn">
+                                        <img id="imgMail" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png'); ?>"/>
+                                        <span class="share">Email</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="print<?php echo str_replace(" ", "_", $tab->getCategoryartist()) ?>-<?php echo $index; ?>">
+                            <div class="button print">
+                                <a href="#" onclick="javascript:print();">
+                                    <div class="printBtn">
+                                        <img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>"/>
+                                        <span class="share">Print</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php $tabIndex++; endforeach; ?>
+</div>
+<script>
+    jQuery.noConflict();
+    
+    jQuery(function() {
+        jQuery('a.tattoo-image-artist').fancybox({
+            wrapCSS : 'tattoos',
+            fitToView : true,
+            scrolling: 'visible',
+//            type: 'image',
+            autoSize : true,
+            closeClick : false,
+            openEffect : 'none',
+            closeEffect : 'none',
+            loop: false,
+            //title : '<a href="#hey">hey</a>',
+            helpers : {
+                title: {
+                        type: 'inside'
+                }
+            },
+            afterLoad   : function() {
+                this.title = (this.index + 1) + ' of ' + this.group.length + ' images';
+                jQuery('.fancybox-inner').mouseenter(function () {
+                    jQuery('.fancybox-inner').zoom();
+                });
+            },afterShow : function(){
+                var sm = jQuery(this.element[0]).parent().children('div.social-mt')[0];
+                jQuery('div.fancybox-title').append(jQuery(sm).clone(true).show());
+                jQuery('body').addClass('print-tattoo-work');
+                jQuery('#current-tattoo-work').attr('src', jQuery('.fancybox-inner img').attr('src'));
+                FB.XFBML.parse();
+            }, afterClose : function(){
+                var newImageUrl = jQuery('#tatoo_col_left img:first-child').attr('src');
+                jQuery('meta[property=og\\:image]').attr('content', newImageUrl);
+                jQuery('body').removeClass('print-tattoo-work');
+            },
+            onUpdate: function() {
+                var newImageUrl = jQuery('.fancybox-inner img:first-child').attr('src');
+                jQuery('meta[property=og\\:image]').attr('content', newImageUrl);
+            }
+        });
+        jQuery('<img id="current-tattoo-work" src="" style="display: none"/>').appendTo('body');
+    })
+
+    jQuery('ul.tabs').each(function(){
+        // For each set of tabs, we want to keep track of
+        // which tab is active and it's associated content
+        var jQueryactive, jQuerycontent, jQuerylinks = jQuery(this).find('a');
+
+        // If the location.hash matches one of the links, use that as the active tab.
+        // If no match is found, use the first link as the initial active tab.
+        jQueryactive = jQuery(jQuerylinks.filter('[href="'+location.hash+'"]')[0] || jQuerylinks[0]);
+        jQueryactive.addClass('active');
+        jQuerycontent = jQuery(jQueryactive.attr('href'));
+
+        // Hide the remaining content
+        jQuerylinks.not(jQueryactive).each(function () {
+            jQuery(jQuery(this).attr('href')).hide();
+        });
+
+        // Bind the click event handler
+        jQuery(this).on('click', 'a', function(e){
+            // Make the old tab inactive.
+            jQueryactive.removeClass('active');
+            jQuerycontent.hide();
+
+            // Update the variables with the new link and content
+            jQueryactive = jQuery(this);
+            jQuerycontent = jQuery(jQuery(this).attr('href'));
+
+            // Make the tab active.
+            jQueryactive.addClass('active');
+            jQuerycontent.show();
+
+            // Prevent the anchor's default click action
+            e.preventDefault();
+        });
+    });
+
+    function maxLong(texto, maxlong) {
+        var in_value, out_value;
+
+        if (jQuery(texto).val().length > maxlong) {
+            in_value = jQuery(texto).val();
+            out_value = in_value.substring(0,maxlong);
+            jQuery(texto).val(out_value);
+        }
+
+        jQuery('span.mini span').html(jQuery(texto).val().length);
+    }
+
+    jQuery('#contact_tattoo_form').live('submit', function(event){
+        event.preventDefault();
+        var customForm = new VarienForm('contact_tattoo_form');
+        if(customForm.validator.validate()){
+            jQuery.post('<?php echo $this->getUrl('tattoo/index/contact') ?>',
+                {
+                    tattooer: jQuery('#tattooer').val(),
+                    name: jQuery('#name').val(),
+                    email: jQuery('#email').val(),
+                    message: jQuery('#message').val()
+                },
+                function( data ) {
+                    var response = jQuery.parseJSON(data);
+                    if(response.success){
+                        jQuery('#contact_tattoo_form').css('display','none');
+                        jQuery('#success').css('display','block');
+                    } else alert(response.message);
+                }
+            );
+        }
+    });
+
+    jQuery.post('<?= $this->getUrl('tattoo/index/sendform'); ?>', {}, function(data){
+        jQuery('.tatoo_right_form').html(data);
+        jQuery('#tattooer').val('<?= $this->getTattooerId() ?>');
+        jQuery('#tattooer-name').text('setup a free consultation with <?= $this->getTattooerName() ?>');
+        jQuery('#success').text('Your message was send it to <?= $this->getTattooerName() ?>');
+    });
+</script>
+<!--<script>
+    jQuery.noConflict();
+
+     jQuery("ul#<?php echo str_replace(" ","_",$tab->getCategoryartist()) ?> a.tattoo-image-artist").attr('rel', 'gallery').fancybox({
+         wrapCSS : 'tattoos',
+         fitToView : true,
+         type: 'image',
+         autoSize : true,
+         closeClick : false,
+         openEffect : 'none',
+         closeEffect : 'none',
+         loop: false,
+         //title : '<a href="#hey">hey</a>',
+         helpers : {
+             title: {
+                     type: 'inside'
+             }
+         },
+         afterLoad   : function() {
+             this.title = (this.index + 1) + ' of ' + this.group.length + ' images';
+             jQuery('.fancybox-inner').mouseenter(function () {
+                 jQuery('.fancybox-inner').zoom();
+             });
+         },afterShow : function(){
+             var sm = jQuery(this.element[0]).parent().children('div.social-mt')[0];
+             jQuery('div.fancybox-title').append(jQuery(sm).clone(true).show());
+         }, afterClose : function(){
+             var newImageUrl = jQuery('#tatoo_col_left img:first-child').attr('src');
+             jQuery('meta[property=og\\:image]').attr('content', newImageUrl);
+         },
+         onUpdate: function() {
+             try {
+                 FB.XFBML.parse();
+             }
+             catch (ex) {
+
+             }
+             var newImageUrl = jQuery('.fancybox-inner img:first-child').attr('src');
+             jQuery('meta[property=og\\:image]').attr('content', newImageUrl);
+         }
+     });
+ </script>-->
+ <style>
+ .hcount .count-o {
+	margin:0 0 0 3px !important;
+	border:1px solid red;
+	}	
+ </style>
+ 

@@ -1,0 +1,40 @@
+<div id="category-title" class="page-title category-title">
+    <H1><?php echo $this->__('FREQUENTLY ASKED QUESTIONS') ?></H1>
+</div>
+<div class="content-customer">
+    <div class="table-customer-care">
+       
+        <h2><?php echo $this->__('Online Shopping Questions') ?></h2>
+
+        <span><?php echo $this->__('Please click on each question to reveal the answer') ?></span>
+    <?php foreach($this->getFaqs() as $faq): ?>
+    <div class="faq faq-question" id="faq-<?php echo $faq->getId()?>">
+                <span><?php echo $faq->getQuestion() ?></span>
+                <div class="faq faq-answer" style='display:none'>
+                    <div><?php echo $faq->getAnswer() ?></div>  
+                            <div class="back-to-top"><a href="#">Back to top</a></div>                 
+                </div>
+
+        </div>
+
+    <?php endforeach; ?>
+    </div>
+</div>
+<script>
+    jQuery.noConflict();
+    jQuery(document).ready(function(){
+        jQuery('div.faq-question').click(function(){
+            jQuery(this).children('div.faq-answer').toggle();
+            if(jQuery(this).hasClass('active')) jQuery(this).removeClass('active');
+            else jQuery(this).addClass('active');
+        });
+    });
+    jQuery('div.main').prepend(jQuery('#category-title'));
+	jQuery('.back-to-top').click(function(e) {
+		e.stopPropagation();
+	});
+	jQuery.noConflict();
+	jQuery('a.forgotpwd').fancybox({
+		'width': 125
+	});
+</script>

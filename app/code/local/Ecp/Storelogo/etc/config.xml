@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Storelogo>
+            <version>0.1.0</version>
+        </Ecp_Storelogo>
+    </modules>            
+    <global>
+        <models>
+            <ecp_storelogo>
+                <class>Ecp_Storelogo_Model</class>
+            </ecp_storelogo>
+        </models>
+        <helpers>
+            <ecp_storelogo>
+                <class>Ecp_Storelogo_Helper</class>
+            </ecp_storelogo>
+        </helpers>        
+    </global>
+     <default>
+        <ecp_storelogo>
+            <storelogo>
+                <value>some value</value>
+            </storelogo>
+        </ecp_storelogo>
+    </default>
+</config>

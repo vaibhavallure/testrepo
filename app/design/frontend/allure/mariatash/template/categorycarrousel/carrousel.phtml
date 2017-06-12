@@ -1,0 +1,203 @@
+<script type="text/javascript" language="javascript">
+jQuery.noConflict();
+(function($) {
+    $(function() {
+        var mcarousel = $('.jcarousel');
+
+        mcarousel
+            .on('mcarousel:reload mcarousel:create', function () {
+                var carousel = $(this),
+                    width = mcarousel.innerWidth();
+
+                if (width >= 600) {
+                    width = width / 3;
+                } else if (width >= 350) {
+                    width = width / 2;
+                }
+
+                carousel.mcarousel('items').css('width', Math.ceil(width) + 'px');
+                carousel.mcarousel('scroll', parseInt(jQuery('li.active').attr('id'))-1, false);
+            })
+            .mcarousel({
+                wrap: 'circular'
+            });
+
+        $('.jcarousel-control-prev')
+            .mcarouselControl({
+                target: '-=1'
+            });
+
+        $('.jcarousel-control-next')
+            .mcarouselControl({
+                target: '+=1'
+            });
+        $('.jcarousel').on('mcarousel:targetin', 'li', function() {
+           // $(this).addClass('active');
+           $(this).children('a').click();
+           //console.log($(this));
+        });
+    });
+})(jQuery);
+
+jQuery(document).ready(function($) {
+
+//     jQuery('#foo3').jcarousel({
+//         initCallback: mycarousel_initCallback,
+//         buttonNextCallback: mycarousel_buttonNextCallback,
+//         buttonPrevCallback: mycarousel_buttonPrevCallback,
+//         // This tells jCarousel NOT to autobuild prev/next buttons
+//         buttonNextHTML: null,
+//         buttonPrevHTML: null
+//     });
+
+    jQuery(window).resize();
+
+    jQuery('div.main div.col-main div.category-title').remove();
+
+});
+
+function mycarousel_initCallback(carousel) {
+    jQuery('#prev3').bind('click', function() {
+       // carousel.next();
+       if((jQuery(".jcarousel-list").css("left").replace('px','') * -1) <        (jQuery(".jcarousel-list").width()-285) ){
+			jQuery(".jcarousel-list").animate({left: ""+ (jQuery(".jcarousel-list").css("left").replace('px','') * -1 + 175+4) * -1 +"px"});
+		}
+        return false;
+    });
+
+    jQuery('#next3').bind('click', function() {
+        //carousel.prev();
+       if((jQuery(".jcarousel-list").css("left").replace('px','') ) < 0 ){
+			jQuery(".jcarousel-list").animate({left: ""+ (jQuery(".jcarousel-list").css("left").replace('px','') * -1 - 175-4) * -1  +"px"});
+		}
+        return false;
+    });
+};
+
+function mycarousel_buttonNextCallback(carousel, button, enabled) {
+    if(enabled){
+        jQuery("#prev3").css('opacity',1);
+    }else{
+        jQuery("#prev3").css('opacity',0.13);
+    }
+};
+
+function mycarousel_buttonPrevCallback(carousel, button, enabled) {
+    if(enabled){
+        jQuery("#next3").css('opacity',1);
+    }else{
+        jQuery("#next3").css('opacity',0.13);
+    }
+};
+
+jQuery(window).resize(function() {
+        var carouselWidth= 0,
+            itemCount = 0,
+            i = 1,
+            itemWidth,
+            carouselVisibleWidth = 0;
+        jQuery('ul#foo3 li').each(function(key, element) {
+           itemWidth = jQuery(element).width() + 4;
+           carouselWidth+= itemWidth;
+           itemCount++;
+        });
+
+        carouselVisibleWidth = document.body.offsetWidth - 42 - Math.round(itemWidth / 2);
+
+        if (carouselWidth >= (document.body.offsetWidth - 69)) {
+            jQuery('#next3, #prev3').show();
+        }
+        else {
+            jQuery('#next3, #prev3').hide();
+            carouselWidth = Math.round(itemCount * itemWidth);
+            jQuery('#foo3').css('width', carouselWidth + 'px');
+        }
+
+		jQuery('.caroufredsel_wrapper .jcarousel-clip').css('width', carouselVisibleWidth + 'px');
+		jQuery('.caroufredsel_wrapper, .caroufredsel_wrapper .jcarousel-container').css('width',carouselVisibleWidth + 'px');
+		if(carouselWidth>= (document.body.offsetWidth - 69) && Mage.Cookies.get('scroll_to_i') > 5){
+			jQuery('#prev3').trigger('click');
+			jQuery('#prev3').trigger('click');
+		}
+});
+
+</script>
+<div class="page-title category-title">
+    <?php $_category = Mage::registry('current_category') ?>
+    <?php
+    if ($_imgUrl = $_category->getImageUrl()) {
+	?>
+		<script type="text/javascript" language="javascript">
+			jQuery(document).ready(function() {
+				jQuery('.col-main').addClass('thumbnail-image');
+				jQuery('.top-container').addClass('thumbnail-image');
+			});
+			</script>
+	<?php
+        if($_category->getCategoryBleed()) {
+            echo '<style type="text/css">
+                        div.main div.col-main div.category-title {display: none;}
+                        .caroufredsel_wrapper {margin-top: 240px !important}                        
+                        #productsContainer-wrapper { margin-top: 75px !important; }
+                        .mb-mana-catalog-leftnav .block-layered-nav-bg {top: -65px !important;}
+						            .mb-category-products .toolbar-top .toolbar {top: -65px !important;}
+                        .toolbar .sorter {margin-top: -28px !important;}
+                        .toolbar-top {top: 36px;}
+                  </style>';
+        }
+        else {
+            echo '<style type="text/css">
+                        div.main div.col-main div.category-title {display: none;}
+                        .caroufredsel_wrapper {margin-top: 250px !important;}
+                        p.category-image { position:absolute; top:260px; height: 240px; left:0; width:100%; z-index:-1; overflow: hidden; }
+                        #productsContainer-wrapper { margin-top: 75px !important; }
+                        .mb-mana-catalog-leftnav .block-layered-nav-bg {top: -65px !important;}
+						            .mb-category-products .toolbar-top .toolbar {top: -65px !important;}
+                        .toolbar .sorter {margin-top: -28px !important;}
+                        .toolbar-top {top: 36px;}
+                </style>';
+        }
+    }
+    else {
+		?>
+			<script type="text/javascript" language="javascript">
+			jQuery(document).ready(function() {
+				jQuery('.col-main').addClass('isBleed');
+			});
+			</script>
+			<?php 
+        echo '<style type="text/css">
+                        div.main div.col-main div.category-title {display: none;}
+                        #productsContainer-wrapper { margin-top: 50px !important; }
+                        .mb-mana-catalog-leftnav .block-layered-nav-bg {top: 0px !important;}
+						.mb-category-products .toolbar-top .toolbar {
+						    top: 0 !important;
+						}
+                        .toolbar .sorter {margin-top: -28px !important;}
+                        .toolbar-top {top: 36px;}
+                  </style>';
+    }
+    ?>
+	
+    <h1 style="color: <?php echo $_category->getCategoryColorTitle() ?>"><?php echo $this->getCurrentCategoryName(); ?></h1>
+</div>
+<?php $_collection = $this->getCategories() ?>
+	<?php if(count($_collection)) { ?>
+<div class="jcarousel-wrapper" id="cartilage_carousel">
+	<div class="caroufredsel_wrapper jcarousel" style='overflow:hidden'>
+	    <ul id="celebrities_list" class="cartilage_list">
+		<?php $i = 1;?>
+        <?php foreach($_collection as $category): ?>
+            <?php $active = strpos(str_replace('.html','',$_SERVER['REQUEST_URI']), str_replace('.html','',str_replace($_SERVER['SERVER_NAME'],'',$category->getUrlPath()))) ? 'class="active"' : '' ?>
+            <li onclick = "Mage.Cookies.set('scroll_to_i',<?php echo $i++?>)">
+                <a class="celeb-image" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>" style="background-image: url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>)" ><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'/catalog/category/' . $category->getThumbnail(); ?>" alt="<?php echo $category->getName(); ?>" /></a>
+                <a class="celeb-name" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $category->getUrlPath(); ?>"><h3 <?php echo $active; ?>><?php echo $category->getName(); ?></h3></a>
+            </li>
+        <?php endforeach; ?>
+	    </ul>
+	</div>
+	<a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+	<a href="#" class="jcarousel-control-next">&rsaquo;</a>
+</div>
+<?php } ?>
+

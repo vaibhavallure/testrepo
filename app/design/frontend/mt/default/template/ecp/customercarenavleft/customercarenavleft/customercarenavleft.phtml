@@ -1,0 +1,16 @@
+<script type="text/javascript">// <![CDATA[
+    jQuery('body').addClass("customer-care-page");
+    // ]]></script>
+<h4><?php echo $this->__('CUSTOMER CARE') ?></h4>
+<?php
+    $cms_pages = $this->getCustomercarenavleft();
+    foreach ($cms_pages as $page):
+?>
+
+    <a href="<?php echo Mage::getBaseUrl() . $page->getIdentifier() ?>"
+        <?php if ((Mage::getSingleton('cms/page')->getIdentifier()) == $page->getIdentifier()): ?>
+            class="selectedNavLink"
+        <?php endif ?>><?php echo $page->getTitle()?>
+    </a>
+
+<?php endforeach; ?>

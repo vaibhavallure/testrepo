@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+    <adminhtml_inventory_layout>
+        <reference name="head">           
+            <action method="addCss">
+                <stylesheet>css/allure/inventory/menu.css</stylesheet>
+            </action>
+            <action method="addJs">
+                   <script>allure/inventory.js</script>
+           </action>  
+            <action method="addCss">
+                <stylesheet>css/allure/inventory/style.css</stylesheet>
+            </action>   
+           
+            <action method="addCss">
+                <stylesheet>css/tinybox/style.css</stylesheet>
+            </action>      
+            <action method="addJs">
+                <script>allure/inventory/tinybox.js</script>
+			</action>
+            <action method="addJs"><js>extjs/ext-tree.js</js></action>
+            <action method="addJs"><js>extjs/ext-tree-checkbox.js</js></action>
+            <action method="addItem"><type>js</type><name>extjs/ext-tree.js</name></action>
+            <action method="addItem"><type>js</type><name>extjs/ext-tree-checkbox.js</name></action>
+            <action method="addItem"><type>js_css</type><name>extjs/resources/css/ext-all.css</name></action>
+            <action method="addItem"><type>js</type><name>mage/adminhtml/rules.js</name><params/></action>
+            <action method="addItem"><type>js_css</type><name>extjs/resources/css/ytheme-magento.css</name></action>
+        </reference>
+       <!--  <reference name="root">
+            <action method="setTemplate">
+                <template>inventory/page-2column-left.phtml</template>
+            </action>
+            <reference name="notifications" >
+                <block type="adminhtml/notification_baseurl" name="notification_baseurl" as="notification_baseurl" template="notification/baseurl.phtml"></block>
+                <block type="adminhtml/cache_notifications" name="cache_notifications" template="system/cache/notifications.phtml"></block>
+                <block type="adminhtml/notification_survey" name="notification_survey" template="notification/survey.phtml"/>
+                <block type="adminhtml/notification_security" name="notification_security" as="notification_security" template="notification/security.phtml"></block>            
+            </reference>
+            <block type="inventory/adminhtml_title" name="inventory_title" as="inventory_title" template="inventory/title.phtml"/>
+            <block type="core/text_list" name="inventory_header" as="inventory_header">
+            </block>
+            <block type="core/text_list" name="left_menu" as="left_menu">
+                <block type="inventory/adminhtml_menu" name="inventory_menu" as="inventory_menu"></block>
+            </block>
+        </reference>  -->
+    </adminhtml_inventory_layout>
+    <adminhtml_inventoryplus_one_tab>
+        <update handle="adminhtml_inventoryplus_layout" />
+        <reference name="head">           
+            <action method="addCss">
+                <stylesheet>css/allure/inventory/one-tab-layout.css</stylesheet>
+            </action>
+        </reference>        
+    </adminhtml_inventoryplus_one_tab>
+
+    <adminhtml_inventory_stock_index>      
+        <update handle="adminhtml_inventory_layout" /> 
+        <reference name="head">
+        	<action method="addJs"><file>allure/jquery.js</file></action>
+         	<action method="addJs"><file>allure/inventory/inventory.js</file></action>
+        	<action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>  
+        </reference>
+        <reference name="content">
+            <block type="inventory/pagination" name="stock_css" template="inventory/stock/receiving.phtml">
+            	<block type="core/template" name="inventory_store" template="inventory/store.phtml" ></block>
+				<block type="inventory/pagination" name="pager" template="inventory/pager.phtml" ></block>
+            </block>            
+        </reference>
+    </adminhtml_inventory_stock_index>
+    
+    <adminhtml_inventory_stock_minmax>      
+        <update handle="adminhtml_inventory_layout" /> 
+        <reference name="head">
+        	<action method="addJs"><file>allure/jquery.js</file></action>
+         	<action method="addJs"><file>allure/inventory/inventory.js</file></action>
+        	<action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>  
+        </reference>
+        <reference name="content">
+            <block type="inventory/minmax" name="stock_css" template="inventory/stock/minmax.phtml">
+            	<block type="core/template" name="inventory_store" template="inventory/store.phtml" ></block>
+				<block type="inventory/minmax" name="pager" template="inventory/pager.phtml" ></block>
+            </block>            
+        </reference>
+    </adminhtml_inventory_stock_minmax>
+    
+    <adminhtml_inventory_stock_transfer>      
+        <update handle="adminhtml_inventory_layout" /> 
+        <reference name="head">
+        	<action method="addJs"><file>allure/jquery.js</file></action>
+         	<action method="addJs"><file>allure/inventory/inventory.js</file></action>
+        	<action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>  
+        </reference>
+        <reference name="content">
+            <block type="inventory/pagination" name="stock_css" template="inventory/stock/transfer.phtml">
+            	<block type="core/template" name="inventory_store" template="inventory/store.phtml" ></block>
+				<block type="inventory/pagination" name="pager" template="inventory/pager.phtml" ></block>
+            </block>            
+        </reference>
+    </adminhtml_inventory_stock_transfer>
+    
+    <!-- Reports -->
+     <adminhtml_inventory_reports_lowstock>      
+        <update handle="adminhtml_inventory_layout" />  
+        <reference name="content">
+            <block type="inventory/adminhtml_reports_lowstock" name="stock_low">
+            </block>            
+        </reference>
+    </adminhtml_inventory_reports_lowstock>
+    
+    <adminhtml_inventory_reports_stockreceive>      
+        <update handle="adminhtml_inventory_layout" />  
+        <reference name="content">
+            <block type="inventory/adminhtml_reports_stockreceive" name="inventory_receive">
+            	
+            </block>            
+        </reference>
+    </adminhtml_inventory_reports_stockreceive>
+    <adminhtml_inventory_reports_stocktransfer>      
+        <update handle="adminhtml_inventory_layout" />  
+        <reference name="content">
+            <block type="inventory/adminhtml_reports_transfer" name="inventory_transfer">
+            </block>            
+        </reference>
+    </adminhtml_inventory_reports_stocktransfer>
+
+    <adminhtml_inventory_purchase_new>      
+        <update handle="adminhtml_inventory_layout" /> 
+        <reference name="head">
+         	<action method="addJs"><file>allure/jquery.js</file></action>
+         	<action method="addJs"><file>allure/inventory/inventory.js</file></action>
+         	<action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>
+        </reference>
+        <reference name="content">
+            <block type="inventory/purchaseorder_new" name="purchaseorder_new" template="inventory/purchaseorder/new.phtml">
+				<block type="core/template" name="inventory_store" template="inventory/store.phtml" ></block>
+				<block type="inventory/purchaseorder_new" name="pager" template="inventory/pager.phtml" ></block>
+            </block>            
+        </reference>
+    </adminhtml_inventory_purchase_new>
+    
+    <adminhtml_inventory_purchase_orders>      
+        <update handle="adminhtml_inventory_layout" /> 
+          <reference name="head">
+         	<action method="addJs"><file>allure/jquery.js</file></action>
+         	<action method="addJs"><file>allure/inventory/inventory.js</file></action>
+        </reference>
+       <reference name="content">
+       <block type="core/template" template="inventory/purchaseorder/gridsearch.phtml"></block>
+          
+            <block type="inventory/adminhtml_purchaseorder" name="purchase_orders">
+            </block>            
+        </reference>
+    </adminhtml_inventory_purchase_orders>
+    
+    <adminhtml_inventory_purchase_view>      
+        <update handle="adminhtml_inventory_layout" />
+        <reference name="head">
+	         <action method="addJs"><file>allure/jquery.js</file></action>
+	         <action method="addJs"><file>allure/inventory/inventory.js</file></action>
+	         <action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>
+        </reference> 
+        <reference name="content">
+            <block type="inventory/purchaseorder_view" name="purchaseorder_new" template="inventory/purchaseorder/view.phtml">
+				<block type="inventory/purchaseorder_view" name="pager" template="inventory/pager.phtml" ></block>
+            </block>
+        </reference>
+    </adminhtml_inventory_purchase_view>
+    <adminhtml_inventory_purchase_receivelist>      
+       <update handle="adminhtml_inventory_layout" /> 
+          <reference name="head">
+         	<action method="addJs"><file>allure/jquery.js</file></action>
+         	<action method="addJs"><file>allure/inventory/inventory.js</file></action>
+        </reference>
+       <reference name="content">
+       		 <block type="core/template" template="inventory/purchaseorder/gridsearch.phtml"></block>
+            <block type="inventory/adminhtml_purchaseorder_receive" name="purchase_receivelist">
+            </block>            
+        </reference>
+    </adminhtml_inventory_purchase_receivelist>
+    <adminhtml_inventory_purchase_viewreceive>      
+       <update handle="adminhtml_inventory_layout" />
+        <reference name="head">
+	         <action method="addJs"><file>allure/jquery.js</file></action>
+	         <action method="addJs"><file>allure/inventory/inventory.js</file></action>
+	         <action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>
+        </reference> 
+        <reference name="content">
+            <block type="inventory/purchaseorder_receive" name="purchaseorder_new" template="inventory/purchaseorder/receive.phtml">
+				<block type="inventory/purchaseorder_receive" name="pager" template="inventory/pager.phtml" ></block>
+            </block>
+        </reference>
+    </adminhtml_inventory_purchase_viewreceive>
+    
+</layout>

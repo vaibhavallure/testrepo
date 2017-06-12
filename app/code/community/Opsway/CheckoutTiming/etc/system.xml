@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <opsway translate="label" module="opsway_checkouttiming">
+            <label>OpsWay</label>
+            <sort_order>50</sort_order>
+        </opsway>
+    </tabs>
+
+    <sections>
+        <opsway_checkout_timing translate="label" module="opsway_checkouttiming">
+            <label>Checkout Timing</label>
+            <tab>opsway</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings translate="label">
+                    <label>Settings</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable logging</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <logger translate="label">
+                            <label>Logger type</label>
+                            <source_model>opsway_checkouttiming/source_loggers</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logger>
+                    </fields>
+                </settings>
+            </groups>
+        </opsway_checkout_timing>
+    </sections>
+</config>

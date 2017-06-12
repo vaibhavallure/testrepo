@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BelVG LLC.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ *
+/**********************************************
+ *        MAGENTO EDITION USAGE NOTICE        *
+ **********************************************/
+/* This package designed for Magento COMMUNITY edition
+ * BelVG does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * BelVG does not provide extension support in case of
+ * incorrect edition usage.
+/**********************************************
+ *        DISCLAIMER                          *
+ **********************************************/
+/* Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future.
+ **********************************************
+ * @category   Belvg
+ * @package    Belvg_DropDownMenu
+ * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ */
+-->
+
+<config>
+    <sections>
+        <ddmenu translate="label">
+            <label>Dropdown Menu</label>
+            <tab>belvg</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1018</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings translate="label">
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment>        
+                        <![CDATA[
+                            <div style="padding:10px;background-color:#fff;border:1px solid #ddd;margin-bottom:7px;">
+                            This module was developed by <a href="http://www.belvg.com" target="_blank">www.BelVG.com</a>.
+                            For docs & examples refer to the BelVG <a href="http://www.belvg.com" target="_blank">web site</a>.
+                            <br/>We have the largest selections of  <a href="http://store.belvg.com/extensions.html" target="_blank">extensions</a> and <a href="http://store.belvg.com/themes.html" target="_blank">themes</a> on Magento.
+                            </div>
+                        ]]>
+                    </comment>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <home translate="label comment">
+                            <label>Home Page link</label>
+                            <comment><![CDATA[Include in Navigation Menu]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </home>
+                        <fly translate="label">
+                            <label>Floating Menu</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fly>
+                        <fly_opacity translate="label tooltip">
+                            <label>Floating Menu Background Opacity</label>
+                            <tooltip><![CDATA[Default value <b>0.8</b><br><br>]]>Where 0 is fully transparent, and 1 is fully opaque.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <fly>1</fly>
+                            </depends>
+                        </fly_opacity>
+                        <overlay_show translate="label">
+                            <label>Display Overlay</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </overlay_show>
+                        <overlay_color translate="label tooltip">
+                            <label>Overlay Color</label>
+                            <tooltip>Specifies a overlay color. Colors should be specified in hex format, e.g. '#aa00aa'.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <overlay_show>1</overlay_show>
+                            </depends>
+                        </overlay_color>
+                        <overlay_opacity translate="label tooltip">
+                            <label>Overlay Opacity</label>
+                            <tooltip><![CDATA[Default value <b>0.7</b><br><br>]]>Where 0 is fully transparent, and 1 is fully opaque.</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <overlay_show>1</overlay_show>
+                            </depends>
+                        </overlay_opacity>
+                    </fields>
+                </settings>
+                <animate translate="label">
+                    <label>Animation</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <transition_in translate="label">
+                            <label>Transition In type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ddmenu/source_transition</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </transition_in>
+                        <transition_in_easing translate="label">
+                            <label>Transition In Easing</label>
+                            <tooltip>Easing used for elastic animations</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ddmenu/source_easing_in</source_model>
+                            <sort_order>55</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <transition_in separator=",">fade,slide</transition_in>
+                            </depends>
+                        </transition_in_easing>
+                        <speed_in translate="label tooltip">
+                            <label>Speed In</label>
+                            <tooltip><![CDATA[<b>in milliseconds</b><br><br>Default value <b>300</b><br><br>]]>Speed of transitions</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <transition_in separator=",">fade,slide</transition_in>
+                            </depends>
+                        </speed_in>
+                        <transition_out translate="label">
+                            <label>Transition Out type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ddmenu/source_transition</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </transition_out>
+                        <transition_out_easing translate="label">
+                            <label>Transition Out Easing</label>
+                            <tooltip>Easing used for elastic animations</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ddmenu/source_easing_out</source_model>
+                            <sort_order>75</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <transition_out separator=",">fade,slide</transition_out>
+                            </depends>
+                        </transition_out_easing>
+                        <speed_out translate="label tooltip">
+                            <label>Speed Out</label>
+                            <tooltip><![CDATA[<b>in milliseconds</b><br><br>Default value <b>200</b><br><br>]]>Speed of transitions</tooltip>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-not-negative-number</validate>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <transition_out separator=",">fade,slide,elastic</transition_out>
+                            </depends>
+                        </speed_out>
+                    </fields>
+                </animate>
+            </groups>
+        </ddmenu>
+    </sections>
+</config>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <restrictcustomergroup_adminhtml_restrictcustomergroup_index>
+        <reference name="content">
+            <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                <action method="setUseConfirm"><params>0</params></action>
+            </block>
+            <block type="restrictcustomergroup/adminhtml_restrictcustomergroup" name="restrictcustomergroup" />
+        </reference>
+    </restrictcustomergroup_adminhtml_restrictcustomergroup_index>
+    
+    <!--static block related-->
+    
+        <restrictcustomergroup_adminhtml_restrictcustomergroup_staticblocks>
+            <block type="core/text_list" name="root">
+                <block type="restrictcustomergroup/adminhtml_restrictcustomergroup_edit_tab_blocks" name="blocks.grid"/>
+                <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                    <reference name="related_grid_serializer">
+                        <action method="initSerializerBlock">
+                            <grid_block_name>blocks.grid</grid_block_name> 
+                            <data_callback>_getSelectedBlocks</data_callback> 
+                            <hidden_input_name>links[blocks_related]</hidden_input_name> 
+                            <reload_param_name>blocks_related</reload_param_name> 
+                        </action>
+                    </reference>
+                </block>
+            </block>
+        </restrictcustomergroup_adminhtml_restrictcustomergroup_staticblocks>
+    
+        
+
+    <restrictcustomergroup_adminhtml_restrictcustomergroup_staticblocksbrid>
+        <block type="core/text_list" name="root">
+           <block type="restrictcustomergroup/adminhtml_restrictcustomergroup_edit_tab_blocks" name="blocks.grid"/>
+        </block>
+    </restrictcustomergroup_adminhtml_restrictcustomergroup_staticblocksbrid>
+    <!-- static block end-->
+    
+    <!-- wysiwyg code -->
+	<restrictcustomergroup_cms_wysiwyg_images_index>
+	    <remove name="footer" />
+	    <remove name="head" />
+	    <reference name="left">
+		<block name="wysiwyg_images.js" type="adminhtml/cms_wysiwyg_images_content" template="cms/browser/js.phtml" />
+		<block name="wysiwyg_images.tree" type="adminhtml/cms_wysiwyg_images_tree" template="cms/browser/tree.phtml" />
+	    </reference>
+	    <reference name="content">
+		<block name="wysiwyg_images.content"  type="adminhtml/cms_wysiwyg_images_content" template="cms/browser/content.phtml">
+		    <block name="wysiwyg_images.uploader" type="adminhtml/cms_wysiwyg_images_content_uploader" template="cms/browser/content/uploader.phtml" />
+		    <block name="wysiwyg_images.newfolder" type="adminhtml/cms_wysiwyg_images_content_newfolder" template="cms/browser/content/newfolder.phtml" />
+		</block>
+	    </reference>
+	</restrictcustomergroup_cms_wysiwyg_images_index>
+	<!-- wysiwyg code -->
+    <restrictcustomergroup_adminhtml_restrictcustomergroup_edit>
+        <update handle="editor"/>
+    </restrictcustomergroup_adminhtml_restrictcustomergroup_edit>
+</layout>

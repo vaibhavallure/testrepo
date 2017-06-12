@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_Core>
+            <name>Allure - Extensions Core</name>
+			<version>1.0.0</version>
+		</Allure_Core>
+	</modules>
+	<global>
+		<helpers>
+			<allure>
+				<class>Allure_Core_Helper</class>
+			</allure>
+			<allure_core>
+				<class>Allure_Core_Helper</class>
+			</allure_core>
+		</helpers>
+		<models>
+			<allure>
+				<class>Allure_Core_Model</class>
+			</allure>
+			<allure_core>
+				<class>Allure_Core_Model</class>
+			</allure_core>
+		</models>
+		<blocks>
+			<allure>
+				<class>Allure_Core_Block</class>
+			</allure>
+			<allure_core>
+				<class>Allure_Core_Block</class>
+			</allure_core>
+		</blocks>
+	</global>
+</config>

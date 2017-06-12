@@ -1,0 +1,412 @@
+<?php
+
+class Ebizmarts_BakerlooPrices_Model_Observer
+{
+
+    public function isPosRequest()
+    {
+        return Mage::app()->getRequest()->getHeader(Mage::helper('bakerloo_restful')->getApiKeyHeader());
+    }
+
+    public function getRequestJson()
+    {
+        return Mage::helper('bakerloo_restful/http')->getJsonPayload(Mage::app()->getRequest(), true);
+    }
+
+    public function priceMatchEnabled()
+    {
+        return (bool)(int)Mage::getStoreConfig('bakerloorestful/checkout/price_override', Mage::app()->getStore());
+    }
+
+    public function priceIncludesTax()
+    {
+        return (int)$this->getConfigValue('tax/calculation/price_includes_tax');
+    }
+
+    public function applyTaxAfterDiscount()
+    {
+        return (int)$this->getConfigValue('tax/calculation/apply_after_discount');
+    }
+
+    /**
+     * @return Mage_Directory_Model_Currency
+     */
+    protected function getBaseCurrency()
+    {
+        return Mage::app()->getStore()->getBaseCurrency();
+    }
+
+    /**
+     * @return Mage_Directory_Model_Currency
+     */
+    protected function getCurrentCurrency()
+    {
+        return Mage::app()->getStore()->getCurrentCurrency();
+    }
+
+    protected function getConfigValue($path)
+    {
+        return Mage::getStoreConfig($path);
+    }
+
+    public function priceMatch(Varien_Event_Observer $observer)
+    {
+        if ($this->isPosRequest() and $this->priceMatchEnabled()) {
+
+            $orderItem = $observer->getEvent()->getOrderItem();
+            $item      = $observer->getEvent()->getItem();
+
+            if ($item->getParentItem()) {
+                return $this;
+            }
+
+            $baseCurrency    = $this->getBaseCurrency();
+            $currentCurrency = $this->getCurrentCurrency();
+            $priceIncludesTax      = $this->priceIncludesTax();
+            $applyTaxAfterDiscount = $this->applyTaxAfterDiscount();
+
+            $product = $item->getPosProductLine();
+
+            if (is_null($product)) {
+                return $this;
+            }
+
+            $product = unserialize($product);
+
+            $hiddenTax = round((float)$product['order_line']['taxOfDiscount'], 2);
+            $lineTotal = round((float)$product['order_line']['subtotal'], 2);
+            $price     = round((float)$product['price'], 2);
+            $discount  = round((float)$product['order_line']['total_discount'], 2);
+
+            //get tax rate from vat_breakdown, as POS tax_rate is unreliable
+            list($taxPercent, $taxAmount, $taxesForItem) = $this->getTaxesForItem($product['order_line']);
+
+            //update item tax rates in quote
+            $this->setItemTaxesToQuote($item, $taxesForItem);
+            $item->setPosAppliedTaxes(serialize($taxesForItem));
+            $orderItem->setPosAppliedTaxes(serialize($taxesForItem));
+
+            $priceWTax = $priceIncludesTax ? $price : $price + $taxAmount;
+
+            if ($item->getHiddenTaxAmount()) {
+                if ($applyTaxAfterDiscount) {
+                    $taxAmount += ($item->getHiddenTaxAmount() - $hiddenTax);
+                }
+
+                if ($product['is_custom_price']) {
+                    $lineTotal += round(($product['order_line']['grand_total'] - ($lineTotal + $product['order_line']['tax_amount'] - $discount)), 2);
+                }
+            }
+
+            $orderItem->setPrice($price);
+            $orderItem->setOriginalPrice($price);
+            $orderItem->setDiscountAmount($discount);
+            $orderItem->setTaxPercent($taxPercent);
+            $orderItem->setTaxAmount($taxAmount);
+            $orderItem->setHiddenTaxAmount($hiddenTax);
+            $orderItem->setPriceInclTax($priceWTax);
+            $orderItem->setRowTotal($lineTotal);
+            $orderItem->setRowTotalInclTax($lineTotal + $taxAmount);
+
+            $item->setCalculationPrice($price);
+            $item->setOriginalPrice($price);
+            $item->setDiscountAmount($discount);
+            $item->setTaxPercent($taxPercent);
+            $item->setTaxAmount($taxAmount);
+            $item->setHiddenTaxAmount($hiddenTax);
+            $item->setTaxRates($taxesForItem);
+            $item->setPriceInclTax($priceWTax);
+            $item->setRowTotal($lineTotal);
+            $item->setRowTotalInclTax($lineTotal + $taxAmount);
+
+            if ($baseCurrency->getCode() != $currentCurrency->getCode()) {
+                /** @var Ebizmarts_BakerlooPayment_Helper_Data $h */
+                $h = Mage::helper('bakerloo_payment');
+
+                $taxAmount  = $h->convertToBaseCurrency($taxAmount, $baseCurrency, $currentCurrency);
+                $lineTotal  = $h->convertToBaseCurrency($lineTotal, $baseCurrency, $currentCurrency);
+                $price      = $h->convertToBaseCurrency($price, $baseCurrency, $currentCurrency);
+                $priceWTax  = $h->convertToBaseCurrency($priceWTax, $baseCurrency, $currentCurrency);
+                $discount   = $h->convertToBaseCurrency($discount, $baseCurrency, $currentCurrency);
+                $hiddenTax  = $h->convertToBaseCurrency($hiddenTax, $baseCurrency, $currentCurrency);
+            }
+
+            $orderItem->setBasePrice($price);
+            $orderItem->setBaseOriginalPrice($price);
+            $orderItem->setBasePriceInclTax($priceWTax);
+            $orderItem->setBaseDiscountAmount($discount);
+            $orderItem->setBaseTaxAmount($taxAmount);
+            $orderItem->setBaseHiddenTaxAmount($hiddenTax);
+            $orderItem->setBaseRowTotal($lineTotal);
+            $orderItem->setBaseRowTotalInclTax($lineTotal + $taxAmount);
+
+            $item->setBaseCalculationPrice($price);
+            $item->setBaseOriginalPrice($price);
+            $item->setBasePriceInclTax($priceWTax);
+            $item->setBaseDiscountAmount($discount);
+            $item->setBaseTaxAmount($taxAmount);
+            $item->setBaseHiddenTaxAmount($hiddenTax);
+            $item->setBaseRowTotal($lineTotal);
+            $item->setBaseRowTotalInclTax($lineTotal + $taxAmount);
+        }
+
+        return $this;
+    }
+
+    public function priceMatchAddress(Varien_Event_Observer $observer)
+    {
+        if ($this->isPosRequest() and $this->priceMatchEnabled()) {
+
+            $json  = $this->getRequestJson();
+
+            if (!is_array($json)) {
+                return $this;
+            }
+
+            $order   = $observer->getEvent()->getOrder();
+            $address = $observer->getEvent()->getAddress();
+
+            list($taxPercent, $appliedTaxes) = $this->getTaxesForQuoteAddress($json, $address);
+            $address->setAppliedTaxes($appliedTaxes);
+
+            $order->setAppliedTaxes($appliedTaxes);
+            $order->setConvertingFromQuote(true);
+
+            $subtotal = round((float)$json['subtotal_amount'], 2);
+            $tax      = round((float)$json['tax_amount'], 2);
+            $total    = round((float)$json['total_amount'], 2);
+            $discount = round((float)$json['discount'], 2);
+            $shipping = round((float)$json['shipping_amount'], 2);
+            $hiddenTax = 0;
+            $shippingTax = 0;
+
+            if (isset($json['shipping_tax_amount'])) {
+                $shippingTax = round((float)$json['shipping_tax_amount'], 2);
+            }
+
+            if ($discount != 0) {
+                if ($this->priceIncludesTax() and empty($json['returns'])) {
+                    $hiddenTax = $total - ($subtotal + $tax - $discount);
+                    //$hiddenTax = round($discount - (($discount * 100) / (100 + $taxPercent)), 2);
+                }
+
+                $discount = -$discount;
+            }
+
+            $order->setTaxAmount($tax);
+            $order->setHiddenTaxAmount($hiddenTax);
+            $order->setDiscountAmount($discount);
+            $order->setSubtotalInclTax($subtotal + $tax);
+            $order->setSubtotal($subtotal);
+            $order->setGrandTotal($total);
+            $order->setShippingAmount($shipping);
+            $order->setShippingTaxAmount($shippingTax);
+
+            $baseCurrency = $this->getBaseCurrency();
+            $currentCurrency = $this->getCurrentCurrency();
+
+            if ($baseCurrency->getCode() != $currentCurrency->getCode()) {
+                /** @var Ebizmarts_BakerlooPayment_Helper_Data $h */
+                $h = Mage::helper('bakerloo_payment');
+
+                $discount    = $h->convertToBaseCurrency($discount, $baseCurrency, $currentCurrency);
+                $subtotal    = $h->convertToBaseCurrency($subtotal, $baseCurrency, $currentCurrency);
+                $total       = $h->convertToBaseCurrency($total, $baseCurrency, $currentCurrency);
+                $tax         = $h->convertToBaseCurrency($tax, $baseCurrency, $currentCurrency);
+                $hiddenTax   = $h->convertToBaseCurrency($hiddenTax, $baseCurrency, $currentCurrency);
+                $shipping    = $h->convertToBaseCurrency($shipping, $baseCurrency, $currentCurrency);
+                $shippingTax = $h->convertToBaseCurrency($shippingTax, $baseCurrency, $currentCurrency);
+            }
+
+            $order->setBaseTaxAmount($tax);
+            $order->setBaseHiddenTaxAmount($hiddenTax);
+            $order->setBaseDiscountAmount($discount);
+            $order->setBaseSubtotalInclTax($subtotal + $tax);
+            $order->setBaseSubtotal($subtotal);
+            $order->setBaseGrandTotal($total);
+            $order->setBaseShippingAmount($shipping);
+            $order->setBaseShippingTaxAmount($shippingTax);
+        }
+
+        return $this;
+    }
+
+    public function getTaxesForItem($orderLine)
+    {
+        $taxPercent   = 0;
+        $taxAmount    = 0;
+        $taxBreakdown = array();
+        $qty = $orderLine['qty'] * 1;
+
+        foreach ($orderLine['applied_vats'] as $vat) {
+
+            $taxInfo = !isset($vat['tax_break']) ?
+                !isset($vat['taxBreak']) ? array() : $vat['taxBreak']
+                : $vat['tax_break'];
+
+            if (count($taxInfo) == 1) {
+
+                $taxInfo = $taxInfo[0];
+
+                if ($taxPercent == 0) {
+                    $taxPercent = 1 + ((double)$taxInfo['rate'] / 100);
+                } else {
+                    $taxPercent = $taxPercent * (1 + ((double)$taxInfo['rate']) / 100);
+                }
+
+                $taxAmount += $taxInfo['tax_amount'];
+                $taxCode = $taxInfo['code'];
+
+                $taxRate = $this->getCalculationRate()->loadByCode($taxCode);
+                $taxBreakdown[] = array(
+                    'rates' => array(
+                        array(
+                            'code'     => $taxCode,
+                            'title'    => $taxCode,
+                            'percent'  => $taxInfo['rate'],
+                            'position' => $taxInfo['priority'],
+                            'priority' => $taxInfo['priority'],
+                            'rule_id'  => (int)$taxRate->getId()
+                        )
+                    ),
+                    'percent' => $taxInfo['rate'],
+                    'id'      => $taxCode
+                );
+            }
+
+            //@TODO: support multiple rates for tax rule
+        }
+
+        if ($taxPercent > 0) {
+            $taxPercent = 100 * ($taxPercent - 1);
+        }
+
+        $taxAmount = round((float)$orderLine['tax_amount'] / $qty, 2);
+        return array(round($taxPercent, 4), $taxAmount, $taxBreakdown);
+    }
+
+    /**
+     * @param Mage_Sales_Model_Quote_Item $item
+     * @param array $taxesForItem
+     *
+     * @return Mage_Sales_Model_Quote
+     */
+    public function setItemTaxesToQuote($item, $taxesForItem)
+    {
+        $quote     = $item->getQuote();
+        $itemTaxes = $quote->getTaxesForItems();
+
+        if (is_null($itemTaxes)) {
+            $itemTaxes = array();
+        }
+
+        $itemTaxes[$item->getId()] = $taxesForItem;
+        $quote->setTaxesForItems($itemTaxes);
+
+        return $quote;
+    }
+
+    /**
+     * Calculate accumulated taxes by tax rule code.
+     *
+     * @param array $json
+     * @param Mage_Sales_Model_Quote_Address $quote
+     * @return array
+     */
+    public function getTaxesForQuoteAddress($json, Mage_Sales_Model_Quote_Address $address)
+    {
+        $products = $json['products'];
+
+        $appliedTaxes = array();
+        $taxPercent = 0;
+
+        // add item level tax rates
+        foreach ($products as $product) {
+            $appliedVats = $product['order_line']['applied_vats'] ? $product['order_line']['applied_vats'] : array();
+
+            foreach ($appliedVats as $vat) {
+
+                $taxBreaks = !isset($vat['tax_break']) ?
+                    !isset($vat['taxBreak']) ? array() : $vat['taxBreak']
+                    : $vat['tax_break'];
+
+                if (count($taxBreaks) == 1) {
+                    $taxCode = $taxBreaks[0]['code'];
+                    $taxRate = $this->getCalculationRate()->loadByCode($taxCode);
+
+                    if (isset($appliedTaxes[$taxCode])) {
+                        $rateInfo = $appliedTaxes[$taxCode];
+                        $rateInfo['amount']      += $taxBreaks[0]['tax_amount'];
+                        $rateInfo['base_amount'] += $taxBreaks[0]['tax_amount']; //@TODO: convert to base amount
+                    } else {
+
+                        if ($taxPercent == 0) {
+                            $taxPercent = 1 + ((double)$taxBreaks[0]['rate'] / 100);
+                        } else {
+                            $taxPercent = $taxPercent * (1 + ((double)$taxBreaks[0]['rate']) / 100);
+                        }
+
+                        $rateInfo = array(
+                            'rates'     => array(
+                                array(
+                                    'code'      => $taxCode,
+                                    'title'     => $taxCode,
+                                    'percent'   => $taxBreaks[0]['rate'],
+                                    'position'  => $taxBreaks[0]['priority'],
+                                    'priority'  => $taxBreaks[0]['priority'],
+                                    'rule_id'   => (int)$taxRate->getId(),
+                                )
+                            ),
+                            'percent'   => $taxBreaks[0]['rate'],
+                            'id'        => (int)$taxRate->getId(),
+                            'process'   => 0,
+                            'amount'    => $taxBreaks[0]['tax_amount'],
+                            'base_amount' => $taxBreaks[0]['tax_amount'],
+                        );
+                    }
+
+                    $appliedTaxes[$taxCode] = $rateInfo;
+                }
+
+                //@TODO: support multiple rates for tax rule
+            }
+        }
+
+        if ($taxPercent > 0) {
+            $taxPercent = 100 * ($taxPercent - 1);
+        }
+
+        // add shipping tax rate if applicable
+        if (isset($json['shipping_tax_amount']) and $json['shipping_tax_amount'] > 0) {
+            $appliedTaxes += $this->getAppliedShippingTaxes($address, $appliedTaxes);
+        }
+
+        return array($taxPercent, $appliedTaxes);
+    }
+
+    /**
+     * @param Mage_Sales_Model_Quote_Address $address
+     * @param array $appliedTaxes
+     * @return array
+     */
+    public function getAppliedShippingTaxes(Mage_Sales_Model_Quote_Address $address, $appliedTaxes)
+    {
+        $addressTaxes = $address->getAppliedTaxes();
+
+        foreach ($appliedTaxes as $_code => $_rate) {
+            if (isset($appliedTaxes[$_code])) {
+                unset($addressTaxes[$_code]);
+            }
+        }
+
+        return $addressTaxes;
+    }
+
+    /**
+     * @return Mage_Tax_Model_Calculation_Rate
+     */
+    public function getCalculationRate()
+    {
+        return Mage::getModel('tax/calculation_rate');
+    }
+}

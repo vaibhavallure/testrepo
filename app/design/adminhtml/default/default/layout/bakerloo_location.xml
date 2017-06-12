@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_pos_store_index>
+        <reference name="content">
+            <block type="bakerloo_location/adminhtml_pos_store" />
+        </reference>
+    </adminhtml_pos_store_index>
+    <adminhtml_pos_store_grid>
+        <reference name="content">
+            <block type="bakerloo_location/adminhtml_pos_store_grid" output="toHtml" />
+        </reference>
+    </adminhtml_pos_store_grid>
+    <adminhtml_pos_store_edit>
+        <reference name="left">
+            <block type="bakerloo_location/adminhtml_pos_store_edit_tabs" name="adminhtml.bakerloolocation.edit.tabs"/>
+        </reference>
+        <reference name="content">
+            <block type="bakerloo_location/adminhtml_pos_store_edit" name="adminhtml.bakerloolocation.edit" />
+        </reference>
+    </adminhtml_pos_store_edit>
+</layout>

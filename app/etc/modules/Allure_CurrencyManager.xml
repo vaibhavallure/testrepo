@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * NOTICE OF LICENSE
+ *
+ * You may not sell, sub-license, rent or lease
+ * any portion of the Software or Documentation to anyone.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade to newer
+ * versions in the future.
+ *
+ * @category   Allure
+ * @package    Allure_CurrencyManager
+ * @copyright  Copyright (c) 2016 Allure Inc (http://www.allureinc.co)
+ * @contacts   support@allureinc.co
+ */
+ -->
+<config>
+    <modules>
+        <Allure_CurrencyManager>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Allure_CurrencyManager>
+    </modules>
+</config>

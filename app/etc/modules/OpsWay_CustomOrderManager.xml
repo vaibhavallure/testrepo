@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <OpsWay_CustomOrderManager>
+            <active>true</active>
+            <codePool>local</codePool>
+        </OpsWay_CustomOrderManager>
+    </modules>
+</config>

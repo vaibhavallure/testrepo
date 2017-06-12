@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_tryon_adminhtml_tryon_index>
+        <reference name="content">
+            <block type="ecp_tryon/adminhtml_tryon" name="ecp_tryon" />
+        </reference>
+    </ecp_tryon_adminhtml_tryon_index>
+    <ecp_tryon_adminhtml_tryon_productsperregion>
+        <reference name="content">
+            <block type="ecp_tryon/adminhtml_tryon_products" name="products" />
+        </reference>
+    </ecp_tryon_adminhtml_tryon_productsperregion>
+    
+    <ecp_tryon_adminhtml_tryon_subregions_productspersubregion>
+        <reference name="content">
+            <block type="ecp_tryon/adminhtml_tryon_subproducts" name="subproducts" />
+        </reference>
+    </ecp_tryon_adminhtml_tryon_subregions_productspersubregion>
+    
+    <ecp_tryon_adminhtml_tryon_ajax>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="ecp_tryon/adminhtml_tryon_products" name="products" />
+        </block>
+    </ecp_tryon_adminhtml_tryon_ajax>
+    
+    <ecp_tryon_adminhtml_tryon_subregions_index>
+        <reference name="content">
+            <block type="ecp_tryon/adminhtml_tryon_subregions" name="ecp_tryon_subregions" />
+        </reference>
+    </ecp_tryon_adminhtml_tryon_subregions_index>
+    
+    <ecp_tryon_adminhtml_tryon_subregions_ajax>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="ecp_tryon/adminhtml_tryon_subproducts" name="subproducts" />
+        </block>
+    </ecp_tryon_adminhtml_tryon_subregions_ajax>
+</layout>

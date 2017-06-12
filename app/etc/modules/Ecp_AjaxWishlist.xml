@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_AjaxWishlist>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ecp_AjaxWishlist>
+    </modules>
+</config> 

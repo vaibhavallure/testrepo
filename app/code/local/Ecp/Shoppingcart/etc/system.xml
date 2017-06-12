@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <ecp_shoppingcart translate="label">
+            <label>Ecp Shoppingcart</label>
+            <tab>general</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <shoppingcart translate="label" >
+                    <label>Ecp Shoppingcart</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <thumbnails translate="label">
+                            <label>Use thumbnail images of simple product in cart</label>
+                            <comment>
+                                <![CDATA[Select YES if want to show thumbnails of simple product instead of configurable products in cart
+                                ]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </thumbnails>
+                    </fields>
+                </shoppingcart>
+            </groups>
+        </ecp_shoppingcart>
+    </sections>
+</config>

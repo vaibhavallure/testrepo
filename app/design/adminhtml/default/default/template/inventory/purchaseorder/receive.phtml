@@ -1,0 +1,118 @@
+<?php 
+	$collection = $this->getCollection();
+	$helper = Mage::helper("inventory");
+?>
+<?php $order=Mage::getModel('inventory/purchaseorder')->load($collection->getFirstItem()->getPoId())?>		
+<?php $orderTotal=$order->getTotalAmount()?>
+
+<div class="content-header">
+   <h3 class="icon-head"><?php echo $helper->__('View Purchase Order')?></h3>
+   <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED):?>
+   <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW || $order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_ACCEPT):?>
+   <button id="save_btn"  form="recive_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/updaterecive', array('_secure' => true,'void'=>true));?>"><?php echo $helper->__('Void')?></button>
+   <?php endif;?>
+   <button id="ship_save_btn" form="recive_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/updaterecive', array('_secure' => true));?>"><?php echo $helper->__('Receive Partially')?></button>
+   <button id="ship_close_btn" form="recive_po" class="po_save_btn"  formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/updaterecive', array('_secure' => true,'close'=>true));?>" ><?php echo $helper->__('Receive Completely')?></button>
+   <?php endif;?>
+   <button onclick="history.back()" class="po_back_btn" ><?php echo $helper->__('Back')?></button>
+</div>
+
+<div>
+	<div id="parent">
+		<div id="child">
+			<label><span><?php echo $helper->__('Purchase Order #');?></span>
+			<?php echo $order->getPoId()?>
+			</label>
+			<label><span><?php echo $helper->__('Order Date #'); ?></span>
+			<?php echo $order->getCreatedDate()?>
+			</label>
+			<?php if($order->getRefNo()):?>
+				<label><span><?php echo $helper->__('Order Feference #'); ?></span>
+				<?php echo $order->getRefNo()?>
+				</label>
+			<?php endif;?>
+			<label><span><?php echo $helper->__('Vendor:'); ?></span>
+			<?php echo $order->getVendorName()?>
+			</label>
+			<label><span><?php echo $helper->__('Store:'); ?></span>
+			<?php echo Mage::getModel('core/website')->load($order->getStockId())->getName()?>
+			</label>
+			<label><span><?php echo $helper->__('Order Status:'); ?></span>
+			<?php echo Mage::helper('inventory')->getOrderStatus($order->getStatus())?>
+			</label>
+		</div>
+	</div>
+</div>
+
+<div class="prod-data">
+<form id="recive_po"  method="post">
+	<input type="hidden" name="order_id" value="<?php echo $order->getPoId()?>">
+	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+	<table class="iventory-product table" style="width: 100%">
+		<th><?php echo $helper->__('Image')?></th>
+		<th><?php echo $helper->__('SKU')?></th>
+		<th><?php echo $helper->__('PRODUCT NAME')?></th>
+		<th><?php echo $helper->__('Qty Ordered')?></th>
+		<th><?php echo $helper->__('VMT Comment')?></th>
+		<th><?php echo $helper->__('Qty Shipped')?></th>
+		<th><?php echo $helper->__('Remaining Qty')?></th>
+		<th><?php echo $helper->__('Expected Ship ')?><br><?php echo $helper->__(' Date')?></th>
+		<th><?php echo $helper->__('Vendor Comment')?></th>
+		
+    	<?php 
+    		foreach ($collection as $_product):
+    			$product = Mage::getModel ( 'catalog/product' )->load ( $_product->getProductId() );
+    	?>
+			<tr id="inventory-row-<?php echo $product->getProductId(); ?>" class="inventory_tr">
+				<td>
+					<img style="width: 100px; height: 100px;" class="product_inventory_thumbnail" 
+							src="<?php  echo Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(100);?>"/>
+				</td>	
+				<td><?php echo $_product->getSku();?></td>
+						
+				<td><?php echo $_product->getName();?></td>
+						
+				<td>
+					<input id="requested_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
+						name="order[<?php echo $_product->getProductId() ?>][<?php echo "requested_qty" ?>]" type="text" 
+						value="<?php echo round($_product->getRequestedQty())?>"/>
+				</td>
+				<td><textarea name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="15" rows="7" ><?php echo $_product->getAdminComment()?></textarea></td>
+				<td>
+					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 
+					 name="order[<?php echo $_product->getProductId() ?>][<?php echo "proposed_qty" ?>]" type="text" 
+					 value="<?php echo round($_product->getProposedQty())?>"/>
+				</td>
+				<td>
+					<input id="remaining_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
+						<?php if(Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?>
+						name="order[<?php echo $_product->getProductId() ?>][<?php echo "remaining_qty" ?>]" type="text" 
+						value="<?php echo round($_product->getRemainingQty())?>"/>
+				</td>
+				<td><div><?php echo $this->getDate($_product->getProductId(),$_product->getProposedDeliveryDate());?></div></td>
+				<td><textarea readonly="readonly" name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="15" rows="7" ><?php echo $_product->getVendorComment()?></textarea></td>
+				
+			</tr>		
+        <?php endforeach ;?>
+  </table>
+  </form>
+  <table style="width:100%">
+      <tr>
+      	 <td>
+      	 	<div style="float:right;margin-right: 10px">
+      	 		<label>Order Total:</label>
+      	 		<input disabled="disabled" id="order_total" style="margin-bottom: 10px" type="text" value="<?php echo $orderTotal?>">
+      	 	</div>
+      	 </td>
+      </tr>
+  </table>
+  
+</div>     	 
+
+    
+<script type="text/javascript">
+	jQuery.noConflict();
+</script>
+
+
+

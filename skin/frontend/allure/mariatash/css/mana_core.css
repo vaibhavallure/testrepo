@@ -1,0 +1,59 @@
+/**
+ * @category    Mana
+ * @package     Mana_Core
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+#m-wait {
+    position:absolute;
+    position:fixed;
+    color:#d85909;
+    font-size:1.1em;
+    font-weight:bold;
+    text-align:center;
+    /*opacity:0.80;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /* IE8 */
+    z-index:10000;
+    }
+	
+#m-wait .loader, .blockUI .loader {
+    background: url('fancybox/fancybox_loading.gif') center center no-repeat;
+	width: 44px;
+	height: 44px;
+    }
+#m-wait .please-wait-filter {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: 25px;
+	margin-left: -38px;
+	color: #fff;
+}
+#m-wait .fancybox-loading, .blockUI .fancybox-loading {
+	background-image: url('fancybox/fancybox_sprite.png');
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -22px;
+	margin-left: -22px;
+	background-position: 0 -108px;
+	opacity: 0.8;
+	cursor: pointer;
+	z-index: 8060;
+	width: 44px;
+	height: 44px;
+}
+.m-popup {
+    position: absolute;
+    background: white;
+    z-index: 20100;
+}
+.m-popup-overlay {
+    position: absolute;
+    background: black;
+    filter: alpha(opacity = 0); /* percent */
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    z-index: 10000;
+}

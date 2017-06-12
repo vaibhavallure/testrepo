@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_press_adminhtml_press_index>
+        <reference name="content">
+            <block type="ecp_press/adminhtml_press" name="ecp_press" />
+        </reference>
+    </ecp_press_adminhtml_press_index>
+</layout>

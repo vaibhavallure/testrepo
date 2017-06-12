@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Priceslider>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ecp_Priceslider>
+    </modules>
+</config> 

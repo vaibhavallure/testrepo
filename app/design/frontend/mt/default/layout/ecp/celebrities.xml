@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_celebrities_index_index>
+        <update handle='category_product_view' />
+        <reference name="head">
+            <action method="addJs"><script>prototype/simulate.js</script></action>
+            <action method="addJs"><script>varien/product.js</script></action>
+            <action method="addJs"><script>varien/configurable.js</script></action>
+            <!--action method="addJs"><script>jquery/jquery.carouFredSel-6.1.0-packed.js</script></action-->
+            <action method="addJs"><script>jquery/jquery.jcarousel.min.js</script></action>
+            <action method="addJs"><script>jquery/fancybox/jquery.fancybox.pack.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>js/jquery.sharrre-1.3.4.min.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/sharrre.css</name></action>
+            <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/><!--<if/><condition>can_load_calendar_js</condition>--></action>
+            <action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/jquery.fancybox.css</stylesheet></action>
+            <action method="addItem">
+                <type>js</type>
+                <name>calendar/calendar.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>-->
+            </action>
+            <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name><!--<params/><if/><condition>can_load_calendar_js</condition>--></action>
+        </reference>
+        <reference name='root'>
+            <action method='setTemplate'><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name='content'>
+            <block type="ecp_discovernavigation/discoverNavigation" name="celebrity.top" template="ecp/discoverNavigation/discoverNavigationMenuOut.phtml" />
+            <block type="ecp_celebrities/celebrities" name="celebrity.clientele" template="ecp/celebrities/celebrities.phtml" />
+        </reference>
+    </ecp_celebrities_index_index>
+    
+    <ecp_celebrities_index_send>
+        <reference name='root'>
+            <action method='setTemplate'><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name='content'>
+            <block type="ecp_celebrities/send" name="celebrity.clientele" template="ecp/celebrities/sendFriend.phtml" />
+        </reference>
+	<remove name="header" />
+        <remove name="footer" />
+    </ecp_celebrities_index_send>
+</layout>
+
+<!--
+<reference name="content">            
+            <block type="ecp_celebrities/celebrities" name="celebrity.clientele" template="ecp/celebrities/celebrities.phtml">
+                <action method="setCelebrityId"><id>1</id></action>
+            </block>
+ </reference>
+-->

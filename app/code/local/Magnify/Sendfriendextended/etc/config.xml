@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magnify_Sendfriendextended>
+            <version>1.0.0</version>
+        </Magnify_Sendfriendextended>
+    </modules>
+    <global>
+    </global>
+    <frontend>
+        <routers>
+            <sendfriend>
+                <args>
+                    <modules>
+                        <Magnify_Sendfriendextended before="Mage_Sendfriend_ProductController">Magnify_Sendfriendextended</Magnify_Sendfriendextended>
+                    </modules>
+                </args>
+            </sendfriend>
+            <magnify_sendfriendextended>
+                <use>standard</use>
+                <args>
+                    <module>Magnify_Sendfriendextended</module>
+                    <frontName>sendfriendextended</frontName>
+                </args>
+            </magnify_sendfriendextended>
+        </routers>
+		<layout>
+            <updates>
+                <magnify_sendfriendextended>
+                    <file>magnify_sendfriendextended.xml</file>
+                </magnify_sendfriendextended>
+            </updates>
+        </layout>
+    </frontend>
+</config>

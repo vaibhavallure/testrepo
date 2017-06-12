@@ -1,0 +1,77 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+$newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormActionUrl());
+?>
+<div id="newsletter-form" >
+    <form action="<?= $newsletterFormURL ?>" method="post" id="newsletter-validate-detail">
+        <div id="newsletter-input" class="form-subscribe-mt">
+            <div class="newsletter-mt">Sign up for Maria Tash's Exclusive Offers and Newsletter</div>
+            <div id="newsletter-errors" class="validation-advice" style="display:none"></div>
+            
+            <div class="input-row">
+                <input type="text" autocomplete="off" name="email" id="email" placeholder="Your Email Address" class="input-text required-entry validate-email" />
+		        <button type="button" onclick="sendNewsletterSubscription(this.form)" title="<?php echo $this->__('Sign up') ?>" class="button">
+		            <span><span><?php echo $this->__('Sign up!') ?></span></span>
+		        </button>
+		        <div class="loader" style="display:none; width: 20px;">
+		            <img src="<?php echo Mage::getBaseUrl('media') . 'loading.gif' ?>" />
+		        </div>
+		    </div>
+        </div>
+		<div id="newsletter-success"></div>
+	</form>
+</div>
+<script type="text/javascript">
+    jQuery.noConflict(); 
+    
+    function sendNewsletterSubscription(form){
+
+        jQuery('#msg-email').text('');
+                    
+        var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+        jQuery('.loader').css({display:'inline-block'});
+        jQuery('.form-subscribe-mt .button').hide();
+        jQuery('#newsletter-success').hide();
+        jQuery('#newsletter-errors').hide();
+        
+        jQuery('#email').val(jQuery.trim(jQuery('#email').val()));	
+        var stringJSON='{"email":"'+jQuery('#email').val()+'","first_name":"'+jQuery('#first_name').val()+'","last_name":"'+jQuery('#last_name').val()+'","country":"Canada"}';
+        var dataSend = JSON.parse(stringJSON);
+
+        jQuery.getJSON(form.action,dataSend,function(data){
+            jQuery('.loader').hide();
+            jQuery('.form-subscribe-mt .button').show();
+            if(data.success){
+                jQuery('#newsletter-input').hide();
+                jQuery('#newsletter-success').show();
+                jQuery('#newsletter-success').html(data.thankyou);
+            } else {
+                //jQuery('#errors').show();
+                //jQuery('#errors').html(data.message);
+            }
+        });
+    }    
+</script>

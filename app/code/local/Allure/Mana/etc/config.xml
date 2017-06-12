@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_Mana>
+            <version>0.0.1</version>
+        </Allure_Mana>
+    </modules>
+    
+    <global>
+       <helpers>
+       		<allure_mana>
+				<class>Allure_Mana_Helper</class>
+		    </allure_mana>
+		    
+		    <mana_core>
+		    	<rewrite>
+                	<layout>Allure_Mana_Helper_Core_Layout</layout>
+                </rewrite>
+            </mana_core>
+		    
+         </helpers>
+    </global>
+    
+</config>

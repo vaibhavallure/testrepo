@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">    
+    <ecp_categorycarrousel_index_index>      
+      <reference name="content">
+        <block type="ecp_categorycarrousel/carrousel" name="carrousel" />
+      </reference>        
+    </ecp_categorycarrousel_index_index>
+</layout>

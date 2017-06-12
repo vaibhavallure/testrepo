@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <NowInStore_CatalogBuilder>
+            <version>1.1.1</version>
+        </NowInStore_CatalogBuilder>
+    </modules>
+    <frontend>
+        <routers>
+            <catalogbuilder>
+                <use>standard</use>
+                <args>
+                    <module>NowInStore_CatalogBuilder</module>
+                    <frontName>catalogbuilder</frontName>
+                </args>
+            </catalogbuilder>
+        </routers>
+    </frontend>
+</config>

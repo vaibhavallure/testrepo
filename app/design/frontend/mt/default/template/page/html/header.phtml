@@ -1,0 +1,116 @@
+<?php 
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<div id="fb-root"></div>
+<script type="text/javascript">
+(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+jQuery(document).ajaxComplete(function(){
+    try{
+        FB.XFBML.parse();
+        twttr.widgets.load();
+    }catch(ex){}
+});
+</script>
+
+<script type="text/javascript">
+	var MariaTash = {};
+	MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+</script>
+<div class="header-container">
+    <div class="header">
+        <h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong>
+            <a href="<?php echo $this->getUrl('') ?>"  alt="Venus by Maria Tash" title="Venus by Maria Tash" class="logo"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
+        </h1>
+        <div class="quick-access">
+            <div class="top-links">
+                <ul class="acv">
+                <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
+				<li id="sign_out_label"><a href="<?php echo Mage::getBaseUrl();?>customer/account/logout">Sign out</a></li>
+                <?php else:?>
+				<li id="sign_in_label"><a href="<?php echo Mage::getBaseUrl();?>customer/account/login">Sign in</a></li>
+                <?php endif;?>
+                <li><a href="<?php echo Mage::getBaseUrl();?>customer/account">My Account</a></li>
+                <li><a href="<?php echo $this->getUrl('wishlist', array('_secure' => $this->getRequest()->isSecure())) ?>">Wishlist</a></li>
+                <li style="position:relative;"><div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div></li>                
+                <li><?php echo $this->getChildHtml('store_currency_selector') ?></li>
+                </ul>
+                <div id="top_links">
+                </div>
+
+            </div>
+            <?php if (1 == 1):?>
+            <?php $secureFlag = (!empty($_SERVER['HTTPS'])) ?  true : false;?>
+            <script type="text/javascript">
+                var query = '?';
+                if (Mage.Cookies.get('<?php echo ECP_Ajaxify_Model_Observer::MESSAGE_ADDED_COOKIE_NAME ?>') == 1)
+                    query = query == '?' ? query+'messages' : query+'&messages';
+                //Don't remove that! Not a bug.
+                if (Mage.Cookies.get('<?php echo ECP_Ajaxify_Model_Observer::CART_NOT_EMPTY_COOKIE_NAME ?>') == 1)
+                                    query = query == '?' ? query+'top_cart' : query+'&top_cart';
+                if (1 == 1)
+                    query = query == '?' ? query+'top_links' : query+'&top_links';
+                query = query == '?' ? query+'shippingtext' : query+'&shippingtext';
+                if (query != '?')
+                    VarnishHeaderRefresh('<?php echo Mage::helper('ecp_ajaxify')->getXHRUrl($secureFlag)?>'+query);
+            </script>
+            <?php endif;?>
+        </div>
+        <?php echo $this->getChildHtml('topSearch') ?>
+        <?php echo $this->getChildHtml('topMenu') ?>
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('call_now')->toHtml(); ?>
+        <div id="shippingtext"></div>
+    </div>
+    <?php echo $this->getChildHtml('topBar') ?>
+    <?php echo $this->getChildHtml('topContainer'); ?>
+</div>
+<script type="text/javascript">
+if(Mage.Cookies.get('is_logged_in') && Mage.Cookies.get('frontend_timeout'))  {
+	//jQuery('#sign_in_label').addClass('display_none');	 //allure comment
+	
+} else {
+	//document.title = 'Customer Sign in';
+	//jQuery('#sign_out_label').addClass('display_none');	//allure comment
+}
+var pathname = window.location.pathname;
+if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
+else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
+var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
+jQuery( document ).ready(function() {
+    jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+});
+jQuery( window ).resize(function() {
+    jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+});
+</script>

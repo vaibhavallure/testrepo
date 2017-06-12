@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_celebrities_adminhtml_celebrities_index>
+        <reference name="content">
+            <block type="ecp_celebrities/adminhtml_celebrities" name="ecp_celebrities" />
+        </reference>
+    </ecp_celebrities_adminhtml_celebrities_index>
+    <ecp_celebrities_adminhtml_celebrities_outfit>
+        <reference name="content">
+            <block type="ecp_celebrities/adminhtml_outfits" name="ecp_celebrities_outfits" />
+        </reference>
+    </ecp_celebrities_adminhtml_celebrities_outfit>
+    <ecp_celebrities_adminhtml_celebrities_edit>
+        <update handle="editor"/>
+    </ecp_celebrities_adminhtml_celebrities_edit>
+    <ecp_celebrities_adminhtml_outfits>
+        <update handle="editor"/>
+    </ecp_celebrities_adminhtml_outfits>
+    <ecp_celebrities_adminhtml_celebrities_productgrid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="ecp_celebrities/adminhtml_outfits_edit_tab_grid" name="relatedProductsGrid.grid"/>
+        </block>
+    </ecp_celebrities_adminhtml_celebrities_productgrid>
+    
+    <ecp_celebrities_adminhtml_celebrities_relatedproductsgrid>
+       <block type="core/text_list" name="root" output="toHtml">
+           <block type="ecp_celebrities/adminhtml_outfits_edit_tab_grid" name="relatedProductsGrid.grid"/>           
+       </block>
+   </ecp_celebrities_adminhtml_celebrities_relatedproductsgrid>  
+</layout>

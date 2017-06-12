@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<sections>
+		<appointments translate="label" module="appointments">
+			<label>Appointments</label>
+			<tab>allure</tab>
+			<sort_order>50</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label">
+					<label>General Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<enable_stores translate="title" module="appointments">
+							<label>Enable Appointment Booking for Store</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>appointments/adminhtml_source_stores</source_model>
+							<sort_order>10</sort_order> <!-- feel free to change this value -->
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_stores>
+						<storemapping translate="label">
+							<label>Store Information</label>
+							<frontend_model>Allure_Appointments_Block_Adminhtml_StoreInformation</frontend_model>
+							<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>11</sort_order>
+						</storemapping>
+						<working_start_time translate="label">
+							<label>Working Starting Time</label>
+							<frontend_type>select</frontend_type>
+							<comment>This is start timing of office</comment>
+							<source_model>appointments/adminhtml_source_timing</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>13</sort_order>
+						</working_start_time>
+						<working_end_time translate="label">
+							<label>Working End Time</label>
+							<frontend_type>select</frontend_type>
+							<comment>This is end timing of office</comment>
+							<source_model>appointments/adminhtml_source_timing</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>15</sort_order>
+						</working_end_time>
+					</fields>
+				</general>
+				<api translate="label">
+					<label>Text Message Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>11</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<!-- <status translate="label">
+							<label>Enable GeoIP Based Geolocation</label>
+							<frontend_type>select</frontend_type>
+							<comment>Enable/Disable Geo Location</comment>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>11</sort_order>
+											</status> -->
+						<soap_url translate="label">
+							<label>Soap URL</label>
+							<frontend_type>text</frontend_type>
+							<comment>This is Soap URL</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>81</sort_order>
+						</soap_url>
+						<soap_username translate="label">
+							<label>Soap Username</label>
+							<frontend_type>text</frontend_type>
+							<comment>This is username of soap</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>82</sort_order>
+						</soap_username>
+						<soap_password translate="label">
+							<label>Soap Password</label>
+							<frontend_type>text</frontend_type>
+							<comment>This is password of soap</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>83</sort_order>
+						</soap_password>
+						<soap_from translate="label">
+							<label>Message From</label>
+							<frontend_type>text</frontend_type>
+							<comment>This is Soap from test or vmt</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>84</sort_order>
+						</soap_from>
+						<smstext_book translate="label">
+							<label>Book Sms Message</label>
+							<frontend_type>textarea</frontend_type>
+							<comment>This is sms message for appointment book</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>85</sort_order>
+						</smstext_book>
+						<smstext_reminder translate="label">
+							<label>Reminder Sms Message</label>
+							<frontend_type>textarea</frontend_type>
+							<comment>This is sms message for appointment Reminder</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>86</sort_order>
+						</smstext_reminder>
+						<smstext_modified translate="label">
+							<label>Appointment Modified Sms Message</label>
+							<frontend_type>textarea</frontend_type>
+							<comment>This is sms message for appointment modified</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>87</sort_order>
+						</smstext_modified>
+						<smstext_cancel translate="label">
+							<label>Cancel Sms Message</label>
+							<frontend_type>textarea</frontend_type>
+							<comment>This is sms message for appointment cancel</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>88</sort_order>
+						</smstext_cancel>
+					</fields>
+				</api>
+				<customer translate="label">
+					<label>Customer Email Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>12</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<send_customer_email translate="label">
+							<label>Enable Customer Email</label>
+							<frontend_type>select</frontend_type>
+							<comment>This will send Email Notifications to customers</comment>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>20</sort_order>
+						</send_customer_email>
+						<customer_template translate="label">
+                            <label>Customer Email Template for Appointment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_customer_email>1</send_customer_email>
+                            </depends>
+                        </customer_template>
+                        
+                        <customer_reminder_template translate="label">
+                            <label>Customer Email Template for Appointment Reminder</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_customer_email>1</send_customer_email>
+                            </depends>
+                        </customer_reminder_template>
+                        
+                        <customer_cancel_template translate="label">
+                            <label>Customer Email Template for Appointment cancellation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_customer_email>1</send_customer_email>
+                            </depends>
+                        </customer_cancel_template>
+                        <customer_modify_template translate="label">
+                            <label>Customer Email Template for Appointment Modify</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_customer_email>1</send_customer_email>
+                            </depends>
+                        </customer_modify_template>
+					</fields>
+				</customer>
+				<piercer translate="label">
+					<label>Piercer Email Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>13</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<send_piercer_email translate="label">
+							<label>Enable Piercer Email</label>
+							<frontend_type>select</frontend_type>
+							<comment>This will send Email Notifications to Piercer</comment>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>35</sort_order>
+						</send_piercer_email>
+						<piercer_welcome_template translate="label">
+                            <label>Piercer Welcome Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>36</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_piercer_email>1</send_piercer_email>
+                            </depends>
+                        </piercer_welcome_template>
+						<piercer_template translate="label">
+                            <label>Piercer Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>40</sort_order>
+                           <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_piercer_email>1</send_piercer_email>
+                            </depends>
+                        </piercer_template>
+                        <piercer_cancel_template translate="label">
+                            <label>Piercer Email Template for cancellation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_piercer_email>1</send_piercer_email>
+                            </depends>
+                        </piercer_cancel_template>
+                         <piercer_modify_template translate="label">
+                            <label>Piercer Email Template for modify</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>46</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_piercer_email>1</send_piercer_email>
+                            </depends>
+                        </piercer_modify_template>
+       				</fields>
+				</piercer>
+				<admin translate="label">
+					<label>Admin Email Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>14</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<send_admin_email translate="label">
+							<label>Enable Admin Email</label>
+							<frontend_type>select</frontend_type>
+							<comment>This will send Email Notifications to admin User</comment>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>50</sort_order>
+						</send_admin_email>
+						<admin_template translate="label">
+                            <label>Admin Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>55</sort_order>
+                           <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_admin_email>1</send_admin_email>
+                            </depends>
+                        </admin_template>
+                        <admin_cancel_template translate="label">
+                            <label>Admin Email Template for cancellation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_admin_email>1</send_admin_email>
+                            </depends>
+                        </admin_cancel_template>
+                        <admin_modify_template translate="label">
+                            <label>Admin Email Template for Modify</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>61</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <depends>
+                                <send_admin_email>1</send_admin_email>
+                            </depends>
+                        </admin_modify_template>
+						<admin_email translate="label comment">
+                            <label>Admin Email Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                            <comment><![CDATA[Email Id of Admin User]]></comment>
+                            <depends>
+                                <send_admin_email>1</send_admin_email>
+                           </depends>
+                        </admin_email>
+       				</fields>
+				</admin>
+			</groups>
+		</appointments>
+	</sections>
+</config>

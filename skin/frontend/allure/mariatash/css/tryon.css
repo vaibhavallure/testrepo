@@ -1,0 +1,31 @@
+#containerTryon{
+        width:830px;
+        height:400px;
+        border:1px solid #CCC;
+    }
+    .leftContainer{
+        width:308px;
+        height:387px;
+        float:left;
+        margin:3px;
+        border:1px solid #CCC;
+    }
+    .rightContainer{
+        width:490px;
+        height:387px;
+        margin:3px;
+        float:right;
+        border:1px solid #CCC;
+    }
+    
+    .filters{
+        width:490px;
+        height:57px;
+        border:1px solid #CCC;
+        display:none;
+    }
+    .products{
+        width:490px;
+        height:330px;
+        border:1px solid #CCC;
+    }

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<widgets>
+    <ecp_categorycarrousel type="ecp_categorycarrousel/carrousel" module="ecp_categorycarrousel">
+        <name>Ecp Category Carrousel</name>
+        <description>Add a special menu above Category Page </description>
+        <parameters>
+            <category_level translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>3</value>
+                <label>Categories Level To Show on the Slideshow</label>
+                <type>text</type>
+            </category_level>
+        </parameters>
+    </ecp_categorycarrousel>
+</widgets>

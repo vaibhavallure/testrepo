@@ -1,0 +1,49 @@
+
+<script src="<?php echo $this->getSkinUrl('js/jQuery/jquery.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jQuery/jquery-ui.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/jQuery/noconflict.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/appointmentjs/jquery-ui.multidatespicker.js');?>"></script>
+
+<!-- Get the already saved working dates to show selected in calendar logic-->
+<?php 
+	$piersersmodel = Mage::registry('appointment_piercers_data');
+	if($piersersmodel):
+		$workdays = $piersersmodel->getWorkingDays();
+	
+	$workdays_arr = array_map('trim', explode(',', $workdays));
+	$_days = '"'.implode('","', $workdays_arr).'"';
+	endif;
+?>
+		
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		
+		var dates = new Array(<?php echo $_days;?>);
+		if(dates.length <= 0){
+			jQuery('#with-altField').multiDatesPicker({
+				
+				minDate: 0,
+				altField: '#altField'	
+			});
+		}
+		else{
+			jQuery('#with-altField').multiDatesPicker({
+				
+				minDate: 0,
+				altField: '#altField',
+				addDates: dates							
+			});
+		}
+		
+		prettyPrint();
+	});
+</script>
+<!-- Get the already saved working dates to show selected in calendar logic-->
+
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td>
+    <div id="with-altField" ></div>
+	<input type="hidden" id="altField"  name="working_days" value="">
+    <td>
+</tr>

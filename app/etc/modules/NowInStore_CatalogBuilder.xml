@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <NowInStore_CatalogBuilder>
+        <active>true</active>
+        <codePool>community</codePool>
+        </NowInStore_CatalogBuilder>
+    </modules>
+</config>

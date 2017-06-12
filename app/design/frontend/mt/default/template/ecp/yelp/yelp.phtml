@@ -1,0 +1,22 @@
+<?php
+$_yelpinfo = $this->getYelpInfo(); 
+$_url      = $this->getYelpUrl();
+if(isset($_yelpinfo->error)) {  
+    return;
+}
+$rate = round($_yelpinfo->rating, 0, PHP_ROUND_HALF_DOWN);
+?>
+<div class="yelp">   
+        <h4><a style="color:#3f4048; font-size: 16px;"href="<?php echo $_url;?>" target="_blank"><?php echo $_yelpinfo->name ?></a></h4>
+        <div class="rate">
+            <a href="<?php echo $_url;?>" target="_blank">
+            <img src="<?php echo $_yelpinfo->rating_img_url ?>" />
+            <span class="reviews"><?php echo $_yelpinfo->review_count ?> reviews <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN).'frontend/mt/default/images/yelp-icon.png'; ?>"></span>
+            </a>
+        </div><span class="yelp-icon"></span>
+        <div class="location">
+            <a href="<?php echo $_url;?>" target="_blank">
+                <span><?php echo $_yelpinfo->location->address[0] ?>, (between <?php echo $_yelpinfo->location->cross_streets?>)</br> <?php echo $_yelpinfo->location->neighborhoods[0] ?>, <?php echo $_yelpinfo->location->city ?>, <?php echo $_yelpinfo->location->state_code." ".$_yelpinfo->location->postal_code ?></span>
+                </a>
+        </div>
+</div>

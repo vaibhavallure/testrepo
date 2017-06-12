@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+     <modules>
+        <Magnify_Sendfriendextended>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Magnify_Sendfriendextended>
+     </modules>
+</config>

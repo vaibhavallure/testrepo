@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Allure_InstaCatalog
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category    Allure
+ * @package     Allure_InstaCatalog
+ * @copyright   Copyright© 2016, Allure Inc
+ * @license     http://opensource.org/licenses/mit-license.php MIT License
+ * @author      Team Allure <extensions@allureinc.co>
+-->
+<config>
+    <sections>
+        <allure_instacatalog translate="label" module="allure_instacatalog">
+            <class>separator-top</class>
+            <label>Shop By Instagram</label>
+            <tab>allure</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>20</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <feed translate="label" module="allure_instacatalog">
+                    <label>Instagram Feed Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <!-- <breadcrumbs translate="label">
+                            <label>Use Breadcrumbs</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </breadcrumbs> -->
+                       <!--  <feed_type>
+                            <label>Feed source</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>allure_instacatalog/options</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </feed_type> -->
+                        <user_id>
+                            <label>User ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[ <a href="http://tinyurl.com/ne389y6" target="_blank">Username to user id</a> | <a target="_blank" href="https://google.com/search?q=What%20is%20my%20Instagram%20account%20ID%3F">What is my Instagram account ID?</a> ]]></comment>
+                        </user_id>
+                        <access_token>
+                            <label>Access Token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment></comment>
+                        </access_token>
+                        <!-- <tag_name>
+                            <label>Tag Name (hashtag)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>without hastag sign</comment>
+                            <depends><feed_type>hashtag</feed_type></depends>
+                        </tag_name> -->
+                        <client_id>
+                            <label>Client ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>from instagram developers account</comment>
+                            <depends><feed_type>hashtag</feed_type></depends>
+                        </client_id>
+                        <!-- <filter_feeds>
+                            <label>Filter feeds</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[ Select feeds from top menu <strong>"Instagram > Feed"</strong> to feed selected feeds only]]></comment>
+                        </filter_feeds> -->
+                        <access_token2>
+                            <label>Access Token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment></comment>
+                            <depends><feed_type>hashtag</feed_type><filter_feed>1</filter_feed></depends>
+                        </access_token2>
+                        <limit>
+                            <label>Limit</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>How many feeds to retrieve ? default is 20</comment>
+                            <!-- <depends><filter_feeds>0</filter_feeds></depends> -->
+                        </limit>
+                    </fields>
+                </feed>
+                
+                <shop_feed translate="label" module="allure_instacatalog">
+                    <label>Instagram Shop by Look Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                    
+                    	<enabled translate="label">
+                            <label>Use Instagram</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                    
+                        <user_id>
+                            <label>User ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[ <a href="http://tinyurl.com/ne389y6" target="_blank">Username to user id</a> | <a target="_blank" href="https://google.com/search?q=What%20is%20my%20Instagram%20account%20ID%3F">What is my Instagram account ID?</a> ]]></comment>
+                            <depends><enabled>0</enabled></depends>
+                        </user_id>
+                        <access_token>
+                            <label>Access Token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment></comment>
+                            <depends><enabled>0</enabled></depends>
+                        </access_token>
+                        
+                        <extra_cookie>
+                            <label>Cookie</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><active>0</active></depends>
+                        </extra_cookie>
+                    
+                    
+                    </fields>
+                </shop_feed>
+                
+                
+                <!-- <feed_features translate="label" module="allure_instacatalog">
+                    <label>More Configurations</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <link_feeds>
+                            <label>Link Feeds</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Link feeds to instagram feed</comment>
+                        </link_feeds>
+                        <resolution>
+                            <label>Choose resolution</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>allure_instacatalog/resolutions</source_model>
+                            <sort_order>105</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </resolution>
+                        <caption>
+                            <label>Show Caption</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </caption>
+                        <likes_count>
+                            <label>Show Likes count</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </likes_count>
+                        <comment_count>
+                            <label>Show Comment count</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </comment_count>
+                    </fields>
+                </feed_features> -->
+            </groups>
+        </allure_instacatalog>
+    </sections>
+</config>

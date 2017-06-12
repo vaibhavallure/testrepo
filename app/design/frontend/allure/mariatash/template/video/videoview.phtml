@@ -1,0 +1,73 @@
+<!DOCTYPE> 
+<html>
+<head>
+	<title>video</title>
+	<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<meta http-equiv="expires" content="FRI, 13 APR 1999 01:00:00 GMT"> 
+	<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>/jquery/jquery-1.8.1.min.js" type="text/javascript"></script>
+	<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>/jquery/flowplayer.js"></script>
+	<link rel="stylesheet" type="text/css"   href="http://releases.flowplayer.org/5.2.1/skin/minimalist.css" />
+	<style type="text/css">
+		.flowplayer {
+		   width: 960px;
+		   height: 539px;
+                   top:0;
+                   left:0;
+		}
+	</style>
+</head>
+<body style="background: #DEDEDE;">
+<?php
+$video = $this->videoView();
+if(!$video->getUrl()){
+    $defaultVideo = Mage::helper('ecp_video')->getDefaultVideo();
+    $video->setUrl($defaultVideo->getUrl());
+}
+if(!$video) return;
+if($video->getType() == 'url'): ?>
+	<?php $videoUrl = $video->getUrl();
+			$isYT   = strpos($videoUrl, 'youtu');
+		if($isYT === false) {} else {
+			$videoUrl = $videoUrl . '?wmode=opaque';	
+		}                
+
+?>
+    <iframe id="videoView" src="<?php echo $videoUrl; ?>" width="960" height="540" frameborder="0"></iframe>
+    <script type="text/javascript">
+	    console.log('<?php echo $videoUrl ?>');
+    </script>
+<?php else: ?>
+    <?php if(substr($video->getUrl(), -4) == '.wmv'): ?>
+        <OBJECT ID="MediaPlayer" WIDTH="192" HEIGHT="190" CLASSID="CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95" STANDBY="Loading Windows Media Player components..." TYPE="application/x-oleobject">
+        <PARAM NAME="FileName" VALUE="videofilename.wmv">
+        <PARAM name="autostart" VALUE="false">
+        <PARAM name="ShowControls" VALUE="true">
+        <param name="ShowStatusBar" value="false">
+        <param name="wmode" value="opaque">
+        <PARAM name="ShowDisplay" VALUE="false">
+        <EMBED TYPE="application/x-mplayer2" WMODE="opaque" SRC="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $video->getUrl(); ?>" NAME="MediaPlayer" WIDTH="960" HEIGHT="540" ShowControls="1" ShowStatusBar="0" ShowDisplay="0" autostart="0"> </EMBED>
+        </OBJECT>
+    <?php elseif(substr($video->getUrl(), -4) == '.mp4'):?>
+            <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js').'flash/jwplayer.js';?>"></script>
+            <div class="flowplayer">
+            <div id="myElement">Loading the player...</div>
+            <script type="text/javascript">
+                jwplayer("myElement").setup({
+                    file: "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $video->getUrl(); ?>",
+                    image: "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $video->getThumbnail(); ?>",
+                    width: 960,
+		    height: 539
+                });
+            </script>
+            </div>
+    <?php else: ?>
+        <div class="flowplayer">
+            <video id="videoView" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $video->getUrl(); ?>"></video>          
+        </div>                    
+    <?php endif; ?>    
+<?php endif; ?>
+</body> 
+</html>
+

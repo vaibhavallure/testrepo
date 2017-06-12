@@ -1,0 +1,25 @@
+input {
+ width:300px
+}
+
+select {
+ width:306px;
+ min-height: 22px;
+ 
+}
+.input_submit{
+    width: 110px;
+    
+    height: 25px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ed6502 #a04300 #a04300 #ed6502;
+    padding: 1px 7px 2px 7px;
+    background: #ffac47 url(images/btn_bg.gif) repeat-x 0 100%;
+    color: #fff
+    
+ }
+ .sub_main ul li {
+ 
+ margin:20px;
+ }

@@ -1,0 +1,26 @@
+<?php if($this->getErrorsResponse() == false): ?>   
+<div class="city-search">
+    <?php $map_url = $this->getMapUrl();?>
+    <a href="<?php echo $map_url;?>" target="_blank">
+         <img src='<?php echo Mage::getBaseUrl('skin').'frontend/mt/default/images/media/city-search-logo.jpg' ?>'/>        
+    </a>
+     <h4><a target="_blank" href="<?php echo $map_url;?>"><?php echo $this->getName() ?></a></h4>
+        <p style="margin-top: 5px;"><?php echo $this->getCategories() ?></p>
+        <p class="citysearch-address"><?php echo $this->getAddress() ?>            
+            <a target="_blank" href="<?php echo $map_url;?>" target="_blank" class="city-search-map-link" style="color: #0081c5">(map)</a></p>
+        <p>Neighborhood: <?php echo $this->getNeighborhood() ?></p>
+
+        <div class="city-search-rating">
+            <a target="_blank" href="<?php echo $map_url;?>">
+            <?php $stars = round($this->getOverallReviewRating()/2,0,PHP_ROUND_HALF_DOWN); 
+                for($x=0; $x<$stars; $x++): ?>
+                <img src='<?php echo Mage::getBaseUrl('skin').'frontend/mt/default/images/rating-star.png' ?>' />
+            <?php endfor;
+                if($this->getOverallReviewRating()%2): ?>
+                <img src='<?php echo Mage::getBaseUrl('skin').'frontend/mt/default/images/rating-star.png' ?>' />
+            <?php endif;?>
+            <p><?php echo $this->getTotalUserReviews() ?> Reviews</p>
+            </a>
+        </div>   
+</div>
+ <?php endif;?>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Layout>
+        <version>0.1.0</version>
+        </Ecp_Layout>
+    </modules>
+    <global>
+        <helpers>
+            <ecp_layout>
+                <class>Ecp_Layout_Helper</class>
+            </ecp_layout>
+            <catalog>
+                <rewrite>
+                    <product_view>Ecp_Layout_Helper_Product_View</product_view>
+                </rewrite>
+            </catalog>
+        </helpers>
+    </global>
+    <default>
+        <apparel>
+            <attribute_set>Appeal</attribute_set>
+        </apparel>
+    </default>
+</config>

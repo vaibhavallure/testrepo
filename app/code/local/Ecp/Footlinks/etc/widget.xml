@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<widgets>
+    <footlinks_ecp type="footlinks/footlinks" module="footlinks">
+        <name>Ecp Widget - Footlinks</name>
+        <description>Add a footlink</description>
+	<parameters>
+            <!--<linkname>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Link name</label>
+                <type>select</type>
+                <source_model>footlinks/system_config_footlinksname</source_model>
+            </linkname>-->
+        </parameters>
+    </footlinks_ecp>
+</widgets>

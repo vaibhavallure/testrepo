@@ -1,0 +1,79 @@
+{
+    box-sizing: border-box;
+}
+#search-list-view  {
+    margin: 0;
+    padding: 0;
+}
+#search-list-view  li {
+    font-size:14px;
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    background: #eee;
+    font-size: 18px;
+    transition: 0.2s;
+
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+/* Set all odd list items to a different color (zebra-stripes) */
+#search-list-view li:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+/* Darker background-color on hover */
+#search-list-view li:hover {
+    background: #ddd;
+}
+
+
+/* #image-annotate-text{
+    width:148px;    		
+ } */
+#search-list-view{
+	background: #FFFEE3 none repeat scroll 0 0;
+	border: 1px solid #000000;
+	/* padding: 15px 7px; */
+	position: absolute;
+	width:280px; /* 265px; */
+	text-align: center;
+	display: block;
+    height:300px;
+    overflow: scroll;
+ }
+        		
+ #search-list-view li{
+    font-size:14px;
+ }
+        		
+ .image-annotate-area{
+     background-color: #000;
+     border-radius: 20px;
+	 color: #222;
+	 box-sizing: border-box;
+	 box-shadow: 0 0px 10px #fff, 0 0px 10px #cfc, 0 0px 10px #cfc;
+ }
+ .image-annotate-edit-area {
+     background-color: #ff5;
+	 border-radius: 20px;
+	 color: #222;
+	 box-sizing: border-box;
+	 box-shadow: 0 0px 10px #fff, 0 0px 10px #cfc, 0 0px 10px #cfc;
+ }
+ 
+ 
+.image-annotate-canvas:hover{
+	cursor: cell ! important;
+ }
+#LookbookImageBlock {  
+	overflow: hidden;	
+}
+
+.button.tiny ,.button.tiny.success{
+	margin: 0px;
+}
+

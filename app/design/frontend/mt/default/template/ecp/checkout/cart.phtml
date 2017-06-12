@@ -1,0 +1,17 @@
+<div class="cart-mt-checkout">
+    <h2>Your Shopping Cart <a href="<?php echo $this->getUrl('checkout/cart')?>">Edit</a></h2>
+    <?php $i=0; $prices = array(); $skus= array(); ?>
+    <?php foreach($this->getItems() as $_item): ?>
+        <?php if($i == 4) break; ?>
+        <div class="cart-product">
+            <?php echo $this->getItemHtml($_item) ?>
+            <?php $prices[$i]=floatval($_item->getPrice()); $skus[$i] = $_item->getSku();  $i++?>
+        </div>
+    <?php endforeach ?>
+    <div class="viewAll">
+        <a href="<?php echo $this->getUrl('checkout/cart')?>">View All Items In Cart</a>
+    </div>
+    <div id="totalsDivRightNav" class="totals-right-nav">
+        <?php echo $this->getChildHtml('totals'); ?>
+    </div>
+</div>

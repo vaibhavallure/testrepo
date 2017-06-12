@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_AdminPermissions>
+            <name>Allure - Admin Store Restrictions</name>
+            <version>0.0.1</version>
+        </Allure_AdminPermissions>
+    </modules>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <allure_adminpermissions>
+                    <file>allure/adminpermissions.xml</file>
+                </allure_adminpermissions>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <global>
+        <blocks>
+            <allure_adminpermissions>
+                <class>Allure_AdminPermissions_Block</class>
+            </allure_adminpermissions>
+            <adminhtml>
+                <rewrite>
+                    <permissions_user_edit_tab_main>Allure_AdminPermissions_Block_Rewrite_Adminhtml_Permissions_User_Edit_Tab_Main</permissions_user_edit_tab_main>
+                	<store_switcher>Allure_AdminPermissions_Block_Rewrite_Adminhtml_Permissions_Store_Switcher</store_switcher>
+                	<system_config_switcher>Allure_AdminPermissions_Block_Rewrite_Adminhtml_Permissions_System_Config_Switcher</system_config_switcher>
+                	<sales_order_create_store_select>Allure_AdminPermissions_Block_Rewrite_Adminhtml_Permissions_Sales_Order_Create_Store_Select</sales_order_create_store_select>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+
+        <models>
+            <allure_adminpermissions>
+                <class>Allure_AdminPermissions_Model</class>
+                <resourceModel>allure_adminpermissions_resource</resourceModel>
+            </allure_adminpermissions>
+            <allure_adminpermissions_resource>
+                <class>Allure_AdminPermissions_Model_Resource</class>
+            </allure_adminpermissions_resource>
+            
+            <adminhtml>
+                <rewrite>
+            		<system_store>Allure_AdminPermissions_Model_Rewrite_Adminhtml_System_Store</system_store>
+            	</rewrite>
+            </adminhtml>
+            
+        </models>
+
+        <resources>
+            <allure_adminpermissions_setup>
+                <setup>
+                    <module>Allure_AdminPermissions</module>
+                    <class>Allure_AdminPermissions_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </allure_adminpermissions_setup>
+            <allure_adminpermissions_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </allure_adminpermissions_write>
+            <allure_adminpermissions_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </allure_adminpermissions_read>
+        </resources>
+
+        <helpers>
+            <allure_adminpermissions>
+                <class>Allure_AdminPermissions_Helper</class>
+            </allure_adminpermissions>
+        </helpers>
+
+        <events>
+        
+            <admin_permissions_role_prepare_save>
+                <observers>
+                    <allure_adminpermissions>
+                        <class>Allure_AdminPermissions_Model_Observer</class>
+                        <method>saveRolesPermissions</method>
+                    </allure_adminpermissions>
+                </observers>
+            </admin_permissions_role_prepare_save>
+            <admin_user_save_before>
+                <observers>
+                    <allure_adminpermissions>
+                        <class>Allure_AdminPermissions_Model_Observer</class>
+                        <method>saveUserStoreRestriction</method>
+                    </allure_adminpermissions>
+                </observers>
+            </admin_user_save_before>
+            
+            <controller_action_predispatch>
+				<observers>
+					<allure_adminpermissions>
+						<class>Allure_AdminPermissions_Model_Observer</class>
+						<method>hookToControllerActionPreDispatch</method>
+					</allure_adminpermissions>
+				</observers>
+			</controller_action_predispatch>
+            
+            <!-- <catalog_product_collection_load_before>
+                <observers>
+                    <allure_adminpermissions>
+                        <class>Allure_AdminPermissions_Model_Observer</class>
+                        <method>filterProductsByAdminStoreRestrictions</method>
+                    </allure_adminpermissions>
+                </observers>
+            </catalog_product_collection_load_before> -->
+            <sales_order_grid_collection_load_before>
+                <observers>
+                    <allure_adminpermissions>
+                        <class>Allure_AdminPermissions_Model_Observer</class>
+                        <method>filterOrdersByAdminStoreRestrictions</method>
+                    </allure_adminpermissions>
+                </observers>
+            </sales_order_grid_collection_load_before>
+            <sales_order_invoice_grid_collection_load_before>
+                <observers>
+                    <allure_adminpermissions>
+                        <class>Allure_AdminPermissions_Model_Observer</class>
+                        <method>filterInvoicesByAdminStoreRestrictions</method>
+                    </allure_adminpermissions>
+                </observers>
+            </sales_order_invoice_grid_collection_load_before>
+            <sales_order_shipment_grid_collection_load_before>
+                <observers>
+                    <allure_adminpermissions>
+                        <class>Allure_AdminPermissions_Model_Observer</class>
+                        <method>filterShipmentsByAdminStoreRestrictions</method>
+                    </allure_adminpermissions>
+                </observers>
+            </sales_order_shipment_grid_collection_load_before>
+            <sales_order_creditmemo_grid_collection_load_before>
+                <observers>
+                    <allure_adminpermissions>
+                        <class>Allure_AdminPermissions_Model_Observer</class>
+                        <method>filterCreditmemosByAdminStoreRestrictions</method>
+                    </allure_adminpermissions>
+                </observers>
+            </sales_order_creditmemo_grid_collection_load_before>
+        </events>
+    </global>
+
+</config>

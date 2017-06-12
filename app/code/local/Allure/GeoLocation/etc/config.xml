@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_GeoLocation>
+			<name>Allure - Geo Location</name>
+			<version>2.0.1</version>
+			<depends>
+				<Allure_Core />
+			</depends>
+		</Allure_GeoLocation>
+	</modules>
+	<global>
+		<helpers>
+			<allure_geolocation>
+				<class>Allure_GeoLocation_Helper</class>
+			</allure_geolocation>
+		</helpers>
+		<models>
+			<allure_geolocation>
+				<class>Allure_GeoLocation_Model</class>
+				<resourceModel>allure_geolocation_mysql4</resourceModel>
+			</allure_geolocation>
+            <allure_geolocation_mysql4>
+                <class>Allure_GeoLocation_Model_Mysql4</class>
+                <entities>
+                    <geoinfo>
+                        <table>allure_geoinfo</table>
+                    </geoinfo>
+                </entities>
+            </allure_geolocation_mysql4>
+		</models>
+		
+        <resources>
+            <allure_geolocation_setup>
+                <setup>
+                    <module>Allure_GeoLocation</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </allure_geolocation_setup>
+            <allure_geolocation_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </allure_geolocation_write>
+            <allure_geolocation_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </allure_geolocation_read>
+        </resources>
+	</global>
+	<frontend>
+		<events>
+			<controller_action_predispatch>
+				<observers>
+					<allure_geolocation>
+						<class>allure_geolocation/observer</class>
+						<method>loadGeoInfo</method>
+					</allure_geolocation>
+				</observers>
+			</controller_action_predispatch>
+		</events>
+	</frontend>
+	<adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<allure_geolocation module="allure_geolocation">
+											<title>Allure - GeoLocation</title>
+										</allure_geolocation>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+	<default>
+		<allure_geolocation>
+			<general>
+				<status>0</status>
+				<test_mode>0</test_mode>
+				<ip_whitelist></ip_whitelist>
+				<ip_override></ip_override>
+				<country_override></country_override>
+				<private_mode>0</private_mode>
+				<proxy_enabled>0</proxy_enabled>
+				<proxy_headers><![CDATA[HTTP_X_REAL_IP, HTTP_X_FORWARDED_FOR, REMOTE_ADDR]]></proxy_headers>
+				<api_url>http://ip-api.com/json/</api_url>
+				<curl_timeout>5</curl_timeout>
+				<debug>0</debug>
+			</general>
+		</allure_geolocation>
+	</default>
+</config>

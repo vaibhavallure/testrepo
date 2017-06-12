@@ -1,0 +1,63 @@
+before_script:
+  - echo 'Start Deployment'
+stages:
+  - devel
+  - stage
+  - alpha
+  - multistore
+  - bugfixes
+  - deploy
+devel:
+  stage: devel
+  tags:
+    - development
+  only:
+    - development
+  script:
+    - deploy
+    - echo 'Deployed on Allure Local Dev'
+stage:
+  stage: stage
+  tags:
+    - staging
+  only:
+    - staging
+  script:
+    - deploy
+    - echo 'Deployed on Staging'
+alpha:
+  stage: alpha
+  tags:
+    - staging
+  only:
+    - master
+  script:
+    - deploy mt
+    - echo 'Deployed on Alpha Staging'
+multistore:
+  stage: multistore
+  tags:
+    - staging
+  only:
+    - multistore
+  script:
+    - deploy mt-multistore
+    - echo 'Deployed on Multi-Store'
+bugfixes:
+  stage: bugfixes
+  tags:
+    - staging
+  only:
+    - bugfixes
+  script:
+    - deploy mt-bugfixes
+    - echo 'Deployed on Bugfixes Staging'
+deploy:
+  stage: deploy
+  tags:
+    - production
+  only:
+    - production
+  script:
+    - deploy
+    - echo 'Deployed on Production'

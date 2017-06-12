@@ -1,0 +1,119 @@
+<?php 
+	$collection = $this->getCollection();
+	$helper = Mage::helper("inventory");
+?>
+<div class="content-header">
+	<h3 class="icon-head"><?php echo $helper->__('Inventory Receiving')?></h3>
+    <button style="float:right" form="inventory_receive"><?php echo $helper->__('Update')?></button>
+</div>
+<div class="input-group">
+	<label><?php echo $helper->__('STORE')?></label>
+	<?php echo $this->getChildHtml('inventory_store');?>
+	
+  	<label><?php echo $helper->__('SCAN OR ENTER')?></label>
+  	<input id="search" name="search" type="text" maxlength="150" placeholder="<?php echo $helper->__('Sku,Name')?>" 
+  		value="<?php if($_GET['search']!=null){echo $_GET['search'];}?>" class="form-control"  aria-describedby="basic-addon2"/>
+  	<button  type="button" onclick="submitsearch()"><?php echo $helper->__('Search')?></button>
+  	<button  type="button" onclick="resetSearch()"><?php echo $helper->__('Reset Filter')?></button>
+</div>
+
+<form id="inventory_receive" action="<?php echo Mage::helper('adminhtml')
+	->getUrl('adminhtml/inventory_stock/save', array('_secure' => true));?>" method="post">
+	
+	<div class="pager-inventory">
+		<?php echo $this->getPagerHtml(); ?>
+	</div>
+	<?php 
+		$websiteId=1;
+		if(Mage::getSingleton('core/session')->getMyWebsiteId())
+			$websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
+		$website=Mage::getModel( "core/website" )->load($websiteId);
+		$storeId=$website->getStoreId();
+		$stockId=$website->getStockId();
+	?>
+	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+	<table class="iventory-product table" style="width: 100%">
+		<th><?php echo $helper->__('SKU')?></th>
+		<th><?php echo $helper->__('Image')?></th>
+		<th><?php echo $helper->__('PRODUCT NAME')?></th>
+		<th><?php echo $helper->__('ATTRIBUTE')?></th>
+		<th><?php echo $helper->__('CURRENT QTY')?></th>
+		<th><?php echo $helper->__('COST')?></th>
+		<th><?php echo $helper->__('RECEIVED QTY')?></th>
+		<th><?php echo $helper->__('TOTAL QTY')?></th>
+    	<?php 
+    		foreach ($collection as $_product):
+    		$product = Mage::getModel ( 'catalog/product' )->setStoreId($stockId)->load ( $_product->getId() );
+    	?>
+		<tr id="inventory-row-<?php echo $product->getId(); ?>">
+			<td><?php echo $_product->getSku();?></td>
+			<td>
+				<img style="width: 100px; height: 100px;" class="product_inventory_thumbnail" 
+					src="<?php  echo  Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(100);?>"/>
+			</td>
+			<td><?php echo $_product->getName();?></td>
+			<?php 
+				$attributeSetModel = Mage::getModel("eav/entity_attribute_set");
+				$attributeSetModel->load($_product->getAttributeSetId());
+				$attributeSetName  = $attributeSetModel->getAttributeSetName();
+			?>	
+			<td><?php echo $attributeSetName;?></td>
+			<?php 
+				$inven=Mage::getModel('cataloginventory/stock_item')
+				->loadByProductAndStock($_product,$stockId)
+			?>
+			<td>
+				<div>
+					<span ><?php echo round($inven->getQty())?></span>
+					<input type="hidden" id="current_<?php echo $product->getId() ?>" 
+						value="<?php  echo round($inven->getQty()) ?>"/>
+				</div>
+			</td>
+			<td>
+				
+				<input style="width:50px"  name="qty[<?php echo $product->getId() ?>][<?php echo "cost" ?>]" 
+					type="text" value=""/>
+				<div>
+					<span>
+						<?php 
+						if($product->getCost()){
+							echo round($product->getCost(),2);
+							}else {
+								echo "Not Set";
+							}
+						?>
+					</span>
+				</div>
+			</td>
+			<td>
+				<div><span><?php $staockId=0;?></span></div>
+				<input style="width:50px" id="<?php echo $product->getId() ?>" 
+				name="qty[<?php echo $product->getId() ?>][<?php echo $staockId ?>]" 
+				type="text" value="" onkeyup='updateReceivingTotalQty(this)'/>
+			</td>
+					
+			<td>
+				<div>
+					<span id="total_<?php echo $product->getId() ?>">
+						<?php echo  round($inven->getQty())?>
+					</span>
+				</div>
+			</td>
+		</tr>		
+        <?php endforeach ;?>
+    </table>
+    <div class="pager-inventory">
+		<?php echo $this->getPagerHtml(); ?>
+	</div>
+</form>   	 
+      	 
+<script type="text/javascript">
+	jQuery.noConflict();
+</script>
+<script type="text/javascript">
+	if (typeof Allure == "undefined") {
+	   var Allure = {};
+	}
+	Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+	Allure.InventoryStoreSwitch = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_stock/store', array('_secure' => true));?>';
+</script>

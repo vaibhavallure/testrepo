@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Allure_InstaCatalog
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category    Allure
+ * @package     Allure_InstaCatalog
+ * @copyright   Copyright© 2016, Allure Inc
+ * @license     http://opensource.org/licenses/mit-license.php MIT License
+ * @author      Team Allure <extensions@allureinc.co>
+-->
+<config>
+	<modules>
+		<Allure_InstaCatalog>
+			<version>1.0.1</version>
+		</Allure_InstaCatalog>
+	</modules>
+	<global>
+		<resources>
+			<allure_instacatalog_setup>
+				<setup>
+					<module>Allure_InstaCatalog</module>
+					<class>Allure_InstaCatalog_Model_Resource_Setup</class>
+				</setup>
+			</allure_instacatalog_setup>
+		</resources>
+		<blocks>
+			<allure_instacatalog>
+				<class>Allure_InstaCatalog_Block</class>
+			</allure_instacatalog>
+		</blocks>
+		<helpers>
+			<allure_instacatalog>
+				<class>Allure_InstaCatalog_Helper</class>
+			</allure_instacatalog>
+		</helpers>
+		<models>
+			<instacatalog>
+				<class>Allure_InstaCatalog_Model</class>
+			</instacatalog>
+			<allure_instacatalog>
+				<class>Allure_InstaCatalog_Model</class>
+				<resourceModel>allure_instacatalog_resource</resourceModel>
+			</allure_instacatalog>
+			<allure_instacatalog_resource>
+				<class>Allure_InstaCatalog_Model_Resource</class>
+				<entities>
+					<feed>
+						<table>allure_instacatalog_feed</table>
+					</feed>
+					<feed_store>
+						<table>allure_instacatalog_feed_store</table>
+					</feed_store>
+				</entities>
+			</allure_instacatalog_resource>
+		</models>
+	</global>
+	<adminhtml>
+		<layout>
+			<updates>
+				<allure_instacatalog>
+					<file>allure/instacatalog.xml</file>
+				</allure_instacatalog>
+			</updates>
+		</layout>
+		<translate>
+			<modules>
+				<Allure_InstaCatalog>
+					<files>
+						<default>Allure_InstaCatalog.csv</default>
+					</files>
+				</Allure_InstaCatalog>
+			</modules>
+		</translate>
+		<global_search>
+			<feed>
+				<class>allure_instacatalog/adminhtml_search_feed</class>
+				<acl>allure_instacatalog</acl>
+			</feed>
+		</global_search>
+	</adminhtml>
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Allure_InstaCatalog before="Mage_Adminhtml">Allure_InstaCatalog_Adminhtml</Allure_InstaCatalog>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	 <crontab>
+		<jobs>
+			<allure_instacatalog>
+				<schedule>
+					<cron_expr>0 22 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>Allure_InstaCatalog/cron::syncFeeds</model>
+				</run>
+			</allure_instacatalog>
+		</jobs>
+	</crontab>
+	<frontend>
+		<routers>
+			<allure_instacatalog>
+				<use>standard</use>
+				<args>
+					<module>Allure_InstaCatalog</module>
+					<frontName>instacatalog</frontName>
+				</args>
+			</allure_instacatalog>
+		</routers>
+		<layout>
+			<updates>
+				<allure_instacatalog>
+					<file>allure/instacatalog.xml</file>
+				</allure_instacatalog>
+			</updates>
+		</layout>
+	</frontend>
+	<default>
+		<allure_instacatalog>
+			<feed>
+				<breadcrumbs>1</breadcrumbs>
+			</feed>
+		</allure_instacatalog>
+	</default>
+</config>

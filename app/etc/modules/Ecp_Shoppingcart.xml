@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Shoppingcart>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ecp_Shoppingcart>
+    </modules>
+</config>

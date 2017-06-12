@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Recentlyviewed>
+        <version>0.1.0</version>
+        </Ecp_Recentlyviewed>
+    </modules>
+    <global>       
+        <blocks>
+            <ecp_recentlyviewed>
+                <class>Ecp_Recentlyviewed_Block</class>
+            </ecp_recentlyviewed>                 
+            <reports>
+                <rewrite>
+                    <product_viewed>Ecp_Recentlyviewed_Block_Product_Viewed</product_viewed>                  
+                </rewrite>
+	    </reports>         
+        </blocks> 
+     </global>    
+</config>

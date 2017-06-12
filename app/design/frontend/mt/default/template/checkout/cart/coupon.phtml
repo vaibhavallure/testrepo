@@ -1,0 +1,93 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<!--<form id="discount-gift-cart" action="#" method="post">
+<div class="discount">
+    <div class="discount-form">
+        <label for="coupon_code"><?php // echo $this->__('Gift Card') ?></label>
+        <input type="hidden" name="remove" id="remove-coupone" value="0" />
+        <div class="input-cart">
+            <input class="input-text" id="coupon_code" name="coupon_code" value="<?php // echo $this->htmlEscape($this->getCouponCode()) ?>" />
+        </div>
+        <div class="buttons-set">
+            <button type="button" title="<?php // echo $this->__('Apply') ?>" class="button" onclick="discountForm.submit(false)" value="<?php // echo $this->__('Apply') ?>"><span><span><?php // echo $this->__('Apply') ?></span></span></button>
+            <p class="youhave">You have $35 on this Card</p>
+            <?php // if(strlen($this->getCouponCode())): ?>
+                &nbsp; <button type="button" title="<?php // echo $this->__('Cancel Coupon') ?>" class="button" onclick="discountForm.submit(true)" value="<?php // echo $this->__('Cancel Coupon') ?>"><span><span><?php // echo $this->__('Cancel Coupon') ?></span></span></button>
+            <?php // endif;?>
+        </div>
+    </div>
+</div>-->
+</form>
+<form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
+    <div class="discount">        
+        <div class="discount-form">
+            <label for="coupon_code2"><?php echo $this->__('Promo Code') ?></label>
+            <input type="hidden" name="remove" id="remove-coupone" value="0" />
+            <div class="input-cart">
+                <input class="input-text" id="coupon_code2" name="coupon_code" value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" <?php echo (strlen($this->getCouponCode())) ? 'disabled' : '';?>/>
+            </div>
+            <div class="buttons-set">                
+                <?php if(strlen($this->getCouponCode())): ?>
+                    <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button_coupon" onclick="discountForm.submit(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
+                    <p class="youhave validation-advice">Promo Code Applied</p>
+                <?php else: ?>
+                    <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="discountForm.submit()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>                
+                <?php endif;?>
+            </div>
+        </div>                
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var discountForm = new VarienForm('discount-coupon-form');
+Validation.add('emptycustomvalidation','<?php echo $this->__('This is a required field');?>',function(myInput){
+    if( myInput != '' )
+    {
+        return true;
+    }
+    return false;
+});
+
+discountForm.submit = function (remove) {
+    $('coupon_code2').addClassName('required-entry');
+    $('coupon_code2').addClassName('emptycustomvalidation');        
+    $('remove-coupone').value = "0";
+    if (this.validator.validate()) {
+        if (remove) {
+            $('coupon_code2').removeClassName('required-entry');
+            $('remove-coupone').value = "1";            
+        } else {
+            $('coupon_code2').addClassName('required-entry');
+            $('coupon_code2').addClassName('emptycustomvalidation');        
+            $('remove-coupone').value = "0";
+        }
+        return VarienForm.prototype.submit.bind(discountForm)();
+    }
+        return false;
+}
+//]]>
+</script>

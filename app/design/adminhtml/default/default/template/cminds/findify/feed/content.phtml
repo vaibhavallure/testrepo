@@ -1,0 +1,294 @@
+<?php
+/**
+* @author CreativeMinds Team
+* @copyright Copyright (c) 2008-2012 CreativeMinds (http://www.CreativeMinds.com)
+* @package CreativeMinds_Feed
+*/
+
+?>
+<?php $code = 'Column'; ?>
+<?php $fields = $this->getFields(); ?>
+<script type="text/javascript">
+//<![CDATA[
+<?php 
+//echo $this->getDynamicJs($code) 
+?>
+    
+function addDynamic(tpl){
+    Element.insert($( tpl + "_container"), {
+        bottom: $( tpl + "_template").innerHTML
+    });
+}
+
+function removeDynamic(button){
+    Element.remove(button.up(".field-row"));
+}
+
+function addDynamicCondition(){
+    addDynamic('Condition');
+}
+    
+function addDynamicColumn() {
+    addDynamic('Column');
+}
+
+function removeDynamicColumn(button){
+    removeDynamic(button);
+}
+
+function removeDynamicCondition(button){
+    removeDynamic(button);
+}
+
+function getXMLRowFormat(){
+    var ret = "";
+    switch($("insert_type").value){
+        case "images":
+            ret = $$("#xml_image_format #insert_image_format")[0].value;
+            break;
+        default:
+            ret = $$("#xml_image_format #insert_format")[0].value;
+            break;
+    }
+
+    return ret;
+}
+
+function addDynamicXmlRow() {
+    
+    var insertAttr = "#insert_attr_" + $("insert_type").value;
+    
+    var tpl = '<:xml_tag>{type=":insert_type" value=":value" format=":insert_format" length=":insert_length" optional=":insert_optional" parent=":parent"}</:xml_tag>';
+    
+    var repl = {
+        ':xml_tag': $("xml_tag").value,
+        ':insert_type': $("insert_type").value,
+        ':value': $('xml_control_container').down(insertAttr).value,
+        ':insert_format': getXMLRowFormat(),
+        ':insert_length': $("insert_length").value,
+        ':insert_optional': $("insert_optional").value,
+        ':parent': $("use_parent").value
+    };
+    
+    $H(repl).each(function(item){
+        tpl = tpl.replace(eval('/' + item.key + '/g'), item.value);
+    })
+    
+    $("xml_body").value += (tpl + '\n');
+//    var insertAttr = "insert_attr_" + $("insert_type").value;
+//    $("xml_body").value = $("xml_body").value
+//        + "<" + $("xml_tag").value + ">"
+//        + $("xml_before").value
+//        + "{" + $("insert_type").value + "|"
+//        + $(insertAttr).value + "|"
+//        + getXMLRowFormat() + "|"
+//        + $("insert_length").value + "|"
+//        + $("insert_optional").value + "}"
+//        + $("xml_after").value
+//        + "</" + $("xml_tag").value + ">\n"
+}
+
+
+function findify_changeType(el){
+//    var sel = $(el).up().next().down();
+//    var arr = [sel, sel.next(), sel.next(1), sel.next(2), sel.next(3), sel.next(4)];
+//    for (var i=0; i<arr.length; ++i){
+//        //alert("$i = " + i + "\r\n $v=" + el.value);
+//        var item = arr[i];
+//        
+//        if (item)
+//            (i == el.value) ? item.show() : item.hide();
+//    }
+    
+//    $('insert_attr_' + $(el).value)
+    
+    
+    
+    $(el).up('tr').down('td#attribute_values').select('select').each(function(select){
+        select.hide();
+    }); 
+    
+    $(el).up('tr').down('td#attribute_values').select('input').each(function(select){
+        select.hide();
+    });
+    
+    $(el).up('tr').down('#insert_attr_' + $(el).value).show();
+    
+    var tr = $(el).up('tr');
+    
+}
+
+function findify_isUpload(el){
+    if (1 == $(el).value) {
+        $('upload_label').show();
+        $('upload_value').show();
+    } else {
+        $('upload_label').hide();
+        $('upload_value').hide();
+    }
+}
+
+//]]>
+</script>
+
+<style>
+    .grid table.cm_constructor{
+        width: 670px;
+    }
+    
+    .grid table.cm_constructor input.input-text{
+/*        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;*/
+    }
+    
+    .grid table.cm_constructor td{
+        padding-right: 10px;
+    }
+   
+    .grid table.cm_constructor input.input-text,
+    .grid table.cm_constructor select
+    {
+        width: 100%;
+    }
+    
+    .cm_constructor .cm_tag,
+    .cm_constructor .cm_type,
+    .cm_constructor .cm_value,
+    .cm_constructor .cm_format
+    {
+        width: 120px;
+    }
+    
+    .grid table.cm_constructor td.cm_checkbox{
+        text-align: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .grid table.cm_constructor td.cm_checkbox input[type="checkbox"]{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+</style>
+
+<div id="csv_options" <?php if ($this->getValueHtml('type') == 1) echo 'style="display:none"'?>>
+<div class="entry-edit" >
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Options') ?></h4>
+    </div>
+    <div class="fieldset" id="findify_csv">
+        <div class="hor-scroll">
+        <table class="form-list" cellspacing="0">
+        <tbody>
+        <tr>
+            <td class="label"><label for="csv_header"><?php echo $this->__('Display Out of Stock Products in Search Results') ?></label></td>
+            <td class="value">
+                <select id="option_availability" name="option_availability" class="select">
+                    <option value="0"><?php echo $this->__('No')?></option>
+                    <option value="1" <?php echo $this->getSelectedHtml('option_availability',1)?> ><?php echo $this->__('Yes')?></option>
+                </select>            
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Fields') ?></h4>
+    </div>
+    <fieldset>
+        <legend><?php echo $this->__('Fields') ?></legend>
+                <div class="grid">
+                <table class="data" style="width:100%" cellpadding="0" cellspacing="0">
+                <thead>
+                <tr class="headings">
+                    <th style="width:110px"><?php echo $this->__('Header')?></th>
+                    <th style="width:95px"><?php echo $this->__('Type')?></th>
+                    <th style="width:200px"><?php echo $this->__('Value')?></th>
+                    <th style="width:60px"><?php echo $this->__('Parent')?></th>
+                    <th><?php echo $this->__('Action') ?></th>
+                </tr>
+                </thead> 
+                </table>  
+                <div id="<?php echo $code?>_container">
+                    <?php foreach ($fields['name'] as $i=>$row): ?>
+                        <?php if($fields['name'][$i] == '') continue; ?>    
+                    <span class="field-row">
+                    <table class="data" style="width: 100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                            <!-- <input type="hidden" name="csv[is_mandatory][]" value="<?php echo (isset($fields['is_mandatory'][$i]) && $fields['is_mandatory'][$i] ? 'true' : 'false') ?>"/> -->
+                        <td style="width:111px"><input class="input-text" <?php echo (isset($fields['is_mandatory'][$i]) &&  $fields['is_mandatory'][$i] ? 'style="color: #888;"' : '') ?>name="csv[name][]"  value="<?php echo $fields['name'][$i]?>" <?php echo (isset($fields['is_mandatory'][$i]) && $fields['is_mandatory'][$i] ? 'readonly' : '') ?>/></td>
+                        <td style="width:96px"><select style="width: 96px" name="csv[type][]" onchange="findify_changeType(this)">
+                                <?php foreach ($this->getFieldTypes() as $_value => $_label): ?>
+                                    <option <?php echo $this->getSelectedHtml($fields['type'][$i], $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                <?php endforeach ?>
+                                </select></td>
+                        <td style="width:201px" id="attribute_values">
+                            <select id="insert_attr_attribute" name="csv[attr][]" style="width:200px">
+                            <?php foreach ($this->getAttributes() as $_value => $_label): ?>
+                                <option <?php echo $this->getSelectedHtml($fields['attr'][$i], $_value)?>
+                                value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                            <input id="insert_attr_text" class="input-text" name="csv[txt][]" style="width:195px; display:none"/>
+                            <select id="insert_attr_images" name="csv[images][]" style="width:200px; display:none;">
+                            <?php foreach ($this->getImagesFields() as $_value => $_label): ?>
+                                <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                        </td>
+                        <td style="width: 61px">
+                            <select name="csv[parent][]">
+                                <option value="no"><?php echo $this->__('No')?></option>
+                                <option <?php echo ($fields['parent'][$i] == 'yes' ? 'selected' : '')?> value="yes"><?php echo $this->__('Yes')?></option>
+                            </select>
+                            <!--<input class="input-checkbox" value="1" type="checkbox"  <?php echo ($this->getValueHtml($i) == 1 ? 'checked' : '')?> />-->
+                        </td>
+                        <td><?php echo (!isset($fields['is_mandatory'][$i]) || !$fields['is_mandatory'][$i]) ? $this->getRemoveDynamicButtonHtml($code) : '' ?></td>
+                    </tr>
+                    </table>                     
+                    </span>
+                    <?php endforeach ?>
+                </div>
+                <div id="<?php echo $code?>_template" style="display:none">
+                    <span class="field-row">
+                    <table class="data" style="width: 100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:111px"><input class="input-text" name="csv[name][]"  /></td>
+                        <td style="width:96px"><select style="width: 96px" name="csv[type][]" onchange="findify_changeType(this)">
+                                <?php foreach ($this->getFieldTypes() as $_value => $_label): ?>
+                                    <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                <?php endforeach ?>
+                                </select></td>
+                        <td style="width:201px" id="attribute_values">
+                            <select id="insert_attr_attribute" name="csv[attr][]" style="width:200px">
+                            <?php foreach ($this->getAttributes() as $_value => $_label): ?>
+                                <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                            <input id="insert_attr_text" class="input-text" name="csv[txt][]" style="width:195px; display:none"/>
+                            <select id="insert_attr_images" name="csv[images][]" style="width:200px; display:none;">
+                            <?php foreach ($this->getImagesFields() as $_value => $_label): ?>
+                                <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                        </td>
+                        <td style="width: 61px">
+                            <select name="csv[parent][]">
+                                <option value="no"><?php echo $this->__('No')?></option>
+                                <option value="yes"><?php echo $this->__('Yes')?></option>
+                            </select>
+                        </td>
+                        <td><?php echo $this->getRemoveDynamicButtonHtml($code) ?></td>
+                    </tr>
+                    </table>                    
+                    </span>
+                </div>  
+                </div> <!-- div grid -->              
+        <?php echo $this->getAddDynamicButtonHtml($code) ?>
+    </fieldset>
+</div>
+</div>

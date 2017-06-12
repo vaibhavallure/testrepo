@@ -1,0 +1,24 @@
+<script type="text/javascript">
+    jQuery.noConflict(); 
+    jQuery(document).ready(function() {
+        jQuery.supersized({
+            // Functionality
+            slide_interval: 5000,// Length between transitions
+            transition: 1,// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+            transition_speed: 700,// Speed of transition
+            // Component						
+            slide_links: 'blank',// Individual links for each slide (Options: false, 'num', 'name', 'blank')
+            slides:// Slideshow Images
+                <?php echo $this->getJsonImages(); ?>
+        });
+		jQuery('.std').remove();
+    });
+</script>   
+<div id="controls-wrapper" class="load-item">
+    <div id="controls">
+        <!--Slide captions displayed here-->
+        <!--Navigation-->
+        <ul id="slide-list"></ul>
+        <div id="slidecaption"></div>
+    </div>        
+</div>

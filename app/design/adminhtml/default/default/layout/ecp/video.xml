@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_video_adminhtml_video_index>
+        <reference name="content">
+            <block type="ecp_video/adminhtml_video" name="ecp_video" />
+        </reference>
+    </ecp_video_adminhtml_video_index>
+</layout>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <entrepids_slideshow_index_index>
+        <!--
+        <reference name="content">
+            <block type="slideshow/slideshow" name="slideshow" template="slideshow/slideshow.phtml" />
+        </reference>
+        
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/slideshow.phtml</template>
+            </action>
+            <action method="setIsHandle">
+                <applied>1</applied>
+            </action>   
+            <block type="entrepids_slideshow/slideshow" name="slideshow" template="slideshow/slideshow.phtml" />
+        </reference-->
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/supersized.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/supersized.shutter.css</stylesheet></action>
+            <action method="addJs"><script>supersized.3.2.7.js</script></action>
+            <action method="addJs"><script>supersized.shutter.js</script></action>           
+            
+        </reference>
+    </entrepids_slideshow_index_index>
+</layout> 

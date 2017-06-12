@@ -1,0 +1,132 @@
+<?php 
+	$collection = $this->getInstagramShopLookCollection();
+	$_feed= null;
+	$search_action  = Mage::getUrl('adminhtml/allure_instaCatalog_feed/searchAjax').'?isAjax=true';
+	$block_class =  Mage::getBlockSingleton('allure_instacatalog/adminhtml_custom');
+	$syncFeedAction = Mage::getUrl('adminhtml/allure_instaCatalog_feed/syncShopFeed');
+?>
+<?php if( count($collection)>0):?>
+
+<div class="feed-title-custom">
+	<h2>Shop By Look Feed's</h2>
+</div>
+
+
+<div class="feed-sync-post">
+	<a class="button tiny success sync-button" 
+		href="<?php echo $syncFeedAction?>"> 
+		<span>Sync Post</span>
+	</a>
+</div>
+
+<div class="clearfix"></div>
+
+<div >
+<?php foreach ($collection as $feed):
+	//$_feed = $feed;?>
+	<div class="post">
+		<div class="img" style="background-image: url(<?php echo $feed->getStandardResolution()?>); position: relative">
+		    <div class="taggable-image-info">
+		      <?php 
+		      	$taggedProducts = json_decode($feed->getHotspots());
+		      	$taggedCnt = count($taggedProducts); 
+		      	$type = "";
+		      	$mode = $feed->getLookbookMode();
+		      	if($mode==1)$type="shop by look";
+		      ?>
+		      <span id="tag-count-<?php echo $feed->getId()?>"><?php echo ($taggedCnt>0)?$taggedCnt:0 ?></span><span> product's tagged</span>
+		    </div>
+		     <span class="feed-type-instagram">
+		     	<i class="<?php echo ($mode==1)?"fa fa-eye":"fa fa-instagram"?> feed-type"></i></span>
+		 </div>
+		 
+		 
+		 <div class="postentry-bottom">
+	  		<div class="postentry-controls">
+	    		<?php if(1):?>
+	    		<label class="visible-label no-select">
+	      			<input id="feed-status-<?php echo $feed->getId()?>" onchange="saveFeedStatusAjax(this,1)" data-id="<?php echo $feed->getId()?>"
+	      				type="checkbox" <?php echo ($feed->getStatus())?'checked="checked"':'' ?>>
+	      			Visible
+	    		</label>
+	    		<?php endif;?>
+	    		<a id="instagram-link-<?php echo $feed->getId()?>" class="button tiny success" style="float:right"
+	    		 data-img-src="<?php echo $feed->getStandardResolution() ?>" data-id="<?php echo $feed->getId()?>" 
+	    		 data-tag-product='<?php echo $feed->getHotspots()?>'
+	             onclick = "openView(this);">
+	      			Tag Products
+	    		</a>
+	    	</div>
+	    	<div class="upper-text">
+			    <p class="text-content" style="margin-top: 0">
+			    <?php echo $feed->getCaption()?>
+			    </p>
+		  	</div>
+		  	
+			<div style="padding: 5px 10px 0px;">
+			<?php 
+				$createDate = $feed->getCreatedTimestamp();
+				if($createDate!=null){
+					$createDate = date('M d, Y', $createDate);
+				}
+				?>
+				<div class="text-footer">
+				    <div class="left"><?php echo $createDate?></div>
+				      <div class="right author">
+				        <a target="_blank" href="<?php echo $feed->getUsername()?>" class="">
+				         
+				         <i class="fa fa-instagram"></i> 
+				         <?php if(0 && !$mode):?> 
+				         <?php //else:?>
+				         <i class="fa fa-eye"></i> 
+				        <?php endif;?> / maria_tash
+				        </a>
+				      </div>
+				      <div class="clearfix"></div>
+			      </div>
+			</div>
+		  	
+	    </div>
+	    
+	</div>
+	<?php endforeach;?>
+<?php else:?>
+<p>Their is no instagram feeds.</p>
+<?php endif;?>
+</div>
+
+
+<div id="product-tagged-view" style="display: none;">
+	<div class="tagger flex-center schedule-form">
+		<div class="imgcontainer">
+			<div class="tagger-close" onclick="closeView();" >
+		    	<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+		            <g>
+		              <path fill="none" stroke-width="1px" d="m0,0 L30,30" stroke="white"></path>
+		              <path fill="none" stroke-width="1px" d="m30,0 L0,30" stroke="white"></path>
+		            </g>
+		        </svg>
+		    </div>
+			<div id="taggable-container" class="taggable-container">
+				<div class="lookbookBlock">
+					<img id="LookbookImage" class="tag-img" width="640" height="640"
+					src="" />
+				</div>
+			</div>
+			
+			<!-- <input id="feed_hotspots" name="feed[hotspots]" value="" type="hidden">
+			<input id="feed_id" name="feed[id]" value="" type="hidden"> -->
+		</div>
+	</div>
+</div>
+
+<script>
+	if (typeof Allure == "undefined") {
+	   var Allure = {};
+	}
+	Allure.TagProductFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+	Allure.TagProductUrl = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/allure_instaCatalog_feed/saveAjax', array('_secure' => true));?>';
+	Allure.FeedStatusUrl = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/allure_instaCatalog_feed/saveFeedStatusAjax', array('_secure' => true));?>';
+	Allure.ProductGetUrl = '<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/allure_instaCatalog_lookbook/getproduct")?>';
+	Allure.SearchProductUrl = '<?php echo $search_action?>';
+</script>

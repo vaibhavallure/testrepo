@@ -1,0 +1,133 @@
+<?php
+$_product = Mage::registry('current_product');
+$productId = $_product->getId();
+$collection = Mage::getResourceModel('allure_instacatalog/feed_collection')
+	->addFieldToFilter('product_ids',array('finset'=> array($productId)))
+	->addFieldToFilter('status', 1);
+
+if (empty($collection))
+    return;
+?>
+
+<?php if (($collection && $collection->getSize())) : ?>
+    <div class="block-title">
+        <strong><span><?php echo $this->__('As seen on instagram') ?></span></strong>
+    </div>
+    <div class="image_carousel">
+        <ul id="foo6" style="overflow: hidden">
+            <?php foreach ($collection as $feeds): ?>
+                <?php
+                    $feed = Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
+                    $instagramObj = unserialize($feed->getInstagramData());
+                    $media_id=$feed->getMediaId();
+                ?>
+                <li class="item" style="width: 92px; height: 120px; margin: 0 8px 0 0;">
+                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $feed->getId() ?>' onclick="instagramView.show(this);" media-id="<?php echo $media_id?>">
+                        <img  src="<?php echo $instagramObj->images->low_resolution->url ?>" alt="" width="92" height="120"/>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <div class="clearfix"></div>
+        <a class="prev" id="foo6_prev" href="#"><span>prev</span></a>
+        <a class="next" id="foo6_next" href="#"><span>next</span></a>
+
+        <div class="pagination" id="foo6_pag"></div>
+    </div>
+
+	<div id="instagram-view-container">
+		<div id="showcase"
+			class="fs-wide-timeline  fs-desktop fs-prepended-detail"
+			style="display: none;">
+			<div id="fs-timeline-detail-592364" class="fs-timeline-detail">
+				<div id="fs-instagram-view-container"
+					class="fs-detail-outer-container ">
+					<div class="instagram-loader"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<script type="text/javascript">
+//<![CDATA[
+	var instagramView = new InstagramView('fs-instagram-view-container','<?php echo Mage::getBaseUrl('web').'instacatalog/feed/view'?>');
+	//]]>
+</script>
+
+<script>
+	jQuery(document).ready(function(){
+		jQuery('.fs-text-product').hover(function(){
+			var id = jQuery(this).attr('data-link-id');
+			var selector = jQuery('#fs_overlink_'+id);
+			selector.css("opacity", "1");
+			selector.find('.fs-overlink-text').css(
+					{"opacity":"1","display":"block"});
+	    }, function(){
+	    	var id = jQuery(this).attr('data-link-id');
+	    	var selector = jQuery('#fs_overlink_'+id);
+	    	selector.css("opacity", "");
+	    	selector.find('.fs-overlink-text').css(
+					{"opacity":"","display":""});
+		});
+	});
+	function showView(e){
+		jQuery('#showcase').show();
+	}
+	function closeView(e){
+		jQuery('#showcase').hide();
+		jQuery('#fs-detail-response').remove();
+		jQuery('#fs-instagram-view-container').html('<div class="instagram-loader"></div>');
+	}
+</script>
+
+
+<script type="text/javascript">
+        jQuery.noConflict();
+
+        jQuery(document).ready(function () {
+
+            jQuery('#foo6').jcarousel({
+                initCallback: mycarousel_initCallbackProd,
+                buttonNextCallback: mycarousel_buttonPrevCallbackProd,
+                buttonPrevCallback: mycarousel_buttonNextCallbackProd,
+                // This tells jCarousel NOT to autobuild prev/next buttons
+                buttonNextHTML: null,
+                buttonPrevHTML: null,
+                itemFallbackDimension: 90
+            });
+
+        });
+
+        function mycarousel_initCallbackProd(carousel) {
+            jQuery('#foo6_prev').bind('click', function () {
+                carousel.prev();
+                return false;
+            });
+
+            jQuery('#foo6_next').bind('click', function () {
+                carousel.next();
+                return false;
+            });
+        }
+
+        function mycarousel_buttonNextCallbackProd(carousel, button, enabled) {
+            if (enabled) {
+                jQuery("#foo6_prev").css('opacity', 1);
+            } else {
+                jQuery("#foo6_prev").css('opacity', 0.13);
+            }
+        }
+
+        function mycarousel_buttonPrevCallbackProd(carousel, button, enabled) {
+            if (enabled) {
+                jQuery("#foo6_next").css('opacity', 1);
+            } else {
+                jQuery("#foo6_next").css('opacity', 0.13);
+            }
+        }
+
+        if (jQuery('ul#foo6 li.item').length <= 5){
+            jQuery("#foo6_next , #foo6_prev").hide();
+        }
+    </script>
+<?php endif; ?>

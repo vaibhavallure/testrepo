@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_headerlogo_adminhtml_headerlogo_index>
+        <reference name="content">
+            <block type="ecp_headerlogo/adminhtml_headerlogo" name="ecp_headerlogo" />
+        </reference>
+    </ecp_headerlogo_adminhtml_headerlogo_index>
+</layout>

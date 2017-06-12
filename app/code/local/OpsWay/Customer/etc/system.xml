@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <sections>
+        <system>
+            <groups>
+                <customer_geoip tranlsate="label" module="opsway_customer">
+                    <label>Customer GeoIP</label>
+                    <fields>
+                        <private_ip_address translate="label">
+                            <label>Private Ip Addresses</label>
+                            <frontend_type>textarea</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>10</sort_order>
+                        </private_ip_address>
+                        <curl_timeout translate="label comment">
+                            <label>Curl Timeout</label>
+                            <comment>Used for option CURLOPT_CONNECTTIMEOUT</comment>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>20</sort_order>
+                        </curl_timeout>
+                    </fields>
+                </customer_geoip>
+            </groups>
+        </system>
+    </sections>
+</config>

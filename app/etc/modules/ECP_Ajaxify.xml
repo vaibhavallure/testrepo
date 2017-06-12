@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <ECP_Ajaxify>
+            <active>true</active>
+            <codePool>community</codePool>
+        </ECP_Ajaxify>
+    </modules>
+</config>

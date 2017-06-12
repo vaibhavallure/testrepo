@@ -1,0 +1,106 @@
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterCheckboxes
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+ol.m-filter-css-checkboxes li a.m-checkbox-unchecked { background: url(../images/manapro_filtercheckboxes/checkbox_unchecked.png) 0 0 no-repeat; }
+ol.m-filter-css-checkboxes li a.m-checkbox-checked { background: url(../images/manapro_filtercheckboxes/checkbox_checked.png) 0 0 no-repeat; }
+ol.m-filter-css-checkboxes li a.m-checkbox-unchecked:hover { background: url(../images/manapro_filtercheckboxes/checkbox_unchecked_hover.png) 0 0 no-repeat; }
+ol.m-filter-css-checkboxes li a.m-checkbox-checked:hover { background: url(../images/manapro_filtercheckboxes/checkbox_checked_hover.png) 0 0 no-repeat; }
+ol.m-filter-css-checkboxes li a.m-checkbox-unchecked,
+ol.m-filter-css-checkboxes li a.m-checkbox-checked { padding-left: 20px; text-decoration: none; }
+
+.m-filter-checkboxes li input { margin-right: 4px; position: relative; top: 2px; }
+
+ul#narrow-by-list {margin-right: 20px; }
+ul#narrow-by-list li { float: left; max-width: 300px; padding-left: 8px; min-height: 20px; }
+ul#narrow-by-list li ol li {width:100%; }
+ul#narrow-by-list li label {  }
+.block .block-title strong {
+    text-transform: none;
+}
+
+/*li.filtru-metals_and_gemstones { width: 300px; }*/
+li.filtru-metals_and_gemstones li { min-width: 134px; }
+/*li.filtru-finger_ring_size { width: 184px; }*/
+li.filtru-finger_ring_size li { min-width: 84px; }
+/*li.filtru-category { width: 228px; }*/
+li.filtru-category li { min-width: 106px; }
+li.filtru-category li a { font-size: 11px !important; }
+
+ul#narrow-by-list li dd .m-more-less {
+    position: relative;
+}
+ul#narrow-by-list li dd .m-more-less .m-show-less-action { color: #3F4048; padding-right: 8px; text-decoration: none; }
+ul#narrow-by-list li dd .m-more-less a.m-show-more-action{
+    background: url(../images/down-arrow.png) no-repeat center center;
+	height: 20px;
+	position: absolute;
+	right: 8px;
+	top: -21px;
+	width: 20px;
+}
+.filtru-price {
+    width: 300px !important;
+}
+.filtru-price dt {
+     display: none;
+}
+.filtru-price dd {
+   position: relative;
+}
+.filtru-price #price-applied .fromprice {float: left; width: 43px; text-align: right;}
+.filtru-price #price-applied .toprice {float: right;}
+.filtru-price .m-filter-slider {position: absolute; width: 150px; margin-left: 50px;}
+.m-slider-selected-value {height: 20px; width: 240px; display: block;margin-left: -46px;}
+.mb-mana-catalogsearch-leftnav .currently {
+    float: left;
+}
+#selected_filters_actives {
+    overflow: hidden;
+}
+#selected_filters_actives li {
+    float: left;
+	color: #38393c;
+	margin-right: 15px;
+}
+.block-layered-nav .currently #selected_filters_actives .btn-remove,.block-layered-nav .currently #selected_filters_actives span {
+    float: left;
+}
+.mb-category-products .toolbar, .mb-search-result .toolbar {
+    position: absolute;
+	right: 0px;
+	top: -73px;
+	z-index: 101;
+	width: 300px;
+}
+.category-ear-cartilage-jewelry .mb-category-products .toolbar{top:-67px;}
+.lt-ie9 .mb-category-products .toolbar {
+
+	top: -57px;
+
+}
+.lt-ie9 .category-ear-cartilage-jewelry .mb-category-products .toolbar {top:-67px;}
+.mb-category-products .toolbar-bottom .toolbar, .mb-search-result .toolbar-bottom .toolbar {
+	top: 65px;
+	z-index: 100;
+}
+#productsContainer-wrapper {
+    margin-top: 77px;
+	}
+.lt-ie9 #productsContainer-wrapper {
+
+}
+.mb-mana-catalogsearch-leftnav .currently {
+	float: left;
+}
+.mb-mana-catalogsearch-leftnav .selected-filters {
+	position: absolute;
+	top: 42px;
+	left: 8px;
+	z-index: -1;
+}
+.mb-mana-catalogsearch-leftnav .actions {
+    float: left;
+}

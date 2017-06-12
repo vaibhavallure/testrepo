@@ -1,0 +1,34 @@
+<select id="store" >
+<?php
+$websiteId=1;
+if(Mage::getSingleton('core/session')->getMyWebsiteId())
+	$websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
+	?>
+		<?php foreach (Mage::app()->getWebsites() as $website) :?>  
+		<option <?php if($website->getId()==$websiteId)?>
+		      value="<?php echo $website->getId()?>"><?php echo $website->getName();?>
+		</option>
+		<?php endforeach;?>
+</select>
+
+<?php $currentURL = Mage::helper('core/url')->getCurrentUrl();?>
+
+<script>
+	//$.noConflict();
+
+	
+	
+	function myFunction(baseUrl){
+		var selectedStore = jQuery('#store :selected').val();
+		console.log("selectedStore="+selectedStore);
+		var a_href = window.location.href;
+
+		a_href = baseUrl +"/store/"+ selectedStore;
+
+		//var a_href = window.location.href+"/store/"+selectedStore;
+		
+		alert("a_href "+a_href);
+		//window.location = 'http://127.0.0.1:8080/index.php/admin_appointments/adminhtml_appointments/viewCalender/store/2';
+		window.location = a_href;
+	}
+</script>

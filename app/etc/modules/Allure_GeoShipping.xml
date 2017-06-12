@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_GeoShipping>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Allure_GeoShipping>
+    </modules>
+</config>

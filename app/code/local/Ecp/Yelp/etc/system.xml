@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <ecp_yelp translate="label">
+            <label>Ecp Yelp</label>
+            <tab>ecp</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <yelp translate="label" module="ecp_yelp">
+                    <label>Ecp Yelp</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <detail_api_url translate="label">
+                            <label>Detail Place Api URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </detail_api_url>
+                        <consumerkey translate="label">
+                            <label>Consumer Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </consumerkey>
+                        <consumersecret translate="label">
+                            <label>Consumer Secret</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </consumersecret>
+                        <token translate="label">
+                            <label>Token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </token>
+                        <tokensecret translate="label">
+                            <label>Token Secret</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tokensecret>
+                        <api_yelp_new_config translate="label">
+                            <label>Account</label>
+                            <frontend_model>ecp_yelp/adminhtml_system_config_form_field_account</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </api_yelp_new_config>
+                        <api_yelp_new_config_url translate="label comment">
+                            <label>Yelp Url</label>
+                            <frontend_model>ecp_yelp/adminhtml_system_config_form_field_url</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </api_yelp_new_config_url>
+                    </fields>
+                </yelp>
+            </groups>
+        </ecp_yelp>
+    </sections>
+</config>

@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category   FME
+ * @package    FME_Restrictcustomergroup
+ * @author     support@fmeextensions.com
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <FME_Restrictcustomergroup>
+            <version>1.4.0</version>
+        </FME_Restrictcustomergroup>
+    </modules>
+    <frontend>
+        <routers>
+            <restrictcustomergroup>
+                <use>standard</use>
+                <args>
+                    <module>FME_Restrictcustomergroup</module>
+                    <frontName>restrictcustomergroup</frontName>
+                </args>
+            </restrictcustomergroup>
+        </routers>
+        <layout>
+            <updates>
+                <restrictcustomergroup>
+                    <file>restrictcustomergroup.xml</file>
+                </restrictcustomergroup>
+            </updates>
+        </layout>
+		<events>
+			<controller_action_layout_generate_blocks_after>
+				<observers>
+					<fme_restrictcustomergroup_restrict_type>
+						<type>singleton</type>
+						<class>FME_Restrictcustomergroup_Model_Observer</class>
+						<method>restrictByType</method>
+					</fme_restrictcustomergroup_restrict_type>
+				</observers>
+			</controller_action_layout_generate_blocks_after>
+		</events>
+		
+		
+    </frontend>
+    <admin>
+        <routers>
+			<restrictcustomergroup>
+				<use>admin</use>
+				<args>
+					<module>FME_Restrictcustomergroup</module>
+					<frontName>restrictcustomergroup</frontName>
+				</args>
+			</restrictcustomergroup>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<!-- for final version
+			<restrictcustomergroup module="restrictcustomergroup">
+					<title>Restrict Customer Group</title>
+					<sort_order>71</sort_order>               
+					<children>
+						<items module="restrictcustomergroup">
+							<title>Manage Items</title>
+							<sort_order>0</sort_order>
+							<action>restrictcustomergroup/adminhtml_restrictcustomergroup</action>
+						</items>
+					</children>
+				</restrictcustomergroup>
+			-->
+			<FME_Extensions module="restrictcustomergroup">
+				<title>FME Extensions</title>
+				<sort_order>71</sort_order>
+				<children>
+					<restrictcustomergroup module="restrictcustomergroup">
+						<title>Restrict Customer Group</title>
+						<sort_order>0</sort_order>               
+						<children>
+							<items module="restrictcustomergroup">
+								<title>Manage Rules</title>
+								<sort_order>0</sort_order>
+								<action>restrictcustomergroup/adminhtml_restrictcustomergroup</action>
+							</items>
+							<rcg_config module="restrictcustomergroup">
+								<title>Configurations</title>
+								<sort_order>1</sort_order>
+								<action>adminhtml/system_config/edit/section/restrictcustomergroup</action>
+							</rcg_config>
+						</children>
+					</restrictcustomergroup>
+				</children>
+			</FME_Extensions>
+		</menu>
+		<acl>
+			<resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <restrictcustomergroup module="restrictcustomergroup">
+                                            <title>FME Restrict Customer Group</title>
+                                        </restrictcustomergroup>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+						<!-- for final version
+						<restrictcustomergroup module="restrictcustomergroup">
+								<title>Restrict Customer Group</title>
+								<sort_order>71</sort_order>               
+								<children>
+									<items module="restrictcustomergroup">
+										<title>Manage Items</title>
+										<sort_order>0</sort_order>
+										<action>restrictcustomergroup/adminhtml_restrictcustomergroup</action>
+									</items>
+								</children>
+							</restrictcustomergroup>
+						-->
+                        <FME_Extensions module="restrictcustomergroup">
+							<title>FME Extensions</title>
+							<sort_order>71</sort_order> 
+							<children>
+								<restrictcustomergroup module="restrictcustomergroup">
+									<title>Restrict Customer Group</title>
+									<sort_order>0</sort_order>               
+									<children>
+										<items module="restrictcustomergroup">
+											<title>Manage Rules</title>
+											<sort_order>0</sort_order>
+											<action>restrictcustomergroup/adminhtml_restrictcustomergroup</action>
+										</items>
+										<rcg_config module="restrictcustomergroup">
+											<title>Configurations</title>
+											<sort_order>1</sort_order>
+											<action>adminhtml/system_config/edit/section/restrictcustomergroup</action>
+										</rcg_config>
+									</children>
+								</restrictcustomergroup>
+							</children>
+						</FME_Extensions>
+                    </children>
+                </admin>
+            </resources>
+		</acl>
+		<layout>
+			<updates>
+				<restrictcustomergroup>
+					<file>restrictcustomergroup.xml</file>
+				</restrictcustomergroup>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <restrictcustomergroup>
+                <class>FME_Restrictcustomergroup_Model</class>
+                <resourceModel>restrictcustomergroup_mysql4</resourceModel>
+            </restrictcustomergroup>
+            <restrictcustomergroup_mysql4>
+                <class>FME_Restrictcustomergroup_Model_Mysql4</class>
+                <entities>
+                    <restrictcustomergroup>
+                        <table>fme_restrictcustomergroup</table>
+                    </restrictcustomergroup>
+					<restrictcustomergroup_store>
+                        <table>fme_restrictcustomergroup_store</table>
+                    </restrictcustomergroup_store>
+					<restrictcustomergroup_blocks>
+						<table>fme_restrictcustomergroup_blocks</table>
+					</restrictcustomergroup_blocks>
+                </entities>
+            </restrictcustomergroup_mysql4>
+        </models>
+        <resources>
+            <restrictcustomergroup_setup>
+                <setup>
+                    <module>FME_Restrictcustomergroup</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </restrictcustomergroup_setup>
+            <restrictcustomergroup_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </restrictcustomergroup_write>
+            <restrictcustomergroup_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </restrictcustomergroup_read>
+        </resources>
+        <blocks>
+            <restrictcustomergroup>
+                <class>FME_Restrictcustomergroup_Block</class>
+            </restrictcustomergroup>
+        </blocks>
+		<blocks>
+			<cms>
+                <rewrite>
+                    <block>FME_Restrictcustomergroup_Block_Cms_Block_Block</block>
+                </rewrite>
+            </cms>
+		</blocks>
+		
+        <helpers>
+            <restrictcustomergroup>
+                <class>FME_Restrictcustomergroup_Helper</class>
+            </restrictcustomergroup>
+        </helpers>
+		
+		<events>
+			<!--<core_block_abstract_to_html_after>-->
+			<!--	<observers>-->
+			<!--		<fme_restrictcustomergroup_before_layout>-->
+			<!--			<type>singleton</type>-->
+			<!--			<class>FME_Restrictcustomergroup_Model_Observer</class>-->
+			<!--			<method>restrictStaticBlock</method>-->
+			<!--		</fme_restrictcustomergroup_before_layout>-->
+			<!--	</observers>	-->
+			<!--</core_block_abstract_to_html_after>-->
+			<catalog_product_load_after>
+				<observers>
+					<fme_restrictcustomergroup_product_view>
+						<type>singleton</type>
+						<class>FME_Restrictcustomergroup_Model_Observer</class>
+						<method>restrictProductView</method>
+					</fme_restrictcustomergroup_product_view>
+				</observers>
+			</catalog_product_load_after>
+			<controller_action_predispatch>
+			<!--<controller_action_layout_generate_blocks_before>-->
+				<observers>
+					<fme_restrictcustomergroup_before_layout>
+						<type>singleton</type>
+						<class>FME_Restrictcustomergroup_Model_Observer</class>
+						<method>restrictOtherPages</method>
+					</fme_restrictcustomergroup_before_layout>
+				</observers>
+			</controller_action_predispatch>
+			<!--
+			<catalog_block_product_list_collection>
+				<observers>
+					<fme_restrictcustomergroup_filter_collection>
+						<type>singleton</type>
+						<class>FME_Restrictcustomergroup_Model_Observer</class>
+						<method>filterByRule</method>
+					</fme_restrictcustomergroup_filter_collection>
+				</observers>
+			</catalog_block_product_list_collection>
+			-->
+			<cms_page_render>
+				<observers>
+					<fme_restrictcustomergroup_filter_cms>
+						<type>singleton</type>
+						<class>FME_Restrictcustomergroup_Model_Observer</class>
+						<method>restrictCmsPage</method>
+					</fme_restrictcustomergroup_filter_cms>
+				</observers>
+			</cms_page_render>
+			
+			<catalog_product_collection_load_after>
+				<observers>
+					<fme_restrictcustomergroup_filter_collection>
+						<type>singleton</type>
+						<class>FME_Restrictcustomergroup_Model_Observer</class>
+						<method>filterProductList</method>
+					</fme_restrictcustomergroup_filter_collection>
+				</observers>
+			</catalog_product_collection_load_after>
+			
+		</events>
+    </global>
+</config>

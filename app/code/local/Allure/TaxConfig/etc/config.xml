@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_TaxConfig>
+			<name>Allure - Tax Configuration</name>
+			<version>1.0.0</version>
+			<depends>
+				<Allure_GeoTax />
+			</depends>
+		</Allure_TaxConfig>
+	</modules>
+	<global>
+		<helpers>
+			<tax>
+				<rewrite>
+					<data>Allure_TaxConfig_Helper_Data</data>
+				</rewrite>
+			</tax>
+			<allure_taxconfig>
+				<class>Allure_TaxConfig_Helper</class>
+			</allure_taxconfig>
+		</helpers>
+		<models>
+			<allure_taxconfig>
+				<class>Allure_TaxConfig_Model</class>
+			</allure_taxconfig>
+		</models>
+	</global>
+	<default>
+		<allure_taxconfig>
+			<skip_catalog_display>
+				<status>0</status>
+				<countries></countries>
+				<summary>VAT Included - No Import Fees.</summary>
+				<debug>0</debug>
+			</skip_catalog_display>
+		</allure_taxconfig>
+	</default>
+</config>

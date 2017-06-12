@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<sections>
+		<allure_geolocation translate="label" module="allure_geolocation">
+			<label>Geo Location</label>
+			<tab>allure</tab>
+			<sort_order>40</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label">
+					<label>General</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<status translate="label">
+							<label>Enable GeoIP Based Geolocation</label>
+							<frontend_type>select</frontend_type>
+							<comment>Enable/Disable Geo Location</comment>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>11</sort_order>
+						</status>
+						<test_mode translate="label">
+							<label>Test Mode</label>
+							<frontend_type>select</frontend_type>
+							<comment>Enable/Disable testing mode. This will disable session storage for the users location</comment>
+							<source_model>allure_geolocation/adminhtml_source_testMode</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>12</sort_order>
+						</test_mode>
+						<ip_whitelist translate="label">
+							<label>IP Whitelist</label>
+							<frontend_type>text</frontend_type>
+							<comment>List of comma seperated IP addresses that are excluded from session storage</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+								<test_mode>2</test_mode>
+							</depends>
+							<sort_order>13</sort_order>
+						</ip_whitelist>
+						<ip_override translate="label">
+							<label>IP Override</label>
+							<frontend_type>text</frontend_type>
+							<comment>IPv4 Address. Can be left blank to disable session only</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+								<test_mode separator=",">1,2,3</test_mode>
+							</depends>
+							<sort_order>14</sort_order>
+						</ip_override>
+						<country_override translate="label">
+							<label>Country Override</label>
+							<frontend_type>text</frontend_type>
+							<comment>ISO 3166 country code to mimic. Can be left blank to
+								disable session only</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+								<test_mode separator=",">1,2,3</test_mode>
+							</depends>
+							<sort_order>15</sort_order>
+						</country_override>
+						<private_mode translate="label">
+							<label>Private Mode</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable
+							</source_model>
+							<comment>Extension does not work correctly on localhost. Enable
+								this to bypass checks and attempt to run as normal anyway
+							</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>16</sort_order>
+						</private_mode>
+						<proxy_enabled translate="label">
+							<label>Enable Remote Header rewrite for IP detection (for Varnish/CDNs)</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<comment>Enabling this will rewrite the "remote_addr_headers" to allow you to use Varnish and CDN's</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>17</sort_order>
+						</proxy_enabled>
+						<proxy_headers translate="label">
+							<label>Server Address Headers</label>
+							<frontend_type>text</frontend_type>
+							<comment>Comma
+								seperated list of server address headers in order or priority. <![CDATA[<strong style="color:red;">ADVANCED USERS ONLY - DO NOT EDIT</strong>]]></comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+								<proxy_enabled>1</proxy_enabled>
+							</depends>
+							<sort_order>18</sort_order>
+						</proxy_headers>
+						<api_url translate="label">
+							<label>API URL</label>
+							<comment>Used for option Geo APIs</comment>
+							<frontend_type>text</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>19</sort_order>
+						</api_url>
+						<curl_timeout translate="label">
+							<label>Curl Timeout</label>
+							<comment>Used for option CURLOPT_CONNECTTIMEOUT</comment>
+							<frontend_type>text</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>19</sort_order>
+						</curl_timeout>
+						<debug translate="label">
+							<label>Debug</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>20</sort_order>
+						</debug>
+					</fields>
+				</general>
+			</groups>
+		</allure_geolocation>
+	</sections>
+</config>

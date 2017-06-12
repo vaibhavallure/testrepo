@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+   
+ 
+    <adminhtml_scripts_index_priceupdate>      
+        <reference name="head">
+        	<action method="addJs"><file>allure/jquery.js</file></action>
+         	<action method="addJs"><file>allure/scripts.js</file></action>
+        	<action method="addCss"><stylesheet>css/allure/scripts.css</stylesheet></action>  
+        </reference>
+        <reference name="content">
+            	<block type="core/template" name="price_update" template="allure/scripts/priceupdate.phtml" ></block>
+        </reference>
+    </adminhtml_scripts_index_priceupdate>
+</layout>

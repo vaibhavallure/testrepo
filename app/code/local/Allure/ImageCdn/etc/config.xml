@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_ImageCdn>
+			<name>Allure - Image CDN</name>
+            <version>1.0.0</version>
+			<depends>
+				<Allure_Core />
+			</depends>
+        </Allure_ImageCdn>
+    </modules>
+    <global>
+        <models>
+            <allure_imagecdn>
+                <class>Allure_ImageCdn_Model</class>
+            </allure_imagecdn>
+        </models>
+        <helpers>
+            <allure_imagecdn>
+            	<class>Allure_ImageCdn_Helper</class>
+    		</allure_imagecdn>
+        </helpers>
+    </global>
+    <default>
+        <allure_imagecdn>
+            <general>
+                <status>0</status>
+                <remove_source>0</remove_source>
+            </general>
+        </allure_imagecdn>
+    </default>
+</config>

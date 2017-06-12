@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <ecp_reviews_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="ecp_reviews/reviews" name="reviews" template="reviews/reviews.phtml" />
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>varien/js.js</script></action>
+            <action method="addJs"><script>varien/form.js</script></action>
+            <action method="addJs"><script>prototype/validation.js</script></action>
+        </reference>
+    </ecp_reviews_index_index>
+</layout>
+

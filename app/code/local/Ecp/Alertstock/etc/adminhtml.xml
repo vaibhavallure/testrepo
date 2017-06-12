@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+  <acl>
+    <resources>
+      <all>
+        <title>Allow Everything</title>
+      </all>
+      <admin>
+        <children>
+          <system>
+            <children>
+              <config>
+                <children>
+                  <ecp_alertstock translate="title" module="ecp_alertstock">
+                    <title>Ecp Alertstock</title>
+                  </ecp_alertstock>
+                </children>
+              </config>
+            </children>
+          </system>
+        </children>
+      </admin>
+    </resources>
+  </acl>
+</config>

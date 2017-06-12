@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_discovernavigation_adminhtml_discovernavigation_index>
+        <reference name="content">
+            <block type="ecp_discovernavigation/adminhtml_discoverNavigation" name="discovernavigation" />
+        </reference>
+    </ecp_discovernavigation_adminhtml_discovernavigation_index>
+</layout>

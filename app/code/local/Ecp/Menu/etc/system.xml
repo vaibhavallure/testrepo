@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <ecp_menu translate="label">
+            <label>Ecp Menu</label>
+            <tab>general</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <menu translate="label" module="ecp_menu">
+                    <label>Ecp Menu</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <value translate="label">
+                            <label>Target Category ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </value>
+                        <blog_link translate="label">
+                            <label>Blog link</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </blog_link>
+                    </fields>
+                </menu>
+            </groups>
+        </ecp_menu>
+    </sections>
+</config>

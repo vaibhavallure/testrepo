@@ -1,0 +1,51 @@
+.awac-button-label-container {
+    height: 35px;
+}
+.awac-button-label {
+    background: url("../images/button-bkg.png") repeat-x scroll 0 2px #EEEEEE;
+    border-color: #CCCCCC #999999 #999999 #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    height: 26px;
+    margin: 4px auto 0 auto;
+    padding-top: 3px;
+    text-align: center;
+    width: 320px;
+}
+.awac-button-label span {
+    font-size: 14px;
+}
+
+.awac-loader-label {
+    text-align: center;
+    height: 19px;
+    padding: 10px 0;
+}
+.awac-loader-label span {
+    background: url("../images/ajax-loader.gif") no-repeat scroll 0 0 transparent;
+    line-height: 16px;
+    padding: 2px 0 2px 20px;
+}
+
+/* 'Back to Top' button */
+.awac-back-to-top,
+.awac-back-to-top.visible {
+    display: none;
+}
+
+.awac-back-to-top {
+    position: fixed;
+    top: 20px;
+    cursor: pointer;
+    padding: 3px 17px 3px 17px;
+    font: bold 12px Arial, Helvetica, sans-serif;
+    color: #fff;
+    background: none repeat scroll 0 0 #406A83;
+    border: solid 1px #000;
+    opacity: .6;
+}
+
+.awac-back-to-top.visible {
+    display: inline;
+}

@@ -1,0 +1,153 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php if ($_product->isSaleable()): ?>
+    <div class="add-to-cart">
+    	<div class="add-to-cart-left">
+			<?php if (!$_product->isGrouped() && $_product->getTypeId() != 'giftcards') { ?>
+                <div>
+                    <label for="qty"><?php echo $this->__('Quantity') ?>:</label>
+                	
+                	<div id="qty-box">
+                		<div class="qty_minus" <?php if($_product->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+				        	<button onclick="plusMinus( '#qty', -1 ); return false;" class="glyphicon glyphicon-menu-left"></button>
+				        </div>
+				        <div class="qty_val">
+				            <input id="qty" name="qty" value="<?php echo $this->getProductDefaultQty() * 1 ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="stockvalidation input-text required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" maxlength="12" <?php if($_product->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
+				        </div>
+				        <div class="qty_plus" <?php if($_product->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+				        	<button onclick="plusMinus( '#qty', 1 ); return false;" class="glyphicon glyphicon-menu-right"></button>
+				        </div>
+                	</div>
+		            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+						<script type="text/javascript">
+							function validateFave (){
+					            var hasErrors = false;
+					            if (jQuery('.ajax-error-messages')) {
+					                jQuery('.ajax-error-messages').remove();
+					            }
+					
+					            jQuery('.required-entry:not(.selectboxit)').each(function () {
+					                if (!jQuery(this).val()) {
+					                    hasErrors = true;
+					                    jQuery('<div class="ajax-error-messages"><?php echo $this->__('This field is required!'); ?></div>').insertAfter(jQuery(this).parent());
+					                }
+					            });
+					
+					            if (hasErrors) {
+					                return false;
+					            }
+								var pid = jQuery('#pid-hidden').val();
+					            if (typeof spConfig<?php echo $_product->getId(); ?> == 'undefined') {
+									wishlistForm.submitAjaxWishlist(this, '<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>cpid/<?php echo $_product->getId()?>/product/'+pid +'/', '<?php echo $_product->getId()?>');
+					            } else {
+					                wishlistForm.submitAjaxWishlist(this, faveArray[spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct()], spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct());
+					            }
+							}
+						</script>
+		    			<a onclick="validateFave()" class="link-wishlist glyphicon glyphicon-star"><span><?php echo $this->__('Add to Wishlist') ?></span></a>
+					<?php endif; ?>
+                </div>
+               
+                 <script>
+						   jQuery(document).ready(function(){
+                                jQuery("select#qty").selectBoxIt({aggressiveChange: true});
+								jQuery("#cart-amount").selectBoxIt({aggressiveChange: true});
+							});
+                        </script>
+                <div class="delayed-product display_none" style="position: relative;"><?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('backorder_message')->toHtml() ?></div>
+
+                <?php } elseif ($_product->getTypeId() != 'giftcards') { ?>
+                <input type="hidden" name="qty" id="qty" maxlength="3" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Quantity') ?>" class="qty required-entry greatherzerocustom emptycustomvalidation validate-greater-than-zero" />
+            <?php } ?>
+        </div>
+        <!--href="<?php // echo $this->getAddToCartUrl($_product); ?>"-->
+        <button id="addtocart" type="button" title="<?php echo $buttonTitle ?>" class="button" onclick="productAddToCartForm.submit(this,this.form)" style="margin-bottom: 0px;">
+            <span><span><?php echo $buttonTitle ?></span></span>
+        </button>
+        <?php echo $this->getChildHtml('', true, true) ?>
+
+    </div>
+<?php endif; ?>
+<?php if(!$_product->isConfigurable()) { ?>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        var showStockMsg = '<?php echo ($_product->getStockItem()->getData('backorders') != 0 && $_product->getStockItem()->getData('qty') < 1) ? true : false ;?>';
+        if(showStockMsg) {
+            jQuery('.delayed-product').removeClass('display_none');
+        } else {
+            jQuery('.delayed-product').addClass('display_none');
+        }
+    });
+</script>
+<?php } ?>
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
+
+<?php echo $this->getChildHtml('product_type_data_extra') ?>
+<?php //echo $this->getPriceHtml($_product) ?>
+
+<script>
+    function plusMinus(elementId,plus){
+        if(parseInt(jQuery(elementId).val()) + plus > 0) {
+            jQuery(elementId).val(parseInt(jQuery(elementId).val()) + plus);
+        }
+    }
+    jQuery(document).bind("keydown", function(e) {
+        var code = e.keyCode || e.which;
+        if (code  == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>

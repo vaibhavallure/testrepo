@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <allure>
+            <title>Allure</title>
+            <sort_order>70</sort_order>
+            <children>
+                <settings translate="title">
+                    <title>Settings</title>
+                    <sort_order>10</sort_order>
+                    <children>
+		                <allure translate="title" module="allure">
+		                    <title>General Information</title>
+		                    <action>adminhtml/system_config/edit/section/allure</action>
+		                    <sort_order>10</sort_order>
+		                </allure>
+		            </children>
+                </settings>
+            </children>
+        </allure>
+    </menu>
+	<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<allure translate="title" module="allure">
+										<title>Allure</title>
+										<sort_order>70</sort_order>
+									</allure>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

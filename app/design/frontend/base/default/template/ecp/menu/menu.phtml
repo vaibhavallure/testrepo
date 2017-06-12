@@ -1,0 +1,12 @@
+<div style="margin-top: 10px;font-size:13px;float:right;">
+    <?php $collection = Mage::getModel('ecp_menu/menu')->getCollection()->addFilter('status',1)->setPageSize(3);?>
+    <?php //$counter=0;?>
+    <?php foreach ($collection as $item) {?>    
+        <?php //if( $counter < 3 ){?>
+            <a class="level-top-submenu" href="<?php echo $item->getUrl();?>"> 
+                <span><?php echo $item->getTitle();?></span>
+            </a>
+        <?php //}?> 
+        <?php //$counter++;?>
+    <?php }?>    
+</div>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <ordermanager_handle>
+        <reference name="head">
+            <action method="addJs"><script>iwd/ordermanager/order.js</script></action>
+            <action method="addJs"><file>mage/adminhtml/sales.js</file></action>
+            <action method="addCss"><name>iwd/ordermanager/style.css</name></action>
+        </reference>
+        <reference name="js">
+            <block type="adminhtml/template" template="iwd/ordermanager/jsinit.phtml" name="create-js"/>
+        </reference>
+    </ordermanager_handle>
+
+    <ordermanager_order_grid_handle>
+        <reference name="head">
+            <action method="addJs"><file>iwd/ordermanager/jquery-ui-1.10.3.min.js</file></action>
+            <action method="addJs"><file>iwd/ordermanager/stickytableheaders.js</file></action>
+            <action method="addJs"><file>iwd/ordermanager/grid.js</file></action>
+            <action method="addCss"><name>iwd/ordermanager/order_grid.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="init" template="iwd/ordermanager/grid/init.phtml" output="toHtml"/>
+        </reference>
+    </ordermanager_order_grid_handle>
+
+    <ordermanager_log_grid_handle>
+        <reference name="head">
+            <action method="addCss"><name>iwd/ordermanager/log_grid.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="init" template="iwd/ordermanager/grid/init.phtml" output="toHtml"/>
+        </reference>
+    </ordermanager_log_grid_handle>
+
+    <!-- system -->
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addCss"><name>iwd/ordermanager/jquery-ui.css</name></action>
+            <action method="addCss"><name>iwd/ordermanager/ui.multiselect.css</name></action>
+            <action method="addCss"><name>iwd/ordermanager/colpick.css</name></action>
+            <action method="addJs"><script>iwd/ordermanager/jquery-ui-1.10.3.min.js</script></action>
+            <action method="addJs"><script>iwd/ordermanager/ui.multiselect.js</script></action>
+            <action method="addJs"><script>iwd/ordermanager/colpick.js</script></action>
+            <action method="addJs"><script>iwd/ordermanager/system.js</script></action>
+        </reference>
+    </adminhtml_system_config_edit>
+
+    <!-- order -->
+    <adminhtml_sales_order_index>
+        <update handle="ordermanager_order_grid_handle" />
+    </adminhtml_sales_order_index>
+
+    <adminhtml_sales_order_view>
+        <update handle="ordermanager_handle"/>
+        <reference name="head">
+            <action method="addJs"><file>mage/adminhtml/giftmessage.js</file></action>
+            <action method="addJs"><file>varien/configurable.js</file></action>
+            <action method="addJs"><file>mage/adminhtml/giftoptions/tooltip.js</file></action>
+            <!--<action method="addJs"><file>mage/adminhtml/product/composite/configure.js</file></action>-->
+            <action method="addJs"><script>iwd/all/modal.js</script></action>
+            <block type="adminhtml/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml"/>
+        </reference>
+        <reference name="order_history">
+           <action method="setTemplate"><template>iwd/ordermanager/history/order.phtml</template></action>
+        </reference>
+        <reference name="order_info">
+           <action method="setTemplate"><template>iwd/ordermanager/order/view/info.phtml</template></action>
+        </reference>
+        
+      <!--   <reference name="order_item_extra_info">
+            <block type="giftmessage/adminhtml_sales_order_view_giftoptions" name="gift_options_link" template="giftmessage/sales/order/view/giftoptions.phtml">
+                <block type="giftmessage/adminhtml_sales_order_view_items" name="gift_options_item_data" template="giftmessage/sales/order/view/items.phtml" />
+            </block>
+        </reference> -->
+        
+        <reference name="order_tab_info">
+        
+           <action method="setTemplate"><template>iwd/ordermanager/order/view/tab/info.phtml</template></action>
+           <block type="adminhtml/sales_order_view_items" name="order_items" template="iwd/ordermanager/items/items.phtml">
+               <action method="addItemRender"><type>default</type><block>adminhtml/sales_order_view_items_renderer_default</block><template>iwd/ordermanager/items/renderer/default.phtml</template></action>
+               <action method="addColumnRender"><column>name</column><block>adminhtml/sales_items_column_name</block><template>iwd/ordermanager/items/renderer/name.phtml</template></action>
+               <action method="addColumnRender"><column>name</column><block>adminhtml/sales_items_column_name_grouped</block><template>iwd/ordermanager/items/renderer/name.phtml</template><type>grouped</type></action>
+          
+           <block type="core/text_list" name="order_item_extra_info">
+	            <block type="giftmessage/adminhtml_sales_order_view_giftoptions" name="gift_options_link" template="iwd/ordermanager/order/view/giftoptions.phtml">
+	                <block type="giftmessage/adminhtml_sales_order_view_items" name="gift_options_item_data" template="iwd/ordermanager/order/view/items.phtml" />
+	            </block>
+            </block>
+			<reference name="order_tab_info">
+				<block type="adminhtml/template" name="popup_window" template="iwd/ordermanager/popup.phtml">
+	                <block type="giftmessage/adminhtml_sales_order_view_form" name="gift_options_form" template="iwd/ordermanager/giftoptionsform.phtml" />
+	        </block>
+			</reference>
+             
+           </block>
+          
+        </reference>
+        <reference name="order_items">
+           <action method="addItemRender"><type>bundle</type><block>bundle/adminhtml_sales_order_view_items_renderer</block><template>iwd/ordermanager/items/renderer/bundle.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+    <adminhtml_sales_order_addcomment>
+        <block type="adminhtml/sales_order_view_history" name="order_history" template="iwd/ordermanager/history/order.phtml" output="toHtml"/>
+    </adminhtml_sales_order_addcomment>
+
+    <!-- invoice -->
+    <adminhtml_sales_order_invoice_view>
+        <update handle="ordermanager_handle"/>
+        <reference name="order_comments">
+            <action method="setTemplate"><template>iwd/ordermanager/history/comments.phtml</template></action>
+        </reference>
+        <reference name="order_info">
+            <action method="setTemplate"><template>iwd/ordermanager/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+    <adminhtml_sales_order_invoice_addcomment>
+        <block type="adminhtml/sales_order_invoice_view_comments" name="invoice_comments">
+            <block type="adminhtml/sales_order_comments_view" name="order_comments" template="iwd/ordermanager/history/comments.phtml"/>
+        </block>
+    </adminhtml_sales_order_invoice_addcomment>
+
+    <!-- shipment -->
+    <adminhtml_sales_order_shipment_view>
+        <update handle="ordermanager_handle"/>
+        <reference name="order_comments">
+            <action method="setTemplate"><template>iwd/ordermanager/history/comments.phtml</template></action>
+        </reference>
+        <reference name="order_info">
+            <action method="setTemplate"><template>iwd/ordermanager/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+    <adminhtml_sales_order_shipment_addcomment>
+        <block type="adminhtml/sales_order_shipment_view_comments" name="shipment_comments">
+            <block type="adminhtml/sales_order_comments_view" name="order_comments" template="iwd/ordermanager/history/comments.phtml"/>
+        </block>
+    </adminhtml_sales_order_shipment_addcomment>
+
+    <!-- credit memo -->
+    <adminhtml_sales_order_creditmemo_view>
+        <update handle="ordermanager_handle"/>
+        <reference name="order_comments">
+            <action method="setTemplate"><template>iwd/ordermanager/history/comments.phtml</template></action>
+        </reference>
+        <reference name="order_info">
+            <action method="setTemplate"><template>iwd/ordermanager/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    <adminhtml_sales_order_creditmemo_addcomment>
+        <block type="adminhtml/sales_order_creditmemo_view_comments" name="creditmemo_comments">
+            <block type="adminhtml/sales_order_comments_view" name="order_comments" template="iwd/ordermanager/history/comments.phtml"/>
+        </block>
+    </adminhtml_sales_order_creditmemo_addcomment>
+
+
+    <!-- customer orders -->
+    <adminhtml_customer_edit>
+        <update handle="ordermanager_order_grid_handle"/>
+    </adminhtml_customer_edit>
+
+    <!-- archive orders -->
+    <adminhtml_sales_archive_order_index>
+        <update handle="ordermanager_order_grid_handle"/>
+    </adminhtml_sales_archive_order_index>
+</layout>

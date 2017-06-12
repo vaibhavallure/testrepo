@@ -1,0 +1,53 @@
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) ?>jquery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)?>jquery/jquery-ui-1.9.1.custom.min.js"></script>
+<script>
+    jQuery.noConflict();
+    jQuery(function() {
+        jQuery("#sortable").sortable({
+            update: function (event, ui) {
+                var order = [];
+                jQuery('#sortable li').each( function(e) {
+                    order.push( jQuery(this).attr('id')  + '/' + ( jQuery(this).index() + 1 ) );
+                });
+                var positions = order.join('/');                
+               
+                setLocation('<?php echo $this->getUrl('*/*/saveSort') ?>'+positions+'');
+            }
+        });
+            
+        jQuery("#sortable").disableSelection();
+    });
+</script>
+<?php 
+    $reviews = $this->getReviews();
+?>
+<div class="content-header">
+<table cellspacing="0">
+    <tbody>
+        <tr>
+            <td style="width:50%">
+                <h3 class="icon-head head-adminhtml-footlinks">Sort order Reviews</h3>
+            </td>
+            <td class="form-buttons">
+                <button id="" class="scalable back" style="" onclick="setLocation('<?php echo $this->getUrl("*/*") ?>')" type="button" title="">
+                    <span>
+                        <span>
+                            <span>Back</span>
+                        </span>
+                    </span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<div class="content">
+    <ul id="sortable">
+        <?php foreach($reviews as $review): ?>
+            <li id="<?php echo $review->getReviewsId()?>" class="ui-state-default">
+                <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                <?php echo $review->getName()." - ".$review->getReview()?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>

@@ -1,0 +1,48 @@
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) ?>jquery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)?>jquery/jquery-ui-1.9.1.custom.min.js"></script>
+<script>
+    jQuery.noConflict();
+    jQuery(function() {
+        jQuery("#sortable").sortable({
+            update: function (event, ui) {
+                var order = [];
+                jQuery('#sortable li').each( function(e) {
+                    order.push( jQuery(this).attr('id')  + '/' + ( jQuery(this).index() + 1 ) );
+                });
+                var positions = order.join('/');                
+               
+                setLocation('<?php echo $this->getUrl('*/*/saveSort') ?>'+positions+'');
+            }
+        });
+            
+        jQuery("#sortable").disableSelection();
+    });
+</script>
+<?php 
+    $menuItems = $this->getItemsMenu();
+?>
+
+<div class="content-header">
+<table cellspacing="0">
+    <tbody>
+        <tr>
+            <td style="width:50%">
+                <h3 class="icon-head head-adminhtml-footlinks">Sort Order Discover Navigation Menu</h3>
+            </td>
+            <td style="width:50%; text-align: left">
+                <h3 class="head-adminhtml-footlinks">Changes are saved automatically. You can leave this page at any time</h3>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<div class="content">
+    <ul id="sortable">
+        <?php foreach($menuItems as $item): ?>
+            <li id="<?php echo $item->getDiscoverMariatashId()?>" class="ui-state-default">
+                <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                <?php echo $item->getCategoryName() ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>

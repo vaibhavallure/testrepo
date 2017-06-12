@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_Varnishgento>
+            <version>0.0.1</version>
+        </Allure_Varnishgento>
+    </modules>
+    
+    <global>
+    	    
+    	 <models>
+       		<allurevarnish>
+				<class>Allure_Varnishgento_Helper</class>
+		    </allurevarnish>
+		    
+		    <opsway_varnishgento>
+		    	<rewrite>
+		    		<observer>Allure_Varnishgento_Model_Observer</observer>
+		    	</rewrite>
+		    </opsway_varnishgento>
+		    
+         </models>
+        
+    </global>
+    
+    
+</config>

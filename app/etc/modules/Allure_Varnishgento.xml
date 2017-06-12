@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_Varnishgento>
+      <active>false</active>
+      <codePool>local</codePool>
+      <!-- <depends>
+      	<Opsway_Varnishgento/>
+      </depends> -->
+    </Allure_Varnishgento>
+  </modules>
+</config>

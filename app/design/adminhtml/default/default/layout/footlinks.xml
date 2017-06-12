@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <footlinks_adminhtml_footlinks_index>
+        <reference name="content">
+            <block type="footlinks/adminhtml_footlinks" name="footlinks" />
+        </reference>
+    </footlinks_adminhtml_footlinks_index>
+</layout>

@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+/*COMIENZAN ESTILOS - ARG */
+
+
+
+.ban_tattoo-1 { width:940px !important; text-align:center; margin: 0 auto;}
+
+.col-tattoo-1 { width: 940px !important; margin: 20px auto 0; overflow: hidden; color: #3f4048; }
+
+.col-left-tattoo-1 { width: 420px !important; float: left; padding-right: 20px; }
+
+.services-tattoo-1 .services-divider { width: 450px !important; height: 1px; background: #d5d5d5; float: right; clear: both; }
+
+.ban-gift-tatto-1 { width: 940px !important; margin-top: 30px; float: left; background: #cfcfd0; }
+.ban-gift-tatto-1 p { width: 940px !important; margin: 0 auto; padding: 0; }
+.col-right-tattoo-1 { width: 450px !important; float: right; padding-left: 10px; border-left: 1px solid #d0d0d1;}
+
+.artists-tattoo-1 .artist-tattoo {
+	width: 215px !important;
+	margin: 0 0px 10px 0 !important;
+}
+
+.tatto_grid li {
+	width: 230px !important;
+
+}
+
+.block.block-layered-nav .block-title{
+	display:none;
+}
+.block-layered-nav #narrow-by-list dt {
+	font-weight: normal !important;
+	padding-left: 3px !important;
+	padding-right: 25px !important;
+	font-size: 11px !important;
+}
+ul#narrow-by-list li{
+	padding-left:4px !important;
+}

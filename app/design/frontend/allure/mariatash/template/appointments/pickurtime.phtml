@@ -1,0 +1,336 @@
+<?php 
+$fetch_model = Mage::registry('apt_modify_data');
+
+if($fetch_model){
+	
+	$f_pickurday = $fetch_model->getAppointmentStart();
+	$timestamp = strtotime($f_pickurday);
+	$fetch_starttime = date('H:i', $timestamp);
+	
+	$f_pickurendtime = $fetch_model->getAppointmentEnd();
+	$timestamp = strtotime($f_pickurendtime);
+	$fetch_endtime = date('H:i', $timestamp);
+}
+?> 
+<div class="pickur_time_main_container">
+	<label class="pickurtimeLable" for="pick_your_time" >Pick Your Time:</label><br/>
+
+<?php if (!$this->getData("timing")):?>
+
+	<div class="notfreepeiercer validation-advice">Sorry Appointment is Not available, Please try changing Store OR Date.</div>
+<?php else: ?>
+
+	<div>
+	<input type = "hidden" class="required-entry-time" value="<?php if($fetch_starttime): echo $fetch_starttime;endif;?>" name="appointment_start" id="starttime_hidden">
+	<input type = "hidden" class="" value="<?php if($fetch_endtime): echo $fetch_endtime; endif;?>" name="appointment_end" id="endtime_hidden">
+	<input type = "hidden" value="" name="piercer_id" id="piercer_id">
+		<?php
+		
+		$interval =10;
+		$timeslot_col_size = 7;
+		$time_pref = 24;
+		$storeSerializeData = Mage::getStoreConfig("appointments/general/storemapping");
+		
+		if($storeSerializeData){
+			$storeUnSerializeData = unserialize($storeSerializeData);
+		
+			$selectedStoreId = intval($this->getData("store_id"));
+		
+			$selectedStoreId = intval($selectedStoreId);
+			
+			if($selectedStoreId){
+				foreach($storeUnSerializeData as $de){
+					//$allStores = Mage::app()->getStores();
+					$storeId = intval($de['store']);
+					//echo "STORE= ".$storeId . "  ".$selectedStoreId;
+					if($storeId == $selectedStoreId){
+						
+						$time_pref = intval($de['time']);						
+					}
+				}
+			}
+		}
+		
+		if($this->getData("timing")) $interval = $this->getData("timing");
+		//$selectedTime = "9:00";
+		
+		$startTime = Mage::getStoreConfig("appointments/general/working_start_time");
+		
+		//echo $startTime." isd sajofasf";
+		
+		$selectedTime = sprintf('%02d', $startTime ).":00";
+		$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time");
+		
+		
+		$startTime = strtotime($startTime.":00");
+		
+		$endTimeSystem = strtotime($endTimeSystem.":00");
+		
+		//echo $startTime."wq,koeow eomkqw"; die;
+		$dateDiff = intval(($endTimeSystem-$startTime)/60);
+		
+		$hours = intval($dateDiff/60)*60;
+		$minutes = $dateDiff%60;
+		
+		$totalMinutes = $hours + $minutes;
+		
+		$totalSlot = (int) $totalMinutes/$interval;
+		
+		
+		/* logic for getting workday Piercer */
+		$collection = Mage::getModel('appointments/piercers')->getCollection();
+		if($this->getData("date")) :
+		$date = $this->getData("date");
+		$dayOfWeek = date("d", strtotime($date));
+		$storeId= $this->getData("store_id");
+		if($dayOfWeek){
+			//$storeId= $this->getData("store_id");
+			//$collection = Mage::getModel('appointments/piercers')->getCollection();
+			$collection->addFieldToFilter('working_days', array('like' => '%'.$dayOfWeek.'%'))
+			->addFieldToFilter('store_id', array('eq' => $storeId))
+			->addFieldToFilter('is_active', array('eq' => '1'));
+			/* If piercer is not free logic start*/
+			if(empty($collection->getData())){
+			
+				echo "<div class='notfreepeiercer validation-advice'>".$this->__('Sorry Appointment is Not available, Please try changing Store OR Date.')."</div>";
+			}
+			/* If piercer is not free logic end*/
+		}
+		endif;
+		/*EO Piercer Logic */
+		
+		
+		
+		echo "<div class='image_carousel'>";
+		echo "<div style=''>";
+		echo " <ul id='foo2' class='jcarosel_main_ul' style='overflow: hidden;'>";
+		
+		$isFour = 0;
+		$countSlot = 0;
+		
+		for($i=0;$i< $totalSlot;$i++)
+		{	
+			$endTime = strtotime("+$interval minutes", strtotime($selectedTime));
+			
+			$slotval ="`". "time_slot_".$i ."`";
+			
+			$endTime = date('H:i', $endTime);
+			
+			$show=false;
+			$allocatedApps = null;
+			
+			foreach ($collection as $piercer)
+			{
+				/*  To check if piercer already has allocated an appointment */
+				$endTo = strtotime("-1 minutes", strtotime($endTime.":59"));
+				$endTo = date('H:i:s', $endTo);
+				$fromTime = date("Y-m-d", strtotime($date))." " .$selectedTime.":00";
+				$toTime = date("Y-m-d", strtotime($date))." " .$endTo;
+					
+				$appCollection = Mage::getModel('appointments/appointments')->getCollection();
+				$appCollection->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$fromTime, 'to'=>$toTime), array('from'=>$fromTime, 'to'=>$toTime)))
+					->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+					->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+				
+				//echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
+				if(count($appCollection))
+					continue;
+				/* End of check */	
+						
+				$workingHours = $piercer->getWorkingHours();
+				$workingHours = unserialize($workingHours);
+				foreach ($workingHours as $workSlot)
+				{
+					$workStart = $workSlot['start'].":00";
+					$workEnd = $workSlot['end'].":00";
+					if(strtotime($workStart)<=strtotime($selectedTime) && strtotime($workEnd)>=strtotime($endTime))
+					{
+						
+						//Mage::log($country_data,Zend_Log::DEBUG, 'store', true );
+						//$value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId()));
+						
+						/* Logic to get most available piercer */
+						/* This logic count number of allocated appointments on that day for particular piercer*/
+						$fromDate = date('Y-m-d', strtotime($date))." 00:00:00";
+						$toDate = date('Y-m-d', strtotime($date))." 23:59:00";
+						$appCount = Mage::getModel('appointments/appointments')->getCollection();
+						$appCount->addFieldToFilter('appointment_start', array('from'=>$fromDate, 'to'=>$toDate))
+						->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+						if($allocatedApps==null)
+						{
+							$allocatedApps = count($appCount);
+						}
+						
+						if(count($appCount)==0)
+						{
+							$show = true;
+							$piercerAllocated = $piercer->getId();
+							break 2;
+						}
+						elseif (count($appCount)<=$allocatedApps)
+						{
+							$show = true;
+							$allocatedApps = count($appCount);
+							$piercerAllocated = $piercer->getId();
+						}
+					}
+				}
+			}
+				
+			if($show==true) :
+				$countSlot++;
+				if((($countSlot - 1) % $timeslot_col_size == 0) || $countSlot==1 ){
+				echo "<li class='item' style= 'display: table-cell;
+	            height: auto;
+	            list-style-type: none;
+	            margin: 10px;
+	            vertical-align: middle;'>";
+				echo "<ul>";
+				$isFour = 0;
+			}
+			
+			$isFour = $isFour + 1;
+			
+			/* echo "<li class='timeslot' id='time_slot_$i' */
+			//if($fetch_starttime):$sel = "selected";endif;
+			
+			if($isSlecetedTrue){
+				$htmlsel = "selectedTime";
+			}
+			echo "<li class='timeslot $htmlsel' id='time_slot_$i'
+			data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
+			data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)' >";
+			
+			echo "<span >";
+			if($time_pref == 12){
+				if($time_pref <= $selectedTime)
+				{
+				 	$endTime1 =  strtotime($selectedTime);
+					$mins_only = date('i', $endTime1);
+					$hrs = date('H', $endTime1);
+					$hrsconvert = sprintf('%02d', ($hrs%$time_pref) );				
+					$selectedTime = $hrsconvert.":".$mins_only." PM"; 
+				}
+				else{				
+					$selectedTime = $selectedTime." AM";						
+				}			
+			}			
+			echo "<span >";
+			echo $selectedTime ;
+			echo "</span>";			
+			echo "</li>";
+			
+			
+			if($isFour == $timeslot_col_size) {
+			echo "</ul>";
+			echo "</li>";
+			$isFour = 0;
+			}
+			
+			endif;
+			if($isFour != $timeslot_col_size && $i == ($totalSlot - 1)) {
+				echo "</ul>";
+				echo "</li>";
+				$isFour = 0;
+			}
+			$selectedTime = ($endTime);
+		}
+		echo "</ul>";
+		echo "<div class='clearfix'></div> <a class='prev apt-prev' id='foo2_prev' href='#'><span>prev</span></a> 
+					<a class='next apt-next' id='foo2_next' href='#'><span>next</span></a> 
+					<div class='pagination' id='foo2_pag'></div>";
+		echo "</div>";
+		echo "</div>";
+		//echo "<br/>";
+		
+		?>
+	</div>
+
+<?php endif;?> 
+</div>
+
+
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/timeslider/sliderDemo.js"></script>
+
+<script>
+	//jQuery(document).ready(function (){
+
+                    jQuery('#foo2').jcarousel({
+                        initCallback: mycarousel_initCallbackProd2,
+                        buttonNextCallback: mycarousel_buttonPrevCallbackProd2,
+                        buttonPrevCallback: mycarousel_buttonNextCallbackProd2,
+                        // This tells jCarousel NOT to autobuild prev/next buttons
+                        buttonNextHTML: null,
+                        buttonPrevHTML: null,
+                        itemFallbackDimension: 90,
+                    });
+
+                    jQuery(window).resize();
+                    
+                function mycarousel_initCallbackProd2(carousel) {
+                    jQuery('#foo2_prev').bind('click', function() {
+                        carousel.prev();
+                        return false;
+                    });
+
+                    jQuery('#foo2_next').bind('click', function() {
+                        carousel.next();
+                        return false;
+                    });
+                };
+
+                function mycarousel_buttonNextCallbackProd2(carousel, button, enabled) {
+                    if(enabled){
+                        jQuery("#foo2_prev").css('opacity',1);
+                    }else{
+                        jQuery("#foo2_prev").css('opacity',0.13);
+                    }
+                };
+
+                function mycarousel_buttonPrevCallbackProd2(carousel, button, enabled) {
+                    if(enabled){
+                        jQuery("#foo2_next").css('opacity',1);
+                    }else{
+                        jQuery("#foo2_next").css('opacity',0.13);
+                    }
+                };
+
+                /* if(jQuery('ul#foo2 li.item').length <= 5){
+                    jQuery("#foo2_next , #foo2_prev").hide();
+                    jQuery(".timeslot").css('margin-right',0);
+                    jQuery(".timeslot").css('margin-left',0);
+
+                } */
+                jQuery(window).resize(function() {
+                    var wi = 0;
+                    jQuery('ul#foo2 li').each(function(key,element){
+                       wi += jQuery(element).width();
+                    });
+
+                    if(wi >= document.body.offsetWidth){
+                            jQuery('#foo2_next, #foo2_prev').show();
+                    }else{
+                            jQuery('#foo2_next, #foo2_prev').hide();
+                    }
+            });
+
+             function slotSelected(id){
+
+				var demo = jQuery("#"+id);
+				var starttime = demo[0].getAttribute('data-start_time_slot');
+				var endtime = demo[0].getAttribute('data-end_time_slot');
+				var piercerId = demo[0].getAttribute('data-piercer');
+				jQuery("#starttime_hidden").val(starttime);
+				jQuery("#endtime_hidden").val(endtime);
+				jQuery("#piercer_id").val(piercerId);
+//			    jQuery(".timeslot").css('background-color',"");
+	//		    jQuery("#"+id).css("background-color","palegoldenrod");
+				jQuery(".timeslot").removeClass("selectedTime");
+				jQuery("#"+id).addClass("selectedTime");
+			
+			}
+		
+		
+			
+		//});
+</script>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Productattribute>
+            <version>0.1.0</version>
+        </Ecp_Productattribute>
+    </modules>
+    <global>       
+        <blocks>
+            <ecp_productattribute>
+                <class>Ecp_Productattribute_Block</class>
+            </ecp_productattribute>                 
+            <catalog>
+                <rewrite>
+                    <product_view_type_configurable>Ecp_Productattribute_Block_Product_View_Type_Configurable</product_view_type_configurable>                  
+                </rewrite>
+            </catalog>      
+        </blocks> 
+    </global>
+    <frontend>
+        <routers>
+            <ecp_productattribute>
+                <use>standard</use>
+                <args>
+                    <module>Ecp_Productattribute</module>
+                    <frontName>productattribute</frontName>
+                </args>
+            </ecp_productattribute>
+        </routers>
+    </frontend>
+</config>

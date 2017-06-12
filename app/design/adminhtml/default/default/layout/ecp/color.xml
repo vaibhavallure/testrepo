@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <ecp_color_adminhtml_color_index>
+        <reference name="content">
+            <block type="ecp_color/adminhtml_color" name="ecp_color" />
+        </reference>
+    </ecp_color_adminhtml_color_index>
+</layout>

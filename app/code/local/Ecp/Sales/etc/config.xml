@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Ecp_Sales>
+			<version>0.1.0</version>
+		</Ecp_Sales>
+	</modules>    
+    <frontend>
+		<routers>
+            <sales>
+                <args>
+                    <modules>
+                        <ecp_sales before="Mage_Sales">Ecp_Sales</ecp_sales>
+                    </modules>
+                </args>
+            </sales>
+        </routers>
+   </frontend>
+	<global>	
+		<blocks>
+			<sales>
+				<rewrite>
+					<order_history>Ecp_Sales_Block_Order_History</order_history>
+				</rewrite>
+			</sales>			
+		</blocks>
+	</global>
+</config>		

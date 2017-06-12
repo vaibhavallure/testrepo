@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Ecp_Wishlist>
+			<version>0.1.0</version>
+		</Ecp_Wishlist>
+	</modules>
+	<global>
+		<helpers>
+			<ecp_wishlist>
+				<class>Ecp_Wishlist_Helper</class>
+			</ecp_wishlist>	
+		</helpers>
+	</global>
+</config>

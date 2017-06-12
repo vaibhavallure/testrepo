@@ -1,0 +1,19 @@
+/**
+ * @category    Mana
+ * @package     ManaPro_FilterSlider
+ * @copyright   Copyright (c) http://www.manadev.com
+ * @license     http://www.manadev.com/license  Proprietary License
+ */
+.m-filter-slider { height: 17px; position: relative; background: none; }
+.m-filter-slider > .m-slider-from, .m-filter-slider > .m-slider-to { height: 10px; width: 6px; position: absolute; top: 3px; }
+.m-filter-slider > .m-slider-span { height: 8px; position: absolute; background: none; border-bottom: 1px solid #787882; left: 0px !important; width: 150px !important;}
+.m-filter-slider > .m-slider-from { background: transparent url(../images/classic-map.png) -585px -10px no-repeat; cursor: e-resize; }
+.m-filter-slider > .m-slider-to { background: transparent url(../images/classic-map.png) -504px -10px no-repeat; cursor: w-resize;}
+
+
+
+.m-slider-values {text-align: center; margin-top: 3px; } 
+.m-slider-values .m-slider-min-value { float: left; }
+.m-slider-values .m-slider-max-value { float: right;}
+.m-slider-selected-value {}
+

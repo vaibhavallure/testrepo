@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <modules>
+        <OpsWay_Customer>
+            <version>0.1.0</version>
+        </OpsWay_Customer>
+    </modules>
+    <global>
+        <models>
+            <opsway_customer>
+                <class>OpsWay_Customer_Model</class>
+            </opsway_customer>
+        </models>
+        <helpers>
+            <opsway_customer>
+                <class>OpsWay_Customer_Helper</class>
+            </opsway_customer>
+        </helpers>
+        <events>
+            <customer_session_init>
+                <observers>
+                    <opsway_customer>
+                        <class>opsway_customer/observer</class>
+                        <method>updateGeoInfo</method>
+                    </opsway_customer>
+                </observers>
+            </customer_session_init>
+        </events>
+    </global>
+    <default>
+        <system>
+            <customer_geoip>
+                <private_ip_address><![CDATA[
+10.0.0.0|10.255.255.255
+172.16.0.0|172.31.255.255
+192.168.0.0|192.168.255.255
+169.254.0.0|169.254.255.255
+127.0.0.0|127.255.255.255
+                ]]></private_ip_address>
+                <curl_timeout>60</curl_timeout>
+            </customer_geoip>
+        </system>
+    </default>
+</config>

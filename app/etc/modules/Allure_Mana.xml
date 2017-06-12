@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Mana>
+			<active>true</active>
+			<codePool>local</codePool>
+			<depends>
+				<Mana_Core />
+			</depends>
+		</Allure_Mana>
+	</modules>
+</config>

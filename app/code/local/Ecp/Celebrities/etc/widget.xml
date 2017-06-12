@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<widgets>
+    <ecp_celebrities type="ecp_celebrities/carrousel" module="ecp_celebrities">
+        <name>Ecp Category Celebrities Carrousel</name>
+        <description>Add a special menu above celebrites Page </description>
+        <parameters />
+    </ecp_celebrities>
+</widgets>

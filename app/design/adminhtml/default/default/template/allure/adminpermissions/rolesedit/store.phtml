@@ -1,0 +1,15 @@
+<?php $_restrict = $this->getRestrictByStore() ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Role by Store') ?></h4>
+    </div>
+    <fieldset>
+        <span class="field-row">
+            <label for="restrict_by_store"><?php echo $this->__('Restrict Role by Store?') ?></label>
+            <select id="restrict_by_store" name="restrict_by_store" class="select">
+                <option value="0" <?php if (!$_restrict) echo 'selected="selected"' ?>><?php echo $this->__('No') ?></option>
+                <option value="1" <?php if ($_restrict) echo 'selected="selected"' ?>><?php echo $this->__('Yes') ?></option>
+            </select>
+        </span>
+    </fieldset>
+</div>

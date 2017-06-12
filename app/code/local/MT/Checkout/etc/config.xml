@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <MT_Checkout>
+            <version>0.1.1</version>
+        </MT_Checkout>
+    </modules>
+    <global>
+        <fieldsets>
+            <sales_convert_quote>
+                <no_signature_delivery>
+                    <to_order>*</to_order>
+                </no_signature_delivery>
+            </sales_convert_quote>
+        </fieldsets>
+    </global>
+    <frontend>
+        <routers>
+            <checkout>
+                <args>
+                    <modules>
+                        <MT_Checkout before="Mage_Checkout">MT_Checkout</MT_Checkout>
+                    </modules>
+                </args>
+            </checkout>
+        </routers>
+    </frontend>
+</config>

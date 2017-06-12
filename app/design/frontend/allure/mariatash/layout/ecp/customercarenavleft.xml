@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <!--<ecp_customercarenavleft_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+            <action method="setTitle" translate="title">
+                    <title>Customer Care</title>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="page/html_wrapper" name="customer.care.wrapper" translate="label">
+                <label>Customer-care-wrapper</label>
+                <action method="setElementClass"><value>customer-care</value></action>
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="ecp_customercarenavleft/customercarenavleft" name="customercarenavleft" template="ecp/customercarenavleft/customercarenavleft.phtml" />
+            <remove name="tags_popular"/>
+            <remove name="catalog.compare.sidebar"/>            
+            <remove name="cart_sidebar"/>
+            <remove name="sale.reorder.sidebar"/>
+            <remove name="wishlist_sidebar"/>
+        </reference>
+    </ecp_customercarenavleft_index>-->
+    <ecp_customercarenavleft_index_index translate="label">
+        <!-- <update handle="ecp_customercarenavleft_index"/>
+        Mage_Customer -->
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="ecp_customercarenavleft/customercarenavleft" name="customercare" template="ecp/customercarenavleft/customercare.phtml" />
+            <!--<block type="cms/block" name="my.orders"><action method="setBlockId"><block_id>customer_care_my_orders</block_id></action></block>
+            <block type="cms/block" name="my.account"><action method="setBlockId"><block_id>customer_care_my_account</block_id></action></block>
+            <block type="cms/block" name="contact.us"><action method="setBlockId"><block_id>customer_care_contact_us</block_id></action></block>
+            <block type="cms/block" name="return.policy"><action method="setBlockId"><block_id>customer_care_return_policy</block_id></action></block>
+            <block type="cms/block" name="our.products"><action method="setBlockId"><block_id>customer_care_our_products</block_id></action></block>
+            <block type="cms/block" name="faqs"><action method="setBlockId"><block_id>customer_care_faqs</block_id></action></block>
+            <block type="cms/block" name="shipping.information"><action method="setBlockId"><block_id>customer_care_shipping_information</block_id></action></block>-->
+        </reference>
+    </ecp_customercarenavleft_index_index>    
+</layout> 

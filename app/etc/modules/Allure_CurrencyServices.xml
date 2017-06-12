@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Allure_CurrencyServices>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Allure_Core />
+            </depends>
+        </Allure_CurrencyServices>
+    </modules>
+</config>

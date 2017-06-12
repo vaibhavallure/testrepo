@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_GeoShipping>
+			<name>Allure - GeoLocation Based Shipping</name>
+			<version>1.0.0</version>
+			<depends>
+				<Allure_Core />
+				<Allure_GeoLocation />
+			</depends>
+		</Allure_GeoShipping>
+	</modules>
+	<global>
+		<helpers>
+			<allure_geoshipping>
+				<class>Allure_GeoShipping_Helper</class>
+			</allure_geoshipping>
+		</helpers>
+		<blocks>
+			<allure_geoshipping>
+				<class>Allure_GeoShipping_Block</class>
+			</allure_geoshipping>
+		</blocks>
+		<models>
+			<allure_geoshipping>
+				<class>Allure_GeoShipping_Model</class>
+			</allure_geoshipping>
+		</models>
+	</global>
+	<frontend>
+		<events>
+			<checkout_cart_save_after>
+				<observers>
+					<allure_geoshipping>
+						<class>allure_geoshipping/observer</class>
+						<method>updateGeoShipping</method>
+					</allure_geoshipping>
+				</observers>
+			</checkout_cart_save_after>
+		</events>
+	</frontend>
+	<default>
+		<allure_geolocation>
+			<shipping_calculation>
+				<status>0</status>
+				<ignore_default>0</ignore_default>
+				<debug>0</debug>
+			</shipping_calculation>
+		</allure_geolocation>
+	</default>
+</config>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<widgets>
+    <slideshow_ecp type="ecp_slideshow/home" module="ecp_slideshow">
+        <name>Ecp Slideshow - Home</name>
+        <description>Add a slideshow in background </description>
+        <parameters />
+    </slideshow_ecp>
+</widgets>

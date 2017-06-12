@@ -1,0 +1,113 @@
+<?php
+$id = $this->getRequest()->getParam('id');
+
+$model = Mage::getModel('restrictcustomergroup/restrictcustomergroup')->load($id);
+$info = array();
+?>
+<ul class="messages">
+    <li class="notice-msg">
+        <ul>
+            <li><?php echo Mage::helper('restrictcustomergroup')->__('Give a URL to redirect to from any URL on the store!') ?> </li>
+        </ul>
+    </li>
+</ul>
+<table cellspacing="0" class="form-list" >
+    <tbody id="fme_form_type">
+
+        <tr>
+            <td class="label"><?php echo Mage::helper('restrictcustomergroup')->__('URL:') ?><span class="required">*</span></td>
+            <td class="value"><?php echo Mage::helper('restrictcustomergroup')->__('Redirect URL:') ?><span class="required">*</span></td>
+        </tr>
+
+        <?php if (count($model->getData()) > 0): ?>
+
+            <?php
+            $info = unserialize($model->getManualUrlRedirect()); //echo '<pre>';print_r($info);echo '</pre>';
+            $i = 0;
+            ?>
+            <?php foreach ($info as $k => $v): ?>
+
+                <tr id="row-<?php echo $i; ?>">
+
+                    <td class="label"><input type="text" style="width: 190px;" class='input-text required-entry validate-url' value="<?php echo $k; ?>" name="url[from][]"></td>
+                    <td class="value"><input type="text" style="width: 190px;" class='input-text required-entry validate-url' value="<?php echo $v; ?>" name="url[to][]"></td>
+
+                    <?php if ($i == 0): ?>
+
+                        <td style="padding-left:20px; padding-top:5px;">
+                            <button style="" onclick="return addRow();" class="scalable" type="button" title="Add Option" id="add_new_option_button">
+                                <span><span>
+                                        <span><?php echo Mage::helper('restrictcustomergroup')->__('Add New') ?></span>
+                                    </span></span>
+                            </button>
+                        </td>
+
+                    <?php else: ?>
+
+                        <td style="padding-left:20px; padding-top:5px;">
+                            <button style="" onclick="removeRow(<?php echo $i; ?>)" class="scalable" type="button" title="Delete Option" id="delete_new_option_button">
+                                <span><span>
+                                        <span><?php echo Mage::helper('restrictcustomergroup')->__('Delete') ?></span>
+                                    </span></span>
+                            </button>
+                        </td>
+
+                    <?php endif; ?>
+
+                    <?php $i++; ?>
+
+                </tr>
+
+            <?php endforeach; ?>
+
+        <?php else: ?>
+
+            <tr>
+                <td class="label"><input type="text" style="width: 190px;" class='input-text validate-url required-entry' value="" name="url[from][]"></td>
+                <td class="value"><input type="text" style="width: 190px;" class='input-text validate-url required-entry' value="" name="url[to][]"></td>
+                <td style="padding-left:20px; padding-top:5px;">
+                    <button style="" onclick="addRow()" class="scalable" type="button" title="Add Option" id="add_new_option_button">
+                        <span><span>
+                                <span><?php echo Mage::helper('restrictcustomergroup')->__('Add New') ?></span>
+                            </span></span>
+                    </button>
+                </td>
+            </tr>
+
+        <?php endif; ?>
+    </tbody>
+</table>
+
+
+<script type="text/javascript">
+//<![CDATA[
+    var superid = <?php echo count($info); ?>;
+
+    function addRow() {
+
+        var string = "";
+        var id = superid;
+        superid = id + 1;
+        var rowId = id;
+
+        string = "<tr id='row-" + id + "'>" +
+                "<td class='label'><input  type='text' style='width: 190px;' class='input-text required-entry validate-url' value='' name='url[from][]'></td>" +
+                "<td class='value'><input type='text' style='width: 190px;' class='input-text required-entry validate-url' value='' name='url[to][]'></td>" +
+                "<td style='padding-left:20px; padding-top:5px;'>" +
+                "<button onclick='removeRow(" + rowId + ")' class='scalable' type='button' title='Delete Option' id='delete_new_option_button'>" +
+                "<span><span>" +
+                "<span><?php echo Mage::helper('restrictcustomergroup')->__('Delete') ?></span>" +
+                "</span></span>" +
+                "</button>" +
+                "</td>" +
+                "</tr>";
+        //document.getElementById('fme_form_type').innerHTML = string;
+        $('fme_form_type').insert(string);
+    }
+
+    function removeRow(e) {
+        $('row-' + e).remove();
+    }
+//]]>
+</script>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<widgets>
+    <shoppingcart_ecp type="shoppingcart/topcart" module="shoppingcart">
+        <name>Ecp Widget - Top Cart</name>
+        <description>Add a top Cart</description>
+        <parameters>
+            <!--page_size translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>5</value>
+                <label>Number of Products to display</label>
+                <type>text</type>
+            </page_size>
+            <template>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Template</label>
+                <type>select</type>
+                <value>shoppingcart/shoppingcart.phtml</value>
+                <values>
+                    <default translate="label">
+                        <value>shoppingcart/shoppingcart.phtml</value>
+                        <label>Default template</label>
+                    </default>
+                </values>
+            </template-->
+        </parameters>
+    </shoppingcart_ecp>
+</widgets>

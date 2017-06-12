@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Allure
+ * @package    Allure_CurrencyManager
+ * @copyright  Copyright (c) 2016 Allure Inc (http://www.allureinc.co)
+ * @contacts   support@allureinc.co
+ */
+ -->
+<config>
+    <modules>
+        <Allure_CurrencyManager>
+            <name>Allure - Currency Manager</name>
+            <version>1.0.0</version>
+            <depends>
+                <Allure_Core />
+            </depends>
+        </Allure_CurrencyManager>
+    </modules>
+
+    <global>
+        <helpers>
+            <currencymanager>
+                <class>Allure_CurrencyManager_Helper</class>
+            </currencymanager>
+            <!--tax>
+                <rewrite>
+                    <data>Allure_CurrencyManager_Helper_Tax</data>
+                </rewrite>
+            </tax-->
+
+        </helpers>
+        <models>
+            <directory>
+                <rewrite>
+                    <currency>Allure_CurrencyManager_Model_Currency</currency>
+                </rewrite>
+            </directory>
+
+            <core>
+                <rewrite>
+                    <locale>Allure_CurrencyManager_Model_Locale</locale>
+                    <store>Allure_CurrencyManager_Model_Store</store>
+                </rewrite>
+            </core>
+
+            <currencymanager>
+                <class>Allure_CurrencyManager_Model</class>
+            </currencymanager>
+        </models>
+        <blocks>
+            <currencymanager>
+                <class>Allure_CurrencyManager_Block</class>
+            </currencymanager>
+            <adminhtml>
+                <rewrite>
+                    <catalog_product_helper_form_price>Allure_CurrencyManager_Block_Adminhtml_Formprice</catalog_product_helper_form_price>
+                </rewrite>
+                <rewrite>
+                    <catalog_product_edit_tab_options_option>Allure_CurrencyManager_Block_Adminhtml_Catalog_Product_Edit_Tab_Options_Option</catalog_product_edit_tab_options_option>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <resources>
+            <currencymanager_setup>
+                <setup>
+                    <module>Allure_CurrencyManager</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </currencymanager_setup>
+            <currencymanager_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </currencymanager_write>
+            <currencymanager_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </currencymanager_read>
+        </resources>
+        <events>
+            <controller_front_init_before>
+                <observers>
+                    <fix_currency_switch_url>
+                        <type>model</type>
+                        <class>currencymanager/observer</class>
+                        <method>fixCurrencySwitchUrl</method>
+                    </fix_currency_switch_url>
+                    <rewrire_classes_depending_on_version>
+                        <type>model</type>
+                        <class>currencymanager/observer</class>
+                        <method>rewriteClasses</method>
+                    </rewrire_classes_depending_on_version>
+                </observers>
+            </controller_front_init_before>
+            <currency_options_after_get>
+                <observers>
+                    <remove_html_tags>
+                        <type>model</type>
+                        <class>currencymanager/observer</class>
+                        <method>removeHtmlTags</method>
+                    </remove_html_tags>
+                </observers>
+            </currency_options_after_get>
+        </events>
+    </global>
+
+    <default>
+        <currencymanager>
+            <general>
+                <enabled>1</enabled>
+                <excludecheckout>1</excludecheckout>
+                <enabledadm>0</enabledadm>
+                <input_admin>0</input_admin>
+                <cutzerodecimal>0</cutzerodecimal>
+                <cutzerodecimal_suffix>,-</cutzerodecimal_suffix>
+                <precision>0</precision>
+                <position>8</position>
+                <display>2</display>
+                <min_decimal_count>2</min_decimal_count>
+            </general>
+            <additional>
+                <fix_currency_switch_url>0</fix_currency_switch_url>
+                <rewrite_classes>1</rewrite_classes>
+            </additional>
+        </currencymanager>
+    </default>
+
+
+    <frontend>
+        <layout>
+            <updates>
+                <currencymanager>
+                    <file>allure/currencymanager.xml</file>
+                </currencymanager>
+            </updates>
+        </layout>
+        <routers>
+            <currencymanager>
+                <use>standard</use>
+                <args>
+                    <module>Allure_CurrencyManager</module>
+                    <frontName>currencymanager</frontName>
+                </args>
+            </currencymanager>
+        </routers>
+    </frontend>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <currencymanager translate="title" module="currencymanager">
+                                            <title>Currency Manager</title>
+                                            <sort_order>400</sort_order>
+                                        </currencymanager>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <translate>
+            <modules>
+                <Allure_CurrencyManager>
+                    <files>
+                        <default>Allure_CurrencyManager.csv</default>
+                    </files>
+                </Allure_CurrencyManager>
+            </modules>
+        </translate>
+    </adminhtml>
+    <phpunit>
+        <suite>
+            <modules>
+                <Allure_CurrencyManager />
+            </modules>
+        </suite>
+    </phpunit>
+</config>

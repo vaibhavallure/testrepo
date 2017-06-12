@@ -1,0 +1,237 @@
+<style>
+
+ul.product-list-selection1 {
+	float: left;
+	width: 806px;
+	margin: 10px 0 49px 0;
+	border-right: 1px solid #CCCCCC;
+	padding: 9px 0 0 0;
+}
+
+ul.product-list-selection1 li {
+	float: left;
+	width: 264px;
+	height: 134px;
+	margin: 0 0 31px 0;
+}
+
+.product-selection1 h4 {
+	float: left;
+	width: 137px;
+	height: 37px;
+	overflow: hidden;
+	font: bold 12px/12px Arial, Helvetica, sans-serif;
+	clear: none;
+	margin: 0 0 12px 10px;
+}
+
+.product-selection1 img {
+	float: left;
+	width: 101px;
+	height: 133px;
+}
+
+.product-selection1 p {
+	float: left;
+	width: 137px;
+	height: auto;
+	overflow: hidden;
+	font: normal 12px/10px Arial, Helvetica, sans-serif;
+	margin: 0 0 9px 10px;
+}
+
+.product-selection1 input {
+	float: left;
+	width: 30px;
+	height: 23px;
+	border: 0;
+	font: 12px/12px Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+.product-selection1 .remove2 {
+	float: left;
+	width: 137px;
+	height: 20px;
+	overflow: hidden;
+	font: normal 12px/17px Arial, Helvetica, sans-serif;
+	margin: 0 0 9px 10px;
+}
+
+.product-selection1 .close2 {
+	float: left;
+	background-image: url("http://test.entrepids.com/mariatash_mc_1702/media/wysiwyg/close-icon2.png");
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	height: 18px;
+	width: 22px;
+	display: block;
+}
+
+
+
+</style>
+
+<script language="JavaScript">
+	
+	function mc_add( base_element, name, metal_color, price, qty ){
+		element = getMcElement( name, metal_color, price, qty );
+		$( base_element ).append( element );
+	}
+	
+	function getMcElement( name, metal_color, price, qty ){
+		result = "";
+		
+        result  = '<li class="product-selection1"><img src="skin/frontend/mt/default/images/product-selction1.jpg"><h4>';
+		result += name;
+		result += '</h4><p>Metal Color: ';
+		result += metal_color;
+		result += '</p><p>Price: ';
+		result += price;
+		result += '</p><p class="qty-try-on">Qty</p><input type="text" title="Qty" value="';
+		result += qty;
+		result += '" maxlength="12" name="qty"><div class="remove2"><div class="close2"></div>Remove</div></li>';
+		
+		return result;
+	}
+	
+	function mc_del( element ){
+		
+	}
+	
+</script>
+
+<!--
+<link rel="stylesheet" type="text/css" href="http://test.entrepids.com/mariatash_mc_1702/skin/frontend/mt/default/css/tryon.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://test.entrepids.com/mariatash_mc_1702/skin/frontend/mt/default/css/styles.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://test.entrepids.com/mariatash_mc_1702/skin/frontend/mt/default/css/tattoo-1.css" media="all" />
+-->
+
+<ul class="product-list-selection1">
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg">
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty">
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+        </li>
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg">
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty">
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+        </li>
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg">
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty">
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+        </li>
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg">
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty">
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+
+        </li>
+        <li class="product-selection1">
+            <img src="skin/frontend/mt/default/images/product-selction1.jpg">
+            <h4>Diamond Invisible Set Dangle Ball Flower Cartilage Stud</h4>
+            <p>
+                Metal Color: Yellow Gold
+            </p>
+            <p>
+                Price:$580
+            </p>
+            <p class="qty-try-on">
+                Qty
+            </p>
+            <input type="text" title="Qty" value="1" maxlength="12" name="qty">
+            <div class="remove2">
+                <div class="close2"></div>
+                Remove
+            </div>
+        </li>
+    </ul>
+    
+<?php
+echo "jojojsodasodsadjsaopdnsaopncsao";
+	$model = Mage::getModel('catalog/product')
+	->getCollection()
+	->addAttributeToSelect('*');
+
+    foreach( $model as $product ){
+        echo '-*- ' . $product->getName() . '*** <b>' . $product->getAttributeText('metal_color') . '</b>' . $product->getPrice() . "</br>";   
+        
+	    //$galleryData = $product->getData('media_gallery');
+		//var_dump( $galleryData );
+		/*
+	    foreach ($galleryData['images'] as &$image) {
+	        var_dump($image);
+	    }
+		*/
+		/*
+        echo ' img = ' . $products->getImage();
+        echo "<br>";
+        echo ' smallimg = ' . $products->getSmallImage();
+        echo "<br>";
+        echo ' thumb = ' . $products->getThumbnail();
+        echo "<br>";
+		*/
+    }
+     
+	/**
+	$class_methods = get_class_methods( $model );
+	//$class_methods = get_class_methods(new myclass());
+	foreach ($class_methods as $method_name) {
+		echo "$method_name </br>";
+	}
+	*/

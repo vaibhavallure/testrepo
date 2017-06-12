@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <report translate="label" module="ecp_reporttoemail">
+            <label>Report to Email</label>
+            <tab>general</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <scheduled_reports translate="label">
+                    <label>Scheduled reports</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <emails translate="label">
+                            <label>List of emails</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Comma separate</comment>
+                        </emails>
+                        <time translate="label">
+                            <label>Time sending email</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Only hour part (in 24h format by UTC time)</comment>
+                        </time>
+                        <count_days translate="label">
+                            <label>Count last days</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>From now</comment>
+                        </count_days>
+                    </fields>
+                </scheduled_reports>
+            </groups>
+        </report>
+    </sections>
+</config>

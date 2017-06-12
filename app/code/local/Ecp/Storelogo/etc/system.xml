@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <ecp_storelogo translate="label">
+            <label>Ecp Storelogo</label>
+            <tab>general</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <storelogo translate="label" module="ecp_storelogo">
+                    <label>Ecp Storelogo</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <value translate="label">
+                            <label>Cms Block</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ecp_storelogo/system_config_source_cms</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </value>
+                    </fields>
+                </storelogo>
+            </groups>
+        </ecp_storelogo>
+    </sections>
+</config>

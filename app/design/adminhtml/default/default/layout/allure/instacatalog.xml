@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Allure_InstaCatalog
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category    Allure
+ * @package     Allure_InstaCatalog
+ * @copyright   Copyright© 2016, Allure Inc
+ * @license     http://opensource.org/licenses/mit-license.php MIT License
+ * @author      Team Allure <extensions@allureinc.co>
+-->
+<layout>
+    <adminhtml_allure_instacatalog_feed_index>
+    	<reference name="head">
+            <action method="addCss"><stylesheet>css/allure/instacatalog/custom/app.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/allure/instacatalog/custom/moderate.css</stylesheet></action>
+        	<action method="addCss"><stylesheet>css/allure/instacatalog/instacatalog_lookbook.css</stylesheet></action>
+        	 <action method="addCss"><stylesheet>css/allure/instacatalog/lookbook/css/annotation.css</stylesheet></action>
+        
+        	<action method="addJs"><script>jquery/jquery.min.js</script></action>
+            <!-- <action method="addJs"><script>jquery/jquery-1.8.1.min.js</script></action> -->
+		    <action method="addJs"><script>jquery/jquery.noconflict.js</script></action>                 
+            <action method="addJs"><script>allure/instacatalog/lookbook/jquery-ui-1.9.1.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/jquery.annotate_custom.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/fileuploader.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/json2.min.js</script></action>
+        	 <action method="addJs"><script>allure/instacatalog/custom_view.js</script></action>
+        
+        </reference>
+        
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>allure_instacatalog/feed</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+           <!--  <block type="allure_instacatalog/adminhtml_feed" name="feed" /> -->
+            <block type="allure_instacatalog/adminhtml_custom" name="custom_feed_grid" template="allure/instacatalog/custom.phtml" />
+        </reference>
+    </adminhtml_allure_instacatalog_feed_index>
+    
+    <adminhtml_allure_instacatalog_feed_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <!-- <block type="allure_instacatalog/adminhtml_feed_grid" name="feed_grid"/> -->
+            <block type="allure_instacatalog/adminhtml_custom" name="custom_feed_grid" template="allure/instacatalog/custom.phtml" />
+        </block>
+    </adminhtml_allure_instacatalog_feed_grid>
+    
+     <adminhtml_allure_instacatalog_feed_shop>
+       <reference name="head">
+            <action method="addCss"><stylesheet>css/allure/instacatalog/custom/app.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/allure/instacatalog/custom/moderate.css</stylesheet></action>
+        	<action method="addCss"><stylesheet>css/allure/instacatalog/instacatalog_lookbook.css</stylesheet></action>
+        	 <action method="addCss"><stylesheet>css/allure/instacatalog/lookbook/css/annotation.css</stylesheet></action>
+        
+        	<action method="addJs"><script>jquery/jquery.min.js</script></action>
+            <!-- <action method="addJs"><script>jquery/jquery-1.8.1.min.js</script></action> -->
+		    <action method="addJs"><script>jquery/jquery.noconflict.js</script></action>                 
+            <action method="addJs"><script>allure/instacatalog/lookbook/jquery-ui-1.9.1.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/jquery.annotate_custom.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/fileuploader.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/json2.min.js</script></action>
+        	 <action method="addJs"><script>allure/instacatalog/custom_view.js</script></action>
+        
+        </reference>
+        
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>allure_instacatalog/feed</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+           <!--  <block type="allure_instacatalog/adminhtml_feed" name="feed" /> -->
+            <block type="allure_instacatalog/adminhtml_custom" name="custom_feed_shop" template="allure/instacatalog/custom_shopby_look.phtml" />
+        </reference>
+    </adminhtml_allure_instacatalog_feed_shop>
+    
+    
+    <instacatalog_lookbook>
+    	<reference name="head">
+            <action method="addCss"><stylesheet>css/allure/instacatalog/lookbook/css/annotation.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/allure/instacatalog/lookbook/css/fileuploader.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/allure/instacatalog/instacatalog_lookbook.css</stylesheet></action>
+            
+            <action method="addJs"><script>jquery/jquery.min.js</script></action>
+            <!-- <action method="addJs"><script>jquery/jquery-1.8.1.min.js</script></action> -->
+		    <action method="addJs"><script>jquery/jquery.noconflict.js</script></action>                 
+            <action method="addJs"><script>allure/instacatalog/lookbook/jquery-ui-1.9.1.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/jquery.annotate.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/fileuploader.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/lookbook/json2.min.js</script></action>
+            <action method="addJs"><script>allure/instacatalog/instafeed.min.js</script></action>
+           <!--  <action method="addJs"><script>allure/instacatalog/instacatalog_lookbook.js</script></action> -->
+        </reference>
+    </instacatalog_lookbook>
+    
+    <!-- Post add/edit action -->
+    <adminhtml_allure_instacatalog_feed_edit>
+        <update handle="instacatalog_lookbook"/>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>allure_instacatalog/feed</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="allure_instacatalog/adminhtml_feed_edit" name="feed_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="allure_instacatalog/adminhtml_feed_edit_tabs" name="feed_tabs"></block>
+        </reference>
+    </adminhtml_allure_instacatalog_feed_edit>
+    
+     <adminhtml_allure_instacatalog_feed_new>
+        <update handle="instacatalog_lookbook"/>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>allure_instacatalog/feed</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" template="allure/instacatalog/select.phtml"></block>
+            <block type="allure_instacatalog/adminhtml_feed_edit" name="feed_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="allure_instacatalog/adminhtml_feed_edit_tabs" name="feed_tabs"></block>
+        </reference>
+    </adminhtml_allure_instacatalog_feed_new>
+</layout>

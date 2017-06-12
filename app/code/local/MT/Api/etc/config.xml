@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <modules>
+        <MT_Api>
+            <version>0.0.2</version>
+        </MT_Api>
+    </modules>
+    <global>
+        <models>
+            <mt_api>
+                <class>MT_Api_Model</class>
+            </mt_api>
+            <sales>
+                <rewrite>
+                    <order_api_v2>MT_Api_Model_Rewrite_Order_Api_V2</order_api_v2>            
+                </rewrite>
+            </sales> 
+        </models>
+    </global>
+</config>

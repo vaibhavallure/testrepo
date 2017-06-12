@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <ecp>
+            <label>ECP</label>
+            <sort_order>101</sort_order>
+        </ecp>
+    </tabs>
+    <sections>
+        <ecp_footlinks>
+            <label>Ecp Footlinks</label>
+            <tab>ecp</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <footlinks>
+                    <label>Foot Links</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>31</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <facebookurl translate="label">
+                            <label>Facebook url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </facebookurl>
+                        <twitterurl translate="label">
+                            <label>Twitter url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </twitterurl>
+                        <pinteresturl translate="label">
+                            <label>Pinterest url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pinteresturl>
+                        <yelpurl translate="label">
+                            <label>Yelp url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </yelpurl>
+                        <instaurl translate="label">
+                            <label>Instagram url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </instaurl>
+                    </fields>
+                </footlinks>
+            </groups>
+        </ecp_footlinks>
+    </sections>
+</config>

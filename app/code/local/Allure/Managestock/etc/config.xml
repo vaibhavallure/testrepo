@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Managestock>
+			<name>Allure - Stock Management</name>
+			<version>0.0.1</version>
+		</Allure_Managestock>
+	</modules>
+	<global>
+
+		<helpers>
+			<managestock>
+				<class>Allure_Managestock_Helper</class>
+			</managestock>
+		</helpers>
+
+		<resources>
+			<allure_managestock_setup>
+				<setup>
+					<module>Allure_Managestock</module>
+				</setup>
+			</allure_managestock_setup>
+		</resources>
+
+		<models>
+			<managestock>
+				<class>Allure_Managestock_Model</class>
+			</managestock>
+
+			<!-- manage stcok by website -->
+			<cataloginventory>
+				<rewrite>
+					<stock>Allure_Managestock_Model_CatalogInventory_Stock</stock>
+					<observer>Allure_Managestock_Model_CatalogInventory_Observer</observer>
+					<stock_item>Allure_Managestock_Model_CatalogInventory_Stock_Item</stock_item>
+					<stock_status>Allure_Managestock_Model_CatalogInventory_Stock_Status</stock_status>
+				</rewrite>
+			</cataloginventory>
+
+			<cataloginventory_resource>
+				<rewrite>
+					<stock_item>Allure_Managestock_Model_CatalogInventory_Resource_Stock_Item</stock_item>
+				</rewrite>
+			</cataloginventory_resource>
+		</models>
+	</global>
+</config>

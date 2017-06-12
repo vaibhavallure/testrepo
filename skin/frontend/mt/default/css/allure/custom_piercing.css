@@ -1,0 +1,42 @@
+.piercing-gallery-mt1 {
+    margin: -50px auto;
+    width: 100%;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.piercing-gallery-mt1 #inner{
+	height: 580px;
+    width: 540px;
+}
+
+.piercing-gallery-mt1 .carousel-content {
+    width: 580px;
+    height: 540px;
+}
+
+.caroufredsel_wrapper2{
+	height: 580px ! important;
+    width: 540px ! important;
+}
+
+.piercing-gallery-mt1 #inner #carousel img.carrousel-images {
+    height: 580px;
+    width: 540px;
+}
+
+.piercing-gallery-mt1 .navigation-menu {
+    width:15% /* 11.5%; */
+}
+
+.piercing-gallery-mt1 .content {
+    width: 81%;
+}
+
+.piercing-gallery-mt1 .title-products-looks {
+    width: 425px;
+}
+
+.piercing-gallery-mt1 .gallery-looks {
+    width: 460px;
+}

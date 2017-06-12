@@ -1,0 +1,265 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @see Mage_Catalog_Block_Product_List_Toolbar
+ */
+$category = Mage::registry('current_category');
+$codes = Mage::registry('attribute_codes');
+$filters = array();
+
+$toolbar = $this->getLayout()->getBlock('product_list_toolbar');
+$currentMode = $toolbar->getCurrentMode();
+
+if (isset($codes)) {
+    foreach ($codes as $key => $code) {
+        $filters[$code] = Mage::registry($code);
+        //echo $code.'<br />';
+        //echo $filter->getHtml();
+    }
+}
+?>
+<?php if ($this->getCollection()->getSize()): ?>
+<div class="toolbar">
+<?php if ($this->isExpanded()): ?>
+<div class="sorter">
+    <?php //if($this->getRequest()->getModuleName() != 'catalogsearch'): ?>
+    <div class='filters-mt-wrapper'>
+        <div class="filters-mt">
+            <div class="filters1">
+                <p>Narrow by:</p>
+                <?php if (isset($filters['category'])): ?>
+                    <div class="combo1">
+                        <?php echo $filters['category']->getHtml(); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (isset($filters['metals_and_gemstones'])): ?>
+                    <div class="combo1">
+                        <?php echo $filters['metals_and_gemstones']->getHtml(); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (isset($filters['apparel_size'])): ?>
+                    <div class="combo2">
+                        <?php echo $filters['apparel_size']->getHtml(); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (isset($filters['finger_ring_size'])): ?>
+                    <div class="combo2">
+                        <?php echo $filters['finger_ring_size']->getHtml(); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((array_key_exists('familycolors', $filters))): ?>
+                    <div class="combo3">
+                        <?php echo Mage::helper('familycolors')->getColorsBlock(); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="line-price">
+                <?php if (isset($filters['price'])): ?>
+                    <div class="price-in">
+                        <?php echo $filters['price']->getHtml(); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="grids">
+                <p>Image size: </p>
+                <a class="mode <?php if ($currentMode == 'grid') echo 'active'; ?> small-grid" mode='grid'></a>
+                <a class="mode <?php if ($currentMode == 'list') echo 'active'; ?> big-grid" mode="list"></a>
+            </div>
+        </div>
+    </div>
+    <div class="filters-selected-options">
+        <div class="filters-selected">
+        </div>
+        <div id="clearAll" style="display:none">
+            <span>Clear All</span>
+        </div>
+    </div>
+    <?php //endif; ?>
+
+    <!--
+        <?php if( $this->isEnabledViewSwitcher() ): ?>
+        <p class="view-mode">
+            <?php $_modes = $this->getModes(); ?>
+            <?php if($_modes && count($_modes)>1): ?>
+            <label><?php echo $this->__('Image Size') ?>:</label>
+            <?php foreach ($this->getModes() as $_code=>$_label): ?>
+                <?php if($this->isModeActive($_code)): ?>
+                    <strong title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><?php echo $_label ?></strong>&nbsp;
+                <?php else: ?>
+                    <a href="<?php echo $this->getModeUrl($_code) ?>" title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><?php echo $_label ?></a>&nbsp;
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </p>
+        <?php endif; ?>
+
+
+		 <div class="limiter">
+            <label><?php echo $this->__('Show') ?></label>
+            <select onchange="setLocation(this.value)">
+            <?php foreach ($this->getAvailableLimit() as  $_key=>$_limit): ?>
+                <option value="<?php echo $this->getLimitUrl($_key) ?>"<?php if($this->isLimitCurrent($_key)): ?> selected="selected"<?php endif ?>>
+                    <?php echo $_limit ?>
+                </option>
+            <?php endforeach; ?>
+            </select> <?php echo $this->__('per page') ?>
+        </div>
+
+        <div class="sort-by">
+            <label><?php echo $this->__('Sort By') ?></label>
+            <select onchange="setLocation(this.value)">
+            <?php foreach($this->getAvailableOrders() as $_key=>$_order): ?>
+                <option value="<?php echo $this->getOrderUrl($_key, 'asc') ?>"<?php if($this->isOrderCurrent($_key)): ?> selected="selected"<?php endif; ?>>
+                    <?php echo $this->__($_order) ?>
+                </option>
+            <?php endforeach; ?>
+            </select>
+            <?php if($this->getCurrentDirection() == 'desc'): ?>
+                <a href="<?php echo $this->getOrderUrl(null, 'asc') ?>" title="<?php echo $this->__('Set Ascending Direction') ?>"><img src="<?php echo $this->getSkinUrl('images/i_desc_arrow.gif') ?>" alt="<?php echo $this->__('Set Ascending Direction') ?>" class="v-middle" /></a>
+            <?php else: ?>
+                <a href="<?php echo $this->getOrderUrl(null, 'desc') ?>" title="<?php echo $this->__('Set Descending Direction') ?>"><img src="<?php echo $this->getSkinUrl('images/i_asc_arrow.gif') ?>" alt="<?php echo $this->__('Set Descending Direction') ?>" class="v-middle" /></a>
+            <?php endif; ?>
+        </div>
+    </div-->
+    <?php endif; ?>
+</div>
+<?php endif ?>
+
+<script>
+    var loading = false;
+    function reloadFilters(page, limit, clicked) {
+        jQuery('div#loaderProducts').addClass('showLoader').removeClass('hideLoader');
+        var codes = ["<?php echo implode('","', $codes) ?>"];
+        var price = 0;
+        var apparel_size, finger_ring_size, metals_and_gemstones, familycolor, material, mode = '0';
+        var this_limit;
+        jQuery.each(codes, function (key, value) {
+            switch (value) {
+                case 'price':
+                    price = jQuery('#priceRange').val().replace(';', '-');
+                    break;
+                case 'familycolors':
+                    familycolor = getCheckedValues(jQuery('input.colors-family-option:checked'));
+                    break;
+                case 'apparel_size':
+                    apparel_size = getCheckedValues(jQuery('input.apparel_size-option:checked'));
+                    break;
+                case 'finger_ring_size':
+                    finger_ring_size = getCheckedValues(jQuery('input.finger_ring_size-option:checked'));
+                    break;
+                //case 'size': size = getCheckedValues(jQuery('input.size-option:checked')); break;
+                case 'metals_and_gemstones':
+                    metals_and_gemstones = getCheckedValues(jQuery('input.metals_and_gemstones-option:checked'));
+                    break;
+                <?php if(isset($filters['category'])): ?>
+                case 'category':
+                    cat = getCheckedValues(jQuery('input.category-option:checked'));
+                    break;
+                <?php endif; ?>
+            }
+        });
+
+        if (limit == false) {
+            this_limit = jQuery('#limitPage').attr('limit');
+        }
+        else {
+            this_limit = limit;
+        }
+        ;
+
+        var data2Send = {
+            price: price,
+            attribute: jQuery('input.colors-family-option:checked').attr('attribute'),
+            //size: size,
+            apparel_size: apparel_size,
+            finger_ring_size: finger_ring_size,
+            color: familycolor,
+            p: page,
+            metals_and_gemstones: metals_and_gemstones,
+            <?php if(isset($filters['category'])): ?>cat: cat, <?php endif; ?>
+            limit: this_limit,
+            mode: jQuery('div.grids a.active').attr('mode'),
+            id: <?php echo ($category) ? $category->getId() : "''" ?>
+        }
+
+        jQuery('div#productsContainer').load(
+            '<?php echo ($category) ? $this->getUrl('ecpcategory/products/get/') : $this->getUrl('ecpcategory/search/index/') ?>?q=<?php echo str_replace(' ','%20',$this->getRequest()->getParam('q')) ?>',
+            data2Send,
+            function () {
+                jQuery('div#loaderProducts').addClass('hideLoader').removeClass('showLoader');
+
+//            if(jQuery(clicked).parent().attr('class')=='view-all'){
+//                jQuery('.view-all').hide();
+//                jQuery('.view-less').show();
+//            }else if(jQuery(clicked).parent().attr('class')=='view-less'){
+//                jQuery('.view-all').show();
+//                jQuery('.view-less').hide();
+//            }
+            }
+        );
+
+    }
+
+    function getCheckedValues(items) {
+        var tmp = [];
+        jQuery(items).each(function (k, item) {
+            tmp.push(jQuery(item).val());
+        });
+        return tmp.join(',');
+    }
+
+    function clearAllFilters() {
+        jQuery('span.attribute-selected').each(function (index) {
+            jQuery('#' + jQuery(this).attr('value')).attr('checked', false);
+            jQuery(this).remove();
+        });
+        jQuery('div#clearAll').hide();
+        reloadFilters();
+    }
+
+    jQuery('a.mode').click(function () {
+        jQuery('a.mode').removeClass('active');
+        jQuery(this).addClass('active');
+        reloadFilters();
+    });
+
+    jQuery('div#clearAll').click(function () {
+        clearAllFilters();
+    });
+
+    function removeMe(obj) {
+        jQuery('#' + jQuery(obj).attr('value')).attr('checked', false);
+        jQuery(obj).remove();
+        if (jQuery('.attribute-selected').length == 0) {
+            jQuery('#clearAll').hide();
+        }
+        reloadFilters();
+    }
+</script>

@@ -1,0 +1,20 @@
+<?php $items = $this->getMenu(); ?>
+<!-- <div class="navigation-menu">
+	<select name="look" id="lookSelect">
+    <?php foreach($items as $item) { ?>    
+     <?php if(strtolower($item->getName()) == 'celebrity clientele') { ?>
+        <option class="discover-mt-navigation current-active" selected="selected">
+        <?php echo $item->getName()?>
+        </option>
+    <?php } else { ?>
+        <option class="discover-mt-navigation"
+			onclick="document.location.href ='<?php echo $item->getUrl() ?>'">
+            <?php echo $item->getName()?>
+        </option>
+	<?php } ?>
+    <?php } ?>
+	</select>
+</div> -->
+<div id="category-title" class="page-title category-title">
+        <h1>CELEBRITY CLIENTELE</h1>
+</div>

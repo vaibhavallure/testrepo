@@ -1,0 +1,26 @@
+<?php
+
+class Ebizmarts_BakerlooLocation_Model_Mysql4_Store extends Mage_Core_Model_Mysql4_Abstract
+{
+
+    protected function _construct()
+    {
+        $this->_init('bakerloo_location/store', 'id');
+    }
+
+    protected function _beforeSave(Mage_Core_Model_Abstract $object)
+    {
+        if (!$object->getId()) {
+            $object->setCreatedAt($this->formatDate(Mage::getModel('core/date')->gmtTimestamp()));
+        }
+
+        $object->setUpdatedAt($this->formatDate(Mage::getModel('core/date')->gmtTimestamp()));
+
+        if ($object->getRegionId()) {
+            $region = Mage::getModel('directory/region')->load($object->getRegionId());
+            $object->setRegion($region->getName());
+        }
+
+        return parent::_beforeSave($object);
+    }
+}

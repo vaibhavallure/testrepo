@@ -1,0 +1,23 @@
+<?php
+$_helper = $this->helper('catalog/output');
+$attrCode = 'factory_care';
+
+$product = $this->getProduct();
+//$attributeSetModel = Mage::getModel("eav/entity_attribute_set");
+//$attributeSetModel->load($product->getAttributeSetId());
+//$attributeSetName = $attributeSetModel->getAttributeSetName();
+
+//if ((0 == strcasecmp($attributeSetName, 'appeal') || 0 == strcasecmp($attributeSetName, 'apparel')) && $attrCode) {
+
+    $attribute = $product->getResource()->getAttribute($attrCode);
+    if ($attribute && $product->hasData($attrCode)) {
+        $content = $attribute->getFrontend()->getValue($product);
+        if (!empty($content)) {
+            echo '<div class="product-specs">'
+                . $_helper->productAttribute($this->getProduct(), $content, $attrCode)
+                . '</div>';
+        } else {
+            echo $this->getLayout()->createBlock('cms/block')->setBlockId('factory_care')->toHtml();
+        }
+    }
+//}

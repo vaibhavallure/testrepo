@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <block type="currencymanager/js" name="currencymanager.js.config">
+                <action ifconfig="currencymanager/general/enabled" method="setTemplate"><name>allure/currencymanager/js.phtml</name></action>
+            </block>
+            <action ifconfig="currencymanager/general/enabled" method="addItem"><type>js</type><name>allure/currencymanager/round.js</name></action>
+        </reference>
+    </default>
+</layout>

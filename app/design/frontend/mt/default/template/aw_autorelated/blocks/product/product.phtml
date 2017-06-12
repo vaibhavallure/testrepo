@@ -1,0 +1,483 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * aheadWorks does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * aheadWorks does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Autorelated
+ * @version    2.3.0
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?>
+
+<?php
+$_product = Mage::registry('current_product');
+$productId = $_product->getId();
+
+$childrenProducts = [];
+if($_product->getTypeId()=="configurable"){
+	$childrenIds = $_product->getTypeInstance()->getChildrenIds($productId);
+	
+	foreach ($childrenIds[0] as $childrenId) {
+		$childrenProducts[] = $childrenId;
+	}
+	/* if(!empty($childrenProducts))
+		$productId = implode(",", $childrenProducts); */
+}
+
+     $collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
+     $str = '';
+     $cnt = 0;
+     if(!empty($childrenProducts)){
+     	foreach ($childrenProducts as $id){
+     		$cnt = $cnt+1;
+     		//$collection->addFieldToFilter('product_ids',array('finset'=> array($id)));
+     		$str .= ' FIND_IN_SET(('.$id.'),`product_ids`) OR ';
+     		/* if(count($childrenProducts)>1 && count($childrenProducts)>$cnt)
+     			$str.= ' OR '; */
+     	}
+     	
+     }else{
+     	//$collection->addFieldToFilter('product_ids',array('finset'=> array($productId)));
+     	//$str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
+     }
+     $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
+	//->addFieldToFilter('product_ids',array('finset'=> array($productId)))
+    // $collection->addFieldToFilter('status', 1);
+	$collection->getSelect()->where( 'status = 1 AND ('.$str.')');
+    //var_dump($collection->getSelect()->__toString());
+?>
+
+<?php if (($collection && $collection->getSize())) : ?>
+    <div class="block-title">
+        <strong><span><?php echo $this->__('As seen on instagram') ?></span></strong>
+    </div>
+    <div class="image_carousel">
+        <ul id="foo6" style="overflow: hidden">
+            <?php foreach ($collection as $feeds): ?>
+                <?php
+                    $feed = Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
+                    $instagramObj = unserialize($feed->getInstagramData());
+                    $media_id=$feed->getId();/* getMediaId(); */
+                    
+                    $_post = $feed;
+                    $shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
+                    $createDate = $_post->getCreatedTimestamp();
+                    if($createDate!=null){
+                    	$createDate = date('d M Y', $createDate);
+                    }
+                    
+                    $imageUrl = $_post->getThumbnail();
+                    if(empty($imageUrl)){
+                    	$imageUrl = $_post->getLowResolution();
+                    	if(empty($imageUrl))
+                    		$imageUrl = $_post->getStandardResolution();
+                    }
+                    
+                    $_options = json_decode($_post->getHotspots());
+                    $points = "";
+                    $productsLinks = "";
+                    $numberOfProducts = 0;
+                    foreach ($_options as $option){
+                    	$sku = $option->text;
+                    	$numberOfProducts += 1;
+                    	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                    	$productName = $product->getName();
+                    	$productId = $product->getId();
+                    
+                    	$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+                    	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+                    	$productUrl = $product->getProductUrl();
+                    	if(!is_null($parentId)){
+                    		$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+                    	}
+                    
+                    	$points .= '<a data-original-url="'.$productUrl.'"';
+                    	$points .= ' href="'.$productUrl.'" target="_blank">';
+                    	$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
+                    	$points .= ' data-link-id="'.$productId.'" ';
+                    	$points .= ' style="position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/640).'%; left:'.(($option->left*100)/640).'%;">';
+                    	$points .= '<div>'.$numberOfProducts.'</div>';
+                    	$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
+                    	$points .= '<div class="fs-arrow-up"></div>';
+                    	$points .= 'Shop it // " '.$productName.'</div></div></a>';
+                    
+                    	$productsLinks .= '<div class="fs-text-link-container ">';
+                    	$productsLinks .= '<a class="fs-text-product fs-link-list" ';
+                    	$productsLinks .= 'data-original-url="'.$productUrl.'"';
+                    	$productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
+                    	$productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
+                    	$productsLinks .= '<span class="fs-link-text-number">'.$numberOfProducts.' <span class="fs-slashes"> // </span>';
+                    	$productsLinks .= '<span class="fs-link-text"> Shop it // '.$productName.' </span></span>';
+                    	$productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
+                    }
+                    
+                ?>
+                <li class="item product-view-instagram-item" >
+                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $feed->getId() ?>' onclick="instagramView.show(this);" media-id="<?php echo $media_id?>"">
+                        <img  src="<?php echo $imageUrl ?>" alt="" />
+                    </a>
+                    <div style="display: none;" id="details-insta-<?php echo $media_id?>"
+								data-user-name="<?php $_post->getUsername()?>" data-img-url="<?php echo $_post->getStandardResolution()?>"
+							 	data-create-date="<?php echo $createDate?>" data-share-url="<?php echo $shareUrl?>">
+							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo $_post->getCaption() ?></div>
+								<div id="insta-product-mark-<?php echo $media_id?>" style="display: none;"><?php echo $points ?></div>
+								<div id="insta-product-details-<?php echo $media_id?>" style="display: none;"><?php echo $productsLinks ?></div>
+							</div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <div class="clearfix"></div>
+        <a class="prev" id="foo6_prev" href="#"><span>prev</span></a>
+        <a class="next" id="foo6_next" href="#"><span>next</span></a>
+
+        <div class="pagination" id="foo6_pag"></div>
+    </div>
+    
+    
+    <div id="instagram-view-container">
+		<div id="showcase"
+			class="fs-wide-timeline  fs-desktop fs-prepended-detail"
+			style="display: none;">
+			<div id="fs-timeline-detail-592364" class="fs-timeline-detail">
+				<div id="fs-instagram-view-container"
+					class="fs-detail-outer-container ">
+					<div class="instagram-loader"></div>
+					
+					<div id="fs-detail-response" class="fs-detail-container "
+				data-resource-url="<?php //echo $feedModel->getUsername()?>">
+				<div class="fs-detail-content">
+					<div class="fs-detail-left">
+						<div class="fs-image-container" style="position: relative;">
+							<img class="fs-detail-image" id="fs_main_image"
+								src="<?php //echo $feedModel->getStandardResolution()
+//$feedModel->getImage()?>">
+							<?php //echo $points?>
+							<div id="point-mark"></div>
+							<p><?php //echo json_encode($instagramObj) ?></p>
+						</div>
+					</div>
+					<div class="fs-detail-right">
+						
+						<div class="fs-detail-nav-bar-arrows">
+						<?php if(1):?>
+							<a class="fs-detail-nav-button" id="fs-prev-post">                 
+								<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+								<g><path class="fs-arrow" fill="none" stroke-width="1px" d="m22.5,0l-15,15l15,15" id="fs-left-path" stroke="#222"></path>
+								</g>
+								</svg>               
+							</a>
+							
+							 <a class="fs-detail-nav-button" id="fs-next-post"> <!--?xml version="1.0"?-->
+								<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
+									xmlns:svg="http://www.w3.org/2000/svg">
+									<g>
+									<path class="fs-arrow" stroke="#222" id="fs-left-path"
+										d="m7.5,0l15,15l-15,15" fill="none"></path></g></svg>
+							</a>
+							<?php endif;?>
+							<div class="fs-detail-nav-bar-close">
+								<a class="fs-detail-nav-button" id="fs-detail-close" onclick="closeView(this);"><svg
+										width="30" height="30" xmlns="http://www.w3.org/2000/svg"
+										xmlns:svg="http://www.w3.org/2000/svg"> <g id="layer1"
+											stroke="#222" class="fs-arrow" stroke-width="1px" fill="none">   <path
+											d="m0,0l30,30"></path>   <path d="m30,0l-30,30"></path></g></svg></a>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+						<div class="fs-products-title fs-plural-products"></div>
+						
+						<?php //echo $productsLinks?>
+						<div id="product-info"></div>
+						
+						<div class="fs-divider"></div>
+						<div style="clear: both;"></div>
+						<div class="fs-detail-title"><?php //echo $feedModel->getText()?></div>
+						
+						<div class="fs-post-info">
+							<a href="<?php //echo $feedModel->getUsername()?>"
+								target="_blank"> 
+								<span class="fs-service-username"> maria_tash</span>
+								<span class="fs-slashes">//</span> INSTAGRAM <span
+								class="fs-slashes">//</span> 
+								<span class="fs-detail-date"><?php //echo $createDate?></span>
+							</a>
+						</div>
+						
+						<div class="fs-detail-shares">
+							<a id="insta-facebook" class="fs-share fs-facebook-share"
+								href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=<?php //echo $shareUrl ?>/&amp;p[image]=<?php //echo $feedModel->getStandardResolution()?>"
+								target="_blank"><i class="fa fa-facebook"></i>
+							</a> 
+							<a id="insta-envelope" class="fs-share fs-link-share"
+								href="mailto:?subject=Thought you might be into this @maria_tash Instagram!&amp;body=<?php //echo $shareUrl ?>/"
+								target="_blank"><i class="fa fa-envelope"></i>
+							</a>
+							<a id="insta-twitter" class="fs-share fs-link-share fs-twitter-share" target="_blank"
+								href="http://www.twitter.com/share?url=<?php //echo $shareUrl ?>/&amp;related=maria_tash&amp;text=Shop this Instagram from @maria_tash">
+								<i class="fa fa-twitter"></i>
+							</a>
+							<a id="insta-pinterest" class="fs-share fs-link-share"
+								href="http://www.pinterest.com/pin/create/button/?url=<?php //echo $shareUrl ?>/&amp;media=<?php //echo $feedModel->getStandardResolution()?>&amp;description=Shop this Instagram from @maria_tash"
+								target="_blank" data-pin-do="buttonPin" data-pin-config="above">
+								<i class="fa fa-pinterest"></i>
+							</a> 
+							<a id="insta-share-link" class="fs-share fs-link-share"
+								href="<?php //echo $shareUrl ?>/"
+								target="_blank"><i class="fa fa-link"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="fs-buy-container fs-unslid"></div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	//<![CDATA[
+		var instagramView = new InstagramView('fs-instagram-view-container','<?php echo Mage::getBaseUrl('web').'instacatalog/feed/view'?>');
+		//]]>
+	</script>
+	
+	<script>
+		jQuery(document).ready(function(){
+			jQuery('.fs-text-product').hover(function(){
+				var id = jQuery(this).attr('data-link-id');
+				var selector = jQuery('#fs_overlink_'+id);
+				selector.css("opacity", "1");
+				selector.find('.fs-overlink-text').css(
+						{"opacity":"1","display":"block"});
+		    }, function(){
+		    	var id = jQuery(this).attr('data-link-id');
+		    	var selector = jQuery('#fs_overlink_'+id);
+		    	selector.css("opacity", "");
+		    	selector.find('.fs-overlink-text').css(
+						{"opacity":"","display":""});
+			});
+		});
+
+		
+		function showView(e){
+			jQuery('#showcase').show();
+		}
+		function closeView(e){
+			jQuery('#showcase').hide();
+			//jQuery('#fs-detail-response').remove();
+			//jQuery('#fs-instagram-view-container').html('<div class="instagram-loader"></div>');
+		}
+
+		jQuery("#fs-prev-post").click(function(){
+			var mediaId = jQuery(this).attr('media-id');
+			jQuery('#fs-post-'+mediaId).trigger('click');
+		});
+
+		jQuery("#fs-next-post").click(function(){
+			var mediaId = jQuery(this).attr('media-id');
+			jQuery('#fs-post-'+mediaId).trigger('click');
+		});
+		
+	</script>
+    
+    
+    <script type="text/javascript">
+        jQuery.noConflict();
+
+        jQuery(document).ready(function () {
+
+            jQuery('#foo6').jcarousel({
+                initCallback: mycarousel_initCallbackProd1,
+                buttonNextCallback: mycarousel_buttonPrevCallbackProd1,
+                buttonPrevCallback: mycarousel_buttonNextCallbackProd1,
+                // This tells jCarousel NOT to autobuild prev/next buttons
+                buttonNextHTML: null,
+                buttonPrevHTML: null,
+                itemFallbackDimension: 90
+            });
+
+        });
+
+        function mycarousel_initCallbackProd1(carousel) {
+            jQuery('#foo6_prev').bind('click', function () {
+                carousel.prev();
+                return false;
+            });
+
+            jQuery('#foo6_next').bind('click', function () {
+                carousel.next();
+                return false;
+            });
+        }
+
+        function mycarousel_buttonNextCallbackProd1(carousel, button, enabled) {
+            if (enabled) {
+                jQuery("#foo6_prev").css('opacity', 1);
+            } else {
+                jQuery("#foo6_prev").css('opacity', 0.13);
+            }
+        }
+
+        function mycarousel_buttonPrevCallbackProd1(carousel, button, enabled) {
+            if (enabled) {
+                jQuery("#foo6_next").css('opacity', 1);
+            } else {
+                jQuery("#foo6_next").css('opacity', 0.13);
+            }
+        }
+
+        if (jQuery('ul#foo6 li.item').length < 4){
+            jQuery("#foo6_next , #foo6_prev").hide();
+        }
+    </script>
+<?php endif; ?>
+
+<?php
+$_size = ($this->getRelatedProducts()->getProductQty()) ? $this->getRelatedProducts()->getProductQty() : Mage::getStoreConfig('awautorelated/general/pcount');
+$abstractBlock = $this->helper('awautorelated')->getAbstractProductBlock();
+$_product = Mage::registry('current_product');
+$tmpColl = $this->getCollection();
+if ($tmpColl != NULL) {
+    $collection = $this->getCollection();
+    $collection->setPage(1, $_size)->load();
+    $collection->getselect()->order(new Zend_Db_Expr('RAND()'));
+} else {
+    $this->markAsShowed();
+    $relatedCollection = $_product->getRelatedProductCollection();
+    $crossCollection = $_product->getCrossSellProductCollection();
+    $merged_ids = array_merge($_product->getRelatedProductIds(),
+        $relatedCollection->getAllIds());
+
+    $collection = Mage::getModel('awautorelated/product_collection')
+        ->setPage(1, $_size)
+        ->addFieldToFilter('entity_id', shuffle($merged_ids))
+        ->addAttributeToSelect('*')
+        ->load();
+    $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
+}
+if (empty($collection))
+    return;
+
+if ($this->getPosition() == AW_Autorelated_Model_Source_Position::INSTEAD_NATIVE_RELATED_BLOCK) {
+    $this->iterateBlock();
+
+    if ($collection && $collection->getSize()) {
+        $this->markAsShowed();
+    } elseif ($this->showNativeBlock()) {
+        echo $this->getParent()->getChildHtml('catalog-product-related');
+
+    }
+} elseif ($_product && $this->getPosition() == AW_Autorelated_Model_Source_Position::INSIDE_PRODUCT_PAGE) {
+    $this->iterateBlock();
+    $tmpIds = $_product->getRelatedProductIds();
+    if (empty($tmpIds)) {
+        if ($collection && $collection->getSize()) {
+            $this->markAsShowed();
+        } elseif ($this->showNativeBlock()) {
+            echo $this->getParent()->getChildHtml('catalog-product-related');
+        }
+    } else {
+        $this->markAsShowed();
+        $collection = Mage::getModel('catalog/product')->getCollection()->addFieldToFilter('entity_id', -1);
+        $collection = $_product->getRelatedProductCollection()->setPage(1, $_size)
+            ->load();
+        $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
+    }
+
+
+}
+
+
+?>
+<?php if (($collection && $collection->getSize())) : ?>
+    <div class="block-title">
+        <strong><span><?php echo $this->__('You may also like') ?></span></strong>
+    </div>
+    <div class="image_carousel">
+        <ul id="foo4" style="overflow: hidden">
+            <?php foreach ($collection as $product): ?>
+                <?php
+                    $product = Mage::getModel('catalog/product')->load($product->getId());
+                ?>
+                <li class="item" style="width: 92px; height: 120px; margin: 0 8px 0 0;">
+                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $product->getId() ?>' href="<?php echo $product->getProductUrl() ?>">
+                        <img  src="<?php echo $this->helper('catalog/image')->init($product, 'thumbnail')->resize(92, 120); ?>" alt="<?php echo $this->htmlEscape($product->getName()) ?>" width="92" height="120"/>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <div class="clearfix"></div>
+        <a class="prev" id="foo4_prev" href="#"><span>prev</span></a>
+        <a class="next" id="foo4_next" href="#"><span>next</span></a>
+
+        <div class="pagination" id="foo4_pag"></div>
+    </div>
+    <script type="text/javascript">
+        jQuery.noConflict();
+
+        jQuery(document).ready(function () {
+
+            jQuery('#foo4').jcarousel({
+                initCallback: mycarousel_initCallbackProd,
+                buttonNextCallback: mycarousel_buttonPrevCallbackProd,
+                buttonPrevCallback: mycarousel_buttonNextCallbackProd,
+                // This tells jCarousel NOT to autobuild prev/next buttons
+                buttonNextHTML: null,
+                buttonPrevHTML: null,
+                itemFallbackDimension: 90
+            });
+
+        });
+
+        function mycarousel_initCallbackProd(carousel) {
+            jQuery('#foo4_prev').bind('click', function () {
+                carousel.prev();
+                return false;
+            });
+
+            jQuery('#foo4_next').bind('click', function () {
+                carousel.next();
+                return false;
+            });
+        }
+
+        function mycarousel_buttonNextCallbackProd(carousel, button, enabled) {
+            if (enabled) {
+                jQuery("#foo4_prev").css('opacity', 1);
+            } else {
+                jQuery("#foo4_prev").css('opacity', 0.13);
+            }
+        }
+
+        function mycarousel_buttonPrevCallbackProd(carousel, button, enabled) {
+            if (enabled) {
+                jQuery("#foo4_next").css('opacity', 1);
+            } else {
+                jQuery("#foo4_next").css('opacity', 0.13);
+            }
+        }
+
+        if (jQuery('ul#foo4 li.item').length <= 5){
+            jQuery("#foo4_next , #foo4_prev").hide();
+        }
+    </script>
+<?php endif; ?>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <ecp_piercinggallery translate="label">
+            <label>Ecp PiercingGallery</label>
+            <tab>general</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <piercinggallery translate="label" module="ecp_piercinggallery">
+                    <label>Piercing Gallery</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <timing translate="label">
+                            <label>Piercing Gallery Slider Timing</label>
+                            <comment>
+                                <![CDATA[Time between slides rotate(in seconds)]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </timing>
+						<piercing_category_id translate="label">
+                            <label>Piercing Category ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </piercing_category_id>
+						<piercing_gallery_category_id translate="label">
+                            <label>Piercing Styles Category ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </piercing_gallery_category_id>
+                    </fields>
+                </piercinggallery>
+            </groups>
+        </ecp_piercinggallery>
+    </sections>
+</config>

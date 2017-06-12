@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Category layered navigation
+ *
+ * @see Mage_Catalog_Block_Layer_View
+ */
+$reloadUrl = $this->getUrl('ecp_category/reload/byFilter');
+$_filters = $this->getFilters();
+$attributeCodes = array();
+foreach ($_filters as $_filter) {
+    if ($_filter->getItemsCount()) {
+        if ($_filter->getAttributeModel()) {
+            if ($_filter->getAttributeModel()->getAttributeCode() != 'price') {
+                $idx = $_filter->getAttributeModel()->getAttributeCode() . '-' . $_filter->getAttributeModel()->getId();
+                $attributeCodes[$idx] = array(
+                    'class' => $_filter->getAttributeModel()->getAttributeCode() . '-option',
+                    'items' => array()
+                );
+                $tmp = array();
+                foreach ($_filter->getItems() as $option) {
+                    $tmp[] = '#' . $_filter->getAttributeModel()->getAttributeCode() . '-' . $option->getValue();
+                }
+                $attributeCodes[$idx]['items'] = implode(',', $tmp);
+            }
+        }
+    }
+}
+?>
+<script>
+    var toHide = <?php echo json_encode($attributeCodes) ?>;
+    jQuery.each(toHide, function (key, values) {
+        jQuery('input.' + values.class).parent().show();
+        jQuery('input.' + values.class).not(values.items).each(function () {
+            jQuery(this).parent().hide();
+        });
+    });
+</script>

@@ -1,0 +1,328 @@
+ div.side-col{
+        display: none !important;
+    }
+    .columns{
+        background: none !important;
+    } 
+    .inventoryplus div.main-col{
+        margin-left: 0;
+    }
+   table {
+    border-collapse: collapse;
+    
+}
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+
+}
+table th{
+	text-transform: uppercase;
+}
+table td{
+padding-top: 10px;
+}
+
+
+
+.pager-no-toolbar {
+ margin-bottom: 10px;
+}
+
+.pager-no-toolbar ~ .pager-no-toolbar {
+ margin-top: 10px;
+}
+
+.toolbar,
+.pager {
+ font-family: "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+ color: #636363;
+ line-height: 30px;
+ font-size: 12px;
+}
+
+.toolbar label,
+.pager-no-toolbar label {
+ font-weight: normal;
+ text-transform: uppercase;
+}
+.toolbar label,
+.pager-no-toolbar label {
+ font-weight: normal;
+ text-transform: uppercase;
+}
+.pager {
+ float: right;
+ overflow: hidden;
+}
+.pager > .count-container {
+ float: left;
+}
+.pager .amount {
+ float: left;
+ font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+ white-space: nowrap;
+ margin: 0 15px 0 0;
+}
+.pager .limiter {
+ float: left;
+ height: 30px;
+ line-height: 30px;
+}
+.pager .limiter > label {
+ padding-right: 5px;
+}
+.pager .limiter > label:after {
+ content: ':';
+}
+.pager .amount,
+.pager .limiter,
+.pager .pages {
+ margin-bottom: 5px;
+}
+
+.pages {
+ float: right;
+ overflow: hidden;
+ margin-left: 15px;
+ margin-bottom: 15px;
+}
+.pages strong {
+ display: none;
+}
+
+.pages li {
+ float: left;
+}
+
+.pages a,
+.pages .current {
+ display: inline-block;
+ border: 0;
+ font-size: 13px;
+ text-align: center;
+ text-transform: uppercase;
+ vertical-align: middle;
+ white-space: nowrap;
+ line-height: 30px;
+ width: 25px;
+ height: 30px;
+ padding: 0;
+ color: #3399cc;
+ font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+}
+
+.pages .current,
+.pages .current:hover {
+ color: #636363;
+ border: 1px solid #cccccc;
+ width: 25px;
+     height: 25px;
+ background-color: #FFFFFF;
+ cursor: default;
+}
+
+.pages .next,
+.pages .previous {
+ font: 0/0 a;
+ text-shadow: none;
+ color: transparent;
+ background-color: transparent;
+ position: relative;
+}
+.pages .next:hover,
+.pages .previous:hover {
+ border: 1px solid #3399cc;
+}
+
+.pages .next:before {
+ content: '';
+ position: absolute;
+ width: 0;
+ height: 0;
+ display: block;
+ border-top: 4px solid transparent;
+ border-bottom: 4px solid transparent;
+ border-left: 4px solid #3399cc;
+ border-right: none;
+ top: 50%;
+ margin-top: -3px;
+ left: 50%;
+ margin-left: -2px;
+}
+.pages .next:hover:before {
+ content: '';
+ position: absolute;
+ width: 0;
+ height: 0;
+ display: block;
+ border-top: 4px solid transparent;
+ border-bottom: 4px solid transparent;
+ border-left: 4px solid #246b8f;
+ border-right: none;
+}
+
+.pages .previous:before {
+ content: '';
+ position: absolute;
+ width: 0;
+ height: 0;
+ display: block;
+ border-top: 4px solid transparent;
+ border-bottom: 4px solid transparent;
+ border-right: 4px solid #3399cc;
+ border-left: none;
+ top: 50%;
+ margin-top: -3px;
+ left: 50%;
+ margin-left: -2px;
+}
+.pages .previous:hover:before {
+ content: '';
+ position: absolute;
+ width: 0;
+ height: 0;
+ display: block;
+ border-top: 4px solid transparent;
+ border-bottom: 4px solid transparent;
+border-right: 4px solid #246b8f;
+ border-left: none;
+}
+
+@media only screen and (max-width: 479px) {
+ .pager .amount--has-pages {
+   display: none;
+ }
+
+ .pages {
+   float: left;
+ }
+
+ .limiter label {
+   display: none;
+ }
+}
+@media only screen and (max-width: 770px) {
+ .col1-layout .sorter,
+ .col1-layout .pager {
+   width: 100%;
+ }
+ .col1-layout .pager {
+   float: left;
+   clear: both;
+ }
+ .col1-layout .pager .pages {
+   float: left;
+   margin-left: 0;
+ }
+ .col1-layout .pager .count-container {
+   float: right;
+ }
+}
+@media only screen and (max-width: 979px) {
+ .col2-left-layout .sorter,
+ .col2-left-layout .pager,
+ .col2-right-layout .sorter,
+ .col2-right-layout .pager,
+ .col3-layout .sorter,
+ .col3-layout .pager {
+   width: 100%;
+ }
+ .col2-left-layout .pager,
+ .col2-right-layout .pager,
+ .col3-layout .pager {
+   float: left;
+   clear: both;
+ }
+ .col2-left-layout .pager .pages,
+ .col2-right-layout .pager .pages,
+ .col3-layout .pager .pages {
+   float: left;
+   margin-left: 0;
+ }
+ .col2-left-layout .pager .count-container,
+ .col2-right-layout .pager .count-container,
+ .col3-layout .pager .count-container {
+   float: right;
+ }
+}
+
+
+
+.btn-inventory-receive{
+	float: right;
+}
+.title-inventory h1{
+	margin-bottom: 30px;
+	text-transform: uppercase;
+}
+.store_management{
+ margin-top: 15px;	
+}
+
+button.create_po_btn {
+   
+    margin-top: 10px;
+    margin-right: 10px;
+}
+button#create_po_btn {
+	 float: right;
+}
+button#create_po_btn2 {
+	 float: right;
+}
+.input-group{
+	margin-bottom: 20px;
+}
+#parent {
+    overflow: hidden;
+    background: #efefef;
+    margin-bottom: 20px;
+}
+
+#child{
+margin: 10px;
+}
+#child label{
+	margin-left: 40px;
+    margin-right: 49px;
+    text-transform: uppercase;
+}
+#child label span{
+	font-weight: 800;
+}
+.po_edit_btn{
+		float: right;
+		
+	}
+	
+.po_back_btn,.po_save_btn{
+		float: right;
+	}
+	
+div.ajax-loading{
+                position: fixed;
+                top: 0;
+                left: 0;
+                height:100%;
+                width:100%;
+                z-index: 9999999;
+                background-image: url('images/page-loading.gif');
+                opacity: 0.7;
+                filter: alpha(opacity=70); /* ie */
+                -moz-opacity: 0.7; /* mozilla */
+                display:none;
+            }
+div.ajax-loading{
+                height:100%;
+                width:100%;
+                background-image: url('images/page-loading.gif');
+                background-position:  center center;
+                background-repeat: no-repeat;
+                opacity: 1;
+                filter: alpha(opacity=100); /* ie */
+                -moz-opacity: 1; /* mozilla */
+            }
+input,textarea{
+	margin: 5px;
+}

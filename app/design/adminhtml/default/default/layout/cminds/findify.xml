@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * CreativeMinds - Findify Connector
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Cminds
+ * @package     Cminds_Findify
+ * @copyright   Copyright (c) 2014 CreativeMinds (http://www.cminds.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<layout>
+    <findify_adminhtml_feed_edit>
+        <reference name="content">
+            <block type="findify/adminhtml_feed_edit" name="findify_feed_edit" />
+            <block type="findify/adminhtml_feed_grid_js" name="findify_feed_js" />
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>findify/adminhtml/feed.js</script></action>
+        </reference>
+        <reference name="left">
+            <block type="findify/adminhtml_feed_edit_tabs" name="findify_feed_edit_tabs" />
+        </reference>
+    </findify_adminhtml_feed_edit>
+    <findify_adminhtml_feed_generate>
+        <reference name="content">
+            <block type="findify/adminhtml_feed_grid_js" name="findify_feed_js" />
+            <block type="findify/adminhtml_feed_generate_result" template="cminds/findify/feed/generate/result.phtml" name="findify_feed_generate_result" />
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>findify/adminhtml/feed.js</script></action>
+            <action method="addItem"><type>skin_css</type><name>cminds/findify/feed.css</name></action>
+        </reference>
+    </findify_adminhtml_feed_generate>
+    <findify_adminhtml_feed_index>
+        <reference name="content">
+            <block type="findify/adminhtml_feed" name="findify_adminhtml_feed" />
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>findify/adminhtml/feed.js</script></action>
+        </reference>
+    </findify_adminhtml_feed_index>
+</layout>

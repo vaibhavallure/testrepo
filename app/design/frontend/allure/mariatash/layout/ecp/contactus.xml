@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <ecp_contactus_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+		
+        <reference name="content">
+            <block type="ecp_contactus/contactus" name="contactus" template="ecp/contactus/contactus.phtml" />
+        </reference>
+    </ecp_contactus_index_index>
+</layout> 

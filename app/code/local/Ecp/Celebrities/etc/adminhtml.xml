@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+  <acl>
+    <resources>
+      <all>
+        <title>Allow Everything</title>
+      </all>
+      <admin>
+        <children>
+          <system>
+            <children>
+              <config>
+                <children>
+                  <ecp_celebrities translate="title" module="ecp_celebrities">
+                    <title>Ecp Celebrities</title>
+                  </ecp_celebrities>
+                </children>
+              </config>
+            </children>
+          </system>
+        </children>
+      </admin>
+    </resources>
+  </acl>
+</config>

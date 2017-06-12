@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding="utf-8" ?>
+<config>
+    <global>
+        <cache>
+            <request_processors>
+                <ee>ECP_Ajaxify_Model_Processor</ee>
+            </request_processors>
+        </cache>
+    </global>
+</config>

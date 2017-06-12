@@ -1,0 +1,16 @@
+/downloader/connect.cfg
+/downloader/.cache
+/app/etc/local.xml
+/var
+/media
+/includes/src/*
+.idea
+.project
+.settings/
+readme.md
+/nbproject
+errors/local.xml
+.hg
+.hgignore
+sftp-config.json
+.DS_Store

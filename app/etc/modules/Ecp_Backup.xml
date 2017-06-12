@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Backup>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ecp_Backup>
+    </modules>
+</config> 

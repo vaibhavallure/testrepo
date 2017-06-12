@@ -1,0 +1,87 @@
+<!--
+  ~ Magestore
+  ~
+  ~ NOTICE OF LICENSE
+  ~
+  ~ This source file is subject to the Magestore.com license that is
+  ~ available through the world-wide-web at this URL:
+  ~ http://www.magestore.com/license-agreement.html
+  ~
+  ~ DISCLAIMER
+  ~
+  ~ Do not edit or add to this file if you wish to upgrade this extension to newer
+  ~ version in the future.
+  ~
+  ~ @category    Magestore
+  ~ @package     Magestore_Webpos
+  ~ @copyright   Copyright (c) 2016 Magestore (http://www.magestore.com/)
+  ~ @license     http://www.magestore.com/license-agreement.html
+  -->
+
+<div class="col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table">
+                <colgroup>
+                    <col width="">
+                    <col width="">
+                    <col width="">
+                    <col width="95">
+                    <col width="">
+                    <col width="">
+                    <col width="">
+                    <col width="">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th data-bind="text: ('Product')"/>
+                        <!--<th data-bind="text: ('SKU')"/>-->
+                        <th data-bind="text: ('Original Price')"/>
+                        <th data-bind="text: ('Price')"/>
+                        <th data-bind="text: ('Qty')"/>
+                        <th data-bind="text: ('Subtotal')"/>
+                        <th data-bind="text: ('Tax Amount')"/>
+                        <th data-bind="text: ('Discount Amount')"/>
+                        <th data-bind="text: ('Row Total')"/>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: {data: $parent.orderData().items, as: 'item'}">
+                    <!-- ko ifnot: item.parent_item_id -->
+                    <tr>
+                        <td>
+                            <h4 class="product-name" data-bind="html: item.name"></h4>
+                            <label class="product-sku" data-bind="text: ('SKU')"></label>:
+                            <span class="product-sku" data-bind="html: item.sku"></span>
+                            <!--<img src="" />-->
+                        </td>
+                        <!--<td class="order-id" data-bind="text: item.sku"/>-->
+                        <td class="price" data-bind="text: $parents[1].convertAndFormatPrice(item.base_original_price)"/>
+                        <td class="price" data-bind="text: $parents[1].convertAndFormatPrice(item.base_price)"/>
+                        <td class="order-id">
+                            <label data-bind="text: ('Ordered: ') + item.qty_ordered"></label></br>
+                            <!-- ko if: item.qty_invoiced > 0 -->
+                            <label data-bind="text: ('Invoiced: ') + item.qty_invoiced"></label></br>
+                            <!-- /ko -->
+                            <!-- ko if: item.qty_shipped > 0 -->
+                            <label data-bind="text: ('Shipped: ') + item.qty_shipped"></label></br>
+                            <!-- /ko -->
+                            <!-- ko if: item.qty_refunded > 0 -->
+                            <label data-bind="text: ('Refunded: ') + item.qty_refunded"></label></br>
+                            <!-- /ko -->
+                            <!-- ko if: item.qty_canceled > 0 -->
+                            <label data-bind="text: ('Canceled: ') + item.qty_canceled"></label></br>
+                            <!-- /ko -->
+                        </td>
+                        <td class="price" data-bind="text: $parents[1].convertAndFormatPrice(item.base_price*item.qty_ordered)"/>
+                        <td class="price" data-bind="text: $parents[1].convertAndFormatPrice(item.base_tax_amount)"/>
+                        <td class="price" data-bind="text: $parents[1].convertAndFormatPrice(
+                            item.base_discount_amount?item.base_discount_amount:0)"/>
+                        <td class="price" data-bind="text: $parents[1].convertAndFormatPrice(
+                            item.base_row_total+item.base_tax_amount-item.base_discount_amount)"/>
+                    </tr>
+                    <!-- /ko -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

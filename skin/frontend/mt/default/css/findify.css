@@ -1,0 +1,1275 @@
+.findify-cleanslate,.findify-cleanslate a,.findify-cleanslate abbr,.findify-cleanslate acronym,.findify-cleanslate address,.findify-cleanslate applet,.findify-cleanslate article,.findify-cleanslate aside,.findify-cleanslate audio,.findify-cleanslate b,.findify-cleanslate big,.findify-cleanslate blockquote,.findify-cleanslate caption,.findify-cleanslate cite,.findify-cleanslate code,.findify-cleanslate dd,.findify-cleanslate del,.findify-cleanslate dfn,.findify-cleanslate dialog,.findify-cleanslate div,.findify-cleanslate dl,.findify-cleanslate dt,.findify-cleanslate em,.findify-cleanslate fieldset,.findify-cleanslate figure,.findify-cleanslate font,.findify-cleanslate footer,.findify-cleanslate form,.findify-cleanslate h1,.findify-cleanslate h2,.findify-cleanslate h3,.findify-cleanslate h4,.findify-cleanslate h5,.findify-cleanslate h6,.findify-cleanslate header,.findify-cleanslate hgroup,.findify-cleanslate hr,.findify-cleanslate i,.findify-cleanslate iframe,.findify-cleanslate img,.findify-cleanslate input,.findify-cleanslate ins,.findify-cleanslate kbd,.findify-cleanslate label,.findify-cleanslate legend,.findify-cleanslate li,.findify-cleanslate mark,.findify-cleanslate menu,.findify-cleanslate nav,.findify-cleanslate object,.findify-cleanslate ol,.findify-cleanslate option,.findify-cleanslate p,.findify-cleanslate pre,.findify-cleanslate q,.findify-cleanslate s,.findify-cleanslate samp,.findify-cleanslate section,.findify-cleanslate select,.findify-cleanslate small,.findify-cleanslate span,.findify-cleanslate strike,.findify-cleanslate strong,.findify-cleanslate sub,.findify-cleanslate sup,.findify-cleanslate table,.findify-cleanslate tbody,.findify-cleanslate td,.findify-cleanslate textarea,.findify-cleanslate tfoot,.findify-cleanslate th,.findify-cleanslate thead,.findify-cleanslate time,.findify-cleanslate tr,.findify-cleanslate tt,.findify-cleanslate ul,.findify-cleanslate var,.findify-cleanslate video {
+  background-attachment: scroll!important;
+  background-color: transparent;
+  background-image: none!important;
+  background-position: 0 0!important;
+  background-repeat: repeat!important;
+  border-color: currentColor!important;
+  border-radius: 0!important;
+  border-style: none!important;
+  border-width: medium!important;
+  bottom: auto!important;
+  clear: none!important;
+  clip: auto!important;
+  color: inherit!important;
+  counter-increment: none!important;
+  counter-reset: none!important;
+  cursor: auto!important;
+  direction: inherit!important;
+  display: inline!important;
+  float: none!important;
+  font-family: inherit!important;
+  font-size: inherit!important;
+  font-style: inherit!important;
+  font-variant: normal!important;
+  font-weight: inherit!important;
+  height: auto!important;
+  left: auto!important;
+  letter-spacing: normal!important;
+  line-height: inherit!important;
+  list-style: none!important;
+  list-style-type: inherit!important;
+  margin: 0;
+  max-height: none!important;
+  max-width: none!important;
+  min-height: 0!important;
+  min-width: 0!important;
+  opacity: 1;
+  outline: none!important;
+  overflow: visible!important;
+  padding: 0;
+  position: static!important;
+  quotes: "" ""!important;
+  right: auto!important;
+  table-layout: auto!important;
+  text-align: inherit!important;
+  text-decoration: inherit!important;
+  text-indent: 0!important;
+  text-transform: none!important;
+  top: auto!important;
+  unicode-bidi: normal!important;
+  vertical-align: baseline!important;
+  visibility: inherit!important;
+  white-space: normal!important;
+  width: auto!important;
+  word-spacing: normal!important;
+  z-index: auto!important;
+  -moz-border-radius: 0!important;
+  -webkit-border-radius: 0!important;
+  -moz-box-sizing: content-box!important;
+  -webkit-box-sizing: content-box!important;
+  box-sizing: content-box!important;
+  text-shadow: none!important;
+}
+
+.findify-facets-content{
+  background-color: #F3F3F3 !important;
+  margin-top: 17px !important;
+  padding: 15px !important;
+}
+
+#findify-search-overlay .findify-facets-content .findify-facet-title .findify-facet-title-text{font-family: "dinmittelschriftregular", "Arial" !important;}
+#findify-search-overlay .findify-facets-content .findify-facet-input-label {font-family: "dinmittelschriftregular", "Arial" !important;}
+
+
+.findify-cleanslate,.findify-cleanslate address,.findify-cleanslate article,.findify-cleanslate aside,.findify-cleanslate blockquote,.findify-cleanslate caption,.findify-cleanslate dd,.findify-cleanslate dialog,.findify-cleanslate div,.findify-cleanslate dl,.findify-cleanslate dt,.findify-cleanslate fieldset,.findify-cleanslate figure,.findify-cleanslate footer,.findify-cleanslate form,.findify-cleanslate h1,.findify-cleanslate h2,.findify-cleanslate h3,.findify-cleanslate h4,.findify-cleanslate h5,.findify-cleanslate h6,.findify-cleanslate header,.findify-cleanslate hgroup,.findify-cleanslate hr,.findify-cleanslate menu,.findify-cleanslate nav,.findify-cleanslate ol,.findify-cleanslate option,.findify-cleanslate p,.findify-cleanslate pre,.findify-cleanslate section,.findify-cleanslate select,.findify-cleanslate textarea,.findify-cleanslate ul {
+  display: block!important;
+}
+
+.findify-cleanslate table {
+  display: table!important;
+}
+
+.findify-cleanslate thead {
+  display: table-header-group!important;
+}
+
+.findify-cleanslate tbody {
+  display: table-row-group!important;
+}
+
+.findify-cleanslate tfoot {
+  display: table-footer-group!important;
+}
+
+.findify-cleanslate tr {
+  display: table-row!important;
+}
+
+.findify-cleanslate td,.findify-cleanslate th {
+  display: table-cell!important;
+}
+
+.findify-cleanslate nav ol,.findify-cleanslate nav ul {
+  list-style-type: none!important;
+}
+
+.findify-cleanslate menu,.findify-cleanslate ul {
+  list-style-type: disc!important;
+}
+
+.findify-cleanslate ol {
+  list-style-type: decimal!important;
+}
+
+.findify-cleanslate menu menu,.findify-cleanslate menu ul,.findify-cleanslate ol menu,.findify-cleanslate ol ul,.findify-cleanslate ul menu,.findify-cleanslate ul ul {
+  list-style-type: circle!important;
+}
+
+.findify-cleanslate menu menu menu,.findify-cleanslate menu menu ul,.findify-cleanslate menu ol menu,.findify-cleanslate menu ol ul,.findify-cleanslate menu ul menu,.findify-cleanslate menu ul ul,.findify-cleanslate ol menu menu,.findify-cleanslate ol menu ul,.findify-cleanslate ol ol menu,.findify-cleanslate ol ol ul,.findify-cleanslate ol ul menu,.findify-cleanslate ol ul ul,.findify-cleanslate ul menu menu,.findify-cleanslate ul menu ul,.findify-cleanslate ul ol menu,.findify-cleanslate ul ol ul,.findify-cleanslate ul ul menu,.findify-cleanslate ul ul ul {
+  list-style-type: square!important;
+}
+
+.findify-cleanslate li {
+  display: list-item!important;
+  min-height: auto!important;
+  min-width: auto!important;
+}
+
+.findify-cleanslate strong {
+  font-weight: 700!important;
+}
+
+.findify-cleanslate em {
+  font-style: italic!important;
+}
+
+.findify-cleanslate code,.findify-cleanslate kbd,.findify-cleanslate samp {
+  font-family: monospace!important;
+}
+
+.findify-cleanslate a,.findify-cleanslate a *,.findify-cleanslate input[type=checkbox],.findify-cleanslate input[type=radio],.findify-cleanslate input[type=submit],.findify-cleanslate select {
+  cursor: pointer!important;
+}
+
+.findify-cleanslate a:hover {
+  text-decoration: none!important;
+}
+
+.findify-cleanslate button,.findify-cleanslate input[type=submit] {
+  text-align: center!important;
+}
+
+.findify-cleanslate input[type=hidden] {
+  display: none!important;
+}
+
+.findify-cleanslate abbr[title],.findify-cleanslate acronym[title],.findify-cleanslate dfn[title] {
+  cursor: help!important;
+  border-bottom-width: 1px!important;
+  border-bottom-style: dotted!important;
+}
+
+.findify-cleanslate ins {
+  background-color: #ff9!important;
+  color: #000!important;
+}
+
+.findify-cleanslate del {
+  text-decoration: line-through!important;
+}
+
+.findify-cleanslate blockquote,.findify-cleanslate q {
+  quotes: none!important;
+}
+
+.findify-cleanslate blockquote:after,.findify-cleanslate blockquote:before,.findify-cleanslate li:after,.findify-cleanslate li:before,.findify-cleanslate q:after,.findify-cleanslate q:before {
+  content: ""!important;
+}
+
+.findify-cleanslate input,.findify-cleanslate select {
+  vertical-align: middle!important;
+}
+
+.findify-cleanslate input,.findify-cleanslate select,.findify-cleanslate textarea {
+  border: 1px solid #ccc!important;
+}
+
+.findify-cleanslate table {
+  border-collapse: collapse!important;
+  border-spacing: 0!important;
+}
+
+.findify-cleanslate hr {
+  display: block!important;
+  height: 1px!important;
+  border: 0!important;
+  border-top: 1px solid #ccc!important;
+  margin: 1em 0!important;
+}
+
+.findify-cleanslate [dir=rtl] {
+  direction: rtl!important;
+}
+
+.findify-cleanslate mark {
+  background-color: #ff9!important;
+  color: #000!important;
+  font-style: italic!important;
+  font-weight: 700!important;
+}
+
+.findify-cleanslate {
+  font-size: medium!important;
+  line-height: 1!important;
+  direction: ltr!important;
+  text-align: left!important;
+  font-family: "Source Sans Pro",sans-serif!important;
+  color: #000!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  text-decoration: none!important;
+  list-style-type: disc!important;
+}
+
+.findify-cleanslate select {
+  -webkit-appearance: menulist!important;
+}
+
+.findify-cleanslate input[type=checkbox] {
+  -webkit-appearance: checkbox!important;
+}
+
+#findify-overlay,#findify-overlay li,#findify-search-overlay,#findify-search-overlay .findify-pagination-special,.findify-primary-font {
+  font-family: "Source Sans Pro",sans-serif!important;
+  font-weight: 400!important;
+  font-size: 15px!important;
+  line-height: 1.25!important;
+  color: #2d2d2d!important;
+}
+
+#findify-search-overlay .findify-facet-has-triangle:not(.findify-facet-is-openned) a.findify-facet-input-label:before,.findify-triangle-right {
+  content: "\f105"!important;
+  font-family: FontAwesome!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  text-decoration: inherit!important;
+  color: #b3b3b3!important;
+  font-size: 15px!important;
+  padding-right: 0!important;
+  position: absolute!important;
+  top: 4px!important;
+}
+
+#findify-search-overlay .findify-facet-has-triangle.findify-facet-is-openned a.findify-facet-input-label:before,.findify-triangle-down {
+ content: "\f105"!important;
+  font-family: FontAwesome!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  text-decoration: inherit!important;
+  color: #b3b3b3!important;
+  font-size: 15px!important;
+  padding-right: 0!important;
+  position: absolute!important;
+  top: 4px!important;
+}
+
+#findify-search-overlay .findify-facet-padding-0.findify-facet-list-elem{
+	font-family:"dinmittelschriftregular", "Arial" !important;
+
+}
+#findify-search-overlay .findify-facet-padding-1.findify-facet-list-elem{
+	font-family:"dinmittelschriftregular", "Arial" !important;
+
+}
+#findify-search-overlay .findify-facet-padding-2.findify-facet-list-elem{
+	font-family:"dinmittelschriftregular", "Arial" !important;
+
+}
+
+#findify-search-overlay .findify-clearfix:after,#findify-search-overlay.findify-clearfix:after {
+  content: "."!important;
+  visibility: hidden!important;
+  display: block!important;
+  height: 0!important;
+  clear: both!important;
+}
+
+#findify-search-overlay .findify-divider {
+  border: 0!important;
+  height: 1px!important;
+  margin: 0!important;
+ /* width: 100%!important;*/
+  background-color: #e6e6e6!important;
+  margin-left: 57px !important;
+  margin-right: 48px !important;
+}
+
+#findify-search-overlay .findify-divider-facet {
+  border: 0!important;
+  height: 1px!important;
+  margin: 8px 0!important;
+  width: 100%!important;
+  background-color: transparent!important;
+}
+
+#findify-search-overlay .findify-push-right {
+  float: right!important;
+}
+
+.findify-external-hidden {
+  display: none!important;
+}
+
+#findify-overlay {
+  background-color: #fff!important;
+  text-align: left!important;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,.5)!important;
+  -moz-box-sizing: border-box!important;
+  -webkit-box-sizing: border-box!important;
+  box-sizing: border-box!important;
+}
+
+#findify-overlay-wrapper {
+  position: absolute!important;
+  z-index: 2147483647!important;
+  width: 400px!important;
+  -moz-box-sizing: border-box!important;
+  -webkit-box-sizing: border-box!important;
+  box-sizing: border-box!important;
+}
+
+#findify-overlay em {
+  font-style: normal!important;
+  font-weight: 700!important;
+}
+
+#findify-overlay li {
+  margin: 0!important;
+  line-height: 1.125!important;
+  display: block!important;
+}
+
+#findify-overlay a {
+  text-decoration: none!important;
+  color: #2d2d2d!important;
+  font-size: 15px!important;
+}
+
+#findify-overlay #finfify-overlay-left li {
+  padding: 0 18px!important;
+  height: 30px!important;
+  line-height: 30px!important;
+}
+
+#findify-overlay #findify-autocomplete-products,#findify-overlay #findify-autocomplete-suggest {
+  list-style: none!important;
+  float: none!important;
+  margin: 0!important;
+}
+
+#findify-overlay #findify-autocomplete-suggest li,#findify-overlay .findify-overlay-product {
+  -webkit-transition: background-color ease .2s!important;
+  transition: background-color ease .2s!important;
+}
+
+#findify-overlay #findify-autocomplete-suggest li:hover,#findify-overlay .findify-active>div,#findify-overlay .findify-active>li,#findify-overlay .findify-overlay-product:hover {
+  background-color: #ebebeb!important;
+}
+
+#findify-overlay .findify-overlay-product {
+  overflow: hidden!important;
+  margin: 0!important;
+  padding: 5px 20px!important;
+}
+
+#findify-overlay .findify-overlay-description {
+  font-size: 15px!important;
+  text-transform: none!important;
+}
+
+#findify-overlay .findify-overlay-price,.findify-overlay-sale-price {
+  line-height: 2!important;
+}
+
+#findify-overlay .findify-overlay-price.findify-sale {
+  color: #f40b37!important;
+  margin-left: 12px!important;
+}
+
+#findify-overlay .findify-overlay-sale-price {
+  text-decoration: line-through!important;
+}
+
+#findify-overlay .findify-overlay-brand-name,#findify-overlay .findify-overlay-description,#findify-overlay .findify-overlay-price-wrapper {
+  margin-left: 70px!important;
+}
+
+#findify-overlay .findify-overlay-price-wrapper {
+  display: none!important;
+}
+
+#findify-overlay .findify-overlay-image-wrapper {
+  width: 65px!important;
+  height: 65px!important;
+  overflow: hidden!important;
+  float: left!important;
+  margin-right: 10px!important;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box!important;
+}
+
+#findify-overlay .findify-overlay-image {
+  width: 100%!important;
+}
+
+#findify-overlay #findify-overlay-products-title,#findify-overlay #findify-overlay-searches-title {
+  padding: 10px!important;
+  color: #b3b3b3!important;
+  text-align: left!important;
+  font-weight: 700!important;
+  font-size: 11px!important;
+  text-transform: uppercase!important;
+}
+
+#findify-overlay hr {
+  margin: 20px 0 0!important;
+}
+
+#findify-overlay #findify-overlay-bottom-panel {
+  color: #b3b3b3!important;
+  font-size: 11px!important;
+  border-top: 1px solid #ccc!important;
+  font-weight: 700!important;
+  height: 35px!important;
+  line-height: 35px!important;
+  text-align: center!important;
+  text-transform: uppercase!important;
+  margin-top: 5px!important;
+  cursor: pointer!important;
+}
+
+#findify-overlay-background {
+  position: fixed!important;
+  height: 100%!important;
+  top: 0!important;
+  left: 0!important;
+  width: 100%!important;
+  z-index: 9999!important;
+  background: rgba(0,0,0,.75)!important;
+  visibility: visible!important;
+  transition: all .5s!important;
+  -webkit-transition: all .5s!important;
+}
+
+@media all and (max-width:767px) {
+  #findify-overlay-wrapper {
+    width: 100%!important;
+    right: 0!important;
+    left: 0!important;
+    padding: 0 10px!important;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box!important;
+  }
+
+  #findify-autocomplete-suggest a:nth-child(4),#findify-autocomplete-suggest a:nth-child(5) {
+    display: none!important;
+  }
+}
+
+#findify-search-overlay {
+ 
+   background-color: white !important;
+  padding: 5px 15px!important;
+  clear: both!important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+}
+
+#findify-search-overlay .findify-hidden {
+  display: none!important;
+}
+
+#findify-search-overlay .findify-navigation {
+  overflow: hidden!important;
+}
+
+#findify-search-overlay .findify-navigation-header,#findify-search-overlay .findify-navigation-second-header {
+  padding: 0 0 0 10px!important;
+  margin-left: 51px !important;
+  margin-right: auto !important;
+  padding-right: 48px !important;
+}
+
+#findify-search-overlay .findify-header {
+  font-size: 15px!important;
+  padding: 16px 0!important;
+}
+
+#findify-search-overlay #findify-didyoumean {
+  font-size: 15px!important;
+}
+
+#findify-search-overlay #findify-didyoumean span {
+  color: #b3b3b3!important;
+}
+
+#findify-search-overlay .findify-control-sort-wrapper {
+  padding: 10px 0!important;
+}
+
+#findify-search-overlay #findify-control-bypage,#findify-search-overlay #findify-control-sort {
+  width: 154px!important;
+  margin: 0!important;
+  background-color: #efefef!important;
+  border-radius: 0!important;
+  cursor: pointer!important;
+  display: inline!important;
+  border: none!important;
+  height: 32px!important;
+  position: relative!important;
+}
+
+#findify-search-overlay #findify-control-bypage:focus,#findify-search-overlay #findify-control-sort:focus {
+  outline: 0!important;
+}
+
+#findify-search-overlay #findify-control-sort:after {
+  content: "\f105"!important;
+  font-family: FontAwesome!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  text-decoration: inherit!important;
+  color: #000!important;
+  font-size: 100px!important;
+  padding-right: 0!important;
+  position: absolute!important;
+  top: 0!important;
+  right: 0!important;
+}
+
+#findify-search-overlay #findify-control-sort-label {
+  vertical-align: middle!important;
+}
+
+#findify-search-overlay .findify-query {
+  font-weight: 700!important;
+}
+
+#findify-search-overlay .findify-query-breadcrumbs {
+  color: #999!important;
+}
+
+#findify-search-overlay .findify-breadcrumb {
+  float: left!important;
+  padding: 16px 0!important;
+  font-size: 15px!important;
+}
+
+#findify-search-overlay .findify-breadcrumb-clickable {
+  cursor: pointer!important;
+}
+
+#findify-search-overlay .findify-pagination {
+  margin: 0!important;
+  font-size: 15px!important;
+  padding: 16px 0!important;
+}
+
+#findify-search-overlay .findify-pagination-current,#findify-search-overlay .findify-pagination-dots,#findify-search-overlay .findify-pagination-spacing,#findify-search-overlay .findify-pagination-special,#findify-search-overlay .findify-pagination-unit {
+  padding: 5px 10px!important;
+  display: inline!important;
+  font-size: 15px!important;
+}
+
+#findify-search-overlay .findify-pagination-dots {
+  padding: 5px 0!important;
+}
+
+#findify-search-overlay .findify-pagination-prev {
+  position: relative!important;
+  padding-left: 16px!important;
+}
+
+#findify-search-overlay .findify-pagination-prev:before {
+  content: "\f104"!important;
+  font-family: FontAwesome!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  text-decoration: inherit!important;
+  font-size: 15px!important;
+  padding-right: 0!important;
+  position: absolute!important;
+  top: 6px!important;
+  left: 0!important;
+}
+
+#findify-search-overlay .findify-pagination-next {
+  padding-right: 16px!important;
+  position: relative!important;
+}
+
+#findify-search-overlay .findify-pagination-next:after {
+  content: "\f105"!important;
+  font-family: FontAwesome!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  text-decoration: inherit!important;
+  font-size: 15px!important;
+  padding-right: 0!important;
+  position: absolute!important;
+  top: 6px!important;
+  right: 0!important;
+}
+
+#findify-search-overlay .findify-pagination-special.findify-pagination-disabled {
+  color: #b3b3b3!important;
+}
+
+#findify-search-overlay .findify-pagination-current {
+  font-weight: 600!important;
+  line-height: 1!important;
+  background-color: #efefef!important;
+}
+
+#findify-search-overlay .findify-pagination-bottom {
+  margin-top: 15px!important;
+  margin-right: 10px!important;
+}
+
+#findify-search-overlay .findify-active,#findify-search-overlay .findify-active:hover {
+  color: #231f20!important;
+}
+
+#findify-search-overlay .findify-view-selector:hover {
+  background-color: #fff!important;
+}
+
+#findify-search-overlay .findify-mobile-facets-button {
+  display: none!important;
+}
+
+@media all and (max-width:767px) {
+  #findify-search-overlay #findify-control-sort-label,#findify-search-overlay .findify-breadcrumb,#findify-search-overlay .findify-pagination,#findify-search-overlay .findify-see-results,#findify-search-overlay.findify-facets-shown .findify-refine-by {
+    display: none!important;
+  }
+
+  #findify-search-overlay .findify-mobile-facets-button,#findify-search-overlay .findify-pagination.findify-pagination-bottom {
+    display: inherit!important;
+  }
+
+  #findify-search-overlay .findify-mobile-facets-button {
+    padding: 17px 0!important;
+  }
+
+  #findify-search-overlay .findify-refine-by,#findify-search-overlay.findify-facets-shown .findify-see-results {
+    display: inline!important;
+    background-color: #EFEFEF!important;
+    padding: 6px 10px!important;
+    cursor: pointer!important;
+  }
+}
+
+#findify-search-overlay .findify-facets {
+  width: 20%!important;
+  padding: 5px 10px!important;
+  display: table-cell!important;
+  -moz-box-sizing: border-box!important;
+  -webkit-box-sizing: border-box!important;
+  box-sizing: border-box!important;
+  vertical-align: top!important;
+}
+
+#findify-search-overlay .findify-facets .findify-divider {
+  margin: 0!important;
+}
+
+#findify-search-overlay .findify-facet-general-title {
+  display: inline-block!important;
+  margin: -1px 0 0!important;
+}
+
+#findify-search-overlay .findify-facet-title {
+  text-transform: capitalize!important;
+  font-weight: 700!important;
+  display: inline-block!important;
+  margin: 12px 0 0!important;
+  font-size: 15px!important;
+  min-width: 100%!important;
+   
+}
+
+#findify-search-overlay .findify-facet-title .findify-facet-title-text {
+  cursor: pointer!important;
+  font-family: "LatoBold", Verdana, Arial, sans-serif !important;
+  border-bottom: 3px solid #555555 !important;
+  margin-bottom: 11px !important;
+  padding-bottom: 5px !important;
+  width: 156px !important;
+  float: left !important;
+}
+
+#findify-search-overlay .findify-facet-title .findify-facet-title-text:first-letter {
+  text-transform: uppercase;
+}
+
+#findify-search-overlay .findify-facet-title .findify-facet-title-open-close {
+  float: right!important;
+  cursor: pointer!important;
+  padding: 0 5px!important;
+  margin-right: -5px!important;
+}
+
+#findify-search-overlay .findify-facet-title .findify-facet-title-open-close i {
+  cursor: pointer!important;
+}
+
+#findify-search-overlay .findify-facet-container {
+  margin-top: 12px!important;
+}
+
+#findify-search-overlay .findify-clear-facet {
+  color: #b3b3b3!important;
+  font-size: 15px!important;
+  font-weight: 400!important;
+  padding-left: 4px!important;
+}
+
+#findify-search-overlay .findify-facets ul {
+  list-style: none!important;
+  padding: 0!important;
+  margin: 0!important;
+  font-size: 15px!important;
+}
+
+#findify-search-overlay .findify-facet-list-elem {
+  margin: 0 0 0 12px!important;
+  padding: 4px 0!important;
+  max-width: 100%!important;
+  position: relative!important;
+}
+
+#findify-search-overlay .findify-facet.findify-facet-category .findify-facet-list-elem:first-child a {
+  padding-left: 0!important;
+}
+
+#findify-search-overlay .findify-facet-has-checkbox {
+  margin-left: 12px!important;
+}
+
+#findify-search-overlay .findify-facet-has-checkbox .findify-facet-input {
+  display: none!important;
+}
+
+#findify-search-overlay .findify-facet-has-checkbox .findify-facet-input-label {
+  display: inline-block!important;
+  padding-left: 7px!important;
+  position: relative!important;
+  max-width: 100%!important;
+}
+
+#findify-search-overlay .findify-facet-has-checkbox .findify-facet-input-label:before {
+  content: ""!important;
+  display: inline-block!important;
+  width: 11px!important;
+  height: 11px!important;
+  margin-right: 10px!important;
+  position: absolute!important;
+  left: -11px!important;
+  top: 5px!important;
+  background-color: transparent!important;
+  border: 1px solid #b3b3b3!important;
+  border-radius: 1px!important;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+#findify-search-overlay .findify-facet-has-checkbox input[type=checkbox]:checked+.findify-facet-input-label:before {
+  content: "\f00c"!important;
+  font-family: FontAwesome!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  text-decoration: inherit!important;
+  font-size: 7px!important;
+  text-align: center!important;
+  line-height: 9px!important;
+  color: #2d2d2d!important;
+  position: absolute!important;
+  border: 1px solid #b3b3b3!important;
+}
+
+#findify-search-overlay .findify-facet-counter {
+  color: #999!important;
+  font-size: 13px!important;
+ 
+  padding: 4px 0 0!important;
+}
+
+#findify-search-overlay .findify-facet-more {
+  margin-top: 12px!important;
+  display: inline-block!important;
+  padding: 9px 14px!important;
+  background: #eaeaea!important;
+  font-size: 15px!important;
+  margin-left: 18px!important;
+}
+
+#findify-search-overlay .findify-facet-padding-1 {
+  padding-left: 12px!important;
+}
+
+#findify-search-overlay .findify-facet-padding-2 {
+  padding-left: 24px!important;
+}
+
+#findify-search-overlay .findify-facet-padding-3 {
+  padding-left: 36px!important;
+  display: none!important;
+}
+
+#findify-search-overlay .findify-facet-padding-4 {
+  padding-left: 48px!important;
+}
+
+#findify-search-overlay .findify-cursor-pointer,#findify-search-overlay .findify-facet-input,#findify-search-overlay .findify-facet-input-label {
+  cursor: pointer!important;
+}
+
+#findify-search-overlay .findify-facet-input-label {
+  color: #2d2d2d!important;
+  line-height: 1.3!important;
+  text-transform: capitalize!important;
+
+  display: inline-block!important;
+}
+
+#findify-search-overlay a.findify-facet-active {
+  font-weight: 600!important;
+}
+
+#findify-search-overlay a.findify-facet-input-label:before {
+  margin-left: -11px!important;
+  border-color: #fff!important;
+}
+
+#findify-search-overlay .findify-facet-input {
+  margin: 1px 0 0 -16px!important;
+  vertical-align: top!important;
+}
+
+#findify-search-overlay .findify-facet-input:checked+.findify-facet-input-label {
+  color: #2D2D2D!important;
+  font-weight: 600!important;
+}
+
+#findify-search-overlay .fa-minus:before,#findify-search-overlay .fa-plus:before {
+  font-size: 10px!important;
+}
+
+@media all and (max-width:767px) {
+  #findify-search-overlay .findify-facets {
+    background-color: #fff!important;
+    width: 300px!important;
+  }
+
+  #findify-search-overlay.findify-facets-shown .findify-facets {
+    -webkit-box-shadow: 10px 0 10px -10px rgba(0,0,0,.5);
+    -moz-box-shadow: 10px 0 10px -10px rgba(0,0,0,.5);
+    box-shadow: 10px 0 10px -10px rgba(0,0,0,.5);
+  }
+}
+
+#findify-search-overlay .findify-content {
+  display: table!important;
+}
+
+#findify-search-overlay .findify-products-banner {
+  margin-top: 13px;
+  margin-bottom: 15px;
+}
+
+#findify-search-overlay .findify-products-banner img {
+  width: 90%!important;
+  vertical-align: top !important; 
+   margin-left: auto !important;
+   margin-right: auto !important;
+    display: block !important;
+}
+
+#findify-search-overlay .findify-products-banner-img-container {
+  display: block!important;
+ /* max-height: 200px!important;
+  overflow: hidden!important;*/
+}
+
+#findify-search-overlay .findify-products-banner-title {
+  font-weight: 700!important;
+  padding-bottom: 8px!important;
+}
+
+#findify-search-overlay .findify-products-wrapper {
+  max-width: 1400px !important;
+  display: table-cell!important;
+  padding: 5px 0 5px 10px!important;
+  -moz-box-sizing: border-box!important;
+  -webkit-box-sizing: border-box!important;
+  box-sizing: border-box!important;
+}
+
+#findify-search-overlay .findify-products {
+  position: relative !important;
+  z-index: 1 !important;
+  text-align: left !important;
+  margin-bottom: 150px !important;
+  margin-left: 60px !important;
+  margin-right: auto !important;
+}
+
+
+
+
+#findify-search-overlay .findify-products:after {
+  content: ''!important;
+  display: inline-block!important;
+  width: 100%!important;
+}
+
+#findify-search-overlay .findify-noresult-products {
+  text-align: justify!important;
+  -ms-text-justify: distribute-all-lines!important;
+  text-justify: distribute-all-lines!important;
+  zoom: 1!important;
+}
+
+#findify-search-overlay .findify-noresult-title {
+  margin: 20px 0 32px!important;
+}
+
+#findify-search-overlay .findify-noresult-explainer {
+  margin: 13px 0 26px!important;
+}
+
+#findify-search-overlay .findify-noresult-query {
+  font-weight: 700!important;
+}
+
+#findify-search-overlay .findify-product-featured {
+  display: inline-block!important;
+  width: 180px!important;
+  margin-right: 10px!important;
+}
+
+#findify-search-overlay .findify-product-optional-info {
+  margin-top: 4px!important;
+  color: #b3b3b3!important;
+  font-size: 13px!important;
+}
+
+#findify-search-overlay .findify-product.findify-grid {
+   display: inline-block !important;
+  vertical-align: top !important;
+  width: 334px !important;
+  padding: 10px;
+  margin-left: -13px;
+  margin-top: -10px;
+  color: #CCCCCC !important;
+  position: relative !important;
+  height: 429px !important;
+}
+#findify-search-overlay .findify-product.findify-grid:hover{
+background: #3f4048;
+z-index: 1000 !important;
+}
+#findify-search-overlay .findify-product.findify-grid:hover  .findify-product-text{
+
+display:block !important;
+}
+#findify-search-overlay .findify-product.findify-grid:hover  #quickview_button{
+display:block !important;
+}
+
+#findify-search-overlay .findify-layout-empty-product.findify-grid {
+  width: 180px!important;
+  vertical-align: top!important;
+  display: inline-block!important;
+  zoom: 1!important;
+  font-size: 0!important;
+  z-index: 1000 !important;
+ 
+}
+
+#findify-search-overlay .findify-product.findify-list {
+  width: 100%!important;
+}
+
+#findify-search-overlay .findify-grid .findify-product-image {
+  margin-top: 36px !important;
+    cursor: pointer !important;
+}
+
+#findify-search-overlay .findify-grid .findify-product-image-wrapper2 .place_class {
+  margin-top: 0px !important;
+}
+
+
+margin-left: 25px !important;
+
+#findify-search-overlay .findify-list .findify-product-image {
+  width: 100px!important;
+  display: block!important;
+  float: left!important;
+  margin-right: 10px!important;
+}
+
+#findify-search-overlay .findify-product-image-wrapper1 {
+  display: table!important;
+  height: 180px!important;
+  width: 205px!important;
+}
+
+#findify-search-overlay .findify-product-image-wrapper2 {
+  display: table-cell!important;
+  vertical-align: middle!important;
+  position: relative!important;
+  background-image: url("../images/img_listing_bg.jpg") !important;
+  display: block !important;
+  height: 409px !important;
+  max-width: 100% !important;
+  width: auto !important;
+  margin: 0 !important;
+  min-width: 314px !important;
+}
+
+#findify-search-overlay .findify-product-image {
+  max-width: 100%!important;
+}
+
+#findify-search-overlay .findify-product-sale-banner {
+  position: absolute!important;
+  display: none!important;
+}
+
+#findify-search-overlay .findify-product-text {
+  padding: 10px 0 5px!important;
+  line-height: 15px!important;
+  word-wrap: break-word!important;
+  background: #3f4048;
+  width: 334px !important;
+  margin-left: -10px;
+  height: 97px !important;
+  display: none !important;
+  
+}
+
+#quickview_button{
+  background: #3f4048 !important;
+  height: 38px !important;
+  height: 38px !important;
+  width: 334px !important;
+  margin-left: -10px !important;
+  display: none !important;
+
+}
+#findify-search-overlay .findify-list .findify-product-text {
+  padding: 0!important;
+}
+
+#findify-search-overlay .findify-product-title {
+  font-size: 14px !important;
+  color: #dedede !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  width: 283px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-weight: bold !important;
+}
+#findify-search-overlay .findify-product-title:hover {
+
+color: #ECC388 !important;
+  cursor: pointer !important;
+}
+
+#findify-search-overlay .findify-product-description {
+  font-size: 11px!important;
+  color: #9D9D9C!important;
+}
+
+#findify-search-overlay .findify-product-prices {
+  margin-top: 15px !important;
+  font-size: 13px !important;
+  font-family: arial !important;
+  height: 27px !important;
+  padding-top: 5px !important;
+  width: 283px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  color: #dedede !important;
+  margin-top: 5px;
+}
+
+#findify-search-overlay .price-label {
+  font-weight: normal !important;
+  font-size: 13px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  color: #dedede !important;
+  float: left !important;
+  margin: 0 6px 0 0 !important;
+}
+
+#color-option{
+  font-size: 13px !important;
+  font-family: arial !important;
+  height: 27px !important;
+  padding-top: 5px !important;
+  width: 72px !important;
+  margin-left: 0px !important;
+  margin-right: auto !important;
+  color: #dedede !important;
+  margin-top: 0px !important;
+  float: left !important;
+}
+
+#findify-search-overlay .findify-product-text #color-option{
+	 margin-left: 25px !important;
+}
+
+#findify-search-overlay .findify-product-price.findify-sale {
+  margin-left: 3px !important;
+  font-size: 20px !important;
+  font-family: "LatoRegular", Verdana, Arial, sans-serif !important;
+  background-image: url("../images/price_back.png") !important;
+  background-size: 100% !important;
+  padding-left: 40px !important;
+  background-repeat: no-repeat !important;
+}
+
+#findify-search-overlay .findify-product-sale-price {
+  font-size: 20px !important;
+  padding-top: 3px !important;
+  font-family: "LatoLight", Verdana, Arial, sans-serif !important;
+  text-decoration: line-through !important;
+  color: #b81515 !important;
+}
+
+#findify-search-overlay .findify-facet-padding-0.findify-facet-list-elem {
+	display: none!important;
+}
+
+#findify-search-overlay .findify-product-sale-old-price {
+  color: #999!important;
+  text-decoration: line-through!important;
+  line-height: 2!important;
+  padding-left: 5px!important;
+}
+
+#findify-search-overlay .findify-product-add-to-cart {
+  margin-top: 12px!important;
+}
+
+#findify-search-overlay .findify-product {
+  -moz-box-sizing: border-box!important;
+  -webkit-box-sizing: border-box!important;
+  box-sizing: border-box!important;
+  line-height: 1!important;
+  text-align: left!important;
+}
+
+#findify-search-overlay .findify-product-extra-field {
+  color: #b3b3b3!important;
+  font-size: 13px!important;
+  margin-bottom: 6px!important;
+}
+
+#findify-search-overlay .findify-product-extra-field2 {
+  font-weight: 300!important;
+  font-size: 15px!important;
+  margin-bottom: 6px!important;
+}
+
+#findify-search-overlay .fa {
+  display: inline-block!important;
+  font-family: FontAwesome!important;
+  font-style: normal!important;
+  font-weight: 400!important;
+  line-height: 1.25!important;
+  -webkit-font-smoothing: antialiased!important;
+  -moz-osx-font-smoothing: grayscale!important;
+}
+
+#findify-search-overlay .fa-angle-right:before {
+  content: "\f105"!important;
+  padding: 0 4px!important;
+  color: #b3b3b3!important;
+}
+
+#findify-search-overlay .btn-quickview{
+ background-image: url('../images/bkg_brown_btn.png')!important;
+background-repeat: repeat-x !important;
+ margin-top: 10px!important;
+   text-align: center!important;
+  display: block!important;
+  clear: both!important;
+  margin: 0 auto 0!important;
+  padding: 5px 14px!important;
+  border-radius: 3px!important;
+  width: 72px!important;
+ }
+
+ #findify-search-overlay .btn-quickview:hover{
+  background-image: url(../images/bkg_brown_btn_hover.png)!important;
+ background-repeat: repeat-x !important;
+ }
+ 
+ #findify-search-overlay .btn-quickview span{
+
+font-size: 13px!important;
+  text-align: center!important;
+  color: #3f4048!important;
+  font-weight: normal!important;
+  text-transform: uppercase!important;
+    font-family: dinmittelschriftregular!important;
+  cursor: pointer!important;
+ }
+ 
+@media all and (max-width:767px) {
+  #findify-search-overlay .findify-content {
+    width: calc(100% + 300px)!important;
+    margin-left: -300px!important;
+    transition: margin-left .3s ease!important;
+  }
+
+  #findify-search-overlay.findify-facets-shown .findify-content {
+    margin-left: 0!important;
+  }
+
+  #findify-search-overlay .findify-products-wrapper {
+    width: calc(100% - 300px)!important;
+    text-align: center!important;
+    margin-left: 0!important;
+    transition: margin-left .3s ease!important;
+  }
+
+  #findify-search-overlay .findify-noresult-products {
+    text-align: center!important;
+  }
+
+  #findify-search-overlay .findify-products {
+    border-left: none!important;
+    padding-left: 0!important;
+    text-align: center!important;
+  }
+
+  #findify-search-overlay .findify-products-banner {
+    display: none!important;
+  }
+}
+
+#color-option li
+{
+width: 21px !important;
+ height: 22px !important;
+ float:left !important;
+ margin: 3px !important;
+ list-style-type:none !important;
+}
+#color-option li:hover{
+  border: 1px solid #c2c2c4 !important;
+  cursor: pointer !important;
+}
+
+.findify-product-prices .new_price{}
+.findify-product-prices .reg_price{float: left !important; margin-right: 5px !important;text-decoration: line-through !important; color: #7D8099 !important;}

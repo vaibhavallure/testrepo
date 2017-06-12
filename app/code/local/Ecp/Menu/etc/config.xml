@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Menu>
+        <version>0.1.0</version>
+        </Ecp_Menu>
+    </modules>
+    <frontend>
+        <routers>
+            <ecp_menu>
+                <use>standard</use>
+                <args>
+                    <module>Ecp_Menu</module>
+                    <frontName>ecpmenu</frontName>
+                </args>
+            </ecp_menu>
+        </routers>
+        <layout>
+            <updates>
+                <ecp_menu>
+                    <file>ecp/menu.xml</file>
+                </ecp_menu>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <ecp_menu>
+                <use>admin</use>
+                <args>
+                    <module>Ecp_Menu</module>
+                    <frontName>ecpmenu</frontName>
+                </args>
+            </ecp_menu>
+        </routers>
+    </admin>
+    <adminhtml>
+     
+        
+        
+        <menu>
+            <cms module="ecp_menu">
+                <sort_order>71</sort_order>               
+                <children>
+                    <submenu module="ecp_menu">
+                        <title>Sub menu</title>
+                        <sort_order>0</sort_order>
+                        <action>ecpmenu/adminhtml_menu</action>
+                    </submenu>
+                </children>
+            </cms>
+        </menu>
+        
+        
+        
+        
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <Ecp_Menu>
+                            <title>Menu Module</title>
+                            <sort_order>10</sort_order>
+                        </Ecp_Menu>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <ecp_menu>
+                    <file>ecp/menu.xml</file>
+                </ecp_menu>
+            </updates>
+        </layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <ecp_menu>
+                <class>Ecp_Menu_Model</class>
+                <resourceModel>ecp_menu_mysql4</resourceModel>
+            </ecp_menu>
+            <ecp_menu_mysql4>
+                <class>Ecp_Menu_Model_Mysql4</class>
+                <entities>
+                    <menu>
+                        <table>ecp_menu</table>
+                    </menu>
+                </entities>
+            </ecp_menu_mysql4>
+        </models>
+        <resources>
+            <ecp_menu_setup>
+                <setup>
+                    <module>Ecp_Menu</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+                </ecp_menu_setup>
+            <ecp_menu_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </ecp_menu_write>
+            <ecp_menu_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </ecp_menu_read>
+        </resources>
+        <blocks>
+            <ecp_menu>
+                <class>Ecp_Menu_Block</class>
+            </ecp_menu>
+        </blocks>
+        <helpers>
+            <ecp_menu>
+                <class>Ecp_Menu_Helper</class>
+            </ecp_menu>
+        </helpers>
+    </global>
+    <default>
+        <ecp_menu>
+            <menu>
+                <value>87</value>
+                <blog_link>http://www.venusbymariatash.com/blog/</blog_link>
+            </menu>
+        </ecp_menu>
+    </default>
+</config>

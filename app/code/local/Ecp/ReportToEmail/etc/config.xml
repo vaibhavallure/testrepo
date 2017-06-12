@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_ReportToEmail>
+            <version>1.0.0</version>
+        </Ecp_ReportToEmail>
+    </modules>
+    <global>
+        <models>
+            <ecp_reporttoemail>
+                <class>Ecp_ReportToEmail_Model</class>
+            </ecp_reporttoemail>
+        </models>
+        <helpers>
+            <ecp_reporttoemail>
+                <class>Ecp_ReportToEmail_Helper</class>
+            </ecp_reporttoemail>
+        </helpers>
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <report translate="title" module="ecp_reporttoemail">
+                                            <title>Report To Email</title>
+                                        </report>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <crontab>
+        <jobs>
+            <ecp_reporttoemail_cron>
+                <schedule>
+                    <cron_expr>30 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>ecp_reporttoemail/observer::sendReport</model>
+                </run>
+            </ecp_reporttoemail_cron>
+        </jobs> 
+    </crontab>
+</config>

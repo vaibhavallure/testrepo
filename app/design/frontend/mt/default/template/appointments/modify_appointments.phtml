@@ -1,0 +1,102 @@
+<?php
+/**
+*
+*	Allure checkout step success order.
+*
+*/
+if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
+
+	$model = Mage::registry('appointment_modified');
+	$apt_id = $model->getId();
+	$apt_email = $model->getEmail();
+	//$encryptedId = Mage::helper('core')->encrypt($apt_id)->toString();
+	//$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();	
+
+?>
+	<?php if($apt_id):?>
+			<div class="page-title">
+			    <h1><p class="detailofapt"><?php echo $this->__('Your Appointment is scheduled!') ?></p></h1>
+			</div><hr/>
+			<div class="checkout-success">
+			    <h4><p class="detailofapt"><?php echo $this->__('Details of Appointment') ?></p></h4>
+				<div class="success-field">
+				<span class="apt-summary"><?php echo $this->__('Name') ?></span>
+				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
+				</div>
+				<div class="success-field">
+				<span class="apt-summary"><?php echo $this->__('Email') ?></span>
+				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getEmail() ?></span>
+				</div>
+				<div class="success-field">
+				<span class="apt-summary"><?php echo $this->__('Phone') ?></span>
+				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPhone() ?></span>
+				</div>
+				<div class="success-field">
+				<span class="apt-summary"><?php echo $this->__('No. of Piercings') ?></span>
+				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingQty() ?></span>
+				</div>
+				<div class="success-field">
+				<span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
+				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingLoc() ?></span>
+				</div>
+				<div class="success-field">
+				<span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
+				<span class="apt-summary" style="font-weight: bold"><?php 
+				$appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
+				$appStartDate = $appStartDate->toString();
+				if($model->getStoreId()=='2')
+					$format = "BST";
+				else
+					$format = "EST";
+				echo  $appStartDate." ".$format?></span>
+				</div>
+				
+				<div class="btns-setDiv">
+					<div class="apt-cancel-buttons-set">
+				         <button type="button" class="button" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
+				    </div>
+				    <div class="apt-modify-buttons-set">
+				         <button type="button" class="button" title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*',array('id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
+				    </div>
+				    
+				   	<div class="apt-buttons-set">
+				         <button type="button" class="button" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo Mage::getBaseUrl().$this->__('appointments');?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+					</div>
+				</div>
+			</div>
+			
+		<?php endif;?>
+<!--  If the id or email not correct  -->	
+<?php else:?>
+			<div class="page-title">
+			    <h1><p class="detailofapt"><?php echo $this->__('Sorry,Record not found to cancel the appointment!') ?></p></h1>
+			</div><hr/>
+			<div class="sryBookPierbtn" >
+			     <button type="button" class="button" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo Mage::getBaseUrl().$this->__('appointments');?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+			</div>
+<?php endif;?>
+
+
+<script>
+	function confirmCancelApt(){
+		var result = confirm("Are you sure you want to Cancel an Scheduled Appointment?");
+		
+		if (result) {
+		    //Logic to cancel the apt
+			var reloadurl = '<?php echo $this->getUrl('*/index/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
+		    jQuery.ajax({
+		        url: reloadurl, //Relative or absolute path to response.php file
+		        method: 'get',
+		        success: function (data) {
+					jQuery('.detailofapt').html(data);
+					jQuery('.checkout-success .success-field').empty();	
+					jQuery('.checkout-success .apt-cancel-buttons-set').empty();
+					jQuery('.checkout-success .apt-modify-buttons-set').empty();
+									
+		        }
+		    });
+		}		
+	}
+</script>
+
+

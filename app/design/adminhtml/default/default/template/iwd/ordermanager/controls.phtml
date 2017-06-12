@@ -1,0 +1,71 @@
+<?php
+    $helper = Mage::helper("iwd_ordermanager");
+    $button_onclick_update = $this->getData('button_onclick_update');
+    $button_onclick_cancel = $this->getData('button_onclick_cancel');
+    $block = $this->getData('block');
+    $recalculate = $this->getData('recalculate');
+?>
+
+<div class="iwd_om_control">
+    <?php if(!empty($button_onclick_cancel)): ?>
+        <button class="scalable" type="button"
+                onclick="<?php echo $button_onclick_cancel; ?>"
+                title="<?php echo Mage::helper('customer')->__("Cancel"); ?>">
+            <?php echo Mage::helper('customer')->__("Cancel"); ?>
+        </button>
+    <?php endif; ?>
+
+    <?php if(!empty($button_onclick_update)): ?>
+        <button class="scalable right" type="button"
+                onclick="<?php echo $button_onclick_update; ?>"
+                title="<?php echo Mage::helper('customer')->__("Update"); ?>">
+            <?php echo Mage::helper('customer')->__("Update"); ?>
+        </button>
+    <?php endif; ?>
+
+    <div class="control_checkboxes">
+        <label class="iwd_om_confirm">
+            <input type="checkbox" name="confirm_edit" <?php echo $helper->isConfirmEditChecked(); ?>/>
+            <span class="iwd_om_tooltip" title="<?php echo $helper->__('Changes will not be applied immediately! Client will receive an email with changes and confirm or cancel it.'); ?>">
+                <span title=""><?php echo $helper->__('Confirm Update'); ?></span>
+            </span>
+        </label>
+
+        <span class="iwd_om_notify">
+            <label>
+                <input type="checkbox" name="notify" <?php echo $helper->isNotifyCustomerChecked(); ?>/>
+                <span class="iwd_om_tooltip" title="<?php echo $helper->__('Notify customer by email about changes.'); ?>">
+                    <span title=""><?php echo $helper->__('Notification'); ?></span>
+                </span>
+            </label>
+            <span class="iwd_om_tooltip" title="<?php echo $helper->__('Customize email list and message.'); ?>">
+                <span class="notify_customize" <?php if(!$helper->isNotifyCustomerCheckedDefault()): ?>style="display:none"<?php endif; ?> onclick="IWD.OrderManager.Popup.showModal('<?php echo $block; ?>');" title="">
+                    [<?php echo Mage::helper('customer')->__("customize"); ?>]
+                </span>
+            </span>
+        </span>
+
+        <?php if($recalculate): ?>
+            <label class="iwd_om_recalculate">
+                <input type="checkbox" name="recalculate_amount" <?php echo $helper->isRecalculateOrderAmountChecked(); ?>/>
+                <span class="iwd_om_tooltip" title="<?php echo $helper->__('Recalculate order total amount if changes affect on amount.'); ?>">
+                    <span title=""><?php echo $helper->__('Recalculate'); ?></span>
+                </span>
+            </label>
+        <?php endif; ?>
+
+        <div class="clear"></div>
+    </div>
+
+    <div style="display:none !important;" id="control_form_<?php echo $block; ?>"></div>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        $ji('input[name="notify"]').on('change', function(){
+            if($ji(this).is(':checked')){$ji(this).closest(".iwd_om_notify").find('.notify_customize').show();}
+            else{$ji(this).closest(".iwd_om_notify").find('.notify_customize').hide();}
+        });
+        //]]>
+    </script>
+</div>
+<div class="clear"></div>

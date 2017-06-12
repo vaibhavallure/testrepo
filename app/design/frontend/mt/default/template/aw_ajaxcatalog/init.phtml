@@ -1,0 +1,62 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Ajaxcatalog
+ * @version    2.0.0
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php /** @var AW_Ajaxcatalog_Block_Init $this */?>
+
+<?php $pagerBlock = $this->getLayout()->createBlock('page/html_pager', 'product_list_toolbar_pager');
+
+        if ($pagerBlock instanceof Varien_Object) {
+
+            /* @var $pagerBlock Mage_Page_Block_Html_Pager */
+            $pagerBlock->setAvailableLimit($this->getAvailableLimit());
+
+            $pagerBlock->setUseContainer(false)
+                ->setShowPerPage(false)
+                ->setShowAmounts(false)
+                ->setLimitVarName($this->getLimitVarName())
+                ->setPageVarName($this->getPageVarName())
+                ->setLimit($this->getLimit())
+                ->setFrameLength(Mage::getStoreConfig('design/pagination/pagination_frame'))
+                ->setJump(Mage::getStoreConfig('design/pagination/pagination_frame_skip'))
+                ->setCollection($this->getCollection());
+
+            echo $pagerBlock->toHtml();
+        }
+?>
+
+<script type="text/javascript">
+    new AWAjaxCatalog({
+        containerSelector: <?php echo Zend_Json::encode($this->getContainerSelector());?> || ".category-products",
+        pagerSelector: <?php echo Zend_Json::encode($this->getPagerSelector());?> || ".category-products .toolbar .pager",
+        categoryRowSelectorList: <?php echo Zend_Json::encode($this->getCategoryRowSelector());?> || [".products-grid2", ".products-grid"],
+        isScrollMode: <?php echo Zend_Json::encode($this->isScrollMode());?>,
+        buttonAsHtml: <?php echo Zend_Json::encode($this->getButtonHtml());?>,
+        loadingAsHtml: <?php echo Zend_Json::encode($this->getLoadingHtml());?>,
+        pageSize: <?php echo Zend_Json::encode($this->getPageSize());?>,
+        totalSize: <?php echo Zend_Json::encode($this->getTotalSize());?>,
+        isBackToTopEnabled: <?php echo Zend_Json::encode($this->isBackToTopEnabled());?>,
+        backToTopLabel: <?php echo Zend_Json::encode($this->getBackToTopLabel());?>
+    });
+</script>

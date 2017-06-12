@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<config>    
+    <modules>
+        <Allure_Scripts>
+			<name>Allure -Scripts</name>
+            <version>1.0.0</version>
+        </Allure_Scripts>
+    </modules>
+    <frontend>
+        <routers>
+            <scripts>
+                <use>standard</use>
+                <args>
+                    <module>Allure_Scripts</module>
+                    <frontName>scripts</frontName>
+                </args>
+            </scripts>
+        </routers>
+        <layout>
+            <updates>
+                <scripts>
+                    <file>allure/scripts.xml</file>
+                </scripts>
+            </updates>
+        </layout>
+        
+    </frontend>
+    <admin> 
+        <routers> 
+            <adminhtml> 
+                <args> 
+                    <modules> 
+                        <allure_scripts after="Mage_Adminhtml">Allure_Scripts_Adminhtml</allure_scripts> 
+                    </modules> 
+                </args> 
+            </adminhtml> 
+        </routers> 
+    </admin>  
+     
+    <adminhtml>
+        <layout>
+            <updates>
+                <scripts>
+                    <file>allure/scripts.xml</file>
+                </scripts>
+            </updates>
+        </layout>
+    </adminhtml>   
+    <global>
+   
+        <blocks>
+            <scripts>
+                <class>Allure_Scripts_Block</class>
+             </scripts>    
+        </blocks>
+        <helpers>
+            <scripts>
+                <class>Allure_Scripts_Helper</class>
+            </scripts>
+        </helpers>
+        <models>
+            <scripts>
+                <class>Allure_Scripts_Model</class>
+                <resourceModel>allure_scripts_resource</resourceModel>
+            </scripts>
+        </models>
+    </global>
+</config>

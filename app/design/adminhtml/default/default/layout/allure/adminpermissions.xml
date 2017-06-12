@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout>
+    <!-- add store multiselect to admin roles edit page -->
+    <adminhtml_permissions_role_editrole>
+        <reference name="adminhtml.permissions.tab.rolesedit">
+            <block type="allure_adminpermissions/role_store" as="roleStore" template="allure/adminpermissions/rolesedit/store.phtml" />
+        </reference>
+    </adminhtml_permissions_role_editrole>
+</layout>

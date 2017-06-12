@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--<config>
+    <sections>
+        <ecp_backup translate="label">
+            <label>Ecp Backup</label>
+            <tab>general</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <backup translate="label" module="ecp_backup">
+                    <label>Ecp Backup</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <value translate="label">
+                            <label>Ingresa URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </value>
+                    </fields>
+                </backup>
+                <config translate="label" module="ecp_backup">
+                    <label>Ecp Config</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>ecp_backup/adminhtml_request</frontend_model>
+                </config>
+                        <realm translate="label">
+                            <label>Realm</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>62</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </realm>        
+            </groups>
+        </ecp_backup>
+    </sections>
+</config>-->

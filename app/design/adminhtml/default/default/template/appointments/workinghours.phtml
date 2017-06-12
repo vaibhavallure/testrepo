@@ -1,0 +1,50 @@
+<?php 
+$_htmlId      = $this->getElement()->getHtmlId();
+$_htmlClass   = $this->getElement()->getClass();
+$_htmlName    = $this->getElement()->getName();
+$_readonly    = $this->getElement()->getReadonly();
+
+if(Mage::registry('appointment_piercers_data')){
+ $collection = Mage::registry('appointment_piercers_data')
+                ->getWorkingHours(); 
+ $collection = unserialize($collection); 
+}
+$_counter = 0;
+?>
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid hours">
+        <table id="attribute-options-table" class="dynamic-grid appointment-timing" cellspacing="0" cellpadding="0"><tbody>
+            <tr>
+                <th><?php echo $this->__('From') ?></th><th><?php echo $this->__('To') ?></th>
+                <th><button id="add_new_option_button" title="Add Option" type="button" class="scalable add"><span><span><span><?php echo $this->__('Add Option') ?></span></span></span></button></th>
+            </tr>
+<?php foreach ($collection as $key => $_item): ?>
+<tr class="option-row appointment-timing-qty" id="hour-row-<?php echo $_counter?>">
+    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][start]"><?php echo Mage::helper('appointments')->getTimeSelectHtml($_item['start']); ?></select></td>
+    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][end]"><?php echo Mage::helper('appointments')->getTimeSelectHtml($_item['end']); ?></select></td>
+    <td class="a-left" id="delete_button_container_option_<?php echo $_counter ?>'">
+        <input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][id]" value="<?php echo $_item['id'] ?>" type="hidden">
+        <input id="delete-row-<?php echo $_counter ?>" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_<?php echo $_counter ?>]" value=""/>
+        <button onclick="$('hour-row-<?php echo $_counter ?>').style.display='none'; $('delete-row-<?php echo $_counter ?>').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button>
+    </td>
+</tr>
+<?php
+        $_counter++;
+    endforeach;
+?>
+</tbody></table>
+<script type="text/javascript">//<![CDATA[
+
+var _form_html_row = '<tr class="option-row appointment-timing-qty" id="hour-row-{{id}}"><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][start]"><?php echo Mage::helper('appointments')->getTimeSelectHtml(); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][end]"><?php echo Mage::helper('appointments')->getTimeSelectHtml(); ?></select></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'hour-row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
+console.log(_form_html_row);
+var _appointment_timing_counter = <?php echo $_counter?>;
+
+$('add_new_option_button').observe('click', function(){
+    $('attribute-options-table').insert(_form_html_row.replace(/\{\{id\}\}/ig, _appointment_timing_counter));
+    _appointment_timing_counter++;
+});
+
+//]]></script>
+    </td>
+</tr>

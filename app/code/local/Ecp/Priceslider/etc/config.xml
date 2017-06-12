@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ecp_Priceslider>
+        <version>0.1.0</version>
+        </Ecp_Priceslider>
+    </modules>
+    <global>       
+        <blocks>
+            <ecp_priceslider>
+                <class>Ecp_Priceslider_Block</class>
+            </ecp_priceslider>                 
+            <catalog>
+                <rewrite>
+	           
+                  <layer_filter_price>Ecp_Priceslider_Block_Layer_Filter_Price</layer_filter_price>
+                  <layer_state>Ecp_Priceslider_Block_Layer_State</layer_state>
+                </rewrite>
+	    </catalog>         
+        </blocks> 
+     </global>    
+</config>

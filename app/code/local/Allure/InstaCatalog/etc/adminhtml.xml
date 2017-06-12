@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Allure_InstaCatalog
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * @category    Allure
+ * @package     Allure_InstaCatalog
+ * @copyright   Copyright© 2016, Allure Inc
+ * @license     http://opensource.org/licenses/mit-license.php MIT License
+ * @author      Team Allure <extensions@allureinc.co>
+-->
+<config>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<allure_instacatalog translate="title" module="allure_instacatalog">
+										<title>Allure - Shop By Instagram</title>
+									</allure_instacatalog>
+								</children>
+							</config>
+						</children>
+					</system>
+					<allure_instacatalog translate="title" module="allure_instacatalog">
+						<title>Instagram</title>
+						<children>
+							<feed translate="title" module="allure_instacatalog">
+								<title>Manage Feeds</title>
+								<sort_order>0</sort_order>
+							</feed>
+							<setting translate="title" module="allure_instacatalog">
+								<title>Settings</title>
+								<sort_order>10</sort_order>
+							</setting>
+						</children>
+					</allure_instacatalog>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+	<menu>
+		<allure translate="title" module="allure_instacatalog">
+			<title>Allure</title>
+            <sort_order>70</sort_order>
+			<children>
+				<instacatalog translate="title" module="allure_instacatalog">
+					<title>Instagram</title>
+					<sort_order>70</sort_order>
+					<children>
+						<settings translate="title" module="allure_instacatalog">
+							<title>Settings</title>
+							<action>adminhtml/system_config/edit/section/allure_instacatalog</action>
+							<sort_order>10</sort_order>
+						</settings>
+						<feed translate="title" module="allure_instacatalog">
+							<title>Instagram Feeds</title>
+							<action>adminhtml/allure_instaCatalog_feed</action>
+							<sort_order>20</sort_order>
+						</feed>
+						
+						<shoplook_feed translate="title" module="allure_instacatalog">
+							<title>Shop By Look Feeds</title>
+							<action>adminhtml/allure_instaCatalog_feed/shop</action>
+							<sort_order>20</sort_order>
+						</shoplook_feed>
+						
+					</children>
+				</instacatalog>
+			</children>
+		</allure>
+	</menu>
+</config>
