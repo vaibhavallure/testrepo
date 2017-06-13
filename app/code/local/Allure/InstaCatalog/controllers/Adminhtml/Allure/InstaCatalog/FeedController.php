@@ -375,7 +375,8 @@ class Allure_InstaCatalog_Adminhtml_Allure_InstaCatalog_FeedController extends A
     	$collection->addAttributeToFilter( array( 
     			array('attribute'=> 'name','like' => $searchQuery . '%'),
     			array('attribute'=> 'sku','like' => $searchQuery . '%'), 
-    			 ) );
+    			 ) )
+    			 ->addAttributeToFilter('type_id', array('eq' => 'simple'));
     	
     	//Mage::log($collection->getSelect()->__toString(),Zend_Log::DEBUG,'abc',true);
     	

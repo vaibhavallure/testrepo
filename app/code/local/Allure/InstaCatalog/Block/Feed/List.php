@@ -34,11 +34,13 @@ class Allure_InstaCatalog_Block_Feed_List extends Mage_Core_Block_Template
         parent::_construct();
         $helper = Mage::helper('allure_instacatalog');
         $limit = $helper->getLimit();
+       // if(empty($limit))
+        $limit = 12;
         $feeds = Mage::getResourceModel('allure_instacatalog/feed_collection')
                          //->addStoreFilter(Mage::app()->getStore())
                          ->addFieldToFilter('status', 1)
-                         //->setPageSize($limit)
-                         //->setCurPage(1)
+                         ->setPageSize($limit)
+                         ->setCurPage(1)
         				->addFieldToFilter('lookbook_mode',array('neq'=>1))
                          ->setOrder('created_timestamp', 'desc'); 
         //$feeds->setOrder('media_id', 'asc');
