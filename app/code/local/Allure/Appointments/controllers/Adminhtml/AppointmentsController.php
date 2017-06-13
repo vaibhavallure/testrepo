@@ -2,6 +2,11 @@
 class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtml_Controller_Action
 {
 
+	protected function _isAllowed()
+	{
+		return true;
+	}
+	
 	public function indexAction()
     {
        $this->loadLayout();
