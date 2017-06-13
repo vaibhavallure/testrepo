@@ -9,6 +9,10 @@ class Allure_Appointments_Adminhtml_PiercingtimingController extends Mage_Adminh
 	   $this->_addContent($this->getLayout()->createBlock('appointments/adminhtml_piercingtiming'));
 	   $this->renderLayout();
     }
+    protected function _isAllowed()
+    {
+    	return true;
+    }
     
     public function gridAction()
     {

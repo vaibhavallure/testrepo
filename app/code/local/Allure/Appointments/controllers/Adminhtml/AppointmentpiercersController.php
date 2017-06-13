@@ -9,6 +9,10 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
 	   $this->_addContent($this->getLayout()->createBlock('appointments/adminhtml_appointmentpiercers'));
 	   $this->renderLayout();
     }
+    protected function _isAllowed()
+    {
+    	return true;
+    }
     
     public function gridAction()
     {

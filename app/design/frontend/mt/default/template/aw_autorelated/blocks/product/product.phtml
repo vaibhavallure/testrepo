@@ -30,39 +30,48 @@
 <?php
 $_product = Mage::registry('current_product');
 $productId = $_product->getId();
+$sku = $_product->getSku();
+if(preg_match("/_/", $sku))
+	$sku = substr($sku, 0,strpos($sku, "_"));
 
-$childrenProducts = [];
-if($_product->getTypeId()=="configurable"){
-	$childrenIds = $_product->getTypeInstance()->getChildrenIds($productId);
-	
-	foreach ($childrenIds[0] as $childrenId) {
-		$childrenProducts[] = $childrenId;
+	$childProductArr = array();
+	$childProductArr[] = $productId;
+	if($_product->getTypeId()=="configurable"){
+		$currentchildrenIds = $_product->getTypeInstance()->getChildrenIds($productId);
+		foreach ($currentchildrenIds[0] as $childrenId) {
+			$childProductArr[] = $childrenId;
+		}
 	}
-	/* if(!empty($childrenProducts))
-		$productId = implode(",", $childrenProducts); */
-}
 
-     $collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
+	
+	$parentItemNumber = $_product->getParentItemNumber();
+	$childrenProducts= Mage::getModel('catalog/product')->getCollection()
+		/* ->addAttributeToFilter( array(
+				array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%'))); */
+	->addAttributeToFilter( array(
+			array('attribute'=> 'type_id','eq'=>'configurable')))
+	->addAttributeToFilter( array(
+			array('attribute'=> 'sku','like' => ''.$sku.'%')));
+    
+	$collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
      $str = '';
      $cnt = 0;
-     if(!empty($childrenProducts)){
-     	foreach ($childrenProducts as $id){
+     if($childrenProducts->getSize()>0){    //if(!empty($childrenProducts)){
+     	foreach ($childrenProducts as $product){
      		$cnt = $cnt+1;
-     		//$collection->addFieldToFilter('product_ids',array('finset'=> array($id)));
-     		$str .= ' FIND_IN_SET(('.$id.'),`product_ids`) OR ';
-     		/* if(count($childrenProducts)>1 && count($childrenProducts)>$cnt)
-     			$str.= ' OR '; */
+     		if($product->getTypeId()=="configurable"){
+     			$childrenIds = $product->getTypeInstance()->getChildrenIds($product->getId());
+     			foreach ($childrenIds[0] as $childrenId) {
+     				$str .= ' FIND_IN_SET(('.$childrenId.'),`product_ids`) OR ';
+     			}
+     		}else{
+     			$str .= ' FIND_IN_SET(('.$product->getId().'),`product_ids`) OR ';
+     		}
      	}
      	
-     }else{
-     	//$collection->addFieldToFilter('product_ids',array('finset'=> array($productId)));
-     	//$str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
      }
      $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
-	//->addFieldToFilter('product_ids',array('finset'=> array($productId)))
-    // $collection->addFieldToFilter('status', 1);
-	$collection->getSelect()->where( 'status = 1 AND ('.$str.')');
-    //var_dump($collection->getSelect()->__toString());
+	 $collection->getSelect()->where( 'status = 1 AND ('.$str.')');
 ?>
 
 <?php if (($collection && $collection->getSize())) : ?>
@@ -108,19 +117,23 @@ if($_product->getTypeId()=="configurable"){
                     	if(!is_null($parentId)){
                     		$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
                     	}
+                    	
+                    	$current_product_class = "";
+                    	if(in_array($productId, $childProductArr))
+                    		$current_product_class = "fs_current_product";
                     
                     	$points .= '<a data-original-url="'.$productUrl.'"';
                     	$points .= ' href="'.$productUrl.'" target="_blank">';
-                    	$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
+                    	$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink '.$current_product_class.'" ';
                     	$points .= ' data-link-id="'.$productId.'" ';
                     	$points .= ' style="position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/640).'%; left:'.(($option->left*100)/640).'%;">';
-                    	$points .= '<div>'.$numberOfProducts.'</div>';
+                    	$points .= '<div class="fs-product-number '.$current_product_class.'">'.$numberOfProducts.'</div>';
                     	$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
                     	$points .= '<div class="fs-arrow-up"></div>';
                     	$points .= 'Shop it // " '.$productName.'</div></div></a>';
                     
                     	$productsLinks .= '<div class="fs-text-link-container ">';
-                    	$productsLinks .= '<a class="fs-text-product fs-link-list" ';
+                    	$productsLinks .= '<a class="fs-text-product fs-link-list '.$current_product_class.'" ';
                     	$productsLinks .= 'data-original-url="'.$productUrl.'"';
                     	$productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
                     	$productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';
