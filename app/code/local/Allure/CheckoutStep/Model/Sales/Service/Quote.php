@@ -83,7 +83,7 @@ class Allure_CheckoutStep_Model_Sales_Service_Quote extends Mage_Sales_Model_Ser
 	    	$orderState = Mage::getSingleton('checkout/session')->getOrderStat();
 	    	$outTotalPaid = $order->getBaseGrandTotal();
 	    	$outTotalDue = $outTotalPaid - $order->getBaseGrandTotal();
-	    	$order->setTotalPaid($outTotalPaid);
+	    	//$order->setTotalPaid($outTotalPaid);
 	    	$order->setTotalDue($outTotalDue);
 	    	if(!empty($orderState)){
 	    		$order->setState($orderState['state'], $orderState['status'], $orderState['message']);
@@ -117,7 +117,7 @@ class Allure_CheckoutStep_Model_Sales_Service_Quote extends Mage_Sales_Model_Ser
     			if($payment_method!="banktransfer" || $payment_method!="purchaseorder"){
     				$transId = $this->createBackorderTransaction($mainOrderId,$order->getId());
     				$this->createBackorderInvoice($order->getId(),true);
-    				$this->updateInvoice($orderId,$transId,$mainOrderId);
+    				$this->updateInvoice($order->getId(),$transId,$mainOrderId);
     			}
     		}
     		//check customer is wholesaller or not and payment is pay later
