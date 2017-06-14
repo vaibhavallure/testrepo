@@ -15,6 +15,18 @@
 				</rewrite>
 			</adminhtml>
 		</blocks>
+		
+		<models>
+			<allure_counterpoint>
+				<class>Allure_Counterpoint_Model</class>
+			</allure_counterpoint>
+		</models>
+		
+		<helpers>
+			<allure_counterpoint>
+				<class>Allure_Counterpoint_Helper</class>
+			</allure_counterpoint>
+		</helpers>
     
 	    <resources>
 			<allure_counterpoint_setup>
