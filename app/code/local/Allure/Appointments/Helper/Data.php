@@ -140,5 +140,13 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		return $label;
 	}
+	public function getTimeByStoreAndPeople($qty ,$storeId){
+		$collection=Mage::getModel('appointments/timing')->getCollection()->addFieldToFilter('qty', $qty)->addFieldToFilter('store_id', $storeId);
+		 if($collection->getFirstItem()->getTime()){
+			return $collection->getFirstItem()->getTime();
+		}else {
+			return  15 * $qty;
+		}
+	}
 }
 	 

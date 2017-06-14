@@ -24,7 +24,7 @@ class Allure_Appointments_Block_Adminhtml_Piercingtiming_Grid extends Mage_Admin
 		$helper = Mage::helper('appointments');
 
 		$this->addColumn('qty', array(
-				'header' => $helper->__('No of Piercing(s)'),
+				'header' => $helper->__('No of People in Group:'),
 				'index'  => 'qty'
 		));
 		
@@ -32,6 +32,15 @@ class Allure_Appointments_Block_Adminhtml_Piercingtiming_Grid extends Mage_Admin
 				'header' => $helper->__('Time Required (in min)'),
 				'index'  => 'time'
 		));
+		if (!Mage::app()->isSingleStoreMode()) {
+			$this->addColumn('store_id', array(
+					'header' => $helper->__('Store'),
+					'type' => 'options',
+					'options' => Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
+					'index' => 'store_id',
+					'sortable' => false,
+			));
+		}
 				
 		$this->addColumn(
 				'action',

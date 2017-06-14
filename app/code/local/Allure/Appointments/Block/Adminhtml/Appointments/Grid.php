@@ -66,7 +66,7 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'index'  => 'booking_time',
 		));
 		$this->addColumn('piercing_qty', array(
-				'header' => $helper->__('No. of Piercing'),
+				'header' => $helper->__('No of People in Group'),
 				'index'  => 'piercing_qty'
 		));
 		

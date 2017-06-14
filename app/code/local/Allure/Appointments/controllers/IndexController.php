@@ -107,8 +107,9 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     	$request = $this->getRequest()->getParam('request');
     	//Mage::log($request,Zend_Log::DEBUG,'my-log',true);
     	
-   		$aptmodel = Mage::getModel('appointments/timing')->load($request['qty'],'qty');
-   		$time = $aptmodel->getTime();
+   		//$aptmodel = Mage::getModel('appointments/timing')->load($request['qty'],'qty');
+    	$time=Mage::helper('appointments')->getTimeByStoreAndPeople($request['qty'],$request['store']);
+   		
    		
    		Mage::log($time,Zend_Log::DEBUG,'appointments',true);
    		
