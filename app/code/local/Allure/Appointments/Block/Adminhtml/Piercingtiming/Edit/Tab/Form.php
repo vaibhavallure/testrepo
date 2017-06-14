@@ -13,7 +13,7 @@ class Allure_Appointments_Block_Adminhtml_Piercingtiming_Edit_Tab_Form extends M
 	
 		$fieldset->addField("qty", "text",
 				array(
-						"label" => Mage::helper("appointments")->__("No. Of Piercing(s)"),
+						"label" => Mage::helper("appointments")->__("No of People in Group"),
 						"name" => "qty"
 				));
 		
@@ -22,6 +22,14 @@ class Allure_Appointments_Block_Adminhtml_Piercingtiming_Edit_Tab_Form extends M
 						"label" => Mage::helper("appointments")->__("Time Required"),
 						"name" => "time"
 				));
+	
+		if (!Mage::app()->isSingleStoreMode()) {
+		$fieldset->addField('store_id', 'select', array(
+				'label'     => Mage::helper("appointments")->__("Store"),
+				'name'    => 'store_id',
+				'values'   => Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
+		));
+		}
 		
 		if (Mage::getSingleton("adminhtml/session")->getPiercingtimingData()) {
 			$form->setValues(Mage::getSingleton("adminhtml/session")->getPiercingtimingData());
