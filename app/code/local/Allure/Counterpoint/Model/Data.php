@@ -332,6 +332,8 @@ class Allure_Counterpoint_Model_Data{
 								$orderObj->setData('state','complete')
 								->setData('status','complete');
 								
+								$orderObj->setCreatedAt($data['info']['order_date']);
+								
 								$transaction->addObject($orderObj);
 								/* $transaction->addCommitCallback(array($orderObj, 'place'));
 								 $transaction->addCommitCallback(array($orderObj, 'save')); */
