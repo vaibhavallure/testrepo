@@ -123,7 +123,7 @@ RewriteRule ^(.git) - [R=404,L]
 ## you can put here your magento root folder
 ## path relative to web root
 
-    #RewriteBase /magento/
+    RewriteBase /
 
 ############################################
 ## uncomment next line to enable light API calls processing

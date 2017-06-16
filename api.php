@@ -29,7 +29,7 @@ if (version_compare(phpversion(), '5.2.0', '<')) {
     exit;
 }
 
-$magentoRootDir = getcwd();
+$magentoRootDir = dirname(__FILE__);
 $bootstrapFilename = $magentoRootDir . '/app/bootstrap.php';
 $mageFilename = $magentoRootDir . '/app/Mage.php';
 

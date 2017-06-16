@@ -70,7 +70,7 @@ if (isset($_SERVER['MAGE_IS_DEVELOPER_MODE'])) {
     Mage::setIsDeveloperMode(true);
 }
 
-#ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 
 umask(0);
 
@@ -79,5 +79,13 @@ $mageRunCode = isset($_SERVER['MAGE_RUN_CODE']) ? $_SERVER['MAGE_RUN_CODE'] : ''
 
 /* Run store or run website */
 $mageRunType = isset($_SERVER['MAGE_RUN_TYPE']) ? $_SERVER['MAGE_RUN_TYPE'] : 'store';
+
+if ($mageRunCode == '' && isset($_SERVER['REDIRECT_MAGE_RUN_CODE'])) {
+	$mageRunCode = $_SERVER['REDIRECT_MAGE_RUN_CODE'];
+}
+
+if ($mageRunType == 'store' && isset($_SERVER['REDIRECT_MAGE_RUN_TYPE'])) {
+	$mageRunCode = $_SERVER['REDIRECT_MAGE_RUN_TYPE'];
+}
 
 Mage::run($mageRunCode, $mageRunType);
