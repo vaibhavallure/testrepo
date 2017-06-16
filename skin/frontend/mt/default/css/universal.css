@@ -1,0 +1,330 @@
+/*
+*	Allure Inc
+*===================================================
+*	My Account UI changes As per Universal Account
+*===================================================
+*/
+
+.customer-account-index .col-main, 
+.customer-account-edit .col-main, 
+.customer-address-index .col-main, 
+.sales-order-history .col-main, 
+.wishlist-index-index .col-main, 
+.newsletter-manage-index .col-main {
+    width: 80% ! important;
+}
+
+.block-account .block-content {
+    background-color: #D0D0D0;
+}
+.block-account .block-content ul li {
+    border-bottom: 1px solid #fff;
+}
+
+/* Hide name of My Account*/
+.block-account .block-title{
+	display:none;
+}
+
+.my-account .page-title,
+.my-account .box .box-title{
+	background:none;
+}
+
+.my-account .page-title h1,
+.my-account .box .box-title h3{
+	font-weight: 600;
+	font-size: 16px;
+}
+
+.customer-address-index .my-account .box .addresses-primary h3 {
+	font-weight: normal;
+	font-size: 15px;
+}
+
+.my-account .addresses-list .col-1 ol {
+    border-right: none;
+}
+
+.customer-address-index .my-account .addresses-list .col-1{
+	margin-right: 0px;
+}
+.customer-address-index .my-account .addresses-list .col-1,
+.my-account .addresses-list .col-2 {
+	width: 50%;
+}
+
+
+/* My account customer address */
+
+.my-account .box .box-title a{
+	display: none;	
+}
+
+.mt-addresses-additional h2{
+	display: none;
+}
+
+.customer-address-index .my-account .addresses-list .box .box-title {
+    margin-bottom: 5px;
+}
+
+.addresses-list address,
+.mt-addresses-additional address {
+	line-height: 20px;
+    font-size: 13px;
+    border: 4px solid #D0D0D0;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.additional-addresses td.item:first-child .item-inner-container {
+    border-right: none;
+}
+.additional-addresses td.item {
+	border-bottom: none;
+}
+
+.mt-additional-address-btns{
+	margin-top: 10px;
+}
+
+.mt-additional-address-btns button.button.btn-1 {
+    float: none ! important;
+    margin-bottom: 0px ! important;
+}
+.mt-additional-address-btns button.button.btn-2 {
+	float: right ! important;
+	margin-bottom: 0px ! important;
+}
+
+.mt-additional-address-btns button.button .mt-btn-name{
+	font-size: 12px;
+}
+
+
+/* Login and Security*/
+
+.my-account .page-sub-title p{
+	font-size: 16px;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.customer-account-edit .buttons-set p.required,
+.customer-account-edit .my-account .form-list{
+	margin-left: 0;
+}
+
+.customer-account-edit .my-account label.mt-phone{
+    display: block;
+    float: left;
+    margin-left: 0px;
+}
+
+.customer-account-edit .my-account .form-list label{
+	width: 20%;
+    text-align: right;
+}
+
+.customer-account-edit .my-account li.fields label{
+	padding: 5px;
+}
+
+.customer-account-edit .my-account .form-list li .input-box input.input-text {
+	height: 30px;
+    width: 85% !important;
+}
+
+.customer-account-edit .input-box {
+    width: 88%;
+    margin-left: 12%;
+}
+
+.customer-account-edit .my-account li.control{
+	margin-left: 21%;
+}
+
+
+
+
+
+div.tab {
+    overflow: hidden;
+   /*  border: 1px solid #ccc; */
+   /*  background-color: #f1f1f1; */
+    width: 36.4%;
+    border-radius: 5px 5px 0px 0px;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: #f1f1f1;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    
+   /*  border-right: 1px solid #ccc; */
+}
+
+#mt-save-card{
+	border-radius: 0px 5px 0px 0px;
+}
+#mt-add-card{
+	border-radius: 5px 5px 0px 0px;
+   /*  border-left: 1px solid #ccc */
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #fff;/*#ccc;*/
+    
+    border: none;;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+   /*  border: 1px solid #ccc; */
+   /*  border-top: none; */
+   background: #fff;
+}
+
+.tabcontent.active {
+	display: block;
+}
+
+.mt-new-payment .mt-new-payment-list{
+	margin-left: -12px;
+	margin-right: -12px;
+}
+
+.mt-new-payment .mt-new-payment-list .mt-payment-item{
+	padding: 5px;
+	background-color: #D0D0D0;
+	margin-bottom: 10px;
+	height: 20px;
+    line-height: 25px;
+}
+
+.mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading{
+	background-color: #fff;
+}
+
+.mt-new-payment .mt-new-payment-list .mt-payment-item .mt-expire-date,
+.mt-new-payment .mt-new-payment-list .mt-payment-item .mt-card-name{
+	float: left;
+}
+.mt-new-payment .mt-new-payment-list .mt-payment-item .mt-card-name{
+	width: 60%;
+}
+.mt-new-payment .mt-new-payment-list .mt-payment-item .mt-expire-date{
+	width: 20%;
+}
+.mt-new-payment .mt-new-payment-list .mt-payment-item .mt-icon{
+	width: 10%;
+	float: right;
+}
+
+.mt-payment-details{
+	display: none;
+}
+
+.mt-payment-details .card-details-main{
+	display: block;
+    overflow: hidden;
+    padding: 10px;
+}
+.mt-payment-details .card-details-main .mt-name-on-card{
+	width: 45%;
+}
+.mt-payment-details .card-details-main .mt-card-address{
+	width: 45%;
+    float: right;
+    margin-top: -35px;
+}
+
+.mt-payment-details .card-details-main .card-title{
+	font-weight: 600;
+}
+
+.mt-arrow{
+	position:absolute;
+    width:20px;
+    height:20px;
+    margin-left:-20px;
+}
+
+.mt-arrow.arrow-down{
+	content: '';
+	background:url('../images/arrow_down.png');
+	background-size:cover;
+}
+.mt-arrow.arrow-up{
+	content: '';
+	background:url('../images/arrow_up.png');
+	background-size:cover;
+}
+
+
+/*add new payments*/
+.manage-payment-method  #billing-new-address-form{
+	width: 100%;	
+	border-right:none;
+	padding-right: 0px;
+}
+
+.manage-payment-method #mt-credit-card-info{
+	width: 100%;	
+}
+
+#billing-new-address-form .input-box input.input-text{
+	height: 30px;
+	width: 100%!important;
+	background: #fff;
+	border: 1px solid #ccc;
+	padding: 0px;
+}
+
+#billing-new-address-form li{
+	margin-bottom: 10px;
+}
+
+#authnetcim_cc_number{
+	padding: 0px!important;
+}
+
+#authnetcim_cc_number,
+#mt-credit-card-info select,
+#billing-new-address-form select{
+	border: 1px solid #ccc;
+	height: 30px;
+	background: #fff;
+}
+
+#billing-new-address-form select{
+	width: 100%;
+}
+
+#authnetcim_cc_cid{
+	height: 30px;
+	background: #fff;
+	border: 1px solid #ccc;
+}
+
+#new-mt-add-payment-method #form-validate{
+	margin-top: -30px;
+}
+
+#new-mt-add-payment-method .mt-paycard-title{
+	margin-top: 30px;
+}
