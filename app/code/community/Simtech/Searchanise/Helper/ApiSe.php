@@ -1381,6 +1381,8 @@ class Simtech_Searchanise_Helper_ApiSe
         self::echoConnectProgress('.');
         
         $q = Mage::getModel('searchanise/queue')->getNextQueue();
+
+        $_prev_update_q = array();
         
         while (!empty($q)) {
             if (Mage::helper('searchanise')->checkDebug()) {
@@ -1503,6 +1505,15 @@ class Simtech_Searchanise_Helper_ApiSe
             } elseif (Simtech_Searchanise_Model_Queue::isUpdateAction($q['action'])) {
                 $dataForSend = array();
 
+                if (!empty($_prev_update_q) && $_prev_update_q['store_id'] != $q['store_id']) { 
+                    Mage::getModel('searchanise/queue')
+                        ->load($q['queue_id'])
+                        ->setData('status',  Simtech_Searchanise_Model_Queue::STATUS_PENDING)
+                        ->setData('started', 0)
+                        ->save();
+                    break;
+                }
+
                 if ($q['action'] == Simtech_Searchanise_Model_Queue::ACT_UPDATE_PRODUCTS) {
                     $items = Mage::helper('searchanise/ApiProducts')->generateProductsFeed($data, $store);
                     if (!empty($items)) {
@@ -1547,6 +1558,7 @@ class Simtech_Searchanise_Helper_ApiSe
                     }
                     $status = self::sendRequest('/api/items/update/json', $privateKey, array('data' => $dataForSend), true);
                 }
+                $_prev_update_q = $q;
                 
             } elseif (Simtech_Searchanise_Model_Queue::isDeleteAction($q['action'])) {
                 $type = Simtech_Searchanise_Model_Queue::getAPITypeByAction($q['action']);
