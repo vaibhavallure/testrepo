@@ -29,13 +29,13 @@
  * Template for Mage_Adminhtml_Block_Widget_Grid
  *
  *  getId()
- *  getCustomCollection()
+ *  getCollection()
  *  getColumns()
  *  getPagerVisibility()
  *  getVarNamePage()
  */
 $numColumns = sizeof($this->getColumns());
-$collection = $this->getCustomCollection();
+$collection = $this->getCollection();
 $count = 0;
 ?>
 <?php if($collection): ?>
@@ -54,7 +54,7 @@ $count = 0;
     <?php else: ?>
         <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php endif; ?>
-<?php if(0&&($this->getPagerVisibility() || $this->getExportTypes() || $this->getFilterVisibility())): ?>
+<?php if(($this->getPagerVisibility() || $this->getExportTypes() || $this->getFilterVisibility())): ?>
     <table cellspacing="0" class="actions">
         <tr>
         <?php if($this->getPagerVisibility()): ?>
@@ -77,7 +77,7 @@ $count = 0;
                 <img src="<?php echo $this->getSkinUrl('images/pager_arrow_right_off.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Go to Next page')) ?>" class="arrow"/>
             <?php endif; ?>
 
-            <?php //echo $this->__('of %s pages', $collection->getLastPageNumber()) ?>
+            <?php echo $this->__('of %s pages', $collection->getLastPageNumber()) ?>
             <span class="separator">|</span>
             <?php echo $this->__('View') ?>
             <select name="<?php echo $this->getVarNameLimit() ?>" onchange="<?php echo $this->getJsObjectName() ?>.loadByElement(this)">
@@ -159,6 +159,7 @@ $count = 0;
         
         <?php 
         	$size = Mage::helper('ampgrid')->getGridThumbSize();
+        	$isRecordFound = false;
         	if (($collection->getSize()>0) && (!$this->getIsCollapsed())): ?>
         <?php foreach ($collection as $_index=>$_item): ?>
         
@@ -172,8 +173,10 @@ $count = 0;
         	foreach ($childProducts as $product){
         		$lastCount++;
         		$url  = Mage::helper('catalog/image')->init($product, 'thumbnail')->resize($size)->__toString();
-        		if(preg_match('/placeholder/',$url))
+        		if(preg_match('/placeholder/',$url)){
         			$flag=true;
+        			$isRecordFound = true;
+        		}
         	}
         	?>
         
@@ -254,8 +257,18 @@ $count = 0;
             </tr>
         <?php endif; ?>
         </tbody>
-
     </table>
+    
+     <?php if(!$isRecordFound):?>
+     	<div style="text-align: center;padding:10px;">
+	     	<?php if($_curPage < $_lastPage):?>
+	     		<p><span style="font-weight: 600;">No Image</span> Product not found on the current page. Please check to next page.</p>
+	     	<?php else : ?>
+	     		<p><span style="font-weight: 600;">No Image</span> Product not found on the current page.</p>
+     		<?php endif; ?>
+     	</div>
+     <?php endif; ?>
+    
     </div>
     <p style="display:none;">Total:<?php echo $count?></p>
 </div>
