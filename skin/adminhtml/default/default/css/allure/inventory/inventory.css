@@ -265,6 +265,11 @@ button.create_po_btn {
     margin-top: 10px;
     margin-right: 10px;
 }
+button.reset_po_btn {
+   
+    margin-top: 10px;
+     float: right;
+}
 button#create_po_btn {
 	 float: right;
 }

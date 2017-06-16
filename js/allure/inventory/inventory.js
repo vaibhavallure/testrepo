@@ -1,27 +1,20 @@
 var $j = jQuery;
+var itemsData;
+if (typeof Allure == "undefined") {
+	   var Allure = {};
+}
 $j(document).ready(function (){
-	
-	//to clear session veriables
-	var isRefreshUrl = getUrlParameter('p');
-    if(!isRefreshUrl){
-    	localStorage.removeItem('data');
-    	localStorage.removeItem('data');
-    }
-	var data = JSON.parse(localStorage.getItem('data'));
-	var refence_no=localStorage.getItem('refence_no')
-	if(refence_no)
-		$j('#refence_no').val(refence_no);
-	if(data){
-		var total =  updateTotal(data);
-		$j('#order_total').val(total);
-	}
+	var data=getStoredData();
 	$j("input:checkbox").change(function(){
 		var selected = [];
         var ischecked= $j(this).is(':checked');
         var id=parseInt($j(this).attr('id'));
         var qty=parseInt($j('#max_qty_'+id).val());
         var cost=parseFloat($j('#cost_'+id).val());
+    	var refence_no=$j('#refence_no').val();
+    	var key=Allure.ViewPurchaseOrderFormKey;
         var comment=$j('#comment_'+id).val();
+        var store=$j('#store').val();
         var totalAmount = parseInt($j('#order_total').val());
         if(ischecked){
 	        if(qty<=0){
@@ -30,37 +23,45 @@ $j(document).ready(function (){
 	        }
 	        else{ 
 	        	totalAmount=totalAmount + (qty * cost);
-	            selected.push({id,qty,cost,comment});
-	             
-	            data = JSON.parse(localStorage.getItem('data'));
-	            if(data){
-	            	data.push(selected);
-	            }else{
-	            	var data = new Array();
-	            	data.push(selected);
-	            }
-	             //total =  updateTotal(data);
-	            localStorage.setItem('data',JSON.stringify(data));
-	            
-	            $j('#order_total').val(totalAmount);
-	            $j('#max_qty_'+id).prop('disabled', true);
-	            $j('#comment_'+id).prop('disabled', true);
+	        	var include = 1;
+	        	var item ={
+	        			id,qty,cost,comment,include,store
+	        	};
+	        	$j.ajax({
+	    	        url: Allure.AddPurchaseItem,
+	    	        dataType : 'json',
+	    			type : 'POST',
+	    			data: {'item':item,'form_key':key,'refence_no':refence_no,'order_total':totalAmount},
+	    			beforeSend: function() { $j('#loading-mask').show(); },
+	    	        complete: function() { $j('#loading-mask').hide(); },
+	    	        success: function(data) {
+	    	            $j('#order_total').val(totalAmount);
+	    	            $j('#max_qty_'+id).prop('disabled', true);
+	    	            $j('#comment_'+id).prop('disabled', true);
+	    	        }
+	    	    });
 	        }
         }else{
+        	totalAmount=totalAmount - (qty * cost);
+        	var include = 0;
+        	var item ={
+        			id,qty,cost,comment,include,store
+        	};
+        	$j.ajax({
+    	        url: Allure.AddPurchaseItem,
+    	        dataType : 'json',
+    			type : 'POST',
+    			data: {'item':item,'form_key':key,'refence_no':refence_no,'order_total':totalAmount},
+    			beforeSend: function() { $j('#loading-mask').show(); },
+    	        complete: function() { $j('#loading-mask').hide(); },
+    	        success: function(data) {
+    	        	 $j('#order_total').val(totalAmount);
+    	        	 $j('#max_qty_'+id).prop('disabled', false);
+    	             $j('#comment_'+id).prop('disabled', false);
+    	        	
+    	        }
+    	    });
         	
-        	//If unchecked
-        	var data = JSON.parse(localStorage.getItem('data'));
-        	selected.push({id,qty,cost,comment});
-        	 if(data){
-            	 data.pop(selected);
-            	 var totalAmount =  updateTotal(data);
-         	 	 $j('#order_total').val(totalAmount);
-             }else{
-            	 data = selected;
-             }
-            localStorage.setItem('data',JSON.stringify(data));
-            $j('#max_qty_'+id).prop('disabled', false);
-            $j('#comment_'+id).prop('disabled', false);
          }
     }); 
 	
@@ -93,30 +94,56 @@ $j(document).ready(function (){
 	});
 
 	$j(".create_po_btn").click(function() {
-		var data = JSON.parse(localStorage.getItem('data'));
-		var refence_no=localStorage.getItem('refence_no');
-		if(data){
-			confirm("Are you sure ?");
+		/*var data = Allure.POData;
+		var sessionData=Allure.POSessionData;
+		var itemData = JSON.stringify(itemsData);*/
+		var store=$j('#store').val();
+		var refence_no=$j('#refence_no').val();
+		if(true){
+			if(confirm("Are you sure ?")){
 			var key=Allure.ViewPurchaseOrderFormKey;
 			$j.ajax({
 		        url: Allure.InventoryPurcaseCreateOrder,
 		        dataType : 'json',
 				type : 'POST',
-				data: {'data':data,'form_key':key,'refence_no':refence_no},
+				data: {'form_key':key,'refence_no':refence_no,'store':store},
 				beforeSend: function() { $j('#loading-mask').show(); },
 		        complete: function() { $j('#loading-mask').hide(); },
 		        success: function(data) {
-		        	localStorage.removeItem('data');
-		        	localStorage.removeItem('refence_no');
+		        
 					//alert(data.message)
 		        	window.location.reload();
 		        }
 		    });
+		  }
 		}
 		else
 			alert("Please select Item first.")
 	});
 	
+	$j(".reset_po_btn").click(function() {
+		/*var data = Allure.POData;
+		var sessionData=Allure.POSessionData;
+		var itemData = JSON.stringify(itemsData);*/
+		   var store=$j('#store').val();
+		
+			if(confirm("Are you sure ?")){
+			var key=Allure.ViewPurchaseOrderFormKey;
+			$j.ajax({
+		        url: Allure.Reset,
+		        dataType : 'json',
+				type : 'POST',
+				data: {'form_key':key,'store':store},
+				beforeSend: function() { $j('#loading-mask').show(); },
+		        complete: function() { $j('#loading-mask').hide(); },
+		        success: function(data) {
+					//alert(data.message)
+		        	window.location.reload();
+		        }
+		    });
+		  }
+	});
+		
 });
 
 function submitsearch(){
@@ -143,22 +170,40 @@ function getUrlParameter(sParam) {
 //Update total 
 function updateTotal(data){
 	var sum = 0;
-	$j.each( data, function( index, value ){
-	    sum += value[0]['cost'] * value[0]['qty'];
-	    $j('#'+value[0]['id']).prop( "checked", true );
-	    $j('#max_qty_'+value[0]['id']).val(value[0]['qty']);
-	    $j('#max_qty_'+value[0]['id']).prop('disabled', true);
-	  /*  $j('#comment_'+value[0]['id']).val(value[0]['comment']);
-	    $j('#comment_'+value[0]['id']).prop('disabled', true);*/
-	    
+	data.forEach(function(value) {
+		sum += value['cost'] * value['qty'];
+	    $j('#'+value['item_id']).prop( "checked", true );
+	    $j('#max_qty_'+value['item_id']).val(value['qty']);
+	    $j('#max_qty_'+value['item_id']).prop('disabled', true);
+	    $j('#comment_'+value['item_id']).val(value['comment']);
+	    $j('#comment_'+value['item_id']).prop('disabled', true);
 	});
+	/*console.log(data.length);
+	var sum = 0;
+	$j.each( data, function( index, value ){
+	    sum += value['cost'] * value['qty'];
+	    $j('#'+value['id']).prop( "checked", true );
+	    $j('#max_qty_'+value['id']).val(value ['qty']);
+	    $j('#max_qty_'+value['id']).prop('disabled', true);
+	    $j('#comment_'+value['id']).val(value ['comment']);
+	    $j('#comment_'+value['id']).prop('disabled', true);
+	    
+	});*/
+	
+	/*for(var key in data){
+		console.log(data[key]);
+		$j("#max_qty_"+key).val(data[key].qty);
+		$j('#max_qty_'+key).prop('disabled', true);
+		$j("#comment_"+key).val(data[key].comment);
+		$j('#comment_'+key).prop('disabled', true);
+		if(data[key].include)
+		$j("#"+key).prop( "checked", true );
+	}*/
+	$j('#order_total').val(sum)
 	return sum;
 }	
 
-function saveValue(e){
-    var val = e.value; // get the value. 
-    localStorage.setItem('refence_no', val);// Every time user writing something, the localStorage's value will override . 
-}
+
 
 function checkCurrentAndTransferQty(e){
     var id = e.id; // get the value.
@@ -182,5 +227,23 @@ function resetSearch(){
 	url = location.href;
 	url = url.substr(0,url.indexOf("?"));
 	location.href=url;
+}
+ function getStoredData(){
+    var store=$j('#store').val();
+	var key=Allure.ViewPurchaseOrderFormKey;
+	$j.ajax({
+        url: Allure.GetStoredInfo,
+        dataType : 'json',
+		type : 'POST',
+		data: {'form_key':key,'store':store},
+		beforeSend: function() { $j('#loading-mask').show(); },
+        complete: function() { $j('#loading-mask').hide(); },
+        success: function(data) {
+        	console.log(data.data);
+        	if(data.data){
+        			updateTotal(data.data);
+	        	}
+        }
+    });
 }
 
