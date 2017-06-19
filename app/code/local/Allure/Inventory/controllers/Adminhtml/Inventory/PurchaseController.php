@@ -455,6 +455,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 	}
 	public function massCancelAction(){
 		$ids = $this->getRequest()->getParam('po_id');
+		$resource     = Mage::getSingleton('core/resource');
+		$writeAdapter   = $resource->getConnection('core_write');
+		$table        = $resource->getTableName('cataloginventory/stock_item');
 		foreach ($ids as $id){
 			if($id && isset($id))
 			{
@@ -462,9 +465,15 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 				$currentDate->toString('Y-m-d H:i:s');
 				$status=Allure_Inventory_Helper_Data::ORDER_STATUS_CANCEL;
 				$order=Mage::getModel('inventory/purchaseorder')->load($id);
+				$orderItems=Mage::getModel('inventory/orderitems')->getCollection($id,'po_id');
+				foreach ($orderItems as $item){
+					$query        = "update {$table} set  po_sent =0 where product_id = '{$item->getProductId()}' AND stock_id = '{$order->getStockId()}'";
+					$writeAdapter->query($query);
+				}
 				if(isset($status))
 					$order->setData('status', $status);
 				$order->setData('updated_date',$currentDate)->save();
+			
 			}
 		}
 		Mage::getSingleton('adminhtml/session')->addSuccess("The order has been cancelled.");
@@ -474,6 +483,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 		$data = $this->getRequest()->getPost();
 		$itemsData=$this->getPOItemsForStore($data['store']);
 		foreach ($itemsData as $singleItem){
+		
 			Mage::getModel('inventory/insertitem')->load($singleItem['id'])->delete();
 		}
 		Mage::getSingleton('adminhtml/session')->addSuccess("The reset action performed successfully");

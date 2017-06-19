@@ -6,7 +6,9 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
-
+Mage::getModel('allure_productwebsite/observer')->assignWebsiteToProduct();
+echo "Done";
+die;
 if(empty($lower) || empty($upper)){
 	die('Please add Upper and Lower limit');
 }

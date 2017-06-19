@@ -1,5 +1,4 @@
 var $j = jQuery;
-var itemsData;
 if (typeof Allure == "undefined") {
 	   var Allure = {};
 }
