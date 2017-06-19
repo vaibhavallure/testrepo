@@ -19,7 +19,7 @@ try {
         }else {
         	$presentCount++;
         	Mage::log("Product Id:".$product->getId()."--------Present",Zend_log::DEBUG,'noimage.log',true);
-        	Mage::log("absentCount:".$presentCount,Zend_log::DEBUG,'noimage.log',true);
+        	Mage::log("presentCount:".$presentCount,Zend_log::DEBUG,'noimage.log',true);
         }
     }
 }

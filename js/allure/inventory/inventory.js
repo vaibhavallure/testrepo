@@ -96,9 +96,10 @@ $j(document).ready(function (){
 		/*var data = Allure.POData;
 		var sessionData=Allure.POSessionData;
 		var itemData = JSON.stringify(itemsData);*/
+		var totalAmount = parseInt($j('#order_total').val());
 		var store=$j('#store').val();
 		var refence_no=$j('#refence_no').val();
-		if(true){
+		if(totalAmount > 0){
 			if(confirm("Are you sure ?")){
 			var key=Allure.ViewPurchaseOrderFormKey;
 			$j.ajax({
