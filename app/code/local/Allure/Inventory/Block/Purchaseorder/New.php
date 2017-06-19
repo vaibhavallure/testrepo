@@ -34,23 +34,14 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		//$collection->addCategoryFilter($category);
 		
 		if($_GET['search']!=null){
-			//$searchText=iconv("UTF-8", "ISO-8859-1//TRANSLIT", $_GET['search']);
-			//$searchString = $_GET['search'];
-			$searchString = str_replace("\\", "\\\\",$_GET['search']);
-			if(strtolower($searchString[0]) == "s"|| strtolower($searchString[0]) == "c"){
+			$searchString = $_GET['search'];
+			$searchString = str_replace("\\", "\\\\",$searchString);
 			$collection->addAttributeToFilter(
 					array(
-							array('attribute' => 'name', 'like' => $searchText.'%'),
-					   )
-					);
-		}else{
-			$collection->addAttributeToFilter(
-					array(
-							array('attribute' => 'sku', 'like' => $searchText.'%'),
-							array('attribute' => 'name', 'like' => $searchText.'%'),
+							array('attribute' => 'sku', 'like' =>'%'.$searchString.'%'),
+							array('attribute' => 'name', 'like' => '%'.$searchString.'%'),
 					)
-					);
-		}
+			);
 		}
 		/* $collection->addAttributeToFilter(
 				array(

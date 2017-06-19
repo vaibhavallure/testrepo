@@ -12,10 +12,26 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
    
     protected function _prepareCollection()
     {
-    	$collection=Mage::getModel('catalog/product')
+    	/* $collection=Mage::getModel('catalog/product')
     	->getCollection()
     	->addAttributeToSelect('*')
-    	/* ->addAttributeToFilter(array(
+    	->addAttributeToFilter(array(
+    			array (
+    					'attribute' => 'image',
+    					'like' => 'no_selection'
+    			),
+    			array (
+    					'attribute' => 'image', // null fields
+    					'null' => true
+    			),
+    			array (
+    					'attribute' => 'image', // empty, but not null
+    					'eq' => ''
+    			),
+    			array (
+    					'attribute' => 'image', // check for information that doesn't conform to Magento's formatting
+    					'nlike' => '%/%/%'
+    			),
     			array (
     					'attribute' => 'image',
     					'like' => 'no_selection'
@@ -33,18 +49,51 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     					'nlike' => '%/%/%'
     			),
     	)); */
-    	->addAttributeToFilter('status', array('eq' => 1))
-    	->addAttributeToFilter('type_id', array('eq' => 'configurable'));
-    	//->addAttributeToFilter('visibility', array(
-    	//		'neq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE));
+    	
+    	
+    	$collection = Mage::getModel('catalog/product')
+    	->getCollection()
+    	->addAttributeToSelect('*')
+    	->addAttributeToFilter(
+    			array(
+    					array(
+    							'attribute' => 'image',
+    							'null' => '1'
+    					),
+    					array(
+    							'attribute' => 'small_image',
+    							'null' => '1'
+    					),
+    					array(
+    							'attribute' => 'thumbnail',
+    							'null' => '1'
+    					),
+    					array(
+    							'attribute' => 'image',
+    							'nlike' => '%/%/%'
+    					),
+    					array(
+    							'attribute' => 'small_image',
+    							'nlike' => '%/%/%'
+    					),
+    					array(
+    							'attribute' => 'thumbnail',
+    							'nlike' => '%/%/%'
+    					)
+    			),
+    			null,
+    			'left'
+    	);
+    	$collection	->addAttributeToFilter('status', array('eq' => 1));
+    
     	$collection->getSelect()->group('e.entity_id');
-    	$collection->setOrder('sku','ASC');
+    	$collection->setOrder('e.entity_id','ASC');
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
 
     
-    public function getCustomCollection(){
+/*     public function getCustomCollection(){
     	$collection=Mage::getModel('catalog/product')
     		->getCollection()
     		->addAttributeToSelect('*')
@@ -56,7 +105,7 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     	$collection->setOrder('sku','ASC');
     	return $collection;
     }
-    
+     */
     
     protected function _prepareColumns()
     {
@@ -68,7 +117,7 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     			'filter'    =>'adminhtml/widget_grid_column_filter_range',
     	));
     	
-    	$this->addColumn('thumb',
+    	/* $this->addColumn('thumb',
     		array(
     				'header'    => Mage::helper('catalog')->__('Thumbnail'),
     				'renderer'  => 'ampgrid/adminhtml_catalog_product_grid_renderer_thumb',
@@ -76,7 +125,7 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     				'sortable'  => true,
     				'filter'    => false,
     				'width'     => 90,
-    	));
+    	)); */
     	
     	$this->addColumn('type',
     			array(
@@ -99,12 +148,12 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     			'index'     =>'name'
     	));
        
-    	$this->addColumn('url_key', array(
+    	/* $this->addColumn('url_key', array(
     			'header'    =>Mage::helper('reports')->__('View In Front'),
     			'sortable'  =>false,
     			'index'     =>'url_key',
     			'renderer'  => 'noimages/adminhtml_noimages_grid_url',
-    	));
+    	)); */
     	
     	$this->addColumn('action',array(
     			'header'    => Mage::helper('sales')->__('View In Admin'),

@@ -140,4 +140,23 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     
     }
     
+    protected function _prepareMassaction()
+    {
+    
+    	$this->setMassactionIdField('po_id');
+    	$this->getMassactionBlock()->setFormFieldName('po_id');
+    	$this->getMassactionBlock()->setUseSelectAll(false);
+    	
+    	if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/cancel')) {
+    		$this->getMassactionBlock()->addItem('cancel_order', array(
+    				'label'=> Mage::helper('sales')->__('Cancel'),
+    				'url'  => $this->getUrl('*/*/massCancel'),
+    				'confirm' => Mage::helper('sales')->__('Are you sure?')
+    		));
+    	}
+    	
+    	return $this;
+    }
+    
+    
 }
