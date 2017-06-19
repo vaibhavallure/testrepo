@@ -85,15 +85,9 @@
 				</td>
 				<td>
 					<input id="remaining_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
-					<?php 	if(Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?>
+					<?php if(Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?>
 						name="order[<?php echo $_product->getProductId() ?>][<?php echo "remaining_qty" ?>]" type="text" 
 						value="<?php echo round($_product->getRemainingQty())?>"/>
-						
-					<input id="remaining_qty_hidden_<?php  echo $_product->getProductId() ?>" style="width:50px"  
-				
-						name="order[<?php echo $_product->getProductId() ?>][<?php echo "remaining_qty_hidden" ?>]" type="hidden" 
-						value="<?php echo round($_product->getRemainingQty())?>" onfocus="myFunction(this.id)"/>
-						
 					
 				</td>
 				<td><div><?php echo $this->getDate($_product->getProductId(),$_product->getProposedDeliveryDate());?></div></td>
