@@ -11,10 +11,10 @@
 
     RewriteBase /
 
-    RewriteCond %{REQUEST_URI} ^/london/(media|skin|js|errors)/
+    RewriteCond %{REQUEST_URI} ^/saks/(media|skin|js|errors)/
     RewriteRule (.+) /$1 [L,QSA]
 
-    RewriteBase /london/
+    RewriteBase /saks/
 
     RewriteCond %{REQUEST_URI} !^/(media|skin|js)/
 
