@@ -19,7 +19,7 @@
  *
  * @category    Varien
  * @package     js
- * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 VarienForm = Class.create();
@@ -190,7 +190,7 @@ RegionUpdater.prototype = {
         if (typeof this.config == 'undefined') {
             return;
         }
-        var regionRequired = 1;//this.config.regions_required.indexOf(this.countryEl.value) >= 0;  //Allure comment this code for the use required field of region when country has not select field regions.
+        var regionRequired = this.config.regions_required.indexOf(this.countryEl.value) >= 0;
 
         elements.each(function(currentElement) {
             Validation.reset(currentElement);
