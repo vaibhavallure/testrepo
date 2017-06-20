@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_MyAccount>
+			<name>Allure - My Account</name>
+			<version>0.1.0</version>
+		</Allure_MyAccount>
+	</modules>
+	<global>
+		<blocks>
+			<myaccount>
+				<class>Allure_MyAccount_Block</class>
+			</myaccount>
+		</blocks>
+		
+		<helpers>
+			<myaccount>
+				<class>Allure_MyAccount_Helper</class>
+			</myaccount>
+		</helpers>
+	</global>
+	
+	<frontend>
+		<secure_url>
+            <myaccount>/myaccount/</myaccount>
+        </secure_url>
+		<routers>
+			<myaccount>
+				<use>standard</use>
+				<args>
+					<module>Allure_MyAccount</module>
+					<frontName>myaccount</frontName>
+				</args>
+			</myaccount>
+		</routers>
+    	<layout>
+        	<updates>
+            	<myaccount>
+                      <file>allure/myaccount.xml</file>
+            	</myaccount>
+        	</updates>
+       	</layout>
+    </frontend>
+	
+</config>

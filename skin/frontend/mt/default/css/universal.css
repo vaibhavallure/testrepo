@@ -153,7 +153,7 @@ div.tab {
     overflow: hidden;
    /*  border: 1px solid #ccc; */
    /*  background-color: #f1f1f1; */
-    width: 36.4%;
+    width: 45%;
     border-radius: 5px 5px 0px 0px;
 }
 
@@ -170,12 +170,17 @@ div.tab button {
    /*  border-right: 1px solid #ccc; */
 }
 
-#mt-save-card{
+/* #mt-save-card{
 	border-radius: 0px 5px 0px 0px;
 }
 #mt-add-card{
-	border-radius: 5px 5px 0px 0px;
+	border-radius: 5px 5px 0px 0px; */
    /*  border-left: 1px solid #ccc */
+/* } */
+
+
+.tab .tablinks{
+	border-radius: 5px 5px 0px 0px;
 }
 
 /* Change background color of buttons on hover */
@@ -328,3 +333,174 @@ div.tab button.active {
 #new-mt-add-payment-method .mt-paycard-title{
 	margin-top: 30px;
 }
+
+.myaccount-index-index .main-container {
+    margin: 0 auto;
+    width: 960px;
+}
+
+.myaccount-index-index .main-container>.page-title {
+    margin: 16px 0 27px;
+    width: auto;
+    overflow: hidden;
+}
+
+.myaccount-index-index .main {
+    padding: 0 0 30px 0;
+    position: relative;
+}
+
+
+
+
+.mt-my-cart,
+.myaccount-index-index .mt-my-orders{
+	margin-left: -12px;
+	margin-right: -12px;
+}
+
+.myaccount-index-index #shopping-cart-table th,
+.myaccount-index-index .mt-myaccount-th{
+	font-weight: 600;
+}
+
+.myaccount-index-index #my-orders-table th{
+	line-height: 5px;
+	border-bottom: 1px solid #000 ! important;
+}
+
+.myaccount-index-index  #shopping-cart-table thead{
+	border-bottom: 1px solid #000 ! important;
+}
+
+.myaccount-index-index .my-account .data-table tr:not(:last-child) {
+    background: none !important;
+    line-height: 25px;
+    border-bottom: 1px solid #ccc ! important;
+}
+
+/*sales order history start*/
+
+.myaccount-index-index .my-account .box .pager {
+    text-align: right;
+}
+
+.myaccount-index-index .my-account .box .pager .limiter {
+    margin-top: 0 !important;
+    padding: 0 !important;
+    text-transform: capitalize;
+    position: relative;
+}
+
+.myaccount-index-index .my-account .box .pager .pages, 
+.myaccount-index-index .my-account .box .box-title a {
+    display: block;
+}
+
+.myaccount-index-index .pager .pages {
+    margin-right: 40px;
+}
+
+.myaccount-index-index .pager .pages li {
+    border: none;
+    padding: 0 5px;
+    font-size: 13px;
+}
+
+.myaccount-index-index .pager .limiter .pager-content-mt {
+    position: relative;
+    display: inline-block;
+    float: none;
+    margin: 0 62px 0 4px;
+    width: 51px;
+    height: 21px;
+    font-size: 13px;
+}
+
+
+.myaccount-index-index .pager .pages .current {
+    background: none;
+    padding: 0;
+    /* margin: 0 9px 0 10px; */
+    text-decoration: underline;
+}
+
+.myaccount-index-index .pager .limiter .pager-content-mt .selectboxit-container {
+    display: block;
+}
+
+.myaccount-index-index .pager .limiter .pager-content-mt .selectboxit-container .selectboxit {
+    width: 55px !important;
+    background: #dedede;
+}
+
+.myaccount-index-index .pager .limiter .pager-content-mt .selectboxit-container .selectboxit-options {
+    width: 55px !important;
+}
+
+.myaccount-index-index .my-account .box .pager .limiter select {
+    margin: 3px 55px 0 0;
+    padding-left: 6px;
+}
+
+.myaccount-index-index .pager .limiter .per-page {
+    display: inline-block !important;
+    position: absolute;
+    top: 2px;
+    right: 0;
+}
+
+.myaccount-index-index .my-account .box .pager .limiter {
+    margin-top: 0 !important;
+    padding: 0 !important;
+    text-transform: capitalize;
+    position: relative;
+}
+
+.myaccount-index-index .my-account .box .pager {
+    text-align: right;
+}
+
+.myaccount-index-index .my-account #my-orders-table {
+   /*  margin-bottom: 30px; */
+    font-size: 13px;
+    line-height: 18px;
+    
+    height: 200px;
+    display: block;
+    overflow-y: scroll;
+}
+
+
+.loader{
+	height: 10px;
+	margin-top: -50px;
+}
+
+/*sales order history end*/
+
+
+/*Checkout cart start*/
+
+.myaccount-index-index .mt-my-cart .cart-mt h1{
+	display: none;
+}
+
+.myaccount-index-index .banner-bg{
+	display: none;
+}
+
+.myaccount-index-index .my-account #shopping-cart-table th{
+	padding-bottom: 0px;
+}
+
+.myaccount-index-index .my-account .ad-to-fav{
+	display: none;
+}
+
+.myaccount-index-index div.cart-mt div.cart-collaterals div.collat-wrap div.coupons-mt {
+	background: none;
+}
+
+/*Checkout cart end*/
+
