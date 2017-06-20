@@ -117,7 +117,7 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     			'filter'    =>'adminhtml/widget_grid_column_filter_range',
     	));
     	
-    	/* $this->addColumn('thumb',
+    	$this->addColumn('thumb',
     		array(
     				'header'    => Mage::helper('catalog')->__('Thumbnail'),
     				'renderer'  => 'ampgrid/adminhtml_catalog_product_grid_renderer_thumb',
@@ -125,7 +125,7 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     				'sortable'  => true,
     				'filter'    => false,
     				'width'     => 90,
-    	)); */
+    	));
     	
     	$this->addColumn('type',
     			array(
