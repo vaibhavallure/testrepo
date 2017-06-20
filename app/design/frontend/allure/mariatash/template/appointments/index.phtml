@@ -68,10 +68,11 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
             return !Validation.get('IsEmpty').test(v);
 		});
         
-        Validation.add('validate-phone-len', "Enter Valid Mobile No.", function(v) {
-            if(v.length > 6){
+        Validation.add('validate-phone-len', "Enter Valid Mobile No with country code.", function(v) {
+        	var telInput = jQuery("#phone").val();
+            if(telInput.charAt(0)=='+' && v.length > 6){
             	return true;
-            }            
+            }               
 		});
     //]]>
 </script>
