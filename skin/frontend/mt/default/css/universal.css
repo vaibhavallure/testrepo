@@ -352,7 +352,7 @@ div.tab button.active {
 
 
 
-
+.mt-my-wishlist,
 .mt-my-cart,
 .myaccount-index-index .mt-my-orders{
 	margin-left: -12px;
@@ -502,5 +502,127 @@ div.tab button.active {
 	background: none;
 }
 
+.myaccount-index-index .my-account .mt-myaccount-promo .buttons-set button {
+     float: none;
+}
+
+.myaccount-index-index .discount-form button.button_coupon {
+	line-height: 5px;
+}
+
+.myaccount-index-index .mt-myaccount-giftcard{
+	margin-left: -31px;
+}
+
+.myaccount-index-index .coupons-mt{
+	width: 100%;
+	margin-left: 0px ! important;	
+}
+
+.myaccount-index-index .coupons{
+	width: 50%;
+	margin-left: 0px;	
+}
+
+.myaccount-index-index .cart-mt .totals {
+	width: 48%;	
+	border: 1px solid #ccc;
+	background: none;    
+}
+
+.myaccount-index-index .cart-mt .totals-table tr {
+    border-bottom: none;
+}
+
+.myaccount-index-index .cart-mt .totals-table tr.title_total {
+	display: none;
+}
+
+.myaccount-index-index .cart-mt .checkout-types {
+    margin-bottom: 0px;
+    margin-right: 15px;
+}
+
+
+.myaccount-index-index .my-account .product-name a {
+	font-weight: 100;	
+}
+
 /*Checkout cart end*/
+
+
+/* Wishlist start*/
+
+.myaccount-index-index #wishlist-table td.add-to-cart-alt{
+	margin: 0;
+	width: 75px;
+}
+
+.myaccount-index-index #wishlist-table td.add-to-cart-alt .qty-wrap{
+	float: left;
+}
+
+.myaccount-index-index #wishlist-table td.add-to-cart-alt .plus_icon{
+	margin-left: 2px;
+}
+.myaccount-index-index #wishlist-table .input-text.qty{
+	margin-top: 0px;
+}
+
+.myaccount-index-index #wishlist-table .mt-myaccount-subtotal{
+	vertical-align: top;
+}
+
+.myaccount-index-index #wishlist-table th ,
+.myaccount-index-index .my-wishlist .data-table tr{
+	background: none !important;
+	border-bottom: 1px solid #000 !important;
+}
+
+.myaccount-index-index #wishlist-table a {
+	font-weight: 100;
+}
+
+.myaccount-index-index .my-wishlist .data-table tr{
+	border-bottom: 1px solid #ccc;	
+}
+
+.myaccount-index-index #wishlist-table .ad-wish-mt textarea {
+	background: none;
+}
+
+/*Whishlist end*/
+
+
+/*new myaccount dashbord start*/
+
+.mt-new-myaccount-dashbord{
+	margin-left: -13px;
+    margin-right: -13px;
+}
+
+.mt-new-myaccount-menu{
+	width: 100%;
+}
+
+.mt-new-myaccount-submenu{
+	width: 45%;
+    float: left;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 13px;
+    
+}
+
+.mt-new-myaccount-banner{
+	width: 100%;
+    border: 1px solid #ccc;
+    clear: both;
+}
+
+.mt-myaccount-new .col-main{
+	width: 100% ! important;
+}
+
+/*new myaccount dashbord end*/
 

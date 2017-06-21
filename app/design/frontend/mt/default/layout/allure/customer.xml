@@ -299,7 +299,7 @@ Customer account pages, rendered for all tabs in dashboard
 Customer account home dashboard layout
 -->
 
-    <customer_account_index translate="label">
+    <customer_account_index_temp translate="label">
         <label>Customer My Account Dashboard</label>
         <update handle="customer_account"/>
         <!-- Mage_Customer -->
@@ -333,6 +333,22 @@ Customer account home dashboard layout
                 <action method="addLink" translate="label" module="customer"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter</label></action>
             </block>
         </reference>-->
+    </customer_account_index_temp>
+    
+    <!-- Allure account -->
+    <customer_account_index translate="label">
+    	<reference name="root">
+            <action method="setTemplate"><template>allure/myaccount/page/2columns-left-dashboard.phtml</template></action>
+        </reference>
+        <reference name="content">             
+            <block type="customer/account_dashboard" name="customer_account_dashboard" template="allure/myaccount/customer/account/dashboard.phtml">
+            	<block type="sales/order_history" name="sales.order.history">
+					<!--block type="page/html_pager" name="product_list_toolbar_pager">
+						<action method="addPagerLimit"><mode>list</mode><limit>5</limit></action>
+					</block-->
+				</block>
+            </block>
+         </reference>
     </customer_account_index>
 
 <!--
