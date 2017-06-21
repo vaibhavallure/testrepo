@@ -91,10 +91,25 @@ class Alluremultistore_Productwebsite_Model_Observer
 									Mage::log("Product Description set: Product Id - ".$_product." Store Id - ".$storeId,
 											Zend_Log::DEBUG,$logFileName,$debugStatus);
 								}
+								try {
+										$product2 = Mage::getModel('catalog/product')->setStoreId($storeId)->load($_product);
+										$priceRule = $website->getWebsitePriceRule();
+										Mage::log('priceRule::'.$priceRule, Zend_Log::DEBUG, $logFileName, true);
+										$oldPrice = $product->getPrice();
+										$newPrice = $oldPrice * $priceRule;
+										Mage::log('newPrice::'.$newPrice, Zend_Log::DEBUG, $logFileName, true);
+										$product2->setPrice($newPrice)->save();
+									
+										
+								} catch (Exception $e) {
+									Mage::log('Exception Occured to set price::'.$e->getMessage(), Zend_Log::DEBUG, $logFileName, true);
+								}
 								
 								//Mage::getModel('catalog/product_status')->updateProductStatus($_product, $storeId, $productStatus);
 							}
+							
 						}
+					
 						
 						foreach ($stockIds as $stockId){
 							$stockItem = Mage::getModel('cataloginventory/stock_item')
