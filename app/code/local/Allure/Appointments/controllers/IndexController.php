@@ -156,6 +156,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     	}
     	
     	if ($post_data) {
+    		Mage::log(" ***********Register appointment**********",Zend_Log::DEBUG,'appointments-register.log',true);
+    		Mage::log($post_data,Zend_Log::DEBUG,'appointments-register.log',true);
     		try {
     			 $post_data['appointment_start'] = $post_data['app_date']." ". $post_data['appointment_start'];
     			 $post_data['appointment_start'] = strtotime($post_data['appointment_start'].":00");
