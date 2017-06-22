@@ -85,13 +85,15 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			}else{
 				$sendEmail = true;
 			}
-			
+			$model = $appointment;
+			$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+			$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
 			if($sendEmail){
-				$model = $appointment;
+				
 				/*Email Code*/
 				if($toSend){
 					$mailSubject="Appointment booking Reminder";
-					
+					$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
 					$email = $model->getEmail();
 					$name = $model->getFirstname()." ".$model->getLastname();
 					$vars = array(
@@ -102,8 +104,9 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 							'no_of_pier' => $model->getPiercingQty(),
 							'piercing_loc' => $model->getPiercingLoc(),
 							'special_notes' => $model->getSpecialNotes(),
-							'apt_starttime'  => $model->getAppointmentStart(),
-							'apt_endtime'    => $model->getAppointmentEnd());
+							'apt_starttime'  => $appointmentStart,
+							'apt_endtime'    => $appointmentEnd,
+							'apt_modify_link'=> $apt_modify_link);
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
 					->sendTransactional($templateId,$sender,$email,$name,$vars);
@@ -127,8 +130,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 							'no_of_pier' => $model->getPiercingQty(),
 							'piercing_loc' => $model->getPiercingLoc(),
 							'special_notes' => $model->getSpecialNotes(),
-							'apt_starttime'  => $model->getAppointmentStart(),
-							'apt_endtime'    => $model->getAppointmentEnd());
+							'apt_starttime'  => $appointmentStart,
+							'apt_endtime'    => $appointmentEnd);
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
 					->sendTransactional($templateId,$sender,$email,$name,$vars);
