@@ -25,12 +25,12 @@
 	</global>
 	 <crontab>
 		<jobs>
-			<allure_productwebsite_schedule>
+			<allure_ordernotifications_schedule>
 					 <schedule><cron_expr>0 4 * * *</cron_expr></schedule>
 				<run>
 					<model>allure_ordernotifications/cron::processOrderNoftifications</model>
 				</run>
-			</allure_productwebsite_schedule>
+			</allure_ordernotifications_schedule>
 		</jobs>
 	</crontab> 
 </config>
