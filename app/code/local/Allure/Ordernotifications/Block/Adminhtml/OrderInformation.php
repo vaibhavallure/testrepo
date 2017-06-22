@@ -21,6 +21,10 @@ class Allure_Ordernotifications_Block_Adminhtml_OrderInformation extends Mage_Ad
         		'label' => Mage::helper('adminhtml')->__('Enabled'),
         		'size' => 28,
         ));
+        $this->addColumn('store', array(
+        		'label' => Mage::helper('adminhtml')->__('Store'),
+        		'size' => 28,
+        ));
         
         $this->_addAfter = false;
         $this->_addButtonLabel = Mage::helper('adminhtml')->__('Add Line');
@@ -48,19 +52,22 @@ class Allure_Ordernotifications_Block_Adminhtml_OrderInformation extends Mage_Ad
         	{
         		$statusStr .= '<option value="'.$list['status'].'">'.$list['label'] .'</option>';
         	}
-            return '<select name="' . $inputName . '" style="width:200px;">'.$statusStr.'</select>';
+            return '<select name="' . $inputName . '" style="width:170px;">'.$statusStr.'</select>';
         }  elseif ($columnName === "no_of_weeks") {
         
         	return '<input type="text" name="' . $inputName . '" style="width:60px;"/>';
 
         }elseif ($columnName === "email") {
         	return '<input type="text" name="' . $inputName . '" style="width:170px;"/>';
+        
+        }elseif ($columnName === "store") {
+        	return '<input type="text" name="' . $inputName . '" style="width:100px;"/>';
         }
         else{
         	$statusStr = "";
         	$statusStr .= '<option value="1">Yes</option>';
         	$statusStr .= '<option value="0">No</option>';
-        	return '<select name="' . $inputName . '" style="width:150px;">'.$statusStr.'</select>';
+        	return '<select name="' . $inputName . '" style="width:70px;">'.$statusStr.'</select>';
         }
         
     }
