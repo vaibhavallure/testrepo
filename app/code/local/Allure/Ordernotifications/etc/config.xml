@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_Ordernotifications>
+			<name>Allure - Vendor Settings</name>
+			<version>1.0.0</version>
+		</Allure_Ordernotifications>
+	</modules>
+	<global>
+		<helpers>
+			<allure_ordernotifications>
+				<class>Allure_Ordernotifications_Helper</class>
+			</allure_ordernotifications>
+		</helpers>
+		<blocks>
+			<allure_ordernotifications>
+				<class>Allure_Ordernotifications_Block</class>
+			</allure_ordernotifications>
+		</blocks>
+		<models>
+			<allure_ordernotifications>
+				<class>Allure_Ordernotifications_Model</class>
+			</allure_ordernotifications>
+		</models>
+	</global>
+	 <crontab>
+		<jobs>
+			<allure_productwebsite_schedule>
+					 <schedule><cron_expr>0 4 * * *</cron_expr></schedule>
+				<run>
+					<model>allure_ordernotifications/cron::processOrderNoftifications</model>
+				</run>
+			</allure_productwebsite_schedule>
+		</jobs>
+	</crontab> 
+</config>
