@@ -63,7 +63,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
 <script type="text/javascript">
     //< ![CDATA[
-        var customForm = new VarienForm('appointemnet_form');
+        var myForm = new VarienForm('appointemnet_form', false);
         Validation.add('required-entry-time', "Please Select Time.", function(v) {
             return !Validation.get('IsEmpty').test(v);
 		});
@@ -74,6 +74,20 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
             	return true;
             }               
 		});
+        var formAlreadySubmitted = false; 
+        jQuery('#appointemnet_form').submit(function(e){ 
+            if(myForm.validator.validate()){ 
+                if(formAlreadySubmitted){ 
+                    e.preventDefault(); 
+                    return false; 
+                 } 
+                var submitChildren = jQuery(this).find('input[type=submit]'); 
+                submitChildren.attr('disabled', 'disabled'); 
+                submitChildren.addClass('disabled'); 
+                formAlreadySubmitted = true; 
+              } 
+
+            });
     //]]>
 </script>
 
