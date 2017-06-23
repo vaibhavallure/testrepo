@@ -45,7 +45,7 @@
         <?php echo $this->getChildHtml('header') ?>        
         <div class="main-container col2-left-layout">
             <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-            <div class="page-title"><h1>
+            <div class="page-title"><h3>
                 <?php
                 $request = Mage::app()->getRequest();
                 if(Mage::app()->getRequest()->getModuleName() == 'wishlist')
@@ -66,8 +66,15 @@
                 }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customerpaymentinfoindex'){
                     echo $this->__('My Saved Cards');
                 }else{
-                    echo $this->__('My Dashboard');
-                } ?></h1></div>
+                	$session = Mage::getSingleton('customer/session');
+                	$name = "Guest";
+                	if($session->isLoggedIn()){
+                		$customer = $session->getCustomer();
+                		$name = $customer->getFirstname();
+                	}
+                	echo "Hello ".$name;
+                } ?>
+                </h3></div>
             <div class="main">
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
                 <?php echo $this->getChildHtml('global_messages') ?>
