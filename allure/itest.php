@@ -19,13 +19,13 @@ $session = $client->login(array('username' => 'sureshinde','apiKey' => 'sunevenu
 
 //var_dump($client->__getFunctions());
 
-$orderIncrementId = 
+$orderIncrementId = '2017003752-B';
 
 if (isset($_GET['orderIncrementId'])) {
 	$orderIncrementId = $_GET['orderIncrementId'];
 }
 
-$orderInfo = $client->salesOrderInfo(array('sessionId'=> $session->result, 'orderIncrementId'=>'2017003752-B'));
+$orderInfo = $client->salesOrderInfo(array('sessionId'=> $session->result, 'orderIncrementId'=>$orderIncrementId));
 
 var_dump($orderInfo);
 
