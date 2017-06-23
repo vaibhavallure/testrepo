@@ -66,7 +66,7 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'index'  => 'booking_time',
 		));
 		$this->addColumn('piercing_qty', array(
-				'header' => $helper->__('No. of Piercing'),
+				'header' => $helper->__('No of People in Group'),
 				'index'  => 'piercing_qty'
 		));
 		
@@ -94,7 +94,17 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'index'  => 'piercer_id',
 				'renderer' => 'appointments/adminhtml_appointments_edit_renderer_piercername'
 		));
-		
+		$this->addColumn('action',array(
+				'header'    => $helper->__('Modify'),
+				'width'     => '5%',
+				'type'      => 'action',
+				'getter'     => 'getId',
+				'renderer' => 'appointments/adminhtml_appointments_edit_renderer_modify',
+				'filter'    => false,
+				'sortable'  => false,
+				'is_system' => true,
+		)
+		);
 		
 		
 		$this->addExportType('*/*/exportCsv', $helper->__('CSV'));

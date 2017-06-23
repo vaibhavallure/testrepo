@@ -236,26 +236,23 @@ i.fs-icon {
   padding: 20px; }
 
 .fs-overlink, .fs-link-number {
-  /*-webkit-transition: line-height 0.2s, height 0.2s, width 0.2s, opacity 0.2s, -webkit-transform 0.2s;
+  -webkit-transition: line-height 0.2s, height 0.2s, width 0.2s, opacity 0.2s, -webkit-transform 0.2s;
   background-color: #222;
-  border-radius: 50%;*/
-  height: 40px;
-  width: 40px;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
   line-height: 20px;
   font-size: 12px;
   font-family: sans-serif;
   text-align: center;
   color: white;
-  background: url(../../images/star.png) left top;
+/*   background: url(../../images/star.png) left top; */
   display: inline-block;
   font-family: sans-serif;
-  background-size: 100%;
+ /*  background-size: 100%; */
  /*  padding: 5px; */
   }
   
-  .fs-product-number{
-  	line-height: 3.9;
-  }
 
 .fs-has-links {
   position: absolute;
@@ -823,14 +820,14 @@ li.fs-link-list {
   color: white;
   z-index: 10;
   margin-left: 10px;
-  /* margin-top: 10px; */
+  margin-top: 10px;
   font-size: 12pt;
   background-color: rgba(0, 0, 0, 0.75);
   min-width: 200px;/* 250px; */
   opacity: 0;
   pointer-events: none;
   font-size: 14px;
-  /* font-weight: bold; */
+  font-weight: bold;
   text-align: left;
   transition: transform 0.25s, opacity 0.25s;
   -webkit-transition: -webkit-transform 0.25s, opacity 0.25s;
@@ -856,9 +853,9 @@ li.fs-link-list {
   border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent; }
 
 .fs-overlink:hover, div.fs-overlink-active {
-  /*box-shadow: 0 5px 0px #222;
+  box-shadow: 0 5px 0px #222;
   transform: translateY(-5px);
-  -webkit-transform: translateY(-5px); */}
+  -webkit-transform: translateY(-5px);}
 
 .fs-overlink-active .fs-overlink-text,
 .fs-overlink:hover .fs-overlink-text {
@@ -924,8 +921,8 @@ a.fs-shop-link.fs-link-list {
   transition: color 0.25s, background-color 0.25s; }
 
 .fs-text-product:hover, .fs-text-product a.fs-link-active {
-  /* background-color: #222; */
-  color: red;	/*white*/
+  background-color: #222;
+  color: white;	/*white*/
   text-decoration: none;
   }
 
@@ -988,10 +985,10 @@ a.fs-shop-link.fs-link-list {
     display: block; } }
 .fs-overlink {
   z-index: 9;
-  /* background-color: white; */
+  background-color: white;
   transition: box-shadow 0.25s, transform 0.25s, opacity 0.25s;
   cursor: pointer;
-  /* box-shadow: 0 1px 0 #222; */ }
+  box-shadow: 0 1px 0 #222; }
 
 .fs-text-product-cta {
   display: none; }
@@ -1297,3 +1294,20 @@ a.fs-shop-link.fs-link-list {
 .fs-continue-shopping:hover {
   background: #3c3c3c;
   color: #fff; }
+  
+ .fs-overlink.fs_current_product{
+ 	 background: url(../../images/star.png) left top; 
+ 	 background-size: 100%;
+ 	 border-radius:0;
+ 	 height: 40px;
+  	 width: 40px;
+  	 box-shadow:none;
+ }
+ .fs-overlink.fs_current_product:hover{
+ 	box-shadow:none;
+ }
+ 
+ .fs-product-number.fs_current_product{
+ 	line-height: 3.9;
+ }
+ 

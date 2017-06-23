@@ -37,7 +37,7 @@ Whoops, it looks like you have an invalid PHP version.</h3></div><p>Magento supp
 /**
  * Compilation includes configuration file
  */
-define('MAGENTO_ROOT', getcwd());
+define('MAGENTO_ROOT', dirname(__DIR__));
 
 $compilerConfig = MAGENTO_ROOT . '/includes/config.php';
 if (file_exists($compilerConfig)) {
@@ -81,6 +81,3 @@ $mageRunCode = isset($_SERVER['MAGE_RUN_CODE']) ? $_SERVER['MAGE_RUN_CODE'] : 'l
 $mageRunType = isset($_SERVER['MAGE_RUN_TYPE']) ? $_SERVER['MAGE_RUN_TYPE'] : 'store';
 
 Mage::run($mageRunCode, $mageRunType);
-
-
-

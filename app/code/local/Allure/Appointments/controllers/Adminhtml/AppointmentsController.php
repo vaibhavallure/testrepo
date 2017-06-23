@@ -2,6 +2,11 @@
 class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtml_Controller_Action
 {
 
+	protected function _isAllowed()
+	{
+		return true;
+	}
+	
 	public function indexAction()
     {
        $this->loadLayout();
@@ -300,7 +305,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     		if($allAppointments){
     			
     		foreach ($allAppointments as $appointment){
-	    		$calenderEvents[] = array('title'=>$appointment->getEmail(),
+	    		$calenderEvents[] = array('title'=>$appointment->getFirstname()." ".$appointment->getLastname(),
 	    				'start'=>$appointment->getAppointmentStart(),
 	    				'end'=>$appointment->getAppointmentEnd(),
 	    				'url'=>$this->getUrl('admin_appointments/adminhtml_appointments/view/id/'.$appointment->getId(),array('_secure' => true))

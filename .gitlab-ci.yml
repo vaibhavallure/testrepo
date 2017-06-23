@@ -4,6 +4,7 @@ stages:
   - develop
   - stage
   - bugfix
+  - upgrade
   - deploy
 develop:
   environment: development
@@ -35,6 +36,16 @@ bugfix:
   script:
     - mage-deploy mt-bugfixes
     - echo 'Deployed on Bugfixes Staging'
+upgrade:
+  environment: upgrade
+  stage: upgrade
+  tags:
+    - staging
+  only:
+    - upgrade
+  script:
+    - mage-deploy upgrade.mariatash
+    - echo 'Deployed on Upgrade Staging'
 deploy:
   environment: production
   stage: deploy

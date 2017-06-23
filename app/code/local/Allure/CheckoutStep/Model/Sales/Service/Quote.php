@@ -83,7 +83,7 @@ class Allure_CheckoutStep_Model_Sales_Service_Quote extends Mage_Sales_Model_Ser
 	    	$orderState = Mage::getSingleton('checkout/session')->getOrderStat();
 	    	$outTotalPaid = $order->getBaseGrandTotal();
 	    	$outTotalDue = $outTotalPaid - $order->getBaseGrandTotal();
-	    	$order->setTotalPaid($outTotalPaid);
+	    	//$order->setTotalPaid($outTotalPaid);
 	    	$order->setTotalDue($outTotalDue);
 	    	if(!empty($orderState)){
 	    		$order->setState($orderState['state'], $orderState['status'], $orderState['message']);
@@ -116,8 +116,8 @@ class Allure_CheckoutStep_Model_Sales_Service_Quote extends Mage_Sales_Model_Ser
     			//Keep order status as pending for banktransfer and purchaseorder for singlecharge
     			if($payment_method!="banktransfer" || $payment_method!="purchaseorder"){
     				$transId = $this->createBackorderTransaction($mainOrderId,$order->getId());
-    				$this->createBackorderInvoice($order->getId());
-    				$this->updateInvoice($orderId,$transId);
+    				$this->createBackorderInvoice($order->getId(),true);
+    				$this->updateInvoice($order->getId(),$transId,$mainOrderId);
     			}
     		}
     		//check customer is wholesaller or not and payment is pay later
@@ -213,7 +213,7 @@ class Allure_CheckoutStep_Model_Sales_Service_Quote extends Mage_Sales_Model_Ser
     }
     
     
-    private function createBackorderInvoice($orderId){
+    private function createBackorderInvoice($orderId,$isPayNow=false){
     	$orderIn = Mage::getModel('sales/order')->load($orderId);
     	$ordered_items = $orderIn->getAllItems();
     	$savedQtys = array();
@@ -222,9 +222,22 @@ class Allure_CheckoutStep_Model_Sales_Service_Quote extends Mage_Sales_Model_Ser
     	}
     	$invoice = Mage::getModel('sales/service_order', $orderIn)->prepareInvoice($savedQtys);
     	$captureCase = "not_capture";
+    	
+    	//if payment method is pay now
+    	if($isPayNow){
+    		$captureCase = "offline";
+    	}
+    	
     	$invoice->setRequestedCaptureCase($captureCase);
     	$invoice->register();
     	$invoice->getOrder()->setIsInProcess(true);
+    	
+    	//if payment method is pay now
+    	if($isPayNow){
+    		$invoice->setState(2);
+    		$invoice->setCanVoidFlag(0);
+    	}
+    	
     	//$invoice->save();
     	$transactionSave = Mage::getModel('core/resource_transaction')
     		->addObject($invoice)
@@ -232,9 +245,9 @@ class Allure_CheckoutStep_Model_Sales_Service_Quote extends Mage_Sales_Model_Ser
     	$transactionSave->save();
     }
     
-    private function updateInvoice($orderId,$transId = 0){
+    private function updateInvoice($orderId,$transId = 0,$mainOrderId){
     	$order = Mage::getModel('sales/order')->load($orderId);
-    	if ($order->hasInvoices()) {
+    	//if ($order->hasInvoices()) {
     		if($transId!=0){
 	    		foreach ($order->getInvoiceCollection() as $invoce) {
 	    			$invoce->setState(2);
@@ -243,7 +256,14 @@ class Allure_CheckoutStep_Model_Sales_Service_Quote extends Mage_Sales_Model_Ser
 	    			$invoce->save();
 	    		}
     		}
-    	}
+    	//}
+    	
+    	//set transactional details to the backorder 
+    	$orderMain = Mage::getModel("sales/order")->load($mainOrderId);
+    	$paymentMain = $orderMain->getPayment();
+    	$payment = $order->getPayment();
+    	$payment->setAdditionalInformation($paymentMain->getAdditionalInformation())
+    		->save();
     }
 
     private function createBackorderInvoice2($orderId){

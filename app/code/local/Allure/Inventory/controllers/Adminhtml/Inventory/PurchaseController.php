@@ -81,22 +81,16 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     public function createOrderAction(){
     	$admin = Mage::getSingleton('admin/session')->getUser();
     	$data = $this->getRequest()->getPost();
-    	//$data=json_decode($data['data']);
-    	
-    	Mage::log($data['data'],Zend_log::DEBUG,'mylogs',true);
-    	if($data['data']){
+    	$itemsData=$this->getPOItemsForStore($data['store']);
+    	if($itemsData){
     		$items=array();
     		$vendor=0;
-    		foreach ($data['data'] as $key){
-    		//	Mage::log('coming',Zend_log::DEBUG,'mylogs',true);
-    	   	    //Mage::log('id:'.$key[0]['id'],Zend_log::DEBUG,'mylogs',true);
-    			$product = Mage::getModel('catalog/product')->load($key[0]['id']);
-    			//Mage::log('Vendor:'.$product->getPrimaryVendor(),Zend_log::DEBUG,'mylogs',true);
+    		foreach ($itemsData as $key){
+    			$product = Mage::getModel('catalog/product')->load($key['item_id']);
     			if($product->getPrimaryVendor())
     				$vendor=$product->getPrimaryVendor();
-    			$items[$vendor][$key[0]['id']] = $key[0];
+    			$items[$vendor][$key['item_id']] = $key;
     		}
-    		Mage::log($items,Zend_log::DEBUG,'mylogs',true);
     	}
     	$websiteId=1;
     	$stockId=1;
@@ -117,7 +111,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     			$vendorId=$key;
     			$vendorName=Mage::helper('allure_vendor')->getVanderName($vendorId);
     			$vendorEmail=Mage::helper('allure_vendor')->getVanderEmail($vendorId);
-    			Mage::log($vendorEmail,Zend_log::DEBUG,'mylogs',true);
+    			Mage::log($vendorEmail,Zend_log::DEBUG,'purchase',true);
     			if(isset($vendorEmail) && !empty($vendorEmail))
     			{
 	    			
@@ -143,7 +137,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 	    			{
 	    				
 	    				$model=Mage::getModel('inventory/orderitems');
-	    				$dataItems = array('po_id'=>$po_id,'ref_no'=>$data['refence_no'],'product_id'=>$item['id'],
+	    				$dataItems = array('po_id'=>$po_id,'ref_no'=>$data['refence_no'],'product_id'=>$item['item_id'],
 	    						'requested_qty'=>$item['qty'],
 	    						'remaining_qty'=>$item['qty'],
 	    						'proposed_qty'=>$item['qty'],'status'=>'new',
@@ -155,9 +149,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 	    				$model->save();
 	    				
 	    				$inven=Mage::getModel('cataloginventory/stock_item')
-	    				->loadByProductAndStock($item['id'],$stockId);
+	    				->loadByProductAndStock($item['item_id'],$stockId);
 	    				$inven->setData('po_sent',1)->save();
-	    				$orderItems.=$item['id'].',';
+	    				$orderItems.=$item['item_id'].',';
 	    			}
 	    			
 	    			$model=Mage::getModel('inventory/orderlogs');
@@ -178,7 +172,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     				
     				foreach ($itemArray as $item)
     				{
-    					$notOrderItems.=$item['id'].',';
+    					$notOrderItems.=$item['item_id'].',';
     				}
     				
     				Mage::log('Please assign vendor to product or vendor email',Zend_log::DEBUG,'mylogs',true);
@@ -190,7 +184,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     			$message.="Order Created for items:".$orderItems;
     		if ($notOrderItems && isset($notOrderItems))
     			$message.="Can not create order as vendor or vendor email is not assiged for products:".$notOrderItems;
-    		
+    		foreach ($itemsData as $singleItem){
+    			Mage::getModel('inventory/insertitem')->load($singleItem['id'])->delete();
+    		}
     		Mage::getSingleton('adminhtml/session')->addSuccess($message);
     		$jsonData = json_encode(compact('success', 'message', 'data'));
     		$this->getResponse()->setHeader('Content-type', 'application/json');
@@ -379,5 +375,121 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 		}
 		Mage::getSingleton('adminhtml/session')->addSuccess("Order accepted");
 		$this->_redirect('*/*/orders');
+	}
+	public function addpurchaseitemAction(){
+		$request = $this->getRequest()->getPost();
+		$website=1;
+		$ItemsInfo=array();
+		$ItemsInfo = Mage::getModel('core/session')->getMyItemsInfo();
+		$Items=$ItemsInfo['items'];
+		$ItemsInfo['refence_no']=$request['refence_no'];
+		$ItemsInfo['order_total']=$request['order_total'];
+		/* if($request['item']['include'])
+			$Items[$request['item']['id']] = $request['item'];
+		else 
+			unset($Items[$request['item']['id']]);
+		$ItemsInfo['items']=$Items;
+		
+		Mage::getModel('core/session')->setMyItemsInfo($ItemsInfo);
+		Mage::register('hi', 'bye');
+		 */
+		$model = Mage::getModel('inventory/insertitem');
+		$user = Mage::getSingleton('admin/session');
+		$userId = $user->getUser()->getUserId();
+		if($request['item']['include']){
+			$insertData = array(
+					'item_id'    => $request['item']['id'],
+					'qty'   =>$request['item']['qty'],
+					'cost' => $request['item']['cost'],
+					'comment'  =>$request['item']['comment'],
+					'user_id' =>$userId,
+					'store_id' =>$request['item']['store']
+			
+			);
+			$model->setData($insertData);
+			$model->save();
+		}else {
+
+			try {
+				$item=$this->loadItemByIdAndStore($request['item']['id'],$request['item']['store']);
+				$model = Mage::getModel('inventory/insertitem')->load($item->getId());
+				$model->delete();
+				//echo "Data deleted successfully.";
+				 
+			} catch (Exception $e){
+				echo $e->getMessage();
+			}
+			
+		}
+		Mage::log($insertData,Zend_log::DEBUG,'purchase',true);
+		
+		//Mage::log(Mage::getModel('core/session')->getMyItemsInfo(),Zend_log::DEBUG,'purchase',true);
+		$jsonData = json_encode(compact('success', 'message', 'data'));
+		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->setBody($jsonData);
+	}
+	public function getstoredinfoAction(){
+		$request = $this->getRequest()->getPost();
+		$user = Mage::getSingleton('admin/session');
+		$userId = $user->getUser()->getUserId();
+		$data = Mage::getModel('inventory/insertitem')->getCollection()->addFieldToFilter('store_id',$request['store'])->addFieldToFilter('user_id',$userId)->getData();
+		//Mage::log($data->getData(),Zend_log::DEBUG,'purchase',true);
+		$jsonData = json_encode(compact('success', 'message', 'data'));
+		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->setBody($jsonData);
+		
+	}
+	public function loadItemByIdAndStore($id,$storeId){
+		$user = Mage::getSingleton('admin/session');
+		$userId = $user->getUser()->getUserId();
+		$model = Mage::getModel('inventory/insertitem')->getCollection()
+		->addFieldToFilter('item_id',$id)->addFieldToFilter('store_id',$storeId)->addFieldToFilter('user_id',$userId);
+		return $model->getFirstItem();
+	}
+	public function getPOItemsForStore($storeId){
+		$user = Mage::getSingleton('admin/session');
+		$userId = $user->getUser()->getUserId();
+		$collection = Mage::getModel('inventory/insertitem')->getCollection()
+		->addFieldToFilter('store_id',$storeId)->addFieldToFilter('user_id',$userId)->getData();
+		return $collection;
+	}
+	public function massCancelAction(){
+		$ids = $this->getRequest()->getParam('po_id');
+		$resource     = Mage::getSingleton('core/resource');
+		$writeAdapter   = $resource->getConnection('core_write');
+		$table        = $resource->getTableName('cataloginventory/stock_item');
+		foreach ($ids as $id){
+			if($id && isset($id))
+			{
+				$currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
+				$currentDate->toString('Y-m-d H:i:s');
+				$status=Allure_Inventory_Helper_Data::ORDER_STATUS_CANCEL;
+				$order=Mage::getModel('inventory/purchaseorder')->load($id);
+				$orderItems=Mage::getModel('inventory/orderitems')->getCollection($id,'po_id');
+				foreach ($orderItems as $item){
+					$query        = "update {$table} set  po_sent =0 where product_id = '{$item->getProductId()}' AND stock_id = '{$order->getStockId()}'";
+					$writeAdapter->query($query);
+				}
+				if(isset($status))
+					$order->setData('status', $status);
+				$order->setData('updated_date',$currentDate)->save();
+			
+			}
+		}
+		Mage::getSingleton('adminhtml/session')->addSuccess("The order has been cancelled.");
+	    $this->_redirect('*/*/orders');
+	}
+	public function resetAction(){
+		$data = $this->getRequest()->getPost();
+		$itemsData=$this->getPOItemsForStore($data['store']);
+		foreach ($itemsData as $singleItem){
+		
+			Mage::getModel('inventory/insertitem')->load($singleItem['id'])->delete();
+		}
+		Mage::getSingleton('adminhtml/session')->addSuccess("The reset action performed successfully");
+		$jsonData = json_encode(compact('success', 'message', 'data'));
+		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->setBody($jsonData);
+		
 	}
 }
