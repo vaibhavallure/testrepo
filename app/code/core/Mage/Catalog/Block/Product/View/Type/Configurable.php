@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -205,14 +205,10 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                     if (isset($options[$attributeId][$value['value_index']])) {
                         $productsIndexOptions = $options[$attributeId][$value['value_index']];
                         $productsIndex = array();
-                       
                         foreach ($productsIndexOptions as $productIndex) {
-                        	
                             if ($productStock[$productIndex]) {
                                 $productsIndex[] = $productIndex;
                             }
-                        	
-                        
                         }
                     } else {
                         $productsIndex = array();
