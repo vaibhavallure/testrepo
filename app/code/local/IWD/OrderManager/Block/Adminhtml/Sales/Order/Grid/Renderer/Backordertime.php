@@ -9,10 +9,13 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Backordertime e
         $items = array();
 
         foreach($order_item_collection as $item){
-            $stockStatus = Mage::getModel('catalog/product')->load($item->getProductId())->getCustomStockStatus();
+        	//Allure comment the code
+           	/* $stockStatus = Mage::getModel('catalog/product')->load($item->getProductId())->getCustomStockStatus();
             //403 stockStatus is backorder-ship-time
-            if($stockStatus == 403 && $item->getBackorderTime() != null) {
-                $items[] = $item->getBackorderTime();
+            if($stockStatus == 403 && $item->getBackorderTime() != null) {   */    
+        	
+            if($item->getBackorderTime() != null) {  //Allure new code
+            	$items[] = $item->getBackorderTime();
             } else {
                 $items[] = '&nbsp;';
             }
