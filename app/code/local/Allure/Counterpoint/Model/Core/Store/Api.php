@@ -47,11 +47,12 @@ class Allure_Counterpoint_Model_Core_Store_Api extends Mage_Api_Model_Resource_A
         // Make result array
         $result = array();
         
+        // Stores Limit Check For Normal APIs
         $allowedStores = Mage::getStoreConfig('allure_counterpoint/general/stores');
         
         $skipStoreCheck = true;
         
-        if (false && $allowedStores) {
+        if ($allowedStores) {
         	$allowedStoresList = explode(',', $allowedStores);
         	
         	if (!in_array(0, $allowedStoresList)) {
@@ -61,6 +62,7 @@ class Allure_Counterpoint_Model_Core_Store_Api extends Mage_Api_Model_Resource_A
         
         foreach ($stores as $store) {
         	
+        	// Stores Limit Check For Normal APIs
         	if (!$skipStoreCheck && !in_array($store->getId(), $allowedStoresList)) {
         		continue;
         	}
