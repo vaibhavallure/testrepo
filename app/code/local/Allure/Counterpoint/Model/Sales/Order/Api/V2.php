@@ -102,8 +102,6 @@ class Allure_Counterpoint_Model_Sales_Order_Api_V2 extends Mage_Sales_Model_Orde
 			$this->_fault('filters_invalid', $e->getMessage());
 		}
 		
-		die($orderCollection->getSelect());
-		
 		foreach ($orderCollection as $order) {
 			$orders[] = $this->_getAttributes($order, 'order');
 		}
