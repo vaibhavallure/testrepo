@@ -19,7 +19,11 @@ $client = new SoapClient(Mage::getBaseUrl('link', true).'api/v2_soap?wsdl=1', ar
 
 // If somestuff requires api authentification,
 // then get a session token
-$session = $client->login(array('username' => 'sureshinde','apiKey' => 'sunevenus'));
+$credentials = array (
+		'username' => 'sureshinde',
+		'apiKey' => 'sunevenus' 
+);
+$session = $client->login($credentials);
 
 //var_dump($session);
 
@@ -28,6 +32,47 @@ $session = $client->login(array('username' => 'sureshinde','apiKey' => 'sunevenu
 $storeList = $client->storeList(array('sessionId'=> $session->result));
 
 var_dump($storeList);
+
+$orderFilters = array (
+		"complex_filter" => array (
+				"complexObjectArray" => array (
+						array (
+								"key" => "store_id",
+								"value" => array (
+										"key" => "=",
+										"value" => "1" 
+								) 
+						),
+						array (
+								"key" => "status",
+								"value" => array (
+										"key" => "in",
+										"value" => "pending,processing,completing" 
+								) 
+						),
+						array (
+								"key" => "created_at",
+								"value" => array (
+										"key" => "from",
+										"value" => "2017-06-19 4:00:00" 
+								) 
+						) 
+				) 
+		) 
+);
+
+$orderFilters = array (
+	"store_id"  => array ("eq" => "1"),
+	"status" => array ("in" => "pending,processing,completing"),
+	"created_at" => array ( "from" => "2017-06-17 4:00:00")
+);
+
+$api = Mage::getSingleton('sales/order_api_v2');
+$orderList= $api->items($orderFilters);
+
+//$orderList = $client->salesOrderList(array('sessionId'=> $session->result, 'filters'=> $orderFilters));
+
+var_dump($orderList);die;
 
 $orderIncrementId = '2017003752-B';
 

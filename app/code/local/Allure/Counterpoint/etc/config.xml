@@ -28,6 +28,11 @@
 					<store_api_v2>Allure_Counterpoint_Model_Core_Store_Api_V2</store_api_v2>
 				</rewrite>
 			</core>
+			<sales>
+				<rewrite>
+					<order_api_v2>Allure_Counterpoint_Model_Sales_Order_Api_V2</order_api_v2>
+				</rewrite>
+			</sales>
 		</models>
 
 		<blocks>
