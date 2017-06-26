@@ -15,10 +15,9 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 ?>
 	<?php if($apt_id):?>
 			<div class="page-title">
-			    <h1><p class="detailofapt"><?php echo $this->__('Your Appointment is scheduled!') ?></p></h1>
+			    <h1><p class="detailofapt"><?php echo $this->__('Appointment Details') ?></p></h1>
 			</div><hr/>
 			<div class="checkout-success">
-			    <h4><p class="detailofapt"><?php echo $this->__('Details of Appointment') ?></p></h4>
 				<div class="success-field">
 				<span class="apt-summary"><?php echo $this->__('Name') ?></span>
 				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
@@ -32,22 +31,24 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPhone() ?></span>
 				</div>
 				<div class="success-field">
-				<span class="apt-summary"><?php echo $this->__('No. of Piercings') ?></span>
+				<span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
 				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingQty() ?></span>
 				</div>
+				<?php if(!empty($model->getPiercingLoc())):?>
 				<div class="success-field">
 				<span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
 				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingLoc() ?></span>
 				</div>
+				<?php endif;?>
 				<div class="success-field">
 				<span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
 				<span class="apt-summary" style="font-weight: bold"><?php 
-				$appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
-				$appStartDate = $appStartDate->toString();
-				if($model->getStoreId()=='2')
-					$format = "BST";
+				$appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+				if($model->getStoreId())
+					$format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
 				else
 					$format = "EST";
+				
 				echo  $appStartDate." ".$format?></span>
 				</div>
 				
