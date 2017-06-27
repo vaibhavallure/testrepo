@@ -27,10 +27,12 @@ Mage::getSingleton("core/session")->setData('appointment_submitted',false);
 	<span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
 	<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingQty() ?></span>
 	</div>
+	<?php if ($model->getPiercingLoc()):?>
 	<div class="success-field">
 	<span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
 	<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingLoc() ?></span>
 	</div>
+	<?php endif;?>
 	<div class="success-field">
 	<span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
 	<span class="apt-summary" style="font-weight: bold"><?php 
