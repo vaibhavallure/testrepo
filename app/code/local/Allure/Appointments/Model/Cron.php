@@ -148,7 +148,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 				$url = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_BASEURL);
 				$smsfrom = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_FROM);
 				$smsText = Mage::getStoreConfig("appointments/api/smstext_reminder",$storeId);
-				$text = $smsText." ".$model->getAppointmentStart();
+				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+				$text = $smsText." ".$appointmentStart;
 				if($phone){//if NotificationPref set to text sms i.e. 2
 					$api = new SoapClient($url,array( 'cache_wsdl' => WSDL_CACHE_NONE,'soap_version' => SOAP_1_1));
 					$session = $api->apiValidateLogin($username,$password);
