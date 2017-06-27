@@ -67,9 +67,9 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 					</div>
 				</div>
 			</div>
-			
 		<?php endif;?>
 <!--  If the id or email not correct  -->	
+		
 <?php else:?>
 			<div class="page-title">
 			    <h1><p class="detailofapt"><?php echo $this->__('Sorry,Record not found to cancel the appointment!') ?></p></h1>
@@ -92,7 +92,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 		        method: 'get',
 		        success: function (data) {
 					jQuery('.detailofapt').html(data);
-					jQuery('.checkout-success .success-field').empty();	
+					//jQuery('.checkout-success .success-field').empty();	
 					jQuery('.checkout-success .apt-cancel-buttons-set').empty();
 					jQuery('.checkout-success .apt-modify-buttons-set').empty();
 									
