@@ -1,49 +1,117 @@
-<h1>My Products</h1>
+<h3>My Products</h3>
+<div class="mt-myaccount-page">
+	<div class="tab">
+	  <button data-link="purchase" id="mt-myproduct-purchase" data-tab="tab1" class="tablinks active" onclick="changeTab(this);">Purchased</button>
+	  <button data-link="wishlist" id="mt-myproduct-wishlist" data-tab="tab2" class="tablinks" onclick="changeTab(this);">Wishlist</button>
+	  <button data-link="cart" id="mt-myproduct-cart" data-tab="tab3" class="tablinks" onclick="changeTab(this);">Cart</button>
+	  <button data-link="receipt" id="mt-myproduct-receipts" data-tab="tab4" class="tablinks" onclick="changeTab(this);">All Receipts</button>
+	</div>
+	
+	<div id="new-mt-myproduct-purchase" class="tabcontent tab1 active">
+	  <div class="mt-new-purchase">
+	  
+	  		<div class="mt-myaccount-filter">
+	  			<div class="mt-myaccount-store">
+	  				<span>Narrow By: </span>
+	  				<?php 
+	  					$currentFilterStore = $_GET['m_store'];
+	  					if(empty($currentFilterStore))
+	  						$currentFilterStore = 'all';
+	  				?>
+	  				<select class="mt-filter-select">
+	  					<option value="all"><?php echo $this->__('STORE')?></option>
+	  					<?php 
+	  						$stores = Mage::app()->getStores();
+	  						foreach ($stores as $store):
+	  					?>
+	  					<option value="<?php echo $store->getId()?>" <?php echo ($currentFilterStore==$store->getId())?"selected=\"selected\"":""?>><?php echo $store->getName()?></option>
+	  					<?php endforeach;?>
+	  				</select>
+	  			</div>
+	  			<div class="mt-myaccount-pier-location">
+	  				<select class="mt-filter-select">
+	  					<option><?php echo $this->__('PIERCIING LOCATION')?></option>
+	  				</select>
+	  			</div>
+	  			<div class="mt-myaccount-sort">
+	  				<select class="mt-filter-select">
+	  					<option><?php echo $this->__('SORT BY')?></option>
+	  				</select>
+	  			</div>
+	  		</div>
+	  		
+	  		<?php echo $this->getChildHtml('purchased_items')?>
+	  		<div class='loader' style="display: none;">
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--text'></div>
+	 	 </div>
+	   </div>
+	</div>
+	
+	<div id="new-mt-myproduct-wishlist" class="tabcontent tab2">
+	  <div class="mt-my-wishlist">
+	  		<?php echo $this->getChildHtml('customer.wishlist')?>
+	  </div>
+	</div>
+	
+	<div id="new-mt-myproduct-cart" class="tabcontent tab3">
+	  <div class="mt-my-cart">
+	  		<?php echo $this->getChildHtml('checkout.cart')?>
+	  </div>
+	</div>
+	
+	<div id="new-mt-myproduct-receipts" class="tabcontent tab4">
+	  <div class="mt-my-orders">
+	  		<?php echo $this->getChildHtml('sales.order.history')?>
+	  	<div class='loader' style="display: none;">
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--dot'></div>
+		    <div class='loader--text'></div>
+	 	 </div>
+	  </div>
+	</div>
 
-<div class="tab">
-  <button id="mt-myproduct-purchase" data-tab="tab1" class="tablinks active" onclick="changeTab(this);">Purchased</button>
-  <button id="mt-myproduct-wishlist" data-tab="tab2" class="tablinks" onclick="changeTab(this);">Wishlist</button>
-  <button id="mt-myproduct-cart" data-tab="tab3" class="tablinks" onclick="changeTab(this);">Cart</button>
-  <button id="mt-myproduct-receipts" data-tab="tab4" class="tablinks" onclick="changeTab(this);">All Receipts</button>
-</div>
-
-<div id="new-mt-myproduct-purchase" class="tabcontent tab1 active">
-  <div class="mt-new-payment">
-  		Hii Pintya
-   </div>
-</div>
-
-<div id="new-mt-myproduct-wishlist" class="tabcontent tab2">
-  <div class="mt-my-wishlist">
-  		<?php echo $this->getChildHtml('customer.wishlist')?>
-  </div>
-</div>
-
-<div id="new-mt-myproduct-cart" class="tabcontent tab3">
-  <div class="mt-my-cart">
-  		<?php echo $this->getChildHtml('checkout.cart')?>
-  </div>
-</div>
-
-<div id="new-mt-myproduct-receipts" class="tabcontent tab4">
-  <div class="mt-my-orders">
-  		<?php echo $this->getChildHtml('sales.order.history')?>
-  	<div class='loader' style="display: none;">
-	    <div class='loader--dot'></div>
-	    <div class='loader--dot'></div>
-	    <div class='loader--dot'></div>
-	    <div class='loader--dot'></div>
-	    <div class='loader--dot'></div>
-	    <div class='loader--dot'></div>
-	    <div class='loader--text'></div>
- 	 </div>
-  </div>
 </div>
 
 <script>
+
+	var Filter_Store = '<?php echo $_GET['m_store']?>';
+	jQuery(document).ready(function(){
+		var type = window.location.hash.substr(1);
+		if(type!="" && type!="undefined" && type!=null){
+			var element = jQuery('.mt-myaccount-page .tab').find('button[data-link='+type+']')
+			changeTab(element);
+		}else{
+			var element = jQuery('.mt-myaccount-page .tab .tablinks.active');
+			changeTab(element);
+		}
+
+		jQuery('.mt-filter-select').on('change',function(){
+			var storeParam = '?m_store='+jQuery(this).val();
+			var uri = window.location;
+			var host = uri.origin;
+			var path = uri.pathname + storeParam;
+			var hash = uri.hash;
+			var url = host + path + hash;
+			window.location.href = url;
+		});
+	});
+	
 	function changeTab(event){
 		var element = jQuery(event);
 		var currentTab = element.attr('data-tab');
+		var dataLink = element.attr('data-link');
+		window.location.hash = dataLink;
+		//document.cookie = 'tab=' + dataLink;    //temp disable
 		jQuery('.tablinks').removeClass('active');
 		element.addClass('active');
 		jQuery('.tabcontent').removeClass('active');		

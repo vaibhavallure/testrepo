@@ -59,4 +59,80 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
         $this->getResponse()->setBody($jsonData);
         
 	}
+	
+	
+	public function getPurchasedItemsAction(){
+		$request = $this->getRequest()->getPost();
+		$pageNo=1;
+		$limit = 10;
+		if($request['page'])
+			$pageNo=$request['page'];
+			
+		if($request['limit'])
+			$limit = $request['limit'];
+		
+		
+		$collection = Mage::getResourceModel('sales/order_item_collection')
+			->addAttributeToSelect('*');
+		$collection->getSelect()->join( array('orders'=> sales_flat_order),
+					'orders.entity_id=main_table.order_id',array('orders.customer_email','orders.customer_id'));
+			
+		$customer = Mage::getSingleton('customer/session')->getCustomer();
+			
+		$collection->addFieldToFilter('customer_id',$customer->getId());
+		//$collection->getSelect()->group('main_table.product_id');
+			
+		$collection->setCurPage($pageNo);
+		$collection->setPageSize($limit);
+		
+		$html = '';
+		foreach ($collection as $_item){
+			$product = $_item->getProduct();
+			$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($_item->getProduct()->getId());
+			$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+			$url = $_item->getProduct()->getProductUrl();
+			if(!is_null($parentId)){
+				$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+			}
+			
+			$html .= '<tr data-id="'.$_item->getId().'">';
+			$html .= '<td class="cart_col1">';
+			$html .= '<a href="'.$url.'" title="'.$product->getName().'" class="product-image">'.
+					'<img src="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(74,96).'" width="74" height="96" alt="'.$product->getName().'">'.
+					'</a>'.
+					'<a data-img="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(350,350).'" class="mt-piercing-photo" href="javascript:void(0);">Piercing Photo</a>'.
+					'</td>';
+			
+			$html .= '<td class="cart_col2">';
+			$html .= '<h2 class="product-name">';
+			$html .=  '<a href="'.$url.'">'.$product->getName().'</a>'.
+					'<span class="mt-purchase-added-at">Purchased: '.date('M d,Y H:i a',strtotime($_item->getCreatedAt())).'</span></h2></td>';
+			
+			$html .= '<td class="cart_col4">';
+			$html .=  '<div class="qty-wrap">';
+			$html .=  '<input value="'.number_format($_item->getQtyOrdered()).'" size="4" title="Qty" class="input-text qty" maxlength="12">'.
+					  '</div></td>';
+			
+			$html .= '<td class="cart_col3">';
+			$html .= '<span class="price_multi"></span> <span class="price">'.Mage::helper('checkout')->formatPrice($_item->getPrice()).'</span></td>';
+			
+			
+			$html .= '<td class="cart_col6">';
+			$html .= '<div class="mt-purchase-btn">';
+			$html .= '<button class="button" onclick="window.open("'.Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId().'/");">See Receipts</button>';
+			$html .= '</div>';
+			$html .= '<div class="mt-purchase-btn">';
+			$html .= '<button class="button" onclick="window.open("'.Mage::getUrl("sales/order/reorder")."order_id/".$_item->getOrderId().'/");">Reorder</button>';
+			$html .= '</div>';
+			$html .= '<div class="mt-purchase-btn">';
+			$html .= '<button class="button">Share</button>';
+			$html .= '</div>';
+			$html .= '</td>';
+			$html .= '</tr>';
+		}
+		$data = array('html'=>$html);
+		$jsonData = json_encode(compact('success', 'message', 'data'));
+		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->setBody($jsonData);
+	}
 }

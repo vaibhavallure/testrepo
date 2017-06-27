@@ -9,16 +9,17 @@
             </div>
             <div class="buttons-set">                
                 <?php if(strlen($this->getCouponCode())): ?>
-                    <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button_coupon" onclick="discountForm.submit(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
+                    <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button_coupon" onclick="applyCoupan(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
                     <p class="youhave validation-advice">Promo Code Applied</p>
                 <?php else: ?>
-                    <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="discountForm.submit()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>                
+                    <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="applyCoupan()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>                
                 <?php endif;?>
             </div>
         </div>                
     </div>
 </form>
 <script type="text/javascript">
+
 //<![CDATA[
 var discountForm = new VarienForm('discount-coupon-form');
 Validation.add('emptycustomvalidation','<?php echo $this->__('This is a required field');?>',function(myInput){
@@ -47,4 +48,22 @@ discountForm.submit = function (remove) {
         return false;
 }
 //]]>
+
+function applyCoupan(remove){
+	 var coupon_code = jQuery('#coupon_code2').val();
+	 if(remove)
+    	 remove = 1;
+	 jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/couponPostAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: {coupon_code:coupon_code,remove:remove},
+	        success: function(data) {
+	        	if(data.success){
+	        		jQuery('.mt-myaccount-promo').html("");
+	        		jQuery('.mt-myaccount-promo').html(data.html);
+	        	}
+	        }
+	    });
+}
 </script>

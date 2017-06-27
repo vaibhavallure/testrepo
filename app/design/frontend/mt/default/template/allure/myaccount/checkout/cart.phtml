@@ -90,25 +90,45 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
         </div>
 
     </div>
-
 </div>
 <script>
     function plusMinus(elementId,plus){
-        jQuery.fancybox.showLoading();
-        jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
         var qty = parseInt(jQuery(elementId).val()) + plus ;
         if(qty > 0) {
+            var parent = jQuery(elementId).parent().parent().parent();
             jQuery(elementId).val(qty);
+            var item_id = jQuery(elementId).attr('data-item-id');
+            var price = jQuery(elementId).attr('data-price');
+            var qtyData = {qty:qty};
+            var cart={};
+            cart[item_id] = qtyData;
+            cart = JSON.stringify(cart);
+            var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
+            jQuery.ajax({
+		        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/updateQtyAjax';?>',
+		        dataType : 'json',
+				type : 'POST',
+				data: {'cart':cart,'price':price,'qty':qty,'form_key':form_key},
+		        success: function(data) {
+		        	if(data.success){
+		        		jQuery('.mt-my-cart #shopping-cart-totals-table').remove();
+			        	jQuery('.mt-my-cart .totals').html(data.total_html);
+			        	parent.find('.cart_col5 .cart-price .price').remove();
+			        	parent.find('.cart_col5 .cart-price').html(data.price);
+		        	}
+		        }
+		    });
         }
-        jQuery( "#shopping-cart-form" ).submit();
     }
+    
     jQuery( ".qty-wrap input" ).focusout(function() {
         if(this.next().value != this.value) {
-            jQuery.fancybox.showLoading();
-            jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
-            jQuery( "#shopping-cart-form" ).submit();
+           // jQuery.fancybox.showLoading();
+           // jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+           // jQuery( "#shopping-cart-form" ).submit();
         }
     })
+    
     jQuery(document).bind("keydown", function(e) {
         var code = e.keyCode || e.which;
         if (code  == 13) {
@@ -137,4 +157,36 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
         maxHeight: 572
     });
 
+</script>
+
+<script>
+	var itemXhr = null;
+	jQuery(document).ready(function(){
+		
+		jQuery('.mt-my-cart .w-remove a.remov').on('click',function(){
+			var item_id = jQuery(this).attr('data-item-id');
+			var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
+			var parent = jQuery(this).parent().parent().parent();
+			
+			if( itemXhr == null ) {
+				jQuery('#item-loader-'+item_id).show();
+				itemXhr =	jQuery.ajax({
+			        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/removeItemAjax';?>',
+			        dataType : 'json',
+					type : 'POST',
+					data: {'id':item_id,'form_key':form_key},
+			        success: function(data) {
+			        	if(data.success){
+			        		parent.remove();
+			        		jQuery('.mt-my-cart #shopping-cart-totals-table').remove();
+				        	jQuery('.mt-my-cart .totals').html(data.total_html);
+			        	}
+			        	itemXhr = null;
+			        	jQuery('#item-loader-'+item_id).hide();
+			        }
+			    });
+			}
+		})
+		
+	});
 </script>

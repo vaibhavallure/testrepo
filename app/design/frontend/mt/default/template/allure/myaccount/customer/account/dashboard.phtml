@@ -112,7 +112,9 @@
 
 	 <div class="mt-new-myaccount-banner">
     	<div class="mt-myaccount-banner-ya">
-    		<div class="banner-ya-img">Insert banner here</div>
+    		<div class="banner-ya-img">
+				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+			</div>
     	</div>
     </div>
     

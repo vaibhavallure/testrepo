@@ -1,0 +1,110 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file s subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_iphone
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+$_item = $this->getItem();
+$isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
+$canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
+$messages = $this->getMessages();
+$typeId = $_item->getProduct()->getTypeId();
+
+?>
+<?php $productId = $this->getProduct()->getId();
+		      $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+              $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+              $url = $this->getProductUrl();
+              if(!is_null($parentId)){
+              	$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+              }
+              
+              ?>
+
+<tr data-id="<?php echo $_item->getId()?>" <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
+    <td class="cart_col1"> 
+        <?php if (1 || $isVisibleProduct && $this->hasProductUrl()):?>
+            <a href="<?php echo $url ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
+        <?php else: ?>
+            <?php //echo $this->escapeHtml($this->getProductName()) ?>
+        <?php endif;?>
+        
+        <a data-img="<?php echo $this->getProductThumbnail()->resize(350,350); ?>" class="mt-piercing-photo" href="javascript:void(0);" >Piercing Photo</a>
+    </td>
+
+    <td class="cart_col2">
+        <h2 class="product-name">
+        <?php if ($isVisibleProduct && $this->hasProductUrl()):?>
+            <a href="<?php echo $url ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
+        <?php else: ?>
+            <?php echo $this->escapeHtml($this->getProductName()) ?>
+        <?php endif; ?>
+        <span class="mt-purchase-added-at"><?php echo "Purchased: ".date('M d,Y H:i a',strtotime($_item->getCreatedAt()))?></span>
+        </h2>
+        <?php if ($_options = $this->getOptionList()):?>
+        <div class="item-options">
+            <?php foreach ($_options as $_option) : ?>
+                <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                <div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                    <?php echo $_formatedOptionValue['full_view'] ?>
+                <?php else: ?>
+                    <?php echo $_formatedOptionValue['value'] ?>
+                <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endif;?>
+
+        <?php $addInfoBlock = $this->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addInfoBlock): ?>
+            <?php echo $addInfoBlock->setItem($_item)->toHtml() ?>
+        <?php endif;?>
+
+    </td>
+    
+    <td  class="cart_col4">
+        <div class="qty-wrap">
+            <input value="<?php echo number_format($_item->getQtyOrdered()) ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12"  />
+        </div>
+    </td>
+    
+    <td  class="cart_col3">
+        <?php echo "<span class='price_multi'></span> ".$this->helper('checkout')->formatPrice($_item->getPrice()) ?>
+    </td>
+    
+    
+    <td  class="cart_col6">
+        <div class="mt-purchase-btn">
+        	<button class="button" onclick="window.open('<?php echo $this->getUrl('sales/order/print')."order_id/".$_item->getOrderId()."/"?>');">See Receipts</button>
+        </div>
+        <div class="mt-purchase-btn">
+        	<button class="button" onclick="window.open('<?php echo $this->getUrl('sales/order/reorder')."order_id/".$_item->getOrderId()."/"?>');">Reorder</button>
+        </div>
+        <div class="mt-purchase-btn">
+        	<button class="button">Share</button>
+        </div>
+    </td>
+</tr>
+

@@ -89,7 +89,7 @@ var xhr = null;
 var page = 2;
 var totalPages = <?php echo $totalPageSize?>;
 jQuery(function($){
-	$('#my-orders-table').bind('scroll', function(){
+	$('.my-account .mt-my-orders .box').bind('scroll', function(){
 		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
 			jQuery('.loader').css({"display":"block"});
 			if(page<=totalPages){

@@ -109,6 +109,7 @@ if($product->getTypeId() =='configurable'){
 
     <h3 class="product-name">        
         <a href="<?php echo $productUrl; ?>" title="<?php echo $this->escapeHtml($defaultProduct->getName()) ?>"><?php echo $this->escapeHtml($defaultProduct->getName()) ?></a>
+    	<span class="mt-wishlist-added-at"><?php echo "Added ".date('M d,Y H:i a',strtotime($item->getAddedAt()))?></span>
     </h3>
     <div class="price-wish"><?php //echo $this->getPriceHtml($product); ?></div>
 	<?php if ($_options = $item->getOptionList($cpid)):?>

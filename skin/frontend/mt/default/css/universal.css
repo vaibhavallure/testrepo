@@ -151,10 +151,7 @@
 
 div.tab {
     overflow: hidden;
-   /*  border: 1px solid #ccc; */
-   /*  background-color: #f1f1f1; */
     width: 45%;
-    border-radius: 5px 5px 0px 0px;
 }
 
 /* Style the buttons inside the tab */
@@ -166,22 +163,9 @@ div.tab button {
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-    
-   /*  border-right: 1px solid #ccc; */
 }
 
-/* #mt-save-card{
-	border-radius: 0px 5px 0px 0px;
-}
-#mt-add-card{
-	border-radius: 5px 5px 0px 0px; */
-   /*  border-left: 1px solid #ccc */
-/* } */
 
-
-.tab .tablinks{
-	border-radius: 5px 5px 0px 0px;
-}
 
 /* Change background color of buttons on hover */
 div.tab button:hover {
@@ -199,8 +183,6 @@ div.tab button.active {
 .tabcontent {
     display: none;
     padding: 6px 12px;
-   /*  border: 1px solid #ccc; */
-   /*  border-top: none; */
    background: #fff;
 }
 
@@ -351,7 +333,7 @@ div.tab button.active {
 }
 
 
-
+.mt-new-purchase,
 .mt-my-wishlist,
 .mt-my-cart,
 .myaccount-index-index .mt-my-orders{
@@ -365,10 +347,11 @@ div.tab button.active {
 }
 
 .myaccount-index-index #my-orders-table th{
-	line-height: 5px;
+	line-height: 18px;
 	border-bottom: 1px solid #000 ! important;
 }
 
+.myaccount-index-index  #myaccount-shopping-cart-table thead
 .myaccount-index-index  #shopping-cart-table thead{
 	border-bottom: 1px solid #000 ! important;
 }
@@ -462,13 +445,12 @@ div.tab button.active {
 }
 
 .myaccount-index-index .my-account #my-orders-table {
-   /*  margin-bottom: 30px; */
     font-size: 13px;
     line-height: 18px;
     
-    height: 200px;
+    /* height: 200px;
     display: block;
-    overflow-y: scroll;
+    overflow-y: scroll; */
 }
 
 
@@ -490,8 +472,18 @@ div.tab button.active {
 	display: none;
 }
 
+
+.myaccount-index-index .my-account #shopping-cart-table thead {
+	border-bottom: 1px solid #000 ! important;	
+}
+
 .myaccount-index-index .my-account #shopping-cart-table th{
 	padding-bottom: 0px;
+	padding: 5px 0px 5px 0px;
+}
+
+.myaccount-index-index .my-account #shopping-cart-table th:first-child {
+    text-indent: 10px;
 }
 
 .myaccount-index-index .my-account .ad-to-fav{
@@ -579,6 +571,10 @@ div.tab button.active {
 	border-bottom: 1px solid #000 !important;
 }
 
+.myaccount-index-index #wishlist-table th{
+	font-weight: 600;
+}
+
 .myaccount-index-index #wishlist-table a {
 	font-weight: 100;
 }
@@ -589,6 +585,12 @@ div.tab button.active {
 
 .myaccount-index-index #wishlist-table .ad-wish-mt textarea {
 	background: none;
+}
+
+.myaccount-index-index .mt-my-cart .mt-cart-added-at,
+.myaccount-index-index #wishlist-table .mt-wishlist-added-at{
+	display: block;
+	font-weight: normal;
 }
 
 /*Whishlist end*/
@@ -644,16 +646,19 @@ div.tab button.active {
 }
 
 .banner-ya-img{
-	border-radius: 4px;
+	/* border-radius: 4px; */
     background-color: #fff;
     height: 100%;
     display: block;
 }
 
+.banner-ya-img img{
+	width: 100%;
+}
 
 .a-box {
     display: block;
-    border-radius: 4px;
+   /*  border-radius: 4px; */
     background-color: #fff;
     height: 100%;
     display: block;
@@ -704,3 +709,151 @@ div.a-column.a-span-last {
 	font-weight: 100;
 }
 
+
+.myaccount-index-index  #myaccount-shopping-cart-table thead{
+	border-bottom: 1px solid #000;	
+	display: none;
+}
+
+.myaccount-index-index  #myaccount-shopping-cart-table th{
+	font-weight: 600;
+	padding: 0px;
+}
+
+.myaccount-index-index #myaccount-shopping-cart-table th:first-child {
+    text-indent: 10px;
+}
+
+#myaccount-shopping-cart-table tr td img {
+    width: 74px;
+    padding: 0;
+    height: 96px;
+    background: linear-gradient(to bottom, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
+}
+
+#myaccount-shopping-cart-table tr td .product-image {
+    padding: 8px;
+    display: inline-block;
+}
+
+#myaccount-shopping-cart-table .cart_col3, 
+#myaccount-shopping-cart-table .cart_col4, 
+#myaccount-shopping-cart-table .cart_col5, 
+#myaccount-shopping-cart-table .cart_col6 {
+    vertical-align: middle;
+}
+
+
+#myaccount-shopping-cart-table .mt-purchase-added-at{
+	display: block;
+	font-weight: normal;
+}
+
+.mt-new-purchase fieldset{
+	margin: 0px;
+	padding: 0px;
+}
+
+.mt-new-purchase .mt-purchase-btn button{
+	width: 115px;
+	text-align: center;
+}
+
+.mt-new-purchase .cart-table .product-name {
+	font-weight: normal;	
+}
+
+#myaccount-shopping-cart-table{
+	height: 400px;
+	display: block;
+	overflow-y:scroll;
+}
+
+.block-account .block-content ul {
+	padding: 0px;	
+}
+
+.customer-paymentinfo-index .page-title > h1,
+.customer-address-index .page-title > h1,
+.customer-account-edit .page-title > h1,
+.myaccount-index-index .page-title > h1{
+	display: none;
+}
+
+.my-account .page-title > h1,
+.my-account > h3,
+.my-account .box .box-title > h3{
+	font-size: 20px;
+    display: block;
+    font-weight:normal;
+    text-transform: uppercase;
+}
+
+.my-account .page-title > h1,
+.my-account > h3{
+	margin-bottom: 10px;
+}
+
+.customer-account-edit .my-account .fieldset {
+	margin-top: 10px;	
+}
+
+.mt-myaccount-filter .mt-myaccount-store{
+	width: 35%;
+    float: left;
+    padding-left: 20px;
+}
+
+.mt-myaccount-filter .mt-myaccount-pier-location{
+	width: 25%;
+    float: left;
+    padding-left: 20px
+}
+	
+.mt-myaccount-filter .mt-myaccount-sort{
+	width: 30%;
+    float: right;
+}
+
+.mt-myaccount-filter .mt-filter-select{
+	width: 150px;
+	height: 25px;
+	background: white url(../images/formelements-select.png) no-repeat center;
+	margin-left: 30px;
+}
+
+.mt-myaccount-filter{
+	width: 100%;
+	display: inline-block;
+	padding: 10px 0px 10px 0px;
+    background: #ccc;
+}
+
+.mt-new-purchase .cart-mt{
+	border-top:1px solid #000;
+}
+
+.mt-myaccount-filter .mt-myaccount-store span{
+	font-weight: 600;
+}
+
+.my-account .mt-my-orders .box .box-title {
+    display: none;
+}
+.my-account .mt-my-orders .box {
+	overflow-y: scroll;
+    height: 200px;
+}
+
+.mt-my-cart #shopping-cart-table .w-remove a:link {
+    background: url(../images/wish-x-remove.png) no-repeat 0px 0px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.mt-loader{
+	background-image: url(../images/loading.gif);
+    background-repeat: no-repeat;
+    height: 25px;
+}

@@ -1056,4 +1056,242 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
 	    $this->loadLayout();
 	    $this->renderLayout();
     }
+    
+    public function removeItemAjaxAction()
+    {
+    	if ($this->_validateFormKey()) {
+    		$id = (int)$this->getRequest()->getParam('id');
+    		if ($id) {
+    			try {
+    				$this->_getCart()->removeItem($id)
+    				->save();
+    				$result['success'] = 1;
+    				$result['message'] = $this->__('Item was removed successfully.');
+    				
+    				$total_html = $this->getLayout()->createBlock('checkout/cart_totals')
+    					->setTemplate('checkout/cart/totals.phtml')->toHtml();
+    				
+    				$result['total_html'] = $total_html;
+    				
+    			} catch (Exception $e) {
+    				$result['success'] = 0;
+    				$result['error'] = $this->__('Can not remove the item.');
+    			}
+    		}
+    	} else {
+    		$result['success'] = 0;
+    		$result['error'] = $this->__('Can not remove the item.');
+    	}
+    	
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+    
+    
+    public function updateQtyAjaxAction()
+    {
+    	if (!$this->_validateFormKey()) {
+    		$this->_redirect('*/*/');
+    		return;
+    	}
+    	try {
+    		$cartData = $this->getRequest()->getParam('cart');
+    		$cartData = json_decode($cartData,true);
+    		if (is_array($cartData)) {
+    			$filter = new Zend_Filter_LocalizedToNormalized(
+    					array('locale' => Mage::app()->getLocale()->getLocaleCode())
+    					);
+    			foreach ($cartData as $index => $data) {
+    				if (isset($data['qty'])) {
+    					$cartData[$index]['qty'] = $filter->filter(trim($data['qty']));
+    				}
+    			}
+    			$cart = $this->_getCart();
+    			if (! $cart->getCustomerSession()->getCustomer()->getId() && $cart->getQuote()->getCustomerId()) {
+    				$cart->getQuote()->setCustomerId(null);
+    			}
+    			
+    			$cartData = $cart->suggestItemsQty($cartData);
+    			$cart->updateItems($cartData)
+    			->save();
+    			$result['success'] = 1;
+    			$result['message'] = $this->__('Qty Updated successfully.');
+    			
+    			$total_html = $this->getLayout()->createBlock('checkout/cart_totals')
+    			->setTemplate('checkout/cart/totals.phtml')->toHtml();
+    			
+    			$result['total_html'] = $total_html;
+    			$price = $this->getRequest()->getParam('price');
+    			$qty = $this->getRequest()->getParam('qty');
+    			if(!empty($qty) && !empty($price))
+    				$result['price'] = Mage::helper('checkout')
+    						->formatPrice(number_format($price*$qty));
+    		}
+    		$this->_getSession()->setCartWasUpdated(true);
+    	} catch (Mage_Core_Exception $e) {
+    		$result['success'] = 0;
+    		$result['message'] = $this->__('Qty not updated.');
+    	} catch (Exception $e) {
+    		$result['success'] = 0;
+    		$result['message'] = $this->__('Qty not updated.');
+    	}
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+    
+    
+    public function couponPostAjaxAction()
+    {
+    	/**
+    	 * No reason continue with empty shopping cart
+    	 */
+    	if (!$this->_getCart()->getQuote()->getItemsCount()) {
+    		$this->_goBack();
+    		return;
+    	}
+    	
+    	$couponCode = (string) $this->getRequest()->getParam('coupon_code');
+    	if ($this->getRequest()->getParam('remove') == 1) {
+    		$couponCode = '';
+    	}
+    	$oldCouponCode = $this->_getQuote()->getCouponCode();
+    	
+    	if (!strlen($couponCode) && !strlen($oldCouponCode)) {
+    		//$this->_goBack();
+    		//return;
+    	}
+    	
+    	try {
+    		$codeLength = strlen($couponCode);
+    		$isCodeLengthValid = $codeLength && $codeLength <= Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH;
+    		
+    		$this->_getQuote()->getShippingAddress()->setCollectShippingRates(true);
+    		$this->_getQuote()->setCouponCode($isCodeLengthValid ? $couponCode : '')
+    		->collectTotals()
+    		->save();
+    		
+    		if ($codeLength) {
+    			if ($isCodeLengthValid && $couponCode == $this->_getQuote()->getCouponCode()) {
+    				$this->_getSession()->addSuccess(
+    						$this->__('Coupon code "%s" was applied.', Mage::helper('core')->escapeHtml($couponCode))
+    						);
+    				$result['success'] = 1;
+    				$result['message'] = $this->__('Coupon code "%s" was applied.', Mage::helper('core')
+    							->escapeHtml($couponCode));
+    				$this->_getSession()->setCartCouponCode($couponCode);
+    			} else {
+    				$this->_getSession()->addError(
+    						$this->__('Coupon code "%s" is not valid.', Mage::helper('core')->escapeHtml($couponCode))
+    						);
+    				$result['success'] = 1;
+    				$result['message'] = $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->escapeHtml($couponCode));
+    				$this->_getSession()->setCartCouponCode($couponCode);
+    			}
+    			
+    		} else {
+    			$this->_getSession()->addSuccess($this->__('Coupon code was canceled.'));
+    			$result['success'] = 0;
+    			$result['message'] = $this->__('Coupon code was canceled.');
+    		}
+    		
+    		$coupan_html = $this->getLayout()->createBlock('checkout/cart_coupon')
+    		->setTemplate('allure/myaccount/checkout/coupon.phtml')->toHtml();
+    		
+    		$result['html']=$coupan_html;
+    		
+    	} catch (Mage_Core_Exception $e) {
+    		$result['success'] = 0;
+    		$result['message'] = $this->__('Coupon code not applied.');
+    	} catch (Exception $e) {
+    		$this->_getSession()->addError($this->__('Cannot apply the coupon code.'));
+    		$result['success'] = 0;
+    		$result['message'] = $this->__('Cannot apply the coupon code.');
+    	}
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    	
+    }
+    
+    private function _setSessionVars($card)
+    {
+    	$oSession = Mage::getSingleton('giftcards/session');
+    	
+    	$giftCardsIds = $oSession->getGiftCardsIds();
+    	
+    	//append applied gift card id to gift card session
+    	//append applied gift card balance to gift card session
+    	if (!empty($giftCardsIds)) {
+    		$giftCardsIds = $oSession->getGiftCardsIds();
+    		if (!array_key_exists($card->getId(), $giftCardsIds)) {
+    			$giftCardsIds[$card->getId()] =  array('balance' => $card->getCardBalance(), 'code' => substr($card->getCardCode(), -4));
+    			$oSession->setGiftCardsIds($giftCardsIds);
+    			
+    			$newBalance = $oSession->getGiftCardBalance() + $card->getCardBalance();
+    			$oSession->setGiftCardBalance($newBalance);
+    		}
+    	} else {
+    		$giftCardsIds[$card->getId()] = array('balance' => $card->getCardBalance(), 'code' => substr($card->getCardCode(), -4));
+    		$oSession->setGiftCardsIds($giftCardsIds);
+    		
+    		$oSession->setGiftCardBalance($card->getCardBalance());
+    	}
+    }
+    
+    public function activateGiftCardAjaxAction()
+    {
+    	$giftCardCode = trim((string)$this->getRequest()->getParam('giftcard_code'));
+    	$card = Mage::getModel('giftcards/giftcards')->load($giftCardCode, 'card_code');
+    	
+    	if ($card->getId() && ($card->getCardStatus() == 1)) {
+    		
+    		Mage::getSingleton('giftcards/session')->setActive('1');
+    		$this->_setSessionVars($card);
+    		$this->_getQuote()->collectTotals();
+    		$result['message'] =  $this->__('Gift Card used');
+    	}else {
+    		if($card->getId() && ($card->getCardStatus() == 2)) {
+    			$result['message'] = $this->__('Gift Card "%s" was used.', Mage::helper('core')->escapeHtml($giftCardCode));
+    		} else {
+    			$result['message'] = $this->__('Gift Card "%s" is not valid.', Mage::helper('core')->escapeHtml($giftCardCode));
+    		}
+    	}
+    	
+    	$coupan_html = $this->getLayout()->createBlock('giftcards/coupon')
+    	->setTemplate('allure/myaccount/checkout/giftcard/coupon.phtml')->toHtml();
+    	
+    	$result['success'] = 1;
+    	$result['html'] = $coupan_html;
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+    
+    public function deActivateGiftCardAjaxAction()
+    {
+    	$oSession = Mage::getSingleton('giftcards/session');
+    	$cardId = $this->getRequest()->getParam('id');
+    	$cardIds = $oSession->getGiftCardsIds();
+    	$sessionBalance = $oSession->getGiftCardBalance();
+    	$newSessionBalance = $sessionBalance - $cardIds[$cardId]['balance'];
+    	unset($cardIds[$cardId]);
+    	if(empty($cardIds))
+    	{
+    		Mage::getSingleton('giftcards/session')->clear();
+    	}
+    	$oSession->setGiftCardBalance($newSessionBalance);
+    	$oSession->setGiftCardsIds($cardIds);
+    	
+    	$this->_getQuote()->collectTotals()->save();
+    	
+    	$result['success'] = 1;
+    	$result['message'] = $this->__('Gift card Removed');
+    	
+    	$coupan_html = $this->getLayout()->createBlock('giftcards/coupon')
+    	->setTemplate('allure/myaccount/checkout/giftcard/coupon.phtml')->toHtml();
+    	
+    	$result['html'] = $coupan_html;
+    	
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+    
 }
