@@ -1,0 +1,66 @@
+<div id="openModal" class="popupLoginModel">
+	<div>
+		<div class="pop-title">
+			<a href="#close" title="Close" class="close">X</a>
+			<h2>Log In to Your Account</h2>
+		</div>
+		<div>
+			<div class="row">
+	 		    <label class="popup-login-lbl" for="email">Email Address</label>
+	  		    <input id='username' type="text" name='username' class="ele_width"/>
+			</div>
+			<div class="row">
+	 		    <label class="popup-login-lbl" for="password">Password</label>
+	  		    <input id='passwd' type="password" name='passwd' class="ele_width"/>
+			</div>
+		</div>
+		<div class="pop-link">
+			<a>Forget Password</a>
+			<button type="button" id="signin-btn" class="button">Log In</button>
+			<p>Don't have account with us? <a onclick="openRegisterModal()" >Create a new account</a></p>
+		</div> 
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+jQuery("#sign_in_label").on('click',function(){	
+jQuery(".popupLoginModel").css({"opacity":"1","pointer-events":"auto"});
+	});
+
+
+jQuery(".close").on('click',function(){console.log('hiee');
+jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
+	});
+
+jQuery("#signin-btn").on('click',function(){
+
+var usrname = jQuery('#username').val();
+var passwd = jQuery('#passwd').val();
+
+var request = {
+		"usrname":usrname,
+		"passwd":passwd
+		};
+		
+jQuery.ajax({
+	
+	url : '<?php echo $this->getUrl('appointments/index/ajaxLogin',array('_secure' => true));?>',
+	dataType : 'json',
+	type : 'POST',
+	data: {request:request},
+	success : function(data){
+		if(data.success){
+			 jQuery('#login-msg').html(data.msg);
+			 jQuery('#reg_form').html(data.output);
+			 jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
+		}else{
+		 jQuery('#login-msg').html(data.error);
+		}
+		}
+	});
+
+
+	});
+ </script> 
