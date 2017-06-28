@@ -10,6 +10,7 @@
 	<div id="new-mt-myproduct-purchase" class="tabcontent tab1 active">
 	  <div class="mt-new-purchase">
 	  
+	  <?php if($this->getPurchasedItems()->getSize()>0):?>
 	  		<div class="mt-myaccount-filter">
 	  			<div class="mt-myaccount-store">
 	  				<span>Narrow By: </span>
@@ -39,6 +40,7 @@
 	  				</select>
 	  			</div>
 	  		</div>
+	  		<?php endif;?>
 	  		
 	  		<?php echo $this->getChildHtml('purchased_items')?>
 	  		<div class='loader' style="display: none;">
