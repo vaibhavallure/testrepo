@@ -35,25 +35,34 @@ class Allure_Inventory_Model_Cron {
 		$file = $path . DS . $name;
 		$storeId=$website->getStoreId();
 		$stockId=$website->getStockId();
-		$category=Mage::getModel('catalog/category')->load(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
+
+		$subCollection=Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
+		$subCollection->addAttributeToSelect('entity_id')->setStoreId($storeId);
+		$ids=array();
+		foreach ($subCollection as  $product){
+			$ids[]=$product->getId();
+		}
+		
+		
 		$collection = Mage::getResourceModel('reports/product_lowstock_collection')
-			->addAttributeToSelect('*')
-			->setStoreId($storeId)
-			->joinInventoryItem('qty')
-			->joinInventoryItem('stock_id')
-			->useManageStockFilter($storeId)
-			->useNotifyStockQtyFilter($storeId)
-			->setOrder('qty', Varien_Data_Collection::SORT_ORDER_ASC);
-			$collection->addAttributeToFilter('stock_id', array('eq' => $stockId));
-			//$collection->addCategoryFilter($category);
-			$collection->addAttributeToFilter(
-					'status',
-					array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
-					);
-			$collection->addAttributeToFilter('type_id', 'simple');
-			if( $storeId ) {
-				$collection->addStoreFilter($storeId);
-			}
+		->addAttributeToSelect('*')
+		->setStoreId($storeId)
+		->joinInventoryItem('qty')
+		->joinInventoryItem('stock_id')
+		->useManageStockFilter($storeId)
+		->useNotifyStockQtyFilter($storeId)
+		->setOrder('qty', Varien_Data_Collection::SORT_ORDER_ASC);
+		$collection->addAttributeToFilter('stock_id', array('eq' => $stockId));
+		//$collection->addCategoryFilter($category);
+		$collection->addAttributeToFilter(
+				'status',
+				array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+		);
+		$collection->addAttributeToFilter('type_id', 'simple');
+		$collection->addAttributeToFilter('entity_id',array('in' => $ids));
+		if( $storeId ) {
+			$collection->addStoreFilter($storeId);
+		}
 			
 			$fp = fopen($file, 'w');
 			$csvHeader = array("Id","sku", "Product Name","Qty");
