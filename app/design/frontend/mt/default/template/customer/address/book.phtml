@@ -98,8 +98,8 @@
                     </address>
                     
                     <div class="mt-additional-address-btns">
-                    	<button type="button" title="Default Billing Address" class="button btn-1"><span class="mt-btn-name">Default Billing Address</span></button>
-                    	<button type="button" title="Default Shipping Address" class="button btn-2"><span class="mt-btn-name">Default Shipping Address</span></button>
+                    	<button onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_billing');" type="button" title="Default Billing Address" class="button btn-1"><span class="mt-btn-name">Default Billing Address</span></button>
+                    	<button onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_shipping');" type="button" title="Default Shipping Address" class="button btn-2"><span class="mt-btn-name">Default Shipping Address</span></button>
                     </div>
                     
                     <p class="additional-address-links">
@@ -127,6 +127,8 @@
     <button type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
 </div>
 <?php endif; ?>
+
+ <input id="customer-address-form-key" type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 <script type="text/javascript">
 //<![CDATA[
     function deleteAddress(addressId) {
@@ -136,4 +138,30 @@
         return false;
     }
 //]]>
+</script>
+
+<script>
+function setDefaultBilling(id,type){
+	var form_key = jQuery('#customer-address-form-key').val();
+	var flag = 1;
+	jQuery.fancybox.showLoading();
+    jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/address/setDefaultAddressAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'id':id,type:type,'form_key':form_key},
+        success: function(data) {
+            if(data.success){
+                window.location.reload();
+            }
+            jQuery.fancybox.hideLoading();
+        	jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+        }
+    });
+}
+
+function setDefaultShipping(flag){
+	
+}
 </script>

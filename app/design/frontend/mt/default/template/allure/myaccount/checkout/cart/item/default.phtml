@@ -64,8 +64,8 @@ $typeId = $_item->getProduct()->getTypeId();
         <?php else: ?>
             <?php echo $this->escapeHtml($this->getProductName()) ?>
         <?php endif; ?>
-        <span class="mt-cart-added-at"><?php echo "Added ".date('M d,Y H:i a',strtotime($_item->getCreatedAt()))?></span>
-        </h2>
+         </h2>
+         <span class="mt-cart-added-at"><?php echo "Added ".date('M d,Y H:i a',strtotime($_item->getCreatedAt()))?></span>
         <?php if ($_options = $this->getOptionList()):?>
         <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
         <div class="product-options" style="display:none;">-->

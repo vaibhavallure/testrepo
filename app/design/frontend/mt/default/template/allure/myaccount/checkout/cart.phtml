@@ -22,7 +22,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
     <?php echo $this->getChildHtml('form_before') ?>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
     <form id="shopping-cart-form" action="<?php echo $this->getUrl('checkout/cart/updatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
-       <?php echo $this->getBlockHtml('formkey'); ?>
+       <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
         <fieldset>
             <table id="shopping-cart-table" class="data-table cart-table" width="100%" border="0">
                 <thead class="shop-titles">
@@ -104,6 +104,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
             cart[item_id] = qtyData;
             cart = JSON.stringify(cart);
             var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
+            showLoadingFancybox();
             jQuery.ajax({
 		        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/updateQtyAjax';?>',
 		        dataType : 'json',
@@ -111,11 +112,10 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 				data: {'cart':cart,'price':price,'qty':qty,'form_key':form_key},
 		        success: function(data) {
 		        	if(data.success){
-		        		jQuery('.mt-my-cart #shopping-cart-totals-table').remove();
-			        	jQuery('.mt-my-cart .totals').html(data.total_html);
-			        	parent.find('.cart_col5 .cart-price .price').remove();
-			        	parent.find('.cart_col5 .cart-price').html(data.price);
+		        		jQuery('.mt-my-cart').html("");
+			        	jQuery('.mt-my-cart').html(data.html);
 		        	}
+		        	hideLoadingFancybox();
 		        }
 		    });
         }
@@ -169,7 +169,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 			var parent = jQuery(this).parent().parent().parent();
 			
 			if( itemXhr == null ) {
-				jQuery('#item-loader-'+item_id).show();
+				showLoadingFancybox();
 				itemXhr =	jQuery.ajax({
 			        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/removeItemAjax';?>',
 			        dataType : 'json',
@@ -177,12 +177,11 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 					data: {'id':item_id,'form_key':form_key},
 			        success: function(data) {
 			        	if(data.success){
-			        		parent.remove();
-			        		jQuery('.mt-my-cart #shopping-cart-totals-table').remove();
-				        	jQuery('.mt-my-cart .totals').html(data.total_html);
+			        		jQuery('.mt-my-cart').html("");
+				        	jQuery('.mt-my-cart').html(data.html);
 			        	}
 			        	itemXhr = null;
-			        	jQuery('#item-loader-'+item_id).hide();
+			        	hideLoadingFancybox();
 			        }
 			    });
 			}

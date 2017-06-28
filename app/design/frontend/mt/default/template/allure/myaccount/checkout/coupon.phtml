@@ -53,6 +53,8 @@ function applyCoupan(remove){
 	 var coupon_code = jQuery('#coupon_code2').val();
 	 if(remove)
     	 remove = 1;
+
+	 showLoadingFancybox();
 	 jQuery.ajax({
 	        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/couponPostAjax';?>',
 	        dataType : 'json',
@@ -60,9 +62,10 @@ function applyCoupan(remove){
 			data: {coupon_code:coupon_code,remove:remove},
 	        success: function(data) {
 	        	if(data.success){
-	        		jQuery('.mt-myaccount-promo').html("");
-	        		jQuery('.mt-myaccount-promo').html(data.html);
+	        		jQuery('.mt-my-cart').html("");
+		        	jQuery('.mt-my-cart').html(data.html);
 	        	}
+	        	hideLoadingFancybox();
 	        }
 	    });
 }

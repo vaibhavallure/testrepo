@@ -40,17 +40,23 @@ $typeId = $_item->getProduct()->getTypeId();
               	$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
               }
               
+              $storeList = array();
+              $stores = Mage::app()->getStores();
+              foreach ($stores as $store) {
+              	$storeList[$store->getId()] = $store->getName();
+              }
+              
               ?>
 
 <tr data-id="<?php echo $_item->getId()?>" <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
     <td class="cart_col1"> 
         <?php if (1 || $isVisibleProduct && $this->hasProductUrl()):?>
-            <a href="<?php echo $url ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
+            <a href="<?php echo $url ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(130,150); ?>" width="130" height="150" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
         <?php else: ?>
             <?php //echo $this->escapeHtml($this->getProductName()) ?>
         <?php endif;?>
         
-        <a data-img="<?php echo $this->getProductThumbnail()->resize(350,350); ?>" class="mt-piercing-photo" href="javascript:void(0);" >Piercing Photo</a>
+        <a data-img="<?php echo $this->getProductThumbnail()->resize(350,350); ?>" class="mt-piercing-photo" href="javascript:void(0);" >View Piercing Photo</a>
     </td>
 
     <td class="cart_col2">
@@ -60,8 +66,10 @@ $typeId = $_item->getProduct()->getTypeId();
         <?php else: ?>
             <?php echo $this->escapeHtml($this->getProductName()) ?>
         <?php endif; ?>
-        <span class="mt-purchase-added-at"><?php echo "Purchased: ".date('M d,Y H:i a',strtotime($_item->getCreatedAt()))?></span>
         </h2>
+        <span class="mt-purchase-added-at"><?php echo "Purchased: ".date('M d,Y H:i a',strtotime($_item->getCreatedAt()))?></span>
+        <button class="button"><?php echo $storeList[$_item->getStoreId()]?></button>
+        
         <?php if ($_options = $this->getOptionList()):?>
         <div class="item-options">
             <?php foreach ($_options as $_option) : ?>
@@ -86,7 +94,7 @@ $typeId = $_item->getProduct()->getTypeId();
     
     <td  class="cart_col4">
         <div class="qty-wrap">
-            <input value="<?php echo number_format($_item->getQtyOrdered()) ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12"  />
+        	<span><?php echo number_format($_item->getQtyOrdered()) ?></span>
         </div>
     </td>
     
@@ -97,10 +105,10 @@ $typeId = $_item->getProduct()->getTypeId();
     
     <td  class="cart_col6">
         <div class="mt-purchase-btn">
-        	<button class="button" onclick="window.open('<?php echo $this->getUrl('sales/order/print')."order_id/".$_item->getOrderId()."/"?>');">See Receipts</button>
+        	<button data-url="<?php echo $this->getUrl('sales/order/print')."order_id/".$_item->getOrderId()."/"?>" class="button" onclick="openPurchaseWindow(this)">See Receipts</button>
         </div>
         <div class="mt-purchase-btn">
-        	<button class="button" onclick="window.open('<?php echo $this->getUrl('sales/order/reorder')."order_id/".$_item->getOrderId()."/"?>');">Reorder</button>
+        	<button data-url="<?php echo $this->getUrl('sales/order/reorder')."order_id/".$_item->getOrderId()."/"?>" class="button" onclick="openPurchaseWindow(this)">Reorder</button>
         </div>
         <div class="mt-purchase-btn">
         	<button class="button">Share</button>

@@ -360,11 +360,12 @@ Customer account address book
         <label>Customer My Account Address Book</label>
         <!-- Mage_Customer -->
         <update handle="customer_account"/>
+         
         <reference name="my.account.wrapper">
             <block type="customer/address_book" name="address_book" before="-" template="customer/address/book.phtml"/>
         </reference>
     </customer_address_index>
-
+    
 <!--
 Customer account address edit page
 -->

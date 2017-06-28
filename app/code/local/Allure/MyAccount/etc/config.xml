@@ -7,6 +7,15 @@
 		</Allure_MyAccount>
 	</modules>
 	<global>
+	
+		<controllers>
+             <Allure_MyAccount>
+                  <rewrite>
+                      <wishlist>Allure_MyAccount_Wishlist_Index</wishlist>
+                  </rewrite>
+             </Allure_MyAccount>
+        </controllers> 
+		
 		<blocks>
 			<myaccount>
 				<class>Allure_MyAccount_Block</class>
@@ -32,6 +41,13 @@
 					<frontName>myaccount</frontName>
 				</args>
 			</myaccount>
+			<wishlist>
+                <args>
+                    <modules>
+                       <Allure_MyAccount before="Mage_Wishlist">Allure_MyAccount_Wishlist</Allure_MyAccount>
+                    </modules>
+                </args>
+            </wishlist>
 		</routers>
     	<layout>
         	<updates>

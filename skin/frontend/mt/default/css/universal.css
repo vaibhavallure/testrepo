@@ -151,7 +151,7 @@
 
 div.tab {
     overflow: hidden;
-    width: 45%;
+    width: 100%;
 }
 
 /* Style the buttons inside the tab */
@@ -163,6 +163,8 @@ div.tab button {
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 
@@ -740,7 +742,17 @@ div.a-column.a-span-last {
 #myaccount-shopping-cart-table .cart_col4, 
 #myaccount-shopping-cart-table .cart_col5, 
 #myaccount-shopping-cart-table .cart_col6 {
-    vertical-align: middle;
+    /* vertical-align: middle; */
+    padding: 10px 0px 0px 0px;
+}
+
+#myaccount-shopping-cart-table .cart_col6 .mt-purchase-btn{
+	padding-bottom: 10px;
+}
+
+#myaccount-shopping-cart-table tr td img {
+	width: 130px;
+	height: 150px;	
 }
 
 
@@ -845,6 +857,7 @@ div.a-column.a-span-last {
     height: 200px;
 }
 
+.mt-my-wishlist  #wishlist-table .w-remove a ,
 .mt-my-cart #shopping-cart-table .w-remove a:link {
     background: url(../images/wish-x-remove.png) no-repeat 0px 0px;
     text-decoration: none;
@@ -856,4 +869,23 @@ div.a-column.a-span-last {
 	background-image: url(../images/loading.gif);
     background-repeat: no-repeat;
     height: 25px;
+}
+
+.mt-my-wishlist .data-table#wishlist-table tbody tr:last-child {
+	background: none ! important;
+	border-bottom: none ! important;	
+}
+
+.mt-my-wishlist .myaccount-update-wishlist-btn{
+	width: 87%;
+    text-align: center ! important;	
+}
+
+.mt-my-wishlist #wishlist-table td.last {
+    padding-top: 20px;
+}
+
+.mt-new-purchase #myaccount-shopping-cart-table .mt-piercing-photo{
+	display: inline-block;
+	padding-left: 20px;
 }

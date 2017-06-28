@@ -1068,10 +1068,9 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     				$result['success'] = 1;
     				$result['message'] = $this->__('Item was removed successfully.');
     				
-    				$total_html = $this->getLayout()->createBlock('checkout/cart_totals')
-    					->setTemplate('checkout/cart/totals.phtml')->toHtml();
-    				
-    				$result['total_html'] = $total_html;
+    				$this->loadLayout('myaccount_checkout_cart_layout');
+    				$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
+    				$result['html']  = $html;
     				
     			} catch (Exception $e) {
     				$result['success'] = 0;
@@ -1117,15 +1116,11 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     			$result['success'] = 1;
     			$result['message'] = $this->__('Qty Updated successfully.');
     			
-    			$total_html = $this->getLayout()->createBlock('checkout/cart_totals')
-    			->setTemplate('checkout/cart/totals.phtml')->toHtml();
     			
-    			$result['total_html'] = $total_html;
-    			$price = $this->getRequest()->getParam('price');
-    			$qty = $this->getRequest()->getParam('qty');
-    			if(!empty($qty) && !empty($price))
-    				$result['price'] = Mage::helper('checkout')
-    						->formatPrice(number_format($price*$qty));
+    			$this->loadLayout('myaccount_checkout_cart_layout');
+    			$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
+    			$result['html']  = $html;
+    			
     		}
     		$this->_getSession()->setCartWasUpdated(true);
     	} catch (Mage_Core_Exception $e) {
@@ -1172,38 +1167,29 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     		
     		if ($codeLength) {
     			if ($isCodeLengthValid && $couponCode == $this->_getQuote()->getCouponCode()) {
-    				$this->_getSession()->addSuccess(
-    						$this->__('Coupon code "%s" was applied.', Mage::helper('core')->escapeHtml($couponCode))
-    						);
     				$result['success'] = 1;
     				$result['message'] = $this->__('Coupon code "%s" was applied.', Mage::helper('core')
     							->escapeHtml($couponCode));
     				$this->_getSession()->setCartCouponCode($couponCode);
     			} else {
-    				$this->_getSession()->addError(
-    						$this->__('Coupon code "%s" is not valid.', Mage::helper('core')->escapeHtml($couponCode))
-    						);
     				$result['success'] = 1;
     				$result['message'] = $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->escapeHtml($couponCode));
     				$this->_getSession()->setCartCouponCode($couponCode);
     			}
     			
     		} else {
-    			$this->_getSession()->addSuccess($this->__('Coupon code was canceled.'));
-    			$result['success'] = 0;
+    			$result['success'] = 1;
     			$result['message'] = $this->__('Coupon code was canceled.');
     		}
     		
-    		$coupan_html = $this->getLayout()->createBlock('checkout/cart_coupon')
-    		->setTemplate('allure/myaccount/checkout/coupon.phtml')->toHtml();
-    		
-    		$result['html']=$coupan_html;
+    		$this->loadLayout('myaccount_checkout_cart_layout');
+    		$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
+    		$result['html']  = $html;
     		
     	} catch (Mage_Core_Exception $e) {
     		$result['success'] = 0;
     		$result['message'] = $this->__('Coupon code not applied.');
     	} catch (Exception $e) {
-    		$this->_getSession()->addError($this->__('Cannot apply the coupon code.'));
     		$result['success'] = 0;
     		$result['message'] = $this->__('Cannot apply the coupon code.');
     	}
@@ -1256,11 +1242,11 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     		}
     	}
     	
-    	$coupan_html = $this->getLayout()->createBlock('giftcards/coupon')
-    	->setTemplate('allure/myaccount/checkout/giftcard/coupon.phtml')->toHtml();
+    	$this->loadLayout('myaccount_checkout_cart_layout');
+    	$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
+    	$result['html']  = $html;
     	
     	$result['success'] = 1;
-    	$result['html'] = $coupan_html;
     	$this->getResponse()->setHeader('Content-type', 'application/json');
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
@@ -1285,10 +1271,9 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     	$result['success'] = 1;
     	$result['message'] = $this->__('Gift card Removed');
     	
-    	$coupan_html = $this->getLayout()->createBlock('giftcards/coupon')
-    	->setTemplate('allure/myaccount/checkout/giftcard/coupon.phtml')->toHtml();
-    	
-    	$result['html'] = $coupan_html;
+    	$this->loadLayout('myaccount_checkout_cart_layout');
+    	$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
+    	$result['html']  = $html;
     	
     	$this->getResponse()->setHeader('Content-type', 'application/json');
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));

@@ -22,7 +22,7 @@
                             echo '<br/><br/>';
                         }
                         echo '<p><b>'.$currencySymbol.$v['applied'].' '.$this->__('applied from Gift Card').' **********'.$v['code'].'.</b><br/>';
-                        echo $this->__('Remaining card balance').': '.$currencySymbol.$v['remaining'].'.</p><a href="'.$this->getUrl("giftcards/cart/deActivateGiftCard/id/$k").'" class="button_coupon" style="position:relative; top:-20px;"><span><span>'.$this->__('Remove').'</span></span></a>';
+                        echo $this->__('Remaining card balance').': '.$currencySymbol.$v['remaining'].'.</p><a onclick="removeCoupan('.$k.')" href="javascript:void(0);" class="button_coupon" style="position:relative; top:-20px;"><span><span>'.$this->__('Remove').'</span></span></a>';
                         $temp = 1;
                     }
         ?>
@@ -35,6 +35,7 @@
 
         function applyGiftcard(remove){
        	 var coupon_code = jQuery('#giftcard_code').val();
+       	 showLoadingFancybox();
        	 jQuery.ajax({
        	        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/activateGiftCardAjax';?>',
        	        dataType : 'json',
@@ -42,11 +43,29 @@
        			data: {giftcard_code:coupon_code,remove:remove},
        	        success: function(data) {
        	        	if(data.success){
-       	        		jQuery('.mt-myaccount-giftcard').html("");
-    	        		jQuery('.mt-myaccount-giftcard').html(data.html);
+       	        		jQuery('.mt-my-cart').html("");
+			        	jQuery('.mt-my-cart').html(data.html);
        	        	}
+       	        	hideLoadingFancybox();
        	        }
        	    });
+       }
+
+       function removeCoupan(id){
+    	   showLoadingFancybox();
+    	   jQuery.ajax({
+      	        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/deActivateGiftCardAjax';?>',
+      	        dataType : 'json',
+      			type : 'POST',
+      			data: {id:id},
+      	        success: function(data) {
+      	        	if(data.success){
+      	        		jQuery('.mt-my-cart').html("");
+			        	jQuery('.mt-my-cart').html(data.html);
+      	        	}
+      	        	hideLoadingFancybox();
+      	        }
+      	    });
        }
     </script>
 

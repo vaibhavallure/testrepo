@@ -85,6 +85,12 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$collection->setCurPage($pageNo);
 		$collection->setPageSize($limit);
 		
+		$storeList = array();
+		$stores = Mage::app()->getStores();
+		foreach ($stores as $store) {
+			$storeList[$store->getId()] = $store->getName();
+		}
+		
 		$html = '';
 		foreach ($collection as $_item){
 			$product = $_item->getProduct();
@@ -95,22 +101,25 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 				$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
 			}
 			
+			$receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
+			$reorderUrl = Mage::getUrl("sales/order/reorder")."order_id/".$_item->getOrderId()."/";
 			$html .= '<tr data-id="'.$_item->getId().'">';
 			$html .= '<td class="cart_col1">';
 			$html .= '<a href="'.$url.'" title="'.$product->getName().'" class="product-image">'.
 					'<img src="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(74,96).'" width="74" height="96" alt="'.$product->getName().'">'.
 					'</a>'.
-					'<a data-img="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(350,350).'" class="mt-piercing-photo" href="javascript:void(0);">Piercing Photo</a>'.
+					'<a data-img="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(350,350).'" class="mt-piercing-photo" href="javascript:void(0);">View Piercing Photo</a>'.
 					'</td>';
 			
 			$html .= '<td class="cart_col2">';
 			$html .= '<h2 class="product-name">';
-			$html .=  '<a href="'.$url.'">'.$product->getName().'</a>'.
-					'<span class="mt-purchase-added-at">Purchased: '.date('M d,Y H:i a',strtotime($_item->getCreatedAt())).'</span></h2></td>';
+			$html .=  '<a href="'.$url.'">'.$product->getName().'</a></h2>'.
+					'<span class="mt-purchase-added-at">Purchased: '.date('M d,Y H:i a',strtotime($_item->getCreatedAt())).'</span>'.
+					'<button class="button">'.$storeList[$_item->getStoreId()].'</button></td>';
 			
 			$html .= '<td class="cart_col4">';
 			$html .=  '<div class="qty-wrap">';
-			$html .=  '<input value="'.number_format($_item->getQtyOrdered()).'" size="4" title="Qty" class="input-text qty" maxlength="12">'.
+			$html .=  '<span>'.number_format($_item->getQtyOrdered()).'</span>'.
 					  '</div></td>';
 			
 			$html .= '<td class="cart_col3">';
@@ -119,10 +128,10 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			
 			$html .= '<td class="cart_col6">';
 			$html .= '<div class="mt-purchase-btn">';
-			$html .= '<button class="button" onclick="window.open("'.Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId().'/");">See Receipts</button>';
+			$html .= '<button data-url="'.$receiptUrl.'" class="button" onclick="openPurchaseWindow(this)">See Receipts</button>';
 			$html .= '</div>';
 			$html .= '<div class="mt-purchase-btn">';
-			$html .= '<button class="button" onclick="window.open("'.Mage::getUrl("sales/order/reorder")."order_id/".$_item->getOrderId().'/");">Reorder</button>';
+			$html .= '<button data-url="'.$reorderUrl.'" class="button" onclick="openPurchaseWindow(this)">Reorder</button>';
 			$html .= '</div>';
 			$html .= '<div class="mt-purchase-btn">';
 			$html .= '<button class="button">Share</button>';

@@ -54,14 +54,14 @@ $totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
 					width: 350px; height: 350px;">
 					<img id="frame-img" alt="" src="" />
 				</div>
-				<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;">
+				<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:void(0);">
 					<span></span>
 				</a>
-				<a title="Next" class="fancybox-nav fancybox-next" href="javascript:;">
+				<a title="Next" class="fancybox-nav fancybox-next" href="javascript:void(0);">
 					<span></span>
 				</a>
 			</div>
-			<a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a>
+			<a title="Close" class="fancybox-item fancybox-close" href="javascript:void(0);"></a>
 		</div>
 	</div>
 </div>
@@ -99,11 +99,11 @@ var totalPageItem = <?php echo $totalPageSizeItem?>;
 jQuery(function($){
 	$('#myaccount-shopping-cart-table').bind('scroll', function(){
 		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
-			jQuery('.loader').css({"display":"block"});
 			if(pageItem<=totalPageItem){
 				 if( xhr == null ) {
 				    //xhr.abort();
 				    //xhr = null;
+				    showLoadingFancybox();
 				 	xhr =	jQuery.ajax({
 						//async: false,
 				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getPurchasedItems';?>',
@@ -113,13 +113,14 @@ jQuery(function($){
 				        success: function(data) {
 				        	jQuery('#myaccount-shopping-cart-table tbody').append(data.data.html);
 				        	jQuery('.loader').css({"display":"none"});
+				        	hideLoadingFancybox();
 				        }
 				    });
 				 	xhr = null;
 				 	pageItem ++;
 				}
 		    }else{
-		    	jQuery('.loader').css({"display":"none"});
+		    	hideLoadingFancybox();
 		    }
 		}
  	});
@@ -132,35 +133,35 @@ jQuery(document).ready(function(){
 		jQuery('.mt-piercing-photo').removeClass('active');
 		jQuery(this).addClass('active');
 		jQuery('#frame-img').attr('src',imgSrc);
-		jQuery('.fancybox-overlay-fixed').show();
+		jQuery('.mt-new-purchase .fancybox-overlay-fixed').show();
 
 		var selector = jQuery('.mt-piercing-photo.active').parent().parent().next();
 		var next = selector.attr('data-id');
 		if(next!="undefined" && next!=null){
-			jQuery('.fancybox-nav.fancybox-next').show();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
 		}else{
-			jQuery('.fancybox-nav.fancybox-next').hide();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').hide();
 		}
 
 		var selector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
 		var prev = selector.attr('data-id');
 		if(prev!="undefined" && prev!=null){
-			jQuery('.fancybox-nav.fancybox-prev').show();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
 		}else{
-			jQuery('.fancybox-nav.fancybox-prev').hide();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').hide();
 		}
 	});
 
 	jQuery('.fancybox-close').click(function(){
-		jQuery('.fancybox-overlay-fixed').hide();
+		jQuery('.mt-new-purchase .fancybox-overlay-fixed').hide();
 	});
 
-	jQuery('.fancybox-nav.fancybox-prev').click(function(){
+	jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').click(function(){
 		toPrevious();
 	});
 
 
-	jQuery('.fancybox-nav.fancybox-next').click(function(){
+	jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').click(function(){
 		toNext();
 	});
 	
@@ -178,15 +179,15 @@ function toNext(){
 		var prevSelector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
 		var prev = prevSelector.attr('data-id');
 		if(prev!="undefined" && prev!=null){
-			jQuery('.fancybox-nav.fancybox-prev').show();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
 		}
 
 		var nextSelector = jQuery('.mt-piercing-photo.active').parent().parent().next();
 		var next = nextSelector.attr('data-id');
 		if(next!="undefined" && next!=null){
-			jQuery('.fancybox-nav.fancybox-next').show();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
 		}else{
-			jQuery('.fancybox-nav.fancybox-next').hide();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').hide();
 		}
 		
 	}
@@ -204,17 +205,23 @@ function toPrevious(){
 		var nextSelector = jQuery('.mt-piercing-photo.active').parent().parent().next();
 		var next = nextSelector.attr('data-id');
 		if(next!="undefined" && next!=null){
-			jQuery('.fancybox-nav.fancybox-next').show();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
 		}
 
 		var prevSelector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
 		var prev = prevSelector.attr('data-id');
 		if(prev!="undefined" && prev!=null){
-			jQuery('.fancybox-nav.fancybox-prev').show();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
 		}else{
-			jQuery('.fancybox-nav.fancybox-prev').hide();
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').hide();
 		}
 	}
+}
+
+
+function openPurchaseWindow(event){
+	var url = jQuery(event).attr('data-url');
+	window.open(url);
 }
 
 </script>

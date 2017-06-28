@@ -117,4 +117,14 @@
 		jQuery('.tabcontent').removeClass('active');		
 		jQuery('.tabcontent.'+currentTab).addClass('active');
 	}
+
+	function showLoadingFancybox(){
+		jQuery.fancybox.showLoading();
+        jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+	}
+
+	function hideLoadingFancybox(){
+		jQuery.fancybox.hideLoading();
+    	jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+	}
 </script>

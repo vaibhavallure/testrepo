@@ -91,11 +91,12 @@ var totalPages = <?php echo $totalPageSize?>;
 jQuery(function($){
 	$('.my-account .mt-my-orders .box').bind('scroll', function(){
 		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
-			jQuery('.loader').css({"display":"block"});
+			
 			if(page<=totalPages){
 				 if( xhr == null ) {
 				    //xhr.abort();
 				    //xhr = null;
+				    showLoadingFancybox();
 				 	xhr =	jQuery.ajax({
 						//async: false,
 				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getOrderHistory';?>',
@@ -104,14 +105,14 @@ jQuery(function($){
 						data: {'page':page,'limit':10},
 				        success: function(data) {
 				        	jQuery('#my-orders-table').append(data.data.html);
-				        	jQuery('.loader').css({"display":"none"});
+				        	hideLoadingFancybox();
 				        }
 				    });
 				 	xhr = null;
 				 	page ++;
 				}
 		    }else{
-		    	jQuery('.loader').css({"display":"none"});
+		    	hideLoadingFancybox();
 		    }
 		}
  	});

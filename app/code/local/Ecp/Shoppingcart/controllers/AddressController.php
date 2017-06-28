@@ -70,4 +70,64 @@ class Ecp_Shoppingcart_AddressController extends Mage_Customer_AddressController
         }
         return $this->_redirectError(Mage::getUrl('*/*/edit', array('id' => $address->getId())));
     }
+    
+    public function setDefaultAddressAjaxAction(){
+    	if (!$this->_validateFormKey()) {
+    		return $this->_redirect('*/*/');
+    	}
+    	
+    	if ($this->getRequest()->isPost()) {
+    		$customer = $this->_getSession()->getCustomer();
+    		/* @var $address Mage_Customer_Model_Address */
+    		$address  = Mage::getModel('customer/address');
+    		$addressId = $this->getRequest()->getParam('id');
+    		if ($addressId) {
+    			$existsAddress = $customer->getAddressById($addressId);
+    			if ($existsAddress->getId() && $existsAddress->getCustomerId() == $customer->getId()) {
+    				$address->setId($existsAddress->getId());
+    			}
+    		}
+    		
+    		try {
+    			$type = $this->getRequest()->getParam('type', false);
+    			
+    			if($type=='default_billing'){
+    				$address->setCustomerId($customer->getId())
+    					->setIsDefaultBilling(1);
+    			}
+    			
+    			if($type=='default_shipping'){
+    				$address->setCustomerId($customer->getId())
+    				->setIsDefaultShipping(1);
+    			}
+    			
+    				$address->save();
+    				if($type=='default_billing'){
+    					Mage::getModel('checkout/type_multishipping')
+    					->setQuoteCustomerBillingAddress($addressId);
+    				}
+    				$result['message'] = $this->__('The address has been saved.');
+    				$result['success'] = 1;
+    				
+    				/* $this->loadLayout('customer_address_index');
+    				$html = $this->getLayout()->getBlock('address_book')->toHtml();
+    				$result['html']  = $html; */
+    				
+    		} catch (Mage_Core_Exception $e) {
+    			$result['success'] = 0;
+    			$result['message'] = $this->__('Cannot save address.');
+    			$result['error'] = $e->getMessage();
+    		} catch (Exception $e) {
+    			$result['success'] = 0;
+    			$result['message'] = $this->__('Cannot save address.');
+    			$result['error'] = $e->getMessage();
+    		}
+    		$this->getResponse()->setHeader('Content-type', 'application/json');
+    		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    	}
+    }
+    
+    public function setDefaultShippingAjaxAction(){
+    	
+    }
 }
