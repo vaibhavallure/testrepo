@@ -4,7 +4,7 @@ class Allure_Inventory_Model_Cron {
 		foreach (Mage::app()->getWebsites() as $website) {
 			 //echo $website->getId();
 		    $this->writeData($website->getId());
-		    Mage::log("Purchase Order Cron",Zend_log::DEBUG,'purchae_order',true);
+		   
 		}
 	}
 
@@ -34,6 +34,8 @@ class Allure_Inventory_Model_Cron {
 			
 			$subCollection=Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
 			$subCollection->addAttributeToSelect('entity_id')->setStoreId($storeId);
+			$subCollection->getSelect()->group('e.entity_id');
+			
 			$ids=array();
 			foreach ($subCollection as  $product){
 				$ids[]=$product->getId();
@@ -77,6 +79,7 @@ class Allure_Inventory_Model_Cron {
 				$this->send_email($websiteId);
 			}
 		} catch (Exception $e) {
+		    Mage::log("Exception Occured:".$e->getMessage(),Zend_log::DEBUG,'lowstock',true);
 		}
 	}
 	public function send_email($websiteId) {
@@ -108,7 +111,7 @@ class Allure_Inventory_Model_Cron {
 				$mailTemplate->send($recipientArr);
 				
 			} catch (Exception $e) {
-				Mage::log($e,Zend_log::DEBUG,'purchae_order',true);
+				Mage::log($e,Zend_log::DEBUG,'lowstock',true);
 			}
 			
 				
@@ -120,9 +123,10 @@ class Allure_Inventory_Model_Cron {
 			$model->setData($logData);
 			$model->save()->getId();
 			endif;
+			Mage::log("Email Sent",Zend_log::DEBUG,'lowstock',true);
 			
 		} catch (Exception $e) {
-			Mage::log("Exception Sending mail:".$e,Zend_log::DEBUG,'purchae_order',true);
+			Mage::log("Exception Sending mail:".$e,Zend_log::DEBUG,'lowstock',true);
 		}
 	}
 	
