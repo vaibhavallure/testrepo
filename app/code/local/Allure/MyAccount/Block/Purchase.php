@@ -31,7 +31,6 @@ class Allure_MyAccount_Block_Purchase extends Mage_Checkout_Block_Cart
 	
 	public function getItemHtml($item)
 	{
-		Mage::log(get_class($item),Zend_log::DEBUG,'abc',true);
 		$renderer = $this->getItemRenderer($item->getProductType())->setItem($item);
 		return $renderer->toHtml();
 	}

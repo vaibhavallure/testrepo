@@ -77,9 +77,8 @@
                 <action method="setCartTemplate"><value>allure/myaccount/purchase/purchase.phtml</value></action>
                 <action method="setEmptyTemplate"><value>allure/myaccount/purchase/purchase.phtml</value></action>
                 <action method="chooseTemplate"/>
-                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>allure/myaccount/purchase/item/default.phtml</template></action>
-                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>allure/myaccount/purchase/item/default.phtml</template></action>
-                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>allure/myaccount/purchase/item/default.phtml</template></action>
+                <action method="addItemRender"><type>simple</type><block>myaccount/renderer</block><template>allure/myaccount/purchase/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>myaccount/renderer_configurable</block><template>allure/myaccount/purchase/item/default.phtml</template></action>
 				
             </block>
             
