@@ -27,18 +27,14 @@ $totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
                 </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 0; $prices = array(); $skus = array(); 
-                    	$modelObect = Mage::getModel('sales/order_item');
-                    ?>
+                    <?php $i = 0; $prices = array(); $skus = array(); ?>
                     <?php foreach ($this->getPurchasedItems() as $_item): ?>
-                    	<?php if($_item instanceof $modelObect):?>
                         <?php echo $this->getItemHtml($_item) ?>
                         <?php
                             $prices[$i] = floatval($_item->getPrice());
                             $skus[$i] = $_item->getSku();
                             $i++
                         ?>
-                        <?php endif;?>
                     <?php endforeach ?>
                 </tbody>
             </table>
