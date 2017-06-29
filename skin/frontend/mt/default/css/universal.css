@@ -938,8 +938,10 @@ div.a-column.a-span-last {
 }
 
 .myaccount-cart-card-img{
-	padding-top: 35px;
-    padding-left: 5px;
+	width: 25%;
+    float: left;
+    padding: 20px;
+    opacity: 0.5;
 }
 
 .myaccount-dashbord-img{
@@ -961,8 +963,95 @@ div.a-column.a-span-last {
 
 .addresses-primary address{
 	background: #D0D0D0;
+	margin-top: 10px;
 }
 
-.additional-addresses address{
-	background: #dedede;
+
+
+
+/*Allure DPK Start*/
+
+.block-account .block-content ul li strong{
+font-weight: bold;
+   color: #000000;
 }
+
+.acc-link-img{
+   width: 20px;
+   padding: 10px 5px 10px 0;
+   margin-left: -5px;
+}
+
+.block-account .block-content {
+   background-color: #f1f1f1;
+}
+
+.block-account .block-content ul li {
+   border-bottom: 1px solid #dedede;
+}
+.block-account .block-content {
+   text-transform: uppercase;
+   font-size: 12px;
+}
+
+div.tab button{
+   /*background-color: #f1f1f1;*/
+   float: left;
+   /*border: none;*/
+   outline: none;
+   cursor: pointer;
+   padding: 14px 6%;
+   transition: 0.3s;
+   text-transform: uppercase;
+   font-weight: 600;
+   margin-right: 1px;
+}
+
+
+.mt-myaccount-filter{
+   width: 100%;
+   display: inline-block;
+   padding: 10px 0px 10px 0px;
+   background: #f1f1f1;
+}
+
+.mt-myaccount-pier-location select.mt-filter-select {
+   width: 93%;
+}
+
+.mt-myaccount-filter .mt-filter-select{
+width: 63%;
+}
+
+.mt-myaccount-filter .mt-myaccount-store {
+   width: 37%;
+   float: left;
+   padding-left: 20px;
+}
+
+.mt-myaccount-filter .mt-myaccount-sort {
+   width: 28%;
+   float: right;
+}
+
+#myaccount-shopping-cart-table .mt-purchase-added-at {
+   display: block;
+   font-weight: normal;
+   color: #999;
+}
+
+#myaccount-shopping-cart-table tr td .product-image {
+   padding: 10px 10px 5px 10px;
+   display: inline-block;
+}
+
+
+.my-account .data-table tbody th, .my-account .data-table tbody td:first-child{
+padding-bottom: 8px;
+}
+
+#myaccount-shopping-cart-table .cart-mt h2{
+   padding: 10px 0 5px 0;
+}
+
+/*Allure DPK end*/

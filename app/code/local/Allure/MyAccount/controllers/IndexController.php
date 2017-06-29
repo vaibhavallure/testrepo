@@ -101,19 +101,31 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 				$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
 			}
 			
+			
+			$productName = $product->getName();
+			$productNotAvailableClass = "";
+			$productDescr = $_item->getProduct()->getDescription();
+			if(!$product->getId()){
+				$productName = $_item->getName();
+				$productNotAvailableClass = "current-item-not-available";
+				$productDescr = $_item->getDescription();
+			}
+			
+			
+			
 			$receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
 			$reorderUrl = Mage::getUrl("sales/order/reorder")."order_id/".$_item->getOrderId()."/";
-			$html .= '<tr data-id="'.$_item->getId().'">';
+			$html .= '<tr data-id="'.$_item->getId().'" class="'.$productNotAvailableClass.'">';
 			$html .= '<td class="cart_col1">';
-			$html .= '<a href="'.$url.'" title="'.$product->getName().'" class="product-image">'.
-					'<img src="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(74,96).'" width="74" height="96" alt="'.$product->getName().'">'.
+			$html .= '<a href="'.$url.'" title="'.$productName.'" class="product-image">'.
+					'<img src="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(74,96).'" width="74" height="96" alt="'.$productName.'">'.
 					'</a>'.
 					'<a data-img="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(350,350).'" class="mt-piercing-photo" href="javascript:void(0);">View Piercing Photo</a>'.
 					'</td>';
 			
 			$html .= '<td class="cart_col2">';
 			$html .= '<h2 class="product-name">';
-			$html .=  '<a href="'.$url.'">'.$product->getName().'</a></h2>'.
+			$html .=  '<a href="'.$url.'">'.$productName.'</a></h2>'.
 					'<span class="mt-purchase-added-at">Purchased: '.date('M d,Y H:i a',strtotime($_item->getCreatedAt())).'</span>'.
 					'<button class="button">'.$storeList[$_item->getStoreId()].'</button></td>';
 			
@@ -130,12 +142,14 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			$html .= '<div class="mt-purchase-btn">';
 			$html .= '<button data-url="'.$receiptUrl.'" class="button" onclick="openPurchaseWindow(this)">See Receipts</button>';
 			$html .= '</div>';
-			$html .= '<div class="mt-purchase-btn">';
-			$html .= '<button data-url="'.$reorderUrl.'" class="button" onclick="openPurchaseWindow(this)">Reorder</button>';
-			$html .= '</div>';
-			$html .= '<div class="mt-purchase-btn">';
-			$html .= '<button class="button">Share</button>';
-			$html .= '</div>';
+			if($product->getId()){
+				$html .= '<div class="mt-purchase-btn">';
+				$html .= '<button data-url="'.$reorderUrl.'" class="button" onclick="openPurchaseWindow(this)">Reorder</button>';
+				$html .= '</div>';
+				$html .= '<div class="mt-purchase-btn">';
+				$html .= '<button class="button">Share</button>';
+				$html .= '</div>';
+			}
 			$html .= '</td>';
 			$html .= '</tr>';
 		}
