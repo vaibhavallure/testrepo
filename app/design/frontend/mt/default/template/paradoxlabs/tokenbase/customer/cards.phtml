@@ -66,13 +66,14 @@
 
   		<ul class="mt-new-payment-list">
   		
+  		<?php if( count( $this->getCards() ) > 0 ): ?>
   			<li class="mt-payment-item mt-heading">
-	  			<div class="mt-card-name">Your credit and debit cards</div>
-	  			<div class="mt-expire-date">Expire Date</div>
+	  			<div class="mt-card-name"><?php echo $this->__('Your credit and debit cards')?></div>
+	  			<div class="mt-expire-date"><?php echo $this->__('Expires')?></div>
 	  			<div class="mt-icon"></div>
   			</li>
   		
-  			<?php if( count( $this->getCards() ) > 0 ): ?>
+  			
   			<?php 
   				foreach( $this->getCards() as $card ): 
   			?>
