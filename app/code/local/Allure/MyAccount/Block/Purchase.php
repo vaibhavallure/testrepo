@@ -2,6 +2,15 @@
 
 class Allure_MyAccount_Block_Purchase extends Mage_Checkout_Block_Cart
 {
+	protected function _prepareLayout()
+	{
+		parent::_prepareLayout();
+		$headBlock = $this->getLayout()->getBlock('head');
+		if ($headBlock) {
+			$headBlock->setTitle($this->__('My Products'));
+		}
+	}
+	
 	public function getPurchasedItems(){
 		//if (Mage::getSingleton('customer/session')->isLoggedIn()) {
 			

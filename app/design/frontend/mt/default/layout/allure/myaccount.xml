@@ -74,6 +74,9 @@
             
             <!-- Purchased Item -->
             <block type="myaccount/purchase" name="purchased_items">
+            	<action method="setTitle" translate="title">
+                    <title>My Products</title>
+                </action>
                 <action method="setCartTemplate"><value>allure/myaccount/purchase/purchase.phtml</value></action>
                 <action method="setEmptyTemplate"><value>allure/myaccount/purchase/purchase.phtml</value></action>
                 <action method="chooseTemplate"/>
