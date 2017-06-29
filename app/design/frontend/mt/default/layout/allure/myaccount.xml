@@ -40,7 +40,7 @@
             	<action method="addItemRender"><type>giftcards</type><block>checkout/cart_item_renderer</block><template>webtex/giftcards/cart_item.phtml</template></action>
             	<block type="giftcards/coupon" before="coupon" name="checkout.cart.giftcards" as="giftcards" template="allure/myaccount/checkout/giftcard/coupon.phtml"/>
 
-                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="allure/myaccount/checkout/cart/totals.phtml">
                     <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 </block>
             </block>
@@ -154,7 +154,7 @@
             	<action method="addItemRender"><type>giftcards</type><block>checkout/cart_item_renderer</block><template>webtex/giftcards/cart_item.phtml</template></action>
             	<block type="giftcards/coupon" before="coupon" name="checkout.cart.giftcards" as="giftcards" template="allure/myaccount/checkout/giftcard/coupon.phtml"/>
 
-                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml">
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="allure/myaccount/checkout/cart/totals.phtml">
                     <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 </block>
             </block>
