@@ -45,7 +45,8 @@
         <?php echo $this->getChildHtml('header') ?>        
         <div class="main-container col2-left-layout">
             <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-            <div class="page-title"><h3>
+            <div class="page-title myaccount-page-tilte">
+            	<h2>
                 <?php
                 $request = Mage::app()->getRequest();
                 if(Mage::app()->getRequest()->getModuleName() == 'wishlist')
@@ -74,7 +75,7 @@
                 	}
                 	echo "Hello ".$name;
                 } ?>
-                </h3></div>
+                </h2></div>
             <div class="main">
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
                 <?php echo $this->getChildHtml('global_messages') ?>

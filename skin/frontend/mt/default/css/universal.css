@@ -896,6 +896,23 @@ div.a-column.a-span-last {
 }
 	
 .my-account .mt-my-orders .box.box-no-order {
-    overflow-y: none;
+    overflow-y: hidden;
     height: auto;
+}
+
+.mt-new-myaccount-dashbord .a-column.a-span9 .a-color-secondary,
+.mt-new-myaccount-dashbord .a-column.a-span9 .a-text-normal{
+	color: #3f4048;
+}
+
+.mt-new-myaccount-dashbord .a-column.a-span9 .a-color-secondary{
+	font-size: 14px;
+}
+
+.mt-myaccount-new .myaccount-page-tilte h2{
+	font-size: 24px;
+}
+
+.mt-myaccount-new .myaccount-page-tilte{
+	margin: 16px 0 10px ! important;
 }
