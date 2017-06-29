@@ -12,6 +12,11 @@
                 <button value="<?php echo $this->__('Activate') ?>" onclick="applyGiftcard(true)" class="button_coupon" title="Apply" type="button"><span><span><?php echo $this->__('Apply') ?></span></span>
                 </button>
             </div>
+            
+            <div class="myaccount-discount-msg">
+            	<p></p>
+            </div>
+            
         </form>
 
         <?php $currencySymbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); $temp = 0; ?>
@@ -35,6 +40,12 @@
 
         function applyGiftcard(remove){
        	 var coupon_code = jQuery('#giftcard_code').val();
+       	 if(coupon_code==null || coupon_code==""){
+       		jQuery('.myaccount-discount-msg p').text("Enter coupan code.");
+	        jQuery('.myaccount-discount-msg').show();
+	        return false;
+       	 }
+       	 
        	 showLoadingFancybox();
        	 jQuery.ajax({
        	        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/activateGiftCardAjax';?>',
@@ -45,7 +56,10 @@
        	        	if(data.success){
        	        		jQuery('.mt-my-cart').html("");
 			        	jQuery('.mt-my-cart').html(data.html);
-       	        	}
+       	        	}else{
+      	        		jQuery('.myaccount-discount-msg p').text(data.message);
+          	        	jQuery('.myaccount-discount-msg').show();
+      	        	}
        	        	hideLoadingFancybox();
        	        }
        	    });

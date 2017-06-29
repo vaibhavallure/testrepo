@@ -15,6 +15,11 @@
                     <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="applyCoupan()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>                
                 <?php endif;?>
             </div>
+            
+            <div class="myaccount-promo-code-msg">
+            	<p></p>
+            </div>
+            
         </div>                
     </div>
 </form>
@@ -51,6 +56,13 @@ discountForm.submit = function (remove) {
 
 function applyCoupan(remove){
 	 var coupon_code = jQuery('#coupon_code2').val();
+
+	 if(coupon_code==null || coupon_code==""){
+    		jQuery('.myaccount-promo-code-msg p').text("Enter promo code code.");
+	        jQuery('.myaccount-promo-code-msg').show();
+	        return false;
+     }
+	 
 	 if(remove)
     	 remove = 1;
 
@@ -64,7 +76,10 @@ function applyCoupan(remove){
 	        	if(data.success){
 	        		jQuery('.mt-my-cart').html("");
 		        	jQuery('.mt-my-cart').html(data.html);
-	        	}
+	        	}else{
+  	        		jQuery('.myaccount-promo-code-msg p').text(data.message);
+      	        	jQuery('.myaccount-promo-code-msg').show();
+  	        	}
 	        	hideLoadingFancybox();
 	        }
 	    });

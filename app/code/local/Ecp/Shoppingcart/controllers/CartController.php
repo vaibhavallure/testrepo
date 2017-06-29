@@ -1172,14 +1172,18 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     							->escapeHtml($couponCode));
     				$this->_getSession()->setCartCouponCode($couponCode);
     			} else {
-    				$result['success'] = 1;
+    				$result['success'] = 0;
     				$result['message'] = $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->escapeHtml($couponCode));
     				$this->_getSession()->setCartCouponCode($couponCode);
     			}
     			
     		} else {
-    			$result['success'] = 1;
+    			$result['success'] = 0;
     			$result['message'] = $this->__('Coupon code was canceled.');
+    		}
+    		
+    		if ($this->getRequest()->getParam('remove') == 1) {
+    			$result['success'] = 1;
     		}
     		
     		$this->loadLayout('myaccount_checkout_cart_layout');
@@ -1234,7 +1238,9 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     		$this->_setSessionVars($card);
     		$this->_getQuote()->collectTotals();
     		$result['message'] =  $this->__('Gift Card used');
+    		$result['success'] = 1;
     	}else {
+    		$result['success'] = 0;
     		if($card->getId() && ($card->getCardStatus() == 2)) {
     			$result['message'] = $this->__('Gift Card "%s" was used.', Mage::helper('core')->escapeHtml($giftCardCode));
     		} else {
@@ -1246,7 +1252,6 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     	$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
     	$result['html']  = $html;
     	
-    	$result['success'] = 1;
     	$this->getResponse()->setHeader('Content-type', 'application/json');
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }

@@ -922,3 +922,12 @@ div.a-column.a-span-last {
     padding: 10px 3px 0px 0px;
     margin-left: -5px;
 }
+
+.myaccount-promo-code-msg,
+.myaccount-discount-msg{
+	clear: both;
+    line-height: 2px;
+    margin-bottom: 20px;
+    display: none;
+    margin-left: 23%;
+}
