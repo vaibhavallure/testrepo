@@ -916,3 +916,9 @@ div.a-column.a-span-last {
 .mt-myaccount-new .myaccount-page-tilte{
 	margin: 16px 0 10px ! important;
 }
+
+.acc-link-img{
+	width: 20px;
+    padding: 10px 3px 0px 0px;
+    margin-left: -5px;
+}
