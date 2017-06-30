@@ -358,15 +358,18 @@ div.tab button.active {
 	border-bottom: 1px solid #000 ! important;
 }
 
-.myaccount-index-index .my-account .data-table tr:not(:last-child) {
+.myaccount-index-index .my-account .data-table tr/* :not(:last-child) */ {
     background: none !important;
     line-height: 25px;
     border-bottom: 1px solid #ccc ! important;
+    font-size: 13px;
 }
 
-#shopping-cart-table tr:last-child {
+/* #shopping-cart-table tr:last-child {
     border-bottom: 1px solid #ccc;
-}
+    font-size: 13px;
+    line-height: 25px;
+} */
 
 /*sales order history start*/
 
@@ -542,9 +545,6 @@ div.tab button.active {
 }
 
 
-.myaccount-index-index .my-account .product-name a {
-	font-weight: 100;	
-}
 
 /*Checkout cart end*/
 
@@ -591,6 +591,8 @@ div.tab button.active {
 
 .myaccount-index-index #wishlist-table .ad-wish-mt textarea {
 	background: none;
+	width: 100px;
+    margin-top: 0px;
 }
 
 .myaccount-index-index .mt-my-cart .mt-cart-added-at,
@@ -777,9 +779,6 @@ div.a-column.a-span-last {
 	text-align: center;
 }
 
-.mt-new-purchase .cart-table .product-name {
-	font-weight: normal;	
-}
 
 #myaccount-shopping-cart-table{
 	height: 400px;
@@ -868,6 +867,9 @@ div.a-column.a-span-last {
     background: url(../images/wish-x-remove.png) no-repeat 0px 0px;
     text-decoration: none;
     cursor: pointer;
+    margin-top: 5px;
+   	text-align: center;
+   	width: 88%;
 }
 
 
@@ -883,17 +885,18 @@ div.a-column.a-span-last {
 }
 
 .mt-my-wishlist .myaccount-update-wishlist-btn{
-	width: 87%;
+	width: 83%;
     text-align: center ! important;	
 }
 
 .mt-my-wishlist #wishlist-table td.last {
-    padding-top: 20px;
+    padding-top: 14px;
 }
 
 .mt-new-purchase #myaccount-shopping-cart-table .mt-piercing-photo{
 	display: inline-block;
 	padding-left: 20px;
+	font-size: 13px;
 }
 
 .mt-my-cart .cart-empty,
@@ -1060,6 +1063,24 @@ padding-bottom: 8px;
    padding: 10px 0 5px 0;
 }
 
+
+.ad-wish-mt .charsRemaining {
+   font-size: 9px;
+   margin-left: 0;
+}
+
+.mt-my-cart button.plus,
+.mt-my-wishlist button.plus,
+.mt-my-cart button.minus,
+.mt-my-wishlist button.minus {
+   border: 0px solid #d1d1d1;
+   height: 16px;
+   width: 16px;
+   background-repeat: no-repeat;
+   background-color: transparent;
+} 
+
+
 /*Allure DPK end*/
 
 
@@ -1069,13 +1090,17 @@ padding-bottom: 8px;
 }
 
 .mt-new-purchase .cart-table .cart_col2{
-	width: 30%;
+	width: 35%;
     padding-right: 15px ! important;
+    position: relative;
 }
 
 .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
 	border: 1px solid #ccc;
-    padding: 5px;
+    padding: 0px 20px;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 38px;
 }
 
 .mt-new-purchase .cart-table .cart_col4 .qty-wrap{
