@@ -133,9 +133,25 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 					array('current_config' => $item->getBuyRequest())
 					);
 			
-			$item->mergeBuyRequest($buyRequest);
+			$isadd = false;
+			
+			/* $item->mergeBuyRequest($buyRequest);
 			if ($item->addToCart($cart, true)) {
 				$cart->save()->getQuote()->collectTotals();
+				$isadd = true;
+			} */
+			
+			$productId = $item->getProductId();
+			if($productId){
+				$product = Mage::getModel('catalog/product')
+					->setStoreId(Mage::app()->getStore()->getId())
+					->load($item->getProductId());
+				$params = array();
+				$params['qty'] = $item->getQty();
+				$cart->addProduct($product, $params);
+				$cart->save()->getQuote()->collectTotals();
+				$isadd = true;
+				$item->delete();
 			}
 			
 			$wishlist->save();
@@ -146,18 +162,33 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 			}
 			Mage::helper('wishlist')->calculate();
 			
-			$product = Mage::getModel('catalog/product')
-			->setStoreId(Mage::app()->getStore()->getId())
-			->load($item->getProductId());
 			$productName = Mage::helper('core')->escapeHtml($product->getName());
-			$message = $this->__('%s was added to your shopping cart.', $productName);
 			
-			$result['success'] = 1;
-			$result['message'] = $message;
-			
-			$this->loadLayout('myaccount_wishlist_layout');
-			$html = $this->getLayout()->getBlock('customer.wishlist_myaccount')->toHtml();
-			$result['html']  = $html;
+			if($isadd){
+				$message = $this->__('%s was added to your shopping cart.', $productName);
+				
+				$result['success'] = 1;
+				$result['message'] = $message;
+				
+				$this->loadLayout('myaccount_wishlist_layout');
+				$html = $this->getLayout()->getBlock('customer.wishlist_myaccount')->toHtml();
+				$result['html']  = $html;
+				
+				$content = $this->getLayout()
+				->createBlock('checkout/cart_sidebar')
+				->setTemplate('checkout/cart/sidebar.phtml')
+				->toHtml();
+				$result['top_cart'] = $content;
+				
+				$this->loadLayout('myaccount_checkout_cart_layout');
+				$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
+				
+				$result['cart_html'] = $html;
+			}else{
+				$result['success'] = 0;
+				$message = $this->__('%s was not added to your shopping cart.', $productName);
+				$result['message'] = $message;
+			}
 			
 		} catch (Mage_Core_Exception $e) {
 			$result['success'] = 0;

@@ -256,6 +256,8 @@ function reorderItem(event){
                     jQuery('#just_added').slideUp(1000);
                     jQuery('#topcart-popup').removeClass('just_added');
                 }, 5000);
+            }else{
+                alert(data.message);
             }
         	hideLoadingFancybox();
         }
