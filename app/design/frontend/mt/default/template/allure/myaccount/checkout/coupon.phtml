@@ -9,7 +9,7 @@
             </div>
             <div class="buttons-set">                
                 <?php if(strlen($this->getCouponCode())): ?>
-                    <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button_coupon" onclick="applyCoupan(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
+                    <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button_coupon cancel_coupan" onclick="applyCoupan(true)" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
                     <p class="youhave validation-advice">Promo Code Applied</p>
                 <?php else: ?>
                     <button type="button" title="<?php echo $this->__('Apply') ?>" class="button_coupon" onclick="applyCoupan()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>                

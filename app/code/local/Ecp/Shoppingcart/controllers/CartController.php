@@ -1072,6 +1072,12 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     				$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
     				$result['html']  = $html;
     				
+    				$content = $this->getLayout()
+    				->createBlock('checkout/cart_sidebar')
+    				->setTemplate('checkout/cart/sidebar.phtml')
+    				->toHtml();
+    				$result['top_cart'] = $content;
+    				
     			} catch (Exception $e) {
     				$result['success'] = 0;
     				$result['error'] = $this->__('Can not remove the item.');
@@ -1116,6 +1122,11 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     			$result['success'] = 1;
     			$result['message'] = $this->__('Qty Updated successfully.');
     			
+    			$content = $this->getLayout()
+    				->createBlock('checkout/cart_sidebar')
+    				->setTemplate('checkout/cart/sidebar.phtml')
+    				->toHtml();
+    			$result['top_cart'] = $content;
     			
     			$this->loadLayout('myaccount_checkout_cart_layout');
     			$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();

@@ -53,7 +53,9 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
             $html .= '</tr>';
         }
         
-        $data = array('html'=>$html);
+       	$count =  $request['count'] ;
+       	$count += count($orders);
+       	$data = array('html'=>$html,'order_count'=>$count);
         $jsonData = json_encode(compact('success', 'message', 'data'));
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody($jsonData);
@@ -103,6 +105,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			
 			
 			$productName = $product->getName();
+			$typeId = $product->getTypeId();
 			$productNotAvailableClass = "";
 			$productDescr = $_item->getProduct()->getDescription();
 			if(!$product->getId()){
@@ -118,7 +121,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			
 			
 			$receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
-			$reorderUrl = Mage::getUrl("sales/order/reorder")."order_id/".$_item->getOrderId()."/";
+			$reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
 			
 			$html .= '<tr data-id="'.$_item->getId().'" class="'.$productNotAvailableClass.'">';
 			$html .= '<td class="cart_col1">';
@@ -129,7 +132,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 					'</td>';
 			
 			$html .= '<td class="cart_col2">';
-			$html .= 	'<h2 class="product-name">';
+			$html .= 	'<h2 class="product-name '.$typeId.'">';
 			$html .=  		'<a href="'.$url.'">'.$productName.'</a>'.
 						'</h2>';
 				if(!empty($productDescr)){
@@ -159,7 +162,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			$html .= 	'</div>';
 			if($product->getId()){
 				$html .= '<div class="mt-purchase-btn">';
-				$html .= 	'<button data-url="'.$reorderUrl.'" class="button" onclick="openPurchaseWindow(this)">Reorder</button>';
+				$html .= 	'<button data-item-id="'.$_item->getId().'" class="button" onclick="reorderItem(this)">Reorder</button>';
 				$html .= '</div>';
 				$html .= '<div class="mt-purchase-btn">';
 				$html .= 	'<button class="button">Share</button>';

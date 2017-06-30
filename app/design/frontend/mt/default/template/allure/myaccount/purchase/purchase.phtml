@@ -228,4 +228,38 @@ function openPurchaseWindow(event){
 	window.open(url);
 }
 
+function reorderItem(event){
+	var item_id = jQuery(event).attr('data-item-id');
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'sales/order/reorderItemAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'item_id':item_id},
+        success: function(data) {
+            if(data.success){
+            	/* jQuery('#new-mt-myproduct-cart .totals #shopping-cart-totals-table').html("");
+				var content = jQuery(data.total).find('#shopping-cart-totals-table').html();
+				jQuery('#new-mt-myproduct-cart .totals #shopping-cart-totals-table').html(content); */
+
+				jQuery('.mt-my-cart').html("");
+	        	jQuery('.mt-my-cart').html(data.cart_html);
+                
+            	jQuery('html, body').animate({
+                    scrollTop: 0
+                }, 'fast');
+
+            	jQuery('#ajax_cart_content').html(data.top_cart);
+                jQuery('#just_added').slideDown(1000);
+                jQuery('#topcart-popup').addClass('just_added');
+                setTimeout(function() {
+                    jQuery('#just_added').slideUp(1000);
+                    jQuery('#topcart-popup').removeClass('just_added');
+                }, 5000);
+            }
+        	hideLoadingFancybox();
+        }
+    });
+}
+
 </script>

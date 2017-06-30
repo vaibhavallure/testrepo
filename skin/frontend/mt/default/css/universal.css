@@ -364,6 +364,10 @@ div.tab button.active {
     border-bottom: 1px solid #ccc ! important;
 }
 
+#shopping-cart-table tr:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
 /*sales order history start*/
 
 .myaccount-index-index .my-account .box .pager {
@@ -1072,3 +1076,29 @@ padding-bottom: 8px;
     padding: 5px;
 }
 
+.mt-new-purchase .cart-table .cart_col4 .qty-wrap{
+	text-align: center;
+}
+
+.mt-myaccount-promo .youhave.validation-advice{
+	clear: both;
+    width: 100%;
+    margin-left: 80px;
+    padding-top: 5px;
+}
+
+.mt-myaccount-promo .cancel_coupan{
+	 padding: 5px 7px 5px ! important;
+}
+
+.total-orders-count{
+    padding: 5px;
+    background: #000;
+    margin-left: 5px;
+    color: #fff;
+    display: none;
+}
+
+.mt-my-cart .cart-table .product-name {
+    font-weight: normal;
+}

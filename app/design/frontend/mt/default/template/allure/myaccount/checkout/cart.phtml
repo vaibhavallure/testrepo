@@ -112,6 +112,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 				data: {'cart':cart,'price':price,'qty':qty,'form_key':form_key},
 		        success: function(data) {
 		        	if(data.success){
+		        		jQuery('#ajax_cart_content').html(data.top_cart);
 		        		jQuery('.mt-my-cart').html("");
 			        	jQuery('.mt-my-cart').html(data.html);
 		        	}
@@ -177,6 +178,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 					data: {'id':item_id,'form_key':form_key},
 			        success: function(data) {
 			        	if(data.success){
+			        		jQuery('#ajax_cart_content').html(data.top_cart);
 			        		jQuery('.mt-my-cart').html("");
 				        	jQuery('.mt-my-cart').html(data.html);
 			        	}

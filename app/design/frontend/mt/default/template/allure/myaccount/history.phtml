@@ -3,6 +3,7 @@
         jQuery('select#showPerPage').customStyle();
     });
 </script>-->
+<input id="sales-order-count" type="hidden" value="<?php echo count($this->getOrders())?>" />
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <?php $_orders = $this->getOrders();
 	if($_orders) {
@@ -97,14 +98,17 @@ jQuery(function($){
 				    //xhr.abort();
 				    //xhr = null;
 				    showLoadingFancybox();
+				    var count = jQuery("#sales-order-count").val();
 				 	xhr =	jQuery.ajax({
 						//async: false,
 				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getOrderHistory';?>',
 				        dataType : 'json',
 						type : 'POST',
-						data: {'page':page,'limit':10},
+						data: {'page':page,'limit':10,'count':count},
 				        success: function(data) {
 				        	jQuery('#my-orders-table').append(data.data.html);
+				        	jQuery("#total-orders-count").text(data.data.order_count);
+				        	jQuery("#sales-order-count").val(data.data.order_count);
 				        	hideLoadingFancybox();
 				        }
 				    });
@@ -116,5 +120,10 @@ jQuery(function($){
 		    }
 		}
  	});
+
+
+	var odrCount =  jQuery("#sales-order-count").val();
+	jQuery("#total-orders-count").text(odrCount);
+	jQuery("#total-orders-count").show();
 });
 </script>
