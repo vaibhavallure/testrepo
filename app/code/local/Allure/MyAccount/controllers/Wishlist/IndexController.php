@@ -183,7 +183,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 				$this->loadLayout('myaccount_checkout_cart_layout');
 				$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
 				
-				$result['cart_html'] = $html;
+				$result['cart_html'] = $cart_html;
 			}else{
 				$result['success'] = 0;
 				$message = $this->__('%s was not added to your shopping cart.', $productName);

@@ -597,6 +597,7 @@ div.tab button.active {
 .myaccount-index-index #wishlist-table .mt-wishlist-added-at{
 	display: block;
 	font-weight: normal;
+	color: #999
 }
 
 /*Whishlist end*/
