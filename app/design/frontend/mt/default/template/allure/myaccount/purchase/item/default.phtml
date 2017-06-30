@@ -29,16 +29,27 @@ $_item = $this->getItem();
 $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 $messages = $this->getMessages();
-$typeId = $_item->getProduct()->getTypeId();
+//$typeId = $_item->getProduct()->getTypeId();
 
 ?>
 <?php 
-	$productId = $this->getProduct()->getId();
+	
+	$productId = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
+	$product = Mage::getModel('catalog/product')->load($productId);
+	$typeId = $product->getTypeId();
+	
+	//$productId = $this->getProduct()->getId();
 	$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
     $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-    $url = $this->getProductUrl();
+    //$url = $this->getProductUrl();
+    
+    $url = $product->getProductUrl();
+    $productDescr = $product->getDescription();
+    
     if(!is_null($parentId)){
-       $url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+       $parentProduct= Mage::getModel("catalog/product")->load($parentId);
+       $url = $parentProduct->getProductUrl();
+       $productDescr = $parentProduct->getDescription();
     }
               
     $storeList = array();
@@ -47,9 +58,11 @@ $typeId = $_item->getProduct()->getTypeId();
       $storeList[$store->getId()] = $store->getName();
     }
           
-    $productName = $this->getProductName();
+    //$productName = $this->getProductName();
+    $productName = $product->getName();
     $productNotAvailableClass = "";
-    $productDescr = $_item->getProduct()->getDescription();
+    //$productDescr = $_item->getProduct()->getDescription();
+    
     if(!$productId){
     	$productName = $_item->getName();
     	$productNotAvailableClass = "current-item-not-available";

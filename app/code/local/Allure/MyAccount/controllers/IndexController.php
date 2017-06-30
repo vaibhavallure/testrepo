@@ -1,8 +1,15 @@
 <?php
 class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action{
+	
 	public function indexAction() {  
-		$this->loadLayout();  
-		$this->renderLayout();
+		if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+			$this->loadLayout();
+			$this->renderLayout();
+		}else{
+			$this->_redirect('customer/account/');
+			return;
+		}
+		
 	}
 	
 	public function getViewUrl($order)
@@ -95,19 +102,26 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		
 		$html = '';
 		foreach ($collection as $_item){
-			$product = $_item->getProduct();
+			
+			$productId = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
+			$product = Mage::getModel('catalog/product')->load($productId);
+			
 			$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($_item->getProduct()->getId());
 			$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-			$url = $_item->getProduct()->getProductUrl();
-			if(!is_null($parentId)){
-				$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
-			}
+			$url = $product->getProductUrl();
 			
+			$productDescr = $product->getDescription();
+			
+			if(!is_null($parentId)){
+				$parentProduct = Mage::getModel("catalog/product")->load($parentId);
+				$url = $parentProduct->getProductUrl();
+				$productDescr = $parentProduct->getDescription();
+			}
 			
 			$productName = $product->getName();
 			$typeId = $product->getTypeId();
 			$productNotAvailableClass = "";
-			$productDescr = $_item->getProduct()->getDescription();
+			
 			if(!$product->getId()){
 				$productName = $_item->getName();
 				$productNotAvailableClass = "current-item-not-available";
