@@ -111,43 +111,58 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 				$productDescr = $_item->getDescription();
 			}
 			
+			if(!empty($productDescr)){
+				if(strlen($productDescr)>=70)
+					$productDescr = substr($productDescr,1,70)."...";
+			}
 			
 			
 			$receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
 			$reorderUrl = Mage::getUrl("sales/order/reorder")."order_id/".$_item->getOrderId()."/";
+			
 			$html .= '<tr data-id="'.$_item->getId().'" class="'.$productNotAvailableClass.'">';
 			$html .= '<td class="cart_col1">';
-			$html .= '<a href="'.$url.'" title="'.$productName.'" class="product-image">'.
-					'<img src="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(74,96).'" width="74" height="96" alt="'.$productName.'">'.
-					'</a>'.
-					'<a data-img="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(350,350).'" class="mt-piercing-photo" href="javascript:void(0);">View Piercing Photo</a>'.
+			$html .= 	'<a href="'.$url.'" title="'.$productName.'" class="product-image">'.
+							'<img src="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(74,96).'" width="74" height="96" alt="'.$productName.'">'.
+						'</a>'.
+						'<a data-img="'.Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(350,350).'" class="mt-piercing-photo" href="javascript:void(0);">View Piercing Photo</a>'.
 					'</td>';
 			
 			$html .= '<td class="cart_col2">';
-			$html .= '<h2 class="product-name">';
-			$html .=  '<a href="'.$url.'">'.$productName.'</a></h2>'.
-					'<span class="mt-purchase-added-at">Purchased: '.date('M d,Y H:i a',strtotime($_item->getCreatedAt())).'</span>'.
-					'<button class="button">'.$storeList[$_item->getStoreId()].'</button></td>';
+			$html .= 	'<h2 class="product-name">';
+			$html .=  		'<a href="'.$url.'">'.$productName.'</a>'.
+						'</h2>';
+				if(!empty($productDescr)){
+					$html .= '<h2 class="product-descr">'.$productDescr.'</h2>';
+				}
+				
+			$html .='<span class="mt-purchase-added-at">Purchased: '.date('M d,Y H:i a',strtotime($_item->getCreatedAt())).'</span>'.
+						'<lable class="purchase-store-name">'.$storeList[$_item->getStoreId()].'</lable>'.
+					'</td>';
 			
 			$html .= '<td class="cart_col4">';
-			$html .=  '<div class="qty-wrap">';
-			$html .=  '<span>'.number_format($_item->getQtyOrdered()).'</span>'.
-					  '</div></td>';
+			$html .=  	'<div class="qty-wrap">';
+			$html .=  		'<span>'.number_format($_item->getQtyOrdered()).'</span>'.
+					  	'</div>'.
+					'</td>';
 			
 			$html .= '<td class="cart_col3">';
-			$html .= '<span class="price_multi"></span> <span class="price">'.Mage::helper('checkout')->formatPrice($_item->getPrice()).'</span></td>';
-			
+			$html .= 	'<span class="price_multi"></span>'. 
+						'<span class="price">'.
+							Mage::helper('checkout')->formatPrice($_item->getPrice()).
+						'</span>'.
+					'</td>';
 			
 			$html .= '<td class="cart_col6">';
-			$html .= '<div class="mt-purchase-btn">';
-			$html .= '<button data-url="'.$receiptUrl.'" class="button" onclick="openPurchaseWindow(this)">See Receipts</button>';
-			$html .= '</div>';
+			$html .= 	'<div class="mt-purchase-btn">';
+			$html .= 		'<button data-url="'.$receiptUrl.'" class="button" onclick="openPurchaseWindow(this)">See Receipts</button>';
+			$html .= 	'</div>';
 			if($product->getId()){
 				$html .= '<div class="mt-purchase-btn">';
-				$html .= '<button data-url="'.$reorderUrl.'" class="button" onclick="openPurchaseWindow(this)">Reorder</button>';
+				$html .= 	'<button data-url="'.$reorderUrl.'" class="button" onclick="openPurchaseWindow(this)">Reorder</button>';
 				$html .= '</div>';
 				$html .= '<div class="mt-purchase-btn">';
-				$html .= '<button class="button">Share</button>';
+				$html .= 	'<button class="button">Share</button>';
 				$html .= '</div>';
 			}
 			$html .= '</td>';

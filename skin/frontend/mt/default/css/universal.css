@@ -1055,3 +1055,20 @@ padding-bottom: 8px;
 }
 
 /*Allure DPK end*/
+
+
+.mt-new-purchase .cart-table .product-descr{
+	padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mt-new-purchase .cart-table .cart_col2{
+	width: 30%;
+    padding-right: 15px ! important;
+}
+
+.mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
+	border: 1px solid #ccc;
+    padding: 5px;
+}
+

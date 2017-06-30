@@ -55,6 +55,11 @@ $typeId = $_item->getProduct()->getTypeId();
     	$productNotAvailableClass = "current-item-not-available";
     	$productDescr = $_item->getDescription();
     }
+    
+    if(!empty($productDescr)){
+    	if(strlen($productDescr)>=70)
+    		$productDescr = substr($productDescr,1,70)."...";
+    }
 ?>
 
 <tr data-id="<?php echo $_item->getId()?>" class="<?php echo $productNotAvailableClass ;if ($messages): echo ' messages-tr'?><?php endif; ?>">
@@ -77,8 +82,13 @@ $typeId = $_item->getProduct()->getTypeId();
             <?php echo $this->escapeHtml($productName) ?>
         <?php endif; ?>
         </h2>
+        
+        <?php if(!empty($productDescr)):?>
+        	<h2 class="product-descr"><?php echo $productDescr?></h2>
+        <?php endif;?>
+        
         <span class="mt-purchase-added-at"><?php echo "Purchased: ".date('M d,Y H:i a',strtotime($_item->getCreatedAt()))?></span>
-        <button class="button"><?php echo $storeList[$_item->getStoreId()]?></button>
+        <label class="purchase-store-name"><?php echo $storeList[$_item->getStoreId()]?></label>
         
         <?php if ($_options = $this->getOptionList()):?>
         <div class="item-options">
