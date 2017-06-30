@@ -350,7 +350,7 @@ div.tab button.active {
 
 .myaccount-index-index #my-orders-table th{
 	line-height: 18px;
-	border-bottom: 1px solid #000 ! important;
+	border-bottom: 1px solid #ccc ! important;
 }
 
 .myaccount-index-index  #myaccount-shopping-cart-table thead
@@ -574,7 +574,7 @@ div.tab button.active {
 .myaccount-index-index #wishlist-table th ,
 .myaccount-index-index .my-wishlist .data-table tr{
 	background: none !important;
-	border-bottom: 1px solid #000 !important;
+	border-bottom: 1px solid #ccc !important;
 }
 
 .myaccount-index-index #wishlist-table th{
@@ -783,7 +783,7 @@ div.a-column.a-span-last {
 #myaccount-shopping-cart-table{
 	height: 400px;
 	display: block;
-	overflow-y:scroll;
+	overflow-y:auto;
 }
 
 .block-account .block-content ul {
@@ -846,9 +846,7 @@ div.a-column.a-span-last {
     background: #ccc;
 }
 
-.mt-new-purchase .cart-mt{
-	border-top:1px solid #000;
-}
+
 
 .mt-myaccount-filter .mt-myaccount-store span{
 	font-weight: 600;
@@ -858,8 +856,8 @@ div.a-column.a-span-last {
     display: none;
 }
 .my-account .mt-my-orders .box {
-	overflow-y: scroll;
-    height: 200px;
+	overflow-y: auto;
+    height: 300px;
 }
 
 .mt-my-wishlist  #wishlist-table .w-remove a ,
@@ -1126,6 +1124,3 @@ padding-bottom: 8px;
     display: none;
 }
 
-.mt-my-cart .cart-table .product-name {
-    font-weight: normal;
-}

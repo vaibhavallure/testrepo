@@ -44,8 +44,8 @@ $typeId = $_item->getProduct()->getTypeId();
 
 <tr <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
     <td class="cart_col1"> 
-        <?php if ($isVisibleProduct && $this->hasProductUrl()):?>
-            <a href="<?php echo $url ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
+        <?php if (1 || $isVisibleProduct && $this->hasProductUrl()):?>
+            <a href="<?php echo $isVisibleProduct && $this->hasProductUrl()?$url:"javascript:void(0);" ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
         <?php else: ?>
             <?php //echo $this->escapeHtml($this->getProductName()) ?>
         <?php endif;?>
