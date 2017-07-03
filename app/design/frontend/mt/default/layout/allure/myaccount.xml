@@ -4,9 +4,10 @@
   		<update handle="customer_account"/>
 	    <reference name="my.account.wrapper">   
 	      <block type="myaccount/myproducts" name="my_products" as="my_products" template="allure/myaccount/myproducts.phtml">
-	      	
+	      	<block type="core/template" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />
 	      	<!-- Sales order history template -->
-	      	<block type="sales/order_history" name="sales.order.history" template="allure/myaccount/history.phtml"></block>
+	      	<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml">
+	      	</block>
 	      		
 	      	<!-- Cart Template -->	
 	      	<block type="checkout/cart" name="checkout.cart">
@@ -82,7 +83,6 @@
                 <action method="chooseTemplate"/>
                 <action method="addItemRender"><type>simple</type><block>myaccount/renderer</block><template>allure/myaccount/purchase/item/default.phtml</template></action>
                 <action method="addItemRender"><type>configurable</type><block>myaccount/renderer_configurable</block><template>allure/myaccount/purchase/item/default.phtml</template></action>
-				
             </block>
             
 	      		

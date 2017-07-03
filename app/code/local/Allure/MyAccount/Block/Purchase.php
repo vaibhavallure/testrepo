@@ -14,7 +14,13 @@ class Allure_MyAccount_Block_Purchase extends Mage_Checkout_Block_Cart
 	public function getPurchasedItems(){
 		//if (Mage::getSingleton('customer/session')->isLoggedIn()) {
 			
-			$store = $_GET['m_store'];
+			$store = 'all';
+			if(empty($_GET['m_store']))
+				$store = $_GET['m_store'];
+			
+			$sortOrder = 'asc';
+			if(!empty($sortOrder))
+				$sortOrder = $_GET['m_sort'];
 			
 			$collection = Mage::getResourceModel('sales/order_item_collection')
 			->addAttributeToSelect('*');
@@ -29,6 +35,10 @@ class Allure_MyAccount_Block_Purchase extends Mage_Checkout_Block_Cart
 			if(!empty($store)){
 				if($store!='all')
 					$collection->addFieldToFilter('main_table.store_id',$store);
+			}
+			
+			if(!empty($sortOrder)){
+				$collection->setOrder('main_table.created_at', $sortOrder);
 			}
 			
 			$collection->setCurPage(1);

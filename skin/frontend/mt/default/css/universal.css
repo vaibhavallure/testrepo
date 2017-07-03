@@ -1124,3 +1124,59 @@ padding-bottom: 8px;
     display: none;
 }
 
+
+
+
+
+
+
+.tabcontent .optionfilter{
+	width: 115px;
+}
+
+.tabcontent .optionfilter dt{
+	background: url(../images/filer_dropdown.png) no-repeat right center transparent !important;
+}
+
+.tabcontent .block-layered-nav-bg {
+    position: relative;
+    top: -15px;;
+}
+
+.tabcontent .block-layered-nav-bg .block-content{
+	position: absolute;
+	    width: 100%;
+}
+
+.tabcontent .myaccount-filter-store-list{
+	/* padding-left: 115px; */
+	width: 25%;
+	float: left;
+	margin-left: -90px;
+	padding-top: 7px;
+}
+
+.tabcontent .myaccount-filter-item{
+	text-align: center;
+}
+
+.tabcontent .selected-sort-type,
+.tabcontent .selected-store{
+	background: #ccc;
+}
+
+
+.tabcontent .myaccount-filter-sort-order-list{
+	width: 25%;
+	float: right;
+	padding-top: 7px;
+}
+
+.tabcontent .filter-label-list{
+	width: 25%;
+	float: left;
+	margin-top: 0px;
+	font-weight: bold;
+	margin: 10px 10px 10px 50px;
+}
+

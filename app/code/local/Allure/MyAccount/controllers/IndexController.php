@@ -26,6 +26,18 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$request = $this->getRequest()->getPost();
 		$pageNo=1;
 		$limit = 10;
+		
+		$store = "all";
+		$sortOrder = "asc";
+		
+		if($request['m_store']){
+			$store = $request['m_store'];
+		}
+		
+		if($request['m_sort']){
+			$sortOrder = $request['m_sort'];
+		}
+		
 		if($request['page'])
 			$pageNo=$request['page'];
 		
@@ -36,7 +48,16 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			->addFieldToSelect('*')
 			->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
 			->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
-			->setOrder('created_at', 'desc');
+			;//->setOrder('created_at', 'desc');
+		
+		if(!empty($store)){
+			if($store!='all')
+				$orders->addFieldToFilter('main_table.store_id',$store);
+		}
+			
+		if(!empty($sortOrder)){
+			$orders->setOrder('main_table.created_at', $sortOrder);
+		}
 		
 		$orders->setCurPage($pageNo);
 		$orders->setPageSize($limit);
@@ -82,12 +103,21 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$request = $this->getRequest()->getPost();
 		$pageNo=1;
 		$limit = 10;
+		$store = "all";
+		$sortOrder = "asc";
 		if($request['page'])
 			$pageNo=$request['page'];
 			
 		if($request['limit'])
 			$limit = $request['limit'];
+
+		if($request['m_store']){
+			$store = $request['m_store'];
+		}
 		
+		if($request['m_sort']){
+			$sortOrder = $request['m_sort'];
+		}
 		
 		$collection = Mage::getResourceModel('sales/order_item_collection')
 			->addAttributeToSelect('*');
@@ -98,6 +128,15 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			
 		$collection->addFieldToFilter('customer_id',$customer->getId());
 		//$collection->getSelect()->group('main_table.product_id');
+		
+		if(!empty($store)){
+			if($store!='all')
+				$collection->addFieldToFilter('main_table.store_id',$store);
+		}
+		
+		if(!empty($sortOrder)){
+			$collection->setOrder('main_table.created_at', $sortOrder);
+		}
 			
 		$collection->setCurPage($pageNo);
 		$collection->setPageSize($limit);

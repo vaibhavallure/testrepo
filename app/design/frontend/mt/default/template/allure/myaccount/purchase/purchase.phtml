@@ -113,7 +113,7 @@ jQuery(function($){
 				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getPurchasedItems';?>',
 				        dataType : 'json',
 						type : 'POST',
-						data: {'page':pageItem,'limit':5},
+						data: {'page':pageItem,'limit':5,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>'},
 				        success: function(data) {
 				        	jQuery('#myaccount-shopping-cart-table tbody').append(data.data.html);
 				        	jQuery('.loader').css({"display":"none"});
