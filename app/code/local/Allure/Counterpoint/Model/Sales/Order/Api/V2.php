@@ -89,7 +89,7 @@ class Allure_Counterpoint_Model_Sales_Order_Api_V2 extends Mage_Sales_Model_Orde
 			foreach ($filters as $field => $value) {
 				
 				if ($field == 'store_id' && !$skipStoreCheck && !in_array($value, $allowedStoresList)) {
-					if (count($allowedStoresList) > 1) {
+					if (count($allowedStoresList) >= 1) {
 						$orderCollection->addFieldToFilter($field, array('in' => $allowedStoresList));
 					} else {
 						$orderCollection->addFieldToFilter($field, $allowedStoresList[0]);
