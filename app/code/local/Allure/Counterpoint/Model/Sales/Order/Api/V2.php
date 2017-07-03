@@ -89,7 +89,7 @@ class Allure_Counterpoint_Model_Sales_Order_Api_V2 extends Mage_Sales_Model_Orde
 			foreach ($filters as $field => $value) {
 				
 				if ($field == 'store_id' && !$skipStoreCheck && !in_array($value, $allowedStoresList)) {
-					if (count($allowedStoresList) > 1) {
+					if (count($allowedStoresList) >= 1) {
 						$orderCollection->addFieldToFilter($field, array('in' => $allowedStoresList));
 					} else {
 						$orderCollection->addFieldToFilter($field, $allowedStoresList[0]);
@@ -101,8 +101,6 @@ class Allure_Counterpoint_Model_Sales_Order_Api_V2 extends Mage_Sales_Model_Orde
 		} catch (Mage_Core_Exception $e) {
 			$this->_fault('filters_invalid', $e->getMessage());
 		}
-		
-		die($orderCollection->getSelect());
 		
 		foreach ($orderCollection as $order) {
 			$orders[] = $this->_getAttributes($order, 'order');
