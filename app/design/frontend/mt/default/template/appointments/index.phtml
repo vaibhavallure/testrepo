@@ -80,10 +80,11 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
         var formAlreadySubmitted = false; 
         jQuery('#appointemnet_form').submit(function(e){ 
             if(myForm.validator.validate()){ 
-                if(formAlreadySubmitted){ 
-                    e.preventDefault(); 
-                    return false; 
-                 } 
+                    if(formAlreadySubmitted){ 
+                        e.preventDefault(); 
+                        return false; 
+                     } 
+                   
                 var submitChildren = jQuery(this).find('input[type=submit]'); 
                 submitChildren.attr('disabled', 'disabled'); 
                 submitChildren.addClass('disabled'); 

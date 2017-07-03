@@ -46,7 +46,7 @@ if($fetch_model){
 					//echo "STORE= ".$storeId . "  ".$selectedStoreId;
 					if($storeId == $selectedStoreId){
 						
-						$time_pref = intval($de['time']);						
+						$time_pref = intval($de['time']);			//24 or 12	hrs		
 					}
 				}
 			}
@@ -85,17 +85,18 @@ if($fetch_model){
 		//echo $totalSlot;
 		
 		/* logic for getting workday Piercer */
-		$collection = Mage::getModel('appointments/piercers')->getCollection();
+		$storeId= $this->getData("store_id");
+		$collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
+			->addFieldToFilter('is_active', array('eq' => '1'));
 		if($this->getData("date")) :
 		$date = $this->getData("date");
 		$dayOfWeek = date("d", strtotime($date));
-		$storeId= $this->getData("store_id");
-		if($dayOfWeek){
+
+		if($date){
 			//$storeId= $this->getData("store_id");
 			//$collection = Mage::getModel('appointments/piercers')->getCollection();
-			$collection->addFieldToFilter('working_days', array('like' => '%'.$dayOfWeek.'%'))
-			->addFieldToFilter('store_id', array('eq' => $storeId))
-			->addFieldToFilter('is_active', array('eq' => '1'));
+			$collection->addFieldToFilter('working_days', array('like' => '%'.$date.'%'));
+			
 			/* If piercer is not free logic start*/
 			if(empty($collection->getData())){
 			

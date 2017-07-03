@@ -9,9 +9,13 @@ class Allure_Ordernotifications_Block_Adminhtml_OrderInformation extends Mage_Ad
             'label' => Mage::helper('adminhtml')->__('Order Status'),
             'size' => 28,
         ));
-        $this->addColumn('no_of_weeks', array(
-            'label' => Mage::helper('adminhtml')->__('No of Weeks'),
+        $this->addColumn('timeinterval', array(
+            'label' => Mage::helper('adminhtml')->__('Time Interval'),
             'size' => 28
+        ));
+        $this->addColumn('timespan', array(
+        		'label' => Mage::helper('adminhtml')->__('Time Span'),
+        		'size' => 28
         ));
         $this->addColumn('email', array(
         		'label' => Mage::helper('adminhtml')->__('Email'),
@@ -52,16 +56,25 @@ class Allure_Ordernotifications_Block_Adminhtml_OrderInformation extends Mage_Ad
         	{
         		$statusStr .= '<option value="'.$list['status'].'">'.$list['label'] .'</option>';
         	}
-            return '<select name="' . $inputName . '" style="width:170px;">'.$statusStr.'</select>';
-        }  elseif ($columnName === "no_of_weeks") {
+            return '<select name="' . $inputName . '" style="width:160px;">'.$statusStr.'</select>';
+        }  elseif ($columnName === "timeinterval") {
         
         	return '<input type="text" name="' . $inputName . '" style="width:60px;"/>';
+
+        } elseif ($columnName === "timespan") {
+        	$statusList=Mage::helper('allure_ordernotifications')->getTimeSpanArray();
+        	foreach ($statusList as $key => $value)
+        	{
+        		$statusStr .= '<option value="'.$key.'">'.$value .'</option>';
+        	}
+        	return '<select name="' . $inputName . '" style="width:70px;">'.$statusStr.'</select>';
+        	
 
         }elseif ($columnName === "email") {
         	return '<input type="text" name="' . $inputName . '" style="width:170px;"/>';
         
         }elseif ($columnName === "store") {
-        	return '<input type="text" name="' . $inputName . '" style="width:100px;"/>';
+        	return '<input type="text" name="' . $inputName . '" style="width:55px;"/>';
         }
         else{
         	$statusStr = "";

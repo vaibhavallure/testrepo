@@ -27,7 +27,7 @@
 								<enable>1</enable>
 							</depends>
 							<sort_order>23</sort_order>
-							<comment><![CDATA[For No of weeks you can provide lower limit and upper limit.e.g 2,5<br />
+							<comment><![CDATA[For time interval you can provide lower limit and upper limit.e.g 2,5<br />
 							Similerly for stores you can provide comma seprated store Ids. If blank cosidered as all stores.]]></comment>
 							
 							
