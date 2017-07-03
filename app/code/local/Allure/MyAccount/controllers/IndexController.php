@@ -44,11 +44,19 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
         $i = 0 ;
         $html = '';
         foreach ($orders as $_order){
+        	$shippingName = "";
+        	if($_order->getShippingAddress()!=null){
+        		$shippingName = $_order->getShippingAddress()->getName();
+        	}else{
+        		if($_order->getBillingAddress()!=null)
+        			$shippingName = $_order->getBillingAddress()->getName();
+        	}
+        	
          	$html .= '<tr>';
          	$html .= '<td style="padding-left:10px;"><a href="'.$this->getViewUrl($_order) .'">'.$_order->getRealOrderId() .'</a></td>';
          	$html .= '<td class="a-left" style="padding-left:20px;" ><span class="nobr">';
          	$html .= Mage::app()->getLocale()->date(strtotime($_order->getCreatedAtStoreDate()), null, null, false)->toString('MM/dd/yyyy').'</span></td>';
-         	$html .= '<td class="a-left" style="padding-left:0;">'.$_order->getShippingAddress()->getName().'' .'</td>';
+         	$html .= '<td class="a-left" style="padding-left:0;">'.$shippingName.'' .'</td>';
          	$html .= '<td class="a-left" style="padding-left:18px;">'.$_order->formatPrice($_order->getGrandTotal()) .'</td>';
          	$html .= '<td class="a-left" style="padding-left:15px;">'.$_order->getStatusLabel().'</td>';
          	$html .= '<td class="a-left" style="padding-left:10px;">';
