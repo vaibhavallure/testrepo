@@ -85,13 +85,10 @@
 <?php if($request->getModuleName().$request->getControllerName().$request->getActionName() != 'customeraccountindex'): ?>
 <div class="mt-addresses-additional ">
     <h2><?php echo $this->__('Additional Addresses') ?></h2>
-    <table>
+    <ul id="additional-addresses">
     <?php if($_pAddsses = $this->getAdditionalAddresses()): ?>
         <?php $contador = 0; foreach($_pAddsses as $_address): ?>
-        <?php if($contador == 0): ?>
-            <tr class="additional-addresses">
-        <?php endif; ?>
-            <td class="item">
+            <li class="item">
                 <div class="item-inner-container">
                     <address>
                         <?php echo $this->getAddressHtml($_address) ?>
@@ -106,25 +103,16 @@
                         <a href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"><?php echo $this->__('Edit') ?></a><!-- <span class="separator">|</span> --><a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $_address->getId() ?>');"><?php echo $this->__('Delete') ?></a>
                     </p>
                 </div>
-            </td>
-        <?php $contador++; 
-            if($contador==2):$contador=0; ?>
-                </tr>
-        <?php endif; ?>
+            </li>
         
         <?php endforeach; ?>
-        <?php if($contador==1):?>
-            </tr>
-        <?php endif; ?>
     <?php else: ?>
-        <tr>
-            <td class="item empty">
+            <li class="item empty">
                 <p><?php echo $this->__('You have no additional address entries in your address book.') ?></p>
-            </td>
-        </tr>
+            </li>
     <?php endif ?>
-    </table>
-    <button type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
+    </ul>
+    <button id="add-new-addresss" type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
 </div>
 <?php endif; ?>
 

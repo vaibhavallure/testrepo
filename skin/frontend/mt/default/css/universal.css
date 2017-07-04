@@ -75,7 +75,6 @@
     font-size: 13px;
     border: 1px solid #ccc;
     padding: 10px;
-    border-radius: 5px;
     font-weight: 600;
 }
 .additional-addresses td.item:first-child .item-inner-container {
@@ -92,6 +91,7 @@
 .mt-additional-address-btns button.button.btn-1 {
     float: none ! important;
     margin-bottom: 0px ! important;
+    margin-right: 10px;
 }
 .mt-additional-address-btns button.button.btn-2 {
 	float: right ! important;
@@ -272,6 +272,7 @@ div.tab button.active {
 	width: 100%;	
 	border-right:none;
 	padding-right: 0px;
+	min-height: auto;
 }
 
 .manage-payment-method #mt-credit-card-info{
@@ -279,7 +280,6 @@ div.tab button.active {
 }
 
 #billing-new-address-form .input-box input.input-text{
-	height: 30px;
 	width: 100%!important;
 	background: #fff;
 	border: 1px solid #ccc;
@@ -287,7 +287,7 @@ div.tab button.active {
 }
 
 #billing-new-address-form li{
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
 }
 
 #authnetcim_cc_number{
@@ -298,7 +298,7 @@ div.tab button.active {
 #mt-credit-card-info select,
 #billing-new-address-form select{
 	border: 1px solid #ccc;
-	height: 30px;
+	height: 21px;
 	background: #fff;
 }
 
@@ -307,7 +307,7 @@ div.tab button.active {
 }
 
 #authnetcim_cc_cid{
-	height: 30px;
+	/* height: 30px; */
 	background: #fff;
 	border: 1px solid #ccc;
 }
@@ -317,7 +317,7 @@ div.tab button.active {
 }
 
 #new-mt-add-payment-method .mt-paycard-title{
-	margin-top: 30px;
+	margin-top: 15px;
 }
 
 .myaccount-index-index .main-container {
@@ -489,8 +489,10 @@ div.tab button.active {
 }
 
 .myaccount-index-index .my-account #shopping-cart-table th{
-	padding-bottom: 0px;
-	padding: 5px 0px 5px 0px;
+	/* padding-bottom: 0px;
+	padding: 5px 0px 5px 0px; */
+	padding: 7px 0px 7px 0px;
+    line-height: 24px;
 }
 
 .myaccount-index-index .my-account #shopping-cart-table th:first-child {
@@ -582,6 +584,7 @@ div.tab button.active {
 
 .myaccount-index-index #wishlist-table th{
 	font-weight: 600;
+	line-height: 37px;
 }
 
 .myaccount-index-index #wishlist-table a {
@@ -651,7 +654,6 @@ div.tab button.active {
 .mt-new-myaccount-submenu a{
 	display: block;
     border-radius: 4px;
-    border: 1px #ddd solid;
     background-color: #fff;
     height: 100%;
     display: block;
@@ -998,7 +1000,7 @@ div.a-column.a-span-last {
 }
 
 #new-mt-add-payment-method .myaccount-add-payment-form{
-	margin-top: -25px;
+	/*margin-top: -25px;*/
 }
 
 .addresses-primary address{
@@ -1056,12 +1058,14 @@ padding: 0 0 8px 0;
     margin-top: 9px;
 }
 
-.additional-addresses .additional-address-links{
+#additional-addresses .additional-address-links{
     position: absolute;
     left: 10px;
-    bottom: -25px;
+    bottom: 16%;
+    right: 0;
+    text-align: right;
 }
-.additional-addresses td.item .item-inner-container {
+#additional-addresses td.item .item-inner-container {
     margin: 0 10px 0px 0;
     padding: 0 0 0px 0;
 }
@@ -1288,10 +1292,24 @@ width: 63%;
 
 #new-mt-saved-card #billing-new-address-form li,
 .myaccount-add-payment-form #billing-new-address-form li {
-    width: 48%;
+    width: 47%;
     float: left;
-    padding: 5px;
+    padding: 5px 5px 5px 0px;
     clear: right;
+    margin-right: 10px;
+}
+#new-mt-saved-card #billing-new-address-form li,
+.myaccount-add-payment-form #billing-new-address-form li.list-odd{
+	float: right;
+	margin-right: 0px;
+}
+
+#mt-credit-card-info li{
+	 width: 47%;
+    float: left;
+    padding: 5px 5px 5px 0px;
+    clear: right;
+    margin-right: 10px;
 }
 
 .mt-payment-card-btn{
@@ -1347,3 +1365,60 @@ width: 63%;
     background-size: 78%;
     background-position: 5px;
 }
+#new-mt-add-payment-method.tabcontent {
+    /*display: none;*/
+    padding: 0px 8px;
+    background: #dedede;
+}
+
+.authnetcim_add{
+	width: 50%;
+    float: right;
+}
+
+.mt-cc-number{
+	width: 50%;
+    float: right;
+    clear: both;
+}
+
+#authnetcim_cc_type_cvv_div,
+#authnetcim_cc_type_exp_div{
+	clear: both;
+}
+
+ul#additional-addresses{
+	display: flex;
+	flex-wrap:wrap;
+	}
+	
+	ul#additional-addresses li{
+	 display: flex;
+	 margin-bottom: 10px;
+	}
+	
+	ul#additional-addresses li .item-inner-container{
+	 padding: 5px 10px;
+	 margin-bottom: 10px;
+	 position: relative;
+	}
+	
+	ul#additional-addresses li .item-inner-container address{
+		 height: 80%;
+		 line-height: 20px;
+		 font-size: 13px;
+		 border: 1px solid #ccc;
+		 padding: 10px;
+		 font-weight: 600;
+	}
+
+	#add-new-addresss{
+	margin-right: 10px;
+	}
+	
+	#additional-addresses .additional-address-links a {
+	display: inline-block;
+	margin-right: 13px;
+	font-size: 13px;
+}
+	
