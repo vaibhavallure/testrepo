@@ -12,7 +12,7 @@ class Allure_MyAccount_Block_Order_History extends Mage_Sales_Block_Order_Histor
     	$this->setTemplate('allure/myaccount/history.phtml');
     	
     	$store = 'all';
-    	if(empty($_GET['m_store']))
+    	if(!empty($_GET['m_store']))
     		$store = $_GET['m_store'];
     		
     	$sortOrder = 'asc';
