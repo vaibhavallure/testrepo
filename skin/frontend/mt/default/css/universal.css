@@ -28,7 +28,7 @@
 
 .my-account .page-title,
 .my-account .box .box-title{
-	background:none;
+	/*background:none;*/
 }
 
 .my-account .page-title h1,
@@ -73,7 +73,7 @@
 .mt-addresses-additional address {
 	line-height: 20px;
     font-size: 13px;
-    border: 4px solid #ccc;
+    border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
     font-weight: 600;
@@ -109,6 +109,7 @@
 	font-size: 16px;
 	font-weight: normal;
 	text-transform: uppercase;
+	padding: 0 0 10px 0;
 }
 
 .customer-account-edit .buttons-set p.required,
@@ -122,29 +123,28 @@
     margin-left: 0px;
 }
 
-.customer-account-edit .my-account .form-list label{
-	width: 20%;
-    text-align: right;
-}
 
-.customer-account-edit .my-account li.fields label{
-	padding: 5px;
-}
+
+
 
 .customer-account-edit .my-account .form-list li .input-box input.input-text {
-	height: 30px;
+	/*height: 30px;*/
     width: 85% !important;
 }
 
 .customer-account-edit .input-box {
     width: 88%;
-    margin-left: 12%;
+    margin-left: 21%;
 }
 
 .customer-account-edit .my-account li.control{
 	margin-left: 21%;
+	margin-top: 0px;
 }
-
+.customer-account-edit .my-account li.control label{
+	padding: 4px 0 3px 30px;
+	
+}
 
 
 
@@ -184,8 +184,8 @@ div.tab button.active {
 /* Style the tab content */
 .tabcontent {
     display: none;
-    padding: 6px 12px;
-   background: #fff;
+    padding: 0px 12px;
+   background: #d1d1d1;
 }
 
 .tabcontent.active {
@@ -198,15 +198,16 @@ div.tab button.active {
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item{
-	padding: 5px;
-	background-color: #D0D0D0;
-	margin-bottom: 10px;
-	height: 20px;
-    line-height: 25px;
+    padding: 8px;
+    background-color: #d1d1d1;
+    border-bottom: 9px solid #dedede;
+    float: left;
+    width: 100%;
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading{
 	background-color: #fff;
+	padding: 10px;
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-expire-date,
@@ -220,7 +221,6 @@ div.tab button.active {
 	width: 20%;
 }
 .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-icon{
-	width: 10%;
 	float: right;
 }
 
@@ -231,19 +231,21 @@ div.tab button.active {
 .mt-payment-details .card-details-main{
 	display: block;
     overflow: hidden;
-    padding: 10px;
+    padding: 0px 10px 10px 10px;
+    background-color: #dedede;
 }
 .mt-payment-details .card-details-main .mt-name-on-card{
-	width: 45%;
+	width: 100%;
 }
 .mt-payment-details .card-details-main .mt-card-address{
-	width: 45%;
+	width: 39%;
     float: right;
     margin-top: -35px;
 }
 
 .mt-payment-details .card-details-main .card-title{
 	font-weight: 600;
+	padding: 0 0 8px;
 }
 
 .mt-arrow{
@@ -361,7 +363,7 @@ div.tab button.active {
 .myaccount-index-index .my-account .data-table tr/* :not(:last-child) */ {
     background: none !important;
     line-height: 25px;
-    border-bottom: 1px solid #ccc ! important;
+    border-bottom: 1px solid #dedede ! important;
     font-size: 13px;
 }
 
@@ -483,7 +485,7 @@ div.tab button.active {
 
 
 .myaccount-index-index .my-account #shopping-cart-table thead {
-	border-bottom: 1px solid #000 ! important;	
+	/*border-bottom: 1px solid #000 ! important;	*/
 }
 
 .myaccount-index-index .my-account #shopping-cart-table th{
@@ -527,8 +529,7 @@ div.tab button.active {
 
 .myaccount-index-index .cart-mt .totals {
 	width: 48%;	
-	border: 1px solid #ccc;
-	background: none;    
+	background: #dedede;    
 }
 
 .myaccount-index-index .cart-mt .totals-table tr {
@@ -568,13 +569,13 @@ div.tab button.active {
 }
 
 .myaccount-index-index #wishlist-table .mt-myaccount-subtotal{
-	vertical-align: top;
+	vertical-align: middle;
 }
 
 .myaccount-index-index #wishlist-table th ,
 .myaccount-index-index .my-wishlist .data-table tr{
-	background: none !important;
-	border-bottom: 1px solid #ccc !important;
+	/*background: none !important;*/
+	border-bottom: 1px solid #dedede !important;
 }
 
 .myaccount-index-index #wishlist-table th{
@@ -582,7 +583,7 @@ div.tab button.active {
 }
 
 .myaccount-index-index #wishlist-table a {
-	font-weight: 100;
+	font-weight: bold;
 }
 
 .myaccount-index-index .my-wishlist .data-table tr{
@@ -590,18 +591,28 @@ div.tab button.active {
 }
 
 .myaccount-index-index #wishlist-table .ad-wish-mt textarea {
-	background: none;
 	width: 100px;
     margin-top: 0px;
+    background: #dedede;
+    
 }
 
 .myaccount-index-index .mt-my-cart .mt-cart-added-at,
 .myaccount-index-index #wishlist-table .mt-wishlist-added-at{
 	display: block;
 	font-weight: normal;
-	color: #999
+	color: #999;
+	font-size: 11px;
+    color: #757881;
 }
 
+#wishlist-table td.wishlist-no-pad{
+	padding-left: 0px;
+}
+
+.cart-table th.a-left-q{
+	padding-left: 23px ! important;
+}
 /*Whishlist end*/
 
 
@@ -659,6 +670,7 @@ div.tab button.active {
     background-color: #fff;
     height: 100%;
     display: block;
+    margin-bottom: 20px;
 }
 
 .banner-ya-img img{
@@ -751,7 +763,8 @@ div.a-column.a-span-last {
 #myaccount-shopping-cart-table .cart_col5, 
 #myaccount-shopping-cart-table .cart_col6 {
     /* vertical-align: middle; */
-    padding: 10px 0px 0px 0px;
+    padding: 8px 8px 0px 0px;
+    text-align: right;
 }
 
 #myaccount-shopping-cart-table .cart_col6 .mt-purchase-btn{
@@ -770,8 +783,8 @@ div.a-column.a-span-last {
 }
 
 .mt-new-purchase fieldset{
-	margin: 0px;
-	padding: 0px;
+	margin: -17px 0px 0px 0px;
+    padding: 0px;
 }
 
 .mt-new-purchase .mt-purchase-btn button{
@@ -780,7 +793,7 @@ div.a-column.a-span-last {
 }
 
 
-#myaccount-shopping-cart-table{
+#purchase-history .box-content{
 	height: 400px;
 	display: block;
 	overflow-y:auto;
@@ -800,10 +813,11 @@ div.a-column.a-span-last {
 .my-account .page-title > h1,
 .my-account > h3,
 .my-account .box .box-title > h3{
-	font-size: 20px;
+	font-size: 16px;
     display: block;
     font-weight:normal;
     text-transform: uppercase;
+    font-family: dinmittelschriftregular;
 }
 
 .my-account .page-title > h1,
@@ -814,6 +828,11 @@ div.a-column.a-span-last {
 .customer-account-edit .my-account .fieldset {
 	margin-top: 10px;	
 }
+.customer-account-edit .my-account .form-list label {
+    padding: 5px 5px 5px 0;
+    text-align: left;
+}
+
 
 .mt-myaccount-filter .mt-myaccount-store{
 	width: 35%;
@@ -842,8 +861,9 @@ div.a-column.a-span-last {
 .mt-myaccount-filter{
 	width: 100%;
 	display: inline-block;
-	padding: 10px 0px 10px 0px;
-    background: #ccc;
+	padding: 7px 0px 7px 0px;
+    background: #d1d1d1;
+    border-bottom: 9px solid #DEDEDE;
 }
 
 
@@ -855,21 +875,26 @@ div.a-column.a-span-last {
 .my-account .mt-my-orders .box .box-title {
     display: none;
 }
-.my-account .mt-my-orders .box {
+.my-account .mt-my-orders .box .box-content {
 	overflow-y: auto;
     height: 300px;
+    margin-top: -17px;
 }
 
 .mt-my-wishlist  #wishlist-table .w-remove a ,
 .mt-my-cart #shopping-cart-table .w-remove a:link {
-    background: url(../images/wish-x-remove.png) no-repeat 0px 0px;
+    background: url(../images/wish-x-remove.png) no-repeat 0px 7px;
     text-decoration: none;
     cursor: pointer;
     margin-top: 5px;
-   	text-align: center;
-   	width: 88%;
+   	text-align: left;
+    float: left;
+    margin-top: 0px;
+    font-weight: normal;
 }
-
+.myaccount-wishlist-move-to-cart{
+	width: 100%;
+}
 
 .mt-loader{
 	background-image: url(../images/loading.gif);
@@ -883,17 +908,19 @@ div.a-column.a-span-last {
 }
 
 .mt-my-wishlist .myaccount-update-wishlist-btn{
-	width: 83%;
+	width: 100%;
     text-align: center ! important;	
+    margin-bottom: 10px;
 }
 
 .mt-my-wishlist #wishlist-table td.last {
-    padding-top: 14px;
+    padding-top: 8px;
+    text-align: right;
 }
 
 .mt-new-purchase #myaccount-shopping-cart-table .mt-piercing-photo{
 	display: inline-block;
-	padding-left: 20px;
+	padding-left: 14px;
 	font-size: 13px;
 }
 
@@ -969,7 +996,7 @@ div.a-column.a-span-last {
 }
 
 .addresses-primary address{
-	background: #D0D0D0;
+	background: #d1d1d1;
 	margin-top: 10px;
 }
 
@@ -977,6 +1004,70 @@ div.a-column.a-span-last {
 
 
 /*Allure DPK Start*/
+
+.additional-addresses .additional-address-links{
+bottom: 35px;
+}
+
+#wishlist-table th.a-left-p{
+    padding-left: 6px;
+}
+.label.required em{
+     float: left; 
+}
+
+#wishlist-table th.a-left {
+    text-align: left;
+    padding-left: 9px;
+}
+
+#wishlist-table td {
+    padding: 8px 8px 8px 8px;
+}
+
+.my-wishlist .data-table tbody td:nth-child(5) span {
+    padding-left: 6px;
+}
+.mt-wishlist-price{
+	vertical-align: middle;
+}
+
+.minus_icon {
+    margin-right: 5px;
+}
+.plus_icon {
+    margin-left: -1px;
+}
+
+.customer-account-edit .buttons-set p.required {
+    margin-left: 15px;
+}
+.customer-account-edit .form-list li, .customer-account-edit .form-list li .field{
+padding: 0 0 8px 0;
+}
+
+.customer-address-index .my-account .addresses-list .addresses-primary p{
+    margin-top: 9px;
+}
+
+.additional-addresses .additional-address-links{
+    position: absolute;
+    left: 10px;
+    bottom: -25px;
+}
+.additional-addresses td.item .item-inner-container {
+    margin: 0 10px 0px 0;
+    padding: 0 0 0px 0;
+}
+.my-account .data-table thead, .my-account .data-table tr{
+    /* background: none !important; */
+    padding: 7px 0px 7px 0px;
+    background: #d1d1d1;
+    border-bottom: 9px solid #DEDEDE;
+}
+
+
+
 
 .block-account .block-content ul li strong{
 font-weight: bold;
@@ -1048,13 +1139,13 @@ width: 63%;
 }
 
 #myaccount-shopping-cart-table tr td .product-image {
-   padding: 10px 10px 5px 10px;
+   padding: 8px 8px 5px 8px;
    display: inline-block;
 }
 
 
 .my-account .data-table tbody th, .my-account .data-table tbody td:first-child{
-padding-bottom: 8px;
+/*padding-bottom: 8px;*/
 }
 
 #myaccount-shopping-cart-table .cart-mt h2{
@@ -1094,7 +1185,7 @@ padding-bottom: 8px;
 }
 
 .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
-	border: 1px solid #ccc;
+	background-color: #dedede;
     padding: 0px 20px;
     border-radius: 3px;
     position: absolute;
@@ -1117,7 +1208,7 @@ padding-bottom: 8px;
 }
 
 .total-count-box{
-	padding: 5px;
+	padding: 5px 7px 3px 7px;
     background: #000;
     margin-left: 5px;
     color: #fff;
@@ -1135,9 +1226,7 @@ padding-bottom: 8px;
 
 
 
-.tabcontent .optionfilter{
-	width: 115px;
-}
+
 
 .tabcontent .optionfilter dt{
 	background: url(../images/filer_dropdown.png) no-repeat right center transparent !important;
@@ -1145,51 +1234,104 @@ padding-bottom: 8px;
 
 .tabcontent .block-layered-nav-bg {
     position: relative;
-    top: -15px;;
+    top: -18px;
+    border-bottom: 9px solid #DEDEDE;
 }
 
 .tabcontent .block-layered-nav-bg .block-content{
 	position: absolute;
-	    width: 100%;
+	width: 100%;
 }
 
 .tabcontent .myaccount-filter-store-list{
 	/* padding-left: 115px; */
-	width: 25%;
+	width: 35%;
 	float: left;
-	margin-left: -90px;
 	padding-top: 7px;
+	margin-right: 20px;
 }
 
 .tabcontent .myaccount-filter-item{
-	text-align: center;
+	text-align: left;
+    padding-left: 6px;
 }
 
 .tabcontent .selected-sort-type,
 .tabcontent .selected-store{
-	background: #ccc;
+	color: #906e39;
 }
 
 
 .tabcontent .myaccount-filter-sort-order-list{
-	width: 25%;
+	width: 35%;
 	float: left;
 	padding-top: 7px;
 }
 
 .tabcontent .filter-label-list{
-	width: 25%;
-	float: left;
-	margin-top: 0px;
-	font-weight: bold;
-	margin: 10px 10px 10px 50px;
+	width: 11%;
+    float: left;
+    margin-top: 0px;
+    font-weight: bold;
+    margin: 7px 0px 7px 10px;
+    line-height: 22px;
+}
+.my-account .data-table tbody th, .my-account .data-table tbody td{
+	padding: 6px 0 0 0;
 }
 
-
-/* #new-mt-saved-card #billing-new-address-form li,
+#new-mt-saved-card #billing-new-address-form li,
 .myaccount-add-payment-form #billing-new-address-form li {
     width: 48%;
     float: left;
     padding: 5px;
     clear: right;
-} */
+}
+
+.mt-payment-card-btn{
+	margin: 10px 0 0;
+}
+
+.mt-payment-card-btn button#delete-form-btn-id-1{
+	float: right;
+}
+
+#box-history {position: relative;}
+
+.my-account #box-history .box-content {padding: 0}
+
+.allure-fancybox-overlay {
+    display: none;
+	position: absolute;
+    top: -17px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    z-index: 10001;
+    background-color: rgba(0, 0, 0, 0.61);
+}
+
+#allure-fancybox-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    margin-top: -22px;
+    margin-left: -22px;
+    background-position: 0 -108px;
+    opacity: 0.8;
+    cursor: pointer;
+    z-index: 8060;
+    background-image: url(../css/fancybox/fancybox_sprite.png);
+}
+
+#allure-fancybox-loading div {
+    width: 100%;
+    height: 100%;
+    background-image: url(../css/fancybox/fancybox_loading.gif);   
+    background-repeat: no-repeat;
+    background-size: 78%;
+    background-position: 5px;
+}

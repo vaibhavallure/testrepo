@@ -18,7 +18,7 @@ class Allure_MyAccount_Block_Purchase extends Mage_Checkout_Block_Cart
 			if(!empty($_GET['m_store']))
 				$store = $_GET['m_store'];
 			
-			$sortOrder = 'asc';
+			$sortOrder = 'desc';
 			if(!empty($sortOrder))
 				$sortOrder = $_GET['m_sort'];
 			

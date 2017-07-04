@@ -28,13 +28,13 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$limit = 10;
 		
 		$store = "all";
-		$sortOrder = "asc";
+		$sortOrder = "desc";
 		
-		if($request['m_store']){
+		if(!empty($request['m_store'])){
 			$store = $request['m_store'];
 		}
 		
-		if($request['m_sort']){
+		if(!empty($request['m_sort'])){
 			$sortOrder = $request['m_sort'];
 		}
 		
@@ -74,7 +74,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
         	}
         	
          	$html .= '<tr>';
-         	$html .= '<td style="padding-left:10px;"><a href="'.$this->getViewUrl($_order) .'">'.$_order->getRealOrderId() .'</a></td>';
+         	$html .= '<td style="padding-left:10px;"><a>'.$_order->getRealOrderId() .'</a></td>';
          	$html .= '<td class="a-left" style="padding-left:20px;" ><span class="nobr">';
          	$html .= Mage::app()->getLocale()->date(strtotime($_order->getCreatedAtStoreDate()), null, null, false)->toString('MM/dd/yyyy').'</span></td>';
          	$html .= '<td class="a-left" style="padding-left:0;">'.$shippingName.'' .'</td>';
@@ -104,18 +104,18 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$pageNo=1;
 		$limit = 10;
 		$store = "all";
-		$sortOrder = "asc";
+		$sortOrder = "desc";
 		if($request['page'])
 			$pageNo=$request['page'];
 			
 		if($request['limit'])
 			$limit = $request['limit'];
 
-		if($request['m_store']){
+		if(!empty($request['m_store'])){
 			$store = $request['m_store'];
 		}
-		
-		if($request['m_sort']){
+			
+		if(!empty($request['m_sort'])){
 			$sortOrder = $request['m_sort'];
 		}
 		

@@ -105,7 +105,7 @@
 	  						<?php if( $card->isInUse() ): ?>
 								<abbr title="<?php echo $this->__('This payment record cannot be modified while associated with pending orders.'); ?>"><?php echo $this->__('Card In Use'); ?></abbr>
 							<?php else: ?>
-	  						<div>
+	  						<div class="mt-payment-card-btn">
 	  							<form  action="<?php echo Mage::getUrl('*/*', array('_secure' => true, 'method' => $card->getMethod())) ?>" method="post">
 									<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
 									<input type="hidden" name="id" value="<?php echo $card->getId() ?>" />

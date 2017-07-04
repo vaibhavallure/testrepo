@@ -15,7 +15,7 @@ class Allure_MyAccount_Block_Order_History extends Mage_Sales_Block_Order_Histor
     	if(!empty($_GET['m_store']))
     		$store = $_GET['m_store'];
     		
-    	$sortOrder = 'asc';
+    	$sortOrder = 'desc';
     	if(!empty($sortOrder))
     		$sortOrder = $_GET['m_sort'];
     	

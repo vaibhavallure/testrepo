@@ -87,7 +87,7 @@ if($product->getTypeId() =='configurable'){
     }   
 }
 ?>
-<td class="product-w-mt">
+<td class="product-w-mt wishlist-no-pad">
     <script>
         jQuery.noConflict();
         jQuery(document).ready(function () {
@@ -110,7 +110,7 @@ if($product->getTypeId() =='configurable'){
     <h3 class="product-name">        
         <a href="<?php echo $productUrl; ?>" title="<?php echo $this->escapeHtml($defaultProduct->getName()) ?>"><?php echo $this->escapeHtml($defaultProduct->getName()) ?></a>
     </h3>
-    <span class="mt-wishlist-added-at"><?php echo "Added ".date('M d,Y H:i a',strtotime($item->getAddedAt()))?></span>
+    <span class="mt-wishlist-added-at"><?php echo "Added ".date('M d, Y H:i a',strtotime($item->getAddedAt()))?></span>
     <div class="price-wish"><?php //echo $this->getPriceHtml($product); ?></div>
 	<?php if ($_options = $item->getOptionList($cpid)):?>
 	<?php foreach ($_options as $_option) : ?>
@@ -121,7 +121,7 @@ if($product->getTypeId() =='configurable'){
 	<?php endif;?>	
 </td>
 
-<td>
+<td class="mt-wishlist-price">
 	<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
 </td>
 
@@ -152,8 +152,8 @@ if($product->getTypeId() =='configurable'){
 <!--****-->
 
 <td class="ad-wish-mt">
-    <textarea class="ecp-wishlist-description" name="description[<?php echo $item->getWishlistItemId() ?>]" rows="3"
-              cols="5" onblur="focusComment(this)" maxlength="300"
+    <textarea placeholder="Please, enter your comments..." class="ecp-wishlist-description" name="description[<?php echo $item->getWishlistItemId() ?>]" rows="3"
+              cols="5"  maxlength="300"
               title="<?php echo $this->__('Comment') ?>"><?php echo($this->escapeHtml($item->getDescription())) ?></textarea>
 
     <div class="charsRemaining">You have 300 characters left</div>

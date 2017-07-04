@@ -71,6 +71,11 @@
 
 <script>
 
+	if (typeof Allure == "undefined") var Allure = {};
+
+	Allure.showLoading = true;
+	Allure.loader = '<div class="allure-fancybox-overlay allure-fancybox-overlay-fixed"><div id="allure-fancybox-loading"><div></div></div></div>';
+
 	var Filter_Store = '<?php echo $_GET['m_store']?>';
 	jQuery(document).ready(function(){
 		var type = window.location.hash.substr(1);
@@ -142,6 +147,15 @@
 		jQuery('.tabcontent.'+currentTab).addClass('active');
 	}
 
+	function showLoadingFancybox1(element){
+		if (Allure.showLoading) {
+			Allure.showLoading = false;
+			jQuery('#'+element+' .box-content').append(Allure.loader);
+			//jQuery('#box-history .allure-fancybox-overlay').height(jQuery('#box-history table').height() + jQuery('#box-history table')[0].scrollHeight);
+			jQuery('#'+element+' .allure-fancybox-overlay').show();
+		}
+	}
+
 	function showLoadingFancybox(){
 		jQuery.fancybox.showLoading();
         jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
@@ -151,6 +165,18 @@
 		jQuery.fancybox.hideLoading();
     	jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
 	}
+
+	function hideLoadingFancybox1(element){
+		if (!Allure.showLoading) {
+			Allure.showLoading = true;
+			//jQuery.fancybox.hideLoading();
+	    	//jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+	
+			jQuery('#'+element+' .allure-fancybox-overlay').remove();
+		}
+	}
+
+	
 </script>
 
 

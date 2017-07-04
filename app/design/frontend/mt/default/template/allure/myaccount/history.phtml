@@ -10,9 +10,7 @@
 ?>
 
 <div class="col2-set">
-    <div class="box <?php echo ($_orders->getSize())?"":"box-no-order"?>">
-        <div class="box-title">
-            <h3>
+    <div id="box-history" class="box <?php echo ($_orders->getSize())?"":"box-no-order"?>">
                 <?php
                     $request = Mage::app()->getRequest();
                    /*  if($request->getModuleName() == 'customer'):
@@ -21,10 +19,7 @@
                         echo $this->getOrders()->getSize()." ".$this->__('item(s)');
                     endif; */
                 ?>
-            </h3>
-            <div class="pager-mt-1"><a style="display: none;" href="<?php echo $this->getUrl('sales/order/history/') ?>"><?php echo $this->__('View All') ?></a>
-			<?php //echo $this->getPagerHtml(); ?></div>
-        </div>
+        <div class="box-content">
         <?php if($_orders->getSize()): ?>
         <table class="data-table" id="my-orders-table">
             <thead>
@@ -42,7 +37,7 @@
                 <?php $i = 0 ?>
                 <?php foreach ($_orders as $_order): ?>
                 <tr>
-                    <td style="padding-left:10px;"><a href="<?php echo $this->getViewUrl($_order) ?>"><?php echo $_order->getRealOrderId() ?></a></td>
+                    <td style="padding-left:10px;"><a ><?php echo $_order->getRealOrderId() ?></a></td>
                     
                     
                     <td class="a-left" style="padding-left:20px;" ><span class="nobr">
@@ -66,6 +61,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
         <script type="text/javascript">decorateTable('my-orders-table');</script>
         <?php // echo $this->getPagerHtml(); ?>
         <?php else: ?>
@@ -91,14 +87,14 @@ var xhr = null;
 var page = 2;
 var totalPages = <?php echo $totalPageSize?>;
 jQuery(function($){
-	$('.my-account .mt-my-orders .box').bind('scroll', function(){
+	$('.my-account .mt-my-orders #box-history .box-content').bind('scroll', function(){
 		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
 			
 			if(page<=totalPages){
 				 if( xhr == null ) {
 				    //xhr.abort();
 				    //xhr = null;
-				    showLoadingFancybox();
+				    showLoadingFancybox1('box-history');
 				    var count = jQuery("#sales-order-count").val();
 				 	xhr =	jQuery.ajax({
 						//async: false,
@@ -110,7 +106,7 @@ jQuery(function($){
 				        	jQuery('#my-orders-table').append(data.data.html);
 				        	jQuery("#total-orders-count").text(data.data.order_count);
 				        	jQuery("#sales-order-count").val(data.data.order_count);
-				        	hideLoadingFancybox();
+				        	hideLoadingFancybox1('box-history');
 				        }
 				    });
 				 	xhr = null;
