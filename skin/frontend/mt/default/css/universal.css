@@ -554,7 +554,9 @@ div.tab button.active {
 
 .myaccount-index-index #wishlist-table td.add-to-cart-alt{
 	margin: 0;
-	width: 75px;
+	width: 95px; /*75px*/
+    vertical-align: middle;
+    float: none;
 }
 
 .myaccount-index-index #wishlist-table td.add-to-cart-alt .qty-wrap{
@@ -588,6 +590,10 @@ div.tab button.active {
 
 .myaccount-index-index .my-wishlist .data-table tr{
 	border-bottom: 1px solid #ccc;	
+}
+
+.myaccount-index-index #wishlist-table .ad-wish-mt{
+	vertical-align: middle;	
 }
 
 .myaccount-index-index #wishlist-table .ad-wish-mt textarea {
