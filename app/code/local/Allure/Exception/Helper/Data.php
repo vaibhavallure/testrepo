@@ -10,7 +10,7 @@ class Allure_Exception_Helper_Data extends Mage_Core_Helper_Abstract
 		$mailTemplate = Mage::getModel('core/email_template');
 		/* @var $mailTemplate Mage_Core_Model_Email_Template */
 		$enabled=Mage::getStoreConfig('allure_exception/email/enabled', $checkout->getStoreId());
-		Mage::log($message,Zend_log::DEBUG,'notifications',true);
+		Mage::log($message->__toString(),Zend_log::DEBUG,'notifications',true);
 		Mage::log($enabled,Zend_log::DEBUG,'notifications',true);
 		try {
 			if($enabled){
@@ -73,7 +73,7 @@ class Allure_Exception_Helper_Data extends Mage_Core_Helper_Abstract
 							$recipient['email'],
 							$recipient['name'],
 							array(
-									'reason'          => $message,
+									'reason'          => $message->__toString(),
 									'checkoutType'    => $checkoutType,
 									'dateAndTime'     => Mage::app()->getLocale()->date(),
 									'customer'        => Mage::helper('customer')->getFullCustomerName($checkout),
