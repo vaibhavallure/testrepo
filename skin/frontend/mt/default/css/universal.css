@@ -1390,33 +1390,33 @@ width: 63%;
 ul#additional-addresses{
 	display: flex;
 	flex-wrap:wrap;
-	}
+	justify-content:space-around;
+}
 	
-	ul#additional-addresses li{
-	 display: flex;
-	 margin-bottom: 10px;
-	}
+ul#additional-addresses li{
+	display: flex;
+	margin-bottom: 10px;
+}
 	
-	ul#additional-addresses li .item-inner-container{
-	 padding: 5px 10px;
-	 margin-bottom: 10px;
-	 position: relative;
-	}
+ul#additional-addresses li .item-inner-container{
+ margin-bottom: 10px;
+ position: relative;
+}
 	
-	ul#additional-addresses li .item-inner-container address{
-		 height: 80%;
-		 line-height: 20px;
-		 font-size: 13px;
-		 border: 1px solid #ccc;
-		 padding: 10px;
-		 font-weight: 600;
-	}
+ul#additional-addresses li .item-inner-container address{
+	 height: 80%;
+	 line-height: 20px;
+	 font-size: 13px;
+	 border: 1px solid #ccc;
+	 padding: 10px;
+	 font-weight: 600;
+}
 
-	#add-new-addresss{
-	margin-right: 10px;
-	}
+#add-new-addresss{
+margin-right: 10px;
+}
 	
-	#additional-addresses .additional-address-links a {
+#additional-addresses .additional-address-links a {
 	display: inline-block;
 	margin-right: 13px;
 	font-size: 13px;
