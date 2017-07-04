@@ -15,7 +15,7 @@ class Allure_MyAccount_Block_Purchase extends Mage_Checkout_Block_Cart
 		//if (Mage::getSingleton('customer/session')->isLoggedIn()) {
 			
 			$store = 'all';
-			if(empty($_GET['m_store']))
+			if(!empty($_GET['m_store']))
 				$store = $_GET['m_store'];
 			
 			$sortOrder = 'asc';
