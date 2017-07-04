@@ -19,6 +19,8 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 <div class="cart-mt">
     <h1>Shopping Cart</h1>
 
+	<input id="myaccount-cart-count" type="hidden" value="<?php echo Mage::helper('checkout/cart')->getSummaryCount();?>">
+
     <?php echo $this->getChildHtml('form_before') ?>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
     <form id="shopping-cart-form" action="<?php echo $this->getUrl('checkout/cart/updatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post">
@@ -163,6 +165,10 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 <script>
 	var itemXhr = null;
 	jQuery(document).ready(function(){
+
+		var cartCount =  jQuery("#myaccount-cart-count").val();
+		jQuery("#myaccount-cart-total-item").text(cartCount);
+		jQuery("#myaccount-cart-total-item").show();
 		
 		jQuery('.mt-my-cart .w-remove a.remov').on('click',function(){
 			var item_id = jQuery(this).attr('data-item-id');

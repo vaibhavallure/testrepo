@@ -5,6 +5,24 @@
     }
 </style>
 <?php if ($this->helper('wishlist')->isAllow()) : ?>
+
+
+<?php 
+	$wishlistCount = 0;
+	if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+   <?php
+        $customer = Mage::getSingleton('customer/session')->getCustomer();
+        $wishlist = Mage::getModel('wishlist/wishlist')->loadByCustomer($customer, true);
+        //$wishlistCount = $wishlist->getItemsCount();
+        $wishListItemCollection = $wishlist->getItemCollection();
+        foreach ($wishListItemCollection as $item)
+        {
+        	$wishlistCount += $item->getQty();
+        }
+    ?>
+<?php endif; ?>
+<input id="wishlist-count" type="hidden" value="<?php echo $wishlistCount;?>" />
+
     <div class="my-wishlist">
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
         
@@ -120,6 +138,16 @@
         <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
     </div>
 <?php endif ?>
+
+
+<script>
+jQuery(document).ready(function(){
+	var wishlistCount =  jQuery("#wishlist-count").val();
+	jQuery("#myaccount-wishlist-total-item").text(wishlistCount);
+	jQuery("#myaccount-wishlist-total-item").show();
+});
+</script>
+
 
 <script>
 	function plusMinusToWishlist(elementId,plus){
