@@ -171,27 +171,32 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 		jQuery("#myaccount-cart-total-item").show();
 		
 		jQuery('.mt-my-cart .w-remove a.remov').on('click',function(){
-			var item_id = jQuery(this).attr('data-item-id');
-			var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
-			var parent = jQuery(this).parent().parent().parent();
-			
-			if( itemXhr == null ) {
-				showLoadingFancybox();
-				itemXhr =	jQuery.ajax({
-			        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/removeItemAjax';?>',
-			        dataType : 'json',
-					type : 'POST',
-					data: {'id':item_id,'form_key':form_key},
-			        success: function(data) {
-			        	if(data.success){
-			        		jQuery('#ajax_cart_content').html(data.top_cart);
-			        		jQuery('.mt-my-cart').html("");
-				        	jQuery('.mt-my-cart').html(data.html);
-			        	}
-			        	itemXhr = null;
-			        	hideLoadingFancybox();
-			        }
-			    });
+
+			if(confirm("Are you sure you want to delete this?")){
+				var item_id = jQuery(this).attr('data-item-id');
+				var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
+				var parent = jQuery(this).parent().parent().parent();
+				
+				if( itemXhr == null ) {
+					showLoadingFancybox();
+					itemXhr =	jQuery.ajax({
+				        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/removeItemAjax';?>',
+				        dataType : 'json',
+						type : 'POST',
+						data: {'id':item_id,'form_key':form_key},
+				        success: function(data) {
+				        	if(data.success){
+				        		jQuery('#ajax_cart_content').html(data.top_cart);
+				        		jQuery('.mt-my-cart').html("");
+					        	jQuery('.mt-my-cart').html(data.html);
+				        	}
+				        	itemXhr = null;
+				        	hideLoadingFancybox();
+				        }
+				    });
+				}
+			}else{
+				return false;
 			}
 		})
 		

@@ -1296,9 +1296,15 @@ width: 63%;
 	float: right;
 }
 
+#purchase-history,
+#wishlist-table-overlay,
 #box-history {position: relative;}
 
 .my-account #box-history .box-content {padding: 0}
+
+#purchase-history .allure-fancybox-overlay {
+	margin-top: 22px;	
+}
 
 .allure-fancybox-overlay {
     display: none;

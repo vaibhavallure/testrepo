@@ -33,6 +33,8 @@
         <form id="wishlist-view-form" action="<?php echo $this->getUrl('*/*/update', array('wishlist_id' => $this->getWishlistInstance()->getId())) ?>" method="post">
            <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
             <?php echo $this->getChildHtml('top'); ?>
+            	<div id="wishlist-table-overlay">
+            	<div class="box-content">
                 <table class="data-table" id="wishlist-table">
                     <thead class="shop-titles">
                         <tr>
@@ -96,6 +98,8 @@
                         
                     </tbody>
                 </table>
+                </div>
+                </div>
         </form>
         <script type="text/javascript">
         //<![CDATA[
@@ -240,22 +244,26 @@ jQuery(document).ready(function(){
 	}
 
 	function wishlistRemoveItem(id){
-		var item_id = id;
-		var form_key 	= jQuery(' #wishlist-view-form input').val();
-		showLoadingFancybox();
-		jQuery.ajax({
-	        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/removeAjax';?>',
-	        dataType : 'json',
-			type : 'POST',
-			data: {'item':item_id,'form_key':form_key},
-	        success: function(data) {
-	        	if(data.success){
-	        		jQuery('.mt-my-wishlist').html("");
-	        		jQuery('.mt-my-wishlist').html(data.html);
-	        	}
-	        	hideLoadingFancybox();
-	        }
-	    });
+		if(confirm("Are you sure you want to delete this?")){
+			var item_id = id;
+			var form_key 	= jQuery(' #wishlist-view-form input').val();
+			showLoadingFancybox();
+			jQuery.ajax({
+		        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/removeAjax';?>',
+		        dataType : 'json',
+				type : 'POST',
+				data: {'item':item_id,'form_key':form_key},
+		        success: function(data) {
+		        	if(data.success){
+		        		jQuery('.mt-my-wishlist').html("");
+		        		jQuery('.mt-my-wishlist').html(data.html);
+		        	}
+		        	hideLoadingFancybox();
+		        }
+		    });
+		}else{
+			return false;
+		}
 	}
 </script>
 
