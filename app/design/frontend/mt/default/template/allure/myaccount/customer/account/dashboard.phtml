@@ -25,6 +25,15 @@
  */
 ?>
 <div class="dashboard">
+
+	<div class="mt-new-myaccount-banner">
+    	<div class="mt-myaccount-banner-ya">
+    		<div class="banner-ya-img">
+				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+			</div>
+    	</div>
+    </div>
+	
     <div class="mt-new-myaccount-dashbord">
     	<div class="mt-new-myaccount-menu">
     		<div class="mt-new-myaccount-submenu">
@@ -110,13 +119,6 @@
     	</div>
     </div>
 
-	 <div class="mt-new-myaccount-banner">
-    	<div class="mt-myaccount-banner-ya">
-    		<div class="banner-ya-img">
-				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
-			</div>
-    	</div>
-    </div>
     
 </div>
 
