@@ -14,7 +14,6 @@ $totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
 <div class="cart-mt">
-
         <fieldset>
         	<?php if($this->getPurchasedItems()->getSize()>0):?>
             <table id="myaccount-shopping-cart-table" class="data-table cart-table" width="100%" border="0">
@@ -30,6 +29,9 @@ $totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
                 <?php 
                 $storeList = array();
                 $stores = Mage::app()->getStores();
+                
+                $storeColorConfig = Mage::helper('myaccount')->getStoreColorConfig();
+                
                 foreach ($stores as $store) {
                 	$storeList[$store->getId()] = $store->getName();
                 }
@@ -80,6 +82,18 @@ $totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
                         $receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
                         $reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
                         
+                        $storeColor = '';
+                        if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
+                        	$storeColor .= 'style="';
+                        	$frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
+                        	if(!empty($frontColor))
+                        		$storeColor .= 'color:'.$frontColor.';'; 
+                        	$backColor = $storeColorConfig[$_item->getStoreId()]['back_color'];
+                        	if(!empty($backColor))
+                        		$storeColor .= 'background:'.$backColor.';';
+                        	$storeColor .= '"';
+                        }
+                        
                         ?>
                         
                       <tr data-id="<?php echo $_item->getId()?>" class="<?php echo $productNotAvailableClass?>">
@@ -105,7 +119,7 @@ $totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
 								<?php endif;?>
 				
 								<span class="mt-purchase-added-at">Purchased: <?php echo date('M d,Y H:i a',strtotime($_item->getCreatedAt()))?></span>
-								<lable class="purchase-store-name"><?php echo $storeList[$_item->getStoreId()]?></lable>
+								<lable <?php echo $storeColor?>  class="purchase-store-name"><?php echo $storeList[$_item->getStoreId()]?></lable>
 							</td>
 			
 							<td class="cart_col4">

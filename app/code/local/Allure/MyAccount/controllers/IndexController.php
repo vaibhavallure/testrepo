@@ -147,6 +147,8 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			$storeList[$store->getId()] = $store->getName();
 		}
 		
+		$storeColorConfig = Mage::helper('myaccount')->getStoreColorConfig();
+		
 		$html = '';
 		foreach ($collection as $_item){
 			
@@ -184,6 +186,20 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			$receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
 			$reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
 			
+			
+			$storeColor = '';
+			if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
+				$storeColor .= 'style="';
+				$frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
+				if(!empty($frontColor))
+					$storeColor .= 'color:'.$frontColor.';';
+				$backColor = $storeColorConfig[$_item->getStoreId()]['back_color'];
+				if(!empty($backColor))
+					$storeColor .= 'background:'.$backColor.';';
+				$storeColor .= '"';
+			}
+			
+			
 			$html .= '<tr data-id="'.$_item->getId().'" class="'.$productNotAvailableClass.'">';
 			$html .= '<td class="cart_col1">';
 			$html .= 	'<a href="'.$url.'" title="'.$productName.'" class="product-image">'.
@@ -201,7 +217,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 				}
 				
 			$html .='<span class="mt-purchase-added-at">Purchased: '.date('M d,Y H:i a',strtotime($_item->getCreatedAt())).'</span>'.
-						'<lable class="purchase-store-name">'.$storeList[$_item->getStoreId()].'</lable>'.
+					'<lable '.$storeColor.' class="purchase-store-name">'.$storeList[$_item->getStoreId()].'</lable>'.
 					'</td>';
 			
 			$html .= '<td class="cart_col4">';
