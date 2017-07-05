@@ -291,7 +291,7 @@ div.tab button.active {
 }
 
 #authnetcim_cc_number{
-	padding: 0px!important;
+	/* padding: 0px!important; */
 }
 
 #authnetcim_cc_number,
@@ -513,7 +513,7 @@ div.tab button.active {
 }
 
 .myaccount-index-index .mt-myaccount-giftcard{
-	margin-left: -31px;
+	/* margin-left: -31px; */
 }
 
 .myaccount-index-index .coupons-mt{
@@ -527,8 +527,10 @@ div.tab button.active {
 }
 
 .myaccount-index-index .cart-mt .totals {
-	width: 48%;	
-	background: #dedede;    
+   float: right;
+   background: #CCCCCC;
+   width: 285px;
+   margin-top: 5px;
 }
 
 .myaccount-index-index .cart-mt .totals-table tr {
@@ -1276,11 +1278,11 @@ width: 63%;
 }
 
 .tabcontent .filter-label-list{
-	width: 11%;
+	width: 17%;
     float: left;
     margin-top: 0px;
     font-weight: bold;
-    margin: 7px 0px 7px 10px;
+    margin: 7px 0px 7px 8px;
     line-height: 22px;
 }
 .my-account .data-table tbody th, .my-account .data-table tbody td{
@@ -1301,21 +1303,6 @@ width: 63%;
 	margin-right: 0px;
 }
 
-#mt-credit-card-info li{
-	 width: 47%;
-    float: left;
-    padding: 5px 5px 5px 0px;
-    clear: right;
-    margin-right: 10px;
-}
-
-#mt-credit-card-info li{
-	 width: 47%;
-    float: left;
-    padding: 5px 5px 5px 0px;
-    clear: right;
-    margin-right: 10px;
-}
 
 .mt-payment-card-btn{
 	margin: 10px 0 0;
@@ -1376,15 +1363,23 @@ width: 63%;
     background: #dedede;
 }
 
-.authnetcim_add{
+/* .authnetcim_add{
 	width: 50%;
     float: right;
-}
+} */
 
 .mt-cc-number{
+	
+}
+
+#mt-credit-card-info .mt-card-info{
 	width: 50%;
     float: right;
     clear: both;
+}
+
+#mt-credit-card-info .mt-card-info #authnetcim_cc_number{
+  padding: 0px 5px 0px 5px
 }
 
 #authnetcim_cc_type_cvv_div,
@@ -1454,5 +1449,16 @@ margin-right: 10px;
 }
 .customer-address-form .col2-left-layout .col-main {
     width: 80%;
+}
+
+.buttons-set button, .buttons-set p.required {
+   margin-right: 12px;
+   float: left;
+}
+#wishlist-table td:first-child, #wishlist-table td:last-child{
+   padding-left: 8px;
+}
+.pay-caart{
+   margin-right: -7px;
 }
 	
