@@ -263,7 +263,7 @@ Customer account pages, rendered for all tabs in dashboard
         <label>Customer My Account (All Pages)</label>
         <!-- Mage_Customer -->
         <reference name="root">
-            <action method="setTemplate"><template>page/2columns-left-dashboard.phtml</template></action>
+            <action method="setTemplate"><template>allure/myaccount/page/2columns-left-dashboard.phtml</template></action>
             <action method="setTitle" translate="title">
                     <title>My Wishlist</title>
              </action>

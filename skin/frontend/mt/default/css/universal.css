@@ -662,7 +662,7 @@ div.tab button.active {
     clear: both;
 }
 
-.mt-myaccount-new .col-main{
+.mt-myaccount-new .col-main.mt-no-sidebar{
 	width: 100% ! important;
 }
 
@@ -1441,5 +1441,18 @@ margin-right: 10px;
     padding-left: 15px;
 } */
 
+.mt-my-cart .cart-mt .discount h2 {
+    padding: 3px 0px 0px 70px;
+}
 
+.customer-address-form .myaccount-page-tilte h1{
+	display: none;
+}
+
+.customer-address-form.col2-left-layout .col-left{
+	width: 18%;
+}
+.customer-address-form .col2-left-layout .col-main {
+    width: 80%;
+}
 	

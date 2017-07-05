@@ -46,8 +46,9 @@
         <div class="main-container col2-left-layout">
             <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
             <div class="page-title myaccount-page-tilte">
-            	<h2>
+            	<h1>
                 <?php
+                $isSidebar = true;
                 $request = Mage::app()->getRequest();
                 if(Mage::app()->getRequest()->getModuleName() == 'wishlist')
                 { 
@@ -66,6 +67,8 @@
                     echo $this->__('Newsletter');
                 }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customerpaymentinfoindex'){
                     echo $this->__('My Saved Cards');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'myaccountindexindex'){
+                	$isSidebar = true;
                 }else{
                 	$session = Mage::getSingleton('customer/session');
                 	$name = "Guest";
@@ -74,15 +77,20 @@
                 		$name = $customer->getFirstname();
                 	}
                 	echo "Hello ".$name;
+                	$isSidebar = false;
                 } ?>
-                </h2></div>
+                </h1></div>
             <div class="main">
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
                 <?php echo $this->getChildHtml('global_messages') ?>
-                <div class="col-main">
+                <div class="col-main <?php echo ($isSidebar)?"":"mt-no-sidebar"?>">
                     <?php echo $this->getChildHtml('content') ?>
                 </div>
-                <div class="col-left sidebar"><?php //echo $this->getChildHtml('left') ?></div>
+                
+                <?php if($isSidebar):?>
+                <div class="col-left sidebar"><?php echo $this->getChildHtml('left') ?></div>
+                <?php endif;?>
+                
             </div>
         </div>
         <?php echo $this->getChildHtml('footer') ?>
