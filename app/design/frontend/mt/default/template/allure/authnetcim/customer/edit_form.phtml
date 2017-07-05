@@ -25,9 +25,6 @@
 			<ul>
 				<li class="card-info-title"><p class="mt-paycard-title"><?php echo $this->__('Credit Card Information'); ?></p></li>
 				
-				<li class="credit-card-image">
-				</li>
-				
 				<?php if( $this->isEdit() ): ?>
 					<li>
 						<input type="radio" class="left" name="payment[sameCard]" value="1" id="<?php echo $code; ?>_sameCard_1" checked="checked" /> <label for="<?php echo $code; ?>_sameCard_1"><?php echo $this->__( 'Continue using payment data %s', $this->getCard()->getLabel() ); ?></label><br />
@@ -36,6 +33,11 @@
 				<?php endif; ?>
 				
 				<?php $style = ( $this->isEdit() ) ? ' style="display:none"' : ''; ?>
+				
+				<li <?php echo $style; ?> class="credit-card-image <?php echo $code; ?>_add">
+					<h6>Credit Cards</h6>
+					<img src="<?php echo $this->getSkinUrl('images/myaccount/all-card.png')?>">
+				</li>
 				
 				<li class="mt-card-info <?php echo $code; ?>_add"<?php echo $style; ?>>
 					<label style="display: none" for="<?php echo $code; ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type'); ?></label>

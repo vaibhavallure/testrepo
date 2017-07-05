@@ -206,7 +206,6 @@ div.tab button.active {
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading{
-	background-color: #fff;
 	padding: 12px;
 }
 
@@ -231,14 +230,15 @@ div.tab button.active {
 .mt-payment-details .card-details-main{
 	display: block;
     overflow: hidden;
-    padding: 0px 10px 10px 10px;
+    padding: 0px 15px 10px 10px;
     background-color: #dedede;
+    width: 100%;
 }
 .mt-payment-details .card-details-main .mt-name-on-card{
 	width: 100%;
 }
 .mt-payment-details .card-details-main .mt-card-address{
-	width: 39%;
+	width: 40%;
     float: right;
     margin-top: -35px;
 }
@@ -1501,7 +1501,7 @@ margin-right: 10px;
    left: 88px;
 }
 .cart-mt .discount #activateGiftCard .buttons-set button{
-left: 280px;
+	left: 212px;
 }
 #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
    width: 99% !important;
@@ -1522,6 +1522,29 @@ left: 280px;
 .manage-payment-method #edit-main .box-title{
  padding: 7px 0px;	
 }
+/* 
+.my-account .input-box select {
+width: 245px;
+} */
 
+.credit-card-image{
+	width: 30%;
+    float: left;
+    position: absolute;
+}
 
+.credit-card-image img{
+	width: 60%;
+}
+
+.manage-payment-method #edit-main .credit-card-image{
+	padding-top:10px;
+}
+
+.mt-new-payment .mt-new-payment-list .mt-payment-item .mt-card-name img{
+	width: 38px;
+    float: left;
+    margin-top: -4px;
+    padding-right: 10px;
+}
 	

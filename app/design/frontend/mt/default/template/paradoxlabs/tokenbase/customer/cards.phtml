@@ -84,9 +84,13 @@
 				$expireDate = date( 'm/Y', strtotime( $card->getExpires()));
 				$cardAddress = $card->getAddressObject()->format('html');
 				$nameOnCard = $card->getAddress('firstname')." ".$card->getAddress('lastname');
+				
+				$cardTypeImg = strtolower($card->getAdditional('cc_type'))."-card.png";
 			?>
 	  			<li class="mt-payment-item" id="mt-payment-item-<?php echo $card->getId()?>">
-		  			<div class="mt-card-name"><?php echo $cardType." ending in ".$cardEndLabel?></div>
+		  			<div class="mt-card-name">
+		  			<img src="<?php echo $this->getSkinUrl('images/myaccount/').$cardTypeImg?>" />
+		  			<?php echo $cardType." ending in ".$cardEndLabel?></div>
 		  			<div class="mt-expire-date"><?php echo $expireDate?></div>
 		  			<div class="mt-icon" data-card-id="<?php echo  $card->getId()?>">
 		  				<a href="javascript:void(0);"><span class="mt-arrow arrow-down"></span></a>
