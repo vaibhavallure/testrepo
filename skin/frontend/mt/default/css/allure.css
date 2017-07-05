@@ -533,6 +533,7 @@ img.snize-item-image[src^=data]::after {
 	-moz-transition: opacity 400ms ease-in;
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
+	background: rgba(217, 217, 217, 0.66);
 }
 .popupLoginModel:target {
 	opacity:1;
@@ -550,6 +551,8 @@ img.snize-item-image[src^=data]::after {
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px
 }
 .popupLoginModel #login-msg{
 	color:#f00;
@@ -597,6 +600,7 @@ img.snize-item-image[src^=data]::after {
 	-moz-transition: opacity 400ms ease-in;
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
+	background: rgba(217, 217, 217, 0.66);
 }
 .popupRegisterModel:target {
 	opacity:1;
@@ -614,6 +618,8 @@ img.snize-item-image[src^=data]::after {
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px
 }
 .popupRegisterModel #login-msg{
 	color:#f00;
@@ -638,7 +644,9 @@ img.snize-item-image[src^=data]::after {
 	box-shadow: 1px 1px 3px #000;
 }
 
-.close:hover { background: #00d9ff; }
+.close:hover { background: #ecc388; 
+color: #fff;
+}
 
 
 
@@ -724,3 +732,12 @@ cursor: pointer;
     padding-bottom: 0px;
     line-height: normal;
 }
+.popup-benifits{
+    list-style-type: disc;
+    margin-left: 25px;
+}
+.pop-link .new_account{
+	text-align: center;
+    margin-top: 10px;
+}
+

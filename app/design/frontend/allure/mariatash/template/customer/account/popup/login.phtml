@@ -1,11 +1,11 @@
 <div id="openModal" class="popupLoginModel">
 	<div>
 	<form class="form-signin" method="post" id="popup-login-form">
-		<div class="pop-title">
+		<div class="pop-title head">
 			<a href="#close" title="Close" class="close">X</a>
 			<h2>Log In </h2>
 		</div>
-		<div>
+		<div class="body">
 			<div class="form-group">
 	 		    <label class="popup-login-lbl" for="email">Email Address</label>
 	  		    <input id='username' type="text" name='username' class="ele_width form-control required-entry validate-email"/>
@@ -16,24 +16,26 @@
 			</div>
 		</div>
 		<div class="pop-link">
-			<a>Forget Password</a>
-			<span id="login-msg">&nbsp;</span>
-			<button type="button" id="signin-btn-popup" class="button">Log In</button>
+			<div class="submit-login">
+				<a>Forget Password</a>
+				<span id="login-msg">&nbsp;</span>
+				<button type="button" id="signin-btn-popup" class="button">Log In</button>
+			</div>
+			<div class="benifits">
+				<p><strong>Create an account to access these benifits:</strong></p>
+				<ul class="popup-benifits">
+				  <li>Keep track of your jewelry sizes</li>
+				  <li>See yout purchase history</li>
+				  <li>Faster Checkout</li>
+				  <li>Share your wishlist</li>
+				  <li>Receive  persionalized online service</li>
+				  <li>$20 off your next purchase if you subscribe to our newsletter</li>
+				</ul>
+			</div>
+			<div class="new_account">
+				<a onclick="openRegisterModal()">Click here to create new account!</a>
+			</div>
 		</div> 
-		<div class="pop-link">
-			<p><strong>Create an account to access these benifits:</strong></p>
-			<ul class="popup-benifits">
-			  <li>Keep track of your jewelry sizes</li>
-			  <li>See yout purchase history</li>
-			  <li>Faster Checkout</li>
-			  <li>Share your wishlist</li>
-			  <li>Receive  persionalized online service</li>
-			  <li>$20 off your next purchase if you subscribe to our newsletter</li>
-			</ul>
-		</div>
-		<div class="pop-link">
-			<a onclick="openRegisterModal()">Click here to create new account</a>
-		</div>
 	</form>
 	</div>
 </div>
