@@ -30,6 +30,7 @@ class Allure_MyAccount_Block_Purchase extends Mage_Checkout_Block_Cart
 			$customer = Mage::getSingleton('customer/session')->getCustomer();
 			
 			$collection->addFieldToFilter('customer_id',$customer->getId());
+			$collection->addFieldToFilter('parent_item_id',array('null' => true));
 			//$collection->getSelect()->group('main_table.product_id');
 			
 			if(!empty($store)){

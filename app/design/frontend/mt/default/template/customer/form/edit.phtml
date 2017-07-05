@@ -35,11 +35,6 @@
         <?php echo $this->getBlockHtml('formkey')?>
         <h2 class="legend"><?php echo $this->__('Account Information') ?></h2>
         
-        <?php //allure?>
-        <div class="page-sub-title">
-			<p><?php echo $this->__('Contact') ?></p>
-		</div>
-        
         <ul class="form-list">
             <li class="fields">
                 <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getCustomer())->toHtml() ?>

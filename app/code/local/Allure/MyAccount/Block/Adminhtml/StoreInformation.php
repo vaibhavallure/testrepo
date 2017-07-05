@@ -17,11 +17,11 @@ class Allure_MyAccount_Block_Adminhtml_StoreInformation extends Mage_Adminhtml_B
         		'label' => Mage::helper('adminhtml')->__('Back Color'),
         		'size' => 28
         ));
-        /* $this->addColumn('timezone', array(
-        		'label' => Mage::helper('adminhtml')->__('Timezone'),
+         $this->addColumn('store_label', array(
+        		'label' => Mage::helper('adminhtml')->__('Store Label'),
         		'size' => 28
         ));
-        $this->addColumn('timezoneabbr', array(
+         /*$this->addColumn('timezoneabbr', array(
         		'label' => Mage::helper('adminhtml')->__('Timezone Abbrevation'),
         		'size' => 28
         )); */

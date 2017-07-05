@@ -127,6 +127,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$customer = Mage::getSingleton('customer/session')->getCustomer();
 			
 		$collection->addFieldToFilter('customer_id',$customer->getId());
+		$collection->addFieldToFilter('parent_item_id',array('null' => true));
 		//$collection->getSelect()->group('main_table.product_id');
 		
 		if(!empty($store)){
@@ -159,12 +160,12 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
 			$url = $product->getProductUrl();
 			
-			$productDescr = $product->getDescription();
+			//$productDescr = $product->getDescription();
 			
 			if(!is_null($parentId)){
 				$parentProduct = Mage::getModel("catalog/product")->load($parentId);
 				$url = $parentProduct->getProductUrl();
-				$productDescr = $parentProduct->getDescription();
+				//$productDescr = $parentProduct->getDescription();
 			}
 			
 			$productName = $product->getName();
@@ -174,13 +175,13 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			if(!$product->getId()){
 				$productName = $_item->getName();
 				$productNotAvailableClass = "current-item-not-available";
-				$productDescr = $_item->getDescription();
+				//$productDescr = $_item->getDescription();
 			}
 			
-			if(!empty($productDescr)){
+			/* if(!empty($productDescr)){
 				if(strlen($productDescr)>=70)
 					$productDescr = substr($productDescr,1,70)."...";
-			}
+			} */
 			
 			
 			$receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
@@ -188,6 +189,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			
 			
 			$storeColor = '';
+			$storeName = $storeList[$_item->getStoreId()];
 			if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
 				$storeColor .= 'style="';
 				$frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
@@ -197,6 +199,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 				if(!empty($backColor))
 					$storeColor .= 'background:'.$backColor.';';
 				$storeColor .= '"';
+				$storeName = $storeColorConfig[$_item->getStoreId()]['store_label'];
 			}
 			
 			
@@ -212,12 +215,12 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			$html .= 	'<h2 class="product-name '.$typeId.'">';
 			$html .=  		'<a href="'.$url.'">'.$productName.'</a>'.
 						'</h2>';
-				if(!empty($productDescr)){
+				/* if(!empty($productDescr)){
 					$html .= '<h2 class="product-descr">'.$productDescr.'</h2>';
-				}
+				} */
 				
 			$html .='<span class="mt-purchase-added-at">Purchased: '.date('M d,Y H:i a',strtotime($_item->getCreatedAt())).'</span>'.
-					'<lable '.$storeColor.' class="purchase-store-name">'.$storeList[$_item->getStoreId()].'</lable>'.
+					'<lable '.$storeColor.' class="purchase-store-name">'.$storeName.'</lable>'.
 					'</td>';
 			
 			$html .= '<td class="cart_col4">';

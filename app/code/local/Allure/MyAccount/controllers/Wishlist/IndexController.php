@@ -248,4 +248,75 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 	}
 	
+	
+	/**
+	 * Add cart item to wishlist and remove from cart
+	 */
+	public function fromcartAjaxAction()
+	{
+		$wishlist = $this->_getWishlist();
+		if (!$wishlist) {
+			return ;//$this->norouteAction();
+		}
+		$itemId = (int) $this->getRequest()->getParam('item');
+		
+		/* @var Mage_Checkout_Model_Cart $cart */
+		$cart = Mage::getSingleton('checkout/cart');
+		$session = Mage::getSingleton('checkout/session');
+		
+		try {
+			$item = $cart->getQuote()->getItemById($itemId);
+				if (!$item) {
+					$result['success'] = 0;
+					$result['message'] = Mage::helper('wishlist')->__("Requested cart item doesn't exist");
+				}else{
+				
+					$productId  = $item->getProductId();
+					$buyRequest = $item->getBuyRequest();
+					
+					$wishlist->addNewItem($productId, $buyRequest);
+					
+					$productIds[] = $productId;
+					$cart->getQuote()->removeItem($itemId);
+					$cart->save();
+					Mage::helper('wishlist')->calculate();
+					$productName = Mage::helper('core')->escapeHtml($item->getProduct()->getName());
+					$wishlistName = Mage::helper('core')->escapeHtml($wishlist->getName());
+					
+					$wishlist->save();
+					
+					$result['success'] = 1;
+					$result['message'] = Mage::helper('wishlist')->__("%s has been moved to wishlist %s", $productName, $wishlistName);
+					
+					$this->loadLayout('myaccount_wishlist_layout');
+					$html = $this->getLayout()->getBlock('customer.wishlist_myaccount')->toHtml();
+					$result['html']  = $html;
+					
+					$content = $this->getLayout()
+					->createBlock('checkout/cart_sidebar')
+					->setTemplate('checkout/cart/sidebar.phtml')
+					->toHtml();
+					$result['top_cart'] = $content;
+					
+					$this->loadLayout('myaccount_checkout_cart_layout');
+					$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
+					
+					$result['cart_html'] = $cart_html;
+					
+			}
+			
+		} catch (Mage_Core_Exception $e) {
+			$result['success'] = 0;
+			$result['message'] = $e->getMessage();
+		} catch (Exception $e) {
+			$result['success'] = 0;
+			$result['message'] = Mage::helper('wishlist')->__('Cannot move item to wishlist');
+		}
+		
+		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+		
+	}
+	
+	
 }

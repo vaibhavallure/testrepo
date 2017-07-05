@@ -499,9 +499,6 @@ div.tab button.active {
     text-indent: 10px;
 }
 
-.myaccount-index-index .my-account .ad-to-fav{
-	display: none;
-}
 
 .myaccount-index-index div.cart-mt div.cart-collaterals div.collat-wrap div.coupons-mt {
 	background: none;
@@ -1312,6 +1309,14 @@ width: 63%;
     margin-right: 10px;
 }
 
+#mt-credit-card-info li{
+	 width: 47%;
+    float: left;
+    padding: 5px 5px 5px 0px;
+    clear: right;
+    margin-right: 10px;
+}
+
 .mt-payment-card-btn{
 	margin: 10px 0 0;
 }
@@ -1395,7 +1400,7 @@ ul#additional-addresses{
 	
 ul#additional-addresses li{
 	display: flex;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 	
 ul#additional-addresses li .item-inner-container{
@@ -1421,4 +1426,20 @@ margin-right: 10px;
 	margin-right: 13px;
 	font-size: 13px;
 }
+
+/* .ad-to-fav a.wishlist-empty-fav {
+    color: #404146;
+    text-decoration: none;
+    background: url(../images/wishlist_fav.png) no-repeat left center;
+    padding-left: 15px;
+}
+
+.ad-to-fav a.wishlist-fill-fav {
+    color: #404146;
+    text-decoration: none;
+    background: url(../images/bg-ad-fav.png) no-repeat left center;
+    padding-left: 15px;
+} */
+
+
 	

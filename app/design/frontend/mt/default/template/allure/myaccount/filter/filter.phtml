@@ -44,7 +44,7 @@
 							
 	$currentSort = $_GET ['m_sort'];
 	if(empty($currentSort))
-		$currentSort = '';
+		$currentSort = 'desc';
 	
 	$stores = Mage::app ()->getStores ();
 	$storeArr = array();
@@ -64,18 +64,21 @@
 
 <li class="myaccount-filter-store-list">
      <div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
-        <dt class="odd"><?php echo ($currentFilterStore!=all)?$storeArr[$currentFilterStore]:"STORE"?></dt>
+        <dt class="odd"><?php echo ($currentFilterStore!='all')?$storeArr[$currentFilterStore]:"ALL STORES"?></dt>
            <dd class="myaccount-filter-store odd" style="display: none;">
 		   		<div class="filter_name"></div>
 					<ol class="myaccount-filter-item">
 					<li>
+						<option value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></option>
 						<?php
 							$stores = Mage::app ()->getStores ();
 							foreach ($stores as $store) :
 						?>
     						
-								<option value="<?php echo $store->getId()?>"
-						<?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>><?php echo $store->getName()?></option>
+							<option value="<?php echo $store->getId()?>"
+								<?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
+							<?php echo $store->getName()?>
+							</option>
             				
             			<?php endforeach;?>
             			</li>
