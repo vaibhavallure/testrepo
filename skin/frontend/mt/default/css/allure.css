@@ -692,7 +692,7 @@ cursor: pointer;
    text-decoration: none;
    color: #000;
 }
-.popupLoginModel #signin-btn {
+.popupLoginModel #signin-btn-popup {
    float: right;
    margin: 20px 0 10px;
    color: #fff;
@@ -713,7 +713,8 @@ cursor: pointer;
     padding-left: 5px;
     padding-right: 5px;
 }
-#popup-register{
+
+#signup-btn-popup{
 	 background: transparent url(../images/bkg_black_btn.png) repeat-x;
     height: 26px;
     color: #fff;

@@ -25,6 +25,15 @@
         </events>
 	</global>
 	<frontend>
+		<routers>
+			<allure_customer>
+				<use>standard</use>
+				<args>
+					<module>Allure_Customer</module>
+					<frontName>customers</frontName>
+				</args>
+			</allure_customer>
+		</routers>
 		<layout>
             <updates>
                 <customer module="Mage_Customer">
