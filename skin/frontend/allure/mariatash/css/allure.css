@@ -2250,7 +2250,9 @@ iframe[name=google_conversion_frame] {display:none}
 	box-shadow: 1px 1px 3px #000;
 }
 
-.close:hover { background: #00d9ff; }
+.close:hover { background: #ecc388;
+color: #fff;
+ }
 
 
 
