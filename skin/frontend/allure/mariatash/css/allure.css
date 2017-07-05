@@ -2268,6 +2268,7 @@ width: 100%;
    border-left: 0px;
    border-right: 0;
    padding: 5px;
+   border-radius: 0;
 }
 .popupRegisterModel input{
    width: 96%;
@@ -2299,9 +2300,14 @@ cursor: pointer;
    color: #000;
 }
 .popupLoginModel #signin-btn-popup {
-   float: right;
-   margin: 20px 0 10px;
+   /* float: right;
+   margin: 20px 0 10px; */
    color: #fff;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
    background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
 }
 #popup_is_subscribed{
@@ -2330,7 +2336,10 @@ cursor: pointer;
     padding-bottom: 0px;
     line-height: normal;
 }
-
+.popup-benifits  {
+       list-style-type: disc;
+    margin-left: 25px;
+}
 
 
 
