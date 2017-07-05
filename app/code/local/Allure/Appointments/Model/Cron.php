@@ -106,6 +106,12 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 							'special_notes' => $model->getSpecialNotes(),
 							'apt_starttime'  => $appointmentStart,
 							'apt_endtime'    => $appointmentEnd,
+							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
 							'apt_modify_link'=> $apt_modify_link);
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
@@ -131,6 +137,12 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 							'piercing_loc' => $model->getPiercingLoc(),
 							'special_notes' => $model->getSpecialNotes(),
 							'apt_starttime'  => $appointmentStart,
+							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
 							'apt_endtime'    => $appointmentEnd);
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
