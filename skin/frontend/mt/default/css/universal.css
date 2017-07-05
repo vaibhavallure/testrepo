@@ -568,10 +568,16 @@ div.tab button.active {
 }
 
 .myaccount-index-index #wishlist-table td.add-to-cart-alt .plus_icon{
-	margin-left: 2px;
+	margin-left: 5px;
 }
 .myaccount-index-index #wishlist-table .input-text.qty{
 	margin-top: 0px;
+	background: none repeat scroll 0 0 #DEDEDE;
+	border-color: #9B9B9B #C8C8C8 #D9D9D9;
+	border-style: solid;
+	border-width: 1px;
+	padding: 9px 4px 10px;
+	float: left;
 }
 
 .myaccount-index-index #wishlist-table .mt-myaccount-subtotal{
@@ -1320,6 +1326,7 @@ width: 63%;
 #new-mt-saved-card #billing-new-address-form li.list-even,
 .myaccount-add-payment-form #billing-new-address-form li.list-even{
 	float: left;
+	clear: both;
 }
 
 
@@ -1334,7 +1341,7 @@ width: 63%;
 }
 
 .mt-payment-card-btn button#delete-form-btn-id-1{
-	float: right;
+	float: none;
 }
 
 #purchase-history,
