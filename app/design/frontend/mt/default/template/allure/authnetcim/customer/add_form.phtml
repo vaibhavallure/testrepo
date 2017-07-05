@@ -134,7 +134,7 @@
 					<li class="list-even">
 						<label style="display: none" for="<?php echo $code; ?>_st" class="required"><em>*</em><?php echo $this->__('State/Province'); ?></label>
 						<div class="input-box">
-							<select style="" class="validate-select required-entry" title="State/Province" name="billing[region_id]" id="region_id" style="display: none;">
+							<select style="display:none;" class="validate-select required-entry" title="State/Province" name="billing[region_id]" id="region_id" >
 								<option value=""><?php echo $this->__('Please select region, state or province'); ?></option>
 							</select>
 							<input placeholder="State/Province" type="text" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('region') ?>" title="State/Province" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('region') ); ?>" name="billing[region]" id="region" />

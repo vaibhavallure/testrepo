@@ -194,11 +194,11 @@ div.tab button.active {
 
 .mt-new-payment .mt-new-payment-list{
 	margin-left: -12px;
-	margin-right: -12px;
+	margin-right: 12px;
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item{
-    padding: 8px;
+    padding: 12px;
     background-color: #d1d1d1;
     border-bottom: 9px solid #dedede;
     float: left;
@@ -207,7 +207,7 @@ div.tab button.active {
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading{
 	background-color: #fff;
-	padding: 10px;
+	padding: 12px;
 }
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item .mt-expire-date,
@@ -310,6 +310,8 @@ div.tab button.active {
 	/* height: 30px; */
 	background: #fff;
 	border: 1px solid #ccc;
+	width: 90px !important;
+    margin-left: 10px;
 }
 
 #new-mt-add-payment-method #form-validate{
@@ -527,9 +529,10 @@ div.tab button.active {
 }
 
 .myaccount-index-index .cart-mt .totals {
+  	width: 48%;
+   background: #dedede;
+   margin-right: 8px;
    float: right;
-   background: #CCCCCC;
-   width: 285px;
    margin-top: 5px;
 }
 
@@ -729,7 +732,7 @@ div.a-column.a-span-last {
 
 /*new myaccount dashbord end*/
 
-.mt-myaccount-new .page-title{
+.mt-myaccount-new .page-title.myaccount-page-tilte{
 	padding-left: 20px;
 }
 
@@ -1289,19 +1292,41 @@ width: 63%;
 	padding: 6px 0 0 0;
 }
 
-#new-mt-saved-card #billing-new-address-form li,
+/* #new-mt-saved-card #billing-new-address-form li,
 .myaccount-add-payment-form #billing-new-address-form li {
     width: 47%;
     float: left;
     padding: 5px 5px 5px 0px;
     clear: right;
     margin-right: 10px;
+} */
+
+/* #new-mt-saved-card #billing-new-address-form li, */
+
+#new-mt-saved-card #billing-new-address-form li.list-even,
+#new-mt-saved-card #billing-new-address-form li.list-odd,
+.myaccount-add-payment-form #billing-new-address-form li.list-even,
+.myaccount-add-payment-form #billing-new-address-form li.list-odd{
+	width: 47%;
+	padding: 5px 5px 5px 0px;
 }
-#new-mt-saved-card #billing-new-address-form li,
+
+#new-mt-saved-card #billing-new-address-form li.list-odd,
 .myaccount-add-payment-form #billing-new-address-form li.list-odd{
 	float: right;
 	margin-right: 0px;
 }
+
+#new-mt-saved-card #billing-new-address-form li.list-even,
+.myaccount-add-payment-form #billing-new-address-form li.list-even{
+	float: left;
+}
+
+
+.mt-new-payment #edit-main{
+	clear: both;
+}
+
 
 
 .mt-payment-card-btn{
@@ -1379,7 +1404,8 @@ width: 63%;
 }
 
 #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
-  padding: 0px 5px 0px 5px
+  padding: 0px 5px 0px 5px;
+  width: 96.9% !important;
 }
 
 #authnetcim_cc_type_cvv_div,
@@ -1460,5 +1486,23 @@ margin-right: 10px;
 }
 .pay-caart{
    margin-right: -7px;
+}
+
+#narrow-by-list-new .filter-label-list > span{
+	text-transform: uppercase;
+}
+
+#discount-gift-cart, #discount-coupon-form{
+   float: left;
+   padding-left: 8px;
+}
+.cart-mt .discount #activateGiftCard .input-box input#giftcard_code{
+   left: 88px;
+}
+.cart-mt .discount #activateGiftCard .buttons-set button{
+left: 280px;
+}
+#mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
+   width: 98.8% !important;
 }
 	
