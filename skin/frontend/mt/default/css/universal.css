@@ -1384,8 +1384,9 @@ width: 63%;
 }
 #new-mt-add-payment-method.tabcontent {
     /*display: none;*/
-    padding: 0px 8px;
-    background: #dedede;
+    padding: 1px 8px 0px;
+    background: #d1d1d1;
+    margin-top: 0px;
 }
 
 /* .authnetcim_add{
@@ -1398,14 +1399,14 @@ width: 63%;
 }
 
 #mt-credit-card-info .mt-card-info{
-	width: 50%;
+	width: 47.7%;
     float: right;
     clear: both;
 }
 
 #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
   padding: 0px 5px 0px 5px;
-  width: 96.9% !important;
+  width: 95.8% !important;
 }
 
 #authnetcim_cc_type_cvv_div,
@@ -1503,6 +1504,24 @@ margin-right: 10px;
 left: 280px;
 }
 #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
-   width: 98.8% !important;
+   width: 99% !important;
 }
+
+#authnetcim_cc_type_exp_div .v-fix {
+	margin-right: 4px;
+}
+
+.sp-methods{
+   margin: 0;
+}
+
+.manage-payment-method #billing-new-address-form .input-box select{
+  padding: 2px 0 2px 2px; 
+}
+
+.manage-payment-method #edit-main .box-title{
+ padding: 7px 0px;	
+}
+
+
 	
