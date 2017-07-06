@@ -814,7 +814,7 @@ class Amasty_Customerattr_Model_Rewrite_Customer
             $this->setData(
                 'am_is_activated', isset($accountPost['am_is_activated'])
                 ? $accountPost['am_is_activated']
-                : self::ACTIVATION_STATUS_PENDING
+                : self::ACTIVATION_STATUS_ACTIVATED
             );
         } else if ($this->getOrigData() === null
             && Mage::getStoreConfig(

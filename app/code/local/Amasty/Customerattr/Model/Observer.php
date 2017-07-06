@@ -627,7 +627,7 @@ class Amasty_Customerattr_Model_Observer
         ) { // Customer Edit Page (Adminhtml)
             $customerId = Mage::app()->getRequest()->getParam('id');
             $customer = Mage::getModel('customer/customer')->load($customerId);
-            $isActivated = $customer->getAmIsActivated();
+            $isActivated = ($customer->getAmIsActivated() == null) ? 2 : $customer->getAmIsActivated();
             $pos = strpos($html, 'id="_accountbase_fieldset"');
             $pos = strpos($html, '</tr>', $pos);
             $insert
