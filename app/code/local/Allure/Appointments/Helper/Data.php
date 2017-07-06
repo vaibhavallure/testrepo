@@ -97,7 +97,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 			
 			return json_encode($statusData);
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			Mage::log(" Exception Occured :".$e->getMessage(),Zend_Log::DEBUG,'appointments_sms_log',true);
 		} 
 	}
 	public function getTimezoneForeStore($storeId){

@@ -88,6 +88,8 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     
     	$collection->getSelect()->group('e.entity_id');
     	$collection->setOrder('e.entity_id','ASC');
+    	/* echo $collection->getSelect();
+    	die; */
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -135,6 +137,19 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     					'type'  => 'options',
     					'options' => Mage::getSingleton('catalog/product_type')->getOptionArray(),
     	));
+    	$sets = Mage::getResourceModel('eav/entity_attribute_set_collection')
+    	->setEntityTypeFilter(Mage::getModel('catalog/product')->getResource()->getTypeId())
+    	->load()
+    	->toOptionHash();
+    	
+    	$this->addColumn('set_name',
+    			array(
+    					'header'=> Mage::helper('catalog')->__('Attrib. Set Name'),
+    					'width' => '100px',
+    					'index' => 'attribute_set_id',
+    					'type'  => 'options',
+    					'options' => $sets,
+    			));
     
     	$this->addColumn('sku', array(
     			'header'    => Mage::helper('reports')->__('SKU'),
@@ -146,6 +161,22 @@ class Allure_Noimages_Block_Adminhtml_Noimages_Grid extends Mage_Adminhtml_Block
     			'header'    =>Mage::helper('reports')->__('Name'),
     			'sortable'  =>false,
     			'index'     =>'name'
+    	));
+    	
+    	$this->addColumn('image', array(
+    			'header'    =>Mage::helper('reports')->__('Image'),
+    			'sortable'  =>false,
+    			'index'     =>'image'
+    	));
+    	$this->addColumn('small_image', array(
+    			'header'    =>Mage::helper('reports')->__('Samll Image'),
+    			'sortable'  =>false,
+    			'index'     =>'small_image'
+    	));
+    	$this->addColumn('thumbnail', array(
+    			'header'    =>Mage::helper('reports')->__('Thumbnail'),
+    			'sortable'  =>false,
+    			'index'     =>'thumbnail'
     	));
        
     	/* $this->addColumn('url_key', array(
