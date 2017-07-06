@@ -19,11 +19,6 @@
 		<ul>
 			<li class="card-info-title"><p class="mt-paycard-title"><?php echo $this->__('Credit Card Information'); ?></p></li>
 		
-			<li class="credit-card-image">
-			<h6>Credit Cards</h6>
-				<img src="<?php echo $this->getSkinUrl('images/myaccount/all-card.png')?>">
-			</li>
-		
 			<?php if(0&& $this->isEdit() ): ?>
 				<li>
 					<input type="radio" class="left" name="payment[sameCard]" value="1" id="<?php echo $code; ?>_sameCard_1" checked="checked" /> <label for="<?php echo $code; ?>_sameCard_1"><?php echo $this->__( 'Continue using payment data %s', $this->getCard()->getLabel() ); ?></label><br />
@@ -81,7 +76,7 @@
 					<div class="input-box">
 						<span style="float: left;">Security code</span>
 						<div class="v-fix">
-							<input placeholder="Card Verification Number" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
+							<input placeholder="ccv" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
 						</div>
 					</div>
 				</li>

@@ -34,10 +34,6 @@
 				
 				<?php $style = ( $this->isEdit() ) ? ' style="display:none"' : ''; ?>
 				
-				<li <?php echo $style; ?> class="credit-card-image <?php echo $code; ?>_add">
-					<h6>Credit Cards</h6>
-					<img src="<?php echo $this->getSkinUrl('images/myaccount/all-card.png')?>">
-				</li>
 				
 				<li class="mt-card-info <?php echo $code; ?>_add"<?php echo $style; ?>>
 					<label style="display: none" for="<?php echo $code; ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type'); ?></label>
@@ -89,7 +85,7 @@
 						<div class="input-box">
 							<span style="float: left;">Security code</span>
 							<div class="v-fix">
-								<input placeholder="Card Verification Number" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
+								<input placeholder="ccv" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
 							</div>
 						</div>
 					</li>

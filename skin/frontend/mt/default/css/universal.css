@@ -1185,6 +1185,8 @@ width: 63%;
    width: 16px;
    background-repeat: no-repeat;
    background-color: transparent;
+   margin: 0;
+   padding: 0;
 } 
 
 
@@ -1407,7 +1409,7 @@ width: 63%;
 
 #mt-credit-card-info .mt-card-info{
 	width: 47.7%;
-    float: right;
+    float: left;
     clear: both;
 }
 
@@ -1421,22 +1423,26 @@ width: 63%;
 	clear: both;
 }
 
+ul#primary-address-list,
 ul#additional-addresses{
 	display: flex;
 	flex-wrap:wrap;
 	justify-content:space-around;
 }
-	
+
+ul#primary-address-list li,	
 ul#additional-addresses li{
 	display: flex;
 	margin-bottom: 20px;
 }
-	
+
+ul#primary-address-list li .item-inner-container,	
 ul#additional-addresses li .item-inner-container{
  margin-bottom: 10px;
  position: relative;
 }
 	
+ul#primary-address-list li .item-inner-container address,	
 ul#additional-addresses li .item-inner-container address{
 	 height: 80%;
 	 line-height: 20px;
@@ -1492,6 +1498,11 @@ margin-right: 10px;
 #wishlist-table td:first-child, #wishlist-table td:last-child{
    padding-left: 8px;
 }
+
+#wishlist-table td:first-child {
+	width: 76px;
+}
+
 .pay-caart{
    margin-right: -7px;
 }
@@ -1534,15 +1545,7 @@ margin-right: 10px;
 width: 245px;
 } */
 
-.credit-card-image{
-	width: 30%;
-    float: left;
-    position: absolute;
-}
 
-.credit-card-image img{
-	width: 60%;
-}
 
 .manage-payment-method #edit-main .credit-card-image{
 	padding-top:10px;
