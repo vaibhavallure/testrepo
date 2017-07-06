@@ -15,7 +15,7 @@ Mage::app();
 
 //var_dump($storeList);die;
 
-$client = new SoapClient(Mage::getBaseUrl('link', true).'api/v2_soap?wsdl=1', array( 'connection_timeout' => 120));
+$client = new SoapClient('https://www.venusbymariatash.com/api/v2_soap?wsdl=1', array( 'connection_timeout' => 120));
 
 // If somestuff requires api authentification,
 // then get a session token
@@ -50,27 +50,27 @@ $orderFilters = array (
 										"value" => "pending" 
 								) 
 						),
-// 						array (
-// 								"key" => "created_at",
-// 								"value" => array (
-// 										"key" => "from",
-// 										"value" => "2017-06-19 4:00:00" 
-// 								) 
-// 						) 
+						array (
+								"key" => "created_at",
+								"value" => array (
+										"key" => "from",
+										"value" => "2017-06-19 4:00:00" 
+								) 
+						) 
 				) 
 		) 
 );
 
-// $orderFilters = array (
-// 	"store_id"  => array ("eq" => "1"),
-// 	"status" => array ("in" => "pending,processing,completing"),
-// 	"created_at" => array ( "from" => "2017-06-17 4:00:00")
-// );
+$orderFilters = array (
+	"store_id"  => array ("eq" => "1"),
+	"status" => array ("in" => "pending,processing,completing"),
+	"created_at" => array ( "from" => "2017-06-17 4:00:00")
+);
+
+$orderList = $client->salesOrderList(array('sessionId'=> $session->result, 'filters'=> $orderFilters));
 
 //$api = Mage::getSingleton('sales/order_api_v2');
 //$orderList= $api->items($orderFilters);
-
-$orderList = $client->salesOrderList(array('sessionId'=> $session->result, 'filters'=> $orderFilters));
 
 var_dump($orderList);die;
 
