@@ -2,6 +2,57 @@
 
 class Ebizmarts_BakerlooRestful_Helper_Acl extends Mage_Core_Helper_Abstract
 {
+    /** @var Mage_Admin_Model_User  */
+    private $_user;
+
+    /** @var Mage_Admin_Model_Acl  */
+    private $_acl;
+
+    public function __construct(
+        Mage_Admin_Model_User $user = null,
+        Mage_Admin_Model_Acl $acl = null
+    )
+    {
+        if (is_null($user)) {
+            $this->_user = Mage::getModel('admin/user');
+        } else {
+            $this->_user = $user;
+        }
+
+        if (is_null($acl)) {
+            $this->_acl = Mage::getResourceModel('admin/acl')->loadAcl();
+        } else {
+            $this->_acl = $acl;
+        }
+    }
+
+    /**
+     * Check if a set of resources is available for a given user.
+     *
+     * @param $username
+     * @param array $perms
+     * @return bool
+     */
+    public function checkPermission($username, array $perms)
+    {
+
+        $allow = true;
+
+        foreach ($perms as $_perm) {
+            $isUserAllowed = $this->isAllowed($username, $_perm);
+
+            if (!$isUserAllowed) {
+                $allow = false;
+                break;
+            }
+        }
+
+        if (!$allow) {
+            Mage::throwException($this->__("Not enough privileges or user is not active."));
+        }
+
+        return $allow;
+    }
 
     /**
      * Check if given username is allowed to access $resource.
@@ -19,14 +70,13 @@ class Ebizmarts_BakerlooRestful_Helper_Acl extends Mage_Core_Helper_Abstract
         $user = $this->getUser($username);
 
         if ($user->getId() && (1 === (int)$user->getIsActive())) {
-            $acl = $this->getAcl();
 
             if (!preg_match('/^admin/', $resource)) {
                 $resource = 'admin/' . $resource;
             }
 
             try {
-                if ($acl->isAllowed($user->getAclRole(), 'all', null)) {
+                if ($this->_acl->isAllowed($user->getAclRole(), 'all', null)) {
                     $allowed = true;
                 }
             } catch (Exception $e) {
@@ -34,7 +84,7 @@ class Ebizmarts_BakerlooRestful_Helper_Acl extends Mage_Core_Helper_Abstract
             }
 
             try {
-                $allowed = $acl->isAllowed($user->getAclRole(), $resource, null);
+                $allowed = $this->_acl->isAllowed($user->getAclRole(), $resource, null);
             } catch (Exception $e) {
                 $allowed = false;
             }
@@ -51,18 +101,8 @@ class Ebizmarts_BakerlooRestful_Helper_Acl extends Mage_Core_Helper_Abstract
      */
     public function getUser($username)
     {
-        $user = $this->getAdminUser()->loadByUsername($username);
-
-        return $user;
-    }
-
-    public function getAcl()
-    {
-        return Mage::getResourceModel('admin/acl')->loadAcl();
-    }
-
-    public function getAdminUser()
-    {
-        return Mage::getModel('admin/user');
+        $this->_user->unsetData();
+        $this->_user->loadByUsername($username);
+        return $this->_user;
     }
 }

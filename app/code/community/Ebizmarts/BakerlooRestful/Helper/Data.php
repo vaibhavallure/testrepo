@@ -3,7 +3,8 @@
 class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
-
+    const BAKERLOO_ORDERS_CONTROLLER = 'bakerlooorders';
+    const BAKERLOO_ORDERS_ACTION = 'place';
 
     private $_encryptationKey              = "gda7asvdsa76gd7a";
     private $_encryptationIV               = "0d6Hs4L1opAqwte8";
@@ -130,6 +131,16 @@ class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
     public function getMagentoVersionHeader()
     {
         return 'B-Magento-Version';
+    }
+
+    public function getRemoteAddr()
+    {
+        return Mage::helper('core/http')->getRemoteAddr();
+    }
+
+    public function getRequestUrl()
+    {
+        return (string)Mage::helper('core/url')->getCurrentUrl();
     }
 
     public function getMagentoVersionCode()
@@ -404,9 +415,17 @@ class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
     private function _matchUserAgent($userAgent)
     {
         $match = false;
+        $configuredUAs = unserialize($this->config("general/allow_user_agents"));
 
         if (preg_match("/(POS|Apiex|Ebizmarts-DNS|Ebizmarts_POS)\/([0-9][.[0-9]*]*)/", $userAgent)) {
             $match = true;
+        } else if (!empty($configuredUAs)) {
+            foreach ($configuredUAs as $_ua) {
+                if (preg_match($_ua['ua_regex'], $userAgent)) {
+                    $match = true;
+                    break;
+                }
+            }
         }
 
         return $match;
@@ -415,6 +434,19 @@ class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
     public function isModuleInstalled($moduleName)
     {
         return Mage::getConfig()->getNode("modules/{$moduleName}");
+    }
+
+    public function isPosRequest(Mage_Core_Controller_Request_Http $request)
+    {
+        $isPosRequest = false;
+
+        if ($request->getHeader($this->getApiKeyHeader())) {
+            $isPosRequest = true;
+        } elseif ($request->getControllerName() == self::BAKERLOO_ORDERS_CONTROLLER) {
+            $isPosRequest = true;
+        }
+
+        return $isPosRequest;
     }
 
     /**
@@ -540,6 +572,19 @@ class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
         $pad = ord($decrypted[($len = strlen($decrypted)) - 1]);
         $decrypted = substr($decrypted, 0, strlen($decrypted) - $pad);
         return $decrypted;
+    }
+
+    /**
+     * @param $date
+     * @return false|string
+     */
+    public function formatDateISO($date)
+    {
+        if (!is_numeric($date)) {
+            $date = strtotime($date);
+        }
+
+        return date('c', $date);
     }
 
     public function getProductBarcode($productId, $storeId = null)
