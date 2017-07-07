@@ -153,10 +153,10 @@ if($product->getTypeId() =='configurable'){
 
 <td class="ad-wish-mt">
     <textarea placeholder="Please, enter your comments..." class="ecp-wishlist-description" name="description[<?php echo $item->getWishlistItemId() ?>]" rows="3"
-              cols="5"  maxlength="300"
+              cols="5"  maxlength="45"
               title="<?php echo $this->__('Comment') ?>"><?php echo($this->escapeHtml($item->getDescription())) ?></textarea>
 
-    <div class="charsRemaining">You have 300 characters left</div>
+    <div class="charsRemaining">You have 45 characters left</div>
 </td>
 
 <?php if(0):?>

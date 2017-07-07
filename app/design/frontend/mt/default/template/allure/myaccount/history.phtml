@@ -4,11 +4,17 @@
     });
 </script>-->
 <input id="sales-order-count" type="hidden" value="<?php echo count($this->getOrders())?>" />
+
+
+
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <?php $_orders = $this->getOrders();
 	if($_orders) {
 ?>
-
+<input page-size="<?php echo $this->getOrders()->getLastPageNumber()?>" current-page="2" 
+	data-url="<?php echo Mage::getBaseUrl('web').'myaccount/index/getOrderHistory';?>"
+	 data-limit="10" type="hidden" id="receipt-type" value="">
+	 
 <div class="col2-set">
     <div id="box-history" class="box <?php echo ($_orders->getSize())?"":"box-no-order"?>">
                 <?php

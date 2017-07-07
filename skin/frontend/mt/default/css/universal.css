@@ -1579,6 +1579,13 @@ width: 245px;
 	float: left;
 }
 
+.myaccount-login-securiry{
+	font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+    float: left;
+}
+
 @-moz-document url-prefix() { 
 	.minus_icon {
 	   margin-top: 2px;

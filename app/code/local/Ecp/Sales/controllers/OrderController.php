@@ -117,4 +117,10 @@ class Ecp_Sales_OrderController extends Mage_Sales_OrderController
     	
     }
     
+    
+    public function reviewAction()
+    {
+    	$this->_viewAction();
+    }
+    
 }

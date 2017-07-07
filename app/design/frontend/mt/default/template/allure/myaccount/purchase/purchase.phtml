@@ -3,6 +3,9 @@
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
 <div class="cart-mt">
+<input page-size="<?php echo $totalPageSizeItem?>" current-page="2" 
+	data-url="<?php echo Mage::getBaseUrl('web').'myaccount/index/getPurchasedItems';?>"
+	 data-limit="10" type="hidden" id="purchase-type" value="">
         <fieldset>
         	<?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
         	<div id="purchase-history">

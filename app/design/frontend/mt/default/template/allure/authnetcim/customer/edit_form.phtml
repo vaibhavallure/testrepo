@@ -80,7 +80,7 @@
 				</li>
 				<?php if( $method->getConfigData('useccv') ): ?>
 					<?php $requireCvv = ($method->getAdvancedConfigData('require_ccv') == 1); ?>
-					<li id="<?php echo $code; ?>_cc_type_cvv_div" <?php if( $requireCvv == 0 ): ?>class="mt-card-info <?php echo $code; ?>_add"<?php echo $style; ?><?php endif; ?>>
+					<li id="<?php echo $code; ?>_cc_type_cvv_div" class="mt-card-info <?php if( $requireCvv == 0 ): ?><?php echo $code; ?>_add<?php endif; ?>" <?php if( $requireCvv == 0 ): ?><?php echo $style; ?><?php endif; ?>>
 						<label style="display: none" for="<?php echo $code; ?>_cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number'); ?></label>
 						<div class="input-box">
 							<span class="card-code">Security Code</span>

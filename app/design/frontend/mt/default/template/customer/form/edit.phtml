@@ -26,7 +26,10 @@
 ?>
 <div class="page-title">
 <!--	<span><a href="#">--><?php //echo $this->__('View All') ?><!--</a></span>-->
-    <h1><?php echo $this->__('Login And Security') //Edit Account Information?></h1>
+	<?php if(0):?>
+    	<h1><?php echo $this->__('Login And Security') //Edit Account Information?></h1>
+    <?php endif;?>
+    <p class="myaccount-login-securiry"><?php echo $this->__('Login And Security') ?></p>
 </div>
 
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>

@@ -248,3 +248,49 @@
                             
      });
 </script>
+
+
+<?php if(0):?>
+<script type="text/javascript">
+var xhrMain = null;
+jQuery(window).scroll(function(){
+	if(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height()){
+		var type = window.location.hash.substr(1);
+		var selector = jQuery("#"+type+"-type");
+		var totalPages = parseInt(selector.attr('page-size'));
+		var page 	   = parseInt(selector.attr('current-page'));
+		var url 	   = selector.attr('data-url');
+		var limit 	   = selector.attr('data-limit');
+		console.log(page+"-"+totalPages);
+		if(page <= totalPages){
+			showLoadingFancybox();
+			 if( xhrMain == null ) {
+			 	xhrMain =	jQuery.ajax({
+			        url: url,
+			        dataType : 'json',
+					type : 'POST',
+					data: {'page':page,'limit':limit,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>'},
+			        success: function(data) {
+						if(type=="purchase"){
+				        	jQuery('#myaccount-shopping-cart-table tbody').append(data.data.html);
+						}else if(type=="receipt"){
+							jQuery('#my-orders-table').append(data.data.html);
+				        	jQuery("#total-orders-count").text(data.data.order_count);
+				        	jQuery("#sales-order-count").val(data.data.order_count)
+						}
+						hideLoadingFancybox();
+			        }
+			    });
+			 	
+			 	xhrMain = null;
+			 	page ++;
+			 	hideLoadingFancybox();
+				selector.attr('current-page',page);
+			}
+	    }else{
+	    	hideLoadingFancybox();
+	    }
+	}
+});
+</script>
+<?php endif;?>
