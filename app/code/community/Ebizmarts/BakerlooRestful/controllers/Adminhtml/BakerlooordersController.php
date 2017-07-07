@@ -196,9 +196,7 @@ class Ebizmarts_BakerlooRestful_Adminhtml_BakerlooordersController extends Mage_
 
         if ($orderId) {
             $postData = $this->getRequest()->getPost('order', array());
-
-            $order = Mage::getModel('bakerloo_restful/order')
-                       ->load($orderId);
+            $order = Mage::getModel('bakerloo_restful/order')->load($orderId);
 
             if (!empty($postData)) {
                 $order->addData($postData)->save();
@@ -212,11 +210,8 @@ class Ebizmarts_BakerlooRestful_Adminhtml_BakerlooordersController extends Mage_
                     if ($order->getOrderId()) {
                         Mage::throwException(Mage::helper('bakerloo_restful')->__('This order is already processed.'));
                     }
-
-                    //POST
-                    $response = Mage::helper('bakerloo_restful/http')->POST($order->getRequestUrl(), $order->getJsonPayload(), $order->getHttpHeaders());
-
-                    $objResponse = json_decode($response, true);
+                    
+                    $objResponse = Mage::getModel('bakerloo_restful/orderManagement')->place($order->getId());
 
                     if (!is_array($objResponse)) {
                         $this->_getSession()->addError(Mage::helper('bakerloo_restful')->__('Could not process order, please try again. Response: %s', $response));

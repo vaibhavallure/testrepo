@@ -11,9 +11,9 @@ class Ebizmarts_BakerlooShipping_Model_Carrier_Freeshipping extends Mage_Shippin
     {
         parent::__construct();
 
-        $apiKey = Mage::app()->getRequest()->getHeader(Mage::helper('bakerloo_restful')->getApiKeyHeader());
+        $isPosRequest = Mage::helper('bakerloo_restful')->isPosRequest(Mage::app()->getRequest());
 
-        if ($apiKey !== false) {
+        if ($isPosRequest) {
             $this->_active = true;
         }
     }
