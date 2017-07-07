@@ -91,6 +91,11 @@
 	    </reference>   
   	</myaccount_index_index>  
   	
+  	<myaccount_purchase_item_load>
+  		 <block type="myaccount/purchase" name="purchased_items" template="allure/myaccount/purchase/item/default.phtml" />
+  	</myaccount_purchase_item_load>
+  	
+  	
   	
   	<myaccount_wishlist_layout>
   		<!-- Wishlist -->

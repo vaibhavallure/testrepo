@@ -1078,6 +1078,8 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     				->toHtml();
     				$result['top_cart'] = $content;
     				
+    				$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
+    				
     			} catch (Exception $e) {
     				$result['success'] = 0;
     				$result['error'] = $this->__('Can not remove the item.');
@@ -1127,6 +1129,8 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     				->setTemplate('checkout/cart/sidebar.phtml')
     				->toHtml();
     			$result['top_cart'] = $content;
+    			
+    			$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
     			
     			$this->loadLayout('myaccount_checkout_cart_layout');
     			$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();

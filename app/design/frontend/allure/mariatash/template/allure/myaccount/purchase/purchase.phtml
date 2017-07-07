@@ -1,24 +1,15 @@
-<?php 
-	/*
-	 * Allure customized My Account
-	 * 
-	 */
-?>
+
 <?php
-$lastProductAddedToCartId = Mage::getSingleton('checkout/session')->getLastAddedProductId();
-if ($lastProductAddedToCartId) {
-    $productCategoryIdsArray = Mage::getModel('catalog/product')->load($lastProductAddedToCartId)->getCategoryIds();
-    $continueShoppingCategoryUrl = Mage::getModel('catalog/category')->load($productCategoryIdsArray[0])->getUrl();
-}
-$totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
+
+$totalPageSizeItem = $this->getPurchaseOrderCollection()->getLastPageNumber();
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
 <div class="cart-mt">
         <fieldset>
-        	<?php if($this->getPurchasedItems()->getSize()>0):?>
+        	<?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
         	<div id="purchase-history">
         	<div class="box-content">
-				<table id="purchase-item-table" class="data-table cart-table" width="100%" border="0>
+				<table id="purchase-item-table" class="data-table cart-table">
                 <?php 
                 $storeList = array();
                 $stores = Mage::app()->getStores();
@@ -31,14 +22,7 @@ $totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
                 
                 ?>
                     <?php $i = 0; $prices = array(); $skus = array(); ?>
-                    <?php foreach ($this->getPurchasedItems() as $_item): ?>
-                        <?php //echo $this->getItemHtml($_item) ?>
-                        <?php
-                           /*  $prices[$i] = floatval($_item->getPrice());
-                            $skus[$i] = $_item->getSku();
-                            $i++ */
-                        ?>
-                        
+                    <?php foreach ($this->getPurchaseOrderCollection() as $_item): ?>
                         <?php 
                         
                         $productId = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
@@ -177,7 +161,7 @@ jQuery(function($){
 						type : 'POST',
 						data: {'page':pageItem,'limit':5,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>','view_type':'2'},
 				        success: function(data) {
-				        	jQuery('#myaccount-shopping-cart-table tbody').append(data.data.html);
+				        	jQuery('#purchase-item-table tbody').append(data.data.html);
 				        	jQuery('.loader').css({"display":"none"});
 				        	hideLoadingFancybox1('purchase-history');
 				        }

@@ -1,21 +1,10 @@
-<?php 
-	/*
-	 * Allure customized My Account
-	 * 
-	 */
-?>
 <?php
-$lastProductAddedToCartId = Mage::getSingleton('checkout/session')->getLastAddedProductId();
-if ($lastProductAddedToCartId) {
-    $productCategoryIdsArray = Mage::getModel('catalog/product')->load($lastProductAddedToCartId)->getCategoryIds();
-    $continueShoppingCategoryUrl = Mage::getModel('catalog/category')->load($productCategoryIdsArray[0])->getUrl();
-}
-$totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
+	$totalPageSizeItem = $this->getPurchaseOrderCollection()->getLastPageNumber();
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
 <div class="cart-mt">
         <fieldset>
-        	<?php if($this->getPurchasedItems()->getSize()>0):?>
+        	<?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
         	<div id="purchase-history">
         	<div class="box-content">
             <table id="myaccount-shopping-cart-table" class="data-table cart-table" width="100%" border="0">
@@ -40,7 +29,7 @@ $totalPageSizeItem = $this->getPurchasedItems()->getLastPageNumber();
                 
                 ?>
                     <?php $i = 0; $prices = array(); $skus = array(); ?>
-                    <?php foreach ($this->getPurchasedItems() as $_item): ?>
+                    <?php foreach ($this->getPurchaseOrderCollection() as $_item): ?>
                         <?php //echo $this->getItemHtml($_item) ?>
                         <?php
                            /*  $prices[$i] = floatval($_item->getPrice());
