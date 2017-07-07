@@ -87,7 +87,7 @@
 								<?php endif;?>
 				
 								<span class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime($_item->getCreatedAt()))?></span>
-								<lable <?php echo $storeColor?>  class="purchase-store-name"><?php echo $storeName?></lable>
+								<label <?php echo $storeColor?>  class="purchase-store-name"><?php echo $storeName?></label>
 							</td>
 			
 							<td class="cart_col4">
@@ -109,7 +109,7 @@
 								</div>
 								<?php if($product->getId()):?>
 									<div class="mt-purchase-btn">
-										<button data-item-id="<?php echo $_item->getId()?>" class="button" onclick="reorderItem(this)">Reorder</button>
+										<button data-item-id="<?php echo $_item->getId()?>" class="button" onclick="reorderItem(this)">Add to Cart</button>
 									</div>
 									<div class="mt-purchase-btn">
 										<button class="button">Share</button>

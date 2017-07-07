@@ -83,7 +83,7 @@
 				$cardEndLabel = $card->getAdditional('cc_last4');
 				$expireDate = date( 'm/Y', strtotime( $card->getExpires()));
 				$cardAddress = $card->getAddressObject()->format('html');
-				$nameOnCard = $card->getAddress('firstname')." ".$card->getAddress('lastname');
+				$nameOnCard = (!empty($card->getNameOnCard()))?$card->getNameOnCard():$card->getAddress('firstname')." ".$card->getAddress('lastname');
 				
 				$cardTypeImg = strtolower($card->getAdditional('cc_type'))."-card.png";
 			?>

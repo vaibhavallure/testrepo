@@ -19,8 +19,8 @@
                         echo $this->getOrders()->getSize()." ".$this->__('item(s)');
                     endif; */
                 ?>
-        <div class="box-content">
         <?php if($_orders->getSize()): ?>
+         <div class="box-content">
         <table class="data-table" id="my-orders-table">
             <thead>
                 <tr>
@@ -69,11 +69,6 @@
         <?php endif; ?>
         <?php if($request->getModuleName() != 'customer'): ?>
             <div class="box-title">
-            <h3>
-            <?php //echo $this->getOrders()->getSize()." ".$this->__('item(s)'); ?>
-            </h3>
-            <!--a href="<?php //echo $this->getUrl('sales/order/history/') ?>"><?php echo $this->__('View All') ?></a-->
-			<?php //echo $this->getPagerHtml(); ?>
 			<?php $totalPageSize = $this->getOrders()->getLastPageNumber()?>
 			</div>
 		<?php endif;?>

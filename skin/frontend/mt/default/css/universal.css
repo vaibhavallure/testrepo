@@ -295,12 +295,17 @@ div.tab button.active {
 	/* padding: 0px!important; */
 }
 
+#authnetcim_name_on_card,
 #authnetcim_cc_number,
 #mt-credit-card-info select,
 #billing-new-address-form select{
 	border: 1px solid #ccc;
 	height: 21px;
 	background: #fff;
+}
+
+#authnetcim_name_on_card{
+	margin-bottom: 10px;
 }
 
 #billing-new-address-form select{
@@ -1414,6 +1419,7 @@ width: 63%;
     clear: both;
 }
 
+#mt-credit-card-info .mt-card-info #authnetcim_name_on_card,
 #mt-credit-card-info .mt-card-info #authnetcim_cc_number{
   padding: 0px 5px 0px 5px;
   width: 95.8% !important;
@@ -1522,6 +1528,12 @@ margin-right: 10px;
 .cart-mt .discount #activateGiftCard .buttons-set button{
 	left: 212px;
 }
+
+.myaccount-index-index .my-account .mt-myaccount-promo .buttons-set button,
+.cart-mt .discount #activateGiftCard .buttons-set button{
+	padding-left: 10px;
+}
+
 #mt-credit-card-info li #authnetcim_cc_type, #mt-credit-card-info li #authnetcim_cc_number{
    width: 99% !important;
 }
@@ -1562,6 +1574,10 @@ width: 245px;
     padding-right: 10px;
 }
 
+#mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box>span.card-code{
+	text-transform: capitalize;
+	float: left;
+}
 
 @-moz-document url-prefix() { 
 	.minus_icon {

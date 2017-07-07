@@ -78,11 +78,7 @@
             	<action method="setTitle" translate="title">
                     <title>My Products</title>
                 </action>
-                <!-- <action method="setCartTemplate"><value>allure/myaccount/purchase/purchase.phtml</value></action>
-                <action method="setEmptyTemplate"><value>allure/myaccount/purchase/purchase.phtml</value></action>
-                <action method="chooseTemplate"/>
-                <action method="addItemRender"><type>simple</type><block>myaccount/renderer</block><template>allure/myaccount/purchase/item/default.phtml</template></action>
-                <action method="addItemRender"><type>configurable</type><block>myaccount/renderer_configurable</block><template>allure/myaccount/purchase/item/default.phtml</template></action> -->
+                <block type="myaccount/purchase" name="purchased_items_list" template="allure/myaccount/purchase/item/default.phtml" />
             </block>
             
 	      		

@@ -8,6 +8,9 @@
 	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 	<input type="hidden" name="id" value="<?php //echo $this->getCard()->getId(); ?>" />
 	<input type="hidden" name="method" value="<?php echo $code; ?>" />
+	
+	<input type="hidden" name="mode_type" value="add" />
+	
 	<?php if( $method->isAcceptJsEnabled() === true ): ?>
 		<input type="hidden" name="payment[acceptjs_key]" id="<?php echo $code; ?>_acceptjs_key" value="" />
 		<input type="hidden" name="payment[acceptjs_value]" id="<?php echo $code; ?>_acceptjs_value" value="" />
@@ -43,6 +46,14 @@
 					<input placeholder="Credit Card Number" type="text" id="<?php echo $code; ?>_cc_number" autocomplete="off" name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number'); ?>" class="input-text <?php echo $code; ?>_require <?php if(1 ||!$this->getCard()->getId() ): ?>required-entry validate-cc-number<?php endif; ?>" value="" />
 				</div>
 			</li>
+			
+			<li class="mt-card-info name-on-card <?php echo $code; ?>_add"<?php echo $style; ?>>
+				<label style="display: none" for="<?php echo $code; ?>_name_on_card" class="required"><em>*</em><?php echo $this->__('Name on the card'); ?></label>
+				<div class="input-box">
+					<input placeholder="Name on the Card" type="text" id="<?php echo $code; ?>_name_on_card" autocomplete="off" name="payment[name_on_card]" title="<?php echo $this->__('Name on the card'); ?>" class="input-text <?php echo $code; ?>_require <?php if(1 ||!$this->getCard()->getNameOnCard() ): ?>required-entry validate-on-card<?php endif; ?>" value="" />
+				</div>
+			</li>
+			
 			<li id="<?php echo $code; ?>_cc_type_exp_div" class="mt-card-info <?php echo $code; ?>_add sp-methods"<?php echo $style; ?>>
 				<label style="display: none" for="<?php echo $code; ?>_expiration" class="required"><em>*</em><?php echo $this->__('Expiration Date'); ?></label>
 				<div class="input-box">
@@ -74,9 +85,9 @@
 				<li id="<?php echo $code; ?>_cc_type_cvv_div" <?php if( $requireCvv == 0 ): ?>class="mt-card-info <?php echo $code; ?>_add"<?php echo $style; ?><?php endif; ?>>
 					<label style="display: none" for="<?php echo $code; ?>_cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number'); ?></label>
 					<div class="input-box">
-						<span style="float: left;">Security code</span>
+						<span class="card-code">Security Code</span>
 						<div class="v-fix">
-							<input placeholder="ccv" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
+							<input placeholder="CCV" type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if(1 || !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
 						</div>
 					</div>
 				</li>
@@ -94,13 +105,13 @@
 					<li class="list-even">
 						<label style="display: none" for="<?php echo $code; ?>_fn" class="required"><em>*</em><?php echo $this->__('First Name'); ?></label>
 						<div class="input-box">
-							<input placeholder="First Name" type="text" id="<?php echo $code; ?>_fn" name="billing[firstname]" class="input-text required-entry" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('firstname') ); ?>" />
+							<input placeholder="First Name *" type="text" id="<?php echo $code; ?>_fn" name="billing[firstname]" class="input-text required-entry" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('firstname') ); ?>" />
 						</div>
 					</li>
 					<li class="list-odd">
 						<label style="display: none" for="<?php echo $code; ?>_ln" class="required"><em>*</em><?php echo $this->__('Last Name'); ?></label>
 						<div class="input-box">
-							<input placeholder="Last Name" type="text" id="<?php echo $code; ?>_ln" name="billing[lastname]" class="input-text required-entry" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('lastname') ); ?>" />
+							<input placeholder="Last Name *" type="text" id="<?php echo $code; ?>_ln" name="billing[lastname]" class="input-text required-entry" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('lastname') ); ?>" />
 						</div>
 					</li>
 					<li class="list-even">
@@ -112,7 +123,7 @@
 					<li class="list-odd">
 						<label style="display: none" for="<?php echo $code; ?>_street" class="required"><em>*</em><?php echo $this->__('Street Address'); ?></label>
 						<div class="input-box">
-							<input placeholder="Street Address" type="text" id="<?php echo $code; ?>_street" name="billing[street][]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('street') ?>" value="<?php //echo $this->escapeHtml( $this->getStreetLine(1) ); ?>" />
+							<input placeholder="Street Address *" type="text" id="<?php echo $code; ?>_street" name="billing[street][]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('street') ?>" value="<?php //echo $this->escapeHtml( $this->getStreetLine(1) ); ?>" />
 						</div>
 					</li>
 					<?php for ($i = 2, $n = Mage::helper('customer/address')->getStreetLines(); $i <= $n; $i++): ?>
@@ -125,7 +136,7 @@
 					<li class="list-odd">
 						<label style="display: none" for="<?php echo $code; ?>_city" class="required"><em>*</em><?php echo $this->__('City'); ?></label>
 						<div class="input-box">
-							<input placeholder="City" type="text" id="<?php echo $code; ?>_city" name="billing[city]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('city') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('city') ); ?>" />
+							<input placeholder="City *" type="text" id="<?php echo $code; ?>_city" name="billing[city]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('city') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('city') ); ?>" />
 						</div>
 					</li>
 					<li class="list-even">
@@ -134,13 +145,13 @@
 							<select style="display:none;" class="validate-select required-entry" title="State/Province" name="billing[region_id]" id="region_id" >
 								<option value=""><?php echo $this->__('Please select region, state or province'); ?></option>
 							</select>
-							<input placeholder="State/Province" type="text" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('region') ?>" title="State/Province" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('region') ); ?>" name="billing[region]" id="region" />
+							<input placeholder="State/Province *" type="text" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('region') ?>" title="State/Province" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('region') ); ?>" name="billing[region]" id="region" />
 						</div>
 					</li>
 					<li class="list-odd">
 						<label style="display: none" for="<?php echo $code; ?>_postcode" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code'); ?></label>
 						<div class="input-box">
-							<input placeholder="Zip/Postal Code" type="text" id="<?php echo $code; ?>_postcode" name="billing[postcode]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('postcode') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('postcode') ); ?>" />
+							<input placeholder="Zip/Postal Code *" type="text" id="<?php echo $code; ?>_postcode" name="billing[postcode]" class="input-text required-entry <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('postcode') ?>" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('postcode') ); ?>" />
 						</div>
 					</li>
 					<li class="list-even">
@@ -152,7 +163,7 @@
 					<li class="list-odd">
 						<label style="display: none"  for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
 						<div class="input-box">
-							<input placeholder="Telephone" type="text" name="billing[telephone]" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('telephone') ) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('telephone') ?>" id="telephone" />
+							<input placeholder="Telephone *" type="text" name="billing[telephone]" value="<?php //echo $this->escapeHtml( $this->getCard()->getAddress('telephone') ) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text <?php echo Mage::helper('tokenbase')->getAttributeValidationClass('telephone') ?>" id="telephone" />
 						</div>
 					</li>
 					<li class="list-even">
