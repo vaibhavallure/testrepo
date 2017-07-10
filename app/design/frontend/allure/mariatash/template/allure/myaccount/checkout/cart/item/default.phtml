@@ -194,6 +194,9 @@
                 <?php endif; ?>
 
             </div>
+            
+             <span class="mt-cart-added-at"><?php echo "Added ".date('M d, Y H:i a',strtotime($_item->getCreatedAt()))?></span>
+            
     </td>
     <td  class="table-remove a-center last">
         <div class="cart-item-remove">

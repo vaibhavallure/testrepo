@@ -153,23 +153,70 @@
 #purchase-item-table.data-table .purchase-store-name{padding: 5px;}
 
 @media (max-width: 767px){
-#purchase-item-table.cart-table .table-product-image {
-    min-height: 0px;
+	#purchase-item-table.cart-table .table-product-image {
+	    min-height: 0px;
+	}
 }
-
 
 
 /*Purchase item end*/
 
 
 
+/*Cart css start*/
+
+#shopping-cart-table .mt-cart-added-at{
+	display: block;
+}
+
+#shopping-cart-table.cart-table .table-product-image {
+	min-height: 150px;
+}
+
+/*Cart css end*/
 
 
+/*Wishlist css start */
 
+.my-account #wishlist-table.data-table tbody td:first-child {
+    width: 100%;
+}
 
+#wishlist-table .a-mt-wishlist-image{
+	width: 20%;
+    float: left;
+    clear: both;
+}
 
+#wishlist-table .h-mt-wishlist-product-name{
+	width: 75%;
+    float: right;
+}
 
+#wishlist-table .qty-wrap input{
+	width: 32px ! important;
+    height: 32px;
+    padding: 5px;
+    top: -5px;
+    position: relative;
+    float: left;
+    margin-right: 5px;
+    border: none;
+}
 
+#wishlist-table .customer_wishlist_item_column_cart span{
+	padding-left: 0px;
+}
+	
+#wishlist-table .customer_wishlist_item_column_cart{
+	width: 115px;
+}
+
+#wishlist-table .mt-wistlists-added-time{
+	width: 100%;
+}
+
+/*Wishlist css end*/
 
 
 

@@ -1,5 +1,5 @@
 <?php
-class Allure_MyAccount_Block_Order_History extends Mage_Sales_Block_Order_History
+class Allure_MyAccount_Block_Order_History extends Mage_Core_Block_Template
 {
    public function getViewUrl($order)
     {
@@ -9,15 +9,29 @@ class Allure_MyAccount_Block_Order_History extends Mage_Sales_Block_Order_Histor
     public function __construct()
     {
     	parent::__construct();
-    	$this->setTemplate('allure/myaccount/history.phtml');
+    	//$this->setTemplate('allure/myaccount/history.phtml');
     	
-    	$store = 'all';
-    	if(!empty($_GET['m_store']))
-    		$store = $_GET['m_store'];
-    		
-    	$sortOrder = 'desc';
-    	if(!empty($sortOrder))
-    		$sortOrder = $_GET['m_sort'];
+    	$request = Mage::app()->getRequest()->getParams();
+    	$pageNo=1;
+    	$limit = 10;
+    	
+    	$store = "all";
+    	$sortOrder = "desc";
+	    if(count($request)>0){
+	    	if(!empty($request['m_store'])){
+	    		$store = $request['m_store'];
+	    	}
+	    	
+	    	if(!empty($request['m_sort'])){
+	    		$sortOrder = $request['m_sort'];
+	    	}
+	    	
+	    	if($request['page'])
+	    		$pageNo=$request['page'];
+	    		
+	    	if($request['limit'])
+	    		$limit = $request['limit'];
+    	}
     	
     	$orders = Mage::getResourceModel('sales/order_collection')
     	->addFieldToSelect('*')
@@ -30,15 +44,14 @@ class Allure_MyAccount_Block_Order_History extends Mage_Sales_Block_Order_Histor
     			$orders->addFieldToFilter('main_table.store_id',$store);
     	}
     	
-    	if(!empty($sortOrder)){
-    		$orders->setOrder('main_table.created_at', $sortOrder);
-    	}
-    	$orders->setPageSize(10);
+    	$orders->setOrder('main_table.created_at', $sortOrder);
+    	
+    	$orders->setCurPage(5);
+    	$orders->setPageSize($limit);
     	
     	$this->setOrders($orders);
     	
-    	
-    	Mage::app()->getFrontController()->getAction()->getLayout()->getBlock('root')->setHeaderTitle(Mage::helper('sales')->__('My Orders'));
+    	//Mage::app()->getFrontController()->getAction()->getLayout()->getBlock('root')->setHeaderTitle(Mage::helper('sales')->__('My Orders'));
     }
     
     protected function _prepareLayout()

@@ -6,7 +6,8 @@
 	      <block type="myaccount/myproducts" name="my_products" as="my_products" template="allure/myaccount/myproducts.phtml">
 	      	<block type="core/template" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />
 	      	<!-- Sales order history template -->
-	      	<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml">
+	      	<block type="myaccount/order_history" name="sales.order.history_list" template="allure/myaccount/historylist.phtml">
+	      		<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml" />
 	      	</block>
 	      		
 	      	<!-- Cart Template -->	
@@ -92,6 +93,9 @@
   	</myaccount_purchase_item_load>
   	
   	
+  	<myaccount_sales_order_history>
+  		<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml" />
+  	</myaccount_sales_order_history>
   	
   	<myaccount_wishlist_layout>
   		<!-- Wishlist -->

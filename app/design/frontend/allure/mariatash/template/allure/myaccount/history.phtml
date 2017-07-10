@@ -1,14 +1,13 @@
+
 <?php $_orders = $this->getOrders();
 	if($_orders) :
 ?>
 
-<?php if($_orders->getSize()>0) :?>
                 <?php $_odd = ''; ?>
                 <?php $i = 0 ?>
                 <?php foreach ($_orders as $_order): ?>
-                
                 <tr>
-                    <td style="padding-left:10px;"><a ><?php echo $_order->getRealOrderId() ?></a></td>
+                    <td style="padding-left:10px;"><a href="<?php echo $this->getViewUrl($_order) ?>"><?php echo $_order->getRealOrderId() ?></a></td>
                     
                     
                     <td class="a-left" style="padding-left:20px;" ><span class="nobr">
@@ -27,8 +26,4 @@
                     </td>
                 </tr>
                 <?php endforeach; ?>
-        <?php else: ?>
-            <p><?php echo $this->__('No orders found in your account.'); ?></p>
-        <?php endif; ?>
-       
 <?php endif; ?>
