@@ -2,16 +2,12 @@
 
 class Ebizmarts_BakerlooRestful_Model_Api_Orders extends Ebizmarts_BakerlooRestful_Model_Api_Api
 {
-    const PRICE_OVERRIDE_EMAIL_TEMPLATE = 'bakerloorestful_pos_customprice_template';
-
     /**
      * Prefix of model events names
      *
      * @var string
      */
     protected $_eventPrefix = 'pos_api_order';
-
-    public $defaultDir = "DESC";
 
     /**
      * Parameter name in event
@@ -22,9 +18,34 @@ class Ebizmarts_BakerlooRestful_Model_Api_Orders extends Ebizmarts_BakerlooRestf
      */
     protected $_eventObject = 'order';
 
+    /** @var Ebizmarts_BakerlooRestful_Model_OrderManagement  */
+    private $_manager;
+
+    /** @var Ebizmarts_BakerlooRestful_Model_OrderDtoBuilder  */
+    private $_dtoBuilder;
+
+    public $defaultDir = "DESC";
+
     protected $_model = "sales/order";
     protected $_filterUseOR = true;
     protected $_pickUpSearch = false;
+
+    public function __construct($params)
+    {
+        parent::__construct($params);
+
+        if (isset($params['manager'])) {
+            $this->_manager = $params['manager'];
+        } else {
+            $this->_manager = Mage::getModel('bakerloo_restful/orderManagement');
+        }
+
+        if (isset($params['dtobuilder'])) {
+            $this->_dtoBuilder = $params['dtobuilder'];
+        } else {
+            $this->_dtoBuilder = Mage::getModel('bakerloo_restful/orderDtoBuilder');
+        }
+    }
 
     public function checkDeletePermissions()
     {
@@ -38,50 +59,6 @@ class Ebizmarts_BakerlooRestful_Model_Api_Orders extends Ebizmarts_BakerlooRestf
         $this->checkPermission(array('bakerloo_api/login', 'bakerloo_api/orders/create'));
     }
 
-    /**
-     * Return order options.
-     * @param $item
-     * @return array
-     */
-    public function orderOptions($item)
-    {
-        $result = array();
-        if ($options = $item->getProductOptions()) {
-            if (isset($options['options'])) {
-                $result = array_merge($result, $options['options']);
-            }
-            if (isset($options['additional_options'])) {
-                $result = array_merge($result, $options['additional_options']);
-            }
-            if (!empty($options['attributes_info'])) {
-                $result = array_merge($options['attributes_info'], $result);
-            }
-        }
-
-        $selections = array();
-        foreach ($result as $option) {
-
-            if (!isset($option['label'])) {
-                continue;
-            }
-
-            $_sel = array('label' => $option['label'], 'value' => '', 'type' => isset($option['option_type']) ? $option['option_type'] : '');
-            if (!is_array($option['value'])) {
-                if (isset($option['option_type']) && ($option['option_type'] === 'multiple' || $option['option_type'] === 'checkbox')) {
-                    $_sel['value'] = explode(',', $option['option_value']);
-                } else {
-                    $_sel['value'] = array($option['value']);
-                }
-            }
-            /*else
-                //TODO*/
-
-            array_push($selections, $_sel);
-        }
-
-        return $selections;
-    }
-
     public function _createDataObject($id = null, $data = null)
     {
         $result = array();
@@ -90,145 +67,10 @@ class Ebizmarts_BakerlooRestful_Model_Api_Orders extends Ebizmarts_BakerlooRestf
         $order = $this->getModel('sales/order')->load($id);
 
         if ($order->getId()) {
-            $orderItems = array();
-
-            $childrenAux = array();
-
-            foreach ($order->getItemsCollection() as $item) {
-                if ($item->getParentItem()) {
-                    $parentId = $item->getParentItemId();
-                    if (array_key_exists($parentId, $childrenAux)) {
-                        $childrenAux[$parentId]['discount'] += $item->getDiscountAmount();
-                    } else {
-                        $childrenAux[$parentId] = array('discount' => $item->getDiscountAmount());
-                    }
-
-                    continue;
-                }
-
-                $product = $this->getModel('catalog/product')->load($item->getProductId());
-
-                $orderItems[$item->getId()] = array(
-                    'name'           => $item->getName(),
-                    'sku'            => $item->getSku(),
-                    'product_id'     => (int)$item->getProductId(),
-                    'item_id'        => (int)$item->getItemId(),
-                    'product_type'   => $item->getProductType(),
-                    'qty'            => ($item->getQtyOrdered() * 1),
-                    'qty_invoiced'   => ($item->getQtyInvoiced() * 1),
-                    'qty_shipped'    => ($item->getQtyShipped() * 1),
-                    'qty_refunded'   => ($item->getQtyRefunded() * 1),
-                    'qty_canceled'   => ($item->getQtyCanceled() * 1),
-                    'price'          => (float)$item->getPrice(),
-                    'tax_amount'     => (float)$item->getTaxAmount(),
-                    'tax_compensation' => (float)$item->getTaxCompensation(),
-                    'price_incl_tax' => (float)$item->getPriceInclTax(),
-                    'tax_percent'    => (float)$item->getTaxPercent(),
-                    'discount'       => (float)$item->getDiscountAmount(),
-                    'total_invoiced' => (float)$item->getRowInvoiced(),
-                    'options'        => $this->orderOptions($item),
-                    'image_url'      => $product->getImageUrl(),
-                    'bundle_items'   => array()
-                );
-
-                if ($item->getProductType() === 'bundle') {
-                    $itemChildrens = $item->getChildrenItems();
-                    foreach ($itemChildrens as $child) {
-                        $orderItems[$item->getId()]['bundle_items'][] = array(
-                            'name'           => $child->getName(),
-                            'sku'            => $child->getSku(),
-                            'product_id'     => (int)$child->getProductId(),
-                            'item_id'        => (int)$child->getItemId(),
-                            'product_type'   => $child->getProductType(),
-                            'qty'            => ($child->getQtyOrdered() * 1),
-                            'qty_invoiced'   => ($child->getQtyInvoiced() * 1),
-                            'qty_shipped'    => ($child->getQtyShipped() * 1),
-                            'qty_refunded'   => ($child->getQtyRefunded() * 1),
-                            'qty_canceled'   => ($child->getQtyCanceled() * 1),
-                            'price'          => (float)$child->getPrice(),
-                            'tax_amount'     => (float)$child->getTaxAmount(),
-                            'price_incl_tax' => (float)$child->getPriceInclTax(),
-                            'tax_percent'    => (float)$child->getTaxPercent(),
-                            'discount'       => (float)$child->getDiscountAmount(),
-                            'total_invoiced' => (float)$child->getRowInvoiced(),
-                            'options'        => $this->orderOptions($child),
-                            'image_url'      => ""
-                        );
-                    }
-
-                }
-
-                $giftTypes = $this->getHelper('bakerloo_gifting')->getSupportedTypes();
-                if (array_key_exists($item->getProductType(), $giftTypes)) {
-                    $orderItems[$item->getId()]['gift_card_options'] = $this->getModel('bakerloo_restful/api_giftcards')->getOrderItemData($item);
-                }
-                
-                if ($item->getProductType() === 'customercredit') {
-                    $itemOptions = $item->getProductOptions();
-                    $orderItems[$item->getId()]['store_credit_options'] = $itemOptions['info_buyRequest'];
-                }
-
-            }
-
-            if (!empty($childrenAux)) {
-                foreach ($childrenAux as $itemId => $iData) {
-                    if (array_key_exists($itemId, $orderItems)) {
-                        foreach ($iData as $key => $value) {
-                            if ($value) {
-                                $orderItems[$itemId][$key] = $value;
-                            }
-                        }
-                    }
-                }
-            }
-
-
-            $shippingAddress = is_object($order->getShippingAddress()) ? $order->getShippingAddress() : new Varien_Object;
-            $billingAddress  = is_object($order->getBillingAddress()) ? $order->getBillingAddress() : new Varien_Object;
-
+            /** @var Ebizmarts_BakerlooRestful_Model_Order $posOrder */
             $posOrder = $this->getModel('bakerloo_restful/order')->load($order->getId(), 'order_id');
 
-            $result += array(
-                "pos_entity_id"        => (int)$posOrder->getId(),
-                "entity_id"            => (int)$order->getId(),
-                "status"               => $order->getStatusLabel(),
-                "state"                => $order->getState(),
-                "created_at"           => $this->formatDateISO($order->getCreatedAt()),
-                "updated_at"           => $this->formatDateISO($order->getUpdatedAt()),
-                "store_id"             => (int)$order->getStoreId(),
-                "store_name"           => $order->getStoreName(),
-                "store_view_name"      => Mage::app()->getStore()->getName(),
-                "customer_id"          => (int)$order->getCustomerId(),
-                "base_subtotal"        => (float)$order->getBaseSubtotal(),
-                "subtotal"             => (float)$order->getSubtotal(),
-                "base_grand_total"     => (float)$order->getBaseGrandTotal(),
-                "base_total_paid"      => (float)$order->getBaseTotalPaid(),
-                "grand_total"          => (float)$order->getGrandTotal(),
-                "total_paid"           => (float)$order->getTotalPaid(),
-                "tax_amount"           => (float)$order->getTaxAmount(),
-                "discount_amount"      => (float)$order->getDiscountAmount(),
-                "coupon_code"          => (string)$order->getCouponCode(),
-                "shipping_description" => (string)$order->getShippingDescription(),
-                "shipping_amount"      => (float)$order->getShippingInclTax(),
-                "shipping_amount_refunded" => (float)$order->getShippingRefunded() + (float)$order->getShippingTaxRefunded(),
-                "increment_id"         => $order->getIncrementId(),
-                "currency_rate"        => (float)$order->getBaseToOrderRate(),
-                "base_currency_code"   => $order->getBaseCurrencyCode(),
-                "order_currency_code"  => $order->getOrderCurrencyCode(),
-                "customer_email"       => (string)$order->getCustomerEmail(),
-                "customer_firstname"   => (string)$order->getCustomerFirstname(),
-                "customer_lastname"    => (string)$order->getCustomerLastname(),
-                "customer_group"       => (int)$order->getCustomerGroupId(),
-                "shipping_name"        => (string)$shippingAddress->getName(),
-                "billing_name"         => (string)$billingAddress->getName(),
-                "products"             => array_values($orderItems),
-                "invoices"             => $this->_getAssociatedData($order->getId(), 'invoices'),
-                "creditnotes"          => $this->_getAssociatedData($order->getId(), 'creditnotes'),
-                "shipping_address"     => $this->_getOrderAddress($order, 'shipping'),
-                "billing_address"      => $this->_getOrderAddress($order, 'billing'),
-                "payment"              => $this->_getOrderPayments($order, $posOrder),
-                "pos_order"            => $this->_getJsonPayload($posOrder)
-            );
+            $result = $this->_dtoBuilder->getDataObject($order, $posOrder);
         }
 
         return $this->returnDataObject($result);
@@ -240,279 +82,11 @@ class Ebizmarts_BakerlooRestful_Model_Api_Orders extends Ebizmarts_BakerlooRestf
      */
     public function post()
     {
-        parent::post();
         if (!$this->getStoreId()) {
             Mage::throwException('Please provide a Store ID.');
         }
-        Mage::app()->setCurrentStore($this->getStoreId());
-        //Mage::log("Store: " . $this->getStoreId(), null, 'store.log', true);
 
-        $data = $this->getJsonPayload(true);
-
-        $order = new Varien_Object;
-        //Save order data to local storage
-        $posOrder = $this->saveOrder($order, $data, null, $this->getRequest()->getRawBody());
-        $returnData = array(
-            'order_id'     => null,
-            'order_number' => null,
-            'order_state'  => "",
-            'order_status' => ""
-        );
-        try {
-            $quote = $this->getHelper('bakerloo_restful/sales')->buildQuote($this->getStoreId(), $data);
-            $service = $this->getModel('sales/service_quote', false, $quote);
-            $service->submitAll();
-            $order = $service->getOrder();
-
-            if ($order->getId()) {
-                $order = $this->getModel('sales/order')->load($order->getId());
-            }
-
-            if ($order) {
-                Mage::dispatchEvent(
-                    'checkout_type_onepage_save_order_after',
-                    array('order' => $order, 'quote' => $quote)
-                );
-            }
-            Mage::dispatchEvent(
-                'checkout_submit_all_after',
-                array('order' => $order, 'quote' => $quote)
-            );
-
-            if (isset($data['returns']) && !empty($data['returns'])) {
-                Mage::dispatchEvent('pos_order_has_returns', array('order_id' => $order->getIncrementId(), 'returned_items' => $this->getReturnDetails($data['returns'])));
-            }
-
-            /* Check payment method is Layaway */
-            if ($data['payment']['method'] == Ebizmarts_BakerlooPayment_Model_Layaway::CODE) {
-                Mage::dispatchEvent('pos_order_has_layaway_payment', array('order' => $order, 'payload' => $data, 'posorder' => $posOrder));
-            }
-
-            //Cancel order if its posted as canceled from device
-            if (isset($data['order_state']) && ((int)$data['order_state'] === 4)) {
-                $order->cancel()
-                    ->save();
-            }
-            //Report price override if custom price has been entered
-            if (isset($data['discount']) and $data['discount'] > 0) {
-                $this->reportPriceOverride($order, $data);
-            }
-
-            //Invoice and ship
-            if ($order->getId()) {
-                list($invoiceConfig, $shipmentConfig) = $this->getInvoiceAndShipmentConfig($order);
-
-                $transactionSave = $this->getModel('core/resource_transaction');
-
-                if ($order->canInvoice() and $invoiceConfig) {
-                    $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
-                    $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
-                    $invoice->setTransactionId(time());
-                    $invoice->register();
-
-                    //Do no send invoice email
-                    $invoice->setEmailSent(false);
-                    $invoice->getOrder()->setCustomerNoteNotify(false);
-
-                    //$invoice->setCreatedAt($data['order_date']);
-
-                    $transactionSave->addObject($invoice)
-                        ->addObject($invoice->getOrder());
-                } elseif ($order->hasInvoices()) {
-                    $invoice = $order->getInvoiceCollection()->getFirstItem();
-                }
-
-                $itemsShipmentQty = $this->getBundleItemQty($order);
-
-                if (!$order->getIsVirtual() and isset($invoice)) {
-                    //If not Virtual, create shipment if indicated.
-                    $createShipment = false;
-                    $shippingMethod = explode('_', $order->getShippingMethod(), 3);
-
-                    if (!isset($shippingMethod[2])) {
-                        $shipmentShip = $shipmentConfig;
-                    } else {
-                        $shipmentShip = (int)Mage::getStoreConfig('carriers/' . $shippingMethod[2] . '/ship');
-                    }
-                    if ((1 === $shipmentConfig) || ((2 === $shipmentConfig) && (1 === $shipmentShip))) {
-                        $createShipment = true;
-                    }
-
-                    if ($createShipment) {
-                        $shipment = Mage::getModel('sales/service_order', $invoice->getOrder())
-                            ->prepareShipment($itemsShipmentQty);
-                        $shipment->register();
-                        if ($shipment) {
-                            //$shipment->setCreatedAt($data['order_date']);
-                            $shipment->setEmailSent($invoice->getEmailSent());
-                            $transactionSave->addObject($shipment)
-                                ->addObject($shipment->getOrder());
-                        }
-                    }
-                }
-
-                if ($order->getId() && isset($data['comments'])) {
-                    $order->addStatusHistoryComment($data['comments'])
-                        ->setCustomerNote($data['comments'])
-                        ->setIsVisibleOnFront(true)
-                        ->setCustomerNoteNotify(true);
-
-                    $transactionSave->addObject($order);
-                }
-
-                //if(isset($invoice) or isset($shipment))
-                $transactionSave->save();
-            }
-
-            $this->saveOrder($order, $data, $posOrder->getId());
-
-            $returnData['order_id']     = (int)$order->getId();
-            $returnData['order_number'] = $order->getIncrementId();
-            $returnData['order_state']  = $order->getState();
-            $returnData['order_status'] = $order->getStatusLabel();
-            $returnData['order_data']   = $this->_createDataObject($order->getId());
-            $posOrder
-                ->setFailMessage('')
-                ->save();
-
-            //Inactivate quote.
-            $service->getQuote()->save();
-        } catch (Exception $e) {
-            Mage::logException($e);
-
-            //set quote as not active if the order fails. (->setIsActive(false))
-            if (isset($quote)) {
-                $quote->setIsActive(false)->save();
-            }
-
-            $posOrderId = (int)$posOrder->getId();
-            $message = $e->getMessage();
-
-            $returnData['order_id']      = $posOrderId;
-            $returnData['order_number']  = $posOrderId;
-            $returnData['order_state']   = "notsaved";
-            $returnData['order_status']  = "notsaved";
-            $returnData['error_message'] = $message;
-            $posOrder->setFailMessage($message)
-                ->save();
-
-            $helper = $this->getHelper('bakerloo_restful');
-
-            $this->getHelper('bakerloo_restful/sales')->notifyAdmin(
-                array(
-                'severity'      => Mage_AdminNotification_Model_Inbox::SEVERITY_CRITICAL,
-                'date_added'    => Mage::getModel('core/date')->date(),
-                'title'         => $helper->__("POS order number #%s failed.", $posOrderId),
-                'description'   => $helper->__($message),
-                'url'           => null /*Mage::helper('adminhtml')->getUrl('adminhtml/bakerlooorders/', array('id' => $posOrderId))*/,
-                )
-            );
-        }
-
-        $this->saveOrder($order, $data, $posOrder->getId());
-
-        //call observers after posOrder save
-        if (isset($returnData['order_data'])) {
-            $returnData['order_data'] = $this->returnDataObject($returnData['order_data']);
-        }
-
-
-        return $returnData;
-    }
-
-    /**
-     *
-     */
-    public function getReturnDetails($returnedProducts)
-    {
-        $returnedProductDetails = array();
-
-        foreach ($returnedProducts as $prod) {
-            if (isset($prod['bundle_option']) && !empty($prod['bundle_option'])) {
-                $bundleQty = $prod['qty'];
-
-                $bundledProducts = $prod['bundle_option'];
-                foreach ($bundledProducts as $bundledProd) {
-                    foreach ($bundledProd['selections'] as $selectedProd) {
-                        if ($selectedProd['selected'] == true) {
-                            $productDetails = array(
-                                'product_id' => $selectedProd['product_id'],
-                                'product_qty' => $selectedProd['qty'] * $bundleQty
-                            );
-                            $returnedProductDetails[] = $productDetails;
-                        }
-                    }
-                }
-            } elseif (isset($prod['type']) && $prod['type'] == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) { // 'configurable'){
-                $productDetails = array(
-                    'product_id' => $prod['child_id'],
-                    'product_qty' => $prod['qty']
-                );
-                $returnedProductDetails[] = $productDetails;
-            } else {
-                $productDetails = array(
-                    'product_id' => $prod['product_id'],
-                    'product_qty' => $prod['qty']
-                );
-                $returnedProductDetails[] = $productDetails;
-            }
-        }
-
-        return $returnedProductDetails;
-    }
-
-    public function reportPriceOverride($order, $orderData)
-    {
-        $totalBefore = $orderData['total_amount'];
-        $discount = $orderData['discount'];
-        $totalAfter = $totalBefore - $discount;
-
-        //save discount to custom price table
-        $this->getModel('bakerloo_restful/customPrice')
-            ->setId(null)
-            ->setOrderId($order->getId())
-            ->setOrderIncrementId($order->getIncrementId())
-            ->setAdminUser($orderData['user'])
-            ->setStoreId($order->getStoreId())
-            ->setTotalDiscount($discount)
-            ->setGrandTotalBeforeDiscount($totalBefore)
-            ->setGrandTotalAfterDiscount($totalAfter)
-            ->save();
-
-        //check email config and send
-        $helper = $this->getHelper('bakerloo_restful');
-        $notifyFlag = $helper->config('custom_discount_email/enabled', $this->getStoreId());
-
-        if ($notifyFlag) {
-            $notifyPercent = (int)$helper->config('custom_discount_email/minimum_percent', $this->getStoreId());
-
-            $orderPercent = ($totalBefore != 0) ? $discount/$totalBefore * 100 : 0;
-            if ($orderPercent >= $notifyPercent) {
-                $this->sendPriceOverrideEmail($order, $discount);
-            }
-        }
-
-        return $this;
-    }
-
-    public function sendPriceOverrideEmail(Mage_Sales_Model_Order $order, $discountAmount)
-    {
-        /** @var Mage_Core_Model_Email_Template $emailTemplate */
-        $emailTemplate = $this->getModel('core/email_template');
-        $emailTemplate->loadDefault(self::PRICE_OVERRIDE_EMAIL_TEMPLATE);
-
-        $adminName  = $this->getStoreConfig('trans_email/ident_general/name', $this->getStoreId());
-        $adminEmail = $this->getStoreConfig('trans_email/ident_general/email', $this->getStoreId());
-
-        $discount = sprintf('%s %d', $order->getBaseCurrencyCode(), $discountAmount);
-        $emailTemplateVars = array(
-            'order_id' => $order->getIncrementId(),
-            'discount' => $discount
-        );
-
-        $emailTemplate->setSenderName($adminName);
-        $emailTemplate->setSenderEmail($adminEmail);
-        $emailTemplate->send($adminEmail, null, $emailTemplateVars);
+        return $this->_manager->create($this->getRequest(), $this->getStoreId());
     }
 
     /**
@@ -1191,7 +765,14 @@ class Ebizmarts_BakerlooRestful_Model_Api_Orders extends Ebizmarts_BakerlooRestf
             ->addFieldToFilter('order_id', array('eq' => $order->getId()));
 
         foreach ($queuedEmails as $queuedEmail) {
-            $queuedEmail->setEmailResult($status)->save();
+            $queuedEmail->setEmailResult($status);
+
+            if ($status) {
+                $queuedEmail->setErrorMessage('');
+                $queuedEmail->setDeleteAttachment(1);
+            }
+
+            $queuedEmail->save();
         }
     }
 
@@ -1254,162 +835,6 @@ class Ebizmarts_BakerlooRestful_Model_Api_Orders extends Ebizmarts_BakerlooRestf
         return $this->_getAllItems($page, $filters);
     }
 
-    private function _getOrderAddress($order, $type)
-    {
-        if ($type == 'billing') {
-            $address = $order->getBillingAddress();
-        } else {
-            $address = $order->getShippingAddress();
-        }
-
-        if (!is_object($address)) {
-            return null;
-        }
-
-        $return = array(
-            "id"                  => $address->getId(),
-            "firstname"           => $address->getFirstname(),
-            "lastname"            => $address->getLastname(),
-            "country_id"          => $address->getCountry(),
-            "city"                => $address->getCity(),
-            "street"              => $address->getStreet(1),
-            "street1"             => $address->getStreet(2),
-            "region"              => $address->getRegion(),
-            "region_id"           => $address->getRegionId(),
-            "postcode"            => $address->getPostcode(),
-            "telephone"           => $address->getTelephone(),
-            "fax"                 => $address->getFax(),
-            "company"             => $address->getCompany(),
-            "is_shipping_address" => (int)($type == 'shipping'),
-            "is_billing_address"  => (int)($type == 'billing'),
-        );
-
-        return $return;
-    }
-
-    public function _getAssociatedData($orderId, $resource)
-    {
-
-        $api = Mage::getModel('bakerloo_restful/api_' . $resource);
-        $api->parameters = array(
-            'not_by_id'=>'not_by_id',
-            'filters' => array('order_id,eq,' . $orderId)
-        );
-
-        $invoices = $api->get();
-
-        if (is_array($invoices) and array_key_exists('page_data', $invoices)) {
-            return $invoices['page_data'];
-        } else {
-            return array();
-        }
-    }
-
-    private function _getJsonPayload(Ebizmarts_BakerlooRestful_Model_Order $order)
-    {
-        $payload = json_decode($order->getJsonPayload(), true);
-
-        if ($payload) {
-            $payload['payment']['customer_signature'] = null;
-            $payload['payment']['customer_signature_type'] = null;
-            $payload['payment']['customer_signature_file'] = null;
-
-            $addedPayments = isset($payload['payment']['addedPayments']) ? $payload['payment']['addedPayments'] : array();
-            foreach ($addedPayments as $_addedPayment) {
-                $_addedPayment['customer_signature'] = null;
-                $_addedPayment['customer_signature_type'] = null;
-                $_addedPayment['customer_signature_file'] = null;
-            }
-
-            $payload['currency_rate'] = (float)$order->getBaseToOrderRate();
-        }
-
-        return $payload;
-    }
-
-    public function _getOrderPayments(Mage_Sales_Model_Order $order, Ebizmarts_BakerlooRestful_Model_Order $posOrder)
-    {
-
-        if (!$posOrder->getId()) {
-            return;
-        }
-
-        $json = json_decode($posOrder->getJsonPayload(), true);
-        $payment = $order->getPayment();
-        $result = null;
-
-        if (!is_null($json) and $payment->getId()) {
-            $result = isset($json['payment']) ? $json['payment'] : array();
-
-            $result['payment_id'] = (int)$payment->getId();
-            $json['payment']['payment_id'] = (int)$payment->getId();
-
-            if (isset($result['customer_signature'])) {
-                $result['customer_signature'] = null;
-            }
-            if (isset($result['customer_signature_type'])) {
-                $result['customer_signature_type'] = null;
-            }
-            if (isset($result['customer_signature_file'])) {
-                $result['customer_signature_file'] = null;
-            }
-
-            if ($payment->getMethod() == Ebizmarts_BakerlooPayment_Model_Layaway::CODE) {
-                if (isset($result['addedPayments']) and is_array($result['addedPayments'])) {
-                    $installments = Mage::getModel('bakerloo_payment/installment')
-                        ->getCollection()
-                        ->addFieldToFilter('parent_id', array('eq' => $payment->getId()))
-                        ->getItems();
-
-                    $installments = array_values($installments);
-                    $installmentKeys = array_keys($installments);
-
-                    //added payments from json
-                    $addedPayments = $result['addedPayments'];
-                    $addedPaymentKeys = array_keys($addedPayments);
-
-                    $result['addedPayments'] = array();
-                    $result['refunds'] = array();
-
-                    foreach ($installmentKeys as $_key) {
-                        $_installment = $installments[$_key];
-                        $installmentJson = unserialize($_installment->getPaymentData());
-
-                        if ($installmentJson) {
-                            $result['addedPayments'][$_key] = $installmentJson;
-                        } else {
-                            $result['addedPayments'][$_key] = $addedPayments[$_key];
-                        }
-
-                        $result['addedPayments'][$_key]['payment_id'] = $_installment->getPaymentId();
-
-                        if (!empty($installmentJson['refunds'])) {
-                            $installmentRefunds = $installmentJson['refunds'];
-                        } else {
-                            $installmentRefunds = $addedPayments[$_key]['refunds'];
-                        }
-
-                        foreach ($installmentRefunds as $_refundKey => $_refund) {
-                            $installmentRefunds[$_refundKey]['refund_id'] = $_installment->getId();
-                        }
-
-                        $result['addedPayments'][$_key]['refunds'] = $installmentRefunds;
-                    }
-
-                    //check installments that may have failed
-                    $diff = array_diff($addedPaymentKeys, $installmentKeys);
-                    foreach ($diff as $_d) {
-                        $result['addedPayments'][] = $addedPayments[$_d];
-                    }
-
-
-                }
-            }
-        }
-
-        return $result;
-    }
-
     public function setCustomerToOrder($customer, $order)
     {
         $order->setData('customer_id', $customer->getId());
@@ -1438,23 +863,5 @@ class Ebizmarts_BakerlooRestful_Model_Api_Orders extends Ebizmarts_BakerlooRestf
         }
 
         return array($invoiceConfig, $shipmentConfig);
-    }
-
-    /**
-     * @param $order
-     * @return array
-     */
-    private function getBundleItemQty($order)
-    {
-        $itemsShipmentQty = array();
-
-        foreach ($order->getItemsCollection() as $item) {
-            if ($item->getProductType() === 'bundle' && !$item->isShipSeparately()) {
-                $itemsShipmentQty[$item->getId()] = $item->getQtyOrdered();
-            } elseif (!is_null($item->getParentItem()) && $item->getParentItem()->getProductType() === 'bundle' && $item->isShipSeparately()) {
-                $itemsShipmentQty[$item->getId()] = $item->getQtyOrdered();
-            }
-        }
-        return $itemsShipmentQty;
     }
 }
