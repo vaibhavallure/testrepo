@@ -557,21 +557,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'index' => 'customer_email'
             ),
 
-            //Allure Code
-            
-            'customer_group_id' => array(
-            		'header' => $helper->__('Customer Group'),
-            		'index' => 'customer_group_id',
-            		'type' => 'options',
-            		'width' => '70px',
-            		'filter_index' => 'method',
-            		'column_css_class' => 'nowrap',
-            		'options' => $groups = Mage::getResourceModel('customer/group_collection')
-            		->load()
-            		->toOptionHash(),
-            ),
-
-            //End of allure code
+           
             
             'coupon_code' => array(
                 'type' => 'text',
@@ -726,15 +712,30 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             		'index' => 'no_signature_delivery',
             		'type' => 'options',
             		'width' => '70px',
-            		'filter_index' => 'main_table.no_signature_delivery',
+            		'filter_index' => "{$tableName_sales_flat_order}.no_signature_delivery",
             		'options' => array(1=>'Yes',0=>'No'),
             ),
+            //Allure Code
+            
+            'customer_group_id' => array(
+            		'header' => $helper->__('Customer Group'),
+            		'index' => 'customer_group_id',
+            		'type' => 'options',
+            		'width' => '70px',
+            		'filter_index' => "{$tableName_sales_flat_order}.customer_group_id",
+            		'column_css_class' => 'nowrap',
+            		'options' => $groups = Mage::getResourceModel('customer/group_collection')
+            		->load()
+            		->toOptionHash(),
+            ),
+            
+            //End of allure code
             'create_order_method' => array(
             		'header' => $helper->__('Order Method'),
             		'index' => 'create_order_method',
             		'type' => 'options',
             		'width' => '70px',
-            		'filter_index' => 'main_table.create_order_method',
+            		'filter_index' => "{$tableName_sales_flat_order}.create_order_method",
             		'options' => array(1=>'CounterPoint',0=>'Website'),
             ),
         );
