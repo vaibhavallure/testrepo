@@ -20,13 +20,13 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
 <?php if($this->canDisplayGiftmessage()): ?>
 <?php $_required = $this->getMessage()->getMessage() != ''?>
-<div id="<?php echo $this->getHtmlId() ?>" class="box-center giftmessage-whole-order-container">
+<div id="<?php echo $this->getHtmlId() ?>" class="box-left giftmessage-whole-order-container">
     <div class="entry-edit">
         <div><?php echo Mage::helper('sales')->__('Gift Message for the Entire Order') ?></div><br />
         <form id="<?php echo $this->getFieldId('form') ?>" action="<?php echo $this->getSaveUrl() ?>">

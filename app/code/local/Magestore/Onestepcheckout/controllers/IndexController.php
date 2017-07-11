@@ -595,6 +595,7 @@ class Magestore_Onestepcheckout_IndexController extends Mage_Core_Controller_Fro
             } catch (Mage_Core_Exception $e) {
                 Mage::logException($e);
                 Mage::getSingleton('checkout/session')->addError($e->getMessage());
+                Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
                 Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
                 $redirect = Mage::getUrl('onestepcheckout/index/index');
                 if ($isAjax) {
@@ -836,6 +837,7 @@ class Magestore_Onestepcheckout_IndexController extends Mage_Core_Controller_Fro
                 } catch (Mage_Core_Exception $e) {
                     Mage::logException($e);
                     Mage::getSingleton('checkout/session')->addError($e->getMessage());
+                    Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
                     Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
                     $redirect = Mage::getUrl('onestepcheckout/index/index');
                     // Header('Location: ' . $redirect);
@@ -845,6 +847,7 @@ class Magestore_Onestepcheckout_IndexController extends Mage_Core_Controller_Fro
                 } catch (Exception $e) {
                     Mage::logException($e);
                     Mage::getSingleton('checkout/session')->addError($e->getMessage());
+                    Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
                     Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
                     $redirect = Mage::getUrl('onestepcheckout/index/index');
                     // Header('Location: ' . $redirect);

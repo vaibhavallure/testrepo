@@ -8,10 +8,9 @@ $model = Mage::getSingleton("core/session")->getData('appointment_submitted');
 Mage::getSingleton("core/session")->setData('appointment_submitted',false);
 ?>
 <div class="page-title">
-    <h1><p class="detailofapt"><?php echo $this->__('Your Appointment has been confirmed!') ?></p></h1>
+    <h1><p class="detailofapt"><?php echo $this->__('Appointment Details') ?></p></h1>
 </div><hr/>
 <div class="checkout-success">
-    <h4><p class="detailofapt"><?php echo $this->__('Details of Appointment') ?></p></h4>
 	<div class="success-field">
 	<span class="apt-summary"><?php echo $this->__('Name') ?></span>
 	<span class="apt-summary" style="font-weight: bold"><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
@@ -28,19 +27,23 @@ Mage::getSingleton("core/session")->setData('appointment_submitted',false);
 	<span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
 	<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingQty() ?></span>
 	</div>
+	<?php if( $model->getPiercingLoc()):?>
 	<div class="success-field">
 	<span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
 	<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingLoc() ?></span>
 	</div>
+	<?php endif;?>
 	<div class="success-field">
 	<span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
 	<span class="apt-summary" style="font-weight: bold"><?php 
-	$appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
-	$appStartDate = $appStartDate->toString();
+	/* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
+	$appStartDate = $appStartDate->toString(); */
+	$appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
 	if($model->getStoreId())
 		$format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
 	else
 		$format = "EST";
+	
 	echo  $appStartDate." ".$format?></span>
 	</div>
 
