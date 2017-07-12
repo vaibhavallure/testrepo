@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<config>    
+    <modules>
+        <Allure_Exception>
+			<name>Allure -Payment Exception Notifications</name>
+            <version>0.0.1</version>
+        </Allure_Exception>
+    </modules>
+    <frontend>
+        <routers>
+            <allure_exception>
+                <use>standard</use>
+                <args>
+                    <module>Allure_Exception</module>
+                    <frontName>allure_exception</frontName>
+                </args>
+            </allure_exception>
+        </routers>
+    </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <allure_exception>
+                    <file>allure_exception.xml</file>
+                </allure_exception>
+            </updates>
+        </layout>
+    </adminhtml>   
+    <global>
+        <helpers>
+            <allure_exception>
+                <class>Allure_Exception_Helper</class>
+            </allure_exception>
+        </helpers>
+    </global>
+</config>
