@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<config>    
+    <modules>
+        <Allure_Londoninventory>
+			<name>Allure - Inventory Management</name>
+            <version>0.1.0</version>
+        </Allure_Londoninventory>
+    </modules>
+    <global>
+        <models>
+            <allure_londoninventory>
+                <class>Allure_Londoninventory_Model</class>
+                <resourceModel>allure_londoninventory_resource</resourceModel>
+            </allure_londoninventory>
+            <allure_londoninventory_resource>
+	          <class>Allure_Londoninventory_Model_Resource</class>
+	             <entities>
+	                 <inventory>
+	                    <table>allure_inventory_purchased</table>
+	                 </inventory>
+	             </entities>
+	       </allure_londoninventory_resource>
+        </models>
+         <resources>
+            <londoninventory_setup>
+                <setup>
+                    <module>Allure_Londoninventory</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </londoninventory_setup>
+            <londoninventory_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </londoninventory_write>
+            <londoninventory_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </londoninventory_read>
+        </resources>
+    </global>
+</config>
