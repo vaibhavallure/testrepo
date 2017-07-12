@@ -5,6 +5,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     const ORDER_STATUS_NEW="new";
     const ORDER_STATUS_REJECT="reject";
     const ORDER_STATUS_CLOSED="closed";
+    const ORDER_STATUS_CANCEL="cancel";
     const ORDER_STATUS_PARTIALLY_CLOSED="partially_closed";
     const ORDER_STATUS_ACCEPT="accept";
     const ORDER_STATUS_PARTIALLY_SHIPPED="partially_shipped";
@@ -15,6 +16,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
 		$statusArray=array();
 		$statusArray['new']='New';
 		$statusArray['closed']='Closed';
+		$statusArray['cancel']='Cancel';
 		$statusArray['partially_closed']='Partially Closed';
 		$statusArray['reject']='Reject';
 		$statusArray['accept']='In Production';

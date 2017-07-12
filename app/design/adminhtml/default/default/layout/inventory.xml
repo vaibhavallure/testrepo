@@ -1,50 +1,7 @@
 <?xml version="1.0"?>
 
 <layout version="0.1.0">
-    <adminhtml_inventory_layout>
-        <reference name="head">           
-            <action method="addCss">
-                <stylesheet>css/allure/inventory/menu.css</stylesheet>
-            </action>
-            <action method="addJs">
-                   <script>allure/inventory.js</script>
-           </action>  
-            <action method="addCss">
-                <stylesheet>css/allure/inventory/style.css</stylesheet>
-            </action>   
-           
-            <action method="addCss">
-                <stylesheet>css/tinybox/style.css</stylesheet>
-            </action>      
-            <action method="addJs">
-                <script>allure/inventory/tinybox.js</script>
-			</action>
-            <action method="addJs"><js>extjs/ext-tree.js</js></action>
-            <action method="addJs"><js>extjs/ext-tree-checkbox.js</js></action>
-            <action method="addItem"><type>js</type><name>extjs/ext-tree.js</name></action>
-            <action method="addItem"><type>js</type><name>extjs/ext-tree-checkbox.js</name></action>
-            <action method="addItem"><type>js_css</type><name>extjs/resources/css/ext-all.css</name></action>
-            <action method="addItem"><type>js</type><name>mage/adminhtml/rules.js</name><params/></action>
-            <action method="addItem"><type>js_css</type><name>extjs/resources/css/ytheme-magento.css</name></action>
-        </reference>
-       <!--  <reference name="root">
-            <action method="setTemplate">
-                <template>inventory/page-2column-left.phtml</template>
-            </action>
-            <reference name="notifications" >
-                <block type="adminhtml/notification_baseurl" name="notification_baseurl" as="notification_baseurl" template="notification/baseurl.phtml"></block>
-                <block type="adminhtml/cache_notifications" name="cache_notifications" template="system/cache/notifications.phtml"></block>
-                <block type="adminhtml/notification_survey" name="notification_survey" template="notification/survey.phtml"/>
-                <block type="adminhtml/notification_security" name="notification_security" as="notification_security" template="notification/security.phtml"></block>            
-            </reference>
-            <block type="inventory/adminhtml_title" name="inventory_title" as="inventory_title" template="inventory/title.phtml"/>
-            <block type="core/text_list" name="inventory_header" as="inventory_header">
-            </block>
-            <block type="core/text_list" name="left_menu" as="left_menu">
-                <block type="inventory/adminhtml_menu" name="inventory_menu" as="inventory_menu"></block>
-            </block>
-        </reference>  -->
-    </adminhtml_inventory_layout>
+
     <adminhtml_inventoryplus_one_tab>
         <update handle="adminhtml_inventoryplus_layout" />
         <reference name="head">           

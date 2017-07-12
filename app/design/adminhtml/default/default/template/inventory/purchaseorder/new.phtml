@@ -5,7 +5,9 @@
 
 <div class="content-header">
     <h3 class="icon-head"><?php echo $helper->__('Create  Purchase Order')?></h3>
+    
     <button id="create_po_btn" class="create_po_btn" ><?php echo $helper->__('CREATE ORDER')?></button>
+    <button id="reset_po_btn" class="reset_po_btn" ><?php echo $helper->__('RESET')?></button>
 </div>
 
 <div class="success" style="display: none;"></div>
@@ -21,7 +23,7 @@
   	<button type="button" onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/new')?>'">
   		<?php echo $helper->__('Reset Filter')?></button>
  	<input style="float:right"  type="text" id="refence_no" class="refence_no" 
- 		placeholder="<?php echo $helper->__('Add reference No')?>" onkeyup='saveValue(this)';/>
+ 		placeholder="<?php echo $helper->__('Add reference No')?>" ;/>
 </div>
 
 <div class="pager-inventory">
@@ -118,6 +120,13 @@
 <div>
     <button id="create_po_btn2" class="create_po_btn"><?php echo $helper->__('CREATE ORDER')?></button>
 </div>
+
+<?php 
+$podataCount=0;
+$podata = Mage::getSingleton('core/session')->getMyItemsInfo();
+if($podata['items'])
+	$podataCount=count($podata['items']);
+?>
     
 <script type="text/javascript">
 	jQuery.noConflict();
@@ -129,5 +138,9 @@
 	}
 	Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 	Allure.InventoryStoreSwitch = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_stock/store', array('_secure' => true));?>';
+	Allure.AddPurchaseItem = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addpurchaseitem', array('_secure' => true));?>';
+	Allure.GetStoredInfo = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/getstoredinfo', array('_secure' => true));?>';
 	Allure.InventoryPurcaseCreateOrder = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/createOrder', array('_secure' => true));?>';
-</script>
+	Allure.Reset = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/reset', array('_secure' => true));?>';
+	
+	</script>

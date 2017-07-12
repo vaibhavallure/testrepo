@@ -3,20 +3,18 @@ $appointment = Mage::registry('allure_appointment');
 /* Initializing variables */
 //$appStartDate = $appointment->getAppointmentStart();
 //$appStartDate = Mage::helper('core')->formatTime($appStartDate);
-$appStartDate= new Zend_Date(strtotime($appointment->getAppointmentStart()));
-$appStartDate = $appStartDate->toString();
 
-$appEndDate= new Zend_Date(strtotime($appointment->getAppointmentEnd()));
-$appEndDate = $appEndDate->toString();
-
-$bookingTime= new Zend_Date(strtotime($appointment->getBookingTime()));
-$bookingTime = $bookingTime->toString();
+$appStartDate=date("F j, Y H:i", strtotime($appointment->getAppointmentStart()));
+$appEndDate=date("F j, Y H:i", strtotime($appointment->getAppointmentEnd()));
+$bookingTime=date("F j, Y H:i", strtotime($appointment->getBookingTime()));
 
 $store = $appointment->getStoreId();
 if($store)
 	$format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($store);
 else
 	$format = "EST";
+
+
 $store = Mage::app()->getStore($store)->getName();
 
 $piercingQty = $appointment->getPiercingQty();
@@ -59,7 +57,7 @@ $specialNotes = $appointment->getSpecialNotes();
                 <td class="value"><strong><?php echo $appEndDate." ".$format ?></strong></td>
             </tr>
             <tr>
-                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Booking Time') ?></label></td>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('Booking Time') ?></label></td>
                 <td class="value"><strong><?php echo $bookingTime." ".$format ?></strong></td>
             </tr>
             <tr>
@@ -67,21 +65,25 @@ $specialNotes = $appointment->getSpecialNotes();
                 <td class="value"><strong><?php echo $store ?></strong></td>
             </tr>
             <tr>
-                <td class="label"><label><?php echo Mage::helper('appointments')->__('No. of Piercing') ?></label></td>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('No of People in Group') ?></label></td>
                 <td class="value"><strong><?php echo $piercingQty ?></strong></td>
             </tr>
+            <?php if(!empty($piercingLoc)):?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Piercing Location') ?></label></td>
                 <td class="value"><strong><?php echo $piercingLoc ?></strong></td>
             </tr>
+            <?php endif;?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Appointment Status') ?></label></td>
                 <td class="value"><strong><?php echo $appStatus ?></strong></td>
             </tr>
+            <?php if(!empty($specialNotes)):?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Special Notes') ?></label></td>
                 <td class="value"><strong><?php echo $specialNotes ?></strong></td>
             </tr>
+            <?php endif;?>
             </table>
         </div>
     </div>
@@ -103,10 +105,13 @@ $specialNotes = $appointment->getSpecialNotes();
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Customer Name') ?></label></td>
                 <td class="value"><strong><?php echo $name ?></strong></td>
             </tr>
+            <?php if(!empty($custId)):?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Customer Id') ?></label></td>
                 <td class="value"><strong><?php echo $custId ?></strong></td>
             </tr>
+            <?php endif;?>
+            
             <tr>
                  <td class="label"><label><?php echo Mage::helper('appointments')->__('Email') ?></label></td>
                 <td class="value"><strong><?php echo $email ?></strong></td>
@@ -135,10 +140,7 @@ $specialNotes = $appointment->getSpecialNotes();
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Notification Preference') ?></label></td>
                 <td class="value"><strong><?php echo $notificationPref ?></strong></td>
             </tr>
-            <tr>
-                <td class="label"><label><?php echo Mage::helper('appointments')->__('Last Notified On') ?></label></td>
-                <td class="value"><strong><?php echo $lastNotified ?></strong></td>
-            </tr>
+           
             </table>
         </div>
     </div>

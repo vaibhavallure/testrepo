@@ -95,28 +95,31 @@ class Ecp_Slideshow_Adminhtml_SlideshowController extends Mage_Adminhtml_Control
                         $data['slide_thumb'] = '';
                     }else Mage::throwException ('You are tryin\'g to delete a thumbnail image without replacing it');
                 }
-
-                if($_FILES['slide_background']['size']){
+  
+                //Removig size check as per Max request
+              
+                
+               /*  if($_FILES['slide_background']['size']){
                     if(((int)$_FILES['slide_background']['size']/1024) > 300){
                         Mage::throwException ('Images can\'t be greather than 300KB');
-                    }
+                    } */
                     /*$ext = pathinfo($_FILES['slide_thumb']['name'], PATHINFO_EXTENSION);
                     if(!in_array($ext,$validExtensions)) Mage::throwException (' format image');*/
                     
 
                     
-                }
+              /*   } */
                 
-                if(isset($_FILES['slide_thumb']['size'])){
+              /*   if(isset($_FILES['slide_thumb']['size'])){
                     if(((int)$_FILES['slide_thumb']['size']/1024) > 300){
                         Mage::throwException ('Images can\'t be greather than 300KB');
-                    }
+                    } */
 
                     
                     /*$ext = pathinfo($_FILES['slide_background']['name'], PATHINFO_EXTENSION);
                     if(!in_array($ext,$validExtensions)) Mage::throwException ('Invalid format image');*/
                     
-                }
+              /*   } */
                 
                 if (isset($_FILES['slide_thumb']['name']) && $_FILES['slide_thumb']['name'] != '') {
                     try {
