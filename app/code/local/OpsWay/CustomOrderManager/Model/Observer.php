@@ -5,7 +5,18 @@ class OpsWay_CustomOrderManager_Model_Observer {
 
 	    $item = $observer->getQuoteItem();
 	    $product = $observer->getProduct();
-	    $item->setBackorderTime($product->getBackorderTime());
+	   	
+	   	//$item->setBackorderTime($product->getBackorderTime()); //Comment by Allure
+	    
+	    //Allure Inc, Modification Date:21/06/2017 
+	    ////START
+	    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
+	    $stockQty = intval($stockItem->getQty());
+	    if ($stockQty <= 0) {
+	    	$item->setBackorderTime($product->getBackorderTime());
+	    }
+	    ////END
+	    
 	    return $this;
 	}
 }

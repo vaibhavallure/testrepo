@@ -1,8 +1,16 @@
 <?xml version="1.0"?>
-<layout version="0.1.0">
+<!-- <layout version="0.1.0">
   <noimages_adminhtml_noimages_index>
 	<reference name="content">
 	  <block type="noimages/adminhtml_noimages_grid" name="noimages" template="allure/noimages/container.phtml" />
+	</reference>
+  </noimages_adminhtml_noimages_index>
+</layout> -->
+
+<layout version="0.1.0">
+  <noimages_adminhtml_noimages_index>
+	<reference name="content">
+	  <block type="noimages/adminhtml_noimages_grid" name="noimages" />
 	</reference>
   </noimages_adminhtml_noimages_index>
 </layout>

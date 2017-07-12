@@ -45,7 +45,11 @@
 		      <a class="navbar-brand" href="<?php echo $this->getUrl('') ?>"  alt="Venus by Maria Tash" title="Venus by Maria Tash" class="logo"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
 		      <?php $_counter = $this->helper('checkout/cart')->getSummaryCount();?>
 		      <div class="navbar-icons navbar-right">
-		      	<a href="<?php echo Mage::getBaseUrl();?>customer/account" class="navbar-icon glyphicon glyphicon-user"><span>My Account</span></a>
+		      	 <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
+				<a href="<?php echo Mage::getBaseUrl();?>customer/account" class="navbar-icon glyphicon glyphicon-user"><span>My Account</span></a>
+                <?php else:?>
+				<a id="sign_in_label" href="#" class="navbar-icon glyphicon glyphicon-user"><span>My Account</span></a>
+                <?php endif;?>
 		      	<a href="<?php echo Mage::getBaseUrl();?>checkout/cart" class="navbar-icon glyphicon glyphicon-shopping-cart" <?php if ($_counter) :?>counter="<?php echo $_counter;?>"<?php endif;?>><span>Cart</span></a>
 		      	
 		      	<?php //allure store currency swticher?>
@@ -85,3 +89,5 @@ var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN
 // });
 
 </script>
+<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/login.phtml')->toHtml(); ?>
+<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/register.phtml')->toHtml(); ?>

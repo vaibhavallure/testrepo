@@ -1,0 +1,105 @@
+<div id="openModal" class="popupRegisterModel">
+	<div>
+	<form class="form-signup" method="post" id="popup-register-form">
+		<div class="pop-title">
+			<a href="#close" title="Close" class="close">X</a>
+			<h2><?php echo $this->__("create a new account")?></h2>
+			
+		</div>
+		<div>
+			<div id="reg_msg_div">
+				<span id="register-msg"></span>
+			</div>
+			<div class="row">
+	 		    <label class="popup-login-lbl" for="firstname"><em>*</em><?php echo $this->__("First Name")?></label>
+	  		    <input id='firstname' type="text" name='firstname' class="ele_width required-entry"/>
+			</div>
+			<div class="row">
+	 		    <label class="popup-login-lbl" for="lastname"><em>*</em><?php echo $this->__("Last Name")?></label>
+	  		       <input id='lastname' type="text" name='lastname' class="ele_width required-entry"/>
+			</div>
+			<div class="row">
+	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo $this->__("Email Address")?></label>
+	  		    <input id='email' type="text" name='email' class="ele_width required-entry validate-email"/>
+			</div>
+			<div class="row">
+	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__("Password")?></label>
+	  		    <input id='password' type="password" name='password' class="ele_width   input-text required-entry validate-password"/>
+			</div>
+			<div class="row">
+	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__("Confirm Password")?></label>
+	  		    <input id='confirmation' type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
+			</div>
+			<div class="row news-letter">
+	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
+	  		    <label class="popup-login-lbl popupcheckbox_lbl"><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
+			</div>
+		
+		</div>
+		<div class="pop-link">
+			
+			<button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
+			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
+			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
+			
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+ function openRegisterModal(){
+	jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
+	jQuery(".popupRegisterModel").css({"opacity":"1","pointer-events":"auto"});
+};
+
+
+//jQuery("#sign_in_label").on('click',function(){	
+
+
+jQuery(".close").on('click',function(){console.log('hiee');
+jQuery(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
+	});
+
+jQuery("#signup-btn-popup").on('click',function(){
+
+	 var myForm = new VarienForm('popup-register-form'); 
+	 if(myForm.validator.validate()){ 
+
+		var firstname = jQuery('#firstname').val();
+		var lastname = jQuery('#lastname').val();
+		var email = jQuery('#email').val();
+		var password = jQuery('#password').val();
+		var is_subscribed = jQuery('#popup_is_subscribed').is(":checked");
+		var key='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+
+		var request = {
+					"firstname":firstname,
+					"lastname":lastname,
+					"email":email,
+					"password":password,
+					"is_subscribed":is_subscribed,
+					'form_key':key
+					};
+			
+		jQuery.ajax({
+		url : '<?php echo $this->getUrl('customers/account/createCustomer',array('_secure' => true));?>',
+		dataType : 'json',
+		type : 'POST',
+		data: {request:request},
+		success : function(data){
+			if(data.success){
+				 jQuery('#reg_msg_div').css('display','none');
+				 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
+				 location.reload();
+			}else{
+				console.log(data.error);
+			 jQuery('#reg_msg_div').css('display','block');
+			 jQuery('#register-msg').html(data.error);
+			 }
+			}
+		});
+	 } //End of form Validate
+
+   });
+ </script> 

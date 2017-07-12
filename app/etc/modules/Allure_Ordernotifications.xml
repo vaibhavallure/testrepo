@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_Ordernotifications>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Allure_Ordernotifications>
+  </modules>
+</config>

@@ -333,7 +333,7 @@
 }
 .apt-buttons-set{
 	/* clear: both; */
-	width:50%;
+/* 	width:50%; */
     float: right;
 }
 #appointemnet_form .pagination{
@@ -449,4 +449,41 @@ a#foo2_next {
 
 #foo2>li {
     margin: 0 7.5px !important;
+}
+
+.checkout-success{
+   border: 1px solid #ccc;
+   overflow: hidden;
+   padding: 15px;
+  /*  border-radius: 5px; */
+ /*   margin-top: 5%; */
+   background-color: #cfcfd1;;
+}
+
+.success-field{
+   float: left;
+   width: 95%;
+   padding: 7px 10px;
+   border-bottom: 1px solid #dedede;
+}
+
+.btns-setDiv{
+   width: 95%;
+   float: left;
+   background-color: #dedede;
+   padding: 15px 10px;
+}
+
+.apt-cancel-buttons-set{
+   float: left;
+   margin-right: 10px;
+}
+
+.apt-modify-buttons-set{
+   float: left;
+   margin-right: 10px;
+}
+
+.apt-buttons-set{
+   float: right;
 }
