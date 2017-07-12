@@ -1,0 +1,198 @@
+/*
+*	Allure Inc
+*===================================================
+*	My Account UI changes As per Universal Account
+*===================================================
+*/
+
+
+.mt-new-myaccount-submenu{
+   width: 100%;
+   border: 1px solid #ccc;
+   margin-top: 5px;
+}
+.mt-new-myaccount-menu{
+   width: 100%;
+}
+.a-box {
+   overflow: hidden;
+}
+
+.a-ws div.a-column, div.a-column {
+    float: left;
+}
+.a-row .a-span3, .a-ws .a-row .a-ws-span3 {
+    width: 22%;
+}
+
+.a-row .a-span9, .a-ws .a-row .a-ws-span9 {
+    width: 78%;
+}
+
+.a-row .a-span3, .a-ws .a-row .a-ws-span3,
+.a-row .a-span9, .a-ws .a-row .a-ws-span9{
+	padding: 5px;
+}
+
+.mt-new-myaccount-dashbord .a-column.a-span9 .a-color-secondary,
+.mt-new-myaccount-dashbord .a-column.a-span9 .a-text-normal{
+	color: #3f4048;
+	margin: 0px;
+}
+
+.mt-new-myaccount-dashbord .a-column.a-span9 .a-text-normal{
+	font-size: 16px;
+}
+.mt-new-myaccount-dashbord .a-column.a-span9 .a-color-secondary{
+	font-size: 14px;
+}
+
+
+.customer-account-index .col-main, 
+.customer-account-edit .col-main, 
+.customer-address-index .col-main, 
+.sales-order-history .col-main, 
+.wishlist-index-index .col-main, 
+.newsletter-manage-index .col-main {
+    width:100% ! important;
+}
+
+
+
+
+.myaccount-index-index .main-container {
+    width: 100%;
+}
+
+
+
+/*Tab code css start*/
+
+.mt-myaccount-page #sns_tab_products .tab-content .tab-pane{
+	display: none;
+}
+.mt-myaccount-page #sns_tab_products .tab-content .tab-pane.active{
+	display: block;
+}
+
+.mt-myaccount-page #sns_tab_products .tab-content {
+	padding: 10px 5px 10px 5px;
+}
+
+/*Tab code css end*/
+
+
+/*Filter start*/
+
+.mt-myaccount-page #sns_tab_products .toolbar-top .filter_by{
+	margin-right: 0px;
+}
+
+#mt-filter-toolbar #narrow-by-list{
+    background: #cfcfd1;
+    position: relative;
+    top: 0px !important;
+    width: 100%;
+    z-index: 999;
+}
+#mt-filter-toolbar #narrow-by-list .block-layered-nav-bg{
+	 position: relative;
+}
+/*Filter end*/
+
+
+
+/*Purchase item start*/
+
+#purchase-order-item-list .purchase-item-main-li {margin-top: 5px;}
+#purchase-order-item-list .purchase-order-item-detail .purchase-order-item-li-even{
+	width: 100%;
+}
+.purchase-order-item-li-even .purchase-item-1,
+.purchase-order-item-li-odd .purchase-item-2{
+	padding: 5px;
+}
+/* .purchase-order-item-li-even .purchase-item-img,
+.purchase-order-item-li-even .purchase-item-qty, */
+.purchase-order-item-li-even .purchase-item-name,
+.purchase-order-item-li-even .purchase-item-price,
+.purchase-order-item-li-even .purchase-item-link{
+	float: left;
+}
+
+.purchase-order-item-li-even .purchase-item-img{width: 25%;}
+/* .purchase-order-item-li-even .purchase-item-qty{width: 25%;}
+.purchase-order-item-li-even .purchase-item-price{width: 25%;} */
+.purchase-order-item-li-even .purchase-item-link{width: 25%;}
+.purchase-order-item-li-even .purchase-item-name{width: 50%;}
+
+#purchase-order-item-list .purchase-order-item-detail .purchase-order-item-li-odd{
+	width: 100%
+}
+
+#purchase-order-item-list .purchase-item-main-li{border: 1px solid #d1d1d1;}
+
+.purchase-order-item-li-even .purchase-item-1 .product-name{
+	padding: 0px;
+}
+
+#purchase-order-item-list .purchase-item-1 .mt-purchase-btn,
+#purchase-order-item-list .purchase-item-2{
+	text-align: center;
+}
+
+
+
+
+#purchase-item-table.data-table tbody td:first-child {
+    width: 100px;
+}
+#purchase-item-table.data-table tbody td .qty-wrap input{
+	border: none;
+}
+#purchase-item-table.data-table .purchase-store-name{padding: 5px;}
+
+@media (max-width: 767px){
+#purchase-item-table.cart-table .table-product-image {
+    min-height: 0px;
+}
+
+
+
+/*Purchase item end*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

@@ -263,7 +263,7 @@ Customer account pages, rendered for all tabs in dashboard
         <label>Customer My Account (All Pages)</label>
         <!-- Mage_Customer -->
         <reference name="root">
-            <action method="setTemplate"><template>page/2columns-left-dashboard.phtml</template></action>
+            <action method="setTemplate"><template>allure/myaccount/page/2columns-left-dashboard.phtml</template></action>
             <action method="setTitle" translate="title">
                     <title>My Wishlist</title>
              </action>
@@ -278,15 +278,16 @@ Customer account pages, rendered for all tabs in dashboard
 
         <reference name="left">
             <block type="customer/account_navigation" name="customer_account_navigation_dashboard" before="-" template="customer/account/navigation.phtml">
-                <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>My Dashboard</label></action>
+                <!-- <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>My Dashboard</label></action> -->
+                <action method="addLink" translate="label" module="customer"><name>my_products</name><path>myaccount/</path><label>My Products</label></action>
+                <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Login And Security</label></action>
+                <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Addresses</label></action>
+                <action method="addLink" translate="label" module="customer"><name>tokenbase_customer_link</name><path>customer/paymentinfo/</path><label>Payment Options</label></action>
                 
-                <action method="addLink" translate="label" module="customer"><name>tokenbase_customer_link</name><path>customer/paymentinfo/</path><label>My Saved Cards</label></action>
+                <!-- <action method="addLink" translate="label" module="customer"><name>orders_history</name><path>sales/order/history/</path><label>My Orders</label></action>
+                <action method="addLink" translate="label" module="customer"><name>wishlist</name><path>wishlist/</path><label>My Wishlist</label></action> -->
                 
-                <action method="addLink" translate="label" module="customer"><name>orders_history</name><path>sales/order/history/</path><label>My Orders</label></action>
-                <action method="addLink" translate="label" module="customer"><name>wishlist</name><path>wishlist/</path><label>My Wishlist</label></action>
-                <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Account Information</label></action>
-                <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
-                <action method="addLink" translate="label" module="customer"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter</label></action>
+               <!--  <action method="addLink" translate="label" module="customer"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter</label></action> -->
             </block>
             <remove name="tags_popular"/>
             <remove name="catalog.compare.sidebar"/>  
@@ -299,7 +300,7 @@ Customer account pages, rendered for all tabs in dashboard
 Customer account home dashboard layout
 -->
 
-    <customer_account_index translate="label">
+    <customer_account_index_temp translate="label">
         <label>Customer My Account Dashboard</label>
         <update handle="customer_account"/>
         <!-- Mage_Customer -->
@@ -333,6 +334,22 @@ Customer account home dashboard layout
                 <action method="addLink" translate="label" module="customer"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter</label></action>
             </block>
         </reference>-->
+    </customer_account_index_temp>
+    
+    <!-- Allure account -->
+    <customer_account_index translate="label">
+    	<reference name="root">
+            <action method="setTemplate"><template>allure/myaccount/page/2columns-left-dashboard.phtml</template></action>
+        </reference>
+        <reference name="content">             
+            <block type="customer/account_dashboard" name="customer_account_dashboard" template="allure/myaccount/customer/account/dashboard.phtml">
+            	<block type="sales/order_history" name="sales.order.history">
+					<!--block type="page/html_pager" name="product_list_toolbar_pager">
+						<action method="addPagerLimit"><mode>list</mode><limit>5</limit></action>
+					</block-->
+				</block>
+            </block>
+         </reference>
     </customer_account_index>
 
 <!--
@@ -343,11 +360,12 @@ Customer account address book
         <label>Customer My Account Address Book</label>
         <!-- Mage_Customer -->
         <update handle="customer_account"/>
+         
         <reference name="my.account.wrapper">
             <block type="customer/address_book" name="address_book" before="-" template="customer/address/book.phtml"/>
         </reference>
     </customer_address_index>
-
+    
 <!--
 Customer account address edit page
 -->

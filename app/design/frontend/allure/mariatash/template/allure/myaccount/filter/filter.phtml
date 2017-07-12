@@ -1,0 +1,93 @@
+<div id="mt-filter-toolbar">
+	<div class="toolbar-top">
+	   <div class="toolbar">
+	      <div class="sorter">
+	          <span class="mt-a_sortby filter_by" href="#">
+	          	  <img src="/skin/frontend/allure/mariatash/images/filter.png" 
+	          	  	height="100%" alt="Show Filters" class="v-top"> Filter 
+	          	  <span class="glyphicon glyphicon-triangle-bottom"></span>
+	          </span>
+	       </div>
+		</div>
+	</div>
+
+<?php
+	$currentFilterStore = $_GET ['m_store'];
+	if (empty ( $currentFilterStore ))
+		$currentFilterStore = 'all';
+							
+	$currentSort = $_GET ['m_sort'];
+	if(empty($currentSort))
+		$currentSort = 'desc';
+	
+	$stores = Mage::app ()->getStores ();
+	$storeArr = array();
+	foreach ($stores as $store) {
+		$storeArr[$store->getId()] = $store->getName();
+	}
+	
+	$sortOderArr = array('desc'=>'Latest Purchase','asc'=>'Oldest Purchase');
+?>
+
+	<div id="narrow-by-list" style="display: none;">
+		<div class="block-layered-nav-bg"><i class="glyphicon glyphicon-remove"></i></div>
+		<ul>
+			<li class="">
+		        <div class="optionfilter" style="display: block;overflow: hidden">
+		            <dt class="odd"><?php echo ($currentFilterStore!='all')?$storeArr[$currentFilterStore]:"ALL STORES"?></dt>
+		            <dd class="odd" style="display:none">
+						<div class="filter_name">ALL STORES</div>
+						<ul class="">
+			    			<li>
+			    			<option value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></option>
+						<?php
+							$stores = Mage::app ()->getStores ();
+							foreach ($stores as $store) :
+						?>
+    						
+							<option value="<?php echo $store->getId()?>"
+								<?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
+							<?php echo $store->getName()?>
+							</option>
+            				
+            			<?php endforeach;?>
+			               </li>
+						</ul>
+					</dd>
+		        </div>
+		    </li>
+		    
+		    <li class="">
+		     <div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
+		        <dt class="odd"><?php echo ($currentSort!='')?$sortOderArr[$currentSort]:"SORT BY"?></dt>
+		           <dd class="odd" style="display: none;">
+				   		<div class="filter_name">SORT BY</div>
+							<ul class="">
+								<li>
+									<?php foreach ($sortOderArr as $key=>$name):?>
+									<option value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></option>
+									<?php endforeach;?>
+			            		</li>
+							</ul>
+					</dd>
+		        </div>
+  			</li>
+		    
+		</ul>
+	</div>
+
+</div>
+
+
+<script>
+	jQuery(document).ready(function(){
+		jQuery('#mt-filter-toolbar .sorter').on('click',function(){
+			jQuery('#mt-filter-toolbar #narrow-by-list').show();
+		});
+
+		jQuery('#mt-filter-toolbar #narrow-by-list .glyphicon-remove').on('click',function(){
+			jQuery('#mt-filter-toolbar #narrow-by-list').hide();
+		});
+	});
+</script>
+

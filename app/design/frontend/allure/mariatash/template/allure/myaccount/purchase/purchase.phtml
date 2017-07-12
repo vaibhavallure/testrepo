@@ -1,0 +1,314 @@
+
+<?php
+
+$totalPageSizeItem = $this->getPurchaseOrderCollection()->getLastPageNumber();
+?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
+<div class="cart-mt">
+        <fieldset>
+        	<?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
+        	<div id="purchase-history">
+        	<div class="box-content">
+				<table id="purchase-item-table" class="data-table cart-table">
+                <?php 
+                $storeList = array();
+                $stores = Mage::app()->getStores();
+                
+                $storeColorConfig = Mage::helper('myaccount')->getStoreColorConfig();
+                
+                foreach ($stores as $store) {
+                	$storeList[$store->getId()] = $store->getName();
+                }
+                
+                ?>
+                    <?php $i = 0; $prices = array(); $skus = array(); ?>
+                    <?php foreach ($this->getPurchaseOrderCollection() as $_item): ?>
+                        <?php 
+                        
+                        $productId = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
+                        $product = Mage::getModel('catalog/product')->load($productId);
+                        
+                        $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($_item->getProduct()->getId());
+                        $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+                        $url = $product->getProductUrl();
+                        
+                        //$productDescr = $product->getDescription();
+                        
+                        if(!is_null($parentId)){
+                        	$parentProduct = Mage::getModel("catalog/product")->load($parentId);
+                        	$url = $parentProduct->getProductUrl();
+                        	//$productDescr = $parentProduct->getDescription();
+                        }
+                        
+                        $productName = $product->getName();
+                        $typeId = $product->getTypeId();
+                        $productNotAvailableClass = "";
+                        
+                        if(!$product->getId()){
+                        	$productName = $_item->getName();
+                        	$productNotAvailableClass = "current-item-not-available";
+                        	$productDescr = $_item->getDescription();
+                        }
+                        
+                        /* if(!empty($productDescr)){
+                        	if(strlen($productDescr)>=70)
+                        		$productDescr = substr($productDescr,1,70)."...";
+                        } */
+                        
+                        
+                        $receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
+                        $reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
+                        
+                        $storeColor = '';
+                        $storeName = $storeList[$_item->getStoreId()];
+                        if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
+                        	$storeColor .= 'style="';
+                        	$frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
+                        	if(!empty($frontColor))
+                        		$storeColor .= 'color:'.$frontColor.';'; 
+                        	$backColor = $storeColorConfig[$_item->getStoreId()]['back_color'];
+                        	if(!empty($backColor))
+                        		$storeColor .= 'background:'.$backColor.';';
+                        	$storeColor .= '"';
+                        	$storeName = $storeColorConfig[$_item->getStoreId()]['store_label'];
+                        }
+                        
+                        ?>
+                     
+					
+					
+					<tr class="messages-tr">
+					    <td class="table-product-image"> 
+					     	<a href="<?php echo $url?>" title="<?php echo $productName?>" class="product-image">
+					          <img src="<?php echo Mage::helper('catalog/image')
+												->init($product, 'thumbnail')->resize(74,96)?>" 
+													width="74" height="96" alt="<?php echo $productName?>">
+					       </a>
+					   </td>
+					
+					    <td class="table-product-info">
+					        <h2 class="product-name">
+					            <a href="<?php echo $url?>"><?php echo $productName?></a>
+					        </h2>
+					   </td>
+					   
+					    <td class="table-tax a-right">
+					        <span class="price">
+					        <?php echo Mage::helper('checkout')->formatPrice($_item->getPrice())?></span>    
+					    </td>
+					    
+					    <td class="table-qty a-center">
+					        <div class="qty-wrap">
+					        	<input  value="<?php echo number_format($_item->getQtyOrdered())?>" size="4" title="Qty" class="input-text qty" maxlength="12">
+					        </div>
+					    </td>
+					    
+					    <td class="table-price-subtotal">
+    							<label <?php echo $storeColor?> class="purchase-store-name"><?php echo $storeName?></label>
+    						<span style="display: block;" class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime($_item->getCreatedAt()))?></span>
+								
+    					</td>
+					    
+					    
+					    <td class="table-remove a-center last">
+					        <div class="mt-purchase-btn">
+										<a data-url="<?php echo $receiptUrl?>" class=""
+											onclick="openPurchaseWindow(this)">See Receipts</a>
+									</div>
+										<?php if($product->getId()):?>
+											<div class="mt-purchase-btn">
+												<a data-item-id="<?php echo $_item->getId()?>"
+													class="" onclick="reorderItem(this)">Reorder</a>
+											</div>
+											<div class="mt-purchase-btn">
+												<a class="">Share</a>
+											</div>
+										<?php endif;?>
+					            
+					 </td>
+				</tr>
+					
+					
+					
+                    <?php endforeach ?>
+                  </table>
+			</div>
+            </div>
+            <?php else:?>
+            	<p class="no-purchase-itemundefined"><?php echo $this->__("You have no purchased item.")?></p>
+            <?php endif;?>
+        </fieldset>
+</div>
+
+
+
+<script>
+var xhr = null;
+var pageItem = 2;
+var totalPageItem = <?php echo $totalPageSizeItem?>;
+jQuery(function($){
+	$('#purchase-history .box-content').bind('scroll', function(){
+		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
+			if(pageItem<=totalPageItem){
+				 if( xhr == null ) {
+				    //xhr.abort();
+				    //xhr = null;
+				    showLoadingFancybox1('purchase-history');
+				 	xhr =	jQuery.ajax({
+						//async: false,
+				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getPurchasedItems';?>',
+				        dataType : 'json',
+						type : 'POST',
+						data: {'page':pageItem,'limit':5,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>','view_type':'2'},
+				        success: function(data) {
+				        	jQuery('#purchase-item-table tbody').append(data.data.html);
+				        	jQuery('.loader').css({"display":"none"});
+				        	hideLoadingFancybox1('purchase-history');
+				        }
+				    });
+				 	xhr = null;
+				 	pageItem ++;
+				}
+		    }else{
+		    	hideLoadingFancybox('purchase-history');
+		    }
+		}
+ 	});
+});
+
+
+jQuery(document).ready(function(){
+	jQuery(document).on('click','.mt-piercing-photo',function(){
+		return false;
+		var imgSrc = jQuery(this).attr('data-img');
+		jQuery('.mt-piercing-photo').removeClass('active');
+		jQuery(this).addClass('active');
+		jQuery('#frame-img').attr('src',imgSrc);
+		jQuery('.mt-new-purchase .fancybox-overlay-fixed').show();
+
+		var selector = jQuery('.mt-piercing-photo.active').parent().parent().next();
+		var next = selector.attr('data-id');
+		if(next!="undefined" && next!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
+		}else{
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').hide();
+		}
+
+		var selector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
+		var prev = selector.attr('data-id');
+		if(prev!="undefined" && prev!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
+		}else{
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').hide();
+		}
+	});
+
+	jQuery('.fancybox-close').click(function(){
+		jQuery('.mt-new-purchase .fancybox-overlay-fixed').hide();
+	});
+
+	jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').click(function(){
+		toPrevious();
+	});
+
+
+	jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').click(function(){
+		toNext();
+	});
+	
+});
+
+function toNext(){
+	var selector = jQuery('.mt-piercing-photo.active').parent().parent().next();
+	var next = selector.attr('data-id');
+	if(next!="undefined" && next!=null){
+		var imgSrc = selector.find('.mt-piercing-photo').attr('data-img');
+		jQuery('#frame-img').attr('src',imgSrc);
+		jQuery('.mt-piercing-photo').removeClass('active');
+		selector.find('.mt-piercing-photo').addClass('active');
+
+		var prevSelector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
+		var prev = prevSelector.attr('data-id');
+		if(prev!="undefined" && prev!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
+		}
+
+		var nextSelector = jQuery('.mt-piercing-photo.active').parent().parent().next();
+		var next = nextSelector.attr('data-id');
+		if(next!="undefined" && next!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
+		}else{
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').hide();
+		}
+		
+	}
+}
+
+function toPrevious(){
+	var selector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
+	var prev = selector.attr('data-id');
+	if(prev!="undefined" && prev!=null){
+		var imgSrc = selector.find('.mt-piercing-photo').attr('data-img');
+		jQuery('#frame-img').attr('src',imgSrc);
+		jQuery('.mt-piercing-photo').removeClass('active');
+		selector.find('.mt-piercing-photo').addClass('active');
+
+		var nextSelector = jQuery('.mt-piercing-photo.active').parent().parent().next();
+		var next = nextSelector.attr('data-id');
+		if(next!="undefined" && next!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
+		}
+
+		var prevSelector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
+		var prev = prevSelector.attr('data-id');
+		if(prev!="undefined" && prev!=null){
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
+		}else{
+			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').hide();
+		}
+	}
+}
+
+
+function openPurchaseWindow(event){
+	var url = jQuery(event).attr('data-url');
+	window.open(url);
+}
+
+function reorderItem(event){
+	var item_id = jQuery(event).attr('data-item-id');
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'sales/order/reorderItemAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'item_id':item_id},
+        success: function(data) {
+            if(data.success){
+            	/* jQuery('#new-mt-myproduct-cart .totals #shopping-cart-totals-table').html("");
+				var content = jQuery(data.total).find('#shopping-cart-totals-table').html();
+				jQuery('#new-mt-myproduct-cart .totals #shopping-cart-totals-table').html(content); */
+
+				jQuery('.mt-my-cart').html("");
+	        	jQuery('.mt-my-cart').html(data.cart_html);
+                
+            	jQuery('html, body').animate({
+                    scrollTop: 0
+                }, 'fast');
+
+            	jQuery('#ajax_cart_content').html(data.top_cart);
+                jQuery('#just_added').slideDown(1000);
+                jQuery('#topcart-popup').addClass('just_added');
+                setTimeout(function() {
+                    jQuery('#just_added').slideUp(1000);
+                    jQuery('#topcart-popup').removeClass('just_added');
+                }, 5000);
+            }else{
+                alert(data.message);
+            }
+        	hideLoadingFancybox();
+        }
+    });
+}
+
+</script>

@@ -106,6 +106,8 @@ Default layout, loads most of the pages
                 <action method="addCss"><stylesheet>css/styles-form-mt.css</stylesheet></action>
 
 				 <action method="addCss"><stylesheet>css/allure.css</stylesheet></action>
+				 
+				 <action method="addCss"><stylesheet>css/universal.css</stylesheet></action>
 						                
                 <action method="addCss"><stylesheet>css/jslider.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/jslider.plastic.css</stylesheet></action>

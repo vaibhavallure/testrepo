@@ -33,7 +33,7 @@
 <div class="col2-set addresses-list">
     <div class="box">
 <div class="box-title title-buttons">
-    <h3><?php echo $this->__('Address Book ') ?></h3>
+    <h3><?php echo $this->__('Addresses ') //Address Book?></h3>
     <?php 
         $request = Mage::app()->getRequest();
         if($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customeraccountindex'): ?>
@@ -85,42 +85,38 @@
 <?php if($request->getModuleName().$request->getControllerName().$request->getActionName() != 'customeraccountindex'): ?>
 <div class="mt-addresses-additional ">
     <h2><?php echo $this->__('Additional Addresses') ?></h2>
-    <table>
+    <ul id="additional-addresses">
     <?php if($_pAddsses = $this->getAdditionalAddresses()): ?>
         <?php $contador = 0; foreach($_pAddsses as $_address): ?>
-        <?php if($contador == 0): ?>
-            <tr class="additional-addresses">
-        <?php endif; ?>
-            <td class="item">
+            <li class="item">
                 <div class="item-inner-container">
                     <address>
                         <?php echo $this->getAddressHtml($_address) ?>
                     </address>
+                    
+                    <div class="mt-additional-address-btns">
+                    	<button onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_billing');" type="button" title="Make Primary Billing Address" class="button btn-1"><span class="mt-btn-name">Make Primary Billing Address</span></button>
+                    	<button onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_shipping');" type="button" title="Make Primary Shipping Address" class="button btn-2"><span class="mt-btn-name">Make Primary Shipping Address</span></button>
+                    </div>
+                    
                     <p class="additional-address-links">
                         <a href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"><?php echo $this->__('Edit') ?></a><!-- <span class="separator">|</span> --><a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $_address->getId() ?>');"><?php echo $this->__('Delete') ?></a>
                     </p>
                 </div>
-            </td>
-        <?php $contador++; 
-            if($contador==2):$contador=0; ?>
-                </tr>
-        <?php endif; ?>
+            </li>
         
         <?php endforeach; ?>
-        <?php if($contador==1):?>
-            </tr>
-        <?php endif; ?>
     <?php else: ?>
-        <tr>
-            <td class="item empty">
+            <li class="item empty">
                 <p><?php echo $this->__('You have no additional address entries in your address book.') ?></p>
-            </td>
-        </tr>
+            </li>
     <?php endif ?>
-    </table>
-    <button type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
+    </ul>
+    <button id="add-new-addresss" type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
 </div>
 <?php endif; ?>
+
+ <input id="customer-address-form-key" type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 <script type="text/javascript">
 //<![CDATA[
     function deleteAddress(addressId) {
@@ -130,4 +126,30 @@
         return false;
     }
 //]]>
+</script>
+
+<script>
+function setDefaultBilling(id,type){
+	var form_key = jQuery('#customer-address-form-key').val();
+	var flag = 1;
+	jQuery.fancybox.showLoading();
+    jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/address/setDefaultAddressAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'id':id,type:type,'form_key':form_key},
+        success: function(data) {
+            if(data.success){
+                window.location.reload();
+            }
+            jQuery.fancybox.hideLoading();
+        	jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+        }
+    });
+}
+
+function setDefaultShipping(flag){
+	
+}
 </script>

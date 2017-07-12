@@ -13193,7 +13193,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 }
 
 .my-wishlist .data-table tbody tr:last-child td {
-	width: auto;
+	/* width: auto; */ /*allure comment*/
 	background: none !important;
 	padding-left: 0;
 	padding-right: 0;
