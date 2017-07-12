@@ -79,6 +79,17 @@
 	padding: 10px 5px 10px 5px;
 }
 
+.mt-myaccount-page #sns_tab_products .mt-account-active-tab.active{
+	float: right;
+}
+
+.mt-myaccount-page #sns_tab_products #mt-account-tab-dropdown-menu li{
+	float: left;
+} 
+
+.mt-myaccount-page #sns_tab_products .mt-account-active-tab > a{
+	text-decoration: none;
+}
 /*Tab code css end*/
 
 
@@ -98,8 +109,30 @@
 #mt-filter-toolbar #narrow-by-list .block-layered-nav-bg{
 	 position: relative;
 }
+
+#mt-filter-toolbar{
+	margin-bottom: 5px;
+}
+
 /*Filter end*/
 
+
+/*pager css start*/
+
+#mt-report-tab .sales-order-history .pager .pages {
+    margin-right: 0px;
+}
+
+#mt-report-tab .sales-order-history .pager .pages .current{
+	padding: 0px;
+	margin: 0px;
+}
+
+#mt-report-tab .sales-order-history .pager .pages .current > a{
+	border: none;
+	text-decoration: underline;
+}
+/*pager css end*/
 
 
 /*Purchase item start*/
@@ -214,6 +247,18 @@
 
 #wishlist-table .mt-wistlists-added-time{
 	width: 100%;
+}
+
+#mt-wishlist-tab #mt-wishlist-msg{
+	position: absolute;
+    background: #906E39;
+    width: 100%;
+    z-index: 99;
+    border: none;
+    border-radius: 0px;
+    right: 0px;
+    left: 0px;
+    color: rgb(255, 255, 255);
 }
 
 /*Wishlist css end*/

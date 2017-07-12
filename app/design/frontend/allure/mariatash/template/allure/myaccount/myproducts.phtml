@@ -51,7 +51,7 @@
 	
 	<div id="sns_tab_products" class="product-collateral clearfix">
     	<ul class="nav-tabs gfont">
-    		<li class="dropdown pull-right tabdrop">
+    		<li class="dropdown pull-left tabdrop">
     			<a class="dropdown-toggle" data-toggle="dropdown">
     				<i class="fa fa-align-justify"></i> 
     			</a>
@@ -103,6 +103,8 @@
              
             <div id="mt-report-tab" class="tab-pane">
                   <div class="collateral-box">
+                  	<?php echo $this->getChildHtml("myaccount_filter");?>
+                  	<?php echo $this->getChildHtml('sales.order.history_list')?>
                   </div>
         	</div>
                     

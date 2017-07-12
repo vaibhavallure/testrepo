@@ -72,7 +72,10 @@
                     <block type="checkout/multishipping_link" name="checkout.cart.methods.multishipping" template="checkout/multishipping/link.phtml"/>
                 </block>
 
-                <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
+                <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="allure/myaccount/checkout/cart/coupon.phtml"/>
+                
+                 <block type="giftcards/coupon" before="coupon" name="checkout.cart.giftcards" as="giftcards" template="allure/myaccount/checkout/giftcards/coupon.phtml"/>
+                
                 <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
 
@@ -216,7 +219,10 @@
                     <block type="checkout/multishipping_link" name="checkout.cart.methods.multishipping" template="checkout/multishipping/link.phtml"/>
                 </block>
 
-                <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
+                <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="allure/myaccount/checkout/cart/coupon.phtml"/>
+                
+                 <block type="giftcards/coupon" before="coupon" name="checkout.cart.giftcards" as="giftcards" template="allure/myaccount/checkout/giftcards/coupon.phtml"/>
+                
                 <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
                 <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
 

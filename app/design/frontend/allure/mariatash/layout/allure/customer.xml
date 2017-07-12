@@ -278,15 +278,15 @@ Customer account pages, rendered for all tabs in dashboard
 
         <reference name="left">
             <block type="customer/account_navigation" name="customer_account_navigation_dashboard" before="-" template="customer/account/navigation.phtml">
-                <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>My Dashboard</label></action>
-                
+               <!--  <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>My Dashboard</label></action>
+                 -->
                 <action method="addLink" translate="label" module="customer"><name>tokenbase_customer_link</name><path>customer/paymentinfo/</path><label>My Saved Cards</label></action>
                 
-                <action method="addLink" translate="label" module="customer"><name>orders_history</name><path>sales/order/history/</path><label>My Orders</label></action>
-                <action method="addLink" translate="label" module="customer"><name>wishlist</name><path>wishlist/</path><label>My Wishlist</label></action>
+                <!-- <action method="addLink" translate="label" module="customer"><name>orders_history</name><path>sales/order/history/</path><label>My Orders</label></action>
+                <action method="addLink" translate="label" module="customer"><name>wishlist</name><path>wishlist/</path><label>My Wishlist</label></action> -->
                 <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Account Information</label></action>
                 <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
-                <action method="addLink" translate="label" module="customer"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter</label></action>
+                <!-- <action method="addLink" translate="label" module="customer"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter</label></action> -->
             </block>
             <remove name="tags_popular"/>
             <remove name="catalog.compare.sidebar"/>  

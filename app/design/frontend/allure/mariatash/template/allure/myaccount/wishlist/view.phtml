@@ -28,6 +28,11 @@
 <?php if ($this->helper('wishlist')->isAllow()) : ?>
     <div class="my-wishlist">
         <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+        
+        	<div id="mt-wishlist-msg" class="alert" style="display: none;">
+  				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+				<p></p>
+			</div>
 
 		<div class="mt-wishlist-table">
         <form id="wishlist-view-form" action="<?php echo $this->getUrl('*/*/update', array('wishlist_id' => $this->getWishlistInstance()->getId())) ?>" method="post">
@@ -158,6 +163,7 @@ function addWishlistItemToCart(id){
 }
 
 function updateWishlistAll(){
+	showLoadingFancybox();
 	jQuery.ajax({
         url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/updateAllItemAjax';?>',
         dataType : 'json',
@@ -168,11 +174,13 @@ function updateWishlistAll(){
 	        	jQuery('#mt-wishlist-tab .collateral-box .my-wishlist').html("");
 	    		jQuery('#mt-wishlist-tab .collateral-box .my-wishlist').html(data.html);
         	}
+        	hideLoadingFancybox();
         }
 	});
 }
 
 function addAllWishlistItemToCart(){
+	showLoadingFancybox();
 	jQuery.ajax({
         url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/addAllCartAjax';?>',
         dataType : 'json',
@@ -187,6 +195,7 @@ function addAllWishlistItemToCart(){
         		jQuery('#mt-cart-tab .collateral-box').html("");
 	        	jQuery('#mt-cart-tab .collateral-box').html(data.cart_html);
         	}
+        	hideLoadingFancybox();
         }
 	});
 }
@@ -202,13 +211,18 @@ function cancelShareForm(){
 }
 
 function sendShareData(){
+	showLoadingFancybox();
 	jQuery.ajax({
         url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/sendAjax';?>',
         dataType : 'json',
 		type : 'POST',
 		data: jQuery(".mt-wishlist-share-form #form-validate").serialize(),
         success: function(data) {
-        	console.log(data);
+            if(data.success)
+            	cancelShareForm();
+        	jQuery('#mt-wishlist-msg p').text(data.message);
+        	jQuery('#mt-wishlist-msg').show();
+        	hideLoadingFancybox();
         }
 	});
 }

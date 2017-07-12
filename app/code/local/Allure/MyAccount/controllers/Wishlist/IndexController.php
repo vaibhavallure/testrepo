@@ -190,6 +190,11 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 		
 		$cart       = Mage::getSingleton('checkout/cart');
 		
+		$messages   = array();
+		$addedItems = array();
+		$notSalable = array();
+		$hasOptions = array();
+		
 		$wishlist   = $this->_getWishlist();
 		if (!$wishlist) {
 			$this->_forward('noRoute');
@@ -256,26 +261,6 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 					$result['success'] = 0;
 					$message = $this->__('Cannot update wishlist');
 				}
-				
-				
-				
-				
-				$this->loadLayout('myaccount_wishlist_layout');
-				$html = $this->getLayout()->getBlock('customer.wishlist_myaccount')->toHtml();
-				$result['html']  = $html;
-				
-				$content = $this->getLayout()
-				->createBlock('checkout/cart_sidebar')
-				->setTemplate('checkout/cart/sidebar.phtml')
-				->toHtml();
-				$result['top_cart'] = $content;
-				
-				$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
-				
-				$this->loadLayout('myaccount_checkout_cart_layout');
-				$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
-				
-				$result['cart_html'] = $cart_html;
 			}else{
 				$result['success'] = 0;
 				$message = $this->__('Items not added to your shopping cart.');
@@ -290,6 +275,83 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 			$result['success'] = 0;
 			$result['message'] = $this->__('Cannot add item to shopping cart');
 			$result['error'] = $e->getMessage();
+		}
+		
+		
+		if ($notSalable) {
+			$products = array();
+			foreach ($notSalable as $item) {
+				$products[] = '"' . $item->getProduct()->getName() . '"';
+			}
+			$result['success'] = 0;
+			$message = Mage::helper('wishlist')->__('Unable to add the following product(s) to shopping cart: %s.', join(', ', $products));
+		}
+		
+		if ($hasOptions) {
+			$products = array();
+			foreach ($hasOptions as $item) {
+				$products[] = '"' . $item->getProduct()->getName() . '"';
+			}
+			$result['success'] = 0;
+			$message =  Mage::helper('wishlist')->__('Product(s) %s have required options. Each of them can be added to cart separately only.', join(', ', $products));
+		}
+		
+		if ($messages) {
+			$isMessageSole = (count($messages) == 1);
+			if ($isMessageSole && count($hasOptions) == 1) {
+				$item = $hasOptions[0];
+				if ($isOwner) {
+					$item->delete();
+				}
+				$redirectUrl = $item->getProductUrl();
+			} else {
+				$wishlistSession = Mage::getSingleton('wishlist/session');
+				foreach ($messages as $message) {
+					$wishlistSession->addError($message);
+				}
+				$redirectUrl = $indexUrl;
+			}
+		}
+		
+		if ($addedItems) {
+			// save wishlist model for setting date of last update
+			try {
+				$wishlist->save();
+			}
+			catch (Exception $e) {
+				Mage::getSingleton('wishlist/session')->addError($this->__('Cannot update wishlist'));
+				$redirectUrl = $indexUrl;
+			}
+			
+			$products = array();
+			foreach ($addedItems as $product) {
+				$products[] = '"' . $product->getName() . '"';
+			}
+			
+			// save cart and collect totals
+			$cart->save()->getQuote()->collectTotals();
+			
+			$this->loadLayout('myaccount_wishlist_layout');
+			$html = $this->getLayout()->getBlock('customer.wishlist_myaccount')->toHtml();
+			$result['html']  = $html;
+			
+			$content = $this->getLayout()
+			->createBlock('checkout/cart_sidebar')
+			->setTemplate('checkout/cart/sidebar.phtml')
+			->toHtml();
+			$result['top_cart'] = $content;
+			
+			$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
+			
+			$this->loadLayout('myaccount_checkout_cart_layout');
+			$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
+			
+			$result['cart_html'] = $cart_html;
+			
+			
+			$result['success'] = 1;
+			$result['message'] = Mage::helper('wishlist')->__('%d product(s) have been added to shopping cart: %s.', count($addedItems), join(', ', $products));
+			
 		}
 		
 		Mage::helper('wishlist')->calculate();

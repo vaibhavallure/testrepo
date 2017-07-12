@@ -9,7 +9,7 @@ class Allure_MyAccount_Block_Order_History extends Mage_Core_Block_Template
     public function __construct()
     {
     	parent::__construct();
-    	//$this->setTemplate('allure/myaccount/history.phtml');
+    	$this->setTemplate('allure/myaccount/history.phtml');
     	
     	$request = Mage::app()->getRequest()->getParams();
     	$pageNo=1;
@@ -46,7 +46,7 @@ class Allure_MyAccount_Block_Order_History extends Mage_Core_Block_Template
     	
     	$orders->setOrder('main_table.created_at', $sortOrder);
     	
-    	$orders->setCurPage(5);
+    	$orders->setCurPage($pageNo);
     	$orders->setPageSize($limit);
     	
     	$this->setOrders($orders);
