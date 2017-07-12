@@ -348,6 +348,7 @@ div.tab button.active {
 .mt-new-purchase,
 .mt-my-wishlist,
 .mt-my-cart,
+.mt-my-openorders,
 .myaccount-index-index .mt-my-orders{
 	margin-left: -12px;
 	margin-right: -12px;
@@ -897,6 +898,13 @@ div.a-column.a-span-last {
 .my-account .mt-my-orders .box .box-title {
     display: none;
 }
+
+.my-account .mt-my-openorders .box .box-content{
+	overflow-y: auto;
+    height: 300px;
+    overflow-x: hidden;
+}
+
 .my-account .mt-my-orders .box .box-content {
 	overflow-y: auto;
     height: 300px;
@@ -1122,7 +1130,7 @@ div.tab button{
    /*border: none;*/
    outline: none;
    cursor: pointer;
-   padding: 14px 6%;
+   padding: 14px 3%;
    transition: 0.3s;
    text-transform: uppercase;
    font-weight: 600;
@@ -1362,6 +1370,7 @@ width: 63%;
 	margin-top: 22px;	
 }
 
+
 .allure-fancybox-overlay {
     display: none;
 	position: absolute;
@@ -1372,6 +1381,10 @@ width: 63%;
     overflow: hidden;
     z-index: 10001;
     background-color: rgba(0, 0, 0, 0.61);
+}
+
+.mt-my-openorders .allure-fancybox-overlay {
+	top: 0px;	
 }
 
 #allure-fancybox-loading {
@@ -1594,4 +1607,20 @@ width: 245px;
 	   margin-top: 2px;
 	}
 }
+
+#my-openorders-table thead th{
+	padding-bottom: 5px;
+    padding-top: 10px;
+}
+
+#my-openorders-table{
+	background: #cfcfd1;
+}
+
+#my-openorders-table tbody td a{
+	text-decoration: none;
+}
 	
+#new-mt-myproduct-openorders #box-history{
+	top: -17px;
+}	

@@ -9,6 +9,10 @@
 	      	<block type="myaccount/order_history" name="sales.order.history_list" template="allure/myaccount/historylist.phtml">
 	      		<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml" />
 	      	</block>
+	      	
+	      	<block type="myaccount/order_openorder" name="sales.order.openorder_list" template="allure/myaccount/openorders/openorderlist.phtml">
+	      		<block type="myaccount/order_openorder" name="sales.order.openorder" template="allure/myaccount/openorders/openorder.phtml" />
+	      	</block>
 	      		
 	      	<!-- Cart Template -->	
 	      	<block type="checkout/cart" name="checkout.cart">
@@ -96,6 +100,10 @@
   	<myaccount_sales_order_history>
   		<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml" />
   	</myaccount_sales_order_history>
+  	
+  	<myaccount_sales_order_openorders>
+  		<block type="myaccount/order_openorder" name="sales.order.openorder" template="allure/myaccount/openorders/openorder.phtml" />
+  	</myaccount_sales_order_openorders>
   	
   	<myaccount_wishlist_layout>
   		<!-- Wishlist -->

@@ -13,10 +13,17 @@
 	  	<span id="myaccount-cart-total-item" class="total-cart-count total-count-box"></span>
 	  </button>
 	  
+	  
+	  <button data-link="openorders" id="mt-myproduct-openorders" data-tab="tab5" class="tablinks" 
+	  	onclick="changeTab(this);">Open Orders
+	  	<span id="total-openorders-count" class="total-orders-count total-count-box"></span>
+	  </button>
+	  
 	  <button data-link="receipt" id="mt-myproduct-receipts" data-tab="tab4" class="tablinks" 
-	  	onclick="changeTab(this);">All Receipts
+	  	onclick="changeTab(this);">All Orders
 	  	<span id="total-orders-count" class="total-orders-count total-count-box"></span>
 	  </button>
+	  
 	</div>
 	
 	<div id="new-mt-myproduct-purchase" class="tabcontent tab1 active">
@@ -55,6 +62,13 @@
 	  <div class="mt-my-orders">
 	  		<?php echo $this->getChildHtml("myaccount_filter");?>
 	  		<?php echo $this->getChildHtml('sales.order.history_list')?>
+	  </div>
+	</div>
+	
+	<div id="new-mt-myproduct-openorders" class="tabcontent tab5">
+	  <div class="mt-my-openorders">
+	  		<?php echo $this->getChildHtml("myaccount_filter");?>
+	  		<?php echo $this->getChildHtml('sales.order.openorder_list')?>
 	  </div>
 	</div>
 
