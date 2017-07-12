@@ -515,6 +515,7 @@ class MT_Checkout_OnepageController extends Mage_Checkout_OnepageController
             );
         } catch (Mage_Core_Exception $e) {
             Mage::logException($e);
+            Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
             Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
             $result['success'] = false;
             $result['error'] = true;
@@ -537,6 +538,7 @@ class MT_Checkout_OnepageController extends Mage_Checkout_OnepageController
             }
         } catch (Exception $e) {
             Mage::logException($e);
+            Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
             Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
             $result['success'] = false;
             $result['error'] = true;
