@@ -2299,9 +2299,7 @@ cursor: pointer;
 	clear: both;
 	letter-spacing: 0.7px;
 }
-.popupRegisterModel .pop-link{
-	margin-top: 40px;
-}
+
 .pop-link a:hover{
    outline: 0;
    text-decoration: none;
@@ -2343,6 +2341,7 @@ cursor: pointer;
     padding-top: 0px;
     padding-bottom: 0px;
     line-height: normal;
+    letter-spacing: 2px;
 }
 .popup-benifits  {
        list-style-type: disc;
@@ -2352,6 +2351,33 @@ cursor: pointer;
 	text-align: center;
     margin-top: 10px;
 }
-
+.popupRegisterModel .pop-link{
+	display: inline-flex;
+    margin-top: 16px;
+}
+#reg_msg_div{
+	text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#reg_msg_div #register-msg{
+	margin: auto;
+	color: #790000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+}
+#login_msg_div{
+	text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#login_msg_div #login-msg{
+	margin: auto;
+	color: #790000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+}
 
 

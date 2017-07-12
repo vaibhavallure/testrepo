@@ -3,37 +3,39 @@
 	<form class="form-signin" method="post" id="popup-login-form">
 		<div class="pop-title">
 			<a href="#close" title="Close" class="close">X</a>
-			<h2>Log In to Your Account</h2>
+			<h2><?php echo $this->__("Log In to Your Account")?></h2>
 		</div>
 		<div class="body">
+			<div id="login_msg_div">
+				<span id="login-msg"></span>
+			</div>
 			<div class="form-group">
-	 		    <label class="popup-login-lbl" for="email">Email Address</label>
+	 		    <label class="popup-login-lbl" for="email"><?php echo $this->__("Email Address")?></label>
 	  		    <input id='username' type="text" name='username' class="ele_width form-control required-entry validate-email"/>
 			</div>
 			<div class="form-group">
-	 		    <label class="popup-login-lbl" for="password">Password</label>
+	 		    <label class="popup-login-lbl" for="password"><?php echo $this->__("Password")?></label>
 	  		    <input id='passwd' type="password" name='passwd' class="ele_width form-control required-entry"/>
 			</div>
 		</div>
 	    <div class="pop-link">
 			<div class="submit-login">
-				<a>Forget Password</a>
-				<span id="login-msg">&nbsp;</span>
-				<button type="button" id="signin-btn-popup" class="button">Log In</button>
+				<a><?php echo $this->__("Forget Password")?></a>
 			</div>
+			<button type="button" id="signin-btn-popup" class="button"><?php echo $this->__("Log In")?></button>
 			<div class="benifits">
-				<p><strong>Create an account to access these benifits:</strong></p>
+				<p><strong><?php echo $this->__("Create an account to access these benifits:")?></strong></p>
 				<ul class="popup-benifits">
-				  <li>Keep track of your jewelry sizes</li>
-				  <li>See yout purchase history</li>
-				  <li>Faster Checkout</li>
-				  <li>Share your wishlist</li>
-				  <li>Receive  persionalized online service</li>
-				  <li>$20 off your next purchase if you subscribe to our newsletter</li>
+				  <li><?php echo $this->__("Keep track of your jewelry sizes")?></li>
+				  <li><?php echo $this->__("See yout purchase history")?></li>
+				  <li><?php echo $this->__("Faster Checkout")?></li>
+				  <li><?php echo $this->__("Share your wishlist")?></li>
+				  <li><?php echo $this->__("Receive  persionalized online service")?></li>
+				  <li><?php echo $this->__("$20 off your next purchase if you subscribe to our newsletter")?></li>
 				</ul>
 			</div>
 			<div class="new_account">
-				<a onclick="openRegisterModal()">Click here to create new account!</a>
+				<a onclick="openRegisterModal()"><?php echo $this->__("Click here to create new account!")?></a>
 			</div>
 		</div> 
 	</form>
@@ -58,10 +60,11 @@ jQuery("#signin-btn-popup").on('click',function(){
 	 if(myForm.validator.validate()){ 
 		var usrname = jQuery('#username').val();
 		var passwd = jQuery('#passwd').val();
-
+		var key='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 		var request = {
 				"usrname":usrname,
-				"passwd":passwd
+				"passwd":passwd,
+				'form_key':key
 				};
 				
 		jQuery.ajax({
@@ -71,9 +74,11 @@ jQuery("#signin-btn-popup").on('click',function(){
 		data: {request:request},
 		success : function(data){
 			if(data.success){
+				 jQuery('#login_msg_div').css('display','none');
 				 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
 				 location.reload();
 			}else{
+		     jQuery('#login_msg_div').css('display','block');
 			 jQuery('#login-msg').html(data.error);
 			}
 			}

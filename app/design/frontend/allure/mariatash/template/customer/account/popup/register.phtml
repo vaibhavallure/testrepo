@@ -3,39 +3,42 @@
 	<form class="form-signup" method="post" id="popup-register-form">
 		<div class="pop-title">
 			<a href="#close" title="Close" class="close">X</a>
-			<h2><?php echo "New account"?>t</h2>
+			<h2><?php echo $this->__("New account")?></h2>
+			
 		</div>
 		<div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="firstname"><em>*</em><?php echo "First Name"?></label>
+			<div id="reg_msg_div">
+				<span id="register-msg"></span>
+			</div>
+			<div class="form-group ">
+	 		    <label class="popup-login-lbl" for="firstname"><?php echo $this->__("First Name")?><em>*</em></label>
 	  		    <input id='firstname' type="text" name='firstname' class="ele_width required-entry"/>
 			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="lastname"><em>*</em><?php echo "Last Name"?></label>
+			<div class="form-group">
+	 		    <label class="popup-login-lbl" for="lastname"><?php echo $this->__("Last Name")?><em>*</em></label>
 	  		       <input id='lastname' type="text" name='lastname' class="ele_width required-entry"/>
 			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo "Email Address"?></label>
+			<div class="form-group">
+	 		    <label class="popup-login-lbl" for="email"><?php echo $this->__("Email Address")?><em>*</em></label>
 	  		    <input id='email' type="text" name='email' class="ele_width required-entry validate-email"/>
 			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo "Password"?></label>
+			<div class="form-group">
+	 		    <label class="popup-login-lbl" for="password"><?php echo $this->__("Password")?><em>*</em></label>
 	  		    <input id='password' type="password" name='password' class="ele_width   input-text required-entry validate-password"/>
 			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo "Confirm Password"?></label>
+			<div class="form-group">
+	 		    <label class="popup-login-lbl" for="password"><?php echo $this->__("Confirm Password")?><em>*</em></label>
 	  		    <input id='confirmation' type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
 			</div>
-			<div class="row">
-	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
-	  		    <label class="popup-login-lbl popupcheckbox_lbl"><strong>Sign me up for the Maria Tash newsletter!</strong></label>
+			<div class=" form-group news-letter">
+	  		      <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
+	  		      <label class="popup-login-lbl "><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
 			</div>
 		
 		</div>
 		<div class="pop-link">
-			<span id="login-msg">&nbsp;</span>
-			<button type="button" id="signup-btn-popup" class="button">Register</button>
-			<label class="popuporlbl">OR</label>
+			<button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
+			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
 			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
 			
 		</div>
@@ -67,6 +70,7 @@ jQuery("#signup-btn-popup").on('click',function(){
 		var email = jQuery('#email').val();
 		var password = jQuery('#password').val();
 		var is_subscribed = jQuery('#popup_is_subscribed').is(":checked");
+		var key='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 
 		var request = {
 					"firstname":firstname,
@@ -74,6 +78,7 @@ jQuery("#signup-btn-popup").on('click',function(){
 					"email":email,
 					"password":password,
 					"is_subscribed":is_subscribed,
+					'form_key':key
 					};
 			
 		jQuery.ajax({
@@ -83,11 +88,13 @@ jQuery("#signup-btn-popup").on('click',function(){
 		data: {request:request},
 		success : function(data){
 			if(data.success){
+				 jQuery('#reg_msg_div').css('display','none');
 				 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
 				 location.reload();
 			}else{
 				console.log(data.error);
-				 jQuery('#login-msg').html(data.error);
+			 jQuery('#reg_msg_div').css('display','block');
+			 jQuery('#register-msg').html(data.error);
 			 }
 			}
 		});

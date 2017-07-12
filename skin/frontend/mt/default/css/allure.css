@@ -555,7 +555,12 @@ img.snize-item-image[src^=data]::after {
     box-shadow: 0px 0px 6px
 }
 .popupLoginModel #login-msg{
-	color:#f00;
+	color:#790000;
+	margin-left: 20px;
+	font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+	
 }
 
 .close {
@@ -621,8 +626,12 @@ img.snize-item-image[src^=data]::after {
     background: #dcdcdc;
     box-shadow: 0px 0px 6px
 }
-.popupRegisterModel #login-msg{
-	color:#f00;
+.popupRegisterModel #register-msg{
+	color:#790000;
+	margin-left: 20px;
+	font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
 }
 
 .close {
@@ -658,9 +667,9 @@ margin-bottom: 10px;
    margin: 0 0 10px
 }
 label.popup-login-lbl{
-width: 100%;
+   width: 100%;
    float: left;
-   font-size: 14px;
+   font-size: 12px;
 }
 .popupLoginModel input{
    width: 96%;
@@ -680,20 +689,23 @@ width: 100%;
    border-right: 0;
    padding: 5px;
 }
+.popupRegisterModel .news-letter{
+	display: inline-block;
+}
 .pop-link a{
    outline: 0;
    text-decoration: underline;
    color: #000;
-cursor: pointer;
-   font-size: 13px;
-   letter-spacing: 1px;
+   cursor: pointer;
+   font-size: 12px;
+ 
 }
 .pop-link p{
 	clear: both;
 	letter-spacing: 0.7px;
 }
 .popupRegisterModel .pop-link{
-	margin-top: 40px;
+	margin-top: 5px;
 }
 .pop-link a:hover{
    outline: 0;
@@ -702,7 +714,7 @@ cursor: pointer;
 }
 .popupLoginModel #signin-btn-popup {
    float: right;
-   margin: 20px 0 10px;
+   margin: 10px 0 10px;
    color: #fff;
    background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
 }
@@ -740,4 +752,27 @@ cursor: pointer;
 	text-align: center;
     margin-top: 10px;
 }
-
+#reg_msg_div{
+	text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#reg_msg_div #register-msg{
+	margin: auto;
+	color: #790000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+}
+#login_msg_div{
+	text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#login_msg_div #login-msg{
+	margin: auto;
+	color: #790000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+}

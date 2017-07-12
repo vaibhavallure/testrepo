@@ -26,7 +26,6 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 					$session->login($request['usrname'], $request['passwd']);
 					$result['success'] = true;
 					$result['msg'] = Mage::helper('core')->__('Login Successfull');
-					$result['output'] = $output;
 				}
 				catch (Mage_Core_Exception $e)
 				{
