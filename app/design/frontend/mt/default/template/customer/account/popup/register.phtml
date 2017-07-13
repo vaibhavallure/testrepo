@@ -37,12 +37,15 @@
 		
 		</div>
 		<div class="pop-link">
-			
-			<button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
+
+            <button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
 			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
 			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
-			
-		</div>
+            <span id="popup_loader_register" class="please-wait-popup-register" style="display: none;">
+                <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
+
+        </div>
+    </form>
 	</div>
 </div>
 
@@ -87,6 +90,8 @@ jQuery("#signup-btn-popup").on('click',function(){
 		dataType : 'json',
 		type : 'POST',
 		data: {request:request},
+            beforeSend: function() { jQuery('#popup_loader_register').show(); },
+            complete: function() { jQuery('#popup_loader_register').hide(); },
 		success : function(data){
 			if(data.success){
 				 jQuery('#reg_msg_div').css('display','none');
