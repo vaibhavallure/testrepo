@@ -270,8 +270,8 @@ jQuery(document).ready(function(){
 		        success: function(data) {
 		            if(data.success)
 		            	cancelShareForm();
-	            	jQuery('.mt-custom-popup-main').addClass('active');
-	            	jQuery('.mt-custom-popup-main .mt-custom-content').text(data.message);
+	            	jQuery('.mt-my-wishlist .mt-custom-popup-main').addClass('active');
+	            	jQuery('.mt-my-wishlist .mt-custom-popup-main .mt-custom-content').text(data.message);
 		        	//jQuery('#mt-wishlist-msg p').text(data.message);
 		        	//jQuery('#mt-wishlist-msg').show();
 		        	hideLoadingFancybox();

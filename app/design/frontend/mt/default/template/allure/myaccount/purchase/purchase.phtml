@@ -252,4 +252,15 @@ function reorderItem(event){
     });
 }
 
+function openTrackOrder(url){
+	  var lastSlash = url.lastIndexOf(':');
+	  var head = url.substring(0, lastSlash)+':';
+	  var protocol = window.location.protocol;
+	  url = url.replace(head, protocol);
+	  jQuery('.mt-new-purchase .mt-custom-popup-main').addClass('active');
+	  jQuery('.mt-new-purchase .mt-custom-popup-main').load(url, function(response, status, xhr) {
+    	  jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content').html(response);
+	 }); 
+}
+
 </script>
