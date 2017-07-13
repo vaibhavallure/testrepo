@@ -1624,3 +1624,87 @@ width: 245px;
 #new-mt-myproduct-openorders #box-history{
 	top: -17px;
 }	
+
+.mt-my-wishlist #wishlist-table-overlay .mt-wishlist-extra-cls{
+	overflow: hidden; 
+	padding: 8px;
+}
+
+#wishlist-table-overlay .box-content .mt-wishlist-share-btn{
+	float: right;
+}
+
+.mt-my-wishlist .mt-wishlist-share-form{
+	padding: 10px;	
+}
+
+.mt-my-wishlist .mt-wishlist-share-form .fieldset ul li textarea{
+	width: 98.3%!important;
+}
+
+
+
+/*Custom Popup start*/
+
+.mt-custom-popup-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 0px;
+}
+.mt-custom-popup-overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mt-custom-popup-overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mt-custom-popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #d1d1d1;
+  border-radius: 0px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.mt-custom-popup h2 {
+  margin-top: 0;
+  color: #333;
+}
+.mt-custom-popup .mt-popup-close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.mt-custom-popup .mt-popup-close:hover {
+  color: #333;
+}
+.mt-custom-popup .mt-custom-content {
+  max-height: 30%;
+  overflow: auto;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 700px){
+  .mt-custom-popup{
+    width: 70%;
+  }
+}
+
+/*Custom Popup end*/

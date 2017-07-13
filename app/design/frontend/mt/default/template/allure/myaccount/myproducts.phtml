@@ -28,21 +28,8 @@
 	
 	<div id="new-mt-myproduct-purchase" class="tabcontent tab1 active">
 	  <div class="mt-new-purchase">
-	  
-	  <?php //if($this->getPurchasedItems()->getSize()>0):?>
 	  		<?php echo $this->getChildHtml("myaccount_filter");?>
-	  <?php //endif;?>
-	  		
 	  		<?php echo $this->getChildHtml('purchased_items')?>
-	  		<div class='loader' style="display: none;">
-		    <div class='loader--dot'></div>
-		    <div class='loader--dot'></div>
-		    <div class='loader--dot'></div>
-		    <div class='loader--dot'></div>
-		    <div class='loader--dot'></div>
-		    <div class='loader--dot'></div>
-		    <div class='loader--text'></div>
-	 	 </div>
 	   </div>
 	</div>
 	

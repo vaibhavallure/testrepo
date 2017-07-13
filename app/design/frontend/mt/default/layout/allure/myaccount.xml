@@ -76,6 +76,11 @@
                     <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.toCart" template="wishlist/button/tocart.phtml" />
                     <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.update" template="wishlist/button/update.phtml" />
                 </block>
+                
+                <block type="core/text_list" name="wishlist.sharing_form">
+                	<block type="wishlist/customer_sharing" name="wishlist.sharing" template="allure/myaccount/wishlist/sharing.phtml" />
+                </block>
+                
             </block>
             
             <!-- Purchased Item -->
