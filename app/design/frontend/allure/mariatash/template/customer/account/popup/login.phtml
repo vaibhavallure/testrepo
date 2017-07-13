@@ -20,7 +20,7 @@
 		</div>
 	    <div class="pop-link">
 			<div class="submit-login">
-				<a><?php echo $this->__("Forget Password")?></a>
+				<a onclick="openRestPasswordModal()"><?php echo $this->__("Forget Password")?></a>
 			</div>
 			<button type="button" id="signin-btn-popup" class="button"><?php echo $this->__("Log In")?></button>
 			<div class="benifits">
@@ -68,7 +68,7 @@ jQuery("#signin-btn-popup").on('click',function(){
 				};
 				
 		jQuery.ajax({
-		url : '<?php echo $this->getUrl('customers/account/ajaxLogin',array('_secure' => true));?>',
+		url : '<?php echo Mage::getBaseUrl('web').'customers/account/ajaxLogin';?>',
 		dataType : 'json',
 		type : 'POST',
 		data: {request:request},

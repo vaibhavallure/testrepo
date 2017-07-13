@@ -2,7 +2,39 @@
 
 class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Action
 {
-   
+
+	public function forgotPasswordPostAction()
+	{
+		$request = $this->getRequest()->getParam('request');
+		$email=$request['email'];
+		if ($email) {
+            $customer = Mage::getModel('customer/customer')
+                ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
+                ->loadByEmail($email);
+            if ($customer->getId()) {
+                try {
+                    $newResetPasswordLinkToken =  Mage::helper('customer')->generateResetPasswordLinkToken();
+                    $customer->changeResetPasswordLinkToken($newResetPasswordLinkToken);
+                    $customer->sendPasswordResetConfirmationEmail();
+                    $result['success'] = true;
+                    $result['msg'] = Mage::helper('core')->__('Reset link sent on your email');
+                } catch (Exception $exception) {
+                    Mage::log($exception);
+                    $result['success'] = flase;
+                    $result['msg'] = Mage::helper('core')->__($exception->getMessage());
+                }
+            }else{
+                $result['success'] = flase;
+                $result['msg'] = Mage::helper('core')->__('Invalid Email Address');
+
+            }		} else {
+
+            $result['success'] = flase;
+            $result['msg'] = Mage::helper('core')->__('Please enter your email.');
+		}
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+	}
+
 	public function ajaxLoginAction()
 	{
 		$session = Mage::getSingleton('customer/session');
@@ -95,7 +127,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 				Mage::getSingleton('customer/session')->loginById($customer->getId());
 				$result['success'] = true;
 				$result['msg'] = Mage::helper('core')->__('Account created Successfully');
-				$result['output'] = $output;
+
 			}
 				
 			catch(Exception $ex){
@@ -108,7 +140,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 		else {
 			$result['success'] = false;
 			$result['error'] = Mage::helper('core')->__('Cutomer with this email already exits.');
-			$result['output'] = $output;
+
 		}
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 		

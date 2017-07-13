@@ -42,6 +42,7 @@
 			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
 			
 		</div>
+    </form>
 	</div>
 </div>
 
@@ -82,7 +83,7 @@ jQuery("#signup-btn-popup").on('click',function(){
 					};
 			
 		jQuery.ajax({
-		url : '<?php echo $this->getUrl('customers/account/createCustomer',array('_secure' => true));?>',
+		url : '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>',
 		dataType : 'json',
 		type : 'POST',
 		data: {request:request},
