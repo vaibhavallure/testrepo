@@ -2379,5 +2379,60 @@ cursor: pointer;
     font-weight: bold;
     line-height: 1.63636363636;
 }
+.popupResetPasswordModel input{
+  width: 96%;
+  margin: 2px 0 10px;
+  border-top: 1px solid #b2b2b2;
+  border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0;
+  padding: 5px;
+  border-radius: 0;
+}
+.popupResetPasswordModel .pop-link{
+  margin-bottom: 30px;
+  clear: both;
+}
 
+.popupResetPasswordModel {
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  top:-20px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 99999;
+  opacity:0;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+  background: rgba(0,0,0,0.8);
+}
+.popupResetPasswordModel:target {
+  opacity:1;
+  pointer-events: auto;
+}
 
+.popupResetPasswordModel > div {
+  width: 320px;
+  position: relative;
+  margin: 10% auto;
+  /* padding: 5px 20px 13px 20px; */
+  padding: 20px;
+  /* border-radius: 10px; */
+  background: #fff;
+  background: -moz-linear-gradient(#fff, #999);
+  background: -webkit-linear-gradient(#fff, #999);
+  background: -o-linear-gradient(#fff, #999);
+  background: #dcdcdc;
+  box-shadow: 0px 0px 6px
+}
+.popupResetPasswordModel #reset_pass_btn{
+  float: right;
+  margin-top: 10px;
+}
+.popupResetPasswordModel .submit-login{
+  padding-bottom: 10px;
+}

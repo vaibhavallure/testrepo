@@ -680,6 +680,42 @@ img.snize-item-image[src^=data]::after {
 	float:right;
 }
 
+.popupResetPasswordModel {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top:-20px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	background: rgba(0,0,0,0.8);
+}
+.popupResetPasswordModel:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.popupResetPasswordModel > div {
+	width: 320px;
+    position: relative;
+    margin: 10% auto;
+    /* padding: 5px 20px 13px 20px; */
+    padding: 20px;
+    /* border-radius: 10px; */
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px
+}
+
 
 
 
@@ -746,7 +782,7 @@ img.snize-item-image[src^=data]::after {
 }
 
 .close:hover { background: #ecc388; 
-color: #fff;
+    color: #fff;
 }
 
 
@@ -772,6 +808,21 @@ label.popup-login-lbl{
    border-right: 0;
    padding: 5px;
 }
+
+.popupResetPasswordModel input{
+   width: 96%;
+   margin: 2px 0 10px;
+   border-top: 1px solid #b2b2b2;
+   border-bottom: 0px;
+   border-left: 0px;
+   border-right: 0;
+   padding: 5px;
+}
+.popupResetPasswordModel .pop-link{
+	   overflow: hidden;
+        clear: both;
+}
+
 .popupRegisterModel input{
    width: 96%;
    margin: 2px 0 10px;
@@ -797,7 +848,8 @@ label.popup-login-lbl{
 	letter-spacing: 0.7px;
 }
 .popupRegisterModel .pop-link{
-	margin-top: 5px;
+	margin-top: 15px;
+
 }
 .pop-link a:hover{
    outline: 0;
@@ -805,6 +857,12 @@ label.popup-login-lbl{
    color: #000;
 }
 .popupLoginModel #signin-btn-popup {
+   float: right;
+   margin: 10px 0 10px;
+   color: #fff;
+   background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
+}
+.popupResetPasswordModel #reset_pass_btn{
    float: right;
    margin: 10px 0 10px;
    color: #fff;
@@ -868,7 +926,31 @@ label.popup-login-lbl{
     font-weight: bold;
     line-height: 1.63636363636;
 }
-
-
-
+#resetpassword_msg_div{
+    text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#resetpassword_msg_div #resetpassword-msg{
+    margin: auto;
+    color: #790000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+}
+.popupLoginModel .submit-login{
+    float: right;
+}
+.popupResetPasswordModel .submit-login{
+    float: right;
+}
+.please-wait-popup{
+    float: left;
+    margin-top: 16px;
+    margin-right: 15px;
+}
+.please-wait-popup-register{
+    margin-top: 16px;
+    margin-left: 15px;
+}
 
