@@ -68,7 +68,7 @@ jQuery("#signin-btn-popup").on('click',function(){
 				};
 				
 		jQuery.ajax({
-		url : '<?php echo $this->getUrl('customers/account/ajaxLogin',array('_secure' => true));?>',
+		url : '<?php echo Mage::getBaseUrl('web').'customers/account/ajaxLogin';?>',
 		dataType : 'json',
 		type : 'POST',
 		data: {request:request},
