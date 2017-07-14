@@ -2,7 +2,8 @@
 <input id="sales-order-count" type="hidden" value="<?php echo count($this->getOrders())?>" />
 <input page-size="<?php echo $this->getOrders()->getLastPageNumber()?>" current-page="2" 
 	data-url="<?php echo Mage::getBaseUrl('web').'myaccount/index/getOrderHistory';?>"
-	 data-limit="10" type="hidden" id="receipt-type" value="">
+	 data-limit="10" type="hidden" id="receipt-type" 
+	data-count="<?php echo count($this->getOrders())?>" >
 	 
 <div class="col2-set">
     <div id="box-history" class="box <?php echo ($_orders->getSize())?"":"box-no-order"?>">
@@ -78,8 +79,9 @@ jQuery(function($){
  	});
 
 
-	var odrCount =  jQuery("#sales-order-count").val();
+	var odrCount =  jQuery("#receipt-type").attr('data-count');
 	jQuery("#total-orders-count").text(odrCount);
+	jQuery("#total-orders-count").attr('data-count',odrCount);
 	jQuery("#total-orders-count").show();
 });
 </script>

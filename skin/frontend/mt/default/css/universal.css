@@ -817,9 +817,9 @@ div.a-column.a-span-last {
 
 
 #purchase-history .box-content{
-	height: 400px;
+	/* height: 400px;
 	display: block;
-	overflow-y:auto;
+	overflow-y:auto; */
 }
 
 .block-account .block-content ul {
@@ -900,14 +900,14 @@ div.a-column.a-span-last {
 }
 
 .my-account .mt-my-openorders .box .box-content{
-	overflow-y: auto;
-    height: 300px;
+	/* overflow-y: auto;
+    height: 300px; */
     overflow-x: hidden;
 }
 
 .my-account .mt-my-orders .box .box-content {
-	overflow-y: auto;
-    height: 300px;
+	/* overflow-y: auto;
+    height: 300px; */
     margin-top: -17px;
 }
 
@@ -1622,7 +1622,7 @@ width: 245px;
 }
 	
 #new-mt-myproduct-openorders #box-history{
-	top: -17px;
+	/* /* top: -17px; */ */
 }	
 
 .mt-my-wishlist #wishlist-table-overlay .mt-wishlist-extra-cls{
@@ -1708,3 +1708,21 @@ width: 245px;
 }
 
 /*Custom Popup end*/
+
+
+#new-mt-myproduct-openorders{
+	overflow: hidden;
+}
+#my-openorders-table{
+	margin-top: -12px;	
+}
+
+.myaccount-loader-div{
+	overflow: hidden;
+}
+
+.myaccount-loader-div .please-wait-popup{
+	margin-top: 30px;
+    margin-left: 45%;
+    margin-bottom: 40px;
+}

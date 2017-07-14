@@ -1,8 +1,9 @@
 <?php  $_orders = $this->getOrders();?>
 <input id="sales-openorder-count" type="hidden" value="<?php echo count($this->getOrders())?>" />
 <input page-size="<?php echo $this->getOrders()->getLastPageNumber()?>" current-page="2" 
-	data-url="<?php echo Mage::getBaseUrl('web').'myaccount/index/getOrderHistory';?>"
-	 data-limit="10" type="hidden" id="receipt-type" value="">
+	data-url="<?php echo Mage::getBaseUrl('web').'myaccount/index/getOpenOrders';?>"
+	 data-limit="10" type="hidden" id="openorders-type" 
+	 data-count="<?php echo count($this->getOrders())?>">
 	 
     <div id="box-history" class="box <?php echo ($_orders->getSize())?"":"box-no-order"?>">
                 <?php
@@ -77,8 +78,8 @@ jQuery(function($){
  	});
 
 
-	var odrCount =  jQuery("#sales-openorder-count").val();
-	jQuery("#total-openorders-count").text(odrCount);
+	var odrCount1 =  jQuery("#openorders-type").attr('data-count');
+	jQuery("#total-openorders-count").text(odrCount1);
 	jQuery("#total-openorders-count").show();
 });
 </script>
