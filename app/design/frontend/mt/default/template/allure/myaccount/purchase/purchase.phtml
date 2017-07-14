@@ -58,6 +58,21 @@
 </div>
 
 
+<div style="width: 100%" class="mt-custom-popup-main mt-custom-popup-overlay">
+	<div class="mt-custom-popup">
+		<h2></h2>
+		<a class="mt-popup-close" href="javascript:jQuery('.mt-custom-popup-main').removeClass('active');">&times;</a>
+		<div class="mt-custom-content">
+			<span id="myaccount-mt-loader-popup" class="please-wait-popup" style="display: none;">
+	    		<img src="<?php echo $this->getSkinUrl('aw_ajaxcatalog/images/ajax-loader.gif')?>" alt="Loading next step..." title="Loading next step..." class="v-middle">
+	    	</span>
+	    	<div class="mt-data-load"> 
+	    	</div>
+		</div>
+	</div>
+</div>
+
+
 
 
 <script>
@@ -257,9 +272,13 @@ function openTrackOrder(url){
 	  var head = url.substring(0, lastSlash)+':';
 	  var protocol = window.location.protocol;
 	  url = url.replace(head, protocol);
+	  jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content .mt-data-load').html("");
+	  jQuery('#myaccount-mt-loader-popup').show();
 	  jQuery('.mt-new-purchase .mt-custom-popup-main').addClass('active');
-	  jQuery('.mt-new-purchase .mt-custom-popup-main').load(url, function(response, status, xhr) {
-    	  jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content').html(response);
+	  jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content .mt-data-load').load(url, function(response, status, xhr) {
+    	  //jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content').html(response);
+		  jQuery('#myaccount-mt-loader-popup').hide();	
+		  jQuery('.tracking-table-popup').parent().find('.divider').remove();	
 	 }); 
 }
 

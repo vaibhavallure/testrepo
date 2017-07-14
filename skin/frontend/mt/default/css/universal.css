@@ -1707,6 +1707,11 @@ width: 245px;
   }
 }
 
+.mt-custom-popup-main #myaccount-mt-loader-popup{
+	margin-left: 45%;
+	float: none;
+}
+
 /*Custom Popup end*/
 
 
@@ -1738,4 +1743,17 @@ width: 245px;
 
 .mt-myaccount-add-new-address-btn-div{
 	float: right;
+}
+
+.mt-myaccount-page .block-layered-nav-bg{
+	z-index: 0;
+}
+
+.mt-myaccount-page .mt-custom-popup-main .title-buttons,
+.mt-myaccount-page .mt-custom-popup-main .buttons-set{
+	display: none;
+}
+
+.mt-myaccount-page .mt-custom-popup-main .tracking-table-popup tbody tr{
+	border-bottom: none !important;
 }
