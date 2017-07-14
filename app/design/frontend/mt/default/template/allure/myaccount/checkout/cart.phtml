@@ -173,7 +173,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 		//remove product from cart
 		jQuery('.mt-my-cart .w-remove a.remov').on('click',function(){
 
-			if(confirm("Are you sure you want to delete this?")){
+			if(confirm("Are you sure you want to remove this product from your cart?")){
 				var item_id = jQuery(this).attr('data-item-id');
 				var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
 				var parent = jQuery(this).parent().parent().parent();
