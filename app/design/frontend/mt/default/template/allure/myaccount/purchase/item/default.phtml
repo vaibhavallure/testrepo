@@ -106,6 +106,14 @@
 							</td>
 			
 							<td class="cart_col6">
+							
+								<?php  if ($_order->getTracksCollection()->count()) : ?>
+                					<div class="mt-purchase-btn">
+                						<button class="button" onclick="popWin('<?php echo Mage::helper('shipping')->getTrackingPopupUrlBySalesModel($_order) ?>','trackorder','width=800,height=600,resizable=yes,scrollbars=yes')" title="<?php echo $this->__('Track') ?>">
+                					<?php echo $this->__('Track') ?></button>
+                					</div>
+                				<?php endif; ?>
+							
 								<div class="mt-purchase-btn">
 									<button data-url="<?php echo $receiptUrl?>" class="button" onclick="openPurchaseWindow(this)">See Receipts</button>
 								</div>
@@ -113,14 +121,6 @@
 									<div class="mt-purchase-btn">
 										<button data-item-id="<?php echo $_item->getId()?>" class="button" onclick="reorderItem(this)">Add to Cart</button>
 									</div>
-									
-									<?php  if ($_order->getTracksCollection()->count()) : ?>
-                						<div class="mt-purchase-btn">
-                							<button class="button" onclick="popWin('<?php echo Mage::helper('shipping')->getTrackingPopupUrlBySalesModel($_order) ?>','trackorder','width=800,height=600,resizable=yes,scrollbars=yes')" title="<?php echo $this->__('Track Number') ?>">
-                						<?php echo $this->__('Track Number') ?></button>
-                						</div>
-                					<?php endif; ?>
-									
 								<?php endif;?>
 								</td>
 							</tr>

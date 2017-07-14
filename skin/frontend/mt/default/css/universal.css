@@ -1726,3 +1726,8 @@ width: 245px;
     margin-left: 45%;
     margin-bottom: 40px;
 }
+
+.myaccount-add-payment-form select,
+.mt-new-payment select {
+	border-radius: 0px;
+}
