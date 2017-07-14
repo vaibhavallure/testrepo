@@ -44,6 +44,11 @@
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 
+<div class="mt-myaccount-add-new-address-btn-div">
+	<button id="add-new-addresss" type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
+</div>
+
+<div class="mt-myaccount-address-primary-div">
     <div class="col-1 addresses-primary">
         <ol>
         <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()): ?>
@@ -79,7 +84,8 @@
             </li>
         <?php endif ?>
         </ol>
-    </div>        
+    </div> 
+   </div>       
     </div>
 </div>
 <?php if($request->getModuleName().$request->getControllerName().$request->getActionName() != 'customeraccountindex'): ?>
@@ -112,8 +118,7 @@
             </li>
     <?php endif ?>
     </ul>
-    <button id="add-new-addresss" type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
-</div>
+    </div>
 <?php endif; ?>
 
  <input id="customer-address-form-key" type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />

@@ -1731,3 +1731,11 @@ width: 245px;
 .mt-new-payment select {
 	border-radius: 0px;
 }
+
+.mt-myaccount-address-primary-div{
+	clear: both;
+}
+
+.mt-myaccount-add-new-address-btn-div{
+	float: right;
+}
