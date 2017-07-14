@@ -34,6 +34,10 @@ class Allure_MyAccount_Block_Purchase extends Mage_Core_Block_Template
 				
 		$collection->addFieldToFilter('customer_id',$customer->getId());
 		$collection->addFieldToFilter('parent_item_id',array('null' => true));
+		
+		$collection->addFieldToFilter('orders.state',array('in'=>array('complete','processing')));
+		$collection->addFieldToFilter('orders.create_order_method',0);
+		
 		//$collection->getSelect()->group('main_table.product_id');
 				
 		if(!empty($store)){

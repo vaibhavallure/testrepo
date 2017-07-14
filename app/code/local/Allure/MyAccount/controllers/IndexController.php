@@ -138,6 +138,9 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$collection->addFieldToFilter('parent_item_id',array('null' => true));
 		//$collection->getSelect()->group('main_table.product_id');
 		
+		$collection->addFieldToFilter('orders.state',array('in'=>array('complete','processing')));
+		$collection->addFieldToFilter('orders.create_order_method',0);
+		
 		if(!empty($store)){
 			if($store!='all')
 				$collection->addFieldToFilter('main_table.store_id',$store);
