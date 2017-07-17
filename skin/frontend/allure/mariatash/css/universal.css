@@ -97,6 +97,7 @@
 
 .mt-myaccount-page #sns_tab_products .toolbar-top .filter_by{
 	margin-right: 0px;
+	height: 25px;
 }
 
 #mt-filter-toolbar #narrow-by-list{
@@ -123,14 +124,23 @@
     margin-right: 0px;
 }
 
+#mt-openorders-tab .sales-order-history .pager .pages .current,
 #mt-report-tab .sales-order-history .pager .pages .current{
 	padding: 0px;
 	margin: 0px;
 }
 
+#mt-openorders-tab .sales-order-history .pager .pages .current >a ,
 #mt-report-tab .sales-order-history .pager .pages .current > a{
 	border: none;
 	text-decoration: underline;
+}
+
+.sales-order-history .pager .pages .active{
+	display: block;
+}
+.sales-order-history .pager .pages .inactive{
+	display: none;
 }
 /*pager css end*/
 
@@ -265,10 +275,18 @@
 
 
 
+/*Open orders css start*/
+
+#my-openorders-table th {
+    padding: 8px 0;
+}
+
+#my-openorders-table tr td a{
+	text-decoration: none;
+}
 
 
-
-
+/*Open orders css end*/
 
 
 
