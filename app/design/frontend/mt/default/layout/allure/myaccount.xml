@@ -178,4 +178,17 @@
             </block>
   	</myaccount_checkout_cart_layout>
   	
+  	<myaccount_index_track>
+  		 <label>Shipment Tracking Popup</label>
+        <reference name="root">
+            <action method="setTemplate"><template>allure/myaccount/page/popup.phtml</template></action>
+        </reference>
+        <!--<reference name="head">
+            <action method="addJs"><script>scriptaculous/scriptaculous.js</script></action>
+        </reference>-->
+        <reference name="content">
+            <block type="shipping/tracking_popup" name="shipping.tracking.popup" template="shipping/tracking/popup.phtml" />
+        </reference>
+  	</myaccount_index_track>
+  	
 </layout>

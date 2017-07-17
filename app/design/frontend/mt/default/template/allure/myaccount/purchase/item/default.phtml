@@ -109,7 +109,7 @@
 							
 								<?php  if ($_order->getTracksCollection()->count()) : ?>
                 					<div class="mt-purchase-btn">
-                						<button class="button" onclick="popWin('<?php echo Mage::helper('shipping')->getTrackingPopupUrlBySalesModel($_order) ?>','trackshipment','width=800,height=600,resizable=yes,scrollbars=yes')" title="<?php echo $this->__('Track') ?>">
+                						<button class="button" onclick="openTrackOrder('<?php echo Mage::helper('myaccount')->getTrackingPopupUrlBySalesModel($_order) ?>')" title="<?php echo $this->__('Track') ?>">
                 					<?php echo $this->__('Track') ?></button>
                 					</div>
                 				<?php endif; ?>
