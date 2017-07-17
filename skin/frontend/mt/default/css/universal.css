@@ -1712,6 +1712,15 @@ width: 245px;
 	float: none;
 }
 
+.mt-custom-popup-main #myaccount-mt-loader-popup img{
+	margin-top: 15%;
+}
+
+#new-mt-myproduct-purchase .mt-custom-popup .mt-custom-content {
+	height: 145px;
+    overflow-y: auto;
+}
+
 /*Custom Popup end*/
 
 
