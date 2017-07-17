@@ -1,54 +1,5 @@
 <h3>My Products</h3>
 <div class="mt-myaccount-page">
-<?php if(0):?>
-	<div class="tab">
-		  <button data-link="purchase" id="mt-myproduct-purchase" data-tab="tab1" class="tablinks active" onclick="changeTab(this);">Purchased</button>
-		  
-		  <button data-link="wishlist" id="mt-myproduct-wishlist" data-tab="tab2" class="tablinks" 
-		  	onclick="changeTab(this);">Wishlist
-		  	<span id="myaccount-wishlist-total-item" class="total-wishlist-count total-count-box"></span>
-		  	</button>
-		  
-		  <button data-link="cart" id="mt-myproduct-cart" data-tab="tab3" class="tablinks" 
-		  	onclick="changeTab(this);">Cart
-		  	<span id="myaccount-cart-total-item" class="total-cart-count total-count-box"></span>
-		  </button>
-		  
-		  <button data-link="receipt" id="mt-myproduct-receipts" data-tab="tab4" class="tablinks" 
-		  	onclick="changeTab(this);">All Receipts
-		  	<span id="total-orders-count" class="total-orders-count total-count-box"></span>
-		  </button>
-	</div>
-	
-	<div id="new-mt-myproduct-purchase" class="tabcontent tab1 active">
-	 	 <div class="mt-new-purchase">
-	  		<?php echo $this->getChildHtml("myaccount_filter");?>
-	  		<?php //echo $this->getChildHtml('purchased_items')?>
-	 	</div>
-	</div>
-	
-	<div id="new-mt-myproduct-wishlist" class="tabcontent tab2">
-		<div class="mt-my-wishlist">
-	  		Hiii
-	  	</div>
-	</div>
-	
-	<div id="new-mt-myproduct-cart" class="tabcontent tab3">
-	 	<div class="mt-my-cart">
-	  		Hiiiiiiii
-	 	</div>
-	</div>
-	
-	<div id="new-mt-myproduct-receipts" class="tabcontent tab4">
-	 	<div class="mt-my-orders">
-	  		<?php echo $this->getChildHtml("myaccount_filter");?>
-	  		Hiiiiiiii
-	 	</div>
-	</div>
-	
-	<?php endif;?>
-	
-	
 	<div id="sns_tab_products" class="product-collateral clearfix">
     	<ul class="nav-tabs gfont">
     		<li class="dropdown pull-left tabdrop">
@@ -74,6 +25,11 @@
 					<li class="mt-account-active-tab">
 						<a onclick="changeTabView(this)" data-link="openorders" data-toggle="tab-pane" data-target="#mt-openorders-tab"> 
 							OPEN OREDERS
+						</a>
+					</li>
+					<li class="mt-account-active-tab">
+						<a onclick="changeTabView(this)" data-link="accountinfo" data-toggle="tab-pane" data-target="#mt-accountinfo-tab"> 
+							ACCOUNT INFORMATION
 						</a>
 					</li>
 				</ul>
@@ -117,6 +73,18 @@
                   <div class="collateral-box">
                   	<?php echo $this->getChildHtml("myaccount_filter");?>
                   	<?php echo $this->getChildHtml('sales.order.openorder_list')?>
+                  </div>
+        	</div>
+        	
+        	<div id="mt-accountinfo-tab" class="tab-pane">
+                  <div class="collateral-box">
+                  	<ul class="messages">
+                  		<li class="">
+	                  		<ul class="mt-msg">
+	                  		</ul>
+                  		</li>
+                  	</ul>
+                  	<?php echo $this->getChildHtml('customer_edit')?>
                   </div>
         	</div>
                     

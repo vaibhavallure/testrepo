@@ -16,6 +16,8 @@
 	      		<block type="myaccount/order_openorder" name="sales.order.openorder" template="allure/myaccount/openorders/openorder.phtml" />
 	      	</block>
 	      	
+	      	<!-- Customer Edit -->
+	      	<block type="customer/form_edit" name="customer_edit" template="allure/myaccount/customer/form/edit.phtml"/>
             
             <block type="checkout/cart" name="checkout.cart">
                 <action method="setCartTemplate"><value>allure/myaccount/checkout/cart.phtml</value></action>
@@ -101,6 +103,10 @@
   	<myaccount_sales_order_openorders>
   		<block type="myaccount/order_openorder" name="sales.order.openorder" template="allure/myaccount/openorders/openorder.phtml" />
   	</myaccount_sales_order_openorders>
+  	
+  	<myaccount_customer_form_edit>
+  		<block type="customer/form_edit" name="customer_edit" template="allure/myaccount/customer/form/edit.phtml"/>
+  	</myaccount_customer_form_edit>
   	
   	
   	<myaccount_purchase_item_load>

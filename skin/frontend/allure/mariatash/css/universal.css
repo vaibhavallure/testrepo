@@ -121,7 +121,7 @@
 /*pager css start*/
 
 #mt-report-tab .sales-order-history .pager .pages {
-    margin-right: 0px;
+   /*  margin-right: 0px; */
 }
 
 #mt-openorders-tab .sales-order-history .pager .pages .current,
@@ -290,8 +290,13 @@
 
 
 
+/*Account Information css start*/
+#mt-accountinfo-tab .messages .error-msg,
+#mt-accountinfo-tab .messages .success-msg{
+	margin-top: 0px;
+}
 
-
+/*Account Information css end*/
 
 
 

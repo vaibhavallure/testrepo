@@ -72,12 +72,12 @@
 					            	</li>
 					            	
 					            	<?php for ($i = 1;$i <= $totalPages;$i++){?>
-					            	<?php if($totalPages>=5):?>
+					            	<?php if($i<=5):?>
 					            	<?php $name = $i;?>
-					            	<li data-page-num="<?php echo $i?>" class="mt-pager-li <?php echo ($i==1)?"current":""?>">
+					            	<li data-page-num="<?php echo $i?>" class="active mt-pager-li <?php echo ($i==1)?"current":""?>">
 					            		<a><?php echo $name;?></a>
 					            	<?php else:?>
-					            	<li data-page-num="<?php echo $i?>" class="mt-pager-li <?php echo ($i==1)?"current":""?>">
+					            	<li data-page-num="<?php echo $i?>" class="inactive mt-pager-li <?php echo ($i==1)?"current":""?>">
 					            		<a><?php echo $i;?></a>
 					            	<?php endif;?>
 					            	</li>
@@ -172,8 +172,19 @@ function moveToPreviousPage(evt){
 		selector.find('.current').removeClass('current');
 		prev.addClass('current');
 		jQuery('#order-history-page').attr('data-current-page',page_num);
+		var nextE = selector.find('li.active').first().prev();
+		var pNum = nextE.attr('data-page-num');
+		if(pNum != undefined){
+			var child_first = selector.find('li.active:gt(5)');
+			if(child_first){
+				var child = selector.find('li.active').last();
+				child.removeClass('active');
+				child.addClass('inactive');
+				nextE.removeClass('inactive');
+				nextE.addClass('active');
+			}
+		}
 		loadOrdersData();
-		console.log(prev.attr('data-page-num'));
 	}
 }
 
@@ -187,8 +198,21 @@ function moveToNextPage(evt){
 		selector.find('.current').removeClass('current');
 		next.addClass('current');
 		jQuery('#order-history-page').attr('data-current-page',page_num);
+
+		var nextE = selector.find('li.active').last().next();
+		var pNum = nextE.attr('data-page-num');
+		if(pNum != undefined){
+			var child_first = selector.find('li.active:gt(5)');
+			if(child_first){
+				var child = selector.find('li.active').first();
+				child.removeClass('active');
+				child.addClass('inactive');
+				nextE.removeClass('inactive');
+				nextE.addClass('active');
+			}
+		}
+		
 		loadOrdersData();
-		console.log(next.attr('data-page-num'));
 	}
 	
 }
