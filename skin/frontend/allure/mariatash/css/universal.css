@@ -84,7 +84,7 @@
 }
 
 .mt-myaccount-page #sns_tab_products #mt-account-tab-dropdown-menu li{
-	float: left;
+	/* float: left; */
 } 
 
 .mt-myaccount-page #sns_tab_products .mt-account-active-tab > a{
