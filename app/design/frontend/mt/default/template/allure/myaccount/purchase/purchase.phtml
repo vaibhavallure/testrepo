@@ -278,7 +278,8 @@ function openTrackOrder(url){
 	  jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content .mt-data-load').load(url, function(response, status, xhr) {
     	  //jQuery('.mt-new-purchase .mt-custom-popup-main .mt-custom-content').html(response);
 		  jQuery('#myaccount-mt-loader-popup').hide();	
-		  jQuery('.tracking-table-popup').parent().find('.divider').remove();	
+		  jQuery('.tracking-table-popup').parent().find('.divider').remove();
+		  jQuery('.tracking-table-popup tr td a').attr('target','_blank');	
 	 }); 
 }
 
