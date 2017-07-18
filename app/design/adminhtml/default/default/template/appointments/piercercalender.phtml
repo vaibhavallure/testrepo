@@ -1,0 +1,112 @@
+<?php 
+/*
+ * 
+ * Calender Events
+ * 
+ * 
+ */
+?>
+<?php  echo Mage::app()->getLayout()->createBlock('appointments/adminhtml_switcher')->toHtml();
+//echo Mage::app()->getLayout()->createBlock('appointments/registration','appointment_store',array('template' => 'appointments/appointment_store.phtml'))->toHtml();?>
+
+
+<div class="mybag-custom-table">
+<div class="myacc-headbg"><h2 class="myacc-heading"> <?php  echo $this->__('Appointments');?></h2> </div>
+</div>
+<div id='calendar'></div>
+<div id="loading-indicator-calender" ></div>
+
+<?php $piercer_id = $this->getRequest()->getParam('piercer');?>
+
+<script src="<?php echo $this->getSkinUrl('js/jQuery/jquery.min.js');?>"></script>
+
+
+<script src="<?php echo $this->getSkinUrl('js/jQuery/jquery-ui.min.js');?>"></script>
+
+<script src="<?php echo $this->getSkinUrl('js/jQuery/noconflict.js');?>"></script>
+
+<link href="<?php echo $this->getSkinUrl('css/calender/fullcalendar.css');?>"  rel="stylesheet" />
+<link href='<?php echo $this->getSkinUrl('css/calender/fullcalendar.print.css');?>' rel='stylesheet' media='print' />
+<script src="<?php echo $this->getSkinUrl('js/calender/moment.min.js');?>"></script>
+<script src="<?php //echo $this->getSkinUrl('js/calender/fullcalendar.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/fullcalendar.min.js');?>"></script>
+
+
+<script>
+	$j(document).ready(function() {
+		
+		var initialLangCode = 'en';
+		$j('#loading-mask').show();
+
+		var convertDate = function (dateString) {
+			var dateArray = dateString.split(/[^0-9]/);
+			//for (i=0;i<a.length;i++) { alert(a[i]); }
+			return new Date (dateArray[0], dateArray[1]-1, dateArray[2], dateArray[3], dateArray[4], dateArray[5]);
+		}
+
+ 		<?php $k = Mage::getSingleton('core/session')->getFormKey(); ?>
+		$j('#loading-indicator-calender').show();
+		$j.ajax({
+			url : '<?php echo $this->getUrl('*/*/calenderevents',array('_secure' => true));?>',
+	 		dataType : 'json',
+	 		type : 'POST',
+	 		data: {'piercer_id':'<?php echo $piercer_id; ?>',form_key:'<?php echo $k ?>'},
+	 		success : function(data){
+		 		console.log(data.response.events);
+		 		if(data.response.lang){
+		 			initialLangCode = data.response.lang;
+		 		}
+
+		 		var events = [];
+
+		 		var data = data.response.events;
+				
+		 		for(var i = 0; i< data.length; i++){
+
+					var startDate = convertDate(data[i].start);
+
+					var endDate = convertDate(data[i].end);
+
+					events[i] =  {
+		 					title: data[i].title,
+		                    start: startDate,
+		                    end: endDate,
+		                    allDay: false,
+		                    url : data[i].url
+		 			};
+		 		}
+
+		 		
+		 		$j('#loading-mask').hide();
+			 		$j('#calendar').fullCalendar({
+			 			header: {
+							left: 'prev,next today',
+							center: 'title',
+							right: 'month,agendaWeek,agendaDay,listMonth'
+
+						},
+
+						// customize the button names,
+						// otherwise they'd all just say "list"
+
+						lang: initialLangCode,
+						defaultDate: new Date(),
+						navLinks: true, // can click day/week names to navigate views
+						editable: true,
+						eventLimit: true, // allow "more" link when too many events
+						events: events
+					});
+	 		}
+		});
+	});
+			//jQuery(".appointments-adminhtml-appointments-viewcalender .myacc-heading").prepend(jQuery('#store_switcher :selected').text());
+</script>
+<style>
+
+
+	#calendar {
+		max-width: 1300px;
+		margin: 0 auto;
+	}
+
+</style>

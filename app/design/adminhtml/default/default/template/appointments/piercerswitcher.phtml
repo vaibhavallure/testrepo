@@ -1,0 +1,34 @@
+<?php $piercersCollection=Mage::getModel('appointments/piercers')->getCollection(); ?>
+<?php if (count($piercersCollection)): ?>
+<p class="switcher"><label for="piercers_switcher"><?php echo $this->__('Choose Piercer:') ?></label>
+<select name="piercers_switcher" id="piercers_switcher" onchange="return switchPiercer(this);">
+<option value="0"><?php echo "All Piercers View"?></option>
+<?php 
+
+foreach ($piercersCollection as $piercer):?>
+<option value="<?php echo $piercer->getId()?>"><?php echo $piercer->getFirstname()." ".$piercer->getLastname() ?></option>
+<?php endforeach;
+?>
+</select>
+<?php echo $this->getHintHtml() ?>
+</p>
+<script type="text/javascript">
+    function switchPiercer(obj) {
+        var piercersParam = obj.value ? 'piercer/' + obj.value + '/' : '';
+        if (obj.switchParams) {
+        	piercersParam += obj.switchParams;
+        }
+    <?php if ($this->getUseConfirm()): ?>
+        if (confirm('<?php echo Mage::helper('core')->jsQuoteEscape($this->__('Please confirm site switching. All data that hasn\'t been saved will be lost.')) ?>')) {
+            setLocation('<?php echo $this->getSwitchUrl() ?>' + piercersParam);
+            return true;
+        } else {
+            obj.value = '<?php echo $this->getPiercerId() ?>';
+        }
+        return false;
+    <?php else: ?>
+        setLocation('<?php echo $this->getSwitchUrl() ?>' + piercersParam);
+    <?php endif; ?>
+    }
+</script>
+<?php endif; ?>
