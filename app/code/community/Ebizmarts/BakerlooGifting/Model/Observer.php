@@ -165,6 +165,6 @@ class Ebizmarts_BakerlooGifting_Model_Observer
 
     public function isPosRequest()
     {
-        return Mage::app()->getRequest()->getHeader(Mage::helper('bakerloo_restful')->getApiKeyHeader());
+        return Mage::helper('bakerloo_restful')->isPosRequest(Mage::app()->getRequest());
     }
 }

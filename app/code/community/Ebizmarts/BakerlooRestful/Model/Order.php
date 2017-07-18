@@ -79,6 +79,14 @@ class Ebizmarts_BakerlooRestful_Model_Order extends Mage_Core_Model_Abstract
         return $headers;
     }
 
+    public function getHttpHeadersAsArray()
+    {
+        $headers = json_decode($this->getJsonRequestHeaders(), true);
+        $headers['B-Order-Id'] = $this->getId();
+
+        return $headers;
+    }
+
     public function setRealCreatedAtToParent()
     {
 

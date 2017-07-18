@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ebizmarts_BakerlooEmail>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </Ebizmarts_BakerlooEmail>
     </modules>
     <global>
@@ -71,4 +71,13 @@
             </updates>
         </layout>
     </adminhtml>
+    <crontab>
+        <jobs>
+            <bakerloo_email_clean_receipt_storage>
+                <schedule><cron_expr>* 1 * * *</cron_expr></schedule>
+                <run><model>bakerloo_email/cleaner::cleanReceiptStorage</model></run>
+            </bakerloo_email_clean_receipt_storage>
+        </jobs>
+    </crontab>
 </config>
+
