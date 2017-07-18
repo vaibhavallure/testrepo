@@ -127,6 +127,52 @@ class Ecp_Shoppingcart_AddressController extends Mage_Customer_AddressController
     	}
     }
     
+    public function editAjaxAction()
+    {
+    	$this->loadLayout('myaccount_customer_address_edit');
+    	$html = $this->getLayout()->getBlock('customer_address_edit')->toHtml();
+    	$result['html']  = $html;
+    	
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    	 
+    }
+    
+    
+    public function deleteAjaxAction()
+    {
+    	if (!$this->_validateFormKey()) {
+    		return ;
+    	}
+    	$addressId = $this->getRequest()->getParam('id', false);
+    	
+    	if ($addressId) {
+    		$address = Mage::getModel('customer/address')->load($addressId);
+    		
+    		if ($address->getCustomerId() != $this->_getSession()->getCustomerId()) {
+    			$result['success'] = 0;
+    			$result['message'] = $this->__('The address does not belong to this customer.');
+    			
+    		}else{
+	    		try {
+	    			$address->delete();
+	    			$this->loadLayout('myaccount_customer_address_data'); 
+	    			$result['message'] = $this->__('The address has been deleted.');
+	    			$result['success'] = 1;
+	    			$html =  $this->getLayout()->getBlock('customer_address_edit')->toHtml();
+	    			$result['html']  = $html;
+	    		} catch (Exception $e){
+	    			$result['success'] = 0;
+	    			$result['message'] = $this->__('An error occurred while deleting the address.');
+	    		}
+    		}
+    	}
+    	
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    	
+    }
+    
     public function setDefaultShippingAjaxAction(){
     	
     }

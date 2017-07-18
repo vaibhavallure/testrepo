@@ -8,35 +8,47 @@
     			</a>
     			<ul id="mt-account-tab-dropdown-menu" class="dropdown-menu">
 					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="wishlist" data-toggle="tab-pane" data-target="#mt-wishlist-tab">
+						<a onclick="changeTabView(this)" data-link="wishlist" 
+						data-toggle="tab-pane" data-title="Wishlist" data-target="#mt-wishlist-tab">
 							WISHLIST 
 						</a>
 					</li>
 					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="cart" data-toggle="tab-pane" data-target="#mt-cart-tab"> 
+						<a onclick="changeTabView(this)" data-link="cart" 
+						data-toggle="tab-pane" data-title="Cart" data-target="#mt-cart-tab"> 
 							CART
 						</a>
 					</li>
 					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="receipt" data-toggle="tab-pane" data-target="#mt-report-tab"> 
+						<a onclick="changeTabView(this)" data-link="receipt" 
+						data-toggle="tab-pane" data-title="All Orders" data-target="#mt-report-tab"> 
 							ALL ORDERS
 						</a>
 					</li>
 					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="openorders" data-toggle="tab-pane" data-target="#mt-openorders-tab"> 
+						<a onclick="changeTabView(this)" data-link="openorders" 
+						data-toggle="tab-pane" data-title="Open Orders" data-target="#mt-openorders-tab"> 
 							OPEN OREDERS
 						</a>
 					</li>
 					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="accountinfo" data-toggle="tab-pane" data-target="#mt-accountinfo-tab"> 
+						<a onclick="changeTabView(this)" data-link="accountinfo" 
+						data-toggle="tab-pane" data-title="Account Information" data-target="#mt-accountinfo-tab"> 
 							ACCOUNT INFORMATION
+						</a>
+					</li>
+					<li class="mt-account-active-tab">
+						<a onclick="changeTabView(this)" data-link="addressbook" 
+						data-toggle="tab-pane" data-title="Address Book" data-target="#mt-addressbook-tab"> 
+							ADDRESS BOOK
 						</a>
 					</li>
 				</ul>
 			</li>
               
             <li class="mt-account-active-tab active">
-               <a data-toggle="tab-pane" data-target="#mt-purchase-item-tab">
+               <a data-toggle="tab-pane" data-target="#mt-purchase-item-tab" 
+               data-title="Purchase" data-link="purchase">
                    PURCHASED ITEM
                </a>
             </li>
@@ -87,6 +99,16 @@
                   	<?php echo $this->getChildHtml('customer_edit')?>
                   </div>
         	</div>
+        	
+        	<div id="mt-addressbook-tab" class="tab-pane">
+                  <div class="collateral-box">
+                  	 <div id="mt-address-edit">
+                  	 </div>
+                  	 <div class="mt-adrress-data">
+                  		<?php echo $this->getChildHtml('address_book')?>
+                  	 </div>
+                 </div>
+        	</div>
                     
         </div>
 	    		
@@ -108,23 +130,33 @@
 			changeTabView(element);
 		}
 		
-		
-		
 	});
 
 	function changeTabView(event){
 		var newTargetId = jQuery(event).attr('data-target');
 		var newLabel = jQuery(event).text();
+		var newDataLink = jQuery(event).attr('data-link');
+		var newTitle = jQuery(event).attr('data-title');
+		
 		var activeSelector = jQuery('.mt-account-active-tab.active').find('a');
+
 		var oldTargetId = activeSelector.attr('data-target');
 		var oldLabel = activeSelector.text();
+		var oldDataLink = activeSelector.attr('data-link');
+		var oldTitle = activeSelector.attr('data-title');
+
 		activeSelector.attr('data-target',newTargetId);
 		activeSelector.text(newLabel);
+		activeSelector.attr('data-link',newDataLink);
+		activeSelector.attr('data-title',newTitle);
+		
 		jQuery(event).attr('data-target',oldTargetId);
 		jQuery(event).text(oldLabel);
+		jQuery(event).attr('data-link',oldDataLink);
+		jQuery(event).attr('data-title',oldTitle);
 
-		var dataLink = jQuery(event).attr('data-link');
-		window.location.hash = dataLink;
+		window.location.hash = newDataLink;
+		document.title = newTitle;
 
 		jQuery('.tab-content .tab-pane').removeClass('active');
 		jQuery(newTargetId).addClass('active');

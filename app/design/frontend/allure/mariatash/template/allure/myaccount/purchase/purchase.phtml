@@ -8,8 +8,8 @@ $totalPageSizeItem = $this->getPurchaseOrderCollection()->getLastPageNumber();
         <fieldset>
         	<?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
         	<div id="purchase-history">
-        	<div class="box-content">
-				<table id="purchase-item-table" class="data-table cart-table">
+        		<div class="box-content">
+					<table id="purchase-item-table" class="data-table cart-table">
                 <?php 
                 $storeList = array();
                 $stores = Mage::app()->getStores();
@@ -21,118 +21,12 @@ $totalPageSizeItem = $this->getPurchaseOrderCollection()->getLastPageNumber();
                 }
                 
                 ?>
-                    <?php $i = 0; $prices = array(); $skus = array(); ?>
-                    <?php foreach ($this->getPurchaseOrderCollection() as $_item): ?>
-                        <?php 
-                        
-                        $productId = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
-                        $product = Mage::getModel('catalog/product')->load($productId);
-                        
-                        $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($_item->getProduct()->getId());
-                        $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-                        $url = $product->getProductUrl();
-                        
-                        //$productDescr = $product->getDescription();
-                        
-                        if(!is_null($parentId)){
-                        	$parentProduct = Mage::getModel("catalog/product")->load($parentId);
-                        	$url = $parentProduct->getProductUrl();
-                        	//$productDescr = $parentProduct->getDescription();
-                        }
-                        
-                        $productName = $product->getName();
-                        $typeId = $product->getTypeId();
-                        $productNotAvailableClass = "";
-                        
-                        if(!$product->getId()){
-                        	$productName = $_item->getName();
-                        	$productNotAvailableClass = "current-item-not-available";
-                        	$productDescr = $_item->getDescription();
-                        }
-                        
-                        /* if(!empty($productDescr)){
-                        	if(strlen($productDescr)>=70)
-                        		$productDescr = substr($productDescr,1,70)."...";
-                        } */
-                        
-                        
-                        $receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
-                        $reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
-                        
-                        $storeColor = '';
-                        $storeName = $storeList[$_item->getStoreId()];
-                        if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
-                        	$storeColor .= 'style="';
-                        	$frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
-                        	if(!empty($frontColor))
-                        		$storeColor .= 'color:'.$frontColor.';'; 
-                        	$backColor = $storeColorConfig[$_item->getStoreId()]['back_color'];
-                        	if(!empty($backColor))
-                        		$storeColor .= 'background:'.$backColor.';';
-                        	$storeColor .= '"';
-                        	$storeName = $storeColorConfig[$_item->getStoreId()]['store_label'];
-                        }
-                        
-                        ?>
-                     
-					
-					
-					<tr class="messages-tr">
-					    <td class="table-product-image"> 
-					     	<a href="<?php echo $url?>" title="<?php echo $productName?>" class="product-image">
-					          <img src="<?php echo Mage::helper('catalog/image')
-												->init($product, 'thumbnail')->resize(74,96)?>" 
-													width="74" height="96" alt="<?php echo $productName?>">
-					       </a>
-					   </td>
-					
-					    <td class="table-product-info">
-					        <h2 class="product-name">
-					            <a href="<?php echo $url?>"><?php echo $productName?></a>
-					        </h2>
-					   </td>
-					   
-					    <td class="table-tax a-right">
-					        <span class="price">
-					        <?php echo Mage::helper('checkout')->formatPrice($_item->getPrice())?></span>    
-					    </td>
-					    
-					    <td class="table-qty a-center">
-					        <div class="qty-wrap">
-					        	<input  value="<?php echo number_format($_item->getQtyOrdered())?>" size="4" title="Qty" class="input-text qty" maxlength="12">
-					        </div>
-					    </td>
-					    
-					    <td class="table-price-subtotal">
-    							<label <?php echo $storeColor?> class="purchase-store-name"><?php echo $storeName?></label>
-    						<span style="display: block;" class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime($_item->getCreatedAt()))?></span>
-								
-    					</td>
-					    
-					    
-					    <td class="table-remove a-center last">
-					        <div class="mt-purchase-btn">
-										<a data-url="<?php echo $receiptUrl?>" class=""
-											onclick="openPurchaseWindow(this)">See Receipts</a>
-									</div>
-										<?php if($product->getId()):?>
-											<div class="mt-purchase-btn">
-												<a data-item-id="<?php echo $_item->getId()?>"
-													class="" onclick="reorderItem(this)">Reorder</a>
-											</div>
-											<div class="mt-purchase-btn">
-												<a class="">Share</a>
-											</div>
-										<?php endif;?>
-					            
-					 </td>
-				</tr>
-					
-					
-					
-                    <?php endforeach ?>
-                  </table>
-			</div>
+                    <tbody>
+		               	<?php echo $this->getChildHtml('purchased_items_list')?>
+		             </tbody>
+                    
+                  	</table>
+				</div>
             </div>
             <?php else:?>
             	<p class="no-purchase-itemundefined"><?php echo $this->__("You have no purchased item.")?></p>

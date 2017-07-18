@@ -102,10 +102,11 @@
 
 #mt-filter-toolbar #narrow-by-list{
     background: #cfcfd1;
-    position: relative;
-    top: 0px !important;
+    position: absolute;
+    top: 40px !important;
     width: 100%;
     z-index: 999;
+    right: 0px;
 }
 #mt-filter-toolbar #narrow-by-list .block-layered-nav-bg{
 	 position: relative;
@@ -113,6 +114,11 @@
 
 #mt-filter-toolbar{
 	margin-bottom: 5px;
+}
+
+#mt-filter-toolbar .selected-sort-type,
+#mt-filter-toolbar .selected-store{
+	background-color: #A2895F;
 }
 
 /*Filter end*/
@@ -201,6 +207,9 @@
 	}
 }
 
+#purchase-history tbody tr{
+	
+}
 
 /*Purchase item end*/
 
@@ -299,9 +308,18 @@
 /*Account Information css end*/
 
 
+/*Cutsomer Address start*/
 
+.edit-address-cancel-btn{
+	float: left ! important;
+	clear: both;
+}
 
+#mt-address-edit .box{
+	border: none;
+}
 
+/*Cutsomer Address end*/
 
 
 

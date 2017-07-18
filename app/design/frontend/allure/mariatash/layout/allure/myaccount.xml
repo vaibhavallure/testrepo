@@ -19,6 +19,9 @@
 	      	<!-- Customer Edit -->
 	      	<block type="customer/form_edit" name="customer_edit" template="allure/myaccount/customer/form/edit.phtml"/>
             
+            <!-- Customer Address -->
+            <block type="customer/address_book" name="address_book" before="-" template="allure/myaccount/customer/address/book.phtml"/>
+            
             <block type="checkout/cart" name="checkout.cart">
                 <action method="setCartTemplate"><value>allure/myaccount/checkout/cart.phtml</value></action>
                 <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
@@ -88,6 +91,7 @@
             	<action method="setTitle" translate="title">
                     <title>My Products</title>
                 </action>
+                <block type="myaccount/purchase" name="purchased_items_list" template="allure/myaccount/purchase/item/default.phtml" />
             </block>
             
 	      		
@@ -107,6 +111,19 @@
   	<myaccount_customer_form_edit>
   		<block type="customer/form_edit" name="customer_edit" template="allure/myaccount/customer/form/edit.phtml"/>
   	</myaccount_customer_form_edit>
+  	
+  	<myaccount_customer_address_edit>
+  		<block type="customer/address_edit" name="customer_address_edit" template="allure/myaccount/customer/address/edit.phtml"/>
+  	</myaccount_customer_address_edit>
+  	
+  	<myaccount_customer_address_data>
+  		<reference name="head">
+            <block type="core/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml" />
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="customer/address_edit" name="customer_address_edit" template="allure/myaccount/customer/address/book.phtml"/>
+        </reference>
+  	</myaccount_customer_address_data>
   	
   	
   	<myaccount_purchase_item_load>
