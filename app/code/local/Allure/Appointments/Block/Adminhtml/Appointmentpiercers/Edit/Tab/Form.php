@@ -13,14 +13,14 @@ class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Edit_Tab_Form exte
 	
 		$fieldset->addField("firstname", "text",
 				array(
-						"label" => Mage::helper("appointments")->__("FirstName"),
+						"label" => Mage::helper("appointments")->__("First Name"),
 						"name" => "firstname",
 						'required'  => true,
 				));
 		
 		$fieldset->addField("lastname", "text",
 				array(
-						"label" => Mage::helper("appointments")->__("LastName"),
+						"label" => Mage::helper("appointments")->__("Last Name"),
 						"name" => "lastname"
 				));
 		

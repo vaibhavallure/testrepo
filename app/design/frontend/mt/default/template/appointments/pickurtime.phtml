@@ -88,15 +88,16 @@ if($fetch_model){
 		$storeId= $this->getData("store_id");
 		$collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
 			->addFieldToFilter('is_active', array('eq' => '1'));
+		
 		if($this->getData("date")) :
 		$date = $this->getData("date");
 		$dayOfWeek = date("d", strtotime($date));
-
+		$day = date('l', strtotime($date));
 		if($date){
 			//$storeId= $this->getData("store_id");
 			//$collection = Mage::getModel('appointments/piercers')->getCollection();
 			$collection->addFieldToFilter('working_days', array('like' => '%'.$date.'%'));
-			
+			Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments', true );
 			/* If piercer is not free logic start*/
 			if(empty($collection->getData())){
 			
@@ -148,14 +149,30 @@ if($fetch_model){
 						
 				$workingHours = $piercer->getWorkingHours();
 				$workingHours = unserialize($workingHours);
+				$noSlot=true;
+				//Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
 				foreach ($workingHours as $workSlot)
 				{
 					//$workStart = $workSlot['start'].":00";
+					
+					if($workSlot['day']!=$day){
+						continue;
+						
+					}
+					$noSlot=false;
 					$workStart = $helper->getTimeByValue($workSlot['start']);
 					//$workEnd = $workSlot['end'].":00";
 					$workEnd = $helper->getTimeByValue($workSlot['end']);
-					if(strtotime($workStart)<=strtotime($selectedTime) && strtotime($workEnd)>=strtotime($endTime))
+					
+					//Break
+					$breakStart = $helper->getTimeByValue($workSlot['break_start']);
+					$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
+					
+					Mage::log($day,Zend_Log::DEBUG, 'appointments', true );
+					if((strtotime($workStart)<=strtotime($selectedTime) && strtotime($breakStart)>=strtotime($endTime)) ||
+							(strtotime($breakEnd)<=strtotime($selectedTime) && strtotime($workEnd)>=strtotime($endTime)))
 					{
+						
 						
 						//Mage::log($country_data,Zend_Log::DEBUG, 'store', true );
 						//$value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId()));
@@ -185,9 +202,11 @@ if($fetch_model){
 							$piercerAllocated = $piercer->getId();
 						}
 					}
+				 
 				}
-			}
 				
+			}
+			
 			if($show==true) :
 				$countSlot++;
 				if((($countSlot - 1) % $timeslot_col_size == 0) || $countSlot==1 ){
@@ -246,6 +265,9 @@ if($fetch_model){
 				$isFour = 0;
 			}
 			$selectedTime = ($endTime);
+		}
+		if($noSlot){
+			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Sorry Appointment is Not available, Please try changing Store OR Date.')."</div>";
 		}
 		echo "</ul>";
 		echo "<div class='clearfix'></div> <a class='prev apt-prev' id='foo2_prev' href='#'><span>prev</span></a> 
