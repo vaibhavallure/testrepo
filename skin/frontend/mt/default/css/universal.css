@@ -1138,11 +1138,12 @@ div.tab button{
    /*border: none;*/
    outline: none;
    cursor: pointer;
-   padding: 14px 3%;
+   padding: 14px; /* 14px 3% */
    transition: 0.3s;
    text-transform: uppercase;
    font-weight: 600;
-   margin-right: 1px;
+   /* margin-right: 1px; */
+   border-left: 1px solid #ccc;
 }
 
 
@@ -1778,4 +1779,8 @@ width: 245px;
 .acc-link-img.product-img,
 .acc-link-img.address-img{
 	margin-top: -3px;
+}
+
+.tablinks{
+	width: 20%;
 }
