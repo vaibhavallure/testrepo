@@ -47,6 +47,10 @@
 	font-size: 14px;
 }
 
+.myaccount-dashbord-img.mt-address,
+.myaccount-dashbord-img.mt-product-img{
+	margin-top: -5px;
+}
 
 .customer-account-index .col-main, 
 .customer-account-edit .col-main, 
@@ -199,7 +203,9 @@
 #purchase-item-table.data-table tbody td .qty-wrap input{
 	border: none;
 }
-#purchase-item-table.data-table .purchase-store-name{padding: 5px;}
+#purchase-item-table.data-table .purchase-store-name{
+	padding: 0px 5px 5px 5px;
+}
 
 @media (max-width: 767px){
 	#purchase-item-table.cart-table .table-product-image {
@@ -208,7 +214,20 @@
 }
 
 #purchase-history tbody tr{
-	
+	padding: 5px;	
+}
+
+#purchase-history .box-content{
+	height: 500px;
+	overflow-y:auto;
+}
+
+#purchase-history .table-product-info{
+	width: 45%;
+}
+
+#purchase-history .table-remove{
+	top: 20px;
 }
 
 /*Purchase item end*/
@@ -319,13 +338,121 @@
 	border: none;
 }
 
+.mt-adrress-data .addresses-primary h3{
+	font-weight: bold;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    text-transform: capitalize;
+}
+
+.mt-adrress-data .additional-addresses td.item{
+	width: 100%;
+	display: block;
+}
+.mt-adrress-data .mt-addresses-additional table{
+	width: 100%;
+}
+
+#mt-addressbook-tab .messages .error-msg,
+#mt-addressbook-tab .messages .success-msg{
+	margin-top: 0px;
+}
 /*Cutsomer Address end*/
 
 
 
+/*Custom Popup start*/
+
+.mt-custom-popup-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 0px;
+}
+.mt-custom-popup-overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mt-custom-popup-overlay.active {
+  visibility: visible;
+  opacity: 1;
+  z-index: 100;
+}
+
+.mt-custom-popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #d1d1d1;
+  border-radius: 0px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.mt-custom-popup h2 {
+  margin-top: 0;
+  color: #333;
+}
+.mt-custom-popup .mt-popup-close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.mt-custom-popup .mt-popup-close:hover {
+  color: #333;
+}
+.mt-custom-popup .mt-custom-content {
+  max-height: 30%;
+  overflow: auto;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 700px){
+  .mt-custom-popup{
+    width: 90%;
+  }
+}
+
+.mt-custom-popup-main #myaccount-mt-loader-popup{
+	margin-left: 45%;
+	float: none;
+}
+
+.mt-custom-popup-main #myaccount-mt-loader-popup img{
+	margin-top: 15%;
+}
+
+#mt-purchase-item-tab .mt-custom-popup .mt-custom-content {
+	/* height: 145px;
+    overflow-y: auto; */
+}
+
+/*Custom Popup end*/
+
+
+/*Shipping Tracking css start*/
+
+.tracking-table-popup tbody th{
+	width: 35% !important;
+}
+
+/*Shipping Tracking css end*/
 
 
 
-
-
+.col-left.sidebar{
+	display: none;
+}
 	

@@ -139,6 +139,18 @@ class Ecp_Shoppingcart_AddressController extends Mage_Customer_AddressController
     }
     
     
+    public function newAjaxAction()
+    {
+    	$this->loadLayout('myaccount_customer_address_new');
+    	$html = $this->getLayout()->getBlock('customer_address_new')->toHtml();
+    	$result['html']  = $html;
+    	
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    	
+    }
+    
+    
     public function deleteAjaxAction()
     {
     	if (!$this->_validateFormKey()) {
@@ -170,6 +182,79 @@ class Ecp_Shoppingcart_AddressController extends Mage_Customer_AddressController
     	
     	$this->getResponse()->setHeader('Content-type', 'application/json');
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    	
+    }
+    
+    
+    public function saveAjaxAction()
+    {
+    	if (!$this->_validateFormKey()) {
+    		return ;//$this->_redirect('*/*/');
+    	}
+    	// Save data
+    	if ($this->getRequest()->isPost()) {
+    		$customer = $this->_getSession()->getCustomer();
+    		/* @var $address Mage_Customer_Model_Address */
+    		$address  = Mage::getModel('customer/address');
+    		$addressId = $this->getRequest()->getParam('address_id');
+    		if ($addressId) {
+    			$existsAddress = $customer->getAddressById($addressId);
+    			if ($existsAddress->getId() && $existsAddress->getCustomerId() == $customer->getId()) {
+    				$address->setId($existsAddress->getId());
+    			}
+    		}
+    		
+    		$errors = array();
+    		
+    		/* @var $addressForm Mage_Customer_Model_Form */
+    		$addressForm = Mage::getModel('customer/form');
+    		$addressForm->setFormCode('customer_address_edit')
+    		->setEntity($address);
+    		$addressData    = $addressForm->extractData($this->getRequest());
+    		$addressErrors  = $addressForm->validateData($addressData);
+    		if ($addressErrors !== true) {
+    			$errors = $addressErrors;
+    		}
+    		
+    		try {
+    			$addressForm->compactData($addressData);
+    			$address->setCustomerId($customer->getId())
+    			->setIsDefaultBilling($this->getRequest()->getParam('default_billing', false))
+    			->setIsDefaultShipping($this->getRequest()->getParam('default_shipping', false));
+    			
+    			$addressErrors = $address->validate();
+    			if ($addressErrors !== true) {
+    				$errors = array_merge($errors, $addressErrors);
+    			}
+    			
+    			if (count($errors) === 0) {
+    				$address->save();
+    				if($this->getRequest()->getParam('default_billing', false)){
+    					Mage::getModel('checkout/type_multishipping')
+    					->setQuoteCustomerBillingAddress($addressId);
+    				}
+    				$this->loadLayout('myaccount_customer_address_data');
+    				$html =  $this->getLayout()->getBlock('customer_address_edit')->toHtml();
+    				$result['html']  = $html;
+    				
+    				$result['success'] = 1;
+    				$result['message'] = $this->__('The address has been saved.');
+    			} else {
+    				$result['success'] = 0;
+    				$result['error'] = $errors;
+    			}
+    		} catch (Mage_Core_Exception $e) {
+    			$result['success'] = 0;
+    			$result['error']   = array($e->getMessage());
+    		} catch (Exception $e) {
+    			$result['success'] = 0;
+    			$result['error']   = array($this->__('Cannot save address.'));
+    		}
+    	}
+    	
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    	
     	
     }
     

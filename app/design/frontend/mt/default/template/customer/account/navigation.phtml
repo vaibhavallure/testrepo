@@ -37,13 +37,13 @@
             	<?php 
             		$img = "";
             		if($_link->getName()=="my_products")
-            			$img = "<img class='acc-link-img' src='".$this->getSkinUrl('images/myaccount/Box.png')."'/>";
+            			$img = "<img class='acc-link-img product-img' src='".$this->getSkinUrl('images/myaccount/diamond.png')."'/>";
             		if($_link->getName()=="account_edit")
-            			$img = "<img class='acc-link-img' src='".$this->getSkinUrl('images/myaccount/sign-in-lock.png')."'/>";
+            			$img = "<img class='acc-link-img login-img' src='".$this->getSkinUrl('images/myaccount/sign-in-lock.png')."'/>";
             		if($_link->getName()=="address_book")
-            			$img = "<img class='acc-link-img' src='".$this->getSkinUrl('images/myaccount/address-map-pin.png')."'/>";
+            			$img = "<img class='acc-link-img address-img' src='".$this->getSkinUrl('images/myaccount/pin_1.png')."'/>";
             		if($_link->getName()=="tokenbase_customer_link")
-            			$img = "<img class='acc-link-img' src='".$this->getSkinUrl('images/myaccount/Payments.png')."'/>";
+            			$img = "<img class='acc-link-img pay-img' src='".$this->getSkinUrl('images/myaccount/Payments.png')."'/>";
             	?>
                 <?php $_last = ($_index++ >= $_count); ?>
                 <?php if ($this->isActive($_link)): ?>

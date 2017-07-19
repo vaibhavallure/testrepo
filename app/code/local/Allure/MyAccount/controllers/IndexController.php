@@ -3,6 +3,20 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 	
 	public function indexAction() {  
 		if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+			
+			if( $this->_methodIsValid() !== true ) {
+				$methods = Mage::helper('tokenbase')->getActiveMethods();
+				
+				if( count( $methods ) > 0 ) {
+					sort( $methods );
+					
+					Mage::register( 'tokenbase_method', $methods[0] );
+				}
+				else {
+					Mage::register( 'tokenbase_method', 'authnetcim' );
+				}
+			}
+			
 			$this->loadLayout();
 			$this->renderLayout();
 		}else{
@@ -10,6 +24,19 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 			return;
 		}
 		
+	}
+	
+	protected function _methodIsValid()
+	{
+		$method	= $this->getRequest()->getParam('method');
+		
+		if( in_array( $method, Mage::helper('tokenbase')->getActiveMethods() ) !== false ) {
+			Mage::register( 'tokenbase_method', $method );
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public function getViewUrl($order)

@@ -32,15 +32,16 @@
 ?>
 <div class="col2-set addresses-list">
     <div class="box">
-    <?php echo $this->getBlockHtml('formkey')?>
+    <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+  
 <div class="box-title title-buttons">
-    <h3><?php echo $this->__('Address Book ') ?></h3>
+    <h3><?php echo $this->__('Addresses') ?></h3>
     <?php 
         $request = Mage::app()->getRequest();
         if($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customeraccountindex'): ?>
             <a href="<?php echo $this->getBaseUrl()."customer/address/" ?>"><?php echo $this->__('Edit') ?></a>
         <?php else: ?>
-            <a href="<?php echo $this->getAddAddressUrl() ?>"><?php echo $this->__('Add New Address') ?></a>
+            <a onclick="createNewAddress()" data-temp="<?php echo $this->getAddAddressUrl() ?>"><?php echo $this->__('Add New Address') ?></a>
         <?php endif; ?>   
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
@@ -98,7 +99,10 @@
                         <?php echo $this->getAddressHtml($_address) ?>
                     </address>
                     <p class="additional-address-links">
-                        <a href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"><?php echo $this->__('Edit') ?></a><!-- <span class="separator">|</span> --><a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $_address->getId() ?>');"><?php echo $this->__('Delete') ?></a>
+                        <a data-id="<?php echo $_address->getId()?>" onclick="editAddressData(this)" data-url="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"><?php echo $this->__('Edit') ?></a><!-- <span class="separator">|</span> -->
+                        <a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $_address->getId() ?>');"><?php echo $this->__('Delete') ?></a>
+                    	<a data-id="<?php echo $_address->getId()?>" onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_billing');"><?php echo $this->__('Default Billing') ?></a>
+                    	<a data-id="<?php echo $_address->getId()?>" onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_shipping');"><?php echo $this->__('Default Shipping') ?></a>
                     </p>
                 </div>
             </td>
@@ -119,7 +123,7 @@
         </tr>
     <?php endif ?>
     </table>
-    <button type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
+    <button onclick="createNewAddress()" type="button" title="<?php echo $this->__('Add New Address') ?>" data-temp="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
 </div>
 <?php endif; ?>
 <script type="text/javascript">
@@ -152,6 +156,22 @@ function editAddressData(evt){
     });
 }
 
+function createNewAddress(){
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/address/newAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+        success: function(data) {
+			jQuery('#mt-address-edit').html("");
+			jQuery('#mt-address-edit').html(data.html);
+			jQuery('#mt-address-edit').show();
+			jQuery('.mt-adrress-data').hide();
+        	hideLoadingFancybox();
+        }
+    });
+}
+
 function deleteAddress(addressId) {
 	var form_key = jQuery('.mt-adrress-data .box > input').val();
 	console.log(form_key);
@@ -174,6 +194,70 @@ function deleteAddress(addressId) {
         });
     }
     return false;
+}
+
+function saveAddressData(){
+	var account_form = new VarienForm('address-form-validate', false); 
+	if(account_form.validator.validate()){ 
+		jQuery('#mt-addressbook-tab .messages > li').removeClass('error-msg');
+		jQuery('#mt-addressbook-tab .messages > li').removeClass('success-msg');	
+		showLoadingFancybox();
+		jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'customer/address/saveAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: jQuery("#address-form-validate").serialize(),
+	        success: function(data) {
+	        	jQuery('#mt-addressbook-tab .messages .mt-msg').html("");
+		        if(data.success){
+			        /* var html = '<li><span>'+data.message+'</span></li>';
+			        html = '<ul>'+html+'</ul>';
+			        jQuery('#mt-addressbook-tab .messages > li').html(html);
+			        jQuery('#mt-addressbook-tab .messages > li').addClass('success-msg');	
+			        jQuery('.mt-adrress-data').html("");
+			        jQuery('.mt-adrress-data').html(data.html); */
+			        window.location.reload();
+				 }else{
+			    	if(data.error.constructor === Array) {
+				    	var len = data.error.length;
+				    	var html = '';
+				    	for(var i=0;i<len;i++){
+				    		html = html+'<li><span>'+data.error[i]+'</span></li>';
+				    	}
+				    	html = '<ul>'+html+'</ul>';
+				    	jQuery('#mt-addressbook-tab .messages > li').html(html);
+				        jQuery('#mt-addressbook-tab .messages > li').addClass('error-msg');
+			    	}else{
+			    		var html = '<li><span>'+data.message+'</span></li>';
+			    		html = '<ul>'+html+'</ul>';
+			    		jQuery('#mt-addressbook-tab .messages > li').html(html);
+				        jQuery('#mt-addressbook-tab .messages > li').addClass('error-msg');
+			    	}
+			    }
+		        jQuery('#mt-addressbook-tab .messages').show();
+	        	hideLoadingFancybox();
+	        	hideEditAdrress();
+	        }
+		});
+	}
+}
+
+function setDefaultBilling(id,type){
+	var form_key = jQuery('.mt-adrress-data .box > input').val();
+	var flag = 1;
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/address/setDefaultAddressAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'id':id,type:type,'form_key':form_key},
+        success: function(data) {
+            if(data.success){
+                window.location.reload();
+            }
+            hideLoadingFancybox()
+        }
+    });
 }
 
 function hideEditAdrress(){

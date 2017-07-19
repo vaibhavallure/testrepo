@@ -33,16 +33,24 @@
 					</li>
 					<li class="mt-account-active-tab">
 						<a onclick="changeTabView(this)" data-link="accountinfo" 
-						data-toggle="tab-pane" data-title="Account Information" data-target="#mt-accountinfo-tab"> 
-							ACCOUNT INFORMATION
+						data-toggle="tab-pane" data-title="Login & Security" data-target="#mt-accountinfo-tab"> 
+							LOGIN &amp; SECURITY
 						</a>
 					</li>
 					<li class="mt-account-active-tab">
 						<a onclick="changeTabView(this)" data-link="addressbook" 
-						data-toggle="tab-pane" data-title="Address Book" data-target="#mt-addressbook-tab"> 
-							ADDRESS BOOK
+						data-toggle="tab-pane" data-title="Addresses" data-target="#mt-addressbook-tab"> 
+							ADDRESSES
 						</a>
 					</li>
+					
+					<li class="mt-account-active-tab">
+						<a onclick="changeTabView(this)" data-link="paymentoptions" 
+						data-toggle="tab-pane" data-title="Payment Options" data-target="#mt-paymentoptions-tab"> 
+							PAYMENT OPTIONS
+						</a>
+					</li>
+					
 				</ul>
 			</li>
               
@@ -102,12 +110,29 @@
         	
         	<div id="mt-addressbook-tab" class="tab-pane">
                   <div class="collateral-box">
-                  	 <div id="mt-address-edit">
-                  	 </div>
+					 <ul class="messages">
+                  		<li class="">
+	                  		<ul class="mt-msg">
+	                  		</ul>
+                  		</li>
+                  	 </ul>                 	
+                  	 <div id="mt-address-edit"></div>
                   	 <div class="mt-adrress-data">
                   		<?php echo $this->getChildHtml('address_book')?>
                   	 </div>
                  </div>
+        	</div>
+        	
+        	<div id="mt-paymentoptions-tab" class="tab-pane">
+                  <div class="collateral-box">
+                  	<ul class="messages mt-messages">
+                  		<li class="">
+	                  		<ul class="mt-msg">
+	                  		</ul>
+                  		</li>
+                  	 </ul>      
+                  	<?php echo $this->getChildHtml('tokenbase_customer_wrapper')?>
+                  </div>
         	</div>
                     
         </div>

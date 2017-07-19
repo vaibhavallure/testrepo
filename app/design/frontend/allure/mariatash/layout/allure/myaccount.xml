@@ -94,6 +94,14 @@
                 <block type="myaccount/purchase" name="purchased_items_list" template="allure/myaccount/purchase/item/default.phtml" />
             </block>
             
+            
+            <block type="tokenbase/customer_wrapper" name="tokenbase_customer_wrapper" template="allure/myaccount/paradoxlabs/tokenbase/customer/wrapper.phtml" >
+            	<block type="core/template" name="tokenbase_manage_authnetcim" template="allure/myaccount/paradoxlabs/tokenbase/customer/method.phtml">
+					<block type="tokenbase/customer_cards" name="tokenbase_manage_authnetcim_cards" as="tokenbase_customer_method_left" template="allure/myaccount/paradoxlabs/tokenbase/customer/cards.phtml" />
+					<block type="tokenbase/customer_form" name="tokenbase_manage_authnetcim_form" as="tokenbase_customer_method_right" template="allure/myaccount/paradoxlabs/authnetcim/customer/form.phtml" />
+				</block>
+            </block>
+            
 	      		
 	      </block> 
 	      <block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>  
@@ -116,6 +124,10 @@
   		<block type="customer/address_edit" name="customer_address_edit" template="allure/myaccount/customer/address/edit.phtml"/>
   	</myaccount_customer_address_edit>
   	
+  	<myaccount_customer_address_new>
+  		<block type="customer/address_edit" name="customer_address_new" template="allure/myaccount/customer/address/edit.phtml"/>
+  	</myaccount_customer_address_new>
+  	
   	<myaccount_customer_address_data>
   		<reference name="head">
             <block type="core/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml" />
@@ -129,6 +141,20 @@
   	<myaccount_purchase_item_load>
   		 <block type="myaccount/purchase" name="purchased_items" template="allure/myaccount/purchase/item/default.phtml" />
   	</myaccount_purchase_item_load>
+  	
+  	
+  	<myaccount_pay_card_data>
+  		<block type="tokenbase/customer_wrapper" name="tokenbase_customer_wrapper" template="allure/myaccount/paradoxlabs/tokenbase/customer/wrapper.phtml" >
+            <block type="core/template" name="tokenbase_manage_authnetcim" template="allure/myaccount/paradoxlabs/tokenbase/customer/method.phtml">
+				<block type="tokenbase/customer_cards" name="tokenbase_manage_authnetcim_cards" as="tokenbase_customer_method_left" template="allure/myaccount/paradoxlabs/tokenbase/customer/cards.phtml" />
+				<block type="tokenbase/customer_form" name="tokenbase_manage_authnetcim_form" as="tokenbase_customer_method_right" template="allure/myaccount/paradoxlabs/authnetcim/customer/form.phtml" />
+			</block>
+         </block>
+  	</myaccount_pay_card_data>
+  	
+  	<myaccount_pay_card_edit>
+  		<block type="tokenbase/customer_form" name="tokenbase_manage_authnetcim_form" as="tokenbase_customer_method_right" template="allure/myaccount/paradoxlabs/authnetcim/customer/form.phtml" />
+  	</myaccount_pay_card_edit>
   	
   	
   	<myaccount_wishlist_layout>
@@ -195,5 +221,18 @@
                 <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
             </block>
   	</myaccount_checkout_cart_layout>
+  	
+  	<myaccount_index_track>
+  		 <label>Shipment Tracking Popup</label>
+        <reference name="root">
+            <action method="setTemplate"><template>allure/myaccount/page/popup.phtml</template></action>
+        </reference>
+        <!--<reference name="head">
+            <action method="addJs"><script>scriptaculous/scriptaculous.js</script></action>
+        </reference>-->
+        <reference name="content">
+            <block type="shipping/tracking_popup" name="shipping.tracking.popup" template="allure/myaccount/shipping/tracking/popup.phtml" />
+        </reference>
+  	</myaccount_index_track>
   	
 </layout>

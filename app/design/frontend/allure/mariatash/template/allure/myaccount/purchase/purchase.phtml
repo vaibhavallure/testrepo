@@ -1,37 +1,44 @@
-
 <?php
-
-$totalPageSizeItem = $this->getPurchaseOrderCollection()->getLastPageNumber();
+	$totalPageSizeItem = $this->getPurchaseOrderCollection()->getLastPageNumber();
 ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>jquery/jquery.cookie.js"></script>
 <div class="cart-mt">
-        <fieldset>
-        	<?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
-        	<div id="purchase-history">
-        		<div class="box-content">
-					<table id="purchase-item-table" class="data-table cart-table">
-                <?php 
-                $storeList = array();
-                $stores = Mage::app()->getStores();
-                
-                $storeColorConfig = Mage::helper('myaccount')->getStoreColorConfig();
-                
-                foreach ($stores as $store) {
-                	$storeList[$store->getId()] = $store->getName();
-                }
-                
-                ?>
-                    <tbody>
-		               	<?php echo $this->getChildHtml('purchased_items_list')?>
-		             </tbody>
-                    
-                  	</table>
-				</div>
-            </div>
-            <?php else:?>
-            	<p class="no-purchase-itemundefined"><?php echo $this->__("You have no purchased item.")?></p>
-            <?php endif;?>
-        </fieldset>
+   <fieldset>
+   <?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
+	   <div id="purchase-history">
+	        <div class="box-content">
+				 <table id="purchase-item-table" class="data-table cart-table">
+	                <?php 
+		                $storeList = array();
+		                $stores = Mage::app()->getStores();
+		                $storeColorConfig = Mage::helper('myaccount')->getStoreColorConfig();
+		                foreach ($stores as $store) {
+		                	$storeList[$store->getId()] = $store->getName();
+		                }
+	                ?>
+	             	<tbody>
+			            <?php echo $this->getChildHtml('purchased_items_list')?>
+			        </tbody>
+	             </table>
+			</div>
+	   </div>
+     <?php else:?>
+          <p class="no-purchase-itemundefined"><?php echo $this->__("You have no purchased item.")?></p>
+     <?php endif;?>
+  </fieldset>
+</div>
+
+<div style="width: 100%" class="mt-custom-popup-main mt-custom-popup-overlay">
+	<div class="mt-custom-popup">
+		<h2></h2>
+		<a class="mt-popup-close" href="javascript:jQuery('.mt-custom-popup-main').removeClass('active');">&times;</a>
+		<div class="mt-custom-content">
+			<span id="myaccount-mt-loader-popup" class="please-wait-popup" style="display: none;">
+	    		<img src="<?php echo $this->getSkinUrl('aw_ajaxcatalog/images/ajax-loader.gif')?>" alt="Loading next step..." title="Loading next step..." class="v-middle">
+	    	</span>
+	    	<div class="mt-data-load"></div>
+		</div>
+	</div>
 </div>
 
 
@@ -45,11 +52,8 @@ jQuery(function($){
 		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
 			if(pageItem<=totalPageItem){
 				 if( xhr == null ) {
-				    //xhr.abort();
-				    //xhr = null;
-				    showLoadingFancybox1('purchase-history');
+				    showLoadingFancybox();
 				 	xhr =	jQuery.ajax({
-						//async: false,
 				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getPurchasedItems';?>',
 				        dataType : 'json',
 						type : 'POST',
@@ -57,117 +61,20 @@ jQuery(function($){
 				        success: function(data) {
 				        	jQuery('#purchase-item-table tbody').append(data.data.html);
 				        	jQuery('.loader').css({"display":"none"});
-				        	hideLoadingFancybox1('purchase-history');
+				        	hideLoadingFancybox();
 				        }
 				    });
 				 	xhr = null;
 				 	pageItem ++;
 				}
 		    }else{
-		    	hideLoadingFancybox('purchase-history');
+		    	hideLoadingFancybox();
 		    }
 		}
  	});
 });
 
 
-jQuery(document).ready(function(){
-	jQuery(document).on('click','.mt-piercing-photo',function(){
-		return false;
-		var imgSrc = jQuery(this).attr('data-img');
-		jQuery('.mt-piercing-photo').removeClass('active');
-		jQuery(this).addClass('active');
-		jQuery('#frame-img').attr('src',imgSrc);
-		jQuery('.mt-new-purchase .fancybox-overlay-fixed').show();
-
-		var selector = jQuery('.mt-piercing-photo.active').parent().parent().next();
-		var next = selector.attr('data-id');
-		if(next!="undefined" && next!=null){
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
-		}else{
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').hide();
-		}
-
-		var selector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
-		var prev = selector.attr('data-id');
-		if(prev!="undefined" && prev!=null){
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
-		}else{
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').hide();
-		}
-	});
-
-	jQuery('.fancybox-close').click(function(){
-		jQuery('.mt-new-purchase .fancybox-overlay-fixed').hide();
-	});
-
-	jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').click(function(){
-		toPrevious();
-	});
-
-
-	jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').click(function(){
-		toNext();
-	});
-	
-});
-
-function toNext(){
-	var selector = jQuery('.mt-piercing-photo.active').parent().parent().next();
-	var next = selector.attr('data-id');
-	if(next!="undefined" && next!=null){
-		var imgSrc = selector.find('.mt-piercing-photo').attr('data-img');
-		jQuery('#frame-img').attr('src',imgSrc);
-		jQuery('.mt-piercing-photo').removeClass('active');
-		selector.find('.mt-piercing-photo').addClass('active');
-
-		var prevSelector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
-		var prev = prevSelector.attr('data-id');
-		if(prev!="undefined" && prev!=null){
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
-		}
-
-		var nextSelector = jQuery('.mt-piercing-photo.active').parent().parent().next();
-		var next = nextSelector.attr('data-id');
-		if(next!="undefined" && next!=null){
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
-		}else{
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').hide();
-		}
-		
-	}
-}
-
-function toPrevious(){
-	var selector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
-	var prev = selector.attr('data-id');
-	if(prev!="undefined" && prev!=null){
-		var imgSrc = selector.find('.mt-piercing-photo').attr('data-img');
-		jQuery('#frame-img').attr('src',imgSrc);
-		jQuery('.mt-piercing-photo').removeClass('active');
-		selector.find('.mt-piercing-photo').addClass('active');
-
-		var nextSelector = jQuery('.mt-piercing-photo.active').parent().parent().next();
-		var next = nextSelector.attr('data-id');
-		if(next!="undefined" && next!=null){
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-next').show();
-		}
-
-		var prevSelector = jQuery('.mt-piercing-photo.active').parent().parent().prev();
-		var prev = prevSelector.attr('data-id');
-		if(prev!="undefined" && prev!=null){
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').show();
-		}else{
-			jQuery('.mt-new-purchase .fancybox-nav.fancybox-prev').hide();
-		}
-	}
-}
-
-
-function openPurchaseWindow(event){
-	var url = jQuery(event).attr('data-url');
-	window.open(url);
-}
 
 function reorderItem(event){
 	var item_id = jQuery(event).attr('data-item-id');
@@ -179,9 +86,6 @@ function reorderItem(event){
 		data: {'item_id':item_id},
         success: function(data) {
             if(data.success){
-            	/* jQuery('#new-mt-myproduct-cart .totals #shopping-cart-totals-table').html("");
-				var content = jQuery(data.total).find('#shopping-cart-totals-table').html();
-				jQuery('#new-mt-myproduct-cart .totals #shopping-cart-totals-table').html(content); */
 
 				jQuery('.mt-my-cart').html("");
 	        	jQuery('.mt-my-cart').html(data.cart_html);
@@ -203,6 +107,21 @@ function reorderItem(event){
         	hideLoadingFancybox();
         }
     });
+}
+
+function openTrackOrder(url){
+	  var lastSlash = url.lastIndexOf(':');
+	  var head = url.substring(0, lastSlash)+':';
+	  var protocol = window.location.protocol;
+	  url = url.replace(head, protocol);
+	  jQuery('#mt-purchase-item-tab .mt-custom-popup-main .mt-custom-content .mt-data-load').html("");
+	  jQuery('#myaccount-mt-loader-popup').show();
+	  jQuery('#mt-purchase-item-tab .mt-custom-popup-main').addClass('active');
+	  jQuery('#mt-purchase-item-tab .mt-custom-popup-main .mt-custom-content .mt-data-load').load(url, function(response, status, xhr) {
+		  jQuery('#myaccount-mt-loader-popup').hide();	
+		  jQuery('.tracking-table-popup').parent().find('.divider').remove();
+		  jQuery('.tracking-table-popup tr td a').attr('target','_blank');	
+	 }); 
 }
 
 </script>

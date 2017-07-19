@@ -1012,6 +1012,14 @@ div.a-column.a-span-last {
 	width: 100%;
 }
 
+.myaccount-dashbord-img.mt-product-img{
+	margin-top: -5px;
+}
+
+.myaccount-dashbord-img.mt-address{
+	margin-top: -12px;
+}
+
 .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading .mt-expire-date,
 .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading .mt-card-name {
    font-weight: 600;
@@ -1765,4 +1773,9 @@ width: 245px;
 
 .mt-myaccount-page .mt-custom-popup-main .tracking-table-popup tbody tr{
 	border-bottom: none !important;
+}
+
+.acc-link-img.product-img,
+.acc-link-img.address-img{
+	margin-top: -3px;
 }
