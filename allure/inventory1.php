@@ -24,8 +24,11 @@ foreach ($purchasedItems as $item){
 }
 Mage::log("****************************************",Zend_log::DEBUG,'london_inventory',true);
 $count=1;
+$from_date = date("Y-m-d 00:00:00",strtotime('03/31/2017'));
 //Adding qty in receiving
 $collection=Mage::getModel('inventory/inventory')->getCollection()->addFieldToFilter('stock_id',$stockId);
+$from_date = date("Y-m-d 00:00:00",strtotime('03/31/2017'));
+$collection->addFieldToFilter('updated_at',array('gt' =>$from_date));
 foreach ($collection as $item){
 	//	$productid = Mage::getModel('catalog/product')->load($item->getProductId());
 	$productid=$item->getProductId();
@@ -49,6 +52,8 @@ Mage::log("****************************************",Zend_log::DEBUG,'london_inv
 $count=1;
 //Addding qty in transfer
 $collection=Mage::getModel('inventory/transfer')->getCollection()->addFieldToFilter('transfer_to',$stockId);
+$from_date = date("Y-m-d 00:00:00",strtotime('03/31/2017'));
+$collection->addFieldToFilter('updated_at',array('gt' =>$from_date));
 foreach ($collection as $item){
 	$productid=$item->getProductId();
 	Mage::log("before update -:".$productid,Zend_log::DEBUG,'london_inventory',true);
@@ -72,6 +77,8 @@ Mage::log("****************************************",Zend_log::DEBUG,'london_inv
 $count=1;
 //Subtracting qty in transfer
 $collection=Mage::getModel('inventory/transfer')->getCollection()->addFieldToFilter('transfer_from',$stockId);
+$from_date = date("Y-m-d 00:00:00",strtotime('03/31/2017'));
+$collection->addFieldToFilter('updated_at',array('gt' =>$from_date));
 foreach ($collection as $item){
 	$productid=$item->getProductId();
 	Mage::log("before update -:".$productid,Zend_log::DEBUG,'london_inventory',true);
