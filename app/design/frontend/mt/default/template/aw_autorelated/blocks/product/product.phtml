@@ -101,6 +101,7 @@ if(preg_match("/_/", $sku_main))
                     $points = "";
                     $productsLinks = "";
                     $numberOfProducts = 0;
+					$temp_sku="";
                     foreach ($_options as $option) {
                         $sku = $option->text;
                         $temp_sku = $sku;
@@ -113,9 +114,14 @@ if(preg_match("/_/", $sku_main))
 
                                                   $sku = $old_sku;
                     }
-                    	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-                    	$productName = $product->getName();
-                    	$productId = $product->getId();
+                        $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                        if(!empty($product)){
+                        $productName = $product->getName();
+                        $productId = $product->getId();
+                        }else{
+							$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$temp_sku);
+						}
+                    
                     
                     	/*$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
                     	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
