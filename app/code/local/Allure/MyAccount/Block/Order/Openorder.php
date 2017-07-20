@@ -36,7 +36,7 @@ class Allure_MyAccount_Block_Order_Openorder extends Mage_Core_Block_Template
     	$orders = Mage::getResourceModel('sales/order_collection')
     	->addFieldToSelect('*')
     	->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
-    	->addFieldToFilter('state', array('in' => array('new','processing') ))
+    	->addFieldToFilter('state', array('nin' => array('canceled','complete','closed')))
     	;//->setOrder('created_at', 'desc');
     	
     	if(!empty($store)){

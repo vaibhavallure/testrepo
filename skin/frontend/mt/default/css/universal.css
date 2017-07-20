@@ -1781,6 +1781,10 @@ width: 245px;
 	margin-top: -3px;
 }
 
-.tablinks{
+.mt-myaccount-page .tablinks{
 	width: 20%;
+}
+
+.manage-payment-method .tablinks{
+	width: 30%;
 }
