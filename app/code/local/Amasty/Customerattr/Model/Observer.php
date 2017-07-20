@@ -932,6 +932,9 @@ class Amasty_Customerattr_Model_Observer
     public function onSalesQuoteSaveAfter($observer)
     {
         $data = $observer->getData();
+        if(is_null($data['order']->getData('customer'))){
+        	return ;
+        }
         $customer = $data['order']->getData('customer')->getData('entity_id');
         if (!is_null($customer)) {
             return;
