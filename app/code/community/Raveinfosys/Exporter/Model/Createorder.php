@@ -190,7 +190,7 @@ class Raveinfosys_Exporter_Model_Createorder extends Mage_Core_Model_Abstract
         $orderPayment = Mage::getModel('sales/order_payment')
                 ->setStoreId($this->store_id)
                 ->setCustomerPaymentId(0)
-                ->setMethod('checkmo')
+                ->setMethod('bakerloo_cash')
                 ->setPoNumber(' - ');
         $order->setPayment($orderPayment);
 
