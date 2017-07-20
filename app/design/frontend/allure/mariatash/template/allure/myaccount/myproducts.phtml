@@ -1,4 +1,4 @@
-<h3>My Products</h3>
+<h3 id="myaccount-tab-label">My Products</h3>
 <div class="mt-myaccount-page">
 	<div id="sns_tab_products" class="product-collateral clearfix">
     	<ul class="nav-tabs gfont">
@@ -56,7 +56,7 @@
               
             <li class="mt-account-active-tab active">
                <a data-toggle="tab-pane" data-target="#mt-purchase-item-tab" 
-               data-title="Purchase" data-link="purchase">
+               data-title="Purchase Item" data-link="purchase">
                    PURCHASED ITEM
                </a>
             </li>
@@ -181,6 +181,7 @@
 		jQuery(event).attr('data-title',oldTitle);
 
 		window.location.hash = newDataLink;
+		jQuery('#myaccount-tab-label').text(newTitle);		
 		document.title = newTitle;
 
 		jQuery('.tab-content .tab-pane').removeClass('active');

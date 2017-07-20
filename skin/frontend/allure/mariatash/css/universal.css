@@ -223,11 +223,12 @@
 }
 #purchase-item-table.data-table .purchase-store-name{
 	padding: 0px 5px 5px 5px;
+	margin-left: 100px;
 }
 
 @media (max-width: 767px){
 	#purchase-item-table.cart-table .table-product-image {
-	    min-height: 0px;
+	    min-height: 130px;
 	}
 }
 
@@ -250,13 +251,26 @@
 
 #purchase-history .cart-table tbody .table-qty,
 #purchase-history .cart-table tbody .table-tax{
-	clear: both;
-    float: right;
-    margin-right: 40px;
+	/* clear: both; */
+    float: left;
+   /*  margin-right: 40px; */
 }
 
 #purchase-history .cart-table tbody .table-qty .qty-wrap span{
-	margin-left: 3px;
+	margin-left: 0px;
+}
+
+#purchase-history .table-price-subtotal{
+	text-align: left;
+}
+#purchase-history .table-price-subtotal span{
+	text-align: center;
+}
+
+@media only screen and (max-device-width : 320px){
+	#purchase-history .table-product-info {
+    	width: 35%;
+	}
 }
 
 /*Purchase item end*/
@@ -338,6 +352,12 @@
     right: 0px;
     left: 0px;
     color: rgb(255, 255, 255);
+}
+
+@media only screen and (max-device-width : 320px){
+	#wishlist-table .h-mt-wishlist-product-name{
+		width: 70%;
+	}
 }
 
 /*Wishlist css end*/
@@ -492,6 +512,14 @@
 #mt-addressbook-tab .messages .success-msg{
 	margin-top: 0px;
 }
+
+@media only screen and (max-device-width : 320px){
+	#mt-addressbook-tab .additional-addresses .additional-address-links a {
+		margin-right: 3px;
+		font-size: 12px;
+	}
+}
+
 /*Cutsomer Address end*/
 
 

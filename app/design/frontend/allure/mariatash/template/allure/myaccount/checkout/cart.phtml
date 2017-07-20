@@ -197,9 +197,12 @@
 			  data: {'item':item_id},
 		      success: function(data) {
 		          if(data.success){
+		        	  jQuery('#mt-wishlist-tab .collateral-box .my-wishlist').html("");
+		        	  jQuery('#mt-wishlist-tab .collateral-box .my-wishlist').html(data.html);
+			          
 		        	  jQuery('.glyphicon-shopping-cart').attr('counter',data.top_qty);
 		        	  jQuery('#mt-cart-tab .collateral-box').html("");
-			          jQuery('#mt-cart-tab .collateral-box').html(data.html);
+			          jQuery('#mt-cart-tab .collateral-box').html(data.cart_html);
 		          }else{
 			          alert(data.message);
 		          }
