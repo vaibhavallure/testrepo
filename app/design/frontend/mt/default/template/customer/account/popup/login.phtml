@@ -16,6 +16,7 @@
 			<div class="form-group">
 	 		    <label class="popup-login-lbl" for="password"><?php echo $this->__("Password")?></label>
 	  		    <input id='passwd' type="password" name='passwd' class="ele_width form-control required-entry"/>
+	  		    <input type="hidden" name="wishlist" id="wishlist_input" value=""/>
 			</div>
 		</div>
 	    <div class="pop-link">
@@ -50,12 +51,22 @@
 
 <script type="text/javascript">
 
-
+if (typeof Allure == "undefined") {
+	   var Allure = {};
+	}
+Allure.Wishlist='<?php echo Mage::getBaseUrl('web').'myaccount/#wishlist';?>',
+		
 jQuery("#sign_in_label").on('click',function(){
+	jQuery('#wishlist_input').val('');
+	jQuery(".popupLoginModel").css({"opacity":"1","pointer-events":"auto"});
+});
+jQuery("#wishlist_label").on('click',function(){
+	jQuery('#wishlist_input').val('wishlist');
 	jQuery(".popupLoginModel").css({"opacity":"1","pointer-events":"auto"});
 });
 
-jQuery(".close").on('click',function(){console.log('hiee');
+jQuery(".close").on('click',function(){
+	jQuery('#wishlist_input').val('');
 jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
 	});
 
@@ -65,6 +76,7 @@ jQuery("#signin-btn-popup").on('click',function(){
 	 if(myForm.validator.validate()){ 
 		var usrname = jQuery('#username').val();
 		var passwd = jQuery('#passwd').val();
+		var wishlist= jQuery('#wishlist_input').val();
 		var key='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 		var request = {
 				"usrname":usrname,
@@ -83,7 +95,12 @@ jQuery("#signin-btn-popup").on('click',function(){
 			if(data.success){
 				 jQuery('#login_msg_div').css('display','none');
 				 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
-				 location.reload();
+				 if(wishlist){
+					 window.location.href = Allure.Wishlist;
+				 }
+				 else{
+					 location.reload();
+				}
 			}else{
 		     jQuery('#login_msg_div').css('display','block');
 			 jQuery('#login-msg').html(data.error);
