@@ -130,10 +130,6 @@
 
 /*pager css start*/
 
-#mt-report-tab .sales-order-history .pager .pages {
-   /*  margin-right: 0px; */
-}
-
 #mt-openorders-tab .sales-order-history .pager .pages .current,
 #mt-report-tab .sales-order-history .pager .pages .current{
 	padding: 0px;
@@ -152,6 +148,27 @@
 .sales-order-history .pager .pages .inactive{
 	display: none;
 }
+
+@media only screen and (max-device-width : 414px){
+	#mt-openorders-tab .sales-order-history .pager .pages,
+	#mt-report-tab .sales-order-history .pager .pages {
+    	margin-right: 0px;
+	}
+
+	#mt-openorders-tab .pager-mt-1 .limiter,
+	#mt-report-tab .pager-mt-1 .limiter {
+		float: left;
+		margin-left: 17%;
+	}
+}
+
+@media only screen and (max-device-width : 320px){
+	#mt-openorders-tab .pager-mt-1 .limiter,
+	#mt-report-tab .pager-mt-1 .limiter {
+		margin-left: 5%;
+	}
+}
+	
 /*pager css end*/
 
 
@@ -362,8 +379,30 @@
 #my-orders-table .order-actions
 {width:130px;}
 
+@media only screen and (max-device-width : 414px){
+	#my-openorders-table .order-number,
+	#my-orders-table .order-number
+	{width:120px;}
+	
+	#my-openorders-table .order-date,
+	#my-orders-table .order-date
+	{width:115px;}
+	
+	#my-openorders-table thead th,
+	#my-openorders-table tbody td a,
+	#my-openorders-table tbody td span,
+	#my-orders-table thead th,
+	#my-orders-table tbody td a,
+	#my-orders-table tbody td span
+	{font-size: 12px;}
+	
+	#my-openorders-table thead th,
+	#my-orders-table thead th
+	{padding: 0px 0;}
+}
 
-@media only screen and (min-device-width : 375px){
+
+@media only screen and (max-device-width : 375px){
 	#my-openorders-table .order-number,
 	#my-orders-table .order-number
 	{width:95px;}
