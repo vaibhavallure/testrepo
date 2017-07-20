@@ -5,6 +5,9 @@
 *===================================================
 */
 
+.col-left.sidebar{
+	display: none;
+}
 
 .mt-new-myaccount-submenu{
    width: 100%;
@@ -299,6 +302,30 @@
    padding: 6px 0 0 0;
 }
 
+#shopping-cart-table tr td:first-child {
+   width: 100px;
+}
+
+#shopping-cart-table .my-account .data-table tbody th, .my-account .data-table tbody td:first-child {
+      padding-right: 10px;
+ }
+
+#shopping-cart-table tr.table-messages {
+   margin-bottom: 10px;
+}
+
+#shopping-cart-table .data-table .product-name {
+   padding: 0;
+}
+
+#mt-cart-tab .cart-mt > h1{
+	display: none;
+}
+
+#mt-cart-tab .cart-table .item-msg{
+	text-align: center;
+}
+
 /*Cart css end*/
 
 
@@ -352,6 +379,14 @@
     right: 0px;
     left: 0px;
     color: rgb(255, 255, 255);
+}
+
+#mt-wishlist-tab .my-wishlist .data-table tbody td:nth-child(2) {
+    width: auto;
+}
+
+#mt-wishlist-tab .my-wishlist .data-table tr{
+	background: transparent ! important;
 }
 
 @media only screen and (max-device-width : 320px){
@@ -615,7 +650,45 @@
 
 
 
-.col-left.sidebar{
-	display: none;
+/*Payment options ccs start*/
+
+#mt-paymentoptions-tab .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text,
+#mt-paymentoptions-tab .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form select{
+	width: 100% !important;
+	border: 1px solid #ddd;
+	margin-bottom: 0px;
 }
+
+#mt-paymentoptions-tab .my-account .manage-payment-method .addresses-list .col-2 #mt-credit-card-info li {
+	padding: 0px 5px;
+}
+
+#mt-paymentoptions-tab select{
+	border-radius: 0px;
+}
+ 
+#mt-paymentoptions-tab #mt-credit-card-info li #authnetcim_cc_number,
+#mt-paymentoptions-tab select,
+#mt-paymentoptions-tab .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text,
+#mt-paymentoptions-tab .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form select{
+	height: 30px;
+}
+
+#mt-paymentoptions-tab #mt-credit-card-info #authnetcim_cc_type_exp_div .input-box{
+	float: none;
+}
+
+#mt-paymentoptions-tab #authnetcim_cc_type_exp_div .v-fix, 
+#mt-paymentoptions-tab #authnetcim_cc_type_exp_div #authnetcim_cc_exp_year, 
+#mt-paymentoptions-tab #authnetcim_cc_type_exp_div #authnetcim_cc_exp_month {
+    width: 100% ! important;
+}
+
+.mt-myaccount-page .product-collateral select{
+	font-weight: normal;
+}
+
+/*Payment options ccs end*/
+
+
 	

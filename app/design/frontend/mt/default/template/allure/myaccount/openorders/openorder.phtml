@@ -18,7 +18,7 @@
                     <td class="a-left" style="padding-left:18px;"><?php echo $_order->formatPrice($_order->getGrandTotal()) ?></td>
                     <td class="a-left" style="padding-left:15px;"><?php echo $_order->getStatusLabel() ?></td>
                     <td class="a-left" style="padding-left:10px;">
-                        <span class="nobr"><a href="<?php echo $this->getViewUrl($_order) ?>"><?php echo $this->__('View Order') ?></a>
+                        <span class="nobr"><a href="<?php echo $this->getViewUrl($_order).'#openorders' ?>"><?php echo $this->__('View Order') ?></a>
                             <?php /*<span class="separator">|</span><a href="<?php echo $this->getTrackUrl($_order) ?>"><?php echo $this->__('Track Order') ?></a>&nbsp;*/ ?>
                             <?php if (0 && $this->helper('sales/reorder')->canReorder($_order)) : ?>
                             <span>|</span> <a href="<?php echo $this->getReorderUrl($_order) ?>" class="link-reorder"><?php echo $this->__('Reorder') ?></a>
