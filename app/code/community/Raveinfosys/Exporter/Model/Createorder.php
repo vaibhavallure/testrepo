@@ -111,19 +111,34 @@ class Raveinfosys_Exporter_Model_Createorder extends Mage_Core_Model_Abstract
         // Set Customer data
 
         $custm_detail = $this->getCustomerInfo($sales_order_arr['customer_email']);
-
         if ($custm_detail) {
             $order->setCustomerEmail($custm_detail['email'])
                     ->setCustomerFirstname($custm_detail['firstname'])
                     ->setCustomerLastname($custm_detail['lastname'])
                     ->setCustomerId($custm_detail['entity_id'])
                     ->setCustomerGroupId($custm_detail['group_id']);
-        } else {
+        } 
+        
+        else {
+        	$customer = Mage::getModel("customer/customer");
+        	$store=Mage::getModel("core/store")->load($this->store_id);
+        	$customer->setWebsiteId($store->getWebsiteId())
+        	->setStore($store)
+        	->setFirstname($sales_order_arr['customer_firstname'])
+        	->setLastname($sales_order_arr['customer_lasttname'])
+        	->setEmail($sales_order_arr['customer_email'])
+        	->setPassword('zxcvbnas');
+        	try{
+        		$customerId=$customer->save()->getId();
+        	}
+        	catch (Exception $e) {
+        		Zend_Debug::dump($e->getMessage());
+        	}
             $order->setCustomerEmail($sales_order_arr['customer_email'])
                     ->setCustomerFirstname($sales_order_arr['customer_firstname'])
                     ->setCustomerLastname($sales_order_arr['customer_lasttname'])
-                    ->setCustomerIsGuest(1)
-                    ->setCustomerGroupId(0);
+                    ->setCustomerId($customerId)
+                    ->setCustomerGroupId(1);
         }
 
 
