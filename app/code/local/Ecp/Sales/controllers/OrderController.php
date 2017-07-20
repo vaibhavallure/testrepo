@@ -99,6 +99,8 @@ class Ecp_Sales_OrderController extends Mage_Sales_OrderController
     			$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
     			
     			$result['cart_html'] = $html;
+    			
+    			$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
     		}else{
     			$result['success'] = 0;
     			$result['message'] = $message;
