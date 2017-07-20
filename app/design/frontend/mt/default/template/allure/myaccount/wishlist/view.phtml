@@ -64,9 +64,12 @@
 	                    	</tbody>
 	                	</table>
 	                	
-	                	<div class="mt-wishlist-extra-cls">
-	        				<button onclick="openShareForm();" class="button mt-wishlist-share-btn">Share Wishlist</button>
-	        			</div>
+	                	<?php if ($this->hasWishlistItems()): ?>
+	                		<div class="mt-wishlist-extra-cls">
+	        					<button onclick="openShareForm();" class="button mt-wishlist-share-btn">Share Wishlist</button>
+	        				</div>
+	        			 <?php endif ?>
+	        			 
         			</div>
         			
         			<div class="mt-wishlist-share-form" style="display: none;">
