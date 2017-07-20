@@ -8,7 +8,9 @@ Mage::app();
 $from_date = date("Y-m-d 00:00:00",strtotime('03/31/2017'));
 $to_date = Mage::getModel('core/date')->date('Y-m-d H:i:s');
 $orders=Mage::getModel("sales/order")->getCollection()->addAttributeToFilter('store_id',2)
-        ->addAttributeToFilter('created_at', array('from'=>$from_date, 'to'=>$to_date));
+        ->addAttributeToFilter('created_at', array('from'=>$from_date, 'to'=>$to_date))
+         ->addAttributeToFilter('status', array('complete','processing','pending'));
+
 
 foreach ($orders as $order){
 	$items=$order->getAllVisibleItems();

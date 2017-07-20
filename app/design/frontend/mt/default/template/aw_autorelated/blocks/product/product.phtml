@@ -30,9 +30,10 @@
 <?php
 $_product = Mage::registry('current_product');
 $productId = $_product->getId();
-$sku = $_product->getSku();
-if(preg_match("/_/", $sku))
-	$sku = substr($sku, 0,strpos($sku, "_"));
+$sku_main = $_product->getSku();
+$old_sku = $sku_main;
+if(preg_match("/_/", $sku_main))
+    $sku_main = substr($sku_main, 0,strpos($sku_main, "_"));
 
 	$childProductArr = array();
 	$childProductArr[] = $productId;
@@ -51,7 +52,7 @@ if(preg_match("/_/", $sku))
 	->addAttributeToFilter( array(
 			array('attribute'=> 'type_id','eq'=>'configurable')))
 	->addAttributeToFilter( array(
-			array('attribute'=> 'sku','like' => ''.$sku.'%')));
+			array('attribute'=> 'sku','like' => ''.$sku_main.'%')));
     
 	$collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
      $str = '';
@@ -59,19 +60,15 @@ if(preg_match("/_/", $sku))
      if($childrenProducts->getSize()>0){    //if(!empty($childrenProducts)){
      	foreach ($childrenProducts as $product){
      		$cnt = $cnt+1;
-     		if($product->getTypeId()=="configurable"){
-     			$childrenIds = $product->getTypeInstance()->getChildrenIds($product->getId());
-     			foreach ($childrenIds[0] as $childrenId) {
-     				$str .= ' FIND_IN_SET(('.$childrenId.'),`product_ids`) OR ';
-     			}
-     		}else{
+
      			$str .= ' FIND_IN_SET(('.$product->getId().'),`product_ids`) OR ';
-     		}
+
      	}
      	
      }
      $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
 	 $collection->getSelect()->where( 'status = 1 AND ('.$str.')');
+
 ?>
 
 <?php if (($collection && $collection->getSize())) : ?>
@@ -104,19 +101,28 @@ if(preg_match("/_/", $sku))
                     $points = "";
                     $productsLinks = "";
                     $numberOfProducts = 0;
-                    foreach ($_options as $option){
-                    	$sku = $option->text;
-                    	$numberOfProducts += 1;
+                    foreach ($_options as $option) {
+                        $sku = $option->text;
+                        $temp_sku = $sku;
+                        if (preg_match("/_/", $temp_sku))
+                            $temp_sku = substr($temp_sku, 0, strpos($temp_sku, "_"));
+
+                        $numberOfProducts += 1;
+                                              if ($temp_sku == $sku_main) {
+                                                  Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
+
+                                                  $sku = $old_sku;
+                    }
                     	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
                     	$productName = $product->getName();
                     	$productId = $product->getId();
                     
-                    	$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+                    	/*$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
                     	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
                     	$productUrl = $product->getProductUrl();
                     	if(!is_null($parentId)){
                     		$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
-                    	}
+                    	}*/
                     	
                     	$current_product_class = "";
                     	if(in_array($productId, $childProductArr))

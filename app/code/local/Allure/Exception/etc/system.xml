@@ -40,7 +40,7 @@
                             </depends>
                         </reciever>
                         <copy_to translate="label">
-                            <label>Send Emails To</label>
+                            <label>Copy Emails To</label>
                             <frontend_type>text</frontend_type>
                             <validate>required-entry</validate>
                             <sort_order>3</sort_order>
