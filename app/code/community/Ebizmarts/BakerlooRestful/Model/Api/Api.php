@@ -756,11 +756,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Api
 
     public function formatDateISO($date)
     {
-        if (!is_numeric($date)) {
-            $date = strtotime($date);
-        }
-
-        return date('c', $date);
+        return $this->getHelper('bakerloo_restful')->formatDateISO($date);
     }
 
     protected function _getIo($resource)
