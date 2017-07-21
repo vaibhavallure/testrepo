@@ -1457,6 +1457,9 @@ ul#primary-address-list li,
 ul#additional-addresses li{
 	display: flex;
 	margin-bottom: 20px;
+	display: -webkit-flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
 ul#primary-address-list li .item-inner-container,	
