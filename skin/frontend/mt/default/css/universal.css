@@ -1597,8 +1597,13 @@ width: 245px;
     padding-right: 10px;
 }
 
+
 #mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box>span.card-code{
 	text-transform: capitalize;
+	float: left;
+}
+
+#mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box{
 	float: left;
 }
 
