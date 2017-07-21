@@ -51,7 +51,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 						continue;
 					}
 					
-					if(!empty($description))
+					//if(!empty($description))
 						$item->setDescription($description);
 					$item->setQty($qty)
 						->save();
