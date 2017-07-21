@@ -1085,7 +1085,7 @@ padding: 0 0 8px 0;
 #additional-addresses .additional-address-links{
     position: absolute;
     left: 10px;
-    bottom: 30px;
+    bottom: 45px;
     right: 0;
     text-align: right;
 }
@@ -1102,16 +1102,21 @@ padding: 0 0 8px 0;
 
 
 
-
 .block-account .block-content ul li strong{
-font-weight: bold;
+   font-weight: bold;
+}
+
+.block-account .block-content ul li strong,
+.block-account .block-content ul li a{
    color: #000000;
+   line-height: 23px;
+   padding: 0px 0 0px 5px;
+   height: auto;
 }
 
 .acc-link-img{
    width: 20px;
-   padding: 10px 5px 10px 0;
-   margin-left: -5px;
+   padding: 0 5px 0 5px;
 }
 
 .block-account .block-content {
@@ -1120,6 +1125,7 @@ font-weight: bold;
 
 .block-account .block-content ul li {
    border-bottom: 1px solid #dedede;
+   padding: 7px 0px;
 }
 .block-account .block-content {
    text-transform: uppercase;
@@ -1457,9 +1463,10 @@ ul#primary-address-list li,
 ul#additional-addresses li{
 	display: flex;
 	margin-bottom: 20px;
+	
 	display: -webkit-flex;
     -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
 }
 
 ul#primary-address-list li .item-inner-container,	
