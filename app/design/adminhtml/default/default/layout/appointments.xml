@@ -36,6 +36,11 @@
  
   <appointments_adminhtml_appointments_new>
 	<reference name="head">
+	 	
+	 	<action method="addJs"><file>jquery/jquery-1.8.1.min.js</file></action>
+	 	<action method="addJs"><file>jquery/jquery-ui.js</file></action>
+	 	<action method="addJs"><file>jquery/jquery.jcarousel.min.js</file></action>
+	 	<action method="addItem"><type>skin_js</type><name>js/jQuery/noconflict.js</name></action>
 	 	<action method="addItem"><type>skin_js</type><name>js/appointmentjs/prettify.js</name></action>
 	 	<action method="addCss"><stylesheet>css/appointmentcss/mdp.css</stylesheet></action>
 	    <action method="addJs"><file>allure/appointments/appointment.js</file></action>
