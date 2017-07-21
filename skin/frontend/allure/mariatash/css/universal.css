@@ -321,7 +321,7 @@
    margin-bottom: 10px;
 }
 
-#shopping-cart-table .data-table .product-name {
+#shopping-cart-table.data-table .product-name {
    padding: 0;
 }
 
@@ -333,6 +333,20 @@
 	text-align: center;
 }
 
+
+#mt-cart-tab .discount .discount-form .input-box{
+	float: left;
+    width: 82%;
+}
+
+#mt-cart-tab .discount .input-box input.input-text{
+	padding: 9px 5px;
+}
+
+#mt-cart-tab .cart-mt .discount .buttons-set {
+	float: right;
+	margin: 0px;
+}
 /*Cart css end*/
 
 

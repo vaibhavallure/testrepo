@@ -1464,9 +1464,13 @@ ul#additional-addresses li{
 	display: flex;
 	margin-bottom: 20px;
 	
-	display: -webkit-flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap-reverse;
+	display:-webkit-flex; 
+	display:-webkit-box; 
+	display:-moz-flex; 
+	display:-moz-box; 
+	display:-ms-flexbox; 
+	display:flex; 
+	flex-direction:row;
 }
 
 ul#primary-address-list li .item-inner-container,	
@@ -1635,7 +1639,7 @@ width: 245px;
 }
 	
 #new-mt-myproduct-openorders #box-history{
-	/* /* top: -17px; */ */
+	margin-top: -10px;
 }	
 
 .mt-my-wishlist #wishlist-table-overlay .mt-wishlist-extra-cls{
