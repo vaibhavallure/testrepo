@@ -33,6 +33,18 @@
             </updates>
         </layout>
 	</frontend>
+	 <crontab>
+		<jobs>
+			<allure_customer_schedule>
+				<schedule>
+					<cron_expr>* * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_customer/observer::setcustomerStatusActive</model>
+				</run>
+			</allure_customer_schedule>
+		</jobs>
+	</crontab>
 	 <adminhtml>
         
     </adminhtml>
