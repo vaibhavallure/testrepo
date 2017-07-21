@@ -33,4 +33,36 @@
       <!-- <block type="core/template" name="appointment_store" as="appointment_store" template="appointment/appointment_store.phtml" ></block> -->
 	</reference>
   </appointments_adminhtml_adminhtml_appointments_viewCalender>
+ 
+  <appointments_adminhtml_appointments_new>
+	<reference name="head">
+	 	<action method="addItem"><type>skin_js</type><name>js/appointmentjs/prettify.js</name></action>
+	 	<action method="addCss"><stylesheet>css/appointmentcss/mdp.css</stylesheet></action>
+	    <action method="addJs"><file>allure/appointments/appointment.js</file></action>
+	    <action method="addJs"><file>allure/appointments/sliderDemo.js</file></action>
+        <action method="addJs"><file>allure/appointments/jQAllRangeSliders-min.js</file></action>
+        <action method="addJs"><file>allure/appointments/dcalendar_picker.js</file></action>
+        <action method="addJs"><file>allure/appointments/intlTelInput.min.js</file></action>
+        <action method="addJs"><file>allure/appointments/intlTelInput.js</file></action>
+        
+        
+        <action method="addCss"><stylesheet>css/appointmentcss/appointments.css</stylesheet></action>
+        <action method="addCss"><stylesheet>css/appointmentcss/sliderDemo.css</stylesheet></action>
+        <action method="addCss"><stylesheet>css/appointmentcss/dcalendar_picker.css</stylesheet></action>
+         <action method="addCss"><stylesheet>css/appointmentcss/intlTelInput.css</stylesheet></action>
+        
+        
+        
+	</reference>
+	<reference name="content">
+           <block type="core/template" name="book_appointment" template="appointments/book_appointment.phtml" >
+           	 	<block type="appointments/index" name="appointments_storelocation" as="appointments_storelocation" template="appointments/storelocation.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_piercing" as="appointments_piercing" template="appointments/piercing.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_pickurday" as="appointments_pickurday" template="appointments/pickurday.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_pickurtime" as="appointments_pickurtime" template="appointments/pickurtime.phtml"/>
+	      	  	<block type="appointments/registration" name="appointments_signin_register" as="appointments_signin_register" template="appointments/signin_register.phtml"/>
+	      	  	<block type="core/template" name="appointments_success" as="appointments_success" template="appointments/success_appointments.phtml"/>
+      </block>
+     </reference>
+  </appointments_adminhtml_appointments_new> 
 </layout>

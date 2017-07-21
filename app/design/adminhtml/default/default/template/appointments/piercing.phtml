@@ -1,0 +1,33 @@
+<?php 	
+		$model = Mage::registry('apt_modify_data');
+		if($model){
+			$fetch_piercing_qty = $model->getPiercingQty();
+			$fetch_piercing_loc = $model->getPiercingLoc();
+		}
+		/* else{
+			$fetch_piercing_qty = '';
+			$fetch_piercing_loc = '';
+		} */
+?>
+<div class="pierqtyDiv">   
+	<label for="no_of_piercings">No of People in Group:</label>
+    <div class="pierqty" >
+            <input type="button" value="-" id="moins" class="minusBtn" onclick="decrease();">
+            <?php if($fetch_piercing_qty):?>
+            	<input type="text" size="5" name="piercing_qty" value="<?php echo $fetch_piercing_qty;?>" id="count" class="pierqtyTxt">
+            <?php else:?>
+           		<input type="text" size="5" name="piercing_qty" value="1" id="count" class="pierqtyTxt">
+            <?php endif;?>			    
+            <input type="button" value="+" id="plus" class="plusBtn" onclick="increase();">
+     </div>
+</div>
+<div class="piercingDiv">
+    <label for="piercing_locatiion">Piercing Location(s):</label>
+	<div>
+		<?php if($fetch_piercing_loc):?>
+				<input type="text" class="piercing_locTxt"name="piercing_loc" value="<?php echo $fetch_piercing_loc;?>" placeholder=" (Optional)">
+		<?php else:?>
+				<input type="text" class="piercing_locTxt"name="piercing_loc" value="" placeholder=" (Optional)">
+		<?php endif;?>
+  	</div>		
+</div>	
