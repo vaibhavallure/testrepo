@@ -1479,7 +1479,7 @@ ul#additional-addresses li .item-inner-container address{
 	 border: 1px solid #ccc;
 	 padding: 10px;
 	 font-weight: 600;
-	 min-height: 180px;
+	 min-height: 145px;
 }
 
 #add-new-addresss{
@@ -1780,7 +1780,7 @@ width: 245px;
 
 .acc-link-img.product-img,
 .acc-link-img.address-img{
-	margin-top: -3px;
+	margin-top: 1px;
 }
 
 .mt-myaccount-page .tablinks{
@@ -1796,5 +1796,9 @@ width: 245px;
 }
 
 .mt-new-payment-list .mt-payment-item.mt-list-item{
+	cursor: pointer;
+}
+
+.sales-order-view #back-to-url{
 	cursor: pointer;
 }
