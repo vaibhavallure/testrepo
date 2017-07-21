@@ -9,7 +9,7 @@ class Allure_Appointments_Block_Adminhtml_Appointments extends Mage_Adminhtml_Bl
 		$this->_headerText = Mage::helper('appointments')->__('Manage Appointments');
 	
 		parent::__construct();
-		$this->_removeButton('add');
+		
 	}
 	
 	protected function _prepareLayout()

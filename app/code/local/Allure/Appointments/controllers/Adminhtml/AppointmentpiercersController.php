@@ -220,14 +220,18 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	$start_time = $newformat;
     	$end_time = $newformat;
     	$url = "not found"; */
+    	$piercer_id=0;
     	$piercer_id = $this->getRequest()->getParam('piercer_id');
     	Mage::log($piercer_id,Zend_Log::DEBUG, 'appointments', true );
     	$url = "not found";
     	$allAppointments = Mage::getModel('appointments/appointments')->getCollection();
-    	if($store_id){
+    	/* if($store_id){
     		$allAppointments->addFieldToFilter('store_id',$store_id);
-    	}
+    	} */
     	$allAppointments->addFieldToFilter('app_status',array('in'=>array('1','2')));
+    	
+    	if(!empty($piercer_id) && $piercer_id!=0)
+    		$allAppointments->addFieldToFilter('piercer_id',$piercer_id);
     
     	if($allAppointments){
     		 

@@ -1,4 +1,5 @@
 <?php $piercersCollection=Mage::getModel('appointments/piercers')->getCollection(); ?>
+<?php $piercer_id = $this->getRequest()->getParam('piercer');?>
 <?php if (count($piercersCollection)): ?>
 <p class="switcher"><label for="piercers_switcher"><?php echo $this->__('Choose Piercer:') ?></label>
 <select name="piercers_switcher" id="piercers_switcher" onchange="return switchPiercer(this);">
@@ -6,7 +7,11 @@
 <?php 
 
 foreach ($piercersCollection as $piercer):?>
-<option value="<?php echo $piercer->getId()?>"><?php echo $piercer->getFirstname()." ".$piercer->getLastname() ?></option>
+<?php if($piercer_id==$piercer->getId()):?>
+	<option selected="selected" value="<?php echo $piercer->getId()?>"><?php echo $piercer->getFirstname()." ".$piercer->getLastname() ?></option>
+<?php else:?>
+	<option value="<?php echo $piercer->getId()?>"><?php echo $piercer->getFirstname()." ".$piercer->getLastname() ?></option>
+<?php endif;?>
 <?php endforeach;
 ?>
 </select>
