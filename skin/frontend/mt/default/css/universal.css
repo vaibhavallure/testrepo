@@ -1010,15 +1010,9 @@ div.a-column.a-span-last {
 
 .myaccount-dashbord-img{
 	width: 100%;
+	margin-top: -20px;
 }
 
-.myaccount-dashbord-img.mt-product-img{
-	margin-top: -5px;
-}
-
-.myaccount-dashbord-img.mt-address{
-	margin-top: -12px;
-}
 
 .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading .mt-expire-date,
 .mt-new-payment .mt-new-payment-list .mt-payment-item.mt-heading .mt-card-name {
@@ -1788,4 +1782,8 @@ width: 245px;
 
 .manage-payment-method .tablinks{
 	width: 30%;
+}
+
+.sales-order-view .myaccount-page-tilte h1{
+	display: none;
 }

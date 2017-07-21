@@ -52,8 +52,15 @@
 
 .myaccount-dashbord-img.mt-address,
 .myaccount-dashbord-img.mt-product-img{
-	margin-top: -5px;
+	margin-top: -7px;
 }
+.myaccount-dashbord-img.mt-login{
+	margin-top: -10px;
+}
+.myaccount-dashbord-img.mt-pay{
+	margin-top: -14px;
+}
+
 
 .customer-account-index .col-main, 
 .customer-account-edit .col-main, 
