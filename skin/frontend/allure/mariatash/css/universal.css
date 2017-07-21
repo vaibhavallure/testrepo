@@ -52,13 +52,13 @@
 
 .myaccount-dashbord-img.mt-address,
 .myaccount-dashbord-img.mt-product-img{
-	margin-top: -7px;
+	/* margin-top: -7px; */
 }
 .myaccount-dashbord-img.mt-login{
-	margin-top: -10px;
+	margin-top: -1px;
 }
 .myaccount-dashbord-img.mt-pay{
-	margin-top: -14px;
+	margin-top: -1px;
 }
 
 
