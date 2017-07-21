@@ -32,8 +32,8 @@
 	var addMain;
 	var editMain; 
 	jQuery(document).ready(function(){
-		jQuery('li .mt-icon').click(function(){
-			var cardId = jQuery(this).attr('data-card-id');
+		jQuery('li.mt-payment-item').click(function(){
+			var cardId = jQuery(this).find('.mt-icon').attr('data-card-id');
 			var selector = jQuery('.mt-payment-details.card-details-'+cardId);
 			selector.toggle();
 			if(selector.is(":visible")){

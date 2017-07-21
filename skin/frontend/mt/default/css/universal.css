@@ -1085,7 +1085,7 @@ padding: 0 0 8px 0;
 #additional-addresses .additional-address-links{
     position: absolute;
     left: 10px;
-    bottom: 16%;
+    bottom: 30px;
     right: 0;
     text-align: right;
 }
@@ -1786,4 +1786,8 @@ width: 245px;
 
 .sales-order-view .myaccount-page-tilte h1{
 	display: none;
+}
+
+.mt-new-payment-list .mt-payment-item.mt-list-item{
+	cursor: pointer;
 }
