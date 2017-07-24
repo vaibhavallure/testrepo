@@ -193,5 +193,64 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	$grid = $this->getLayout()->createBlock('appointments/adminhtml_appointmentpiercers_grid');
     	$this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
+    public function viewCalenderAction ()
+    {
+    	$post_data = $this->getRequest()->getParam('piercer');
+    	$store_id = 0;
+    	if($post_data){
+    		$piercers_id = $post_data;
+    	}
+    	 
+    	Mage::register('piercers_id', $piercers_id);
+    	 
+    	$this->loadLayout();
+    	$this->_addContent($this->getLayout()->createBlock('appointments/adminhtml_appointmentpiercers_calenderview'));
+    	$this->renderLayout();
+    	 
+    }
+    public function calendereventsAction(){
+    	$calenderEvents = array();
+    
+    	/* $name = "test name";
+    
+    	$time = strtotime('3/16/2017 3:28 AM');
+    
+    	$newformat = date('Y-m-d H:i',$time);
+    
+    	$start_time = $newformat;
+    	$end_time = $newformat;
+    	$url = "not found"; */
+    	$piercer_id=0;
+    	$piercer_id = $this->getRequest()->getParam('piercer_id');
+    	Mage::log($piercer_id,Zend_Log::DEBUG, 'appointments', true );
+    	$url = "not found";
+    	$allAppointments = Mage::getModel('appointments/appointments')->getCollection();
+    	/* if($store_id){
+    		$allAppointments->addFieldToFilter('store_id',$store_id);
+    	} */
+    	$allAppointments->addFieldToFilter('app_status',array('in'=>array('1','2')));
+    	
+    	if(!empty($piercer_id) && $piercer_id!=0)
+    		$allAppointments->addFieldToFilter('piercer_id',$piercer_id);
+    
+    	if($allAppointments){
+    		 
+    		foreach ($allAppointments as $appointment){
+    			$calenderEvents[] = array('title'=>$appointment->getFirstname()." ".$appointment->getLastname(),
+    					'start'=>$appointment->getAppointmentStart(),
+    					'end'=>$appointment->getAppointmentEnd(),
+    					'url'=>$this->getUrl('admin_appointments/adminhtml_appointments/view/id/'.$appointment->getId(),array('_secure' => true))
+    			);
+    		}
+    	}
+    	$_currentStore=Mage::app()->getStore();
+    	$code1 = $_currentStore->getCode();
+    	$lanCode = substr(strrchr($code1, "_"), 1);
+    
+    	$response = array('status'=>true,'events'=>$calenderEvents,'lang'=>$lanCode);
+    	$jsonData = json_encode ( compact ( 'success', 'response', 'data' ) );
+    	$this->getResponse ()->setHeader ( 'Content-type', 'application/json' );
+    	$this->getResponse ()->setBody ( $jsonData );
+    }
     
 }

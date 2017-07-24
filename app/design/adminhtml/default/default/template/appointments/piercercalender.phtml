@@ -6,18 +6,18 @@
  * 
  */
 ?>
-<?php echo Mage::app()->getLayout()->createBlock('adminhtml/store_switcher')->toHtml();
+<?php  echo Mage::app()->getLayout()->createBlock('appointments/adminhtml_switcher')->toHtml();
 //echo Mage::app()->getLayout()->createBlock('appointments/registration','appointment_store',array('template' => 'appointments/appointment_store.phtml'))->toHtml();?>
-
 
 <div class="content-header">
 	<h3 class="icon-head"><?php echo 'Appointments' ?></h3>
     <button  onclick="location.href='<?php echo Mage::getBaseUrl('web').'admin_appointments/adminhtml_appointments/new'?>'" style="float:right" id="book_another" class="book_another" ><?php echo 'Book New Appointment' ?></button>
 </div>
+
 <div id='calendar'></div>
 <div id="loading-indicator-calender" ></div>
 
-<?php $store_id = Mage::registry('store_iddd', 0);?>
+<?php $piercer_id = $this->getRequest()->getParam('piercer');?>
 
 <script src="<?php echo $this->getSkinUrl('js/jQuery/jquery.min.js');?>"></script>
 
@@ -51,7 +51,7 @@
 			url : '<?php echo $this->getUrl('*/*/calenderevents',array('_secure' => true));?>',
 	 		dataType : 'json',
 	 		type : 'POST',
-	 		data: {'store_id':'<?php echo $store_id; ?>',form_key:'<?php echo $k ?>'},
+	 		data: {'piercer_id':'<?php echo $piercer_id; ?>',form_key:'<?php echo $k ?>'},
 	 		success : function(data){
 		 		console.log(data.response.events);
 		 		if(data.response.lang){
@@ -76,6 +76,7 @@
 		                    url : data[i].url
 		 			};
 		 		}
+
 		 		
 		 		$j('#loading-mask').hide();
 			 		$j('#calendar').fullCalendar({
