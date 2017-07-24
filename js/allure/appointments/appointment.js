@@ -27,7 +27,7 @@ var count = 1;
  				"date":todaysDate
  	 		};
  	 jQuery.ajax({
-        	url : Allure.ajaxGetTimeUrl,
+        	url : Allure.adminAjaxGetTimeUrl,
         	dataType : 'json',
  			type : 'POST',
  			data: {request:request},
@@ -66,7 +66,7 @@ var count = 1;
   				"date":todaysDate
   	 		};
   	 jQuery.ajax({
-         	url : Allure.ajaxGetTimeUrl,
+         	url : Allure.adminAjaxGetTimeUrl,
          	dataType : 'json',
   			type : 'POST',
   			data: {request:request},
@@ -88,10 +88,10 @@ var count = 1;
 	 //Pick Ur Time
 	 var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
 	 simple.sliderDemo();
-
+		console.log(todaysDate);
 	 //Pick Ur Day	 	 
-	 /*jQuery( "#datepicker-13" ).datepicker({
-		 
+	 jQuery( "#datepicker-13" ).datepicker({
+		 console.log(todaysDate);
 		 onSelect: function (date, instance) {			 
 			 var qty = document.getElementById("count").value;
 			 jQuery("#datepicker-13_hidden").val(date);
@@ -113,7 +113,7 @@ var count = 1;
 					}
 		        });
 		    }		 
-	 }).datepicker("show");*/
+	 }).datepicker("show");
 	 
 	 
 	//ajax start to get the working days of piercers according to store
@@ -121,7 +121,7 @@ var count = 1;
 			var storeid = document.getElementById("store-id").value;
 		}
 	 	jQuery.ajax({
-	 		url : Allure.ajaxGetWorkingDaysUrl,
+	 		url : Allure.adminAjaxGetWorkingDaysUrl,
 			type : 'POST',
 			dataType:'json',
 			data: {storeid:storeid},
@@ -136,6 +136,7 @@ var count = 1;
 	 //If store change pickurtime should display also change acc to store and date 
 	 jQuery("#store-id").on("change",function(){
 		 	console.log("hi");
+			console.log(todaysDate);
 		 	//jQuery("#pick_ur_time_div").empty();
 		 	var todaysDate = document.getElementById("datepicker-13_hidden").value;	
 			//ajax start to pass the selected date to get the time
@@ -147,7 +148,7 @@ var count = 1;
 		 				"date":todaysDate
 		 	 		};
 		 	 jQuery.ajax({
-		        	url : Allure.ajaxGetTimeUrl,
+		        	url : Allure.adminAjaxGetTimeUrl,
 		        	dataType : 'json',
 		 			type : 'POST',
 		 			data: {request:request},
@@ -162,7 +163,7 @@ var count = 1;
 		 	 
 		 	//ajax start to get the working days of piercers according to store			 	
 			 	jQuery.ajax({
-			 		url : Allure.ajaxGetWorkingDaysUrl,			 		
+			 		url : Allure.adminAjaxGetWorkingDaysUrl,			 		
 					type : 'POST',
 					dataType:'json',
 					data: {storeid:storeid},
@@ -183,6 +184,7 @@ var count = 1;
 	 if(document.getElementById("datepicker-13_hidden")!= null )
 	 {
 		var todaysDate = document.getElementById("datepicker-13_hidden").value;	
+		console.log(todaysDate);
 		//ajax start to pass the selected date to get the time
 		var qty = document.getElementById("count").value;
 		var storeid = document.getElementById("store-id").value;
@@ -192,7 +194,7 @@ var count = 1;
 	 				"date":todaysDate
 	 	 		};
 	 	 jQuery.ajax({
-	        	url : Allure.ajaxGetTimeUrl,
+	        	url : Allure.adminAjaxGetTimeUrl,
 	        	dataType : 'json',
 	 			type : 'POST',
 	 			data: {request:request},

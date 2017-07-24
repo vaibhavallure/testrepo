@@ -3,7 +3,7 @@
 	<h3 class="icon-head"><?php echo 'BOOK MY PIERCING' ?></h3>
 </div>
 
-<<?php
+<?php
 $embedded = $this->getRequest()->getParam('embedded');
 ?>
 <?php 	
@@ -13,7 +13,7 @@ $embedded = $this->getRequest()->getParam('embedded');
 		}		
 		
 ?>
-<div class="appointmentContainer" >
+<div class="appointmentContainer">
 <div class="<?php if($embedded=='1'): echo 'appointment-header'; endif;?>"
 
 	<?php if($embedded=='1'):?>
@@ -28,7 +28,7 @@ $embedded = $this->getRequest()->getParam('embedded');
 		else:
 		?>
 		<?php //if(Mage::getSingleton("core/session")->getData('appointmentData_availablity')):?>
-			<form action="<?php echo $this->getActionUrl()?>" name="" id="appointemnet_form" method="POST">		
+			<form action="<?php echo   Mage::getBaseUrl('web').'admin_appointments/index/save' ?>" name="" id="appointemnet_form" method="POST">		
 			<?php if($fetch_aptId):?> <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>"><?php endif;?>
 			<?php echo $this->getBlockHtml('formkey');?>
 					<div class="field">
@@ -59,8 +59,8 @@ $embedded = $this->getRequest()->getParam('embedded');
 </div>
 
 <script type="text/javascript">
-Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
-Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
+Allure.adminAjaxGetTimeUrl = '<?php echo  Mage::getBaseUrl('web').'admin_appointments/index/ajaxGetTime'?>';
+Allure.adminAjaxGetWorkingDaysUrl = '<?php echo Mage::getBaseUrl('web').'admin_appointments/index/ajaxGetWorkingDays';?>';
 </script>
 
 <script type="text/javascript">
