@@ -7,7 +7,7 @@ class Allure_Appointments_Block_Adminhtml_Appointments extends Mage_Adminhtml_Bl
 		$this->_blockGroup = 'appointments';
 		$this->_controller = 'adminhtml_appointments';
 		$this->_headerText = Mage::helper('appointments')->__('Manage Appointments');
-	
+		$this->_addButtonLabel = Mage::helper('appointments')->__('Book New Appointment');
 		parent::__construct();
 		
 	}

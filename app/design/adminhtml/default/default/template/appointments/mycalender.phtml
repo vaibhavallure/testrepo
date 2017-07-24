@@ -10,8 +10,9 @@
 //echo Mage::app()->getLayout()->createBlock('appointments/registration','appointment_store',array('template' => 'appointments/appointment_store.phtml'))->toHtml();?>
 
 
-<div class="mybag-custom-table">
-<div class="myacc-headbg"><h2 class="myacc-heading"> <?php  echo $this->__('Appointments');?></h2> </div>
+<div class="content-header">
+	<h3 class="icon-head"><?php echo 'Appointments' ?></h3>
+    <button  onclick="location.href='<?php echo Mage::getBaseUrl('web').'admin_appointments/adminhtml_appointments/new'?>'" style="float:right" id="book_another" class="book_another" ><?php echo 'Book New Appointment' ?></button>
 </div>
 <div id='calendar'></div>
 <div id="loading-indicator-calender" ></div>

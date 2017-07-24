@@ -24,7 +24,8 @@ var count = 1;
 	var request = {
  				"qty":qty,
  				"store":storeid,
- 				"date":todaysDate
+ 				"date":todaysDate,
+ 				"form_key":Allure.adminFormKey
  	 		};
  	 jQuery.ajax({
         	url : Allure.adminAjaxGetTimeUrl,
@@ -63,7 +64,8 @@ var count = 1;
  	var request = {
   				"qty":qty,
   				"store":storeid,
-  				"date":todaysDate
+  				"date":todaysDate,
+  				"form_key":Allure.adminFormKey
   	 		};
   	 jQuery.ajax({
          	url : Allure.adminAjaxGetTimeUrl,
@@ -88,17 +90,16 @@ var count = 1;
 	 //Pick Ur Time
 	 var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
 	 simple.sliderDemo();
-		console.log(todaysDate);
 	 //Pick Ur Day	 	 
 	 jQuery( "#datepicker-13" ).datepicker({
-		 console.log(todaysDate);
 		 onSelect: function (date, instance) {			 
 			 var qty = document.getElementById("count").value;
 			 jQuery("#datepicker-13_hidden").val(date);
 			 console.log(Allure.ajaxGetTimeUrl);
 			 var request = {
 						"qty":qty,
-						"date":date
+						"date":date,
+						"form_key":Allure.adminFormKey
 			 		};
 			 jQuery.ajax({
 		        	url : Allure.ajaxGetTimeUrl,
@@ -124,7 +125,8 @@ var count = 1;
 	 		url : Allure.adminAjaxGetWorkingDaysUrl,
 			type : 'POST',
 			dataType:'json',
-			data: {storeid:storeid},
+			data: {storeid:storeid,
+				form_key:Allure.adminFormKey},
 			success : function(response){
 				jQuery("#fetchpickurday").html(response.output);				
 			}
@@ -145,13 +147,15 @@ var count = 1;
 			var request = {
 		 				"qty":qty,
 		 				"store":storeid,
-		 				"date":todaysDate
+		 				"date":todaysDate,
+		 				"form_key":Allure.adminFormKey
 		 	 		};
 		 	 jQuery.ajax({
 		        	url : Allure.adminAjaxGetTimeUrl,
 		        	dataType : 'json',
 		 			type : 'POST',
-		 			data: {request:request},
+		 			data: {request:request
+		 				},
 		 			success : function(response){
 		 				jQuery("#pick_ur_time_div").html(response.output);
 		 				window.sample = 30;
@@ -166,7 +170,8 @@ var count = 1;
 			 		url : Allure.adminAjaxGetWorkingDaysUrl,			 		
 					type : 'POST',
 					dataType:'json',
-					data: {storeid:storeid},
+					data: {storeid:storeid,
+						form_key:Allure.adminFormKey},
 					success : function(response){
 						jQuery("#fetchpickurday").html(response.output);
 					}
@@ -181,7 +186,7 @@ var count = 1;
 	 
 	 //If the customer come from modified onclick link getthe date and show time start
 
-	 if(document.getElementById("datepicker-13_hidden")!= null )
+	 if(document.getElementById("datepicker-13_hidden")!=null)
 	 {
 		var todaysDate = document.getElementById("datepicker-13_hidden").value;	
 		console.log(todaysDate);
@@ -191,7 +196,8 @@ var count = 1;
 		var request = {
 	 				"qty":qty,
 	 				"store":storeid,
-	 				"date":todaysDate
+	 				"date":todaysDate,
+	 				"form_key":Allure.adminFormKey
 	 	 		};
 	 	 jQuery.ajax({
 	        	url : Allure.adminAjaxGetTimeUrl,

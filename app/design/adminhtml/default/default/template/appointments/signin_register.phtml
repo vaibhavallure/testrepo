@@ -150,21 +150,7 @@ if ($session->isLoggedIn()) {
 				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
 				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message</p></div>
 				    </div>
-				    <div class="fieldDiv">
-				    	<?php if(!$session->isLoggedIn()):?>
-						 <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;">Create Account:
-						 <div class="pwdBlock">
-							 <div class="fieldDiv">
-							 	<label>Password:</label><br/>					    	
-								<input class="pwdele_width input-text validate-password" type="password" name="password" id="password" value="" />
-							 </div><!-- validate-password validate-both-passwords -->
-							 <div class="fieldDiv">
-							 	<label>Confirm Password:</label><br/>					    	
-								<input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
-							 </div>
-						</div>
-						<?php endif;?>
-					</div>
+				   
 			</div>
 		</div>
 	

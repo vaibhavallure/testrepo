@@ -371,10 +371,11 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 					var request = {
 				 				"qty":qty,
 				 				"store":storeid,
-				 				"date":todaysDate
+				 				"date":todaysDate,
+				 				"form_key":Allure.adminFormKey
 				 	 		};
 				 	 $.ajax({
-				        	url : Allure.ajaxGetTimeUrl,
+				        	url : Allure.adminAjaxGetTimeUrl,
 				        	dataType : 'json',
 				 			type : 'POST',
 				 			data: {request:request},
@@ -483,18 +484,19 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 					var request = {
 				 				"qty":qty,
 				 				"store":storeid,
-				 				"date":e.date
+				 				"date":e.date,
+				 				"form_key":Allure.adminFormKey
 				 	 		};
 				 	 $.ajax({
-				        	url : Allure.ajaxGetTimeUrl,
+				        	url : Allure.adminAjaxGetTimeUrl,
 				        	dataType : 'json',
 				 			type : 'POST',
 				 			data: {request:request},
 				 			success : function(response){
 				 				$("#pick_ur_time_div").html(response.output);
 				 				window.sample = 30;
-				 				 var simple = $("#appointemnet_form").find(".pick_your_time").append();
-				 				 simple.sliderDemo();
+				 				var simple = $("#appointemnet_form").find(".pick_your_time").append();
+				 				simple.sliderDemo();
 				 			}
 				        });
 					//ajax end
