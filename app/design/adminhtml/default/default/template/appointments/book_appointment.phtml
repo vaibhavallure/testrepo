@@ -25,7 +25,7 @@ $embedded = $this->getRequest()->getParam('embedded');
 			<form action="<?php echo   Mage::getBaseUrl('web').'admin_appointments/adminhtml_index/save' ?>" name="" id="admin_appointemnet_form" method="POST">		
 			<?php if($fetch_aptId):?> <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>"><?php endif;?>
 			<?php //echo $this->getBlockHtml('formkey');?>
-			<input type="hidden" name="form_key" value="<? echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+			<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 					<div class="field">
 					      <div class="storeLocDiv">  
 					      	<?php echo $this->getChildHtml('appointments_storelocation')?>    
