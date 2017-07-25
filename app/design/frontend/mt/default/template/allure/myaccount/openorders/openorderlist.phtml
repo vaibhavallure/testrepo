@@ -30,7 +30,7 @@
         <script type="text/javascript">decorateTable('my-orders-table');</script>
         <?php // echo $this->getPagerHtml(); ?>
         <?php else: ?>
-            <p><?php echo $this->__('No orders found in your account.'); ?></p>
+            <p class="no-order-msg"><?php echo $this->__('No orders found in your account.'); ?></p>
         <?php endif; ?>
         <?php if(0 && $request->getModuleName() != 'customer'): ?>
             <div class="box-title">

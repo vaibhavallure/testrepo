@@ -1807,3 +1807,14 @@ width: 245px;
 .sales-order-view #back-to-url{
 	cursor: pointer;
 }
+
+#new-mt-myproduct-receipts .no-order-msg{
+	padding: 0px 10px 10px 10px;
+}
+#new-mt-myproduct-openorders .no-order-msg{
+	padding: 5px 10px 10px 10px;
+}
+
+#new-mt-myproduct-cart .cart-empty{
+	margin-top: -20px;
+}

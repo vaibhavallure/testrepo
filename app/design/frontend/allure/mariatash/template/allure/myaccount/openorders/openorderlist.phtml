@@ -57,7 +57,7 @@
             </h3>
             
         </div>
-        
+        <?php if($_orders->getSize()): ?>
         <div class="sales-order-history">
 	            <div class="pager-mt-1"><a href="#">View All</a>
 	        		<div class="pager">
@@ -95,7 +95,7 @@
 				</div>
             </div>
         
-        <?php if($_orders->getSize()): ?>
+        
         <table class="data-table" id="my-openorders-table">
             <thead>
                 <tr>
@@ -114,7 +114,7 @@
         <script type="text/javascript">decorateTable('my-orders-table');</script>
         <?php // echo $this->getPagerHtml(); ?>
         <?php else: ?>
-            <p><?php echo $this->__('No orders found in your account.'); ?></p>
+            <p class="no-order-msg"><?php echo $this->__('No orders found in your account.'); ?></p>
         <?php endif; ?>
     </div>
     

@@ -277,6 +277,16 @@
 	text-align: center;
 }
 
+#mt-purchase-item-tab .table-product-image img{
+	background: url(../../../../../media/wysiwyg/background/img_product_add_bg.jpg) repeat-x top left;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(13%,#757881), color-stop(49%,#b5bbc9), color-stop(99%,#b5bbc9));
+    background: -webkit-linear-gradient(top, #757881 13%,#b5bbc9 49%,#b5bbc9 99%);
+    background: -o-linear-gradient(top, #757881 13%,#b5bbc9 49%,#b5bbc9 99%);
+    background: -ms-linear-gradient(top, #757881 13%,#b5bbc9 49%,#b5bbc9 99%);
+    background: linear-gradient(to bottom, #757881 13%,#b5bbc9 49%,#b5bbc9 99%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#757881', endColorstr='#b5bbc9',GradientType=0 );
+}
+
 @media only screen and (max-device-width : 320px){
 	#purchase-history .table-product-info {
     	width: 35%;
@@ -347,6 +357,10 @@
 	float: right;
 	margin: 0px;
 }
+
+#mt-cart-tab #shopping-cart-table tr td .product-image{
+	padding: 0px;
+}
 /*Cart css end*/
 
 
@@ -365,6 +379,7 @@
 #wishlist-table .h-mt-wishlist-product-name{
 	width: 75%;
     float: right;
+    padding-right: 30px;
 }
 
 #wishlist-table .qty-wrap input{
@@ -410,9 +425,24 @@
 	background: transparent ! important;
 }
 
+#mt-wishlist-tab .my-wishlist textarea{
+	height: 75px;
+}
+
+#mt-wishlist-tab #wishlist-table .h-mt-wishlist-product-name h3.product-name{
+	margin-top: 0px;
+}
+
 @media only screen and (max-device-width : 320px){
 	#wishlist-table .h-mt-wishlist-product-name{
 		width: 70%;
+	}
+}
+
+@media only screen and (min-device-width : 320px){
+	#mt-wishlist-tab .my-wishlist .data-table tbody .product-image {
+	    width: 74px;
+	    height: 96px;
 	}
 }
 
@@ -430,6 +460,10 @@
 	text-decoration: none;
 }
 
+#mt-report-tab .box p.no-order-msg,
+#mt-openorders-tab .box p.no-order-msg{
+	padding: 10px 0px 0px 10px;
+}
 
 #my-openorders-table .order-number,
 #my-orders-table .order-number

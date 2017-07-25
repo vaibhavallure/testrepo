@@ -28,8 +28,27 @@
 $item = $this->getItem();
 $product = $item->getProduct();
 ?>
-<textarea placeholder="Please, enter your comments..." name="description[<?php echo $item->getWishlistItemId() ?>]" 
-	rows="3" cols="5"  title="<?php echo $this->__('Comment') ?>"><?php echo ($this->escapeHtml($item->getDescription())) ?></textarea>
+<textarea class="ecp-wishlist-description" placeholder="Please, enter your comments..." name="description[<?php echo $item->getWishlistItemId() ?>]" 
+maxlength="45" rows="2" cols="5"  title="<?php echo $this->__('Comment') ?>"><?php echo ($this->escapeHtml($item->getDescription())) ?></textarea>
+<div class="charsRemaining">You have 45 characters left</div>
+ <script>
+        jQuery.noConflict();
+        jQuery(document).ready(function () {
+            jQuery('.ecp-wishlist-description').each(function(){
+                var max = parseInt(jQuery(this).attr('maxlength')); 
+                jQuery(this).parent().find('.charsRemaining').html('You have ' + (max - jQuery(this).val().length) + ' characters left');
+            });
+            jQuery('textarea[maxlength]').keyup(function () {
+                var max = parseInt(jQuery(this).attr('maxlength'));                
+                if (jQuery(this).val().length > max) {
+                    jQuery(this).val(jQuery(this).val().substr(0, jQuery(this).attr('maxlength')));
+                }
+
+                jQuery(this).parent().find('.charsRemaining').html('You have ' + (max - jQuery(this).val().length) + ' characters left');
+            });
+        });
+
+    </script>
 </td>
 
 <td  class="table-qty a-center">
