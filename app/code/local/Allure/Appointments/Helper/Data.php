@@ -170,5 +170,11 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 			return  15 * $qty;
 		}
 	}
+	public function decimalToTime($val){
+	       $hr=(int)$val/1;
+	       $min = fmod($val, 1)*60;
+	       return $hr.":".$min.':00';
+	    
+	}
 }
 	 

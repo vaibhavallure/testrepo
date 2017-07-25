@@ -61,19 +61,23 @@
 		 		var events = [];
 
 		 		var data = data.response.events;
-				
+				//console.log(data);
 		 		for(var i = 0; i< data.length; i++){
 
 					var startDate = convertDate(data[i].start);
 
 					var endDate = convertDate(data[i].end);
+					var color = data[i].color;
 
 					events[i] =  {
 		 					title: data[i].title,
 		                    start: startDate,
 		                    end: endDate,
 		                    allDay: false,
-		                    url : data[i].url
+		                    url : data[i].url,
+		                    backgroundColor: color
+		                   
+		                    
 		 			};
 		 		}
 
@@ -96,6 +100,7 @@
 						editable: true,
 						eventLimit: true, // allow "more" link when too many events
 						events: events
+						
 					});
 	 		}
 		});

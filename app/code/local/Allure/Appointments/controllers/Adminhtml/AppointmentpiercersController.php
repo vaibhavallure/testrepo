@@ -224,10 +224,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	$piercer_id = $this->getRequest()->getParam('piercer_id');
     	Mage::log($piercer_id,Zend_Log::DEBUG, 'appointments', true );
     	$url = "not found";
-    	$allAppointments = Mage::getModel('appointments/appointments')->getCollection();
-    	/* if($store_id){
-    		$allAppointments->addFieldToFilter('store_id',$store_id);
-    	} */
+  /*   	$allAppointments = Mage::getModel('appointments/appointments')->getCollection();
     	$allAppointments->addFieldToFilter('app_status',array('in'=>array('1','2')));
     	
     	if(!empty($piercer_id) && $piercer_id!=0)
@@ -242,6 +239,72 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     					'url'=>$this->getUrl('admin_appointments/adminhtml_appointments/view/id/'.$appointment->getId(),array('_secure' => true))
     			);
     		}
+    	} */
+    	$helper=Mage::helper('appointments');
+    	$piercers = Mage::getModel('appointments/piercers')->getCollection();
+    	$piercers->addFieldToFilter('is_active',array('in'=>array('1')));
+    	if(!empty($piercer_id) && $piercer_id!=0)
+    	    $piercers->addFieldToFilter('id',$piercer_id);
+    	$calenderEvents=array();
+    	foreach ($piercers as $piercer){
+    	    $color=$piercer->getColor();
+    	    Mage::log($color,Zend_Log::DEBUG,'abc',true);
+    	    $workdaysarr = explode(",", $piercer->getWorkingDays());
+    	    if(count($workdaysarr)){
+    	        foreach ($workdaysarr as $singeDay){
+    	            $dayOfWeek = date("d", strtotime($singeDay));
+    	            $day = date('l', strtotime($date));
+    	            $workingHours = $piercer->getWorkingHours();
+    	            $workingHours = unserialize($workingHours);
+    	            foreach ($workingHours as $workSlot)
+    	            {
+    	                //$workStart = $workSlot['start'].":00";
+    	                
+    	                if($workSlot['day']!=$day){
+    	                    continue;
+    	                    
+    	                }
+    	            
+    	                $start=$helper->decimalToTime($workSlot['start']);
+    	                $start = date("Y-m-d", strtotime($singeDay))." " .$start;
+    	                 Mage::log($start,Zend_Log::DEBUG,'abc',true);
+    	                 $breakStart=$helper->decimalToTime($workSlot['break_start']); 
+    	                 $breakStart = date("Y-m-d", strtotime($singeDay))." " .$breakStart;
+    	                
+    	                $calenderEvents[] = array('title'=>$piercer->getFirstname()." ".$piercer->getLastname(),
+    	                    'start'=>$start,
+    	                    'end'=>$breakStart,
+    	                    'url'=>"goole.com",
+    	                    'color'=>$color
+    	                    
+    	                );
+    	                
+    	                $breakEnd=$helper->decimalToTime($workSlot['break_end']);
+    	                $end=$helper->decimalToTime($workSlot['end']);
+    	                
+    	                $breakEnd = date("Y-m-d", strtotime($singeDay))." " .$breakEnd;
+    	                
+    	                $end = date("Y-m-d", strtotime($singeDay))." " .$end;
+    	                $calenderEvents[] = array('title'=>$piercer->getFirstname()." ".$piercer->getLastname(),
+    	                    'start'=>$breakEnd,
+    	                    'end'=>$end,
+    	                    'url'=>"goole.com",
+    	                    'color'=>$color
+    	                );
+    	                $breakColor="#D08040";
+    	                $calenderEvents[] = array('title'=>"Luch Break",
+    	                    'start'=>$breakStart,
+    	                    'end'=>$breakEnd,
+    	                    'url'=>"goole.com",
+    	                    'color'=>$breakColor
+    	                    
+    	                );
+    	            }
+    	        }
+    	    
+    	    }
+    	    
+    	    
     	}
     	$_currentStore=Mage::app()->getStore();
     	$code1 = $_currentStore->getCode();
@@ -252,5 +315,6 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	$this->getResponse ()->setHeader ( 'Content-type', 'application/json' );
     	$this->getResponse ()->setBody ( $jsonData );
     }
+   
     
 }
