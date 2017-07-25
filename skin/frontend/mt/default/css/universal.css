@@ -1818,3 +1818,11 @@ width: 245px;
 #new-mt-myproduct-cart .cart-empty{
 	margin-top: -20px;
 }
+.register-back-link{
+	display: block;
+}
+
+.popupRegisterModel .amazon-pay-button{
+    margin-top: 0px ! important;
+    margin-right: 55px;
+}

@@ -30,6 +30,11 @@
 	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__("Confirm Password")?></label>
 	  		    <input id='confirmation' type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
 			</div>
+			
+			<div class="row">
+	 		    <label for="required fields"><em>*</em><?php echo $this->__("Required Fields")?></label>
+			</div>
+			
 			<div class="row news-letter">
 	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
 	  		    <label class="popup-login-lbl popupcheckbox_lbl"><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
@@ -37,10 +42,20 @@
 		
 		</div>
 		<div class="pop-link">
-
+			<a id="register-back-link" class="register-back-link"><?php echo $this->__("Back")?></a>
             <button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
 			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
+			
+			<?php if(0):?>
 			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
+            <?php endif;?>
+            
+            <?php 
+                echo $this->getLayout()->createBlock('amazon_payments/button')
+                    ->setTemplate('amazon_payments/button.phtml')->toHtml(); 
+            ?>
+            
+            
             <span id="popup_loader_register" class="please-wait-popup-register" style="display: none;">
                 <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
 
@@ -50,16 +65,25 @@
 </div>
 
 
+<?php 
+   //echo $this->getLayout()->createBlock('amazon_payments/script')
+     //    ->setTemplate('amazon_payments/script.phtml')->toHtml(); 
+?>
+
 <script type="text/javascript">
  function openRegisterModal(){
 	jQuery('#wishlist_input').val('');
 	jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupRegisterModel").css({"opacity":"1","pointer-events":"auto"});
+	jQuery('.popupRegisterModel .amazon-pay-button img').attr('src','https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png');
 };
-
 
 //jQuery("#sign_in_label").on('click',function(){	
 
+jQuery('#register-back-link').on('click',function(){
+	jQuery(".close").trigger('click');
+	jQuery("#sign_in_label").trigger('click');
+});
 
 jQuery(".close").on('click',function(){
 	jQuery('#wishlist_input').val('');
