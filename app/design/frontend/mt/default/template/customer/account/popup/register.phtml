@@ -42,7 +42,7 @@
 		
 		</div>
 		<div class="pop-link">
-			<a id="register-back-link" class="register-back-link"><?php echo $this->__("Back")?></a>
+			<a id="register-back-link" onclick="gotoLoginPage();" class="register-back-link"><?php echo $this->__("Back to login")?></a>
             <button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
 			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
 			
@@ -79,11 +79,10 @@
 };
 
 //jQuery("#sign_in_label").on('click',function(){	
-
-jQuery('#register-back-link').on('click',function(){
+function gotoLoginPage(){
 	jQuery(".close").trigger('click');
 	jQuery("#sign_in_label").trigger('click');
-});
+}
 
 jQuery(".close").on('click',function(){
 	jQuery('#wishlist_input').val('');

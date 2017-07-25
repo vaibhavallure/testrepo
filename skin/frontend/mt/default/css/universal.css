@@ -1826,3 +1826,8 @@ width: 245px;
     margin-top: 0px ! important;
     margin-right: 55px;
 }
+
+.popupResetPasswordModel #resetpass-back-link{
+	position: absolute;
+	margin-top: 10px;
+}
