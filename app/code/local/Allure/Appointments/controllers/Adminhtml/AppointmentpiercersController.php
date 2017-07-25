@@ -292,7 +292,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	                    'color'=>$color
     	                );
     	                $breakColor="#D08040";
-    	                $calenderEvents[] = array('title'=>"Luch Break",
+    	                $calenderEvents[] = array('title'=>"Luch Break"." ".$piercer->getFirstname()." ".$piercer->getLastname(),
     	                    'start'=>$breakStart,
     	                    'end'=>$breakEnd,
     	                    'url'=>"goole.com",
