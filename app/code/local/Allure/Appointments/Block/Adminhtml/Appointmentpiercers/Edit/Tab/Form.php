@@ -101,6 +101,12 @@ class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Edit_Tab_Form exte
 						"name" => "is_active"
 				));
 		
+		$fieldset->addField("color", "text",
+		    array(
+		        "label" => Mage::helper("appointments")->__("Color"),
+		        "name" => "color"
+		    ));
+		
 		if (Mage::getSingleton("adminhtml/session")->getAppointmentpiercersData()) {
 			$form->setValues(Mage::getSingleton("adminhtml/session")->getAppointmentpiercersData());
 			Mage::getSingleton("adminhtml/session")->getAppointmentpiercersData(null);
