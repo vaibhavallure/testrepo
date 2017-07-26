@@ -316,7 +316,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     		foreach ($allAppointments as $appointment){
     		    $piercer=Mage::getModel("appointments/piercers")->load($appointment->getPiercerId());
     		    
-	    		$calenderEvents[] = array('title'=>$appointment->getFirstname()." ".$appointment->getLastname(),
+    		    $calenderEvents[] = array('title'=>$appointment->getFirstname()." ".$appointment->getLastname()." (".$piercer->getFirstname()." ".$piercer->getLastname().")",
 	    				'start'=>$appointment->getAppointmentStart(),
 	    				'end'=>$appointment->getAppointmentEnd(),
 	    				'url'=>$this->getUrl('admin_appointments/adminhtml_appointments/view/id/'.$appointment->getId(),array('_secure' => true)),

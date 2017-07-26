@@ -593,3 +593,13 @@ a.next span,
     background: #bfa979;
 	
 }
+textarea {
+	    width: 160%;
+    height: 56px;
+    background: #F7F7F7;
+    border: none;
+    padding: 9px 6px;
+    border: none;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
+}

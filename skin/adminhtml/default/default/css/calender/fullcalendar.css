@@ -1082,6 +1082,7 @@ a.fc-more:hover {
 .fc-time-grid .fc-slats td {
 	height: 1.5em;
 	border-bottom: 0; /* each cell is responsible for its top border */
+    height: 30px !important;
 }
 
 .fc-time-grid .fc-slats .fc-minor td {
@@ -1377,6 +1378,7 @@ be a descendant of the grid when it is being dragged.
 	text-decoration: underline;
 }
 
+
 /* message when no events */
 
 .fc-list-empty-wrap2 {
@@ -1401,4 +1403,12 @@ be a descendant of the grid when it is being dragged.
 
 .fc-unthemed .fc-list-empty { /* theme will provide own background */
 	background-color: #eee;
+}
+.fc-content-skeleton .fc-time-grid-event{
+	   min-height: 17px;
+    font-size: 13px;
+}
+.fc-day-grid .fc-content-skeleton .fc-day-grid-event{
+	   min-height: 17px;
+    font-size: 13px;
 }
