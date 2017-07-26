@@ -274,7 +274,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	                $calenderEvents[] = array('title'=>$piercer->getFirstname()." ".$piercer->getLastname(),
     	                    'start'=>$start,
     	                    'end'=>$breakStart,
-    	                    'url'=>"goole.com",
+    	                    'url'=>$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
     	                    'color'=>$color
     	                    
     	                );
@@ -288,14 +288,14 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	                $calenderEvents[] = array('title'=>$piercer->getFirstname()." ".$piercer->getLastname(),
     	                    'start'=>$breakEnd,
     	                    'end'=>$end,
-    	                    'url'=>"goole.com",
+    	                    'url'=>$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
     	                    'color'=>$color
     	                );
     	                $breakColor="#D08040";
-    	                $calenderEvents[] = array('title'=>"Luch Break"." ".$piercer->getFirstname()." ".$piercer->getLastname(),
+    	                $calenderEvents[] = array('title'=>"Luch Break"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
     	                    'start'=>$breakStart,
     	                    'end'=>$breakEnd,
-    	                    'url'=>"goole.com",
+    	                    'url'=>$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
     	                    'color'=>$breakColor
     	                    
     	                );
