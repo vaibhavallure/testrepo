@@ -209,7 +209,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         {
                             Mage::log("Modifing appointment",Zend_Log::DEBUG,'appointments',true);
                             $smsText = Mage::getStoreConfig("appointments/api/smstext_modified",$storeId);
-                            $smsText.= " ".$appointmentStart;
+                            $smsText=str_replace("(date)",$appointmentStart,$smsText);
                             if($post_data['phone']){
                                 $smsdata = Mage::helper('appointments')->sendsms($post_data['phone'],$smsText,$storeId);
                                 Mage::log("Appointment Modification Email Sent",Zend_Log::DEBUG,'appointments',true);
@@ -351,7 +351,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         {
                             Mage::log("New appointment Bookig",Zend_Log::DEBUG,'appointments',true);
                             $smsText = Mage::getStoreConfig("appointments/api/smstext_book",$storeId);
-                            $smsText.= " ".$appointmentStart;
+                            $smsText=str_replace("(date)",$appointmentStart,$smsText);
                             if($model->getPhone()){
                                 $smsdata = Mage::helper('appointments')->sendsms($model->getPhone(),$smsText,$storeId);
                                 $model->setSmsStatus($smsdata);

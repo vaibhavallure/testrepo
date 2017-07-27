@@ -17,34 +17,41 @@ if($_product->getTypeId()=="configurable"){
 	}
 	/* if(!empty($childrenProducts))
 		$productId = implode(",", $childrenProducts); */
-}
-     $parentItemNumber = $_product->getParentItemNumber();
-     $childrenProducts= Mage::getModel('catalog/product')->getCollection()
-         ->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%')))
-         ->addAttributeToFilter( array(array('attribute'=> 'type_id','eq'=>'configurable')));
-
-     $collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
-     $str = '';
-     $cnt = 0;
-     if(!empty($childrenProducts)){
-     	foreach ($childrenProducts as $singleProduct){
-     		$cnt = $cnt+1;
-     		//$collection->addFieldToFilter('product_ids',array('finset'=> array($id)));
-     		$str .= ' FIND_IN_SET(('.$singleProduct->getId().'),`product_ids`) OR ';
-     		/* if(count($childrenProducts)>1 && count($childrenProducts)>$cnt)
-     			$str.= ' OR '; */
-     	}
-     	
-     }else{
-     	//$collection->addFieldToFilter('product_ids',array('finset'=> array($productId)));
-     	//$str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
-     }
-     $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
-	//->addFieldToFilter('product_ids',array('finset'=> array($productId)))
-    // $collection->addFieldToFilter('status', 1);
-	$collection->getSelect()->where( 'status = 1 AND ('.$str.')');
-    //var_dump($collection->getSelect()->__toString());
-?>
+    }
+    $parentItemNumber = $_product->getParentItemNumber();
+    $childrenProducts= Mage::getModel('catalog/product')->getCollection();
+      if(isset($parentItemNumber))
+            $childrenProducts->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%')));
+      else {
+            $childrenProducts->addAttributeToFilter( array(
+                array('attribute'=> 'sku','like' => ''.$sku_main.'%')));
+      }
+      $childrenProducts->addAttributeToFilter( array(
+            array('attribute'=> 'type_id','eq'=>'configurable')));
+        
+    
+         $collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
+         $str = '';
+         $cnt = 0;
+         if(!empty($childrenProducts)){
+         	foreach ($childrenProducts as $singleProduct){
+         		$cnt = $cnt+1;
+         		//$collection->addFieldToFilter('product_ids',array('finset'=> array($id)));
+         		$str .= ' FIND_IN_SET(('.$singleProduct->getId().'),`product_ids`) OR ';
+         		/* if(count($childrenProducts)>1 && count($childrenProducts)>$cnt)
+         			$str.= ' OR '; */
+         	}
+         	
+         }else{
+         	//$collection->addFieldToFilter('product_ids',array('finset'=> array($productId)));
+         	//$str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
+         }
+         $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
+    	//->addFieldToFilter('product_ids',array('finset'=> array($productId)))
+        // $collection->addFieldToFilter('status', 1);
+    	$collection->getSelect()->where( 'status = 1 AND ('.$str.')');
+        //var_dump($collection->getSelect()->__toString());
+    ?>
 
 <?php if (($collection && $collection->getSize())) : ?>
     <div class="mt-allure-instagram-block block-title">
@@ -81,9 +88,8 @@ if($_product->getTypeId()=="configurable"){
                     	$numberOfProducts += 1;
                     	$temp_sku = $sku;
                     	$temp_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-                    	
-                    	$temp_product_parent=$temp_product->getParentItemNumber();
-                    	
+                    	if(!empty($temp_product))
+                    	   $temp_product_parent=$temp_product->getParentItemNumber();
                     	if (isset($temp_product_parent) && $temp_product_parent == $parentItemNumber) {
                     	    Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
                     	    $sku = $old_sku;
@@ -95,17 +101,14 @@ if($_product->getTypeId()=="configurable"){
                     	    $productUrl = $product->getProductUrl();
                     	}else{
                     	    $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$temp_sku);
-                    	    $productName = $product->getName();
-                    	    $productId = $product->getId();
-                    	    $productUrl = $product->getProductUrl();
+                    	    if(!empty($product)){
+                    	        $productName = $product->getName();
+                    	        $productId = $product->getId();
+                    	        $productUrl = $product->getProductUrl();
+                    	    }
                     	}
                     
-                    	/* $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
-                    	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null); */
-                    	
-                    /* 	if(!is_null($parentId)){
-                    		$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
-                    	} */
+                       
                     	
                     	$current_product_class = "";
                     	if(in_array($productId, $childProductArr))
