@@ -104,6 +104,11 @@
 .mt-myaccount-page #sns_tab_products .mt-account-active-tab > a{
 	text-decoration: none;
 }
+
+.mt-new-myaccount-submenu .a-column.a-span9{
+	margin-top: 10px;
+}
+
 /*Tab code css end*/
 
 
@@ -261,9 +266,14 @@
 
 #purchase-history .cart-table tbody .table-qty,
 #purchase-history .cart-table tbody .table-tax{
-	/* clear: both; */
-    float: left;
-   /*  margin-right: 40px; */
+	clear: both;
+    float: right;
+}
+#purchase-history .cart-table tbody .table-qty{
+	 margin-right: 19%;
+}
+#purchase-history .cart-table tbody .table-tax{
+	 margin-right: 20%;
 }
 
 #purchase-history .cart-table tbody .table-qty .qty-wrap span{
@@ -287,9 +297,27 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#757881', endColorstr='#b5bbc9',GradientType=0 );
 }
 
+@media only screen and (min-device-width : 414px){
+	#purchase-history .cart-table tbody .table-qty{
+	 	margin-right: 22%;
+	}
+	#purchase-history .cart-table tbody .table-tax{
+	 	margin-right: 23%;
+	}
+}
+
+
+
 @media only screen and (max-device-width : 320px){
 	#purchase-history .table-product-info {
     	width: 35%;
+	}
+	
+	#purchase-history .cart-table tbody .table-qty{
+	 	margin-right: 14%;
+	}
+	#purchase-history .cart-table tbody .table-tax{
+	 	margin-right: 15%;
 	}
 }
 
@@ -361,6 +389,21 @@
 #mt-cart-tab #shopping-cart-table tr td .product-image{
 	padding: 0px;
 }
+
+@media only screen and (max-device-width : 320px){
+	#mt-cart-tab .discount .discount-form .input-box{
+    	width: 78%;
+	}
+	
+	#mt-cart-tab .pay-caart button.button {
+    	padding: 5px !important;
+	}
+	
+	#mt-cart-tab .table-qty.a-center{
+		margin-left: 36%;
+	}
+}
+
 /*Cart css end*/
 
 
