@@ -33,7 +33,7 @@ $productId = $_product->getId();
 $sku_main = $_product->getSku();
 $old_sku = $sku_main;
 if(preg_match("/_/", $sku_main))
-    $sku_main = substr($sku_main, 0,strpos($sku_main, "_"));
+    //$sku_main = substr($sku_main, 0,strpos($sku_main, "_"));
 
 	$childProductArr = array();
 	$childProductArr[] = $productId;
@@ -46,13 +46,16 @@ if(preg_match("/_/", $sku_main))
 
 	
 	$parentItemNumber = $_product->getParentItemNumber();
-	$childrenProducts= Mage::getModel('catalog/product')->getCollection()
-		->addAttributeToFilter( array(
-				array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%')))
-	->addAttributeToFilter( array(
+	$childrenProducts= Mage::getModel('catalog/product')->getCollection();
+	if(isset($parentItemNumber))
+	    $childrenProducts->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%')));
+	else {
+	     $childrenProducts->addAttributeToFilter( array(
+	     array('attribute'=> 'sku','like' => ''.$sku_main.'%')));
+	}
+	$childrenProducts->addAttributeToFilter( array(
 			array('attribute'=> 'type_id','eq'=>'configurable')));
-	/* ->addAttributeToFilter( array(
-			array('attribute'=> 'sku','like' => ''.$sku_main.'%'))); */
+
     
 	$collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
      $str = '';
@@ -106,7 +109,8 @@ if(preg_match("/_/", $sku_main))
                         $sku = $option->text;
                         $temp_sku = $sku;
                         $temp_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-                        $temp_product_parent=$temp_product->getParentItemNumber();
+                        if (!empty($temp_product))
+                            $temp_product_parent=$temp_product->getParentItemNumber();
                         /* if (preg_match("/_/", $temp_sku))
                             $temp_sku = substr($temp_sku, 0, strpos($temp_sku, "_")); */  //commented by Ajay to enable Check by Parent Item Number
                         
@@ -122,19 +126,15 @@ if(preg_match("/_/", $sku_main))
                             $productId = $product->getId();
                         }else{
 							$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$temp_sku);
+							if(!empty($product)){
 							$productName = $product->getName();
 							$productId = $product->getId();
 							$productUrl = $product->getProductUrl();
+							}
 						}
                     
                     
-                    	/*$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
-                    	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-                    	$productUrl = $product->getProductUrl();
-                    	if(!is_null($parentId)){
-                    		$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
-                    	}*/
-                    	
+                  
                     	$current_product_class = "";
                     	if(in_array($productId, $childProductArr))
                     		$current_product_class = "fs_current_product";
