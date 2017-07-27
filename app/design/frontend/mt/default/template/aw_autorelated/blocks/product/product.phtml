@@ -47,12 +47,12 @@ if(preg_match("/_/", $sku_main))
 	
 	$parentItemNumber = $_product->getParentItemNumber();
 	$childrenProducts= Mage::getModel('catalog/product')->getCollection()
-		/* ->addAttributeToFilter( array(
-				array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%'))); */
+		->addAttributeToFilter( array(
+				array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%')))
 	->addAttributeToFilter( array(
-			array('attribute'=> 'type_id','eq'=>'configurable')))
-	->addAttributeToFilter( array(
-			array('attribute'=> 'sku','like' => ''.$sku_main.'%')));
+			array('attribute'=> 'type_id','eq'=>'configurable')));
+	/* ->addAttributeToFilter( array(
+			array('attribute'=> 'sku','like' => ''.$sku_main.'%'))); */
     
 	$collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
      $str = '';
@@ -61,7 +61,7 @@ if(preg_match("/_/", $sku_main))
      	foreach ($childrenProducts as $product){
      		$cnt = $cnt+1;
 
-     			$str .= ' FIND_IN_SET(('.$product->getId().'),`product_ids`) OR ';
+     		$str .= ' FIND_IN_SET(('.$product->getId().'),`product_ids`) OR ';
 
      	}
      	
@@ -101,21 +101,32 @@ if(preg_match("/_/", $sku_main))
                     $points = "";
                     $productsLinks = "";
                     $numberOfProducts = 0;
+					$temp_sku="";
                     foreach ($_options as $option) {
                         $sku = $option->text;
                         $temp_sku = $sku;
-                        if (preg_match("/_/", $temp_sku))
-                            $temp_sku = substr($temp_sku, 0, strpos($temp_sku, "_"));
-
+                        $temp_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                        $temp_product_parent=$temp_product->getParentItemNumber();
+                        /* if (preg_match("/_/", $temp_sku))
+                            $temp_sku = substr($temp_sku, 0, strpos($temp_sku, "_")); */  //commented by Ajay to enable Check by Parent Item Number
+                        
                         $numberOfProducts += 1;
-                                              if ($temp_sku == $sku_main) {
-                                                  Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
-
-                                                  $sku = $old_sku;
-                    }
-                    	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-                    	$productName = $product->getName();
-                    	$productId = $product->getId();
+                        
+                        if (isset($temp_product_parent) && $temp_product_parent == $parentItemNumber) {
+                            Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
+                            $sku = $old_sku;
+                        }
+                        $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                        if(!empty($product)){
+                            $productName = $product->getName();
+                            $productId = $product->getId();
+                        }else{
+							$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$temp_sku);
+							$productName = $product->getName();
+							$productId = $product->getId();
+							$productUrl = $product->getProductUrl();
+						}
+                    
                     
                     	/*$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
                     	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
@@ -159,7 +170,7 @@ if(preg_match("/_/", $sku_main))
 							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo $_post->getCaption() ?></div>
 								<div id="insta-product-mark-<?php echo $media_id?>" style="display: none;"><?php echo $points ?></div>
 								<div id="insta-product-details-<?php echo $media_id?>" style="display: none;"><?php echo $productsLinks ?></div>
-							</div>
+					</div>
                 </li>
             <?php endforeach; ?>
         </ul>

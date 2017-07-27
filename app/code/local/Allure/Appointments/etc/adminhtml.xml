@@ -17,10 +17,15 @@
 								<sort_order>2</sort_order>
 								<action>admin_appointments/adminhtml_appointments/viewCalender</action>
 							</appointments_calender>
+							<piercers_calender module="appointments">
+								<title>View Piercers on Calender</title>
+								<sort_order>2</sort_order>
+								<action>admin_appointments/adminhtml_appointmentpiercers/viewCalender</action>
+							</piercers_calender>
 							<piercers module="appointments">
 								<title>Manage Piercers</title>
 								<sort_order>3</sort_order>
-								<action>admin_appointments/adminhtml_appointmentpiercers</action>
+								<action>admin_appointments/adminhtml_appointmentpiercers/index</action>
 							</piercers>
 							<timing module="appointments">
 								<title>Manage Piercing Timing</title>

@@ -1,26 +1,36 @@
 <?php
 $_product = Mage::registry('current_product');
 $productId = $_product->getId();
+$sku_main = $_product->getSku();
 
 $childrenProducts = [];
 if($_product->getTypeId()=="configurable"){
 	$childrenIds = $_product->getTypeInstance()->getChildrenIds($productId);
 	
-	foreach ($childrenIds[0] as $childrenId) {
-		$childrenProducts[] = $childrenId;
+	$childProductArr = array();
+	$childProductArr[] = $productId;
+	if($_product->getTypeId()=="configurable"){
+	    $currentchildrenIds = $_product->getTypeInstance()->getChildrenIds($productId);
+	    foreach ($currentchildrenIds[0] as $childrenId) {
+	        $childProductArr[] = $childrenId;
+	    }
 	}
 	/* if(!empty($childrenProducts))
 		$productId = implode(",", $childrenProducts); */
 }
+     $parentItemNumber = $_product->getParentItemNumber();
+     $childrenProducts= Mage::getModel('catalog/product')->getCollection()
+         ->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%')))
+         ->addAttributeToFilter( array(array('attribute'=> 'type_id','eq'=>'configurable')));
 
      $collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
      $str = '';
      $cnt = 0;
      if(!empty($childrenProducts)){
-     	foreach ($childrenProducts as $id){
+     	foreach ($childrenProducts as $singleProduct){
      		$cnt = $cnt+1;
      		//$collection->addFieldToFilter('product_ids',array('finset'=> array($id)));
-     		$str .= ' FIND_IN_SET(('.$id.'),`product_ids`) OR ';
+     		$str .= ' FIND_IN_SET(('.$singleProduct->getId().'),`product_ids`) OR ';
      		/* if(count($childrenProducts)>1 && count($childrenProducts)>$cnt)
      			$str.= ' OR '; */
      	}
@@ -69,29 +79,50 @@ if($_product->getTypeId()=="configurable"){
                     foreach ($_options as $option){
                     	$sku = $option->text;
                     	$numberOfProducts += 1;
-                    	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-                    	$productName = $product->getName();
-                    	$productId = $product->getId();
-                    
-                    	$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
-                    	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-                    	$productUrl = $product->getProductUrl();
-                    	if(!is_null($parentId)){
-                    		$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+                    	$temp_sku = $sku;
+                    	$temp_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                    	
+                    	$temp_product_parent=$temp_product->getParentItemNumber();
+                    	
+                    	if (isset($temp_product_parent) && $temp_product_parent == $parentItemNumber) {
+                    	    Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
+                    	    $sku = $old_sku;
                     	}
+                    	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                    	if(!empty($product)){
+                    	    $productName = $product->getName();
+                    	    $productId = $product->getId();
+                    	    $productUrl = $product->getProductUrl();
+                    	}else{
+                    	    $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$temp_sku);
+                    	    $productName = $product->getName();
+                    	    $productId = $product->getId();
+                    	    $productUrl = $product->getProductUrl();
+                    	}
+                    
+                    	/* $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+                    	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null); */
+                    	
+                    /* 	if(!is_null($parentId)){
+                    		$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+                    	} */
+                    	
+                    	$current_product_class = "";
+                    	if(in_array($productId, $childProductArr))
+                    	    $current_product_class = "fs_current_product";
                     
                     	$points .= '<a data-original-url="'.$productUrl.'"';
                     	$points .= ' href="'.$productUrl.'" target="_blank">';
-                    	$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
+                    	$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink '.$current_product_class.'" ';
                     	$points .= ' data-link-id="'.$productId.'" ';
                     	$points .= ' style="position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/640).'%; left:'.(($option->left*100)/640).'%;">';
-                    	$points .= '<div>'.$numberOfProducts.'</div>';
+                    	$points .= '<div class=" '.$current_product_class.'">'.$numberOfProducts.'</div>';
                     	$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
                     	$points .= '<div class="fs-arrow-up"></div>';
                     	$points .= 'Shop it // " '.$productName.'</div></div></a>';
                     
                     	$productsLinks .= '<div class="fs-text-link-container ">';
-                    	$productsLinks .= '<a class="fs-text-product fs-link-list" ';
+                    	$productsLinks .= '<a class="fs-text-product fs-link-list '.$current_product_class.'" ';
                     	$productsLinks .= 'data-original-url="'.$productUrl.'"';
                     	$productsLinks .= ' id="fs_link_'.$productId.'" target="_blank" data-link-id="'.$productId.'"';
                     	$productsLinks .= ' href="'.$productUrl.'"> <span class="fs-link-text-all">';

@@ -44,6 +44,28 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		//$timing[$i]= sprintf("%02d", $i).":00";
 		return $timing;
 	}
+	public function  getDaysSelect(){
+		$daysArray=array();
+		$daysArray['Sunday']='Sunday';
+		$daysArray['Monday']='Monday';
+		$daysArray['Tuesday']='Tuesday';
+		$daysArray['Wednesday']='Wednesday';
+		$daysArray['Thursday']='Thursday';
+		$daysArray['Friday']='Friday';
+		$daysArray['Saturday']='Saturday';
+		return $daysArray;
+	}
+	public function  getDaysSelectHtml($val=null){
+		$output = "";
+		$days = $this->getDaysSelect();
+		foreach ($days as $key => $value)
+		{
+			$selected = ($val==$key) ? 'selected' : '';
+			$output .= "<option value=".$key." $selected>".$value."</option>";
+		}
+		$output.="";
+		return $output;
+	}
 	public function getTimeSelectHtml($val=null)
 	{
 		$output = "";
@@ -147,6 +169,12 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		}else {
 			return  15 * $qty;
 		}
+	}
+	public function decimalToTime($val){
+	       $hr=(int)$val/1;
+	       $min = fmod($val, 1)*60;
+	       return $hr.":".$min.':00';
+	    
 	}
 }
 	 
