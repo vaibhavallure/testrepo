@@ -1289,3 +1289,21 @@ a.fs-shop-link.fs-link-list {
 .fs-continue-shopping:hover {
   background: #3c3c3c;
   color: #fff; }
+  
+  .fs-overlink.fs_current_product {
+    background: url(../../images/star.png) left top;
+    background-size: 100%;
+    border-radius: 0;
+    height: 40px;
+    width: 40px;
+    box-shadow: none;
+    	line-height: 3.9;
+    
+}
+ .fs-overlink.fs_current_product:hover{
+ 	box-shadow:none;
+ }
+ 
+ .fs-product-number.fs_current_product{
+ 	line-height: 3.9;
+ }
