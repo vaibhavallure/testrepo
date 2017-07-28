@@ -209,7 +209,12 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         {
                             Mage::log("Modifing appointment",Zend_Log::DEBUG,'appointments',true);
                             $smsText = Mage::getStoreConfig("appointments/api/smstext_modified",$storeId);
-                            $smsText=str_replace("(date)",$appointmentStart,$smsText);
+                            
+                            $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+                            $time=date('h:i A', strtotime($model->getAppointmentStart()));
+                            $smsText=str_replace("(time)",$time,$smsText);
+                            $smsText=str_replace("(date)",$date,$smsText);
+                            
                             if($post_data['phone']){
                                 $smsdata = Mage::helper('appointments')->sendsms($post_data['phone'],$smsText,$storeId);
                                 Mage::log("Appointment Modification Email Sent",Zend_Log::DEBUG,'appointments',true);
@@ -351,7 +356,15 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         {
                             Mage::log("New appointment Bookig",Zend_Log::DEBUG,'appointments',true);
                             $smsText = Mage::getStoreConfig("appointments/api/smstext_book",$storeId);
-                            $smsText=str_replace("(date)",$appointmentStart,$smsText);
+                          
+                            $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+                            $time=date('h:i A', strtotime($model->getAppointmentStart()));
+                            $smsText=str_replace("(time)",$time,$smsText);
+                            $smsText=str_replace("(date)",$date,$smsText);
+                            $apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
+                            $shortUrl=Mage::helper('appointments')->getShortUrl($apt_modify_link);
+                            $smsText=str_replace("(modify_link)",$shortUrl,$smsText);
+                            
                             if($model->getPhone()){
                                 $smsdata = Mage::helper('appointments')->sendsms($model->getPhone(),$smsText,$storeId);
                                 $model->setSmsStatus($smsdata);
@@ -606,7 +619,17 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     //$smsText = "Your Appointment is Cancelled successfully";
                     $smsText = Mage::getStoreConfig("appointments/api/smstext_cancel",$storeId);
                     $appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-                    $smsText .= " ".$appointmentStart;
+                  
+                    $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+                    $time=date('h:i A', strtotime($model->getAppointmentStart()));
+                    
+                    $booking_link= Mage::getBaseUrl('web').'appointments/';
+                    $booking_link=Mage::helper('appointments')->getShortUrl($booking_link);
+                    $smsText=str_replace("(time)",$time,$smsText);
+                    $smsText=str_replace("(date)",$date,$smsText);
+                    $smsText=str_replace("(book_link)",$booking_link,$smsText);
+                    
+                    
                     if($model->getPhone()){
                         $phno_forsms = preg_replace('/\s+/', '', $model->getPhone());
                         $smsdata = Mage::helper('appointments')->sendsms($phno_forsms,$smsText,$storeId);
