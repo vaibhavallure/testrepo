@@ -24,20 +24,23 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-/**
- * Description of Video
- *
- * @category    Ecp
- * @package     Ecp_Video
- * @author      Entrepids Core Team <core@entrepids.com>
- */
-class Ecp_Video_Helper_Data extends Mage_Core_Helper_Abstract
-{
-    public function getDefaultVideo(){
-        $collection=Mage::getModel('ecp_video/video')->getCollection()
-        ->addFieldToFilter('status',1);
-        $collection->getSelect()->order('position', 'ASC');;
-       return $collection->getFirstItem();
-        
-    }
-}
+
+
+$installer = $this;
+
+$installer->startSetup();
+
+
+$connection = $installer->getConnection();
+
+
+
+$connection->addColumn(
+    $this->getTable('ecp_video'),//table name
+    'position',      //column name
+    'int(11)  DEFAULT 0'  //datatype definition
+    );
+
+$installer->endSetup();
+
+
