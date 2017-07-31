@@ -141,26 +141,29 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     
     public function newAction()
     {
-    	$id = $this->getRequest()->getParam('id');
+    /* 	$id = $this->getRequest()->getParam('id');
     	$model = Mage::getModel('appointments/piercers')->load($id);
     
     	$data = Mage::getSingleton('adminhtml/session')->getFormData(true);
     	if (!empty($data)) {
     		$model->setData($data);
-    	}
+    	} */
     
     	$this->loadLayout();
     	//$this->_setActiveMenu('blog/posts');
-    	$this->_title('Add new Piercer');
+    	$this->_title('Create Appointment');
     
-    	$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+    	/* $this->getLayout()->getBlock('head')->setCanLoadExtJs(true); */
     
-    	$this
-    	->_addContent($this->getLayout()->createBlock('appointments/adminhtml_appointmentpiercers_edit'))
-    	->_addLeft($this->getLayout()->createBlock('appointments/adminhtml_appointmentpiercers_edit_tabs'))
+    	/* $this
+    	->_addContent($this->getLayout()->createBlock('appointments/adminhtml_appointments_edit'))
+    	->_addLeft($this->getLayout()->createBlock('appointments/adminhtml_appointments_edit_tabs'))
     	;
-    	$this->getLayout()->getBlock('head')->setCanLoadTinyMce(true);
+    	$this->getLayout()->getBlock('head')->setCanLoadTinyMce(true); */
     	$this->renderLayout();
+    	
+    	
+    	
     }
     
     public function saveAction ()
@@ -311,10 +314,13 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     		if($allAppointments){
     			
     		foreach ($allAppointments as $appointment){
-	    		$calenderEvents[] = array('title'=>$appointment->getFirstname()." ".$appointment->getLastname(),
+    		    $piercer=Mage::getModel("appointments/piercers")->load($appointment->getPiercerId());
+    		    
+    		    $calenderEvents[] = array('title'=>$appointment->getFirstname()." ".$appointment->getLastname()." (".$piercer->getFirstname()." ".$piercer->getLastname().")",
 	    				'start'=>$appointment->getAppointmentStart(),
 	    				'end'=>$appointment->getAppointmentEnd(),
-	    				'url'=>$this->getUrl('admin_appointments/adminhtml_appointments/view/id/'.$appointment->getId(),array('_secure' => true))
+	    				'url'=>$this->getUrl('admin_appointments/adminhtml_appointments/view/id/'.$appointment->getId(),array('_secure' => true)),
+	    		        'color'=>$piercer->getColor()
 	    		);
     		}
     	 }

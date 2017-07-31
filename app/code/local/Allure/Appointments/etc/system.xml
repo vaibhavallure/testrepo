@@ -75,6 +75,16 @@
 							<show_in_store>0</show_in_store>
 							<sort_order>11</sort_order>
 											</status> -->
+						<google_api_key translate="label">
+							<label>Google API Key</label>
+							<frontend_type>text</frontend_type>
+							<comment>Google API Key for API Shortner</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>80</sort_order>
+						</google_api_key>
+						
 						<soap_url translate="label">
 							<label>Soap URL</label>
 							<frontend_type>text</frontend_type>
