@@ -126,7 +126,9 @@ var count = 1;
 			dataType:'json',
 			data: {storeid:storeid},
 			success : function(response){
-				jQuery("#fetchpickurday").html(response.output);				
+				jQuery("#fetchpickurday").html(response.output);
+				if(response.schedule)
+				  jQuery("#piercer_schedule").html(response.schedule);
 			}
      });
 	 //ajax start to get the working days of piercers according to store
@@ -167,6 +169,8 @@ var count = 1;
 					data: {storeid:storeid},
 					success : function(response){
 						jQuery("#fetchpickurday").html(response.output);
+						if(response.schedule)
+							jQuery("#piercer_schedule").html(response.schedule);
 					}
 		     });
 			 //ajax start to get the working days of piercers according to store
