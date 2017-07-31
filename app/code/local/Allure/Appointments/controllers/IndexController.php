@@ -124,6 +124,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
    		
    		$block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store']);
    		$output = $block->toHtml();
+   		
    		$result['success'] = true;
    		$result['msg'] = $time;
    		$result['output'] = $output;
@@ -780,9 +781,10 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     	$block = $this->getLayout()->createBlock('core/template','appointments_pickurday',array('template' => 'appointments/pickurday.phtml'))->setData("workingdays",$jsonDATA);
     	
     	$output = $block->toHtml();
-        
+    	$schedule= Mage::getStoreConfig("appointments/piercer_schedule/schedule",$storeid);
     	$result['success'] = true;
     	$result['output'] = $output;
+    	$result['schedule'] = $schedule;
     	 
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
