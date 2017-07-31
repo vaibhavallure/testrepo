@@ -45,7 +45,7 @@ class Allure_ProcessOrders_Model_OrderProcessor{
 //  		ob_flush();
 	}
 	
-	private function getOrderList($storeId, $status, $from) {
+	private function getOrderList($storeId, $status, $from, $to) {
 		$orderFilters = array (
 			"complex_filter" => array (
 				"complexObjectArray" => array (
@@ -69,7 +69,14 @@ class Allure_ProcessOrders_Model_OrderProcessor{
 							"key" => "from",
 							"value" => (string) $from 
 						)
-					)
+					),
+				    array (
+				        "key" => "created_at",
+				        "value" => array (
+				            "key" => "to",
+				            "value" => (string) $to
+				        )
+				    )
 				)
 			)
 		);
@@ -224,8 +231,9 @@ class Allure_ProcessOrders_Model_OrderProcessor{
 		$storeId 	= (isset($_GET['store']) && !empty($_GET['store'])) ? (int) $_GET['store'] : 2;
 		$status  	= (isset($_GET['status']) && !empty($_GET['status'])) ? (string) $_GET['status'] : 'pending';
 		$from 		= (isset($_GET['from']) && !empty($_GET['from'])) ? date("Y-m-d H:i:s", strtotime($_GET['from'],time())) : date("Y-m-d H:i:s", strtotime('first day of this month', time()));
+		$to 		= (isset($_GET['to']) && !empty($_GET['to'])) ? date("Y-m-d H:i:s", strtotime($_GET['to'],time())) : date("Y-m-d H:i:s", date("Y-m-d H:i:s",strtotime("-30 minutes")));
 		
-		$ordersList = $this->getOrderList($storeId, $status, $from);
+		$ordersList = $this->getOrderList($storeId, $status, $from,	$to);
 		if ($ordersList && count($ordersList)) {
 			foreach ($ordersList as $order) {
 				$this->processOrderStatus($order, $status);
