@@ -91,12 +91,14 @@ class Ecp_Video_Adminhtml_VideoController extends Mage_Adminhtml_Controller_acti
             $videoModel = Mage::getModel('ecp_video/video')->load($id);           
             try{
             if ($data = $this->getRequest()->getPost()) {
+            
                     $path = Mage::getBaseDir('media') . DS . 'videoupload' . DS;
                     $key = $videoModel->generateKey();
                     $ext = explode(".", $_FILES['thumbnail']['name']);
                     $name = $key.".".$ext[1];
                     $videoModel->setKey($key);
                     $videoModel->setTitle($data['title']);
+                    $videoModel->setPosition($data['position']);
                     $videoModel->setDuration($data['duration']);
                     $videoModel->setDescription($data['description']);
                     $videoModel->setStatus($data['status']);

@@ -1,6 +1,6 @@
 <?php
 
-class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
+class Allure_Appointments_Block_Adminhtml_Appointments_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
 	protected function _prepareForm ()
 	{
