@@ -44,6 +44,28 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		//$timing[$i]= sprintf("%02d", $i).":00";
 		return $timing;
 	}
+	public function  getDaysSelect(){
+		$daysArray=array();
+		$daysArray['Sunday']='Sunday';
+		$daysArray['Monday']='Monday';
+		$daysArray['Tuesday']='Tuesday';
+		$daysArray['Wednesday']='Wednesday';
+		$daysArray['Thursday']='Thursday';
+		$daysArray['Friday']='Friday';
+		$daysArray['Saturday']='Saturday';
+		return $daysArray;
+	}
+	public function  getDaysSelectHtml($val=null){
+		$output = "";
+		$days = $this->getDaysSelect();
+		foreach ($days as $key => $value)
+		{
+			$selected = ($val==$key) ? 'selected' : '';
+			$output .= "<option value=".$key." $selected>".$value."</option>";
+		}
+		$output.="";
+		return $output;
+	}
 	public function getTimeSelectHtml($val=null)
 	{
 		$output = "";
@@ -147,6 +169,32 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		}else {
 			return  15 * $qty;
 		}
+	}
+	public function decimalToTime($val){
+	       $hr=(int)$val/1;
+	       $min = fmod($val, 1)*60;
+	       return $hr.":".$min.':00';
+	    
+	}
+	public function getShortUrl($url){
+	    $apiKey = '';
+	    $apiKey = Mage::getStoreConfig('appointments/general/google_api_key');
+	    if (!$apiKey)
+	        $apiKey = 'AIzaSyCZ3hFq9zcuXks44WNSdpwtr4Zz1kRi6BI';
+	    $postData = array('longUrl' => $url);
+	    $jsonData = json_encode($postData);
+	    $curlObj = curl_init();
+	    curl_setopt($curlObj, CURLOPT_URL, 'https://www.googleapis.com/urlshortener/v1/url?key='.$apiKey);
+	    curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($curlObj, CURLOPT_SSL_VERIFYPEER, 0);
+	    curl_setopt($curlObj, CURLOPT_HEADER, 0);
+	    curl_setopt($curlObj, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
+	    curl_setopt($curlObj, CURLOPT_POST, 1);
+	    curl_setopt($curlObj, CURLOPT_POSTFIELDS, $jsonData);
+	    $response = curl_exec($curlObj);
+	    $json = json_decode($response);
+	    curl_close($curlObj);
+	    return $json->id;
 	}
 }
 	 
