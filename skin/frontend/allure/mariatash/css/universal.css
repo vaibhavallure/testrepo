@@ -106,7 +106,8 @@
 }
 
 .mt-new-myaccount-submenu .a-column.a-span9{
-	margin-top: 10px;
+	margin-top: 20px;
+	
 }
 
 /*Tab code css end*/
@@ -333,6 +334,11 @@
 
 #shopping-cart-table.cart-table .table-product-image {
 	min-height: 150px;
+	text-align: center;
+}
+#shopping-cart-table tbody tr{
+	border-bottom: 1px solid #d9dde3;
+	padding-top: 10px;
 }
 
 #shopping-cart-table .cart-item-fav .button{
