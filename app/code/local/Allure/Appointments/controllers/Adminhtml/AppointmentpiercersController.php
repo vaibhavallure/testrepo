@@ -253,7 +253,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	    if(count($workdaysarr)){
     	        foreach ($workdaysarr as $singeDay){
     	            $dayOfWeek = date("d", strtotime($singeDay));
-    	            $day = date('l', strtotime($date));
+    	            $day = date('l', strtotime($singeDay));
     	            $workingHours = $piercer->getWorkingHours();
     	            $workingHours = unserialize($workingHours);
     	            foreach ($workingHours as $workSlot)
@@ -264,7 +264,6 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	                    continue;
     	                    
     	                }
-    	            
     	                $start=$helper->decimalToTime($workSlot['start']);
     	                $start = date("Y-m-d", strtotime($singeDay))." " .$start;
     	                 Mage::log($start,Zend_Log::DEBUG,'abc',true);
@@ -292,7 +291,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	                    'color'=>$color
     	                );
     	                $breakColor="#D08040";
-    	                $calenderEvents[] = array('title'=>"Luch Break"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
+    	                $calenderEvents[] = array('title'=>"Lunch Break"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
     	                    'start'=>$breakStart,
     	                    'end'=>$breakEnd,
     	                    'url'=>$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
