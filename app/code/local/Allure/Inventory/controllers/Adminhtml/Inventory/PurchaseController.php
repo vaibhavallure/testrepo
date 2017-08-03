@@ -492,4 +492,49 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 		$this->getResponse()->setBody($jsonData);
 		
 	}
+    public function confirmAction(){
+
+        $this->loadLayout();
+        $this->renderLayout();
+
+    }
+    public function addcustomitemAction(){
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+    public function savecustomitemAction(){
+        $data = $this->getRequest()->getPost();
+        if(isset($data['data']) && !empty($data['data'])){
+            foreach ($data['data'] as $key=>$value){
+                try{
+                    $model=Mage::getModel('inventory/customitem');
+                    $model->setData(array('sku'=>$value['sku'],'name'=>$value['name'],'cost'=>$value['cost']));
+                    $insertId=$model->save()->getId();
+                    if(isset($insertId)){
+                        $websiteId=1;
+                        $stockId=1;
+                        if(Mage::getSingleton('core/session')->getMyWebsiteId())
+                            $websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
+                        $website=Mage::getModel( "core/website" )->load($websiteId);
+                        $stockId=$website->getStockId();
+                        $user = Mage::getSingleton('admin/session');
+                        $userId = $user->getUser()->getUserId();
+                        $modelTemp=Mage::getModel('inventory/insertitem');
+                        $insertData=array('item_id'=>$insertId,'store_id'=>$stockId,'qty'=>$value['qty'],'user_id'=>$userId,'comment'=>$value['comment'],'cost'=>$value['cost'],'is_custom'=>1);
+                        $modelTemp->setData($insertData);
+                        $modelTemp->save();
+                    }
+                }catch(Exception $e){
+                    Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                }
+            }
+
+        }
+        Mage::getSingleton('adminhtml/session')->addSuccess("Items added to your order");
+        $this->_redirectReferer();
+
+    }
+    public function removecustomitemAction(){
+
+    }
 }

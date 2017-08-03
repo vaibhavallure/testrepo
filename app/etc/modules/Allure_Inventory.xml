@@ -6,13 +6,8 @@
             <active>true</active>
             <codePool>local</codePool>
             <edition>basic</edition>
-            <public_version>1.7.5</public_version>
-            <public_date>2016-12-19</public_date>
-            <erp>
-                <alias_name>Inventory Management</alias_name>
-                <icon>inventory</icon>
-                <default_page>adminhtml/inp_stock</default_page>
-            </erp>
+
         </Allure_Inventory>
+
     </modules>
 </config>

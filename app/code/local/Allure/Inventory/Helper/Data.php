@@ -183,5 +183,29 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     	}
     	fclose($fp);
     }
+    public function getPurchaseOrderItems($storeId){
+        $user = Mage::getSingleton('admin/session');
+        $userId = $user->getUser()->getUserId();
+        $data = Mage::getModel('inventory/insertitem')->getCollection()->addFieldToFilter('store_id',$storeId)->addFieldToFilter('user_id',$userId)->getData();
+        //Mage::log($data->getData(),Zend_log::DEBUG,'purchase',true);
+        return $data;
+
+    }
+    public function getVendorName($vendorId){
+        $attribute = Mage::getSingleton('eav/config')
+            ->getAttribute(Mage_Catalog_Model_Product::ENTITY, 'primary_vendor');
+
+        if ($attribute->usesSource()) {
+            $options = $attribute->getSource()->getAllOptions(false);
+        }
+        $vendorName="DMEO";
+        foreach ($options as $option){
+            if($option['value']==$vendorId){
+                $vendorName=$option['label'];
+                break;
+            }
+        }
+        return $vendorName;
+    }
     
 }

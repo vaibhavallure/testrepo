@@ -270,6 +270,10 @@ button.reset_po_btn {
     margin-top: 10px;
      float: right;
 }
+ button.add_custom_item{
+     margin-top: 10px;
+     float: right;
+ }
 button#create_po_btn {
 	 float: right;
 }
@@ -331,3 +335,9 @@ div.ajax-loading{
 input,textarea{
 	margin: 5px;
 }
+ .adminhtml-inventory-purchase-addcustomitem .wrapper {
+     min-width: auto;
+ }
+ .adminhtml-inventory-purchase-addcustomitem .wrapper .middle{
+     min-height: auto;
+ }
