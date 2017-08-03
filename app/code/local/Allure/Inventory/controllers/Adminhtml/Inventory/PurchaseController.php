@@ -82,119 +82,149 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     	$admin = Mage::getSingleton('admin/session')->getUser();
     	$data = $this->getRequest()->getPost();
     	$itemsData=$this->getPOItemsForStore($data['store']);
-    	if($itemsData){
-    		$items=array();
-    		$vendor=0;
-    		foreach ($itemsData as $key){
-    			$product = Mage::getModel('catalog/product')->load($key['item_id']);
-    			if($product->getPrimaryVendor())
-    				$vendor=$product->getPrimaryVendor();
-    			$items[$vendor][$key['item_id']] = $key;
-    		}
+    	try {
+    	    if($itemsData){
+    	        //Default Vendor if vendor is not assigned to Product
+    	        $vendor=Mage::getStoreConfig("allure_vendor/manage_vendor/vendor");
+    	        $items=array();
+    	        $vendor=0;
+    	        foreach ($itemsData as $key){
+    	            if(!$key['is_custom']){
+    	                $product = Mage::getModel('catalog/product')->load($key['item_id']);
+    	                if($product->getPrimaryVendor())
+    	                    $vendor=$product->getPrimaryVendor();
+    	            }
+    	            $items[$vendor][$key['item_id']] = $key;
+    	        }
+    	    }
+    	    $websiteId=1;
+    	    $stockId=1;
+    	    if(Mage::getSingleton('core/session')->getMyWebsiteId())
+    	        $websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
+    	        $website=Mage::getModel( "core/website" )->load($websiteId);
+    	        $stockId=$website->getStockId();
+    	        
+    	        $date = new Zend_Date(Mage::getModel('core/date')->timestamp());
+    	        $date->addDay('7');
+    	        $date->toString('Y-m-d H:i:s');
+    	        $message="";
+    	        $orderItems="";
+    	        $notOrderItems="";
+    	        Mage::log($items,Zend_log::DEBUG,'mylogs',true);
+    	        if(isset($items)){
+    	            foreach ($items as $key=>$itemArray){
+    	                $vendorId=$key;
+    	                $vendorName=Mage::helper('allure_vendor')->getVanderName($vendorId);
+    	                $vendorEmail=Mage::helper('allure_vendor')->getVanderEmail($vendorId);
+    	                Mage::log($vendorEmail,Zend_log::DEBUG,'purchase',true);
+    	                if(isset($vendorName) && !empty(vendorName))
+    	                {
+    	                    
+    	                    $totalAmount=0;
+    	                    $po_id=null;
+    	                    foreach ($itemArray as $item)
+    	                    {
+    	                        $totalAmount+=$item['qty']*$item['cost'];
+    	                    }
+    	                    
+    	                    Mage::log('Total:'.$totalAmount,Zend_log::DEBUG,'mylogs',true);
+    	                    
+    	                    //Create order
+    	                    if($stockId==2)
+    	                        $orderStatus=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT;
+    	                    else 
+    	                        $orderStatus=Allure_Inventory_Helper_Data::ORDER_STATUS_NEW;
+    	                    
+    	                    $model=Mage::getModel('inventory/purchaseorder');
+    	                    $orderData = array('ref_no'=>$data['refence_no'],'vendor_id'=>$vendorId,
+    	                        'created_date'=>date("Y-m-d H:i:s"),
+    	                        'updated_date'=>date("Y-m-d H:i:s"),
+    	                        'vendor_name'=>$vendorName,'status'=>$orderStatus,
+    	                        'total_amount'=>$totalAmount,'stock_id'=>$stockId);
+    	                    
+    	                    $model->setData($orderData);
+    	                    $po_id=$model->save()->getId();
+    	                    
+    	                    foreach ($itemArray as $item)
+    	                    {
+    	                        //Map Order items With Order
+    	                        //Insert entry in allure_purchase_order_item
+    	                        
+    	                        Mage::log("temp:",Zend_log::DEBUG,'mylogs',true);
+    	                        Mage::log($item,Zend_log::DEBUG,'mylogs',true);
+    	                        $model=Mage::getModel('inventory/orderitems');
+    	                        $dataItems = array('po_id'=>$po_id,'ref_no'=>$data['refence_no'],'product_id'=>$item['item_id'],
+    	                            'requested_qty'=>$item['qty'],
+    	                            'remaining_qty'=>$item['qty'],
+    	                            'proposed_qty'=>$item['qty'],'status'=>'new',
+    	                            'requested_delivery_date'=>$date,
+    	                            'is_custom'=>$item['is_custom'],
+    	                            'admin_comment'=>$item['comment'],
+    	                            'total_amount'=>$item['qty']*$item['cost'],
+    	                            'stock_id'=>$stockId);
+    	                        Mage::log("Admin Comment:".$item['admin_comment'],Zend_log::DEBUG,'mylogs',true);
+    	                        $model->setData($dataItems);
+    	                        $model->save();
+    	                        
+    	                        //If Item is Custom dont  set PO Sent flag
+    	                        if(!$item['is_custom']){
+    	                            $inven=Mage::getModel('cataloginventory/stock_item')
+    	                            ->loadByProductAndStock($item['item_id'],$stockId);
+    	                            $inven->setData('po_sent',1)->save();
+    	                        }
+    	                        $orderItems.=$item['item_id'].',';
+    	                    }
+    	                    
+    	                    //Purchase order logs just for extra information
+    	                    //insert entry in allure_purchase_order_log
+    	                    $model=Mage::getModel('inventory/orderlogs');
+    	                    $logData = array('po_id'=>$po_id,'vendor_id'=>$vendorId,
+    	                        'user_id'=>$admin->getUserId(),
+    	                        'date'=>date("Y-m-d H:i:s"),
+    	                        'total_amount'=>$totalAmount,'stock_id'=>$stockId);
+    	                    $model->setData($logData);
+    	                    $model->save()->getId();
+    	                    // 	    			Mage::log('Created:'.$po_id,Zend_log::DEBUG,'mylogs',true);
+    	                    try {
+    	                        $helper=Mage::helper('inventory');
+    	                        $helper->sendOrderEmailToVendor($po_id,$orderData,$itemArray,$vendorEmail);
+    	                    } catch (Exception $e) {
+    	                    }
+    	                    
+    	                }else{
+    	                    
+    	                    foreach ($itemArray as $item)
+    	                    {
+    	                        $notOrderItems.=$item['item_id'].',';
+    	                    }
+    	                    
+    	                    Mage::log('Please assign vendor to product or vendor email',Zend_log::DEBUG,'mylogs',true);
+    	                }
+    	                
+    	            }
+    	            
+    	            if($orderItems && isset($orderItems))
+    	                $message.="Order Created for items:".$orderItems;
+    	                if ($notOrderItems && isset($notOrderItems))
+    	                    $message.="Can not create order as vendor or vendor email is not assiged for products:".$notOrderItems;
+    	                    
+    	                    //Delete item from allure_inventory_purchase_tmp as its temp table
+    	                    foreach ($itemsData as $singleItem){
+    	                        Mage::getModel('inventory/insertitem')->load($singleItem['id'])->delete();
+    	                    }
+    	                    Mage::getSingleton('adminhtml/session')->addSuccess($message);
+    	                
+    	        }
+    	        $jsonData = json_encode(compact('success', 'message', 'data'));
+    	        $this->getResponse()->setHeader('Content-type', 'application/json');
+    	        $this->getResponse()->setBody($jsonData);
+    	} catch (Exception $e) {
+    	    Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+    	    $jsonData = json_encode(compact('success', 'message', 'data'));
+    	    $this->getResponse()->setHeader('Content-type', 'application/json');
+    	    $this->getResponse()->setBody($jsonData);
     	}
-    	$websiteId=1;
-    	$stockId=1;
-    	if(Mage::getSingleton('core/session')->getMyWebsiteId())
-    		$websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
-    	$website=Mage::getModel( "core/website" )->load($websiteId);
-    	$stockId=$website->getStockId();
-
-    	$date = new Zend_Date(Mage::getModel('core/date')->timestamp());
-    	$date->addDay('7');
-    	$date->toString('Y-m-d H:i:s');
-    	$message="";
-    	$orderItems="";
-    	$notOrderItems="";
-    	Mage::log($items,Zend_log::DEBUG,'mylogs',true);
-    	if(isset($items)){
-    		foreach ($items as $key=>$itemArray){
-    			$vendorId=$key;
-    			$vendorName=Mage::helper('allure_vendor')->getVanderName($vendorId);
-    			$vendorEmail=Mage::helper('allure_vendor')->getVanderEmail($vendorId);
-    			Mage::log($vendorEmail,Zend_log::DEBUG,'purchase',true);
-    			if(isset($vendorEmail) && !empty($vendorEmail))
-    			{
-	    			
-	    			$totalAmount=0;
-	    			$po_id=null;
-	    			foreach ($itemArray as $item)
-	    			{
-	    				$totalAmount+=$item['qty']*$item['cost'];
-	    			}
-	    			
-	    			Mage::log('Total:'.$totalAmount,Zend_log::DEBUG,'mylogs',true);
-	    			$model=Mage::getModel('inventory/purchaseorder');
-	    			$orderData = array('ref_no'=>$data['refence_no'],'vendor_id'=>$vendorId,
-	    					'created_date'=>date("Y-m-d H:i:s"),
-	    					'updated_date'=>date("Y-m-d H:i:s"),
-	    					'vendor_name'=>$vendorName,'status'=>'new',
-	    					'total_amount'=>$totalAmount,'stock_id'=>$stockId);
-	    			
-	    			$model->setData($orderData);
-	    			$po_id=$model->save()->getId();
-	    			
-	    			foreach ($itemArray as $item)
-	    			{
-	    				
-	    				$model=Mage::getModel('inventory/orderitems');
-	    				$dataItems = array('po_id'=>$po_id,'ref_no'=>$data['refence_no'],'product_id'=>$item['item_id'],
-	    						'requested_qty'=>$item['qty'],
-	    						'remaining_qty'=>$item['qty'],
-	    						'proposed_qty'=>$item['qty'],'status'=>'new',
-	    						'requested_delivery_date'=>$date,
-	    						'admin_comment'=>$item['comment'],
-	    						'total_amount'=>$item['qty']*$item['cost'],'stock_id'=>$stockId);
-	    				Mage::log("Admin Comment:".$item['admin_comment'],Zend_log::DEBUG,'mylogs',true);
-	    				$model->setData($dataItems);
-	    				$model->save();
-	    				
-	    				$inven=Mage::getModel('cataloginventory/stock_item')
-	    				->loadByProductAndStock($item['item_id'],$stockId);
-	    				$inven->setData('po_sent',1)->save();
-	    				$orderItems.=$item['item_id'].',';
-	    			}
-	    			
-	    			$model=Mage::getModel('inventory/orderlogs');
-	    			$logData = array('po_id'=>$po_id,'vendor_id'=>$vendorId,
-	    					'user_id'=>$admin->getUserId(),
-	    					'date'=>date("Y-m-d H:i:s"),
-	    					'total_amount'=>$totalAmount,'stock_id'=>$stockId);
-	    			$model->setData($logData);
-	    			$model->save()->getId();
-	    			Mage::log('Created:'.$po_id,Zend_log::DEBUG,'mylogs',true);
-	    			try {
-	    				$helper=Mage::helper('inventory');
-	    				$helper->sendOrderEmailToVendor($po_id,$orderData,$itemArray,$vendorEmail);
-	    			} catch (Exception $e) {
-	    			}
-	    			
-    			}else{
-    				
-    				foreach ($itemArray as $item)
-    				{
-    					$notOrderItems.=$item['item_id'].',';
-    				}
-    				
-    				Mage::log('Please assign vendor to product or vendor email',Zend_log::DEBUG,'mylogs',true);
-    			}
-    			
-    		}
-    		
-    		if($orderItems && isset($orderItems))
-    			$message.="Order Created for items:".$orderItems;
-    		if ($notOrderItems && isset($notOrderItems))
-    			$message.="Can not create order as vendor or vendor email is not assiged for products:".$notOrderItems;
-    		foreach ($itemsData as $singleItem){
-    			Mage::getModel('inventory/insertitem')->load($singleItem['id'])->delete();
-    		}
-    		Mage::getSingleton('adminhtml/session')->addSuccess($message);
-    		$jsonData = json_encode(compact('success', 'message', 'data'));
-    		$this->getResponse()->setHeader('Content-type', 'application/json');
-    		$this->getResponse()->setBody($jsonData);
-    	}
-    	$jsonData = json_encode(compact('success', 'message', 'data'));
-    	$this->getResponse()->setHeader('Content-type', 'application/json');
-    	$this->getResponse()->setBody($jsonData);
+    	
     	
     }
     
