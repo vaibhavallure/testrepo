@@ -77,6 +77,11 @@
 					</td>
 						
 					<td>
+						
+						<input id="cost_<?php  echo $product->getId() ?>" style="width:50px"  
+							 name="qty[<?php echo $product->getId() ?>][<?php echo "cost" ?>]" 
+							type="text" value="<?php echo round($product->getCost())?>" />
+							
 						<div>
 							<span>
 								<?php 
@@ -88,9 +93,6 @@
 								?>
 							</span>
 						</div>
-						<input id="cost_<?php  echo $product->getId() ?>" style="width:50px"  
-							type="hidden" name="qty[<?php echo $product->getId() ?>][<?php echo "cost" ?>]" 
-							type="text" value="<?php echo round($product->getCost())?>" />
 					</td>
 					<td>
 						<div>
