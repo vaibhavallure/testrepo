@@ -185,11 +185,13 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     	                    $model->setData($logData);
     	                    $model->save()->getId();
     	                    // 	    			Mage::log('Created:'.$po_id,Zend_log::DEBUG,'mylogs',true);
-    	                    try {
-    	                        $helper=Mage::helper('inventory');
-    	                        $helper->sendOrderEmailToVendor($po_id,$orderData,$itemArray,$vendorEmail);
-    	                    } catch (Exception $e) {
-    	                    }
+    	                    if($stockId!=2){
+        	                    try {
+        	                        $helper=Mage::helper('inventory');
+        	                        $helper->sendOrderEmailToVendor($po_id,$orderData,$itemArray,$vendorEmail);
+        	                    } catch (Exception $e) {
+        	                    }
+    	                    } //Send email to vendor directly except LOndon stroe
     	                    
     	                }else{
     	                    
@@ -294,14 +296,14 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             
             if($close)
                 $status=Allure_Inventory_Helper_Data::ORDER_STATUS_FULLY_SHIPPED;
-                if($ship)
-                    $status=Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_SHIPPED;
-                    $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
-                    $currentDate->toString('Y-m-d H:i:s');
-                    $order=Mage::getModel('inventory/purchaseorder')->load($po_id);
-                    if(($close || $ship) && isset($status))
-                        $order->setData('status', $status);;
-                        $order->setData('updated_date',$currentDate)->save();
+            if($ship)
+                $status=Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_SHIPPED;
+            $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
+            $currentDate->toString('Y-m-d H:i:s');
+            $order=Mage::getModel('inventory/purchaseorder')->load($po_id);
+            if(($close || $ship) && isset($status))
+                $order->setData('status', $status);;
+            $order->setData('updated_date',$currentDate)->save();
                         
         }
         Mage::getSingleton('adminhtml/session')->addSuccess("Order updated");
@@ -326,14 +328,52 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $currentOrder=Mage::getModel('inventory/purchaseorder')->load($po_id);
         $void=Mage::app()->getRequest()->getParam('void');
         $close=Mage::app()->getRequest()->getParam('close');
-        foreach ($data['order'] as $product=>$key){
-            $arr=array_filter($data['order'][$product]);
-            $updateStock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$currentOrder->getStockId());
-            if(!empty($arr) && !$void){
-                if(!is_null($updateStock->getItemId()) && ($updateStock->getItemId()!=0)){
-                    
-                    $sotoreId=Mage::getModel('inventory/purchaseorder')->load($po_id)->getStockId();
-                    //Tring to get only one first item and updating it
+     
+        try {
+            foreach ($data['order'] as $product=>$key){
+                $arr=array_filter($data['order'][$product]);
+                $tempProduct= $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product)->addFieldToFilter('po_id',$po_id)->getFirstItem();
+                Mage::log($tempProduct['is_custom'],Zend_log::DEBUG,'mylogs',true);
+                if(!$tempProduct['is_custom'])
+                {
+                    $updateStock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$currentOrder->getStockId());
+                    if(!empty($arr) && !$void){
+                        if(!is_null($updateStock->getItemId()) && ($updateStock->getItemId()!=0)){
+                            
+                            //Tring to get only one first item and updating it
+                            
+                            $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product)->addFieldToFilter('po_id',$po_id);
+                            foreach ($items as $item){
+                                if($date)
+                                    $item->setData('proposed_delivery_date',$date);
+                                    $remainingQty=$item->getData('remaining_qty')-$arr['proposed_qty'];
+                                    $item->setData('remaining_qty',$remainingQty);
+                                    $item->setData('admin_comment',$arr['admin_comment']);
+                                    $item->setData('vendor_comment',$arr['vendor_comment']);
+                                    $item->setData('requested_qty',$arr['requested_qty']);
+                                    $item->setData('proposed_qty',$arr['proposed_qty'])->save();
+                            }
+                            
+                            //Receive stock
+                            $previousQty=$updateStock->getQty();
+                            $newQty=$updateStock->getQty()+$arr['proposed_qty'];
+                            if($close && isset($close))
+                                $updateStock->setData('po_sent',0);   //Reset flag on order close
+                                $updateStock->setData('qty',$newQty)->save();
+                                
+                                $inventory=Mage::getModel('inventory/inventory');
+                                $inventory->setProductId($product);
+                                $inventory->setUserId($admin->getUserId());
+                                $inventory->setPreviousQty($previousQty);
+                                $inventory->setAddedQty($arr['proposed_qty']);
+                                $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
+                                $inventory->setStockId($currentOrder->getStockId());
+                                $inventory->setPoId($po_id);
+                                $inventory->save();
+                        }
+                        
+                    }
+                }else{
                     
                     $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product)->addFieldToFilter('po_id',$po_id);
                     foreach ($items as $item){
@@ -348,39 +388,39 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     }
                     
                     //Receive stock
-                    $previousQty=$updateStock->getQty();
-                    $newQty=$updateStock->getQty()+$arr['proposed_qty'];
-                    if($close && isset($close))
-                        $updateStock->setData('po_sent',0);   //Reset flag on order close
-                        $updateStock->setData('qty',$newQty)->save();
-                        
-                        
-                        $inventory=Mage::getModel('inventory/inventory');
-                        $inventory->setProductId($product);
-                        $inventory->setUserId($admin->getUserId());
-                        $inventory->setPreviousQty($previousQty);
-                        $inventory->setAddedQty($arr['proposed_qty']);
-                        $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
-                        $inventory->setStockId($currentOrder->getStockId());
-                        $inventory->setPoId($po_id);
-                        $inventory->save();
-                }
+                    
+                    /*
+                     $inventory=Mage::getModel('inventory/inventory');
+                     $inventory->setProductId($product);
+                     $inventory->setUserId($admin->getUserId());
+                     $inventory->setPreviousQty($previousQty);
+                     $inventory->setAddedQty($arr['proposed_qty']);
+                     $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
+                     $inventory->setStockId($currentOrder->getStockId());
+                     $inventory->setPoId($po_id);
+                     $inventory->save(); */
+                    
+                } //End Of else
                 
-            }
+            } //End of foreach
+            
             $status=Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_CLOSED;
             if($close)
                 $status=Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED;
-                if($void)
-                    $status=Allure_Inventory_Helper_Data::ORDER_STATUS_REJECT;
-                    $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
-                    $currentDate->toString('Y-m-d H:i:s');
-                    $order=Mage::getModel('inventory/purchaseorder')->load($po_id);
-                    if(isset($status))
-                        $order->setData('status', $status);
-                        $order->setData('updated_date',$currentDate)->save();
+            if($void)
+                $status=Allure_Inventory_Helper_Data::ORDER_STATUS_REJECT;
+            $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
+            $currentDate->toString('Y-m-d H:i:s');
+            $order=Mage::getModel('inventory/purchaseorder')->load($po_id);
+            if(isset($status))
+                $order->setData('status', $status);
+            $order->setData('updated_date',$currentDate)->save();
+            
+            Mage::getSingleton('adminhtml/session')->addSuccess("Order Received");
                         
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
         }
-        Mage::getSingleton('adminhtml/session')->addSuccess("Order Received");
         $this->_redirect('*/*/receivelist');
     }
     public function exportDownloadsCsvAction(){
@@ -533,6 +573,10 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     {
                         $order->setData('status', $status);
                         $order->setData('updated_date',$currentDate)->save();
+                        $vendorEmail=Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
+                        $orderItems=Mage::getModel('inventory/orderitems')->getCollection($id,'po_id');
+                        $helper=Mage::helper('inventory');
+                        $helper->sendOrderEmailToVendor($id,$order->getData(),$orderItems,$vendorEmail);
                     }
                     
                     
@@ -550,7 +594,6 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $data = $this->getRequest()->getPost();
         $itemsData=$this->getPOItemsForStore($data['store']);
         foreach ($itemsData as $singleItem){
-            
             Mage::getModel('inventory/insertitem')->load($singleItem['id'])->delete();
         }
         Mage::getSingleton('adminhtml/session')->addSuccess("The reset action performed successfully");
