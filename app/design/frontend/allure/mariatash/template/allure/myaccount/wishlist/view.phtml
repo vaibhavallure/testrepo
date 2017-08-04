@@ -39,6 +39,12 @@
             <?php echo $this->getChildHtml('top'); ?>
             <fieldset>
                 <?php if ($this->hasWishlistItems()): ?>
+                
+                <button type="button" name="save_and_share" onclick="openShareForm()"
+    				title="<?php echo $this->__('Share Wishlist') ?>" class="button mt-btn-share">
+    				<span><span><?php echo $this->__('Share Wishlist') ?></span></span>
+    			</button>
+                
                         <?php //echo $this->getBlockHtml('formkey');?>
                         <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
                         <?php $this->getChild('items')->setItems($this->getWishlistItems()); ?>

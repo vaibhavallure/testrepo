@@ -241,9 +241,13 @@
 	margin-left: 100px;
 }
 
+#mt-purchase-item-tab #purchase-history .table-product-info .product-name{
+	padding: 0px;
+}
+
 @media (max-width: 767px){
 	#purchase-item-table.cart-table .table-product-image {
-	    min-height: 130px;
+	    min-height: 100px;
 	}
 }
 
@@ -476,6 +480,11 @@
 	margin-top: 0px;
 }
 
+#mt-wishlist-tab .mt-btn-share{
+	margin-bottom: 10px;
+	float: right;
+}
+
 @media only screen and (max-device-width : 320px){
 	#wishlist-table .h-mt-wishlist-product-name{
 		width: 70%;
@@ -531,6 +540,11 @@
 #my-openorders-table .order-actions,
 #my-orders-table .order-actions
 {width:130px;}
+
+#my-openorders-table .mt-oder-num,
+#my-orders-table .mt-oder-num{
+	text-decoration: underline;
+}
 
 @media only screen and (max-device-width : 414px){
 	#my-openorders-table .order-number,
@@ -787,6 +801,100 @@
 }
 
 /*Payment options ccs end*/
+
+
+/*Sales order view*/
+
+.sales-order-view .my-account .page-title{
+	height: auto;
+	text-align: center;
+}
+.sales-order-view .my-account .page-title h1 {
+   line-height: 1.5;
+   width: 100%;
+}
+
+.sales-order-view .my-account .box{
+	margin: 20px 0;
+}
+
+.sales-order-view .my-account .order-info-box .box-title{
+	padding: 6px 10px;
+}
+
+.sales-order-view .col2-set .col-2,
+.sales-order-view .col2-set .col-1{
+	width: 100%;
+}
+
+.sales-order-view .my-account .order-info-box .box-title h2 {
+   padding: 5px 0 15px;
+}
+
+.sales-order-view .order-items.order-details tr.mt-total-tr{
+	display: block;
+}
+.sales-order-view .order-items.order-details tr.mt-total-tr td{
+	width: 100%;
+}
+
+.order-items.order-details tbody{
+	width: 100%;
+	display: inline-block;
+}
+
+.order-items.order-details thead{
+    width: 100%;
+    display: inline-table;
+}
+
+.order-items.order-details .nobr-sku,
+.mt-td-order-view,
+.mt-order-th-view{
+	display: none;
+}
+
+.mt-td-order-view-block{
+	display: block;
+}
+
+.mt-order-view-tr{
+	width: 100%;
+    display: inline-table;
+}
+.mt-order-veiw-pr-name{
+	width: 100% ! important;
+	display: inline-table;
+}
+
+.mt-order-allre-table{
+	width: 100%;
+	display: block;
+}
+
+.mt-td-order-view-block{
+	text-align: left !important;
+	padding-left: 10px!important;
+}
+
+td.a-right.mt-td-order-view-block{
+	text-align: left ! important;
+	padding-left: 10px!important;
+}
+.sales-order-view .my-account .data-table{
+	margin-left: 0px ;
+}
+
+.mt-deiv-order-view-allre{
+	padding-left: 10px;
+}
+
+.sales-order-view .mt-order-allre-table .shipping{
+	width: 100%;
+	margin-left: 0px;
+}
+
+/*Sales order view end*/
 
 
 	

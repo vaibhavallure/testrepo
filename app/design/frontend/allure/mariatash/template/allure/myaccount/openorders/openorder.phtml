@@ -7,7 +7,11 @@
                 <?php $i = 0 ?>
                 <?php foreach ($_orders as $_order): ?>
                 <tr>
-                    <td style="padding-left:10px;"><a href="<?php echo $this->getViewUrl($_order).'#openorders' ?>"><?php echo $_order->getRealOrderId() ?></a></td>
+                    <td style="padding-left:10px;">
+                    	<a class="mt-oder-num" href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
+                    		<?php echo $_order->getRealOrderId() ?>
+                    	</a>
+                    </td>
                     
                     
                     <td class="a-left" style="padding-left:20px;" ><span class="nobr">
