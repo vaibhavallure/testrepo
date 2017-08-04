@@ -1,7 +1,6 @@
 <?php 
 	$collection = $this->getCollection();
 	$helper = Mage::helper("inventory");
-	
 ?>
 <?php $order=Mage::getModel('inventory/purchaseorder')->load($collection->getFirstItem()->getPoId())?>		
 <?php $orderTotal=$order->getTotalAmount()?>
@@ -61,27 +60,19 @@
 		<th><?php echo $helper->__('Vendor Comment')?></th>
 		
     	<?php 
-    
     		foreach ($collection as $_product):
-    		
-    		 
-    		   if(!$_product->getIsCustom())
-    			 $product = Mage::getModel ( 'catalog/product' )->load ($_product->getProductId());
-    		   else 
-    		     $product = Mage::getModel ( 'inventory/customitem' )->load ($_product->getProductId());
+    			$product = Mage::getModel ( 'catalog/product' )->load ( $_product->getProductId() );
     	?>
-			<tr id="inventory-row-<?php echo $_product->getProductId(); ?>" class="inventory_tr">
+			<tr id="inventory-row-<?php echo $product->getProductId(); ?>" class="inventory_tr">
 					
-				<td><?php echo $product->getSku();?></td>
-				<td><?php echo (!$_product->getIsCustom()) ? $product->getVendorItemNo() : "" ;?></td>
+				<td><?php echo $_product->getSku();?></td>
+				<td><?php echo $product->getVendorItemNo();?></td>
 				<td>
-				<?php if(!$_product->getIsCustom()):?>
-					<img style="width: 50px; height: 50px;" class="product_inventory_thumbnail" 
-							src="<?php  echo Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(50);?>"/>
-				<?php endif;?>
+					<img style="width: 100px; height: 100px;" class="product_inventory_thumbnail" 
+							src="<?php  echo Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(100);?>"/>
 				</td>
 						
-				<td><?php echo $product->getName();?></td>
+				<td><?php echo $_product->getName();?></td>
 						
 				<td>
 					<input id="requested_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
@@ -93,14 +84,14 @@
 				<td>
 					<label><?php echo nl2br($_product->getAdminComment())?></label>
 					<textarea hidden="true" <?php if(Mage::helper('allure_vendor')->isUserVendor()){echo 'readonly="readonly"';}?>
-						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="3" >
+						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="15" rows="7" >
 						 <?php echo $_product->getAdminComment()?>
 					</textarea>
 				</td>
 				<?php else:?>
 				<td>
 					<textarea  <?php if(Mage::helper('allure_vendor')->isUserVendor()){echo 'readonly="readonly"';}?>
-						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="3" >
+						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="15" rows="7" >
 						 <?php echo $_product->getAdminComment()?>
 					</textarea>
 				</td>
@@ -120,7 +111,7 @@
 				</td>
 				
 				<td><div><?php echo $this->getDate($_product->getProductId(),$_product->getProposedDeliveryDate());?></div></td>
-				<td><textarea name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="13" rows="3" ><?php echo $_product->getVendorComment()?></textarea></td>
+				<td><textarea name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="15" rows="7" ><?php echo $_product->getVendorComment()?></textarea></td>
 				
 			</tr>		
         <?php endforeach ;?>
