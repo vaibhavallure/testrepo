@@ -224,13 +224,14 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         
         $orderData=Mage::getModel("inventory/purchaseorder")->load($po_id);
         $storeId=$orderData->getStoreId();
-        $orderItems=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('po_id',$id);
+        $orderItems=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('po_id',$po_id);
         $order_url="";
         if(isset($vendorEitems_orderedmail))
             $order_url=$this->getOrderEncodeUrl($vendorEmail,$po_id);
         $emailVariables = array();
         $emailVariables['items_ordered'] = count($orderItems);
         $emailVariables['order_id'] = $po_id;
+        $emailVariables['order_status'] = $this->getOrderStatus($orderData->getStatus());
         $emailVariables['shipment_status'] = $this->getOrderStatus($orderData->getStatus());
         $emailVariables['order_url'] = $order_url;
         $base_url=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'email-header.png';

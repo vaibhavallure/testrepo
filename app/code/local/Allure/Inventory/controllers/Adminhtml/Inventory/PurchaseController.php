@@ -89,7 +89,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                    
                     foreach ($itemsData as $key) {
                         
-                        if (!$key['is_custom']) {
+                        if (! $key['is_custom']) {
                             $product = Mage::getModel('catalog/product')->load($key['item_id']);
                             if ($product->getPrimaryVendor())
                                 $vendor = $product->getPrimaryVendor();
@@ -662,9 +662,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     public function massApproveAction(){
         $ids = $this->getRequest()->getParam('po_id');
         $helper = Mage::helper('inventory');
-        $resource = Mage::getSingleton('core/resource');
-        $writeAdapter = $resource->getConnection('core_write');
-        $table = $resource->getTableName('cataloginventory/stock_item');
+       
         try {
             foreach ($ids as $id) {
                 if ($id && isset($id)) {
