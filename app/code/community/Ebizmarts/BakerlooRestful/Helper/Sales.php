@@ -255,15 +255,16 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                     //Rewards integrations
                     $this->applyRewardsToQuoteItem($_product, $product, $quoteItem);
 
-                    if (isset($_product['guid'])) {
-                        $quoteItem->setPosItemGuid($_product['guid']);
-                    }
                 } catch (Exception $qex) {
                     $this->throwBuildQuoteException("An error occurred, Product SKU: {$product->getSku()}. Error Message: {$qex->getMessage()}");
                 }
 
                 if (is_string($quoteItem)) {
                     $this->throwBuildQuoteException($quoteItem . ' Product ID: ' . $_product['product_id']);
+                }
+
+                if (isset($_product['guid'])) {
+                    $quoteItem->setPosItemGuid($_product['guid']);
                 }
 
                 //@TODO: Discount amount per line, see discount.

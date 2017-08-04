@@ -18,5 +18,18 @@ class Allure_Customer_Model_Observer
     	$attrStore->save();
     	return ;
     }
+    public function setcustomerStatusActive(){
+    	Mage::log("Setting Customer active",Zend_log::DEBUG,'customer_activate',true);
+    	$customerCollection = Mage::getModel('customer/customer')->getCollection();
+    	$customerCollection->addFieldToFilter( 'am_is_activated', '1' );
+    	if(count($customerCollection)){
+    		foreach ($customerCollection as $customer){
+    			$customer = Mage::getModel('customer/customer')->load($customer->getId());
+    			$customer->setAmIsActivated(2);
+    			$customer->save();
+    		}
+    	}
+    	
+    }
    
 }

@@ -1,10 +1,21 @@
 <?php
 class Allure_Inventory_Model_Cron {
 	public function autoProcessLowstockReports(){
-		foreach (Mage::app()->getWebsites() as $website) {
-			 //echo $website->getId();
-		    $this->writeData($website->getId());
-		   
+		$stores= Mage::getStoreConfig('inventory/general/enable_stores');
+		$stores= explode(",",$stores);
+		$websiteIds=array();
+		if (!empty($stores)){
+		    foreach ($stores as $id){
+		        $website=Mage::getModel('core/store')->load($id);
+		        array_push($websiteIds, $website->getWebsiteId());
+		        
+		    }
+		}
+		$websiteIds=array_unique($websiteIds);
+		if(!empty($websiteIds)){
+		    foreach ($websiteIds as $websiteId) {
+		        $this->writeData($websiteId);
+		    }
 		}
 	}
 
