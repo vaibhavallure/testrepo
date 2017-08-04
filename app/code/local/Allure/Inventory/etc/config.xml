@@ -4,7 +4,7 @@
     <modules>
         <Allure_Inventory>
 			<name>Allure - Inventory Management</name>
-            <version>1.0.2</version>
+            <version>1.0.0</version>
         </Allure_Inventory>
     </modules>
     <frontend>
@@ -111,9 +111,6 @@
 	                  <insertitem>
 	                    <table>allure_inventory_purchase_tmp</table>
 	                 </insertitem>
-                     <customitem>
-                         <table>allure_inventory_custom_item</table>
-                     </customitem>
 	             </entities>
 	       </allure_inventory_resource>
         </models>

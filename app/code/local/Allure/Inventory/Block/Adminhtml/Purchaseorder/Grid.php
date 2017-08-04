@@ -21,11 +21,8 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         
         //$collection->addFieldToFilter('admin_comment', array('like' => '%'.'Demo'.'%'));
       
-        if(isset($vendor) && $vendor){
-            $collection->addFieldToFilter('status',array('nin' =>Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT));
+        if(isset($vendor) && $vendor)
         	$collection->addFieldToFilter('vendor_id',$vendor);
-        
-        }
         
         if($_GET['search']!=null){
         	$subCollection = Mage::getModel('inventory/orderitems')->getCollection()->addFieldToSelect('po_id');
@@ -155,12 +152,6 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     				'label'=> Mage::helper('sales')->__('Cancel'),
     				'url'  => $this->getUrl('*/*/massCancel'),
     				'confirm' => Mage::helper('sales')->__('Are you sure?')
-    		));
-    		
-    		$this->getMassactionBlock()->addItem('approve_order', array(
-    		    'label'=> Mage::helper('sales')->__('Approve'),
-    		    'url'  => $this->getUrl('*/*/massApprove'),
-    		    'confirm' => Mage::helper('sales')->__('Are you sure?')
     		));
     	}
     	
