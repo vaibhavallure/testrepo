@@ -101,7 +101,7 @@ $j(document).ready(function (){
 		var totalAmount = parseInt($j('#order_total').val());
 		var store=$j('#store').val();
 		var refence_no=$j('#refence_no').val();
-		if(totalAmount > 0){
+	
 			if(confirm("Are you sure ?")){
 			var key=Allure.ViewPurchaseOrderFormKey;
 			$j.ajax({
@@ -118,9 +118,7 @@ $j(document).ready(function (){
 		        }
 		    });
 		  }
-		}
-		else
-			alert("Please select Item first.")
+		
 	});
 	
 	$j(".reset_po_btn").click(function() {
