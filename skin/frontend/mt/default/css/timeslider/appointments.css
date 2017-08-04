@@ -487,3 +487,10 @@ a#foo2_next {
 .apt-buttons-set{
    float: right;
 }
+#app_create_account{
+	margin-top: 25px;
+}
+.splnotesTxtarea{
+	height: 68px !important;
+}
+
