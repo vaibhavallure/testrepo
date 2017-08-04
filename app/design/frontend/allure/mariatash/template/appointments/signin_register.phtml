@@ -153,7 +153,7 @@ if ($session->isLoggedIn()) {
 		  			</div>
 			  	  	<div class="fieldDiv splnotesDiv">
 				  	   	<label>Special Notes:</label>			    		
-				    	<textarea class="splnotesTxtarea" name="special_notes" rows="4" ><?php if($f_special_notes):
+				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php echo "Optional:  please specify names of poeple being pierced or desired piercer for appointment" ?>" rows="4" ><?php if($f_special_notes):
 				    	echo $f_special_notes;
 				    	endif;?></textarea>			    	
 				    </div>
