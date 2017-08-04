@@ -12,11 +12,13 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Renderer_Items extends Mage
 		->loadByCode($entityTypeId, 'name')
 		->getAttributeId();
 		$collection = Mage::getModel('inventory/orderitems')->getCollection();
+		$collection =  $collection->addFieldToFilter( 'po_id', $value);
+		
 		//$collection->getSelect()->joinLeft('allure_purchase_order_item', 'allure_purchase_order_item.po_id = main_table.po_id', array('product_id'));
 	/* 	$collection->getSelect()->joinLeft(
 				array('prod' => 'catalog_product_entity'),
 				'prod.entity_id = main_table.product_id',
-				array('sku')
+				array('sku')'product_id''product_id'
 				)
 				->joinLeft(
 						array('cpev' => 'catalog_product_entity_varchar'),

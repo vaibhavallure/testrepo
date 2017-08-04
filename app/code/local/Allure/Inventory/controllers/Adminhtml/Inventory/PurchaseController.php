@@ -79,6 +79,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     	$admin = Mage::getSingleton('admin/session')->getUser();
         $data = $this->getRequest()->getPost();
         $itemsData = $this->getPOItemsForStore($data['store']);
+        $helper = Mage::helper('inventory');
         try {
             if ($itemsData) {
                 // Default Vendor if vendor is not assigned to Product
@@ -194,10 +195,30 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         // Mage::log('Created:'.$po_id,Zend_log::DEBUG,'mylogs',true);
                         if ($stockId != 2) {
                             try {
-                                $helper = Mage::helper('inventory');
-                                $helper->sendOrderEmailToVendor($po_id, $orderData, $itemArray, $vendorEmail);
+                               
+                                $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_create',$storeId);
+                                $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                                if (!empty($adminEmail)) {
+                                    $adminEmail =  explode(',', $adminEmail);
+                                }
+                                //sendEmail($po_id, $vendorEmail,$templateId,$templateId)
+                                $helper->sendEmail($po_id, $vendorEmail, $templateId, $adminEmail);
                             } catch (Exception $e) {}
                         } // Send email to vendor directly except LOndon stroe
+                        else {
+                            try {
+                                //Send notification to Admin
+                                $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_create',$storeId);
+                                $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                                //sendEmail($po_id, $vendorEmail,$templateId,$templateId)
+                                if (!empty($adminEmail)) {
+                                    $adminEmail =  explode(',', $adminEmail);
+                                }
+                                $helper->sendEmail($po_id, '', $templateId, $adminEmail);
+                            } catch (Exception $e) {}
+                                
+                        } //ENd of else
+                            
                     } else {
                         
                         foreach ($itemArray as $item) {
@@ -456,17 +477,32 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
     }
     public function acceptAction(){
         $id=Mage::app()->getRequest()->getParam('id');
-        if($id && isset($id))
-        {
-            $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
-            $currentDate->toString('Y-m-d H:i:s');
-            $status=Allure_Inventory_Helper_Data::ORDER_STATUS_ACCEPT;
-            $order=Mage::getModel('inventory/purchaseorder')->load($id);
-            if(isset($status))
-                $order->setData('status', $status);
-                $order->setData('updated_date',$currentDate)->save();
+        $helper = Mage::helper('inventory');
+        try {
+            if($id && isset($id))
+            {
+                $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
+                $currentDate->toString('Y-m-d H:i:s');
+                $status = Allure_Inventory_Helper_Data::ORDER_STATUS_ACCEPT;
+                $order = Mage::getModel('inventory/purchaseorder')->load($id);
+                $storeId=$order->getStoreId();
+                if (isset($status))
+                    $order->setData('status', $status);
+                $order->setData('updated_date', $currentDate)->save();
+                
+                $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_accept',$storeId);
+                $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                //sendEmail($po_id, $vendorEmail,$templateId,$templateId)
+                if (!empty($adminEmail)) {
+                    $adminEmail =  explode(',', $adminEmail);
+                }
+                $helper->sendEmail($po_id, '', $templateId, $adminEmail);
+            }
+            Mage::getSingleton('adminhtml/session')->addSuccess("Order accepted");
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
         }
-        Mage::getSingleton('adminhtml/session')->addSuccess("Order accepted");
+      
         $this->_redirect('*/*/orders');
     }
     public function addpurchaseitemAction(){
@@ -563,10 +599,13 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 $currentDate->toString('Y-m-d H:i:s');
                 $status = Allure_Inventory_Helper_Data::ORDER_STATUS_CANCEL;
                 $order = Mage::getModel('inventory/purchaseorder')->load($id);
-                $orderItems = Mage::getModel('inventory/orderitems')->getCollection($id, 'po_id');
-                foreach ($orderItems as $item) {
-                    $query = "update {$table} set  po_sent =0 where product_id = '{$item->getProductId()}' AND stock_id = '{$order->getStockId()}'";
-                    $writeAdapter->query($query);
+                
+                if ($order->getStatus()== Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT ||$order->getStatus()== Allure_Inventory_Helper_Data::ORDER_STATUS_NEW) {
+                    $orderItems = Mage::getModel('inventory/orderitems')->getCollection($id, 'po_id');
+                    foreach ($orderItems as $item) {
+                        $query = "update {$table} set  po_sent =0 where product_id = '{$item->getProductId()}' AND stock_id = '{$order->getStockId()}'";
+                        $writeAdapter->query($query);
+                    }
                 }
                 if (isset($status))
                     $order->setData('status', $status);
@@ -588,7 +627,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     $currentDate->toString('Y-m-d H:i:s');
                     $status = Allure_Inventory_Helper_Data::ORDER_STATUS_NEW;
                     $order = Mage::getModel('inventory/purchaseorder')->load($id);
-                    if ($order->getStatus == Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT) {
+                    if ($order->getStatus()== Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT) {
                         $order->setData('status', $status);
                         $order->setData('updated_date', $currentDate)->save();
                         $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
@@ -622,4 +661,50 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $this->loadLayout();
         $this->renderLayout();
     }
+
+    public function savecustomitemAction()
+    {
+        $data = $this->getRequest()->getPost();
+        if (isset($data['data']) && ! empty($data['data'])) {
+            foreach ($data['data'] as $key => $value) {
+                try {
+                    $model = Mage::getModel('inventory/customitem');
+                    $model->setData(array(
+                        'sku' => $value['sku'],
+                        'name' => $value['name'],
+                        'cost' => $value['cost']
+                    ));
+                    $insertId = $model->save()->getId();
+                    if (isset($insertId)) {
+                        $websiteId = 1;
+                        $stockId = 1;
+                        if (Mage::getSingleton('core/session')->getMyWebsiteId())
+                            $websiteId = Mage::getSingleton('core/session')->getMyWebsiteId();
+                        $website = Mage::getModel("core/website")->load($websiteId);
+                        $stockId = $website->getStockId();
+                        $user = Mage::getSingleton('admin/session');
+                        $userId = $user->getUser()->getUserId();
+                        $modelTemp = Mage::getModel('inventory/insertitem');
+                        $insertData = array(
+                            'item_id' => $insertId,
+                            'store_id' => $stockId,
+                            'qty' => $value['qty'],
+                            'user_id' => $userId,
+                            'comment' => $value['comment'],
+                            'cost' => $value['cost'],
+                            'is_custom' => 1
+                        );
+                        $modelTemp->setData($insertData);
+                        $modelTemp->save();
+                    }
+                    Mage::getSingleton('adminhtml/session')->addSuccess("Items added to your order");
+                } catch (Exception $e) {
+                    Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                }
+            }
+        }
+
+        $this->_redirectReferer();
+    }
+    
 }
