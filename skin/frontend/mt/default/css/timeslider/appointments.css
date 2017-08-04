@@ -490,3 +490,6 @@ a#foo2_next {
 #app_create_account{
 	margin-top: 25px;
 }
+.splnotesTxtarea{
+	height: 68px !important;
+}
