@@ -107,7 +107,22 @@
 
 .mt-new-myaccount-submenu .a-column.a-span9{
 	margin-top: 20px;
+}
+
+@media only screen and (max-device-width : 375px){
+	.mt-new-myaccount-submenu .a-column.a-span9 {
+		margin-top: 15px;
+	}
+}
+
+@media only screen and (max-device-width : 320px){
+	.mt-new-myaccount-submenu .a-column.a-span9{
+		margin-top: 0px;
+	}
 	
+	.acc-mt-pay.mt-new-myaccount-submenu .a-column.a-span9{
+		margin-top: 9px;
+	}
 }
 
 /*Tab code css end*/
