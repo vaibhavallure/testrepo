@@ -493,4 +493,19 @@ a#foo2_next {
 .splnotesTxtarea{
 	height: 68px !important;
 }
+.appt_ph .intl-tel-input{
+	width: 100% !important;
+}
+.appt_ph input{
+	width: 320px;
+}
+@-moz-document url-prefix() { 
+ .appt_ph input{
+	width: 332px;
+}}
+
+@-moz-document url-prefix() { 
+ .appt_country select{
+	width: 332px;
+}}
 
