@@ -84,7 +84,7 @@ if ($session->isLoggedIn()) {
 					    	<!-- <input class="ele_width required-entry validate-email" type="text" name="email" value="<?php //echo $email?>" />-->
 					    	<input class="ele_width required-entry validate-email" type="text" name="email" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" />
 					    </div>
-						<div class="">
+						<div class="fieldDiv appt_ph">
 					    	<label>Phone Number*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-number" type="text" name="phone" value="<?php //echo $telephone?>" />-->
 					    	<input class="ele_width required-entry validate-phone-len" type="text" id="phone" name="phone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>" />
@@ -96,7 +96,7 @@ if ($session->isLoggedIn()) {
 						    <input class="ele_width" type="text" name="street" value="<?php if($f_street):echo $f_street;else: echo $street['0'];endif;?>">
 						</div>	
 								
-						<div class="fieldDiv">
+						<div class="fieldDiv appt_country">
 					    	<?php 
 					    	$countryList = Mage::getResourceModel('directory/country_collection')
 							        ->loadData()
