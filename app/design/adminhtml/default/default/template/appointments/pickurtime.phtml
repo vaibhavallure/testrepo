@@ -1,17 +1,17 @@
-<?php 
+<?php
 $fetch_model = Mage::registry('apt_modify_data');
 
 if($fetch_model){
-	
-	$f_pickurday = $fetch_model->getAppointmentStart();
-	$timestamp = strtotime($f_pickurday);
-	$fetch_starttime = date('H:i', $timestamp);
-	
-	$f_pickurendtime = $fetch_model->getAppointmentEnd();
-	$timestamp = strtotime($f_pickurendtime);
-	$fetch_endtime = date('H:i', $timestamp);
+    
+    $f_pickurday = $fetch_model->getAppointmentStart();
+    $timestamp = strtotime($f_pickurday);
+    $fetch_starttime = date('H:i', $timestamp);
+    
+    $f_pickurendtime = $fetch_model->getAppointmentEnd();
+    $timestamp = strtotime($f_pickurendtime);
+    $fetch_endtime = date('H:i', $timestamp);
 }
-?> 
+?>
 <div class="pickur_time_main_container">
 	<label class="pickurtimeLable" for="pick_your_time" >Pick Your Time:</label><br/>
 
@@ -31,11 +31,11 @@ if($fetch_model){
 		$time_pref = 24;
 		$helper=Mage::helper('appointments');
 		$storeSerializeData = Mage::getStoreConfig("appointments/general/storemapping");
-		
+		$selectedStoreId = intval($this->getData("store_id"));
 		if($storeSerializeData){
 			$storeUnSerializeData = unserialize($storeSerializeData);
 		
-			$selectedStoreId = intval($this->getData("store_id"));
+			
 		
 			$selectedStoreId = intval($selectedStoreId);
 			
@@ -51,11 +51,12 @@ if($fetch_model){
 				}
 			}
 		}
+		$intervalTime=$helper->getTimeByStoreAndPeople(1,$selectedStoreId);
 		
 		if($this->getData("timing")) $interval = $this->getData("timing");
 		//$selectedTime = "9:00";
 		
-		$startTime = Mage::getStoreConfig("appointments/general/working_start_time");
+		$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
 		
 		//echo $startTime." isd sajofasf";
 		
@@ -63,7 +64,7 @@ if($fetch_model){
 		$selectedTime = $helper->getTimeByValue($startTime);
 		
 		
-		$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time");
+		$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time",$selectedStoreId);
 		
 		
 		$selectedStartTime = strtotime($selectedTime);
@@ -81,7 +82,7 @@ if($fetch_model){
 		$totalMinutes = $hours + $minutes;
 		
 		
-		$totalSlot = (int) $totalMinutes/$interval;
+		$totalSlot = (int) $totalMinutes/$intervalTime;
 		//echo $totalSlot;
 		
 		/* logic for getting workday Piercer */
@@ -119,7 +120,10 @@ if($fetch_model){
 		
 		for($i=0;$i< $totalSlot;$i++)
 		{	
+		    $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
 			$endTime = strtotime("+$interval minutes", strtotime($selectedTime));
+			Mage::log("Start time:".$selectedTime,Zend_log::DEBUG,'mylogs',true);
+			Mage::log("End time:".$endTime,Zend_log::DEBUG,'mylogs',true);
 			
 			$slotval ="`". "time_slot_".$i ."`";
 			//echo '<br>'.$slotval;
@@ -264,7 +268,8 @@ if($fetch_model){
 				echo "</li>";
 				$isFour = 0;
 			}
-			$selectedTime = ($endTime);
+			$newStartTime = date('H:i', $newStartTime);
+			$selectedTime = ($newStartTime);
 		}
 		if($noSlot){
 			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Sorry Appointment is Not available, Please try changing Store OR Date.')."</div>";
@@ -284,7 +289,7 @@ if($fetch_model){
 </div>
 
 
-
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/timeslider/sliderDemo.js"></script>
 
 <script>
 	//jQuery(document).ready(function (){
