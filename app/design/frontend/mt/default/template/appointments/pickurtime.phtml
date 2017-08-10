@@ -155,8 +155,6 @@ if($fetch_model){
 				    ->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
 				}
 				
-			    if($i==3)
-					//Mage::log((string)$appCollection->getSelect(),Zend_log::DEBUG,'mylogs',true);
 				//echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
 			    if(count($appCollection2))
 					    continue;
