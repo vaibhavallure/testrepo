@@ -122,8 +122,7 @@ if($fetch_model){
 		{	
 		    $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
 			$endTime = strtotime("+$interval minutes", strtotime($selectedTime));
-			Mage::log("Start time:".$selectedTime,Zend_log::DEBUG,'mylogs',true);
-			Mage::log("End time:".$endTime,Zend_log::DEBUG,'mylogs',true);
+
 			
 			$slotval ="`". "time_slot_".$i ."`";
 			//echo '<br>'.$slotval;
@@ -146,9 +145,23 @@ if($fetch_model){
 					->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
 					->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
 				
+				$appCollection2=null;
+				if(!count($appCollection)){
+				    $appCollection2 = Mage::getModel('appointments/appointments')->getCollection();
+				    $appCollection2->addFieldToFilter('appointment_start', array('lteq'=>$fromTime))
+				    ->addFieldToFilter("appointment_end",array('gteq'=>$toTime))
+				    ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+				    ->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+				}
+				
+			    if($i==3)
+					//Mage::log((string)$appCollection->getSelect(),Zend_log::DEBUG,'mylogs',true);
 				//echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
+			    if(count($appCollection2))
+					    continue;
 				if(count($appCollection))
 					continue;
+			 
 				/* End of check */	
 						
 				$workingHours = $piercer->getWorkingHours();

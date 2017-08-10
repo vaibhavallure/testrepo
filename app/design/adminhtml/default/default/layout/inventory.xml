@@ -95,44 +95,6 @@
             </block>            
         </reference>
     </adminhtml_inventory_purchase_new>
-
-    <adminhtml_inventory_purchase_confirm>
-        <update handle="adminhtml_inventory_layout" />
-        <reference name="head">
-            <action method="addJs"><file>allure/jquery.js</file></action>
-            <action method="addJs"><file>allure/inventory/inventory.js</file></action>
-            <action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>
-        </reference>
-        <reference name="content">
-            <block type="core/template" name="purchase_confirm" template="inventory/purchaseorder/purchaseorder_confirmation.phtml">
-            </block>
-        </reference>
-    </adminhtml_inventory_purchase_confirm>
-
-    <adminhtml_inventory_purchase_addcustomitem>
-    <update handle="adminhtml_inventory_layout" />
-        <reference name="root">
-            <remove name="header"/>
-            <remove name="footer" />
-            <remove name="notifications" />
-            <remove name="top.menu" />
-            <remove name="menu" />
-            <remove name="top.links" />
-            <remove name="top.container" />
-            <remove name="nav-bar" />
-
-        </reference>
-        <reference name="head">
-            <action method="addJs"><file>allure/jquery.js</file></action>
-            <action method="addJs"><file>allure/inventory/inventory.js</file></action>
-            <action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>
-        </reference>
-        <reference name="content">
-            <block type="core/template" name="addCustomItem" template="inventory/purchaseorder/add_custom_item.phtml">
-            </block>
-        </reference>
-
-    </adminhtml_inventory_purchase_addcustomitem>
     
     <adminhtml_inventory_purchase_orders>      
         <update handle="adminhtml_inventory_layout" /> 
@@ -186,7 +148,5 @@
             </block>
         </reference>
     </adminhtml_inventory_purchase_viewreceive>
-
-
     
-</layout>
+</layout>
