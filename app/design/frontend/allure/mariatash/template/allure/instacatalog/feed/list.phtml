@@ -183,6 +183,8 @@
             			$sku = $option->text;
             			$numberOfProducts += 1;
             			$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+            			if(empty($product))
+            			    continue;
             			$productName = $product->getName();
             			$productId = $product->getId();
             		
