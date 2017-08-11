@@ -138,7 +138,7 @@ $specialNotes = $appointment->getSpecialNotes();
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Notification Preference') ?></label></td>
-                <td class="value"><strong><?php echo $notificationPref ?></strong></td>
+               <td class="value"><strong><?php echo ($notificationPref==1) ? "Email" : "Phone";  ?></strong></td>
             </tr>
            
             </table>
