@@ -67,7 +67,8 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
 	    	$this->addColumn('vendor_name', array(
 	    			'header'    => Mage::helper('reports')->__('Vendor Name'),
 	    			'align'     =>'left',
-	    			'index'     => 'vendor_name',
+	    	        'index'     => 'vendor_name',
+	    	        'renderer'     => 'inventory/adminhtml_purchaseorder_renderer_vendor'
 	    	));
     	}
     	$this->addColumn('ref_no', array(
