@@ -50,6 +50,27 @@
 	             </counterpoint_order_id>
 	    	</sales_convert_quote>
 	    </fieldsets>
+	    
+	    <events>
+	    	<customer_save_after>
+            	<observers>
+                	<allure_counterpoint>
+                     	<class>allure_counterpoint/observer</class>
+                     	<method>sendCustomerInfoToSugarcrm</method>
+                 	</allure_counterpoint>
+             	</observers>
+         	</customer_save_after>
+         	
+         	<customer_address_save_after>
+            	<observers>
+                	<allure_counterpoint>
+                     	<class>allure_counterpoint/observer</class>
+                     	<method>sendCustomerAddressInfoToSugarcrm</method>
+                 	</allure_counterpoint>
+             	</observers>
+         	</customer_address_save_after>
+         	
+	    </events>
         
     </global>
     
