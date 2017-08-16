@@ -152,7 +152,7 @@ if($_product->getTypeId()=="configurable"){
                     <div style="display: none;" id="details-insta-<?php echo $media_id?>"
 								data-user-name="<?php $_post->getUsername()?>" data-img-url="<?php echo $_post->getStandardResolution()?>"
 							 	data-create-date="<?php echo $createDate?>" data-share-url="<?php echo $shareUrl?>">
-							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo $_post->getCaption() ?></div>
+							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo json_encode($_post->getCaption()) ?></div>
 								<div id="insta-product-mark-<?php echo $media_id?>" style="display: none;"><?php echo $points ?></div>
 								<div id="insta-product-details-<?php echo $media_id?>" style="display: none;"><?php echo $productsLinks ?></div>
 							</div>

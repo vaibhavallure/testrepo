@@ -21,14 +21,28 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Backordertime e
             }
              */
             
-            $product=Mage::getModel("catalog/product")
-            ->setStoreId($storeId)->load($item->getProductId());
-            $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$storeId);
-            if($stock->getQty()>=0 && $stock->getIsInStock()){
-                $items[] = '&nbsp;';
-            }
-            else{
-                $items[] = $product->getBackorderTime();
+          /*   $product=Mage::getModel("catalog/product")
+            ->setStoreId($storeId)->load(); */
+            $product = Mage::getModel('catalog/product');
+            $product->setStoreId($storeId)->load($product->getIdBySku($item->getSku()));
+            if(!empty($product)){
+                $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$storeId);
+                Mage::log($product->getId()."=".$stock->getQty(),Zend_log::DEBUG,'mylogs',true);
+                if($stock->getQty()>=1 && $stock->getIsInStock()){
+                    $items[] = '&nbsp;';
+                }
+                else{
+                    if($product->getBackorderTime())
+                        $items[] = $product->getBackorderTime();
+                    else 
+                        $items[] ='Backordered';
+                }
+            }else {
+                if($item->getBackorderTime() != null) {  //Allure new code
+                    $items[] = $item->getBackorderTime();
+                } else {
+                    $items[] = '&nbsp;';
+                }
             }
         }
 
