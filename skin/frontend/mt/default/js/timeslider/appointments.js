@@ -73,8 +73,8 @@ var count = 1;
          	dataType : 'json',
   			type : 'POST',
   			data: {request:request},
-  			beforeSend: function() { $('#appointment_loader').show(); },
-	        complete: function() { $('#appointment_loader').hide(); },
+  			beforeSend: function() { jQuery('#appointment_loader').show(); },
+	        complete: function() { jQuery('#appointment_loader').hide(); },
 
   			success : function(response){
   				jQuery("#pick_ur_time_div").html(response.output);

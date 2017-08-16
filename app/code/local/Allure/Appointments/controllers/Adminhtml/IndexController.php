@@ -1,6 +1,10 @@
 <?php
 class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Controller_Action
 {
+    protected function _isAllowed()
+    {
+        return true;
+    }
     public function IndexAction() {
         
         //MODIFY ACTION start by bhagya
