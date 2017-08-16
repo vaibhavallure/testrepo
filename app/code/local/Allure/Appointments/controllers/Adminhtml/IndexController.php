@@ -792,10 +792,12 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
     }
     public function savedetailsAction(){
         $post_data = $this->getRequest()->getPost();
+       
         try {
             if(isset($post_data['id'])){
-                
                 $model = Mage::getModel('appointments/appointments')->load($post_data['id']);
+                $post_data['appointment_start']=$model->getAppointmentStart();
+                $post_data['appointment_end']=$model->getAppointmentEnd();
                 $model = Mage::getModel('appointments/appointments')->addData($post_data)
                 ->save();
                 Mage::getSingleton("adminhtml/session")->addSuccess(Mage::helper("appointments")->__("Appointment details updated successfully"));
