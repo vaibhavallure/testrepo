@@ -9,6 +9,7 @@ $appEndDate=date("F j, Y H:i", strtotime($appointment->getAppointmentEnd()));
 $bookingTime=date("F j, Y H:i", strtotime($appointment->getBookingTime()));
 
 $store = $appointment->getStoreId();
+$storeId=$appointment->getStoreId();
 if($store)
 	$format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($store);
 else
@@ -179,15 +180,20 @@ $specialNotes = $appointment->getSpecialNotes();
             </tr>
             <tr>
                 <td class="label"><label><?php if($piercerId):echo Mage::helper('appointments')->__('Change Piercer'); else: echo Mage::helper('appointments')->__('Allocate Piercer'); endif;?></label></td>
-                <?php $piercers  = Mage::getModel('appointments/adminhtml_source_piercer')->toArray();
+                <?php //$piercers  = Mage::getModel('appointments/adminhtml_source_piercer')->toArray();
+                ?>
+                 <?php $piercers = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
+			         ->addFieldToFilter('is_active', array('eq' => '1'));;
                 ?>
                 <td class="value">
                 <form action="<?php echo $this->getActionUrl()?>" method="post">
                 <?php echo $this->getBlockHtml('formkey')?>
                 	<select name="appointment_piercer" style="width:200px;">
-                		<?php foreach ($piercers as $key=>$piercer):?>
-                		<option value="<?php echo $key?>" <?php if($piercerId==$key){echo "selected";}?>><?php echo $piercer?></option>
+                	<?php if(count($piercers)>=1):?>
+                		<?php foreach ($piercers as $piercer):?>
+                		<option value="<?php echo $piercer->getId()?>" <?php if($piercerId==$piercer->getId()){echo "selected";}?>><?php echo $piercer->getFirstname()." ".$piercer->getLastname()?></option>
                 		<?php endforeach;?>
+                		<?php endif;?>
                 	</select>
                 	<button type="submit" style="margin-left:20px;"><?php if($piercerId):echo Mage::helper('appointments')->__('Change'); else: echo Mage::helper('appointments')->__('Allocate'); endif;?></button>
                 </form>
