@@ -790,4 +790,101 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
+    public function savedetailsAction(){
+        $post_data = $this->getRequest()->getPost();
+        try {
+            if(isset($post_data['id'])){
+                
+                $model = Mage::getModel('appointments/appointments')->load($post_data['id']);
+                $model = Mage::getModel('appointments/appointments')->addData($post_data)
+                ->save();
+                Mage::getSingleton("adminhtml/session")->addSuccess(Mage::helper("appointments")->__("Appointment details updated successfully"));
+                $this->_redirect("admin_appointments/adminhtml_appointments/view/id",array('id'=>$post_data['id']));
+            }else {
+                Mage::getSingleton("adminhtml/session")->addError(Mage::helper("appointments")->__("Unable to update appointment details"));
+                $this->_redirect("admin_appointments/adminhtml_appointments/");
+            }
+        } catch (Exception $e) {
+            Mage::getSingleton("adminhtml/session")->addError(Mage::helper("appointments")->__($e->getMessage()));
+            $this->_redirect("admin_appointments/adminhtml_appointments/");
+        }
+    }
+    public function sendconfirmationAction(){
+        $post_data = $this->getRequest()->getParam('id');
+        try {
+            if($post_data)
+            {
+                $model = Mage::getModel('appointments/appointments')->load($post_data);
+                $storeId=$model->getStoreId();
+                $appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+                if($model->getNotificationPref() === '2')
+                {
+                    Mage::log("New appointment Bookig",Zend_Log::DEBUG,'appointments',true);
+                    $smsText = Mage::getStoreConfig("appointments/api/smstext_book",$storeId);
+                    $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+                    $time=date('h:i A', strtotime($model->getAppointmentStart()));
+                    $smsText=str_replace("(time)",$time,$smsText);
+                    $smsText=str_replace("(date)",$date,$smsText);
+                    $apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
+                    $shortUrl=Mage::helper('appointments')->getShortUrl($apt_modify_link);
+                    $smsText=str_replace("(modify_link)",$shortUrl,$smsText);
+                    Mage::log($smsText,Zend_Log::DEBUG,'appointments',true);
+                    if($model->getPhone()){
+                        $smsdata = Mage::helper('appointments')->sendsms($model->getPhone(),$smsText,$storeId);
+                        $model->setSmsStatus($smsdata);
+                        $model->save();
+                        Mage::log("New appointment Message Sent",Zend_Log::DEBUG,'appointments',true);
+                    }
+                }
+                //Customer Email Code
+                $toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
+                
+                
+                Mage::log(" *********** appointment Start**********",Zend_Log::DEBUG,'appointments-register.log',true);
+                Mage::log($appointmentStart,Zend_Log::DEBUG,'appointments-register.log',true);
+                Mage::log(" *********** appointment End**********",Zend_Log::DEBUG,'appointments-register.log',true);
+                Mage::log($appointmentEnd,Zend_Log::DEBUG,'appointments-register.log',true);
+                
+                if($toSend)
+                {
+                    $templateId = Mage::getStoreConfig("appointments/customer/customer_template",$storeId);
+                    $mailSubject="Appointment booking";
+                    $sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+                    $email = $model->getEmail();
+                    $name = $model->getFirstname()." ".$model->getLastname();
+                    $apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
+                    
+                    $vars = array(
+                        'name'        => $model->getFirstname()." ".$model->getLastname(),
+                        'customer_name'        => $model->getFirstname()." ".$model->getLastname(),
+                        'customer_email'  => $model->getEmail(),
+                        'customer_phone'      => $model->getPhone(),
+                        'no_of_pier' => $model->getPiercingQty(),
+                        'piercing_loc' => $model->getPiercingLoc(),
+                        'special_notes' => $model->getSpecialNotes(),
+                        'apt_starttime'  => $appointmentStart,
+                        'apt_endtime'    => $appointmentEnd,
+                        'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+                        'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+                        'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+                        'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+                        'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+                        'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+                        'apt_modify_link'=> $apt_modify_link);
+                    $mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
+                }
+                Mage::getSingleton("adminhtml/session")->addSuccess(Mage::helper("appointments")->__("Confirmation send successfully "));
+                $this->_redirect("admin_appointments/adminhtml_appointments/");
+            }else{
+                Mage::getSingleton("adminhtml/session")->addError(Mage::helper("appointments")->__("Unable to Send Confirmation"));
+                $this->_redirect("admin_appointments/adminhtml_appointments/");
+            } 
+        } catch (Exception $e) {
+            Mage::getSingleton("adminhtml/session")->addError(Mage::helper("appointments")->__($e->getMessage()));
+            $this->_redirect("admin_appointments/adminhtml_appointments/");
+        }
+            
+    }
+    
 }
