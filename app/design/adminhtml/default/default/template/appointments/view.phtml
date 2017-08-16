@@ -27,6 +27,8 @@ $piercerId = $appointment->getPiercerId();
 $piercerName = Mage::helper('appointments')->getPiercerName($piercerId);
 
 $name = $appointment->getFirstname()." ".$appointment->getLastname();
+$firstname = $appointment->getFirstname();
+$lastname = $appointment->getLastname();
 $custId = $appointment->getCustomerId();
 $email = $appointment->getEmail();
 $phone = $appointment->getPhone();
@@ -99,50 +101,64 @@ $specialNotes = $appointment->getSpecialNotes();
             <h4 class="icon-head head-appointment-information"><?php echo Mage::helper('appointments')->__('Customer Information') ?></h4>
             <div class="tools"></div>
         </div>
+         <form action="<?php echo $this->getUrl('admin_appointments/adminhtml_index/savedetails')?>" method="post">
+          <?php echo $this->getBlockHtml('formkey')?>
        <div class="fieldset">
             <table cellspacing="0" class="form-list">
             <tr>
-                <td class="label"><label><?php echo Mage::helper('appointments')->__('Customer Name') ?></label></td>
-                <td class="value"><strong><?php echo $name ?></strong></td>
+               
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('First Name') ?></label></td>
+                <td class="value"> <input type="hidden" name="id" value="<?php echo $appointment->getId();?>"><input name="firstname" value="<?php echo $firstname ;?>"></td>
+            </tr>
+             <tr>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('Last Name') ?></label></td>
+                <td class="value"><input name="lastname" value="<?php echo $lastname ;?>"></td>
             </tr>
             <?php if(!empty($custId)):?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Customer Id') ?></label></td>
-                <td class="value"><strong><?php echo $custId ?></strong></td>
+                <td class="value"><input value="<?php echo $custId?>"></td>
             </tr>
             <?php endif;?>
             
             <tr>
                  <td class="label"><label><?php echo Mage::helper('appointments')->__('Email') ?></label></td>
-                <td class="value"><strong><?php echo $email ?></strong></td>
+                <td class="value"><input name="email" value="<?php echo $email?>"></td>
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Phone') ?></label></td>
-                <td class="value"><strong><?php echo $phone ?></strong></td>
+                <td class="value"><input name="phone" value="<?php echo $phone?>"></td>
+                
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Street') ?></label></td>
-                <td class="value"><strong><?php echo $street ?></strong></td>
+                <td class="value"><input name="street" value="<?php echo $street?>"></td>
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('City') ?></label></td>
-                <td class="value"><strong><?php echo $city ?></strong></td>
+                <td class="value"><input name="city" value="<?php echo $city?>"></td>
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Country') ?></label></td>
-                <td class="value"><strong><?php echo $country ?></strong></td>
+                <td class="value"><input name="country" value="<?php echo $country?>"></td>
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Postal Code') ?></label></td>
-                <td class="value"><strong><?php echo $postCode ?></strong></td>
+                <td class="value"><input name="post_code" value="<?php echo $postCode?>"></td>
             </tr>
             <tr>
-                <td class="label"><label><?php echo Mage::helper('appointments')->__('Notification Preference') ?></label></td>
-                <td class="value"><strong><?php echo $notificationPref ?></strong></td>
+              <td class="label"><label><?php echo Mage::helper('appointments')->__('Notification Preference') ?></label></td>
+              <td class="value"><select name="notification_pref" style="width:173px;">
+                		<option value="1" <?php if($notificationPref==1){echo "selected";}?>><?php echo "Email"?></option>
+                		<option value="2" <?php if($notificationPref==2){echo "selected";}?>><?php echo "Phone"?></option>
+               </select>
+               <button style="margin-left: 10px;" type="submit">Save</button>
+              </td>
             </tr>
-           
+         
             </table>
         </div>
+        </form>
     </div>
 </div>
 

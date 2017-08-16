@@ -122,7 +122,8 @@ if($fetch_model){
 		{	
 		    $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
 			$endTime = strtotime("+$interval minutes", strtotime($selectedTime));
-
+			//Mage::log("Start time:".$selectedTime,Zend_log::DEBUG,'mylogs',true);
+			//Mage::log("End time:".$endTime,Zend_log::DEBUG,'mylogs',true);
 			
 			$slotval ="`". "time_slot_".$i ."`";
 			//echo '<br>'.$slotval;
