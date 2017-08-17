@@ -115,9 +115,6 @@
 				<order_type>
 					<to_order>*</to_order>
 				</order_type>
-				<payment_mode>
-					<to_order>*</to_order>
-				</payment_mode>
 			</sales_convert_quote>
 		</fieldsets>
 

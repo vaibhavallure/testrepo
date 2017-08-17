@@ -5,7 +5,7 @@
 			<active>true</active>
 			<codePool>local</codePool>
 			<depends>
-				<Amasty_Core />
+				<Allure_Core />
 				<Amasty_Customerattr />
 			</depends>
 		</Allure_MultiCheckout>
