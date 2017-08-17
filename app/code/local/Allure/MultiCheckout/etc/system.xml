@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<allure_multicheckout translate="label" module="checkoutstep">
+			<label>MultiCheckout Settings</label>
+			<tab>allure</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>30</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<retailer_customer translate="label">
+					<label>Payment Methods - Retail</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<retailer_payment_methods>
+							<label>Available Payment Methods</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>checkoutstep/customer_retailer_paymentoptions</source_model>
+							<sort_order>1s</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Visible only for Retail customers.</comment>
+						</retailer_payment_methods>
+					</fields>
+				</retailer_customer>
+
+				<wholesale_customer translate="label">
+					<label>Payment Methods - Wholesale</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+
+						<wholesale_pay_now_options>
+							<label>Available Payment Methods - Pay now</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>checkoutstep/customer_wholesale_paymentoptions</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Choose only selected Wholesale customer payment methods.</comment>
+						</wholesale_pay_now_options>
+
+						<wholesale_pay_as_ship_options>
+							<label>Available Payment Methods - Pay as you ship</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>checkoutstep/customer_wholesale_paymentoptions</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Choose only selected Wholesale customer payment methods.</comment>
+						</wholesale_pay_as_ship_options>
+
+					</fields>
+				</wholesale_customer>
+
+			</groups>
+		</allure_multicheckout>
+
+
+		<!-- Multiple order email template Design add into sales email configuration start. -->
+		<sales_email>
+			<label>Sales Emails</label>
+			<tab>sales</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>301</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<allure_multicheckout_sales_email translate="label">
+					<label>MultiCheckout - Sales Emails</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>301</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+
+					<fields>
+						<template translate="label">
+							<label>MultiCheckout - General Order Email Template</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_email_template</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Email contains two orders.</comment>
+						</template>
+						<guest_template translate="label">
+							<label>MultiCheckout - Guest Order Email Template</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_email_template</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Email contains two orders.</comment>
+						</guest_template>
+					</fields>
+				</allure_multicheckout_sales_email>
+			</groups>
+		</sales_email>
+		<!-- Multiple order email template Design add into sales email configuration end. -->
+
+	</sections>
+</config>
