@@ -2116,3 +2116,8 @@ iframe[name=google_conversion_frame] {display:none}
 *		Currency Switcher End
 *	======================================
 */
+
+input.special-inst-product {
+    width: 100%;
+    /* line-height: 30px; */
+}
