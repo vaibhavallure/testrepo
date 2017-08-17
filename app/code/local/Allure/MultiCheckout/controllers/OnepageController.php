@@ -114,10 +114,10 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $layout = $this->getLayout();
         $update = $layout->getUpdate();
         
-        $_checkoutstepHelper = Mage::helper('allure_multicheckout');
+        $_checkoutHelper = Mage::helper('allure_multicheckout');
         if (strtolower($this->getOnepage()
             ->getQuote()
-            ->getDeliveryMethod()) == strtolower($_checkoutstepHelper::TWO_SHIP))
+            ->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP))
             $update->load('checkout_onepage_allureshippingmethod');
         else
             $update->load('checkout_onepage_shippingmethod');
@@ -241,11 +241,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                     ->collectTotals();
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
                 
-                $_checkoutstepHelper = Mage::helper('allure_multicheckout');
+                $_checkoutHelper = Mage::helper('allure_multicheckout');
                 if (strtolower(
                         $this->getOnepage()
                             ->getQuote()
-                            ->getDeliveryMethod()) == strtolower($_checkoutstepHelper::TWO_SHIP)) {
+                            ->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
                     
                     $giftMessageId = $this->getOnepage()
                         ->getQuote()
@@ -399,8 +399,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             if (empty($result['error']) && ! $redirectUrl) {
                 // check delivery method set review
                 $quoteObj = Mage::getSingleton('checkout/session')->getQuote();
-                $_checkoutstepHelper = Mage::helper('allure_multicheckout');
-                if (strtolower($quoteObj->getDeliveryMethod()) == strtolower($_checkoutstepHelper::TWO_SHIP)) {
+                $_checkoutHelper = Mage::helper('allure_multicheckout');
+                if (strtolower($quoteObj->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
                     $this->loadLayout('checkout_onepage_shipment_review');
                 } else {
                     $this->loadLayout('checkout_onepage_review');
@@ -437,7 +437,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             return;
         }
         $result = array();
-        $_checkoutstepHelper = Mage::helper('allure_multicheckout');
+        $_checkoutHelper = Mage::helper('allure_multicheckout');
         try {
             $requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds();
             if ($requiredAgreements) {
@@ -463,26 +463,19 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                          Mage_Payment_Model_Method_Abstract::CHECK_ORDER_TOTAL_MIN_MAX |
                          Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL;
                 
-                if (strtolower(
-                        $this->getOnepage()
-                            ->getQuote()
-                            ->getDeliveryMethod()) == strtolower($_checkoutstepHelper::ONE_SHIP)) {
+                if (strtolower($this->getOnepage()->getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP)) {
                     $this->getOnepage()
                         ->getQuote()
                         ->getPayment()
                         ->importData($data);
                 } else {
-                    if (! $this->getOnepage()
-                        ->getQuoteOrdered()
-                        ->getIsCheckoutCart())
+                    if (! $this->getOnepage()->getQuoteOrdered()->getIsCheckoutCart())
                         $this->getOnepage()
                             ->getQuoteOrdered()
                             ->getPayment()
                             ->importData($data);
                     // Mage::log($this->getOnepage()->getQuoteOrdered()->getPayment()->getCcNumber(),Zend_log::DEBUG,'abc',true);
-                    if (! $this->getOnepage()
-                        ->getQuoteBackordered()
-                        ->getIsCheckoutCart())
+                    if (! $this->getOnepage()->getQuoteBackordered()->getIsCheckoutCart())
                         $this->getOnepage()
                             ->getQuoteBackordered()
                             ->getPayment()
@@ -560,7 +553,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         
         if (strtolower($this->getOnepage()
             ->getQuote()
-            ->getDeliveryMethod()) == strtolower($_checkoutstepHelper::ONE_SHIP)) {
+            ->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP)) {
             $this->getOnepage()
                 ->getQuote()
                 ->save();

@@ -179,7 +179,7 @@ class Allure_MultiCheckout_Model_Backordered_Session extends Mage_Core_Model_Ses
             return $this;
         }
 
-        Mage::dispatchEvent('load_customer_quote_before', array('checkoutstep_backorderd_session' => $this));
+        Mage::dispatchEvent('load_customer_quote_before', array('checkout_session' => $this));
 
         $customerQuote = Mage::getModel('sales/quote')
             ->setStoreId(Mage::app()->getStore()->getId())

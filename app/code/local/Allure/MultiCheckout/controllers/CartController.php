@@ -93,8 +93,8 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 ->save();
             
             // coupon code apply to two shipment quote's.
-            $_checkoutstepHelper = Mage::helper('allure_multicheckout');
-            if (strtolower($this->_getQuote()->getDeliveryMethod()) == strtolower($_checkoutstepHelper::TWO_SHIP)) {
+            $_checkoutHelper = Mage::helper('allure_multicheckout');
+            if (strtolower($this->_getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
                 
                 $model = Mage::getModel('checkout/type_onepage');
                 $model->getQuoteOrdered()

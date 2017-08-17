@@ -30,6 +30,7 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
     public function place ()
     {
         $outOfStockOrderId = Mage::getSingleton('checkout/session')->getOutOfStockOrder();
+        
         if (! isset($outOfStockOrderId) && empty($outOfStockOrderId))
             $outOfStockOrderId = 0;
         
@@ -55,6 +56,7 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
          */
         $methodInstance->validate();
         $action = $methodInstance->getConfigPaymentAction();
+        
         if ($action) {
             if ($methodInstance->isInitializeNeeded()) {
                 /**
@@ -69,22 +71,14 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                         $this->_order($order->getBaseTotalDue());
                         break;
                     case Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE:
-                        $this->_authorize(true, $order->getBaseTotalDue()); // base
-                                                                            // amount
-                                                                            // will
-                                                                            // be
-                                                                            // set
-                                                                            // inside
+                        // base amount will be set inside
+                        $this->_authorize(true, $order->getBaseTotalDue());
                         $this->setAmountAuthorized($order->getTotalDue());
                         break;
                     case Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE_CAPTURE:
                         if ($order->getIsReadyToShip()) {
-                            $this->_authorize(true, $order->getBaseTotalDue()); // base
-                                                                                // amount
-                                                                                // will
-                                                                                // be
-                                                                                // set
-                                                                                // inside
+                            // base amount will be set inside
+                            $this->_authorize(true, $order->getBaseTotalDue());
                             $this->setAmountAuthorized($order->getTotalDue());
                         } else {
                             $this->setAmountAuthorized($order->getTotalDue());

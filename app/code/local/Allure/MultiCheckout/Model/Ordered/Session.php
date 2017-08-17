@@ -205,7 +205,7 @@ class Allure_MultiCheckout_Model_Ordered_Session extends Mage_Core_Model_Session
             return $this;
         }
 
-        Mage::dispatchEvent('load_customer_quote_before', array('checkoutstep_ordered_session' => $this));
+        Mage::dispatchEvent('load_customer_quote_before', array('checkout_session' => $this));
 
         $customerQuote = Mage::getModel('sales/quote')
             ->setStoreId(Mage::app()->getStore()->getId())

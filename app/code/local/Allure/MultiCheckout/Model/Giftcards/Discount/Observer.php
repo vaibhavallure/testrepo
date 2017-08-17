@@ -46,11 +46,11 @@ class Allure_MultiCheckout_Model_Giftcards_Discount_Observer extends Webtex_Gift
     public function testDiscountQuote ($observer)
     {
         $session = Mage::getSingleton('giftcards/session');
-        $_checkoutstepHelper = Mage::helper('allure_multicheckout');
+        $_checkoutHelper = Mage::helper('allure_multicheckout');
         // if giftcard is active
         if ($session->getActive() && $session->getGiftCardsIds()) {
             $this->_oQuote = $observer->getQuote();
-            if ($this->_oQuote->getOrderType() != $_checkoutstepHelper::MULTI_BACK_ORDER) {
+            if ($this->_oQuote->getOrderType() != $_checkoutHelper::MULTI_BACK_ORDER) {
                 $this->_oQuote->setUseGiftcards(true);
                 
                 $this->_setBalanceByCurrencies(array_keys($session->getGiftCardsIds()));

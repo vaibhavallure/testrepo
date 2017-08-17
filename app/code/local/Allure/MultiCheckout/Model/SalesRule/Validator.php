@@ -22,7 +22,7 @@ class Allure_MultiCheckout_Model_SalesRule_Validator extends Mage_SalesRule_Mode
         $itemOriginalPrice = $this->_getItemOriginalPrice($item);
         $baseItemOriginalPrice = $this->_getItemBaseOriginalPrice($item);
         
-        $_checkoutstepHelper = Mage::helper('allure_multicheckout');
+        $_checkoutHelper = Mage::helper('allure_multicheckout');
         $orderType = $quote->getOrderType();
         
         if ($itemPrice < 0) {
@@ -92,7 +92,7 @@ class Allure_MultiCheckout_Model_SalesRule_Validator extends Mage_SalesRule_Mode
                     break;
                 
                 case Mage_SalesRule_Model_Rule::CART_FIXED_ACTION:
-                    // if($quote->getOrderType()!=$_checkoutstepHelper::MULTI_BACK_ORDER){
+                    // if($quote->getOrderType()!=$_checkoutHelper::MULTI_BACK_ORDER){
                     if (empty($this->_rulesItemTotals[$rule->getId()])) {
                         Mage::throwException(Mage::helper('salesrule')->__('Item totals are not set for rule.'));
                     }
@@ -112,8 +112,8 @@ class Allure_MultiCheckout_Model_SalesRule_Validator extends Mage_SalesRule_Mode
                     $cartRules = $address->getCartFixedRules();
                     if (! isset($cartRules[$rule->getId()])) {
                         // check order type and divide discount amount
-                        if ($orderType == $_checkoutstepHelper::MULTI_BACK_ORDER ||
-                                 $orderType == $_checkoutstepHelper::MULTI_MAIN_ORDER) {
+                        if ($orderType == $_checkoutHelper::MULTI_BACK_ORDER ||
+                                 $orderType == $_checkoutHelper::MULTI_MAIN_ORDER) {
                             $cartRules[$rule->getId()] = $rule->getDiscountAmount() / 2.0;
                         } else {
                             $cartRules[$rule->getId()] = $rule->getDiscountAmount();
