@@ -24,7 +24,8 @@ var count = 1;
 	var request = {
  				"qty":qty,
  				"store":storeid,
- 				"date":todaysDate
+ 				"date":todaysDate,
+ 				"id":Allure.appointmentId
  	 		};
  	 jQuery.ajax({
         	url : Allure.ajaxGetTimeUrl,
@@ -66,7 +67,8 @@ var count = 1;
  	var request = {
   				"qty":qty,
   				"store":storeid,
-  				"date":todaysDate
+  				"date":todaysDate,
+  				"id":Allure.appointmentId
   	 		};
   	 jQuery.ajax({
          	url : Allure.ajaxGetTimeUrl,
@@ -130,7 +132,7 @@ var count = 1;
 	 		url : Allure.ajaxGetWorkingDaysUrl,
 			type : 'POST',
 			dataType:'json',
-			data: {storeid:storeid},
+			data: {storeid:storeid,id:Allure.appointmentId},
 			beforeSend: function() { jQuery('#appointment_loader').show(); },
 	        complete: function() { jQuery('#appointment_loader').hide(); },
 
@@ -154,7 +156,8 @@ var count = 1;
 			var request = {
 		 				"qty":qty,
 		 				"store":storeid,
-		 				"date":todaysDate
+		 				"date":todaysDate,
+		 				"id":Allure.appointmentId
 		 	 		};
 		 	 jQuery.ajax({
 		        	url : Allure.ajaxGetTimeUrl,
@@ -178,11 +181,13 @@ var count = 1;
 			 		url : Allure.ajaxGetWorkingDaysUrl,			 		
 					type : 'POST',
 					dataType:'json',
-					data: {storeid:storeid},
+					data: {storeid:storeid,id:Allure.appointmentId
+						},
 					beforeSend: function() { jQuery('#appointment_loader').show(); },
 			        complete: function() { jQuery('#appointment_loader').hide(); },
 					success : function(response){
 						jQuery("#fetchpickurday").html(response.output);
+						
 						if(response.schedule)
 							jQuery("#piercer_schedule").html(response.schedule);
 					}
@@ -206,8 +211,11 @@ var count = 1;
 		var request = {
 	 				"qty":qty,
 	 				"store":storeid,
-	 				"date":todaysDate
+	 				"date":todaysDate,
+	 				"id":Allure.appointmentId
 	 	 		};
+		console.log("sc");
+		 console.log(Allure.appointmentId);
 	 	 jQuery.ajax({
 	        	url : Allure.ajaxGetTimeUrl,
 	        	dataType : 'json',
@@ -217,6 +225,7 @@ var count = 1;
 		        complete: function() { jQuery('#appointment_loader').hide(); },
 
 	 			success : function(response){
+	 				
 	 				jQuery("#pick_ur_time_div").html(response.output);
 	 				window.sample = 30;
 	 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();

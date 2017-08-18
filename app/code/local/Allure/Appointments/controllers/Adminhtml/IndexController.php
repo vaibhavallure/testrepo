@@ -127,7 +127,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
          $value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId())); */
         
         
-        $block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store']);
+        $block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store'])->setData("id",$request['id']);
         $output = $block->toHtml();
         $result['success'] = true;
         $result['msg'] = $time;
@@ -164,6 +164,11 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 Mage::log(" ***********Register appointment**********",Zend_Log::DEBUG,'appointments-register.log',true);
                 Mage::log($post_data,Zend_Log::DEBUG,'appointments-register.log',true);
                 try {
+                    if(isset($post_data['id'])){
+                        $old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
+                        if(empty($post_data['app_date']))
+                            $post_data['app_date']=date('m/d/Y' ,strtotime($old_appointment->getAppointmentStart()));
+                    }
                     $post_data['appointment_start'] = $post_data['app_date']." ". $post_data['appointment_start'];
                     $post_data['appointment_start'] = strtotime($post_data['appointment_start'].":00");
                     $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
@@ -755,7 +760,15 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
     {
         $result = array('success' => false);
         $storeid = $this->getRequest()->getParam('storeid');
-        
+        $id = $this->getRequest()->getParam('id');
+        if($id)
+        {
+            $models = Mage::getModel('appointments/appointments')->load($id);
+            //$models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email)->addFieldToFilter('app_status',array('in'=>array(Allure_Appointments_Model_Appointments::STATUS_REQUEST,Allure_Appointments_Model_Appointments::STATUS_ASSIGNED)));
+            if($models->getId())
+                Mage::register('apt_modify_data',$models);
+                
+        }
         //To modify the appointment get the data from registry end
         $piercers = Mage::getModel('appointments/piercers')->getCollection()
         ->addFieldToFilter('store_id', array('eq' => $storeid))
