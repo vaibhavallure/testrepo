@@ -23,6 +23,14 @@
                 </observers>
             </admin_system_config_changed_section_customer>
         </events>
+        <resources>
+            <allure_customer_setup>
+                <setup>
+                    <module>Allure_Customer</module>
+                    <class>Mage_Customer_Model_Resource_Setup</class>
+                </setup>
+			</allure_customer_setup>
+        </resources>
 	</global>
 	<frontend>
 		<layout>
@@ -34,7 +42,7 @@
         </layout>
 	</frontend>
 	 <crontab>
-		<jobs>
+		<joballure_customers>
 			<allure_customer_schedule>
 				<schedule>
 			        <cron_expr>*/15 * * * *</cron_expr>
@@ -43,6 +51,6 @@
 					<model>allure_customer/observer::setcustomerStatusActive</model>
 				</run>
 			</allure_customer_schedule>
-		</jobs>
+		</joballure_customers>
 	</crontab>
 </config>
