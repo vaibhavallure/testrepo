@@ -147,6 +147,11 @@ if($store)
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Postal Code') ?></label></td>
                 <td class="value"><input name="post_code" value="<?php echo $postCode?>"></td>
             </tr>
+             <tr>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('Special Notes') ?></label></td>
+                <td class="value"><textarea name="special_notes" style="height: 5em;width: 166px;" id="special_notes_app" rows="5" cols="5"><?php echo $specialNotes?></textarea></td>
+            </tr>
+         
             <tr>
               <td class="label"><label><?php echo Mage::helper('appointments')->__('Notification Preference') ?></label></td>
               <td class="value"><select name="notification_pref" style="width:173px;">
