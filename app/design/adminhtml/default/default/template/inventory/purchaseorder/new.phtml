@@ -57,6 +57,8 @@
 					<td><?php echo $_product->getSku();?></td>
 					<td><img style="width: 100px; height: 100px;" class="product_inventory_thumbnail" src="<?php  echo  Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(100);?>"/></td>
 					<td><?php echo $_product->getName();?></td>
+					<?php //echo $helper->getVendorName($_product->getPrimaryVendor());?>
+                    <td><?php echo  "MT Factory"; ?></td>
 						
 					<?php 
 						$inven=Mage::getModel('cataloginventory/stock_item')

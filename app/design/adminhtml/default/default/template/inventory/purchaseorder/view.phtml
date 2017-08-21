@@ -30,7 +30,7 @@
 				</label>
 			<?php endif;?>
 			<label><span><?php echo $helper->__('Vendor:'); ?></span>
-			<?php echo $order->getVendorName()?>
+			<?php echo Mage::helper('allure_vendor')->isUserVendor()? $order->getVendorName():"MT Factory";?>
 			</label>
 			<label><span><?php echo $helper->__('Store:'); ?></span>
 			<?php echo Mage::getModel('core/website')->load($order->getStockId())->getName()?>
