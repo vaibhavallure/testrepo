@@ -31,6 +31,9 @@ var count = 1;
         	dataType : 'json',
  			type : 'POST',
  			data: {request:request},
+ 			beforeSend: function() { jQuery('#appointment_loader').show(); },
+	        complete: function() { jQuery('#appointment_loader').hide(); },
+
  			success : function(response){
  				jQuery("#pick_ur_time_div").html(response.output);
  				window.sample = 30;
@@ -70,6 +73,9 @@ var count = 1;
          	dataType : 'json',
   			type : 'POST',
   			data: {request:request},
+  			beforeSend: function() { jQuery('#appointment_loader').show(); },
+	        complete: function() { jQuery('#appointment_loader').hide(); },
+
   			success : function(response){
   				jQuery("#pick_ur_time_div").html(response.output);
   				window.sample = 30;
@@ -125,6 +131,9 @@ var count = 1;
 			type : 'POST',
 			dataType:'json',
 			data: {storeid:storeid},
+			beforeSend: function() { jQuery('#appointment_loader').show(); },
+	        complete: function() { jQuery('#appointment_loader').hide(); },
+
 			success : function(response){
 				jQuery("#fetchpickurday").html(response.output);
 				if(response.schedule)
@@ -152,6 +161,9 @@ var count = 1;
 		        	dataType : 'json',
 		 			type : 'POST',
 		 			data: {request:request},
+		 			beforeSend: function() { jQuery('#appointment_loader').show(); },
+			        complete: function() { jQuery('#appointment_loader').hide(); },
+
 		 			success : function(response){
 		 				jQuery("#pick_ur_time_div").html(response.output);
 		 				window.sample = 30;
@@ -167,6 +179,8 @@ var count = 1;
 					type : 'POST',
 					dataType:'json',
 					data: {storeid:storeid},
+					beforeSend: function() { jQuery('#appointment_loader').show(); },
+			        complete: function() { jQuery('#appointment_loader').hide(); },
 					success : function(response){
 						jQuery("#fetchpickurday").html(response.output);
 						if(response.schedule)
@@ -199,6 +213,9 @@ var count = 1;
 	        	dataType : 'json',
 	 			type : 'POST',
 	 			data: {request:request},
+	 			beforeSend: function() { jQuery('#appointment_loader').show(); },
+		        complete: function() { jQuery('#appointment_loader').hide(); },
+
 	 			success : function(response){
 	 				jQuery("#pick_ur_time_div").html(response.output);
 	 				window.sample = 30;

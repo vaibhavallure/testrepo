@@ -16,8 +16,8 @@ $j(document).ready(function (){
         var store=$j('#store').val();
         var totalAmount = parseInt($j('#order_total').val());
         if(ischecked){
-	        if(qty<=0 || cost<=0){
-	        	 alert('Please Enter Qty or Cost Greater than 0.');
+	        if(qty<=0){
+	        	 alert('Please Enter Qty Greater than 0.');
 	        	 $j(this).removeAttr('checked');
 	        }
 	        else{ 
@@ -37,7 +37,6 @@ $j(document).ready(function (){
 	    	            $j('#order_total').val(totalAmount);
 	    	            $j('#max_qty_'+id).prop('disabled', true);
 	    	            $j('#comment_'+id).prop('disabled', true);
-	    	            $j('#cost_'+id).prop('disabled', true);
 	    	        }
 	    	    });
 	        }
@@ -48,7 +47,7 @@ $j(document).ready(function (){
         			id,qty,cost,comment,include,store
         	};
         	$j.ajax({
-    	        url: Allure.AddPurchaseItem, //using same url because using  include = 0; flag
+    	        url: Allure.AddPurchaseItem,
     	        dataType : 'json',
     			type : 'POST',
     			data: {'item':item,'form_key':key,'refence_no':refence_no,'order_total':totalAmount},
@@ -58,7 +57,6 @@ $j(document).ready(function (){
     	        	 $j('#order_total').val(totalAmount);
     	        	 $j('#max_qty_'+id).prop('disabled', false);
     	             $j('#comment_'+id).prop('disabled', false);
-    	             $j('#cost_'+id).prop('disabled', false);
     	        	
     	        }
     	    });
@@ -101,7 +99,7 @@ $j(document).ready(function (){
 		var totalAmount = parseInt($j('#order_total').val());
 		var store=$j('#store').val();
 		var refence_no=$j('#refence_no').val();
-	
+		if(totalAmount > 0){
 			if(confirm("Are you sure ?")){
 			var key=Allure.ViewPurchaseOrderFormKey;
 			$j.ajax({
@@ -118,7 +116,9 @@ $j(document).ready(function (){
 		        }
 		    });
 		  }
-		
+		}
+		else
+			alert("Please select Item first.")
 	});
 	
 	$j(".reset_po_btn").click(function() {
@@ -174,8 +174,6 @@ function updateTotal(data){
 		sum += value['cost'] * value['qty'];
 	    $j('#'+value['item_id']).prop( "checked", true );
 	    $j('#max_qty_'+value['item_id']).val(value['qty']);
-	    $j('#cost_'+value['item_id']).val(value['cost']);
-	    $j('#cost_'+value['item_id']).prop('disabled', true);
 	    $j('#max_qty_'+value['item_id']).prop('disabled', true);
 	    $j('#comment_'+value['item_id']).val(value['comment']);
 	    $j('#comment_'+value['item_id']).prop('disabled', true);

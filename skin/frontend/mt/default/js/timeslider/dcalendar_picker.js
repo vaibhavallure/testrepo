@@ -378,6 +378,9 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				        	dataType : 'json',
 				 			type : 'POST',
 				 			data: {request:request},
+				 			beforeSend: function() { $('#appointment_loader').show(); },
+					        complete: function() { $('#appointment_loader').hide(); },
+
 				 			success : function(response){
 				 				$("#pick_ur_time_div").html(response.output);
 				 				window.sample = 30;
@@ -490,6 +493,9 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				        	dataType : 'json',
 				 			type : 'POST',
 				 			data: {request:request},
+				 			beforeSend: function() { $('#appointment_loader').show(); },
+					        complete: function() { $('#appointment_loader').hide(); },
+
 				 			success : function(response){
 				 				$("#pick_ur_time_div").html(response.output);
 				 				window.sample = 30;

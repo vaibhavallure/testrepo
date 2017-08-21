@@ -61,21 +61,16 @@
 		
     	<?php 
     		foreach ($collection as $_product):
-    		if(!$_product->getIsCustom())
-    		      $product = Mage::getModel ( 'catalog/product' )->load ($_product->getProductId());
-    		    else
-    		      $product = Mage::getModel ( 'inventory/customitem' )->load ($_product->getProductId());
+    			$product = Mage::getModel ( 'catalog/product' )->load ( $_product->getProductId() );
     	?>
-			<tr id="inventory-row-<?php echo $_product->getProductId(); ?>" class="inventory_tr">
+			<tr id="inventory-row-<?php echo $product->getProductId(); ?>" class="inventory_tr">
 				<td>
-					<?php if(!$_product->getIsCustom()): ?>
 					<img style="width: 100px; height: 100px;" class="product_inventory_thumbnail" 
 							src="<?php  echo Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(100);?>"/>
-					<?php endif;?>
 				</td>	
-				<td><?php echo $product->getSku();?></td>
+				<td><?php echo $_product->getSku();?></td>
 						
-				<td><?php echo $product->getName();?></td>
+				<td><?php echo $_product->getName();?></td>
 						
 				<td>
 					<input id="requested_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
