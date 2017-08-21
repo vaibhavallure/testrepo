@@ -214,7 +214,7 @@ $typeId = $_item->getProduct()->getTypeId();
                     }
                 }
                     
-                if ($isBackordered) : ?>
+                if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) : ?>
                 	<p>This product is not available in the requested quantity. <?php echo $backorderedQty; ?> of the items will be backordered.</p>
                	<?php else : ?>
             		<?= Mage::helper('amstockstatus')->showStockStatus($_item->getProduct(), false, false, false) ?>

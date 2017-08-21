@@ -232,7 +232,7 @@
     <tr class="table-messages">
         <td colspan="6">
             <div class="item-msg <?php echo $message['type'] ?>">
-            <?php if ( intval($_item->getProduct()->getStockItem()->getQty()) < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() ) : ?>
+            <?php if ( intval($_item->getProduct()->getStockItem()->getQty()) < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() && $_item->getProduct()->getStockItem()->getManageStock()==1 ) : ?>
                 <p>This product is not available in the requested quantity. <?php echo $_item->getQty()-intval($_item->getProduct()->getStockItem()->getQty()); ?> of the items will be backordered.</p>
             <?php else : ?>
                 <?php foreach ($messages as $message): ?>

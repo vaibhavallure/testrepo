@@ -67,7 +67,7 @@ class Allure_CheckoutStep_Helper_Data extends Mage_Customer_Helper_Data
 	    	->loadByProduct($item->getProduct())->getQty();
 	    	
 	    	$stock_qty = intval($item->getProduct()->getStockItem()->getQty());
-	    	if ($stock_qty < $item->getQty() && $item->getProduct()->getStockItem()->getIsInStock() ):
+	    	if ($stock_qty < $item->getQty() && $item->getProduct()->getStockItem()->getIsInStock() && $item->getProduct()->getStockItem()->getManageStock()==1 ):
 		    	//if($productInventoryQty<=0):
 		    	$isBackorderAvailable = true;
 		    	break;
