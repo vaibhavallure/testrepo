@@ -43,6 +43,9 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
 
     public function getResourceCollectionName()
     {
+       // Mage::getModel('processorders/observer')->runProcess();
+       // Mage::getResourceModel('sales/report_order')->aggregate();
+       
         return ($this->getFilterData()->getData('report_type') == 'updated_at_order')
             ? 'sales/report_order_updatedat_collection'
             : 'sales/report_order_collection';
@@ -50,6 +53,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
 
     protected function _prepareColumns()
     {
+        if($this->getRequest()->getParam('store_ids')){
         $this->addColumn('period', array(
             'header'        => Mage::helper('sales')->__('Period'),
             'index'         => 'period',
@@ -98,6 +102,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'currency_code' => $currencyCode,
             'index'         => 'total_income_amount',
             'total'         => 'sum',
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'sortable'      => false,
             'rate'          => $rate,
         ));
@@ -109,6 +114,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'index'             => 'total_revenue_amount',
             'total'             => 'sum',
             'sortable'          => false,
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'visibility_filter' => array('show_actual_columns'),
             'rate'              => $rate,
         ));
@@ -120,6 +126,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'index'             => 'total_profit_amount',
             'total'             => 'sum',
             'sortable'          => false,
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'visibility_filter' => array('show_actual_columns'),
             'rate'              => $rate,
         ));
@@ -131,6 +138,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'index'         => 'total_invoiced_amount',
             'total'         => 'sum',
             'sortable'      => false,
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'rate'          => $rate,
         ));
 
@@ -141,6 +149,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'index'             => 'total_paid_amount',
             'total'             => 'sum',
             'sortable'          => false,
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'visibility_filter' => array('show_actual_columns'),
             'rate'              => $rate,
         ));
@@ -149,6 +158,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'header'        => Mage::helper('sales')->__('Refunded'),
             'type'          => 'currency',
             'currency_code' => $currencyCode,
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'index'         => 'total_refunded_amount',
             'total'         => 'sum',
             'sortable'      => false,
@@ -160,7 +170,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'type'          => 'currency',
             'currency_code' => $currencyCode,
             'index'         => 'total_tax_amount',
-            'total'         => 'sum',
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'sortable'      => false,
             'rate'          => $rate,
         ));
@@ -171,6 +181,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'currency_code'     => $currencyCode,
             'index'             => 'total_tax_amount_actual',
             'total'             => 'sum',
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'sortable'          => false,
             'visibility_filter' => array('show_actual_columns'),
             'rate'              => $rate,
@@ -181,6 +192,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'type'          => 'currency',
             'currency_code' => $currencyCode,
             'index'         => 'total_shipping_amount',
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'total'         => 'sum',
             'sortable'      => false,
             'rate'          => $rate,
@@ -191,6 +203,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'type'              => 'currency',
             'currency_code'     => $currencyCode,
             'index'             => 'total_shipping_amount_actual',
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'total'             => 'sum',
             'sortable'          => false,
             'visibility_filter' => array('show_actual_columns'),
@@ -202,6 +215,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'type'          => 'currency',
             'currency_code' => $currencyCode,
             'index'         => 'total_discount_amount',
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'total'         => 'sum',
             'sortable'      => false,
             'rate'          => $rate,
@@ -212,6 +226,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'type'              => 'currency',
             'currency_code'     => $currencyCode,
             'index'             => 'total_discount_amount_actual',
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'total'             => 'sum',
             'sortable'          => false,
             'visibility_filter' => array('show_actual_columns'),
@@ -223,11 +238,14 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
             'type'          => 'currency',
             'currency_code' => $currencyCode,
             'index'         => 'total_canceled_amount',
+            'renderer'      => 'adminhtml/report_sales_grid_column_renderer_total',
             'total'         => 'sum',
             'sortable'      => false,
             'rate'          => $rate,
         ));
-
+        }else {
+            
+        }
 
         $this->addExportType('*/*/exportSalesCsv', Mage::helper('adminhtml')->__('CSV'));
         $this->addExportType('*/*/exportSalesExcel', Mage::helper('adminhtml')->__('Excel XML'));
