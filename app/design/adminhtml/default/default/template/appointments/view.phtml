@@ -1,4 +1,4 @@
-<?php 
+<?php
 $appointment = Mage::registry('allure_appointment');
 /* Initializing variables */
 //$appStartDate = $appointment->getAppointmentStart();
@@ -11,37 +11,37 @@ $bookingTime=date("F j, Y H:i", strtotime($appointment->getBookingTime()));
 $store = $appointment->getStoreId();
 $storeId=$appointment->getStoreId();
 if($store)
-	$format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($store);
-else
-	$format = "EST";
-
-
-$store = Mage::app()->getStore($store)->getName();
-
-$piercingQty = $appointment->getPiercingQty();
-$piercingLoc = $appointment->getPiercingLoc();
-
-$appStatus = $appointment->getAppStatus();
-$appStatus = Mage::getModel('appointments/appointments')->getStatus($appStatus);
-
-$piercerId = $appointment->getPiercerId();
-$piercerName = Mage::helper('appointments')->getPiercerName($piercerId);
-
-$name = $appointment->getFirstname()." ".$appointment->getLastname();
-$firstname = $appointment->getFirstname();
-$lastname = $appointment->getLastname();
-$custId = $appointment->getCustomerId();
-$email = $appointment->getEmail();
-$phone = $appointment->getPhone();
-$street = $appointment->getStreet();
-$city = $appointment->getCity();
-$country = $appointment->getCountry();
-$postCode = $appointment->getPostalCode();
-$notificationPref = $appointment->getNotificationPref();
-$lastNotified = $appointment->getLastNotified();
-
-$specialNotes = $appointment->getSpecialNotes();
-?>
+    $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($store);
+    else
+        $format = "EST";
+        
+        
+        $store = Mage::app()->getStore($store)->getName();
+        
+        $piercingQty = $appointment->getPiercingQty();
+        $piercingLoc = $appointment->getPiercingLoc();
+        
+        $appStatus = $appointment->getAppStatus();
+        $appStatus = Mage::getModel('appointments/appointments')->getStatus($appStatus);
+        
+        $piercerId = $appointment->getPiercerId();
+        $piercerName = Mage::helper('appointments')->getPiercerName($piercerId);
+        
+        $name = $appointment->getFirstname()." ".$appointment->getLastname();
+        $firstname = $appointment->getFirstname();
+        $lastname = $appointment->getLastname();
+        $custId = $appointment->getCustomerId();
+        $email = $appointment->getEmail();
+        $phone = $appointment->getPhone();
+        $street = $appointment->getStreet();
+        $city = $appointment->getCity();
+        $country = $appointment->getCountry();
+        $postCode = $appointment->getPostalCode();
+        $notificationPref = $appointment->getNotificationPref();
+        $lastNotified = $appointment->getLastNotified();
+        
+        $specialNotes = $appointment->getSpecialNotes();
+        ?>
 <div class="box-left">
     <!--Billing Address-->
     <div class="entry-edit">
@@ -147,6 +147,11 @@ $specialNotes = $appointment->getSpecialNotes();
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Postal Code') ?></label></td>
                 <td class="value"><input name="post_code" value="<?php echo $postCode?>"></td>
             </tr>
+             <tr>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('Special Notes') ?></label></td>
+                <td class="value"><textarea name="special_notes" style="height: 5em;width: 166px;" id="special_notes_app" rows="5" cols="5"><?php echo $specialNotes?></textarea></td>
+            </tr>
+         
             <tr>
               <td class="label"><label><?php echo Mage::helper('appointments')->__('Notification Preference') ?></label></td>
               <td class="value"><select name="notification_pref" style="width:173px;">

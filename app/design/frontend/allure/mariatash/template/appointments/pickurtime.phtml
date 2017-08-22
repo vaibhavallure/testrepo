@@ -54,7 +54,18 @@ if($fetch_model){
 		$intervalTime=$helper->getTimeByStoreAndPeople(1,$selectedStoreId);
 		
 		if($this->getData("timing")) $interval = $this->getData("timing");
+		
+		if($this->getData("id")) $appointmentId = $this->getData("id");
 		//$selectedTime = "9:00";
+		if(isset($appointmentId)){
+		    $oldApp=Mage::getModel('appointments/appointments')->load($appointmentId);
+		    $old_app_start=date('H:i', strtotime($oldApp->getAppointmentStart()));
+		    $old_app_end=date('H:i', strtotime($oldApp->getAppointmentEnd()));
+		    $old_app_end=date('H:i', strtotime("1 minutes", strtotime($old_app_end)));
+		    $old_app_piercer=$oldApp->getPiercerId();
+		    $old_app_date= date('m/d/Y',strtotime($oldApp->getAppointmentStart()));
+		}
+		Mage::log($appointmentId,Zend_log::DEBUG,'mylogs',true);
 		
 		$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
 		
@@ -92,6 +103,9 @@ if($fetch_model){
 		
 		if($this->getData("date")) :
 		$date = $this->getData("date");
+		Mage::log("default Date",Zend_log::DEBUG,'mylogs',true);
+		Mage::log($date,Zend_log::DEBUG,'mylogs',true);
+		
 		$dayOfWeek = date("d", strtotime($date));
 		$day = date('l', strtotime($date));
 		if($date){
@@ -145,7 +159,8 @@ if($fetch_model){
 				$appCollection->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$fromTime, 'to'=>$toTime), array('from'=>$fromTime, 'to'=>$toTime)))
 					->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
 					->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
-				
+				if(isset($appointmentId))
+				    $appCollection->addFieldToFilter('id', array('neq' => $appointmentId));
 				$appCollection2=null;
 				if(!count($appCollection)){
 				    $appCollection2 = Mage::getModel('appointments/appointments')->getCollection();
@@ -153,6 +168,8 @@ if($fetch_model){
 				    ->addFieldToFilter("appointment_end",array('gteq'=>$toTime))
 				    ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
 				    ->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+				    if(isset($appointmentId))
+				        $appCollection2->addFieldToFilter('id', array('neq' => $appointmentId));
 				}
 				
 				//echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
@@ -195,11 +212,15 @@ if($fetch_model){
 						
 						/* Logic to get most available piercer */
 						/* This logic count number of allocated appointments on that day for particular piercer*/
+					    
 						$fromDate = date('Y-m-d', strtotime($date))." 00:00:00";
 						$toDate = date('Y-m-d', strtotime($date))." 23:59:00";
 						$appCount = Mage::getModel('appointments/appointments')->getCollection();
 						$appCount->addFieldToFilter('appointment_start', array('from'=>$fromDate, 'to'=>$toDate))
 						->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+						if(isset($appointmentId))
+						   $appCount->addFieldToFilter('id', array('neq' => $appointmentId));
+						
 						if($allocatedApps==null)
 						{
 							$allocatedApps = count($appCount);
@@ -239,13 +260,17 @@ if($fetch_model){
 			
 			/* echo "<li class='timeslot' id='time_slot_$i' */
 			//if($fetch_starttime):$sel = "selected";endif;
-			
-			if($isSlecetedTrue){
-				$htmlsel = "selectedTime";
+			$htmlsel="";
+			if($appointmentId){
+			    if(($selectedTime==$old_app_start)&&($old_app_piercer==$piercerAllocated)&&($old_app_end==$endTime)&&($old_app_date==$date))
+			        $htmlsel = "selectedTime";
 			}
+			
+			
 			echo "<li class='timeslot $htmlsel' id='time_slot_$i'
 			data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
 			data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)' >";
+			
 			
 			echo "<span >";
 			if($time_pref == 12){
@@ -282,7 +307,10 @@ if($fetch_model){
 			}
 			$newStartTime = date('H:i', $newStartTime);
 			$selectedTime = ($newStartTime);
+			/* if($noSlot)
+			    echo "<li class='timeslot' id='time_slot_17' data-start_time_slot='18:30' data-end_time_slot='19:00' data-pos='17' data-piercer='5' onclick='slotSelected(`time_slot_17`)'><span><span>18:30</span></span></li>"; */
 		}
+		
 		if($noSlot){
 			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Sorry Appointment is Not available, Please try changing Store OR Date.')."</div>";
 		}

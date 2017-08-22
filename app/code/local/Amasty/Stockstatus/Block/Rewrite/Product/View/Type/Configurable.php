@@ -40,7 +40,9 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
 
                 $stockStatus = '';
                 $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
-                if ( (!Mage::getStoreConfig('amstockstatus/general/displayforoutonly') || !$product->isSaleable()) || ($product->isInStock() && $stockItem->getData('qty') <= Mage::helper('amstockstatus')->getBackorderQnt() ) )
+              
+                //Commented by allure 
+                /*  if ( (!Mage::getStoreConfig('amstockstatus/general/displayforoutonly') || !$product->isSaleable()) || ($product->isInStock() && $stockItem->getData('qty') <= Mage::helper('amstockstatus')->getBackorderQnt() ) )
                 {
                     if ($product->getData('hide_default_stock_status') || ($product->isInStock() && 0 == $stockItem->getData('qty')))
                     {
@@ -55,7 +57,8 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
                             $stockStatus = Mage::helper('amstockstatus')->getCustomStockStatusText($product);
                         }
                     }
-                }
+                } */
+                $stockStatus = Mage::helper('amstockstatus')->getCustomStockStatusText($product);
                 if ($key)
                 {
                     $aStockStatus[implode(',', $key)] = array(
