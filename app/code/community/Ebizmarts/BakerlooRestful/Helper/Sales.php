@@ -62,11 +62,8 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         }
 
         if ($onlyQuote) {
-            if ($customerId) {
-                $this->getQuote()->setCustomerId($customerId);
-            } elseif ($customerExistsByEmail) {
-                $this->getQuote()->setCustomerId($customerId);
-                $customerId = $customerExistsByEmail->getId();
+            if ($customer->getId()) {
+                $this->getQuote()->setCustomer($customer);
             }
 
             $this->collectQuoteTotals();
@@ -871,6 +868,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
             'discount_amount'         => round($discountAmountOriginal * $qty, 2, PHP_ROUND_HALF_UP),
             'tax_amount'              => (float)$quoteItem->getTaxAmount(),
             'tax_percent'             => (double)$quoteItem->getTaxPercent(),
+            'tax_of_discount'         => (float)$quoteItem->getHiddenTaxAmount(),
             'grand_total'             => round($itemTotal, 2, PHP_ROUND_HALF_UP),
             'applied_vats'            => $appliedVats,
             'product'                 => Mage::getModel('bakerloo_restful/api_products')->_createDataObject((int)$quoteItem->getProductId())

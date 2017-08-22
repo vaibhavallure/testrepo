@@ -2,6 +2,7 @@
 
 class Ebizmarts_BakerlooRestful_Model_OrderManagement
 {
+    const ORDER_REGISTRY_KEY      = 'current_bakerloo_order';
     const XML_PERMISSIONS_LOGIN   = 'bakerloo_api/login';
     const XML_PERMISSIONS_CREATE  = 'bakerloo_api/orders/create';
     const EVENT_ORDER_HAS_RETURNS = 'pos_order_has_returns';
@@ -157,7 +158,9 @@ class Ebizmarts_BakerlooRestful_Model_OrderManagement
             return $returnData;
         }
 
+        $this->registerOrder($this->_bakerlooOrder);
         $payload = $this->_bakerlooOrder->getJsonPayload();
+        
         if (is_string($payload)) {
             $payload = json_decode($payload, true);
         }
@@ -820,5 +823,13 @@ class Ebizmarts_BakerlooRestful_Model_OrderManagement
     protected function getStoreConfig($path, $storeId)
     {
         return Mage::getStoreConfig($path, $storeId);
+    }
+
+    protected function registerOrder($order) {
+        if (Mage::registry(self::ORDER_REGISTRY_KEY)) {
+            Mage::unregister(self::ORDER_REGISTRY_KEY);
+        }
+
+        Mage::register(self::ORDER_REGISTRY_KEY, $order);
     }
 }

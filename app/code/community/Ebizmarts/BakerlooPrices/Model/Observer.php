@@ -13,8 +13,13 @@ class Ebizmarts_BakerlooPrices_Model_Observer
 
     public function getRequestJson()
     {
-        if (Mage::app()->getRequest()->getControllerName() == Ebizmarts_BakerlooRestful_Helper_Data::BAKERLOO_ORDERS_CONTROLLER) {
-            return $this->getRequestJsonFromForm();
+        $request = Mage::app()->getRequest();
+        if ($request->getControllerName() == Ebizmarts_BakerlooRestful_Helper_Data::BAKERLOO_ORDERS_CONTROLLER) {
+            if ($request->getActionName() == Ebizmarts_BakerlooRestful_Helper_Data::BAKERLOO_ORDERS_ACTION) {
+                return $this->getRequestJsonFromForm();
+            } else {
+                return $this->getJsonFromOrder();
+            }
         } else {
             return $this->getRequestJsonFromPostBody();
         }
@@ -39,6 +44,20 @@ class Ebizmarts_BakerlooPrices_Model_Observer
 
         if (!is_array($postData)) {
             $postData = array();
+        }
+
+        return $postData;
+    }
+
+    private function getJsonFromOrder() {
+        $order = Mage::registry(Ebizmarts_BakerlooRestful_Model_OrderManagement::ORDER_REGISTRY_KEY);
+        if (!$order or !($order instanceof Ebizmarts_BakerlooRestful_Model_Order)) {
+            return null;
+        }
+
+        $postData = $order->getJsonPayload();
+        if (is_string($postData) and !empty($postData)) {
+            $postData = json_decode($postData, true);
         }
 
         return $postData;
@@ -128,33 +147,30 @@ class Ebizmarts_BakerlooPrices_Model_Observer
 
             $product = unserialize($product);
 
-            $hiddenTax = round((float)$product['order_line']['taxOfDiscount'], 2);
+            $hiddenTax = $this->getHiddenTaxAmount($product);
             $lineTotal = round((float)$product['order_line']['subtotal'], 2);
             $price     = round((float)$product['price'], 2);
             $discount  = round((float)$product['order_line']['total_discount'], 2);
+            $qty       = $product['qty'];
 
             //get tax rate from vat_breakdown, as POS tax_rate is unreliable
-            list($taxPercent, $taxAmount, $taxesForItem) = $this->getTaxesForItem($product['order_line']);
+            list($taxPercent, $taxesForItem) = $this->getTaxesForItem($product['order_line']);
+            $taxAmount = round((float)$product['order_line']['tax_amount'], 2);
 
             //update item tax rates in quote
             $this->setItemTaxesToQuote($item, $taxesForItem);
             $item->setPosAppliedTaxes(serialize($taxesForItem));
             $orderItem->setPosAppliedTaxes(serialize($taxesForItem));
 
-            $priceWTax = $priceIncludesTax ? $price : $price + $taxAmount;
+            $priceWTax = $priceIncludesTax ? $price : $price + ($taxAmount / $qty);
 
             if ($item->getHiddenTaxAmount()) {
                 if ($applyTaxAfterDiscount and !$applyDiscountOnPricesInclTax) {
                     $taxAmount += ($item->getHiddenTaxAmount() - $hiddenTax);
                 }
-
-                if ($product['is_custom_price']) {
-                    $lineTotal += round(($product['order_line']['grand_total'] - ($lineTotal + $product['order_line']['tax_amount'] - $discount)), 2);
-                }
             }
 
             $orderItem->setPrice($price);
-//            $orderItem->setOriginalPrice($price);
             $orderItem->setDiscountAmount($discount);
             $orderItem->setTaxPercent($taxPercent);
             $orderItem->setTaxAmount($taxAmount);
@@ -187,7 +203,6 @@ class Ebizmarts_BakerlooPrices_Model_Observer
             }
 
             $orderItem->setBasePrice($price);
-            $orderItem->setBaseOriginalPrice($price);
             $orderItem->setBasePriceInclTax($priceWTax);
             $orderItem->setBaseDiscountAmount($discount);
             $orderItem->setBaseTaxAmount($taxAmount);
@@ -206,6 +221,22 @@ class Ebizmarts_BakerlooPrices_Model_Observer
         }
 
         return $this;
+    }
+
+    private function getHiddenTaxAmount($product) {
+        $lineTotal = round((float)$product['order_line']['subtotal'], 2);
+        $discount  = round((float)$product['order_line']['total_discount'], 2);
+        $hiddenTax = max((float)$product['order_line']['taxOfDiscount'], (float)$product['order_line']['taxOfCustomDiscount']);
+        $calculatedHiddenTax = round(($product['order_line']['grand_total'] - ($lineTotal + $product['order_line']['tax_amount'] - $discount)), 2);
+
+        if ($product['is_custom_price']) {
+            $hiddenTax = $calculatedHiddenTax;
+        }
+        elseif (isset($product['order_line']['calculatedOnline']) and $product['order_line']['calculatedOnline'] === true) {
+            $hiddenTax = $calculatedHiddenTax;
+        }
+
+        return $hiddenTax;
     }
 
     public function priceMatchAddress(Varien_Event_Observer $observer)
@@ -339,8 +370,7 @@ class Ebizmarts_BakerlooPrices_Model_Observer
             $taxPercent = 100 * ($taxPercent - 1);
         }
 
-        $taxAmount = round((float)$orderLine['tax_amount'] / $qty, 2);
-        return array(round($taxPercent, 4), $taxAmount, $taxBreakdown);
+        return array(round($taxPercent, 4), $taxBreakdown);
     }
 
     /**
