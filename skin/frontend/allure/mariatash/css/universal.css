@@ -103,10 +103,38 @@
 
 .mt-myaccount-page #sns_tab_products .mt-account-active-tab > a{
 	text-decoration: none;
+	font-size: 14px;
 }
 
 .mt-new-myaccount-submenu .a-column.a-span9{
 	margin-top: 20px;
+}
+
+#mt-account-tab-dropdown-menu{
+	width: 100%;
+	padding: 0px;
+    border-radius: 0px;
+    background-color: #505152;
+}
+.mt-myaccount-page .nav-tabs .tabdrop{
+	width: 100%;
+	 background-color: #505152;
+}
+.mt-myaccount-page .nav-tabs .tabdrop > a{
+	color: #fff ! important;
+	border: none ! important;
+}
+
+
+.mt-myaccount-page .nav-tabs .mt-account-show-li{
+	position: absolute;
+    right: 0;
+}
+
+.tabdrop .mt-account-active-tab a{
+	border-bottom: 1px solid #ccc;
+	color: #9d9d9d;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.25);
 }
 
 @media only screen and (max-device-width : 375px){
