@@ -46,6 +46,8 @@ class Ecp_ReportToEmail_Model_Observer
                 $storeIds = array(
                     $storesId
                 );
+                Mage::getModel('processorders/observer')->runProcess();
+                Mage::getResourceModel('sales/report_order')->aggregate();
                 $collection = Mage::getResourceModel('sales/report_order_collection');
                 $collection->addFieldToFilter($report_type, array(
                     'from' => $fromDate,
