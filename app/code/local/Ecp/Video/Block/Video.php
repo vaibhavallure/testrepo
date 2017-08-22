@@ -43,7 +43,8 @@ class Ecp_Video_Block_Video extends Mage_Core_Block_Template
     
      public function getVideos()     
      { 
-        $videoCollection = Mage::getModel('ecp_video/video')->getCollection()->addFieldToFilter('status', 1);
+         $videoCollection = Mage::getModel('ecp_video/video')->getCollection()->addFieldToFilter('status', 1);
+         $videoCollection->getSelect()->order('position', 'ASC');
         if(count($videoCollection) >= 1){
             $index = 0;
             foreach ($videoCollection as $key => $value) {

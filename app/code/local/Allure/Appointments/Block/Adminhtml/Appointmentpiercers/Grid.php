@@ -26,6 +26,7 @@ class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Grid extends Mage_
 
 		$this->addColumn('id', array(
 				'header' => $helper->__('Piercer Id'),
+				'width'     => '50px',
 				'index'  => 'id'
 		));
 
@@ -64,7 +65,16 @@ class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Grid extends Mage_
 		$this->addColumn('working_hours', array(
 				'header' => $helper->__('Working Hours'),
 				'index'  => 'working_hours',
+				'width'     => '200px',
 				'renderer' => 'appointments/adminhtml_appointmentpiercers_edit_renderer_workinghoursgrid'
+			
+		));
+		$this->addColumn('break_hours', array(
+				'header' => $helper->__('Break Hours'),
+				'index'  => 'working_hours',
+				'width'     => '200px',
+				'renderer' => 'appointments/adminhtml_appointmentpiercers_edit_renderer_breakhoursgrid'
+		
 		));
 		
 		$this->addColumn('is_active', array(

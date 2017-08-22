@@ -166,7 +166,7 @@ $typeId = $_item->getProduct()->getTypeId();
 	        }
         //if ($manageStock == 1 && $stock_qty < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() ) :
        //mt-allure code 
-        if ($isBackordered) : ?>
+	        if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) : ?>
         	<?php //allure code
                 $message = "";
                 $stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());

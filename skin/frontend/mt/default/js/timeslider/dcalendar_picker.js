@@ -23,14 +23,14 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 			this.today = new Date();	//system date
 			this.options = options;
 			
-			
+			//console.log(this.calendar.prev().val());
 			//current selected date, default is today if no value given
 			if(this.calendar.prev().val() === '') {
 				this.date = new Date();
 			} else {
 				var dateObj = this.reformatDate(this.calendar.prev().val());
 				this.date = isNaN(parseInt(dateObj.m)) ? new Date(dateObj.m + " " + dateObj.d + ", " + dateObj.y) : new Date(dateObj.y, dateObj.m - 1, dateObj.d);
-				
+				//console.log(this.date);
 			}
 			
 			this.viewMode = 'days';
@@ -276,7 +276,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 							
 							
 								var jsonDate = $('#availablewdays').data('original');
-								
+								//console.log(jsonDate);
 								//To show disabled date for allocated Piercer start 
 								if (jsonDate != null)
 								{
@@ -348,19 +348,28 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 							}
 						}
 					}*/
+					//console.log(temp);
 					cal.push(temp);
 				}
-
+				/* Code to Pre Selected Date */
+				var selDateObj = new Date($('#datepicker-13_hidden').val());
+				var selectDate = selDateObj.getDate();
+				var selectMonth = selDateObj.getMonth();
 				$.each(cal, function(i, v){
 					var row = $('<tr></tr>'), l = v.length;
-					for(var i = 0; i < l; i++) { row.append(v[i]); }
+					for(var i = 0; i < l; i++) { 
+						// Preselected Condition Allure
+						if(v[i][0].innerText == selectDate && that.date.getMonth() == selectMonth)
+							v[i].addClass('selectedDate');
+						row.append(v[i]); 
+					}
 					tBody.append(row);
 				});
 				
 				//Get the todaysDate by bhagyashri =Onload get the pick ur time by setting todays date to hidden date 
 				this.todayBySysDate = new Date();	//system date
 				var todaysDate = (this.todayBySysDate.getMonth() + 1) + "/" + this.todayBySysDate.getDate() + "/" + this.todayBySysDate.getFullYear();
-				if(document.getElementById("datepicker-13_hidden").value ==='')
+				/*if(document.getElementById("datepicker-13_hidden").value ==='')
 				{
 					document.getElementById("datepicker-13_hidden").value = todaysDate;	
 					
@@ -378,6 +387,9 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				        	dataType : 'json',
 				 			type : 'POST',
 				 			data: {request:request},
+				 			beforeSend: function() { $('#appointment_loader').show(); },
+					        complete: function() { $('#appointment_loader').hide(); },
+
 				 			success : function(response){
 				 				$("#pick_ur_time_div").html(response.output);
 				 				window.sample = 30;
@@ -386,7 +398,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				 			}
 				        });
 					//ajax end
-				}
+				}*/
 				var sysDate ='';
 				//var sysDate = "Today: " + daysofweek[that.today.getDay()] + ", " + months[that.today.getMonth()] + " " + that.today.getDate() + ", " + that.today.getFullYear();
 				tBody.append('<tr><td colspan="7" id="today">' + sysDate + '</td></tr>').appendTo(that.calendar);
@@ -483,13 +495,17 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 					var request = {
 				 				"qty":qty,
 				 				"store":storeid,
-				 				"date":e.date
+				 				"date":e.date,
+				 				"id":Allure.appointmentId
 				 	 		};
 				 	 $.ajax({
 				        	url : Allure.ajaxGetTimeUrl,
 				        	dataType : 'json',
 				 			type : 'POST',
 				 			data: {request:request},
+				 			beforeSend: function() { $('#appointment_loader').show(); },
+					        complete: function() { $('#appointment_loader').hide(); },
+
 				 			success : function(response){
 				 				$("#pick_ur_time_div").html(response.output);
 				 				window.sample = 30;

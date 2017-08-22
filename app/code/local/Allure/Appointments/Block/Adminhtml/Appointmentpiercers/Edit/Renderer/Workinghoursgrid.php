@@ -10,7 +10,7 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 		$data = "";
 		foreach ($timing as $time)
 		{
-			$data .=  $helper->getTimeByValue($time['start'] )."-".   $helper->getTimeByValue($time['end'] )." <br/>";
+			$data .= $time['day']." ".$helper->getTimeByValue($time['start'] )."-".   $helper->getTimeByValue($time['end'] )." <br/>";
 		}
 		return $data;
 	}

@@ -73,6 +73,13 @@ class Ecp_Video_Block_Adminhtml_Video_Grid extends Mage_Adminhtml_Block_Widget_G
       ));
 	  */
 
+      $this->addColumn('position', array(
+          'header'    => Mage::helper('ecp_video')->__('Position'),
+          'align'     => 'left',
+          'width'     => '80px',
+          'index'     => 'position'
+          
+      ));
       $this->addColumn('status', array(
           'header'    => Mage::helper('ecp_video')->__('Status'),
           'align'     => 'left',

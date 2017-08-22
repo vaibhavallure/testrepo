@@ -156,7 +156,7 @@
             <td colspan="6">
                 <div class="item-msg <?php echo $message['type'] ?>">
                     <?php $stock_qty = intval($_item->getProduct()->getStockItem()->getQty());
-                    if ( $stock_qty < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() ) : ?>
+                    if ( $stock_qty < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() && $_item->getProduct()->getStockItem()->getManageStock()==1 ) : ?>
                         <p>This product is not available in the requested quantity. <?php echo $_item->getQty()-$stock_qty; ?> of the items will be backordered.</p>
                     <?php else : ?>
                         <?php foreach ($messages as $message): ?>

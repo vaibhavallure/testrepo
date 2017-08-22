@@ -255,7 +255,7 @@ $typeId = $_item->getProduct()->getTypeId();
                 }
                  
                 if (0):  //existing code allure add code flag
-	                if ($isBackordered) : ?>
+                if ($isBackordered ) : ?>
 	                	<p>This product is not available in the requested quantity. <?php echo $backorderedQty; ?> of the items will be backordered.</p>
 	               	<?php else : ?>
 		                <?php foreach ($messages as $message): ?>
@@ -266,7 +266,7 @@ $typeId = $_item->getProduct()->getTypeId();
 				<?php endif; ?> 
 				
 				<?php //allure add code start?>
-				<?php if ($isBackordered) :?> 
+				<?php if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) :?> 
 				<?php
                 	$message = "";
                 	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());

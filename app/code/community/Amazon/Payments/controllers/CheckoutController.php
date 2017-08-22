@@ -250,6 +250,7 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
             );
         } catch (Mage_Core_Exception $e) {
             Mage::logException($e);
+            Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
             Mage::helper('checkout')->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage());
             $result['success'] = false;
             $result['error'] = true;
@@ -273,6 +274,7 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
             }
         } catch (Exception $e) {
             Mage::logException($e);
+            Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
             Mage::helper('checkout')->sendPaymentFailedEmail($this->_getCheckout()->getQuote(), $e->getMessage());
             $result['success']  = false;
             $result['error']    = true;
