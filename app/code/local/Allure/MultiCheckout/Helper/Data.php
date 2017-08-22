@@ -21,20 +21,14 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
 
     const MULTI_BACK_ORDER = 'Multiple - Backorder';
 
-    // const XML_PATH_WHOLESALE_CUSTOMER_PAYMENT_METHODS_ENABLED =
-    // 'allure_multicheckout/wholesale_customer/enabled';
-    const XML_PATH_WHOLESALE_CUSTOMER_PAYMENT_METHODS = 'allure_multicheckout/wholesale_customer/wholesale_payment_methods';
+    const XML_PATH_RETAILER_CUSTOMER_PAYMENT_METHODS = 'allure_multicheckout/retail/payment_methods';
 
-    const XML_PATH_RETAILER_CUSTOMER_PAYMENT_METHODS = 'allure_multicheckout/retailer_customer/retailer_payment_methods';
+    const XML_PATH_WHOLESALE_CUSTOMER_PAY_NOW_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_now';
 
-    const XML_PATH_WHOLESALE_CUSTOMER_PAY_NOW_OPTIONS = 'allure_multicheckout/wholesale_customer/wholesale_pay_now_options';
-
-    const XML_PATH_WHOLESALE_CUSTOMER_PAY_AS_SHIP_OPTIONS = 'allure_multicheckout/wholesale_customer/wholesale_pay_as_ship_options';
+    const XML_PATH_WHOLESALE_CUSTOMER_PAY_AS_SHIP_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_as_ship';
 
     public function getWholeCustomerPaymentMethods ()
     {
-        // $payment_methods =
-        // Mage::getStoreConfig(self::XML_PATH_WHOLESALE_CUSTOMER_PAYMENT_METHODS);
         $pay1 = $this->getWholesaleCustomersPayNowMethods();
         $pay2 = $this->getWholesaleCustomersPayAsShipMethods();
         $newArr = array_merge($pay1, $pay2);
