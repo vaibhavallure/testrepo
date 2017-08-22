@@ -6,7 +6,7 @@
 <?php $orderTotal=$order->getTotalAmount()?>
 <div class="content-header">
    <h3 class="icon-head"><?php echo $helper->__('View Purchase Order')?></h3>
-   <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED && $order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CANCEL):?>
+   <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_SHIPPED && $order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_FULLY_SHIPPED && $order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED && $order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CANCEL):?>
    <button id="save_btn"  form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/saveOrder', array('_secure' => true));?>"><?php echo $helper->__('Save')?></button>
    <button id="ship_save_btn" form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/saveOrder', array('_secure' => true,'ship'=>true));?>"><?php echo $helper->__('Ship Partially')?></button>
    <button id="ship_close_btn" form="save_po" class="po_save_btn"  formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/saveOrder', array('_secure' => true,'close'=>true));?>" ><?php echo $helper->__('Ship Completely')?></button>
@@ -30,7 +30,7 @@
 				</label>
 			<?php endif;?>
 			<label><span><?php echo $helper->__('Vendor:'); ?></span>
-			<?php echo $order->getVendorName()?>
+			<?php echo Mage::helper('allure_vendor')->isUserVendor()? $order->getVendorName():"MT Factory";?>
 			</label>
 			<label><span><?php echo $helper->__('Store:'); ?></span>
 			<?php echo Mage::getModel('core/website')->load($order->getStockId())->getName()?>
@@ -100,7 +100,7 @@
 				<td>
 					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 
 					 name="order[<?php echo $_product->getProductId() ?>][<?php echo "proposed_qty" ?>]" type="text" 
-					 value="<?php echo round($_product->getProposedQty())?>"  />
+					 value="<?php echo round($_product->getRemainingQty())?>"  />
 				</td>
 				<td>
 					<input id="remaining_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  

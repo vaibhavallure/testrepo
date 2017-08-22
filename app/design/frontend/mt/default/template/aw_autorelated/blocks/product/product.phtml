@@ -109,6 +109,8 @@ if(preg_match("/_/", $sku_main))
                         $sku = $option->text;
                         $temp_sku = $sku;
                         $temp_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                        if(empty($temp_product))
+                            continue;
                         if (!empty($temp_product))
                             $temp_product_parent=$temp_product->getParentItemNumber();
                         /* if (preg_match("/_/", $temp_sku))
@@ -167,7 +169,7 @@ if(preg_match("/_/", $sku_main))
                     <div style="display: none;" id="details-insta-<?php echo $media_id?>"
 								data-user-name="<?php $_post->getUsername()?>" data-img-url="<?php echo $_post->getStandardResolution()?>"
 							 	data-create-date="<?php echo $createDate?>" data-share-url="<?php echo $shareUrl?>">
-							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo $_post->getCaption() ?></div>
+							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo json_decode($_post->getCaption()) ?></div>
 								<div id="insta-product-mark-<?php echo $media_id?>" style="display: none;"><?php echo $points ?></div>
 								<div id="insta-product-details-<?php echo $media_id?>" style="display: none;"><?php echo $productsLinks ?></div>
 					</div>

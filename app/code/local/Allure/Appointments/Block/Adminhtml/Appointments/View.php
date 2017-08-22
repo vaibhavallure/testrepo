@@ -41,6 +41,18 @@ class Allure_Appointments_Block_Adminhtml_Appointments_View extends Mage_Adminht
 					. $this->getCancelUrl()
 					. '\')',
 			));
+			$this->_addButton('save', array(
+			    'label'     => Mage::helper('adminhtml')->__('Send Confirmation'),
+			    'class'     => 'save',
+			    'onclick'   => 'confirmSetLocation(\''
+			    . Mage::helper('core')->jsQuoteEscape(
+			        Mage::helper('adminhtml')->__('Are you sure that you want to send appointment confirmation to customer?')
+			        )
+			    .'\', \''
+			    . $this->getConfirmationUrl()
+			    . '\')',
+			));
+			
 		}
 	
 	}
@@ -58,4 +70,12 @@ class Allure_Appointments_Block_Adminhtml_Appointments_View extends Mage_Adminht
 	{
 		return Mage::helper("appointments")->__("Appointment View");
 	}
+	public function getConfirmationUrl()
+	{
+	    $this->_objectId=$this->getRequest()->getParam('id');
+	    $key=Mage::getSingleton('core/session')->getFormKey();
+	    // $this->_objectId=$this->getRequest()->getParam($this->_objectId);
+	    return $this->getUrl('admin_appointments/adminhtml_index/sendconfirmation', array('id'=>$this->_objectId,'form_key'=>$key,'_secure' => true));
+	}
+	
 }

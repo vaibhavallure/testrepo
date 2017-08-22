@@ -181,7 +181,7 @@
                     <?php endif; ?> 
                     
                     <?php //allure add code start?>
-					<?php if ($isBackordered) :?> 
+					<?php if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) :?> 
 					<?php
 	                	$message = "";
 	                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());

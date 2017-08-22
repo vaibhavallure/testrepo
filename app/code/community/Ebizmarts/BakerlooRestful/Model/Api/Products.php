@@ -100,6 +100,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
 
             if (array_key_exists(2, $stockFilters) and !empty($stockFilters[2])) {
                 $isInStock = implode(',', $stockFilters[2]);
+                $globalManageStock = Mage::getStoreConfig(Mage_CatalogInventory_Model_Stock_Item::XML_PATH_MANAGE_STOCK, $this->getStoreId());
                 $skipTypes = sprintf('\'%s\', \'%s\', \'%s\'', Mage_Catalog_Model_Product_Type::TYPE_BUNDLE, Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE, Mage_Catalog_Model_Product_Type::TYPE_GROUPED);
                 $typeBundle = Mage_Catalog_Model_Product_Type::TYPE_BUNDLE;
 
@@ -114,7 +115,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
                 /* @var $subquerySelect Varien_Db_Select */
                 $childStockSelect = $this->getNewSelect();
                 $childStockSelect->from(array('child_stock' => $this->_getCollection()->getTable('cataloginventory/stock_item')), array('item_id'));
-                $childStockSelect->where("child_stock.is_in_stock in ($isInStock) or child_stock.manage_stock = 0");
+                $childStockSelect->where("(child_stock.use_config_manage_stock = 0 AND child_stock.manage_stock = 0) OR (((child_stock.use_config_manage_stock = 1 AND {$globalManageStock} = 1) OR (child_stock.manage_stock = 1)) AND child_stock.is_in_stock in ({$isInStock}))");
                 $childStockSelect->where('child_stock.product_id = child.child_id');
 
                 $bundleSelect = new Varien_Db_Select(Mage::getSingleton('core/resource')->getConnection(Mage_Core_Model_Resource::DEFAULT_READ_RESOURCE));
@@ -133,11 +134,11 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
 
                 if ($this->isOnlineSearch()) {
                     $onlineSearchSubselect = $this->_addOnlineSearchSubselect($filters, true, $isInStock);
-                    $subQuery = new Zend_Db_Expr("((cisi.is_in_stock in ({$isInStock}) OR cisi.manage_stock = 0) AND e.type_id NOT IN ({$skipTypes})) OR (e.type_id != '{$typeBundle}' AND EXISTS ({$childStockSelect}) OR (e.type_id = '{$typeBundle}' AND NOT EXISTS ({$bundleSelect})))");
+                    $subQuery = new Zend_Db_Expr("(((cisi.use_config_manage_stock = 0 AND cisi.manage_stock = 0) OR (((cisi.use_config_manage_stock = 1 AND {$globalManageStock} = 1) OR (cisi.manage_stock = 1)) AND cisi.is_in_stock in ({$isInStock}))) AND e.type_id NOT IN ({$skipTypes})) OR (e.type_id != '{$typeBundle}' AND EXISTS ({$childStockSelect}) OR (e.type_id = '{$typeBundle}' AND NOT EXISTS ({$bundleSelect})))");
                     $this->_getCollection()->getSelect()->where($subQuery, null, Varien_Db_Select::TYPE_CONDITION);
                     $this->_getCollection()->getSelect()->orWhere("EXISTS ({$onlineSearchSubselect})", null, Varien_Db_Select::TYPE_CONDITION);
                 } else {
-                    $subQuery = new Zend_Db_Expr("((cisi.is_in_stock in ({$isInStock}) OR cisi.manage_stock = 0) AND e.type_id NOT IN ({$skipTypes})) OR (e.type_id != '{$typeBundle}' AND EXISTS ({$childStockSelect}) OR (e.type_id = '{$typeBundle}' AND NOT EXISTS ({$bundleSelect})))");
+                    $subQuery = new Zend_Db_Expr("(((cisi.use_config_manage_stock = 0 AND cisi.manage_stock = 0) OR (((cisi.use_config_manage_stock = 1 AND {$globalManageStock} = 1) OR (cisi.manage_stock = 1)) AND cisi.is_in_stock in ({$isInStock}))) AND e.type_id NOT IN ({$skipTypes})) OR (e.type_id != '{$typeBundle}' AND EXISTS ({$childStockSelect}) OR (e.type_id = '{$typeBundle}' AND NOT EXISTS ({$bundleSelect})))");
                     $this->_getCollection()->getSelect()->where($subQuery, null, Varien_Db_Select::TYPE_CONDITION);
                     $this->_getCollection()->groupByAttribute('entity_id');
                 }

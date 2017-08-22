@@ -24,7 +24,8 @@ var count = 1;
 	var request = {
  				"qty":qty,
  				"store":storeid,
- 				"date":todaysDate
+ 				"date":todaysDate,
+ 				"id":Allure.appointmentId
  	 		};
  	 jQuery.ajax({
         	url : Allure.ajaxGetTimeUrl,
@@ -63,13 +64,14 @@ var count = 1;
  	var request = {
   				"qty":qty,
   				"store":storeid,
-  				"date":todaysDate
+  				"date":todaysDate,
+  				"id":Allure.appointmentId
   	 		};
   	 jQuery.ajax({
          	url : Allure.ajaxGetTimeUrl,
          	dataType : 'json',
   			type : 'POST',
-  			data: {request:request},
+  			data: {request:request,id:Allure.appointmentId},
   			success : function(response){
   				jQuery("#pick_ur_time_div").html(response.output);
   				window.sample = 30;
@@ -124,7 +126,7 @@ var count = 1;
 	 		url : Allure.ajaxGetWorkingDaysUrl,
 			type : 'POST',
 			dataType:'json',
-			data: {storeid:storeid},
+			data: {storeid:storeid,id:Allure.appointmentId},
 			success : function(response){
 				jQuery("#fetchpickurday").html(response.output);
 				if(response.schedule)
@@ -145,7 +147,8 @@ var count = 1;
 			var request = {
 		 				"qty":qty,
 		 				"store":storeid,
-		 				"date":todaysDate
+		 				"date":todaysDate,
+		 				"id":Allure.appointmentId
 		 	 		};
 		 	 jQuery.ajax({
 		        	url : Allure.ajaxGetTimeUrl,
@@ -166,7 +169,7 @@ var count = 1;
 			 		url : Allure.ajaxGetWorkingDaysUrl,			 		
 					type : 'POST',
 					dataType:'json',
-					data: {storeid:storeid},
+					data: {storeid:storeid,id:Allure.appointmentId},
 					success : function(response){
 						jQuery("#fetchpickurday").html(response.output);
 						if(response.schedule)
@@ -192,7 +195,8 @@ var count = 1;
 		var request = {
 	 				"qty":qty,
 	 				"store":storeid,
-	 				"date":todaysDate
+	 				"date":todaysDate,
+	 				"id":Allure.appointmentId
 	 	 		};
 	 	 jQuery.ajax({
 	        	url : Allure.ajaxGetTimeUrl,

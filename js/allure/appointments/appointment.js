@@ -25,6 +25,7 @@ var count = 1;
  				"qty":qty,
  				"store":storeid,
  				"date":todaysDate,
+ 				"id":Allure.appointmentId,
  				"form_key":Allure.adminFormKey
  	 		};
  	 jQuery.ajax({
@@ -64,6 +65,7 @@ var count = 1;
  	var request = {
   				"qty":qty,
   				"store":storeid,
+  				"id":Allure.appointmentId,
   				"date":todaysDate,
   				"form_key":Allure.adminFormKey
   	 		};
@@ -99,6 +101,7 @@ var count = 1;
 			 var request = {
 						"qty":qty,
 						"date":date,
+						"id":Allure.appointmentId,
 						"form_key":Allure.adminFormKey
 			 		};
 			 jQuery.ajax({
@@ -125,7 +128,7 @@ var count = 1;
 	 		url : Allure.adminAjaxGetWorkingDaysUrl,
 			type : 'POST',
 			dataType:'json',
-			data: {storeid:storeid,
+			data: {storeid:storeid,id:Allure.appointmentId,
 				form_key:Allure.adminFormKey},
 			success : function(response){
 				jQuery("#fetchpickurday").html(response.output);				
@@ -137,8 +140,8 @@ var count = 1;
 	 
 	 //If store change pickurtime should display also change acc to store and date 
 	 jQuery("#store-id").on("change",function(){
-		 	console.log("hi");
-			console.log(todaysDate);
+		 	//console.log("hi");
+			//console.log(todaysDate);
 		 	//jQuery("#pick_ur_time_div").empty();
 		 	var todaysDate = document.getElementById("datepicker-13_hidden").value;	
 			//ajax start to pass the selected date to get the time
@@ -148,6 +151,7 @@ var count = 1;
 		 				"qty":qty,
 		 				"store":storeid,
 		 				"date":todaysDate,
+		 				"id":Allure.appointmentId,
 		 				"form_key":Allure.adminFormKey
 		 	 		};
 		 	 jQuery.ajax({
@@ -170,7 +174,7 @@ var count = 1;
 			 		url : Allure.adminAjaxGetWorkingDaysUrl,			 		
 					type : 'POST',
 					dataType:'json',
-					data: {storeid:storeid,
+					data: {storeid:storeid,id:Allure.appointmentId,
 						form_key:Allure.adminFormKey},
 					success : function(response){
 						jQuery("#fetchpickurday").html(response.output);
@@ -197,6 +201,7 @@ var count = 1;
 	 				"qty":qty,
 	 				"store":storeid,
 	 				"date":todaysDate,
+	 				"id":Allure.appointmentId,
 	 				"form_key":Allure.adminFormKey
 	 	 		};
 	 	 jQuery.ajax({
