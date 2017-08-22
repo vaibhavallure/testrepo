@@ -28,7 +28,7 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Backordertime e
             if(!empty($product)){
                 $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$storeId);
                 Mage::log($product->getId()."=".$stock->getQty(),Zend_log::DEBUG,'mylogs',true);
-                if($stock->getQty()>=1 && $stock->getIsInStock()){
+                if(($stock->getQty()>=1 && $stock->getIsInStock())||($product->getStockItem()->getManageStock()==0)){
                     $items[] = '&nbsp;';
                 }
                 else{
