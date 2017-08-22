@@ -19,7 +19,7 @@
 		<jobs>
 			<allure_processorders_schedule>
 				<schedule>
-					<cron_expr>0,30 * * * *</cron_expr>
+					<cron_expr>15,45 * * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>processorders/observer::runProcess</model>
