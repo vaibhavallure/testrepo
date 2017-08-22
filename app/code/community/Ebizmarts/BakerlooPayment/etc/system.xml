@@ -2832,6 +2832,85 @@
                         </sort_order>
                     </fields>
                 </bakerloo_payment_express>
+                <bakerloo_wigroup translate="label">
+                    <label>wiGroup</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_wigroup/active</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <config_path>payment/bakerloo_wigroup/title</config_path>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <invoice translate="label">
+                            <label>Create Invoice</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_wigroup/invoice</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoice>
+                        <ship translate="label">
+                            <label>Create Shipment</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_wigroup/ship</config_path>
+                            <source_model>bakerloo_payment/source_shipyesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><invoice>1</invoice></depends>
+                        </ship>
+                        <open_cash_drawer translate="label">
+                            <label>Open cash drawer</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_wigroup/open_cash_drawer</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </open_cash_drawer>
+                        <requires_signature translate="label">
+                            <label>Requires Signature</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_wigroup/requires_signature</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </requires_signature>
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <config_path>payment/bakerloo_wigroup/sort_order</config_path>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </bakerloo_wigroup>
             </groups>
         </bakerloo_payment>
     </sections>
