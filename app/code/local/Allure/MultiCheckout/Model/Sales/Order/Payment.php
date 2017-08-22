@@ -57,6 +57,8 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
         $methodInstance->validate();
         $action = $methodInstance->getConfigPaymentAction();
         
+        $pendingPayment = false;
+        
         if ($action) {
             if ($methodInstance->isInitializeNeeded()) {
                 /**
@@ -77,9 +79,10 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
                         break;
                     case Mage_Payment_Model_Method_Abstract::ACTION_AUTHORIZE_CAPTURE:
                         if ($order->getIsReadyToShip()) {
-                            // base amount will be set inside
-                            $this->_authorize(true, $order->getBaseTotalDue());
-                            $this->setAmountAuthorized($order->getTotalDue());
+                            // Don't Authorize/Capture Pay Later Wholesale Order
+                            $pendingPayment = true;
+                            $stateObject->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+                            $stateObject->setStatus(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
                         } else {
                             $this->setAmountAuthorized($order->getTotalDue());
                             $this->setBaseAmountAuthorized($order->getBaseTotalDue());
