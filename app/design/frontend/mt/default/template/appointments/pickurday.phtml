@@ -10,10 +10,17 @@ if($fetch_model){
 	
 	
 }
-
 //To get the ajax call block
 $workingdays = $this->getData("workingdays");
-
+if (!$fetch_date){
+    $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
+    foreach (json_decode($workingdays) as $key=>$value){
+        if($dateCurrent<=$value){
+            $fetch_date =$value ;
+            break;
+        }
+    }
+}
 ?>
 <strong id="availablewdays" data-original='<?php echo $workingdays;?>'></strong><!-- To disable the non working days pass the json peiercer data -->
 
