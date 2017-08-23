@@ -64,7 +64,7 @@ function createCustomer($data){
                     ->setLastname($lastname)
                     ->setEmail($email)
                     ->setPassword($password)
-                    ->setCustomerType(1)  //counterpoint
+                    ->setCustomerType(2)  //counterpoint
                     ->save();
                 
                 Mage::log("New Customer Create From CRM - Custsomer Id-:".$customer->getId(),Zend_log::DEBUG,'crm_customer',true);

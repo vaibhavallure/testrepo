@@ -31,22 +31,27 @@ $item_detail[] = array(
     'sku'=>'test-sagar','qty'=>1
 );
 
-$customer_detail = array(
-    'name'=>'Sagar G','email'=>'sagardada12@allureinc.co',
-    'street'=>'Sagar Path','city'=>'Pune','state'=>'Maharashtra',
-    'country'=>'India','zip_code'=>'413103','phone'=>'9657293982'
-);
+
 $order_detail = array(
     'subtotal'=>'100.00','tax'=>'25.00',
     'order_date'=>'19-08-2017'
 );
 
 $_order_data = array();
-$_order_data['1004'] = array(
-    'item_detail'       => $item_detail,
-    'customer_detail'   => $customer_detail,
-    'order_detail'      => $order_detail
-);
+for($i=0;$i<10;$i++){
+    $id = 2225+$i;
+    $customer_detail = array(
+        'name'=>'Sagar G','email'=>'sagardada122145678'.$i.'@allureinc.co',
+        'street'=>'Sagar Path','city'=>'Pune','state'=>'Maharashtra',
+        'country'=>'India','zip_code'=>'413103','phone'=>'9657293982'
+    );
+    $_order_data[$id] = array(
+        'item_detail'       => $item_detail,
+        'customer_detail'   => $customer_detail,
+        'order_detail'      => $order_detail
+    );
+}
+
 
 
 try{

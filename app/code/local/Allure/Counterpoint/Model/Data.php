@@ -2,7 +2,7 @@
 class Allure_Counterpoint_Model_Data{	
 	
 	public function synkCounterpointOrders($from,$to){
-		$websiteId = Mage::app()->getWebsite()->getId();
+		$websiteId =  1;//Mage::app()->getWebsite()->getId();
 		$store = Mage::app()->getStore();
 		
 		$alphabets = range('A','Z');
@@ -150,7 +150,7 @@ class Allure_Counterpoint_Model_Data{
 								$lastName = $name[1];
 								
 								// Start New Sales Order Quote
-								$quote = Mage::getModel('sales/quote')->setStoreId($store->getId());
+								$quote = Mage::getModel('sales/quote')->setStoreId($storeId);
 								
 								if(empty($email)){  //create customer with new email
 									$emailName = $firstName."".$lastName;
@@ -212,8 +212,6 @@ class Allure_Counterpoint_Model_Data{
 								$quoteObj = Mage::getModel('sales/quote')->assignCustomer($customer);
 								$quoteObj = $quoteObj->setStoreId(Mage::app()->getStore()->getId());
 								
-								//$productId = Mage::getModel('catalog/product')->getIdBySku($sku);
-								//$productObj = Mage::getModel('catalog/product')->load($productId);
 								foreach ($productArr as $productId=>$qty){
 									$params = array();
 									$params['qty'] = $qty;
@@ -261,20 +259,18 @@ class Allure_Counterpoint_Model_Data{
 									$quoteObj->setShippingAddress($quoteShippingAddress);
 									// fixed shipping method
 									$quoteObj->getShippingAddress()->setShippingMethod('webpos_shipping_storepickup');
-									//$quoteObj->getShippingAddress()->setCollectShippingRates(true);
-									//$quoteObj->getShippingAddress()->collectShippingRates();
 								}
 								$quoteObj->collectTotals();
 								
 								//$quoteObj->save();
 								$transaction = Mage::getModel('core/resource_transaction');
 								if ($quoteObj->getCustomerId()) {
-									$transaction->addObject($quoteObj->getCustomer());
+									//$transaction->addObject($quoteObj->getCustomer());
 								}
 								
 								$quoteObj->setIsActive(0);
 								
-								$transaction->addObject($quoteObj);
+								//$transaction->addObject($quoteObj);
 								$quoteObj->reserveOrderId();
 								
 								$quoteObj->setCreateOrderMethod(1); //order status as counterpoint 1
@@ -334,63 +330,48 @@ class Allure_Counterpoint_Model_Data{
 								
 								$orderObj->setCreatedAt($data['info']['order_date']);
 								
-								$transaction->addObject($orderObj);
+								//$transaction->addObject($orderObj);
+								
 								/* $transaction->addCommitCallback(array($orderObj, 'place'));
 								 $transaction->addCommitCallback(array($orderObj, 'save')); */
 								
 								try {
-									$transaction->save();
+									//$transaction->save();
+									$orderObj->save();
+									$quoteObj->save();
+									
+    								$increment_id = $orderObj->getRealOrderId();
+    								
+    								//	$quoteObj->setIsActive(0);
+    								//	$quoteObj->save();
+    								
+    								//create invoice for created order
+    								$ordered_items = $orderObj->getAllItems();
+    								$savedQtys = array();
+    								foreach($ordered_items as $item){     //item detail
+    									$savedQtys[$item->getItemId()] = $item->getQtyOrdered();
+    								}
+    								$invoice = Mage::getModel('sales/service_order', $orderObj)->prepareInvoice($savedQtys);
+    								$captureCase = "offline";
+    								$invoice->setRequestedCaptureCase($captureCase);
+    								$invoice->register();
+    								$invoice->getOrder()->setIsInProcess(true);
+    								
+    								$invoice->setState(2);
+    								$invoice->setCanVoidFlag(0);
+    								
+    								$invoice->save();
+    								/* $transactionSave = Mage::getModel('core/resource_transaction')
+    								->addObject($invoice)
+    								->addObject($invoice->getOrder());
+    								$transactionSave->save(); */
+    								Mage::log("No-".$cnt." - New Order Create Id:".$increment_id, Zend_Log::DEBUG,"counter_point_order",true);
+								
 								} catch (Exception $e){
-									Mage::log("Trans Exception-".$e->getMessage(), Zend_Log::DEBUG,"counter_point_order",true);
-									Mage::throwException('Order Cancelled.');
+								    Mage::log("Trans Exception-".$e->getMessage(), Zend_Log::DEBUG,"counter_point_order",true);
+								    Mage::throwException('Order Cancelled.');
 								}
-								$increment_id = $orderObj->getRealOrderId();
 								
-								//	$quoteObj->setIsActive(0);
-								//	$quoteObj->save();
-								
-								//create invoice for created order
-								$ordered_items = $orderObj->getAllItems();
-								$savedQtys = array();
-								foreach($ordered_items as $item){     //item detail
-									$savedQtys[$item->getItemId()] = $item->getQtyOrdered();
-								}
-								$invoice = Mage::getModel('sales/service_order', $orderObj)->prepareInvoice($savedQtys);
-								$captureCase = "offline";
-								$invoice->setRequestedCaptureCase($captureCase);
-								$invoice->register();
-								$invoice->getOrder()->setIsInProcess(true);
-								
-								$invoice->setState(2);
-								$invoice->setCanVoidFlag(0);
-								
-								//$invoice->save();
-								$transactionSave = Mage::getModel('core/resource_transaction')
-								->addObject($invoice)
-								->addObject($invoice->getOrder());
-								$transactionSave->save();
-								
-								//echo "New Order Create Id:".$increment_id;
-								Mage::log("No-".$cnt." - New Order Create Id:".$increment_id, Zend_Log::DEBUG,"counter_point_order",true);
-								//var_dump("order:".$orderObj->getId());
-								//$orderData = Mage::getModel('sales/order')->load($orderObj->getId());
-								
-								/* if ($orderObj->hasInvoices()) {
-								 if($transId!=0){
-								 foreach ($order->getInvoiceCollection() as $invoce) {
-								 $invoce->setState(2);
-								 $invoce->setCanVoidFlag(0);
-								 $invoce->save();
-								 }
-								 }
-								 } */
-								
-								//complete the order status
-								
-								/* $orderData = Mage::getModel('sales/order')->load($orderObj->getId());
-								 $orderData->setData('state','complete')
-								 ->setData('status','complete')
-								 ->save(); */
 						}else{
 							Mage::log("No-".$cnt." - CountertPoint Order Id ".$counterpointOrderId." not created.Product Not match to magento", Zend_Log::DEBUG,"counter_point_order",true);
 						}
@@ -409,5 +390,154 @@ class Allure_Counterpoint_Model_Data{
 			Mage::log($e, Zend_Log::DEBUG,"counter_point_order",true);
 		}
 		Mage::log("Finish.....", Zend_Log::DEBUG,"counter_point_order",true);
+	}
+	
+	
+	public function createCustomerByCounterpoint(){
+	   try{
+	       $websiteId =  1;
+	       $store = Mage::app()->getStore();
+	       
+	       $alphabets = range('A','Z');
+	       $numbers = range('0','9');
+	       $additional_characters = array('#','@','$');
+	       $final_array = array_merge($alphabets,$numbers,$additional_characters);
+	       
+	       $helper = Mage::helper('allure_counterpoint');
+	       
+	       $hostName = $helper->getHostName();//"CPSQL";
+	       $dbUsername = $helper->getDBUserName();//"sa";
+	       $dbPassword = $helper->getDBPassword();//"root";
+	       $dbName = "Venus84";
+	       
+	       $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
+	       if($conn){
+	           try{
+	               Mage::log("Connection established.", Zend_Log::DEBUG,"counter_point_order",true);
+	               
+	               $query = "select a.DOC_ID,a.TKT_NO order_id,a.TKT_DT order_date,a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
+					a.tot total,concat(b.ITEM_NO,'|',b.CELL_DESCR) sku,b.QTY_SOLD qty,b.prc,b.descr pname,
+	 				c.EMAIL_ADRS_1 as email,c.nam name,c.adrs_1 street,c.city,c.state,c.zip_cod , c.cntry as country,c.phone_1 phone
+					from ps_tkt_hist a join
+					ps_tkt_hist_lin b on a.TKT_NO=b.TKT_NO
+					join ps_tkt_hist_contact c  on(a.doc_id=c.doc_id)
+					where c.CONTACT_ID=1 and b.QTY_SOLD>0 and (TAX_OVRD_REAS<>'MAGENTO' or TAX_OVRD_REAS is null)
+					and a.tkt_dt <='".$from."' and a.tkt_dt >='".$to."' order by a.BUS_DAT desc;";
+	               //and tkt_dt >='2017-05-30'
+	               $query1 = "select * from dbo.ps_ord_hist where tkt_no='2017003176'";
+	               $result = odbc_exec($conn, $query);
+	               $count = 0;
+	               $i 	   = 0;
+	               $addrArr = array();
+	               $addressHeader = array('email','name','street','city','state','zip_cod','country','phone');
+	               while(odbc_fetch_row($result)){
+	                   $order_id = odbc_result($result, 'order_id');
+	                   $address1 	= array();
+	                   
+	                   //parse row data as required format
+	                   for ($j = 1; $j <= odbc_num_fields($result); $j++){
+	                       $field_name  = odbc_field_name($result, $j);
+	                       $field_value = odbc_result($result, $field_name);
+	                       if(in_array($field_name, $addressHeader)){
+	                           if($field_name == 'email'){
+	                               $field_value = strtolower($field_value);
+	                           $address1[$field_name] = $field_value;
+	                       }
+	                   }
+	                   $addrArr[] = $address1;
+	               }
+	               Mage::log("Total customer-".count($addrArr), Zend_Log::DEBUG,"counter_point_order",true);
+	               odbc_close($conn);
+	           }catch (Exception $e){
+	               odbc_close($conn);
+	               print_r($e);
+	           }
+	       }else{
+	           Mage::log("Connection could not be established.", Zend_Log::DEBUG,"counter_point_order",true);
+	           die( print_r( sqlsrv_errors(), true));
+	       }
+	       
+	       
+	       
+	       if(count($addrArr)){
+	           foreach ($addrArr as $data){
+	               $address = $data;
+	               $email = $address['email'];
+	               $street = $address['street'];
+	               $city = $address['city'];
+	               $state = $address['state'];
+	               $country = $address['country']?$address['country']:"";
+	               $zip_code = $address['zip_cod'];
+	               $phone = $address['phone'];
+	               $name = $address['name'];
+	               $name = explode(" ", $name);
+	               $firstName = $name[0];
+	               $lastName = $name[0];
+	               if(count($name)>1)
+	                   $lastName = $name[1];
+	                   
+	                   // Start New Sales Order Quote
+	                   $quote = Mage::getModel('sales/quote')->setStoreId($storeId);
+	                   
+	                   if(empty($email)){  //create customer with new email
+	                       $emailName = $firstName."".$lastName;
+	                       $email = strtolower($emailName)."@mariatash.com";
+	                   }
+	                   
+	                   $email = strtolower($email);
+	                   $customer = Mage::getModel('customer/customer')
+	                       ->setWebsiteId($websiteId)
+	                       ->loadByEmail($email);
+	                   if(!$customer->getId()){
+	                       $groupId = 1;
+	                       $storeId = 1;
+	                       
+	                       $password = '';
+	                       $length = 6;  //password length
+	                       while($length--) {
+	                           $keyV = array_rand($final_array);
+	                           $password .= $final_array[$keyV];
+	                       }
+	                       $customer = Mage::getModel("customer/customer");
+	                       $customer->setWebsiteId($websiteId)
+	                           ->setStoreId($storeId)
+	                           ->setGroupId($groupId)
+	                           ->setFirstname($firstName)
+	                           ->setLastname($lastName)
+	                           ->setEmail($email)
+	                           ->setPassword($password)
+	                           ->setCustomerType(1)  //counterpoint
+	                           ->save();
+	                       //if(!empty($street)){
+	                       $_custom_address = array (
+	                           'firstname'  => $customer->getFirstname(),
+	                           'lastname'   => $customer->getLastname(),
+	                           'street'     => array (
+	                               '0' => $street
+	                           ),
+	                           'city'       => $city,
+	                           'postcode'   => $zip_code,
+	                           'country_id' => $country,
+	                           'region' 	=> 	$state,
+	                           'telephone'  => $phone,
+	                           'fax'        => '',
+	                       );
+	                       
+	                       $address = Mage::getModel("customer/address");
+	                       $address->setData($_custom_address)
+	                           ->setCustomerId($customer->getId())
+	                           ->setIsDefaultBilling('1')
+	                           ->setIsDefaultShipping('1')
+	                           ->setSaveInAddressBook('1');
+	                       $address->save();
+	                       Mage::log("New Customer Address create.Customer Id:".$customer->getId()." Address Id:".$address->getId(), Zend_Log::DEBUG,"counter_point_order",true);
+	                 }  
+	            }
+	       }
+	       
+	       
+	   }catch (Exception $e){
+	       Mage::log($e->getMessage(), Zend_Log::DEBUG,"counter_point_order",true);
+	   }
 	}
 }
