@@ -87,6 +87,7 @@ class Allure_MultiCheckout_Model_Sales_Order_Shipment extends Mage_Sales_Model_O
             }
         }
         
+        // MultiCheckout - Phase II - Charge After Shipment is created
         $order = $this->getOrder();
         if ($order->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT && $order->hasInvoices()) {
             foreach ($order->getInvoiceCollection() as $invoice) {
