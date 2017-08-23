@@ -12,9 +12,15 @@ if($fetch_model){
 }
 //To get the ajax call block
 $workingdays = $this->getData("workingdays");
+//$arr = array('11-01-2012', '01-01-2014', '01-01-2015', '09-02-2013', '01-01-2013');
+function date_sort($a, $b) {
+    return strtotime($a) - strtotime($b);
+}
+usort(json_decode($workingdays), "date_sort");
+
 if (!$fetch_date){
     $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
-    foreach (json_decode($workingdays) as $key=>$value){
+    foreach ( $workingdays as $key=>$value){
         if($dateCurrent<=$value){
             $fetch_date =$value ;
             break;
