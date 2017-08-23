@@ -76,7 +76,6 @@
             <li class="mt-account-active-tab mt-drop-acc mt-account-show-li active">
                <a data-toggle="tab-pane" data-target="#mt-purchase-item-tab" 
                data-title="Purchase Item" data-link="purchase">
-                   PURCHASED ITEM
                </a>
             </li>
        </ul>
@@ -170,7 +169,7 @@
 			var element = jQuery('.mt-account-active-tab ').find('a[data-link='+type+']')
 			changeTabView(element);
 		}else{
-			var element = jQuery('.mt-account-active-tab.active a');
+			var element = jQuery('..mt-account-show-li.active a');
 			changeTabView(element);
 		}
 		
@@ -193,7 +192,7 @@
 		activeSelector.text(newLabel);
 		activeSelector.attr('data-link',newDataLink); 
 		activeSelector.attr('data-title',newTitle);*/
-		
+		activeSelector.text("");
 		activeSelector.text(newLabel);
 		
 		/*jQuery(event).attr('data-target',oldTargetId);
@@ -279,7 +278,6 @@
 	}
 
 	function changeDropView(event){
-		console.log(jQuery('#mt-account-tab-dropdown-menu-1').hasClass('in'));
 		if(!jQuery('#mt-account-tab-dropdown-menu-1').hasClass('in')){
 			jQuery('.tab-submenu-mt').addClass('open');
 		}else{
