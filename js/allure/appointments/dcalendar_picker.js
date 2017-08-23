@@ -36,7 +36,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 			this.viewMode = 'days';
 			this.selected = (this.date.getMonth() + 1) + "/" + this.date.getDate() + "/" + this.date.getFullYear();
 			//this.minDate = this.calendar.prev().data('mindate');
-			this.minDate = this.selected; //To show previous date should be disable of current date  by bhagya
+			this.minDate = this.today; //To show previous date should be disable of current date  by bhagya
 			this.maxDate = this.calendar.prev().data('maxdate');
 			
 			if(options.mode === 'calendar')
@@ -282,6 +282,8 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 								{
 									
 									//Disable the dates before the todays date & Disable the all dates
+									//console.log(that.minDate);
+									//console.log(d < min);
 									if ((that.minDate && d < min)){
 										temp[dayOfWeek].css({"cursor":"no-drop !important","color": "#999 !important"});
 									}
@@ -485,8 +487,8 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				}).on('selectdate', function(e){
 					that.val(e.date).trigger('onchange');
 				    that.trigger($.Event('dateselected', {date: e.date, elem: that}));
-					selectedDate = true;					
-					
+					selectedDate = true;	
+			
 					
 					//ajax start to pass the selected date to get the time
 					var qty = document.getElementById("count").value;
