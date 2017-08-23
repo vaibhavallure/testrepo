@@ -28,14 +28,25 @@ while($csvData = $io->streamReadCsv()){
 	}
 	$sku = trim($csvData[$skuIndex]);
 	$id = $productModel->getIdBySku($sku);
+	$_product=$productModel->load($id);
 	if ($id) {
-		$price = trim($csvData[$priceIndex]);
-		if (!isset($productIdsByPrice[$price])) {
-			$productIdsByPrice[$price] = array();
-		}
-		$productIdsByPrice[$price][] = $id;
+	    $price = trim($csvData[$priceIndex]);
+	    if (!isset($productIdsByPrice[$price])) {
+	        $productIdsByPrice[$price] = array();
+	    }
+	    $productIdsByPrice[$price][] = $id;
+	    if($_product->getTypeId()=="configurable"){
+	        $currentchildrenIds = $_product->getTypeInstance()->getChildrenIds($_product->getId());
+	        foreach ($currentchildrenIds[0] as $childrenId) {
+	            // $childProductArr[] = $childrenId;
+	            $productIdsByPrice[$price][] = $childrenId;
+	        }
+	    }
 	}
+	
+	
 }
+
 
 $resource     = Mage::getSingleton('core/resource');
 $writeAdapter   = $resource->getConnection('core_write');
