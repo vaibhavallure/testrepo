@@ -36,7 +36,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 			this.viewMode = 'days';
 			this.selected = (this.date.getMonth() + 1) + "/" + this.date.getDate() + "/" + this.date.getFullYear();
 			//this.minDate = this.calendar.prev().data('mindate');
-			this.minDate = this.selected; //To show previous date should be disable of current date  by bhagya
+			this.minDate = this.today; //To show previous date should be disable of current date  by bhagya
 			this.maxDate = this.calendar.prev().data('maxdate');
 			
 			if(options.mode === 'calendar')
