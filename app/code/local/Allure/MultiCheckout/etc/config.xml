@@ -71,6 +71,7 @@
 				<rewrite>
 					<!-- <order_invoice>Allure_MultiCheckout_Model_Sales_Order_Invoice</order_invoice> -->
 					<order_payment>Allure_MultiCheckout_Model_Sales_Order_Payment</order_payment>
+					<order_shipment>Allure_MultiCheckout_Model_Sales_Order_Shipment</order_shipment>
 					<order>Allure_MultiCheckout_Model_Sales_Order</order>
 					<service_quote>Allure_MultiCheckout_Model_Sales_Service_Quote</service_quote>
 				</rewrite>
