@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_MultiCheckout>
+			<name>Allure - Multicheckout</name>
+			<version>1.0.3</version>
+			<depends>
+				<Allure_Core />
+			</depends>
+		</Allure_MultiCheckout>
+	</modules>
+
+	<global>
+		<controllers>
+			<Allure_MultiCheckout>
+				<rewrite>
+					<checkout>Allure_MultiCheckout_Onepage</checkout>
+					<checkout>Allure_MultiCheckout_Cart</checkout>
+					<sales>Allure_MultiCheckout_Order</sales>
+				</rewrite>
+			</Allure_MultiCheckout>
+		</controllers>
+
+		<blocks>
+			<allure_multicheckout>
+				<class>Allure_MultiCheckout_Block</class>
+			</allure_multicheckout>
+			<checkout>
+				<rewrite>
+					<onepage_review_info>Allure_MultiCheckout_Block_Checkout_Onepage_Review_Info</onepage_review_info>
+					<onepage_shipping_method_available>Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available</onepage_shipping_method_available>
+				</rewrite>
+
+				<rewrite>
+					<cart_totals>Allure_MultiCheckout_Block_Checkout_Cart_Totals</cart_totals>
+				</rewrite>
+
+				<rewrite>
+					<onepage_payment_methods>Allure_MultiCheckout_Block_Checkout_Onepage_Payment_Methods</onepage_payment_methods>
+				</rewrite>
+
+			</checkout>
+
+		</blocks>
+
+		<helpers>
+			<allure_multicheckout>
+				<class>Allure_MultiCheckout_Helper</class>
+			</allure_multicheckout>
+			<checkoutstep>
+				<class>Allure_MultiCheckout_Helper</class>
+			</checkoutstep>
+		</helpers>
+
+		<models>
+			<allure_multicheckout>
+				<class>Allure_MultiCheckout_Model</class>
+				<resourceModel>allure_multicheckout_mysql4</resourceModel>
+			</allure_multicheckout>
+			<checkoutstep>
+				<class>Allure_MultiCheckout_Model</class>
+				<resourceModel>allure_multicheckout_mysql4</resourceModel>
+			</checkoutstep>
+			<checkout>
+				<rewrite>
+					<type_onepage>Allure_MultiCheckout_Model_Checkout_Type_Onepage</type_onepage>
+				</rewrite>
+			</checkout>
+
+			<sales>
+				<rewrite>
+					<!-- <order_invoice>Allure_MultiCheckout_Model_Sales_Order_Invoice</order_invoice> -->
+					<order_payment>Allure_MultiCheckout_Model_Sales_Order_Payment</order_payment>
+					<order_shipment>Allure_MultiCheckout_Model_Sales_Order_Shipment</order_shipment>
+					<order>Allure_MultiCheckout_Model_Sales_Order</order>
+					<service_quote>Allure_MultiCheckout_Model_Sales_Service_Quote</service_quote>
+				</rewrite>
+			</sales>
+
+			<giftcards>
+				<rewrite>
+					<discount_observer>Allure_MultiCheckout_Model_Giftcards_Discount_Observer</discount_observer>
+				</rewrite>
+			</giftcards>
+
+			<!-- <salesrule> <rewrite> <validator>Allure_MultiCheckout_Model_SalesRule_Validator</validator> </rewrite> </salesrule> -->
+
+		</models>
+
+		<resources>
+			<allure_multicheckout_setup>
+				<setup>
+					<module>Allure_MultiCheckout</module>
+					<class>Mage_Sales_Model_Mysql4_Setup</class>
+				</setup>
+				<connection>
+					<use>default_setup</use>
+				</connection>
+			</allure_multicheckout_setup>
+		</resources>
+
+		<fieldsets>
+			<sales_convert_quote>
+				<delivery_method>
+					<to_order>*</to_order>
+				</delivery_method>
+				<wholesale_pay_option>
+					<to_order>*</to_order>
+				</wholesale_pay_option>
+				<is_ready_to_ship>
+					<to_order>*</to_order>
+				</is_ready_to_ship>
+				<is_child_order>
+					<to_order>*</to_order>
+				</is_child_order>
+				<order_type>
+					<to_order>*</to_order>
+				</order_type>
+			</sales_convert_quote>
+		</fieldsets>
+
+		<events>
+			<customer_logout>
+				<observers>
+					<allure_multicheckout_changequotestatus>
+						<class>allure_multicheckout/observer</class>
+						<method>changeQuoteStatus</method>
+					</allure_multicheckout_changequotestatus>
+				</observers>
+			</customer_logout>
+		</events>
+
+	</global>
+
+	<frontend>
+		<routers>
+			<checkout>
+				<args>
+					<modules>
+						<Allure_MultiCheckout before="MT_Checkout">Allure_MultiCheckout</Allure_MultiCheckout>
+					</modules>
+				</args>
+			</checkout>
+			<sales>
+				<args>
+					<modules>
+						<Allure_MultiCheckout before="Mage_Checkout">Allure_MultiCheckout</Allure_MultiCheckout>
+					</modules>
+				</args>
+			</sales>
+		</routers>
+		<layout>
+			<updates>
+				<allure_multicheckout>
+					<file>allure/multicheckout.xml</file>
+				</allure_multicheckout>
+			</updates>
+		</layout>
+	</frontend>
+
+</config>
