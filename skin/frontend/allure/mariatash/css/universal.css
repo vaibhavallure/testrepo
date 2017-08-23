@@ -991,3 +991,7 @@ td.a-right.mt-td-order-view-block{
 .tab-submenu-mt.open > a{
 	color: #fff ! important;
 }
+
+.mt-myaccount-page .nav-tabs{
+	z-index: 1000 ! important;
+}

@@ -83,10 +83,32 @@
 	jQuery(document).ready(function(){
 		jQuery('#mt-filter-toolbar .sorter').on('click',function(){
 			jQuery('#mt-filter-toolbar #narrow-by-list').show();
+			var uri = window.location;
+			var hash = uri.hash;
+    		if(hash=="#purchase" || hash=="#receipt" || hash=="#openorders"){
+   				if(jQuery('#mt-purchase-item-tab .no-purchase-item').length){
+   					jQuery('#mt-purchase-item-tab .cart-mt').css({"height":"245px"});
+   				}
+   				if(jQuery('#mt-report-tab .no-order-msg').length){
+   					jQuery('#mt-report-tab .box').css({"height":"245px"});
+   				}
+   				if(jQuery('#mt-openorders-tab .no-order-msg').length){
+   					jQuery('#mt-openorders-tab .box').css({"height":"245px"});
+   				}
+    		}
 		});
 
 		jQuery('#mt-filter-toolbar #narrow-by-list .glyphicon-remove').on('click',function(){
 			jQuery('#mt-filter-toolbar #narrow-by-list').hide();
+			if(jQuery('#mt-purchase-item-tab .no-purchase-item').length){
+				jQuery('#mt-purchase-item-tab .cart-mt').css({"height":""});
+			}
+			if(jQuery('#mt-report-tab .no-order-msg').length){
+				jQuery('#mt-report-tab .box').css({"height":""});
+			}
+			if(jQuery('#mt-openorders-tab .no-order-msg').length){
+				jQuery('#mt-openorders-tab .box').css({"height":""});
+			}
 		});
 
 
