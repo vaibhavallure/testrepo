@@ -43,8 +43,11 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
     
     public function getResourceCollectionName()
     {
-         Mage::getModel('processorders/observer')->runProcess();
-         Mage::getResourceModel('sales/report_order')->aggregate();
+         try {
+             Mage::getModel('processorders/observer')->runProcess();
+             Mage::getResourceModel('sales/report_order')->aggregate();
+         } catch (Exception $e) {
+         }
         return ($this->getFilterData()->getData('report_type') == 'updated_at_order')
         ? 'sales/report_order_updatedat_collection'
             : 'sales/report_order_collection';

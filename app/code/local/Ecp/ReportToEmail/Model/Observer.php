@@ -46,8 +46,12 @@ class Ecp_ReportToEmail_Model_Observer
                 $storeIds = array(
                     $storesId
                 );
-                Mage::getModel('processorders/observer')->runProcess();
-                Mage::getResourceModel('sales/report_order')->aggregate();
+                try {
+                    Mage::getModel('processorders/observer')->runProcess();
+                    Mage::getResourceModel('sales/report_order')->aggregate();
+                } catch (Exception $e) {
+                    
+                }
                 $collection = Mage::getResourceModel('sales/report_order_collection');
                 $collection->addFieldToFilter($report_type, array(
                     'from' => $fromDate,
@@ -232,7 +236,7 @@ class Ecp_ReportToEmail_Model_Observer
                     $mail->send();
                    
                 } catch (Mage_Core_Exception $e) {
-                    Mage::log('Sending report ' . $e->getMessage(), null, 'accounting_report.log');
+                    Mage::log('Sending report ' . $e->getMessage(), Zend_log::DEBUG, 'accounting_report.log',true);
                 } catch (Exception $e) {
                     Mage::logException($e);
                 }
