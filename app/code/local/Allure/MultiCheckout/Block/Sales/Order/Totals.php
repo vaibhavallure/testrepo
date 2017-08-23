@@ -140,12 +140,15 @@ class Allure_MultiCheckout_Block_Sales_Order_Totals extends Mage_Core_Block_Temp
         /**
          * Base grandtotal
          */
-        if ($this->getOrder()->isCurrencyDifferent()) {
+        
+        $pendingPayment = $this->getOrder()->getState() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT;
+        
+        if ($pendingPayment || $this->getOrder()->isCurrencyDifferent()) {
             $this->_totals['base_grandtotal'] = new Varien_Object(
                     array(
                             'code' => 'base_grandtotal',
                             'value' => $this->getOrder()->formatBasePrice($source->getBaseGrandTotal()),
-                            'label' => $this->__('Grand Total to be Charged'),
+                            'label' => $this->__('Grand Total to be Charged (has not been paid)'),
                             'is_formated' => true
                     ));
         }
