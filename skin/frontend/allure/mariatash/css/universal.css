@@ -945,5 +945,49 @@ td.a-right.mt-td-order-view-block{
 
 /*Sales order view end*/
 
+#mt-myaccout-nav .navbar{
+	border-radius: 0px;
+}
+#mt-myaccout-nav .navbar .navbar-header{
+	height: 0px;
+}
+#bs-example-navbar-collapse-2{
+	 background-color: #505152;
+	 margin-top: -20px;
+	 position: absolute;
+	width: 92%;
+	z-index: 1;
+}
 
-	
+#bs-example-navbar-collapse-2 a{
+	text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+	color: #9d9d9d;
+	text-decoration: none;
+}
+
+#bs-example-navbar-collapse-2  a,
+#bs-example-navbar-collapse-2 {
+	background-color: #505152;
+}
+
+#mt-account-tab-dropdown-menu-1 li{
+	border-bottom: 1px solid #ccc;
+    padding: 3px;
+    padding-left: 40px;
+}
+
+#mt-account-tab-dropdown-menu-1 li >a{
+	border: none;
+}
+
+#mt-my-prod-menu{
+	background: #505152;
+    color: #9d9d9d;
+}
+.mt-account-active-tab > a{
+	background: #505152 ! important;
+}
+.mt-acc-tab-view.active,
+.tab-submenu-mt.open > a{
+	color: #fff ! important;
+}

@@ -3,49 +3,68 @@
 	<div id="sns_tab_products" class="product-collateral clearfix">
     	<ul class="nav-tabs gfont">
     		<li class="dropdown pull-left mt-drop-acc tabdrop">
-    			<a class="dropdown-toggle" data-toggle="dropdown">
+    			<a class="dropdown-toggle" data-toggle="collapse" 
+    				data-target="#mt-account-tab-dropdown-menu">
     				<i class="fa fa-align-justify"></i> 
     			</a>
-    			<ul id="mt-account-tab-dropdown-menu" class="dropdown-menu">
-					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="wishlist" 
-						data-toggle="tab-pane" data-title="Wishlist" data-target="#mt-wishlist-tab">
-							WISHLIST 
-						</a>
-					</li>
-					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="cart" 
-						data-toggle="tab-pane" data-title="Cart" data-target="#mt-cart-tab"> 
-							CART
-						</a>
-					</li>
-					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="receipt" 
-						data-toggle="tab-pane" data-title="All Orders" data-target="#mt-report-tab"> 
-							ALL ORDERS
-						</a>
-					</li>
-					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="openorders" 
-						data-toggle="tab-pane" data-title="Open Orders" data-target="#mt-openorders-tab"> 
-							OPEN OREDERS
-						</a>
-					</li>
-					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="accountinfo" 
-						data-toggle="tab-pane" data-title="Login & Security" data-target="#mt-accountinfo-tab"> 
-							LOGIN &amp; SECURITY
-						</a>
-					</li>
-					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="addressbook" 
-						data-toggle="tab-pane" data-title="Addresses" data-target="#mt-addressbook-tab"> 
-							ADDRESSES
-						</a>
-					</li>
+    			<ul id="mt-account-tab-dropdown-menu" class="dropdown-menu collapse">
+					<li class="mt-account-active-tab tab-submenu-mt dropdown">
+    					<a id="mt-my-prod-menu" onclick="changeDropView(this);" class="dropdown-toggle" 
+    						data-toggle="collapse" 
+            				data-target="#mt-account-tab-dropdown-menu-1">
+            				MY PRODUCTS
+            				<span id="mt-dropmenu-icon" class="caret"></span>
+        				</a>
+    				
+    					<ul id="mt-account-tab-dropdown-menu-1" class="collapse">
+        					<li class="mt-account-active-tab">
+                               <a class="mt-acc-tab-view" onclick="changeTabView(this)" data-toggle="tab-pane" data-target="#mt-purchase-item-tab" 
+                               data-title="Purchase Item" data-link="purchase">
+                                   PURCHASED ITEM
+                               </a>
+                            </li>
+        					<li class="mt-account-active-tab">
+        						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="wishlist" 
+        						data-toggle="tab-pane" data-title="Wishlist" data-target="#mt-wishlist-tab">
+        							WISHLIST 
+        						</a>
+        					</li>
+        					<li class="mt-account-active-tab">
+        						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="cart" 
+        						data-toggle="tab-pane" data-title="Cart" data-target="#mt-cart-tab"> 
+        							CART
+        						</a>
+        					</li>
+        					<li class="mt-account-active-tab">
+        						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="receipt" 
+        						data-toggle="tab-pane" data-title="All Orders" data-target="#mt-report-tab"> 
+        							ALL ORDERS
+        						</a>
+        					</li>
+        					<li class="mt-account-active-tab">
+        						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="openorders" 
+        						data-toggle="tab-pane" data-title="Open Orders" data-target="#mt-openorders-tab"> 
+        							OPEN OREDERS
+        						</a>
+        					</li>
+    					</ul>
+    				</li>
+    				<li class="mt-account-active-tab">
+    						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="accountinfo" 
+    						data-toggle="tab-pane" data-title="Login & Security" data-target="#mt-accountinfo-tab"> 
+    							LOGIN &amp; SECURITY
+    						</a>
+    				</li>
+    				<li class="mt-account-active-tab">
+    						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="addressbook" 
+    						data-toggle="tab-pane" data-title="Addresses" data-target="#mt-addressbook-tab"> 
+    							ADDRESSES
+    						</a>
+    				</li>
+					
 					
 					<li class="mt-account-active-tab">
-						<a onclick="changeTabView(this)" data-link="paymentoptions" 
+						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="paymentoptions" 
 						data-toggle="tab-pane" data-title="Payment Options" data-target="#mt-paymentoptions-tab"> 
 							PAYMENT OPTIONS
 						</a>
@@ -163,22 +182,38 @@
 		var newDataLink = jQuery(event).attr('data-link');
 		var newTitle = jQuery(event).attr('data-title');
 		
-		var activeSelector = jQuery('.mt-account-active-tab.active').find('a');
+		var activeSelector = jQuery('.mt-account-show-li.active').find('a');
 
 		var oldTargetId = activeSelector.attr('data-target');
 		var oldLabel = activeSelector.text();
 		var oldDataLink = activeSelector.attr('data-link');
 		var oldTitle = activeSelector.attr('data-title');
 
-		activeSelector.attr('data-target',newTargetId);
+		/* activeSelector.attr('data-target',newTargetId);
 		activeSelector.text(newLabel);
-		activeSelector.attr('data-link',newDataLink);
-		activeSelector.attr('data-title',newTitle);
+		activeSelector.attr('data-link',newDataLink); 
+		activeSelector.attr('data-title',newTitle);*/
 		
-		jQuery(event).attr('data-target',oldTargetId);
+		activeSelector.text(newLabel);
+		
+		/*jQuery(event).attr('data-target',oldTargetId);
 		jQuery(event).text(oldLabel);
 		jQuery(event).attr('data-link',oldDataLink);
-		jQuery(event).attr('data-title',oldTitle);
+		jQuery(event).attr('data-title',oldTitle); */
+
+		jQuery('.mt-acc-tab-view').removeClass('active');
+		jQuery(event).addClass('active');
+
+		if((newDataLink=="accountinfo" || newDataLink=="addressbook" || newDataLink=="paymentoptions")){
+			if(jQuery('#mt-account-tab-dropdown-menu-1').hasClass('in')){
+				jQuery('.tab-submenu-mt').removeClass('open');
+				jQuery('#mt-account-tab-dropdown-menu-1').removeClass('in');
+			}
+		}
+
+		if(jQuery('#mt-account-tab-dropdown-menu').hasClass('in')){
+			jQuery('#mt-account-tab-dropdown-menu').removeClass('in');
+		}
 
 		window.location.hash = newDataLink;
 		jQuery('#myaccount-tab-label').text(newTitle);		
@@ -243,6 +278,14 @@
 		}
 	}
 
+	function changeDropView(event){
+		console.log(jQuery('#mt-account-tab-dropdown-menu-1').hasClass('in'));
+		if(!jQuery('#mt-account-tab-dropdown-menu-1').hasClass('in')){
+			jQuery('.tab-submenu-mt').addClass('open');
+		}else{
+			jQuery('.tab-submenu-mt').removeClass('open');
+		}
+	}
 	
 </script>
 
