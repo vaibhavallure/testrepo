@@ -16,7 +16,7 @@ $priceIndex = 1;
 
 $prodCount=0;
 $csv = Mage::getBaseDir('var').DS."priceImport".DS.$name;
-
+$productNotFound=array();
 
 $io = new Varien_Io_File();
 $productIdsByPrice = array();
@@ -28,8 +28,9 @@ while($csvData = $io->streamReadCsv()){
 	}
 	$sku = trim($csvData[$skuIndex]);
 	$id = $productModel->getIdBySku($sku);
-	$_product=$productModel->load($id);
+	
 	if ($id) {
+	    $_product=$productModel->load($id);
 	    $price = trim($csvData[$priceIndex]);
 	    if (!isset($productIdsByPrice[$price])) {
 	        $productIdsByPrice[$price] = array();
@@ -42,6 +43,9 @@ while($csvData = $io->streamReadCsv()){
 	            $productIdsByPrice[$price][] = $childrenId;
 	        }
 	    }
+	}else {
+	    $productNotFound[]=$sku;
+	    
 	}
 	
 	
@@ -76,6 +80,7 @@ $writeAdapter->commit();
 }catch (Exception $e) {
 	$writeAdapter->rollback();
 }
+Mage::log("Products not found:".json_encode($productNotFound),Zend_log::DEBUG,'priceupdate',true);
 	
 die("Operation end...");
 	
