@@ -40,7 +40,7 @@
 	font-weight: bold;
 	font-size: 16px;
 }
-calendar .disabled span {
+.calendar .disabled span {
     font-size: 12px;
     font-weight: normal;
 }
