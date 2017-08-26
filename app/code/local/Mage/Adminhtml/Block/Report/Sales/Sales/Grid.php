@@ -44,7 +44,7 @@ class Mage_Adminhtml_Block_Report_Sales_Sales_Grid extends Mage_Adminhtml_Block_
     public function getResourceCollectionName()
     {
          try {
-             Mage::getModel('processorders/observer')->runProcess();
+             
              Mage::getResourceModel('sales/report_order')->aggregate();
          } catch (Exception $e) {
          }
