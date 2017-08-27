@@ -40,6 +40,11 @@
 				</rewrite>
 
 			</checkout>
+			<sales>
+				<rewrite>
+					<order_totals>Allure_MultiCheckout_Block_Sales_Order_Totals</order_totals>
+				</rewrite>
+			</sales>
 
 		</blocks>
 
