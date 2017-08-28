@@ -4,6 +4,8 @@ umask(0);
 Mage::app();
 
 
+
+
 //remote site wsdl url
 $_URL       = "http://mariatash.ws02.allure.inc/api/v2_soap/?wsdl=1";
 
@@ -38,8 +40,8 @@ $order_detail = array(
 );
 
 $_order_data = array();
-for($i=0;$i<10;$i++){
-    $id = 2225+$i;
+for($i=0;$i<1;$i++){
+    $id = 2250+$i;
     $customer_detail = array(
         'name'=>'Sagar G','email'=>'sagardada122145678'.$i.'@allureinc.co',
         'street'=>'Sagar Path','city'=>'Pune','state'=>'Maharashtra',
@@ -62,7 +64,7 @@ try{
     
     $_RequestData = array(
         'sessionId' => $session->result,
-        'counterpoint_data' => json_encode($_order_data)
+        'counterpoint_data' => json_encode($mainArr)
     );
     
     $result  = $client->counterpointOrderList($_RequestData);

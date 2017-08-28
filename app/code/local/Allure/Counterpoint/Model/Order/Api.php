@@ -4,7 +4,7 @@
  */
 class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstract{
     
-    protected $_ctpnt_logs_file_name = "abc";
+    protected $_ctpnt_logs_file_name = "counterpoint_api";
     
     /**
      * @param string $counterpoint_data
@@ -62,7 +62,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
      */
     private function createOrderByUsingCounterpointData($ctpnt_order_id,
         $ctpnt_order_data){
-        $stratTime=time();
         try{
             $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'increment_id');
             if(!$orderObj->getId()){
@@ -71,12 +70,10 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                     Mage::log("counterpoint order_id:-".$ctpnt_order_id." not present in magento.",
                         Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                     
-                    Mage::log("1:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                     
                     $customerDetailArr = $ctpnt_order_data['customer_detail'];
                     $customer = $this->insertCustomer($customerDetailArr);
                     $billingAddress = $this->getBillingAddressOfCtpnt($customer,$customerDetailArr);
-                    Mage::log("2:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                     
                     $_store_id = 1; //main website
                     $quoteObj = Mage::getModel('sales/quote')->assignCustomer($customer);
@@ -86,27 +83,32 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                     foreach ($productsArr as $value){
                         $sku = strtoupper($value['sku']);
                         $qty = $value['qty'];
-                        $productId = Mage::getModel('catalog/product')->getIdBySku($sku);
+                       /*  $productId = Mage::getModel('catalog/product')->getIdBySku($sku);
                         if($productId){
                             $productObj = Mage::getModel('catalog/product')->load($productId);
-                        }else {
+                        }else { */
                             $productObj = Mage::getModel('catalog/product');
                             $productObj->setTypeId('simple');
                             $productObj->setTaxClassId(1);
                             $productObj->setSku($sku);
-                            $productObj->setName($value['name']);
-                            $productObj->setShortDescription($value['name']);
-                            $productObj->setDescription($value['name']);
-                            $productObj->setPrice($value['price']);
-                        }
+                            $productObj->setName($value['pname']);
+                            $productObj->setShortDescription($value['pname']);
+                            $productObj->setDescription($value['pname']);
+                            $productObj->setPrice($value['prc']);
+                            
+                            $quoteItem = Mage::getModel("sales/quote_item")
+                            ->setProduct($productObj);
+                            $quoteItem->setQty($qty);
+                            
+                            $quoteObj->addItem($quoteItem);
+                       // }
                         
-                        $params = array();
+                        /* $params = array();
                         $params['qty'] = $qty;
                         $request = new Varien_Object();
                         $request->setData($params);
-                        $quoteObj->addProduct($productObj , $request);
+                        $quoteObj->addProduct($productObj , $request); */
                     }
-                    Mage::log("3:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                     
                         $quoteBillingAddress = Mage::getModel('sales/quote_address');
                         $quoteBillingAddress->setData($billingAddress);
@@ -123,14 +125,12 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             //$quoteObj->getShippingAddress()->collectShippingRates();
                         }
                         $quoteObj->collectTotals();
-                        Mage::log("4:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                         
                         //$quoteObj->save();
                         $transaction = Mage::getModel('core/resource_transaction');
                         if ($quoteObj->getCustomerId()) {
                            // $transaction->addObject($quoteObj->getCustomer());
                         }
-                        Mage::log("5:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                         
                         $quoteObj->setIsActive(0);
                         
@@ -147,7 +147,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         $quotePaymentObj = $quoteObj->getPayment();
                         $quotePaymentObj->setMethod($payment_method);
                         $quoteObj->setPayment($quotePaymentObj);
-                        Mage::log("6:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                         
                         $convertQuoteObj = Mage::getSingleton('sales/convert_quote');
                         if ($quoteObj->getIsVirtual()) {
@@ -165,7 +164,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         }
                         
                         $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
-                        Mage::log("7:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                         
                         $items=$quoteObj->getAllItems();
                         
@@ -177,7 +175,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             }
                             $orderObj->addItem($orderItem);
                         }
-                        Mage::log("7-1:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                         
                         $orderObj->setCanShipPartiallyItem(false);
                         
@@ -199,7 +196,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         $orderObj->setCreatedAt($extraOrderDetails['order_date']);
                         
                         //$transaction->addObject($orderObj);
-                        Mage::log("7-2:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                         
                         /* $transaction->addCommitCallback(array($orderObj, 'place'));
                          $transaction->addCommitCallback(array($orderObj, 'save')); */
@@ -208,7 +204,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             //$transaction->save();
                             $orderObj->save();
                             $quoteObj->save();
-                            Mage::log("8:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                             
                             $increment_id = $orderObj->getRealOrderId();
                             
@@ -234,7 +229,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 ->addObject($invoice)
                                 ->addObject($invoice->getOrder());
                             $transactionSave->save(); */
-                            Mage::log("9:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                             
                         } catch (Exception $e){
                             Mage::log("Trans Exception-".$e->getMessage(), Zend_Log::DEBUG,$this->_ctpnt_logs_file_name,true);
@@ -253,7 +247,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         }catch (Exception $e){
             Mage::log("Exception in createOrderByUsingCounterpointData method of Class name is".get_class($this),
                 Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
-            Mage::log($e,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+            Mage::log($e->getMessage(),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
         }
     }
     
@@ -280,7 +274,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             'lastname' => $customer->getLastname(),
             'telephone' => $customerDetailArr['phone'],
             'street' => $customerDetailArr['street'],
-          //  'country_id' => 'IN',//$customerDetailArr['country'],
+            'country_id' => $customerDetailArr['country']?$customerDetailArr['country']:"",
             'city' => $customerDetailArr['city'],
             'postcode' => $customerDetailArr['zip_code'],
             //'region_id' => "12",
@@ -293,14 +287,12 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     }
     
     private function insertCustomer($customerDetailArr){
-        $stratTime = time();
-        Mage::log("1-a:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
         
         $email      = $customerDetailArr['email'];
         $street     = $customerDetailArr['street'];
         $city       = $customerDetailArr['city'];
         $state      = $customerDetailArr['state'];
-        $country    = $customerDetailArr['country'];
+        $country    = $customerDetailArr['country']?$customerDetailArr['country']:"";
         $zip_code   = $customerDetailArr['zip_code'];
         $phone      = $customerDetailArr['phone'];
         $name       = $customerDetailArr['name'];
@@ -319,7 +311,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $customer = Mage::getModel('customer/customer')
             ->setWebsiteId($websiteId)
              ->loadByEmail($email);
-             Mage::log("1-b:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
              
         if(!$customer->getId()){
             $groupId = 1;
@@ -336,7 +327,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 ->setPassword($password)
                 ->setCustomerType(1)  //counterpoint
                 ->save();
-                Mage::log("1-b-i:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                 
             $_custom_address = array (
                 'firstname'  => $customer->getFirstname(),
@@ -346,7 +336,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 ),
                 'city'       => $city,
                 'postcode'   => $zip_code,
-               // 'country_id' => 'IN',
+                'country_id' => $country,
                 'region' 	=> 	$state,
                 'telephone'  => $phone,
                 'fax'        => '',
@@ -359,7 +349,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 ->setIsDefaultShipping('1')
                 ->setSaveInAddressBook('1');
             $address->save();
-            Mage::log("1-c:-".(time()-$stratTime),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
             
             Mage::log("New customer create.customer_id:".$customer->getId(),
                 Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);

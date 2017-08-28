@@ -3,7 +3,7 @@ class Allure_Counterpoint_Model_Data{
 	
 	public function synkCounterpointOrders($from,$to){
 		$websiteId =  1;//Mage::app()->getWebsite()->getId();
-		$store = Mage::app()->getStore();
+		$storeId = 1;// Mage::app()->getStore();
 		
 		$alphabets = range('A','Z');
 		$numbers = range('0','9');
@@ -22,7 +22,7 @@ class Allure_Counterpoint_Model_Data{
 			try{
 				Mage::log("Connection established.", Zend_Log::DEBUG,"counter_point_order",true);
 				
-				$query = "select a.DOC_ID,a.TKT_NO order_id,a.TKT_DT order_date,a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
+				$query2 = "select a.DOC_ID,a.TKT_NO order_id,a.TKT_DT order_date,a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
 					a.tot total,concat(b.ITEM_NO,'|',b.CELL_DESCR) sku,b.QTY_SOLD qty,b.prc,b.descr pname,
 	 				c.EMAIL_ADRS_1 as email,c.nam name,c.adrs_1 street,c.city,c.state,c.zip_cod , c.cntry as country,c.phone_1 phone
 					from ps_tkt_hist a join
@@ -32,6 +32,14 @@ class Allure_Counterpoint_Model_Data{
 					and a.tkt_dt <='".$from."' and a.tkt_dt >='".$to."' order by a.BUS_DAT desc;";
 				//and tkt_dt >='2017-05-30'
 				$query1 = "select * from dbo.ps_ord_hist where tkt_no='2017003176'";
+				
+				$query = "SELECT a.doc_id,a.tkt_no order_id,a.tkt_dt order_date,concat(b.item_no,'|',cell_descr) sku,b.DESCR pname,
+                          b.orig_qty qty,b.prc,a.sub_tot subtotal,a.tot_ext_cost,a.tax_amt tax,a.tot total, c.nam name,
+                          c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,c.phone_1 phone,
+                          c.cntry as country FROM ps_ord_hist a JOIN ps_ord_hist_lin b on(a.tkt_no=b.tkt_no)
+                          join ps_ord_hist_contact c on(a.doc_id=c.doc_id) WHERE (a.TAX_OVRD_REAS<>'MAGENTO' or a.TAX_OVRD_REAS is null) 
+                           and a.tkt_dt like '%".$from."%'  order by a.BUS_DAT desc;";
+				
 				$result = odbc_exec($conn, $query);
 				$count = 0;
 				$i 	   = 0;
@@ -85,7 +93,7 @@ class Allure_Counterpoint_Model_Data{
 			}
 		}else{
 			Mage::log("Connection could not be established.", Zend_Log::DEBUG,"counter_point_order",true);
-			die( print_r( sqlsrv_errors(), true));
+			die( print_r( "Try again."));
 		}
 		
 		$cnt = 1;
@@ -98,41 +106,19 @@ class Allure_Counterpoint_Model_Data{
 				$order = Mage::getModel('sales/order')->load($counterpointOrderId, 'increment_id');
 				
 				if(!$order->getId()){
-					$order = Mage::getModel('sales/order')->load($counterpointOrderId, 'counterpoint_order_id');
+				    $counterpointOrderId = $key;
+				    $order = Mage::getModel('sales/order')->load($counterpointOrderId, 'counterpoint_order_id');
 					if(!$order->getId()){
 						//echo "Order Id:".$counterpointOrderId." Not present";
 						Mage::log("Order Id:".$counterpointOrderId." Not present"." - Order date:-".$data['info']['order_date'], Zend_Log::DEBUG,"counter_point_order",true);
 						
 						//sales order quote
 						$quoteObj = Mage::getModel('sales/quote');
-						$quoteObj = $quoteObj->setStoreId(Mage::app()->getStore()->getId());
-						$quoteFlag = false;
+						$quoteObj = $quoteObj->setStoreId($storeId);
+						$quoteFlag = true;
 						$productArr = array();
 						$newProductArr = array();
-						foreach ($data['items'] as $value){
-							$sku = strtoupper($value['sku']);
-							$qty = $value['qty'];
-							
-							$productId = Mage::getModel('catalog/product')->getIdBySku($sku);
-							if($productId){
-								$quoteFlag = true;
-								$productArr[$productId] = $qty;
-								//echo "<br>Product_id:".$productId;
-								//echo "<br>";
-							}else {
-								$quoteFlag = true;
-								$product = Mage::getModel('catalog/product');
-								$product->setTypeId('simple');
-								$product->setTaxClassId(1);
-								$product->setSku($sku);
-								$product->setName($value['pname']);
-								$product->setShortDescription($value['pname']);
-								$product->setDescription($value['pname']);
-								$product->setPrice($value['prc']);
-								$newProductArr[] = array("item"=>$product,'qty'=>$qty);
-								//break;
-							}
-						}
+						
 						if($quoteFlag){
 							$address = $data['address'];
 							$email = $address['email'];
@@ -146,11 +132,9 @@ class Allure_Counterpoint_Model_Data{
 							$name = explode(" ", $name);
 							$firstName = $name[0];
 							$lastName = $name[0];
+							
 							if(count($name)>1)
 								$lastName = $name[1];
-								
-								// Start New Sales Order Quote
-								$quote = Mage::getModel('sales/quote')->setStoreId($storeId);
 								
 								if(empty($email)){  //create customer with new email
 									$emailName = $firstName."".$lastName;
@@ -161,6 +145,7 @@ class Allure_Counterpoint_Model_Data{
 								$customer = Mage::getModel('customer/customer')
 								->setWebsiteId($websiteId)
 								->loadByEmail($email);
+								
 								if(!$customer->getId()){
 									$groupId = 1;
 									$storeId = 1;
@@ -209,10 +194,53 @@ class Allure_Counterpoint_Model_Data{
 								}
 								
 								// assign this customer to quote object, before any type of magento order, first create quote.
-								$quoteObj = Mage::getModel('sales/quote')->assignCustomer($customer);
-								$quoteObj = $quoteObj->setStoreId(Mage::app()->getStore()->getId());
+								$quoteObj = Mage::getModel('sales/quote')
+								    ->assignCustomer($customer);
+								$quoteObj = $quoteObj->setStoreId($storeId);
+								foreach ($data['items'] as $value){
+								    $sku1 = strtoupper($value['sku']);
+								    $qty = $value['qty'];
+								    
+								   /*  $productId = Mage::getModel('catalog/product')->getIdBySku($sku1);
+								    if($productId){
+								        $params = array();
+								        $params['qty'] = $qty;
+								        $request = new Varien_Object();
+								        $request->setData($params);
+								        $productObj = Mage::getModel('catalog/product')->load($productId);
+								        //Mage::log($productObj->getData(), Zend_Log::DEBUG,"counter_point_order",true);
+								        
+								        $quoteObj->addProduct($productObj , $request);
+								    }else { */
+    								    $quoteFlag = true;
+    								    $product = Mage::getModel('catalog/product');
+    								    $product->setTypeId('simple');
+    								    $product->setTaxClassId(1);
+    								    $product->setSku($sku1);
+    								    $product->setName($value['pname']);
+    								    $product->setShortDescription($value['pname']);
+    								    $product->setDescription($value['pname']);
+    								    $product->setPrice($value['prc']);
+    								    $product->setQty($qty);
+    								    //$newProductArr[] = array("item"=>$product,'qty'=>$qty);
+    								    
+    								    $params = array();
+    								    $params['qty'] = $qty;
+    								    $request = new Varien_Object();
+    								    $request->setData($params);
+    								   // Mage::log($product->getData(), Zend_Log::DEBUG,"counter_point_order",true);
+    								    //Mage::log($sku1." == ".$qty ,Zend_Log::DEBUG,"counter_point_order",true);
+    								    
+    								    $quoteItem = Mage::getModel("sales/quote_item")
+    								    ->setProduct($product);
+    								    $quoteItem->setQty($qty);
+    								     
+    								    $quoteObj->addItem($quoteItem );
+    								    $product = null;
+								  // }
+								}
 								
-								foreach ($productArr as $productId=>$qty){
+								/* foreach ($productArr as $productId=>$qty){
 									$params = array();
 									$params['qty'] = $qty;
 									$request = new Varien_Object();
@@ -221,15 +249,20 @@ class Allure_Counterpoint_Model_Data{
 									$quoteObj->addProduct($productObj , $request);
 								}
 								
-								if(count($newProductArr) > 0){
+								
+								 if(count($newProductArr) > 0){
 									foreach ($newProductArr as $newProduct){
 										$newItem = $newProduct['item'];
 										$newQty = $newProduct['qty'];
+										$params = array();
+										$params['qty'] = $newQty;
 										$request = new Varien_Object();
 										$request->setData($params);
+										Mage::log($newItem->getData(), Zend_Log::DEBUG,"counter_point_order",true);
+										
 										$quoteObj->addProduct($newItem, $request);
 									}
-								}
+								}  */
 								// sample billing address
 								$billingAddress = array
 								(
@@ -323,6 +356,7 @@ class Allure_Counterpoint_Model_Data{
 								$orderObj->setGrandTotal($totalAmmount);
 								$orderObj->setBaseTaxAmount($taxAmmount);
 								$orderObj->setBaseGrandTotal($totalAmmount);
+								//$orderObj->setTotalPaid($totalAmmount);
 								
 								//complete the order status
 								$orderObj->setData('state','complete')
@@ -369,7 +403,6 @@ class Allure_Counterpoint_Model_Data{
 								
 								} catch (Exception $e){
 								    Mage::log("Trans Exception-".$e->getMessage(), Zend_Log::DEBUG,"counter_point_order",true);
-								    Mage::throwException('Order Cancelled.');
 								}
 								
 						}else{
@@ -385,9 +418,7 @@ class Allure_Counterpoint_Model_Data{
 				$cnt++;
 			}
 		}catch (Exception $e){
-			Mage::throwException('Order Cancelled '.$e->getMessage());
-			Mage::log("Exception-", Zend_Log::DEBUG,"counter_point_order",true);
-			Mage::log($e, Zend_Log::DEBUG,"counter_point_order",true);
+		    Mage::log($e->getMessage(), Zend_Log::DEBUG,"counter_point_order",true);
 		}
 		Mage::log("Finish.....", Zend_Log::DEBUG,"counter_point_order",true);
 	}
@@ -448,6 +479,7 @@ class Allure_Counterpoint_Model_Data{
 	               }
 	               Mage::log("Total customer-".count($addrArr), Zend_Log::DEBUG,"counter_point_order",true);
 	               odbc_close($conn);
+	             }
 	           }catch (Exception $e){
 	               odbc_close($conn);
 	               print_r($e);
