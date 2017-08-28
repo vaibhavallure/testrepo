@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_Reports>
+            <version>0.1.0</version>
+        </Allure_Reports>
+    </modules>
+    
+    <global>
+	    <blocks>
+	    	<allure_reports>
+	    		<class>Allure_Reports_Block</class>
+	    	</allure_reports>
+	    </blocks>
+	    <helpers>
+	    	<allure_reports>
+	    		<class>Allure_Reports_Helper</class>
+	    	</allure_reports>
+	    </helpers>
+    </global>
+    
+     <adminhtml>
+		<layout>
+			<updates>
+				<allure_reports>
+					<file>allure/order_report.xml</file>
+				</allure_reports>
+			</updates>
+		</layout>
+	</adminhtml>
+        
+    <admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Allure_Reports before="Mage_Adminhtml">Allure_Reports_Adminhtml</Allure_Reports>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin> 
+    
+</config>
