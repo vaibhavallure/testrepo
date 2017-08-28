@@ -19,6 +19,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         //foreach ($counterpointData as $orderId=>$data){
             //Mage::log($orderId,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
        // }
+        Mage::log("Total order-".count($counterpointData),
+            Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
         $this->importCPSQLOrderIntoMagento($counterpointData);
         return 1;
     }
@@ -30,10 +32,16 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $connection = Mage::getSingleton('core/resource')->getConnection('core_write');
         try{
            // $connection->beginTransaction();
+           $count = 0;
             foreach ($counterpointOrderArr as $order_id_key => $order_data_arr){
                 $ctrpnt_order_id = $this->getCounterpointOrderId($order_id_key);
                 $this->createOrderByUsingCounterpointData($ctrpnt_order_id, $order_data_arr);
+                Mage::log("count no-".$count,
+                    Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+                $count++;
             }
+            Mage::log("Finish...",
+                Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
             //$connection->commit();
         }catch (Exception $e){
            // $connection->rollback();
@@ -243,6 +251,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 Mage::log("counterpoint order_id:-".$ctpnt_order_id." present in magento.",
                     Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
             }
+                
             
         }catch (Exception $e){
             Mage::log("Exception in createOrderByUsingCounterpointData method of Class name is".get_class($this),
