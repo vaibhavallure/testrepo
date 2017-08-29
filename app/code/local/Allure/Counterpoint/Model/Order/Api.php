@@ -11,7 +11,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
      * @return number
      */
     public function test($counterpoint_data){
-        $counterpointData = json_decode($counterpoint_data,true);
+        $counterpointData = json_decode(stripslashes($counterpoint_data),true);
         //Mage::log($counterpointData,Zend_log::DEBUG,
           //                                      $this->_ctpnt_logs_file_name,true);
         //Mage::log(count($counterpointData),Zend_log::DEBUG,
@@ -73,7 +73,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         try{
             $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'increment_id');
             if(!$orderObj->getId()){
-                $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
+               // $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
                 if(!$orderObj->getId()){
                     Mage::log("counterpoint order_id:-".$ctpnt_order_id." not present in magento.",
                         Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
@@ -107,8 +107,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $quoteItem = Mage::getModel("sales/quote_item")
                             ->setProduct($productObj);
                             $quoteItem->setQty($qty);
-                            
+                            Mage::log($sku,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                             $quoteObj->addItem($quoteItem);
+                            $productObj = null;
                        // }
                         
                         /* $params = array();

@@ -46,7 +46,7 @@ if($conn){
                           c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,c.phone_1 phone,
                           c.cntry as country FROM ps_ord_hist a JOIN ps_ord_hist_lin b on(a.tkt_no=b.tkt_no)
                           join ps_ord_hist_contact c on(a.doc_id=c.doc_id) WHERE (a.TAX_OVRD_REAS<>'MAGENTO' or a.TAX_OVRD_REAS is null)
-                          and a.tkt_dt like '%".$from."%'  and a.tkt_no like '%211558%' order by a.BUS_DAT desc;";
+                          and a.tkt_dt like '%2009%' or a.tkt_dt like '%2010%' or a.tkt_dt like '%2011%' order by a.BUS_DAT desc;";
                               
         
         
@@ -97,7 +97,7 @@ if($conn){
         }
         odbc_close($conn);
         echo "<pre>";
-        print_r(($mainArr));
+        print_r(count($mainArr));
         
     }catch (Exception $e){
         print_r($e->getMessage());
