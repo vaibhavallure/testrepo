@@ -107,7 +107,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $quoteItem = Mage::getModel("sales/quote_item")
                             ->setProduct($productObj);
                             $quoteItem->setQty($qty);
-                            Mage::log($sku,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+                            //Mage::log($sku,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                             $quoteObj->addItem($quoteItem);
                             $productObj = null;
                        // }
