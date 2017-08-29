@@ -11,7 +11,14 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
      * @return number
      */
     public function test($counterpoint_data){
-        $counterpointData = json_decode(stripslashes($counterpoint_data),true);
+        
+        $counterpoint_data = utf8_decode($counterpoint_data);
+        $counterpoint_data = trim($counterpoint_data,'"');
+        $counterpoint_data = stripslashes($counterpoint_data);
+        
+        $counterpointData = unserialize($counterpoint_data);
+        
+        //$counterpointData = (trim(stripslashes($counterpoint_data),'"'));
         //Mage::log($counterpointData,Zend_log::DEBUG,
           //                                      $this->_ctpnt_logs_file_name,true);
         //Mage::log(count($counterpointData),Zend_log::DEBUG,

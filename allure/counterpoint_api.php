@@ -24,17 +24,19 @@ if($conn){
         
         $query = "SELECT a.doc_id,a.tkt_no order_id,a.tkt_dt order_date,concat(b.item_no,'|',cell_descr) sku,b.DESCR pname,
                           b.orig_qty qty,b.prc,a.sub_tot subtotal,a.tot_ext_cost,a.tax_amt tax,a.tot total, c.nam name,
-                          c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod zip_code ,c.phone_1 phone,
+                          c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,c.phone_1 phone,
                           c.cntry as country FROM ps_ord_hist a JOIN ps_ord_hist_lin b on(a.tkt_no=b.tkt_no)
                           join ps_ord_hist_contact c on(a.doc_id=c.doc_id) WHERE (a.TAX_OVRD_REAS<>'MAGENTO' or a.TAX_OVRD_REAS is null)
                           and a.tkt_dt like '%2008%' order by a.BUS_DAT desc;";
-
+        
+        
+        
         $result = odbc_exec($conn, $query);
         $count = 0;
         $i 	   = 0;
         $mainArr = array();
         $itemHeader = array('qty','sku','prc','pname');
-        $addressHeader = array('email','name','street','city','state','zip_code','country','phone');
+        $addressHeader = array('email','name','street','city','state','zip_cod','country','phone');
         while(odbc_fetch_row($result)){
             $order_id = odbc_result($result, 'order_id');
             $arr 		= array();
@@ -65,24 +67,26 @@ if($conn){
             }
             
             if(!array_key_exists($order_id, $mainArr)){
-                $mainArr[$order_id] = array('item_detail'=>array($items),
-                    'customer_detail'=>$address,'order_detail'=>$info);
+                $mainArr[$order_id] = array('items'=>array($items),
+                    'address'=>$address,'info'=>$info);
             }else{
-                $tempItems = $mainArr[$order_id]['item_detail'];
+                $tempItems = $mainArr[$order_id]['items'];
                 $tempItems[] = $items;
-                $mainArr[$order_id]['item_detail'] = $tempItems;
+                $mainArr[$order_id]['items'] = $tempItems;
             }
             $i++;
         }
         odbc_close($conn);
-        echo "<pre>";
-        /* $str = json_encode($mainArr,true);
-        $ad = addslashes($str);
-        echo ($ad);
-        $tempD = stripslashes($ad);
+        /* echo "<pre>";
+        print_r(count($mainArr));
         echo "<br>";
-        print_r(($tempD));
+        $ad = addslashes(json_encode($mainArr));
+        print_r($ad);
+        echo "<br>";
+        $td = stripslashes($ad);
+        print_r($td);
         die; */
+        
         
     }catch (Exception $e){
         print_r($e->getMessage());
@@ -93,8 +97,10 @@ if($conn){
 }
 
 
+
+
 //remote site wsdl url
-$_URL       = "http://universal.allurecommerce.com/api/v2_soap/?wsdl=1";
+$_URL       = "http://mariatash.ws02.allure.inc/api/v2_soap/?wsdl=1";
 
 /**
  * @return array of magento credentials.
@@ -149,9 +155,13 @@ try{
     $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
     $session = $client->login($_AUTH_DETAILS_ARR);
     
+    
+    $reqS = addslashes(serialize($mainArr));
+    $reqU = utf8_encode('"'.$reqS.'"');
+    
     $_RequestData = array(
         'sessionId' => $session->result,
-        'counterpoint_data' => addslashes(json_encode($mainArr,true))
+        'counterpoint_data' => $reqU
     );
     
     $result  = $client->counterpointOrderList($_RequestData);
