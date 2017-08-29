@@ -27,7 +27,7 @@ if($conn){
                           c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod zip_code ,c.phone_1 phone,
                           c.cntry as country FROM ps_ord_hist a JOIN ps_ord_hist_lin b on(a.tkt_no=b.tkt_no)
                           join ps_ord_hist_contact c on(a.doc_id=c.doc_id) WHERE (a.TAX_OVRD_REAS<>'MAGENTO' or a.TAX_OVRD_REAS is null)
-                          and a.tkt_dt like '%2009%' order by a.BUS_DAT desc;";
+                          and a.tkt_dt like '%2008%' order by a.BUS_DAT desc;";
 
         $result = odbc_exec($conn, $query);
         $count = 0;
@@ -94,7 +94,7 @@ if($conn){
 
 
 //remote site wsdl url
-$_URL       = "http://mariatash.ws02.allure.inc/api/v2_soap/?wsdl=1";
+$_URL       = "http://universal.allurecommerce.com/api/v2_soap/?wsdl=1";
 
 /**
  * @return array of magento credentials.

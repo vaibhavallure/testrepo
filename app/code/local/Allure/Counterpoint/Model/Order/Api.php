@@ -73,7 +73,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         try{
             $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'increment_id');
             if(!$orderObj->getId()){
-               // $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
+               $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
                 if(!$orderObj->getId()){
                     Mage::log("counterpoint order_id:-".$ctpnt_order_id." not present in magento.",
                         Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
