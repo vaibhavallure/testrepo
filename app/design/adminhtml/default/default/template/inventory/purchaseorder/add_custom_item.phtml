@@ -1,0 +1,47 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ajay
+ * Date: 1/8/17
+ * Time: 11:39 PM
+ */
+
+
+
+
+$_counter = 0;
+?>
+
+
+<tr>
+    <td class="label"></td>
+    <td colspan="10" class="grid hours">
+        <form id="addCustomItems" action="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/savecustomitem') ?>" method="post">
+         <table id="attribute-options-table" class="dynamic-grid appointment-timing" cellspacing="0" cellpadding="0"><tbody>
+            <tr>
+                <th><?php echo $this->__('Sku') ?></th>
+                <th><?php echo $this->__('Product Name') ?></th>
+                <th><?php echo $this->__('Qty') ?></th>
+                <th><?php echo $this->__('Cost') ?></th>
+                <th><?php echo $this->__('Comment') ?></th>
+                <th><button id="add_new_option_button" title="Add Option" type="button" class="scalable add"><span><span><span><?php echo $this->__('Add Option') ?></span></span></span></button></th>
+            </tr>
+            <tr><input type="hidden" name="form_key" value="<?php  echo Mage::getSingleton('core/session')->getFormKey() ?>" /></tr>
+            </tbody></table>
+
+        <button type="submit" style="margin-top: 10px;float:right" id="" class="" ><?php echo $this->__('Apply')?></button>
+        </form>
+            <script type="text/javascript">//<![CDATA[
+
+            var _form_html_row = '<tr class="option-row appointment-timing-qty" id="hour-row-{{id}}"><td><input type="text" name="data[option_{{id}}][sku]"></input></td><td><textarea  cols="8" rows="3" name="data[option_{{id}}][name]"></textarea></td><td><input type="text" style="width:35px;" name="data[option_{{id}}][qty]"></input></td><td><input style="width:35px;"  type="text" name="data[option_{{id}}][cost]"</input></td><td><textarea  cols="8" rows="3" type="text" name="data[option_{{id}}][comment]"></textarea></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'hour-row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
+            console.log(_form_html_row);
+            var _appointment_timing_counter = <?php echo $_counter?>;
+
+            $('add_new_option_button').observe('click', function(){
+                $('attribute-options-table').insert(_form_html_row.replace(/\{\{id\}\}/ig, _appointment_timing_counter));
+                _appointment_timing_counter++;
+            });
+
+            //]]></script>
+    </td>
+</tr>
