@@ -339,8 +339,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 $order->setData('status', $status);
 
             $order->setData('updated_date', $currentDate)->save();
-            $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
-            Mage::log($vendorEmail, Zend_log::DEBUG, 'pologs', true);
+//            $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
 
             if ($close && $canFullyShipOrder){
                 //fully Shipped
