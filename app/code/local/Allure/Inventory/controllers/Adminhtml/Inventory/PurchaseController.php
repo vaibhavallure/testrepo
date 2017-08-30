@@ -280,7 +280,8 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if (isset($arr) && $arr) {
                     $date = "";
                     if (isset($arr['proposed_delivery_date']) && $arr['proposed_delivery_date'])
-                        $date = date('Y-m-d h:i:s', strtotime($arr['proposed_delivery_date']));
+                        $date = date('jS F, Y', strtotime($arr['proposed_delivery_date']));
+                    Mage::log($date,Zend_log::DEBUG, 'pologs', true);
 
                     $dataItems = array(
                         'po_id' => $po_id,
@@ -314,7 +315,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                             $days = Mage::getStoreConfig('allure_vendor/backorder/backorder_time');
                         $backDate = date_create($date);
                         date_add($backDate, date_interval_create_from_date_string($days . " days"));
-                        $backDate = date_format($backDate, "Y-m-d h:i:s");
+                        $backDate = date_format($backDate, "jS F, Y");
 
                         if (! $item->getIsCustom()) {
                             Mage::getSingleton('catalog/product_action')->updateAttributes(array(
@@ -333,7 +334,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             if ($ship)
                 $status = Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_SHIPPED;
             $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
-            $currentDate->toString('Y-m-d H:i:s');
+            $currentDate->toString('jS F, Y');
             $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
             if (($close || $ship) && isset($status))
                 $order->setData('status', $status);
@@ -441,7 +442,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                             $inventory->setUserId($admin->getUserId());
                             $inventory->setPreviousQty($previousQty);
                             $inventory->setAddedQty($arr['proposed_qty']);
-                            $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
+                            $inventory->setUpdatedAt(date("jS F, Y"));
                             $inventory->setStockId($currentOrder->getStockId());
                             $inventory->setPoId($po_id);
                             $inventory->save();
@@ -471,7 +472,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                      * $inventory->setUserId($admin->getUserId());
                      * $inventory->setPreviousQty($previousQty);
                      * $inventory->setAddedQty($arr['proposed_qty']);
-                     * $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
+                     * $inventory->setUpdatedAt(date("jS F, Y"));
                      * $inventory->setStockId($currentOrder->getStockId());
                      * $inventory->setPoId($po_id);
                      * $inventory->save();
@@ -485,7 +486,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             if ($void)
                 $status = Allure_Inventory_Helper_Data::ORDER_STATUS_REJECT;
             $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
-            $currentDate->toString('Y-m-d H:i:s');
+            $currentDate->toString('jS F, Y');
             $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
             if (isset($status))
                 $order->setData('status', $status);
@@ -520,7 +521,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             if($id && isset($id))
             {
                 $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
-                $currentDate->toString('Y-m-d H:i:s');
+                $currentDate->toString('jS F, Y');
                 $status = Allure_Inventory_Helper_Data::ORDER_STATUS_ACCEPT;
                 $order = Mage::getModel('inventory/purchaseorder')->load($id);
                 $storeId=$order->getStoreId();
@@ -638,7 +639,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             foreach ($ids as $id) {
                 if ($id && isset($id)) {
                     $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
-                    $currentDate->toString('Y-m-d H:i:s');
+                    $currentDate->toString('jS F, Y');
                     $status = Allure_Inventory_Helper_Data::ORDER_STATUS_CANCEL;
                     $order = Mage::getModel('inventory/purchaseorder')->load($id);
                     $storeId=$order->getStoreId();
@@ -680,7 +681,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             foreach ($ids as $id) {
                 if ($id && isset($id)) {
                     $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
-                    $currentDate->toString('Y-m-d H:i:s');
+                    $currentDate->toString('jS F, Y');
                     $status = Allure_Inventory_Helper_Data::ORDER_STATUS_NEW;
                     $order = Mage::getModel('inventory/purchaseorder')->load($id);
                     $storeId=$order->getStoreId();
