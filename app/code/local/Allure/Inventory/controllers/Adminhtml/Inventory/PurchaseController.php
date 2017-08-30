@@ -339,41 +339,52 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 $order->setData('status', $status);
             
             $order->setData('updated_date', $currentDate)->save();
-             $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
+//             $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
              if ($close && $canFullyShipOrder){
-                //fully Shipped
+                 Mage::log('close adn fulltship', Zend_log::DEBUG, 'pologs', true);
+
+                 //fully Shipped
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_close',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
-                $helper->sendEmail($po_id, '',$templateId,$adminEmail,true);
-                $helper->sendEmail($po_id, '',$templateId,$vendorEmail,true);
+                $helper->sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,true);
+//                $helper->sendEmail($po_id, '',$templateId,$vendorEmail,true);
 
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order shipped fully.");
                 
             }
             elseif ($close){
                 //Partially Ship
-                
+                Mage::log('close', Zend_log::DEBUG, 'pologs', true);
+
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_shipment',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
-                $helper->sendEmail($po_id, '',$templateId,$adminEmail,true);
-                $helper->sendEmail($po_id, '',$templateId,$vendorEmail,true);
+                $helper->sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,true);
+//                $helper->sendEmail($po_id, '',$templateId,$vendorEmail,true);
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order shipped partially, as some of items remaining to ship.");
             }
             elseif ($ship){
                 //Partially Ship
-                
+                Mage::log('ship', Zend_log::DEBUG, 'pologs', true);
+
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_shipment',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
-                $helper->sendEmail($po_id, '',$templateId,$adminEmail,true);
-                $helper->sendEmail($po_id, '',$templateId,$vendorEmail,true);
+                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+//                $helper->sendEmail($po_id, '',$templateId,$vendorEmail,true);
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order Shipped partially.");
             }
             else{
                 //Order Save
+
+
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_comment',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
-                $helper->sendEmail($po_id, '',$templateId,$adminEmail,true);
-                $helper->sendEmail($po_id, '',$templateId,$vendorEmail,true);
+                $helper->sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,true);
+//                Mage::log('save', Zend_log::DEBUG, 'pologs', true);
+//
+//                $helper->sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,false);
+//                Mage::log('save', Zend_log::DEBUG, 'pologs', true);
+
+
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order saved sucessfully.");
             }
          } catch (Exception $e){
