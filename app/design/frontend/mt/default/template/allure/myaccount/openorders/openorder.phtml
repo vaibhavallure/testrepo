@@ -4,6 +4,13 @@
 <?php if($_orders->getSize()>0) :?>
 <?php $_odd = ''; ?>
 <?php $i = 0 ?>
+
+<?php 
+    $orderStatusArr1 = Mage::getSingleton('sales/order_config')
+                      ->getStatuses();
+    $orderStatusArr = Mage::helper("myaccount")->getOrderMessages();
+?>
+
 <?php foreach ($_orders as $_order): ?>
 <tr>
 	<td style="padding-left:10px;">
@@ -35,7 +42,9 @@
 
 	<td class="a-left" style="padding-left:15px;">
 		<a href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
-			<?php echo $_order->getStatusLabel() ?>
+			<?php //echo $_order->getStatusLabel() ?>
+			 <?php $status = $orderStatusArr[$_order->getState()]?$orderStatusArr[$_order->getState()]:$orderStatusArr1[$_order->getState()]?>
+             <?php echo $status?>
 		</a>
 	</td>
 

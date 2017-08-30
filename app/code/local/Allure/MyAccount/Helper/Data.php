@@ -3,6 +3,8 @@
 class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
 {
 	const STORE_COLOR_MAPPING_XML = "myaccount/general/storemapping";
+	const ORDER_STATE_MAPPING_XML = "myaccount/general/order_message_mapping";
+	
     public function getStoreColorConfig(){
     	$storeColorConfig = Mage::getStoreConfig(self::STORE_COLOR_MAPPING_XML);
     	$config=unserialize($storeColorConfig);
@@ -13,6 +15,15 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
     	return $storeConf;
     }
     
+    public function getOrderMessages(){
+        $storeColorConfig = Mage::getStoreConfig(self::ORDER_STATE_MAPPING_XML);
+        $config=unserialize($storeColorConfig);
+        $orderLabelArr = array();
+        foreach ($config as $conf){
+            $orderLabelArr["{$conf['order_state']}"] = $conf['label'];
+        }
+        return $orderLabelArr;
+    }
     
     public function getTrackingPopupUrlBySalesModel($model)
     {
@@ -52,4 +63,30 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
     	return $storeModel->getUrl('myaccount/index/track', $param);
     }
     
+    /*
+     * get product current stock status
+     */
+    public function getProductCurrentStatus($sku){
+        $orderType  = Mage::app()->getRequest()->getParam('order_type');
+        $stockMsg = "";
+        $isShow = false;
+        if($orderType=="open"){
+            $productId  = Mage::getModel('catalog/product')->getIdBySku($sku);
+            $product    = Mage::getModel('catalog/product')->load($productId);
+            $stockItem  = Mage::getModel('cataloginventory/stock_item')
+                            ->loadByProduct($product);
+            $stockQty   = intval($stockItem->getQty());
+            if($stockQty > 0){
+                $stockMsg = "In Stock";
+            }else{ 
+                $backTime = $product->getData('backorder_time');
+                $stockMsg = "Out of Stock";
+                if(!is_null($backTime))
+                    $stockMsg .= " - ".$backTime;
+            }
+            $isShow = true;
+        }
+        return array("is_show"=>$isShow,"message"=>$stockMsg);
+    }
+        
 }

@@ -3,7 +3,8 @@ class Allure_MyAccount_Block_Order_Openorder extends Mage_Core_Block_Template
 {
    public function getViewUrl($order)
     {
-        return $this->getUrl('sales/order/view', array('order_id' => $order->getId()));
+        return $this->getUrl('sales/order/view', 
+            array('order_id' => $order->getId(),'order_type'=>'open'));
     }
     
     public function __construct()

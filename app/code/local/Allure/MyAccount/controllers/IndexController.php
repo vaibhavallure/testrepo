@@ -74,7 +74,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$orders = Mage::getResourceModel('sales/order_collection')
 			->addFieldToSelect('*')
 			->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
-			->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
+			->addFieldToFilter('state', array('in' =>  array('in' => array('canceled','complete','closed'))))
 			;//->setOrder('created_at', 'desc');
 		
 		if(!empty($store)){
@@ -214,7 +214,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 				$orders = Mage::getResourceModel('sales/order_collection')
 				->addFieldToSelect('*')
 				->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
-				->addFieldToFilter('state', array('in' => array('new','processing')))
+				->addFieldToFilter('state',  array('nin' => array('canceled','complete','closed')))
 				;//->setOrder('created_at', 'desc');
 				
 				if(!empty($store)){

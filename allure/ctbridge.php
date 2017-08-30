@@ -24,7 +24,7 @@ $dbName = "Venus84";
 
 
 $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
-if(0 && $conn){
+if($conn){
     try{
        // echo "Connection established...";
         $from = $fromYear;//'2017-05-30 23:59:59';
@@ -111,10 +111,18 @@ if(0 && $conn){
 }
 
 
-//die;
-
-
 die;
+$csv = Mage::getBaseDir('var').DS."import".DS."magento_order_1.csv";
+$io = new Varien_Io_File();
+$io->streamOpen($csv, 'r');
+$arrCsv = array();
+while($csvData = $io->streamReadCsv()){
+    $arrCsv[$csvData[1]] = $csvData[0];
+}
+//echo "<pre>";
+//print_r($arrCsv);
+
+//die;
 
 header ( "Content-type: application/vnd.ms-excel" );
 header ( "Content-Disposition: attachment; filename=counterpoint_order.xls" );
@@ -122,7 +130,8 @@ header ( "Content-Disposition: attachment; filename=counterpoint_order.xls" );
 
 $str = "<table>
   <tr>
-    <th>order_id</th>
+    <th>magento_order_id</th>
+    <th>ct_order_id</th>
     <th>
         items
     </th>
@@ -140,6 +149,7 @@ $str = "<table>
   </tr>";
    foreach ($mainArr as $key=>$data){
  $str .= "<tr>
+    <td>$arrCsv[$key]</td>
     <td>$key</td>
     <td>
     	<table>

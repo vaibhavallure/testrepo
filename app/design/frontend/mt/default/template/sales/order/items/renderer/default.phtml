@@ -57,6 +57,21 @@
             <?php echo $addtInfoBlock->setItem($_item)->toHtml(); ?>
         <?php endif; ?>
         <?php echo $this->htmlEscape($_item->getDescription()) ?>
+        
+        <?php //@author:allure code start?>
+        <?php 
+            $stockStatus = Mage::helper("myaccount")
+                    ->getProductCurrentStatus($this->getSku()); 
+        ?>
+        <?php if($stockStatus['is_show']):?>
+            <dl class="item-options">
+            	<dt><strong><?php echo $this->escapeHtml('Product Status') ?></strong></dt>
+                <dd><?php echo $stockStatus['message'] ?></dd>
+            </dl>
+        <?php endif;?>
+        <?php //@author:allure code end?>
+        
+         
         <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId() && $this->helper('giftmessage/message')->getEscapedGiftMessage($_item)!=''): ?>
             <dl class="item-options">
                             <dt><strong><?php echo $this->escapeHtml('Special Message:') ?></strong></dt>

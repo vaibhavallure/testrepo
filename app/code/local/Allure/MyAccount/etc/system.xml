@@ -26,6 +26,17 @@
 							<show_in_store>1</show_in_store>
 							<sort_order>11</sort_order>
 						</storemapping>
+						
+						<order_message_mapping translate="label">
+							<label>Order Message Settings</label>
+							<frontend_model>Allure_MyAccount_Block_Adminhtml_Customerorderstatus</frontend_model>
+							<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>12</sort_order>
+						</order_message_mapping>
+						
 					</fields>
 				</general>
 			</groups>
