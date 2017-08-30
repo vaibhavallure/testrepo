@@ -59,8 +59,9 @@
         <?php echo $this->htmlEscape($_item->getDescription()) ?>
         <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId() && $this->helper('giftmessage/message')->getEscapedGiftMessage($_item)!=''): ?>
             <dl class="item-options">
-                            <dt><strong><?php echo $this->escapeHtml('Special Message:') ?></strong></dt>
-                            <dd><?php echo  $this->helper('giftmessage/message')->getEscapedGiftMessage($_item)?></dd>
+                <dt><strong><?php echo $this->escapeHtml('Special Message:') ?></strong></dt>
+                <dd><?php echo  $this->helper('giftmessage/message')->getEscapedGiftMessage($_item)?></dd>
+                <dt>(Special requests might delay your order due to production time)</dt>
             </dl>
         <?php endif; ?>
     </td>
