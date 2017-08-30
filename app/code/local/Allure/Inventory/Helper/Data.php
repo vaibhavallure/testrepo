@@ -75,10 +75,9 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
             "Proposed Qty",
             "VMT Comment",
             "Vendor Comment",
-            "Status",
             "Requested Delivery Date",
             "Proposed Delivery Date",
-            "Total Amount"
+            "Total Cost"
             );
     	fputcsv( $fp, $csvHeader,",");
     	foreach ($orderItems as $item){
@@ -95,11 +94,11 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$pqty = $item->getProposedQty();
     		$comment = $item->getAdminComment();
     		$Vcomment = $item->getVendorComment();
-    		$status = $item->getStatus();
+//    		$status = $item->getStatus();
     		$reqdelivery = $item->getRequestedDeliveryDate();
     		$propdelivery = $item->getProposedDeliveryDate();
     		$total = $item->getTotalAmount();
-    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$status,$reqdelivery,$propdelivery,$total), ",");
+    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$reqdelivery,$propdelivery,$total), ",");
     	}
     	fclose($fp);
     }
