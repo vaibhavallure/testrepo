@@ -24,9 +24,9 @@ $dbName = "Venus84";
 
 
 $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
-if($conn){
+if(0 && $conn){
     try{
-        echo "Connection established...";
+       // echo "Connection established...";
         $from = $fromYear;//'2017-05-30 23:59:59';
         $to = $toYear;//'2017-05-30 00:00:00';
         
@@ -46,7 +46,7 @@ if($conn){
                           c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,c.phone_1 phone,
                           c.cntry as country FROM ps_ord_hist a JOIN ps_ord_hist_lin b on(a.tkt_no=b.tkt_no)
                           join ps_ord_hist_contact c on(a.doc_id=c.doc_id) WHERE (a.TAX_OVRD_REAS<>'MAGENTO' or a.TAX_OVRD_REAS is null)
-                          and a.tkt_dt like '%2010%' order by a.BUS_DAT desc;";
+                           order by a.BUS_DAT desc;";
                               
         
         
@@ -96,12 +96,12 @@ if($conn){
             $i++;
         }
         odbc_close($conn);
-        echo "<pre>";
+       // echo "<pre>";
         $st = addslashes('"'.serialize($mainArr).'"');
-        print_r($st);
-        echo "<br>";
+       // print_r($st);
+       // echo "<br>";
         $st = trim(stripslashes($st),'"');
-        print_r(count(unserialize($st)));
+      //  print_r(count(unserialize($st)));
         
     }catch (Exception $e){
         print_r($e->getMessage());
@@ -110,7 +110,77 @@ if($conn){
    echo "Connection  not established...";
 }
 
+
+//die;
+
+
 die;
 
+header ( "Content-type: application/vnd.ms-excel" );
+header ( "Content-Disposition: attachment; filename=counterpoint_order.xls" );
 
+
+$str = "<table>
+  <tr>
+    <th>order_id</th>
+    <th>
+        items
+    </th>
+    <th>customer name</th>
+    <th>email</th>
+    <th>street</th>
+    <th>city</th>
+    <th>state</th>
+    <th>zip</th>
+    <th>country</th>
+    <th>phone</th>
+    <th>subtotal</th>
+    <th>tax</th>
+    <th>order date</th>
+  </tr>";
+   foreach ($mainArr as $key=>$data){
+ $str .= "<tr>
+    <td>$key</td>
+    <td>
+    	<table>
+    		<tr>
+    			<th>sku</th>
+    			<th>name</th>
+    			<th>price</th>
+    			<th>qty</th>
+    		</tr>";
+    	 foreach($data['items'] as $items){
+    	   $str .= "<tr>
+    				<td>{$items['sku']}</td>
+    				<td>{$items['pname']}</td>
+    				<td>{$items['prc']}</td>
+    				<td>{$items['qty']}</td>
+    			</tr>";
+    	   }
+    		
+    $customerInfo = $data['address'];
+    $orderDetail = $data['info'];
+    		
+    $str .= "</table>
+    </td>
+    <td>{$customerInfo['name']}</td>
+    <td>{$customerInfo['email']}</td>
+    <td>{$customerInfo['street']}</td>
+    <td>{$customerInfo['city']}</td>
+    <td>{$customerInfo['state']}</td>
+    <td>{$customerInfo['zip_cod']}</td>
+    <td>{$customerInfo['country']}</td>
+    <td>{$customerInfo['phone']}</td>
+    
+     
+    <td>{$orderDetail['subtotal']}</td>
+    <td>{$orderDetail['tax']}</td>
+	<td>{$orderDetail['order_date']}</td>
+  </tr>";
+   }
+  $str .="</table>";
+
+  echo $str;
+
+    
 
