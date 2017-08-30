@@ -344,7 +344,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_close',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
                 $helper->sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,true);
-                
+
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order shipped fully.");
                 
             }
@@ -530,8 +530,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if (!empty($adminEmail)) {
                     $adminEmail =  explode(',', $adminEmail);
                 }
+                $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                 $helper->sendEmail($id,'',$templateId,$adminEmail,false);
-               
+                $helper->sendEmail($id,$vendorEmail,$templateId,$adminEmail,false);
             }
             Mage::getSingleton('adminhtml/session')->addSuccess("Order accepted");
         } catch (Exception $e) {
