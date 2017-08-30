@@ -39,16 +39,16 @@
 						<div class="filter_name">ALL STORES</div>
 						<ul class="mt-mb-filter-stores">
 			    			<li>
-			    			<option value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></option>
+			    			<dd value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></dd>
 						<?php
 							$stores = Mage::app ()->getStores ();
 							foreach ($stores as $store) :
 						?>
     						
-							<option value="<?php echo $store->getId()?>"
+							<dd value="<?php echo $store->getId()?>"
 								<?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
 							<?php echo $store->getName()?>
-							</option>
+							</dd>
             				
             			<?php endforeach;?>
 			               </li>
@@ -65,7 +65,7 @@
 							<ul class="mt-mb-filter-sort">
 								<li>
 									<?php foreach ($sortOderArr as $key=>$name):?>
-									<option value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></option>
+									<dd value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></dd>
 									<?php endforeach;?>
 			            		</li>
 							</ul>
@@ -119,8 +119,8 @@
 		});
 
 
-		jQuery('ul.mt-mb-filter-stores li option').click(function(){
-            var mval = jQuery(this).val();
+		jQuery('ul.mt-mb-filter-stores li dd').click(function(){
+            var mval = jQuery(this).attr('value');//val();
 			 var uri = window.location;
 			 var host = uri.origin;
 			 var params = getParams('m_store',mval);
@@ -130,8 +130,8 @@
 			 window.location.href = url;
         });
 
-        jQuery('ul.mt-mb-filter-sort li option').click(function(){
-            var mval = jQuery(this).val();
+        jQuery('ul.mt-mb-filter-sort li dd').click(function(){
+            var mval = jQuery(this).attr('value');//val();
 			 var uri = window.location;
 			 var host = uri.origin;
 			 var params = getParams('m_sort',mval);
