@@ -67,7 +67,19 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     	$orderItems=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('po_id',$id);
     	
     	$fp = fopen($file, 'w');
-    	$csvHeader = array("Item Id","Vendor Code", "Item Desciption","Qty","VMT Comment");
+    	$csvHeader = array(
+    	    "Item Id",
+            "Vendor Code",
+            "Item Desciption",
+            "Requested Qty",
+            "Proposed Qty",
+            "VMT Comment",
+            "Vendor Comment",
+            "Status",
+            "Requested Delivery Date",
+            "Proposed Delivery Date",
+            "Total Amount"
+            );
     	fputcsv( $fp, $csvHeader,",");
     	foreach ($orderItems as $item){
     	    if($item->getIsCustom()){
@@ -80,8 +92,14 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$vendorCode = $_product->getVendorItemNo();
     		$name = $_product->getName();
     		$qty = $item->getRequestedQty();
+    		$pqty = $item->getProposedQty();
     		$comment = $item->getAdminComment();
-    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$comment), ",");
+    		$Vcomment = $item->getVendorComment();
+    		$status = $item->getStatus();
+    		$reqdelivery = $item->getRequestedDeliveryDate();
+    		$propdelivery = $item->getProposedDeliveryDate();
+    		$total = $item->getTotalAmount();
+    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$status,$reqdelivery,$propdelivery,$total), ",");
     	}
     	fclose($fp);
     }

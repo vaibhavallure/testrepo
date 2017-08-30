@@ -368,8 +368,10 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             }
             else{
                 //Order Save
+
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_comment',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                Mage::log($adminEmail,Zend_log::DEBUG, 'pologs', true);
                 $helper->sendEmail($po_id, '',$templateId,$adminEmail,true);
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order saved sucessfully.");
             }
