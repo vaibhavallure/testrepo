@@ -118,14 +118,13 @@
 						<?php if(Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?>
 						name="order[<?php echo $_product->getProductId() ?>][<?php echo "remaining_qty" ?>]" type="text" 
 						value="<?php echo round($_product->getRemainingQty())?>" />
-						
 				</td>
-				
-				<td><div><?php echo $this->getDate($_product->getProductId(),$_product->getProposedDeliveryDate());?></div></td>
+				<td>
+                    <div><?php echo $this->getDate($_product->getProductId(),$_product->getProposedDeliveryDate());?></div>
+                </td>
 				<td>
                     <textarea <?php if(!Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?> name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="13" rows="3" ><?php echo $_product->getVendorComment()?></textarea>
                 </td>
-				
 			</tr>		
         <?php endforeach ;?>
   </table>

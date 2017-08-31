@@ -9,7 +9,7 @@ InstagramView.prototype = {
 	show:function(e){
 		var id = jQuery(e).attr('media-id');
 		var url = this.url+'/id/'+id;
-		
+
 		var selector = jQuery("#details-insta-"+id);
 		var username = selector.attr('data-user-name');
 		var img = selector.attr('data-img-url');
@@ -42,7 +42,8 @@ InstagramView.prototype = {
 		if(jQuery(e).parent().next().hasClass('fs-entry-container') || jQuery(e).parent().next().hasClass('jcarousel-item')){
 			jQuery('#fs-next-post').removeAttr("disabled");
 			jQuery('#fs-next-post').removeClass('fs-button-inactive');
-			var mediaId = jQuery(e).parent().next().find('.fs-timeline-entry').attr('media-id');
+			var mediaId = jQuery(e).parent().next().find('.fancybox').attr('media-id');
+			// console.log(jQuery(e).parent().next().find('.fancybox').attr('media-id'));
 			jQuery('#fs-next-post').attr("media-id",mediaId)
 		}else{
 			jQuery('#fs-next-post').attr("disabled","disabled");
@@ -53,7 +54,7 @@ InstagramView.prototype = {
 		if(jQuery(e).parent().prev().hasClass('fs-entry-container') || jQuery(e).parent().prev().hasClass('jcarousel-item')){
 			jQuery('#fs-prev-post').removeAttr("disabled");
 			jQuery('#fs-prev-post').removeClass('fs-button-inactive');
-			var mediaId = jQuery(e).parent().prev().find('.fs-timeline-entry').attr('media-id');
+			var mediaId = jQuery(e).parent().prev().find('.fancybox').attr('media-id');
 			jQuery('#fs-prev-post').attr("media-id",mediaId)
 		}else{
 			jQuery('#fs-prev-post').attr("disabled","disabled");

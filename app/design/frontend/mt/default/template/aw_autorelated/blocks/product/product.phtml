@@ -80,7 +80,9 @@ if(preg_match("/_/", $sku_main))
     </div>
     <div class="image_carousel">
         <ul id="foo6" style="overflow: hidden">
-            <?php foreach ($collection as $feeds): ?>
+            <?php
+            $count=0;
+            foreach ($collection as $feeds): ?>
                 <?php
                     $feed = Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
                     $instagramObj = unserialize($feed->getInstagramData());
@@ -321,12 +323,12 @@ if(preg_match("/_/", $sku_main))
 
 		jQuery("#fs-prev-post").click(function(){
 			var mediaId = jQuery(this).attr('media-id');
-			jQuery('#fs-post-'+mediaId).trigger('click');
+			jQuery('#product-quickview-'+mediaId).trigger('click');
 		});
 
 		jQuery("#fs-next-post").click(function(){
 			var mediaId = jQuery(this).attr('media-id');
-			jQuery('#fs-post-'+mediaId).trigger('click');
+			jQuery('#product-quickview-'+mediaId).trigger('click');
 		});
 		
 	</script>
