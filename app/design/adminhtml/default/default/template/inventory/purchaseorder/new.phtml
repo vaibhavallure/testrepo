@@ -104,6 +104,14 @@
 					<td>
 						<div>
 							<input id="<?php echo $product->getId()?>" type="checkbox" name="inclide"/>
+							<br/>
+							<?php $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product->getId())
+							->addFieldToFilter('is_custom',0)->addFieldToFilter('stock_id',$stockId)->setOrder('po_id','DESC');
+							if(count($items)):
+							$orderDetails=Mage::getModel('inventory/purchaseorder')->load($items->getFirstItem()->getPoId());
+							?>
+							<label><?php echo date('Y-m-d',strtotime($orderDetails->getCreatedDate()))."(".$items->getFirstItem()->getRequestedQty().")"?></label>
+						   <?php endif;?>
 						</div>
 					</td>
 				</tr>		
