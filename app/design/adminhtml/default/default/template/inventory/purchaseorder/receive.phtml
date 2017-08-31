@@ -11,6 +11,7 @@
    <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW || $order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_ACCEPT):?>
    <button id="save_btn"  form="recive_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/updaterecive', array('_secure' => true,'void'=>true));?>"><?php echo $helper->__('Void')?></button>
    <?php endif;?>
+   <button id="save_btn"  form="recive_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/saveOrder', array('_secure' => true));?>"><?php echo $helper->__('Save')?></button>
    <button id="ship_save_btn" form="recive_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/updaterecive', array('_secure' => true));?>"><?php echo $helper->__('Receive Partially')?></button>
    <button id="ship_close_btn" form="recive_po" class="po_save_btn"  formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/updaterecive', array('_secure' => true,'close'=>true));?>" ><?php echo $helper->__('Receive Completely')?></button>
    <?php endif;?>
