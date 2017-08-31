@@ -130,6 +130,7 @@ if($fetch_model){
 		
 		$isFour = 0;
 		$countSlot = 0;
+		$noSlot=true;
 		
 		for($i=0;$i< $totalSlot;$i++)
 		{	
@@ -181,7 +182,7 @@ if($fetch_model){
 						
 				$workingHours = $piercer->getWorkingHours();
 				$workingHours = unserialize($workingHours);
-				$noSlot=true;
+				
 				//Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
 				foreach ($workingHours as $workSlot)
 				{
@@ -191,7 +192,7 @@ if($fetch_model){
 						continue;
 						
 					}
-					$noSlot=false;
+					
 					$workStart = $helper->getTimeByValue($workSlot['start']);
 					//$workEnd = $workSlot['end'].":00";
 					$workEnd = $helper->getTimeByValue($workSlot['end']);
@@ -229,6 +230,7 @@ if($fetch_model){
 						{
 							$show = true;
 							$piercerAllocated = $piercer->getId();
+							$noSlot=false;
 							break 2;
 						}
 						elseif (count($appCount)<=$allocatedApps)
@@ -236,6 +238,7 @@ if($fetch_model){
 							$show = true;
 							$allocatedApps = count($appCount);
 							$piercerAllocated = $piercer->getId();
+							$noSlot=false;
 						}
 					}
 				 
