@@ -992,6 +992,10 @@ td.a-right.mt-td-order-view-block{
 	color: #fff ! important;
 }
 
-.mt-myaccount-page .nav-tabs{
+/* .sales-order-view .order-items.order-details tr.mt-total-tr td:first-child{
+	text-align: right !important;
+} */
+
+/* .mt-myaccount-page .nav-tabs{
 	z-index: 1000 ! important;
-}
+} */
