@@ -92,8 +92,6 @@ class Mage_Sales_Model_Resource_Report_Order_Createdat extends Mage_Sales_Model_
                 'o.' . $aggregationField,
                 $from, $to
                 ));
-            Mage::log("From",Zend_Log::DEBUG,'mylogs',true);
-            Mage::log($from,Zend_Log::DEBUG,'mylogs',true);
             // Columns list
             $columns = array(
                 // convert dates from UTC to current admin timezone
