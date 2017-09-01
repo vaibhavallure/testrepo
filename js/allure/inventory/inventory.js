@@ -36,6 +36,7 @@ $j(document).ready(function (){
 	    	        success: function(data) {
 	    	            $j('#order_total').val(totalAmount);
 	    	            $j('#max_qty_'+id).prop('disabled', true);
+	    	            $j('#cost_'+id).prop('disabled', true);
 	    	            $j('#comment_'+id).prop('disabled', true);
 	    	        }
 	    	    });
@@ -56,6 +57,7 @@ $j(document).ready(function (){
     	        success: function(data) {
     	        	 $j('#order_total').val(totalAmount);
     	        	 $j('#max_qty_'+id).prop('disabled', false);
+    	        	 $j('#cost_'+id).prop('disabled', false);
     	             $j('#comment_'+id).prop('disabled', false);
     	        	
     	        }
