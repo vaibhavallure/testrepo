@@ -301,8 +301,11 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
     {
 
         $productIds = array_keys($products);
+        
+        $stock = Mage::getModel('cataloginventory/stock');
 
         $stockItemCol = Mage::getResourceModel('cataloginventory/stock_item_collection')
+            ->addStockFilter($stock)
             ->addFieldToFilter('product_id', array('in' => $productIds));
 
         foreach ($stockItemCol as $_sItem) {
