@@ -9,6 +9,10 @@ require_once('../app/Mage.php');
 umask(0);
 Mage::app();
 
+$stock_item = Mage::getSingleton('cataloginventory/stock_item');
+
+var_dump(get_class($stock_item));
+
 //$api = Mage::getSingleton('core/store_api_v2');
 
 //$storeList = $api->items();
