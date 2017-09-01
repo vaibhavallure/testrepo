@@ -1035,8 +1035,10 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
 
         $io->streamUnlock();
         $io->streamClose();
+        
+        echo "\xEF\xBB\xBF";
 
-        return chr(239) . chr(187) . chr(191) . array(
+        return array(
             'type'  => 'filename',
             'value' => $file,
             'rm'    => true // can delete file after use
