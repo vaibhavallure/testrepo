@@ -79,10 +79,9 @@
 					</td>
 						
 					<td>
-						
 						<input id="cost_<?php  echo $product->getId() ?>" style="width:50px"  
 							 name="qty[<?php echo $product->getId() ?>][<?php echo "cost" ?>]" 
-							type="text" value="<?php echo round($product->getCost())?>" />
+							type="text" value="<?php echo round($product->getCost(),2)?>" />
 							
 						<div>
 							<span>
