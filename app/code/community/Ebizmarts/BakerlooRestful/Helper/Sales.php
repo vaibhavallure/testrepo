@@ -229,7 +229,8 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                 $buyInfo = $this->getBuyInfo($_product, $product);
                 try {
                     //Skip stock checking
-                    if (Mage::helper('bakerloo_restful')->dontCheckStock()) {
+                    // Update by Allure - Skip Stock Check true always
+                    if (true || Mage::helper('bakerloo_restful')->dontCheckStock()) {
                         $product->getStockItem()->setData('manage_stock', 0);
                         $product->getStockItem()->setData('use_config_manage_stock', 0);
                     }
