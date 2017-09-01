@@ -30,18 +30,24 @@ if($conn){
         $from = $fromYear;//'2017-05-30 23:59:59';
         $to = $toYear;//'2017-05-30 00:00:00';
         
-        $query2 = "select a.DOC_ID,a.TKT_NO order_id,a.TKT_DT order_date,a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
-					a.tot total,concat(b.ITEM_NO,'|',b.CELL_DESCR) sku,b.QTY_SOLD qty,b.prc,b.descr pname,
-	 				c.EMAIL_ADRS_1 as email,c.nam name,c.adrs_1 street,c.city,c.state,c.zip_cod , c.cntry as country,c.phone_1 phone
-					from ps_tkt_hist a join
+        $query = " select a.DOC_ID,a.TKT_NO order_id,a.TKT_DT order_date,
+                    a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
+					a.tot total,concat(b.ITEM_NO,'|',b.CELL_DESCR) sku,
+                    b.QTY_SOLD qty,b.prc,b.descr pname,
+	 				c.EMAIL_ADRS_1 as email,c.nam name,c.adrs_1 street,c.city,
+                    c.state,c.zip_cod zip_code, c.cntry as country,c.phone_1 phone,
+                    d.disc_amt dis_amount,d.disc_pct dis_pct
+					from ps_tkt_hist a left join
+                    PS_TKT_HIST_DISC d on(a.doc_id=d.doc_id) join
 					ps_tkt_hist_lin b on a.TKT_NO=b.TKT_NO
 					join ps_tkt_hist_contact c  on(a.doc_id=c.doc_id)
 					where c.CONTACT_ID=1 and b.QTY_SOLD>0 and (TAX_OVRD_REAS<>'MAGENTO' or TAX_OVRD_REAS is null)
-					and a.tkt_dt <='".$from."' and a.tkt_dt >='".$to."' order by a.BUS_DAT desc;";
+					and a.tkt_no ='285094' order by a.BUS_DAT desc;";
+        //and a.tkt_dt <='".$from."' and a.tkt_dt >='".$to."'
         //and tkt_dt >='2017-05-30'
         $query1 = "select * from dbo.ps_ord_hist where tkt_no='2017003176'";
         
-        $query = "SELECT a.doc_id,a.tkt_no order_id,a.tkt_dt order_date,concat(b.item_no,'|',cell_descr) sku,b.DESCR pname,
+        $query1 = "SELECT a.doc_id,a.tkt_no order_id,a.tkt_dt order_date,concat(b.item_no,'|',cell_descr) sku,b.DESCR pname,
                           b.orig_qty qty,b.prc,a.sub_tot subtotal,a.tot_ext_cost,a.tax_amt tax,a.tot total, c.nam name,
                           c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,c.phone_1 phone,
                           c.cntry as country FROM ps_ord_hist a JOIN ps_ord_hist_lin b on(a.tkt_no=b.tkt_no)
@@ -55,7 +61,7 @@ if($conn){
         $i 	   = 0;
         $mainArr = array();
         $itemHeader = array('qty','sku','prc','pname');
-        $addressHeader = array('email','name','street','city','state','zip_cod','country','phone');
+        $addressHeader = array('email','name','street','city','state','zip_code','country','phone');
         while(odbc_fetch_row($result)){
             $order_id = odbc_result($result, 'order_id');
             $arr 		= array();
@@ -96,12 +102,13 @@ if($conn){
             $i++;
         }
         odbc_close($conn);
-       // echo "<pre>";
-        $st = addslashes('"'.serialize($mainArr).'"');
+       echo "<pre>";
+        //$st = addslashes('"'.serialize($mainArr).'"');
        // print_r($st);
        // echo "<br>";
-        $st = trim(stripslashes($st),'"');
-      //  print_r(count(unserialize($st)));
+       // $st = trim(stripslashes($st),'"');
+       // print_r(count(unserialize($st)));
+       print_r(($mainArr));
         
     }catch (Exception $e){
         print_r($e->getMessage());
@@ -110,7 +117,7 @@ if($conn){
    echo "Connection  not established...";
 }
 
-
+die;
 die;
 $csv = Mage::getBaseDir('var').DS."import".DS."magento_order_1.csv";
 $io = new Varien_Io_File();

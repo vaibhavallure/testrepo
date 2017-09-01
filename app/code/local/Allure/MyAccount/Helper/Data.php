@@ -66,7 +66,7 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
     /*
      * get product current stock status
      */
-    public function getProductCurrentStatus($sku){
+    public function getProductCurrentStatus($sku,$qty){
         $orderType  = Mage::app()->getRequest()->getParam('order_type');
         $stockMsg = "";
         $isShow = false;
@@ -77,12 +77,14 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
                             ->loadByProduct($product);
             $stockQty   = intval($stockItem->getQty());
             if($stockQty > 0){
-                $stockMsg = "In Stock";
+                $stockMsg = "(In Stock: Ships Within 24 hours (Mon-Fri).)";
             }else{ 
                 $backTime = $product->getData('backorder_time');
-                $stockMsg = "Out of Stock";
+                $stockMsg = "";
                 if(!is_null($backTime))
-                    $stockMsg .= " - ".$backTime;
+                    $stockMsg = "The metal color or length combination you selected is backordered. Order now and It will ship "." - ".$backTime;
+                else 
+                    $stockMsg = "This product is not available in the requested quantity.".$qty." of the items will be backordered.";
             }
             $isShow = true;
         }

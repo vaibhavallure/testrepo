@@ -22,21 +22,35 @@ if($conn){
     try{
         echo "Connection established...";
         
-        $query = "SELECT a.doc_id,a.tkt_no order_id,a.tkt_dt order_date,concat(b.item_no,'|',cell_descr) sku,b.DESCR pname,
+        $query1 = "SELECT a.doc_id,a.tkt_no order_id,a.tkt_dt order_date,concat(b.item_no,'|',cell_descr) sku,b.DESCR pname,
                           b.orig_qty qty,b.prc,a.sub_tot subtotal,a.tot_ext_cost,a.tax_amt tax,a.tot total, c.nam name,
                           c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,c.phone_1 phone,
                           c.cntry as country FROM ps_ord_hist a JOIN ps_ord_hist_lin b on(a.tkt_no=b.tkt_no)
                           join ps_ord_hist_contact c on(a.doc_id=c.doc_id) WHERE (a.TAX_OVRD_REAS<>'MAGENTO' or a.TAX_OVRD_REAS is null)
                           and a.tkt_dt like '%2008%' order by a.BUS_DAT desc;";
         
-        
+        $query = " select a.DOC_ID,a.TKT_NO order_id,a.event_no ,a.TKT_DT order_date,
+                    a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
+					a.tot total,concat(b.ITEM_NO,'|',b.CELL_DESCR) sku,
+                    b.QTY_SOLD qty,b.prc prc,b.descr pname,
+	 				c.EMAIL_ADRS_1 as email,c.nam name,c.adrs_1 street,c.city,
+                    c.state,c.zip_cod zip_code , c.cntry as country,c.phone_1 phone,
+                    d.disc_amt dis_amount,d.disc_pct dis_pct
+					from ps_tkt_hist a join
+					ps_tkt_hist_lin b on a.TKT_NO=b.TKT_NO
+                    left join
+                    PS_TKT_HIST_DISC d on(a.doc_id=d.doc_id and d.lin_seq_no is null)
+					join ps_tkt_hist_contact c  on(a.doc_id=c.doc_id)
+					where a.tot > 0 and b.QTY_SOLD > 0 and c.CONTACT_ID=1 and (TAX_OVRD_REAS<>'MAGENTO' or TAX_OVRD_REAS is null)
+					and a.tkt_dt like '%2008%'
+                    order by a.BUS_DAT desc;";
         
         $result = odbc_exec($conn, $query);
         $count = 0;
         $i 	   = 0;
         $mainArr = array();
         $itemHeader = array('qty','sku','prc','pname');
-        $addressHeader = array('email','name','street','city','state','zip_cod','country','phone');
+        $addressHeader = array('email','name','street','city','state','zip_code','country','phone');
         while(odbc_fetch_row($result)){
             $order_id = odbc_result($result, 'order_id');
             $arr 		= array();
@@ -67,12 +81,12 @@ if($conn){
             }
             
             if(!array_key_exists($order_id, $mainArr)){
-                $mainArr[$order_id] = array('items'=>array($items),
-                    'address'=>$address,'info'=>$info);
+                $mainArr[$order_id] = array('item_detail'=>array($items),
+                    'customer_detail'=>$address,'order_detail'=>$info);
             }else{
-                $tempItems = $mainArr[$order_id]['items'];
+                $tempItems = $mainArr[$order_id]['item_detail'];
                 $tempItems[] = $items;
-                $mainArr[$order_id]['items'] = $tempItems;
+                $mainArr[$order_id]['item_detail'] = $tempItems;
             }
             $i++;
         }
@@ -96,7 +110,9 @@ if($conn){
     die;
 }
 
-
+ echo "<pre>";
+//print_r(($mainArr));
+die; 
 
 
 //remote site wsdl url
