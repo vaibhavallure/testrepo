@@ -128,6 +128,7 @@ if(preg_match("/_/", $sku_main))
                         if(!empty($product)){
                             $productName = $product->getName();
                             $productId = $product->getId();
+                            $productUrl = $product->getProductUrl();
                         }else{
 							$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$temp_sku);
 							if(!empty($product)){
@@ -137,8 +138,8 @@ if(preg_match("/_/", $sku_main))
 							}
 						}
                     
-                    
-                  
+
+
                     	$current_product_class = "";
                     	if(in_array($productId, $childProductArr))
                     		$current_product_class = "fs_current_product";
