@@ -152,11 +152,11 @@
                     <!--</shift_adjustment>-->
                 </entities>
             </bakerloo_restful_mysql4>
-            <!-- <cataloginventory>
+            <cataloginventory>
                 <rewrite>
                     <stock_item>Ebizmarts_BakerlooRestful_Model_Rewrite_CatalogInventory_Stock_Item</stock_item>
                 </rewrite>
-            </cataloginventory> -->
+            </cataloginventory>
         </models>
         <resources>
             <bakerloo_restful_setup>
