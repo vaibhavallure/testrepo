@@ -9,7 +9,7 @@ require_once('../app/Mage.php');
 umask(0);
 Mage::app('london');
 
-$stock = Mage::getSingleton('cataloginventory/stock_item');
+$stock = Mage::getSingleton('cataloginventory/stock');
 $stock_item = Mage::getSingleton('cataloginventory/stock_item');
 var_dump($stock->getId());
 var_dump($stock_item->getStockId());
