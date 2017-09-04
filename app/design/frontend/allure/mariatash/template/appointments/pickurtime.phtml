@@ -114,9 +114,9 @@ if($fetch_model){
 			$collection->addFieldToFilter('working_days', array('like' => '%'.$date.'%'));
 			Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments', true );
 			/* If piercer is not free logic start*/
-			if(empty($collection->getData())){
+			if(!$collection->count()){
 			
-				echo "<div class='notfreepeiercer validation-advice'>".$this->__('Sorry Appointment is Not available, Please try changing Store OR Date.')."</div>";
+				echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
 			}
 			/* If piercer is not free logic end*/
 		}
@@ -192,7 +192,7 @@ if($fetch_model){
 						continue;
 						
 					}
-					$noSlot=false;
+					
 					$workStart = $helper->getTimeByValue($workSlot['start']);
 					//$workEnd = $workSlot['end'].":00";
 					$workEnd = $helper->getTimeByValue($workSlot['end']);
@@ -237,8 +237,8 @@ if($fetch_model){
 						{
 							$show = true;
 							$allocatedApps = count($appCount);
-							$piercerAllocated = $piercer->getId();
 							$noSlot=false;
+							$piercerAllocated = $piercer->getId();
 						}
 					}
 				 
@@ -314,7 +314,7 @@ if($fetch_model){
 		}
 		
 		if($noSlot){
-			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Sorry Appointment is Not available, Please try changing Store OR Date.')."</div>";
+			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
 		}
 		echo "</ul>";
 		echo "<div class='clearfix'></div> <a class='prev apt-prev' id='foo2_prev' href='#'><span>prev</span></a> 

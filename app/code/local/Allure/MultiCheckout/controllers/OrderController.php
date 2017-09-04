@@ -7,7 +7,7 @@
  * @package    Mage_Sales
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-require_once ('app/code/local/Ecp/Sales/controllers/OrderController.php');
+require_once ('Ecp/Sales/controllers/OrderController.php');
 
 class Allure_MultiCheckout_OrderController extends Ecp_Sales_OrderController
 {
