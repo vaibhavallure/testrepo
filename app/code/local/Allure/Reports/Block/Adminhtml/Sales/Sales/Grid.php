@@ -87,47 +87,30 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $reportType = $filterData['report_type'];
         $order_date_col= "created_at";
         $requestParams = $this->getRequest()->getParam('store_ids');
-        $storeId = 0;
+        $storeId = 1;
         if(!empty($requestParams)){
             $storeId = $requestParams;
         }
         Mage::app()->getStore()->setId($storeId);
-        $timezone=Mage::getStoreConfig('general/locale/timezone',$storeId);
-        $datetime = new DateTime($filterData->getData('from')." 00:00:00");
-        $datetime->setTimezone(new DateTimeZone($timezone));
-        $from= $datetime->format('Y-m-d H:i:s (e)');
-        $datetime = new DateTime($filterData->getData('to')."23:59:59");
-        $datetime->setTimezone(new DateTimeZone($timezone));
-        $to= $datetime->format('Y-m-d H:i:s (e)');
+    
         
        // $from = date('Y-m-d', strtotime($filterData->getData('from')));
       //  $to = date('Y-m-d', strtotime($filterData->getData('to')));
         
         //$from =Mage::getSingleton('core/date')->gmtDate('Y-m-d H:i:s',strtotime($filterData->getData('from')." 00:59:59"));
       //  $to = Mage::getSingleton('core/date')->gmtDate('Y-m-d H:i:s',strtotime($filterData->getData('to')." 23:59:59"));
+         
         $from = $filterData->getData('from')." 00:00:00";
         $to = $filterData->getData('to')." 23:59:59";
         
-        if($storeId==1){
+        if($storeId==1 && !empty($filterData->getData('from')) && !empty($filterData->getData('to')) ){
             $from = date("Y-m-d H:i:s",strtotime("4 hours",strtotime($from)));
             $to = date("Y-m-d H:i:s",strtotime("4 hours",strtotime($to)));
-        }elseif ($storeId==2){
+        }elseif ($storeId==2 && !empty($filterData->getData('from')) && !empty($filterData->getData('to')) ){
             $from = date("Y-m-d H:i:s",strtotime("-1 hours",strtotime($from)));
             $to = date("Y-m-d H:i:s",strtotime("-1 hours",strtotime($to)));
         }
-       // $from= date("Y-m-d H:i:59",strtotime("-4 hours",strtotime($from)));
-       // $to= date("Y-m-d H:i:59",strtotime("-4 hours",strtotime($to)));
-        
-       /*  
-        $orderDate = Mage::app()->getLocale()->storeDate(
-            Mage::app()->getStore(),
-            Varien_Date::toTimestamp($from),
-            true
-            );
-        echo $from;
-        echo "<br>";
-        echo $orderDate; */
-        //die;
+      
         
         if($reportType != "created_at_order"){
             $order_date_col = "updated_at";
@@ -170,7 +153,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         }
         
         $requestParams = $this->getRequest()->getParam('store_ids');
-        $storeId = 0;
+        $storeId = 1;
         if(!empty($requestParams)){
             $storeId = $requestParams;
         }
@@ -179,13 +162,6 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $to = $filterData->getData('to')." 23:59:59";
       
         
-        
-        //$from = str_replace("/", "-", $from);
-        //$to = str_replace("/", "-", $to);
-        // print_r($from);
-        // $from = date("Y-m-d H:i:s", strtotime($from));
-        // $to = date("Y-m-d H:i:s", strtotime($to));
-        //allure
         $groupClause = $this->getPeriodFormat($filterData);
         
         $condition = $this->getFilterCondition($filterData);
@@ -219,23 +195,10 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         else 
             $collection->getSelect()->columns('created_at');
         
-       /*  $collection->getSelect()
-            ->columns('count(entity_id) count')
-            ->columns('sum(total_qty_ordered) total_qty_ordered')
-            ->columns('sum(base_grand_total * store_to_base_rate) total_paid')
-            ->columns('IFNULL(sum(base_total_invoiced * store_to_base_rate),0) total_invoiced')
-            ->columns('IFNULL(sum(base_total_refunded * store_to_base_rate),0) total_refunded')
-            ->columns('IFNULL(sum(base_tax_amount * store_to_base_rate),0) tax_amount')
-            ->columns('IFNULL(sum(base_shipping_amount * store_to_base_rate),0) base_shipping_amount')
-            ->columns('IFNULL(sum(base_discount_amount * store_to_base_rate),0)*(-1) base_discount_amount')
-            ->columns('IFNULL(sum(base_total_canceled * store_to_base_rate),0) base_total_canceled')
-            //->where("created_at >='".$from."' and created_at <='".$to."'")
-            ->where($condition)
-            ->group($groupClause); */
+   
          
             $collection->getSelect()
-            ->columns('(increment_id) INCREAMENT_ID')
-            ->columns('count(entity_id) orders_count')
+            ->columns('count(IFNULL(entity_id,0)) orders_count')
             ->columns('sum(IFNULL(total_qty_ordered,0)) total_qty_ordered')
             ->columns('sum(IFNULL(base_grand_total,0)-IFNULL(base_total_canceled,0)) total_income_amount')
             ->columns('sum(
@@ -260,14 +223,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
            ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
            ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
             ->where($condition);
-          
-           
  
-         /* echo "<pre>";
-         foreach ($collection as $data){
-             print_r($data->getData());
-         }
-        die; */
         $this->setCollection($collection);
         //echo $collection->getSelect();
         return parent::_prepareCollection();
@@ -296,7 +252,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         }
         //First column in the grid
         $fields['created_at'] = 'Totals';
-        $totals->setData($fields);
+       // $totals->setData($fields);
         //print_r($totals->toArray());exit;
         return $totals;
     }
