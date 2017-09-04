@@ -232,8 +232,8 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
     		$roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
 	        $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
 	        $role = strtolower($role);
-	        
-	        if ($role == 'wholesale' && strlen(strstr($child->getUrl(),"jewelry.html"))) :
+	        Mage::log($child->getUrl(),Zend_log::DEBUG,true,'mylogs');
+	        if ($role == 'wholesale') :
                  return '
                  <li><a href="'.Mage::getBaseUrl('web').'jewelry/frontals-only.html ">
                              Frontals Only / Ends

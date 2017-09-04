@@ -86,11 +86,45 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $periodType = $filterData['period_type'];
         $reportType = $filterData['report_type'];
         $order_date_col= "created_at";
+        $requestParams = $this->getRequest()->getParam('store_ids');
+        $storeId = 0;
+        if(!empty($requestParams)){
+            $storeId = $requestParams;
+        }
+        Mage::app()->getStore()->setId($storeId);
+        $timezone=Mage::getStoreConfig('general/locale/timezone',$storeId);
+        $datetime = new DateTime($filterData->getData('from')." 00:00:00");
+        $datetime->setTimezone(new DateTimeZone($timezone));
+        $from= $datetime->format('Y-m-d H:i:s (e)');
+        $datetime = new DateTime($filterData->getData('to')."23:59:59");
+        $datetime->setTimezone(new DateTimeZone($timezone));
+        $to= $datetime->format('Y-m-d H:i:s (e)');
+        
+       // $from = date('Y-m-d', strtotime($filterData->getData('from')));
+      //  $to = date('Y-m-d', strtotime($filterData->getData('to')));
+        
+        //$from =Mage::getSingleton('core/date')->gmtDate('Y-m-d H:i:s',strtotime($filterData->getData('from')." 00:59:59"));
+      //  $to = Mage::getSingleton('core/date')->gmtDate('Y-m-d H:i:s',strtotime($filterData->getData('to')." 23:59:59"));
         $from = $filterData->getData('from')." 00:00:00";
         $to = $filterData->getData('to')." 23:59:59";
+       // $from= date("Y-m-d H:i:59",strtotime("-4 hours",strtotime($from)));
+       // $to= date("Y-m-d H:i:59",strtotime("-4 hours",strtotime($to)));
+        
+       /*  
+        $orderDate = Mage::app()->getLocale()->storeDate(
+            Mage::app()->getStore(),
+            Varien_Date::toTimestamp($from),
+            true
+            );
+        echo $from;
+        echo "<br>";
+        echo $orderDate; */
+        //die;
+        
         if($reportType != "created_at_order"){
             $order_date_col = "updated_at";
         }
+        
         $whereClause = "";
         if ($periodType == "year"){
             $year1 = date("Y", strtotime($from));
@@ -135,6 +169,8 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         
         $from = $filterData->getData('from')." 00:00:00";
         $to = $filterData->getData('to')." 23:59:59";
+        
+        
         //$from = str_replace("/", "-", $from);
         //$to = str_replace("/", "-", $to);
         // print_r($from);
@@ -189,6 +225,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             ->group($groupClause); */
          
             $collection->getSelect()
+            ->columns('(increment_id) INCREAMENT_ID')
             ->columns('count(entity_id) orders_count')
             ->columns('sum(IFNULL(total_qty_ordered,0)) total_qty_ordered')
             ->columns('sum(IFNULL(base_grand_total,0)-IFNULL(base_total_canceled,0)) total_income_amount')
@@ -215,12 +252,17 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
            ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
             ->where($condition)
             ->group($groupClause);
-         //echo $collection->getSelect()->__tostring();
-        //die;
+           
+ 
+         /* echo "<pre>";
+         foreach ($collection as $data){
+             print_r($data->getData());
+         }
+        die; */
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
-    
+   
     protected $_countTotals = true;
     public function getTotals()
     {
