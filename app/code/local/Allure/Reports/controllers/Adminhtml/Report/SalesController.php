@@ -45,7 +45,7 @@ class Allure_Reports_Adminhtml_Report_SalesController extends Mage_Adminhtml_Rep
     {
         $this->_title($this->__('Reports'))->_title($this->__('Sales'))->_title($this->__('Sales'));
 
-        $this->_showLastExecutionTime(Mage_Reports_Model_Flag::REPORT_ORDER_FLAG_CODE, 'sales');
+       // $this->_showLastExecutionTime(Mage_Reports_Model_Flag::REPORT_ORDER_FLAG_CODE, 'sales');
 
         $this->_initAction()
             ->_setActiveMenu('report/sales/salesreport')
