@@ -24,7 +24,7 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
             $orders->getFirstItem();
             $symbol=Mage::app()->getLocale()->currency( $orders->getFirstItem()->getStoreCurrencyCode() )->getSymbol();
             
-            $value=round(($row->getData($this->getColumn()->getIndex())/$orders->getFirstItem()->getBaseToGlobalRate()),2);
+            $value=round(($row->getData($this->getColumn()->getIndex())),2);
              echo ($symbol).$value;
             }
             else 

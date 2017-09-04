@@ -229,9 +229,10 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                 $buyInfo = $this->getBuyInfo($_product, $product);
                 try {
                     //Skip stock checking
-                    if (Mage::helper('bakerloo_restful')->dontCheckStock()) {
-                        $product->getStockItem()->setData('manage_stock', 0);
+                    // Update by Allure - Skip Stock Check true always
+                    if (true || Mage::helper('bakerloo_restful')->dontCheckStock()) {
                         $product->getStockItem()->setData('use_config_manage_stock', 0);
+                        $product->getStockItem()->setData('manage_stock', 0);
                     }
 
                     //if simple_configurable_product enabled, use child's price
@@ -240,7 +241,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                         $product->setSpecialPrice('');
                     }
 
-                    if (isset($_product['no_tax']) and $_product['no_tax']) {
+                    if (true || (isset($_product['no_tax']) and $_product['no_tax'])) {
                         $_taxHelper = Mage::helper('tax');
                         $_finalPriceExclTax = $_taxHelper->getPrice($product, $product->getFinalPrice(), false);
                         $product->setTaxClassId('0');
@@ -300,8 +301,11 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
     {
 
         $productIds = array_keys($products);
+        
+        $stock = Mage::getModel('cataloginventory/stock');
 
         $stockItemCol = Mage::getResourceModel('cataloginventory/stock_item_collection')
+            ->addStockFilter($stock)
             ->addFieldToFilter('product_id', array('in' => $productIds));
 
         foreach ($stockItemCol as $_sItem) {
