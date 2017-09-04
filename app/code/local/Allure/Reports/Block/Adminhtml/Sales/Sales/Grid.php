@@ -107,6 +107,14 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
       //  $to = Mage::getSingleton('core/date')->gmtDate('Y-m-d H:i:s',strtotime($filterData->getData('to')." 23:59:59"));
         $from = $filterData->getData('from')." 00:00:00";
         $to = $filterData->getData('to')." 23:59:59";
+        
+        if($storeId==1){
+            $from = date("Y-m-d H:i:s",strtotime("4 hours",strtotime($from)));
+            $to = date("Y-m-d H:i:s",strtotime("4 hours",strtotime($to)));
+        }elseif ($storeId==2){
+            $from = date("Y-m-d H:i:s",strtotime("-1 hours",strtotime($from)));
+            $to = date("Y-m-d H:i:s",strtotime("-1 hours",strtotime($to)));
+        }
        // $from= date("Y-m-d H:i:59",strtotime("-4 hours",strtotime($from)));
        // $to= date("Y-m-d H:i:59",strtotime("-4 hours",strtotime($to)));
         
@@ -169,6 +177,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         
         $from = $filterData->getData('from')." 00:00:00";
         $to = $filterData->getData('to')." 23:59:59";
+      
         
         
         //$from = str_replace("/", "-", $from);
@@ -250,8 +259,8 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
            ->columns('sum(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_refunded,0)) total_shipping_amount_actual')
            ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
            ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
-            ->where($condition)
-            ->group($groupClause);
+            ->where($condition);
+          
            
  
          /* echo "<pre>";
@@ -260,6 +269,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
          }
         die; */
         $this->setCollection($collection);
+        //echo $collection->getSelect();
         return parent::_prepareCollection();
     }
    
@@ -310,7 +320,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
     
     protected function _prepareColumns()
     {
-        $this->addColumn('period', array(
+       /*  $this->addColumn('period', array(
             'header'        => Mage::helper('sales')->__('Period'),
             'index'         => 'created_at',
             'width'         => 100,
@@ -320,6 +330,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             'totals_label'  => Mage::helper('sales')->__('Total'),
             'html_decorators' => array('nobr'),
         ));
+         */
         
         $this->addColumn('orders_count', array(
             'header'    => Mage::helper('sales')->__('Orders'),
