@@ -11,12 +11,13 @@
             </block>
         </reference>
     </adminhtml_report_sales_dailyorderreport> -->
-    
+ 
     <adminhtml_report_sales_salesreport>
+  	   <remove name="messages" />
         <update handle="report_sales"/>
         <reference name="content">
             <block type="allure_reports/adminhtml_sales_sales" template="report/grid/container.phtml" name="sales.report.grid.container">
-                <block type="adminhtml/store_switcher" template="report/store/switcher/enhanced.phtml" name="store.switcher">
+                <block type="adminhtml/store_switcher" template="allure/reports/enhanced.phtml" name="store.switcher">
                     <action method="setStoreVarName"><var_name>store_ids</var_name></action>
                 </block>
                 <block type="allure_reports/adminhtml_report_filter_form_order" name="grid.filter.form">
