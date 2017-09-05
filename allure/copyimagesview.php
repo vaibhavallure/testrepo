@@ -8,10 +8,10 @@ $count=0;
 
 $productModel=Mage::getModel('catalog/product');
 $collecton=Mage::getModel('catalog/product')->getCollection();
-$collecton->addAttributeToFilter('sku',array('like'=>'c%'));
+$collecton->addAttributeToFilter('sku',array('like'=>'CSC15D%'));
 
 $connection = Mage::getSingleton('core/resource')->getConnection('core_write');
-echo "<pre>";
+//echo "<pre>";
 try{
     $connection->beginTransaction();
     $baseDir = Mage::getSingleton('catalog/product_media_config')->getBaseMediaPath();
@@ -26,17 +26,45 @@ try{
             $x_Product = Mage::getModel("catalog/product")->load($x_ProductId);
             Mage::log($count.'.'."source sku-".$product->getSku()."=="."target sku-".$x_Product->getSku()
                 ,Zend_Log::DEBUG,'copy_image_view',true);
+            
+            $cimagePath=$product->getData('image');
+            $ext = substr($xcimagePath, strrpos($cimagePath, "."));
+            $cimagePath=str_replace($ext, "", $cimagePath);
+            
+            $csmallPath=$product->getData('small_image');
+            $ext = substr($csmallPath, strrpos($csmallPath, "."));
+            $csmallPath=str_replace($ext, "", $csmallPath);
+            
+            $cthumbnailPath=$product->getData('thumbnail');
+            $ext = substr($cthumbnailPath, strrpos($cthumbnailPath, "."));
+            $cthumbnailPath=str_replace($ext, "", $cthumbnailPath);
+           // echo $cimagePath;
+            
+           // print_r($product->getSku()."-----".$product->getData('image'));
+          //  echo "<br>";
+         
+                
             foreach ($x_Product->getMediaGalleryImages() as $image){
-                $path = $image['path'];
-                if(file_exists($path)){
+                $xpath = $image['file'];
+                $ext = substr($xpath, strrpos($xpath, "."));
+                $xpath=str_replace($ext, "", $xpath);
+              //  echo $x_sku.'------------'.$xpath;
+              //  echo "<br>";
                     try{
-                        Mage::getSingleton('catalog/product_action')->updateAttributes(array($x_ProductId), array('image'=>$image['file'],'small_image'=>$image['file'],'thumbnail'=>$image['file']), 0);
-                        break;
+                        if($xpath==$cimagePath.'_1' || $xpath==$cimagePath.'_2')
+                           Mage::getSingleton('catalog/product_action')->updateAttributes(array($x_ProductId), array('image'=>$image['file']), 0);
+                        if($xpath==$csmallPath.'_1' || $xpath==$csmallPath.'_2')
+                           Mage::getSingleton('catalog/product_action')->updateAttributes(array($x_ProductId), array('small_image'=>$image['file']), 0);
+                        if($xpath==$cthumbnailPath.'_1' || $xpath==$cthumbnailPath.'_2')
+                           Mage::getSingleton('catalog/product_action')->updateAttributes(array($x_ProductId), array('thumbnail'=>$image['file']), 0);
+                       // break;
                     }catch (Exception $e){
                         Mage::log("Exception 1-:".$e->getMessage(),Zend_Log::DEBUG,'copy_image_view',true);
                     }
-                }
+                
             }
+               // print_r($product->getData('image'));
+            
            
             $count++;
             if($count%10==0){
