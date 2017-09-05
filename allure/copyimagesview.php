@@ -8,7 +8,7 @@ $count=0;
 
 $productModel=Mage::getModel('catalog/product');
 $collecton=Mage::getModel('catalog/product')->getCollection();
-$collecton->addAttributeToFilter('sku',array('like'=>'CSC15D%'));
+$collecton->addAttributeToFilter('sku',array('like'=>'C%'));
 
 $connection = Mage::getSingleton('core/resource')->getConnection('core_write');
 //echo "<pre>";
