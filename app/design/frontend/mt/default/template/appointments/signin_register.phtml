@@ -70,13 +70,13 @@ if ($session->isLoggedIn()) {
 					  	<div class="fieldDiv">
 					  	   	<label>First Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php //echo $firstName?>" />-->
-					    	<input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
+					    	<input class="ele_width required-entry" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
 					    </div>
 						
 						<div class="fieldDiv">
 					    	<label>Last Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php //echo $lastName?>" />-->
-					    	<input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
+					    	<input class="ele_width required-entry" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
 					    </div>
 					
 					  	<div class="fieldDiv">
@@ -86,7 +86,6 @@ if ($session->isLoggedIn()) {
 					    </div>
 						<div class="fieldDiv appt_ph">
 					    	<label>Phone Number*:</label><br/>
-					    	<!-- <input class="ele_width required-entry validate-number" type="text" name="phone" value="<?php //echo $telephone?>" />-->
 					    	<input class="ele_width required-entry validate-phone-len" type="text" id="phone" name="phone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>" />
 					    </div>
 					
