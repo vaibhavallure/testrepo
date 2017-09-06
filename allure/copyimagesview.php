@@ -4,11 +4,23 @@ umask(0);
 Mage::app();
 Mage::app()->getStore()->setId(Mage_Core_Model_App::ADMIN_STORE_ID);
 
+$lower = $_GET['lower'];
+$upper= $_GET['upper'];
+
+if(empty($lower) || empty($upper)){
+    die('Please add Upper and Lower limit');
+}
+
 $count=0;
 
 $productModel=Mage::getModel('catalog/product');
 $collecton=Mage::getModel('catalog/product')->getCollection();
+$collecton->addAttributeToFilter('entity_id', array(
+    'from' => $lower,
+    'to' => $upper
+));
 $collecton->addAttributeToFilter('sku',array('like'=>'C%'));
+
 
 $connection = Mage::getSingleton('core/resource')->getConnection('core_write');
 //echo "<pre>";
