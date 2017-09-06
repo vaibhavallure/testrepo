@@ -28,7 +28,7 @@
 <?php $_order = $this->getItem()->getOrderItem()->getOrder() ?>
 <tr class="border mt-order-view-tr" id="order-item-row-<?php echo $_item->getId() ?>">
     <td class="mt-td-order-view-block mt-order-veiw-pr-name">
-        <div class="mt-deiv-order-view-allre">
+        <div class="mt-deiv-order-view-allre" style="margin-bottom: 10px">
             <p style="margin-bottom: 0px">PRODUCT:</p>
             <h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
             <?php if($_options = $this->getItemOptions()): ?>
@@ -192,9 +192,10 @@
                         </span>
                             <?php endif; ?>
                         <?php endif; ?>
-            </span>
+                </span>
                     <?php endif; ?>
-
+                </span>
+            </span>
         </div>
     </td>
     <td class="a-center nobr-sku mt-td-order-view"><?php echo $this->escapeHtml(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>

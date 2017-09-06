@@ -78,6 +78,11 @@ h1 {font-size: 28px;}
   width: 100%;
 }
 
+.pager{
+  margin-bottom: 0px;
+  margin-top: 25px;
+}
+
 .product-image-gallery img.gallery-image {
   min-height: 320px;
 }
@@ -1304,7 +1309,10 @@ ul#narrow-by-list {
 .selected-filters {
 }
 
-i.glyphicon.glyphicon-remove {float:right;}
+i.glyphicon.glyphicon-remove {
+  float:right;
+  top: 6px;
+}
 
 #block-filters {
   font-size: 12px;
