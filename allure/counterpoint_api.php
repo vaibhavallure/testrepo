@@ -8,7 +8,7 @@ Mage::app()->setCurrentStore(0);
 $from = $_GET['from'];
 if(empty($from))
     die('year required');
-
+die;
 $helper = Mage::helper('allure_counterpoint');
 
 $hostName   = $helper->getHostName();
@@ -18,7 +18,7 @@ $dbName = "Venus84";
 
 
 $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
-if($conn){
+if(0 && $conn){
     try{
         echo "Connection established...";
         
@@ -42,7 +42,7 @@ if($conn){
                     PS_TKT_HIST_DISC d on(a.doc_id=d.doc_id and d.lin_seq_no is null)
 					join ps_tkt_hist_contact c  on(a.doc_id=c.doc_id)
 					where a.tot > 0 and b.QTY_SOLD > 0 and c.CONTACT_ID=1 and (TAX_OVRD_REAS<>'MAGENTO' or TAX_OVRD_REAS is null)
-					and a.tkt_dt like '%2008%'
+					and a.tkt_no ='215859'
                     order by a.BUS_DAT desc;";
         
         $result = odbc_exec($conn, $query);
@@ -107,12 +107,12 @@ if($conn){
     }
 }else{
     echo "Connection  not established...";
-    die;
+    //die;
 }
 
  echo "<pre>";
 //print_r(($mainArr));
-die; 
+//die; 
 
 
 //remote site wsdl url
@@ -138,14 +138,36 @@ function getSoapWSDLOptions(){
 
 $item_detail = array();
 $item_detail[] = array(
-    'name'=>'Test Sagar','price'=>10,
-    'sku'=>'test-sagar','qty'=>1
+    'pname'=>'Test Sagar','prc'=>55,
+    'sku'=>'test-sagar','qty'=>-1
 );
 
+ $item_detail[] = array(
+    'pname'=>'Test Sagar 1 ','prc'=>100,
+    'sku'=>'test-sagar1','qty'=>-1
+);
+  $item_detail[] = array(
+    'pname'=>'Test Sagar 2 ','prc'=>120,
+    'sku'=>'test-sagar2','qty'=>1
+);
+  /*$item_detail[] = array(
+    'pname'=>'Test Sagar 1 ','prc'=>60,
+    'sku'=>'test-sagar1','qty'=>1
+); 
+/*$item_detail[] = array(
+    'pname'=>'Test Sagar 1 ','prc'=>28.68,
+    'sku'=>'test-sagar1','qty'=>1
+);
+ */
 
 $order_detail = array(
-    'subtotal'=>'100.00','tax'=>'25.00',
-    'order_date'=>'19-08-2017'
+    'subtotal'=>'100.00','tax'=>'-2.93',
+    'order_date'=>'19-08-2017',
+    'lins'=>'3',
+    'sal_lins'=>'1',
+    'ret_sal_lins'=>'2',
+    'sal_lin_tot'=>'120',
+    'ret_lin_tot'=>'-155'
 );
 
 $_order_data = array();
@@ -169,19 +191,19 @@ try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
     $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    $session = $client->login($_AUTH_DETAILS_ARR);
+    //$session = $client->login($_AUTH_DETAILS_ARR);
     
-    
-    $reqS = addslashes(serialize($mainArr));
+    $reqS = addslashes(serialize($_order_data));
     $reqU = utf8_encode('"'.$reqS.'"');
+    
     
     $_RequestData = array(
         'sessionId' => $session->result,
         'counterpoint_data' => $reqU
     );
     
-    $result  = $client->counterpointOrderList($_RequestData);
-    
+    //$result  = $client->counterpointOrderList($_RequestData);
+    $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
     $client->endSession(array('sessionId' => $session->result));
