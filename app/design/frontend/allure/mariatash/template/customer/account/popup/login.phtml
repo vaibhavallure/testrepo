@@ -76,7 +76,12 @@ jQuery("#signin-btn-popup").on('click',function(){
 			if(data.success){
 				 jQuery('#login_msg_div').css('display','none');
 				 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
-				 location.reload();
+				 if(data.redirect){
+                     window.location.replace(data.url);
+                 }
+                 else {
+				     location.reload();
+                 }
 			}else{
 		     jQuery('#login_msg_div').css('display','block');
 			 jQuery('#login-msg').html(data.error);
