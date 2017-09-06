@@ -35,7 +35,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $yesterday=date('Y-m-d');
                 $from = $yesterday."00:00:00";
                 $to = $yesterday."23:59:59";
-                if($storeId==1){
+                /* if($storeId==1){
                     $from = date("Y-m-d H:i:s",strtotime("-1 day 4 hours",strtotime($from)));
                     $to = date("Y-m-d H:i:s",strtotime("-1 day 4 hours",strtotime($to)));
                 }elseif ($storeId==2){
@@ -44,7 +44,9 @@ class Ecp_ReportToEmail_Model_Observer
                 }else {
                     $from = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($from)));
                     $to = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($to)));
-                }
+                } */
+                $from = date("Y-m-d H:i:s",strtotime("-1 day 4 hours",strtotime($from)));
+                $to = date("Y-m-d H:i:s",strtotime("-1 day 4 hours",strtotime($to)));
                 
                 $time = (int) trim(Mage::getStoreConfig('report/scheduled_reports/time'));
                 $curTime = new DateTime();

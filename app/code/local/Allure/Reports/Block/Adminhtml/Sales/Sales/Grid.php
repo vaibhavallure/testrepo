@@ -103,12 +103,9 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $from = $filterData->getData('from')." 00:00:00";
         $to = $filterData->getData('to')." 23:59:59";
         
-        if($storeId==1 && !empty($filterData->getData('from')) && !empty($filterData->getData('to')) ){
+        if(!empty($filterData->getData('from')) && !empty($filterData->getData('to')) ){
             $from = date("Y-m-d H:i:s",strtotime("4 hours",strtotime($from)));
             $to = date("Y-m-d H:i:s",strtotime("4 hours",strtotime($to)));
-        }elseif ($storeId==2 && !empty($filterData->getData('from')) && !empty($filterData->getData('to')) ){
-            $from = date("Y-m-d H:i:s",strtotime("-1 hours",strtotime($from)));
-            $to = date("Y-m-d H:i:s",strtotime("-1 hours",strtotime($to)));
         }
       
         
@@ -260,7 +257,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
     public function getCurrentCurrencyCode()
     {
         $requestParams = $this->getRequest()->getParam('store_ids');
-        $storeId = 0;
+        $storeId = 1;
         if(!empty($requestParams)){
             $storeId = $requestParams;
             return Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
