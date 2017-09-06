@@ -156,6 +156,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                             $quoteObj->setCreateOrderMethod(1); //order status as counterpoint 1
                             $quoteObj->setCounterpointOrderId($ctpnt_order_id);
+                            $quoteObj->setOrderType("Counterpoint");
                             
                             $ccInfo = array();
                             // assign payment method
