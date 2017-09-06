@@ -116,12 +116,17 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                 }
 
         		$htmlSeparated = ''; 
-
+        	
                 foreach ($children as $child) {
+                   
                     $this->categoryIds[] = $this->getCategoryId($child);
                     $subHtml             = $this->getSubCategoryHtml($child, TRUE);
                     $i += 1 + (int)$this->rows;
-        
+                    $category=Mage::getModel('catalog/category')->load($this->getCategoryId($child));
+                    if($category->getIsWholesale()){
+                        if($this->checkUserRole()==0)
+                            continue;
+                    }
 	            	if($this->_itemSeparated($this->getCategoryId($child))){
 	                        $htmlSeparated .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
 	                                        ' . (($boo)?'':'') . '
@@ -191,7 +196,11 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                     $dropdown = $subHtml ? ' dropdown dropdown-submenu' : '';
                     $curate = $subHtml ? '<span class="caret"></span>' : '';
                     $i += 1 + (int)$this->rows;
-        
+                    $category=Mage::getModel('catalog/category')->load($this->getCategoryId($child));
+                    if($category->getIsWholesale()){
+                        if($this->checkUserRole()==0)
+                            continue;
+                    }
             		if ($this->_itemSeparated($this->getCategoryId($child))) {
                         $htmlSeparated .= '<li class="menu-item menu-item-separated' . $first . $dropdown . (($child->getIsActive())?' current':'') . '">
                                             <a href="' . $child->getUrl() . '">
@@ -232,7 +241,6 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
     		$roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
 	        $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
 	        $role = strtolower($role);
-	        Mage::log($child->getUrl(),Zend_log::DEBUG,true,'mylogs');
 	        if ($role == 'wholesale') :
                  return '
                  <li><a href="'.Mage::getBaseUrl('web').'jewelry/frontals-only.html ">
@@ -251,6 +259,16 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
     	}
     	
     	return NULL;
+    }
+    private function checkUserRole(){
+        $roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+        $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
+        $role = strtolower($role);
+        if ($role == 'wholesale')
+            return 1;
+        else 
+            return 0;
+        
     }
 
     /**
