@@ -3,6 +3,169 @@
 umask(0);
 Mage::app(); 
 
+$helper = Mage::helper('allure_counterpoint');
+
+$hostName   = $helper->getHostName();
+$dbUsername = $helper->getDBUserName();//"sa";
+$dbPassword = $helper->getDBPassword();//"root";
+$dbName = "Venus84";
+
+
+$conn = odbc_connect($hostName, $dbUsername,$dbPassword);
+if($conn){
+    try{
+        $query = "select  a.bus_dat,a.doc_id,a.event_no,a.tkt_no,a.tkt_dt,a.sal_lin_tot,
+                  a.ret_lin_tot,a.lins,a.sal_lins,a.ret_lins,a.sub_tot,
+                  a.tax_amt,a.tot_chng,a.tot,
+                  b.lin_typ,b.item_no,b.descr,b.ret_reas,b.qty_sold,
+                  b.prc,b.ext_prc,b.gross_ext_prc,b.disp_ext_prc,
+                  c.disc_typ,c.disc_amt,c.disc_pct
+                  FROM PS_TKT_HIST a 
+                  join PS_TKT_HIST_LIN b on(a.tkt_no=b.tkt_no)
+                  left join PS_TKT_HIST_DISC c on(b.doc_id = c.doc_id 
+                    AND b.lin_seq_no=c.lin_seq_no)
+                  where a.tot > 0 and a.tkt_typ='T' ;";
+        $result = odbc_exec($conn, $query);
+        $count = 0;
+        $i 	   = 0;
+        $mainArr = array();
+        $itemHeader = array('lin_typ','item_no','descr','ret_reas','qty_sold','prc','ext_prc',
+        'gross_ext_prc','disp_ext_prc','disc_typ','disc_amt','disc_pct');
+        while(odbc_fetch_row($result)){
+            $order_id = odbc_result($result, 'tkt_no');
+            $arr 		= array();
+            $items 		= array();
+            $address 	= array();
+            $info		= array();
+            
+            //parse row data as required format
+            for ($j = 1; $j <= odbc_num_fields($result); $j++){
+                $field_name  = odbc_field_name($result, $j);
+                $field_value = odbc_result($result, $field_name);
+                if(in_array($field_name, $itemHeader)){
+                    $items[$field_name] = $field_value;
+                }else{
+                    $info[$field_name] = $field_value;
+                }
+            }
+            
+            if(!array_key_exists($order_id, $mainArr)){
+                $mainArr[$order_id] = array('items'=>array($items),
+                   'info'=>$info);
+            }else{
+                $tempItems = $mainArr[$order_id]['items'];
+                $tempItems[] = $items;
+                $mainArr[$order_id]['items'] = $tempItems;
+            }
+            $i++;
+        }
+        odbc_close($conn);
+        
+    }catch (Exception $e){
+        print_r($e->getMessage());
+    }
+}else{
+    echo "Connection  not established...";
+    die;
+}
+/* echo "<pre>";
+print_r($mainArr);
+die; */
+
+$str = "<table border='1'>
+  <tr>
+    <th>TKT_NO</th>
+    <th>BUST_DAT</th>
+    <th>DOC_ID</th>
+    <th>EVENT_NO</th>
+    <th>ORD_DT</th>
+    <th>SAL_LIN_TOT</th>
+    <th>RET_LIN_TOT</th>
+    <th>LINS</th>
+    <th>SAL_LINS</th>
+    <th>RET_LINS</th>
+    <th>SUB_TOT</th>
+    <th>TAX_AMT</th>
+    <th>TOT_CHNG</th>
+    <th>TOT</th>
+    <th>
+        ITEMS
+        <table>
+            		<tr>
+            			<th>LIN_TYP</th>
+            			<th>ITEM_NO</th>
+            			<th>DESCR</th>
+            			<th>RET_REAS</th>
+                        <th>QTY_SOLD</th>
+            			<th>PRC</th>
+            			<th>EXT_PRC</th>
+            			<th>GROSS_EXT_PRC</th>
+                        <th>DISP_EXT_PRC</th>
+            			<th>DISC_TYP</th>
+                        <th>DISC_AMT</th>
+            			<th>DISC_PCT</th>
+            		</tr>
+            </table>
+    </th>
+  </tr>";
+foreach ($mainArr as $key=>$data){
+    $orderDetail = $data['info'];
+    $str .= "<tr style='border-bottom: solid 1px black;'>
+    <td>$key</td>
+    <td>{$orderDetail['bus_dat']}</td>
+    <td>{$orderDetail['doc_id']}</td>
+	<td>{$orderDetail['event_no']}</td>
+    <td>{$orderDetail['tkt_dt']}</td>
+    <td>{$orderDetail['sal_lin_tot']}</td>
+    <td>{$orderDetail['ret_lin_tot']}</td>
+    <td>{$orderDetail['lins']}</td>
+    <td>{$orderDetail['sal_lins']}</td>
+    <td>{$orderDetail['ret_lins']}</td>
+    <td>{$orderDetail['sub_tot']}</td>
+    <td>{$orderDetail['tax_amt']}</td>
+    <td>{$orderDetail['tot_chng']}</td>
+    <td>{$orderDetail['tot']}</td>
+    
+    <td>
+    	<table>
+    		";
+    foreach($data['items'] as $items){
+        $str .= "<tr >
+    				<td>{$items['lin_typ']}</td>
+    				<td>{$items['item_no']}</td>
+    				<td>{$items['descr']}</td>
+    				<td>{$items['ret_reas']}</td>
+
+                    <td>{$items['qty_sold']}</td>
+    				<td>{$items['prc']}</td>
+    				<td>{$items['ext_prc']}</td>
+    				<td>{$items['gross_ext_prc']}</td>
+
+                    <td>{$items['disp_ext_prc']}</td>
+    				<td>{$items['disc_typ']}</td>
+    				<td>{$items['disc_amt']}</td>
+    				<td>{$items['disc_pct']}</td>
+
+    			</tr>";
+    }
+    $str .= "</table>
+    </td>
+    
+  </tr>";
+}
+$str .="</table>";
+
+header ( "Content-type: application/vnd.ms-excel" );
+header ( "Content-Disposition: attachment; filename=non_zero_ctpt_order_2016.xls" );
+
+echo $str;
+
+
+
+
+
+die;
+
 Mage::app()->setCurrentStore(0);
 
 $fromYear = $_GET['from'];

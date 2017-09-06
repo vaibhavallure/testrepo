@@ -112,7 +112,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 $productObj->setDescription($value['pname']);
                                 $productObj->setPrice($value['prc']);
                                 
-                                $quoteItem = Mage::getModel("sales/quote_item")
+                                $quoteItem = Mage::getModel("allure_counterpoint/item")
                                 ->setProduct($productObj);
                                 $quoteItem->setQty($qty);
                                 //Mage::log($sku,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
@@ -156,6 +156,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                             $quoteObj->setCreateOrderMethod(1); //order status as counterpoint 1
                             $quoteObj->setCounterpointOrderId($ctpnt_order_id);
+                            $quoteObj->setOrderType("Counterpoint");
                             
                             $ccInfo = array();
                             // assign payment method
@@ -201,7 +202,28 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $totalAmmount = $quoteObj->getGrandTotal();
                             $taxAmmount = $extraOrderDetails['tax'];
                             $discountAmount = $extraOrderDetails['dis_amount'];
-                            if($taxAmmount){
+                            
+                            //extra val for counterpoint
+                            /* $totalItemQty = $extraOrderDetails['lins'];
+                            $returnItemQty = $extraOrderDetails['ret_sal_lins'];
+                            $returnItemTotal = $extraOrderDetails['ret_lin_tot'];
+                            $itemTotal = $extraOrderDetails['sal_lin_tot'];
+                            
+                            if($totalItemQty == $returnItemQty){
+                                $taxAmmount = 0.0;
+                            }elseif ($returnItemQty > 0 && $returnItemQty < $totalItemQty){
+                                $taxPercent = ($taxAmmount * 100)/$totalAmmount;
+                                if($taxPercent < 0){
+                                    $taxPercent = $taxPercent * (-1);
+                                }
+                                $taxAmmount = ($itemTotal * $taxPercent)/100;
+                                $totalAmmount = $itemTotal ;
+                                $orderObj->setSubTotal($totalAmmount);
+                            }else{
+                                
+                            } */
+                            
+                            if(1){
                                 $totalAmmount =$totalAmmount + $taxAmmount;
                                 $orderObj->setTaxAmount($taxAmmount);
                             }

@@ -25,7 +25,19 @@
     </div>
 <?php endif ?>
 </td>
-<td class="a-center"><?php echo $_item->getStatus() ?></td>
+
+<?php 
+//allure code
+$orderType = $_item->getOrder()->getOrderType();
+$status = $_item->getStatus();
+if($orderType == "Counterpoint"){
+    if($_item->getQtyOrdered() < 0){
+        $status = "Returned";
+    }
+}
+?>
+
+<td class="a-center"><?php echo $status ;//$_item->getStatus() //allure comment ?></td>
 <td class="a-right"><?php echo $this->displayPriceAttribute('original_price') ?></td>
 <td class="a-right">
     <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>

@@ -27,7 +27,17 @@
 <?php if ($_item = $this->getItem()): ?>
 <table cellspacing="0" class="qty-table">
     <tr>
-        <td><?php echo Mage::helper('sales')->__('Ordered') ?></td>
+    	<?php 
+    	   //allure code
+    	$orderType = $_item->getOrder()->getOrderType();
+    	$status = Mage::helper('sales')->__('Ordered');
+    	if($orderType == "Counterpoint"){
+    	    if($_item->getQtyOrdered() < 0){
+    	        $status = Mage::helper('sales')->__('Returned');
+    	    }
+    	}
+    	?>
+        <td><?php echo $status;//Mage::helper('sales')->__('Ordered') //allure ?></td>
         <td><strong><?php echo $_item->getQtyOrdered()*1 ?></strong></td>
     </tr>
     <?php if ((float) $_item->getQtyInvoiced()): ?>
