@@ -353,7 +353,7 @@ color: #666;
   border: 1px solid #ddd;
   padding: 15px;
   position: relative;
-  overflow: hidden;
+  overflow: inherit;
   clear: both;
 }
 #sns_tab_products .tab-content>.tab-pane {display:block}
