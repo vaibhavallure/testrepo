@@ -2,13 +2,17 @@
 require_once('../app/Mage.php'); 
 umask(0);
 Mage::app();
-
+die;
 Mage::app()->setCurrentStore(0);
+ini_set('memory_limit', '-1');
+//ini_set('post_max_size', '20M');
+
+ini_set('max_execution_time', -1);
 
 $from = $_GET['from'];
 if(empty($from))
     die('year required');
-die;
+
 $helper = Mage::helper('allure_counterpoint');
 
 $hostName   = $helper->getHostName();
@@ -18,7 +22,7 @@ $dbName = "Venus84";
 
 
 $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
-if(0 && $conn){
+if($conn){
     try{
         echo "Connection established...";
         
@@ -41,8 +45,10 @@ if(0 && $conn){
                     left join
                     PS_TKT_HIST_DISC d on(a.doc_id=d.doc_id and d.lin_seq_no is null)
 					join ps_tkt_hist_contact c  on(a.doc_id=c.doc_id)
-					where a.tot > 0 and b.QTY_SOLD > 0 and c.CONTACT_ID=1 and (TAX_OVRD_REAS<>'MAGENTO' or TAX_OVRD_REAS is null)
-					and a.tkt_no ='215859'
+					where  c.CONTACT_ID=1 and (TAX_OVRD_REAS<>'MAGENTO' or TAX_OVRD_REAS is null)
+					and a.tkt_dt >= convert(datetime,'2009-03-30') 
+                    and a.tkt_dt <= convert(datetime,'2009-06-30')  
+                    and a.tkt_typ='T' 
                     order by a.BUS_DAT desc;";
         
         $result = odbc_exec($conn, $query);
@@ -107,12 +113,12 @@ if(0 && $conn){
     }
 }else{
     echo "Connection  not established...";
-    //die;
+    die;
 }
 
  echo "<pre>";
-//print_r(($mainArr));
-//die; 
+/* print_r(($mainArr));
+die;  */
 
 
 //remote site wsdl url
@@ -138,21 +144,21 @@ function getSoapWSDLOptions(){
 
 $item_detail = array();
 $item_detail[] = array(
-    'pname'=>'Test Sagar','prc'=>55,
+    'pname'=>'Test Sagar','prc'=>795,
     'sku'=>'test-sagar','qty'=>-1
 );
 
  $item_detail[] = array(
-    'pname'=>'Test Sagar 1 ','prc'=>100,
-    'sku'=>'test-sagar1','qty'=>-1
+    'pname'=>'Test Sagar 1 ','prc'=>175,
+    'sku'=>'test-sagar-1','qty'=>-1
 );
   $item_detail[] = array(
-    'pname'=>'Test Sagar 2 ','prc'=>120,
-    'sku'=>'test-sagar2','qty'=>1
+    'pname'=>'Test Sagar 2 ','prc'=>385,
+    'sku'=>'test-sagar-2','qty'=>1
 );
-  /*$item_detail[] = array(
-    'pname'=>'Test Sagar 1 ','prc'=>60,
-    'sku'=>'test-sagar1','qty'=>1
+ $item_detail[] = array(
+    'pname'=>'Test Sagar 3 ','prc'=>430,
+    'sku'=>'test-sagar-3','qty'=>1
 ); 
 /*$item_detail[] = array(
     'pname'=>'Test Sagar 1 ','prc'=>28.68,
@@ -161,7 +167,7 @@ $item_detail[] = array(
  */
 
 $order_detail = array(
-    'subtotal'=>'100.00','tax'=>'-2.93',
+    'subtotal'=>'100.00','tax'=>'-2.98',
     'order_date'=>'19-08-2017',
     'lins'=>'3',
     'sal_lins'=>'1',
@@ -191,9 +197,9 @@ try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
     $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    //$session = $client->login($_AUTH_DETAILS_ARR);
+    $session = $client->login($_AUTH_DETAILS_ARR);
     
-    $reqS = addslashes(serialize($_order_data));
+    $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
     
     
@@ -202,8 +208,8 @@ try{
         'counterpoint_data' => $reqU
     );
     
-    //$result  = $client->counterpointOrderList($_RequestData);
-    $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
+    $result  = $client->counterpointOrderList($_RequestData);
+    //$result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
     $client->endSession(array('sessionId' => $session->result));

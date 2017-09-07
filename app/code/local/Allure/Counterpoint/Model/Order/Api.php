@@ -29,6 +29,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         Mage::log("Total order-".count($counterpointData),
             Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
         $this->importCPSQLOrderIntoMagento($counterpointData);
+        $counterpointData = null;
         return 1;
     }
     
@@ -47,6 +48,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                     Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                 $count++;
             }
+            $counterpointOrderArr = null;
             Mage::log("Finish...",
                 Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
             //$connection->commit();
@@ -191,6 +193,12 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 if ($item->getParentItem()) {
                                     $orderItem->setParentItem($orderObj->getItemByQuoteItemId($item->getParentItem()->getId()));
                                 }
+                                //refunded code
+                                if($orderItem->getData('qty_ordered') < 0){
+                                    $orderItem->setData('qty_ordered',1);
+                                    $orderItem->setData('qty_refunded',1);
+                                    $orderItem->setData('qty_canceled',1);
+                                }
                                 $orderObj->addItem($orderItem);
                             }
                             
@@ -274,10 +282,18 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 $invoice->setCanVoidFlag(0);
                                 
                                 $invoice->save();
+                                
+                                $shipmentId = $this->createShipment($increment_id);
+                                
                                /*  $transactionSave = Mage::getModel('core/resource_transaction')
                                     ->addObject($invoice)
                                     ->addObject($invoice->getOrder());
                                 $transactionSave->save(); */
+                                $invoice = null;
+                                $quoteObj = null;
+                                $orderObj = null;
+                                $customer = null;
+                                $billingAddress = null;
                                 
                             } catch (Exception $e){
                                 Mage::log("Trans Exception-".$e->getMessage(), Zend_Log::DEBUG,$this->_ctpnt_logs_file_name,true);
@@ -300,6 +316,63 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
             Mage::log($e->getMessage(),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
         }
+        $orderObj = null;
+    }
+    
+    
+    /**
+     * Create new shipment for order
+     *
+     * @param string $orderIncrementId
+     * @param array $itemsQty
+     * @param string $comment
+     * @param booleam $email
+     * @param boolean $includeComment
+     * @return string
+     */
+    private function createShipment($orderIncrementId, $itemsQty = array(), $comment = null, $email = false,
+        $includeComment = false
+        ) {
+            $order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+            
+            /**
+             * Check order existing
+             */
+            if (!$order->getId()) {
+                $this->_fault('order_not_exists');
+            }
+            
+            /**
+             * Check shipment create availability
+             */
+            if (!$order->canShip()) {
+                $this->_fault('data_invalid', Mage::helper('sales')->__('Cannot do shipment for order.'));
+            }
+            
+            /* @var $shipment Mage_Sales_Model_Order_Shipment */
+            $shipment = $order->prepareShipment($itemsQty);
+            if ($shipment) {
+                $shipment->register();
+                $shipment->addComment($comment, $email && $includeComment);
+                if ($email) {
+                    $shipment->setEmailSent(true);
+                }
+                $shipment->getOrder()->setIsInProcess(true);
+                try {
+                    $transactionSave = Mage::getModel('core/resource_transaction')
+                    ->addObject($shipment)
+                    ->addObject($shipment->getOrder())
+                    ->save();
+                    //$shipment->sendEmail($email, ($includeComment ? $comment : ''));
+                } catch (Mage_Core_Exception $e) {
+                    $this->_fault('data_invalid', $e->getMessage());
+                }
+                $shipmentId = $shipment->getIncrementId();
+                $shipment = null;
+                $order = null;
+                return null;//$shipment->getIncrementId();
+            }
+            return null;
     }
     
     private function generateRandomPassword(){
