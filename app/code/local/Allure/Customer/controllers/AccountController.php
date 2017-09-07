@@ -58,6 +58,12 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 					$session->login($request['usrname'], $request['passwd']);
 					$result['success'] = true;
 					$result['msg'] = Mage::helper('core')->__('Login Successfull');
+                    if(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)==$_SERVER['HTTP_REFERER']){
+                        Mage::log(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB),Zend_Log::DEBUG,'demo.log',true);
+                        $result['redirect'] = true;
+                        $result['url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'customer/account';
+                    }
+
 				}
 				catch (Mage_Core_Exception $e)
 				{
