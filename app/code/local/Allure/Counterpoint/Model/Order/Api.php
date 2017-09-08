@@ -195,9 +195,16 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 }
                                 //refunded code
                                 if($orderItem->getData('qty_ordered') < 0){
-                                    $orderItem->setData('qty_ordered',1);
+                                    $qtyItem = $orderItem->getData('qty_ordered');
+                                    if($qtyItem < 0){
+                                        $qtyItem = $qtyItem * (-1);
+                                    }
+                                    $orderItem->setData('qty_ordered',$qtyItem);
+                                    $orderItem->setData('qty_refunded',$qtyItem);
+                                    $orderItem->setData('qty_canceled',$qtyItem);
+                                   /*  $orderItem->setData('qty_ordered',1);
                                     $orderItem->setData('qty_refunded',1);
-                                    $orderItem->setData('qty_canceled',1);
+                                    $orderItem->setData('qty_canceled',1); */
                                 }
                                 $orderObj->addItem($orderItem);
                             }
