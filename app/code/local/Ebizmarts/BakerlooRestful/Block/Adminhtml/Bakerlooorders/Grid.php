@@ -42,6 +42,16 @@ class Ebizmarts_BakerlooRestful_Block_Adminhtml_Bakerlooorders_Grid extends Mage
                 'renderer' => 'bakerloo_restful/adminhtml_widget_grid_column_renderer_orderNumber',
             )
         );
+        $this->addColumn(
+            'order_items',
+            array(
+                'header'   => $helper->__('Items'),
+                'index'    => 'order_items',
+                'width' => '500px',
+                'type'  => 'text',
+                'renderer' => 'bakerloo_restful/adminhtml_widget_grid_column_renderer_items',
+            )
+            );
 
         $this->addColumn(
             'device_order_id',
@@ -63,6 +73,8 @@ class Ebizmarts_BakerlooRestful_Block_Adminhtml_Bakerlooorders_Grid extends Mage
             'header'    =>$helper->__('Store'),
             'sortable'  =>True,
             'index'     =>'store_id',
+            'width' => '500',
+            'type'  => 'text',
             'type'      => 'options',
             'options'   => Mage::getModel('core/store')->getCollection()->toOptionHash()
             
