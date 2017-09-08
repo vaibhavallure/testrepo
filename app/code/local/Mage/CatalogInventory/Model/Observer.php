@@ -604,7 +604,7 @@ class Mage_CatalogInventory_Model_Observer
     public function checkoutAllSubmitAfter(Varien_Event_Observer $observer)
     {
         $quote = $observer->getEvent()->getQuote();
-        if (Mage::registry('allure_posinventory_skipped_date') && !$quote->getInventoryProcessed()) {
+        if (!Mage::registry('allure_posinventory_skipped_date') && !$quote->getInventoryProcessed()) {
             $this->subtractQuoteInventory($observer);
             $this->reindexQuoteInventory($observer);
         }
