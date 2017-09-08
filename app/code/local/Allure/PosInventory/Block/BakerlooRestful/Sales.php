@@ -262,10 +262,16 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
 
         $productsById = $this->getProductsById($products);
         $productItems = $this->getProductItems(array_keys($productsById), $fastProducts);
+        
+        //echo "<pre>";print_r(array_keys($productsById));print_r($productItems);die;
 
         foreach ($productsById as $_id => $_products) {
 
             foreach ($_products as $_product) {
+            		if ($productItems && !isset($productItems[$_id])) {
+            			$this->throwBuildQuoteException("An error occurred, Product ID: {$_id} No longer Exists.");
+            		}
+            		
                 $product = clone $productItems[$_id];
 
                 if (!$product->getId()) {
