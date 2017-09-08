@@ -110,6 +110,9 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
         //var_dump($this->getQuote()->getData());
         
         if ($isSkippedDate) {
+	        	if (!Mage::registry('allure_posinventory_skipped_date')) {
+	        		Mage::register('allure_posinventory_skipped_date', true);
+	        	}
         		$this->getQuote()->setIsProcessed(true);
         }
         
@@ -269,7 +272,7 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
 
             foreach ($_products as $_product) {
             		if ($productItems && !isset($productItems[$_id])) {
-            			$this->throwBuildQuoteException("An error occurred, Product ID: {$_id} No longer Exists.");
+            			$this->throwBuildQuoteException("Product ID: {$_id} does not exist.");
             		}
             		
                 $product = clone $productItems[$_id];
