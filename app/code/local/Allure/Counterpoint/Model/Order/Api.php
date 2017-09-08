@@ -58,6 +58,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 $this->_ctpnt_logs_file_name,true);
             Mage::log("Exception-".$e,Zend_log::DEBUG,
                 $this->_ctpnt_logs_file_name,true);
+            $e = null;
         }
     }
     
@@ -195,9 +196,16 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 }
                                 //refunded code
                                 if($orderItem->getData('qty_ordered') < 0){
-                                    $orderItem->setData('qty_ordered',1);
+                                    $qtyItem = $orderItem->getData('qty_ordered');
+                                    if($qtyItem < 0){
+                                        $qtyItem = $qtyItem * (-1);
+                                    }
+                                    $orderItem->setData('qty_ordered',$qtyItem);
+                                    $orderItem->setData('qty_refunded',$qtyItem);
+                                    $orderItem->setData('qty_canceled',$qtyItem);
+                                   /*  $orderItem->setData('qty_ordered',1);
                                     $orderItem->setData('qty_refunded',1);
-                                    $orderItem->setData('qty_canceled',1);
+                                    $orderItem->setData('qty_canceled',1); */
                                 }
                                 $orderObj->addItem($orderItem);
                             }
@@ -298,6 +306,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             } catch (Exception $e){
                                 Mage::log("Trans Exception-".$e->getMessage(), Zend_Log::DEBUG,$this->_ctpnt_logs_file_name,true);
                                 Mage::throwException('Order Cancelled.');
+                                $e = null;
                             }
                     }
                     
@@ -315,6 +324,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             Mage::log("Exception in createOrderByUsingCounterpointData method of Class name is".get_class($this),
                 Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
             Mage::log($e->getMessage(),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+            $e = null;
         }
         $orderObj = null;
     }
@@ -363,11 +373,11 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                     ->addObject($shipment)
                     ->addObject($shipment->getOrder())
                     ->save();
-                    //$shipment->sendEmail($email, ($includeComment ? $comment : ''));
+                    $shipmentId = $shipment->getIncrementId();
                 } catch (Mage_Core_Exception $e) {
                     $this->_fault('data_invalid', $e->getMessage());
+                    $e = null;
                 }
-                $shipmentId = $shipment->getIncrementId();
                 $shipment = null;
                 $order = null;
                 return null;//$shipment->getIncrementId();
