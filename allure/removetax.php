@@ -15,9 +15,8 @@ $from= date("Y-m-d 00:00:00",strtotime($from));
 $to = date("Y-m-d 00:00:00",strtotime($to));
 $orders=Mage::getModel("sales/order")->getCollection()->addAttributeToFilter('store_id',$store)
 ->addAttributeToFilter('created_at', array('from'=>$from, 'to'=>$to))
-->addAttributeToFilter('status', array('complete','processing','pending'));
-$connection = Mage::getSingleton('core/resource')->getConnection('core_write');
-$connection->beginTransaction();
+->addAttributeToFilter('status', array('complete','processing','pending','canceled'));
+
 
 foreach ($orders as $order){
     try {
@@ -31,7 +30,12 @@ foreach ($orders as $order){
             $order->setBaseGrandTotal($order->getBaseGrandTotal()-$order->getBaseTaxAmount());
             $order->setBaseSubtotalInclTax($order->getBaseSubtotalInclTax()-$order->getBaseTaxAmount());
             $order->setBaseTaxAmount($order->getBaseTaxAmount()-$order->getBaseTaxAmount());
-            
+          
+            if($order->getBaseSubtotalCanceled()>0){
+                $order->setBaseSubtotalCanceled($order->getBaseSubtotalCanceled()-$order->getBaseTaxAmount());
+                $order->setBaseTaxCanceled($order->getBaseTaxCanceled()-$order->getBaseTaxAmount());
+            }
+                
             $order->setTotalPaid($order->getTotalPaid()-$order->getTaxAmount());
             $order->setTaxInvoiced($order->getTaxInvoiced()-$order->getTaxAmount());
             $order->setTotalInvoiced($order->getTotalInvoiced()-$order->getTaxAmount());
@@ -84,17 +88,14 @@ foreach ($orders as $order){
             }
             $order->save();
             $count++;
-            if($count%10==0){
-                $connection->commit();
-                $connection->beginTransaction();
-            }
+           
             Mage::log('count:'.$count,Zend_log::DEBUG,'remove_tax.log',true);
             Mage::log($order->getIncrementId(),Zend_log::DEBUG,'remove_tax.log',true);
         }
-        $connection->commit();
+        
     } catch (Exception $e) {
         Mage::log("Exception For:".$order->getIncrementId(),Zend_log::DEBUG,'remove_tax.log',true);
-        Mage::log($e->getMessage(),Zend_log::DEBUG,'remove_tax',true);
+        Mage::log($e->getMessage(),Zend_log::DEBUG,'remove_tax.log',true);
     }
 }
 echo "Done";
