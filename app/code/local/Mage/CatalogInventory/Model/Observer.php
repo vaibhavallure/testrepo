@@ -604,7 +604,7 @@ class Mage_CatalogInventory_Model_Observer
     public function checkoutAllSubmitAfter(Varien_Event_Observer $observer)
     {
         $quote = $observer->getEvent()->getQuote();
-        if (Mage::registry('allure_posinventory_skipped_date') && !$quote->getInventoryProcessed()) {
+        if (!Mage::registry('allure_posinventory_skipped_date') && !$quote->getInventoryProcessed()) {
             $this->subtractQuoteInventory($observer);
             $this->reindexQuoteInventory($observer);
         }
@@ -625,7 +625,7 @@ class Mage_CatalogInventory_Model_Observer
 
         // Maybe we've already processed this quote in some event during order placement
         // e.g. call in event 'sales_model_service_quote_submit_before' and later in 'checkout_submit_all_after'
-        if ($quote->getInventoryProcessed()) {
+        if (Mage::registry('allure_posinventory_skipped_date') || $quote->getInventoryProcessed()) {
             return;
         }
         $items = $this->_getProductsQty($quote->getAllItems());
