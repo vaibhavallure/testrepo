@@ -353,7 +353,7 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
         Varien_Profiler::stop('POS::' . __METHOD__);
     }
 
-    private function _loadStockForProducts($products)
+    protected function _loadStockForProducts($products)
     {
 
         $productIds = array_keys($products);
@@ -371,4 +371,5 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
 
         return $products;
     }
+    
 }
