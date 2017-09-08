@@ -53,7 +53,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         if (!is_array($data['products']) or empty($data['products'])) {
             $this->throwBuildQuoteException(Mage::helper('bakerloo_restful')->__('ALERT: No products provided on order.'));
         }
-
+        
         $this->_addProductsToQuote($data['products']);
         //Adding products to Quote
 
@@ -230,7 +230,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                 try {
                     //Skip stock checking
                     // Update by Allure - Skip Stock Check true always
-                    if (true || Mage::helper('bakerloo_restful')->dontCheckStock()) {
+                    if (Mage::helper('bakerloo_restful')->dontCheckStock()) {
                         $product->getStockItem()->setData('use_config_manage_stock', 0);
                         $product->getStockItem()->setData('manage_stock', 0);
                     }
@@ -241,7 +241,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                         $product->setSpecialPrice('');
                     }
 
-                    if (true || (isset($_product['no_tax']) and $_product['no_tax'])) {
+                    if (isset($_product['no_tax']) and $_product['no_tax']) {
                         $_taxHelper = Mage::helper('tax');
                         $_finalPriceExclTax = $_taxHelper->getPrice($product, $product->getFinalPrice(), false);
                         $product->setTaxClassId('0');

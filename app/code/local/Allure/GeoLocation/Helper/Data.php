@@ -15,7 +15,7 @@ class Allure_GeoLocation_Helper_Data extends Mage_Core_Helper_Abstract
     
     public function isEnabledOnFrontEnd()
     {
-    	return !Mage::app()->getStore()->isAdmin() && $this->isEnabled();
+    		return !Mage::app()->getStore()->isAdmin() && $this->isEnabled();
     }
     
     public function getTestMode()
