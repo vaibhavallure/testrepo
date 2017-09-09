@@ -2,20 +2,34 @@
 <config>
 	<modules>
 		<Allure_PosInventory>
-			<name>Allure - eBizMarts POS Inventory Update</name>
-			<version>1.0.0</version>
+			<name>Allure - eBizMarts POS Inventory</name>
+			<version>1.1.0</version>
 			<depends>
 				<Allure_Core />
-				<Ebizmarts_BakerlooRestful />
 			</depends>
 		</Allure_PosInventory>
 	</modules>
 	<global>
+		<helpers>
+			<allure_posinventory>
+				<class>Allure_PosInventory_Helper</class>
+			</allure_posinventory>
+            <bakerloo_restful>
+                <rewrite>
+                    <sales>Allure_PosInventory_Block_BakerlooRestful_Sales</sales>
+                </rewrite>
+            </bakerloo_restful>
+		</helpers>
 		<models>
 			<allure_posinventory>
 				<class>Allure_PosInventory_Model</class>
 			</allure_posinventory>
 		</models>
+		<blocks>
+			<allure_posinventory>
+				<class>Allure_PosInventory_Block</class>
+			</allure_posinventory>
+		</blocks>
 		
 		<events>
 			<pos_get_inventory>
