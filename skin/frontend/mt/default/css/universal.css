@@ -1813,6 +1813,7 @@ width: 245px;
 }
 #new-mt-myproduct-openorders .no-order-msg{
 	padding: 5px 10px 10px 10px;
+    background-color: #d1d1d1;
 }
 
 #new-mt-myproduct-cart .cart-empty{
