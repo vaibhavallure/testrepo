@@ -100,7 +100,7 @@
         <update handle="adminhtml_inventory_layout" />
         <reference name="head">
             <action method="addJs"><file>allure/jquery.js</file></action>
-            <action method="addJs"><file>allure/inventory/inventory.js</file></action>
+            <action method="addJs"><file>allure/inventory/confirmation.js</file></action>
             <action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>
         </reference>
         <reference name="content">
@@ -108,6 +108,7 @@
             </block>
         </reference>
     </adminhtml_inventory_purchase_confirm>
+    
 
     <adminhtml_inventory_purchase_addcustomitem>
     <update handle="adminhtml_inventory_layout" />
