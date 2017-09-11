@@ -19,6 +19,13 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 
         $this->renderLayout();
     }
+    public function confirmAction() {
+        $this->_initAction();
+        $this->_title($this->__('Inventory'))
+        ->_title($this->__('Manage Stock'));
+        
+        $this->renderLayout();
+    }
 
 
     public function saveAction() {
@@ -313,17 +320,67 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         $days = "7";
                         if (Mage::getStoreConfig('allure_vendor/backorder/backorder_time'))
                             $days = Mage::getStoreConfig('allure_vendor/backorder/backorder_time');
+                        
+                       /*      update Back-ordered time update to child items */
+                      if (!$item->getIsCustom()){
+                        $_product=Mage::getModel('catalog/product')->load($product);
+                        $parentSKu='';
+                        $subString='';
+                        $skuString=explode('|', $_product->getSku());
+                        $parentSKu=(string)$skuString[0];
+                        unset($skuString[0]);
+                        $subString=implode('|',$skuString);
+                        
+                        $childrenProducts= Mage::getModel('catalog/product')->getCollection();
+                        $childrenProducts->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => '%'.$parentSKu.'%')));
+                        $childProductArr = array();
+                        $childProductArr[] =$product;
+                        foreach ($childrenProducts as $child){
+                            $child=Mage::getModel('catalog/product')->load($child->getId());
+                            $childSku=explode('|', $child->getSku());
+                            if(!isset($subString) && count($childSku)==1){
+                                $childProductArr[] = $child->getId();
+                                continue;
+                            }
+                            unset($childSku[0]);
+                            if($subString==implode('|',$childSku))
+                            {
+                                $childProductArr[] = $child->getId();
+                                continue;
+                            }
+                            
+                            if($child->getTypeId()=="configurable"){
+                                $currentchildrenIds = $child->getTypeInstance()->getChildrenIds($child->getId());
+                                foreach ($currentchildrenIds[0] as $childrenId) {
+                                    $sbuChild=Mage::getModel('catalog/product')->load($childrenId);
+                                    $subChildSku=explode('|', $sbuChild->getSku());
+                                    unset($subChildSku[0]);
+                                    if($subString==implode('|',$subChildSku))
+                                        $childProductArr[] = $childrenId;
+                                   
+                                }
+                                
+                            }
+                            
+                        }
+                        $childProductArr=array_unique($childProductArr);
+                        
+                        Mage::log("Backorder time set for:",Zend_log::DEBUG,'po_backorderdate.log',true);
+                        Mage::log($childProductArr,Zend_log::DEBUG,'po_backorderdate.log',true);
                         $backDate = date_create($date);
                         date_add($backDate, date_interval_create_from_date_string($days . " days"));
+                        
                         $backDate = date_format($backDate, "jS F, Y");
 
-                        if (! $item->getIsCustom()) {
-                            Mage::getSingleton('catalog/product_action')->updateAttributes(array(
-                                $product
-                            ), array(
+                        if (!$item->getIsCustom()) {
+                            Mage::getSingleton('catalog/product_action')->updateAttributes(
+                                $childProductArr
+                            , array(
                                 'backorder_time' => $backDate
                             ), $storeId);
                         }
+                      }
+                        
                         if ($arr['remaining_qty'] != 0)
                             $canFullyShipOrder = false;
                     }
@@ -378,7 +435,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             }
         } catch (Exception $e){
 
-            Mage::getSingleton('adminhtml/session')->addSuccess($e->getMessage());
+            Mage::getSingleton('adminhtml/session')->addError($e);
         }
         $this->_redirect('*/*/orders');
     }
@@ -573,7 +630,8 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 'cost' => $request['item']['cost'],
                 'comment' => $request['item']['comment'],
                 'user_id' => $userId,
-                'store_id' => $request['item']['store']
+                'store_id' => $request['item']['store'],
+                'is_custom' => $request['item']['is_custom']
 
             );
             $model->setData($insertData);

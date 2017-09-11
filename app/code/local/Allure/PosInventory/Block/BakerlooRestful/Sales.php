@@ -110,6 +110,9 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
         //var_dump($this->getQuote()->getData());
         
         if ($isSkippedDate) {
+	        	if (!Mage::registry('allure_posinventory_skipped_date')) {
+	        		Mage::register('allure_posinventory_skipped_date', true);
+	        	}
         		$this->getQuote()->setIsProcessed(true);
         }
         
@@ -262,10 +265,16 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
 
         $productsById = $this->getProductsById($products);
         $productItems = $this->getProductItems(array_keys($productsById), $fastProducts);
+        
+        //echo "<pre>";print_r(array_keys($productsById));print_r($productItems);die;
 
         foreach ($productsById as $_id => $_products) {
 
             foreach ($_products as $_product) {
+            		if ($productItems && !isset($productItems[$_id])) {
+            			$this->throwBuildQuoteException("Product ID: {$_id} does not exist.");
+            		}
+            		
                 $product = clone $productItems[$_id];
 
                 if (!$product->getId()) {
@@ -353,7 +362,7 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
         Varien_Profiler::stop('POS::' . __METHOD__);
     }
 
-    private function _loadStockForProducts($products)
+    protected function _loadStockForProducts($products)
     {
 
         $productIds = array_keys($products);
@@ -371,4 +380,5 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
 
         return $products;
     }
+    
 }

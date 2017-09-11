@@ -10,13 +10,15 @@ $j(document).ready(function (){
         
         var id=parseInt($j(this).attr('id'));
         var qty=parseInt($j('#max_qty_'+id).val());
+        var is_custom=parseInt($j('#is_custom_'+id).val());
         var cost=parseFloat($j('#cost_'+id).val());
+   
     	var refence_no=$j('#refence_no').val();
     	var key=Allure.ViewPurchaseOrderFormKey;
         var comment=$j('#comment_'+id).val();
         var store=$j('#store').val();
         var totalAmount = parseInt($j('#order_total').val());
-
+        console.log(totalAmount);
         if(ischecked){
 	        if(qty<=0){
 	        	 alert('Please Enter Qty Greater than 0.');
@@ -26,8 +28,9 @@ $j(document).ready(function (){
 	        	totalAmount=totalAmount + (qty * cost);
 	        	var include = 1;
 	        	var item ={
-	        			id,qty,cost,comment,include,store
+	        			id,qty,cost,comment,include,store,is_custom
 	        	};
+	        	console.log(item);
 	        	$j.ajax({
 	    	        url: Allure.AddPurchaseItem,
 	    	        dataType : 'json',
@@ -44,10 +47,10 @@ $j(document).ready(function (){
 	    	    });
 	        }
         }else{
-        	totalAmount= totalAmount -(qty * cost);
+        	totalAmount=totalAmount - (qty * cost);
         	var include = 0;
         	var item ={
-        			id,qty,cost,comment,include,store
+        			id,qty,cost,comment,include,store,is_custom
         	};
         	$j.ajax({
     	        url: Allure.AddPurchaseItem,
