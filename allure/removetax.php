@@ -6,6 +6,7 @@ $from = $_GET['from'];
 $to= $_GET['to'];
 $store= $_GET['store'];
 
+
 if(empty($from) || empty($to) || empty($store)){
     die('Please add Store Id ,from & to date limit');
 }
@@ -15,29 +16,34 @@ $from= date("Y-m-d 00:00:00",strtotime($from));
 $to = date("Y-m-d 00:00:00",strtotime($to));
 $orders=Mage::getModel("sales/order")->getCollection()->addAttributeToFilter('store_id',$store)
 ->addAttributeToFilter('created_at', array('from'=>$from, 'to'=>$to))
-->addAttributeToFilter('status', array('complete','processing','pending'));
-$connection = Mage::getSingleton('core/resource')->getConnection('core_write');
-$connection->beginTransaction();
+->addAttributeToFilter('status', array('complete','processing','pending','canceled'));
 
 foreach ($orders as $order){
     try {
         $order=Mage::getModel('sales/order')->load($order->getEntityId());
         if($order->getBaseTaxAmount() > 0){
-            $order->setBaseTaxInvoiced($order->getBaseTaxInvoiced()-$order->getBaseTaxAmount());
-         
-            
+            if($order->getBaseTaxInvoiced() > 0)
+                $order->setBaseTaxInvoiced($order->getBaseTaxInvoiced()-$order->getBaseTaxAmount());
             $order->setBaseTotalPaid($order->getBaseTotalPaid()-$order->getBaseTaxAmount());
-            $order->setBaseTotalInvoiced($order->getBaseTotalInvoiced()-$order->getBaseTaxAmount());
+            if($order->getBaseTotalInvoiced() >0)
+                $order->setBaseTotalInvoiced($order->getBaseTotalInvoiced()-$order->getBaseTaxAmount());
             $order->setBaseGrandTotal($order->getBaseGrandTotal()-$order->getBaseTaxAmount());
             $order->setBaseSubtotalInclTax($order->getBaseSubtotalInclTax()-$order->getBaseTaxAmount());
             $order->setBaseTaxAmount($order->getBaseTaxAmount()-$order->getBaseTaxAmount());
-            
-            $order->setTotalPaid($order->getTotalPaid()-$order->getTaxAmount());
-            $order->setTaxInvoiced($order->getTaxInvoiced()-$order->getTaxAmount());
-            $order->setTotalInvoiced($order->getTotalInvoiced()-$order->getTaxAmount());
+          
+            if($order->getBaseSubtotalCanceled()>0){
+                $order->setBaseSubtotalCanceled($order->getBaseSubtotalCanceled()-$order->getBaseTaxAmount());
+                $order->setBaseTaxCanceled(0);
+            }
+            if($order->getTotalPaid() >0)
+                $order->setTotalPaid($order->getTotalPaid()-$order->getTaxAmount());
+            if($order->getTaxInvoiced() >0)
+                $order->setTaxInvoiced($order->getTaxInvoiced()-$order->getTaxAmount());
+            if($order->getTotalInvoiced() >0)
+                $order->setTotalInvoiced($order->getTotalInvoiced()-$order->getTaxAmount());
             $order->setSubtotalInclTax($order->getSubtotalInclTax()-$order->getTaxAmount());
             $order->setGrandTotal($order->getGrandTotal()-$order->getTaxAmount());
-            $order->setTaxAmount($order->getTaxAmount()-$order->getTaxAmount());
+            $order->setTaxAmount(0);
             
             $items=$order->getAllVisibleItems();
             foreach ($items as $item){
@@ -84,17 +90,14 @@ foreach ($orders as $order){
             }
             $order->save();
             $count++;
-            if($count%10==0){
-                $connection->commit();
-                $connection->beginTransaction();
-            }
+           
             Mage::log('count:'.$count,Zend_log::DEBUG,'remove_tax.log',true);
             Mage::log($order->getIncrementId(),Zend_log::DEBUG,'remove_tax.log',true);
         }
-        $connection->commit();
+        
     } catch (Exception $e) {
         Mage::log("Exception For:".$order->getIncrementId(),Zend_log::DEBUG,'remove_tax.log',true);
-        Mage::log($e->getMessage(),Zend_log::DEBUG,'remove_tax',true);
+        Mage::log($e->getMessage(),Zend_log::DEBUG,'remove_tax.log',true);
     }
 }
 echo "Done";

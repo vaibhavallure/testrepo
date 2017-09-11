@@ -5,9 +5,12 @@
 
 <div class="content-header">
     <h3 class="icon-head"><?php echo $helper->__('Create  Purchase Order')?></h3>
-    
-
+  		
     <button id="create_po_btn" class="create_po_btn" ><?php echo $helper->__('Create Order')?></button>
+     <button type="button"  style="float: right;
+    margin-top: 10px;"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/confirm')?>'">
+  		<?php echo $helper->__('View Items')?></button>
+  		
     <button id="reset_po_btn" class="reset_po_btn" ><?php echo $helper->__('Reset')?></button>
     <button id="add_custom_item" style="float: right;
     margin-top: 10px;" class="add_custom_item" onclick="javascript:openMyPopup()" ><?php echo $helper->__('Add Custom Item')?></button>
@@ -181,6 +184,7 @@ if($podata['items'])
             url:url,
             onClose:function (param, el) {
                // alert('onClose');
+            	getStoredData();
             }
         });
     }
