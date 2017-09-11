@@ -408,7 +408,7 @@ class Amasty_Customerattr_Model_Observer
             'options'      => $options,
             'renderer'     => 'amcustomerattr/adminhtml_renderer_activationStatus',
         );
-        $grid->addColumnAfter('am_is_activated', $column, $after);
+//        $grid->addColumnAfter('am_is_activated', $column, $after);
 
         return $grid;
     }
@@ -644,7 +644,8 @@ class Amasty_Customerattr_Model_Observer
                                     </select>
                                 </td>
                             </tr>';
-            $html = substr_replace($html, $insert, $pos + 5, 0);
+            //removes Account activated attr from form
+           // $html = substr_replace($html, $insert, $pos + 5, 0);
         }
 
         $flag = false;
