@@ -14,7 +14,7 @@
 	  </button>
 	  
 	  
-	  <button data-link="openorders" id="mt-myproduct-openorders" data-tab="tab5" class="tablinks" 
+	  <button data-link="openorders" id="mt-myproduct-openorders" data-tab="tab5" class="tablinks"
 	  	onclick="changeTab(this);">Open Orders
 	  	<span id="total-openorders-count" class="total-orders-count total-count-box"></span>
 	  </button>
@@ -52,7 +52,7 @@
 	  </div>
 	</div>
 	
-	<div id="new-mt-myproduct-openorders" class="tabcontent tab5">
+	<div id="new-mt-myproduct-openorders" class="tabcontent tab5" style="overflow: inherit;">
 	  <div class="mt-my-openorders">
 	  		<?php echo $this->getChildHtml("myaccount_filter");?>
 	  		<?php echo $this->getChildHtml('sales.order.openorder_list')?>
