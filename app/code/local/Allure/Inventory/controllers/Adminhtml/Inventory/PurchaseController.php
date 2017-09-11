@@ -373,11 +373,11 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         $backDate = date_format($backDate, "jS F, Y");
 
                         if (!$item->getIsCustom()) {
-                         /*    Mage::getSingleton('catalog/product_action')->updateAttributes(
+                            Mage::getSingleton('catalog/product_action')->updateAttributes(
                                 $childProductArr
                             , array(
                                 'backorder_time' => $backDate
-                            ), $storeId); */
+                            ), $storeId);
                         }
                       }
                         
