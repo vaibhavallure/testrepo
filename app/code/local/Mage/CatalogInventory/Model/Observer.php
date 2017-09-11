@@ -382,17 +382,17 @@ class Mage_CatalogInventory_Model_Observer
                 $increaseOptionQty = ($quoteItem->getQtyToAdd() ? $quoteItem->getQtyToAdd() : $qty) * $optionValue;
 
                 $stockItem = $option->getProduct()->getStockItem();
+                
+                /* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
+                if (!$stockItem instanceof Mage_CatalogInventory_Model_Stock_Item) {
+                	Mage::throwException(
+                		Mage::helper('cataloginventory')->__('The stock item for Product in option is not valid.')
+                		);
+                }
 
                 if ($quoteItem->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) {
                     $stockItem->setParentItem($quoteItem);
                     $stockItem->setProductName($quoteItem->getName());
-                }
-
-                /* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
-                if (!$stockItem instanceof Mage_CatalogInventory_Model_Stock_Item) {
-                    Mage::throwException(
-                        Mage::helper('cataloginventory')->__('The stock item for Product in option is not valid.')
-                    );
                 }
 
                 /**
