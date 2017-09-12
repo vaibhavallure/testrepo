@@ -865,7 +865,6 @@ if (empty($posOrderId)) {
 
 switch ($action) {
 	case 'process':
-		$order = $this->order->load($orderId);
 		$orderProcessor->place($posOrderId);
 		break;
 }
