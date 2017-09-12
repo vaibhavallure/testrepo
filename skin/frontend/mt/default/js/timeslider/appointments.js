@@ -24,13 +24,17 @@ var count = 1;
 	var request = {
  				"qty":qty,
  				"store":storeid,
- 				"date":todaysDate
+ 				"date":todaysDate,
+ 				"id":Allure.appointmentId
  	 		};
  	 jQuery.ajax({
         	url : Allure.ajaxGetTimeUrl,
         	dataType : 'json',
  			type : 'POST',
  			data: {request:request},
+ 			beforeSend: function() { jQuery('#appointment_loader').show(); },
+	        complete: function() { jQuery('#appointment_loader').hide(); },
+
  			success : function(response){
  				jQuery("#pick_ur_time_div").html(response.output);
  				window.sample = 30;
@@ -63,13 +67,17 @@ var count = 1;
  	var request = {
   				"qty":qty,
   				"store":storeid,
-  				"date":todaysDate
+  				"date":todaysDate,
+  				"id":Allure.appointmentId
   	 		};
   	 jQuery.ajax({
          	url : Allure.ajaxGetTimeUrl,
          	dataType : 'json',
   			type : 'POST',
   			data: {request:request},
+  			beforeSend: function() { jQuery('#appointment_loader').show(); },
+	        complete: function() { jQuery('#appointment_loader').hide(); },
+
   			success : function(response){
   				jQuery("#pick_ur_time_div").html(response.output);
   				window.sample = 30;
@@ -124,9 +132,49 @@ var count = 1;
 	 		url : Allure.ajaxGetWorkingDaysUrl,
 			type : 'POST',
 			dataType:'json',
-			data: {storeid:storeid},
+			data: {storeid:storeid,id:Allure.appointmentId},
+			beforeSend: function() { jQuery('#appointment_loader').show(); },
+	        complete: function() { jQuery('#appointment_loader').hide(); },
+
 			success : function(response){
-				jQuery("#fetchpickurday").html(response.output);				
+				jQuery("#fetchpickurday").html(response.output);
+				if(response.schedule)
+				  jQuery("#piercer_schedule").html(response.schedule);
+				 //If the customer come from modified onclick link getthe date and show time start
+
+				 if(document.getElementById("datepicker-13_hidden")!= null )
+				 {
+					var todaysDate = document.getElementById("datepicker-13_hidden").value;	
+					//ajax start to pass the selected date to get the time
+					var qty = document.getElementById("count").value;
+					var storeid = document.getElementById("store-id").value;
+					var request = {
+				 				"qty":qty,
+				 				"store":storeid,
+				 				"date":todaysDate,
+				 				"id":Allure.appointmentId
+				 	 		};
+					console.log("sc");
+					 console.log(Allure.appointmentId);
+				 	 jQuery.ajax({
+				        	url : Allure.ajaxGetTimeUrl,
+				        	dataType : 'json',
+				 			type : 'POST',
+				 			data: {request:request},
+				 			beforeSend: function() { jQuery('#appointment_loader').show(); },
+					        complete: function() { jQuery('#appointment_loader').hide(); },
+
+				 			success : function(response){
+				 				
+				 				jQuery("#pick_ur_time_div").html(response.output);
+				 				window.sample = 30;
+				 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
+				 				simple.sliderDemo();
+				 			}
+				        });
+					//ajax end
+				 }
+				 //If the customer come from modified onclick link getthe date and show time end
 			}
      });
 	 //ajax start to get the working days of piercers according to store
@@ -136,39 +184,52 @@ var count = 1;
 	 //If store change pickurtime should display also change acc to store and date 
 	 jQuery("#store-id").on("change",function(){
 		 	//jQuery("#pick_ur_time_div").empty();
-		 	var todaysDate = document.getElementById("datepicker-13_hidden").value;	
+		 	
 			//ajax start to pass the selected date to get the time
 			var qty = document.getElementById("count").value;
 			var storeid = document.getElementById("store-id").value;
-			var request = {
-		 				"qty":qty,
-		 				"store":storeid,
-		 				"date":todaysDate
-		 	 		};
-		 	 jQuery.ajax({
-		        	url : Allure.ajaxGetTimeUrl,
-		        	dataType : 'json',
-		 			type : 'POST',
-		 			data: {request:request},
-		 			success : function(response){
-		 				jQuery("#pick_ur_time_div").html(response.output);
-		 				window.sample = 30;
-		 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
-		 				simple.sliderDemo();
-		 			}
-		        });
-			//ajax end
-		 	 
+			 
 		 	//ajax start to get the working days of piercers according to store			 	
 			 	jQuery.ajax({
 			 		url : Allure.ajaxGetWorkingDaysUrl,			 		
 					type : 'POST',
 					dataType:'json',
-					data: {storeid:storeid},
+					data: {storeid:storeid,id:Allure.appointmentId
+						},
+					beforeSend: function() { jQuery('#appointment_loader').show(); },
+			        complete: function() { jQuery('#appointment_loader').hide(); },
 					success : function(response){
 						jQuery("#fetchpickurday").html(response.output);
+						if(response.schedule)
+							jQuery("#piercer_schedule").html(response.schedule);
+						var todaysDate = document.getElementById("datepicker-13_hidden").value;
+						var request = {
+				 				"qty":qty,
+				 				"store":storeid,
+				 				"date":todaysDate,
+				 				"id":Allure.appointmentId
+				 	 		};
+				 	 jQuery.ajax({
+				        	url : Allure.ajaxGetTimeUrl,
+				        	dataType : 'json',
+				 			type : 'POST',
+				 			data: {request:request},
+				 			beforeSend: function() { jQuery('#appointment_loader').show(); },
+					        complete: function() { jQuery('#appointment_loader').hide(); },
+
+				 			success : function(response){
+				 				jQuery("#pick_ur_time_div").html(response.output);
+				 				window.sample = 30;
+				 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
+				 				simple.sliderDemo();
+				 			}
+				        });
+					//ajax end
+						
 					}
 		     });
+			
+		 	
 			 //ajax start to get the working days of piercers according to store
 		 	 
 		 	 
@@ -177,32 +238,5 @@ var count = 1;
 	 
 	 
 	 
-	 //If the customer come from modified onclick link getthe date and show time start
-
-	 if(document.getElementById("datepicker-13_hidden")!= null )
-	 {
-		var todaysDate = document.getElementById("datepicker-13_hidden").value;	
-		//ajax start to pass the selected date to get the time
-		var qty = document.getElementById("count").value;
-		var storeid = document.getElementById("store-id").value;
-		var request = {
-	 				"qty":qty,
-	 				"store":storeid,
-	 				"date":todaysDate
-	 	 		};
-	 	 jQuery.ajax({
-	        	url : Allure.ajaxGetTimeUrl,
-	        	dataType : 'json',
-	 			type : 'POST',
-	 			data: {request:request},
-	 			success : function(response){
-	 				jQuery("#pick_ur_time_div").html(response.output);
-	 				window.sample = 30;
-	 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
-	 				simple.sliderDemo();
-	 			}
-	        });
-		//ajax end
-	 }
-	 //If the customer come from modified onclick link getthe date and show time end
+	
 }); 

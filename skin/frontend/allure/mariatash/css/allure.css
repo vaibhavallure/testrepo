@@ -2124,14 +2124,12 @@ iframe[name=google_conversion_frame] {display:none}
 *		Currency Switcher End
 *	======================================
 */
-
-
-
+input.special-inst-product {
+    width: 100%;
+}
 
 
 /* popop css added by Ajay */
-
-
 
 .popupLoginModel {
 	position: fixed;

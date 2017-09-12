@@ -55,8 +55,13 @@ $embedded = $this->getRequest()->getParam('embedded');
 	</div>
 	<!-- </div> -->
 </div>
-
+<div style="display:none;" id="appointment_loader" class="loading">Loading&#8230;</div>
 <script type="text/javascript">
+if (typeof Allure == "undefined") {
+    var Allure = {};
+} 
+Allure.appointmentId = '<?php echo $this->getRequest()->getParam('id')?>';
+//console.log(Allure.appointmentId);
 Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
 Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 </script>

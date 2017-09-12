@@ -122,8 +122,9 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
    		$value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId())); */
    			
    		
-   		$block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store']);
+   		$block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store'])->setData("id",$request['id']);
    		$output = $block->toHtml();
+   		
    		$result['success'] = true;
    		$result['msg'] = $time;
    		$result['output'] = $output;
@@ -139,6 +140,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     public function saveAction ()
     {
     	$post_data = $this->getRequest()->getPost();
+    	
     	$embeded = $this->getRequest()->getParam('embedded');
     	$storep = $this->getRequest()->getParam('store');
     	
@@ -159,6 +161,11 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     		Mage::log(" ***********Register appointment**********",Zend_Log::DEBUG,'appointments-register.log',true);
     		Mage::log($post_data,Zend_Log::DEBUG,'appointments-register.log',true);
     		try {
+    		    if(isset($post_data['id'])){
+    		        $old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
+    		        if(empty($post_data['app_date']))
+    		            $post_data['app_date']=date('m/d/Y' ,strtotime($old_appointment->getAppointmentStart()));
+    		    }
     			 $post_data['appointment_start'] = $post_data['app_date']." ". $post_data['appointment_start'];
     			 $post_data['appointment_start'] = strtotime($post_data['appointment_start'].":00");
     			 $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
@@ -174,9 +181,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     			 $phno = preg_replace('/\s+/', '', $post_data['phone']);//remove the whitespaces from phone no
     			 $post_data['phone'] = $phno;
     			 $storeId=$post_data['store_id'];
-    			 if(isset($post_data['id'])){
-    			 	$old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
-    			 }
+    			 
     			 $model = Mage::getModel('appointments/appointments')->addData($post_data)
     				->save();
     				
@@ -198,24 +203,33 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     			 
     			if($old_appointment)
     			{
-	         		//If SMS is checked for notify me.
-    				$oldAppointmentStart=date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
-    				$oldAppointmentEnd=date("F j, Y H:i", strtotime($old_appointment->getAppointmentEnd()));
-    				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-    				$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
-    				
-	    			if($post_data['notification_pref'] === '2')
-	    		    {
-	    		    	Mage::log("Modifing appointment",Zend_Log::DEBUG,'appointments',true);
-	    			    $smsText = Mage::getStoreConfig("appointments/api/smstext_modified",$storeId);
-	    				$smsText.= " ".$appointmentStart;
-	    			    if($post_data['phone']){
-	    				   $smsdata = Mage::helper('appointments')->sendsms($post_data['phone'],$smsText,$storeId);
-	    				   Mage::log("Appointment Modification Email Sent",Zend_Log::DEBUG,'appointments',true);
-	    				   $model->setSmsStatus($smsdata);
-	    				   $model->save();
-	    				   }
-	    				}
+    	         		//If SMS is checked for notify me.
+        				$oldAppointmentStart=date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
+        				$oldAppointmentEnd=date("F j, Y H:i", strtotime($old_appointment->getAppointmentEnd()));
+        				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+        				$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+        				
+    	    			if($post_data['notification_pref'] === '2')
+    	    		    {
+    	    		    
+    	    			    $smsText = Mage::getStoreConfig("appointments/api/smstext_modified",$storeId);
+    	    			  
+    	    			    $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+    	    			    $time=date('h:i A', strtotime($model->getAppointmentStart()));
+    	    			    $smsText=str_replace("(time)",$time,$smsText);
+    	    			    $smsText=str_replace("(date)",$date,$smsText);
+    	    			    
+    	    			    Mage::log($smsText,Zend_Log::DEBUG,'appointments',true);
+    	    			    
+    	    			    //Do not send mofify link for Modify again
+    	    			    
+    	    			    if($post_data['phone']){
+    	    			       $smsdata = Mage::helper('appointments')->sendsms($post_data['phone'],$smsText,$storeId);
+    	    				   Mage::log("Appointment Modification Email Sent",Zend_Log::DEBUG,'appointments',true);
+    	    				   $model->setSmsStatus($smsdata);
+    	    				   $model->save();
+    	    				}
+    	    		    }
 	    				$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
 	    				
 	    				//Notifiy Customer by Email
@@ -350,7 +364,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     					{
     						Mage::log("New appointment Bookig",Zend_Log::DEBUG,'appointments',true);
     						$smsText = Mage::getStoreConfig("appointments/api/smstext_book",$storeId);
-    						$smsText.= " ".$appointmentStart;
+    						$date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+    						$time=date('h:i A', strtotime($model->getAppointmentStart()));
+    						$smsText=str_replace("(time)",$time,$smsText);
+    						$smsText=str_replace("(date)",$date,$smsText);
+    						$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
+    						$shortUrl=Mage::helper('appointments')->getShortUrl($apt_modify_link);
+    						$smsText=str_replace("(modify_link)",$shortUrl,$smsText);
+    						Mage::log($smsText,Zend_Log::DEBUG,'appointments',true);
     						if($model->getPhone()){
     							$smsdata = Mage::helper('appointments')->sendsms($model->getPhone(),$smsText,$storeId);
     							$model->setSmsStatus($smsdata);
@@ -604,13 +625,22 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 		    			//$smsText = "Your Appointment is Cancelled successfully";
 	    				$smsText = Mage::getStoreConfig("appointments/api/smstext_cancel",$storeId);
 	    				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-	    				$smsText .= " ".$appointmentStart;
+	    				$date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+	    				$time=date('h:i A', strtotime($model->getAppointmentStart()));
+	    				
+	    				$booking_link= Mage::getBaseUrl('web').'appointments/';
+	    				$booking_link=Mage::helper('appointments')->getShortUrl($booking_link);
+	    				$smsText=str_replace("(time)",$time,$smsText);
+	    				$smsText=str_replace("(date)",$date,$smsText);
+	    				$smsText=str_replace("(book_link)",$booking_link,$smsText);
+	    				
+	    				Mage::log($smsText,Zend_Log::DEBUG,'appointments',true);
 		    			if($model->getPhone()){	    			
 		    				$phno_forsms = preg_replace('/\s+/', '', $model->getPhone());
 		    				$smsdata = Mage::helper('appointments')->sendsms($phno_forsms,$smsText,$storeId);
 		    				$model->setSmsStatus($smsdata);
 		    				$model->save();
-		    				Mage::log(" sms send Cancelled ",Zend_Log::DEBUG,'appointments',true);
+		    				
 		    			}
 	    			}
 	    			//SMS CODE TO CANCEL Appointment end
@@ -726,7 +756,15 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     {
     	$result = array('success' => false);
     	$storeid = $this->getRequest()->getParam('storeid');
-    	 
+    	$id = $this->getRequest()->getParam('id');
+    	if($id)
+    	{
+    	    $models = Mage::getModel('appointments/appointments')->load($id);
+    	    //$models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email)->addFieldToFilter('app_status',array('in'=>array(Allure_Appointments_Model_Appointments::STATUS_REQUEST,Allure_Appointments_Model_Appointments::STATUS_ASSIGNED)));
+    	    if($models->getId())
+    	        Mage::register('apt_modify_data',$models);
+    	   
+    	}
     	//To modify the appointment get the data from registry end
     	$piercers = Mage::getModel('appointments/piercers')->getCollection()
     				->addFieldToFilter('store_id', array('eq' => $storeid))
@@ -755,9 +793,10 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     	$block = $this->getLayout()->createBlock('core/template','appointments_pickurday',array('template' => 'appointments/pickurday.phtml'))->setData("workingdays",$jsonDATA);
     	
     	$output = $block->toHtml();
-        
+    	$schedule= Mage::getStoreConfig("appointments/piercer_schedule/schedule",$storeid);
     	$result['success'] = true;
     	$result['output'] = $output;
+    	$result['schedule'] = $schedule;
     	 
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }

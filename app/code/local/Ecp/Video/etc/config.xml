@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ecp_Video>
-        <version>0.1.1</version>
+        <version>0.1.2</version>
         </Ecp_Video>
     </modules>
     <frontend>

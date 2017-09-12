@@ -597,6 +597,18 @@
                 <open_cash_drawer>0</open_cash_drawer>
                 <requires_signature>0</requires_signature>
             </bakerloo_alipay>
+            <bakerloo_wigroup>
+                <active>0</active>
+                <model>bakerloo_payment/wigroup</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>POS wiGroup</title>
+                <allowspecific>0</allowspecific>
+                <invoice>1</invoice>
+                <ship>1</ship>
+                <open_cash_drawer>0</open_cash_drawer>
+                <requires_signature>0</requires_signature>
+            </bakerloo_wigroup>
         </payment>
     </default>
     <frontend>

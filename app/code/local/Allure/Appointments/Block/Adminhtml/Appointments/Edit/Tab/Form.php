@@ -1,6 +1,6 @@
 <?php
 
-class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
+class Allure_Appointments_Block_Adminhtml_Appointments_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
 {
 	protected function _prepareForm ()
 	{
@@ -13,13 +13,13 @@ class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Edit_Tab_Form exte
 	
 		$fieldset->addField("firstname", "text",
 				array(
-						"label" => Mage::helper("appointments")->__("FirstName"),
+						"label" => Mage::helper("appointments")->__("First Name"),
 						"name" => "firstname"
 				));
 		
 		$fieldset->addField("lastname", "text",
 				array(
-						"label" => Mage::helper("appointments")->__("LastName"),
+						"label" => Mage::helper("appointments")->__("Last Name"),
 						"name" => "lastname"
 				));
 		

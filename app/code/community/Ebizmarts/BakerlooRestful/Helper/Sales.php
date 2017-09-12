@@ -62,11 +62,8 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         }
 
         if ($onlyQuote) {
-            if ($customerId) {
-                $this->getQuote()->setCustomerId($customerId);
-            } elseif ($customerExistsByEmail) {
-                $this->getQuote()->setCustomerId($customerId);
-                $customerId = $customerExistsByEmail->getId();
+            if ($customer->getId()) {
+                $this->getQuote()->setCustomer($customer);
             }
 
             $this->collectQuoteTotals();
@@ -255,15 +252,16 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                     //Rewards integrations
                     $this->applyRewardsToQuoteItem($_product, $product, $quoteItem);
 
-                    if (isset($_product['guid'])) {
-                        $quoteItem->setPosItemGuid($_product['guid']);
-                    }
                 } catch (Exception $qex) {
                     $this->throwBuildQuoteException("An error occurred, Product SKU: {$product->getSku()}. Error Message: {$qex->getMessage()}");
                 }
 
                 if (is_string($quoteItem)) {
                     $this->throwBuildQuoteException($quoteItem . ' Product ID: ' . $_product['product_id']);
+                }
+
+                if (isset($_product['guid'])) {
+                    $quoteItem->setPosItemGuid($_product['guid']);
                 }
 
                 //@TODO: Discount amount per line, see discount.
@@ -870,6 +868,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
             'discount_amount'         => round($discountAmountOriginal * $qty, 2, PHP_ROUND_HALF_UP),
             'tax_amount'              => (float)$quoteItem->getTaxAmount(),
             'tax_percent'             => (double)$quoteItem->getTaxPercent(),
+            'tax_of_discount'         => (float)$quoteItem->getHiddenTaxAmount(),
             'grand_total'             => round($itemTotal, 2, PHP_ROUND_HALF_UP),
             'applied_vats'            => $appliedVats,
             'product'                 => Mage::getModel('bakerloo_restful/api_products')->_createDataObject((int)$quoteItem->getProductId())

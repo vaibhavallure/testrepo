@@ -36,7 +36,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 			this.viewMode = 'days';
 			this.selected = (this.date.getMonth() + 1) + "/" + this.date.getDate() + "/" + this.date.getFullYear();
 			//this.minDate = this.calendar.prev().data('mindate');
-			this.minDate = this.selected; //To show previous date should be disable of current date  by bhagya
+			this.minDate = this.today; //To show previous date should be disable of current date  by bhagya
 			this.maxDate = this.calendar.prev().data('maxdate');
 			
 			if(options.mode === 'calendar')
@@ -349,16 +349,24 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 					cal.push(temp);
 				}
 
+				var selDateObj = new Date($('#datepicker-13_hidden').val());
+				var selectDate = selDateObj.getDate();
+				var selectMonth = selDateObj.getMonth();
 				$.each(cal, function(i, v){
 					var row = $('<tr></tr>'), l = v.length;
-					for(var i = 0; i < l; i++) { row.append(v[i]); }
+					for(var i = 0; i < l; i++) { 
+						// Preselected Condition Allure
+						if(v[i][0].innerText == selectDate && that.date.getMonth() == selectMonth)
+							v[i].addClass('selectedDate');
+						row.append(v[i]); 
+					}
 					tBody.append(row);
 				});
 				
 				//Get the todaysDate by bhagyashri =Onload get the pick ur time by setting todays date to hidden date 
 				this.todayBySysDate = new Date();	//system date
 				var todaysDate = (this.todayBySysDate.getMonth() + 1) + "/" + this.todayBySysDate.getDate() + "/" + this.todayBySysDate.getFullYear();
-				if(document.getElementById("datepicker-13_hidden").value ==='')
+				/*if(document.getElementById("datepicker-13_hidden").value ==='')
 				{
 					document.getElementById("datepicker-13_hidden").value = todaysDate;	
 					
@@ -384,7 +392,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				 			}
 				        });
 					//ajax end
-				}
+				}*/
 				var sysDate ='';
 				//var sysDate = "Today: " + daysofweek[that.today.getDay()] + ", " + months[that.today.getMonth()] + " " + that.today.getDate() + ", " + that.today.getFullYear();
 				tBody.append('<tr><td colspan="7" id="today">' + sysDate + '</td></tr>').appendTo(that.calendar);

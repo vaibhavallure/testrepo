@@ -67,7 +67,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Stores extends Ebizmarts_BakerlooRestf
                                 'default_tax_dest_region'    => Mage::getStoreConfig('tax/defaults/region', $store),
                                 'default_tax_dest_postcode'  => Mage::getStoreConfig('tax/defaults/postcode', $store),
                                 'based_on'                   => $store->getConfig('tax/calculation/based_on'),
-                                'default_customer_tax_class' => $this->getModel('tax/calculation')->getDefaultCustomerTaxClass($store),
+                                'default_customer_tax_class' => $this->getDefaultTaxClassId($store),
                                 'apply_discount_on_prices'   => (int)$store->getConfig('tax/calculation/discount_tax'),
                             )
                         ),
@@ -105,5 +105,17 @@ class Ebizmarts_BakerlooRestful_Model_Api_Stores extends Ebizmarts_BakerlooRestf
         }
 
         return $result;
+    }
+
+    private function getDefaultTaxClassId($store) {
+        $useMagento = $store->getConfig("bakerloorestful/catalog/guest_tax_rate");
+
+        if ($useMagento) {
+            $taxClassId = $this->getModel('tax/calculation')->getDefaultCustomerTaxClass($store);
+        } else {
+            $taxClassId = $this->getModel('customer/group')->getTaxClassId(Mage_Customer_Model_Group::NOT_LOGGED_IN_ID);
+        }
+
+        return $taxClassId;
     }
 }
