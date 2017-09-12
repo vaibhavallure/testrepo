@@ -25,7 +25,7 @@
  */
 ?>
 </form>
-<div class="discount">        
+<div class="discount <?php echo (strlen($this->getCouponCode()))?"remove-btn-enb":""?>">        
     <h2><?php echo $this->__('Promo Code') ?></h2>
     <div class="discount-form">
 		<form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost') ?>" method="post">
@@ -38,11 +38,14 @@
             <div class="buttons-set">                
                 <?php if(strlen($this->getCouponCode())): ?>
                     <button type="button" title="<?php echo $this->__('Cancel Coupon') ?>" class="button" onclick="applyCoupan(true);/*discountForm.submit(true)*/" value="<?php echo $this->__('Cancel Coupon') ?>"><span><span><?php echo $this->__('Remove') ?></span></span></button>
-                    <p class="youhave validation-advice">Promo Code Applied</p>
+                    
                 <?php else: ?>
                     <button type="button" title="<?php echo $this->__('Apply') ?>" class="button" onclick="applyCoupan()/*discountForm.submit()*/" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>                
                 <?php endif;?>
             </div>
+            <?php if(strlen($this->getCouponCode())): ?>
+            	<p class="youhave validation-advice">Promo Code Applied</p>
+            <?php endif;?>
 		</form>
     </div>
 	<script type="text/javascript">
