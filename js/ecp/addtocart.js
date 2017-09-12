@@ -62,7 +62,7 @@ function addToShoppingCart(button, formId) {
                 datos = '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
 		
               //allure code start
-               /* var super_attribute = {};
+                var super_attribute = {};
                 var options= {};
                 var optionStr = '';
                 var formData = jQuery('#product_addtocart_form').serializeArray();
@@ -86,10 +86,12 @@ function addToShoppingCart(button, formId) {
                 	 optionStr = optionStr + '"options":'+JSON.stringify(options);
                  }
                     
-                 stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":"",'+optionStr+'}';*/
+                 stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":"",'+optionStr+'}';
+                 
+                 
                  //allure code end   
                 
-                var stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":""}';
+                //var stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":""}';
                 var dataSend = JSON.parse(stringJSON);
                 var urlAdd2Cart = jQuery("#product_addtocart_form").attr('action');
             } else {
