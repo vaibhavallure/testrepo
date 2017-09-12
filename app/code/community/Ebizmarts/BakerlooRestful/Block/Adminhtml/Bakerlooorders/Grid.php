@@ -58,6 +58,15 @@ class Ebizmarts_BakerlooRestful_Block_Adminhtml_Bakerlooorders_Grid extends Mage
                 'index'    => 'remote_ip'
             )
         );
+       
+        $this->addColumn('store_id', array(
+            'header'    =>$helper->__('Store'),
+            'sortable'  =>True,
+            'index'     =>'store_id',
+            'type'      => 'options',
+            'options'   => Mage::getModel('core/store')->getCollection()->toOptionHash()
+            
+        ));
 
         $this->addColumn(
             'order_payment_method',

@@ -138,17 +138,25 @@ class Amasty_Customerattr_Model_Rewrite_Customer
                     || $activated == self::ACTIVATION_STATUS_DEACTIVATED))
                 && ($loginForm)
             ) {// user tries to log in (otherwise we're logged in already and we've changed user via admin panel or etc)
-                Mage::getSingleton('customer/session')->addError(
-                    Mage::helper('amcustomerattr')->__(
-                        'Account is not active yet.'
-                    )
-                );
-                $this->setIsLoggedIn(true);
-                Mage::getSingleton('core/session')->logout();
-                Mage::app()->getFrontController()->getResponse()->setRedirect(
-                    Mage::getUrl('customer/account')
-                );
-                return $this;
+//                Mage::getSingleton('customer/session')->addError(
+//                    Mage::helper('amcustomerattr')->__(
+//                        'Account is not active yet.'
+//                    )
+//                );
+//                $this->setIsLoggedIn(true);
+//                Mage::getSingleton('core/session')->logout();
+//                Mage::app()->getFrontController()->getResponse()->setRedirect(
+//                    Mage::getUrl('customer/account')
+//                );
+//                return $this;
+                $act=Mage::getModel('customer/customer')->load(
+                    $this->getId());
+//                )->getAmIsActivated();
+                $act->setAmIsActivated(2);
+                $act->save();
+                Mage::log($act->getAmIsActivated(),Zend_Log::DEBUG,'demo.log',true);
+
+
             }
 
         }

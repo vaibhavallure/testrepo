@@ -16,8 +16,7 @@ if($fetch_model){
 	<label class="pickurtimeLable" for="pick_your_time" >Pick Your Time:</label><br/>
 
 <?php if (!$this->getData("timing")):?>
-
-	<div class="notfreepeiercer validation-advice">Sorry!! The piercing slot is not available booking for specified location and date.</div>
+	<div class="notfreepeiercer validation-advice">Walk-ins are welcome but currently all appointments are booked for the selected date.</div>
 <?php else: ?>
 
 	<div>
@@ -116,7 +115,7 @@ if($fetch_model){
 			/* If piercer is not free logic start*/
 			if(empty($collection->getData())){
 			
-				echo "<div class='notfreepeiercer validation-advice'>".$this->__('Sorry Appointment is Not available, Please try changing Store OR Date.')."</div>";
+				echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
 			}
 			/* If piercer is not free logic end*/
 		}
@@ -131,6 +130,7 @@ if($fetch_model){
 		
 		$isFour = 0;
 		$countSlot = 0;
+		$noSlot=true;
 		
 		for($i=0;$i< $totalSlot;$i++)
 		{	
@@ -182,7 +182,7 @@ if($fetch_model){
 						
 				$workingHours = $piercer->getWorkingHours();
 				$workingHours = unserialize($workingHours);
-				$noSlot=true;
+				
 				//Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
 				foreach ($workingHours as $workSlot)
 				{
@@ -192,7 +192,7 @@ if($fetch_model){
 						continue;
 						
 					}
-					$noSlot=false;
+					
 					$workStart = $helper->getTimeByValue($workSlot['start']);
 					//$workEnd = $workSlot['end'].":00";
 					$workEnd = $helper->getTimeByValue($workSlot['end']);
@@ -230,6 +230,7 @@ if($fetch_model){
 						{
 							$show = true;
 							$piercerAllocated = $piercer->getId();
+							$noSlot=false;
 							break 2;
 						}
 						elseif (count($appCount)<=$allocatedApps)
@@ -237,6 +238,7 @@ if($fetch_model){
 							$show = true;
 							$allocatedApps = count($appCount);
 							$piercerAllocated = $piercer->getId();
+							$noSlot=false;
 						}
 					}
 				 
@@ -312,7 +314,7 @@ if($fetch_model){
 		}
 		
 		if($noSlot){
-			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Sorry Appointment is Not available, Please try changing Store OR Date.')."</div>";
+			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
 		}
 		echo "</ul>";
 		echo "<div class='clearfix'></div> <a class='prev apt-prev' id='foo2_prev' href='#'><span>prev</span></a> 

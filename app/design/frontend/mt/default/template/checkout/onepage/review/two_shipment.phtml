@@ -8,13 +8,8 @@
 
 <?php
 		$count = $count+1; 
-		/* $qoute = Mage::getModel('sales/quote')
-        			->load(Mage::getSingleton('checkout/session')->getOrdered());
-        Mage::getSingleton('checkout/session')->replaceQuote($qoute);
-        $quote = Mage::getSingleton('checkout/session')->getQuote();
-        $quote->collectTotals()->save(); */
         
-        $quote = Mage::getSingleton("checkoutstep/ordered_session")->getQuote();
+        $quote = Mage::getSingleton("allure_multicheckout/ordered_session")->getQuote();
         $quote->collectTotals()->save();
         
         ?>
@@ -113,15 +108,9 @@ switch ($payment->getMethod()) {
 ?>
 
  <?php 
- 		$count = $count+1; 
- 		/* Mage::getSingleton('checkout/session')->clear();
- 		$qoute1 = Mage::getModel('sales/quote')
-        			->load(Mage::getSingleton('checkout/session')->getBackorder());
-        Mage::getSingleton('checkout/session')->replaceQuote($qoute1);
-        $quote = Mage::getSingleton('checkout/session')->getQuote();
-        $quote->collectTotals()->save(); */
+ 		$count = $count+1;
         
-        $quote1 = Mage::getSingleton("checkoutstep/backordered_session")->getQuote();
+        $quote1 = Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote();
         $quote1->collectTotals()->save();
         ?>
 
