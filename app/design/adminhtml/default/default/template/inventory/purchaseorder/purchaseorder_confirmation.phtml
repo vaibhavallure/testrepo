@@ -24,7 +24,9 @@ print_r($orderItems); */
 
     <button id="create_po_btn" class="create_po_btn" ><?php echo $helper->__('Create Order')?></button>
     <button id="reset_po_btn" class="reset_po_btn" ><?php echo $helper->__('Reset')?></button>
-    <button id="reset_po_btn" class="reset_po_btn" ><?php echo $helper->__('Add Custom Item')?></button>
+    <button type="button" style="float: right;
+    margin-top: 10px;" onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/new')?>'">
+  		<?php echo $helper->__('Add More Items')?></button>
 </div>
 
 <div class="success" style="display: none;"></div>
@@ -72,30 +74,37 @@ print_r($orderItems); */
 
         <?php
         foreach ($orderItems as $item):
-            $product = Mage::getModel ( 'catalog/product' )->setStoreId($stockId)->load ( $item['item_id'] );
-
+            if ($item['is_custom']) {
+                $product = Mage::getModel('inventory/customitem')->load($item['item_id']);
+                $thumnailURL='';
+            } else {
+                $product = Mage::getModel('catalog/product')->setStoreId($stockId)->load($item['item_id']);
+             
+                $thumnailURL=Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(75);
+            }
             ?>
             <tr id="inventory-row-<?php echo $product->getId(); ?>" class="inventory_tr">
                 <td><?php echo $product->getSku();?></td>
-                <td><img style="width: 75px; height: 75px;" class="product_inventory_thumbnail" src="<?php  echo  Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(75);?>"/></td>
+                <?php ?>
+                <td><img style="width: 75px; height: 75px;" class="product_inventory_thumbnail" src="<?php  echo $thumnailURL  ;?>"/></td>
                 <td><?php echo $product->getName();?></td>
                 <td><?php echo $helper->getVendorName($product->getPrimaryVendor());?></td>
 
-                <?php
-                $inven=Mage::getModel('cataloginventory/stock_item')
-                    ->loadByProductAndStock($product,$stockId)
-                ?>
+               
                 <td>
                     <div>
                         <label><?php echo round($item['qty'])?></label>
+                       <input id="max_qty_<?php  echo $product->getId() ?>" style="width:50px"  
+					 		name="qty[<?php echo $product->getId() ?>][<?php echo "max_qty" ?>]" 
+					 		type="text" value="<?php echo round($item['qty'])?>"/>
                     </div>
                 </td>
                 <td>
                     <div>
 							<span>
 								<?php
-                                if($product->getCost()){
-                                    echo  round($product->getCost(),2);
+								if($item['cost']){
+								    echo  round($item['cost'],2);
                                 }else {
                                     echo "0";
                                 }
@@ -104,10 +113,11 @@ print_r($orderItems); */
                     </div>
                     <input id="cost_<?php  echo $product->getId() ?>" style="width:50px"
                            type="hidden" name="qty[<?php echo $product->getId() ?>][<?php echo "cost" ?>]"
-                           type="text" value="<?php echo round($product->getCost())?>" />
+                           type="text" value="<?php echo round($item['cost'])?>" />
                 </td>
                 <td>
                     <div>
+                    	<input type="hidden" id="is_custom_<?php echo $product->getId()?>"name="qty[<?php echo $product->getId() ?>][<?php echo "is_custom" ?>]" value="<?php echo $item['is_custom']?>">
                         <textarea id="comment_<?php echo $product->getId()?>" cols="15" rows="3"  name="qty[<?php echo $product->getId() ?>][<?php echo "admin_comment" ?>]"/><?php echo $item['comment']?></textarea>
                     </div>
                 </td>
@@ -119,35 +129,7 @@ print_r($orderItems); */
             </tr>
 
         <?php endforeach ;?>
-        <tr id="inventory-row-custom" class="inventory_tr">
-            <td><textarea type="text" name="custom-product-sku"></textarea></td>
-            <td><img  class="product_inventory_thumbnail" /></td>
-            <td><textarea type="text" name="custom-product-name"></textarea></td>
-            <td><textarea type="text" name="custom-product-vendor"></textarea></td>
-
-
-            <td>
-                <div>
-                    <label><textarea type="text" name="custom-product-qty"></textarea></label>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <label><textarea type="text" name="custom-product-cost"></textarea></label>
-                </div>
-
-            </td>
-            <td>
-                <div>
-                    <textarea id="comment_<?php echo $product->getId()?>" cols="15" rows="3"  name="qty[<?php echo $product->getId() ?>][<?php echo "admin_comment" ?>]"/></textarea>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <input id="<?php echo $product->getId()?>" type="checkbox" name="inclide"/>
-                </div>
-            </td>
-        </tr>
+       
     </table>
     <div class="pager-inventory">
         <?php echo $this->getPagerHtml(); ?>

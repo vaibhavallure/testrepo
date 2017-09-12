@@ -271,7 +271,7 @@ class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_Bakerloo
         foreach ($productsById as $_id => $_products) {
 
             foreach ($_products as $_product) {
-            		if ($productItems && !isset($productItems[$_id])) {
+            		if (!$productItems || !isset($productItems[$_id])) {
             			$this->throwBuildQuoteException("Product ID: {$_id} does not exist.");
             		}
             		
