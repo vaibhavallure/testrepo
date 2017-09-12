@@ -41,8 +41,8 @@
         <col />
         <col width="1" />
         <?php
-        	$_checkoutstepHelper = Mage::helper('checkoutstep');
-        	if((strtolower(Mage::getSingleton('checkout/session')->getQuote()->getDeliveryMethod())==strtolower($_checkoutstepHelper::TWO_SHIP))){
+        	$_checkoutHelper = Mage::helper('allure_multicheckout');
+        	if((strtolower(Mage::getSingleton('checkout/session')->getQuote()->getDeliveryMethod())==strtolower($_checkoutHelper::TWO_SHIP))){
         ?>
         
         	<?php

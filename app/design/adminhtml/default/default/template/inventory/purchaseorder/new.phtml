@@ -5,9 +5,15 @@
 
 <div class="content-header">
     <h3 class="icon-head"><?php echo $helper->__('Create  Purchase Order')?></h3>
-    
-    <button id="create_po_btn" class="create_po_btn" ><?php echo $helper->__('CREATE ORDER')?></button>
-    <button id="reset_po_btn" class="reset_po_btn" ><?php echo $helper->__('RESET')?></button>
+  		
+    <button id="create_po_btn" class="create_po_btn" ><?php echo $helper->__('Create Order')?></button>
+     <button type="button"  style="float: right;
+    margin-top: 10px;"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/confirm')?>'">
+  		<?php echo $helper->__('View Items')?></button>
+  		
+    <button id="reset_po_btn" class="reset_po_btn" ><?php echo $helper->__('Reset')?></button>
+    <button id="add_custom_item" style="float: right;
+    margin-top: 10px;" class="add_custom_item" onclick="javascript:openMyPopup()" ><?php echo $helper->__('Add Custom Item')?></button>
 </div>
 
 <div class="success" style="display: none;"></div>
@@ -35,6 +41,7 @@
 		<th><?php echo $helper->__('SKU')?></th>
 		<th><?php echo $helper->__('Image')?></th>
 		<th><?php echo $helper->__('PRODUCT NAME')?></th>
+        <th><?php echo $helper->__('VENDOR NAME')?></th>
 		<th><?php echo $helper->__('Current Qty')?></th>
 		<th><?php echo $helper->__('Order Qty')?></th>
 		<th><?php echo $helper->__('Cost/Item')?></th>
@@ -55,7 +62,7 @@
 	    ?>
 			    <tr id="inventory-row-<?php echo $_product->getId(); ?>" class="inventory_tr">
 					<td><?php echo $_product->getSku();?></td>
-					<td><img style="width: 100px; height: 100px;" class="product_inventory_thumbnail" src="<?php  echo  Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(100);?>"/></td>
+					<td><img style="width: 50px; height: 50px;" class="product_inventory_thumbnail" src="<?php  echo  Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75);?>"/></td>
 					<td><?php echo $_product->getName();?></td>
 					<?php //echo $helper->getVendorName($_product->getPrimaryVendor());?>
                     <td><?php echo  "MT Factory"; ?></td>
@@ -75,6 +82,10 @@
 					</td>
 						
 					<td>
+						<input id="cost_<?php  echo $product->getId() ?>" style="width:50px"  
+							 name="qty[<?php echo $product->getId() ?>][<?php echo "cost" ?>]" 
+							type="text" value="<?php echo round($product->getCost(),2)?>" />
+							
 						<div>
 							<span>
 								<?php 
@@ -86,18 +97,23 @@
 								?>
 							</span>
 						</div>
-						<input id="cost_<?php  echo $product->getId() ?>" style="width:50px"  
-							type="hidden" name="qty[<?php echo $product->getId() ?>][<?php echo "cost" ?>]" 
-							type="text" value="<?php echo round($product->getCost())?>" />
 					</td>
 					<td>
 						<div>
-							<textarea id="comment_<?php echo $_product->getId()?>" cols="15" rows="7"  name="qty[<?php echo $_product->getId() ?>][<?php echo "admin_comment" ?>]"/></textarea>
+							<textarea id="comment_<?php echo $_product->getId()?>" cols="15" rows="3"  name="qty[<?php echo $_product->getId() ?>][<?php echo "admin_comment" ?>]"/></textarea>
 						</div>
 					</td>
 					<td>
 						<div>
 							<input id="<?php echo $product->getId()?>" type="checkbox" name="inclide"/>
+							<br/>
+							<?php $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product->getId())
+							->addFieldToFilter('is_custom',0)->addFieldToFilter('stock_id',$stockId)->setOrder('po_id','DESC');
+							if(count($items)):
+							$orderDetails=Mage::getModel('inventory/purchaseorder')->load($items->getFirstItem()->getPoId());
+							?>
+							<label><?php echo date('Y-m-d',strtotime($orderDetails->getCreatedDate()))."(".$items->getFirstItem()->getRequestedQty().")"?></label>
+						   <?php endif;?>
 						</div>
 					</td>
 				</tr>		
@@ -120,8 +136,10 @@
  
 </div>     	 
 <div>
-    <button id="create_po_btn2" class="create_po_btn"><?php echo $helper->__('CREATE ORDER')?></button>
+    <button id="create_po_btn2" class="create_po_btn"><?php echo $helper->__('Create Order')?></button>
 </div>
+
+
 
 <?php 
 $podataCount=0;
@@ -133,7 +151,6 @@ if($podata['items'])
 <script type="text/javascript">
 	jQuery.noConflict();
 </script>
-
 <script type="text/javascript">
 	if (typeof Allure == "undefined") {
 	   var Allure = {};
@@ -144,5 +161,35 @@ if($podata['items'])
 	Allure.GetStoredInfo = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/getstoredinfo', array('_secure' => true));?>';
 	Allure.InventoryPurcaseCreateOrder = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/createOrder', array('_secure' => true));?>';
 	Allure.Reset = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/reset', array('_secure' => true));?>';
-	
+
+	function openMyPopup() {
+
+        var url = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addCustomItem') ?>?';
+
+        var dialogWindow = Dialog.info(null, {
+            closable:true,
+            resizable:false,
+            draggable:true,
+            className:'magento',
+            windowClassName:'popup-window',
+            title:'Add custom item to purchase order',
+            top:50,
+            width:600,
+            height:200,
+            zIndex:1000,
+            recenterAuto:false,
+            hideEffect:Element.hide,
+            showEffect:Element.show,
+            id:'browser_window',
+            url:url,
+            onClose:function (param, el) {
+               // alert('onClose');
+            	getStoredData();
+            }
+        });
+    }
+
+    function closePopup() {
+        Windows.close('browser_window');
+    }
 	</script>
