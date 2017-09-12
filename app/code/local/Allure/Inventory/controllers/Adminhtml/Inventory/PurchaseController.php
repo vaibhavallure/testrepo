@@ -332,7 +332,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         $subString=implode('|',$skuString);
                         
                         $childrenProducts= Mage::getModel('catalog/product')->getCollection();
-                        $childrenProducts->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => '%'.$parentSKu.'%')));
+                        $childrenProducts->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => $parentSKu)));
                         $childProductArr = array();
                         $childProductArr[] =$product;
                         foreach ($childrenProducts as $child){
