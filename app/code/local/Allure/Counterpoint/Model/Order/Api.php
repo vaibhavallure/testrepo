@@ -18,14 +18,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         
         $counterpointData = unserialize($counterpoint_data);
         
-        //$counterpointData = (trim(stripslashes($counterpoint_data),'"'));
-        //Mage::log($counterpointData,Zend_log::DEBUG,
-          //                                      $this->_ctpnt_logs_file_name,true);
-        //Mage::log(count($counterpointData),Zend_log::DEBUG,
-            //                                    $this->_ctpnt_logs_file_name,true);
-        //foreach ($counterpointData as $orderId=>$data){
-            //Mage::log($orderId,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
-       // }
         Mage::log("Total order-".count($counterpointData),
             Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
         $this->importCPSQLOrderIntoMagento($counterpointData);
@@ -39,7 +31,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     private function importCPSQLOrderIntoMagento($counterpointOrderArr){
         $connection = Mage::getSingleton('core/resource')->getConnection('core_write');
         try{
-           // $connection->beginTransaction();
            $count = 1;
             foreach ($counterpointOrderArr as $order_id_key => $order_data_arr){
                 $ctrpnt_order_id = $order_id_key;//$this->getCounterpointOrderId($order_id_key);
@@ -51,9 +42,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             $counterpointOrderArr = null;
             Mage::log("Finish...",
                 Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
-            //$connection->commit();
         }catch (Exception $e){
-           // $connection->rollback();
             Mage::log("Exception in importCPSQLOrderIntoMagento",Zend_log::DEBUG,
                 $this->_ctpnt_logs_file_name,true);
             Mage::log("Exception-".$e,Zend_log::DEBUG,
@@ -102,38 +91,27 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         foreach ($productsArr as $value){
                             $sku = strtoupper($value['sku']);
                             $qty = $value['qty'];
-                           /*  $productId = Mage::getModel('catalog/product')->getIdBySku($sku);
-                            if($productId){
-                                $productObj = Mage::getModel('catalog/product')->load($productId);
-                            }else { */
-                                $productObj = Mage::getModel('catalog/product');
-                                $productObj->setTypeId('simple');
-                                $productObj->setTaxClassId(1);
-                                $productObj->setSku($sku);
-                                $productObj->setName($value['pname']);
-                                $productObj->setShortDescription($value['pname']);
-                                $productObj->setDescription($value['pname']);
-                                $productObj->setPrice($value['prc']);
+                            $productObj = Mage::getModel('catalog/product');
+                            $productObj->setTypeId('simple');
+                            $productObj->setTaxClassId(1);
+                            $productObj->setSku($sku);
+                            $productObj->setName($value['pname']);
+                            $productObj->setShortDescription($value['pname']);
+                            $productObj->setDescription($value['pname']);
+                            $productObj->setPrice($value['prc']);
                                 
-                                $quoteItem = Mage::getModel("allure_counterpoint/item")
+                            $quoteItem = Mage::getModel("allure_counterpoint/item")
                                 ->setProduct($productObj);
-                                $quoteItem->setQty($qty);
+                            $quoteItem->setQty($qty);
                                 //Mage::log($sku,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
-                                $quoteObj->addItem($quoteItem);
-                                $productObj = null;
-                           // }
-                            
-                            /* $params = array();
-                            $params['qty'] = $qty;
-                            $request = new Varien_Object();
-                            $request->setData($params);
-                            $quoteObj->addProduct($productObj , $request); */
+                            $quoteObj->addItem($quoteItem);
+                            $productObj = null;
                         }
                         
-                            $quoteBillingAddress = Mage::getModel('sales/quote_address');
-                            $quoteBillingAddress->setData($billingAddress);
-                            $quoteObj->setBillingAddress($quoteBillingAddress);
-                            //if product is not virtual
+                        $quoteBillingAddress = Mage::getModel('sales/quote_address');
+                        $quoteBillingAddress->setData($billingAddress);
+                        $quoteObj->setBillingAddress($quoteBillingAddress);
+                        //if product is not virtual
                             if (!$quoteObj->getIsVirtual()) {
                                 $shippingAddress = $billingAddress;
                                 $quoteShippingAddress = Mage::getModel('sales/quote_address');
@@ -160,6 +138,12 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $quoteObj->setCreateOrderMethod(1); //order status as counterpoint 1
                             $quoteObj->setCounterpointOrderId($ctpnt_order_id);
                             $quoteObj->setOrderType("Counterpoint");
+                            
+                            $incrementIdQ = $quoteObj->getReservedOrderId();
+                            if($incrementIdQ){
+                                $incrementIdQ = "CP-".$incrementIdQ;
+                                $quoteObj->setReservedOrderId($incrementIdQ);
+                            }
                             
                             $ccInfo = array();
                             // assign payment method
@@ -219,25 +203,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $taxAmmount = $extraOrderDetails['tax'];
                             $discountAmount = $extraOrderDetails['dis_amount'];
                             
-                            //extra val for counterpoint
-                            /* $totalItemQty = $extraOrderDetails['lins'];
-                            $returnItemQty = $extraOrderDetails['ret_sal_lins'];
-                            $returnItemTotal = $extraOrderDetails['ret_lin_tot'];
-                            $itemTotal = $extraOrderDetails['sal_lin_tot'];
-                            
-                            if($totalItemQty == $returnItemQty){
-                                $taxAmmount = 0.0;
-                            }elseif ($returnItemQty > 0 && $returnItemQty < $totalItemQty){
-                                $taxPercent = ($taxAmmount * 100)/$totalAmmount;
-                                if($taxPercent < 0){
-                                    $taxPercent = $taxPercent * (-1);
-                                }
-                                $taxAmmount = ($itemTotal * $taxPercent)/100;
-                                $totalAmmount = $itemTotal ;
-                                $orderObj->setSubTotal($totalAmmount);
-                            }else{
-                                
-                            } */
                             
                             if(1){
                                 $totalAmmount =$totalAmmount + $taxAmmount;
@@ -260,10 +225,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                             $orderObj->setCreatedAt($extraOrderDetails['order_date']);
                             
-                            //$transaction->addObject($orderObj);
-                            
-                            /* $transaction->addCommitCallback(array($orderObj, 'place'));
-                             $transaction->addCommitCallback(array($orderObj, 'save')); */
                             
                             try {
                                 //$transaction->save();
@@ -293,10 +254,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 
                                 $shipmentId = $this->createShipment($increment_id);
                                 
-                               /*  $transactionSave = Mage::getModel('core/resource_transaction')
-                                    ->addObject($invoice)
-                                    ->addObject($invoice->getOrder());
-                                $transactionSave->save(); */
                                 $invoice = null;
                                 $quoteObj = null;
                                 $orderObj = null;
@@ -449,6 +406,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         if(!$customer->getId()){
             $groupId = 1;
             $storeId = 1;
+            $websiteId = 1;
             
             $password = $this->generateRandomPassword();
             $customer = Mage::getModel("customer/customer");
