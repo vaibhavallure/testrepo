@@ -54,9 +54,17 @@ $dbName = "Venus84";
 
 
 $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
-if(0&&$conn){
+if($conn){
     try{
         echo "Connection established...";
+        
+        $query1 = "SELECT a.doc_id,a.tkt_no order_id,a.tkt_dt order_date,concat(b.item_no,'|',cell_descr) sku,b.DESCR pname,
+                          b.orig_qty qty,b.prc,a.sub_tot subtotal,a.tot_ext_cost,a.tax_amt tax,a.tot total, c.nam name,
+                          c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,c.phone_1 phone,
+                          c.cntry as country FROM ps_ord_hist a JOIN ps_ord_hist_lin b on(a.tkt_no=b.tkt_no)
+                          join ps_ord_hist_contact c on(a.doc_id=c.doc_id) WHERE (a.TAX_OVRD_REAS<>'MAGENTO' or a.TAX_OVRD_REAS is null)
+                          and a.tkt_dt like '%2008%' order by a.BUS_DAT desc;";
+        
         $query = " select a.DOC_ID,a.TKT_NO order_id,a.event_no ,a.TKT_DT order_date,
                     a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
 					a.tot total,concat(b.ITEM_NO,'|',b.CELL_DESCR) sku,
@@ -137,17 +145,17 @@ if(0&&$conn){
     }
 }else{
     echo "Connection  not established...";
-    ///die;
+    die;
 }
 
  echo "<pre>";
-// print_r(count($mainArr));
+ print_r(count($mainArr));
 /* print_r(($mainArr));
 die;  */
 
 
 //remote site wsdl url
-$_URL       = "http://mariatash.ws02.allure.inc/api/v2_soap/?wsdl=1";
+$_URL       = "http://universal.allurecommerce.com/api/v2_soap/?wsdl=1";
 
 /**
  * @return array of magento credentials.
@@ -165,6 +173,57 @@ function getSoapWSDLOptions(){
     return array('connection_timeout' => 60,'trace' => 1,
         'cache_wsdl' => WSDL_CACHE_NONE);
 }
+
+
+$item_detail = array();
+$item_detail[] = array(
+    'pname'=>'Test Sagar','prc'=>795,
+    'sku'=>'test-sagar','qty'=>-1
+);
+
+ $item_detail[] = array(
+    'pname'=>'Test Sagar 1 ','prc'=>175,
+    'sku'=>'test-sagar-1','qty'=>-1
+);
+  $item_detail[] = array(
+    'pname'=>'Test Sagar 2 ','prc'=>385,
+    'sku'=>'test-sagar-2','qty'=>1
+);
+ $item_detail[] = array(
+    'pname'=>'Test Sagar 3 ','prc'=>430,
+    'sku'=>'test-sagar-3','qty'=>1
+); 
+/*$item_detail[] = array(
+    'pname'=>'Test Sagar 1 ','prc'=>28.68,
+    'sku'=>'test-sagar1','qty'=>1
+);
+ */
+
+$order_detail = array(
+    'subtotal'=>'100.00','tax'=>'-2.98',
+    'order_date'=>'19-08-2017',
+    'lins'=>'3',
+    'sal_lins'=>'1',
+    'ret_sal_lins'=>'2',
+    'sal_lin_tot'=>'120',
+    'ret_lin_tot'=>'-155'
+);
+
+$_order_data = array();
+for($i=0;$i<1;$i++){
+    $id = 5001;
+    $customer_detail = array(
+        'name'=>'Sagar G','email'=>'sagardada122145678'.$i.'@allureinc.co',
+        'street'=>'Sagar Path','city'=>'Pune','state'=>'Maharashtra',
+        'country'=>'India','zip_code'=>'413103','phone'=>'9657293982'
+    );
+    $_order_data[$id] = array(
+        'item_detail'       => $item_detail,
+        'customer_detail'   => $customer_detail,
+        'order_detail'      => $order_detail
+    );
+}
+
 
 
 try{

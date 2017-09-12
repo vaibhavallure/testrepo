@@ -9,14 +9,18 @@ $counterPointCollection = Mage::getModel("sales/order")
                           ->getCollection()
                           ->addFieldToFilter("create_order_method",1);
 
-$str = "<table><tr><th>magento_order</th><th>ct_order</th></tr>" ;                        
+header ( "Content-type: application/vnd.ms-excel" );
+header ( "Content-Disposition: attachment; filename=magento_order.xls" );
+
+$str = "<table><tr><th>magento_order</th><th>ct_order</th></tr>" ;  
+echo $str;
 foreach ($counterPointCollection as $order){
     $orderId = $order->getIncrementId();
     $ctpntOrderId = $order->getCounterpointOrderId();
-    $str .= "<tr><td>{$orderId}</td><td>{$ctpntOrderId}</td></tr>";
+    $str = "<tr><td>{$orderId}</td><td>{$ctpntOrderId}</td></tr>";
+    echo $str;
 }
-$str .= "</table>";
+$str = "</table>";
 
-header ( "Content-type: application/vnd.ms-excel" );
-header ( "Content-Disposition: attachment; filename=magento_order.xls" );
 echo $str;
+die;

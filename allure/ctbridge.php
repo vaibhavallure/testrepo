@@ -24,7 +24,10 @@ if($conn){
                   join PS_TKT_HIST_LIN b on(a.tkt_no=b.tkt_no)
                   left join PS_TKT_HIST_DISC c on(b.doc_id = c.doc_id 
                     AND b.lin_seq_no=c.lin_seq_no)
-                  where a.tot > 0 and a.tkt_typ='T' ;";
+                  where (TAX_OVRD_REAS<>'MAGENTO' or TAX_OVRD_REAS is null) 
+                        and a.tkt_typ='T' 
+                    and a.tkt_dt >= convert(datetime,'2008-01-01')
+                    and a.tkt_dt <= convert(datetime,'2008-12-31');";
         $result = odbc_exec($conn, $query);
         $count = 0;
         $i 	   = 0;
@@ -72,8 +75,17 @@ if($conn){
 print_r($mainArr);
 die; */
 
+$csv = Mage::getBaseDir('var').DS."import".DS."magento_order_1.csv";
+$io = new Varien_Io_File();
+$io->streamOpen($csv, 'r');
+$arrCsv = array();
+while($csvData = $io->streamReadCsv()){
+    $arrCsv[$csvData[1]] = $csvData[0];
+}
+
 $str = "<table border='1'>
   <tr>
+    <th>MAGENTO_ID</th>
     <th>TKT_NO</th>
     <th>BUST_DAT</th>
     <th>DOC_ID</th>
@@ -111,6 +123,7 @@ $str = "<table border='1'>
 foreach ($mainArr as $key=>$data){
     $orderDetail = $data['info'];
     $str .= "<tr style='border-bottom: solid 1px black;'>
+    <td>{$arrCsv[$key]}</td>
     <td>$key</td>
     <td>{$orderDetail['bus_dat']}</td>
     <td>{$orderDetail['doc_id']}</td>
