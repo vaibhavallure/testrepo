@@ -1,0 +1,221 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+//echo get_class($this);
+
+
+?>
+<!--<script>
+    jQuery(document).ready(function(){
+        jQuery('select#showPerPage').customStyle();
+    });
+</script>-->
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php $_orders = $this->getOrders();
+	if($_orders) :
+?>
+<input type="hidden" id="order-history-page" data-current-page="2"   
+	data-total-page="<?php echo $_orders->getLastPageNumber()?>"/>
+
+<?php $totalPages = $_orders->getLastPageNumber();?>
+	
+<div class="col2-set">
+    <div class="box">
+        <div class="box-title">
+            <h3>
+                <?php
+                    $request = Mage::app()->getRequest();
+                    if($request->getModuleName() == 'customer'):
+                        echo $this->__('Recent Orders');
+                    else:
+                        echo $this->getOrders()->getSize()." ".$this->__('item(s)');
+                    endif;
+                ?>
+            </h3>
+            
+        </div>
+        
+        <?php if($_orders->getSize()): ?>
+        <div class="sales-order-history">
+	            <div class="pager-mt-1"><a href="https://mariatash.ws02.allure.inc/sales/order/history/">View All</a>
+	        		<div class="pager">
+	        			<div class="limiter">
+	            			<div class="pages">
+	        					<strong>Page:</strong>
+					        	<ol>
+					                <li>
+					                	<a data-last-page="<?php echo $totalPages?>" onclick="moveToPreviousPage(this);" class="previous i-previous" href="javascript:void(0);" title="Previous">
+					                        <img src="<?php echo $this->getSkinUrl('images/pager_arrow_left.gif')?>" alt="Previous" class="v-middle">
+					                    </a>
+					            	</li>
+					            	
+					            	<?php for ($i = 1;$i <= $totalPages;$i++){?>
+					            	<?php if($i<=5):?>
+					            	<?php $name = $i;?>
+					            	<li data-page-num="<?php echo $i?>" class="active mt-pager-li <?php echo ($i==1)?"current":""?>">
+					            		<a><?php echo $name;?></a>
+					            	<?php else:?>
+					            	<li data-page-num="<?php echo $i?>" class="inactive mt-pager-li <?php echo ($i==1)?"current":""?>">
+					            		<a><?php echo $i;?></a>
+					            	<?php endif;?>
+					            	</li>
+					            	<?php };?>
+					            	
+					            	<li>
+	                					<a data-last-page="<?php echo $totalPages?>" onclick="moveToNextPage(this);" class="next i-next" href="javascript:void(0);" title="Next">
+	                                       <img src="<?php echo $this->getSkinUrl('images/pager_arrow_right.gif')?>" alt="Next" class="v-middle">
+	                                    </a>
+	            					</li>
+	                			</ol>
+	    					</div>
+	        			</div>
+					</div>
+				</div>
+            </div>
+        
+        
+        <table class="data-table" id="my-orders-table">
+            <thead>
+                <tr>
+                    <th><div class="order-number"><?php echo $this->__('Odr num.') ?></div></th>
+                    <th class="a-left" style="padding-left: 25px;"><div class="order-date"><?php echo $this->__('Date') ?></div></th>
+                    <th class="a-left" style="padding-left: 0px;"><div class="order-ship-to"><?php echo $this->__('Ship To') ?></div></th>
+                    <th class="a-left" style="padding-left: 0;"><div class="order-total"><?php echo $this->__('Order Total') ?></div></th>
+                    <th class="a-left" style="padding-left: 0;"><div class="order-status"><?php echo $this->__('Order Status') ?></div></th>
+                    <th class="a-center" style="padding-left: 0px;"><div class="order-actions"><?php echo $this->__('Actions') ?></div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php echo $this->getChildHtml('sales.order.history')?>
+            </tbody>
+        </table>
+        <script type="text/javascript">decorateTable('my-orders-table');</script>
+        <?php // echo $this->getPagerHtml(); ?>
+        <?php else: ?>
+            <p class="no-order-msg"><?php echo $this->__('No orders found in your account.'); ?></p>
+        <?php endif; ?>
+    </div>
+    
+</div>
+<?php endif;?>
+
+
+<script>
+
+jQuery(document).ready(function(){
+	jQuery('#mt-report-tab li.mt-pager-li a').on('click',function(){
+		var current = jQuery('#mt-report-tab li.mt-pager-li.current');
+		var cur_page_num = parseInt(current.attr('data-page-num'));
+		current.removeClass('current');
+		var selector = jQuery(this).parent();
+		selector.addClass('current');
+		var page_num = parseInt(selector.attr('data-page-num'));
+		jQuery('#order-history-page').attr('data-current-page',page_num);
+		if(page_num!==cur_page_num){
+			loadOrdersData();
+		}
+	});
+});
+
+function loadOrdersData(){
+	var selector = jQuery('#order-history-page');
+	var cPage = parseInt(selector.attr('data-current-page'));
+	var tPage = parseInt(selector.attr('data-total-page'));
+	if(cPage <= tPage){
+		    showLoadingFancybox();
+		    var count = jQuery("#sales-order-count").val();
+		 	jQuery.ajax({
+		        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getOrderHistory';?>',
+		        dataType : 'json',
+				type : 'POST',
+				data: {'page':cPage,'limit':10,'count':count,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>'},
+		        success: function(data) {
+		        	jQuery('#my-orders-table tbody').html("");
+		        	jQuery('#my-orders-table tbody').html(data.data.html);
+		        	hideLoadingFancybox();
+		        }
+		    });
+   }else{
+   	hideLoadingFancybox();
+   }
+}
+
+function moveToPreviousPage(evt){
+	var last_page = jQuery(evt).attr('data-last-page');
+	var selector = jQuery(evt).parent().parent();
+	var current = selector.find('.current');
+	var prev = current.prev();
+	page_num = prev.attr('data-page-num');
+	if(page_num != undefined){
+		selector.find('.current').removeClass('current');
+		prev.addClass('current');
+		jQuery('#order-history-page').attr('data-current-page',page_num);
+		var nextE = selector.find('li.active').first().prev();
+		var pNum = nextE.attr('data-page-num');
+		if(pNum != undefined){
+			var child_first = selector.find('li.active:gt(5)');
+			if(child_first){
+				var child = selector.find('li.active').last();
+				child.removeClass('active');
+				child.addClass('inactive');
+				nextE.removeClass('inactive');
+				nextE.addClass('active');
+			}
+		}
+		loadOrdersData();
+	}
+}
+
+function moveToNextPage(evt){
+	var last_page = jQuery(evt).attr('data-last-page');
+	var selector = jQuery(evt).parent().parent();
+	var current = selector.find('.current');
+	var next = current.next();
+	page_num = next.attr('data-page-num');
+	if(page_num != undefined){
+		selector.find('.current').removeClass('current');
+		next.addClass('current');
+		jQuery('#order-history-page').attr('data-current-page',page_num);
+
+		var nextE = selector.find('li.active').last().next();
+		var pNum = nextE.attr('data-page-num');
+		if(pNum != undefined){
+			var child_first = selector.find('li.active:gt(5)');
+			if(child_first){
+				var child = selector.find('li.active').first();
+				child.removeClass('active');
+				child.addClass('inactive');
+				nextE.removeClass('inactive');
+				nextE.addClass('active');
+			}
+		}
+		
+		loadOrdersData();
+	}
+	
+}
+
+</script>

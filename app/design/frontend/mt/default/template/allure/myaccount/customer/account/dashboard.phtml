@@ -1,0 +1,131 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="dashboard">
+
+	<div class="mt-new-myaccount-banner">
+    	<div class="mt-myaccount-banner-ya">
+    		<div class="banner-ya-img">
+				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('myaccount-banner')->toHtml();?>
+			</div>
+    	</div>
+    </div>
+	
+    <div class="mt-new-myaccount-dashbord">
+    	<div class="mt-new-myaccount-menu">
+    		<div class="mt-new-myaccount-submenu">
+    			<a href="<?php echo Mage::getUrl('myaccount')?>">
+    				<div class="a-box ya-card--rich">
+    					<div class="a-box-inner">
+						    <div class="a-row">
+						        <div class="a-column a-span3">
+						            <img class="myaccount-dashbord-img mt-product-img" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/diamond.png')?>">
+						        </div>
+						        <div class="a-column a-span9 a-span-last">
+						            <h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
+						                My Products
+						            </h2>
+						            <span class="a-color-secondary">Track, return, or buy things again</span>
+						        </div>
+						    </div>
+						</div>
+					</div>
+    			</a>
+    		</div>
+    		
+    		<div class="mt-new-myaccount-submenu">
+    			<a href="<?php echo Mage::getUrl('customer/account/edit')?>">
+    				<div class="a-box ya-card--rich">
+    					<div class="a-box-inner">
+						    <div class="a-row">
+						        <div class="a-column a-span3">
+						            <img class="myaccount-dashbord-img mt-login" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/sign-in-lock.png')?>">
+						        </div>
+						        <div class="a-column a-span9 a-span-last">
+						            <h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
+						                Login & security
+						            </h2>
+						            <span class="a-color-secondary">Edit login, name, and mobile number</span>
+						        </div>
+						    </div>
+						</div>
+					</div>
+    			</a>
+    		</div>
+    	</div>
+    	<div class="mt-new-myaccount-menu">
+    		<div class="mt-new-myaccount-submenu">
+    			<a href="<?php echo Mage::getUrl('customer/address')?>">
+    				<div class="a-box ya-card--rich">
+    					<div class="a-box-inner">
+						    <div class="a-row">
+						        <div class="a-column a-span3">
+						            <img class="myaccount-dashbord-img mt-address" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/pin_1.png')?>">
+						        </div>
+						        <div class="a-column a-span9 a-span-last">
+						            <h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
+						                Addresses
+						            </h2>
+						            <span class="a-color-secondary">Edit addresses for orders and gifts</span>
+						        </div>
+						    </div>
+						</div>
+					</div>
+    			</a>
+    		</div>
+    		
+    		<div class="mt-new-myaccount-submenu">
+    			<a href="<?php echo Mage::getUrl('customer/paymentinfo')?>">
+    				<div class="a-box ya-card--rich">
+    					<div class="a-box-inner">
+						    <div class="a-row">
+						        <div class="a-column a-span3">
+						            <img class="myaccount-dashbord-img mt-pay" alt="Your Orders" src="<?php echo $this->getSkinUrl('images/myaccount/Payments.png')?>">
+						        </div>
+						        <div class="a-column a-span9 a-span-last">
+						            <h2 class="a-spacing-none ya-card__heading--rich a-text-normal">
+						                Payment options
+						            </h2>
+						            <span class="a-color-secondary">Edit or add payment methods</span>
+						        </div>
+						    </div>
+						</div>
+					</div>
+    			</a>
+    		</div>
+    	</div>
+    </div>
+
+    
+</div>
+
+
+<script>
+	jQuery(document).ready(function(){
+		var myprofileheight = jQuery(".addresses-primary").height();
+		jQuery('.box-my-profile .box-content').css("height", myprofileheight);
+	});
+</script>
