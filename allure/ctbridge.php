@@ -26,8 +26,8 @@ if($conn){
                     AND b.lin_seq_no=c.lin_seq_no)
                   where (TAX_OVRD_REAS<>'MAGENTO' or TAX_OVRD_REAS is null) 
                         and a.tkt_typ='T' 
-                    and a.tkt_dt >= convert(datetime,'2008-01-01')
-                    and a.tkt_dt <= convert(datetime,'2008-12-31');";
+                    and a.tkt_dt >= convert(datetime,'2015-01-01')
+                    and a.tkt_dt <= convert(datetime,'2015-03-31');";
         $result = odbc_exec($conn, $query);
         $count = 0;
         $i 	   = 0;
@@ -75,7 +75,7 @@ if($conn){
 print_r($mainArr);
 die; */
 
-$csv = Mage::getBaseDir('var').DS."import".DS."magento_order_1.csv";
+$csv = Mage::getBaseDir('var').DS."import".DS."magento_order_2.csv";
 $io = new Varien_Io_File();
 $io->streamOpen($csv, 'r');
 $arrCsv = array();
@@ -169,7 +169,7 @@ foreach ($mainArr as $key=>$data){
 $str .="</table>";
 
 header ( "Content-type: application/vnd.ms-excel" );
-header ( "Content-Disposition: attachment; filename=non_zero_ctpt_order_2016.xls" );
+header ( "Content-Disposition: attachment; filename=cp_order_2015.xls" );
 
 echo $str;
 
