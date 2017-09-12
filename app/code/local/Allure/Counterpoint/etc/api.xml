@@ -1,0 +1,42 @@
+<config>
+	<api>
+		<resources>
+			<counterpoint_order translate="title" module="allure_counterpoint">
+        		<model>allure_counterpoint/order_api</model>
+        		<title>Counterpoint API</title>
+        		<acl>allure_counterpoint/order</acl>
+
+        		<methods>
+			    	<list translate="title" module="allure_counterpoint">
+			            <title>List of events</title>
+			            <method>test</method>
+				    	<acl>allure_counterpoint/order</acl>
+			         </list>
+			    </methods>
+			</counterpoint_order>
+		</resources>
+		
+		<!-- <resources_alias>
+	      <counterpoint_order>counterpoint_order</counterpoint_order>
+	    </resources_alias> -->
+    
+	    <v2>
+		    <resources_function_prefix>
+		         <counterpoint_order>counterpointOrder</counterpoint_order>
+		    </resources_function_prefix>
+	    </v2>
+	    
+	    <acl>
+	      <resources>
+	        <allure_counterpoint translate="title" module="allure_counterpoint">
+	           <title>Counterpoint Order</title>
+	           <sort_order>5</sort_order>
+	           <order translate="title" module="allure_counterpoint">
+	              <title>Order data</title>
+	           </order>
+	        </allure_counterpoint>
+	      </resources>
+	    </acl>
+	    
+	</api>
+</config>

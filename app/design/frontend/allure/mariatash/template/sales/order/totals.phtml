@@ -48,7 +48,7 @@
     <?php if ($_total->getBlockName()): ?>
         <?php echo $this->getChildHtml($_total->getBlockName(), false); ?>
     <?php else:?>
-    <tr class="<?php echo $_code?>">
+    <tr class="<?php echo $_code?> mt-total-tr">
         <td colspan="5" <?php echo $this->getLabelProperties()?>>
             <?php if ($_total->getStrong()):?>
             <strong><?php echo $this->escapeHtml($_total->getLabel());?></strong>

@@ -15,7 +15,8 @@ class Amazon_Payments_Block_Script extends Mage_Core_Block_Template
      */
     protected function _afterToHtml($html)
     {
-        if ($this->getIsDefault() && Mage::helper('checkout/cart')->getItemsCount() == 0) {
+        //allure add 0 flag
+        if (0 && $this->getIsDefault() && Mage::helper('checkout/cart')->getItemsCount() == 0) {
             return;
         }
         else {
