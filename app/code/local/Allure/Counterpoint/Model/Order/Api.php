@@ -387,8 +387,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $zip_code   = $customerDetailArr['zip_code'];
         $phone      = $customerDetailArr['phone'];
         $name       = $customerDetailArr['name'];
+        $group      = ($customerDetailArr['nam_typ'])?$customerDetailArr['nam_typ']:"P";
         
-        $name       = explode(" ", $name);
+        $name        = explode(" ", $name);
         $firstName  = $name[0];
         $lastName   = $name[0];
         if(count($name) >   1)
@@ -405,6 +406,10 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
              
         if(!$customer->getId()){
             $groupId = 1;
+            if($group == "B"){
+                $groupId = 2;
+            }
+            
             $storeId = 1;
             $websiteId = 1;
             
