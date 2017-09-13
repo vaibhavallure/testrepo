@@ -46,8 +46,8 @@ try {
     $website = Mage::getModel('core/website')->load($websiteId);
     
     if(empty($file)){
-        echo "log file created";
         Mage::log('store name -:'.$store->getName()." file created.", Zend_Log::DEBUG, $storeName, true);
+        die("log file created");
     }
     
     Mage::app()->setCurrentStore(0);
