@@ -4,22 +4,46 @@
  */
 class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstract{
     
-    protected $_ctpnt_logs_file_name = "counterpoint_api";
+    protected $_ctpnt_logs_file_name    = "counterpoint_api";
+    
+    const STORE_ID                      = 1;
+    const WEBSITE_ID                    = 1;
+    const TAX_CLASS_ID                  = 1;
+    
+    const COUNTERPOINT_ORDER            = 1;
+    const ORDER_TYPE                    = "Counterpoint";
+    const ORDER_STATE                   = "complete";
+    const ORDER_STATUS                  = "complete";
+    
+    const GENERAL_CUSTOMER              = 1;
+    const WHOLESELLER_CUSTOMER          = 2;
+    const COUNTERPOINT_CUSTOMER         = 1;
+    
+    const ORDER_CAPTURE_CASE            = "offline";
+    const INVOICE_STATE                 = 2;
+    
+    const PAYMENT_METHOD                = "codforpos";
+    const SHIPPING_METHOD               = "webpos_shipping_storepickup";
+    
+    const SIMPLE_PRODUCT                = "simple";
+    
+    /**
+     * @param $logData
+     */
+    private function AddLog($logData){
+        Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+    }
     
     /**
      * @param string $counterpoint_data
      * @return number
      */
     public function test($counterpoint_data){
-        
         $counterpoint_data = utf8_decode($counterpoint_data);
         $counterpoint_data = trim($counterpoint_data,'"');
         $counterpoint_data = stripslashes($counterpoint_data);
-        
         $counterpointData = unserialize($counterpoint_data);
-        
-        Mage::log("Total order-".count($counterpointData),
-            Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+        $this->AddLog("Total order-".count($counterpointData));
         $this->importCPSQLOrderIntoMagento($counterpointData);
         $counterpointData = null;
         return 1;
@@ -29,24 +53,19 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
      * @param array $counterpointOrderArr
      */
     private function importCPSQLOrderIntoMagento($counterpointOrderArr){
-        $connection = Mage::getSingleton('core/resource')->getConnection('core_write');
         try{
-           $count = 1;
+            $count = 1;
             foreach ($counterpointOrderArr as $order_id_key => $order_data_arr){
                 $ctrpnt_order_id = $order_id_key;//$this->getCounterpointOrderId($order_id_key);
                 $this->createOrderByUsingCounterpointData($ctrpnt_order_id, $order_data_arr);
-                Mage::log("count no-".$count,
-                    Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+                $this->AddLog("count no-:".$count);
                 $count++;
             }
             $counterpointOrderArr = null;
-            Mage::log("Finish...",
-                Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+            $this->AddLog("Finish...");
         }catch (Exception $e){
-            Mage::log("Exception in importCPSQLOrderIntoMagento",Zend_log::DEBUG,
-                $this->_ctpnt_logs_file_name,true);
-            Mage::log("Exception-".$e,Zend_log::DEBUG,
-                $this->_ctpnt_logs_file_name,true);
+            $this->AddLog("Exception in importCPSQLOrderIntoMagento");
+            $this->AddLog("Exception-".$e);
             $e = null;
         }
     }
@@ -73,37 +92,43 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'increment_id');
             if(!$orderObj->getId()){
                $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
-                if(!$orderObj->getId()){
-                     Mage::log("counterpoint order_id:-".$ctpnt_order_id." not present in magento.",
-                        Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
-                    
+               if(!$orderObj->getId()){
+                     $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." not present in magento.");
                      $productsArr = $ctpnt_order_data['item_detail'];
-                    
-                     if(count($productsArr)>0){
+                     if(count($productsArr) > 0){
                         $customerDetailArr = $ctpnt_order_data['customer_detail'];
                         $customer = $this->insertCustomer($customerDetailArr);
                         $billingAddress = $this->getBillingAddressOfCtpnt($customer,$customerDetailArr);
                         
-                        $_store_id = 1; //main website
-                        $quoteObj = Mage::getModel('sales/quote')->assignCustomer($customer);
-                        $quoteObj = $quoteObj->setStoreId($_store_id);
+                        $quoteObj = Mage::getModel('sales/quote')
+                                        ->assignCustomer($customer);
+                        $quoteObj = $quoteObj->setStoreId(self::STORE_ID);
                         
                         foreach ($productsArr as $value){
                             $sku = strtoupper($value['sku']);
                             $qty = $value['qty'];
+                            
+                            //negative price may be discount
+                            //i.e payout or yelp in counterpoint
+                            $price = $value['prc'];
+                            if($price < 0){
+                                if(($sku == "PAYOUT") || ($sku == "YELP") ){
+                                    $price = $price * (-1);
+                                }
+                            }
+                            
                             $productObj = Mage::getModel('catalog/product');
-                            $productObj->setTypeId('simple');
-                            $productObj->setTaxClassId(1);
+                            $productObj->setTypeId(self::SIMPLE_PRODUCT);
+                            $productObj->setTaxClassId(self::TAX_CLASS_ID);
                             $productObj->setSku($sku);
                             $productObj->setName($value['pname']);
                             $productObj->setShortDescription($value['pname']);
                             $productObj->setDescription($value['pname']);
-                            $productObj->setPrice($value['prc']);
+                            $productObj->setPrice($price);
                                 
                             $quoteItem = Mage::getModel("allure_counterpoint/item")
-                                ->setProduct($productObj);
+                                            ->setProduct($productObj);
                             $quoteItem->setQty($qty);
-                                //Mage::log($sku,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
                             $quoteObj->addItem($quoteItem);
                             $productObj = null;
                         }
@@ -112,175 +137,192 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         $quoteBillingAddress->setData($billingAddress);
                         $quoteObj->setBillingAddress($quoteBillingAddress);
                         //if product is not virtual
-                            if (!$quoteObj->getIsVirtual()) {
-                                $shippingAddress = $billingAddress;
-                                $quoteShippingAddress = Mage::getModel('sales/quote_address');
-                                $quoteShippingAddress->setData($shippingAddress);
-                                $quoteObj->setShippingAddress($quoteShippingAddress);
-                                // fixed shipping method
-                                $quoteObj->getShippingAddress()->setShippingMethod('webpos_shipping_storepickup');
-                                //$quoteObj->getShippingAddress()->setCollectShippingRates(true);
-                                //$quoteObj->getShippingAddress()->collectShippingRates();
-                            }
-                            $quoteObj->collectTotals();
-                            
-                            //$quoteObj->save();
-                            $transaction = Mage::getModel('core/resource_transaction');
-                            if ($quoteObj->getCustomerId()) {
-                               // $transaction->addObject($quoteObj->getCustomer());
-                            }
-                            
-                            $quoteObj->setIsActive(0);
-                            
-                            //$transaction->addObject($quoteObj);
-                            $quoteObj->reserveOrderId();
-                            
-                            $quoteObj->setCreateOrderMethod(1); //order status as counterpoint 1
-                            $quoteObj->setCounterpointOrderId($ctpnt_order_id);
-                            $quoteObj->setOrderType("Counterpoint");
-                            
-                            $incrementIdQ = $quoteObj->getReservedOrderId();
-                            if($incrementIdQ){
-                                $incrementIdQ = "CP-".$incrementIdQ;
-                                $quoteObj->setReservedOrderId($incrementIdQ);
-                            }
-                            
-                            $ccInfo = array();
-                            // assign payment method
-                            $payment_method = 'codforpos';
-                            
-                            $quotePaymentObj = $quoteObj->getPayment();
-                            $quotePaymentObj->setMethod($payment_method);
-                            $quoteObj->setPayment($quotePaymentObj);
-                            
-                            $convertQuoteObj = Mage::getSingleton('sales/convert_quote');
-                            if ($quoteObj->getIsVirtual()) {
-                                $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getBillingAddress());
-                            } else {
-                                $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getShippingAddress());
-                            }
-                            
-                            $orderPaymentObj = $convertQuoteObj->paymentToOrderPayment($quotePaymentObj);
-                            
-                            $orderObj->setBillingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getBillingAddress()));
-                            $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
-                            if (!$quoteObj->getIsVirtual()) {
-                                $orderObj->setShippingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getShippingAddress()));
-                            }
-                            
-                            $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
-                            
-                            $items=$quoteObj->getAllItems();
-                            
-                            foreach ($items as $item) {
-                                //@var $item Mage_Sales_Model_Quote_Item
-                                $orderItem = $convertQuoteObj->itemToOrderItem($item);
-                                if ($item->getParentItem()) {
-                                    $orderItem->setParentItem($orderObj->getItemByQuoteItemId($item->getParentItem()->getId()));
+                        if(!$quoteObj->getIsVirtual()) {
+                            $shippingAddress = $billingAddress;
+                            $quoteShippingAddress = Mage::getModel('sales/quote_address');
+                            $quoteShippingAddress->setData($shippingAddress);
+                            $quoteObj->setShippingAddress($quoteShippingAddress);
+                            // fixed shipping method
+                            $quoteObj->getShippingAddress()->setShippingMethod(self::SHIPPING_METHOD);
+                            //$quoteObj->getShippingAddress()->setCollectShippingRates(true);
+                            //$quoteObj->getShippingAddress()->collectShippingRates();
+                        }
+                        
+                        $quoteObj->collectTotals();
+                        
+                        //change order total if sku maybe 'yelp' or 'payout'
+                        //Start allure-2
+                        $quoteItemsObj = $quoteObj->getAllItems();
+                        $discountTot    = 0;
+                        $isDiscountTot  = false;
+                        foreach ($quoteItemsObj as $item) {
+                            $kuQ = $item->getSku();
+                            if(($kuQ == "YELP") || ($kuQ == "PAYOUT")){
+                                $qtyQ = $item->getQty();
+                                $priceQ = $item->getPrice();
+                                if($qtyQ<0){
+                                    $priceQ = $priceQ * $qtyQ * (-1);
+                                }else{
+                                    $priceQ = $priceQ * $qtyQ * (-1);
                                 }
-                                //refunded code
-                                if($orderItem->getData('qty_ordered') < 0){
-                                    $qtyItem = $orderItem->getData('qty_ordered');
-                                    if($qtyItem < 0){
-                                        $qtyItem = $qtyItem * (-1);
-                                    }
-                                    $orderItem->setData('qty_ordered',$qtyItem);
-                                    $orderItem->setData('qty_refunded',$qtyItem);
-                                    $orderItem->setData('qty_canceled',$qtyItem);
-                                   /*  $orderItem->setData('qty_ordered',1);
-                                    $orderItem->setData('qty_refunded',1);
-                                    $orderItem->setData('qty_canceled',1); */
+                                $item->setRowTotal($priceQ);
+                                $item->setBaseRowTotal($priceQ);
+                                $item->setRowTotalInclTax($priceQ);
+                                $item->setBaseRowTotalInclTax($priceQ);
+                                $item->setTaxableAmount($priceQ);
+                                $item->setBaseTaxableAmount($priceQ);
+                                $discountTot = $discountTot + ($priceQ);
+                                $isDiscountTot = true;
+                            }
+                        }
+                        
+                        if($isDiscountTot){
+                            $discountTot = $discountTot * 2;
+                            $quoteObj->setSubtotal($quoteObj->getSubtotal() + $discountTot);
+                            $quoteObj->setBaseSubtotal($quoteObj->getBaseSubtotal() + $discountTot);
+                            $quoteObj->setSubtotalWithDiscount($quoteObj->getSubtotalWithDiscount() + $discountTot);
+                            $quoteObj->setBaseSubtotalWithDiscount($quoteObj->getBaseSubtotalWithDiscount() + $discountTot);
+                            $quoteObj->setGrandTotal($quoteObj->getGrandTotal() + $discountTot);
+                            $quoteObj->setBaseGrandTotal($quoteObj->getBaseGrandTotal() + $discountTot);
+                        }
+                        $quoteObj->save();
+                        //End - allure-2
+                        
+                        $quoteObj->setIsActive(0);
+                        $quoteObj->reserveOrderId();
+                        //order status as counterpoint 1
+                        $quoteObj->setCreateOrderMethod(self::COUNTERPOINT_ORDER); 
+                        $quoteObj->setCounterpointOrderId($ctpnt_order_id);
+                        $quoteObj->setOrderType(self::ORDER_TYPE);
+                        $incrementIdQ = $quoteObj->getReservedOrderId();
+                        if($incrementIdQ){
+                            $incrementIdQ = "CP-".$incrementIdQ;
+                            $quoteObj->setReservedOrderId($incrementIdQ);
+                        }
+                            
+                        $ccInfo = array();
+                        // assign payment method
+                        $payment_method = self::PAYMENT_METHOD;
+                        $quotePaymentObj = $quoteObj->getPayment();
+                        $quotePaymentObj->setMethod($payment_method);
+                        $quoteObj->setPayment($quotePaymentObj);
+                            
+                        $convertQuoteObj = Mage::getSingleton('sales/convert_quote');
+                        if($quoteObj->getIsVirtual()) {
+                           $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getBillingAddress());
+                        }else{
+                           $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getShippingAddress());
+                        }
+                            
+                        $orderPaymentObj = $convertQuoteObj->paymentToOrderPayment($quotePaymentObj);
+                            
+                        $orderObj->setBillingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getBillingAddress()));
+                        $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
+                        if(!$quoteObj->getIsVirtual()) {
+                           $orderObj->setShippingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getShippingAddress()));
+                        }
+                            
+                        $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
+                            
+                        $items=$quoteObj->getAllItems();
+                        foreach ($items as $item) {
+                            $orderItem = $convertQuoteObj->itemToOrderItem($item);
+                            if($item->getParentItem()) {
+                                $orderItem->setParentItem($orderObj->getItemByQuoteItemId($item->getParentItem()->getId()));
+                            }
+                            //refunded code
+                            if($orderItem->getData('qty_ordered') < 0){
+                                $qtyItem = $orderItem->getData('qty_ordered');
+                                if($qtyItem < 0){
+                                    $qtyItem = $qtyItem * (-1);
                                 }
-                                $orderObj->addItem($orderItem);
-                            }
+                                $orderItem->setData('qty_ordered',$qtyItem);
+                                $orderItem->setData('qty_refunded',$qtyItem);
+                                $orderItem->setData('qty_canceled',$qtyItem);
+                           }
+                           $orderObj->addItem($orderItem);
+                        }
                             
-                            $orderObj->setCanShipPartiallyItem(false);
+                        $orderObj->setCanShipPartiallyItem(false);
                             
-                            $totalDue = $orderObj->getTotalDue();
+                        $totalDue = $orderObj->getTotalDue();
                             
-                            $extraOrderDetails = $ctpnt_order_data['order_detail'];
-                            $totalAmmount = $quoteObj->getGrandTotal();
-                            $taxAmmount = $extraOrderDetails['tax'];
-                            $discountAmount = $extraOrderDetails['dis_amount'];
+                        $extraOrderDetails = $ctpnt_order_data['order_detail'];
+                        $totalAmmount = $quoteObj->getGrandTotal();
+                        $taxAmmount = $extraOrderDetails['tax'];
+                        $discountAmount = $extraOrderDetails['dis_amount'];
                             
+                        if(1){
+                            $totalAmmount =$totalAmmount + $taxAmmount;
+                            $orderObj->setTaxAmount($taxAmmount);
+                        }
+                        if($discountAmount){
+                            $discountAmount = 0-$discountAmount;
+                            $totalAmmount = $totalAmmount + $discountAmount;
+                            $orderObj->setDiscountAmount($discountAmount);
+                        }
+                        
+                        if($isDiscountTot){
+                            $quoteSubTotal = $quoteObj->getSubtotal();
+                            $orderObj->setSubtotal($quoteSubTotal);
+                            $orderObj->setBaseSubtotal($quoteSubTotal);
+                            $orderObj->setSubtotalInclTax($quoteSubTotal);
+                            $orderObj->setBaseSubtotalInclTax($quoteSubTotal);
+                        }
                             
-                            if(1){
-                                $totalAmmount =$totalAmmount + $taxAmmount;
-                                $orderObj->setTaxAmount($taxAmmount);
-                            }
-                            if($discountAmount){
-                                $discountAmount = 0-$discountAmount;
-                                $totalAmmount = $totalAmmount + $discountAmount;
-                                $orderObj->setDiscountAmount($discountAmount);
-                            }
+                        $orderObj->setGrandTotal($totalAmmount);
+                        $orderObj->setBaseTaxAmount($taxAmmount);
+                        $orderObj->setBaseGrandTotal($totalAmmount);
+                        $orderObj->setTotalPaid($totalAmmount);
                             
-                            $orderObj->setGrandTotal($totalAmmount);
-                            $orderObj->setBaseTaxAmount($taxAmmount);
-                            $orderObj->setBaseGrandTotal($totalAmmount);
-                            $orderObj->setTotalPaid($totalAmmount);
+                        //complete the order status
+                        $orderObj->setData('state',self::ORDER_STATE)
+                                 ->setData('status',self::ORDER_STATUS);
                             
-                            //complete the order status
-                            $orderObj->setData('state','complete')
-                                ->setData('status','complete');
-                            
-                            $orderObj->setCreatedAt($extraOrderDetails['order_date']);
-                            
-                            
-                            try {
-                                //$transaction->save();
-                                $orderObj->save();
-                                $quoteObj->save();
+                        $orderObj->setCreatedAt($extraOrderDetails['order_date']);
+                        try{
+                              $orderObj->save();
+                              $quoteObj->save();
+                              $increment_id = $orderObj->getRealOrderId();
+                              $this->AddLog("New order id-".$increment_id);
                                 
-                                $increment_id = $orderObj->getRealOrderId();
+                              //create invoice for created order
+                              $ordered_items = $orderObj->getAllItems();
+                              $savedQtys = array();
+                              foreach($ordered_items as $item){     //item detail
+                                  $savedQtys[$item->getItemId()] = $item->getQtyOrdered();
+                              }
+                              $invoice = Mage::getModel('sales/service_order', $orderObj)
+                                               ->prepareInvoice($savedQtys);
+                              $invoice->setRequestedCaptureCase(self::ORDER_CAPTURE_CASE);
+                              $invoice->register();
+                              $invoice->getOrder()->setIsInProcess(true);
+                              $invoice->setState(self::INVOICE_STATE);
+                              $invoice->setCanVoidFlag(0);
+                              $invoice->save();
                                 
-                                Mage::log("New order id-".$increment_id,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+                              $shipmentId = $this->createShipment($increment_id);
                                 
-                                //create invoice for created order
-                                $ordered_items = $orderObj->getAllItems();
-                                $savedQtys = array();
-                                foreach($ordered_items as $item){     //item detail
-                                    $savedQtys[$item->getItemId()] = $item->getQtyOrdered();
-                                }
-                                $invoice = Mage::getModel('sales/service_order', $orderObj)->prepareInvoice($savedQtys);
-                                $captureCase = "offline";
-                                $invoice->setRequestedCaptureCase($captureCase);
-                                $invoice->register();
-                                $invoice->getOrder()->setIsInProcess(true);
+                              $invoice = null;
+                              $quoteObj = null;
+                              $orderObj = null;
+                              $customer = null;
+                              $billingAddress = null;
                                 
-                                $invoice->setState(2);
-                                $invoice->setCanVoidFlag(0);
-                                
-                                $invoice->save();
-                                
-                                $shipmentId = $this->createShipment($increment_id);
-                                
-                                $invoice = null;
-                                $quoteObj = null;
-                                $orderObj = null;
-                                $customer = null;
-                                $billingAddress = null;
-                                
-                            } catch (Exception $e){
-                                Mage::log("Trans Exception-".$e->getMessage(), Zend_Log::DEBUG,$this->_ctpnt_logs_file_name,true);
-                                Mage::throwException('Order Cancelled.');
-                                $e = null;
-                            }
+                         }catch(Exception $e){
+                             $this->AddLog("Exception-".$e->getMessage());
+                             $e = null;
+                        }
                     }
-                    
                 }else{
-                    Mage::log("counterpoint order_id:-".$ctpnt_order_id." already created in magento.",
-                        Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+                    $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." already created in magento.");
                 }
             }else{
-                Mage::log("counterpoint order_id:-".$ctpnt_order_id." present in magento.",
-                    Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+                $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." present in magento.");
             }
-                
-            
         }catch (Exception $e){
-            Mage::log("Exception in createOrderByUsingCounterpointData method of Class name is".get_class($this),
-                Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
-            Mage::log($e->getMessage(),Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+            $this->AddLog("Exception in createOrderByUsingCounterpointData method of Class name is-".get_class($this));
+            $this->AddLog($e->getMessage());
             $e = null;
         }
         $orderObj = null;
@@ -297,49 +339,48 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
      * @param boolean $includeComment
      * @return string
      */
-    private function createShipment($orderIncrementId, $itemsQty = array(), $comment = null, $email = false,
-        $includeComment = false
-        ) {
-            $order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+    private function createShipment($orderIncrementId, $itemsQty = array(), 
+                $comment = null, $email = false,$includeComment = false) {
+        $order = Mage::getModel('sales/order')
+                    ->loadByIncrementId($orderIncrementId);
+        /**
+         * Check order existing
+         */
+        if(!$order->getId()) {
+           $this->_fault('order_not_exists');
+        }
             
-            /**
-             * Check order existing
-             */
-            if (!$order->getId()) {
-                $this->_fault('order_not_exists');
-            }
+        /**
+         * Check shipment create availability
+         */
+        if(!$order->canShip()) {
+            $this->_fault('data_invalid', Mage::helper('sales')->__('Cannot do shipment for order.'));
+        }
             
-            /**
-             * Check shipment create availability
-             */
-            if (!$order->canShip()) {
-                $this->_fault('data_invalid', Mage::helper('sales')->__('Cannot do shipment for order.'));
+        /* @var $shipment Mage_Sales_Model_Order_Shipment */
+        $shipment = $order->prepareShipment($itemsQty);
+        if($shipment){
+            $shipment->register();
+            $shipment->addComment($comment, $email && $includeComment);
+            if($email) {
+                $shipment->setEmailSent(true);
             }
-            
-            /* @var $shipment Mage_Sales_Model_Order_Shipment */
-            $shipment = $order->prepareShipment($itemsQty);
-            if ($shipment) {
-                $shipment->register();
-                $shipment->addComment($comment, $email && $includeComment);
-                if ($email) {
-                    $shipment->setEmailSent(true);
-                }
-                $shipment->getOrder()->setIsInProcess(true);
-                try {
-                    $transactionSave = Mage::getModel('core/resource_transaction')
-                    ->addObject($shipment)
-                    ->addObject($shipment->getOrder())
-                    ->save();
-                    $shipmentId = $shipment->getIncrementId();
-                } catch (Mage_Core_Exception $e) {
-                    $this->_fault('data_invalid', $e->getMessage());
-                    $e = null;
-                }
-                $shipment = null;
-                $order = null;
-                return null;//$shipment->getIncrementId();
+            $shipment->getOrder()->setIsInProcess(true);
+            try{
+                $transactionSave = Mage::getModel('core/resource_transaction')
+                                        ->addObject($shipment)
+                                        ->addObject($shipment->getOrder())
+                                        ->save();
+                $shipmentId = $shipment->getIncrementId();
+            }catch(Mage_Core_Exception $e) {
+                $this->_fault('data_invalid', $e->getMessage());
+                $e = null;
             }
-            return null;
+            $shipment = null;
+            $order = null;
+            return null;//$shipment->getIncrementId();
+        }
+        return null;
     }
     
     private function generateRandomPassword(){
@@ -347,7 +388,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $numbers = range('0','9');
         $additional_characters = array('#','@','$');
         $final_array = array_merge($alphabets,$numbers,$additional_characters);
-        
         $password = '';
         $length = 6;  //password length
         while($length--) {
@@ -377,8 +417,11 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         return $billingAddress;
     }
     
+    /**
+     * @param array $customerDetailArr
+     * @return Mage_Customer_Model_Customer
+     */
     private function insertCustomer($customerDetailArr){
-        
         $email      = $customerDetailArr['email'];
         $street     = $customerDetailArr['street'];
         $city       = $customerDetailArr['city'];
@@ -392,7 +435,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $name        = explode(" ", $name);
         $firstName  = $name[0];
         $lastName   = $name[0];
-        if(count($name) >   1)
+        if(count($name) > 1)
             $lastName = $name[1];
         
         if(empty($email)){
@@ -401,28 +444,25 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         }
         $email = strtolower($email);
         $customer = Mage::getModel('customer/customer')
-            ->setWebsiteId($websiteId)
-             ->loadByEmail($email);
+                          ->setWebsiteId($websiteId)
+                          ->loadByEmail($email);
              
         if(!$customer->getId()){
-            $groupId = 1;
+            $groupId = self::GENERAL_CUSTOMER;
             if($group == "B"){
-                $groupId = 2;
+                $groupId = self::WHOLESELLER_CUSTOMER;
             }
-            
-            $storeId = 1;
-            $websiteId = 1;
             
             $password = $this->generateRandomPassword();
             $customer = Mage::getModel("customer/customer");
-            $customer->setWebsiteId($websiteId)
-                ->setStoreId($storeId)
+            $customer->setWebsiteId(self::WEBSITE_ID)
+                ->setStoreId(self::STORE_ID)
                 ->setGroupId($groupId)
                 ->setFirstname($firstName)
                 ->setLastname($lastName)
                 ->setEmail($email)
                 ->setPassword($password)
-                ->setCustomerType(1)  //counterpoint
+                ->setCustomerType(self::COUNTERPOINT_CUSTOMER)  //counterpoint
                 ->save();
                 
             $_custom_address = array (
@@ -446,11 +486,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 ->setIsDefaultShipping('1')
                 ->setSaveInAddressBook('1');
             $address->save();
-            
-            Mage::log("New customer create.customer_id:".$customer->getId(),
-                Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
+            $this->AddLog("New customer create.customer_id:".$customer->getId());
         }
         return $customer;
     }
-    
 }
