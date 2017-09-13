@@ -430,6 +430,10 @@
     width: 82%;
 }
 
+#mt-cart-tab .discount.remove-btn-enb .discount-form .input-box{
+		width: 78% ! important;
+}
+
 #mt-cart-tab .discount .input-box input.input-text{
 	padding: 9px 5px;
 }
@@ -446,6 +450,10 @@
 @media only screen and (max-device-width : 320px){
 	#mt-cart-tab .discount .discount-form .input-box{
     	width: 78%;
+	}
+	
+	#mt-cart-tab .discount.remove-btn-enb .discount-form .input-box{
+		width: 73.3% ! important;
 	}
 	
 	#mt-cart-tab .pay-caart button.button {
@@ -1007,6 +1015,13 @@ td.a-right.mt-td-order-view-block{
 	text-align: left !important;
 }
 
+/* .discount.remove-btn-enb .discount-form .input-box{
+	width: 78% ! important;
+} */
+
+.discount.remove-btn-enb .discount-form .youhave{
+	width: 100px;
+}
 
 /* .mt-myaccount-page .nav-tabs{
 	z-index: 1000 ! important;

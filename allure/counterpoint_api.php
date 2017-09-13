@@ -69,7 +69,7 @@ if($conn){
                     a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
 					a.tot total,concat(b.ITEM_NO,'|',b.CELL_DESCR) sku,
                     b.QTY_SOLD qty,b.prc prc,b.descr pname,
-	 				c.EMAIL_ADRS_1 as email,c.nam name,c.adrs_1 street,c.city,
+	 				c.EMAIL_ADRS_1 as email,c.nam name,c.nam_typ,c.adrs_1 street,c.city,
                     c.state,c.zip_cod zip_code , c.cntry as country,c.phone_1 phone,
                     d.disc_amt dis_amount,d.disc_pct dis_pct
 					from ps_tkt_hist a join
@@ -88,7 +88,7 @@ if($conn){
         $i 	   = 0;
         $mainArr = array();
         $itemHeader = array('qty','sku','prc','pname');
-        $addressHeader = array('email','name','street','city','state','zip_code','country','phone');
+        $addressHeader = array('email','name','street','city','state','zip_code','country','phone','nam_typ');
         while(odbc_fetch_row($result)){
             $order_id = odbc_result($result, 'order_id');
             $arr 		= array();
