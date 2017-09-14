@@ -1,6 +1,6 @@
 <?php
 
-class Alluremultistore_Managestock_Model_CatalogInventory_Stock_Item extends Magestore_Webpos_Model_Stock_Item
+class Alluremultistore_Managestock_Model_CatalogInventory_Stock_Item extends Mage_CatalogInventory_Model_Stock_Item
 {
 
 	const BACKORDERS_YES = 'Ebizmarts_BakerlooRestful_Model_Rewrite_CatalogInventory_Stock_Item';
