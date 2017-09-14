@@ -6,6 +6,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     
     protected $_ctpnt_logs_file_name    = "counterpoint_api";
     
+    protected $_storeId                 = -1;
+    protected $_websiteId               = -1;
+    
     const STORE_ID                      = 1;
     const WEBSITE_ID                    = 1;
     const TAX_CLASS_ID                  = 1;
@@ -27,6 +30,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     
     const SIMPLE_PRODUCT                = "simple";
     
+    const COUNTERPOINT_STORE_NAME       = "counterpoint";
+    
     /**
      * @param $logData
      */
@@ -43,10 +48,42 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $counterpoint_data = trim($counterpoint_data,'"');
         $counterpoint_data = stripslashes($counterpoint_data);
         $counterpointData = unserialize($counterpoint_data);
-        $this->AddLog("Total order-".count($counterpointData));
+        $this->AddLog("Total Order Count-:".count($counterpointData));
         $this->importCPSQLOrderIntoMagento($counterpointData);
         $counterpointData = null;
         return 1;
+    }
+    
+    private function setCounterpointStore(){
+        $helper = Mage::helper('allure_counterpoint');
+        $storeId = $helper->getCounterPointStoreId();
+        if (empty($storeId)){
+            $this->AddLog("Please set store_id to save counterpoint data.Can't proceed without stor_id.");
+            die;
+        }
+        //set counterpoint store_id
+        $this->_storeId = $storeId;
+        $store = Mage::getModel('core/store')->load($this->_storeId);
+        if(!$store){
+            $this->AddLog("Invalid store.");
+            die;
+        }
+        if(!($store->getCode() == self::COUNTERPOINT_STORE_NAME)){
+            $this->AddLog("Wrong store choose.Please add correct store_id.");
+            die;
+        }
+        $websiteId = $store->getWebsiteId();
+        $website = Mage::getModel('core/website')->load($websiteId);
+        if($websiteId == 1){
+            $this->AddLog("You can't save data to main_website.");
+            die;
+        }
+        if(!($website->getCode() == self::COUNTERPOINT_STORE_NAME)){
+            $this->AddLog("Wrong website choose.Please add correct store_id.");
+            die;
+        }
+        //set counterpoint website_id
+        $this->_websiteId = $websiteId;
     }
     
     /**
@@ -54,6 +91,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
      */
     private function importCPSQLOrderIntoMagento($counterpointOrderArr){
         try{
+            $this->setCounterpointStore();
+            $this->AddLog("counterpoint store_id-:".$this->_storeId);
+            $this->AddLog("counterpoint website_id-:".$this->_websiteId);
             $count = 1;
             foreach ($counterpointOrderArr as $order_id_key => $order_data_arr){
                 $ctrpnt_order_id = $order_id_key;//$this->getCounterpointOrderId($order_id_key);
@@ -102,7 +142,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         
                         $quoteObj = Mage::getModel('sales/quote')
                                         ->assignCustomer($customer);
-                        $quoteObj = $quoteObj->setStoreId(self::STORE_ID);
+                        $quoteObj = $quoteObj->setStoreId($this->_storeId);
                         
                         foreach ($productsArr as $value){
                             $sku = strtoupper($value['sku']);
@@ -284,7 +324,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                               $orderObj->save();
                               $quoteObj->save();
                               $increment_id = $orderObj->getRealOrderId();
-                              $this->AddLog("New order id-".$increment_id);
+                              $this->AddLog("new order increment_id-:".$increment_id);
                                 
                               //create invoice for created order
                               $ordered_items = $orderObj->getAllItems();
@@ -455,8 +495,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             
             $password = $this->generateRandomPassword();
             $customer = Mage::getModel("customer/customer");
-            $customer->setWebsiteId(self::WEBSITE_ID)
-                ->setStoreId(self::STORE_ID)
+            $customer->setWebsiteId($this->_websiteId)
+                ->setStoreId($this->_storeId)
                 ->setGroupId($groupId)
                 ->setFirstname($firstName)
                 ->setLastname($lastName)
@@ -486,7 +526,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 ->setIsDefaultShipping('1')
                 ->setSaveInAddressBook('1');
             $address->save();
-            $this->AddLog("New customer create.customer_id:".$customer->getId());
+            $this->AddLog("new customer create.customer_id-:".$customer->getId());
         }
         return $customer;
     }
