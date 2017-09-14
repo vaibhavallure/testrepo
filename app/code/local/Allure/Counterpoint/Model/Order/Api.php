@@ -27,6 +27,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     
     const PAYMENT_METHOD                = "codforpos";
     const SHIPPING_METHOD               = "webpos_shipping_storepickup";
+    const SHIPPING_METHOD_NAME          = "Webpos Shipping Storepickup";
     
     const SIMPLE_PRODUCT                = "simple";
     
@@ -313,7 +314,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $orderObj->setSubtotalInclTax($quoteSubTotal);
                             $orderObj->setBaseSubtotalInclTax($quoteSubTotal);
                         }
-                            
+                         
+                        $orderObj->setShippingDescription(self::SHIPPING_METHOD_NAME);
                         $orderObj->setGrandTotal($totalAmmount);
                         $orderObj->setBaseTaxAmount($taxAmmount);
                         $orderObj->setBaseGrandTotal($totalAmmount);
