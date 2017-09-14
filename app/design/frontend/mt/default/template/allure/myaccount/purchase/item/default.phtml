@@ -74,10 +74,12 @@
 										->init($product, 'thumbnail')->resize(74,96)?>" 
 											width="74" height="96" alt="<?php echo $productName?>">
 								</a>
+								<?php if(0):?>
 								<a data-img="<?php echo Mage::helper('catalog/image')
 									->init($product, 'thumbnail')->resize(350,350)?>" class="mt-piercing-photo" 
 									href="javascript:void(0);">View Piercing Photo
 								</a>
+								<?php endif;?>
 							</td>
 			
 							<td class="cart_col2">
