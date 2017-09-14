@@ -57,6 +57,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     private function setCounterpointStore(){
         $helper = Mage::helper('allure_counterpoint');
         $storeId = $helper->getCounterPointStoreId();
+        $websiteCode = $helper->getCounterPointWebsiteCode();
         if (empty($storeId)){
             $this->AddLog("Please set store_id to save counterpoint data.Can't proceed without stor_id.");
             die;
@@ -68,17 +69,20 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             $this->AddLog("Invalid store.");
             die;
         }
-        if(!($store->getCode() == self::COUNTERPOINT_STORE_NAME)){
-            $this->AddLog("Wrong store choose.Please add correct store_id.");
-            die;
-        }
+        
         $websiteId = $store->getWebsiteId();
         $website = Mage::getModel('core/website')->load($websiteId);
         if($websiteId == 1){
             $this->AddLog("You can't save data to main_website.");
             die;
         }
-        if(!($website->getCode() == self::COUNTERPOINT_STORE_NAME)){
+        
+        if(empty($websiteCode)){
+            $this->AddLog("You have not added counterpoint website code.");
+            die;
+        }
+        
+        if(!($website->getCode() == $websiteCode)){
             $this->AddLog("Wrong website choose.Please add correct store_id.");
             die;
         }

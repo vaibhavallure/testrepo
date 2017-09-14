@@ -10,7 +10,7 @@ class Allure_Counterpoint_Helper_Data extends Mage_Core_Helper_Abstract{
     const XML_COUNTERPOINT_DB_PASSWORD 	= 'allure_counterpoint/counterpoint_settings/passwd';
     
     const XML_COUNTERPOINT_STORE_ID 	= 'allure_counterpoint/counterpoint_settings/cp_store';
-    
+    const XML_COUNTERPOINT_WEBSITE_CODE = 'allure_counterpoint/counterpoint_settings/cp_website_code';
     //SugarCRM settings info
     const XML_SUGERCRM_STATUS           = 'allure_counterpoint/crm_settings/status';
     const XML_SUGERCRM_API_URL          = 'allure_counterpoint/crm_settings/api_url';
@@ -62,6 +62,10 @@ class Allure_Counterpoint_Helper_Data extends Mage_Core_Helper_Abstract{
      */
     public function getCounterPointStoreId(){
         return Mage::getStoreConfig(self::XML_COUNTERPOINT_STORE_ID);
+    }
+    
+    public function getCounterPointWebsiteCode(){
+        return Mage::getStoreConfig(self::XML_COUNTERPOINT_WEBSITE_CODE);
     }
     
     
