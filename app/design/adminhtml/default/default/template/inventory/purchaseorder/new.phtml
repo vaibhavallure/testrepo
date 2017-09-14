@@ -100,6 +100,7 @@
 					</td>
 					<td>
 						<div>
+							<input type="hidden" id="is_custom_<?php echo $_product->getId()?>"name="qty[<?php echo $_product->getId() ?>][<?php echo "is_custom" ?>]" value="0">
 							<textarea id="comment_<?php echo $_product->getId()?>" cols="15" rows="3"  name="qty[<?php echo $_product->getId() ?>][<?php echo "admin_comment" ?>]"/></textarea>
 						</div>
 					</td>

@@ -12,8 +12,14 @@
        <?php if($order->getStatus()!="new" && Mage::helper('allure_vendor')->isUserVendor()){?>
    <button id="ship_save_btn" form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/saveOrder', array('_secure' => true,'ship'=>true));?>"><?php echo $helper->__('Ship Partially')?></button>
    <button id="ship_close_btn" form="save_po" class="po_save_btn"  formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/saveOrder', array('_secure' => true,'close'=>true));?>" ><?php echo $helper->__('Ship Completely')?></button>
+  
     <?php } ?>
    <?php endif;?>
+   
+    <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW):?>
+    <button id="accept" class="po_save_btn"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/accept', array('_secure' => true,'id'=>$order->getPoId()));?>'" ><?php echo $helper->__('Accept')?></button>
+   <?php endif;?>
+   
    <button onclick="history.back()" class="po_back_btn" ><?php echo $helper->__('Back')?></button>
 </div>
 
@@ -111,7 +117,7 @@
 				<td>
 					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 
 					 name="order[<?php echo $_product->getProductId() ?>][<?php echo "proposed_qty" ?>]" type="text" 
-					 value="<?php echo round($_product->getRemainingQty())?>"  />
+					 value="0"  />
 				</td>
 				<td>
 					<input id="remaining_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
