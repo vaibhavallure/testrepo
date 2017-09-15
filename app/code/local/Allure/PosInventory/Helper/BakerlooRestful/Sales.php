@@ -1,6 +1,6 @@
 <?php
 
-class Allure_PosInventory_Block_BakerlooRestful_Sales extends Ebizmarts_BakerlooRestful_Helper_Sales
+class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_BakerlooRestful_Helper_Sales
 {
 	var $_allureHelper;
 	
