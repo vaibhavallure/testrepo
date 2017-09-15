@@ -166,6 +166,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                if(!$orderObj->getId()){
                      $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." not present in magento.");
                      $productsArr = $ctpnt_order_data['item_detail'];
+                     $extraOrderDetails = $ctpnt_order_data['order_detail'];
                      if(count($productsArr) > 0){
                         $customerDetailArr = $ctpnt_order_data['customer_detail'];
                         $customer = $this->insertCustomer($customerDetailArr);
@@ -200,6 +201,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $quoteItem = Mage::getModel("allure_counterpoint/item")
                                             ->setProduct($productObj);
                             $quoteItem->setQty($qty);
+                            $quoteItem->setStoreId($this->_storeId);
                             $quoteObj->addItem($quoteItem);
                             $productObj = null;
                         }
@@ -312,6 +314,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 $orderItem->setData('qty_refunded',$qtyItem);
                                 $orderItem->setData('qty_canceled',$qtyItem);
                            }
+                           $orderItem->setData('created_at',$extraOrderDetails['order_date']);
+                           $orderItem->setData('updated_at',$extraOrderDetails['order_date']);
                            $orderObj->addItem($orderItem);
                         }
                             
@@ -319,7 +323,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                         $totalDue = $orderObj->getTotalDue();
                             
-                        $extraOrderDetails = $ctpnt_order_data['order_detail'];
                         $totalAmmount = $quoteObj->getGrandTotal();
                         $taxAmmount = $extraOrderDetails['tax'];
                         $discountAmount = $extraOrderDetails['dis_amount'];
