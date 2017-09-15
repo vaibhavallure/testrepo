@@ -81,7 +81,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			$appstatus = $appointment->getAppStatus();
 			
 			$date=Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s');
-			$dStart = new DateTime($model->getLastNotified());
+			$dStart = new DateTime($appointment->getLastNotified());
 			$dEnd  = new DateTime($date);
 			$dDiff = $dStart->diff($dEnd);
 			$dDiff->format('%R'); // use for point out relation: smaller/greater
