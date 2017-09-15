@@ -69,7 +69,6 @@
         ?>
         <?php if($stockStatus['is_show']):?>
             <dl class="item-options">
-                <!--            	<dt><strong>--><?php //echo $this->escapeHtml('Product Status') ?><!--</strong></dt>-->
                 <dd style="font-size: 12px"><?php echo $stockStatus['message'] ?></dd>
             </dl>
         <?php endif;?>
@@ -90,7 +89,7 @@
             SKU : <?php echo $_item->getSku() ?><br />
     	</span>
             <span class="nobr">
-                Qty : <strong><?php echo $_item->getQty()*1 ?></strong><br />
+                Qty : <strong><?php echo $this->getItem()->getQtyOrdered()*1 //allure code //$_item->getQty()*1 //existing code ?></strong><br />
     	    </span>
             <br>
         <span>Price : </span>

@@ -65,6 +65,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $websiteCode        = $helper->getCounterPointWebsiteCode();
         $paymentMethod      = $helper->getCounterPointPaymentMethod();
         $shippingMethodCode = $helper->getCounterPointShippingMethodCode();
+        $this->AddLog("shhipping Method -:".$shippingMethodCode);
         $shippingMethodName = $helper->getCounterPointShippingMethodName();
         
         if(empty($paymentMethod)){
@@ -73,14 +74,14 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         }
         
         if(empty($shippingMethodCode)){
-            $this->AddLog("Plase set Shipping Method Code.Without shipping code can't proceed");
+            $this->AddLog("Plase set Shipping Method.Without shipping method can't proceed");
             die;
         }
         
-        if(empty($shippingMethodName)){
+        /* if(empty($shippingMethodName)){
             $this->AddLog("Plase set Shipping Method Name.Without shipping name can't proceed");
             die;
-        }
+        } */
         
         if (empty($storeId)){
             $this->AddLog("Please set store_id to save counterpoint data.Can't proceed without stor_id.");
@@ -114,7 +115,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $this->_websiteId           = $websiteId;
         $this->_paymentMethod       = $paymentMethod;
         $this->_shippingMethodCode  = $shippingMethodCode;
-        $this->_shippingMethodName  = $shippingMethodName;
+        $shippingMethodArr = Mage::getModel("allure_counterpoint/entity_shippingMethods")
+                                   ->toOptionArray();
+        $this->_shippingMethodName  = $shippingMethodArr[$this->_shippingMethodCode]['label'];
     }
     
     /**
