@@ -9,6 +9,10 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     protected $_storeId                 = -1;
     protected $_websiteId               = -1;
     
+    protected $_paymentMethod           = null;
+    protected $_shippingMethodCode      = null;
+    protected $_shippingMethodName      = null;
+    
     const STORE_ID                      = 1;
     const WEBSITE_ID                    = 1;
     const TAX_CLASS_ID                  = 1;
@@ -55,10 +59,29 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         return 1;
     }
     
-    private function setCounterpointStore(){
-        $helper = Mage::helper('allure_counterpoint');
-        $storeId = $helper->getCounterPointStoreId();
-        $websiteCode = $helper->getCounterPointWebsiteCode();
+    private function prepareCounterpointSettings(){
+        $helper             = Mage::helper('allure_counterpoint');
+        $storeId            = $helper->getCounterPointStoreId();
+        $websiteCode        = $helper->getCounterPointWebsiteCode();
+        $paymentMethod      = $helper->getCounterPointPaymentMethod();
+        $shippingMethodCode = $helper->getCounterPointShippingMethodCode();
+        $shippingMethodName = $helper->getCounterPointShippingMethodName();
+        
+        if(empty($paymentMethod)){
+            $this->AddLog("Plase set payment method.Without payment method can't proceed");
+            die;
+        }
+        
+        if(empty($shippingMethodCode)){
+            $this->AddLog("Plase set Shipping Method Code.Without shipping code can't proceed");
+            die;
+        }
+        
+        if(empty($shippingMethodName)){
+            $this->AddLog("Plase set Shipping Method Name.Without shipping name can't proceed");
+            die;
+        }
+        
         if (empty($storeId)){
             $this->AddLog("Please set store_id to save counterpoint data.Can't proceed without stor_id.");
             die;
@@ -88,7 +111,10 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             die;
         }
         //set counterpoint website_id
-        $this->_websiteId = $websiteId;
+        $this->_websiteId           = $websiteId;
+        $this->_paymentMethod       = $paymentMethod;
+        $this->_shippingMethodCode  = $shippingMethodCode;
+        $this->_shippingMethodName  = $shippingMethodName;
     }
     
     /**
@@ -96,7 +122,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
      */
     private function importCPSQLOrderIntoMagento($counterpointOrderArr){
         try{
-            $this->setCounterpointStore();
+            $this->prepareCounterpointSettings();
             $this->AddLog("counterpoint store_id-:".$this->_storeId);
             $this->AddLog("counterpoint website_id-:".$this->_websiteId);
             $count = 1;
@@ -188,7 +214,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $quoteShippingAddress->setData($shippingAddress);
                             $quoteObj->setShippingAddress($quoteShippingAddress);
                             // fixed shipping method
-                            $quoteObj->getShippingAddress()->setShippingMethod(self::SHIPPING_METHOD);
+                            $quoteObj->getShippingAddress()
+                                ->setShippingMethod($this->_shippingMethodCode); //self::SHIPPING_METHOD
                             //$quoteObj->getShippingAddress()->setCollectShippingRates(true);
                             //$quoteObj->getShippingAddress()->collectShippingRates();
                         }
@@ -247,7 +274,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                         $ccInfo = array();
                         // assign payment method
-                        $payment_method = self::PAYMENT_METHOD;
+                        $payment_method = $this->_paymentMethod;//self::PAYMENT_METHOD;
                         $quotePaymentObj = $quoteObj->getPayment();
                         $quotePaymentObj->setMethod($payment_method);
                         $quoteObj->setPayment($quotePaymentObj);
@@ -315,7 +342,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $orderObj->setBaseSubtotalInclTax($quoteSubTotal);
                         }
                          
-                        $orderObj->setShippingDescription(self::SHIPPING_METHOD_NAME);
+                        $orderObj->setShippingDescription($this->_shippingMethodName); //self::SHIPPING_METHOD_NAME
                         $orderObj->setGrandTotal($totalAmmount);
                         $orderObj->setBaseTaxAmount($taxAmmount);
                         $orderObj->setBaseGrandTotal($totalAmmount);

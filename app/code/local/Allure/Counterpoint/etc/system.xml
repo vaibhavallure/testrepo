@@ -56,15 +56,41 @@
                             <comment>Set store Id where to add counterpont order's data</comment>
                         </cp_store>
                         
-                        <cp_website_code>
-                            <label>Website code</label>
+                        <cp_payment_method>
+                            <label>Payment Method</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                        </cp_payment_method>
+                        
+                        <cp_shipping_method_code>
+                            <label>Shipping Method Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cp_shipping_method_code>
+                        
+                        <cp_shipping_method_name>
+                            <label>Shipping Method Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cp_shipping_method_name>
+                        
+                        <cp_website_code>
+                            <label>Website code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                             <comment>counterpoint website code</comment>
-                            <depends><active>0</active></depends>
                         </cp_website_code>
                         
                     </fields>
