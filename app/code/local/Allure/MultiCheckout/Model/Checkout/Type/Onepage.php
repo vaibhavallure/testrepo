@@ -549,7 +549,9 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             $backorder_quote->setId(null);
             $order_quote->setId(null);
             foreach ($quoteItems as $item) {
-                $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
+                
+                //Commenting to add to backorder
+               /*  $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
                     ->getQty();
                 $stock_qty = intval($item->getProduct()
                     ->getStockItem()
@@ -561,7 +563,25 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 } else {
                     // $order_quote->addItem($item->setId(null));
                     $order_quote->addProduct($item->getProduct(), $item->getBuyRequest());
+                } */
+                
+                //Added in parent child
+                
+                $storeId=Mage::app()->getStore()->getStoreId();
+                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+                $productInvryCount = Mage::getModel('cataloginventory/stock_item')
+                ->loadByProduct($_product,$storeId);
+                
+                $stock_qty = intval($productInvryCount->getQty());
+                if ($stock_qty < $item->getQty() ){
+                    //if( $productInvryCount <= 0 ){
+                    //$backorder_quote->addItem($item->setId(null));
+                    $backorder_quote->addProduct($item->getProduct(), $item->getBuyRequest());
+                }else{
+                    //$order_quote->addItem($item->setId(null));
+                    $order_quote->addProduct($item->getProduct(), $item->getBuyRequest());
                 }
+                
             }
             
             if (count($backorder_quote->getAllItems()) > 0) {
