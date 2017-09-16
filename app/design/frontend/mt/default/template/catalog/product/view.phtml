@@ -291,15 +291,12 @@ if ($_product->getSizeSample() == 1) {
     <?php endif; ?>
     
     <?php //existing code
-    	if(1):
+    	if(0):
     ?>
     <form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <?php endif;?>
     <?php //allure code?>
-    <?php if(0):?>
     <form action="<?php echo $this->getSubmitUrl($_product)//.'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-       <?php endif;?>
-       
         <div class="no-display">
             <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
