@@ -25,7 +25,7 @@ staging:
   only:
     - staging
   script:
-    - mage_deploy_stage
+    - mage_deploy_stage mariatash
     - echo 'Deployed on Staging'
 alpha:
   environment: alpha
