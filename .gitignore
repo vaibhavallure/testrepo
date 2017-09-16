@@ -1,4 +1,5 @@
 /downloader/connect.cfg
+/downloader/cache.cfg
 /downloader/.cache
 /app/etc/local.xml
 /var
