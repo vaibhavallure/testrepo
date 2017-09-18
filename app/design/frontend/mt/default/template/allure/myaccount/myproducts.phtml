@@ -232,8 +232,8 @@
              });
              
 
-         jQuery('.myaccount-filter-store-list .myaccount-filter-item li option').click(function(){
-             var mval = jQuery(this).val();
+         jQuery('.myaccount-filter-store-list .myaccount-filter-item li dd').click(function(){
+             var mval = jQuery(this).attr('value');//jQuery(this).val();
  			 var uri = window.location;
  			 var host = uri.origin;
  			 var params = getParams('m_store',mval);
@@ -243,8 +243,8 @@
  			 window.location.href = url;
          });
 
-         jQuery('.myaccount-filter-sort-order-list .myaccount-filter-item li option').click(function(){
-             var mval = jQuery(this).val();
+         jQuery('.myaccount-filter-sort-order-list .myaccount-filter-item li dd').click(function(){
+             var mval = jQuery(this).attr('value');//jQuery(this).val();
  			 var uri = window.location;
  			 var host = uri.origin;
  			 var params = getParams('m_sort',mval);
