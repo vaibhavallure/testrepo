@@ -69,6 +69,7 @@ Default layout, loads most of the pages
 				<action method="addJs"><script>selectivizr.js</script></action>
                 <action method="addJs"><script>jquery.hoverIntent.minified.js</script></action>
 
+				<action method="addItem"><type>skin_js</type><name>js/allure/unilogin.js</name></action>
                 <!--CSS3 for IE-->
                 <!--<action method="addJs">-->
                     <!--<script>selectivizr.js</script>-->
