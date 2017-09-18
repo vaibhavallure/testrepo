@@ -51,7 +51,7 @@
 	    	</sales_convert_quote>
 	    </fieldsets>
 	    
-	   <!--  <events>
+	   <events>
 	    	<customer_save_after>
             	<observers>
                 	<allure_counterpoint>
@@ -70,7 +70,7 @@
              	</observers>
          	</customer_address_save_after>
          	
-	    </events> -->
+	    </events>
         
     </global>
     

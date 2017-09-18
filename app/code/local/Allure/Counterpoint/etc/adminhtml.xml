@@ -1,8 +1,29 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <menu>
+        <allure>
+            <title>Allure</title>
+            <sort_order>70</sort_order>
+            <children>
+                <settings translate="title">
+                    <title>Settings</title>
+                    <sort_order>10</sort_order>
+                    <children>
+		                <allure_counterpoint translate="title" module="allure_counterpoint">
+		                    <title>Counterpoint</title>
+		                    <action>adminhtml/system_config/edit/section/allure_counterpoint</action>
+		                    <sort_order>10</sort_order>
+		                </allure_counterpoint>
+		            </children>
+                </settings>
+            </children>
+        </allure>
+    </menu>
 	<acl>
 		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
 			<admin>
 				<children>
 					<system>
@@ -11,41 +32,14 @@
 								<children>
 									<allure_counterpoint translate="title" module="allure_counterpoint">
 										<title>Allure - CounterPoint Bridge</title>
+										<sort_order>1</sort_order>
 									</allure_counterpoint>
 								</children>
 							</config>
 						</children>
 					</system>
-					<allure_counterpoint translate="title" module="allure_counterpoint">
-						<title>CounterPoint</title>
-						<children>
-							<setting translate="title" module="allure_counterpoint">
-								<title>Settings</title>
-								<sort_order>10</sort_order>
-							</setting>
-						</children>
-					</allure_counterpoint>
 				</children>
 			</admin>
 		</resources>
 	</acl>
-	<menu>
-		<allure translate="title" module="allure_counterpoint">
-			<title>Allure</title>
-            <sort_order>70</sort_order>
-			<children>
-				<counterpoint translate="title" module="allure_counterpoint">
-					<title>Counterpoint</title>
-					<sort_order>80</sort_order>
-					<children>
-						<settings translate="title" module="allure_counterpoint">
-							<title>Settings</title>
-							<action>adminhtml/system_config/edit/section/allure_counterpoint</action>
-							<sort_order>10</sort_order>
-						</settings>
-					</children>
-				</counterpoint>
-			</children>
-		</allure>
-	</menu>
 </config>
