@@ -110,15 +110,19 @@ if($product->getTypeId() =='configurable'){
     <h3 class="product-name">        
         <a href="<?php echo $productUrl; ?>" title="<?php echo $this->escapeHtml($defaultProduct->getName()) ?>"><?php echo $this->escapeHtml($defaultProduct->getName()) ?></a>
     </h3>
-    <span class="mt-wishlist-added-at"><?php echo "Added ".date('M d, Y H:i a',strtotime($item->getAddedAt()))?></span>
     <div class="price-wish"><?php //echo $this->getPriceHtml($product); ?></div>
-	<?php if ($_options = $item->getOptionList($cpid)):?>
+	<?php 
+	   $helper = Mage::helper('catalog/product_configuration');
+	   $_options = $helper->getConfigurableOptions($item);
+	?>
+	<?php if ($_options):?>
 	<?php foreach ($_options as $_option) : ?>
 		<div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>		
 			<?php echo $_option['value'] ?>
 		</div>
 	<?php endforeach; ?>
 	<?php endif;?>	
+	<span class="mt-wishlist-added-at"><?php echo "Added ".date('M d, Y H:i a',strtotime($item->getAddedAt()))?></span>
 </td>
 
 <td class="mt-wishlist-price">
