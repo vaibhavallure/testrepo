@@ -412,6 +412,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 //fully Shipped
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_close',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                if (!empty($adminEmail)) {
+                    $adminEmail =  explode(',', $adminEmail);
+                }
                 $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                 $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
 
@@ -423,6 +426,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_shipment',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                if (!empty($adminEmail)) {
+                    $adminEmail =  explode(',', $adminEmail);
+                }
                 $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                 Mage::log("vendorEmail:".$templateId,Zend_log::DEBUG,"mylogs",true);
                 $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
@@ -433,6 +439,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_shipment',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                if (!empty($adminEmail)) {
+                    $adminEmail =  explode(',', $adminEmail);
+                }
                 $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                 Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
                 $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
@@ -447,6 +456,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT)
                    $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                 Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
+                if (!empty($adminEmail)) {
+                    $adminEmail =  explode(',', $adminEmail);
+                }
                 $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order saved sucessfully.");
             }
