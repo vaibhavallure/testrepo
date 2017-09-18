@@ -410,13 +410,13 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 			
 			$isadd = false;
 			
-			/* $item->mergeBuyRequest($buyRequest);
+			$item->mergeBuyRequest($buyRequest);
 			if ($item->addToCart($cart, true)) {
 				$cart->save()->getQuote()->collectTotals();
 				$isadd = true;
-			} */
+			}
 			
-			$productId = $item->getProductId();
+			/* $productId = $item->getProductId();
 			if($productId){
 				$product = Mage::getModel('catalog/product')
 					->setStoreId(Mage::app()->getStore()->getId())
@@ -427,7 +427,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 				$cart->save()->getQuote()->collectTotals();
 				$isadd = true;
 				$item->delete();
-			}
+			} */
 			
 			$wishlist->save();
 			Mage::helper('wishlist')->calculate();
@@ -437,7 +437,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 			}
 			Mage::helper('wishlist')->calculate();
 			
-			$productName = Mage::helper('core')->escapeHtml($product->getName());
+			$productName = Mage::helper('core')->escapeHtml($item->getName());
 			
 			if($isadd){
 				$message = $this->__('%s was added to your shopping cart.', $productName);
