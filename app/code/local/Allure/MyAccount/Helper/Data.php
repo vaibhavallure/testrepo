@@ -81,10 +81,8 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
             }else{ 
                 $backTime = $product->getData('backorder_time');
                 $stockMsg = "";
-                if(!is_null($backTime))
+                if(!is_null($backTime) && !empty($backTime))
                     $stockMsg = "(The metal color or length combination you selected is backordered. Order now and It will ship "." - ".$backTime.")";
-                else 
-                    $stockMsg = "(This product is not available in the requested quantity.".$qty." of the items will be backordered.)";
             }
             $isShow = true;
         }
