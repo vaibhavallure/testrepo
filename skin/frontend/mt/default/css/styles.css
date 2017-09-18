@@ -15000,7 +15000,7 @@ body.quickview-index-index {
 }
 
 .giftcard-info .date_selector_div {
-	width: 242px;
+	width: 212px;
 	float: right;
 	margin: 0 3px;
 	position: relative;
@@ -15041,11 +15041,11 @@ body.quickview-index-index {
 }
 
 .giftcard-info .date_selector_div>div.div_selector_day.styled {
-	width: 64px;
+	width: 48px;
 }
 
 .giftcard-info .date_selector_div>div.div_selector_year.styled {
-	width: 68px;
+	width: 52px;
 }
 
 .giftcard-info .date_selector_div select.date_selector_month {
@@ -19663,4 +19663,33 @@ iframe[name=google_conversion_frame] {display:none}
 }
 #quick_register li.one_column {
     width: 100%;
+}
+
+input[type="radio"].giftcard-radio {
+   left: 0px;
+   position: relative;
+}
+input.giftcard-radio {
+   width: 22px !important;
+   margin-right: 7px;
+   float: left;
+   padding-right: 12px;
+   overflow: hidden;
+}
+
+
+input.giftcard-radio1 {
+   position: relative;
+   width: 18px !important;
+   margin-right: 7px;
+   float: left;
+   left: 0px !important;
+   /* padding-right: 12px; */
+   /* overflow: hidden; */
+
+   /* padding: 0px 10px; */
+   margin-left: 20px;
+}
+.email_delivery_option2{
+	    margin-left: 138px !important;
 }

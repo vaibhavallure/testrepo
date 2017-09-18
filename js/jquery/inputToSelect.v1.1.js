@@ -29,6 +29,7 @@
                 var _element = this;
 
                 var parent_div = jQuery(this).parent();
+                parent_div.before('<input type="radio" class="giftcard-radio1" name="mail_delivery_option" value="1" checked="checked">')
                 var i,d,cd = new Date();
                 if (jQuery(_element).val()) {
                     var vals = jQuery(_element).val().split('-');
@@ -145,7 +146,8 @@
                 });
                                 
                 parent_div.append('<div id="advice-required-entry-date" class="validation-advice" style="display:none"></div>');
-                parent_div.append('<div class="date-input-info"><em>*</em> Based on Eastern Standard Time.</div>');                                                                
+                parent_div.append('<div class="date-input-info"><em>*</em> Based on Eastern Standard Time.</div>');
+                parent_div.after('<div class="email_delivery_option2"><input type="radio" class="giftcard-radio" name="mail_delivery_option" value="2">Deliver Immediately</div>');
                                 
                 if (!options.hasEmpty || options.defaultToday) {
                     //set the dates

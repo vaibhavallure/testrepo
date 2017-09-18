@@ -372,4 +372,14 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
             $oGiftCard->send();
         }
     }
+    public function sendEmailImmediately()
+    {
+        $currentDate = date('Y-m-d');
+        $oGiftCards = Mage::getModel('giftcards/giftcards')->getCollection()
+        ->addFieldToFilter('mail_delivery_date', array('eq' => $currentDate))
+        ->addFieldToFilter('card_status', 1);
+        foreach ($oGiftCards as $oGiftCard) {
+            $oGiftCard->send();
+        }
+    }
 }
