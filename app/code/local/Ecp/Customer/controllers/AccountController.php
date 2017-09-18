@@ -281,5 +281,109 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
 
         $this->_loginPostRedirect();
     }
+    
+    /**
+     * Change customer password action
+     */
+    public function editPostAjaxAction()
+    {
+    	if (!$this->_validateFormKey()) {
+    		return ;//$this->_redirect('*/*/edit');
+    	}
+    	
+    	if ($this->getRequest()->isPost()) {
+    		/** @var $customer Mage_Customer_Model_Customer */
+    		$customer = $this->_getSession()->getCustomer();
+    		$customer->setOldEmail($customer->getEmail());
+    		/** @var $customerForm Mage_Customer_Model_Form */
+    		$customerForm = $this->_getModel('customer/form');
+    		$customerForm->setFormCode('customer_account_edit')
+    		->setEntity($customer);
+    		
+    		$customerData = $customerForm->extractData($this->getRequest());
+    		
+    		$errors = array();
+    		$customerErrors = $customerForm->validateData($customerData);
+    		if ($customerErrors !== true) {
+    			$errors = array_merge($customerErrors, $errors);
+    		} else {
+    			$customerForm->compactData($customerData);
+    			$errors = array();
+    			
+    			if (!$customer->validatePassword($this->getRequest()->getPost('current_password'))) {
+    				$errors[] = $this->__('Invalid current password');
+    			}
+    			
+    			// If email change was requested then set flag
+    			$isChangeEmail = ($customer->getOldEmail() != $customer->getEmail()) ? true : false;
+    			$customer->setIsChangeEmail($isChangeEmail);
+    			
+    			// If password change was requested then add it to common validation scheme
+    			$customer->setIsChangePassword($this->getRequest()->getParam('change_password'));
+    			
+    			if ($customer->getIsChangePassword()) {
+    				$newPass    = $this->getRequest()->getPost('password');
+    				$confPass   = $this->getRequest()->getPost('confirmation');
+    				
+    				if (strlen($newPass)) {
+    					/**
+    					 * Set entered password and its confirmation - they
+    					 * will be validated later to match each other and be of right length
+    					 */
+    					$customer->setPassword($newPass);
+    					$customer->setPasswordConfirmation($confPass);
+    				} else {
+    					$errors[] = $this->__('New password field cannot be empty.');
+    				}
+    			}
+    			
+    			// Validate account and compose list of errors if any
+    			$customerErrors = $customer->validate();
+    			if (is_array($customerErrors)) {
+    				$errors = array_merge($errors, $customerErrors);
+    			}
+    		}
+    		
+    		if (!empty($errors)) {
+    		 	$result['success'] = 0;
+    		 	$result['error'] = $errors;
+    		} else{
+	    		try {
+	    			$customer->cleanPasswordsValidationData();
+	    			
+	    			// Reset all password reset tokens if all data was sufficient and correct on email change
+	    			if ($customer->getIsChangeEmail()) {
+	    				$customer->setRpToken(null);
+	    				$customer->setRpTokenCreatedAt(null);
+	    			}
+	    			
+	    			$customer->save();
+	    			$result['success'] = 1;
+	    			$result['message'] =  $this->__('The account information has been saved.');
+	    			
+	    			$this->loadLayout('myaccount_customer_form_edit');
+	    			$html = $this->getLayout()->getBlock('customer_edit')->toHtml();
+	    			$result['html']  = $html;
+	    			
+	    			if ($customer->getIsChangeEmail() || $customer->getIsChangePassword()) {
+	    				$customer->sendChangedPasswordOrEmail();
+	    			}
+	    			
+	    		} catch (Mage_Core_Exception $e) {
+	    			$result['success'] = 0;
+	    			$result['message'] =  $e->getMessage();
+	    			$result['error'] = $errors;
+	    		} catch (Exception $e) {
+	    			$result['success'] = 0;
+	    			$result['message'] =  $this->__('Cannot save the customer.');
+	    			$result['error'] = $errors;
+	    		}
+	    	}
+    	}
+    	
+    	$this->getResponse()->setHeader('Content-type', 'application/json');
+    	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    	
+    }
 
 }

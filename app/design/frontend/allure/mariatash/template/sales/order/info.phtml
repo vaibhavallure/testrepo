@@ -43,14 +43,14 @@
         <ul id="order-info-tabs">
         <?php foreach ($_links as $_link): ?>
             <?php if($_link->getUrl()): ?>
-                <li><a href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a></li>
+                <li style="padding-bottom: 10px"><a href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a></li>
                 <?php if ($i++<$linksCount): ?>
-                    <li> | </li>
+                    <li style="padding-bottom: 10px"> | </li>
                 <?php endif; ?>
             <?php else: ?>
-                <li class="current"><?php echo $_link->getLabel() ?></li>
+                <li class="current" style="padding-bottom: 1px"><?php echo $_link->getLabel() ?></li>
                 <?php if ($i++<$linksCount): ?>
-                    <li> | </li>
+                    <li style="padding-bottom: 10px"> | </li>
                 <?php endif; ?>
             <?php endif; ?>
         <?php endforeach; ?>
@@ -76,7 +76,7 @@
             <div class="box-title">
                 <h2><?php echo $this->__('Shipping Method') ?></h2>
             </div>
-            <div class="box-content">
+            <div class="box-content" style="margin-bottom: 10px">
                 <?php if ($_order->getShippingDescription()): ?>
                     <?php echo $this->escapeHtml($_order->getShippingDescription()) ?>
                 <?php else: ?>
@@ -103,7 +103,7 @@
             <div class="box-title">
                 <h2><?php echo $this->__('Payment Method') ?></h2>
             </div>
-            <div class="box-content">
+            <div class="box-content" style="margin-bottom: 10px">
                 <?php echo $this->getPaymentInfoHtml() ?>
             </div>
         </div>

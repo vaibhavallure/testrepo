@@ -284,6 +284,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'shipping_telephone' => $helper->__('Ship - Phone'),
         	'no_signature_delivery' => $helper->__('Signature Required ?'),
         	'create_order_method' => $helper->__('Order Method ?'),
+            'counterpoint_order_id'=>$helper->__('Counterpoint Id'),
 
         		//Allure Attribute
         	'customer_group_id' => $helper->__('Customer Group'),
@@ -755,6 +756,13 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             		'width' => '70px',
             		'filter_index' => "{$tableName_sales_flat_order}.create_order_method",
             		'options' => array(1=>'CounterPoint',0=>'Website'),
+            ),
+            'counterpoint_order_id' => array(
+                'header' => $helper->__('Counterpoint Id'),
+                'index' => 'counterpoint_order_id',
+                'type' => 'text',
+                'width' => '70px',
+                'filter_index' => "{$tableName_sales_flat_order}.counterpoint_order_id",
             ),
         );
 

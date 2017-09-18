@@ -34,11 +34,24 @@
             <?php $_index = 1; ?>
             <?php $_count = count($_links); ?>
             <?php foreach ($_links as $_link): ?>
+            	<?php 
+            		$img = "";
+            		if($_link->getName()=="my_products")
+            			$img = "<img class='acc-link-img product-img' src='".$this->getSkinUrl('images/myaccount/diamond.png')."'/>";
+            		if($_link->getName()=="account_edit")
+            			$img = "<img class='acc-link-img login-img' src='".$this->getSkinUrl('images/myaccount/sign-in-lock.png')."'/>";
+            		if($_link->getName()=="address_book")
+            			$img = "<img class='acc-link-img address-img' src='".$this->getSkinUrl('images/myaccount/pin_1.png')."'/>";
+            		if($_link->getName()=="tokenbase_customer_link")
+            			$img = "<img class='acc-link-img pay-img' src='".$this->getSkinUrl('images/myaccount/Payments.png')."'/>";
+            	?>
                 <?php $_last = ($_index++ >= $_count); ?>
                 <?php if ($this->isActive($_link)): ?>
-                    <li class="current<?php echo ($_last ? ' last' : '') ?>"><strong><?php echo $_link->getLabel() ?></strong></li>
+                    <li class="current<?php echo ($_last ? ' last' : '') ?>">
+                    <strong><?php echo $img?><?php echo $_link->getLabel() ?></strong>
+                    </li>
                 <?php else: ?>
-                    <li<?php echo ($_last ? ' class="last"' : '') ?>><a href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a></li>
+                    <li<?php echo ($_last ? ' class="last"' : '') ?>><a href="<?php echo $_link->getUrl() ?>"><?php echo $img?><?php echo $_link->getLabel() ?></a></li>
                 <?php endif; ?>
             <?php endforeach; ?>
         </ul>
