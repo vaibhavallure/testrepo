@@ -69,16 +69,16 @@
 		   		<div class="filter_name"></div>
 					<ol class="myaccount-filter-item">
 					<li>
-						<option value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></option>
+						<dd value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></dd>
 						<?php
 							$stores = Mage::app ()->getStores ();
 							foreach ($stores as $store) :
 						?>
     						
-							<option value="<?php echo $store->getId()?>"
+							<dd value="<?php echo $store->getId()?>"
 								<?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
 							<?php echo $store->getName()?>
-							</option>
+							</dd>
             				
             			<?php endforeach;?>
             			</li>
@@ -95,7 +95,7 @@
 					<ol class="myaccount-filter-item">
 						<li>
 							<?php foreach ($sortOderArr as $key=>$name):?>
-							<option value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></option>
+							<dd value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></dd>
 							<?php endforeach;?>
 	            		</li>
 					</ol>
