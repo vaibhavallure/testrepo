@@ -51,7 +51,7 @@
 							</depends>
 						</filter_status>
 						<filter_from translate="title" module="allure_orderprocessor">
-							<label>Order From Filter</label>
+							<label>Order From Date Filter</label>
 							<frontend_type>text</frontend_type>
 							<sort_order>14</sort_order>
 							<show_in_default>1</show_in_default>
@@ -61,11 +61,22 @@
 								<status>1</status>
 							</depends>
 						</filter_from>
+						<filter_to translate="title" module="allure_orderprocessor">
+							<label>Order To Date Filter</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>15</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+						</filter_to>
 						<debug translate="label" module="allure_orderprocessor">
 							<label>Debug</label>
 							<frontend_type>select</frontend_type>
 							<source_model>adminhtml/system_config_source_enabledisable</source_model>
-							<sort_order>15</sort_order>
+							<sort_order>16</sort_order>
 							<show_in_default>1</show_in_default>
 							<show_in_website>0</show_in_website>
 							<show_in_store>0</show_in_store>

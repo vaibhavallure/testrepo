@@ -31,7 +31,7 @@ class Allure_OrderProcessor_Model_OrderProcessor
 		Mage::log($message, Zend_Log::DEBUG, 'order_processor.log', $this->helper->isDebugMode());
 	}
 	
-	private function getOrderList($stores, $status, $from) {
+	private function getOrderList($stores, $status, $from, $to) {
 		$orderFilters = array (
 			"store_id" => array (
 				"in" => $stores
@@ -40,7 +40,8 @@ class Allure_OrderProcessor_Model_OrderProcessor
 				"in" => $status
 			),
 			"created_at" => array (
-				"from" => (string) $from
+				"from" => (string) $from,
+				"to" => (string) $to
 			)
 		);
 		try {
@@ -204,23 +205,36 @@ class Allure_OrderProcessor_Model_OrderProcessor
 			
 			$from = $helper->getFromFilter();
 			
-			$date = new DateTime();
+			$to = $helper->getToFilter();
+			
+			$fromDate = new DateTime();
 			
 			if ($from && !empty($from)) {
-				$date->modify($from);
+				$fromDate->modify($from);
 			} else {
-				$date->modify("-30 minutes");
+				$fromDate->modify("-1 day");
 			}
 			
-			$from = $date->format('Y-m-d H:i:s');
+			$from = $fromDate->format('Y-m-d H:i:s');
+			
+			$toDate = new DateTime();
+			
+			if ($to && !empty($to)) {
+				$toDate->modify($to);
+			} else {
+				$toDate->modify("-30 minutes");
+			}
+			
+			$to = $toDate->format('Y-m-d H:i:s');
 			
 			if (!empty($stores)) {
 			
 				$this->log("STORES:: ".json_encode($stores));
 				$this->log("STATUS:: ".json_encode($status));
 				$this->log("FROM:: ".json_encode($from));
+				$this->log("TO:: ".json_encode($to));
 				
-				$ordersList = $this->getOrderList($stores, $status, $from);
+				$ordersList = $this->getOrderList($stores, $status, $from, $to);
 				
 				$this->log('Found '.count($ordersList).' orders...');
 				
