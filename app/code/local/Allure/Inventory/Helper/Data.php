@@ -132,12 +132,14 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         $path = Mage::getBaseDir('var') . DS . 'export' . DS;
         $name   = 'purchase_order_'.$po_id.'.csv';
         $file = $path . DS . $name;
+        $vendorEmail =  explode(',', $vendorEmail);
+       
         
         $orderData=Mage::getModel("inventory/purchaseorder")->load($po_id);
         $storeId=$orderData->getStoreId();
         $orderItems=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('po_id',$po_id);
         $order_url="";
-        
+  
         $emailVariables = array();
         $emailVariables['items_ordered'] = count($orderItems);
         $emailVariables['order_id'] = $po_id;
@@ -155,7 +157,6 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
             Mage::log("Order emails are disabled ",Zend_Log::DEBUG,"mylogs",true);
             return;
         }
-        
         $emailTemplate  = Mage::getModel('core/email_template');
         if($templateId)
             $emailTemplate  = $emailTemplate->load($templateId);
@@ -168,7 +169,6 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         if (!empty($copyTo)) {
             $copyTo =  explode(',', $copyTo);
         }
-        
         if($vendorEmail)
             $sendEmail = $vendorEmail;
         else 
