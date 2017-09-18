@@ -10,6 +10,7 @@ $j(document).ready(function (){
         
         var id=parseInt($j(this).attr('id'));
         var qty=parseInt($j('#max_qty_'+id).val());
+        var is_custom=parseInt($j('#is_custom_'+id).val());
         var cost=parseFloat($j('#cost_'+id).val());
     	var refence_no=$j('#refence_no').val();
     	var key=Allure.ViewPurchaseOrderFormKey;
@@ -26,7 +27,7 @@ $j(document).ready(function (){
 	        	totalAmount=totalAmount + (qty * cost);
 	        	var include = 1;
 	        	var item ={
-	        			id,qty,cost,comment,include,store
+	        			id,qty,cost,comment,include,store,is_custom
 	        	};
 	        	$j.ajax({
 	    	        url: Allure.AddPurchaseItem,
@@ -47,7 +48,7 @@ $j(document).ready(function (){
         	totalAmount= totalAmount -(qty * cost);
         	var include = 0;
         	var item ={
-        			id,qty,cost,comment,include,store
+        			id,qty,cost,comment,include,store,is_custom
         	};
         	$j.ajax({
     	        url: Allure.AddPurchaseItem,
@@ -245,7 +246,7 @@ function resetSearch(){
 		beforeSend: function() { $j('#loading-mask').show(); },
         complete: function() { $j('#loading-mask').hide(); },
         success: function(data) {
-        	console.log(data.data);
+        	//console.log(data.data);
         	if(data.data){
         			updateTotal(data.data);
 	        	}

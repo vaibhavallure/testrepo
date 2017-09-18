@@ -73,11 +73,28 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			
 			$sendEmail = false;
 			$sendSms = false;
+			
 			$startDate = $appointment->getAppointmentStart();
 			$bookedDate = $appointment->getBookingTime();
 			$notification_pref = $appointment->getNotificationPref();
 			$phone = $appointment->getPhone();
 			$appstatus = $appointment->getAppStatus();
+			
+			$date=Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s');
+			$dStart = new DateTime($appointment->getLastNotified());
+			$dEnd  = new DateTime($date);
+			$dDiff = $dStart->diff($dEnd);
+			$dDiff->format('%R'); // use for point out relation: smaller/greater
+			$dDiff->days;
+			
+			if($dDiff->days <= 0)
+			   continue;
+			
+			
+			$appointment->setLastNotified($date);
+			$appointment->save();
+			
+			   
 			Mage::log(" notication type  ".$notification_pref,Zend_Log::DEBUG,'appointments',true);
 			if($notification_pref == 2){
 				$sendSms = true;

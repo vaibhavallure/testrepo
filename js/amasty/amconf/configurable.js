@@ -595,8 +595,8 @@ Product.Config.prototype.updateFormProductId = function(productId){
     }
     var currentAction = $('product_addtocart_form').action;
     //allure commented
-    newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
-    $('product_addtocart_form').action = newcurrentAction;
-    $('product_addtocart_form').product.value = productId;
+    //newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
+    //$('product_addtocart_form').action = newcurrentAction;
+    //$('product_addtocart_form').product.value = productId;
 };
 
