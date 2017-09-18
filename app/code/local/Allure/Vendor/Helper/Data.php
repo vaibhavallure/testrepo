@@ -10,11 +10,12 @@ class Allure_Vendor_Helper_Data extends Mage_Core_Helper_Abstract {
             if ($conf['vendor'] == $vendorId) {
                 $user_data = Mage::getModel('admin/user')->load($conf['user']);
                 if ($user_data->getEmail())
-                    array_push($email, $user_data->getEmail());
+                   /*  array_push($email, $user_data->getEmail()); */
+                    return $user_data->getEmail();
             }
         }
         
-        return array_unique($email);
+        return '';
 	}
 	public function getVanderName($vendorId){
         $atributeCode = 'primary_vendor';
