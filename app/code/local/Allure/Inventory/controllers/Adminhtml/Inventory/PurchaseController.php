@@ -602,6 +602,37 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 
         $this->_redirect('*/*/orders');
     }
+    public function approveAction(){
+        $id=Mage::app()->getRequest()->getParam('id');
+        $helper = Mage::helper('inventory');
+        try {
+            if($id && isset($id))
+            {
+                $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
+                $currentDate->toString('jS F, Y');
+                $status = Allure_Inventory_Helper_Data::ORDER_STATUS_NEW;
+                $order = Mage::getModel('inventory/purchaseorder')->load($id);
+                $storeId=$order->getStoreId();
+                if (isset($status))
+                    $order->setData('status', $status);
+                    $order->setData('updated_date', $currentDate)->save();
+                    
+                    $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_accept',$storeId);
+                    $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                    if (!empty($adminEmail)) {
+                        $adminEmail =  explode(',', $adminEmail);
+                    }
+                    
+                    $helper->sendEmail($id,'',$templateId,$adminEmail,false);
+                    
+            }
+            Mage::getSingleton('adminhtml/session')->addSuccess("Order accepted");
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+        }
+        
+        $this->_redirect('*/*/orders');
+    }
     public function addpurchaseitemAction(){
         $request = $this->getRequest()->getPost();
         $website = 1;
@@ -700,8 +731,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     $currentDate->toString('jS F, Y');
                     $status = Allure_Inventory_Helper_Data::ORDER_STATUS_CANCEL;
                     $order = Mage::getModel('inventory/purchaseorder')->load($id);
+                    $statusExisting=$order->getStatus();
                     $storeId=$order->getStoreId();
-                    if ($order->getStatus()== Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT ||$order->getStatus()== Allure_Inventory_Helper_Data::ORDER_STATUS_NEW) {
+                    if ($statusExisting== Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT ||$order->getStatus()== Allure_Inventory_Helper_Data::ORDER_STATUS_NEW) {
                         $orderItems = Mage::getModel('inventory/orderitems')->getCollection($id, 'po_id');
                         foreach ($orderItems as $item) {
                             $query = "update {$table} set  po_sent =0 where product_id = '{$item->getProductId()}' AND stock_id = '{$order->getStockId()}'";
@@ -713,12 +745,14 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         Mage::log('Ids Received', Zend_Log::DEBUG, 'mylogs', true);
                         $templateId = Mage::getStoreConfig('allure_vendor/general/purchase_order_cancel', $storeId);
                         Mage::log('Ids Received'.$templateId, Zend_Log::DEBUG, 'mylogs', true);
+                        
                         $adminEmail = Mage::getStoreConfig('allure_vendor/general/admin_email', $storeId);
                         if (! empty($adminEmail)) {
                             $adminEmail = explode(',', $adminEmail);
                         }
-                        Mage::log('Ids Received'.$adminEmail, Zend_Log::DEBUG, 'mylogs', true);
-                        $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
+                        $vendorEmail='';
+                        if($statusExisting==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW)
+                            $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                         $helper->sendEmail($id, $vendorEmail, $templateId, $adminEmail, false);
 
                     }
@@ -748,7 +782,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         $order->setData('updated_date', $currentDate)->save();
                         $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
 
-                        $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_accept',$storeId);
+                        $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_approve',$storeId);
                         $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
                         if (!empty($adminEmail)) {
                             $adminEmail =  explode(',', $adminEmail);
