@@ -4,7 +4,7 @@ ini_set('xdebug.var_display_max_depth', 8);
 ini_set('xdebug.var_display_max_children', 256);
 ini_set('xdebug.var_display_max_data', 1024);
 
-class Allure_OrderProcessor_Model_OrderProcessor
+class Allure_OrderProcessor_Model_Processor
 {
 	private $helper;
 	
