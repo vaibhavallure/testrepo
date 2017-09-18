@@ -457,7 +457,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 				
 				$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
 				
-				$this->loadLayout('myaccount_checkout_cart_layout');
+				//$this->loadLayout('myaccount_checkout_cart_layout');
 				$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
 				
 				$result['cart_html'] = $cart_html;
@@ -578,7 +578,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 					$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
 					
 					
-					$this->loadLayout('myaccount_checkout_cart_layout');
+					//$this->loadLayout('myaccount_checkout_cart_layout');
 					$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
 					
 					$result['cart_html'] = $cart_html;
