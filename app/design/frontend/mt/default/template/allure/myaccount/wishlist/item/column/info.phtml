@@ -113,6 +113,7 @@ if($product->getTypeId() =='configurable'){
     <div class="price-wish"><?php //echo $this->getPriceHtml($product); ?></div>
 	<?php 
 	   $helper = Mage::helper('catalog/product_configuration');
+	   if($item->getProductType() == "configurable"):
 	   $_options = $helper->getConfigurableOptions($item);
 	?>
 	<?php if ($_options):?>
@@ -121,6 +122,7 @@ if($product->getTypeId() =='configurable'){
 			<?php echo $_option['value'] ?>
 		</div>
 	<?php endforeach; ?>
+	<?php endif;?>	
 	<?php endif;?>	
 	<span class="mt-wishlist-added-at"><?php echo "Added ".date('M d, Y H:i a',strtotime($item->getAddedAt()))?></span>
 </td>
