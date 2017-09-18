@@ -508,7 +508,11 @@ if ($_product->getSizeSample() == 1) {
                 jQuery('.ajax-error-messages').remove();
             }
 
-            jQuery('.required-entry:not(.selectboxit)').each(function () {
+			//old code
+            //jQuery('.required-entry:not(.selectboxit)').each(function () {
+            
+            //new code -allure
+            jQuery('.main-container .required-entry:not(.selectboxit)').each(function () {
                 console.log("Add to Cart")
                 if (!jQuery(this).val()) {
                     hasErrors = true;
