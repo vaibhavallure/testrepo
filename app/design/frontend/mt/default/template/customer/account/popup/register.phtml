@@ -71,65 +71,9 @@
 ?>
 
 <script type="text/javascript">
- function openRegisterModal(){
-	jQuery('#wishlist_input').val('');
-	jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
-	jQuery(".popupRegisterModel").css({"opacity":"1","pointer-events":"auto"});
-	jQuery('.popupRegisterModel .amazon-pay-button img').attr('src','https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png');
-};
-
-//jQuery("#sign_in_label").on('click',function(){	
-function gotoLoginPage(){
-	jQuery(".close").trigger('click');
-	jQuery("#sign_in_label").trigger('click');
+if (typeof Allure == "undefined") {
+	 var Allure = {};
 }
-
-jQuery(".close").on('click',function(){
-	jQuery('#wishlist_input').val('');
-	jQuery(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
-	});
-
-jQuery("#signup-btn-popup").on('click',function(){
-
-	 var myForm = new VarienForm('popup-register-form'); 
-	 if(myForm.validator.validate()){ 
-
-		var firstname = jQuery('#firstname').val();
-		var lastname = jQuery('#lastname').val();
-		var email = jQuery('#email').val();
-		var password = jQuery('#password').val();
-		var is_subscribed = jQuery('#popup_is_subscribed').is(":checked");
-		var key='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-
-		var request = {
-					"firstname":firstname,
-					"lastname":lastname,
-					"email":email,
-					"password":password,
-					"is_subscribed":is_subscribed,
-					'form_key':key
-					};
-			
-		jQuery.ajax({
-		url : '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>',
-		dataType : 'json',
-		type : 'POST',
-		data: {request:request},
-            beforeSend: function() { jQuery('#popup_loader_register').show(); },
-            complete: function() { jQuery('#popup_loader_register').hide(); },
-		success : function(data){
-			if(data.success){
-				 jQuery('#reg_msg_div').css('display','none');
-				 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
-				 location.reload();
-			}else{
-				console.log(data.error);
-			 jQuery('#reg_msg_div').css('display','block');
-			 jQuery('#register-msg').html(data.error);
-			 }
-			}
-		});
-	 } //End of form Validate
-
-   });
- </script> 
+Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
+</script> 
