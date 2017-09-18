@@ -26,6 +26,11 @@ class Allure_OrderProcessor_Helper_Data extends Mage_Core_Helper_Abstract
 		return $this->getConfig('filter_from');
 	}
 	
+	public function getToFilter()
+	{
+		return $this->getConfig('filter_to');
+	}
+	
 	public function isDebugMode()
 	{
 		return $this->getConfig('debug');
