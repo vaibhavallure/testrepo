@@ -139,7 +139,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         }
 
         //shipping_description, customer_email, coupon_code, weight, customer_note
-        $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount','no_signature_delivery','counterpoint_order_id','create_order_method');
+        $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method');
         $selected_col = array_intersect($selected_columns, $sales_flat_order);
         if (!empty($selected_col)) {
             $collection->getSelect()->joinLeft($tableName_sales_flat_order,
@@ -210,6 +210,8 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         /* echo "<pre>";
         print_r($collection->getData());
         die; */
+
+        //die((string) $collection->getSelect());
         $collection->getSelect()->group('main_table.entity_id');
         return $collection;
     }
@@ -230,7 +232,6 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'total_paid' => $helper->__('*Total Paid'),
             'shipping_name' => $helper->__('*Ship - Name'),
             'billing_name' => $helper->__('*Bill - Name'),
-
 
             /*** sales_flat_order_item ***/
             'ordered_products' => $helper->__('Item(s) Ordered'),
@@ -253,6 +254,9 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'tax_amount' => $helper->__('Tax Amount'),
             'base_shipping_amount' => $helper->__('Ship. Amount (Base)'),
             'shipping_amount' => $helper->__('Ship. Amount'),
+
+            'base_discount_amount' => $helper->__('Discount (Base)'),
+            'discount_amount' => $helper->__('Discount'),
 
             /*** sales objects ***/
             'invoice' => $helper->__('Invoice(s)'),
@@ -346,10 +350,6 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         $tableName_sales_flat_invoice = Mage::getSingleton('core/resource')->getTableName('sales_flat_invoice');
         $tableName_sales_flat_creditmemo = Mage::getSingleton('core/resource')->getTableName('sales_flat_creditmemo');
         $tableName_sales_flat_shipment = Mage::getSingleton('core/resource')->getTableName('sales_flat_shipment');
-
-        
-        
-        
        
         $columns = array(
             /*** main table ***/
@@ -440,6 +440,24 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'index' => 'shipping_amount',
                 'filter_index' => 'sales_flat_order.shipping_amount',
                 'column_css_class' => 'nowrap',
+            ),
+
+            'base_discount_amount' => array(
+                'header' => $helper->__('Discount (Base)'),
+                'type' => 'currency',
+                'index' => 'base_discount_amount',
+                'filter_index' => "{$tableName_sales_flat_order}.base_discount_amount",
+                'currency' => 'base_currency_code',
+                'column_css_class' => 'nowrap'
+            ),
+
+            'discount_amount' => array(
+                'header' => $helper->__('Discount'),
+                'type' => 'currency',
+                'index' => 'discount_amount',
+                'filter_index' => "{$tableName_sales_flat_order}.discount_amount",
+                'currency' => 'order_currency_code',
+                'column_css_class' => 'nowrap'
             ),
 
             /*** order items ***/
