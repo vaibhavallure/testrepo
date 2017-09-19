@@ -81,8 +81,23 @@ class Amazon_Payments_Model_Async extends Mage_Core_Model_Abstract
         $message = '';
 
         try {
-
+            $payment = $order->getPayment();
+            $method  = $payment->getMethodInstance(); // Amazon_Payments_Model_PaymentMethod
+            $amount  = $payment->getAmountOrdered();
             $amazonOrderReference = $order->getPayment()->getAdditionalInformation('order_reference');
+
+            // Pre-orders
+            if ($method->_isPreorder($payment)) {
+                // Authorize pre-order on manual sync
+                if ($isManualSync) {
+                    $method->authorize($payment, $amount);
+                    $amazonOrderReference = $payment->getAdditionalInformation('order_reference');
+                }
+                // Ignore pre-order if cron
+                else {
+                    return;
+                }
+            }
 
             $orderReferenceDetails = $_api->getOrderReferenceDetails($amazonOrderReference);
 
@@ -127,12 +142,12 @@ class Amazon_Payments_Model_Async extends Mage_Core_Model_Abstract
                     return;
                 }
 
-                $message = Mage::helper('payment')->__('Sync with Amazon: Authorization state is %s.', $amazonAuthorizationState);
+                $message = Mage::helper('payment')->__('Sync with Amazon: Authorization state is "%s".', $amazonAuthorizationState);
 
                 switch ($amazonAuthorizationState) {
                   // Pending (All Authorization objects are in the Pending state for 30 seconds after Authorize request)
                   case Amazon_Payments_Model_Api::AUTH_STATUS_PENDING:
-                      $message .= ' (Payment is currently authorizing. Please try again momentarily.)';
+                      $message .= Mage::helper('payment')->__(' (Payment is currently authorizing. Please try again momentarily.)');
                       break;
 
                   // Declined
@@ -171,7 +186,7 @@ class Amazon_Payments_Model_Async extends Mage_Core_Model_Abstract
                       else {
                           $order->setState(Mage_Sales_Model_Order::STATE_HOLDED, true);
 
-                          $message .= ' Unable to create invoice due to Authorization Reason Code: ' . $reasonCode;
+                          $message .= Mage::helper('payment')->__(' Unable to create invoice due to Authorization Reason Code: %s', $reasonCode);
                       }
 
                       break;

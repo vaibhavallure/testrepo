@@ -25,14 +25,23 @@ class Amazon_Payments_CustomerController extends Mage_Core_Controller_Front_Acti
         }
 
         if ($token) {
+            /** @var Amazon_Payments_Model_Customer $customer */
             $customer = Mage::getModel('amazon_payments/customer')->loginWithToken($token);
+
+            // Redirect if needed
+            if ($customer->isRedirect()) {
+                Mage::app()->getResponse()
+                    ->setRedirect(Mage::helper('amazon_payments')->getVerifyUrl(), 301)
+                    ->sendResponse();
+                return;
+            }
 
             if ($customer->getId()) {
                 $this->_redirectUrl(Mage::helper('customer')->getDashboardUrl());
             }
             // Login failed
             else {
-                Mage::getSingleton('customer/session')->addError('Unable to log in with Amazon.');
+                Mage::getSingleton('customer/session')->addError(Mage::helper('amazon_payments')->__('Unable to log in with Amazon'));
 
                 if ($referer = $this->getRequest()->getParam(Mage_Customer_Helper_Data::REFERER_QUERY_PARAM_NAME)) {
                     $referer = Mage::helper('core')->urlDecode($referer);
@@ -43,7 +52,7 @@ class Amazon_Payments_CustomerController extends Mage_Core_Controller_Front_Acti
         }
         // Error
         else if ($error = $this->getRequest()->getParam('error_description')) {
-            Mage::getSingleton('customer/session')->addError('Unable to log in with Amazon: ' . htmlspecialchars($error));
+            Mage::getSingleton('customer/session')->addError(Mage::helper('amazon_payments')->__('Unable to log in with Amazon') . ': ' . htmlspecialchars($error));
             $this->_redirectUrl(Mage::getUrl(''));
         }
         // Non-popup/full-page redirect login requires JavaScript
