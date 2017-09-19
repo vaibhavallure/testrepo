@@ -55,11 +55,7 @@ class Amazon_Payments_Block_Onepage extends Mage_Checkout_Block_Onepage_Abstract
      */
     protected function _getStepCodes()
     {
-        //return array('login', 'widget', 'shipping_method', 'review');
-    	$stepCodes = array('login', 'widget', 'shipping_method', 'review');
-    	
-    	if(Mage::helper('checkoutstep')->isQuoteContainOutOfStockProducts())
-    		array_splice($stepCodes, 2, 0, 'delivery_option');
-    	return $stepCodes;
+        return array('login', 'widget', 'shipping_method', 'review');
     }
+
 }

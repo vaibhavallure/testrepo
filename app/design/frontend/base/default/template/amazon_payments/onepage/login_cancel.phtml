@@ -9,18 +9,19 @@
  */
 ?>
 
-<div class="col2-set"><?php echo $this->__('Login and Pay with Amazon uses information from your Amazon account to place your order.'); ?></div>
+<br />
+<?php echo $this->__('Login and Pay with Amazon uses information from your Amazon account to place your order.'); ?>
 
 <div class="col2-set">
     <div class="col-1">
         <div class="buttons-set">
-            <button type="button" class="button btn-amazon_continue" onclick="checkout.gotoSection('widget', false);"><span><span><?php echo $this->__('Continue'); ?></span></span></button>
+            <button type="button" class="button" onclick="checkout.gotoSection('widget', false);"><span><span><?php echo $this->__('Continue'); ?></span></span></button>
         </div>
     </div>
 
     <div class="col-2">
         <div class="buttons-set">
-            <button type="button" class="button btn-amazon_change_payment_method" onclick="amazonCheckoutCancel();"><span><span><?php echo $this->__('Change Payment Method'); ?></span></span></button>
+            <button type="button" class="button" onclick="amazonCheckoutCancel();"><span><span><?php echo $this->__('Change Payment Method'); ?></span></span></button>
         </div>
     </div>
 
