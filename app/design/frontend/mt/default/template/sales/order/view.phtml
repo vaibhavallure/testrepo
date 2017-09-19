@@ -144,6 +144,21 @@
     </div>
     <?php endif; ?>
     <div class="buttons-set">
-        <p class="back"><a href="<?php echo $this->getBackUrl() ?>"><!--<small>&laquo; </small>--><?php echo /*$this->getBackTitle()*/$this->__('Back to Order History') ?></a></p>
+        <p class="back"><a id="back-to-url" onclick="backToOrderPage(this);" data-url="<?php echo $this->getUrl('myaccount'); //$this->getBackUrl() ?>"><!--<small>&laquo; </small>--><?php echo /*$this->getBackTitle()*/$this->__('Back to Order History') ?></a></p>
     </div>
 </div>
+
+<?php //allure code?>
+<script>
+	function backToOrderPage(evt){
+		var type = window.location.hash.substr(1);
+		if(type!="" && type!="undefined" && type!=null){
+			var url = jQuery(evt).attr('data-url');
+			url = url + '#'+type;
+			window.location.href = url;
+		}else{
+			window.location.href = '<?php echo Mage::getBaseUrl('web').'myaccount/#receipt';?>';
+		}
+	}
+		
+</script>

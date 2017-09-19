@@ -1,0 +1,131 @@
+
+<div class="my-account">
+	<div class="col2-set">
+		<div class="box">
+			
+			<?php if( count( $this->getActiveMethods() ) > 1 ): ?>
+				<ul class="links">
+					<?php foreach( $this->getActiveMethods() as $method ): ?>
+						<li <?php if( Mage::registry('method') == $method ): ?>class="active"<?php endif; ?>><a href="<?php echo $this->getUrl( '*/*/*', array( 'method' => $method ) ); ?>"><?php echo Mage::getStoreConfig( 'payment/' . $method . '/title' ); ?></a></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+			
+			<div class="manage-payment-method">
+				<?php echo $this->getChildHtml('tokenbase_manage_authnetcim'); ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+function editPayerCard(evt){
+	var form_key = jQuery('#mt-saved-card-form-key').val();
+	var id = jQuery(evt).attr('data-id');
+	var method = jQuery(evt).attr('data-method');
+
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/paymentinfo/editAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'id':id,'method':method,'form_key':form_key},
+        success: function(data) {
+        	console.log(data);
+            if(data.success){
+                jQuery('#mt-card-saved-data').hide();
+                jQuery('#mt-card-add-new-data').hide();
+                jQuery('#mt-card-edit-data').show();
+            	jQuery('#mt-paymentoptions-tab #mt-card-edit-data').html("");
+            	jQuery('#mt-paymentoptions-tab #mt-card-edit-data').html(data.html);
+            }
+        	hideLoadingFancybox();
+        }
+    });
+}
+
+function deletePayerCard(evt){
+	var form_key = jQuery('#mt-saved-card-form-key').val();
+	var id = jQuery(evt).attr('data-id');
+	var method = jQuery(evt).attr('data-method');
+
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/paymentinfo/deleteAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'id':id,'method':method,'form_key':form_key},
+        success: function(data) {
+            console.log(data);
+            if(data.success){
+            	jQuery('#mt-paymentoptions-tab .collateral-box').html("");
+            	jQuery('#mt-paymentoptions-tab .collateral-box').html(data.html);
+            }
+        	hideLoadingFancybox();
+        }
+    });
+}
+
+function saveNewCardData(){
+	var myform_card = new VarienForm('mt-pay-card-form-validate', false); 
+	if(myform_card.validator.validate()){ 
+		showLoadingFancybox();
+		jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'customer/paymentinfo/saveAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: jQuery("#mt-pay-card-form-validate").serialize(),
+	        success: function(data) {
+	            console.log(data);
+	            if(data.success){
+	            	jQuery('#mt-paymentoptions-tab .collateral-box').html("");
+	            	jQuery('#mt-paymentoptions-tab .collateral-box').html(data.html);
+	            }else{
+	            	var html = '<li><span>'+data.message+'</span></li>';
+		    		html = '<ul>'+html+'</ul>';
+		    		jQuery('#mt-paymentoptions-tab .messages > li').html(html);
+			        jQuery('#mt-paymentoptions-tab .messages > li').addClass('error-msg');
+	            }
+	            jQuery('#mt-paymentoptions-tab .messages.mt-messages').show();
+	        	hideLoadingFancybox();
+	        }
+	    });
+	}
+}
+
+function saveEditCardData(){
+	var myform_card = new VarienForm('mt-pay-edit-card-form-validate', false); 
+	if(myform_card.validator.validate()){ 
+		showLoadingFancybox();
+		jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'customer/paymentinfo/saveAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: jQuery("#mt-pay-edit-card-form-validate").serialize(),
+	        success: function(data) {
+	            console.log(data);
+	            jQuery('#mt-paymentoptions-tab .messages .mt-msg').html("");
+	            if(data.success){
+	            	jQuery('#mt-paymentoptions-tab .collateral-box').html("");
+	            	jQuery('#mt-paymentoptions-tab .collateral-box').html(data.html);
+	            }else{
+	            	var html = '<li><span>'+data.message+'</span></li>';
+		    		html = '<ul>'+html+'</ul>';
+		    		jQuery('#mt-paymentoptions-tab .messages > li').html(html);
+			        jQuery('#mt-paymentoptions-tab .messages > li').addClass('error-msg');
+	            }
+	            jQuery('#mt-paymentoptions-tab .messages.mt-messages').show();
+	        	hideLoadingFancybox();
+	        }
+	    });
+	}
+}
+
+function cancelCardData(){
+	 jQuery('#mt-card-saved-data').show();
+     jQuery('#mt-card-add-new-data').show();
+     jQuery('#mt-pay-card-form-validate').hide();
+     jQuery('#mt-card-edit-data').hide();
+     jQuery('#mt-card-edit-data').html("");
+}
+</script>

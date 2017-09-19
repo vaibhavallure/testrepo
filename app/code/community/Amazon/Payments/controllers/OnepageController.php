@@ -39,6 +39,8 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
                 'method' => 'amazon_payments',
                 'additional_information' => array(
                     'order_reference' => $this->getAmazonOrderReferenceId(),
+                    'billing_agreement_id' => $this->getAmazonBillingAgreementId(),
+                    'billing_agreement_consent' => $this->getAmazonBillingAgreementConsent(),
                 )
             ));
 
@@ -49,19 +51,11 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
                     'html' => $this->_getReviewHtml()
                 );
             } else {
-            	if(Mage::helper('checkoutstep')->isQuoteContainOutOfStockProducts()){
-            		$result['goto_section'] = 'delivery_option';
-            		$result['update_section'] = array(
-            				'name' => 'delivery-option',
-            				'html' => $this->_getDeliveryinstuctionsHtml()
-            		);
-            	}else{
-            		$result['goto_section'] = 'shipping_method';
-            		$result['update_section'] = array(
-            				'name' => 'shipping-method',
-            				'html' => $this->_getShippingMethodsHtml()
-            		);
-            	}
+                $result['goto_section'] = 'shipping_method';
+                $result['update_section'] = array(
+                    'name' => 'shipping-method',
+                    'html' => $this->_getShippingMethodsHtml()
+                );
             }
 
             $data = $this->getRequest()->getPost('billing', array());
@@ -78,6 +72,12 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
                 ->setStoreId(Mage::app()->getStore()->getId())
                 ->setIsSubscribed(true)
                 ->save();
+            }
+
+            // Validate country
+            if (!$this->isCountryAllowed($this->_getCheckout()->getQuote()->getShippingAddress()->getCountry())) {
+                $result['error'] = true;
+                $result['message'] = $this->__('This order cannot be shipped to the selected country. Please use a different shipping address.');
             }
 
         }
@@ -100,8 +100,7 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
         }
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping_method', '');
-            //$result = $this->_getOnepage()->saveShippingMethod($data);
-            $result = $this->_getOnepage()->saveShippingMethod($this->getRequest()->getPost()); //allureinc code
+            $result = $this->_getOnepage()->saveShippingMethod($data);
             // $result will contain error data if shipping method is empty
             if (!$result) {
                 Mage::dispatchEvent(
@@ -111,6 +110,7 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
                           'quote'   => $this->_getOnepage()->getQuote()));
                 $this->_getOnepage()->getQuote()->collectTotals();
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+
 
                 $result['goto_section'] = 'review';
                 $result['update_section'] = array(
@@ -130,7 +130,7 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
      *
      * @return string
      */
-    /* protected function _getShippingMethodsHtml()
+    protected function _getShippingMethodsHtml()
     {
         $layout = $this->getLayout();
         $update = $layout->getUpdate();
@@ -139,41 +139,7 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
         $layout->generateBlocks();
         $output = $layout->getOutput();
         return $output;
-    } */
-    
-    
-    public function getOnepage() {
-    	return Mage::getSingleton('checkout/type_onepage');
     }
-    
-    //allure inc code
-    protected function _getShippingMethodsHtml() {
-    	$layout = $this->getLayout();
-    	$update = $layout->getUpdate();
-    
-    	$_checkoutstepHelper = Mage::helper('checkoutstep');
-    	if(strtolower($this->getOnepage()->getQuote()->getDeliveryMethod())==strtolower($_checkoutstepHelper::TWO_SHIP))
-    		$update->load('checkout_onepage_allureshippingmethod');
-    	else
-    		$update->load('checkout_onepage_shippingmethod');
-    	$layout->generateXml();
-    	$layout->generateBlocks();
-    	$output = $layout->getOutput();
-    	return $output;
-    }
-    
-    //allureinc code
-    protected function _getDeliveryinstuctionsHtml()
-    {
-    	$layout = $this->getLayout();
-    	$update = $layout->getUpdate();
-    	$update->load('checkout_onepage_deliveryoption');
-    	$layout->generateXml();
-    	$layout->generateBlocks();
-    	$output = $layout->getOutput();
-    	return $output;
-    }
-    
 
     /**
      * Get order review step html
@@ -184,17 +150,7 @@ class Amazon_Payments_OnepageController extends Amazon_Payments_Controller_Check
     {
         $layout = $this->getLayout();
         $update = $layout->getUpdate();
-        //$update->load('checkout_onepage_review');
-        //allurein code here start
-        $quoteObj = Mage::getSingleton('checkout/session')->getQuote();
-       // Mage::log($quoteObj->getDeliveryMethod(),Zend_Log::DEBUG,'abc',true);
-        $_checkoutstepHelper = Mage::helper('checkoutstep');
-        if(strtolower($quoteObj->getDeliveryMethod())==strtolower($_checkoutstepHelper::TWO_SHIP)){
-        	$update->load('checkout_onepage_shipment_review');
-        }else{
-        	$update->load('checkout_onepage_review');
-        }
-        //allurein code here end
+        $update->load('checkout_onepage_review');
         $layout->generateXml();
         $layout->generateBlocks();
         $output = $layout->getOutput();

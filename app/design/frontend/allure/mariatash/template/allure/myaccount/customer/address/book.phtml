@@ -1,0 +1,267 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Temlate for Mage_Customer_Block_Address_Book block
+ * @var $test Mage_Customer_Block_Address_Book
+ */
+?>
+<div class="col2-set addresses-list">
+    <div class="box">
+    <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+  
+<div class="box-title title-buttons">
+    <h3><?php echo $this->__('Addresses') ?></h3>
+    <?php 
+        $request = Mage::app()->getRequest();
+        if($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customeraccountindex'): ?>
+            <a href="<?php echo $this->getBaseUrl()."customer/address/" ?>"><?php echo $this->__('Edit') ?></a>
+        <?php else: ?>
+            <a onclick="createNewAddress()" data-temp="<?php echo $this->getAddAddressUrl() ?>"><?php echo $this->__('Add New Address') ?></a>
+        <?php endif; ?>   
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+    <div class="addresses-primary">
+        <ol>
+        <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()): ?>
+            <li class="item">
+                <h3><?php echo $this->__('Primary Billing Address ') ?></h3>
+                <address>
+                    <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
+                </address>
+                <p><a data-id=<?php echo Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId()?> onclick="editAddressData(this)" data-url="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a></p>
+           </li>
+        <?php else: ?>
+            <li class="item">
+                <h3><?php echo $this->__('Billing Address ') ?></h3>
+                <?php echo $this->__('You have no default billing address in your address book.') ?>
+            </li>
+        <?php endif ?>
+        </ol>
+    </div>
+    <div class="addresses-primary">
+       <ol> 
+        <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()): ?>
+            <li class="item">
+                <h3><?php echo $this->__('Primary Shipping Address ') ?></h3>
+                <address>
+                    <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
+                </address>
+                <p><a data-id="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId()?>" onclick="editAddressData(this)" data-url="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a></p>
+            </li>
+        <?php else: ?>
+            <li class="item empty">
+                <h3><?php echo $this->__('Primary Shipping Address ') ?></h3>
+                <?php echo $this->__('You have no default shipping address in your address book.') ?>
+            </li>
+        <?php endif ?>
+        </ol>
+    </div>        
+    </div>
+</div>
+<?php if($request->getModuleName().$request->getControllerName().$request->getActionName() != 'customeraccountindex'): ?>
+<div class="mt-addresses-additional box">
+    <h2><?php echo $this->__('Additional Addresses') ?></h2>
+    <table>
+    <?php if($_pAddsses = $this->getAdditionalAddresses()): ?>
+        <?php $contador = 0; foreach($_pAddsses as $_address): ?>
+        <?php if($contador == 0): ?>
+            <tr class="additional-addresses">
+        <?php endif; ?>
+            <td class="item">
+                <div class="item-inner-container">
+                    <address>
+                        <?php echo $this->getAddressHtml($_address) ?>
+                    </address>
+                    <p class="additional-address-links">
+                        <a data-id="<?php echo $_address->getId()?>" onclick="editAddressData(this)" data-url="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"><?php echo $this->__('Edit') ?></a><!-- <span class="separator">|</span> -->
+                        <a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $_address->getId() ?>');"><?php echo $this->__('Delete') ?></a>
+                    	<a data-id="<?php echo $_address->getId()?>" onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_billing');"><?php echo $this->__('Default Billing') ?></a>
+                    	<a data-id="<?php echo $_address->getId()?>" onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_shipping');"><?php echo $this->__('Default Shipping') ?></a>
+                    </p>
+                </div>
+            </td>
+        <?php $contador++; 
+            if($contador==2):$contador=0; ?>
+                </tr>
+        <?php endif; ?>
+        
+        <?php endforeach; ?>
+        <?php if($contador==1):?>
+            </tr>
+        <?php endif; ?>
+    <?php else: ?>
+        <tr>
+            <td class="item empty">
+                <p><?php echo $this->__('You have no additional address entries in your address book.') ?></p>
+            </td>
+        </tr>
+    <?php endif ?>
+    </table>
+    <button onclick="createNewAddress()" type="button" title="<?php echo $this->__('Add New Address') ?>" data-temp="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+//<![CDATA[
+    function deleteAddress1(addressId) {
+        if(confirm('<?php echo $this->__('Are you sure you want to delete this address?') ?>')) {
+            window.location='<?php echo $this->getDeleteUrl() ?>id/'+addressId;
+        }
+        return false;
+    }
+//]]>
+</script>
+
+<script>
+function editAddressData(evt){
+	var id = jQuery(evt).attr('data-id'); 
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/address/editAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'id':id},
+        success: function(data) {
+			jQuery('#mt-address-edit').html("");
+			jQuery('#mt-address-edit').html(data.html);
+			jQuery('#mt-address-edit').show();
+			jQuery('.mt-adrress-data').hide();
+        	hideLoadingFancybox();
+        }
+    });
+}
+
+function createNewAddress(){
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/address/newAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+        success: function(data) {
+			jQuery('#mt-address-edit').html("");
+			jQuery('#mt-address-edit').html(data.html);
+			jQuery('#mt-address-edit').show();
+			jQuery('.mt-adrress-data').hide();
+        	hideLoadingFancybox();
+        }
+    });
+}
+
+function deleteAddress(addressId) {
+	var form_key = jQuery('.mt-adrress-data .box > input').val();
+	console.log(form_key);
+    if(confirm('<?php echo $this->__('Are you sure you want to delete this address?') ?>')) {
+    	showLoadingFancybox();
+    	jQuery.ajax({
+            url: '<?php echo Mage::getBaseUrl('web').'customer/address/deleteAjax';?>',
+            dataType : 'json',
+    		type : 'POST',
+    		data: {'id':addressId,form_key:form_key},
+            success: function(data) {
+                console.log(data);
+    			if(data.success){
+        			//jQuery('.mt-adrress-data').html("");
+        			//jQuery('.mt-adrress-data').html(data.html);
+        			window.location.reload();
+    			}
+            	hideLoadingFancybox();
+            }
+        });
+    }
+    return false;
+}
+
+function saveAddressData(){
+	var account_form = new VarienForm('address-form-validate', false); 
+	if(account_form.validator.validate()){ 
+		jQuery('#mt-addressbook-tab .messages > li').removeClass('error-msg');
+		jQuery('#mt-addressbook-tab .messages > li').removeClass('success-msg');	
+		showLoadingFancybox();
+		jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'customer/address/saveAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: jQuery("#address-form-validate").serialize(),
+	        success: function(data) {
+	        	jQuery('#mt-addressbook-tab .messages .mt-msg').html("");
+		        if(data.success){
+			        /* var html = '<li><span>'+data.message+'</span></li>';
+			        html = '<ul>'+html+'</ul>';
+			        jQuery('#mt-addressbook-tab .messages > li').html(html);
+			        jQuery('#mt-addressbook-tab .messages > li').addClass('success-msg');	
+			        jQuery('.mt-adrress-data').html("");
+			        jQuery('.mt-adrress-data').html(data.html); */
+			        window.location.reload();
+				 }else{
+			    	if(data.error.constructor === Array) {
+				    	var len = data.error.length;
+				    	var html = '';
+				    	for(var i=0;i<len;i++){
+				    		html = html+'<li><span>'+data.error[i]+'</span></li>';
+				    	}
+				    	html = '<ul>'+html+'</ul>';
+				    	jQuery('#mt-addressbook-tab .messages > li').html(html);
+				        jQuery('#mt-addressbook-tab .messages > li').addClass('error-msg');
+			    	}else{
+			    		var html = '<li><span>'+data.message+'</span></li>';
+			    		html = '<ul>'+html+'</ul>';
+			    		jQuery('#mt-addressbook-tab .messages > li').html(html);
+				        jQuery('#mt-addressbook-tab .messages > li').addClass('error-msg');
+			    	}
+			    }
+		        jQuery('#mt-addressbook-tab .messages').show();
+	        	hideLoadingFancybox();
+	        	hideEditAdrress();
+	        }
+		});
+	}
+}
+
+function setDefaultBilling(id,type){
+	var form_key = jQuery('.mt-adrress-data .box > input').val();
+	var flag = 1;
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/address/setDefaultAddressAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'id':id,type:type,'form_key':form_key},
+        success: function(data) {
+            if(data.success){
+                window.location.reload();
+            }
+            hideLoadingFancybox()
+        }
+    });
+}
+
+function hideEditAdrress(){
+	jQuery('#mt-address-edit').hide();
+	jQuery('.mt-adrress-data').show();
+}
+</script>
