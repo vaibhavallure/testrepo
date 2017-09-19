@@ -414,20 +414,20 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 			if ($item->addToCart($cart, true)) {
 				$cart->save()->getQuote()->collectTotals();
 				$isadd = true;
+			}else{//realted to counterpoint
+			    $productId = $item->getProductId();
+			    if($productId){
+			        $product = Mage::getModel('catalog/product')
+			             ->setStoreId(Mage::app()->getStore()->getId())
+			             ->load($item->getProductId());
+			        $params = array();
+			        $params['qty'] = $item->getQty();
+			        $cart->addProduct($product, $params);
+			        $cart->save()->getQuote()->collectTotals();
+			        $isadd = true;
+			        $item->delete();
+			    }
 			}
-			
-			/* $productId = $item->getProductId();
-			if($productId){
-				$product = Mage::getModel('catalog/product')
-					->setStoreId(Mage::app()->getStore()->getId())
-					->load($item->getProductId());
-				$params = array();
-				$params['qty'] = $item->getQty();
-				$cart->addProduct($product, $params);
-				$cart->save()->getQuote()->collectTotals();
-				$isadd = true;
-				$item->delete();
-			} */
 			
 			$wishlist->save();
 			Mage::helper('wishlist')->calculate();
@@ -455,7 +455,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 				->toHtml();
 				$result['top_cart'] = $content;
 				
-				$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
+				$result['top_qty'] = Mage::helper('checkout/cart')->getItemsQty();
 				
 				//$this->loadLayout('myaccount_checkout_cart_layout');
 				$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();

@@ -19,7 +19,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 <div class="cart-mt">
     <h1>Shopping Cart</h1>
 
-	<input id="myaccount-cart-count" type="hidden" value="<?php echo Mage::helper('checkout/cart')->getSummaryCount();?>">
+	<input id="myaccount-cart-count" type="hidden" value="<?php echo Mage::helper('checkout/cart')->getItemsQty();?>">
 
     <?php echo $this->getChildHtml('form_before') ?>
     <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
@@ -218,6 +218,11 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 
 			        	  jQuery('.mt-my-cart').html("");
 				          jQuery('.mt-my-cart').html(data.cart_html);
+
+				          if(!jQuery("#myaccount-cart-count").length){
+				        	  jQuery("#myaccount-cart-total-item").text(0);
+				      		  jQuery("#myaccount-cart-total-item").show();
+				          }
 			                
 						  jQuery('#ajax_cart_content').html(data.top_cart);
 			          }else{
