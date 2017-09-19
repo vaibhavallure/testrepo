@@ -62,22 +62,32 @@ class Ecp_Sales_OrderController extends Mage_Sales_OrderController
     		$result = array();
     		$message = "";
     		$isAdd = false;
+    		$prevCnt = Mage::helper('checkout/cart')->getItemsQty();
     		if(!empty($item_id)){
     			$item = Mage::getModel("sales/order_item")->load($item_id);
     			if($item->getId()){
-    				$productId = Mage::getModel('catalog/product')->getIdBySku($item->getSku());
-    				if($productId){
-    					$productObj = Mage::getModel('catalog/product')->load($productId);
-    					//$cart->addOrderItem($item);
-    					$params = array();
-    					$params['qty'] = 1;
-    					$cart->addProduct($productObj, $params);
-    					$cart->save()->getQuote()->collectTotals();
-    					$isAdd = true;
-    					$message =  $productObj->getName().' add into your shopping cart.';
-    				}else{
-    					$message = 'Cannot add the item to shopping cart.Item not available';
-    				}
+    			    if($item->getProduct()->getTypeId() == "configurable"){
+        			    $cart->addOrderItem($item);
+        			    $cart->save();
+    			    }else{ //related to counterpoint product
+    			        $productId = Mage::getModel('catalog/product')->getIdBySku($item->getSku());
+    			        if($productId){
+        			        $productObj = Mage::getModel('catalog/product')->load($productId);
+        			        $params = array();
+        			        $params['qty'] = 1;
+        			        $cart->addProduct($productObj, $params);
+        			        $cart->save();
+    			        }
+    			    }
+    			    
+    			    $cart->getQuote()->collectTotals();
+    			    $curCnt = Mage::helper('checkout/cart')->getItemsQty();
+    			    //Mage::log($cart->getQuote()->getData(),Zend_log::DEBUG,'abc',true);
+    			    if($prevCnt < $curCnt ){
+    			         $isAdd = true;
+    			    }else{
+    			        $message = 'Cannot add the item to shopping cart';
+    			    }
     			}else{
     				$message = 'Cannot add the item to shopping cart.';
     			}
@@ -100,7 +110,7 @@ class Ecp_Sales_OrderController extends Mage_Sales_OrderController
     			
     			$result['cart_html'] = $html;
     			
-    			$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
+    			$result['top_qty'] = Mage::helper('checkout/cart')->getItemsQty();
     		}else{
     			$result['success'] = 0;
     			$result['message'] = $message;
