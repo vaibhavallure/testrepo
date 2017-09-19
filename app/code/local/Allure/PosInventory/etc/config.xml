@@ -16,7 +16,7 @@
 			</allure_posinventory>
             <bakerloo_restful>
                 <rewrite>
-                    <sales>Allure_PosInventory_Block_BakerlooRestful_Sales</sales>
+                    <sales>Allure_PosInventory_Helper_BakerlooRestful_Sales</sales>
                 </rewrite>
             </bakerloo_restful>
 		</helpers>
