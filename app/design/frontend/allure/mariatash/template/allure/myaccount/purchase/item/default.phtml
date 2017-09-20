@@ -52,7 +52,7 @@
  
 <tr class="purchase-tr">
 	<td class="table-product-image"> 
-		<a href="<?php echo $url?>" title="<?php echo $productName?>" class="product-image">
+		<a <?php echo ($product->getId())? "href='".$url."'":""?> title="<?php echo $productName?>" class="product-image">
 			<img src="<?php echo Mage::helper('catalog/image')
 					->init($product, 'thumbnail')->resize(74,96)?>" 
 					width="74" height="96" alt="<?php echo $productName?>">
@@ -61,7 +61,7 @@
 					
 	<td class="table-product-info">
 		<h2 class="product-name">
-			<a href="<?php echo $url?>"><?php echo $productName?></a>
+			<a <?php echo ($product->getId())? "href='".$url."'":""?>><?php echo $productName?></a>
 		</h2>
 	</td>
 					   
