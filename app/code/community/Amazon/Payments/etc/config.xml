@@ -10,7 +10,7 @@
 <config>
     <modules>
         <Amazon_Payments>
-            <version>1.4.0</version>
+            <version>1.4.4</version>
         </Amazon_Payments>
         <Amazon_Login>
             <!-- Disable legacy module -->
@@ -34,6 +34,9 @@
                     <login>
                         <table>amazon_login</table>
                     </login>
+                    <token>
+                        <table>amazon_payments_token</table>
+                    </token>
                 </entities>
             </login_mysql4>
             <sales>
@@ -77,6 +80,16 @@
                     <use>core_setup</use>
                 </connection>
             </payments_setup>
+            <payments_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </payments_write>
+            <payments_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </payments_read>
         </resources>
     </global>
     <admin>
@@ -99,6 +112,15 @@
                 </tax>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <Amazon_Payments>
+                    <files>
+                        <default>Amazon_Payments.csv</default>
+                    </files>
+                </Amazon_Payments>
+            </modules>
+        </translate>
         <events>
             <adminhtml_widget_container_html_before>
                 <observers>
@@ -127,6 +149,8 @@
             <amazon_checkout>/amazon_payments/checkout</amazon_checkout>
             <simplepath>/amazon_payments/simplepath</simplepath>
             <amazon_login_verify>/amazon_payments/customer/verify</amazon_login_verify>
+            <amazon_ajaxcart>/amazon_payments/token/ajaxcart</amazon_ajaxcart>
+            <amazon_token_checkout>/amazon_payments/token/checkout</amazon_token_checkout>
         </secure_url>
         <routers>
             <amazon_payments>
@@ -137,6 +161,15 @@
                 </args>
             </amazon_payments>
         </routers>
+        <translate>
+            <modules>
+                <Amazon_Payments>
+                    <files>
+                        <default>Amazon_Payments.csv</default>
+                    </files>
+                </Amazon_Payments>
+            </modules>
+        </translate>
         <layout>
             <updates>
                 <amazon_payments>
@@ -169,6 +202,14 @@
                     </amazon_payments_observer>
                 </observers>
             </controller_action_predispatch_checkout_cart_index>
+            <controller_response_redirect>
+                <observers>
+                    <amazon_payments_observer>
+                        <class>Amazon_Payments_Model_Observer_Action</class>
+                        <method>responseRedirect</method>
+                    </amazon_payments_observer>
+                </observers>
+            </controller_response_redirect>
             <custom_quote_process>
                 <observers>
                     <amazon_payments_observer>
@@ -189,18 +230,21 @@
                 <show_pay_cart>1</show_pay_cart>
                 <order_status>processing</order_status>
                 <active>1</active>
+                <region>us</region>
                 <secure_cart>1</secure_cart>
                 <button_type>PwA</button_type>
                 <button_color>Gold</button_color>
                 <button_size>medium</button_size>
                 <button_badge>1</button_badge>
                 <popup>1</popup>
+                <show_coupon>1</show_coupon>
                 <access_secret backend_model="adminhtml/system_config_backend_encrypted" />
                 <client_secret backend_model="adminhtml/system_config_backend_encrypted" />
             </amazon_payments>
         </payment>
         <amazon_login>
             <settings>
+                <enabled>1</enabled>
                 <popup>1</popup>
             </settings>
         </amazon_login>

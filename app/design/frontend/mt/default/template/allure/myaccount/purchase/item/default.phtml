@@ -68,7 +68,7 @@
                         
                       <tr data-id="<?php echo $_item->getId()?>" class="<?php echo $productNotAvailableClass?>">
 							<td class="cart_col1">
-								<a href="<?php echo $url?>" title="<?php echo $productName?>" 
+								<a <?php echo ($product->getId())? "href='".$url."'":""?> title="<?php echo $productName?>" 
 										class="product-image">
 									<img src="<?php echo Mage::helper('catalog/image')
 										->init($product, 'thumbnail')->resize(74,96)?>" 
@@ -84,7 +84,7 @@
 			
 							<td class="cart_col2">
 								<h2 class="product-name <?php echo $typeId?>">
-									<a href="<?php echo $url?>"><?php echo $productName?></a>
+									<a <?php echo ($product->getId())? "href='".$url."'":""?> ><?php echo $productName?></a>
 								</h2>
 								<?php if(0 /* && !empty($productDescr) */):?>
 									<h2 class="product-descr"><?php //echo $productDescr?></h2>

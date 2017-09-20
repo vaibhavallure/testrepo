@@ -39,6 +39,27 @@
 						
 					</fields>
 				</general>
+				
+				<purchase_item_settings translate="label">
+					<label>Purchase Item Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>20</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<purchase_item_escape_sku>
+							<label>Which SKU's Escape</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>separate by comma (ex:A,B,C,...)</comment>
+						</purchase_item_escape_sku>
+					</fields>
+				</purchase_item_settings>
+				
 			</groups>
 		</myaccount>
 	</sections>

@@ -15,8 +15,7 @@ class Amazon_Payments_Block_Script extends Mage_Core_Block_Template
      */
     protected function _afterToHtml($html)
     {
-        //allure add 0 flag
-        if (0 && $this->getIsDefault() && Mage::helper('checkout/cart')->getItemsCount() == 0) {
+        if ($this->getIsDefault() && Mage::helper('checkout/cart')->getItemsCount() == 0) {
             return;
         }
         else {
@@ -87,6 +86,26 @@ class Amazon_Payments_Block_Script extends Mage_Core_Block_Template
     public function isPopup()
     {
         return Mage::helper('amazon_payments/data')->isPopup();
+    }
+
+    /**
+     * Is enabled?
+     */
+    public function isEnabled()
+    {
+        return Mage::helper('amazon_payments/data')->isEnabled();
+    }
+
+    /**
+     * Is loaded?
+     */
+    public function isLoaded()
+    {
+        if ($this->getIsLoaded()) {
+            return true;
+        }
+        $this->setIsLoaded(true);
+        return false;
     }
 
 

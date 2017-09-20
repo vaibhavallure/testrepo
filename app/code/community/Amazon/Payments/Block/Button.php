@@ -82,6 +82,22 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
     }
 
     /**
+     * Get language
+     */
+    public function getLanguage()
+    {
+         return Mage::helper('amazon_payments')->getLanguage();
+    }
+
+    /**
+     * Retrieve ajax cart popup modal URL
+     */
+    public function getAjaxCartModalUrl()
+    {
+        return $this->helper('amazon_payments')->getAjaxCartModalUrl();
+    }
+
+    /**
      * Is Disabled?
      *
      * @return bool
@@ -98,7 +114,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function isAmazonLoginEnabled()
     {
-        return $this->helper('amazon_payments')->isEnabled();
+        return $this->helper('amazon_payments')->isLoginEnabled();
     }
 
     /**
@@ -153,6 +169,16 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
         }
 
         return ($this->helper('amazon_payments')->isPopup());
+    }
+
+    /**
+     * Is tokenized payments enabled?
+     *
+     * @return bool
+     */
+    public function isTokenEnabled()
+    {
+        return Mage::getSingleton('amazon_payments/config')->isTokenEnabled();
     }
 
 }
