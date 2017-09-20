@@ -1,7 +1,7 @@
 <?php
 class Allure_MyAccount_Block_Order_History extends Mage_Core_Block_Template
 {
-   public function getViewUrl($order)
+    public function getViewUrl($order)
     {
         return $this->getUrl('sales/order/view', array('order_id' => $order->getId()));
     }
@@ -11,44 +11,9 @@ class Allure_MyAccount_Block_Order_History extends Mage_Core_Block_Template
     	parent::__construct();
     	$this->setTemplate('allure/myaccount/history.phtml');
     	
-    	$request = Mage::app()->getRequest()->getParams();
-    	$pageNo=1;
-    	$limit = 10;
-    	
-    	$store = "all";
-    	$sortOrder = "desc";
-	    if(count($request)>0){
-	    	if(!empty($request['m_store'])){
-	    		$store = $request['m_store'];
-	    	}
-	    	
-	    	if(!empty($request['m_sort'])){
-	    		$sortOrder = $request['m_sort'];
-	    	}
-	    	
-	    	if($request['page'])
-	    		$pageNo=$request['page'];
-	    		
-	    	if($request['limit'])
-	    		$limit = $request['limit'];
-    	}
-    	
-    	$orders = Mage::getResourceModel('sales/order_collection')
-    	->addFieldToSelect('*')
-    	->addFieldToFilter('customer_id', Mage::getSingleton('customer/session')->getCustomer()->getId())
-    	->addFieldToFilter('state', array('in' => array('canceled','complete','closed')));  //Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()
-    	;//->setOrder('created_at', 'desc');
-    	
-    	if(!empty($store)){
-    		if($store!='all')
-    			$orders->addFieldToFilter('main_table.store_id',$store);
-    	}
-    	
-    	$orders->setOrder('main_table.created_at', $sortOrder);
-    	
-    	$orders->setCurPage($pageNo);
-    	$orders->setPageSize($limit);
-    	
+    	$helper    = Mage::helper("myaccount");
+    	$AllOrder  = $helper::ALL_ORDER;
+    	$orders    = $helper->getOrdersHistory($AllOrder);
     	$this->setOrders($orders);
     	
     	//Mage::app()->getFrontController()->getAction()->getLayout()->getBlock('root')->setHeaderTitle(Mage::helper('sales')->__('My Orders'));
@@ -72,7 +37,7 @@ class Allure_MyAccount_Block_Order_History extends Mage_Core_Block_Template
 
     }
     
-     public function getReorderUrl($order)
+    public function getReorderUrl($order)
     {
         return $this->getUrl('sales/order/reorder', array('order_id' => $order->getId()));
     }

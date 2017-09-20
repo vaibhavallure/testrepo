@@ -5,6 +5,13 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
 	const STORE_COLOR_MAPPING_XML = "myaccount/general/storemapping";
 	const ORDER_STATE_MAPPING_XML = "myaccount/general/order_message_mapping";
 	
+	//purchase item settings
+	const PURCHASE_ITEM_SKU_ESCAPE_XML = "myaccount/purchase_item_settings/purchase_item_escape_sku";
+	
+	//order status flag
+	const OPEN_ORDER = 1;
+	const ALL_ORDER  = 2;
+	
     public function getStoreColorConfig(){
     	$storeColorConfig = Mage::getStoreConfig(self::STORE_COLOR_MAPPING_XML);
     	$config=unserialize($storeColorConfig);
@@ -35,6 +42,13 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
     		return $this->_getTrackingUrl('track_id', $model, 'getEntityId');
     	}
     	return '';
+    }
+    
+    /**
+     * get sku string separated by comma
+     */
+    public function getPurchaseEscapeSKU(){
+        return Mage::getStoreConfig(self::PURCHASE_ITEM_SKU_ESCAPE_XML);
     }
     
     /**
@@ -87,6 +101,110 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
             $isShow = true;
         }
         return array("is_show"=>$isShow,"message"=>$stockMsg);
+    }
+    
+    /**
+     * get customer's order purchased item collection
+     */
+    public function getPurchaseItems(){
+        $request    = Mage::app()->getRequest()->getParams();
+        $pageNo     = 1;
+        $limit      = 10;
+        $store      = "all";
+        $sortOrder  = "desc";
+        
+        $escapeSKU  = $this->getPurchaseEscapeSKU();
+        
+        if(count($request)){
+            if($request['page']){
+                $pageNo=$request['page'];
+            }
+            if($request['limit']){
+                $limit = $request['limit'];
+            }
+            if(!empty($request['m_store'])){
+                $store = $request['m_store'];
+            }
+            if(!empty($request['m_sort'])){
+                $sortOrder = $request['m_sort'];
+            }
+        }
+        
+        $collection = Mage::getResourceModel('sales/order_item_collection')
+                        ->addAttributeToSelect('*');
+        $collection->getSelect()->join( array('orders'=> sales_flat_order),
+                'orders.entity_id=main_table.order_id',
+                array('orders.customer_email','orders.customer_id')
+            );
+        $customer = Mage::getSingleton('customer/session')->getCustomer();
+        $collection->addFieldToFilter('customer_id',$customer->getId());
+        $collection->addFieldToFilter('parent_item_id',array('null' => true));
+        $collection->addFieldToFilter('orders.state',array('in'=>array('complete','processing')));
+        $collection->addFieldToFilter('price',array('gt' => 0));
+        
+        //escape sku string from purchase item
+        if(!empty($escapeSKU) && $escapeSKU != ""){
+            $escapeSKU = explode(",", $escapeSKU);
+            $collection->addFieldToFilter('sku',array('nin' => $escapeSKU));
+        }
+        
+        if(!empty($store)){
+            if($store!='all'){
+                $collection->addFieldToFilter('main_table.store_id',$store);
+            }
+        }
+        if(!empty($sortOrder)){
+            $collection->setOrder('main_table.created_at', $sortOrder);
+        }
+        $collection->setCurPage($pageNo);
+        $collection->setPageSize($limit);
+        return $collection;
+    }
+    
+    /**
+     * get all order history collection
+     */
+    public function getOrdersHistory($orderFlag){
+        $request = Mage::app()->getRequest()->getParams();
+        $pageNo     = 1;
+        $limit      = 10;
+        $store      = "all";
+        $sortOrder  = "desc";
+        
+        if(count($request)>0){
+            if(!empty($request['m_store'])){
+                $store = $request['m_store'];
+            }
+            if(!empty($request['m_sort'])){
+                $sortOrder = $request['m_sort'];
+            }
+            if($request['page']){
+                $pageNo=$request['page'];
+            }
+            if($request['limit']){
+                $limit = $request['limit'];
+            }
+        }
+        $customer   = Mage::getSingleton('customer/session')->getCustomer();
+        $collection = Mage::getResourceModel('sales/order_collection')
+                        ->addFieldToSelect('*')
+                        ->addFieldToFilter('customer_id', $customer->getId());
+        
+        if($orderFlag == self::ALL_ORDER){
+            $collection->addFieldToFilter('state', array('in' => array('canceled','complete','closed'))); 
+        }elseif($orderFlag == self::OPEN_ORDER){
+            $collection->addFieldToFilter('state', array('nin' => array('canceled','complete','closed'))); 
+        }
+        
+        if(!empty($store)){
+            if($store!='all'){
+                $collection->addFieldToFilter('main_table.store_id',$store);
+            }
+        }
+        $collection->setOrder('main_table.created_at', $sortOrder);
+        $collection->setCurPage($pageNo);
+        $collection->setPageSize($limit);
+        return $collection;
     }
         
 }
