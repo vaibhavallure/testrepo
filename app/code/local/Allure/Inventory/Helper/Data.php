@@ -132,7 +132,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         $path = Mage::getBaseDir('var') . DS . 'export' . DS;
         $name   = 'purchase_order_'.$po_id.'.csv';
         $file = $path . DS . $name;
-        $vendorEmail =  explode(',', $vendorEmail);
+        //$vendorEmail =  explode(',', $vendorEmail);
        
         
         $orderData=Mage::getModel("inventory/purchaseorder")->load($po_id);
