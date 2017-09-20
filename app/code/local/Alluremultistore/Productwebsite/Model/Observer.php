@@ -69,10 +69,14 @@ class Alluremultistore_Productwebsite_Model_Observer
 					
 					foreach ($productIds as $_product){
 					    $product = Mage::getModel('catalog/product')->load($_product); //Loading product for Admin 
-						Mage::log("Before Product Price - ".$product->getPrice(),Zend_Log::DEBUG,$logFileName,$debugStatus);
+					    $collection = Mage::getModel('catalog/product')->getCollection();
+					    $collection->joinAttribute('price', 'catalog_product/price', 'entity_id', null,'left',0);
+					    $collection->addAttributeToFilter('entity_id', array('in' => array($_product)));
+					    $stock=$collection->getFirstItem();
+					    Mage::log("Before Product Price - ".$stock['price'],Zend_Log::DEBUG,$logFileName,$debugStatus);
 						if($productStatus !== -1){
 							//$product->setStatus($productStatus)->save();
-							Mage::getModel('catalog/product_status')->updateProductStatus($_product, 0, $productStatus);
+							//Mage::getModel('catalog/product_status')->updateProductStatus($_product, 0, $productStatus);
 							Mage::log("After Product status - ".$product->getStatus(),Zend_Log::DEBUG,$logFileName,$debugStatus);
 						}
 						
@@ -95,7 +99,7 @@ class Alluremultistore_Productwebsite_Model_Observer
 										$product2 = Mage::getModel('catalog/product')->setStoreId($storeId)->load($_product);
 										$priceRule = $website->getWebsitePriceRule();
 										Mage::log('priceRule::'.$priceRule, Zend_Log::DEBUG, $logFileName, true);
-										$oldPrice = $product->getPrice();
+										$oldPrice = $stock['price'];
 										$newPrice = $oldPrice * $priceRule;
 										Mage::log('newPrice::'.$newPrice, Zend_Log::DEBUG, $logFileName, true);
 										$product2->setPrice($newPrice)->save();
