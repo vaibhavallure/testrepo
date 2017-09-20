@@ -42,6 +42,7 @@ function addToShoppingCart(button, formId) {
             '","mail_from_email":"' + jQuery('input#mail-from-email').val() +
             '","mail_message":"' + jQuery('textarea#mail-message').val() +
             '","mail_delivery_date":"' + jQuery('input#date-input').val() +
+            '","mail_delivery_option":"' + jQuery('input#mail_delivery_option:checked').val() +
             '","offline_city":"","offline_country":"","offline_phone":"","offline_state":"","offline_street":"","offline_zip":""';
 
             var stringJSON = '{"qty":"' + jQuery("#" + formId.id + " #qty").val() + '"' + datos + ',"related_product":""}';

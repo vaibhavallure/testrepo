@@ -130,8 +130,8 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
 <script type="text/javascript">
     function changeFieldset(type) {
         var mapEmail = new Array('card-amount', 'mail-from', 'mail-from-email', 'mail-to', 'mail-to-email', 'mail-message', 'date-input','mail_delivery_option');
-        var mapPrint = new Array('card-amount', 'mail-from', 'mail-to', 'mail-message');
-        var mapOffline = new Array('card-amount', 'mail-from', 'mail-to', 'mail-message', 'offline-country', 'offline-state', 'offline-city', 'offline-street', 'offline-zip', 'offline-phone');
+        var mapPrint = new Array('card-amount', 'mail-from', 'mail-to', 'mail-message','mail_delivery_option');
+        var mapOffline = new Array('card-amount', 'mail-from', 'mail-to', 'mail-message', 'offline-country', 'offline-state', 'offline-city', 'offline-street', 'offline-zip', 'offline-phone','mail_delivery_option');
         $('giftcard-fieldset').select('.field').invoke('hide');
         var map = mapEmail;
         if (type == 'email') {
@@ -184,6 +184,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
         jQuery('div#mail-message-characters-info span').html(jQuery(texto).val().length);
     }
     
+    
     //jQuery('select#cart-amount').append('<option value="other">Other</option>');
     
     /*function checkSelected(){
@@ -196,6 +197,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
             jQuery("select#cart-amount").attr("name","card_amount");
         }
     }*/
+
     
     <?php if(Mage::helper('customer')->isLoggedIn()):?>
         jQuery('.giftcard-info input#mail-from').val('<?php echo Mage::helper('customer')->getCustomerName() ?>');
@@ -216,7 +218,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
     
     jQuery.ajax({
         url: '<?php echo Mage::getBaseUrl(); ?>checkout/cart/getemail/'
-    }).done(function(data) {
+    }).done(function(data) {mmediately
         jQuery('#mail-from-email').val(data);
     });
     jQuery(document).ready(function(){

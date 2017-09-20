@@ -19666,7 +19666,7 @@ iframe[name=google_conversion_frame] {display:none}
 }
 
 input[type="radio"].giftcard-radio {
-   left: 0px;
+   left: -3px;
    position: relative;
 }
 input.giftcard-radio {
