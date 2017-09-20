@@ -1078,7 +1078,7 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     				->toHtml();
     				$result['top_cart'] = $content;
     				
-    				$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
+    				$result['top_qty'] = Mage::helper('checkout/cart')->getItemsQty();
     				
     			} catch (Exception $e) {
     				$result['success'] = 0;
@@ -1130,7 +1130,7 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     				->toHtml();
     			$result['top_cart'] = $content;
     			
-    			$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
+    			$result['top_qty'] = Mage::helper('checkout/cart')->getItemsQty();
     			
     			$this->loadLayout('myaccount_checkout_cart_layout');
     			$html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();

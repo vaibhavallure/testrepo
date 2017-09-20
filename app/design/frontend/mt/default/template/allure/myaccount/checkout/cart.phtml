@@ -189,6 +189,11 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 				        	if(data.success){
 				        		jQuery('#ajax_cart_content').html(data.top_cart);
 				        		jQuery('.mt-my-cart').html("");
+
+				        		if(!jQuery("#myaccount-cart-count").length){
+						        	  jQuery("#myaccount-cart-total-item").text(0);
+						      		  jQuery("#myaccount-cart-total-item").show();
+						        }
 					        	jQuery('.mt-my-cart').html(data.html);
 				        	}
 				        	itemXhr = null;
