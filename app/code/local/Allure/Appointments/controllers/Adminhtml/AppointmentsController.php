@@ -379,7 +379,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         if($post_data['piercer_id']!=0){
             $appointments->addFieldToFilter('piercer_id',$post_data['piercer_id']);
         }
-      
+        $appointments->getSelect()->order('appointment_start', 'ASC');
 
         if ($appointments->getSize()){
             $flag = true;
