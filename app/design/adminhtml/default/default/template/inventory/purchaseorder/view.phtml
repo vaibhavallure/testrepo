@@ -16,9 +16,10 @@
     <?php } ?>
    <?php endif;?>
    
-    <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW):?>
+    <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW && Mage::helper('allure_vendor')->isUserVendor()):?>
     <button id="accept" class="po_save_btn"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/accept', array('_secure' => true,'id'=>$order->getPoId()));?>'" ><?php echo $helper->__('Accept')?></button>
    <?php endif;?>
+  
    
    <button onclick="history.back()" class="po_back_btn" ><?php echo $helper->__('Back')?></button>
 </div>
