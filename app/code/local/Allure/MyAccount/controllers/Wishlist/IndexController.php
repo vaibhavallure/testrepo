@@ -575,7 +575,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 					->toHtml();
 					$result['top_cart'] = $content;
 					
-					$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
+					$result['top_qty'] = Mage::helper('checkout/cart')->getItemsQty();
 					
 					
 					//$this->loadLayout('myaccount_checkout_cart_layout');
