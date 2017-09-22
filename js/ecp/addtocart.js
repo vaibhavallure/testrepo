@@ -62,33 +62,43 @@ function addToShoppingCart(button, formId) {
                 datos = '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
 		
               //allure code start
-                var super_attribute = {};
-                var options= {};
-                var optionStr = '';
-                var formData = jQuery('#product_addtocart_form').serializeArray();
-                for(var i = 0; i<formData.length; i++){
-                	var record = formData[i];
-                    if(record.name.indexOf("super_attribute") >= 0){
-                    	var index = record.name.match(/\[(.*?)\]/)[1];
-                        super_attribute[index]=record.value;
-                    }
-                    if(record.name.indexOf("options") >= 0){
-                    	var index = record.name.match(/\[(.*?)\]/)[1];
-                        options[index]=record.value;
-                    }
-                 }
-                 if(Object.keys(super_attribute).length>0){
-                	 optionStr = optionStr + '"super_attribute":'+JSON.stringify(super_attribute);
-                	 if(Object.keys(options).length>0)
-                		 optionStr = optionStr + ',';
-                 }
-                 if(Object.keys(options).length>0){
-                	 optionStr = optionStr + '"options":'+JSON.stringify(options);
-                 }
-                    
-                 stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":"",'+optionStr+'}';
-                 
-                 
+                var flagP = false;
+                if(jQuery('#parent-child-product').length){ 
+                	var checkParentChild = jQuery('#parent-child-product').val();
+                	if(checkParentChild == 1){
+                		flagP = true;
+                	}
+                }
+                
+                if(flagP){
+	                var super_attribute = {};
+	                var options= {};
+	                var optionStr = '';
+	                var formData = jQuery('#product_addtocart_form').serializeArray();
+	                for(var i = 0; i<formData.length; i++){
+	                	var record = formData[i];
+	                    if(record.name.indexOf("super_attribute") >= 0){
+	                    	var index = record.name.match(/\[(.*?)\]/)[1];
+	                        super_attribute[index]=record.value;
+	                    }
+	                    if(record.name.indexOf("options") >= 0){
+	                    	var index = record.name.match(/\[(.*?)\]/)[1];
+	                        options[index]=record.value;
+	                    }
+	                 }
+	                 if(Object.keys(super_attribute).length>0){
+	                	 optionStr = optionStr + '"super_attribute":'+JSON.stringify(super_attribute);
+	                	 if(Object.keys(options).length>0)
+	                		 optionStr = optionStr + ',';
+	                 }
+	                 if(Object.keys(options).length>0){
+	                	 optionStr = optionStr + '"options":'+JSON.stringify(options);
+	                 }
+	                    
+	                 stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":"",'+optionStr+'}';
+                }else{
+                	var stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":""}';
+                }
                  //allure code end   
                 
                 //var stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":""}';
