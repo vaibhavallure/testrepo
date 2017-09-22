@@ -1,3 +1,4 @@
+<pre>
 <?php
 
 ini_set('xdebug.var_display_max_depth', 5);
@@ -32,8 +33,7 @@ $session = $client->login($credentials);
 
 $orderInfo = $client->salesOrderInfo(array('sessionId'=> $session->result, 'orderIncrementId'=> $orderIncrementId));
 	
-
-var_dump($orderInfo);die;
+print_r($orderInfo);die;
 
 //var_dump($orderList);
 
