@@ -9,7 +9,10 @@
 <div class="content-header">
 	<h3 class="icon-head"><?php echo $helper->__('Print Appointments')?></h3>
 </div>
-<form method="post" name="appointment_print" action="<?echo Mage::helper('adminhtml')->getUrl('admin_appointments/adminhtml_appointments/pdfdocs', array('_secure' => true)); ?>">
+
+<form id="appointment_print" action="<?php echo Mage::helper('adminhtml')
+	->getUrl('admin_appointments/adminhtml_appointments/pdfdocs', array('_secure' => true));?>" method="post">
+	
 <div class="print_appointment-main">
     <div class="fieldDiv print_appointment-sub">
       <label><?php echo $helper->__('Select Store') ?></label>
