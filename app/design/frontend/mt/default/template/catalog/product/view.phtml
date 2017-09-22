@@ -40,6 +40,11 @@ $_helper = $this->helper('catalog/output');
 $_product = $this->getProduct();
 $_productId = $_product->getId();
 
+//parent child check
+$prHelper        = Mage::helper("alluremultistore_catalog");
+$isCustomOptions = $prHelper->isCustomOptionsAvailable($_productId);
+$parentVal = ($isCustomOptions)?1:0;
+
 $aprod = Mage::getModel("catalog/product")->load($_productId);
 $backOrderArray[$aprod->getId()] = Mage::getModel('cataloginventory/stock_item')->loadByProduct($aprod)->getBackorders();
 
@@ -290,17 +295,18 @@ if ($_product->getSizeSample() == 1) {
         </div>
     <?php endif; ?>
     
-    <?php //existing code
-    	if(0):
-    ?>
+    <?php if(!$isCustomOptions):?>
     <form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-    <?php endif;?>
-    <?php //allure code?>
+    <?php else:?>
+    <?php //for parent child?>
     <form action="<?php echo $this->getSubmitUrl($_product)//.'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <?php endif;?>
+    
         <div class="no-display">
             <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="related_product" id="related-products-field" value=""/>
+        	<input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
         </div>
 
         <div class="product-view-left">
