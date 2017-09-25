@@ -136,6 +136,14 @@ class Alluremultistore_Productwebsite_Model_Observer
 									} */
 									$data[stock_id] = $stockId;
 									$data['qty']=0;
+									
+									$data['manage_stock']=1;
+									$data['use_config_manage_stock']=0;
+									$data['min_sale_qty']=1;
+									$data['use_config_min_sale_qty']=0;
+									$data['max_sale_qty']=1000;
+									$data['use_config_max_sale_qty']=0;
+									
 									$stockItem->addData($data);
 								}else{
 									$stockItem->setData('stock_id', $stockId);
