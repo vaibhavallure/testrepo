@@ -38,7 +38,11 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
     	$stockId=$website->getStockId();
     	Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
     	
-
+    	$resource     = Mage::getSingleton('core/resource');
+    	
+    	$writeAdapter   = $resource->getConnection('core_write');
+    	$writeAdapter->beginTransaction();
+    	
     	try {
     		foreach ($data['qty'] as $product=>$key){
     			$arr=array_filter($data['qty'][$product]);
@@ -93,7 +97,7 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
     			}
     		}
     		
-    		
+    		$writeAdapter->commit();
     	} catch (Exception $e) {
     		$writeAdapter->rollback();
     	}
