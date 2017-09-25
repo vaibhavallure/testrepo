@@ -47,9 +47,7 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
     		foreach ($data['qty'] as $product=>$key){
     			$arr=array_filter($data['qty'][$product]);
     			if(!empty($arr)){
-    				$updateStock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock(32669,$stockId);
-    				
-    			
+    			    $updateStock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$stockId);
     				if(!is_null($updateStock->getItemId()) && ($updateStock->getItemId()!=0)){
     					$previousQty=$updateStock->getQty();
     					$newQty=$updateStock->getQty()+$arr[0];
