@@ -250,8 +250,15 @@ class Webtex_Giftcards_Adminhtml_GiftcardsController extends Mage_Adminhtml_Cont
 
 
     // Fixed SUPEE 6285 ACL bug
-    function _isAllowed()
+    /* function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('giftcards');
+    } */
+    
+    //Added by Allure
+    
+    function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('customer/giftcards/grid');
     }
 }
