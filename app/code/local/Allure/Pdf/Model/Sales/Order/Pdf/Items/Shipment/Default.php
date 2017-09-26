@@ -79,17 +79,41 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Shipment_Default extends Mage_Sales
         $actionName = Mage::app()->getRequest()->getActionName();
         if($actionName == "pdfdocs"){
             $helper    = Mage::helper("allure_pdf");
-            $lineBlockArr = $helper->getItemStockStaus($item ,$this->getOrder(),100);
+            $feed = 100;
+            $lineBlockArr = $helper->getItemStockStaus($item ,$this->getOrder(),$feed);
             $isShow = $lineBlockArr['is_show'];
             if($isShow){
                 $lineBlockStockMessage = $lineBlockArr['line_block'];
                 $page = $pdf->drawLineBlocks($page, array($lineBlockStockMessage), array('table_header' => true));
                 $this->setPage($page);
+                
+                $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed);
+                if($salesInstr['is_show']){
+                    $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
+                    $this->setPage($page);
+                    $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
+                    $this->setPage($page);
+                }
             }
             
             $lineSeparator = $helper->getLineSeparator();
             $page = $pdf->drawLineBlocks($page, array($lineSeparator), array('table_header' => true));
             $this->setPage($page);
+            
+            $isLastItem = $item->getIsLastItem();
+            if($isLastItem){
+                $orderInfo = $helper->getOrderGiftMessage($this->getOrder());
+                if($orderInfo['is_show']){
+                    $page = $pdf->drawLineBlocks($page, array($orderInfo['label']), array('table_header' => true));
+                    $this->setPage($page);
+                    /* $page = $pdf->drawLineBlocks($page, array($orderInfo['from']), array('table_header' => true));
+                    $this->setPage($page);
+                    $page = $pdf->drawLineBlocks($page, array($orderInfo['to']), array('table_header' => true));
+                    $this->setPage($page); */
+                    $page = $pdf->drawLineBlocks($page, array($orderInfo['message']), array('table_header' => true));
+                    $this->setPage($page);
+                }
+            }
         }
         //allure code - End
     }

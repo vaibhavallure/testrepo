@@ -28,7 +28,7 @@
 <?php $_order = $this->getItem()->getOrder() ?>
 <tr>
     <td colspan="10" align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
-        <strong style="font-size:11px;"><?php echo $this->htmlEscape($_item->getName()) . Mage::helper('amstockstatus')->getEmailStockStatusMessage($this->getSku($_item), $_item->getQtyOrdered()*1);//getStatusBySku($this->getSku($_item), $_item->getQtyOrdered()*1); ?></strong>
+        <strong style="font-size:11px;"><?php echo $this->htmlEscape($_item->getName()) . Mage::helper('amstockstatus')->getEmailStockStatusMessage($_item);//getStatusBySku($this->getSku($_item), $_item->getQtyOrdered()*1); ?></strong>
         <?php if ($this->getItemOptions()): ?>
         <dl style="margin:0; padding:0;">
             <?php foreach ($this->getItemOptions() as $option): ?>

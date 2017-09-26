@@ -31,9 +31,11 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Shipment extends Mage_Sales_Model_Order_P
         $this->_setFontRegular($page, 10);
         
         if ($putOrderId) {
+            $this->_setFontRegular($page, 12);
             $page->drawText(
                 Mage::helper('sales')->__('Order # ') . $order->getRealOrderId(), 35, ($top -= 30), 'UTF-8'
                 );
+            $this->_setFontRegular($page, 10);
         }
         $page->drawText(
             Mage::helper('sales')->__('Order Date: ') . Mage::helper('core')->formatDate(
@@ -46,7 +48,9 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Shipment extends Mage_Sales_Model_Order_P
         
         //allure code - Start
         $helper = Mage::helper("allure_pdf");
+        $this->_setFontRegular($page, 12);
         $helper->addSignatureRequiredToPdf($page,$customTop,$order);
+        $this->_setFontRegular($page, 10);
         //allure code - End
         
         $top -= 10;
@@ -249,5 +253,68 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Shipment extends Mage_Sales_Model_Order_P
                 $this->y = $currentY;
                 $this->y -= 15;
         }
+    }
+    
+    /**
+     * Return PDF document
+     *
+     * @param  array $shipments
+     * @return Zend_Pdf
+     */
+    public function getPdf($shipments = array())
+    {
+        $this->_beforeGetPdf();
+        $this->_initRenderer('shipment');
+        
+        $pdf = new Zend_Pdf();
+        $this->_setPdf($pdf);
+        $style = new Zend_Pdf_Style();
+        $this->_setFontBold($style, 10);
+        foreach ($shipments as $shipment) {
+            if ($shipment->getStoreId()) {
+                Mage::app()->getLocale()->emulate($shipment->getStoreId());
+                Mage::app()->setCurrentStore($shipment->getStoreId());
+            }
+            $page  = $this->newPage();
+            $order = $shipment->getOrder();
+            /* Add image */
+            $this->insertLogo($page, $shipment->getStore());
+            /* Add address */
+            $this->insertAddress($page, $shipment->getStore());
+            /* Add head */
+            $this->insertOrder(
+                $page,
+                $shipment,
+                Mage::getStoreConfigFlag(self::XML_PATH_SALES_PDF_SHIPMENT_PUT_ORDER_ID, $order->getStoreId())
+                );
+            /* Add document text and number */
+            $this->insertDocumentNumber(
+                $page,
+                Mage::helper('sales')->__('Packingslip # ') . $shipment->getIncrementId()
+                );
+            /* Add table */
+            $this->_drawHeader($page);
+            /* Add body */
+            $cnt = 1;
+            foreach ($shipment->getAllItems() as $item) {
+                if ($item->getOrderItem()->getParentItem()) {
+                    continue;
+                }
+                /* Draw item */
+                if(count($shipment->getAllItems()) == $cnt){
+                    $item = $item->setIsLastItem(1);
+                    $this->_drawItem($item, $page, $order);
+                }else{
+                    $this->_drawItem($item, $page, $order);
+                }
+                $cnt ++;
+                $page = end($pdf->pages);
+            }
+        }
+        $this->_afterGetPdf();
+        if ($shipment->getStoreId()) {
+            Mage::app()->getLocale()->revert();
+        }
+        return $pdf;
     }
 }
