@@ -80,25 +80,39 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
     /*
      * get product current stock status
      */
-    public function getProductCurrentStatus($sku,$qty){
+    public function getProductCurrentStatus($sku,$qty,$storeId){
         $orderType  = Mage::app()->getRequest()->getParam('order_type');
         $stockMsg = "";
         $isShow = false;
-        if($orderType=="open"){
-            $productId  = Mage::getModel('catalog/product')->getIdBySku($sku);
-            $product    = Mage::getModel('catalog/product')->load($productId);
-            $stockItem  = Mage::getModel('cataloginventory/stock_item')
-                            ->loadByProduct($product);
-            $stockQty   = intval($stockItem->getQty());
-            if($stockQty > 0){
-                $stockMsg = "(In Stock: Ships Within 24 hours (Mon-Fri).)";
-            }else{ 
-                $backTime = $product->getData('backorder_time');
-                $stockMsg = "";
-                if(!is_null($backTime) && !empty($backTime))
-                    $stockMsg = "(The metal color or length combination you selected is backordered. Order now and It will ship "." - ".$backTime.")";
+        if(empty($storeId)){
+            return array("is_show"=>$isShow,"message"=>$stockMsg);
+        }
+        
+        if($storeId == 1){
+            if($orderType=="open"){
+                $store      = Mage::getModel('core/store')->load($storeId);
+                $websiteId  = $store->getWebsiteId();
+                $website    = Mage::getModel('core/website')->load($websiteId);
+                $stockId    = $website->getStockId();
+                $productId  = Mage::getModel('catalog/product')->getIdBySku($sku);
+                $product    = Mage::getModel('catalog/product')
+                                ->setStoreId($storeId)
+                                ->load($productId);
+                $stockItem  = Mage::getModel('cataloginventory/stock_item')
+                                ->loadByProductAndStock($product,$stockId);
+                $stockQty   = intval($stockItem->getQty());
+                if($stockQty > 0){
+                    $stockMsg = "(In Stock: Ships Within 24 hours (Mon-Fri).)";
+                }else{ 
+                    $backTime = $product->getData('backorder_time');
+                    $stockMsg = "";
+                    if(!is_null($backTime) && !empty($backTime))
+                        $stockMsg = "(The metal color or length combination you selected is backordered. Order now and It will ship "." - ".$backTime.")";
+                    else 
+                        $stockMsg = "(The metal color or length combination you selected is backordered.)";
+                }
+                $isShow = true;
             }
-            $isShow = true;
         }
         return array("is_show"=>$isShow,"message"=>$stockMsg);
     }
