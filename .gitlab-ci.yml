@@ -66,7 +66,7 @@ staging_new:
   only:
     - staging
   script:
-    - mage_deploy stage-mariatash
+    - mage-deploy stage-mariatash
     - echo 'Deployed on Staging'
     
     
