@@ -1,0 +1,198 @@
+<?php
+
+class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
+{
+    /**
+     * get line separator for more readable format
+     */
+    public function getLineSeparator(){
+        $lines[][] = array(
+            'text'  => "--------------------------------------------------------------------------------------------------------------------------------------------------------------",
+            'font' => 'italic',
+            'feed' => 35
+        );
+        
+        $lineBlock = array(
+            'lines'  => $lines,
+            'height' => 20
+        );
+        return $lineBlock;
+    }
+    
+    /**
+     * get sales items stock status
+     */
+    public function getItemStockStaus($item , $order,$feed = 35){
+        $message   = $this->getSalesProductStockStatus($item , $order);
+        $flag      = false;
+        if(!empty($message)){
+            $flag = true;
+        }
+        $lines[][] = array(
+            'text'  => $message,
+            'font' => 'italic',
+            'feed' => $feed
+        );
+        
+        $lineBlock = array(
+            'lines'  => $lines,
+            'height' => 20
+        );
+        
+        return array("is_show"=>$flag , "line_block" => $lineBlock);
+    }
+    
+    /**
+     * get product stock status message
+     */
+    public function getSalesProductStockStatus($item , $order){
+        $sku     = $item->getSku();
+        $storeId = $order->getStoreId();
+        $product = Mage::getModel('catalog/product');
+        $product->setStoreId($storeId)
+                ->load($product->getIdBySku($sku));
+        $message = "";
+        if($storeId == 1){
+            if(!empty($product)){
+                $store      = Mage::getModel('core/store')->load($storeId);
+                $websiteId  = $store->getWebsiteId();
+                $website    = Mage::getModel('core/website')->load($websiteId);
+                $stockId    = $website->getStockId();
+                $stock = Mage::getModel('cataloginventory/stock_item')
+                    ->loadByProductAndStock($product,$stockId);
+                if(($stock->getQty() >= 1 && $stock->getIsInStock())
+                            ||($product->getStockItem()->getManageStock() == 0)){
+                        $message = "";
+                }else{
+                    if(!is_null($product->getBackorderTime()) &&
+                                            $product->getBackorderTime() != ""){
+                        $message = "( ".$product->getBackorderTime()." )";
+                    }else{
+                        $message ='( Backordered )';
+                    }
+                }
+            }else{
+                $orderItemId = $item->getOrderItemId();
+                $orderItem = Mage::getModel("sales/order_item")->load($orderItemId);
+                if($orderItem->getBackorderTime() != null) {
+                    $message = "( ".$orderItem->getBackorderTime()." )";
+                }
+            }
+        }
+        return $message;
+    }
+    
+    /**
+     * get order required signature status
+     */
+    public function addSignatureRequiredToPdf($page ,$top ,$order){
+        $actionName = Mage::app()->getRequest()->getActionName();
+        if($actionName == "pdfdocs"){
+            $signature = ($order->getNoSignatureDelivery()) ? "Yes" : "No";
+            $page->drawText(
+                Mage::helper('sales')->__('Is Signature Required : ') . $signature, 400, ($top -= 30), 'UTF-8'
+            );
+        }
+    }
+    
+    public function getSalesOrderItemSpecialInstruction($item,$feed = 35){
+        try{
+            $flag = false;
+            $orderItemId = $item->getOrderItemId();
+            $orderItem = $item->getOrderItem();//Mage::getModel("sales/order_item")->load($orderItemId);
+            $giftHelper = Mage::helper('giftmessage/message');
+            if($giftHelper->getIsMessagesAvailable('order_item', $orderItem) && $orderItem->getGiftMessageId() && $giftHelper->getEscapedGiftMessage($orderItem)!=''){
+                $message = $giftHelper->getEscapedGiftMessage($orderItem);
+                $lines[][] = array(
+                    'text'  => Mage::helper('core/string')->str_split($message, 80, true, true),
+                    'font' => 'italic',
+                    'feed' => $feed,
+                    'height' => 12
+                );
+                $lineBlock = array(
+                    'lines'  => $lines,
+                    'height' => 20
+                );
+                
+                $linesHdr[][] = array(
+                    'text'  => "Special Message ",
+                    'font'  => 'bold',
+                    'feed' => $feed
+                );
+                $lineBlockHdr = array(
+                    'lines'  => $linesHdr,
+                    'height' => 12
+                );
+                
+                return array("is_show"=>true,'label_block'=>$lineBlockHdr,'value_block'=>$lineBlock);
+            }
+            return array("is_show"=>$flag);
+        }catch (Exception $e){}
+    }
+    
+    /**
+     * get order gift message
+     */
+    public function getOrderGiftMessage($order){
+        try{
+            $giftHelper = Mage::helper('giftmessage/message');
+            if($giftHelper->getIsMessagesAvailable('order', $order) && $order->getGiftMessageId()){
+                $_giftMessage = $giftHelper->getGiftMessageForEntity($order);
+                $from = "From : ".$this->htmlEscape($_giftMessage->getSender());
+                $to   = "To : ".$this->htmlEscape($_giftMessage->getRecipient());
+                $message = $giftHelper->getEscapedGiftMessage($order);
+                
+                $lines[][] = array(
+                    'text'  => "Gift Message for this order",
+                    'font' => 'bold',
+                    'feed' => 35,
+                    'height' => 12
+                );
+                $lineBlock = array(
+                    'lines'  => $lines,
+                    'height' => 20
+                );
+                
+                $linesFrom[][] = array(
+                    'text'  => $from,
+                    'font' => 'italic',
+                    'feed' => 35
+                );
+                $lineBlockFrom = array(
+                    'lines'  => $linesFrom,
+                    'height' => 20
+                );
+                
+                $linesTo[][] = array(
+                    'text'  => $to,
+                    'font' => 'italic',
+                    'feed' => 35
+                );
+                $lineBlockTo = array(
+                    'lines'  => $linesTo,
+                    'height' => 20
+                );
+                
+                $linesMsg[][] = array(
+                    'text'  => Mage::helper('core/string')->str_split($message, 80, true, true),
+                    'font' => 'italic',
+                    'feed' => 35,
+                    'height' => 12
+                );
+                $lineBlockMsg = array(
+                    'lines'  => $linesMsg,
+                    'height' => 20
+                );
+                
+                return array(
+                    "is_show"=>true,"from"=>$lineBlockFrom,
+                    "to"=>$lineBlockTo,"message"=>$lineBlockMsg,
+                    "label"=>$lineBlock
+                );
+            }
+            return array("is_show"=>false);
+        }catch (Exception $e){}
+    }
+    
+    
+}
