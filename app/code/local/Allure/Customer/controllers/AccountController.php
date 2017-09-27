@@ -115,10 +115,10 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			$customer->setStore($store);
 			$customer->setFirstname($customer_fname);
 			$customer->setLastname($customer_lname);
-	
+			$isSubscribe=$request['is_subscribed'];
 			//$customer->setPassword($customer->generatePassword($passwordLength));
 			$customer->setPassword($password);
-			if($request['is_subscribed'])
+			if($isSubscribe=='true')
 				$customer->setIsSubscribed(1);
 			//$customer->password_hash = md5($password);
 			//$customer->setPassword($password);
