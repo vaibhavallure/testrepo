@@ -64,8 +64,9 @@
         <?php //@author:allure code start?>
         <?php
         $qty = $this->getItem()->getQtyOrdered()*1;
+        $storeId = $this->getItem()->getStoreId();
         $stockStatus = Mage::helper("myaccount")
-            ->getProductCurrentStatus($this->getSku(),$qty);
+            ->getProductCurrentStatus($this->getSku(),$qty,$storeId);
         ?>
         <?php if($stockStatus['is_show']):?>
             <dl class="item-options">

@@ -184,7 +184,10 @@
             }
             jQuery("#country").selectBoxIt({aggressiveChange: true});
             jQuery("#region_id").selectBoxIt({aggressiveChange: true});
-            jQuery.placeholder.shim();
+            
+            if(jQuery.placeholder != undefined) //allure code
+            	jQuery.placeholder.shim();
+        	
             var region_length = jQuery('#region_id option').length;
             if(region_length == 1){
                 jQuery('#region_idSelectBoxItContainer').remove();
