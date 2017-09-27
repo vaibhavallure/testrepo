@@ -20,7 +20,7 @@
 			</div>
 			<div class="form-group">
 	 		    <label class="popup-login-lbl" for="email"><?php echo $this->__("Email Address")?><em>*</em></label>
-	  		    <input id='email' type="text" name='email' class="ele_width required-entry validate-email"/>
+	  		    <input id='email-register' type="text" name='email' class="ele_width required-entry validate-email"/>
 			</div>
 			<div class="form-group">
 	 		    <label class="popup-login-lbl" for="password"><?php echo $this->__("Password")?><em>*</em></label>
@@ -68,7 +68,7 @@ jQuery("#signup-btn-popup").on('click',function(){
 
 		var firstname = jQuery('#firstname').val();
 		var lastname = jQuery('#lastname').val();
-		var email = jQuery('#email').val();
+		var email = jQuery('#email-register').val();
 		var password = jQuery('#password').val();
 		var is_subscribed = jQuery('#popup_is_subscribed').is(":checked");
 		var key='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
