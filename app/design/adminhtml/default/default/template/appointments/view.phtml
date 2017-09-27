@@ -186,9 +186,10 @@ if($store)
             <tr>
                 <td class="label"><label><?php if($piercerId):echo Mage::helper('appointments')->__('Change Piercer'); else: echo Mage::helper('appointments')->__('Allocate Piercer'); endif;?></label></td>
                 <?php //$piercers  = Mage::getModel('appointments/adminhtml_source_piercer')->toArray();
+                    $piercersArray=Mage::helper('appointments')->getAvailablePiercers($appointment->getId());
                 ?>
                  <?php $piercers = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
-			         ->addFieldToFilter('is_active', array('eq' => '1'));;
+                 ->addFieldToFilter('id', array('in' =>$piercersArray));
                 ?>
                 <td class="value">
                 <form action="<?php echo $this->getActionUrl()?>" method="post">
