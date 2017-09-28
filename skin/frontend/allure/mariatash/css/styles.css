@@ -9874,6 +9874,7 @@ float: right;
     margin-top: -2px;
 }
 
+
 .checkout-onepage-success .col2-right-layout .col-right{
 	display: none;
 }
@@ -9881,4 +9882,44 @@ float: right;
 .checkout-onepage-index label[for="billing:save_in_address_book"]{
 	padding: 0px ! important;
 	background: none ! important;
+}
+
+
+
+input[type="radio"].giftcard-radio {
+   left: 0px;
+   position: relative;
+}
+input.giftcard-radio {
+   width: 22px !important;
+   margin-right: 7px;
+   float: left;
+   padding-right: 12px;
+   overflow: hidden;
+}
+
+
+input.giftcard-radio1 {
+   position: relative;
+   width: 18px !important;
+   margin-right: 7px;
+   float: left;
+   left: 0px !important;
+   /* padding-right: 12px; */
+   /* overflow: hidden; */
+
+   /* padding: 0px 10px; */
+   margin-left: 20px;
+}
+.email_delivery_option2{
+	    margin-left: 0;
+}
+#mail_delivery_option{
+	opacity: unset !important;
+}
+.delivery_option_mo{
+	    display: block;
+    /* position: absolute; */
+    width: 100% !important;
+
 }
