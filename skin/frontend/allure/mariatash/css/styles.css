@@ -9877,3 +9877,8 @@ float: right;
 .checkout-onepage-success .col2-right-layout .col-right{
 	display: none;
 }
+
+.checkout-onepage-index label[for="billing:save_in_address_book"]{
+	padding: 0px ! important;
+	background: none ! important;
+}
