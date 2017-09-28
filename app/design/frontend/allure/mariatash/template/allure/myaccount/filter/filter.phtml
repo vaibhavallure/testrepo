@@ -84,6 +84,7 @@
 		jQuery('#mt-filter-toolbar .sorter').on('click',function(){
 			var uri = window.location;
 			var hash = uri.hash;
+			<?php if(0):?>
     		if(hash=="#purchase" || hash=="#receipt" || hash=="#openorders"){
         		console.log(jQuery('#narrow-by-list').innerHeight());
    				if(jQuery('#mt-purchase-item-tab .no-purchase-item').length){
@@ -99,11 +100,13 @@
    					//jQuery('#mt-openorders-tab .box').css({"height":"245px"});
    				}
     		}
+    		<?php endif;?>
     		jQuery('#mt-filter-toolbar #narrow-by-list').show();
 		});
 
 		jQuery('#mt-filter-toolbar #narrow-by-list .glyphicon-remove').on('click',function(){
 			jQuery('#mt-filter-toolbar #narrow-by-list').hide();
+			<?php if(0):?>
 			if(jQuery('#mt-purchase-item-tab .no-purchase-item').length){
 				jQuery('#mt-filter-toolbar #narrow-by-list').css({"position":"","margin-top":""});
 				//jQuery('#mt-purchase-item-tab .cart-mt').css({"height":""});
@@ -116,6 +119,7 @@
 				jQuery('#mt-filter-toolbar #narrow-by-list').css({"position":"","margin-top":""});
 				//jQuery('#mt-openorders-tab .box').css({"height":""});
 			}
+			<?php endif;?>
 		});
 
 
