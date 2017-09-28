@@ -4904,7 +4904,7 @@ ol#checkoutSteps.opc li.active {
     font: 13px/35px Arial,Helvetica,sans-serif;
     height: 33px;
     padding-left: 9px;
-    width: 970px;
+    width: 100%; /*970px;*/
     margin:12px 0 10px 0;
     text-transform: uppercase;
 }
@@ -9872,4 +9872,8 @@ float: right;
 #review-buttons-container #review-back{
 	float: left;
     margin-top: -2px;
+}
+
+.checkout-onepage-success .col2-right-layout .col-right{
+	display: none;
 }
