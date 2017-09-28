@@ -67,7 +67,7 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
         // Staring import image from Amazon S3 Bucket
         $bucket = Mage::getStoreConfig('allure_imagecdn/amazons3/bucket');
         
-        $remove_source = false;//Mage::getStoreConfig('allure_imagecdn/general/remove_source');
+        $remove_source = Mage::getStoreConfig('allure_imagecdn/general/remove_source');
                 
         if (!self::$_aws) {
             self::log('Connecting...');
