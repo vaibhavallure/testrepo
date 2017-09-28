@@ -110,7 +110,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			{
     				$templateId = Mage::getStoreConfig("appointments/piercer/piercer_welcome_template",$storeId);
     				$mailSubject="sample subject";
-    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name"), 'email'=> Mage::getStoreConfig("trans_email/bookings/email"));
     				$email = $piercer->getEmail();
     				$name = $piercer->getFirstname()." ".$piercer->getLastname();
     				$vars = array(

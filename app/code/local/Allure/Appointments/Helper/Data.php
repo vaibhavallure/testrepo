@@ -196,5 +196,86 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    curl_close($curlObj);
 	    return $json->id;
 	}
+	public function getAvailablePiercers($id){
+	    
+	    $appointments= Mage::getModel('appointments/appointments')->load($id);
+	    $storeId=$appointments->getStoreId();
+	    $appDate=date("m/d/Y",strtotime($appointments->getAppointmentStart()));
+	    $appDay=date('l', strtotime($appDate));
+	    $fromTime=$appointments->getAppointmentStart();
+	    $toTime=$appointments->getAppointmentEnd();
+	    $piercersArray=array();
+	    $piercersArray[]=$appointments->getPiercerId();
+	    try {
+	        $collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
+	        ->addFieldToFilter('is_active', array('eq' => '1'));
+	        $collection->addFieldToFilter('working_days', array('like' => '%'.$appDate.'%'));
+	        foreach ($collection as $piercer)
+	        {
+	            
+	            $appCollection = Mage::getModel('appointments/appointments')->getCollection();
+	            $appCollection->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$fromTime, 'to'=>$toTime), array('from'=>$fromTime, 'to'=>$toTime)))
+	            ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+	            ->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+	            
+	            if(isset($appointmentId))
+	                $appCollection->addFieldToFilter('id', array('neq' => $appointmentId));
+	                $appCollection2=null;
+	                if(!count($appCollection)){
+	                    $appCollection2 = Mage::getModel('appointments/appointments')->getCollection();
+	                    $appCollection2->addFieldToFilter('appointment_start', array('lteq'=>$fromTime))
+	                    ->addFieldToFilter("appointment_end",array('gteq'=>$toTime))
+	                    ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+	                    ->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+	                    if(isset($appointmentId))
+	                        $appCollection2->addFieldToFilter('id', array('neq' => $appointmentId));
+	                }
+	                
+	                //echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
+	                if(count($appCollection2))
+	                    continue;
+	                    if(count($appCollection))
+	                        continue;
+	                        
+	                        /* End of check */
+	                        
+	                        $workingHours = $piercer->getWorkingHours();
+	                        $workingHours = unserialize($workingHours);
+	                        
+	                        //Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
+	                        
+	                        foreach ($workingHours as $workSlot)
+	                        {
+	                            //$workStart = $workSlot['start'].":00";
+	                            
+	                            if($workSlot['day']!=$appDay){
+	                                continue;
+	                                
+	                            }
+	                            $workStart = $this->getTimeByValue($workSlot['start']);
+	                            //$workEnd = $workSlot['end'].":00";
+	                            $workEnd = $this->getTimeByValue($workSlot['end']);
+	                            
+	                            //Break
+	                            $breakStart = $this->getTimeByValue($workSlot['break_start']);
+	                            $breakEnd = $this->getTimeByValue($workSlot['break_end']);
+	                            
+	                            $fromDateTime=date("H:i",strtotime($fromTime));
+	                            
+	                            $toDateTime=date("H:i",strtotime($toTime));
+	                            
+	                            if((strtotime($workStart)<=strtotime($fromDateTime) && strtotime($toDateTime)<=strtotime($breakStart)) ||
+	                                (strtotime($breakEnd)<=strtotime($fromDateTime) && strtotime($toDateTime)<=strtotime($workEnd)))
+	                            {
+	                                $piercersArray[]=$piercer->getId();
+	                            }
+	                            
+	                        }
+	                        
+	        }
+	    } catch (Exception $e) {
+	    }
+	    return $piercersArray;
+	}
 }
 	 

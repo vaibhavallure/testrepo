@@ -76,7 +76,7 @@ jQuery(document).ready(function(){
 		 if(myForm.validator.validate()){ 
 			var firstname 		= $j('#firstname').val();
 			var lastname 		= $j('#lastname').val();
-			var email 			= $j('#email').val();
+			var email 			= $j('#email-register').val();
 			var password 		= $j('#password').val();
 			var is_subscribed 	= $j('#popup_is_subscribed').is(":checked");
 			var key				= Allure.RegisterModelFormKey;
