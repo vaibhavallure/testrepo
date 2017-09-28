@@ -32,10 +32,40 @@ $_product = Mage::registry('current_product');
 $productId = $_product->getId();
 $sku_main = $_product->getSku();
 $old_sku = $sku_main;
+$skForwordingArray=array();
+
+$childProductArr[] = $productId;
+//MT-362 SKu forwording logic
+$childProductArr = array();
+if($old_sku[0]=='X' || $old_sku[0]=='x'){
+    $E_sku = 'E'.substr($old_sku, 1);
+    $E_ProductId=Mage::getModel("catalog/product")->getIdBySku($E_sku);
+    if (isset($E_ProductId)){
+        $skForwordingArray[]=$E_ProductId;
+        $childProductArr[] = $E_ProductId;
+     
+    }
+}
+if($old_sku[0]=='C' || $old_sku[0]=='S'||$old_sku[0]=='N'||$old_sku[0]=='c'||$old_sku[0]=='s'||$old_sku[0]=='n'){
+    $E_sku = 'E'.substr($old_sku, 1);
+    $E_ProductId=Mage::getModel("catalog/product")->getIdBySku($E_sku);
+    if (isset($E_ProductId))
+        $skForwordingArray[]=$E_ProductId;
+    $X_sku = 'X'.substr($old_sku, 1);
+    $X_ProductId=Mage::getModel("catalog/product")->getIdBySku($X_sku);
+    if (isset($E_ProductId)){
+        $skForwordingArray[]=$X_ProductId;
+        $childProductArr[] = $X_ProductId;
+    }
+    
+}
+    
+//MT-362 SKu forwording logic
+
 if(preg_match("/_/", $sku_main))
     //$sku_main = substr($sku_main, 0,strpos($sku_main, "_"));
 
-	$childProductArr = array();
+	
 	$childProductArr[] = $productId;
 	if($_product->getTypeId()=="configurable"){
 		$currentchildrenIds = $_product->getTypeInstance()->getChildrenIds($productId);
@@ -69,8 +99,13 @@ if(preg_match("/_/", $sku_main))
      	}
      	
      }
+     //Adding as per MT-362 ESKU forwarding
+      foreach ($skForwordingArray as $id){
+          $str .= ' FIND_IN_SET(('.$id.'),`product_ids`) OR ';
+      }
      $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
 	 $collection->getSelect()->where( 'status = 1 AND ('.$str.')');
+
 
 ?>
 
@@ -124,6 +159,11 @@ if(preg_match("/_/", $sku_main))
                             Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
                             $sku = $old_sku;
                         }
+                        if (substr($temp_sku, 1)==substr($sku_main, 1)) {
+                            Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
+                            $sku = $old_sku;
+                        }
+                        
                         $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
                         if(!empty($product)){
                             $productName = $product->getName();
