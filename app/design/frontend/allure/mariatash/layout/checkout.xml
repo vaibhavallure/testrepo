@@ -375,20 +375,15 @@ One page checkout main layout
                 <block type="checkout/onepage_billing" name="checkout.onepage.billing" as="billing" template="checkout/onepage/billing.phtml"/>
                 <block type="checkout/onepage_shipping" name="checkout.onepage.shipping" as="shipping" template="checkout/onepage/shipping.phtml"/>
                 
-                <!-- new delivery method after shipping information -->
-                <block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="checkoutstep/checkout/onepage/delivery_option.phtml">
-                	<block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="checkoutstep/checkout/onepage/delivery_option_details.phtml"></block>
+                 <!-- new delivery method after shipping information -->
+                <block type="allure_multicheckout/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="allure/multicheckout/checkout/onepage/delivery_option.phtml">
+                	<block type="allure_multicheckout/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="allure/multicheckout/checkout/onepage/delivery_option_details.phtml"></block>
                   </block>
                 
                 <block type="checkout/onepage_shipping_method" name="checkout.onepage.shipping_method" as="shipping_method" template="checkout/onepage/shipping_method.phtml">
                     <block type="checkout/onepage_shipping_method_available" name="checkout.onepage.shipping_method.available" as="available" template="checkout/onepage/shipping_method/available.phtml"/>
                     <block type="checkout/onepage_shipping_method_additional" name="checkout.onepage.shipping_method.additional" as="additional" template="checkout/onepage/shipping_method/additional.phtml"/>
                 </block>
-                
-                <!-- old delivery method after shipping method -->
-                <!-- <block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="checkoutstep/checkout/onepage/delivery_option.phtml">
-                	<block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="checkoutstep/checkout/onepage/delivery_option_details.phtml"></block>
-                  </block> -->
                 
                 <block type="checkout/onepage_payment" name="checkout.onepage.payment" as="payment" template="checkout/onepage/payment.phtml">
                     <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/onepage/payment/methods.phtml">
