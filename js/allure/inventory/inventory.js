@@ -7,14 +7,17 @@ $j(document).ready(function (){
 	$j("input:checkbox").change(function(){
 		var selected = [];
         var ischecked= $j(this).is(':checked');
+        
         var id=parseInt($j(this).attr('id'));
         var qty=parseInt($j('#max_qty_'+id).val());
+        var is_custom=parseInt($j('#is_custom_'+id).val());
         var cost=parseFloat($j('#cost_'+id).val());
     	var refence_no=$j('#refence_no').val();
     	var key=Allure.ViewPurchaseOrderFormKey;
         var comment=$j('#comment_'+id).val();
         var store=$j('#store').val();
         var totalAmount = parseInt($j('#order_total').val());
+
         if(ischecked){
 	        if(qty<=0){
 	        	 alert('Please Enter Qty Greater than 0.');
@@ -24,7 +27,7 @@ $j(document).ready(function (){
 	        	totalAmount=totalAmount + (qty * cost);
 	        	var include = 1;
 	        	var item ={
-	        			id,qty,cost,comment,include,store
+	        			id,qty,cost,comment,include,store,is_custom
 	        	};
 	        	$j.ajax({
 	    	        url: Allure.AddPurchaseItem,
@@ -36,15 +39,16 @@ $j(document).ready(function (){
 	    	        success: function(data) {
 	    	            $j('#order_total').val(totalAmount);
 	    	            $j('#max_qty_'+id).prop('disabled', true);
+	    	            $j('#cost_'+id).prop('disabled', true);
 	    	            $j('#comment_'+id).prop('disabled', true);
 	    	        }
 	    	    });
 	        }
         }else{
-        	totalAmount=totalAmount - (qty * cost);
+        	totalAmount= totalAmount -(qty * cost);
         	var include = 0;
         	var item ={
-        			id,qty,cost,comment,include,store
+        			id,qty,cost,comment,include,store,is_custom
         	};
         	$j.ajax({
     	        url: Allure.AddPurchaseItem,
@@ -56,6 +60,7 @@ $j(document).ready(function (){
     	        success: function(data) {
     	        	 $j('#order_total').val(totalAmount);
     	        	 $j('#max_qty_'+id).prop('disabled', false);
+    	        	 $j('#cost_'+id).prop('disabled', false);
     	             $j('#comment_'+id).prop('disabled', false);
     	        	
     	        }
@@ -177,6 +182,8 @@ function updateTotal(data){
 	    $j('#max_qty_'+value['item_id']).prop('disabled', true);
 	    $j('#comment_'+value['item_id']).val(value['comment']);
 	    $j('#comment_'+value['item_id']).prop('disabled', true);
+	    $j('#cost_'+value['item_id']).val(value['cost']);
+	    $j('#cost_'+value['item_id']).prop('disabled', true);
 	});
 	/*console.log(data.length);
 	var sum = 0;
@@ -239,7 +246,7 @@ function resetSearch(){
 		beforeSend: function() { $j('#loading-mask').show(); },
         complete: function() { $j('#loading-mask').hide(); },
         success: function(data) {
-        	console.log(data.data);
+        	//console.log(data.data);
         	if(data.data){
         			updateTotal(data.data);
 	        	}

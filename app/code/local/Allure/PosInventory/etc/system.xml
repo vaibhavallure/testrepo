@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<sections>
+		<allure_posinventory translate="label">
+			<label>POS Inventory</label>
+			<tab>allure</tab>
+			<sort_order>100</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label">
+					<label>General</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<status translate="label">
+							<label>Enable POS Inventory Settings ?</label>
+							<frontend_type>select</frontend_type>
+							<comment>Enable/Disable POS Inventory Settings</comment>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>11</sort_order>
+						</status>
+						<skip_stock_before translate="label">
+							<label>Enable Skip Stock Before</label>
+							<frontend_type>select</frontend_type>
+							<comment>Enable/Disable Stock Decrement Before Date</comment>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>12</sort_order>
+							<depends>
+								<status>1</status>
+							</depends>
+						</skip_stock_before>
+						<skip_stock_before_date translate="label">
+							<label>Stock Decrement Before Date</label>
+							<frontend_type>text</frontend_type>
+							<comment>Stock Decrement Before Date</comment>
+							<frontend_model>allure_posinventory/adminhtml_system_config_form_field_date</frontend_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>13</sort_order>
+							<depends>
+								<skip_stock_before>1</skip_stock_before>
+							</depends>
+						</skip_stock_before_date>
+						<skip_stock_after translate="label">
+							<label>Enable Skip Stock After</label>
+							<frontend_type>select</frontend_type>
+							<comment>Enable/Disable Stock Decrement After Date</comment>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>14</sort_order>
+							<depends>
+								<status>1</status>
+							</depends>
+						</skip_stock_after>
+						<skip_stock_after_date translate="label">
+							<label>Stock Decrement After Date</label>
+							<frontend_type>text</frontend_type>
+							<comment>Stock Decrement After Date</comment>
+							<frontend_model>allure_posinventory/adminhtml_system_config_form_field_date</frontend_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>15</sort_order>
+							<depends>
+								<skip_stock_after>1</skip_stock_after>
+							</depends>
+						</skip_stock_after_date>
+						<debug translate="label">
+							<label>Debug</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>20</sort_order>
+						</debug>
+					</fields>
+				</general>
+			</groups>
+		</allure_posinventory>
+	</sections>
+</config>

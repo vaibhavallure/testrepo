@@ -595,8 +595,24 @@ Product.Config.prototype.updateFormProductId = function(productId){
     }
     var currentAction = $('product_addtocart_form').action;
     //allure commented
-    newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
-    $('product_addtocart_form').action = newcurrentAction;
-    $('product_addtocart_form').product.value = productId;
+    //newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
+    //$('product_addtocart_form').action = newcurrentAction;
+    //$('product_addtocart_form').product.value = productId;
+    
+    var flag = true;
+    if(jQuery('#parent-child-product').length){ 
+    	var checkParentChild = jQuery('#parent-child-product').val();
+    	if(checkParentChild == 1){
+    		flag = false;
+    	}
+    }
+    
+    if(flag){
+    	//for non parent child
+    	newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
+        $('product_addtocart_form').action = newcurrentAction;
+        $('product_addtocart_form').product.value = productId;
+    }
+    
 };
 

@@ -113,6 +113,7 @@ try{
 						'city'       => $data['city'],
 						'postcode'   => $data['zip_cod'],
 						'country_id' => $data['cntry'],
+						'region' 	=> 	$data['state'],
 						'telephone'  => $data['phone_1'],
 						'fax'        => $data['fax_1'],
 				);

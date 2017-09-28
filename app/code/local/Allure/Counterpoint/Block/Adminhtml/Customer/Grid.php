@@ -144,7 +144,7 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
         		'align'     => 'center',
         		'width'     => '80px',
         		'type'      => 'options',
-        		'options'   => array(1=>'CounterPoint',0=>'Website'),
+                'options'   => array(0=>'Website',1=>'CounterPoint',2=>'Sugar CRM'),
         		'index'     => 'customer_type',
         ));
         

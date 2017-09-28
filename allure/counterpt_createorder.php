@@ -16,7 +16,7 @@ $final_array = array_merge($alphabets,$numbers,$additional_characters);
 $connection = Mage::getSingleton('core/resource')->getConnection('core_read');
 $sql        = "SELECT a.doc_id,a.tkt_no order_id,a.tkt_dt,concat(b.item_no,'|',cell_descr) sku,
 				b.qty_sold qty,b.prc,a.sub_tot,a.tot_ext_cost,a.tax_amt,a.tot, c.nam name,
-				c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,
+				c.EMAIL_ADRS_1 as email,c.adrs_1 street,c.city,c.state,c.zip_cod ,c.phone_1 phone,
 				c.cntry as country FROM `ps_ord_hist` a JOIN `ps_doc_lin` b on(a.tkt_no=b.tkt_no) 
 				join `ps_ord_hist_cell` c on(a.doc_id=c.doc_id) where c.EMAIL_ADRS_1 <> '' 
 				and b.qty_sold > 0";
@@ -73,7 +73,8 @@ foreach ($newArr as $key=>$data){
 					echo "<br>";
 					
 				}else {
-					//break;
+					$quoteFlag = false;
+					break;
 				}
 			}
 			
@@ -119,7 +120,34 @@ foreach ($newArr as $key=>$data){
 						->setLastname($lastName)
 						->setEmail($email)
 						->setPassword($password)
+						->setCustomerType(1)  //counterpoint
 						->save();
+						
+						if(!empty($street)){
+							$_custom_address = array (
+									'firstname'  => $customer->getFirstname(),
+									'lastname'   => $customer->getLastname(),
+									'street'     => array (
+											'0' => $street
+									),
+									'city'       => $city,
+									'postcode'   => $zip_code,
+									'country_id' => $country,
+									'region' 	=> 	$state,
+									'telephone'  => $phone,
+									'fax'        => '',
+							);
+							
+							$address = Mage::getModel("customer/address");
+							$address->setData($_custom_address)
+							->setCustomerId($customer->getId())
+							->setIsDefaultBilling('1')
+							->setIsDefaultShipping('1')
+							->setSaveInAddressBook('1');
+							$address->save();
+							Mage::log("New Customer Address create.Customer Id:".$customer->getId()." Address Id:".$address->getId(), Zend_Log::DEBUG,"counter_point_order",true);
+						}
+						
 					}
 					
 					
@@ -280,17 +308,17 @@ foreach ($newArr as $key=>$data){
 						->save();
 					
 			}else{
-				echo "CountertPoint Oder Id ".$counterpointOrderId." not created.Product Not match to magento";
+				echo "CountertPoint Order Id ".$counterpointOrderId." not created.Product Not match to magento";
 				Mage::log("CountertPoint Oder Id ".$counterpointOrderId." not created.Product Not match to magento", Zend_Log::DEBUG,"counter_point_order",true);
 			}
 		}else{
 			echo "CountertPoint Oder Id:".$counterpointOrderId." Already Created in magento";
-			Mage::log("CountertPoint Oder Id:".$counterpointOrderId." Already Created in magento", Zend_Log::DEBUG,"counter_point_order",true);
+			Mage::log("CountertPoint Order Id:".$counterpointOrderId." Already Created in magento", Zend_Log::DEBUG,"counter_point_order",true);
 		}
 		
 	}else{ 
-		echo "CountertPoint Oder Id:".$counterpointOrderId." present in Magento";
-		Mage::log("CountertPoint Oder Id:".$counterpointOrderId." present in Magento", Zend_Log::DEBUG,"counter_point_order",true);
+		echo "CountertPoint Order Id:".$counterpointOrderId." present in Magento";
+		Mage::log("CountertPoint Order Id:".$counterpointOrderId." present in Magento", Zend_Log::DEBUG,"counter_point_order",true);
 	}
 	echo "<br>";
 	

@@ -16,7 +16,7 @@ $priceIndex = 1;
 
 $prodCount=0;
 $csv = Mage::getBaseDir('var').DS."priceImport".DS.$name;
-
+$productNotFound=array();
 
 $io = new Varien_Io_File();
 $productIdsByPrice = array();
@@ -28,14 +28,29 @@ while($csvData = $io->streamReadCsv()){
 	}
 	$sku = trim($csvData[$skuIndex]);
 	$id = $productModel->getIdBySku($sku);
+	
 	if ($id) {
-		$price = trim($csvData[$priceIndex]);
-		if (!isset($productIdsByPrice[$price])) {
-			$productIdsByPrice[$price] = array();
-		}
-		$productIdsByPrice[$price][] = $id;
+	    $_product=$productModel->load($id);
+	    $price = trim($csvData[$priceIndex]);
+	    if (!isset($productIdsByPrice[$price])) {
+	        $productIdsByPrice[$price] = array();
+	    }
+	    $productIdsByPrice[$price][] = $id;
+	    if($_product->getTypeId()=="configurable"){
+	        $currentchildrenIds = $_product->getTypeInstance()->getChildrenIds($_product->getId());
+	        foreach ($currentchildrenIds[0] as $childrenId) {
+	            // $childProductArr[] = $childrenId;
+	            $productIdsByPrice[$price][] = $childrenId;
+	        }
+	    }
+	}else {
+	    $productNotFound[]=$sku;
+	    
 	}
+	
+	
 }
+
 
 $resource     = Mage::getSingleton('core/resource');
 $writeAdapter   = $resource->getConnection('core_write');
@@ -65,6 +80,7 @@ $writeAdapter->commit();
 }catch (Exception $e) {
 	$writeAdapter->rollback();
 }
+Mage::log("Products not found:".json_encode($productNotFound),Zend_log::DEBUG,'priceupdate',true);
 	
 die("Operation end...");
 	

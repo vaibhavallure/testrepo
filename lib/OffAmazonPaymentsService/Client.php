@@ -117,9 +117,15 @@ class OffAmazonPaymentsService_Client implements OffAmazonPaymentsService_Interf
      */
     public function __construct($config = null)
     {
-        iconv_set_encoding('output_encoding', 'UTF-8');
-        iconv_set_encoding('input_encoding', 'UTF-8');
-        iconv_set_encoding('internal_encoding', 'UTF-8');
+        if (PHP_VERSION_ID < 50600) {
+            iconv_set_encoding('output_encoding', 'UTF-8');
+            iconv_set_encoding('input_encoding', 'UTF-8');
+            iconv_set_encoding('internal_encoding', 'UTF-8');
+        } else {
+            ini_set('output_encoding', 'UTF-8');
+            ini_set('input_encoding', 'UTF-8');
+            ini_set('default_charset', 'UTF-8');
+        }
 
         if ($config != null) {
             $this->_checkConfigHasAllRequiredKeys($config);
@@ -969,6 +975,12 @@ class OffAmazonPaymentsService_Client implements OffAmazonPaymentsService_Interf
         curl_setopt($ch, CURLOPT_PORT, $port);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+
+        if (defined('CURLOPT_IPRESOLVE'))
+        {
+            curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        }
+
 
         # if a ca bundle is configured, use it as opposed to the default ca
         # configured for the server
