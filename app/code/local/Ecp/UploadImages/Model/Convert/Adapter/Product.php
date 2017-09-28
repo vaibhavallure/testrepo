@@ -65,7 +65,6 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
         self::log('START : saveRow');
         
         // Staring import image from Amazon S3 Bucket
-        self::log('Connecting...');
         
         $aws_key = Mage::getStoreConfig('allure_imagecdn/amazons3/access_key_id');
         $aws_secret_key = Mage::getStoreConfig('allure_imagecdn/amazons3/access_key_secret');
@@ -74,10 +73,12 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
         $remove_source = Mage::getStoreConfig('allure_imagecdn/general/remove_source');
                 
         if (!self::$_aws) {
+            self::log('Connecting...');
+            
             self::$_aws = new Zend_Service_Amazon_S3($aws_key, $aws_secret_key);
-        }
         
-        self::log('Connected');
+            self::log('Connected');
+        }
         
         $sku = $importData['sku'];
         $image = $importData['image'];
