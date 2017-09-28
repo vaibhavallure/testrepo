@@ -40,7 +40,7 @@ $childProductArr = array();
 if($old_sku[0]=='X' || $old_sku[0]=='x'){
     $E_sku = 'E'.substr($old_sku, 1);
     $E_ProductId=Mage::getModel("catalog/product")->getIdBySku($E_sku);
-    if (isset($E_ProductId)){
+    if (isset($E_ProductId) && !empty($E_ProductId)){
         $skForwordingArray[]=$E_ProductId;
         $childProductArr[] = $E_ProductId;
      
@@ -49,11 +49,13 @@ if($old_sku[0]=='X' || $old_sku[0]=='x'){
 if($old_sku[0]=='C' || $old_sku[0]=='S'||$old_sku[0]=='N'||$old_sku[0]=='c'||$old_sku[0]=='s'||$old_sku[0]=='n'){
     $E_sku = 'E'.substr($old_sku, 1);
     $E_ProductId=Mage::getModel("catalog/product")->getIdBySku($E_sku);
-    if (isset($E_ProductId))
+    if (isset($E_ProductId) && !empty($E_ProductId)){
         $skForwordingArray[]=$E_ProductId;
+        $childProductArr[] = $E_ProductId;
+    }
     $X_sku = 'X'.substr($old_sku, 1);
     $X_ProductId=Mage::getModel("catalog/product")->getIdBySku($X_sku);
-    if (isset($E_ProductId)){
+    if (isset($X_ProductId) && !empty($X_ProductId)){
         $skForwordingArray[]=$X_ProductId;
         $childProductArr[] = $X_ProductId;
     }
@@ -100,9 +102,12 @@ if(preg_match("/_/", $sku_main))
      	
      }
      //Adding as per MT-362 ESKU forwarding
-      foreach ($skForwordingArray as $id){
-          $str .= ' FIND_IN_SET(('.$id.'),`product_ids`) OR ';
-      }
+   
+     if(!empty($skForwordingArray)){
+          foreach ($skForwordingArray as $id){
+              $str .= ' FIND_IN_SET(('.$id.'),`product_ids`) OR ';
+          }
+     }
      $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
 	 $collection->getSelect()->where( 'status = 1 AND ('.$str.')');
 
