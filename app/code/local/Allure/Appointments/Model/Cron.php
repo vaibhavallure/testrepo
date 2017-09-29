@@ -66,8 +66,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			$storeId=$appointment->getStoreId();
 			$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
 			$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
-			$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name"),
-					'email'=> Mage::getStoreConfig("trans_email/bookings/email"));
+			$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId),
+			    'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 			
 			$toSendAdmin = Mage::getStoreConfig("appointments/admin/send_admin_email",$storeId);
 			
@@ -142,7 +142,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 					$templateId = Mage::getStoreConfig("appointments/admin/admin_template",$storeId);
 					$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
 					$mailSubject="Appointment booking Reminder";
-					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name"), 'email'=> Mage::getStoreConfig("trans_email/bookings/email"));
+					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email"));
 					$email = $adminEmail;
 					$name = "Admin";
 					$vars = array(

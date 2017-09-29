@@ -32,8 +32,9 @@ class MT_Api_Model_Rewrite_Order_Api_V2 extends Mage_Sales_Model_Order_Api_V2
 			//Mage::log(json_encode($this->_getAttributes($item, 'order_item')),Zend_log::DEBUG,'api_orders.log',true);
 			
 			//added for Parent child
+			$user=Mage::getSingleton('api/session')->getUser()->getUsername();
 			$itemNew=$this->_getAttributes($item, 'order_item');
-			if($itemNew['product_type']=='configurable'){
+			if($itemNew['product_type']=='configurable' && $user=='cstage'){
 			    $productId = Mage::getModel("catalog/product")->getIdBySku($itemNew['sku']);
 			    $simpleProduct=Mage::getModel('catalog/product')->load($productId);
 			    $itemNew['product_type']='simple';
@@ -49,6 +50,8 @@ class MT_Api_Model_Rewrite_Order_Api_V2 extends Mage_Sales_Model_Order_Api_V2
 			    $itemNew['product_options']=serialize($product_options);
 			    
 			}
+			
+			Mage::log(json_encode($user),Zend_log::DEBUG,'api_orders.log',true);
 			$result['items'][] = $itemNew;
 		}
 		$result['payment'] = $this->_getAttributes($order->getPayment(), 'order_payment');
