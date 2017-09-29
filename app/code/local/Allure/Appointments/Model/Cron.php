@@ -142,7 +142,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 					$templateId = Mage::getStoreConfig("appointments/admin/admin_template",$storeId);
 					$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
 					$mailSubject="Appointment booking Reminder";
-					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email"));
+					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 					$email = $adminEmail;
 					$name = "Admin";
 					$vars = array(
