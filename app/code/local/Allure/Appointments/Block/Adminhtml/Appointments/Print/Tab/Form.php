@@ -21,12 +21,12 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Print_Tab_Form extends Ma
 		 ));
 
 		
-		$piercerField=$fieldset->addField('piercer_id', 'select', array(
+		/* $piercerField=$fieldset->addField('piercer_id', 'select', array(
 		    'label'     => Mage::helper("appointments")->__("Piercer"),
 		    'name'    => 'piercer_id',
 		    'values'   => Mage::helper("appointments")->piercerOptionArray()
 		));
-		
+ */		
 		$fieldset->addField('from_date', 'date', array(
 		    'name'               => 'from_date',
 		    'label'              => Mage::helper('appointments')->__('From Date'),

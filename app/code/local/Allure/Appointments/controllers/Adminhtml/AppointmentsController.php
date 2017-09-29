@@ -391,9 +391,9 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         if($post_data['store_id']!=0){
             $appointments->addFieldToFilter('main_table.store_id',$post_data['store_id']);
         }
-        if($post_data['piercer_id']!=0){
+        /* if($post_data['piercer_id']!=0){
             $appointments->addFieldToFilter('piercer_id',$post_data['piercer_id']);
-        }
+        } */
         if(!empty($post_data['from_date']) && !empty($post_data['to_date'])){
             $fromDate = date('Y-m-d', strtotime($post_data['from_date']))." 00:00:00";
             $toDate = date('Y-m-d', strtotime($post_data['to_date']))." 23:59:00";
