@@ -67,6 +67,18 @@ class Alluremultistore_Managestock_Helper_Data extends Mage_Core_Helper_Abstract
 					if(isset($store)&& !empty($store)){
 						$storeId = $store;
 					}
+				}elseif ($controllerName=="sales_orderr" || $controllerName=="sales_order"){
+				    $params = Mage::app()->getRequest()->getParams();
+				    if(array_key_exists("order_id", $params)){
+				        $order = Mage::getModel("sales/order")->load($params['order_id']);
+				        $storeId = $order->getStoreId();
+				    }elseif (array_key_exists("store_id", $params)){
+				        $storeId = $params['store_id'];
+				    }elseif (array_key_exists("store", $params)){
+				        $storeId = $params['store'];
+				    }else{
+				        $storeId = Mage::app()->getStore()->getId();
+				    }
 				}
 			}
 		}
