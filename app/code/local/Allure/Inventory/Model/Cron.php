@@ -46,7 +46,7 @@ class Allure_Inventory_Model_Cron {
 			$collection->getSelect()->joinLeft('allure_purchase_order', 'allure_purchase_order.po_id = main_table.po_id');
 			$collection->addFieldToFilter('allure_purchase_order.status',array('nin' =>array( 'closed','cancel')));
 			$collection->addFieldToFilter('main_table.is_custom',0);
-			$collection->addFieldToFilter('allure_purchase_order.stock_id',$storeId);
+			$collection->addFieldToFilter('allure_purchase_order.stock_id',$stockId);
 			
 			$productArray=array();
 			foreach ($collection as $Poproducts){
@@ -81,7 +81,8 @@ class Allure_Inventory_Model_Cron {
 			);
 			$collection->addAttributeToFilter('type_id', 'simple');
 			$collection->addAttributeToFilter('entity_id',array('in' => $ids));
-			$collection->addAttributeToFilter('entity_id',array('nin' => $productArray));
+			if(!empty($productArray))
+			    $collection->addAttributeToFilter('entity_id',array('nin' => $productArray));
 			if( $storeId ) {
 				$collection->addStoreFilter($storeId);
 			}
