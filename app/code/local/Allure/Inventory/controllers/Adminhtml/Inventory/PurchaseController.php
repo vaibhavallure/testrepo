@@ -410,7 +410,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 
             if ($close && $canFullyShipOrder){
                 //fully Shipped
-                $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_close',$storeId);
+                $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_shipment',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
                 if (!empty($adminEmail)) {
                     $adminEmail =  explode(',', $adminEmail);
@@ -485,6 +485,8 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $data = $this->getRequest()->getPost();
         $po_id=$data['order_id'];
         $currentOrder=Mage::getModel('inventory/purchaseorder')->load($po_id);
+        $sotoreId = $currentOrder->getStockId();
+
         $void=Mage::app()->getRequest()->getParam('void');
         $close=Mage::app()->getRequest()->getParam('close');
         try {
@@ -572,6 +574,33 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             if ($void)
                 $status = Allure_Inventory_Helper_Data::ORDER_STATUS_REJECT;
             
+            
+             if ($close){
+                    //Fully ship and closed
+                    
+                    $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_close',$storeId);
+                    $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                    if (!empty($adminEmail)) {
+                        $adminEmail =  explode(',', $adminEmail);
+                    }
+                    $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
+                    Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
+                    $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+                    Mage::getSingleton('adminhtml/session')->addSuccess("Order Shipped partially.");
+             }else {
+                 //Partially ship and closed
+                 if(!$void){
+                   $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_receive',$storeId);
+                   $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
+                   if (!empty($adminEmail)) {
+                       $adminEmail =  explode(',', $adminEmail);
+                   }
+                   $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
+                   Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
+                   $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+               }
+             }
+           
             $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
             $currentDate->toString('jS F, Y');
             $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
