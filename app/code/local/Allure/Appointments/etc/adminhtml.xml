@@ -86,6 +86,11 @@
 									<sort_order>5</sort_order>
 									<action>admin_appointments/adminhtml_piercingtiming</action>
 								</timing>
+							   <print module="appointments">
+										<title>Print Appointments</title>
+										<sort_order>5</sort_order>
+										<action>admin_appointments/adminhtml_appointments/print</action>
+							   </print>
 							</children>
 						</appointments>
 					</children>

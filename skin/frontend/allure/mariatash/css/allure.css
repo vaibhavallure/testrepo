@@ -32,6 +32,14 @@ body {
 	  height: 100%;
 	  color: #000;
 }
+
+button.apple-pay-button-with-text.apple-pay-button-black-with-text {
+  min-height: 30px !important;
+  height: 20px !important;
+  margin-top: -2px !important;
+  border-radius: 0 !important;
+}
+
 .owl-carousel,#zoom-btn {z-index:0 !important}
 p {  word-wrap: break-word;}
 #zoom-btn {
