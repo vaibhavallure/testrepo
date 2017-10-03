@@ -222,7 +222,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             ->where($condition);
  
         $this->setCollection($collection);
-        echo $collection->getSelect();
+        //echo $collection->getSelect();
         return parent::_prepareCollection();
     }
    
