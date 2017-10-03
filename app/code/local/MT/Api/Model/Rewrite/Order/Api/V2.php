@@ -29,14 +29,33 @@ class MT_Api_Model_Rewrite_Order_Api_V2 extends Mage_Sales_Model_Order_Api_V2
 						Mage::getSingleton('giftmessage/message')->load($item->getGiftMessageId())->getMessage()
 						);
 			}
+			//Mage::log(json_encode($this->_getAttributes($item, 'order_item')),Zend_log::DEBUG,'api_orders.log',true);
 			
-			$result['items'][] = $this->_getAttributes($item, 'order_item');
+			//added for Parent child
+			$user=Mage::getSingleton('api/session')->getUser()->getUsername();
+			$itemNew=$this->_getAttributes($item, 'order_item');
+			if($itemNew['product_type']=='configurable' && $user=='cstage'){
+			    $productId = Mage::getModel("catalog/product")->getIdBySku($itemNew['sku']);
+			    $simpleProduct=Mage::getModel('catalog/product')->load($productId);
+			    $itemNew['product_type']='simple';
+			    $itemNew['name']=$simpleProduct->getName();
+			    $cpid=$itemNew['product_id'];
+			    if(isset($productId) && !empty($productId))
+			        $itemNew['product_id']=$productId;
+			    $product_options = unserialize($itemNew['product_options']);
+			    $oldObj=$product_options['info_buyRequest'];
+			    $oldObj['cpid']=$cpid;
+			    //Mage::log(json_encode($oldObj),Zend_log::DEBUG,'api_orders.log',true);
+			    $product_options['info_buyRequest']=($oldObj);
+			    $itemNew['product_options']=serialize($product_options);
+			    
+			}
+			
+			Mage::log(json_encode($user),Zend_log::DEBUG,'api_orders.log',true);
+			$result['items'][] = $itemNew;
 		}
-		
 		$result['payment'] = $this->_getAttributes($order->getPayment(), 'order_payment');
-		
 		$result['status_history'] = array();
-		
 		foreach ($order->getAllStatusHistory() as $history) {
 			$result['status_history'][] = $this->_getAttributes($history, 'order_status_history');
 		}
