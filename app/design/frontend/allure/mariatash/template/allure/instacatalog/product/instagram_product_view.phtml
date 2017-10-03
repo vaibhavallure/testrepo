@@ -6,6 +6,8 @@ $old_sku=$sku_main;
 $childrenProducts = [];
 $skForwordingArray = array();
 $childProductArr = array();
+$childProductArr[] = $productId;
+
 if($old_sku[0]=='X' || $old_sku[0]=='x'){
     $E_sku = 'E'.substr($old_sku, 1);
     $E_ProductId=Mage::getModel("catalog/product")->getIdBySku($E_sku);

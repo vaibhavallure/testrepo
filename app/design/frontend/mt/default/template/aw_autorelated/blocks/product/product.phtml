@@ -33,10 +33,10 @@ $productId = $_product->getId();
 $sku_main = $_product->getSku();
 $old_sku = $sku_main;
 $skForwordingArray=array();
-
+$childProductArr = array();
 $childProductArr[] = $productId;
 //MT-362 SKu forwording logic
-$childProductArr = array();
+
 if($old_sku[0]=='X' || $old_sku[0]=='x'){
     $E_sku = 'E'.substr($old_sku, 1);
     $E_ProductId=Mage::getModel("catalog/product")->getIdBySku($E_sku);
