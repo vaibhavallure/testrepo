@@ -1,0 +1,12 @@
+<select id="store">
+		<?php 
+			$websiteId=1;
+			if(Mage::getSingleton('core/session')->getMyWebsiteId())
+				$websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
+		?>
+		<?php foreach (Mage::app()->getWebsites() as $website) :?>  
+		<option <?php if($website->getId()==$websiteId) echo "selected"?>
+		      value="<?php echo $website->getId()?>"><?php echo $website->getName();?>
+		</option>
+		<?php endforeach;?>
+</select>
