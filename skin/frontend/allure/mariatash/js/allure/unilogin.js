@@ -22,8 +22,8 @@ jQuery(document).ready(function(){
 	$j("#signin-btn-popup").on('click',function(){
 		 var myForm = new VarienForm('popup-login-form', false); 
 		 if(myForm.validator.validate()){ 
-			var usrname = $j('#popup-login-form #username').val();
-			var passwd 	= $j('#popup-login-form #passwd').val();
+			var usrname = $j('#popup-login-form #username-login').val();
+			var passwd 	= $j('#popup-login-form #passwd-login').val();
 			var key		= Allure.LoginFormKey;
 			var request = {"usrname":usrname, "passwd":passwd, "form_key":key};
 					
