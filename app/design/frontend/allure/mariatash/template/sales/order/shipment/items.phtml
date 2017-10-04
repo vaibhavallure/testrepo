@@ -33,7 +33,7 @@
 	});
 </script>
 <?php  $_order = $this->getOrder() ?>
-<p class="order-links">
+<p class="">
     <?php  if ($_order->getTracksCollection()->count()) : ?>
         <a class="track-all-shipments arrow-active" href="javascript:;" title="<?php echo $this->__('Track all shipment(s)') ?>"><?php echo $this->__('Track all shipments') ?></a> <span class="separator">|</span>
     <?php endif; ?>
@@ -79,13 +79,13 @@
     <col />
     <col width="1" />
     <col width="1" />
-    <thead>
-        <tr>
-            <th><?php echo $this->__('Product Name') ?></th>
-            <th><?php echo $this->__('SKU') ?></th>
-            <th class="a-center"><span class="nobr"><?php echo $this->__('Qty Shipped') ?></span></th>
-        </tr>
-    </thead>
+<!--    <thead>-->
+<!--        <tr>-->
+<!--            <th>--><?php //echo $this->__('Product Name') ?><!--</th>-->
+<!--            <th>--><?php //echo $this->__('SKU') ?><!--</th>-->
+<!--            <th class="a-center"><span class="nobr">--><?php //echo $this->__('Qty Shipped') ?><!--</span></th>-->
+<!--        </tr>-->
+<!--    </thead>-->
     <?php $_items = $_shipment->getAllItems(); ?>
     <?php $_count = count($_items) ?>
     <?php foreach ($_items as $_item): ?>

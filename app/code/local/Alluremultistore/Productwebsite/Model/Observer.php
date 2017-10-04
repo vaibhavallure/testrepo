@@ -68,11 +68,15 @@ class Alluremultistore_Productwebsite_Model_Observer
 					Mage::getModel('catalog/product_website')->addProducts($websiteIds, $productIds);
 					
 					foreach ($productIds as $_product){
-						$product = Mage::getModel('catalog/product')->load($_product);
-						Mage::log("Before Product status - ".$product->getStatus(),Zend_Log::DEBUG,$logFileName,$debugStatus);
+					    $product = Mage::getModel('catalog/product')->load($_product); //Loading product for Admin 
+					    $collection = Mage::getModel('catalog/product')->getCollection();
+					    $collection->joinAttribute('price', 'catalog_product/price', 'entity_id', null,'left',0);
+					    $collection->addAttributeToFilter('entity_id', array('in' => array($_product)));
+					    $stock=$collection->getFirstItem();
+					    Mage::log("Before Product Price - ".$stock['price'],Zend_Log::DEBUG,$logFileName,$debugStatus);
 						if($productStatus !== -1){
 							//$product->setStatus($productStatus)->save();
-							Mage::getModel('catalog/product_status')->updateProductStatus($_product, 0, $productStatus);
+							//Mage::getModel('catalog/product_status')->updateProductStatus($_product, 0, $productStatus);
 							Mage::log("After Product status - ".$product->getStatus(),Zend_Log::DEBUG,$logFileName,$debugStatus);
 						}
 						
@@ -91,11 +95,11 @@ class Alluremultistore_Productwebsite_Model_Observer
 									Mage::log("Product Description set: Product Id - ".$_product." Store Id - ".$storeId,
 											Zend_Log::DEBUG,$logFileName,$debugStatus);
 								}
-								/* try {
+								try {
 										$product2 = Mage::getModel('catalog/product')->setStoreId($storeId)->load($_product);
 										$priceRule = $website->getWebsitePriceRule();
 										Mage::log('priceRule::'.$priceRule, Zend_Log::DEBUG, $logFileName, true);
-										$oldPrice = $product->getPrice();
+										$oldPrice = $stock['price'];
 										$newPrice = $oldPrice * $priceRule;
 										Mage::log('newPrice::'.$newPrice, Zend_Log::DEBUG, $logFileName, true);
 										$product2->setPrice($newPrice)->save();
@@ -103,7 +107,7 @@ class Alluremultistore_Productwebsite_Model_Observer
 										
 								} catch (Exception $e) {
 									Mage::log('Exception Occured to set price::'.$e->getMessage(), Zend_Log::DEBUG, $logFileName, true);
-								} */
+								}
 								
 								//Mage::getModel('catalog/product_status')->updateProductStatus($_product, $storeId, $productStatus);
 							}
@@ -132,6 +136,14 @@ class Alluremultistore_Productwebsite_Model_Observer
 									} */
 									$data[stock_id] = $stockId;
 									$data['qty']=0;
+									
+									$data['manage_stock']=1;
+									$data['use_config_manage_stock']=0;
+									$data['min_sale_qty']=1;
+									$data['use_config_min_sale_qty']=0;
+									$data['max_sale_qty']=1000;
+									$data['use_config_max_sale_qty']=0;
+									
 									$stockItem->addData($data);
 								}else{
 									$stockItem->setData('stock_id', $stockId);

@@ -3880,7 +3880,7 @@ p.category-image-bleed img {
 }
 
 .sales-order-view .data-table th {
-	padding: 9px 0;
+	padding: 9px 10px; /* 9px 0; */
 }
 
 .data-table th {
@@ -13193,7 +13193,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 }
 
 .my-wishlist .data-table tbody tr:last-child td {
-	width: auto;
+	/* width: auto; */ /*allure comment*/
 	background: none !important;
 	padding-left: 0;
 	padding-right: 0;
@@ -18701,7 +18701,7 @@ h2.products-look-msg {
 }
 
 .cart-mt .discount h2 {
-	padding: 3px 0 0 54px;
+	padding: 3px 0 0 22px;	/*3px 0 0 54px;*/
 	width: 80px;
 	float: left;
 	font-size: 13px;
@@ -19665,6 +19665,11 @@ iframe[name=google_conversion_frame] {display:none}
     width: 100%;
 }
 
+.sales-order-creditmemo .my-account .data-table .a-right,
+.sales-order-invoice .my-account .data-table td.a-center,
+.sales-order-shipment .my-account .data-table td.a-center {
+	text-align: center!important;
+}
 input[type="radio"].giftcard-radio {
    left: -3px;
    position: relative;

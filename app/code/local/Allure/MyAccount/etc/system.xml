@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<sections>
+		<myaccount translate="label" module="myaccount">
+			<label>My Account</label>
+			<tab>allure</tab>
+			<sort_order>60</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label">
+					<label>Account Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<storemapping translate="label">
+							<label>Store Settings</label>
+							<frontend_model>Allure_MyAccount_Block_Adminhtml_StoreInformation</frontend_model>
+							<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>11</sort_order>
+						</storemapping>
+						
+						<order_message_mapping translate="label">
+							<label>Order Message Settings</label>
+							<frontend_model>Allure_MyAccount_Block_Adminhtml_Customerorderstatus</frontend_model>
+							<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>12</sort_order>
+						</order_message_mapping>
+						
+					</fields>
+				</general>
+				
+				<purchase_item_settings translate="label">
+					<label>Purchase Item Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>20</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<purchase_item_escape_sku>
+							<label>Which SKU's Escape</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>separate by comma (ex:A,B,C,...)</comment>
+						</purchase_item_escape_sku>
+					</fields>
+				</purchase_item_settings>
+				
+			</groups>
+		</myaccount>
+	</sections>
+</config>

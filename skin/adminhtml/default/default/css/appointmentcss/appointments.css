@@ -610,4 +610,36 @@ textarea{
 	  height: 5em !important;
 	  width: 166px !important;
 }
-
+.print_appointment-main{
+	    margin-left: 20px;
+	    width: 300px;
+}
+.fieldDiv.print_appointment-sub{
+	margin-top: 20px
+}
+.fieldDiv.print_appointment-sub label{
+	width:200px;
+}
+.fieldDiv.print_appointment-sub select{
+	height: 25px;
+    width: 200px;
+    float: right;
+}
+.app_print_submit{
+	margin-top: 19px;
+    height: 25px;
+    width: 77px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ed6502 #a04300 #a04300 #ed6502;
+    padding: 1px 7px 2px 7px;
+    background: #ffac47 url(images/btn_bg.gif) repeat-x 0 100%;
+    color: #fff;
+    font: bold 12px arial, helvetica, sans-serif;
+    cursor: pointer;
+    text-align: center !important;
+    white-space: nowrap;
+}
+.app_print_store{
+	
+}

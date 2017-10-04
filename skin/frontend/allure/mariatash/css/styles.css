@@ -4904,7 +4904,7 @@ ol#checkoutSteps.opc li.active {
     font: 13px/35px Arial,Helvetica,sans-serif;
     height: 33px;
     padding-left: 9px;
-    width: 970px;
+    width: 100%; /*970px;*/
     margin:12px 0 10px 0;
     text-transform: uppercase;
 }
@@ -6136,7 +6136,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 .my-account .order-info-box .box-title { background:none; text-align:left; padding:6px 10px 0; margin:0; height:auto; }
 .my-account .order-info-box .box-title h2{ text-transform:none; margin:0; font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; font-weight:bold; }
 .my-account .order-info-box .box-content p{ text-transform:none; margin:0; font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; font-weight:normal; }
-.my-account .order-info-box .box-content address{ line-height:17px; }
+.my-account .order-info-box .box-content address{ line-height:17px; margin-bottom: 10px}
 
 .my-account .data-table tbody.odd tr { background:none; }
 .my-account .data-table tbody.even tr { background:none; }
@@ -9875,6 +9875,15 @@ float: right;
 }
 
 
+.checkout-onepage-success .col2-right-layout .col-right{
+	display: none;
+}
+
+.checkout-onepage-index label[for="billing:save_in_address_book"]{
+	padding: 0px ! important;
+	background: none ! important;
+}
+
 input[type="radio"].giftcard-radio {
    left: 0px;
    position: relative;
@@ -9907,7 +9916,7 @@ input.giftcard-radio1 {
 	opacity: unset !important;
 }
 .delivery_option_mo{
-	    display: block;
+    display: block;
     /* position: absolute; */
-    width: 100%;
+    width: 100% !important;
 }

@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <Allure_ProcessOrders>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Allure_ProcessOrders>
-    </modules>
-</config>

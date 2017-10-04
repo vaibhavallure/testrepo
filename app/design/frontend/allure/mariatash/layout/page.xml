@@ -70,6 +70,7 @@ Default layout, loads most of the pages
 				<action method="addJs"><script>selectivizr.js</script></action>
                 <action method="addJs"><script>jquery.hoverIntent.minified.js</script></action>
 
+<action method="addItem"><type>skin_js</type><name>js/allure/unilogin.js</name></action>
                 <!--CSS3 for IE-->
                 <!--<action method="addJs">-->
                     <!--<script>selectivizr.js</script>-->
@@ -112,6 +113,8 @@ Default layout, loads most of the pages
                 <action method="addItem"><type>js</type><name>lib/ds-sleight.js</name><params/><if>lt IE 7</if></action>
                 <action method="addItem"><type>skin_js</type><name>js/ie6.js</name><params/><if>lt IE 7</if></action>
                 <action method="addCss"><stylesheet>css/owl.carousel.min.css</stylesheet></action>
+                
+                <action method="addCss"><stylesheet>css/universal.css</stylesheet></action>
                 
             </block>
 

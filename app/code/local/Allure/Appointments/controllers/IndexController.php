@@ -238,7 +238,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    				{
 	    					$templateId = Mage::getStoreConfig("appointments/customer/customer_modify_template",$storeId);
 	    					$mailSubject="Appointment Modified";
-	    					$sender     = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    					$sender     = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    					$email = $model->getEmail();
 	    					$name = $model->getFirstname()." ".$model->getLastname();
 	    					$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
@@ -279,7 +279,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    					$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
 	    					$adminEmail=explode(",",$adminEmail);
 	    					$mailSubject="Appointment Modified";
-	    					$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    					$email = $adminEmail;
 	    					$name = "Admin";
 	    					$vars = array(
@@ -320,7 +320,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    				{
 	    					$templateId = Mage::getStoreConfig("appointments/piercer/piercer_modify_template",$storeId);
 	    					$mailSubject="Appointment Modified";
-	    					$sender = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    					$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    					$email = $piercer->getEmail();
 	    					$name = $piercer->getFirstname()." ".$piercer->getLastname();
 	    					$vars = array(
@@ -392,7 +392,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     					{
     						$templateId = Mage::getStoreConfig("appointments/customer/customer_template",$storeId);
     						$mailSubject="Appointment booking";
-    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
     						$email = $model->getEmail();
     						$name = $model->getFirstname()." ".$model->getLastname();
     						$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
@@ -424,7 +424,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     						$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
     						$recipientArr=explode(",",$adminEmail);
     						$mailSubject="Appointment booking";
-    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
     						$email = $adminEmail;
     						$name = "Admin";
     						$vars = array(
@@ -453,7 +453,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     					{
     						$templateId = Mage::getStoreConfig("appointments/piercer/piercer_template",$storeId);
     						$mailSubject="Appointment Booking";
-    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
     						$email = $piercer->getEmail();
     						$name = $piercer->getFirstname()." ".$piercer->getLastname();
     						$vars = array(
@@ -652,7 +652,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    			{
 	    				$templateId = Mage::getStoreConfig("appointments/customer/customer_cancel_template",$storeId);
 	    				$mailSubject="Appointment Cancellation";
-	    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    				$email = $model->getEmail();
 	    				$name = $model->getFirstname()." ".$model->getLastname();
 	    				$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
@@ -686,7 +686,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    				$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
 	    				$adminEmail=explode(",",$adminEmail);
 	    				$mailSubject="Appointment Cancellation";
-	    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    				$email = $adminEmail;
 	    				$name = "Admin";
 	    				$vars = array(
@@ -718,7 +718,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    			{
 	    				$templateId = Mage::getStoreConfig("appointments/piercer/piercer_cancel_template",$storeId);
 	    				$mailSubject="Appointment Cancellation";
-	    				$sender = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    				$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    				$email = $piercer->getEmail();
 	    				$name = $piercer->getFirstname()." ".$piercer->getLastname();
 	    				$vars = array(
