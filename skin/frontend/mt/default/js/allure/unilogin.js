@@ -28,8 +28,8 @@ jQuery(document).ready(function(){
 	$j("#signin-btn-popup").on('click',function(){
 		 var myForm = new VarienForm('popup-login-form', false); 
 		 if(myForm.validator.validate()){ 
-			var usrname = jQuery('#username').val();
-			var passwd = jQuery('#passwd').val();
+			var usrname = jQuery('#username-login').val();
+			var passwd = jQuery('#passwd-login').val();
 			var wishlist= jQuery('#wishlist_input').val();
 			var key=Allure.LoginFormKey;
 			var request = {
