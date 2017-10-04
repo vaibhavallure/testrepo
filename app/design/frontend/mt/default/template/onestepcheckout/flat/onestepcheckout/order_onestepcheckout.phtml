@@ -53,7 +53,7 @@
     <?php endforeach; ?>
     <tbody>
         <?php
- $delivery = Mage::getModel('onestepcheckout/delivery')->load($_order->getId(), 'order_id');
+ $delivery = Mage::getModel('multicheckout/delivery')->load($_order->getId(), 'order_id');
 if($delivery->getId()):
 ?>
 
