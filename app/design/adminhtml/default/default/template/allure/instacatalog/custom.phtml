@@ -153,10 +153,13 @@ function openView(e){
 }
 
 function closeView(){
+	jQuery("#image-annotate-edit-form").remove();
+	jQuery(".image-annotate-area-editable").remove();
 	jQuery('#product-tagged-view').hide();
 	jQuery(".image-annotate-canvas").remove();
 	jQuery(".lookbookBlock").remove();
 	jQuery("#image-annotate-edit-form").remove();
 	jQuery("#search-list-view").remove();
+	
 }
 </script>

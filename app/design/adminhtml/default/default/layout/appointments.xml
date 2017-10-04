@@ -135,7 +135,7 @@
       </block>
      </reference>
   </appointments_adminhtml_appointments_new> 
-    <appointments_adminhtml_appointments_print>
+<!--     <appointments_adminhtml_appointments_print>
 	<reference name="head">
 	 	
 	 	<action method="addJs"><file>jquery/jquery-1.8.1.min.js</file></action>
@@ -163,6 +163,6 @@
            <block type="core/template" name="print_appointment" template="appointments/print_appointments.phtml" >
       </block>
      </reference>
-  </appointments_adminhtml_appointments_print> 
+  </appointments_adminhtml_appointments_print>  -->
   
 </layout>

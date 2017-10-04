@@ -277,5 +277,28 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    }
 	    return $piercersArray;
 	}
+	public  function  storeOptionArray(){
+	    $stores=Mage::getModel('core/store')->getCollection();
+	    $stores->setOrder('store_id', 'ASC');
+	    $storeArray=array();
+	    $storeArray[0]= 'Any';
+        foreach ($stores as $store): 
+        $storeArray[$store->getId()]=$store->getName();
+		endforeach;
+		return $storeArray;
+	    
+	}
+	
+	public function piercerOptionArray(){
+	    $piercers=Mage::getModel('appointments/piercers')->getCollection();
+	    $piercers->addFieldToFilter('is_active',1);
+	    $piercerArray=array();
+	    $piercerArray[0]= 'Any';
+	    foreach ($piercers as $piercer):
+	    $piercerArray[$piercer->getId()]=$piercer->getFirstname().' '.$piercer->getLastname();
+	    endforeach;
+	    return $piercerArray;
+	    
+	}
 }
 	 

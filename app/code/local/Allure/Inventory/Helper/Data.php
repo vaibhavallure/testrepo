@@ -117,7 +117,10 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         if ($attribute->usesSource()) {
             $options = $attribute->getSource()->getAllOptions(false);
         }
-        $vendorName="DMEO";
+        if(Mage::getStoreConfig("allure_vendor/manage_vendor/vendor"))
+            $vendorName=Mage::helper('allure_vendor')->getVanderName(Mage::getStoreConfig("allure_vendor/manage_vendor/vendor"));
+        else 
+            $vendorName="CRYSTAL RISE";
         foreach ($options as $option){
             if($option['value']==$vendorId){
                 $vendorName=$option['label'];
