@@ -18,6 +18,13 @@ jQuery(document).ready(function(){
 		$j(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
 	});
 	
+	$j('.popupLoginModel #passwd').keypress(function (e) {
+		 var key = e.which;
+		 if(key == 13)
+			 $j("#signin-btn-popup").trigger('click');
+		 return false;  
+	});
+	
 	$j("#signin-btn-popup").on('click',function(){
 		 var myForm = new VarienForm('popup-login-form', false); 
 		 if(myForm.validator.validate()){ 

@@ -4,7 +4,10 @@
   		<update handle="customer_account"/>
 	    <reference name="my.account.wrapper">   
 	      <block type="myaccount/myproducts" name="my_products" as="my_products" template="allure/myaccount/myproducts.phtml">
-	      	<block type="core/template" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />
+	      	<block type="myaccount/filter" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />
+	      	<block type="myaccount/filter" name="myaccount_filter_openorder" template="allure/myaccount/filter/openorder_filter.phtml" />
+	      	<block type="myaccount/filter" name="myaccount_filter_allorder" template="allure/myaccount/filter/allorder_filter.phtml" />
+	      	
 	      	<!-- Sales order history template -->
 	      	<block type="myaccount/order_history" name="sales.order.history_list" template="allure/myaccount/historylist.phtml">
 	      		<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml" />
@@ -226,5 +229,15 @@
             <block type="shipping/tracking_popup" name="shipping.tracking.popup" template="shipping/tracking/popup.phtml" />
         </reference>
   	</myaccount_index_track>
+  	
+  	
+  	<sales_order_view translate="label"> 
+          <reference name="order_items">  
+              <action method="setTemplate">
+                  <template>allure/myaccount/sales/order/view/items.phtml</template>
+              </action>          
+        </reference>   
+    </sales_order_view> 
+  	
   	
 </layout>
