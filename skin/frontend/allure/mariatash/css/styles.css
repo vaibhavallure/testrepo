@@ -9884,8 +9884,6 @@ float: right;
 	background: none ! important;
 }
 
-
-
 input[type="radio"].giftcard-radio {
    left: 0px;
    position: relative;
@@ -9918,8 +9916,7 @@ input.giftcard-radio1 {
 	opacity: unset !important;
 }
 .delivery_option_mo{
-	    display: block;
+    display: block;
     /* position: absolute; */
     width: 100% !important;
-
 }
