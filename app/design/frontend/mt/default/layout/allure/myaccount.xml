@@ -230,4 +230,14 @@
         </reference>
   	</myaccount_index_track>
   	
+  	
+  	<sales_order_view translate="label"> 
+          <reference name="order_items">  
+              <action method="setTemplate">
+                  <template>allure/myaccount/sales/order/view/items.phtml</template>
+              </action>          
+        </reference>   
+    </sales_order_view> 
+  	
+  	
 </layout>

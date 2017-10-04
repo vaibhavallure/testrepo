@@ -19578,7 +19578,8 @@ input.m-slider {
  .special-instruction-textarea {
  	margin-top: -18px;
     margin-left: 113px;
-    width: 45%;
+    max-width:255px;
+    width:100%;
  }
  
  .special-instruction-textarea textarea{
@@ -19612,10 +19613,12 @@ input.m-slider {
 
 .product-info-right-quickview .product-special-instructions{
 	margin-bottom: 15px;
+	overflow: hidden;
 }
 
 .product-info-right-quickview .product-special-instructions .special-instruction-textarea{
-	width: 39%;
+	max-width:255px;
+    width:100%;
 }
 
 #checkout-step-login .col2-set .col-2.checkout-amazon-step{
