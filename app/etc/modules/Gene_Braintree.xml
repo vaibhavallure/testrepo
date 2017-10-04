@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Gene_Braintree>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
         </Gene_Braintree>
     </modules>
