@@ -6,7 +6,7 @@
 <?php $_order = $this->getLayout()->getBlock('items')->getOrder();  ?>
 <?php if ($_order): ?>
 <?php
- $delivery = Mage::getModel('onestepcheckout/delivery')->load($_order->getId(), 'order_id');
+ $delivery = Mage::getModel('allure_multicheckout/delivery')->load($_order->getId(), 'order_id');
 if($delivery->getId()):
 ?>
 <table cellspacing="0" cellpadding="0" border="0" style="border:1px solid #EAEAEA;margin-bottom:15px">
