@@ -4904,7 +4904,7 @@ ol#checkoutSteps.opc li.active {
     font: 13px/35px Arial,Helvetica,sans-serif;
     height: 33px;
     padding-left: 9px;
-    width: 970px;
+    width: 100%; /*970px;*/
     margin:12px 0 10px 0;
     text-transform: uppercase;
 }
@@ -9873,6 +9873,17 @@ float: right;
 	float: left;
     margin-top: -2px;
 }
+
+
+.checkout-onepage-success .col2-right-layout .col-right{
+	display: none;
+}
+
+.checkout-onepage-index label[for="billing:save_in_address_book"]{
+	padding: 0px ! important;
+	background: none ! important;
+}
+
 input[type="radio"].giftcard-radio {
    left: 0px;
    position: relative;
@@ -9905,7 +9916,7 @@ input.giftcard-radio1 {
 	opacity: unset !important;
 }
 .delivery_option_mo{
-	    display: block;
+    display: block;
     /* position: absolute; */
     width: 100% !important;
 }

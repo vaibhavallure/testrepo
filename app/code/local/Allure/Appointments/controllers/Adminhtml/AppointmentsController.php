@@ -110,7 +110,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			{
     				$templateId = Mage::getStoreConfig("appointments/piercer/piercer_welcome_template",$storeId);
     				$mailSubject="sample subject";
-    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name"), 'email'=> Mage::getStoreConfig("trans_email/bookings/email"));
+    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
     				$email = $piercer->getEmail();
     				$name = $piercer->getFirstname()." ".$piercer->getLastname();
     				$vars = array(
@@ -362,9 +362,24 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     	$this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
     public function printAction() {
-        $this->_initAction();
+       /*  $this->_initAction();
         $this->_title($this->__('Appointments'))
         ->_title($this->__('Print'));
+        $this->renderLayout(); */
+        
+       
+        
+        $this->loadLayout();
+        //$this->_setActiveMenu('blog/posts');
+        $this->_title('Print Appointments');
+        
+        $this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+        
+        $this
+        ->_addContent($this->getLayout()->createBlock('appointments/adminhtml_appointments_print'))
+        ->_addLeft($this->getLayout()->createBlock('appointments/adminhtml_appointments_print_tabs'))
+        ;
+        $this->getLayout()->getBlock('head')->setCanLoadTinyMce(true);
         $this->renderLayout();
     }
     
@@ -376,8 +391,14 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         if($post_data['store_id']!=0){
             $appointments->addFieldToFilter('main_table.store_id',$post_data['store_id']);
         }
-        if($post_data['piercer_id']!=0){
+        /* if($post_data['piercer_id']!=0){
             $appointments->addFieldToFilter('piercer_id',$post_data['piercer_id']);
+        } */
+        if(!empty($post_data['from_date']) && !empty($post_data['to_date'])){
+            $fromDate = date('Y-m-d', strtotime($post_data['from_date']))." 00:00:00";
+            $toDate = date('Y-m-d', strtotime($post_data['to_date']))." 23:59:00";
+            $appointments->addFieldToFilter('appointment_start', array('from'=>$fromDate, 'to'=>$toDate));
+            
         }
         $appointments->getSelect()->order('appointment_start', 'ASC');
 
@@ -396,7 +417,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                 $pdf->render(), 'application/pdf'
                 );
         } else {
-            $this->_getSession()->addError($this->__('There are no printable documents related to selected orders.'));
+            $this->_getSession()->addError($this->__('There are no printable appointments related to store or Piercer.'));
             $this->_redirect('*/*/print');
         }
         

@@ -6,7 +6,7 @@
    <fieldset>
    <?php if($this->getPurchaseOrderCollection()->getSize()>0):?>
 	   <div id="purchase-history">
-	        <div class="box-content">
+	        <div <?php if($this->getPurchaseOrderCollection()->getSize() > 1):?> class="box-content" <?php endif;?>>
 				 <table id="purchase-item-table" class="data-table cart-table">
 	                <?php 
 		                $storeList = array();

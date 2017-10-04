@@ -42,6 +42,18 @@ class Allure_Inventory_Model_Cron {
 			$header = array("Id","sku","Qty");
 			$io->streamWriteCsv($header);
 			
+			$collection = Mage::getModel('inventory/orderitems')->getCollection();
+			$collection->getSelect()->joinLeft('allure_purchase_order', 'allure_purchase_order.po_id = main_table.po_id');
+			$collection->addFieldToFilter('allure_purchase_order.status',array('nin' =>array( 'closed','cancel')));
+			$collection->addFieldToFilter('main_table.is_custom',0);
+			$collection->addFieldToFilter('allure_purchase_order.stock_id',$stockId);
+			
+			$productArray=array();
+			foreach ($collection as $Poproducts){
+			    $productArray[]=$Poproducts->getProductId();
+			    
+			}
+			
 			
 			$subCollection=Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
 			$subCollection->addAttributeToSelect('entity_id')->setStoreId($storeId);
@@ -69,6 +81,8 @@ class Allure_Inventory_Model_Cron {
 			);
 			$collection->addAttributeToFilter('type_id', 'simple');
 			$collection->addAttributeToFilter('entity_id',array('in' => $ids));
+			if(!empty($productArray))
+			    $collection->addAttributeToFilter('entity_id',array('nin' => $productArray));
 			if( $storeId ) {
 				$collection->addStoreFilter($storeId);
 			}
