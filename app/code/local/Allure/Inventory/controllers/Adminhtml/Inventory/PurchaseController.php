@@ -388,6 +388,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     }
                     
                     $qtyRemaining=$arr['remaining_qty']-$arr['proposed_qty'];
+                    
                     Mage::log("Qty Remain:".$qtyRemaining,Zend_log::DEBUG,"mylogs",true);
                     if ($qtyRemaining > 0)
                         $canFullyShipOrder =0;
@@ -486,7 +487,8 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $po_id=$data['order_id'];
         $currentOrder=Mage::getModel('inventory/purchaseorder')->load($po_id);
         $sotoreId = $currentOrder->getStockId();
-
+        $helper = Mage::helper('inventory');
+        
         $void=Mage::app()->getRequest()->getParam('void');
         $close=Mage::app()->getRequest()->getParam('close');
         try {
@@ -573,7 +575,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 $status = Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED;
             if ($void)
                 $status = Allure_Inventory_Helper_Data::ORDER_STATUS_REJECT;
-            
+            $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
             
              if ($close){
                     //Fully ship and closed
@@ -586,7 +588,6 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                     Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
                     $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
-                    Mage::getSingleton('adminhtml/session')->addSuccess("Order Shipped partially.");
              }else {
                  //Partially ship and closed
                  if(!$void){
@@ -603,7 +604,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
            
             $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
             $currentDate->toString('jS F, Y');
-            $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
+         
             if (isset($status))
                 $order->setData('status', $status);
             $order->setData('updated_date', $currentDate)->save();
