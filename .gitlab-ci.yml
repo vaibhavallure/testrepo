@@ -35,6 +35,7 @@ alpha:
   only:
     - master
   script:
+    - env
     - mage-deploy mt
     - echo 'Deployed on Staging'
 bugfix:
