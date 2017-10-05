@@ -52,7 +52,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         // mt-allure code
         $this->getQuote()->setDeliveryMethod('one_ship');
         // change custom quote status
-        $this->changeCustsomQuoteStatus();
+        $this->changeCustomQuoteStatus();
         
         if ($collectTotals) {
             $this->getQuote()->collectTotals();
