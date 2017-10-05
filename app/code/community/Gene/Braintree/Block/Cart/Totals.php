@@ -5,7 +5,8 @@
  *
  * @author Dave Macaulay <braintreesupport@gene.co.uk>
  */
-class Gene_Braintree_Block_Cart_Totals extends Mage_Checkout_Block_Cart_Totals
+//Mage_Checkout_Block_Cart_Totals
+class Gene_Braintree_Block_Cart_Totals extends Allure_MultiCheckout_Block_Checkout_Cart_Totals
 {
 
     /**

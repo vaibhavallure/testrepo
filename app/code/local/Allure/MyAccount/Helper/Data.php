@@ -180,10 +180,12 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
      */
     public function getOrdersHistory($orderFlag){
         $request = Mage::app()->getRequest()->getParams();
-        $pageNo     = 1;
-        $limit      = 10;
-        $store      = "all";
-        $sortOrder  = "desc";
+        $pageNo             = 1;
+        $limit              = 10;
+        $store              = "all";
+        $sortOrder          = "desc";
+        $openOrderStatus    = "all";
+        $closeOrderStatus   = "all";
         
         if(count($request)>0){
             if(!empty($request['m_store'])){
@@ -193,10 +195,16 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
                 $sortOrder = $request['m_sort'];
             }
             if($request['page']){
-                $pageNo=$request['page'];
+               $pageNo = $request['page'];
             }
             if($request['limit']){
-                $limit = $request['limit'];
+               $limit = $request['limit'];
+            }
+            if($request['m_order']){
+                $openOrderStatus = $request['m_order'];
+            }
+            if($request['m_aorder']){
+                $closeOrderStatus = $request['m_aorder'];
             }
         }
         $customer   = Mage::getSingleton('customer/session')->getCustomer();
@@ -206,8 +214,18 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         
         if($orderFlag == self::ALL_ORDER){
             $collection->addFieldToFilter('state', array('in' => array('canceled','complete','closed'))); 
+            if(!empty($closeOrderStatus)){
+                if($closeOrderStatus != "all"){
+                    $collection->addFieldToFilter('state',$closeOrderStatus);
+                }
+            }
         }elseif($orderFlag == self::OPEN_ORDER){
             $collection->addFieldToFilter('state', array('nin' => array('canceled','complete','closed'))); 
+            if(!empty($openOrderStatus)){
+                if($openOrderStatus != "all"){
+                    $collection->addFieldToFilter('state',$openOrderStatus);
+                }
+            }
         }
         
         if(!empty($store)){
@@ -215,6 +233,7 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
                 $collection->addFieldToFilter('main_table.store_id',$store);
             }
         }
+                
         $collection->setOrder('main_table.created_at', $sortOrder);
         $collection->setCurPage($pageNo);
         $collection->setPageSize($limit);

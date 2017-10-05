@@ -99,6 +99,7 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
         $this->_createBillingAgreement();
         
         $orderIsNotified = null;
+        
         if ($stateObject->getState() && $stateObject->getStatus()) {
             $orderState = $stateObject->getState();
             $orderStatus = $stateObject->getStatus();
@@ -110,11 +111,13 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
             } else {
                 // check if $orderStatus has assigned a state
                 $states = $order->getConfig()->getStatusStates($orderStatus);
+
                 if (count($states) == 0) {
                     $orderStatus = $order->getConfig()->getStateDefaultStatus($orderState);
                 }
             }
         }
+
         $isCustomerNotified = (null !== $orderIsNotified) ? $orderIsNotified : $order->getCustomerNoteNotify();
         $message = $order->getCustomerNote();
         

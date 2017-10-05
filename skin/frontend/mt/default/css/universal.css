@@ -1286,8 +1286,7 @@ width: 63%;
 	width: 100%;
 }
 
-.tabcontent .myaccount-filter-store-list{
-	/* padding-left: 115px; */
+.tabcontent .myaccount-filter-store-list.purchase-order-filter{
 	width: 35%;
 	float: left;
 	padding-top: 7px;
@@ -1305,11 +1304,31 @@ width: 63%;
 }
 
 
-.tabcontent .myaccount-filter-sort-order-list{
+.tabcontent .myaccount-filter-sort-order-list.purchase-order-filter{
 	width: 35%;
 	float: left;
 	padding-top: 7px;
 }
+
+
+.tabcontent .myaccount-filter-store-list.order-filter-status{
+	width: 25%;
+	float: left;
+	padding-top: 7px;
+	margin-right: 20px;
+}
+.tabcontent .myaccount-filter-sort-order-list.order-filter-status{
+	width: 25%;
+	float: left;
+	padding-top: 7px;
+	margin-right: 20px;
+}
+.myaccount-filter-order-status-list.order-filter-status{
+	width: 25%;
+	float: left;
+	padding-top: 7px;
+}
+
 
 .tabcontent .filter-label-list{
 	width: 17%;
