@@ -203,7 +203,8 @@ class Amazon_Payments_Model_Type_Checkout extends Mage_Checkout_Model_Type_Onepa
                 $isNewCustomer = true;
                 break;
             default:
-                $this->_prepareCustomerQuote();
+                $this->_prepareNewCustomerQuote();
+                $isNewCustomer = true;
                 break;
         }
 
