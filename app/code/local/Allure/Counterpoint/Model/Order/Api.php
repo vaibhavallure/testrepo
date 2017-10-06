@@ -9,6 +9,12 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     protected $_storeId                 = -1;
     protected $_websiteId               = -1;
     
+    protected $_store_vba               = -1;
+    protected $_store_vmt               = -1;
+    
+    protected $_website_vba             = -1;
+    protected $_website_vmt             = -1;
+    
     protected $_paymentMethod           = null;
     protected $_shippingMethodCode      = null;
     protected $_shippingMethodName      = null;
@@ -29,13 +35,17 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     const ORDER_CAPTURE_CASE            = "offline";
     const INVOICE_STATE                 = 2;
     
-    const PAYMENT_METHOD                = "codforpos";
-    const SHIPPING_METHOD               = "webpos_shipping_storepickup";
-    const SHIPPING_METHOD_NAME          = "Webpos Shipping Storepickup";
+    const PAYMENT_METHOD_CASH           = "counterpoint_cash";
+    const PAYMENT_METHOD_CREDIT_CARD    = "counterpoint_creditcard";
+    const SHIPPING_METHOD               = "counterpoint_storepickupshipping";
+    //const SHIPPING_METHOD_NAME          = "Webpos Shipping Storepickup";
     
     const SIMPLE_PRODUCT                = "simple";
     
     const COUNTERPOINT_STORE_NAME       = "counterpoint";
+    
+    const COUNTERPOINT_STORE_VBA        = "counterpoint_vba";
+    const COUNTERPOINT_STORE_VMT        = "counterpoint_vmt";
     
     /**
      * @param $logData
@@ -59,16 +69,16 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         return 1;
     }
     
-    private function prepareCounterpointSettings(){
+    private function prepareCounterpointSettingsOld(){
         $helper             = Mage::helper('allure_counterpoint');
-        $storeId            = $helper->getCounterPointStoreId();
+        $storeIds            = $helper->getCounterPointStoreId();
         $websiteCode        = $helper->getCounterPointWebsiteCode();
-        $paymentMethod      = $helper->getCounterPointPaymentMethod();
-        $shippingMethodCode = $helper->getCounterPointShippingMethodCode();
-        $this->AddLog("shhipping Method -:".$shippingMethodCode);
-        $shippingMethodName = $helper->getCounterPointShippingMethodName();
+        //$paymentMethod      = $helper->getCounterPointPaymentMethod();
+        //$shippingMethodCode = $helper->getCounterPointShippingMethodCode();
+        //$this->AddLog("shipping Method -:".$shippingMethodCode);
+        //$shippingMethodName = $helper->getCounterPointShippingMethodName();
         
-        if(empty($paymentMethod)){
+        /* if(empty($paymentMethod)){
             $this->AddLog("Plase set payment method.Without payment method can't proceed");
             die;
         }
@@ -76,28 +86,48 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         if(empty($shippingMethodCode)){
             $this->AddLog("Plase set Shipping Method.Without shipping method can't proceed");
             die;
-        }
+        } */
         
         /* if(empty($shippingMethodName)){
             $this->AddLog("Plase set Shipping Method Name.Without shipping name can't proceed");
             die;
         } */
         
-        if (empty($storeId)){
+        if (empty($storeIds)){
             $this->AddLog("Please set store_id to save counterpoint data.Can't proceed without stor_id.");
             die;
         }
+        $storeIds = explode(",", $storeIds);
+        if(!count($storeIds) == 2){
+            die("Mention counterponit store.");
+        }
         //set counterpoint store_id
-        $this->_storeId = $storeId;
-        $store = Mage::getModel('core/store')->load($this->_storeId);
-        if(!$store){
+        //$this->_storeId = $storeId;
+        $store1 = $storeIds[0];
+        $store2 = $storeIds[1];
+        
+        $storeObj1 = Mage::getModel('core/store')->load($store1);
+        if(!$storeObj1){
             $this->AddLog("Invalid store.");
             die;
         }
         
-        $websiteId = $store->getWebsiteId();
-        $website = Mage::getModel('core/website')->load($websiteId);
-        if($websiteId == 1){
+        $storeObj2 = Mage::getModel('core/store')->load($store2);
+        if(!$storeObj2){
+            $this->AddLog("Invalid store.");
+            die;
+        }
+        
+        $websiteId1 = $storeObj1->getWebsiteId();
+        $websiteObj1 = Mage::getModel('core/website')->load($websiteId1);
+        if($websiteId1 == 1){
+            $this->AddLog("You can't save data to main_website.");
+            die;
+        }
+        
+        $websiteId2 = $storeObj2->getWebsiteId();
+        $websiteObj2 = Mage::getModel('core/website')->load($websiteId2);
+        if($websiteId2 == 1){
             $this->AddLog("You can't save data to main_website.");
             die;
         }
@@ -107,17 +137,57 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             die;
         }
         
-        if(!($website->getCode() == $websiteCode)){
+        if(!(preg_match("/".$websiteCode."/",$websiteObj1->getCode()))){
             $this->AddLog("Wrong website choose.Please add correct store_id.");
             die;
         }
+        
+        if(!(preg_match("/".$websiteCode."/",$websiteObj2->getCode()))){
+            $this->AddLog("Wrong website choose.Please add correct store_id.");
+            die;
+        }
+        
         //set counterpoint website_id
-        $this->_websiteId           = $websiteId;
-        $this->_paymentMethod       = $paymentMethod;
-        $this->_shippingMethodCode  = $shippingMethodCode;
-        $shippingMethodArr = Mage::getModel("allure_counterpoint/entity_shippingMethods")
-                                   ->toOptionArray();
+        // $this->_websiteId           = $websiteId;
+        //$this->_paymentMethod       = "counterpoint_cash";  //$paymentMethod;
+        $this->_shippingMethodCode  = self::SHIPPING_METHOD;    //$shippingMethodCode;
+        $shippingMethodArr          = Mage::getModel("allure_counterpoint/entity_shippingMethods")->toOptionArray();
         $this->_shippingMethodName  = $shippingMethodArr[$this->_shippingMethodCode]['label'];
+    }
+    
+    private function prepareCounterpointSettings(){
+        $this->_shippingMethodCode  = self::SHIPPING_METHOD;    //$shippingMethodCode;
+        $shippingMethodArr          = Mage::getModel("allure_counterpoint/entity_shippingMethods")->toOptionArray();
+        $this->_shippingMethodName  = $shippingMethodArr[$this->_shippingMethodCode]['label'];
+        
+        $storeVBA = Mage::getModel('core/store')->load(self::COUNTERPOINT_STORE_VBA,'code');
+        if(!$storeVBA){
+            $this->AddLog("Invalid store VBA.");
+            die;
+        }
+        
+        $storeVMT = Mage::getModel('core/store')->load(self::COUNTERPOINT_STORE_VMT,'code');
+        if(!$storeVMT){
+            $this->AddLog("Invalid store VMT.");
+            die;
+        }
+        
+        $websiteIdVBA = $storeVBA->getWebsiteId();
+        if($websiteIdVBA == 1){
+            $this->AddLog("You can't save data to main_website.");
+            die;
+        }
+        
+        $websiteIdVMT = $storeVMT->getWebsiteId();
+        if($websiteIdVMT == 1){
+            $this->AddLog("You can't save data to main_website.");
+            die;
+        }
+        
+        $this->_store_vba = $storeVBA->getId();
+        $this->_store_vmt = $storeVMT->getId();
+        $this->_website_vba = $websiteIdVBA;
+        $this->_website_vmt = $websiteIdVMT;
     }
     
     /**
@@ -126,8 +196,10 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     private function importCPSQLOrderIntoMagento($counterpointOrderArr){
         try{
             $this->prepareCounterpointSettings();
-            $this->AddLog("counterpoint store_id-:".$this->_storeId);
-            $this->AddLog("counterpoint website_id-:".$this->_websiteId);
+            $this->AddLog("counterpoint VBA store_id-:".$this->_store_vba);
+            $this->AddLog("counterpoint VBA website_id-:".$this->_website_vba);
+            $this->AddLog("counterpoint VMT store_id-:".$this->_store_vmt);
+            $this->AddLog("counterpoint VMT website_id-:".$this->_website_vmt);
             $count = 1;
             foreach ($counterpointOrderArr as $order_id_key => $order_data_arr){
                 $ctrpnt_order_id = $order_id_key;//$this->getCounterpointOrderId($order_id_key);
@@ -170,7 +242,21 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                      $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." not present in magento.");
                      $productsArr = $ctpnt_order_data['item_detail'];
                      $extraOrderDetails = $ctpnt_order_data['order_detail'];
-                     if(count($productsArr) > 0){
+                     
+                     $extraInfo = $ctpnt_order_data['extra_data'];
+                     $isOrderCreate = false;
+                     if($extraInfo['str_id'] == 1){
+                         $this->_storeId = $this->_store_vba;
+                         $isOrderCreate = true;
+                     }elseif($extraInfo['str_id'] == 2){
+                         $this->_storeId = $this->_store_vmt;
+                         $isOrderCreate = true;
+                     }else{
+                         $this->_storeId = $this->_store_vba;
+                     }
+                     
+                     if(count($productsArr) > 0 && $isOrderCreate){
+                        $this->AddLog("store id -:".$this->_storeId);
                         $customerDetailArr = $ctpnt_order_data['customer_detail'];
                         $customer = $this->insertCustomer($customerDetailArr);
                         $billingAddress = $this->getBillingAddressOfCtpnt($customer,$customerDetailArr);
@@ -270,6 +356,14 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         //order status as counterpoint 1
                         $quoteObj->setCreateOrderMethod(self::COUNTERPOINT_ORDER); 
                         $quoteObj->setCounterpointOrderId($ctpnt_order_id);
+                        
+                        $quoteObj->setCounterpointStrId($extraInfo['str_id']);
+                        $quoteObj->setCounterpointStaId($extraInfo['sta_id']);
+                        $quoteObj->setCounterpointDrwId($extraInfo['drw_id']);
+                        $quoteObj->setCounterpointDocId($extraInfo['doc_id']);
+                        $extraInfoSer = serialize($extraInfo);
+                        $quoteObj->setCounterpointExtraInfo($extraInfoSer);
+                        
                         $quoteObj->setOrderType(self::ORDER_TYPE);
                         $incrementIdQ = $quoteObj->getReservedOrderId();
                         if($incrementIdQ){
@@ -279,7 +373,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                         $ccInfo = array();
                         // assign payment method
-                        $payment_method = $this->_paymentMethod;//self::PAYMENT_METHOD;
+                        $payment_method  = self::PAYMENT_METHOD_CASH;
                         $quotePaymentObj = $quoteObj->getPayment();
                         $quotePaymentObj->setMethod($payment_method);
                         $quoteObj->setPayment($quotePaymentObj);
@@ -291,7 +385,6 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                            $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getShippingAddress());
                         }
                             
-                        $orderPaymentObj = $convertQuoteObj->paymentToOrderPayment($quotePaymentObj);
                             
                         $orderObj->setBillingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getBillingAddress()));
                         $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
@@ -371,15 +464,91 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                               foreach($ordered_items as $item){     //item detail
                                   $savedQtys[$item->getItemId()] = $item->getQtyOrdered();
                               }
-                              $invoice = Mage::getModel('sales/service_order', $orderObj)
-                                               ->prepareInvoice($savedQtys);
-                              $invoice->setRequestedCaptureCase(self::ORDER_CAPTURE_CASE);
-                              $invoice->register();
-                              $invoice->getOrder()->setIsInProcess(true);
-                              $invoice->setState(self::INVOICE_STATE);
-                              $invoice->setCanVoidFlag(0);
-                              $invoice->save();
-                                
+                              
+                              $_payments = $ctpnt_order_data['payment'];
+                              $invoiceCnt = 1;
+                              $payCount = count($_payments);
+                              foreach($_payments as $payment){
+                                  $invoice = Mage::getModel('sales/service_order', $orderObj)
+                                                ->prepareInvoice($savedQtys);
+                                  $invoice->setRequestedCaptureCase(self::ORDER_CAPTURE_CASE);
+                                  $invoice->register();
+                                  $invoice->getOrder()->setIsInProcess(true);
+                                  $invoice->setState(self::INVOICE_STATE);
+                                  $invoice->setCanVoidFlag(0);
+                                  if($payCount > 1){
+                                      $incAmount = $payment['amt'];
+                                      $invoice->setBaseGrandTotal($incAmount);
+                                      $invoice->setGrandTotal($incAmount);
+                                      $invoice->setSubtotalInclTax($incAmount);
+                                      $invoice->setSubtotal($incAmount);
+                                      $invoice->setBaseSubtotal($incAmount);
+                                  }
+                                  $invoiceCnt++;
+                                  $invoice->save();
+                                  $payCodeType = $payment['pay_cod_typ'];
+                                  $paycode     = $payment['pay_cod'];
+                                  $amount      = $payment['amt'];
+                                  $cr_card_no_msk = $payment['cr_card_no_msk'];
+                                  if(!empty($cr_card_no_msk)){
+                                      if($payCodeType == "B"){
+                                          $changeMethod = $this->getChangePaymentMethod($paycode);
+                                          if($changeMethod['is_change']){
+                                              $methodCode = $changeMethod['method_code'];
+                                              $orderPay = $orderObj->getPayment();
+                                              $orderPay->setMethod($methodCode);
+                                              $orderPay->save();
+                                          }
+                                      }elseif($payCodeType == "E" || $payCodeType =="D"){
+                                          $orderPay = $orderObj->getPayment();
+                                          $orderPay->setMethod("counterpoint_creditcard");
+                                          $ccType = $this->getPayCode($paycode);
+                                          $ccLast4 = substr($cr_card_no_msk, -4);
+                                          $orderPay->setCcType($ccType);
+                                          $orderPay->setCcLast4($ccLast4);
+                                          $expireDate = $payment['cr_card_exp_dat'];
+                                          if(!empty($expireDate)){
+                                              $exMonth = date("m",strtotime($expireDate));
+                                              $exYear = date("Y",strtotime($expireDate));
+                                              $orderPay->setCcExpMonth($exMonth);
+                                              $orderPay->setCcExpYear($exYear);
+                                          }
+                                          $responseTrn = $this->getDummyResponseOfTransaction($orderObj,$invoice,$payment);
+                                          $orderPay->setAdditionalInformation($responseTrn);
+                                          $orderPay->save();
+                                          
+                                          if(!empty($payment['processor_client_rcpt'])){
+                                              $orderObj->addStatusHistoryComment($payment['processor_client_rcpt']);
+                                              $orderObj->addStatusHistoryComment($payment['processor_merch_rcpt']);
+                                              $orderObj->save();
+                                          }
+                                          $this->createTransaction($orderObj,$payment);
+                                      }else{
+                                          $changeMethod = $this->getChangePaymentMethod($paycode);
+                                          if($changeMethod['is_change']){
+                                              $methodCode = $changeMethod['method_code'];
+                                              $orderPay = $orderObj->getPayment();
+                                              $orderPay->setMethod($methodCode);
+                                              $orderPay->save();
+                                          }
+                                      }
+                                  }else{
+                                      $changeMethod = $this->getChangePaymentMethod($paycode);
+                                      if($changeMethod['is_change']){
+                                          $methodCode = $changeMethod['method_code'];
+                                          $orderPay = $orderObj->getPayment();
+                                          $orderPay->setMethod($methodCode);
+                                          $orderPay->save();
+                                      }
+                                  }
+                              } 
+                              
+                              $orderObj->setGrandTotal($totalAmmount);
+                              $orderObj->setBaseTaxAmount($taxAmmount);
+                              $orderObj->setBaseGrandTotal($totalAmmount);
+                              $orderObj->setTotalPaid($totalAmmount);
+                              $orderObj->save();
+                              
                               $shipmentId = $this->createShipment($increment_id);
                                 
                               $invoice = null;
@@ -405,6 +574,109 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             $e = null;
         }
         $orderObj = null;
+    }
+    
+    private function getChangePaymentMethod($payMethod){
+        $isChange = false;
+        $method_code = "";
+        if($payMethod == "CHK"){
+            $isChange = true;
+            $method_code = "counterpoint_check";
+        }elseif($payMethod == "GIFT"){
+            $isChange = true;
+            $method_code = "counterpoint_gift";
+        }elseif($payMethod == "STCR"){
+            $isChange = true;
+            $method_code = "counterpoint_stcr";
+        }elseif($payMethod == "WHOLESALE"){
+            $isChange = true;
+            $method_code = "counterpoint_wholesale";
+        }elseif($payMethod == "WIRED"){
+            $isChange = true;
+            $method_code = "counterpoint_wired";
+        }elseif($payMethod == "PAYPAL"){
+            $isChange = true;
+            $method_code = "counterpoint_paypal";
+        }
+        return array('is_change'=>$isChange,'method_code'=>$method_code);
+    }
+    
+    private function getPayCode($payMethod){
+        $paycode = "";
+        if($payMethod == "MC"){
+            $paycode = "MC";
+        }elseif($payMethod == "VISA"){
+            $paycode = "VI";
+        }elseif($payMethod == "AMEX"){
+            $paycode = "AM";
+        }elseif($payMethod == "DISC"){
+            $paycode = "DI";
+        }
+        return $paycode;
+    }
+    
+    private function createTransaction($order,$payment){
+        $transaction = Mage::getModel('sales/order_payment_transaction');
+        $transaction->setOrderId($order->getId());
+        $transaction->setOrderPaymentObject($order->getPayment());
+        $transaction->setTxnType("capture");
+        //$transaction->setTxnId($payment['processor_trans_id']);
+        $transaction->setIsClosed(0);
+        $additinalInfo = $order->getPayment()->getAdditionalInformation();
+        if ($additinalInfo) {
+            foreach ($additinalInfo as $key => $value) {
+                $transaction->setAdditionalInformation($key, $value);
+            }
+        }
+        $transaction->save();
+    }
+    
+    private function getDummyResponseOfTransaction($order, $invoice,$payment){
+        $customerId = $order->getCustomerId();
+        $amount     = $payment['amt'];//$order->getBaseGrandTotal();
+        $invoiceNumber = $invoice->getIncrementId();
+        $accNumber = "XXXX".substr($payment['cr_card_exp_dat'], -4);
+        $payMethod = $payment['pay_cod'];
+        $cardType = "";
+        if($payMethod == "MC"){
+            $cardType = "MasterCard";
+        }elseif($payMethod == "VISA"){
+            $cardType = "VISA";
+        }elseif($payMethod == "AMEX"){
+            $cardType = "American Express";
+        }elseif($payMethod == "DISC"){
+            $cardType = "Discover";
+        }
+        
+        $res = array("save" => "1",
+            "response_code" => "1",
+            "response_subcode" =>"",
+            "response_reason_code" => "0",
+            "response_reason_text" =>"",
+            "approval_code" => "000000",
+            "auth_code" => "000000",
+            "avs_result_code" => "P",
+            "transaction_id" => $payment['processor_trans_id'],
+            "reference_transaction_id" =>"",
+            "invoice_number" => $invoiceNumber,
+            "description" =>"",
+            "amount" => $amount,
+            "method" => "CC",
+            "transaction_type" => "auth_capture",
+            "customer_id" => $customerId,
+            "md5_hash" => "2D28AC7293F21CC59888CFD8B92014EB",
+            "card_code_response_code" =>"",
+            "cavv_response_code" =>"",
+            "acc_number" => $accNumber,
+            "card_type" =>$cardType ,
+            "split_tender_id" =>"",
+            "requested_amount" =>"",
+            "balance_on_card" =>"",
+            "profile_id" => "",
+            "payment_id" => "",
+            "is_fraud" =>"",
+            "is_error" =>"");
+        return $res;
     }
     
     
