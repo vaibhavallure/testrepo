@@ -69,91 +69,149 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         return 1;
     }
     
-    private function prepareCounterpointSettingsOld(){
-        $helper             = Mage::helper('allure_counterpoint');
-        $storeIds            = $helper->getCounterPointStoreId();
-        $websiteCode        = $helper->getCounterPointWebsiteCode();
-        //$paymentMethod      = $helper->getCounterPointPaymentMethod();
-        //$shippingMethodCode = $helper->getCounterPointShippingMethodCode();
-        //$this->AddLog("shipping Method -:".$shippingMethodCode);
-        //$shippingMethodName = $helper->getCounterPointShippingMethodName();
-        
-        /* if(empty($paymentMethod)){
-            $this->AddLog("Plase set payment method.Without payment method can't proceed");
-            die;
-        }
-        
-        if(empty($shippingMethodCode)){
-            $this->AddLog("Plase set Shipping Method.Without shipping method can't proceed");
-            die;
-        } */
-        
-        /* if(empty($shippingMethodName)){
-            $this->AddLog("Plase set Shipping Method Name.Without shipping name can't proceed");
-            die;
-        } */
-        
-        if (empty($storeIds)){
-            $this->AddLog("Please set store_id to save counterpoint data.Can't proceed without stor_id.");
-            die;
-        }
-        $storeIds = explode(",", $storeIds);
-        if(!count($storeIds) == 2){
-            die("Mention counterponit store.");
-        }
-        //set counterpoint store_id
-        //$this->_storeId = $storeId;
-        $store1 = $storeIds[0];
-        $store2 = $storeIds[1];
-        
-        $storeObj1 = Mage::getModel('core/store')->load($store1);
-        if(!$storeObj1){
-            $this->AddLog("Invalid store.");
-            die;
-        }
-        
-        $storeObj2 = Mage::getModel('core/store')->load($store2);
-        if(!$storeObj2){
-            $this->AddLog("Invalid store.");
-            die;
-        }
-        
-        $websiteId1 = $storeObj1->getWebsiteId();
-        $websiteObj1 = Mage::getModel('core/website')->load($websiteId1);
-        if($websiteId1 == 1){
-            $this->AddLog("You can't save data to main_website.");
-            die;
-        }
-        
-        $websiteId2 = $storeObj2->getWebsiteId();
-        $websiteObj2 = Mage::getModel('core/website')->load($websiteId2);
-        if($websiteId2 == 1){
-            $this->AddLog("You can't save data to main_website.");
-            die;
-        }
-        
-        if(empty($websiteCode)){
-            $this->AddLog("You have not added counterpoint website code.");
-            die;
-        }
-        
-        if(!(preg_match("/".$websiteCode."/",$websiteObj1->getCode()))){
-            $this->AddLog("Wrong website choose.Please add correct store_id.");
-            die;
-        }
-        
-        if(!(preg_match("/".$websiteCode."/",$websiteObj2->getCode()))){
-            $this->AddLog("Wrong website choose.Please add correct store_id.");
-            die;
-        }
-        
-        //set counterpoint website_id
-        // $this->_websiteId           = $websiteId;
-        //$this->_paymentMethod       = "counterpoint_cash";  //$paymentMethod;
-        $this->_shippingMethodCode  = self::SHIPPING_METHOD;    //$shippingMethodCode;
-        $shippingMethodArr          = Mage::getModel("allure_counterpoint/entity_shippingMethods")->toOptionArray();
-        $this->_shippingMethodName  = $shippingMethodArr[$this->_shippingMethodCode]['label'];
+    /**
+     * add payment data
+     */
+    public function addPayment($payment_data){
+        $payment_data = utf8_decode($payment_data);
+        $payment_data = trim($payment_data,'"');
+        $payment_data = stripslashes($payment_data);
+        $paymentData = unserialize($payment_data);
+        $this->AddLog("order count for payment-:".count($paymentData));
+        $this->addPaymentData($paymentData);
+        return 1;
     }
+    
+    private function addPaymentData($payment_data){
+        foreach ($payment_data as $order_id => $payData){
+            try{
+                $orderObj = Mage::getModel('sales/order')
+                            ->load($order_id,'counterpoint_order_id');
+                if($orderObj->getId()){
+                    if($orderObj->hasInvoices()){
+                        $this->AddLog("Invoice already created.order id-:".$orderObj->getIncrementId());
+                    }else{
+                        $this->AddLog("Order counterpoint order present.Id-:".$orderObj->getIncrementId());
+                        $payments = $payData['payment'];
+                        //create invoice for created order
+                        $ordered_items = $orderObj->getAllItems();
+                        $savedQtys = array();
+                        foreach($ordered_items as $item){     //item detail
+                            $savedQtys[$item->getItemId()] = $item->getQtyOrdered();
+                        }
+                        $payCount = count($payments);
+                        $paymentCnt = 0;
+                        $paymentInfo = array();
+                        foreach ($payments as $payment){
+                            $cr_card_no_msk = $payment['cr_card_no_msk'];
+                            $payCodeType = $payment['pay_cod_typ'];
+                            $paycode     = $payment['pay_cod'];
+                            $amount      = $payment['amt'];
+                            $invoice = Mage::getModel('sales/service_order', $orderObj)
+                                                ->prepareInvoice($savedQtys);
+                            $invoice->setRequestedCaptureCase(self::ORDER_CAPTURE_CASE);
+                            $invoice->register();
+                            $invoice->getOrder()->setIsInProcess(true);
+                            $invoice->setState(self::INVOICE_STATE);
+                            $invoice->setCanVoidFlag(0);
+                            
+                            //if($payCount > 1){
+                                $isShowPay = true;
+                                $incAmount = $payment['amt'];
+                                if($incAmount <= 0){
+                                    $isShowPay = false;
+                                }
+                                
+                                $invoice->setBaseGrandTotal($incAmount);
+                                $invoice->setGrandTotal($incAmount);
+                                $invoice->setSubtotalInclTax($incAmount);
+                                $invoice->setSubtotal($incAmount);
+                                $invoice->setBaseSubtotal($incAmount);
+                           // }
+                            
+                            $invoice->save();
+                            //if($payCodeType == "E" || $payCodeType =="D"){
+                            if(!empty($cr_card_no_msk)){
+                                $orderPay = $orderObj->getPayment();
+                                if($paymentCnt > 0){
+                                    $orderPay = Mage::getModel("sales/order_payment");
+                                    $orderPay->setParentId($orderObj->getId());
+                                    $orderPay->setAmountPaid($amount);
+                                    $orderPay->setBaseAmountPaid($amount);
+                                }
+                                $orderPay->setMethod("counterpoint_creditcard");
+                                $ccType = $this->getPayCode($paycode);
+                                $ccLast4 = substr($cr_card_no_msk, -4);
+                                $orderPay->setCcType($ccType);
+                                $orderPay->setCcLast4($ccLast4);
+                                $expireDate = $payment['cr_card_exp_dat'];
+                                if(!empty($expireDate)){
+                                    $exMonth = date("m",strtotime($expireDate));
+                                    $exYear = date("Y",strtotime($expireDate));
+                                    $orderPay->setCcExpMonth($exMonth);
+                                    $orderPay->setCcExpYear($exYear);
+                                }
+                                $responseTrn = $this->getDummyResponseOfTransaction($orderObj,$invoice,$payment);
+                                $orderPay->setAdditionalInformation($responseTrn);
+                                $orderPay->save();
+                                
+                                $paymentCnt++;
+                                $paymentInfo[$invoice->getId()] = array('is_show'=>$isShowPay,'payment_id'=>$orderPay->getId(),'amt'=>$incAmount);
+                                
+                                if(!empty($payment['processor_client_rcpt'])){
+                                    $orderObj->addStatusHistoryComment($payment['processor_client_rcpt']);
+                                    $orderObj->addStatusHistoryComment($payment['processor_merch_rcpt']);
+                                    $orderObj->save();
+                                }
+                                $this->createTransaction($orderObj,$payment);
+                            }else{
+                                $changeMethod = $this->getChangePaymentMethod($paycode);
+                                if($changeMethod['is_change']){
+                                    $methodCode = $changeMethod['method_code'];
+                                    $orderPay = $orderObj->getPayment();
+                                    if($paymentCnt > 0){
+                                        $orderPay = Mage::getModel("sales/order_payment");
+                                        $orderPay->setParentId($orderObj->getId());
+                                    }
+                                    $orderPay->setMethod($methodCode);
+                                    $orderPay->save();
+                                    $paymentCnt++;
+                                    $paymentInfo[$invoice->getId()] = array('is_show'=>$isShowPay,'payment_id'=>$orderPay->getId(),'amt'=>$incAmount);
+                                }
+                            }
+                           
+                            $this->AddLog("invoice created.id-:".$invoice->getIncrementId());
+                        }
+                        $increment_id = $orderObj->getIncrementId();
+                        $shipmentId = $this->createShipment($increment_id);
+                        
+                        $orderObj->getPayment()->setAdditionalData(serialize($paymentInfo))->save();
+                        $counterpointExtraInfo = unserialize($orderObj->getCounterpointExtraInfo());
+                        $counterpointExtraInfo['payment_info'] = $payments;
+                        $counterpointExtraInfo = serialize($counterpointExtraInfo);
+                        $orderObj->setCounterpointExtraInfo($counterpointExtraInfo);
+                        $orderObj->setTotalPaid($orderObj->getBaseGrandTotal())
+                        ->save();
+                    }
+                }else{
+                    $this->AddLog("Order not created yet.counterpoint_order_id-:".$order_id);
+                }
+            }catch(Exception $e){
+                $this->AddLog("Exception in setPaymentData method");
+                $this->AddLog("Exception -: ".$e->getMessage());
+            }
+        }
+    }
+    
+    private function createOrderInvoice($orderObj,$payData){
+        try{
+            
+        }catch(Exception $e){
+            $this->AddLog("Exception in createOrderInvoice method");
+            $this->AddLog("Exception -: ".$e->getMessage());
+        }
+    }
+    
     
     private function prepareCounterpointSettings(){
         $this->_shippingMethodCode  = self::SHIPPING_METHOD;    //$shippingMethodCode;
@@ -387,7 +445,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                             
                         $orderObj->setBillingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getBillingAddress()));
-                        $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
+                        //$orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
                         if(!$quoteObj->getIsVirtual()) {
                            $orderObj->setShippingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getShippingAddress()));
                         }
@@ -457,100 +515,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                               $quoteObj->save();
                               $increment_id = $orderObj->getRealOrderId();
                               $this->AddLog("new order increment_id-:".$increment_id);
-                                
-                              //create invoice for created order
-                              $ordered_items = $orderObj->getAllItems();
-                              $savedQtys = array();
-                              foreach($ordered_items as $item){     //item detail
-                                  $savedQtys[$item->getItemId()] = $item->getQtyOrdered();
-                              }
-                              
-                              $_payments = $ctpnt_order_data['payment'];
-                              $invoiceCnt = 1;
-                              $payCount = count($_payments);
-                              foreach($_payments as $payment){
-                                  $invoice = Mage::getModel('sales/service_order', $orderObj)
-                                                ->prepareInvoice($savedQtys);
-                                  $invoice->setRequestedCaptureCase(self::ORDER_CAPTURE_CASE);
-                                  $invoice->register();
-                                  $invoice->getOrder()->setIsInProcess(true);
-                                  $invoice->setState(self::INVOICE_STATE);
-                                  $invoice->setCanVoidFlag(0);
-                                  if($payCount > 1){
-                                      $incAmount = $payment['amt'];
-                                      $invoice->setBaseGrandTotal($incAmount);
-                                      $invoice->setGrandTotal($incAmount);
-                                      $invoice->setSubtotalInclTax($incAmount);
-                                      $invoice->setSubtotal($incAmount);
-                                      $invoice->setBaseSubtotal($incAmount);
-                                  }
-                                  $invoiceCnt++;
-                                  $invoice->save();
-                                  $payCodeType = $payment['pay_cod_typ'];
-                                  $paycode     = $payment['pay_cod'];
-                                  $amount      = $payment['amt'];
-                                  $cr_card_no_msk = $payment['cr_card_no_msk'];
-                                  if(!empty($cr_card_no_msk)){
-                                      if($payCodeType == "B"){
-                                          $changeMethod = $this->getChangePaymentMethod($paycode);
-                                          if($changeMethod['is_change']){
-                                              $methodCode = $changeMethod['method_code'];
-                                              $orderPay = $orderObj->getPayment();
-                                              $orderPay->setMethod($methodCode);
-                                              $orderPay->save();
-                                          }
-                                      }elseif($payCodeType == "E" || $payCodeType =="D"){
-                                          $orderPay = $orderObj->getPayment();
-                                          $orderPay->setMethod("counterpoint_creditcard");
-                                          $ccType = $this->getPayCode($paycode);
-                                          $ccLast4 = substr($cr_card_no_msk, -4);
-                                          $orderPay->setCcType($ccType);
-                                          $orderPay->setCcLast4($ccLast4);
-                                          $expireDate = $payment['cr_card_exp_dat'];
-                                          if(!empty($expireDate)){
-                                              $exMonth = date("m",strtotime($expireDate));
-                                              $exYear = date("Y",strtotime($expireDate));
-                                              $orderPay->setCcExpMonth($exMonth);
-                                              $orderPay->setCcExpYear($exYear);
-                                          }
-                                          $responseTrn = $this->getDummyResponseOfTransaction($orderObj,$invoice,$payment);
-                                          $orderPay->setAdditionalInformation($responseTrn);
-                                          $orderPay->save();
-                                          
-                                          if(!empty($payment['processor_client_rcpt'])){
-                                              $orderObj->addStatusHistoryComment($payment['processor_client_rcpt']);
-                                              $orderObj->addStatusHistoryComment($payment['processor_merch_rcpt']);
-                                              $orderObj->save();
-                                          }
-                                          $this->createTransaction($orderObj,$payment);
-                                      }else{
-                                          $changeMethod = $this->getChangePaymentMethod($paycode);
-                                          if($changeMethod['is_change']){
-                                              $methodCode = $changeMethod['method_code'];
-                                              $orderPay = $orderObj->getPayment();
-                                              $orderPay->setMethod($methodCode);
-                                              $orderPay->save();
-                                          }
-                                      }
-                                  }else{
-                                      $changeMethod = $this->getChangePaymentMethod($paycode);
-                                      if($changeMethod['is_change']){
-                                          $methodCode = $changeMethod['method_code'];
-                                          $orderPay = $orderObj->getPayment();
-                                          $orderPay->setMethod($methodCode);
-                                          $orderPay->save();
-                                      }
-                                  }
-                              } 
-                              
-                              $orderObj->setGrandTotal($totalAmmount);
-                              $orderObj->setBaseTaxAmount($taxAmmount);
-                              $orderObj->setBaseGrandTotal($totalAmmount);
-                              $orderObj->setTotalPaid($totalAmmount);
-                              $orderObj->save();
-                              
-                              $shipmentId = $this->createShipment($increment_id);
-                                
+
                               $invoice = null;
                               $quoteObj = null;
                               $orderObj = null;
@@ -597,7 +562,33 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         }elseif($payMethod == "PAYPAL"){
             $isChange = true;
             $method_code = "counterpoint_paypal";
+        }elseif($payMethod == "CASH"){
+            $isChange = true;
+            $method_code = "counterpoint_cash";
+        }elseif($payMethod == "AUTHORIZE"){
+            $isChange = true;
+            $method_code = "counterpoint_authorize";
+        }elseif($payMethod == "COUP"){
+            $isChange = true;
+            $method_code = "counterpoint_coup";
+        }elseif($payMethod == "INTERNET"){
+            $isChange = true;
+            $method_code = "counterpoint_internet";
+        }elseif($payMethod == "AMAZON"){
+            $isChange = true;
+            $method_code = "counterpoint_amazon";
+        }elseif($payMethod == "BDAY"){
+            $isChange = true;
+            $method_code = "counterpoint_bday";
+        }elseif($payMethod == "PLDGC"){
+            $isChange = true;
+            $method_code = "counterpoint_pldgc";
+        }elseif($payMethod == "£ CASH"){
+            $isChange = true;
+            $method_code = "counterpoint_poundcash";
         }
+        
+        
         return array('is_change'=>$isChange,'method_code'=>$method_code);
     }
     

@@ -12,6 +12,10 @@
 			            <method>test</method>
 				    	<acl>allure_counterpoint/order</acl>
 			         </list>
+			         <addPayment translate="title" module="sales">
+                        <title>Add comment to order</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </addPayment>
 			    </methods>
 			</counterpoint_order>
 		</resources>

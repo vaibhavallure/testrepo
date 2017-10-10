@@ -59,7 +59,7 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                 $stationValues = $this->getCounterpointStationValues($storeCode);
                 $fieldset->addField('show_counterpoint_sta_id', 'select', array(
                     'name'      => 'show_counterpoint_sta_id',
-                    'label'     => Mage::helper('reports')->__('Counterpoint STA Id'),
+                    'label'     => Mage::helper('reports')->__('Counterpoint Station Id'),
                     'options'   => array(
                         '0' => Mage::helper('reports')->__('Any'),
                         '1' => Mage::helper('reports')->__('Specified'),
@@ -105,14 +105,14 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
         $values = array();
         if(!empty($storeCode)){
             if($storeCode == "counterpoint_vmt"){
-                $values[] = array('label'=>'21' ,'value'=>'21');
-                $values[] = array('label'=>'22' ,'value'=>'22');
-                $values[] = array('label'=>'23' ,'value'=>'23');
-                $values[] = array('label'=>'24' ,'value'=>'24');
-                $values[] = array('label'=>'29' ,'value'=>'29');
+                $values[] = array('label'=>'Station 21' ,'value'=>'21');
+                $values[] = array('label'=>'Station 22' ,'value'=>'22');
+                $values[] = array('label'=>'Station 23' ,'value'=>'23');
+                $values[] = array('label'=>'Station 24' ,'value'=>'24');
+                $values[] = array('label'=>'Station 29' ,'value'=>'29');
             }else{
-                $values[] = array('label'=>'1' ,'value'=>'1');
-                $values[] = array('label'=>'2' ,'value'=>'2');
+                $values[] = array('label'=>'Station 1' ,'value'=>'1');
+                $values[] = array('label'=>'Station 2' ,'value'=>'2');
             }
         }
         return $values;

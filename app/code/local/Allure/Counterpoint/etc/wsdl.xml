@@ -14,6 +14,13 @@
 	<message name="counterpointOrderListResponse">
 	    <part name="result" type="xsd:int"  />
 	</message>
+	<message name="counterpointOrderAddPaymentRequest">
+    	<part name="sessionId" type="xsd:string" />
+    	<part name="payment_data" type="xsd:string" />
+	</message>
+	<message name="counterpointOrderAddPaymentResponse">
+	    <part name="result" type="xsd:int"  />
+	</message>
     <portType name="{{var wsdl.handler}}PortType">
         <operation name="counterpointOrderList">
 	      <documentation>List of events</documentation>
@@ -21,9 +28,28 @@
 	      <output message="typens:counterpointOrderListResponse" />
 	   </operation>
     </portType>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="counterpointOrderAddPayment">
+	      <documentation>Add Payemnts</documentation>
+	      <input message="typens:counterpointOrderAddPaymentRequest" />
+	      <output message="typens:counterpointOrderAddPaymentResponse" />
+	   </operation>
+    </portType>
     <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
         <operation name="counterpointOrderList">
+	      <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+	      <input>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </input>
+	      <output>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </output>
+	    </operation>
+    </binding>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="counterpointOrderAddPayment">
 	      <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
 	      <input>
 	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
