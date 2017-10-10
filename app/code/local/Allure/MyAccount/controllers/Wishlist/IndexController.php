@@ -601,6 +601,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 	
 	public function sendAjaxAction()
 	{
+	    return;
 		if (!$this->_validateFormKey()) {
 			return $this->_redirect('*/*/');
 		}
