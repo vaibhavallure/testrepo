@@ -83,10 +83,12 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     }
     
     private function addPaymentData($payment_data){
+        $seqCnt = 0;
         foreach ($payment_data as $order_id => $payData){
             try{
                 $orderObj = Mage::getModel('sales/order')
                             ->load($order_id,'counterpoint_order_id');
+                $this->AddLog("order cnt -:".$seqCnt);
                 if($orderObj->getId()){
                     if($orderObj->hasInvoices()){
                         $this->AddLog("Invoice already created.order id-:".$orderObj->getIncrementId());
@@ -196,10 +198,12 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 }else{
                     $this->AddLog("Order not created yet.counterpoint_order_id-:".$order_id);
                 }
+                $this->AddLog("finish...");
             }catch(Exception $e){
                 $this->AddLog("Exception in setPaymentData method");
                 $this->AddLog("Exception -: ".$e->getMessage());
             }
+            $seqCnt++;
         }
     }
     

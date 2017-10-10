@@ -164,7 +164,7 @@ if($conn){
 echo "<pre>";
 print_r(count($mainArr));
 /* print_r(($mainArr));
-die;  */
+die; */ 
 
 //remote site wsdl url
 $_URL       = "http://universal.allurecommerce.com/api/v2_soap/?wsdl=1";
@@ -189,8 +189,8 @@ function getSoapWSDLOptions(){
 try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
-   // $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    //$session = $client->login($_AUTH_DETAILS_ARR);
+    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    $session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -201,11 +201,11 @@ try{
         'counterpoint_data' => $reqU
     );
     
-    //$result  = $client->counterpointOrderList($_RequestData);
-    $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
+    $result  = $client->counterpointOrderList($_RequestData);
+    //$result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
-    //$client->endSession(array('sessionId' => $session->result));
+    $client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);
