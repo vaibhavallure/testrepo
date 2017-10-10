@@ -198,13 +198,13 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                 }else{
                     $this->AddLog("Order not created yet.counterpoint_order_id-:".$order_id);
                 }
-                $this->AddLog("finish...");
             }catch(Exception $e){
                 $this->AddLog("Exception in setPaymentData method");
                 $this->AddLog("Exception -: ".$e->getMessage());
             }
             $seqCnt++;
         }
+        $this->AddLog("finish...");
     }
     
     private function createOrderInvoice($orderObj,$payData){
@@ -309,9 +309,11 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                      $isOrderCreate = false;
                      if($extraInfo['str_id'] == 1){
                          $this->_storeId = $this->_store_vba;
+                         $this->_websiteId = $this->_website_vba;
                          $isOrderCreate = true;
                      }elseif($extraInfo['str_id'] == 2){
                          $this->_storeId = $this->_store_vmt;
+                         $this->_websiteId = $this->_website_vmt;
                          $isOrderCreate = true;
                      }else{
                          $this->_storeId = $this->_store_vba;
