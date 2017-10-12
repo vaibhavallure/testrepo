@@ -1,11 +1,11 @@
 <div id="openModal" class="popupLoginModel">
-	<div>
+	<div id="login-modal-container" class="modal-container">
 		<form class="form-signin" method="post" id="popup-login-form">
     		<div class="pop-title">
     			<a href="#close" title="Close" class="close">X</a>
     			<h2><?php echo $this->__("Log In ")?></h2>
     		</div>
-    		<div class="body">
+    		<div class="pop-content">
     			<div id="login_msg_div">
     				<span id="login-msg"></span>
     			</div>
@@ -40,13 +40,12 @@
     		</div> 
     	</form>
 	</div>
+
+    <script type="text/javascript">
+        if (typeof Allure == "undefined") {
+             var Allure = {};
+        }
+        Allure.LoginFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+        Allure.LoginUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/ajaxLogin';?>';
+    </script> 
 </div>
-
-
-<script type="text/javascript">
-if (typeof Allure == "undefined") {
-	 var Allure = {};
-}
-Allure.LoginFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-Allure.LoginUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/ajaxLogin';?>';
-</script> 
