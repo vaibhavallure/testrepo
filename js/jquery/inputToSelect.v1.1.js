@@ -29,7 +29,7 @@
                 var _element = this;
 
                 var parent_div = jQuery(this).parent();
-                parent_div.before('<input type="radio" class="giftcard-radio1" id="mail_delivery_option" name="mail_delivery_option" value="1" checked="checked">');
+                parent_div.before('<input type="radio" class="giftcard-radio1" id="mail_delivery_option" name="mail_delivery_option" value="1" checked="checked">')
                 var i,d,cd = new Date();
                 if (jQuery(_element).val()) {
                     var vals = jQuery(_element).val().split('-');

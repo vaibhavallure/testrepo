@@ -35,6 +35,7 @@ alpha:
   only:
     - master
   script:
+    - env
     - mage-deploy mt
     - echo 'Deployed on Staging'
 bugfix:
@@ -57,6 +58,19 @@ upgrade:
   script:
     - mage-deploy upgrade.mariatash
     - echo 'Deployed on Upgrade Staging'
+    
+staging_new:
+  environment: staging
+  stage: staging
+  tags:
+    - staging
+  only:
+    - staging
+  script:
+    - mage-deploy stage-mariatash
+    - echo 'Deployed on Staging'
+    
+    
 deploy:
   environment: production
   stage: deploy

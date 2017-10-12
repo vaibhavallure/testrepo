@@ -1,113 +1,53 @@
-<?php if(0):?>
-
-<div class="mt-myaccount-filter">
-	<div class="mt-myaccount-store">
-		<span>Narrow By: </span>
-	  	<?php
-			$currentFilterStore = $_GET ['m_store'];
-			if (empty ( $currentFilterStore ))
-				$currentFilterStore = 'all';
-							
-				$currentSort = $_GET ['m_sort'];
-			?>
-	  		<select class="mt-filter-select">
-				<option value="all"><?php echo $this->__('STORE')?></option>
-	  			<?php
-					$stores = Mage::app ()->getStores ();
-					foreach ( $stores as $store ) :
-				?>
-	  				<option value="<?php echo $store->getId()?>"
-						<?php echo ($currentFilterStore==$store->getId())?"selected=\"selected\"":""?>><?php echo $store->getName()?></option>
-	  				<?php endforeach;?>
-	  		</select>
-	</div>
-
-	<div class="mt-myaccount-sort">
-		<select class="mt-filter-select">
-			<option value=""><?php echo $this->__('SORT BY')?></option>
-			<option value="<?php echo 'asc'?>"
-				<?php echo ($currentSort)?"selected='selected'":""?>><?php echo $this->__('ASC')?></option>
-			<option value="<?php echo 'desc'?>"
-				<?php echo ($currentSort)?"selected='selected'":""?>><?php echo $this->__('DESC')?></option>
-		</select>
-	</div>
-</div>
-
-<?php endif;?>
-
-<?php if(1):?>
-
 <?php
-	$currentFilterStore = $_GET ['m_store'];
-	if (empty ( $currentFilterStore ))
-		$currentFilterStore = 'all';
-							
-	$currentSort = $_GET ['m_sort'];
-	if(empty($currentSort))
-		$currentSort = 'desc';
-	
-	$stores = Mage::app ()->getStores ();
-	$storeArr = array();
-	foreach ($stores as $store) {
-		$storeArr[$store->getId()] = $store->getName();
-	}
-	
-	$sortOderArr = array('desc'=>'Latest Purchase','asc'=>'Oldest Purchase');
+    $currentFilterStore = $this->getCurrentFilterStore();
+    $currentSort        = $this->getCurrentFilterSortOrder();
+    $stores             = $this->getAllStores();
+    $storeArr           = $this->getStoreListArray();
+    $sortOderArr        = $this->getSortOrderArray();
 ?>
-
 <div class="block-layered-nav-bg">
-<div class="block block-layered-nav mb-mana-catalogsearch-leftnav">
-<div class="block-content">
-<ul id=narrow-by-list-new>
-
-<li class="filter-label-list"><span>Narrow By: </span></li>
-
-<li class="myaccount-filter-store-list">
-     <div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
-        <dt class="odd"><?php echo ($currentFilterStore!='all')?$storeArr[$currentFilterStore]:"ALL STORES"?></dt>
-           <dd class="myaccount-filter-store odd" style="display: none;">
-		   		<div class="filter_name"></div>
-					<ol class="myaccount-filter-item">
-					<li>
-						<dd value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></dd>
-						<?php
-							$stores = Mage::app ()->getStores ();
-							foreach ($stores as $store) :
-						?>
-    						
-							<dd value="<?php echo $store->getId()?>"
-								<?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
-							<?php echo $store->getName()?>
-							</dd>
-            				
-            			<?php endforeach;?>
-            			</li>
-					</ol>
-			</dd>
-        </div>
-  </li>
+	<div class="block block-layered-nav mb-mana-catalogsearch-leftnav">
+		<div class="block-content">
+			<ul id=narrow-by-list-new>
+				<li class="filter-label-list"><span>Narrow By: </span></li>
+				<li class="myaccount-filter-store-list purchase-order-filter">
+     				<div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
+        				<dt class="odd"><?php echo ($currentFilterStore!='all')?$storeArr[$currentFilterStore]:"ALL STORES"?></dt>
+           				<dd class="myaccount-filter-store odd" style="display: none;">
+		   					<div class="filter_name"></div>
+							<ol class="myaccount-filter-item">
+								<li>
+									<dd value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></dd>
+									<?php foreach ($stores as $store) :?>
+        									<dd value="<?php echo $store->getId()?>"
+        								        <?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
+        										<?php echo $store->getName()?>
+        									</dd>
+            						<?php endforeach;?>
+            					</li>
+							</ol>
+						</dd>
+        			</div>
+  				</li>
   
-  <li class="myaccount-filter-sort-order-list">
-     <div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
-        <dt class="odd"><?php echo ($currentSort!='')?$sortOderArr[$currentSort]:"SORT BY"?></dt>
-           <dd class="myaccount-filter-sort-order odd" style="display: none;">
-		   		<div class="filter_name"></div>
-					<ol class="myaccount-filter-item">
-						<li>
-							<?php foreach ($sortOderArr as $key=>$name):?>
-							<dd value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></dd>
-							<?php endforeach;?>
-	            		</li>
-					</ol>
-			</dd>
-        </div>
-  </li>
-  
-  
-  </ul>
-  </div>
-  </div>
-  </div>
-  <?php endif;?>
-  
+  				<li class="myaccount-filter-sort-order-list purchase-order-filter">
+     				<div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
+        				<dt class="odd"><?php echo ($currentSort!='')?$sortOderArr[$currentSort]:"SORT BY"?></dt>
+           				<dd class="myaccount-filter-sort-order odd" style="display: none;">
+		   					<div class="filter_name"></div>
+							<ol class="myaccount-filter-item">
+								<li>
+            						<?php foreach ($sortOderArr as $key=>$name):?>
+            						<dd value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></dd>
+            						<?php endforeach;?>
+            	            	</li>
+            				</ol>
+						</dd>
+        			</div>
+  				</li>
+  				
+  			</ul>
+  		</div>
+  	</div>
+</div>
   
