@@ -619,7 +619,7 @@ class Mage_Wishlist_IndexController extends Mage_Wishlist_Controller_Abstract
      */
     public function sendAction()
     {
-        return;
+       
         if (!$this->_validateFormKey()) {
             return $this->_redirect('*/*/');
         }
