@@ -33,6 +33,10 @@ body {
 	  color: #000;
 }
 
+body.modal-popup-body { 
+    position: fixed !important; 
+} 
+
 button.apple-pay-button-with-text.apple-pay-button-black-with-text {
   min-height: 30px !important;
   height: 20px !important;

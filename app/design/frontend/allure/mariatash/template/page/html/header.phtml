@@ -69,26 +69,23 @@
 		</nav>
     </div>
     <?php echo $this->getChildHtml('topContainer'); ?>
-</div>
-<script type="text/javascript">
-if(Mage.Cookies.get('is_logged_in') && Mage.Cookies.get('frontend_timeout'))  {
-	jQuery('#sign_in_label').addClass('display_none');	
-} else {
-	//document.title = 'Customer Sign in';
-	jQuery('#sign_out_label').addClass('display_none');
-}
-var pathname = window.location.pathname;
-if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
-else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
-var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
-// jQuery( document ).ready(function() {
-//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
-// });
-// jQuery( window ).resize(function() {
-//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
-// });
+	<script type="text/javascript">
+		if(Mage.Cookies.get('is_logged_in') && Mage.Cookies.get('frontend_timeout'))  {
+			jQuery('#sign_in_label').addClass('display_none');	
+		} else {
+			//document.title = 'Customer Sign in';
+			jQuery('#sign_out_label').addClass('display_none');
+		}
+		var pathname = window.location.pathname;
+		if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
+		else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
+		var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
+		// jQuery( document ).ready(function() {
+		//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+		// });
+		// jQuery( window ).resize(function() {
+		//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+		// });
 
-</script>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/login.phtml')->toHtml(); ?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/register.phtml')->toHtml(); ?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/reset_password.phtml')->toHtml(); ?>
+	</script>
+</div>
