@@ -14,9 +14,9 @@ class Alluremultistore_Productwebsite_Model_Observer
 		$helper = Mage::helper("allure_productwebsite");
 		$logFileName = "product_website_assign.log";
 		if($helper->getProductAssignCronStatus()){
-			$debugStatus = false;
-			if($helper->getDebugStatus())
-				$debugStatus = true;
+			$debugStatus = true;
+			/* if($helper->getDebugStatus())
+				$debugStatus = true; */
 			
 			$productStatus = -1;
 			
