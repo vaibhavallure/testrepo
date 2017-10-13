@@ -56,13 +56,22 @@
         </reference>
     </sendfriend_product_send>
 	<myaccount_index_index>
-	<reference name="wishlist.sharing_form">
-		<reference name="wishlist.sharing">
-		   	<block type="core/text_list" name="form.additional.info">
-                <block type="studioforty9_recaptcha/explicit" name="studioforty9.recaptcha.explicit" template="studioforty9/recaptcha/explicit.phtml"/>
-            </block>
+		<reference name="wishlist.sharing_form">
+			<reference name="wishlist.sharing">
+			   	<block type="core/text_list" name="form.additional.info">
+	                <block type="studioforty9_recaptcha/explicit" name="studioforty9.recaptcha.explicit" template="studioforty9/recaptcha/explicit.phtml"/>
+	            </block>
+			</reference>
 		</reference>
-	</reference>
 	</myaccount_index_index>
+	<wishlist_index_share>
+			<reference name="my.account.wrapper">
+			    <reference name="wishlist.sharing">
+			   	<block type="core/text_list" name="form.additional.info">
+	                <block type="studioforty9_recaptcha/explicit" name="studioforty9.recaptcha.explicit" template="studioforty9/recaptcha/explicit.phtml"/>
+	            </block>
+	            </reference>
+			</reference>
+	</wishlist_index_share>
 	    
 </layout>
