@@ -302,7 +302,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         'vendor_comment' => $arr['vendor_comment']
                     );
 
-                    $sotoreId = Mage::getModel('inventory/purchaseorder')->load($po_id)->getStockId();
+                    $storeId = Mage::getModel('inventory/purchaseorder')->load($po_id)->getStockId();
 
                     // Tring to get only one first item and updating it
                     $items = Mage::getModel('inventory/orderitems')->getCollection()
