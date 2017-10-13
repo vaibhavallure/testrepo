@@ -29,6 +29,7 @@ class Studioforty9_Recaptcha_Model_Source_Routes
     public function toOptionArray()
     {
         $routes = new Studioforty9_Recaptcha_Model_Routes();
+        $routes->add('wishlist_index_share', Mage::helper('studioforty9_recaptcha')->__('Share My Account Wishlist Email'));
         $routes->add('myaccount_index_index', Mage::helper('studioforty9_recaptcha')->__('Share Wishlist Email'));
         $routes->add('contacts_index', Mage::helper('studioforty9_recaptcha')->__('Contact Form'));
         $routes->add('review_product', Mage::helper('studioforty9_recaptcha')->__('Product Review Form'));
