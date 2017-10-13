@@ -9,7 +9,7 @@ ini_set('memory_limit', '-1');
 $startDate = $_GET['start'];
 $endDate   = $_GET['end'];
 $state     = $_GET['state'];
-//die;
+die;
 if(empty($state)){
     die("Please mention data in 'state' field.");
 }else{
@@ -97,6 +97,7 @@ if($conn){
                     AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
                     AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
                     AND CONTACT_TABLE.CONTACT_ID = ".$state."
+                    AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
                    -- AND MAIN_TABLE.TKT_NO = '285086' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
@@ -189,8 +190,8 @@ function getSoapWSDLOptions(){
 try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
-    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    $session = $client->login($_AUTH_DETAILS_ARR);
+    //$client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    //$session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -201,11 +202,11 @@ try{
         'counterpoint_data' => $reqU
     );
     
-    $result  = $client->counterpointOrderList($_RequestData);
-    //$result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
+    //$result  = $client->counterpointOrderList($_RequestData);
+    $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
-    $client->endSession(array('sessionId' => $session->result));
+    //$client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);

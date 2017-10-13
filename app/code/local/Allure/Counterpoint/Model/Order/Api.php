@@ -297,6 +297,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     private function createOrderByUsingCounterpointData($ctpnt_order_id,
         $ctpnt_order_data){
         try{
+            $productModel = Mage::getModel("catalog/product");
             $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'increment_id');
             if(!$orderObj->getId()){
                $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
@@ -460,6 +461,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                         $items=$quoteObj->getAllItems();
                         foreach ($items as $item) {
+                            $productId = $productModel->getIdBySku($item->getSku());
                             $orderItem = $convertQuoteObj->itemToOrderItem($item);
                             if($item->getParentItem()) {
                                 $orderItem->setParentItem($orderObj->getItemByQuoteItemId($item->getParentItem()->getId()));
@@ -476,6 +478,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                            }
                            $orderItem->setData('created_at',$extraOrderDetails['order_date']);
                            $orderItem->setData('updated_at',$extraOrderDetails['order_date']);
+                           if($productId){
+                               $orderItem->setData('product_id',$productId);
+                           }
                            $orderObj->addItem($orderItem);
                         }
                             
