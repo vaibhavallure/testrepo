@@ -199,8 +199,7 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
             } else {
                 $this->getQuote()->getShippingAddress()
                     ->setPaymentMethod($data['payment']['method']);
-                    Mage::log($data['shipping'],Zend_log::DEBUG,'ajay.log',true);
-                    $this->getQuote()->getShippingAddress()->setShippingMethod('bakerloo_freeshipping');
+                    $this->getQuote()->getShippingAddress()->setShippingMethod($data['shipping']);
             }
         }
        // Mage::log($this->getQuote()->getData(),Zend_log::DEBUG,'ajay.log',true);
