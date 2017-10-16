@@ -89,6 +89,7 @@ class Mage_Payment_Model_Info extends Mage_Core_Model_Abstract
                     return $instance;
                 }
             }
+            Mage::log("Payment Method exception:".get_class($this),Zend_log::DEBUG,'ebiz_payment.log',true);
             Mage::throwException(Mage::helper('payment')->__('The requested Payment Method is not available.'));
         }
 

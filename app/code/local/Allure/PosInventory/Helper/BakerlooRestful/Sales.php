@@ -198,11 +198,12 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
                     ->setPaymentMethod($data['payment']['method']);
             } else {
                 $this->getQuote()->getShippingAddress()
-                    ->setPaymentMethod($data['payment']['method'])
-                    ->setShippingMethod($data['shipping']);
+                    ->setPaymentMethod($data['payment']['method']);
+                    Mage::log($data['shipping'],Zend_log::DEBUG,'ajay.log',true);
+                    $this->getQuote()->getShippingAddress()->setShippingMethod('bakerloo_freeshipping');
             }
         }
-
+       // Mage::log($this->getQuote()->getData(),Zend_log::DEBUG,'ajay.log',true);
         $billingAddress  = $this->_getAddress($data['customer']['billing_address'], $data['customer']['email']);
         $this->getQuote()
             ->getBillingAddress()
@@ -237,6 +238,8 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
 
         //Commented on January, 6 2015 to fix issue with coupons applied twice on bundle products.
         //$this->getQuote()->collectTotals()->save();
+        if(empty($this->getQuote()->getShippingAddress()->getShippingMethod()))
+            $this->getQuote()->getShippingAddress()->setShippingMethod($data['shipping']);
         $this->getQuote()->save();
 
         //If coupon was provided and does not validate, throw error.
@@ -381,4 +384,13 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
         return $products;
     }
     
+    public function processFailedOrder($id){
+        if(Mage::registry('failed_ebiz_order'))
+            Mage::unregister('failed_ebiz_order');
+        Mage::register('failed_ebiz_order', $id);
+        
+        $orderProcessor = new POS_Order();
+        $orderProcessor->place($id);
+        
+    }
 }
