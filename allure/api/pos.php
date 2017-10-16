@@ -228,7 +228,6 @@ class POS_Order
 			}
 			
 			//die("ERROR::".$e->getMessage());
-			Mage::dispatchEvent('retry_failed_order',array('object'=>$this->_bakerlooOrder->getId()));
 			$this->_bakerlooOrder->setFailMessage($e->getMessage())->save();
 			
 			// Prepare return data
