@@ -228,7 +228,7 @@ INLINECSS;
         if($stockItem->getIsInStock()==1 && $stockItem->getQty()<=0)
         {
             if($product->getBackorderTime())
-                $status="The metal color or length combination you selected is backordered. Order now and It will ship within ".$product->getBackorderTime();
+                $status="The metal color or length combination you selected is backordered. Order now and It will ship ".$product->getBackorderTime();
             else       
                 $status="The metal color or length combination you selected is backordered.";
         }
