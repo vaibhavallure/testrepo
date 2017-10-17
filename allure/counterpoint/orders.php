@@ -79,7 +79,8 @@ if($conn){
         $query = "SELECT MAIN_TABLE.doc_id,MAIN_TABLE.str_id,MAIN_TABLE.sta_id,
                     MAIN_TABLE.tkt_typ,MAIN_TABLE.drw_id,MAIN_TABLE.usr_id,MAIN_TABLE.stk_loc_id,MAIN_TABLE.cust_no,
                     MAIN_TABLE.tkt_no order_id, MAIN_TABLE.event_no , MAIN_TABLE.tkt_dt order_date,
-                    MAIN_TABLE.tax_ovrd_reas place, MAIN_TABLE.sub_tot subtotal, MAIN_TABLE.tax_amt tax,MAIN_TABLE.tot total, 
+                    MAIN_TABLE.tax_ovrd_reas place, MAIN_TABLE.sub_tot subtotal, MAIN_TABLE.tax_amt tax,MAIN_TABLE.tot total,
+                    MAIN_TABLE.tot_tnd,MAIN_TABLE.tot_chng,
                     CONCAT(ITEM_TABLE.ITEM_NO,'|',ITEM_TABLE.CELL_DESCR) sku,
                     ITEM_TABLE.QTY_SOLD qty, ITEM_TABLE.PRC prc, ITEM_TABLE.DESCR pname,
                     ITEM_TABLE.lin_seq_no,
@@ -92,13 +93,13 @@ if($conn){
                     JOIN PS_TKT_HIST_CONTACT CONTACT_TABLE ON ( MAIN_TABLE.DOC_ID = CONTACT_TABLE.DOC_ID )
                     LEFT JOIN PS_TKT_HIST_DISC DISC_TABLE ON ( MAIN_TABLE.DOC_ID = DISC_TABLE.DOC_ID AND DISC_TABLE.LIN_SEQ_NO is null)
                     WHERE 
-                    MAIN_TABLE.STR_ID NOT IN(3 , 7)
-                    AND MAIN_TABLE.TKT_TYP = 'T'
-                    AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
+                    MAIN_TABLE.STR_ID NOT IN(3 ) AND
+                    MAIN_TABLE.TKT_TYP = 'T' AND
+                    MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
                     AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
                     AND CONTACT_TABLE.CONTACT_ID = ".$state."
                     AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
-                   -- AND MAIN_TABLE.TKT_NO = '285086' 
+                    -- AND MAIN_TABLE.TKT_NO = '3-1002596' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
         $result = odbc_exec($conn, $query);
@@ -202,11 +203,11 @@ try{
         'counterpoint_data' => $reqU
     );
     
-    //$result  = $client->counterpointOrderList($_RequestData);
+   // $result  = $client->counterpointOrderList($_RequestData);
     $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
-    //$client->endSession(array('sessionId' => $session->result));
+   // $client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);

@@ -51,22 +51,11 @@ if($conn){
                     MAIN_TABLE.tkt_typ,MAIN_TABLE.drw_id,MAIN_TABLE.usr_id,MAIN_TABLE.stk_loc_id,MAIN_TABLE.cust_no,
                     MAIN_TABLE.tkt_no order_id, MAIN_TABLE.event_no , MAIN_TABLE.tkt_dt order_date,
                     MAIN_TABLE.tax_ovrd_reas place, MAIN_TABLE.sub_tot subtotal, MAIN_TABLE.tax_amt tax,MAIN_TABLE.tot total, 
-                    MAIN_TABLE.tot_tnd,MAIN_TABLE.tot_chng,
-                    PMT_TABLE.pay_cod, PMT_TABLE.pay_cod_typ, PMT_TABLE.descr,PMT_TABLE.pmt_lin_typ,PMT_TABLE.amt,
-                    PMT_TABLE.pmt_seq_no,PMT_TABLE.home_curncy_amt,
-                    PMT_CARD_TABLE.cr_card_no, PMT_CARD_TABLE.cr_card_no_msk, PMT_CARD_TABLE.cr_card_nam, PMT_CARD_TABLE.cr_card_exp_dat,
-                    PMT_RCPT_TABLE.trans_typ, PMT_RCPT_TABLE.unique_trans_id, PMT_RCPT_TABLE.trans_stat, PMT_RCPT_TABLE.trans_approved,
-                    PMT_RCPT_TABLE.processor_trans_id, PMT_RCPT_TABLE.rcpt_card_no_msk, PMT_RCPT_TABLE.rcpt_card_typ,
-                    PMT_RCPT_TABLE.rcpt_amt, PMT_RCPT_TABLE.processor_msg, PMT_RCPT_TABLE.rcpt_msg, PMT_RCPT_TABLE.entry_meth,
-                    PMT_RCPT_TABLE.processor_client_rcpt, PMT_RCPT_TABLE.processor_merch_rcpt
-
+                    MAIN_TABLE.tot_tnd,MAIN_TABLE.tot_chng
+                    
                     FROM PS_TKT_HIST MAIN_TABLE 
-                    INNER JOIN PS_TKT_HIST_PMT PMT_TABLE ON ( MAIN_TABLE.TKT_NO = PMT_TABLE.TKT_NO) 
-                    LEFT JOIN PS_TKT_HIST_PMT_CHK PMT_CHECK_TABLE ON ( PMT_TABLE.DOC_ID = PMT_CHECK_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_CHECK_TABLE.PMT_SEQ_NO)
-                    Left JOIN PS_TKT_HIST_PMT_CR_CARD PMT_CARD_TABLE ON( PMT_TABLE.DOC_ID = PMT_CARD_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_CARD_TABLE.PMT_SEQ_NO)
-                    LEFT JOIN PS_TKT_HIST_PMT_RCPT PMT_RCPT_TABLE on(PMT_TABLE.DOC_ID = PMT_RCPT_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_RCPT_TABLE.PMT_SEQ_NO)
                     WHERE 
-                    MAIN_TABLE.STR_ID NOT IN(3,7) AND
+                    MAIN_TABLE.STR_ID NOT IN(3 ) AND
                     MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
                     AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
                     MAIN_TABLE.TKT_TYP = 'T'
@@ -87,19 +76,15 @@ if($conn){
         $extHeader = array('doc_id','str_id','sta_id','tkt_typ','drw_id','event_no','stk_loc_id','cust_no');
         while(odbc_fetch_row($result)){
             $order_id   = odbc_result($result, 'order_id');
-            $pmt_seq_no = odbc_result($result, 'pmt_seq_no');
             $arr 		= array();
             $info		= array();
-            $payment    = array();
             $extra      = array();
             
             //parse row data as required format
             for ($j = 1; $j <= odbc_num_fields($result); $j++){
                 $field_name  = odbc_field_name($result, $j);
                 $field_value = odbc_result($result, $field_name);
-                if(in_array($field_name, $paymentHeader)){
-                    $payment[$field_name] = $field_value;
-                }elseif(in_array($field_name, $extHeader)){
+                if(in_array($field_name, $extHeader)){
                     $extra[$field_name] = $field_value;
                 }else{
                     $info[$field_name] = $field_value;
@@ -109,14 +94,8 @@ if($conn){
             if(!array_key_exists($order_id, $mainArr)){
                 $mainArr[$order_id] = array(
                     'order_detail'=>$info,
-                    'payment'=>array($pmt_seq_no=>$payment),
                     'extra_data'=>$extra
                 );
-            }else{
-                $tempPayment = $mainArr[$order_id]['payment'];
-                $tempPayment[$pmt_seq_no] = $payment;
-                $mainArr[$order_id]['payment'] = $tempPayment;
-                
             }
             $i++;
         }
@@ -136,7 +115,7 @@ if($conn){
 
 
 //remote site wsdl url
-$_URL       = "http://universal.allurecommerce.com/api/v2_soap/?wsdl=1";
+$_URL       = "http://mariatash.ws02.allure.inc/api/v2_soap/?wsdl=1";
 
 /**
  * @return array of magento credentials.
@@ -158,8 +137,8 @@ function getSoapWSDLOptions(){
 try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
-    //$client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    //$session = $client->login($_AUTH_DETAILS_ARR);
+    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    $session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -167,15 +146,15 @@ try{
     
     $_RequestData = array(
         'sessionId' => $session->result,
-        'payment_data' => $reqU
+        'shipment_data' => $reqU
     );
     
-    //$result  = $client->counterpointOrderAddPayment($_RequestData);
-    $result = Mage::getModel('allure_counterpoint/order_api')
-    ->addPayment($reqU);
+    $result  = $client->counterpointOrderAddShipment($_RequestData);
+    //$result = Mage::getModel('allure_counterpoint/order_api')
+    //->addShipment($reqU);
     echo "<pre>";
     print_r($result);
-    //$client->endSession(array('sessionId' => $session->result));
+    $client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);

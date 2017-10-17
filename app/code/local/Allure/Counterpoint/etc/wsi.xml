@@ -38,6 +38,21 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
+            <xsd:element name="counterpointOrderAddShipmentRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="shipment_data" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddShipmentResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
         </xsd:schema>
     </wsdl:types>
     <wsdl:message name="counterpointOrderListRequest">
@@ -52,18 +67,31 @@
     <wsdl:message name="counterpointOrderAddPaymentResponse">
         <wsdl:part name="parameters" element="typens:counterpointOrderAddPaymentResponseParam" />
     </wsdl:message>
+    <wsdl:message name="counterpointOrderAddShipmentRequest">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddShipmentRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderAddShipmentResponse">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddShipmentResponseParam" />
+    </wsdl:message>
     <wsdl:portType name="{{var wsdl.handler}}PortType">
          <wsdl:operation name="counterpointOrderList">
-            <wsdl:documentation>Create new product and return product id</wsdl:documentation>
+            <wsdl:documentation>create order by counterpoint</wsdl:documentation>
             <wsdl:input message="typens:counterpointOrderListRequest" />
             <wsdl:output message="typens:counterpointOrderListResponse" />
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:portType name="{{var wsdl.handler}}PortType">
          <wsdl:operation name="counterpointOrderAddPayment">
-            <wsdl:documentation>Create new product and return product id</wsdl:documentation>
+            <wsdl:documentation>Add payments</wsdl:documentation>
             <wsdl:input message="typens:counterpointOrderAddPaymentRequest" />
             <wsdl:output message="typens:counterpointOrderAddPaymentResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+         <wsdl:operation name="counterpointOrderAddShipment">
+            <wsdl:documentation>Add shipments</wsdl:documentation>
+            <wsdl:input message="typens:counterpointOrderAddShipmentRequest" />
+            <wsdl:output message="typens:counterpointOrderAddShipmentResponse" />
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
@@ -81,6 +109,18 @@
     <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
          <wsdl:operation name="counterpointOrderAddPayment">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+         <wsdl:operation name="counterpointOrderAddShipment">
             <soap:operation soapAction="" />
             <wsdl:input>
                 <soap:body use="literal" />

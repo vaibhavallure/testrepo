@@ -6,6 +6,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     
     protected $_ctpnt_logs_file_name    = "counterpoint_api";
     
+    protected $_ctpnt_logs_invoice      = "counterpoint_invoice";
+    protected $_ctpnt_logs_shipment     = "counterpoint_shipment";
+    
     protected $_storeId                 = -1;
     protected $_websiteId               = -1;
     
@@ -54,6 +57,14 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_file_name,true);
     }
     
+    private function addLogInvoice($logData){
+        Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_invoice,true);
+    }
+    
+    private function addLogPayment($logData){
+        Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_shipment,true);
+    }
+    
     /**
      * @param string $counterpoint_data
      * @return number
@@ -77,9 +88,68 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $payment_data = trim($payment_data,'"');
         $payment_data = stripslashes($payment_data);
         $paymentData = unserialize($payment_data);
-        $this->AddLog("order count for payment-:".count($paymentData));
+        $this->addLogInvoice("order count for payment-:".count($paymentData));
         $this->addPaymentData($paymentData);
         return 1;
+    }
+    
+    public function addShipment($shipment_data){
+        $shipment_data = utf8_decode($shipment_data);
+        $shipment_data = trim($shipment_data,'"');
+        $shipment_data = stripslashes($shipment_data);
+        $shipmentData = unserialize($shipment_data);
+        $this->addLogPayment("order count for shipment-:".count($shipmentData));
+        $this->createOrderShipment($shipmentData);
+        return 1;
+    }
+    
+    private function createOrderShipment($shipmentData){
+        $cntShip = 1;
+        foreach ($shipmentData as $order_id => $odrData){
+            try{
+                $order = Mage::getModel('sales/order')->load($order_id,'counterpoint_order_id');
+                if($order->getId()) {
+                    $this->addLogPayment("order increment id-:".$order->getIncrementId());
+                    if($order->hasShipments()){
+                        $this->addLogPayment("Order has already shipment."); 
+                    }else{
+                        /**
+                         * Check shipment create availability
+                         */
+                        if(!$order->canShip()) {
+                            $this->_fault('data_invalid', Mage::helper('sales')->__('Cannot do shipment for order.'));
+                        }
+                        
+                        /* @var $shipment Mage_Sales_Model_Order_Shipment */
+                        $shipment = $order->prepareShipment($itemsQty);
+                        if($shipment){
+                            $shipment->register();
+                            $shipment->addComment($comment, $email && $includeComment);
+                            if($email) {
+                                $shipment->setEmailSent(true);
+                            }
+                            $shipment->getOrder()->setIsInProcess(true);
+                            $transactionSave = Mage::getModel('core/resource_transaction')
+                                ->addObject($shipment)
+                                ->addObject($shipment->getOrder())
+                                ->save();
+                            $shipmentId = $shipment->getIncrementId();
+                            $this->addLogPayment("Order shipment created.shipment increment id-:".$shipmentId);
+                            $shipment = null;
+                            $order = null;
+                        }
+                    }
+                }else{
+                    $this->addLogPayment("Order not created.counterpoint order id-:".$order_id);
+                }
+            }catch (Exception $e){
+                $this->addLogPayment("Exception in createCPOrderShipment");
+                $this->addLogPayment("Exception-:".$e->getMessage());
+            }
+            $this->addLogPayment("count-:".$cntShip);
+            $cntShip++;
+        }
+        $this->addLogPayment("Finish...");
     }
     
     private function addPaymentData($payment_data){
@@ -88,12 +158,12 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             try{
                 $orderObj = Mage::getModel('sales/order')
                             ->load($order_id,'counterpoint_order_id');
-                $this->AddLog("order cnt -:".$seqCnt);
+                $this->addLogInvoice("order cnt -:".$seqCnt);
                 if($orderObj->getId()){
                     if($orderObj->hasInvoices()){
-                        $this->AddLog("Invoice already created.order id-:".$orderObj->getIncrementId());
+                        $this->addLogInvoice("Invoice already created.order id-:".$orderObj->getIncrementId());
                     }else{
-                        $this->AddLog("Order counterpoint order present.Id-:".$orderObj->getIncrementId());
+                        $this->addLogInvoice("Order counterpoint order present.Id-:".$orderObj->getIncrementId());
                         $payments = $payData['payment'];
                         //create invoice for created order
                         $ordered_items = $orderObj->getAllItems();
@@ -104,11 +174,14 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         $payCount = count($payments);
                         $paymentCnt = 0;
                         $paymentInfo = array();
+                        $totalPaidAmount = 0;
                         foreach ($payments as $payment){
-                            $cr_card_no_msk = $payment['cr_card_no_msk'];
-                            $payCodeType = $payment['pay_cod_typ'];
-                            $paycode     = $payment['pay_cod'];
-                            $amount      = $payment['amt'];
+                            $cr_card_no_msk     = $payment['cr_card_no_msk'];
+                            $payCodeType        = $payment['pay_cod_typ'];
+                            $paycode            = $payment['pay_cod'];
+                            $amount             = $payment['home_curncy_amt'];//$payment['amt'];
+                            $amountHomeCurncy   = $payment['home_curncy_amt'];
+                            $totalPaidAmount    = $totalPaidAmount + $amount;
                             $invoice = Mage::getModel('sales/service_order', $orderObj)
                                                 ->prepareInvoice($savedQtys);
                             $invoice->setRequestedCaptureCase(self::ORDER_CAPTURE_CASE);
@@ -119,7 +192,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             
                             //if($payCount > 1){
                                 $isShowPay = true;
-                                $incAmount = $payment['amt'];
+                                $incAmount = $payment['home_curncy_amt'];//$payment['amt'];
                                 if($incAmount <= 0){
                                     $isShowPay = false;
                                 }
@@ -182,38 +255,31 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 }
                             }
                            
-                            $this->AddLog("invoice created.id-:".$invoice->getIncrementId());
+                            $this->addLogInvoice("invoice created.id-:".$invoice->getIncrementId());
                         }
                         $increment_id = $orderObj->getIncrementId();
-                        $shipmentId = $this->createShipment($increment_id);
+                        
+                        //$shipmentId = $this->createShipment($increment_id);
                         
                         $orderObj->getPayment()->setAdditionalData(serialize($paymentInfo))->save();
                         $counterpointExtraInfo = unserialize($orderObj->getCounterpointExtraInfo());
                         $counterpointExtraInfo['payment_info'] = $payments;
                         $counterpointExtraInfo = serialize($counterpointExtraInfo);
                         $orderObj->setCounterpointExtraInfo($counterpointExtraInfo);
-                        $orderObj->setTotalPaid($orderObj->getBaseGrandTotal())
-                        ->save();
+                        
+                        $orderObj->setTotalPaid($totalPaidAmount);
+                        $orderObj->save();
                     }
                 }else{
-                    $this->AddLog("Order not created yet.counterpoint_order_id-:".$order_id);
+                    $this->addLogInvoice("Order not created yet.counterpoint_order_id-:".$order_id);
                 }
             }catch(Exception $e){
-                $this->AddLog("Exception in setPaymentData method");
-                $this->AddLog("Exception -: ".$e->getMessage());
+                $this->addLogInvoice("Exception in setPaymentData method");
+                $this->addLogInvoice("Exception -: ".$e->getMessage());
             }
             $seqCnt++;
         }
-        $this->AddLog("finish...");
-    }
-    
-    private function createOrderInvoice($orderObj,$payData){
-        try{
-            
-        }catch(Exception $e){
-            $this->AddLog("Exception in createOrderInvoice method");
-            $this->AddLog("Exception -: ".$e->getMessage());
-        }
+        $this->addLogInvoice("finish...");
     }
     
     
@@ -317,7 +383,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                          $this->_websiteId = $this->_website_vmt;
                          $isOrderCreate = true;
                      }else{
-                         $this->_storeId = $this->_store_vba;
+                         $this->_storeId = $this->_store_vmt;
+                         $this->_websiteId = $this->_website_vmt;
+                         $isOrderCreate = true;
                      }
                      
                      if(count($productsArr) > 0 && $isOrderCreate){
@@ -514,7 +582,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         $orderObj->setGrandTotal($totalAmmount);
                         $orderObj->setBaseTaxAmount($taxAmmount);
                         $orderObj->setBaseGrandTotal($totalAmmount);
-                        $orderObj->setTotalPaid($totalAmmount);
+                        //$orderObj->setTotalPaid($totalAmmount);
                             
                         //complete the order status
                         $orderObj->setData('state',self::ORDER_STATE)
