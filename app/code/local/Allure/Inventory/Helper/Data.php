@@ -75,7 +75,6 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
             "Proposed Qty",
             "VMT Comment",
             "Vendor Comment",
-            "Requested Delivery Date",
             "Proposed Delivery Date"
            
             );
@@ -95,10 +94,11 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$comment = $item->getAdminComment();
     		$Vcomment = $item->getVendorComment();
 //    		$status = $item->getStatus();
-    		$reqdelivery = $item->getRequestedDeliveryDate();
+    		//$reqdelivery = $item->getRequestedDeliveryDate();
     		$propdelivery = $item->getProposedDeliveryDate();
     		//$total = $item->getTotalAmount();
-    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$reqdelivery,$propdelivery), ",");
+    		
+    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$propdelivery), ",");
     	}
     	fclose($fp);
     }
