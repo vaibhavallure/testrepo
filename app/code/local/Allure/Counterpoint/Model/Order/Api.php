@@ -240,7 +240,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 }
                                 $this->createTransaction($orderObj,$payment);
                             }else{
-                                $changeMethod = $this->getChangePaymentMethod($paycode);
+                                $payDesc = $payment['descr'];
+                                $changeMethod = $this->getChangePaymentMethod($paycode,$payDesc);
                                 if($changeMethod['is_change']){
                                     $methodCode = $changeMethod['method_code'];
                                     $orderPay = $orderObj->getPayment();
@@ -620,7 +621,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $orderObj = null;
     }
     
-    private function getChangePaymentMethod($payMethod){
+    private function getChangePaymentMethod($payMethod,$desc){
         $isChange = false;
         $method_code = "";
         if($payMethod == "CHK"){
@@ -663,6 +664,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             $isChange = true;
             $method_code = "counterpoint_pldgc";
         }elseif($payMethod == "£ CASH"){
+            $isChange = true;
+            $method_code = "counterpoint_poundcash";
+        }elseif($desc == "Pound Cash"){
             $isChange = true;
             $method_code = "counterpoint_poundcash";
         }
