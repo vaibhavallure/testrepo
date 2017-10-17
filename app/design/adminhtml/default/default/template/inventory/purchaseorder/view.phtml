@@ -82,7 +82,7 @@
 			<tr id="inventory-row-<?php echo $_product->getProductId(); ?>" class="inventory_tr">
 					
 				<td><?php echo $product->getSku();?></td>
-				<td><?php echo (!$_product->getIsCustom()) ? $product->getVendorItemNo() : "" ;?></td>
+				<td><?php echo (!$_product->getIsCustom()) ? $_product->getVendorSku() : "" ;?></td>
 				<td>
 				<?php if(!$_product->getIsCustom()):?>
 					<img style="width: 50px; height: 50px;" class="product_inventory_thumbnail" 
@@ -109,8 +109,8 @@
 				<?php else:?>
 				<td>
 					<textarea  <?php if(Mage::helper('allure_vendor')->isUserVendor()){echo 'readonly="readonly"';}?>
-						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="3" >
-						 <?php echo $_product->getAdminComment()?>
+						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="7" >
+						<?php echo $_product->getAdminComment()?>
 					</textarea>
 				</td>
 				<?php endif;?>
@@ -130,12 +130,13 @@
                     <div><?php echo $this->getDate($_product->getProductId(),$_product->getProposedDeliveryDate());?></div>
                 </td>
 				<td>
-                    <textarea <?php if(!Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?> name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="13" rows="3" ><?php echo $_product->getVendorComment()?></textarea>
+                    <textarea <?php if(!Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?> name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="13" rows="7" ><?php echo $_product->getVendorComment()?></textarea>
                 </td>
 			</tr>		
         <?php endforeach ;?>
   </table>
   </form>
+  <?php if(!Mage::helper('allure_vendor')->isUserVendor()) :?>
   <table style="width:100%">
       <tr>
       	 <td>
@@ -146,7 +147,7 @@
       	 </td>
       </tr>
   </table>
-  
+  <?php endif;?>
 </div>     	 
 
     

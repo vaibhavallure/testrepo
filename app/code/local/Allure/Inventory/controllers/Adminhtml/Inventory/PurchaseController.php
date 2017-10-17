@@ -174,7 +174,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                     'is_custom' => $item['is_custom'],
                                     'admin_comment' => $item['comment'],
                                     'total_amount' => $item['qty'] * $item['cost'],
-                                    'stock_id' => $stockId
+                                    'stock_id' => $stockId,
+                                    'vendor_sku' =>$item['vendor_sku']
+                                    
                                 );
                                 Mage::log("Admin Comment:" . $item['admin_comment'], Zend_log::DEBUG, 'mylogs', true);
                                 $model->setData($dataItems);
@@ -282,13 +284,14 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             $ship = Mage::app()->getRequest()->getParam('ship');
             $close = Mage::app()->getRequest()->getParam('close');
             $canFullyShipOrder = 1;
+            $diffArray=array();
             foreach ($data['order'] as $product => $key) {
                 $arr = array_filter($data['order'][$product]);
                
                 if (isset($arr) && $arr) {
                     $date = "";
                     if (isset($arr['proposed_delivery_date']) && $arr['proposed_delivery_date'])
-                        $date = date('jS F, Y', strtotime($arr['proposed_delivery_date']));
+                        $date = date('F j, Y', strtotime($arr['proposed_delivery_date']));
                     Mage::log($date,Zend_log::DEBUG, 'pologs', true);
 
                     $dataItems = array(
@@ -301,6 +304,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         'admin_comment' => $arr['admin_comment'],
                         'vendor_comment' => $arr['vendor_comment']
                     );
+        
 
                     $storeId = Mage::getModel('inventory/purchaseorder')->load($po_id)->getStockId();
 
@@ -309,6 +313,23 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         ->addFieldToFilter('product_id', $product)
                         ->addFieldToFilter('po_id', $po_id);
                     foreach ($items as $item) {
+                        if(trim($item->getAdminComment())!=trim($arr['admin_comment'])){
+                            $diffArray[$item->getId()]['admin_comment']=$arr['admin_comment'];
+                            $diffArray[$item->getId()]['admin_comment_old']=$item->getAdminComment();
+                            $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                        }
+                        if(trim($item->getVendorComment())!=trim($arr['vendor_comment'])){
+                            $diffArray[$item->getId()]['vendor_comment']=$arr['vendor_comment'];
+                            $diffArray[$item->getId()]['vendor_comment_old']=$item->getVendorComment();
+                            $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                        }
+                        
+                        if(date('m/d/Y',strtotime($item->getProposedDeliveryDate()))!=$arr['proposed_delivery_date']){
+                            $diffArray[$item->getId()]['proposed_delivery_date']=$date;
+                            $diffArray[$item->getId()]['proposed_delivery_date_old']= date('F j, Y', strtotime($item->getProposedDeliveryDate()));
+                            $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                        }
+                     
                         if ($date)
                             $item->setData('proposed_delivery_date', $date);
                         $item->setData('admin_comment', $arr['admin_comment']);
@@ -317,6 +338,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         if ($close || $ship)
                             $item->setData('proposed_qty', $arr['proposed_qty']);
                         $item->save();
+                       
                     }
 
                     if ($date) {
@@ -374,7 +396,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         $backDate = date_create($date);
                         date_add($backDate, date_interval_create_from_date_string($days . " days"));
                         
-                        $backDate = date_format($backDate, "jS F, Y");
+                        $backDate = date_format($backDate, "F j, Y");
 
                         if (!$item->getIsCustom()) {
                             Mage::getSingleton('catalog/product_action')->updateAttributes(
@@ -417,7 +439,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     $adminEmail =  explode(',', $adminEmail);
                 }
                 $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
-                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true,$diffArray);
 
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order shipped fully.");
 
@@ -432,7 +454,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 }
                 $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                 Mage::log("vendorEmail:".$templateId,Zend_log::DEBUG,"mylogs",true);
-                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true,$diffArray);
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order shipped partially, as some of items remaining to ship.");
             }
             elseif ($ship){
@@ -445,7 +467,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 }
                 $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                 Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
-                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true,$diffArray);
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order Shipped partially.");
             }
             else{
@@ -460,9 +482,10 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if (!empty($adminEmail)) {
                     $adminEmail =  explode(',', $adminEmail);
                 }
-                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+                $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true,$diffArray);
                 Mage::getSingleton('adminhtml/session')->addSuccess("Order saved sucessfully.");
             }
+       
         } catch (Exception $e){
 
             Mage::getSingleton('adminhtml/session')->addError($e);
@@ -470,6 +493,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $this->_redirect('*/*/orders');
     }
 
+    
     public function receivelistAction()
     {
         $this->loadLayout();
@@ -488,6 +512,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $currentOrder=Mage::getModel('inventory/purchaseorder')->load($po_id);
         $sotoreId = $currentOrder->getStockId();
         $helper = Mage::helper('inventory');
+        $diffArray=array();
         
         $void=Mage::app()->getRequest()->getParam('void');
         $close=Mage::app()->getRequest()->getParam('close');
@@ -510,6 +535,23 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                 ->addFieldToFilter('product_id', $product)
                                 ->addFieldToFilter('po_id', $po_id);
                             foreach ($items as $item) {
+                                if(trim($item->getAdminComment())!=trim($arr['admin_comment'])){
+                                    $diffArray[$item->getId()]['admin_comment']=$arr['admin_comment'];
+                                    $diffArray[$item->getId()]['admin_comment_old']=$item->getAdminComment();
+                                    $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                                }
+                                if(trim($item->getVendorComment())!=trim($arr['vendor_comment'])){
+                                    $diffArray[$item->getId()]['vendor_comment']=$arr['vendor_comment'];
+                                    $diffArray[$item->getId()]['vendor_comment_old']=$item->getVendorComment();
+                                    $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                                }
+                                
+                                if(date('m/d/Y',strtotime($item->getProposedDeliveryDate()))!=$arr['proposed_delivery_date']){
+                                    $diffArray[$item->getId()]['proposed_delivery_date']=$date;
+                                    $diffArray[$item->getId()]['proposed_delivery_date_old']= date('F j, Y', strtotime($item->getProposedDeliveryDate()));
+                                    $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                                }
+                                
                                 if ($date)
                                     $item->setData('proposed_delivery_date', $date);
                                 $remainingQty = $item->getData('remaining_qty') - $arr['proposed_qty'];
@@ -544,6 +586,23 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         ->addFieldToFilter('product_id', $product)
                         ->addFieldToFilter('po_id', $po_id);
                     foreach ($items as $item) {
+                        if(trim($item->getAdminComment())!=trim($arr['admin_comment'])){
+                            $diffArray[$item->getId()]['admin_comment']=$arr['admin_comment'];
+                            $diffArray[$item->getId()]['admin_comment_old']=$item->getAdminComment();
+                            $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                        }
+                        if(trim($item->getVendorComment())!=trim($arr['vendor_comment'])){
+                            $diffArray[$item->getId()]['vendor_comment']=$arr['vendor_comment'];
+                            $diffArray[$item->getId()]['vendor_comment_old']=$item->getVendorComment();
+                            $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                        }
+                        
+                        if(date('m/d/Y',strtotime($item->getProposedDeliveryDate()))!=$arr['proposed_delivery_date']){
+                            $diffArray[$item->getId()]['proposed_delivery_date']=$date;
+                            $diffArray[$item->getId()]['proposed_delivery_date_old']= date('F j, Y', strtotime($item->getProposedDeliveryDate()));
+                            $diffArray[$item->getId()]['is_custom']=$item->getIsCustom();
+                        }
+                        
                         if ($date)
                             $item->setData('proposed_delivery_date', $date);
                         $remainingQty = $item->getData('remaining_qty') - $arr['proposed_qty'];
@@ -587,7 +646,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     }
                     $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                     Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
-                    $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+                    $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true,$diffArray);
              }else {
                  //Partially ship and closed
                  if(!$void){
@@ -598,7 +657,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                    }
                    $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                    Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
-                   $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true);
+                   $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true,$diffArray);
                }
              }
            
@@ -702,16 +761,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $Items = $ItemsInfo['items'];
         $ItemsInfo['refence_no'] = $request['refence_no'];
         $ItemsInfo['order_total'] = $request['order_total'];
-        /*
-         * if($request['item']['include'])
-         * $Items[$request['item']['id']] = $request['item'];
-         * else
-         * unset($Items[$request['item']['id']]);
-         * $ItemsInfo['items']=$Items;
-         *
-         * Mage::getModel('core/session')->setMyItemsInfo($ItemsInfo);
-         * Mage::register('hi', 'bye');
-         */
+        
         $model = Mage::getModel('inventory/insertitem');
         $user = Mage::getSingleton('admin/session');
         $userId = $user->getUser()->getUserId();
@@ -723,7 +773,8 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 'comment' => $request['item']['comment'],
                 'user_id' => $userId,
                 'store_id' => $request['item']['store'],
-                'is_custom' => $request['item']['is_custom']
+                'is_custom' => $request['item']['is_custom'],
+                'vendor_sku' => $request['item']['vendor_sku']
 
             );
             $model->setData($insertData);
@@ -739,9 +790,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 echo $e->getMessage();
             }
         }
-        Mage::log($insertData, Zend_log::DEBUG, 'purchase', true);
 
-        // Mage::log(Mage::getModel('core/session')->getMyItemsInfo(),Zend_log::DEBUG,'purchase',true);
         $jsonData = json_encode(compact('success', 'message', 'data'));
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody($jsonData);
