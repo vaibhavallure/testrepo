@@ -207,7 +207,8 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 
 	    $_product = Mage::getModel("catalog/product")->load($product_id);
 
-		Mage::getSingleton('catalog/product_option')->unsetOptions();
+		//Mage::getSingleton('catalog/product_option')->unsetOptions();
+		$_product->getOptionInstance()->unsetOptions();
 	    
 	    if ($_product->getOptions() != ''){
 			foreach ($_product->getOptions() as $_option) {
