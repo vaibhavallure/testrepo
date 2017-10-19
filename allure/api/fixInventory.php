@@ -189,7 +189,8 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 
 		fputcsv($post_length_custom_options, array(
 			$sku,
-			$post_length
+			$post_length,
+			'OK'
 		));
 	} catch (Exception $e) {
 		Mage::log('Failed Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
@@ -244,7 +245,8 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
 				$sku,
 				$stock_id,
 				$oldStock,
-				$qty
+				$qty,
+				'OK'
 			));
 		} catch (Exception $e) {
 			Mage::log('Failed Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
