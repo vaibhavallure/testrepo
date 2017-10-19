@@ -126,7 +126,6 @@ foreach ($fixedItems as $fixedSku) {
 		}
 	}
 }
-die;
 
 $post_length_custom_options_file = Mage::getBaseDir('var').'/export/post_length_custom_options.csv';
 $post_length_inventory_file = Mage::getBaseDir('var').'/export/post_length_inventory.csv';
@@ -135,6 +134,10 @@ $post_length_custom_options = fopen($post_length_custom_options_file, 'w');
 $post_length_inventory = fopen($post_length_inventory_file, 'w');
 
 foreach ($customPostLengthOptions as $product_id => $option_values) {
+
+	$sku = $skuByProductId[$product_id];
+
+	Mage::log('Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 	
 	$option = array (
         'title'			=> 'Post Length',
@@ -160,11 +163,8 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 
 	$_product->save();
 
-	$sku = $skuByProductId[$product_id];
-
 	$post_length = implode('|', $postLenths[$sku]);
 
-	Mage::log('Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 	Mage::log('Post Length:: '.$post_length, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 
 	fputcsv($post_length_custom_options, array(
@@ -176,6 +176,11 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 foreach ($inventoryUpdates as $product_id => $stockQty) {
 
 	foreach ( $stockQty as $stock_id => $qty) {
+
+		$sku = $skuByProductId[$product_id];
+
+		Mage::log('Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+
 	 	$stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
 				->addProductsFilter(array($product_id))
 				->addStockFilter($stock_id)
@@ -195,7 +200,6 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
         $stockItem->save();
 
 		Mage::log('Stock Id:: '.$stock_id, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
-		Mage::log('Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 		Mage::log('Original Stock:: '.$oldStock, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 		Mage::log('New Stock:: '.$qty, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 
