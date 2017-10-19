@@ -155,32 +155,38 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
         'values'		=> $option_values
     );
 
-    $_product = Mage::getModel("catalog/product")->load($product_id);
-    
-    if ($_product->getOptions() != ''){
-		foreach ($_product->getOptions() as $_option) {
-			$_option->delete();
+    try {
+
+	    $_product = Mage::getModel("catalog/product")->load($product_id);
+	    
+	    if ($_product->getOptions() != ''){
+			foreach ($_product->getOptions() as $_option) {
+				$_option->delete();
+			}
+
+			$_product->setHasOptions(0)->save();
 		}
 
-		$_product->setHasOptions(0)->save();
+	    $_product->setProductOptions(array($option));
+		$_product->setCanSaveCustomOptions(true);
+
+		$_product->save();
+
+		unset($_product);
+
+		$post_length = implode('|', $postLenths[$sku]);
+
+		Mage::log('Post Length:: '.$post_length, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+		var_dump('Post Length:: '.$post_length);
+
+		fputcsv($post_length_custom_options, array(
+			$sku,
+			$post_length
+		));
+	} catch (Exception $e) {
+		Mage::log('Failed Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+		var_dump('Failed Adding Custom Options for SKU:: '.$sku);
 	}
-
-    $_product->setProductOptions(array($option));
-	$_product->setCanSaveCustomOptions(true);
-
-	$_product->save();
-
-	unset($_product);
-
-	$post_length = implode('|', $postLenths[$sku]);
-
-	Mage::log('Post Length:: '.$post_length, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
-	var_dump('Post Length:: '.$post_length);
-
-	fputcsv($post_length_custom_options, array(
-		$sku,
-		$post_length
-	));
 }
 
 foreach ($inventoryUpdates as $product_id => $stockQty) {
@@ -193,37 +199,43 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
 
 		var_dump('Updating Stock for SKU:: '.$sku);
 
-	 	$stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
-				->addProductsFilter(array($product_id))
-				->addStockFilter($stock_id)
-				->getFirstItem();
+		try {
 
-      	$oldStock = $stockItem->getQty();
+		 	$stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
+					->addProductsFilter(array($product_id))
+					->addStockFilter($stock_id)
+					->getFirstItem();
 
-        if (!$stockItem->getId()) {
-            $stockItem->setData('product_id', $product_id);
-            $stockItem->setData('stock_id', $stock_id);
-            $stockItem->setData('manage_stock', 1);
-            $stockItem->setData('qty', $qty);
-        } else { // if there is, update it
-            $stockItem->setQty($qty);
-            $stockItem->setManageStock(true);
-        }
-        $stockItem->save();
+	      	$oldStock = $stockItem->getQty();
 
-		unset($stockItem);
+	        if (!$stockItem->getId()) {
+	            $stockItem->setData('product_id', $product_id);
+	            $stockItem->setData('stock_id', $stock_id);
+	            $stockItem->setData('manage_stock', 1);
+	            $stockItem->setData('qty', $qty);
+	        } else { // if there is, update it
+	            $stockItem->setQty($qty);
+	            $stockItem->setManageStock(true);
+	        }
+	        $stockItem->save();
 
-		Mage::log('Stock Id:: '.$stock_id, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
-		Mage::log('Original Stock:: '.$oldStock, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
-		Mage::log('New Stock:: '.$qty, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+			unset($stockItem);
 
-		fputcsv($post_length_inventory, array(
-			$product_id,
-			$sku,
-			$stock_id,
-			$oldStock,
-			$qty
-		));
+			Mage::log('Stock Id:: '.$stock_id, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+			Mage::log('Original Stock:: '.$oldStock, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+			Mage::log('New Stock:: '.$qty, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+
+			fputcsv($post_length_inventory, array(
+				$product_id,
+				$sku,
+				$stock_id,
+				$oldStock,
+				$qty
+			));
+		} catch (Exception $e) {
+			Mage::log('Failed Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+			var_dump('Failed Updating Stock for SKU:: '.$sku);
+		}
 	}
 }
 
