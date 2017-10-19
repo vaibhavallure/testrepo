@@ -184,6 +184,7 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 	if (empty($sku) || in_array($sku, $skippedSkus)) {
 		Mage::log('Skipping Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 		var_dump('Skipping Custom Options for SKU:: '.$sku);
+		continue;
 	}
 
 	Mage::log('Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
@@ -206,7 +207,8 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 
 	    $_product = Mage::getModel("catalog/product")->load($product_id);
 
-		Mage::getSingleton('catalog/product_option')->unsetOptions();
+		//Mage::getSingleton('catalog/product_option')->unsetOptions();
+		$_product->getOptionInstance()->unsetOptions();
 	    
 	    if ($_product->getOptions() != ''){
 			foreach ($_product->getOptions() as $_option) {
@@ -264,6 +266,7 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
 		if (empty($sku) || in_array($sku, $skippedSkus)) {
 			Mage::log('Skipping Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 			var_dump('Skipping Stock for SKU:: '.$sku);
+			continue;
 		}
 
 		Mage::log('Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
