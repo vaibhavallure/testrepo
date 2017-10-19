@@ -31,7 +31,7 @@ foreach ($fixedItems as $fixedSku) {
 		$oldItemSku = $product->getSku();
 
 		Mage::log('Found Simple SKU :: '.$oldItemSku, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-		var_dump("Item SKU: ".$oldItemSku);
+		var_dump("Found Simple SKU: ".$oldItemSku);
 
 		$oldItemSkuArray = explode('|', $oldItemSku);
 
@@ -45,7 +45,7 @@ foreach ($fixedItems as $fixedSku) {
 
 			var_dump("New SKU: ".$newItem);
 
-			var_dump("Parent Item: ".$parentItem);
+			//var_dump("Parent Item: ".$parentItem);
 			var_dump("Post Length: ".$post_length);
 
 			$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItemSku);
@@ -121,10 +121,16 @@ foreach ($fixedItems as $fixedSku) {
 
 	            $inventoryUpdatesLog[$newItem][2] = $inventoryUpdates[$newItemId][2];
 
-				var_dump("Parent Found");
+	            unset($stockItem);
+	            unset($stockItemLondon);
+
 			}
 		}
+
+		unset($product);
 	}
+
+	unset($productCollection);
 }
 
 $post_length_custom_options_file = Mage::getBaseDir('var').'/export/post_length_custom_options.csv';
@@ -138,7 +144,8 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 	$sku = $skuByProductId[$product_id];
 
 	Mage::log('Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
-	
+	var_dump('Adding Custom Options for SKU:: '.$sku);
+
 	$option = array (
         'title'			=> 'Post Length',
         'type'			=> 'drop_down',
@@ -163,9 +170,12 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 
 	$_product->save();
 
+	unset($_product);
+
 	$post_length = implode('|', $postLenths[$sku]);
 
 	Mage::log('Post Length:: '.$post_length, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+	var_dump('Post Length:: '.$post_length);
 
 	fputcsv($post_length_custom_options, array(
 		$sku,
@@ -180,6 +190,8 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
 		$sku = $skuByProductId[$product_id];
 
 		Mage::log('Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
+
+		var_dump('Updating Stock for SKU:: '.$sku);
 
 	 	$stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
 				->addProductsFilter(array($product_id))
@@ -199,10 +211,11 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
         }
         $stockItem->save();
 
+		unset($stockItem);
+
 		Mage::log('Stock Id:: '.$stock_id, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 		Mage::log('Original Stock:: '.$oldStock, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 		Mage::log('New Stock:: '.$qty, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
-
 
 		fputcsv($post_length_inventory, array(
 			$product_id,
