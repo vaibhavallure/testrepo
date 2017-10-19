@@ -28,32 +28,32 @@ foreach ($fixedItems as $fixedSku) {
 
 	foreach ($productCollection  as $product) {
 
-		$oldItemSku = $product->getSku();
+		$oldItem = $product->getSku();
 
-		Mage::log('Found Simple SKU :: '.$oldItemSku, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-		var_dump("Found Simple SKU: ".$oldItemSku);
+		Mage::log('Found Simple SKU :: '.$oldItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+		var_dump("Found Simple SKU: ".$oldItem);
 
-		$oldItemSkuArray = explode('|', $oldItemSku);
+		$oldItemSku = explode('|', $oldItem);
 
-		if (count($oldItemSkuArray) > 2) {
+		if (count($oldItemSku) > 2) {
 
-			$parentItem = $oldItemSkuArray[0];
+			$parentItem = $oldItemSku[0];
 
-			$post_length = array_pop($oldItemSkuArray);
+			$post_length = array_pop($oldItemSku);
 
-			$newItem = implode('|', $oldItemSkuArray);
+			$newItem = implode('|', $oldItemSku);
 
 			var_dump("New SKU: ".$newItem);
 
 			//var_dump("Parent Item: ".$parentItem);
 			var_dump("Post Length: ".$post_length);
 
-			$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItemSku);
+			$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
 			$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
 			$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
 
 			Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-			Mage::log('Original SKU :: '.$oldItemSku, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+			Mage::log('Original SKU :: '.$oldItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
 			Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
 
 			if (!isset($customPostLengthOptions[$parentItemId])) {
@@ -64,7 +64,7 @@ foreach ($fixedItems as $fixedSku) {
 			
 				Mage::log('New ITEM EXISTS !!', Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
 
-				$skuByProductId[$oldItemId] = $oldItemSku;
+				$skuByProductId[$oldItemId] = $oldItem;
 				$skuByProductId[$newItemId] = $newItem;
 				$skuByProductId[$parentItemId] = $parentItem;
 
@@ -146,6 +146,10 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 	Mage::log('Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 	var_dump('Adding Custom Options for SKU:: '.$sku);
 
+	if (empty($sku)) {
+		continue;
+	}
+
 	$option = array (
         'title'			=> 'Post Length',
         'type'			=> 'drop_down',
@@ -186,6 +190,12 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 	} catch (Exception $e) {
 		Mage::log('Failed Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 		var_dump('Failed Adding Custom Options for SKU:: '.$sku);
+
+		fputcsv($post_length_custom_options, array(
+			$sku,
+			$post_length,
+			'FAIL:'.$e->getMessage()
+		));
 	}
 }
 
@@ -202,9 +212,9 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
 		try {
 
 		 	$stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
-					->addProductsFilter(array($product_id))
-					->addStockFilter($stock_id)
-					->getFirstItem();
+				->addProductsFilter(array($product_id))
+				->addStockFilter($stock_id)
+				->getFirstItem();
 
 	      	$oldStock = $stockItem->getQty();
 
@@ -235,6 +245,15 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
 		} catch (Exception $e) {
 			Mage::log('Failed Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
 			var_dump('Failed Updating Stock for SKU:: '.$sku);
+
+			fputcsv($post_length_inventory, array(
+				$product_id,
+				$sku,
+				$stock_id,
+				$oldStock,
+				$qty,
+				'FAIL:'.$e->getMessage()
+			));
 		}
 	}
 }
