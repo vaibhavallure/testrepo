@@ -164,12 +164,12 @@ if ($firstTime) {
 	$postLenths = json_decode(file_get_contents($postLenthsFile), true);
 }
 
-var_dump($skuByProductId);
-var_dump($customPostLengthOptions);
-var_dump($inventoryUpdates);
-var_dump($postLenths);
+//var_dump($skuByProductId);
+//var_dump($customPostLengthOptions);
+//var_dump($inventoryUpdates);
+//var_dump($postLenths);
 
-die;
+//die;
 
 $post_length_custom_options_file = Mage::getBaseDir('var').'/export/post_length_custom_options.csv';
 $post_length_custom_options = fopen($post_length_custom_options_file, 'w');
@@ -204,8 +204,9 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 
     try {
 
-    	/*
 	    $_product = Mage::getModel("catalog/product")->load($product_id);
+
+		Mage::getSingleton('catalog/product_option')->unsetOptions();
 	    
 	    if ($_product->getOptions() != ''){
 			foreach ($_product->getOptions() as $_option) {
@@ -221,7 +222,6 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 		$_product->save();
 
 		unset($_product);
-		*/
 
 		$post_length = implode('|', $postLenths[$sku]);
 
