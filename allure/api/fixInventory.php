@@ -18,130 +18,155 @@ $inventoryUpdates = array();
 
 $postLenths = array();
 
-foreach ($fixedItems as $fixedSku) {
-	Mage::log('Parsing Fixed SKU:: '.$fixedSku, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-	var_dump("Fixed SKU: ".$fixedSku);
-	$productCollection = Mage::getModel('catalog/product')->getCollection()
-		->addAttributeToFilter('type_id', 'simple')
-		->addAttributeToFilter('sku', array ('like'=> $fixedSku.'|%'))
-		->load();
+$skuByProductIdFile = Mage::getBaseDir('var').'/export/skuByProductId.json';
+$customPostLengthOptionsFile = Mage::getBaseDir('var').'/export/customPostLengthOptions.json';
+$inventoryUpdatesFile = Mage::getBaseDir('var').'/export/inventoryUpdates.json';
+$postLenthsFile = Mage::getBaseDir('var').'/export/postLenths.json';
 
-	foreach ($productCollection  as $product) {
 
-		$oldItem = $product->getSku();
+$firstTime = false;
 
-		Mage::log('Found Simple SKU :: '.$oldItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-		var_dump("Found Simple SKU: ".$oldItem);
 
-		$oldItemSku = explode('|', $oldItem);
-
-		if (count($oldItemSku) > 2) {
-
-			$parentItem = $oldItemSku[0];
-
-			$post_length = array_pop($oldItemSku);
-
-			$newItem = implode('|', $oldItemSku);
-
-			var_dump("New SKU: ".$newItem);
-
-			//var_dump("Parent Item: ".$parentItem);
-			var_dump("Post Length: ".$post_length);
-
-			$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
-			$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
-			$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
-
-			Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-			Mage::log('Original SKU :: '.$oldItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-			Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-
-			if (!isset($customPostLengthOptions[$parentItemId])) {
-				$customPostLengthOptions[$parentItemId] = array();
-			}
-
-			if ($newItemId && !isset($customPostLengthOptions[$parentItemId][$post_length])) {
-			
-				Mage::log('New ITEM EXISTS !!', Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-
-				$skuByProductId[$oldItemId] = $oldItem;
-				$skuByProductId[$newItemId] = $newItem;
-				$skuByProductId[$parentItemId] = $parentItem;
-
-				$postLenths[$parentItem][] = $post_length;
-
-				if (!empty($parentItemId)) {
-
-					$sort_order = count($customPostLengthOptions[$parentItemId]) + 1;
-
-					$customPostLengthOptions[$parentItemId][$post_length] = array(
-			            'title' => $post_length,
-			            'price' => 0,
-			            'price_type' => 'fixed',
-			            'sku' => '',
-			            'is_delete' => 0,
-			            'sort_order' => $sort_order
-		            );
-
-		            $customPostLengthOptionsLog[$parentItem][$post_length] = $post_length;
-		        }
-
-		        if (!empty($newItemId)) {
-		            $stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
-						->addProductsFilter(array($oldItemId))
-						->addStockFilter(1)
-						->getFirstItem();
-
-					$oldStock = $stockItem->getQty();
-
-		            $stockItemLondon = Mage::getModel('cataloginventory/stock_item')->getCollection()
-						->addProductsFilter(array($oldItemId))
-						->addStockFilter(2)
-						->getFirstItem();
-
-					$oldStockLondon = $stockItemLondon->getQty();
-
-					if (!isset($inventoryUpdates[$newItemId])) {
-						$inventoryUpdates[$newItemId] = array();
-					}
-
-					Mage::log('Main Stock :: '.$oldStock, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-					Mage::log('London Stock :: '.$oldStockLondon, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-
-		            if (isset($inventoryUpdates[$newItemId][1])) {
-		            	$inventoryUpdates[$newItemId][1] += $oldStock;
-		            } else {
-		            	$inventoryUpdates[$newItemId][1] = $oldStock;
-		            }
-
-		            $inventoryUpdatesLog[$newItem][1] = $inventoryUpdates[$newItemId];
-
-		            if (isset($inventoryUpdates[$newItemId][2])) {
-		            	$inventoryUpdates[$newItemId][2] += $oldStockLondon;
-		            } else {
-		            	$inventoryUpdates[$newItemId][2] = $oldStockLondon;
-		            }
-
-		            $inventoryUpdatesLog[$newItem][2] = $inventoryUpdates[$newItemId][2];
-		        }
-
-	            unset($stockItem);
-	            unset($stockItemLondon);
-
-			}
-		}
-
-		unset($product);
-	}
-
-	unset($productCollection);
+if (!file_exists($skuByProductIdFile)) {
+	$firstTime = true;
 }
 
-$post_length_custom_options_file = Mage::getBaseDir('var').'/export/post_length_custom_options.csv';
-$post_length_inventory_file = Mage::getBaseDir('var').'/export/post_length_inventory.csv';
+if ($firstTime) {
 
+	foreach ($fixedItems as $fixedSku) {
+		Mage::log('Parsing Fixed SKU:: '.$fixedSku, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+		var_dump("Fixed SKU: ".$fixedSku);
+		$productCollection = Mage::getModel('catalog/product')->getCollection()
+			->addAttributeToFilter('type_id', 'simple')
+			->addAttributeToFilter('sku', array ('like'=> $fixedSku.'|%'))
+			->load();
+
+		foreach ($productCollection  as $product) {
+
+			$oldItem = $product->getSku();
+
+			Mage::log('Found Simple SKU :: '.$oldItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+			var_dump("Found Simple SKU: ".$oldItem);
+
+			$oldItemSku = explode('|', $oldItem);
+
+			if (count($oldItemSku) > 2) {
+
+				$parentItem = $oldItemSku[0];
+
+				$post_length = array_pop($oldItemSku);
+
+				$newItem = implode('|', $oldItemSku);
+
+				var_dump("New SKU: ".$newItem);
+
+				//var_dump("Parent Item: ".$parentItem);
+				var_dump("Post Length: ".$post_length);
+
+				$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
+				$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
+				$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
+
+				Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+				Mage::log('Original SKU :: '.$oldItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+				Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+
+				if (!isset($customPostLengthOptions[$parentItemId])) {
+					$customPostLengthOptions[$parentItemId] = array();
+				}
+
+				if ($newItemId && !isset($customPostLengthOptions[$parentItemId][$post_length])) {
+				
+					Mage::log('New ITEM EXISTS !!', Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+
+					$skuByProductId[$oldItemId] = $oldItem;
+					$skuByProductId[$newItemId] = $newItem;
+					$skuByProductId[$parentItemId] = $parentItem;
+
+					$postLenths[$parentItem][] = $post_length;
+
+					if (!empty($parentItemId)) {
+
+						$sort_order = count($customPostLengthOptions[$parentItemId]) + 1;
+
+						$customPostLengthOptions[$parentItemId][$post_length] = array(
+				            'title' => $post_length,
+				            'price' => 0,
+				            'price_type' => 'fixed',
+				            'sku' => '',
+				            'is_delete' => 0,
+				            'sort_order' => $sort_order
+			            );
+
+			            $customPostLengthOptionsLog[$parentItem][$post_length] = $post_length;
+			        }
+
+			        if (!empty($newItemId)) {
+			            $stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
+							->addProductsFilter(array($oldItemId))
+							->addStockFilter(1)
+							->getFirstItem();
+
+						$oldStock = $stockItem->getQty();
+
+			            $stockItemLondon = Mage::getModel('cataloginventory/stock_item')->getCollection()
+							->addProductsFilter(array($oldItemId))
+							->addStockFilter(2)
+							->getFirstItem();
+
+						$oldStockLondon = $stockItemLondon->getQty();
+
+						if (!isset($inventoryUpdates[$newItemId])) {
+							$inventoryUpdates[$newItemId] = array();
+						}
+
+						Mage::log('Main Stock :: '.$oldStock, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+						Mage::log('London Stock :: '.$oldStockLondon, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+
+			            if (isset($inventoryUpdates[$newItemId][1])) {
+			            	$inventoryUpdates[$newItemId][1] += $oldStock;
+			            } else {
+			            	$inventoryUpdates[$newItemId][1] = $oldStock;
+			            }
+
+			            $inventoryUpdatesLog[$newItem][1] = $inventoryUpdates[$newItemId];
+
+			            if (isset($inventoryUpdates[$newItemId][2])) {
+			            	$inventoryUpdates[$newItemId][2] += $oldStockLondon;
+			            } else {
+			            	$inventoryUpdates[$newItemId][2] = $oldStockLondon;
+			            }
+
+			            $inventoryUpdatesLog[$newItem][2] = $inventoryUpdates[$newItemId][2];
+			        }
+
+		            unset($stockItem);
+		            unset($stockItemLondon);
+
+				}
+			}
+
+			unset($product);
+		}
+
+		unset($productCollection);
+	}
+
+
+	file_put_contents($skuByProductIdFile, json_encode($skuByProductId));
+	file_put_contents($customPostLengthOptionsFile, json_encode($customPostLengthOptions));
+	file_put_contents($inventoryUpdatesFile, json_encode($inventoryUpdates));
+	file_put_contents($postLenthsFile, json_encode($postLenths));
+} else {
+	$skuByProductId = json_decode(file_put_contents($skuByProductIdFile)), true);
+	$customPostLengthOptions = json_decode(file_put_contents($customPostLengthOptionsFile), true);
+	$inventoryUpdates = json_decode(file_put_contents($inventoryUpdatesFile), true);
+	$postLenths = json_decode(file_put_contents($postLenthsFile), true);
+}
+
+
+$post_length_custom_options_file = Mage::getBaseDir('var').'/export/post_length_custom_options.csv';
 $post_length_custom_options = fopen($post_length_custom_options_file, 'w');
-$post_length_inventory = fopen($post_length_inventory_file, 'w');
 
 foreach ($customPostLengthOptions as $product_id => $option_values) {
 
@@ -204,6 +229,14 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 	}
 }
 
+fclose($post_length_custom_options);
+
+die;
+
+$post_length_inventory_file = Mage::getBaseDir('var').'/export/post_length_inventory.csv';
+
+$post_length_inventory = fopen($post_length_inventory_file, 'w');
+
 foreach ($inventoryUpdates as $product_id => $stockQty) {
 
 	foreach ( $stockQty as $stock_id => $qty) {
@@ -264,5 +297,4 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
 	}
 }
 
-fclose($post_length_custom_options);
 fclose($post_length_inventory);
