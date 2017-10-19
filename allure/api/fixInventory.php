@@ -70,56 +70,60 @@ foreach ($fixedItems as $fixedSku) {
 
 				$postLenths[$parentItem][] = $post_length;
 
-				$sort_order = count($customPostLengthOptions[$parentItemId]) + 1;
+				if (!empty($parentItemId)) {
 
-				$customPostLengthOptions[$parentItemId][$post_length] = array(
-		            'title' => $post_length,
-		            'price' => 0,
-		            'price_type' => 'fixed',
-		            'sku' => '',
-		            'is_delete' => 0,
-		            'sort_order' => $sort_order
-	            );
+					$sort_order = count($customPostLengthOptions[$parentItemId]) + 1;
 
-	            $customPostLengthOptionsLog[$parentItem][$post_length] = $post_length;
+					$customPostLengthOptions[$parentItemId][$post_length] = array(
+			            'title' => $post_length,
+			            'price' => 0,
+			            'price_type' => 'fixed',
+			            'sku' => '',
+			            'is_delete' => 0,
+			            'sort_order' => $sort_order
+		            );
 
-	            $stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
-					->addProductsFilter(array($oldItemId))
-					->addStockFilter(1)
-					->getFirstItem();
+		            $customPostLengthOptionsLog[$parentItem][$post_length] = $post_length;
+		        }
 
-				$oldStock = $stockItem->getQty();
+		        if (!empty($newItemId)) {
+		            $stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
+						->addProductsFilter(array($oldItemId))
+						->addStockFilter(1)
+						->getFirstItem();
 
-	            $stockItemLondon = Mage::getModel('cataloginventory/stock_item')->getCollection()
-					->addProductsFilter(array($oldItemId))
-					->addStockFilter(2)
-					->getFirstItem();
+					$oldStock = $stockItem->getQty();
 
-				$oldStockLondon = $stockItemLondon->getQty();
+		            $stockItemLondon = Mage::getModel('cataloginventory/stock_item')->getCollection()
+						->addProductsFilter(array($oldItemId))
+						->addStockFilter(2)
+						->getFirstItem();
 
-				if (!isset($inventoryUpdates[$newItemId])) {
-					$inventoryUpdates[$newItemId] = array();
-				}
+					$oldStockLondon = $stockItemLondon->getQty();
 
+					if (!isset($inventoryUpdates[$newItemId])) {
+						$inventoryUpdates[$newItemId] = array();
+					}
 
-				Mage::log('Main Stock :: '.$oldStock, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
-				Mage::log('London Stock :: '.$oldStockLondon, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+					Mage::log('Main Stock :: '.$oldStock, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
+					Mage::log('London Stock :: '.$oldStockLondon, Zend_Log::DEBUG, 'parent_child_migrations_parsing.log', true);
 
-	            if (isset($inventoryUpdates[$newItemId][1])) {
-	            	$inventoryUpdates[$newItemId][1] += $oldStock;
-	            } else {
-	            	$inventoryUpdates[$newItemId][1] = $oldStock;
-	            }
+		            if (isset($inventoryUpdates[$newItemId][1])) {
+		            	$inventoryUpdates[$newItemId][1] += $oldStock;
+		            } else {
+		            	$inventoryUpdates[$newItemId][1] = $oldStock;
+		            }
 
-	            $inventoryUpdatesLog[$newItem][1] = $inventoryUpdates[$newItemId];
+		            $inventoryUpdatesLog[$newItem][1] = $inventoryUpdates[$newItemId];
 
-	            if (isset($inventoryUpdates[$newItemId][2])) {
-	            	$inventoryUpdates[$newItemId][2] += $oldStockLondon;
-	            } else {
-	            	$inventoryUpdates[$newItemId][2] = $oldStockLondon;
-	            }
+		            if (isset($inventoryUpdates[$newItemId][2])) {
+		            	$inventoryUpdates[$newItemId][2] += $oldStockLondon;
+		            } else {
+		            	$inventoryUpdates[$newItemId][2] = $oldStockLondon;
+		            }
 
-	            $inventoryUpdatesLog[$newItem][2] = $inventoryUpdates[$newItemId][2];
+		            $inventoryUpdatesLog[$newItem][2] = $inventoryUpdates[$newItemId][2];
+		        }
 
 	            unset($stockItem);
 	            unset($stockItemLondon);
@@ -185,7 +189,8 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 
 		fputcsv($post_length_custom_options, array(
 			$sku,
-			$post_length
+			$post_length,
+			'OK'
 		));
 	} catch (Exception $e) {
 		Mage::log('Failed Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
@@ -240,7 +245,8 @@ foreach ($inventoryUpdates as $product_id => $stockQty) {
 				$sku,
 				$stock_id,
 				$oldStock,
-				$qty
+				$qty,
+				'OK'
 			));
 		} catch (Exception $e) {
 			Mage::log('Failed Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'parent_child_migrations_processing.log', true);
