@@ -14,9 +14,11 @@ $fixedItems = array("CCLV7DPS_C","CCLV7DPS_R","XCLVD","CCLVD","CCLVD_B","CCLVD_C
 
 
 foreach ($fixedItems as $fixedSku) {
-    
+    $removePostLength=false;
     $productId = Mage::getModel('catalog/product')->getIdBySku($fixedSku);
     $_product = Mage::getModel('catalog/product')->load($productId);
+    
+    if($_product->getId()){   //Process only if product found
     
     $childProducts = Mage::getModel('catalog/product_type_configurable')
         ->getUsedProducts(null,$_product);
@@ -32,7 +34,7 @@ foreach ($fixedItems as $fixedSku) {
             
             $lengthString1   = "MM";
             
-            if(preg_match("/MM/", $childSku) || preg_match("/mm/", $childSku)) {
+            if(preg_match("/MM/", $childSku) || preg_match("/mm/", $childSku)) {   //Check contains length
                 
                 Mage::log('Simple SKU with Length :: '.$childSku, Zend_Log::DEBUG, 'parent_child_association.log', true);
                 $childSkuArray = explode('|', $childSku);
@@ -47,6 +49,7 @@ foreach ($fixedItems as $fixedSku) {
                     
                     if(isset($productIdWithoutLength) && !empty($productIdWithoutLength) && $productNew->getTypeId()=='simple'){
                        // $newAssoProductsArray[]=$productIdWithoutLength;
+                        $removePostLength=true;
                         foreach (array_keys($newAssoProductsArray, $child->getId()) as $key) {
                             unset($newAssoProductsArray[$key]);
                         }
@@ -62,22 +65,38 @@ foreach ($fixedItems as $fixedSku) {
             }
             
      }
-     Mage::log('Array :: '.$newAssoProductsArray, Zend_Log::DEBUG, 'parent_child_association.log', true);
    
      
-     Mage::getResourceSingleton('catalog/product_type_configurable')
-            ->saveProducts($_product, $newAssoProductsArray);
-            
-     $productAttributeOptions = $_product->getTypeInstance(true)->getConfigurableAttributesAsArray($_product);
+     try {
+         if($removePostLength){
+             Mage::getResourceSingleton('catalog/product_type_configurable')
+             ->saveProducts($_product, $newAssoProductsArray);
+        
+             $productAttributeOptions = $_product->getTypeInstance(true)->getConfigurableAttributesAsArray($_product);
              foreach ($productAttributeOptions as $prodOptions){
                  if($prodOptions['attribute_code']=='post_length'){
-                 $query        = "delete from {$table} WHERE product_super_attribute_id =".$prodOptions['id'];
-                 $writeAdapter->query($query);
+                     $query        = "delete from {$table} WHERE product_super_attribute_id =".$prodOptions['id'];
+                     $writeAdapter->query($query);
                  }
              }
-           
-     Mage::log('Association updated for :: '.$_product->getId(), Zend_Log::DEBUG, 'parent_child_association.log', true);
+             Mage::log('Association updated for :: '.$_product->getId(), Zend_Log::DEBUG, 'parent_child_association.log', true);
+         }  //Remove post lengths only when atleast one new wothout postlength product found
+         else{
+             Mage::log('Updation Not reuired :: '.$_product->getId(), Zend_Log::DEBUG, 'parent_child_association.log', true);
+         }
+         
+     } catch (Exception $e) {
+         var_dump("Excepton:".$e->getMessage());
+     }
+     
+     
+     Mage::log('==================================================== ', Zend_Log::DEBUG, 'parent_child_association.log', true);
        
+    }
+    else{
+        Mage::log('Product Not found ::'.$fixedSku, Zend_Log::DEBUG, 'parent_child_association.log', true);
+        Mage::log('==================================================== ', Zend_Log::DEBUG, 'parent_child_association.log', true);
+    }
 }
 
 
