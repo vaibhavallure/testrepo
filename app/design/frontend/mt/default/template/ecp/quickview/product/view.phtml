@@ -30,18 +30,32 @@
 </script>
 <?php 
 $_helper = $this->helper('catalog/output'); ?>
-<?php $_product = $this->getProduct(); ?>
+<?php $_product = $this->getProduct();
+
+$prHelper        = Mage::helper("alluremultistore_catalog");
+$isCustomOptions = $prHelper->isCustomOptionsAvailable($_product->getId());
+$parentVal = ($isCustomOptions)?1:0;
+
+?>
 <script type="text/javascript">
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view sample-size">
 <div class="product-essential">
-<form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" target="_top" method="post"
+ <?php if(!$isCustomOptions):?>
+ 
+<form action="<?php echo $this->getSubmitUrl($_product). 'cpid/'.$_product->getId().'/' ?>" target="_top" method="post"
       id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+      <?php else:?>
+      <form action="<?php echo $this->getSubmitUrl($_product). /* 'cpid/'.$_product->getId(). */'/' ?>" target="_top" method="post"
+      id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+      
+        <?php endif;?>
     <div class="no-display">
         <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
         <input type="hidden" name="related_product" id="related-products-field" value=""/>
+        <input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
     </div>
 
     <div class="product-shop-quickview">

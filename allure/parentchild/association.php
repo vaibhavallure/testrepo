@@ -1,5 +1,5 @@
 <?php
-require_once('../app/Mage.php');
+require_once('../../app/Mage.php');
 umask(0);
 Mage::app();
 Mage::app()->setCurrentStore(0);
