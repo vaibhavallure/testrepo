@@ -8,7 +8,7 @@ ini_set('memory_limit', '-1');
 $startDate = $_GET['start'];
 $endDate   = $_GET['end'];
 $state     = $_GET['state'];
-die;
+//die;
 if(empty($state)){
     die("Please mention data in 'state' field.");
 }else{
@@ -55,10 +55,10 @@ if($conn){
                     
                     FROM PS_TKT_HIST MAIN_TABLE 
                     WHERE 
-                    MAIN_TABLE.STR_ID NOT IN(3 ,7) AND
-                    MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
+                    MAIN_TABLE.STR_ID NOT IN(3 ,7) 
+                    AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
                     AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
-                    MAIN_TABLE.TKT_TYP = 'T'
+                    AND MAIN_TABLE.TKT_TYP = 'T'
                     -- AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
                     -- AND MAIN_TABLE.TKT_NO = '3-1002596' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
@@ -116,7 +116,7 @@ if($conn){
 
 
 //remote site wsdl url
-$_URL       = "http://mariatash.ws02.allure.inc/api/v2_soap/?wsdl=1";
+$_URL       = "http://universal.allurecommerce.com/api/v2_soap/?wsdl=1";
 
 /**
  * @return array of magento credentials.

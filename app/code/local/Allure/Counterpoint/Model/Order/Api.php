@@ -399,7 +399,273 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             $count = 1;
             foreach ($counterpointOrderArr as $order_id_key => $order_data_arr){
                 $ctrpnt_order_id = $order_id_key;//$this->getCounterpointOrderId($order_id_key);
-                $this->createOrderByUsingCounterpointData($ctrpnt_order_id, $order_data_arr);
+                //$this->createOrderByUsingCounterpointData($ctrpnt_order_id, $order_data_arr);
+                
+                $ctpnt_order_id = $ctrpnt_order_id;
+                $ctpnt_order_data = $order_data_arr;
+                try{
+                    $productModel = Mage::getModel("catalog/product");
+                    $order_type = $ctpnt_order_data['order_type'];
+                    $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'increment_id');
+                    if(!$orderObj->getId()){
+                        $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
+                        if($order_type == "ord"){
+                            $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_orig_tkt_no');
+                        }
+                        
+                        if(!$orderObj->getId()){
+                            $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." not present in magento.");
+                            $productsArr = $ctpnt_order_data['item_detail'];
+                            $extraOrderDetails = $ctpnt_order_data['order_detail'];
+                            
+                            $extraInfo = $ctpnt_order_data['extra_data'];
+                            $isOrderCreate = false;
+                            if($extraInfo['str_id'] == 1){
+                                $this->_storeId = $this->_store_vba;
+                                $this->_websiteId = $this->_website_vba;
+                                $isOrderCreate = true;
+                            }elseif($extraInfo['str_id'] == 2){
+                                $this->_storeId = $this->_store_vmt;
+                                $this->_websiteId = $this->_website_vmt;
+                                $isOrderCreate = true;
+                            }else{
+                                $this->_storeId = $this->_store_vmt;
+                                $this->_websiteId = $this->_website_vmt;
+                                $isOrderCreate = true;
+                            }
+                            
+                            if(count($productsArr) > 0 && $isOrderCreate){
+                                $this->AddLog("store id -:".$this->_storeId);
+                                $customerDetailArr = $ctpnt_order_data['customer_detail'];
+                                $customer = $this->insertCustomer($customerDetailArr);
+                                $billingAddress = $this->getBillingAddressOfCtpnt($customer,$customerDetailArr);
+                                
+                                $quoteObj = Mage::getModel('sales/quote')
+                                ->assignCustomer($customer);
+                                $quoteObj = $quoteObj->setStoreId($this->_storeId);
+                                
+                                foreach ($productsArr as $value){
+                                    $sku = strtoupper($value['sku']);
+                                    $qty = $value['qty'];
+                                    
+                                    //negative price may be discount
+                                    //i.e payout or yelp in counterpoint
+                                    $price = $value['prc'];
+                                    if($price < 0){
+                                        if(($sku == "PAYOUT") || ($sku == "YELP") ){
+                                            $price = $price * (-1);
+                                        }
+                                    }
+                                    
+                                    $productObj = Mage::getModel('catalog/product');
+                                    $productObj->setTypeId(self::SIMPLE_PRODUCT);
+                                    $productObj->setTaxClassId(self::TAX_CLASS_ID);
+                                    $productObj->setSku($sku);
+                                    $productObj->setName($value['pname']);
+                                    $productObj->setShortDescription($value['pname']);
+                                    $productObj->setDescription($value['pname']);
+                                    $productObj->setPrice($price);
+                                    
+                                    $quoteItem = Mage::getModel("allure_counterpoint/item")
+                                    ->setProduct($productObj);
+                                    $quoteItem->setQty($qty);
+                                    $quoteItem->setStoreId($this->_storeId);
+                                    $quoteObj->addItem($quoteItem);
+                                    $productObj = null;
+                                }
+                                
+                                $quoteBillingAddress = Mage::getModel('sales/quote_address');
+                                $quoteBillingAddress->setData($billingAddress);
+                                $quoteObj->setBillingAddress($quoteBillingAddress);
+                                //if product is not virtual
+                                if(!$quoteObj->getIsVirtual()) {
+                                    $shippingAddress = $billingAddress;
+                                    $quoteShippingAddress = Mage::getModel('sales/quote_address');
+                                    $quoteShippingAddress->setData($shippingAddress);
+                                    $quoteObj->setShippingAddress($quoteShippingAddress);
+                                    // fixed shipping method
+                                    $quoteObj->getShippingAddress()
+                                    ->setShippingMethod($this->_shippingMethodCode); //self::SHIPPING_METHOD
+                                    //$quoteObj->getShippingAddress()->setCollectShippingRates(true);
+                                    //$quoteObj->getShippingAddress()->collectShippingRates();
+                                }
+                                
+                                $quoteObj->collectTotals();
+                                
+                                //change order total if sku maybe 'yelp' or 'payout'
+                                //Start allure-2
+                                $quoteItemsObj = $quoteObj->getAllItems();
+                                $discountTot    = 0;
+                                $isDiscountTot  = false;
+                                foreach ($quoteItemsObj as $item) {
+                                    $kuQ = $item->getSku();
+                                    if(($kuQ == "YELP") || ($kuQ == "PAYOUT")){
+                                        $qtyQ = $item->getQty();
+                                        $priceQ = $item->getPrice();
+                                        if($qtyQ<0){
+                                            $priceQ = $priceQ * $qtyQ * (-1);
+                                        }else{
+                                            $priceQ = $priceQ * $qtyQ * (-1);
+                                        }
+                                        $item->setRowTotal($priceQ);
+                                        $item->setBaseRowTotal($priceQ);
+                                        $item->setRowTotalInclTax($priceQ);
+                                        $item->setBaseRowTotalInclTax($priceQ);
+                                        $item->setTaxableAmount($priceQ);
+                                        $item->setBaseTaxableAmount($priceQ);
+                                        $discountTot = $discountTot + ($priceQ);
+                                        $isDiscountTot = true;
+                                    }
+                                }
+                                
+                                if($isDiscountTot){
+                                    $discountTot = $discountTot * 2;
+                                    $quoteObj->setSubtotal($quoteObj->getSubtotal() + $discountTot);
+                                    $quoteObj->setBaseSubtotal($quoteObj->getBaseSubtotal() + $discountTot);
+                                    $quoteObj->setSubtotalWithDiscount($quoteObj->getSubtotalWithDiscount() + $discountTot);
+                                    $quoteObj->setBaseSubtotalWithDiscount($quoteObj->getBaseSubtotalWithDiscount() + $discountTot);
+                                    $quoteObj->setGrandTotal($quoteObj->getGrandTotal() + $discountTot);
+                                    $quoteObj->setBaseGrandTotal($quoteObj->getBaseGrandTotal() + $discountTot);
+                                }
+                                $quoteObj->save();
+                                //End - allure-2
+                                
+                                $quoteObj->setIsActive(0);
+                                $quoteObj->reserveOrderId();
+                                //order status as counterpoint 1
+                                $quoteObj->setCreateOrderMethod(self::COUNTERPOINT_ORDER);
+                                $quoteObj->setCounterpointOrderId($ctpnt_order_id);
+                                
+                                $quoteObj->setCounterpointOrderType($order_type);
+                                $quoteObj->setCounterpointStrId($extraInfo['str_id']);
+                                $quoteObj->setCounterpointStaId($extraInfo['sta_id']);
+                                $quoteObj->setCounterpointDrwId($extraInfo['drw_id']);
+                                $quoteObj->setCounterpointDocId($extraInfo['doc_id']);
+                                $extraInfoSer = serialize($extraInfo);
+                                $quoteObj->setCounterpointExtraInfo($extraInfoSer);
+                                
+                                $quoteObj->setOrderType(self::ORDER_TYPE);
+                                $incrementIdQ = $quoteObj->getReservedOrderId();
+                                if($incrementIdQ){
+                                    $incrementIdQ = "CP-".$incrementIdQ;
+                                    $quoteObj->setReservedOrderId($incrementIdQ);
+                                }
+                                
+                                $ccInfo = array();
+                                // assign payment method
+                                $payment_method  = self::PAYMENT_METHOD_CASH;
+                                $quotePaymentObj = $quoteObj->getPayment();
+                                $quotePaymentObj->setMethod($payment_method);
+                                $quoteObj->setPayment($quotePaymentObj);
+                                
+                                $convertQuoteObj = Mage::getSingleton('sales/convert_quote');
+                                if($quoteObj->getIsVirtual()) {
+                                    $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getBillingAddress());
+                                }else{
+                                    $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getShippingAddress());
+                                }
+                                
+                                
+                                $orderObj->setBillingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getBillingAddress()));
+                                //$orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
+                                if(!$quoteObj->getIsVirtual()) {
+                                    $orderObj->setShippingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getShippingAddress()));
+                                }
+                                
+                                $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
+                                
+                                $items=$quoteObj->getAllItems();
+                                foreach ($items as $item) {
+                                    $productId = $productModel->getIdBySku($item->getSku());
+                                    $orderItem = $convertQuoteObj->itemToOrderItem($item);
+                                    if($item->getParentItem()) {
+                                        $orderItem->setParentItem($orderObj->getItemByQuoteItemId($item->getParentItem()->getId()));
+                                    }
+                                    //refunded code
+                                    if($orderItem->getData('qty_ordered') < 0){
+                                        $qtyItem = $orderItem->getData('qty_ordered');
+                                        if($qtyItem < 0){
+                                            $qtyItem = $qtyItem * (-1);
+                                        }
+                                        $orderItem->setData('qty_ordered',$qtyItem);
+                                        $orderItem->setData('qty_refunded',$qtyItem);
+                                        $orderItem->setData('qty_canceled',$qtyItem);
+                                    }
+                                    $orderItem->setData('created_at',$extraOrderDetails['order_date']);
+                                    $orderItem->setData('updated_at',$extraOrderDetails['order_date']);
+                                    if($productId){
+                                        $orderItem->setData('product_id',$productId);
+                                    }
+                                    $orderObj->addItem($orderItem);
+                                }
+                                
+                                $orderObj->setCanShipPartiallyItem(false);
+                                
+                                $totalDue = $orderObj->getTotalDue();
+                                
+                                $totalAmmount = $quoteObj->getGrandTotal();
+                                $taxAmmount = $extraOrderDetails['tax'];
+                                $discountAmount = $extraOrderDetails['dis_amount'];
+                                
+                                if(1){
+                                    $totalAmmount =$totalAmmount + $taxAmmount;
+                                    $orderObj->setTaxAmount($taxAmmount);
+                                }
+                                if($discountAmount){
+                                    $discountAmount = 0-$discountAmount;
+                                    $totalAmmount = $totalAmmount + $discountAmount;
+                                    $orderObj->setDiscountAmount($discountAmount);
+                                }
+                                
+                                if($isDiscountTot){
+                                    $quoteSubTotal = $quoteObj->getSubtotal();
+                                    $orderObj->setSubtotal($quoteSubTotal);
+                                    $orderObj->setBaseSubtotal($quoteSubTotal);
+                                    $orderObj->setSubtotalInclTax($quoteSubTotal);
+                                    $orderObj->setBaseSubtotalInclTax($quoteSubTotal);
+                                }
+                                
+                                $orderObj->setShippingDescription($this->_shippingMethodName); //self::SHIPPING_METHOD_NAME
+                                $orderObj->setGrandTotal($totalAmmount);
+                                $orderObj->setBaseTaxAmount($taxAmmount);
+                                $orderObj->setBaseGrandTotal($totalAmmount);
+                                //$orderObj->setTotalPaid($totalAmmount);
+                                
+                                //complete the order status
+                                $orderObj->setData('state',self::ORDER_STATE)
+                                ->setData('status',self::ORDER_STATUS);
+                                
+                                $orderObj->setCreatedAt($extraOrderDetails['order_date']);
+                                try{
+                                    $orderObj->save();
+                                    $quoteObj->save();
+                                    $increment_id = $orderObj->getRealOrderId();
+                                    $this->AddLog("new order increment_id-:".$increment_id);
+                                    
+                                    $quoteObj       = null;
+                                    $orderObj       = null;
+                                    $customer       = null;
+                                    $billingAddress = null;
+                                    $productModel   = null;
+                                    
+                                }catch(Exception $e){
+                                    $this->AddLog("Exception-".$e->getMessage());
+                                    $e = null;
+                                }
+                            }
+                        }else{
+                            $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." already created in magento.");
+                        }
+                    }else{
+                        $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." present in magento.");
+                    }
+                }catch (Exception $e){
+                    $this->AddLog("Exception in importCPSQLOrderIntoMagento method of Class name is-:".get_class($this));
+                    $this->AddLog($e->getMessage());
+                    $e = null;
+                }
+                $orderObj = null;
+                
                 $this->AddLog("count no-:".$count);
                 $count++;
             }

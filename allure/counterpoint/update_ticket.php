@@ -46,9 +46,9 @@ if($conn){
                     FROM PS_TKT_HIST A
                     JOIN PS_TKT_HIST_ORIG_DOC B ON(A.DOC_ID=B.DOC_ID)
                     WHERE A.STR_ID IN(1,2) 
-                   -- AND A.TKT_DT >= convert(datetime,'".$startDate."')
-                    -- AND A.TKT_DT <= convert(datetime,'".$endDate."') 
-                    AND A.TKT_NO = '215849' 
+                    AND A.TKT_DT >= convert(datetime,'".$startDate."')
+                    AND A.TKT_DT <= convert(datetime,'".$endDate."') 
+                    -- AND A.TKT_NO = '215849' 
                     ORDER BY B.ORIG_TKT_NO DESC";
         
         $result = odbc_exec($conn, $query);
@@ -107,8 +107,8 @@ function getSoapWSDLOptions(){
 try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
-    //$client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    //$session = $client->login($_AUTH_DETAILS_ARR);
+    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    $session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -119,11 +119,11 @@ try{
         'order_data' => $reqU
     );
     
-    //$result  = $client->counterpointOrderUpdateTicketByOrignalTicket($_RequestData);
-    $result = Mage::getModel('allure_counterpoint/order_api')->updateTicketByOrignalTicket($reqU);
+    $result  = $client->counterpointOrderUpdateTicketByOrignalTicket($_RequestData);
+    //$result = Mage::getModel('allure_counterpoint/order_api')->updateTicketByOrignalTicket($reqU);
     echo "<pre>";
     print_r($result);
-    //$client->endSession(array('sessionId' => $session->result));
+    $client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);
