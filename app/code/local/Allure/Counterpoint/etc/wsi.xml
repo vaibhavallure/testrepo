@@ -13,6 +13,8 @@
                     <xsd:sequence>
                         <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
                     	<xsd:element minOccurs="1" maxOccurs="1" name="counterpoint_data" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="memory_limit" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="is_memory_limit" type="xsd:int" />
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>

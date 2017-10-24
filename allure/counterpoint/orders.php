@@ -98,7 +98,7 @@ if($conn){
                     AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
                     AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
                     AND CONTACT_TABLE.CONTACT_ID = ".$state."
-                    AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
+                    -- AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
                     -- AND MAIN_TABLE.TKT_NO = '215849' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
@@ -200,7 +200,9 @@ try{
     
     $_RequestData = array(
         'sessionId' => $session->result,
-        'counterpoint_data' => $reqU
+        'counterpoint_data' => $reqU,
+        'memory_limit' => '-1',
+        'is_memory_limit' => 1
     );
     
     $result  = $client->counterpointOrderList($_RequestData);

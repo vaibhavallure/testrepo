@@ -10,6 +10,8 @@
     <message name="counterpointOrderListRequest">
     	<part name="sessionId" type="xsd:string" />
     	<part name="counterpoint_data" type="xsd:string" />
+    	<part name="memory_limit" type="xsd:string" />
+    	<part name="is_memory_limit" type="xsd:int" />
 	</message>
 	<message name="counterpointOrderListResponse">
 	    <part name="result" type="xsd:int"  />

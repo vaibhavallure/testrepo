@@ -80,12 +80,18 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
      * @param string $counterpoint_data
      * @return number
      */
-    public function test($counterpoint_data){
+    public function test($counterpoint_data,$memory_limit = null,$is_memory_limit = 0){
         $counterpoint_data = utf8_decode($counterpoint_data);
         $counterpoint_data = trim($counterpoint_data,'"');
         $counterpoint_data = stripslashes($counterpoint_data);
         $counterpointData = unserialize($counterpoint_data);
         $this->AddLog("Total Order Count-:".count($counterpointData));
+        $this->AddLog("memory limit-:".$memory_limit);
+        $this->AddLog("is memory limit-:".$is_memory_limit);
+        if($is_memory_limit){
+            if(!empty($memory_limit))
+                ini_set('memory_limit', $memory_limit);
+        }
         $this->importCPSQLOrderIntoMagento($counterpointData);
         $counterpointData = null;
         return 1;
