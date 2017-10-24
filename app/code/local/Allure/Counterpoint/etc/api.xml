@@ -20,6 +20,14 @@
                         <title>Add shipment to order</title>
                         <acl>allure_counterpoint/order</acl>
                     </addShipment>
+                    <updateTicketByOrignalTicket>
+                    	<title>update order id by orignal ticket</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </updateTicketByOrignalTicket>
+                    <addOrignalTicket>
+                    	<title>add orignal ticket</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </addOrignalTicket>
 			    </methods>
 			</counterpoint_order>
 		</resources>

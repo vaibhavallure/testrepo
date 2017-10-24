@@ -9,6 +9,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     protected $_ctpnt_logs_invoice      = "counterpoint_invoice";
     protected $_ctpnt_logs_shipment     = "counterpoint_shipment";
     
+    protected $_ctpnt_logs_update_tkt   = "counterpoint_update_ticket";
+    protected $_ctpnt_logs_orignal_tkt  = "counterpoint_orignal_ticket";
+    
     protected $_storeId                 = -1;
     protected $_websiteId               = -1;
     
@@ -65,6 +68,14 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_shipment,true);
     }
     
+    private function addLogUpdateOrder($logData){
+        Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_update_tkt,true);
+    }
+    
+    private function addLogOrignalOrder($logData){
+        Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_orignal_tkt,true);
+    }
+    
     /**
      * @param string $counterpoint_data
      * @return number
@@ -103,11 +114,62 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         return 1;
     }
     
+    /**
+     * add counterpoint orignal ticket no against counterpoint order
+     */
+    public function updateTicketByOrignalTicket($order_data){
+        $order_data = utf8_decode($order_data);
+        $order_data = trim($order_data,'"');
+        $order_data = stripslashes($order_data);
+        $orderData = unserialize($order_data);
+        $this->addLogUpdateOrder("order count for update-:".count($orderData));
+        $this->updateTicketData($orderData);
+        return 1;
+    }
+    
+    /**
+     * add missing line item order data 
+     */
+    public function addOrignalTicket($ticket_data){
+        $ticket_data = utf8_decode($ticket_data);
+        $ticket_data = trim($ticket_data,'"');
+        $ticket_data = stripslashes($ticket_data);
+        $ticketData = unserialize($ticket_data);
+        $this->addLogOrignalOrder("origanl order count-:".count($ticketData));
+        return 1;
+    }
+    
+    private function updateTicketData($orderData){
+        $cntT = 0;
+        foreach ($orderData as $order_id => $data){
+            try{
+                $order = Mage::getModel('sales/order')
+                                ->load($order_id,'counterpoint_order_id');
+                $this->addLogUpdateOrder("order count-:".$cntT);
+                if($order->getId()){
+                    $orignalTicket = $data['order']['orig_tkt_no'];
+                    $order->setCounterpointOrigTktNo($orignalTicket);
+                    $order->save();
+                    $this->addLogUpdateOrder("orignal tkt no-:".$orignalTicket." save against order id-:".$order->getIncrementId());
+                }
+            }catch(Exception $e){
+                $this->addLogUpdateOrder($e->getMessage());
+            }
+            $cntT++;
+        }
+        $this->addLogUpdateOrder("finish...");
+    }
+    
     private function createOrderShipment($shipmentData){
         $cntShip = 1;
         foreach ($shipmentData as $order_id => $odrData){
             try{
+                $order_type = $odrData['order_type'];
                 $order = Mage::getModel('sales/order')->load($order_id,'counterpoint_order_id');
+                if($order_type == "ord"){
+                    $order = Mage::getModel('sales/order')->load($order_id,'counterpoint_orig_tkt_no');
+                }
+                
                 if($order->getId()) {
                     $this->addLogPayment("order increment id-:".$order->getIncrementId());
                     if($order->hasShipments()){
@@ -156,8 +218,13 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $seqCnt = 0;
         foreach ($payment_data as $order_id => $payData){
             try{
+                $order_type = $payData['order_type'];
                 $orderObj = Mage::getModel('sales/order')
                             ->load($order_id,'counterpoint_order_id');
+                if($order_type == "ord"){
+                    $orderObj = Mage::getModel('sales/order')->load($order_id,'counterpoint_orig_tkt_no');
+                }
+                
                 $this->addLogInvoice("order cnt -:".$seqCnt);
                 if($orderObj->getId()){
                     if($orderObj->hasInvoices()){
@@ -365,9 +432,14 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $ctpnt_order_data){
         try{
             $productModel = Mage::getModel("catalog/product");
+            $order_type = $ctpnt_order_data['order_type'];
             $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'increment_id');
             if(!$orderObj->getId()){
                $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
+               if($order_type == "ord"){
+                   $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_orig_tkt_no');
+               }
+               
                if(!$orderObj->getId()){
                      $this->AddLog("counterpoint order_id:-".$ctpnt_order_id." not present in magento.");
                      $productsArr = $ctpnt_order_data['item_detail'];
@@ -491,6 +563,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         $quoteObj->setCreateOrderMethod(self::COUNTERPOINT_ORDER); 
                         $quoteObj->setCounterpointOrderId($ctpnt_order_id);
                         
+                        $quoteObj->setCounterpointOrderType($order_type);
                         $quoteObj->setCounterpointStrId($extraInfo['str_id']);
                         $quoteObj->setCounterpointStaId($extraInfo['sta_id']);
                         $quoteObj->setCounterpointDrwId($extraInfo['drw_id']);

@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_Counterpoint>
 			<name>Allure - Counterpoint Bridge</name>
-			<version>1.0.1</version>
+			<version>1.0.2</version>
 			<depends>
 				<Allure_Core />
 			</depends>
@@ -74,6 +74,12 @@
 				<counterpoint_extra_info>
 					<to_order>*</to_order>
 				</counterpoint_extra_info>
+				<counterpoint_orig_tkt_no>
+					<to_order>*</to_order>
+				</counterpoint_orig_tkt_no>
+				<counterpoint_order_type>
+					<to_order>*</to_order>
+				</counterpoint_order_type>
 			</sales_convert_quote>
 		</fieldsets>
 

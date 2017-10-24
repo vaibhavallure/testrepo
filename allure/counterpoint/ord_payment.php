@@ -48,9 +48,9 @@ if($conn){
     try{
         echo "Connection established...";
         $query = "SELECT MAIN_TABLE.doc_id,MAIN_TABLE.str_id,MAIN_TABLE.sta_id,
-                    MAIN_TABLE.tkt_typ,MAIN_TABLE.drw_id,MAIN_TABLE.usr_id,MAIN_TABLE.stk_loc_id,MAIN_TABLE.cust_no,
+                    MAIN_TABLE.usr_id,MAIN_TABLE.stk_loc_id,MAIN_TABLE.cust_no,
                     MAIN_TABLE.tkt_no order_id, MAIN_TABLE.event_no , MAIN_TABLE.tkt_dt order_date,
-                    MAIN_TABLE.tax_ovrd_reas place, MAIN_TABLE.sub_tot subtotal, MAIN_TABLE.tax_amt tax,MAIN_TABLE.tot total, 
+                    MAIN_TABLE.sub_tot subtotal, MAIN_TABLE.tax_amt tax,MAIN_TABLE.tot total, 
                     MAIN_TABLE.tot_tnd,MAIN_TABLE.tot_chng,
                     PMT_TABLE.pay_cod, PMT_TABLE.pay_cod_typ, PMT_TABLE.descr,PMT_TABLE.pmt_lin_typ,PMT_TABLE.amt,
                     PMT_TABLE.pmt_seq_no,PMT_TABLE.home_curncy_amt,
@@ -60,18 +60,16 @@ if($conn){
                     PMT_RCPT_TABLE.rcpt_amt, PMT_RCPT_TABLE.processor_msg, PMT_RCPT_TABLE.rcpt_msg, PMT_RCPT_TABLE.entry_meth,
                     PMT_RCPT_TABLE.processor_client_rcpt, PMT_RCPT_TABLE.processor_merch_rcpt
 
-                    FROM PS_TKT_HIST MAIN_TABLE 
-                    INNER JOIN PS_TKT_HIST_PMT PMT_TABLE ON ( MAIN_TABLE.TKT_NO = PMT_TABLE.TKT_NO) 
-                    LEFT JOIN PS_TKT_HIST_PMT_CHK PMT_CHECK_TABLE ON ( PMT_TABLE.DOC_ID = PMT_CHECK_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_CHECK_TABLE.PMT_SEQ_NO)
-                    Left JOIN PS_TKT_HIST_PMT_CR_CARD PMT_CARD_TABLE ON( PMT_TABLE.DOC_ID = PMT_CARD_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_CARD_TABLE.PMT_SEQ_NO)
-                    LEFT JOIN PS_TKT_HIST_PMT_RCPT PMT_RCPT_TABLE on(PMT_TABLE.DOC_ID = PMT_RCPT_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_RCPT_TABLE.PMT_SEQ_NO)
+                    FROM PS_ORD_HIST MAIN_TABLE 
+                    INNER JOIN PS_ORD_HIST_PMT PMT_TABLE ON ( MAIN_TABLE.TKT_NO = PMT_TABLE.TKT_NO) 
+                    LEFT JOIN PS_ORD_HIST_PMT_CHK PMT_CHECK_TABLE ON ( PMT_TABLE.DOC_ID = PMT_CHECK_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_CHECK_TABLE.PMT_SEQ_NO)
+                    Left JOIN PS_ORD_HIST_PMT_CR_CARD PMT_CARD_TABLE ON( PMT_TABLE.DOC_ID = PMT_CARD_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_CARD_TABLE.PMT_SEQ_NO)
+                    LEFT JOIN PS_ORD_HIST_PMT_RCPT PMT_RCPT_TABLE on(PMT_TABLE.DOC_ID = PMT_RCPT_TABLE.DOC_ID AND PMT_TABLE.PMT_SEQ_NO = PMT_RCPT_TABLE.PMT_SEQ_NO)
                     WHERE 
-                    MAIN_TABLE.STR_ID NOT IN(3,7) 
+                    MAIN_TABLE.STR_ID NOT IN(3,7)
                     -- AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
                     -- AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
-                    -- AND MAIN_TABLE.TKT_TYP = 'T'
-                    -- AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
-                    AND MAIN_TABLE.TKT_NO = '215849' 
+                    AND MAIN_TABLE.TKT_NO = '214880' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
         $result = odbc_exec($conn, $query);
@@ -111,7 +109,7 @@ if($conn){
                     'order_detail'=>$info,
                     'payment'=>array($pmt_seq_no=>$payment),
                     'extra_data'=>$extra,
-                    'order_type'=>'tkt'
+                    'order_type'=>'ord'
                 );
             }else{
                 $tempPayment = $mainArr[$order_id]['payment'];

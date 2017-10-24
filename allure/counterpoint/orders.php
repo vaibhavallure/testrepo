@@ -9,7 +9,7 @@ ini_set('memory_limit', '-1');
 $startDate = $_GET['start'];
 $endDate   = $_GET['end'];
 $state     = $_GET['state'];
-die;
+//die;
 if(empty($state)){
     die("Please mention data in 'state' field.");
 }else{
@@ -93,13 +93,13 @@ if($conn){
                     JOIN PS_TKT_HIST_CONTACT CONTACT_TABLE ON ( MAIN_TABLE.DOC_ID = CONTACT_TABLE.DOC_ID )
                     LEFT JOIN PS_TKT_HIST_DISC DISC_TABLE ON ( MAIN_TABLE.DOC_ID = DISC_TABLE.DOC_ID AND DISC_TABLE.LIN_SEQ_NO is null)
                     WHERE 
-                    MAIN_TABLE.STR_ID NOT IN(3,7) AND
-                    MAIN_TABLE.TKT_TYP = 'T' AND
-                    MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
-                    AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
-                    AND CONTACT_TABLE.CONTACT_ID = ".$state."
-                    AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
-                    -- AND MAIN_TABLE.TKT_NO = '3-1002596' 
+                    MAIN_TABLE.STR_ID NOT IN(3,7) 
+                    AND MAIN_TABLE.TKT_TYP = 'T' 
+                    -- AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
+                   -- AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
+                    -- AND CONTACT_TABLE.CONTACT_ID = ".$state."
+                    -- AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
+                    AND MAIN_TABLE.TKT_NO = '215849' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
         $result = odbc_exec($conn, $query);
@@ -145,7 +145,7 @@ if($conn){
             if(!array_key_exists($order_id, $mainArr)){
                 $mainArr[$order_id] = array('item_detail'=>array($lin_seq_no=>$items),
                     'customer_detail'=>$address,'order_detail'=>$info,
-                    'extra_data'=>$extra
+                    'extra_data'=>$extra,'order_type'=>'tkt'
                 );
             }else{
                 $tempItems = $mainArr[$order_id]['item_detail'];
@@ -165,8 +165,8 @@ if($conn){
 
 echo "<pre>";
 print_r(count($mainArr));
-print_r(($mainArr));
-die; 
+//print_r(($mainArr));
+//die; 
 
 //remote site wsdl url
 $_URL       = "http://universal.allurecommerce.com/api/v2_soap/?wsdl=1";
@@ -191,8 +191,8 @@ function getSoapWSDLOptions(){
 try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
-    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    $session = $client->login($_AUTH_DETAILS_ARR);
+    //$client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    //$session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -203,11 +203,11 @@ try{
         'counterpoint_data' => $reqU
     );
     
-    $result  = $client->counterpointOrderList($_RequestData);
-    //$result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
+    //$result  = $client->counterpointOrderList($_RequestData);
+    $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
-    $client->endSession(array('sessionId' => $session->result));
+    //$client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);
