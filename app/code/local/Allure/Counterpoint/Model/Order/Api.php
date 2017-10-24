@@ -89,8 +89,10 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $this->AddLog("memory limit-:".$memory_limit);
         $this->AddLog("is memory limit-:".$is_memory_limit);
         if($is_memory_limit){
-            if(!empty($memory_limit))
+            if(!empty($memory_limit)){
                 ini_set('memory_limit', $memory_limit);
+                ini_set('max_execution_time', -1);
+            }
         }
         $this->importCPSQLOrderIntoMagento($counterpointData);
         $counterpointData = null;
