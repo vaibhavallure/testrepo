@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<sections>
+	  <trans_email translate="label" module="core">
+            <class>separator-top</class>
+            <label>Store Email Addresses</label>
+            <tab>general</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>90</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+			  <bookings translate="label">
+		                    <label>Bookings</label>
+		                    <frontend_type>text</frontend_type>
+		                    <sort_order>5</sort_order>
+		                    <show_in_default>1</show_in_default>
+		                    <show_in_website>1</show_in_website>
+		                    <show_in_store>1</show_in_store>
+		                    <fields>
+		                        <email translate="label">
+		                            <label>Sender Email</label>
+		                            <frontend_type>text</frontend_type>
+		                            <validate>validate-email</validate>
+		                            <backend_model>adminhtml/system_config_backend_email_address</backend_model>
+		                            <sort_order>2</sort_order>
+		                            <show_in_default>1</show_in_default>
+		                            <show_in_website>1</show_in_website>
+		                            <show_in_store>1</show_in_store>
+		                        </email>
+		                        <name translate="label">
+		                            <label>Sender Name</label>
+		                            <frontend_type>text</frontend_type>
+		                            <backend_model>adminhtml/system_config_backend_email_sender</backend_model>
+		                            <validate>validate-emailSender</validate>
+		                            <sort_order>1</sort_order>
+		                            <show_in_default>1</show_in_default>
+		                            <show_in_website>1</show_in_website>
+		                            <show_in_store>1</show_in_store>
+		                        </name>
+		                    </fields>
+		             </bookings>
+		    </groups>
+	  </trans_email>
 		<appointments translate="label" module="appointments">
 			<label>Appointments</label>
 			<tab>allure</tab>

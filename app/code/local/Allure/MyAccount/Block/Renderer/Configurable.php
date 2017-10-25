@@ -1,0 +1,5 @@
+<?php
+
+class Allure_MyAccount_Block_Renderer_Configurable extends Mage_Checkout_Block_Cart_Item_Renderer_Configurable
+{
+}

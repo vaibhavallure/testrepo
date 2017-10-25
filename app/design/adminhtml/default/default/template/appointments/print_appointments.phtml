@@ -1,0 +1,45 @@
+<?php  $helper = Mage::helper("appointments"); 
+ $stores=Mage::getModel('core/store')->getCollection();
+ $stores->setOrder('store_id', 'ASC');
+ $piercers=Mage::getModel('appointments/piercers')->getCollection();
+ $piercers->addFieldToFilter('is_active',1); //Active piercers Only
+?>
+
+  
+<div class="content-header">
+	<h3 class="icon-head"><?php echo $helper->__('Print Appointments')?></h3>
+</div>
+
+<form id="appointment_print" action="<?php echo Mage::helper('adminhtml')
+	->getUrl('admin_appointments/adminhtml_appointments/pdfdocs', array('_secure' => true));?>" method="post">
+	
+<div class="print_appointment-main">
+    <div class="fieldDiv print_appointment-sub">
+      <label><?php echo $helper->__('Select Store') ?></label>
+      	<select id="store-id" name="store_id" class="app_print_store">
+      	<option value="0" ><?php echo $helper->__('All') ?></option>
+		<?php
+		foreach ($stores as $store): 		?>
+		<option value="<?php echo $store->getStoreId()?>" ><?php echo $store->getName()?></option>
+		<?php endforeach;?>
+		</select>
+    </div> 
+    <div class="fieldDiv print_appointment-sub" >
+          <label><?php echo $helper->__('Select Piercer') ?></label>
+          	<select id="piercer_id" name="piercer_id" class="">
+          	<option value="0" ><?php echo $helper->__('Any') ?></option>
+    		<?php
+    		foreach ($piercers as $piercer): 		?>
+    		<option value="<?php echo $piercer->getId()?>" ><?php echo $piercer->getFirstname().' '.$piercer->getLastname()?></option>
+    		<?php endforeach;?>
+    		</select>
+     </div>
+     
+     <div class="fieldDiv print_appointment-sub">
+     	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+    	<input type="submit" name="submit" title="Submit" class="app_print_submit">
+     </div>
+</div>
+
+</form>
+

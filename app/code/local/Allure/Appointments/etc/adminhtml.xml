@@ -32,9 +32,14 @@
 								<sort_order>4</sort_order>
 								<action>admin_appointments/adminhtml_piercingtiming</action>
 							</timing>
+							<print module="appointments">
+								<title>Print Appointments</title>
+								<sort_order>5</sort_order>
+								<action>admin_appointments/adminhtml_appointments/print</action>
+							</print>
 							<settings module="appointments">
 								<title>Settings</title>
-								<sort_order>5</sort_order>
+								<sort_order>6</sort_order>
 								<action>adminhtml/system_config/edit/section/appointments</action>
 							</settings>
 						</children>
@@ -81,6 +86,11 @@
 									<sort_order>5</sort_order>
 									<action>admin_appointments/adminhtml_piercingtiming</action>
 								</timing>
+							   <print module="appointments">
+										<title>Print Appointments</title>
+										<sort_order>5</sort_order>
+										<action>admin_appointments/adminhtml_appointments/print</action>
+							   </print>
 							</children>
 						</appointments>
 					</children>

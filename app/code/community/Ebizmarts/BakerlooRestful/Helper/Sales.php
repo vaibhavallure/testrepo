@@ -53,7 +53,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         if (!is_array($data['products']) or empty($data['products'])) {
             $this->throwBuildQuoteException(Mage::helper('bakerloo_restful')->__('ALERT: No products provided on order.'));
         }
-
+        
         $this->_addProductsToQuote($data['products']);
         //Adding products to Quote
 
@@ -229,9 +229,10 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                 $buyInfo = $this->getBuyInfo($_product, $product);
                 try {
                     //Skip stock checking
+                    // Update by Allure - Skip Stock Check true always
                     if (Mage::helper('bakerloo_restful')->dontCheckStock()) {
-                        $product->getStockItem()->setData('manage_stock', 0);
                         $product->getStockItem()->setData('use_config_manage_stock', 0);
+                        $product->getStockItem()->setData('manage_stock', 0);
                     }
 
                     //if simple_configurable_product enabled, use child's price
@@ -296,12 +297,15 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         Varien_Profiler::stop('POS::' . __METHOD__);
     }
 
-    private function _loadStockForProducts($products)
+    protected function _loadStockForProducts($products)
     {
 
         $productIds = array_keys($products);
+        
+        $stock = Mage::getModel('cataloginventory/stock');
 
         $stockItemCol = Mage::getResourceModel('cataloginventory/stock_item_collection')
+            ->addStockFilter($stock)
             ->addFieldToFilter('product_id', array('in' => $productIds));
 
         foreach ($stockItemCol as $_sItem) {
@@ -482,7 +486,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         return ($optionType == 'radio' or $optionType == 'select');
     }
 
-    private function _applyCustomPrice($quoteItem, $price)
+    protected function _applyCustomPrice($quoteItem, $price)
     {
 
         //Cannot apply custom price on dynamic bundle, Magento does not allow it.
@@ -498,7 +502,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         }
     }
 
-    private function _getCustomerAddress($addressId)
+    protected function _getCustomerAddress($addressId)
     {
         $address = Mage::getModel('customer/address')->load((int)$addressId);
         if (is_null($address->getId())) {
@@ -552,7 +556,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      * @param  string $data JSON data
      * @return void
      */
-    private function _involveNewCustomer($data)
+    protected function _involveNewCustomer($data)
     {
 
         $email = (string)$data['customer']['email'];
@@ -1039,7 +1043,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      * @param $storeId
      * @param $giftCards
      */
-    private function setGiftCardsToQuote($storeId, $giftCards)
+    protected function setGiftCardsToQuote($storeId, $giftCards)
     {
         if (empty($giftCards))
             return;
@@ -1059,7 +1063,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
     /**
      * @param $rules
      */
-    private function setRewardsToQuote($rules)
+    protected function setRewardsToQuote($rules)
     {
         if (empty($rules))
             return;
@@ -1079,7 +1083,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      * @param $data
      * @return bool
      */
-    private function checkAndSetCoupon($data)
+    protected function checkAndSetCoupon($data)
     {
         if (isset($data['coupon_code']) && !empty($data['coupon_code'])) {
             $couponCode = $data['coupon_code'];
@@ -1095,7 +1099,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
     /**
      * @param bool $hasGiftCards
      */
-    private function setFreePaymentMethodToQuote($hasGiftCards = false)
+    protected function setFreePaymentMethodToQuote($hasGiftCards = false)
     {
         if ($hasGiftCards) {
             $this->getQuote()->getPayment()->importData(array('method' => 'free'));
@@ -1122,7 +1126,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         $this->getQuote()->getPayment()->importData((array)$data['payment']);
     }
 
-    private function collectQuoteTotals()
+    protected function collectQuoteTotals()
     {
         if ($this->getQuote()->isVirtual()) {
             $this->getQuote()->getBillingAddress()->getTotals();
@@ -1135,7 +1139,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      * @param $products
      * @return array
      */
-    private function getProductsById($products)
+    protected function getProductsById($products)
     {
         $productsById = array();
 
@@ -1154,7 +1158,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      * @param $productIds
      * @return array
      */
-    private function getProductItems($productIds, $fastProducts = false)
+    protected function getProductItems($productIds, $fastProducts = false)
     {
         $attributes = Mage::helper('bakerloo_restful')->config('checkout/fast_product_attributes', Mage::app()->getStore()->getId());
         $attributes = explode(',', $attributes);
@@ -1183,7 +1187,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      * @param $product
      * @param $quoteItem
      */
-    private function applyRewardsToQuoteItem($_product, $product, $quoteItem)
+    protected function applyRewardsToQuoteItem($_product, $product, $quoteItem)
     {
         if (!isset($_product['loyalty']) or empty($_product['loyalty'])) {
             return;
@@ -1205,7 +1209,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      * @param $_product
      * @param $quoteItem
      */
-    private function setPosDiscountReasonToQuoteItem($_product, $quoteItem)
+    protected function setPosDiscountReasonToQuoteItem($_product, $quoteItem)
     {
         if (!isset($_product['discount_reason'])) {
             return;
@@ -1226,7 +1230,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      * @param $message
      * @throws Mage_Core_Exception
      */
-    private function throwBuildQuoteException($message)
+    protected function throwBuildQuoteException($message)
     {
         if ($this->getQuote()) {
             $this->getQuote()->delete();

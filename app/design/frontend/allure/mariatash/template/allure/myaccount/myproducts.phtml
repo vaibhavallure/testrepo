@@ -1,0 +1,289 @@
+<h3 id="myaccount-tab-label">My Products</h3>
+<div class="mt-myaccount-page">
+	<div id="sns_tab_products" class="product-collateral clearfix">
+    	<ul class="nav-tabs gfont">
+    		<li class="dropdown pull-left mt-drop-acc tabdrop">
+    			<a class="dropdown-toggle" data-toggle="collapse" 
+    				data-target="#mt-account-tab-dropdown-menu">
+    				<i class="fa fa-align-justify"></i> 
+    			</a>
+    			<ul id="mt-account-tab-dropdown-menu" class="dropdown-menu collapse">
+					<li class="mt-account-active-tab tab-submenu-mt dropdown">
+    					<a id="mt-my-prod-menu" onclick="changeDropView(this);" class="dropdown-toggle" 
+    						data-toggle="collapse" 
+            				data-target="#mt-account-tab-dropdown-menu-1">
+            				MY PRODUCTS
+            				<span id="mt-dropmenu-icon" class="caret"></span>
+        				</a>
+    				
+    					<ul id="mt-account-tab-dropdown-menu-1" class="collapse">
+        					<li class="mt-account-active-tab">
+                               <a class="mt-acc-tab-view" onclick="changeTabView(this)" data-toggle="tab-pane" data-target="#mt-purchase-item-tab" 
+                               data-title="Purchased Products" data-link="purchase">
+                                   PURCHASED PRODUCTS
+                               </a>
+                            </li>
+        					<li class="mt-account-active-tab">
+        						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="wishlist" 
+        						data-toggle="tab-pane" data-title="Wishlist" data-target="#mt-wishlist-tab">
+        							WISHLIST 
+        						</a>
+        					</li>
+        					<li class="mt-account-active-tab">
+        						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="cart" 
+        						data-toggle="tab-pane" data-title="Cart" data-target="#mt-cart-tab"> 
+        							CART
+        						</a>
+        					</li>
+        					<li class="mt-account-active-tab">
+        						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="openorders" 
+        						data-toggle="tab-pane" data-title="Open Orders" data-target="#mt-openorders-tab"> 
+        							OPEN ORDERS
+        						</a>
+        					</li>
+        					<li class="mt-account-active-tab">
+        						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="receipt" 
+        						data-toggle="tab-pane" data-title="All Orders" data-target="#mt-report-tab"> 
+        							ALL ORDERS
+        						</a>
+        					</li>
+    					</ul>
+    				</li>
+    				<li class="mt-account-active-tab">
+    						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="accountinfo" 
+    						data-toggle="tab-pane" data-title="Login & Security" data-target="#mt-accountinfo-tab"> 
+    							LOGIN &amp; SECURITY
+    						</a>
+    				</li>
+    				<li class="mt-account-active-tab">
+    						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="addressbook" 
+    						data-toggle="tab-pane" data-title="Addresses" data-target="#mt-addressbook-tab"> 
+    							ADDRESSES
+    						</a>
+    				</li>
+					
+					
+					<li class="mt-account-active-tab">
+						<a class="mt-acc-tab-view" onclick="changeTabView(this)" data-link="paymentoptions" 
+						data-toggle="tab-pane" data-title="Payment Options" data-target="#mt-paymentoptions-tab"> 
+							PAYMENT OPTIONS
+						</a>
+					</li>
+					
+				</ul>
+			</li>
+              
+            <li class="mt-account-active-tab mt-drop-acc mt-account-show-li active">
+               <a data-toggle="tab-pane" data-target="#mt-purchase-item-tab" 
+               data-title="Purchased Product" data-link="purchase">
+               </a>
+            </li>
+       </ul>
+	    		
+       <div class="tab-content">
+       		<div id="mt-purchase-item-tab" class="tab-pane active">
+                 <div class="collateral-box">
+                 	<?php echo $this->getChildHtml("myaccount_filter");?>
+                 	<?php echo $this->getChildHtml('purchased_items')?>
+                  </div>
+             </div>
+             
+            <div id="mt-wishlist-tab" class="tab-pane">
+                 <div class="collateral-box">
+                      <?php echo $this->getChildHtml('customer.wishlist')?>
+                 </div>
+            </div>
+            
+            <div id="mt-cart-tab" class="tab-pane">
+                 <div class="collateral-box">
+                      <?php echo $this->getChildHtml('checkout.cart')?>
+                 </div>
+            </div>
+             
+            <div id="mt-report-tab" class="tab-pane">
+                  <div class="collateral-box">
+                  	<?php echo $this->getChildHtml("myaccount_filter");?>
+                  	<?php echo $this->getChildHtml('sales.order.history_list')?>
+                  </div>
+        	</div>
+        	
+        	<div id="mt-openorders-tab" class="tab-pane">
+                  <div class="collateral-box">
+                  	<?php echo $this->getChildHtml("myaccount_filter");?>
+                  	<?php echo $this->getChildHtml('sales.order.openorder_list')?>
+                  </div>
+        	</div>
+        	
+        	<div id="mt-accountinfo-tab" class="tab-pane">
+                  <div class="collateral-box">
+                  	<ul class="messages">
+                  		<li class="">
+	                  		<ul class="mt-msg">
+	                  		</ul>
+                  		</li>
+                  	</ul>
+                  	<?php echo $this->getChildHtml('customer_edit')?>
+                  </div>
+        	</div>
+        	
+        	<div id="mt-addressbook-tab" class="tab-pane">
+                  <div class="collateral-box">
+					 <ul class="messages">
+                  		<li class="">
+	                  		<ul class="mt-msg">
+	                  		</ul>
+                  		</li>
+                  	 </ul>                 	
+                  	 <div id="mt-address-edit"></div>
+                  	 <div class="mt-adrress-data">
+                  		<?php echo $this->getChildHtml('address_book')?>
+                  	 </div>
+                 </div>
+        	</div>
+        	
+        	<div id="mt-paymentoptions-tab" class="tab-pane">
+                  <div class="collateral-box">
+                  	<ul class="messages mt-messages">
+                  		<li class="">
+	                  		<ul class="mt-msg">
+	                  		</ul>
+                  		</li>
+                  	 </ul>      
+                  	<?php echo $this->getChildHtml('tokenbase_customer_wrapper')?>
+                  </div>
+        	</div>
+                    
+        </div>
+	    		
+    </div>
+	
+
+</div>
+
+
+<script>
+	jQuery(document).ready(function(){
+
+		var type = window.location.hash.substr(1);
+		if(type!="" && type!="undefined" && type!=null){
+			var element = jQuery('.mt-account-active-tab ').find('a[data-link='+type+']')
+			changeTabView(element);
+		}else{
+			var element = jQuery('..mt-account-show-li.active a');
+			changeTabView(element);
+		}
+		
+	});
+
+	function changeTabView(event){
+		var newTargetId = jQuery(event).attr('data-target');
+		var newLabel = jQuery(event).text();
+		var newDataLink = jQuery(event).attr('data-link');
+		var newTitle = jQuery(event).attr('data-title');
+		
+		var activeSelector = jQuery('.mt-account-show-li.active').find('a');
+
+		var oldTargetId = activeSelector.attr('data-target');
+		var oldLabel = activeSelector.text();
+		var oldDataLink = activeSelector.attr('data-link');
+		var oldTitle = activeSelector.attr('data-title');
+
+		/* activeSelector.attr('data-target',newTargetId);
+		activeSelector.text(newLabel);
+		activeSelector.attr('data-link',newDataLink); 
+		activeSelector.attr('data-title',newTitle);*/
+		activeSelector.text("");
+		activeSelector.text(newLabel);
+		
+		/*jQuery(event).attr('data-target',oldTargetId);
+		jQuery(event).text(oldLabel);
+		jQuery(event).attr('data-link',oldDataLink);
+		jQuery(event).attr('data-title',oldTitle); */
+
+		jQuery('.mt-acc-tab-view').removeClass('active');
+		jQuery(event).addClass('active');
+
+		if((newDataLink=="accountinfo" || newDataLink=="addressbook" || newDataLink=="paymentoptions")){
+			if(jQuery('#mt-account-tab-dropdown-menu-1').hasClass('in')){
+				jQuery('.tab-submenu-mt').removeClass('open');
+				jQuery('#mt-account-tab-dropdown-menu-1').removeClass('in');
+			}
+		}
+
+		if(jQuery('#mt-account-tab-dropdown-menu').hasClass('in')){
+			jQuery('#mt-account-tab-dropdown-menu').removeClass('in');
+		}
+
+		window.location.hash = newDataLink;
+		jQuery('#myaccount-tab-label').text(newTitle);		
+		document.title = newTitle;
+
+		jQuery('.tab-content .tab-pane').removeClass('active');
+		jQuery(newTargetId).addClass('active');
+	}
+</script>
+
+
+<script>
+
+	function getParams(mkey,mval){
+		var uri = window.location;
+		var key = mkey;
+		var queryString = ""+(uri.search.indexOf("?") !== -1) ? uri.search.split("?")[1] : "";
+		var params = "";
+		if (queryString !== "" && queryString != undefined) {
+			 params = params + "?";
+		     var params_arr = queryString.split("&");
+		     params = params + key + "=" + mval+"&";
+		     for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+		          var param = params_arr[i].split("=")[0];
+		          if(param!==key){
+				     params = params + params_arr[i]+"&";
+			      }
+		     }
+		     params = params.replace(/\&$/, '');
+		}else{
+			 params = "?" + mkey + "=" + mval;
+		}
+		return params;
+	}
+	
+	function showLoadingFancybox1(element){
+		if (Allure.showLoading) {
+			Allure.showLoading = false;
+			jQuery('#'+element+' .box-content').append(Allure.loader);
+			//jQuery('#box-history .allure-fancybox-overlay').height(jQuery('#box-history table').height() + jQuery('#box-history table')[0].scrollHeight);
+			jQuery('#'+element+' .allure-fancybox-overlay').show();
+		}
+	}
+
+	function showLoadingFancybox(){
+		jQuery.fancybox.showLoading();
+        jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+	}
+
+	function hideLoadingFancybox(){
+		jQuery.fancybox.hideLoading();
+    	jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+	}
+
+	function hideLoadingFancybox1(element){
+		if (!Allure.showLoading) {
+			Allure.showLoading = true;
+			//jQuery.fancybox.hideLoading();
+	    	//jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+	
+			jQuery('#'+element+' .allure-fancybox-overlay').remove();
+		}
+	}
+
+	function changeDropView(event){
+		if(!jQuery('#mt-account-tab-dropdown-menu-1').hasClass('in')){
+			jQuery('.tab-submenu-mt').addClass('open');
+		}else{
+			jQuery('.tab-submenu-mt').removeClass('open');
+		}
+	}
+	
+</script>
+

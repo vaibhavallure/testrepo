@@ -10,7 +10,7 @@
                     <sort_order>10</sort_order>
                     <children>
 		                <allure_counterpoint translate="title" module="allure_counterpoint">
-		                    <title>Counterpoint</title>
+		                    <title>CounterPoint</title>
 		                    <action>adminhtml/system_config/edit/section/allure_counterpoint</action>
 		                    <sort_order>10</sort_order>
 		                </allure_counterpoint>
@@ -31,7 +31,7 @@
 							<config>
 								<children>
 									<allure_counterpoint translate="title" module="allure_counterpoint">
-										<title>Counterpoint Configuration</title>
+										<title>Allure - CounterPoint Bridge</title>
 										<sort_order>1</sort_order>
 									</allure_counterpoint>
 								</children>

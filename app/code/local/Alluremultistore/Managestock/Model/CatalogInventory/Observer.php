@@ -1,6 +1,6 @@
 <?php
 
-class Alluremultistore_Managestock_Model_CatalogInventory_Observer extends Magestore_Webpos_Model_Inventory_Observer 
+class Alluremultistore_Managestock_Model_CatalogInventory_Observer extends Mage_CatalogInventory_Model_Observer
 {
 	
 	/**

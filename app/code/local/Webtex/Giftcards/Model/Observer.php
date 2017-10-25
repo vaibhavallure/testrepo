@@ -37,6 +37,8 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
                 foreach ($quote->getAllVisibleItems() as $item) {
                     if ($item->getProduct()->getTypeId() == 'giftcards') {
                         $options = $item->getProduct()->getCustomOptions();
+                        
+                        
                         $optionsDataMap = array(
                             'card_type',
                             'mail_to',
@@ -50,6 +52,7 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
                             'offline_zip',
                             'offline_phone',
                             'mail_delivery_date',
+                            'mail_delivery_option',
                             'card_currency'
                         );
                         $data = array();
@@ -58,11 +61,26 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
                                 $data[$field] = $options[$field]->getValue();
                             }
                         }
+                        //Added by Allure
+                        $buyRequestArray=$options['info_buyRequest']->getValue();
+                        $buyRequestArray=unserialize($buyRequestArray);
+                        $mailDeliveryOption=$buyRequestArray['mail_delivery_option'];
+                        if(isset($mailDeliveryOption))
+                            $data['mail_delivery_option']=$mailDeliveryOption;
+                        
+                        
+                            
                         $data['card_amount'] = $item->getCalculationPrice()+$item->getTaxAmount();
                         $data['product_id'] = $item->getProductId();
                         $data['card_status'] = 0;
                         $data['order_id'] = $order->getId();
-
+                        
+                        $buyRequestArray=$options['info_buyRequest']->getValue();
+                        $buyRequestArray=unserialize($buyRequestArray);
+                        $mailDeliveryOption=$buyRequestArray['mail_delivery_option'];
+                        if(isset($mailDeliveryOption))
+                            $data['mail_delivery_option']=$mailDeliveryOption;
+                            
                         if(!isset($data['mail_to_email']) || empty($data['mail_to_email'])){
                             $data['mail_to_email'] = $order->getCustomerEmail();
                         }
@@ -328,13 +346,15 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
         $order = $observer->getEvent()->getOrder();
         if (in_array($order->getState(), array('complete'))) {
             $cards = Mage::getModel('giftcards/giftcards')->getCollection()
-                ->addFieldToFilter('order_id', $order->getId());
+                ->addFieldToFilter('order_id', $order->getId())
+                ->addFieldToFilter('mail_delivery_option',2);  //adding checkup Deliver Immediately
             foreach ($cards as $card) {
               if($card->getCardStatus() == 0) {
                 $card->setCardStatus(1)->save();
-                if ((($card->getMailDeliveryDate() == null) || ($curDate >= $card->getMailDeliveryDate())) && $card->getCardType() != 'offline') {
+
+                if ($card->getCardType() != 'offline') {
                     $card->send();
-                }
+                }                    
               }
             }
         }
@@ -367,9 +387,22 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
         $currentDate = date('Y-m-d');
         $oGiftCards = Mage::getModel('giftcards/giftcards')->getCollection()
             ->addFieldToFilter('mail_delivery_date', array('eq' => $currentDate))
-            ->addFieldToFilter('card_status', 1);
+            ->addFieldToFilter('card_status', 1)
+            ->addFieldToFilter('mail_delivery_option', 1); //If selected first as delivery option
+        
         foreach ($oGiftCards as $oGiftCard) {
             $oGiftCard->send();
         }
     }
+    public function sendEmailImmediately()
+    {
+        $currentDate = date('Y-m-d');
+        $oGiftCards = Mage::getModel('giftcards/giftcards')->getCollection()
+        ->addFieldToFilter('mail_delivery_date', array('eq' => $currentDate))
+        ->addFieldToFilter('card_status', 1);
+        foreach ($oGiftCards as $oGiftCard) {
+            $oGiftCard->send();
+        }
+    }
+    
 }

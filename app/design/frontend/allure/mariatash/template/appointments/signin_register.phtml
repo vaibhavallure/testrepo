@@ -70,13 +70,13 @@ if ($session->isLoggedIn()) {
 					  	<div class="fieldDiv">
 					  	   	<label>First Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php //echo $firstName?>" />-->
-					    	<input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
+					    	<input class="ele_width required-entry" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
 					    </div>
 						
 						<div class="fieldDiv">
 					    	<label>Last Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php //echo $lastName?>" />-->
-					    	<input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
+					    	<input class="ele_width required-entry" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
 					    </div>
 					
 					  	<div class="fieldDiv">

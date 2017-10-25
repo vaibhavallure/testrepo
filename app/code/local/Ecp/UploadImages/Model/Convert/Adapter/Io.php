@@ -219,13 +219,12 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         // Staring import image from Amazon S3 Bucket
         self::log('Connecting...');
         
-        $aws_key = Mage::getStoreConfig('allure_imagecdn/amazons3/access_key_id');
-        $aws_secret_key = Mage::getStoreConfig('allure_imagecdn/amazons3/access_key_secret');
         $bucket = Mage::getStoreConfig('allure_imagecdn/amazons3/bucket');
         
         $remove_source = Mage::getStoreConfig('allure_imagecdn/general/remove_source');
         
-        $s3 = new Zend_Service_Amazon_S3($aws_key, $aws_secret_key);
+        $s3 = Mage::getSingleton('uploadimages/connect_amazon_s3')->connect();
+
         self::log('Connected');
 
         self::log('Loading Objects...');
