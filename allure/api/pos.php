@@ -227,8 +227,7 @@ class POS_Order
 				$quote->setIsActive(false)->save();
 			}
 			
-			die("ERROR::".$e->getMessage());
-			
+			//die("ERROR::".$e->getMessage());
 			$this->_bakerlooOrder->setFailMessage($e->getMessage())->save();
 			
 			// Prepare return data
@@ -247,6 +246,10 @@ class POS_Order
 					'url'         => null
 				)
 				);
+			
+			$failedId=Mage::registry('failed_ebiz_order');
+			if(empty($failedId) ||$failedId!=$this->_bakerlooOrder->getId())
+			    $this->_salesHelper->processFailedOrder($this->_bakerlooOrder->getId());
 			
 			$this->updateBakerlooOrder($order, $payload, $this->_bakerlooOrder->getId());
 		}

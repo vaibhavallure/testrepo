@@ -13,6 +13,7 @@ $j(document).ready(function (){
         var is_custom=parseInt($j('#is_custom_'+id).val());
         var cost=parseFloat($j('#cost_'+id).val());
     	var refence_no=$j('#refence_no').val();
+    	var vendor_sku=$j('#vendor_sku_'+id).val();
     	var key=Allure.ViewPurchaseOrderFormKey;
         var comment=$j('#comment_'+id).val();
         var store=$j('#store').val();
@@ -27,7 +28,7 @@ $j(document).ready(function (){
 	        	totalAmount=totalAmount + (qty * cost);
 	        	var include = 1;
 	        	var item ={
-	        			id,qty,cost,comment,include,store,is_custom
+	        			id,qty,cost,comment,include,store,is_custom,vendor_sku
 	        	};
 	        	$j.ajax({
 	    	        url: Allure.AddPurchaseItem,
@@ -41,6 +42,7 @@ $j(document).ready(function (){
 	    	            $j('#max_qty_'+id).prop('disabled', true);
 	    	            $j('#cost_'+id).prop('disabled', true);
 	    	            $j('#comment_'+id).prop('disabled', true);
+	    	            $j('#vendor_sku_'+id).prop('disabled', true);
 	    	        }
 	    	    });
 	        }
@@ -48,7 +50,7 @@ $j(document).ready(function (){
         	totalAmount= totalAmount -(qty * cost);
         	var include = 0;
         	var item ={
-        			id,qty,cost,comment,include,store,is_custom
+        			id,qty,cost,comment,include,store,is_custom,vendor_sku
         	};
         	$j.ajax({
     	        url: Allure.AddPurchaseItem,
@@ -62,6 +64,7 @@ $j(document).ready(function (){
     	        	 $j('#max_qty_'+id).prop('disabled', false);
     	        	 $j('#cost_'+id).prop('disabled', false);
     	             $j('#comment_'+id).prop('disabled', false);
+    	             $j('#vendor_sku_'+id).prop('disabled', false);
     	        	
     	        }
     	    });
@@ -184,6 +187,8 @@ function updateTotal(data){
 	    $j('#comment_'+value['item_id']).prop('disabled', true);
 	    $j('#cost_'+value['item_id']).val(value['cost']);
 	    $j('#cost_'+value['item_id']).prop('disabled', true);
+	    $j('#vendor_sku_'+value['item_id']).val(value['vendor_sku']);
+	    $j('#vendor_sku_'+value['item_id']).prop('disabled', true);
 	});
 	/*console.log(data.length);
 	var sum = 0;
