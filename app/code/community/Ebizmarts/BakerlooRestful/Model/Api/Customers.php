@@ -2,6 +2,7 @@
 
 class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRestful_Model_Api_Api
 {
+    const EDITABLE_ATTR_EVENT = 'return_editable_attributes_before';
 
     protected $_model = "customer/customer";
 
@@ -457,6 +458,12 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
         if ($customerExists === false) {
             $password     = substr(uniqid(), 0, 8);
             $customer     = $this->getHelper('bakerloo_restful')->createCustomer($websiteId, $data, $password);
+
+            //Set attributes.
+            if (isset($data['customer']['editable_attributes']) and is_array($data['customer']['editable_attributes']) and !empty($data['customer']['editable_attributes'])) {
+                $this->_updateAttributes($customer, $data['customer']['editable_attributes']);
+            }
+
         } else {
             Mage::throwException($this->getHelper('bakerloo_restful')->__("Customer already exists."));
         }
@@ -664,18 +671,21 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
                 $attribute = $ca->loadByCode($entityType, $attr);
 
                 $config []= array(
-                    'name'  => $attribute->getAttributeCode(),
-                    'label' => $attribute->getFrontendLabel(),
-                    'type'  => $attribute->getFrontendInput(),
+                    'name'     => $attribute->getAttributeCode(),
+                    'label'    => $attribute->getFrontendLabel(),
+                    'type'     => $attribute->getFrontendInput(),
+                    'required' => false
                 );
-
 
                 $ca->unsetOldData();
                 $ca->unsetData();
             }
         }
 
-        return $config;
+        $config = new Varien_Object($config);
+        Mage::dispatchEvent(self::EDITABLE_ATTR_EVENT, array('attributes' => $config));
+        
+        return $config->getData();
     }
 
     protected function _editableAttributesConfig()
