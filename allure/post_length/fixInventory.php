@@ -4,7 +4,6 @@ umask(0);
 Mage::app();
 $app = Mage::app();
 Mage::app()->setCurrentStore(0);
-Mage::app()->getStore()->setId(Mage_Core_Model_App::ADMIN_STORE_ID);
 
 echo "<pre>";
 
@@ -13,109 +12,199 @@ $fixedItems = array("CCLV7DPS_C","CCLV7DPS_R","XCLVD","CCLVD","CCLVD_B","CCLVD_C
 //$fixedItems = array("CSQGPS_E");//CSQGPS_E XCLVD
 
 $skuByProductId = array();
-$imageUpdates = array();
 
-$skuByProductIdFile = Mage::getBaseDir('var').'/export/skuByProductId.json';
-$customPostLengthOptionsFile = Mage::getBaseDir('var').'/export/customPostLengthOptions.json';
-$inventoryUpdatesFile = Mage::getBaseDir('var').'/export/inventoryUpdates.json';
-$postLenthsFile = Mage::getBaseDir('var').'/export/postLenths.json';
+$inventoryUpdates = array();
 
+$skuByProductIdFile = Mage::getBaseDir('var').'/export/postLengthSkuByProductId.json';
+$inventoryUpdatesFile = Mage::getBaseDir('var').'/export/postLengthInventoryUpdates.json';
 
-foreach ($fixedItems as $fixedSku) {
-	Mage::log('Parsing Fixed SKU:: '.$fixedSku, Zend_Log::DEBUG, 'image_migrations.log', true);
-	var_dump("Fixed SKU: ".$fixedSku);
-	$productCollection = Mage::getModel('catalog/product')->getCollection()
-		->addAttributeToFilter('type_id', 'simple')
-		->addAttributeToFilter('sku', array ('like'=> $fixedSku.'|%'))
-		->load();
+$firstTime = false;
 
-	foreach ($productCollection  as $product) {
+if (!file_exists($skuByProductIdFile)) {
+	$firstTime = true;
+}
 
-		$oldItem = $product->getSku();
+if ($firstTime) {
 
-		Mage::log('Old SKU :: '.$oldItem, Zend_Log::DEBUG, 'image_migrations.log', true);
-		var_dump("Old SKU: ".$oldItem);
+	foreach ($fixedItems as $fixedSku) {
+		Mage::log('Parsing Fixed SKU:: '.$fixedSku, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+		var_dump("Fixed SKU: ".$fixedSku);
+		$productCollection = Mage::getModel('catalog/product')->getCollection()
+			->addAttributeToFilter('type_id', 'simple')
+			->addAttributeToFilter('sku', array ('like'=> $fixedSku.'|%'))
+			->load();
 
-		$oldItemSku = explode('|', $oldItem);
+		foreach ($productCollection  as $product) {
 
-		if (count($oldItemSku) == 3) {
+			$oldItem = $product->getSku();
 
-			$parentItem = $oldItemSku[0];
+			Mage::log('Found Simple SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+			var_dump("Found Simple SKU: ".$oldItem);
 
-			$post_length = array_pop($oldItemSku);
+			$oldItemSku = explode('|', $oldItem);
 
-			$newItem = implode('|', $oldItemSku);
-			
-			Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'image_migrations.log', true);
-			Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'image_migrations.log', true);
-			var_dump("New SKU: ".$newItem);
-			var_dump("Parent SKU: ".$parentItem);
+			if (count($oldItemSku) > 2) {
 
-			//var_dump("Parent Item: ".$parentItem);
-			var_dump("Post Length: ".$post_length);
+				$parentItem = $oldItemSku[0];
 
-			$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
-			$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
-			$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
+				$post_length = array_pop($oldItemSku);
 
-			Mage::log('Original Id :: '.$oldItemId, Zend_Log::DEBUG, 'image_migrations.log', true);
-			Mage::log('New Id :: '.$newItemId, Zend_Log::DEBUG, 'image_migrations.log', true);
-			Mage::log('Parent Id :: '.$parentItemId, Zend_Log::DEBUG, 'image_migrations.log', true);
+				$newItem = implode('|', $oldItemSku);
 
-			if ($newItemId && !isset($imageUpdates[$newItemId])) {
-			    
-				$newProduct =  Mage::getModel('catalog/product')->load($newItemId);
-				$parentProduct =  Mage::getModel('catalog/product')->load($parentItemId);
+				var_dump("New SKU: ".$newItem);
+
+				//var_dump("Parent Item: ".$parentItem);
+				var_dump("Post Length: ".$post_length);
+
+				$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
+				$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
+				$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
+
+				Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('Original SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+
+				if (!empty($newItemId)) {
 				
-				$product = Mage::getModel('catalog/product')->load($oldItemId);
-				
-				/*
-				var_dump($product->getImage());
-				var_dump($product->getSmallImage());
-				var_dump($product->getMediaGalleryImages());
-				*/
-				
-				$images = $product->getMediaGalleryImages();
-				
-				foreach ($images as $image) {
-				    // Check if the file path exists
-				    if ( $path = $image->getPath() ) {
-				        if (file_exists($path)) {
-				            
-				            $galleryTypes = array();
-				            
-				            $imageFile = $image->getFile();
-				            
-				            if ($product->getImage() == $imageFile) {
-				                $galleryTypes[] = 'image';
-				            }
-				            
-				            if ($product->getThumbnail() == $imageFile) {
-				                $galleryTypes[] = 'thumbnail';
-				            }
-				            
-				            if ($product->getSmallImage() == $imageFile) {
-				                $galleryTypes[] = 'small_image';
-				            }
-				            
-				            Mage::log('Image :: '.$imageFile, Zend_Log::DEBUG, 'image_migrations.log', true);
-				            var_dump('Image :: '.$imageFile);
-				            
-				            Mage::log('Media Types :: '.implode('|', $galleryTypes), Zend_Log::DEBUG, 'image_migrations.log', true);
-				            var_dump('Media Types :: '.implode('|', $galleryTypes));
-				            
-				            $newProduct->addImageToMediaGallery($path, $galleryTypes, false, false);
-				            $parentProduct->addImageToMediaGallery($path, $galleryTypes, false, false);
-				        }
-				    }
-				}
+					Mage::log('New ITEM EXISTS !!', Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
 
-				$imageUpdates[$newItemId] = true;
+					$skuByProductId[$oldItemId] = $oldItem;
+					$skuByProductId[$newItemId] = $newItem;
+					$skuByProductId[$parentItemId] = $parentItem;
+
+		            $stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
+						->addProductsFilter(array($oldItemId))
+						->addStockFilter(1)
+						->getFirstItem();
+
+					$oldStock = $stockItem->getQty();
+
+		            $stockItemLondon = Mage::getModel('cataloginventory/stock_item')->getCollection()
+						->addProductsFilter(array($oldItemId))
+						->addStockFilter(2)
+						->getFirstItem();
+
+					$oldStockLondon = $stockItemLondon->getQty();
+
+					if (!isset($inventoryUpdates[$newItemId])) {
+						$inventoryUpdates[$newItemId] = array();
+					}
+
+					Mage::log('Main Stock :: '.$oldStock, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+					Mage::log('London Stock :: '.$oldStockLondon, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+
+		            if (isset($inventoryUpdates[$newItemId][1])) {
+		            	$inventoryUpdates[$newItemId][1] += $oldStock;
+		            } else {
+		            	$inventoryUpdates[$newItemId][1] = $oldStock;
+		            }
+
+		            $inventoryUpdatesLog[$newItem][1] = $inventoryUpdates[$newItemId];
+
+		            if (isset($inventoryUpdates[$newItemId][2])) {
+		            	$inventoryUpdates[$newItemId][2] += $oldStockLondon;
+		            } else {
+		            	$inventoryUpdates[$newItemId][2] = $oldStockLondon;
+		            }
+
+		            $inventoryUpdatesLog[$newItem][2] = $inventoryUpdates[$newItemId][2];
+		        }
+
+	            unset($stockItem);
+	            unset($stockItemLondon);
 			}
+
+			unset($product);
 		}
 
-		unset($product);
+		unset($productCollection);
 	}
 
-	unset($productCollection);
+
+	file_put_contents($skuByProductIdFile, json_encode($skuByProductId));
+	file_put_contents($inventoryUpdatesFile, json_encode($inventoryUpdates));
+} else {
+	$skuByProductId = json_decode(file_get_contents($skuByProductIdFile), true);
+	$inventoryUpdates = json_decode(file_get_contents($inventoryUpdatesFile), true);
 }
+
+//var_dump($skuByProductId);
+//var_dump($inventoryUpdates);
+
+//die;
+
+$post_length_custom_options_file = Mage::getBaseDir('var').'/export/post_length_custom_options.csv';
+$post_length_custom_options = fopen($post_length_custom_options_file, 'w');
+
+$skippedSkus = array();
+
+$post_length_inventory_file = Mage::getBaseDir('var').'/export/post_length_inventory.csv';
+
+$post_length_inventory = fopen($post_length_inventory_file, 'w');
+
+foreach ($inventoryUpdates as $product_id => $stockQty) {
+
+	foreach ( $stockQty as $stock_id => $qty) {
+
+		$sku = $skuByProductId[$product_id];
+
+		if (empty($sku) || in_array($sku, $skippedSkus)) {
+			Mage::log('Skipping Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+			var_dump('Skipping Stock for SKU:: '.$sku);
+			continue;
+		}
+
+		Mage::log('Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+		var_dump('Updating Stock for SKU:: '.$sku);
+
+		try {
+
+		 	$stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
+				->addProductsFilter(array($product_id))
+				->addStockFilter($stock_id)
+				->getFirstItem();
+
+	      	$oldStock = $stockItem->getQty();
+
+	        if (!$stockItem->getId()) {
+	            $stockItem->setData('product_id', $product_id);
+	            $stockItem->setData('stock_id', $stock_id);
+	            $stockItem->setData('manage_stock', 1);
+	            $stockItem->setData('qty', $qty);
+	        } else { // if there is, update it
+	            $stockItem->setQty($qty);
+	            $stockItem->setManageStock(true);
+	        }
+	        $stockItem->save();
+
+			unset($stockItem);
+
+			Mage::log('Stock Id:: '.$stock_id, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+			Mage::log('Original Stock:: '.$oldStock, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+			Mage::log('New Stock:: '.$qty, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+
+			fputcsv($post_length_inventory, array(
+				$product_id,
+				$sku,
+				$stock_id,
+				$oldStock,
+				$qty,
+				'OK'
+			));
+		} catch (Exception $e) {
+			Mage::log('Failed Updating Stock for SKU:: '.$sku, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+			var_dump('Failed Updating Stock for SKU:: '.$sku);
+
+			fputcsv($post_length_inventory, array(
+				$product_id,
+				$sku,
+				$stock_id,
+				$oldStock,
+				$qty,
+				'FAIL:'.$e->getMessage()
+			));
+		}
+	}
+}
+
+fclose($post_length_inventory);

@@ -4,7 +4,6 @@ umask(0);
 Mage::app();
 $app = Mage::app();
 Mage::app()->setCurrentStore(0);
-Mage::app()->getStore()->setId(Mage_Core_Model_App::ADMIN_STORE_ID);
 
 echo "<pre>";
 
@@ -13,109 +12,230 @@ $fixedItems = array("CCLV7DPS_C","CCLV7DPS_R","XCLVD","CCLVD","CCLVD_B","CCLVD_C
 //$fixedItems = array("CSQGPS_E");//CSQGPS_E XCLVD
 
 $skuByProductId = array();
-$imageUpdates = array();
 
-$skuByProductIdFile = Mage::getBaseDir('var').'/export/skuByProductId.json';
-$customPostLengthOptionsFile = Mage::getBaseDir('var').'/export/customPostLengthOptions.json';
-$inventoryUpdatesFile = Mage::getBaseDir('var').'/export/inventoryUpdates.json';
-$postLenthsFile = Mage::getBaseDir('var').'/export/postLenths.json';
+$customPostLengthOptions = array();
+
+$postLenths = array();
+
+$skuByProductIdFile = Mage::getBaseDir('var').'/export/postLength_SkuByProductId.json';
+$customPostLengthOptionsFile = Mage::getBaseDir('var').'/export/postLength_CustomPostLengthOptions.json';
+$postLengthsFile = Mage::getBaseDir('var').'/export/postLengths.json';
 
 
-foreach ($fixedItems as $fixedSku) {
-	Mage::log('Parsing Fixed SKU:: '.$fixedSku, Zend_Log::DEBUG, 'image_migrations.log', true);
-	var_dump("Fixed SKU: ".$fixedSku);
-	$productCollection = Mage::getModel('catalog/product')->getCollection()
-		->addAttributeToFilter('type_id', 'simple')
-		->addAttributeToFilter('sku', array ('like'=> $fixedSku.'|%'))
-		->load();
+$firstTime = false;
 
-	foreach ($productCollection  as $product) {
 
-		$oldItem = $product->getSku();
+if (!file_exists($skuByProductIdFile)) {
+	$firstTime = true;
+}
 
-		Mage::log('Old SKU :: '.$oldItem, Zend_Log::DEBUG, 'image_migrations.log', true);
-		var_dump("Old SKU: ".$oldItem);
+if ($firstTime) {
 
-		$oldItemSku = explode('|', $oldItem);
+	foreach ($fixedItems as $fixedSku) {
+		Mage::log('Parsing Fixed SKU:: '.$fixedSku, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+		var_dump("Fixed SKU: ".$fixedSku);
+		$productCollection = Mage::getModel('catalog/product')->getCollection()
+			->addAttributeToFilter('type_id', 'simple')
+			->addAttributeToFilter('sku', array ('like'=> $fixedSku.'|%'))
+			->load();
 
-		if (count($oldItemSku) == 3) {
+		foreach ($productCollection  as $product) {
 
-			$parentItem = $oldItemSku[0];
+			$oldItem = $product->getSku();
 
-			$post_length = array_pop($oldItemSku);
+			Mage::log('Found Simple SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+			var_dump("Found Simple SKU: ".$oldItem);
 
-			$newItem = implode('|', $oldItemSku);
-			
-			Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'image_migrations.log', true);
-			Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'image_migrations.log', true);
-			var_dump("New SKU: ".$newItem);
-			var_dump("Parent SKU: ".$parentItem);
+			$oldItemSku = explode('|', $oldItem);
 
-			//var_dump("Parent Item: ".$parentItem);
-			var_dump("Post Length: ".$post_length);
+			if (count($oldItemSku) > 2) {
 
-			$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
-			$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
-			$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
+				$parentItem = $oldItemSku[0];
 
-			Mage::log('Original Id :: '.$oldItemId, Zend_Log::DEBUG, 'image_migrations.log', true);
-			Mage::log('New Id :: '.$newItemId, Zend_Log::DEBUG, 'image_migrations.log', true);
-			Mage::log('Parent Id :: '.$parentItemId, Zend_Log::DEBUG, 'image_migrations.log', true);
+				$post_length = array_pop($oldItemSku);
 
-			if ($newItemId && !isset($imageUpdates[$newItemId])) {
-			    
-				$newProduct =  Mage::getModel('catalog/product')->load($newItemId);
-				$parentProduct =  Mage::getModel('catalog/product')->load($parentItemId);
+				$newItem = implode('|', $oldItemSku);
+
+				var_dump("New SKU: ".$newItem);
+
+				//var_dump("Parent Item: ".$parentItem);
+				var_dump("Post Length: ".$post_length);
+
+				$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
+				$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
+				$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
+
+				Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('Original SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
 				
-				$product = Mage::getModel('catalog/product')->load($oldItemId);
-				
-				/*
-				var_dump($product->getImage());
-				var_dump($product->getSmallImage());
-				var_dump($product->getMediaGalleryImages());
-				*/
-				
-				$images = $product->getMediaGalleryImages();
-				
-				foreach ($images as $image) {
-				    // Check if the file path exists
-				    if ( $path = $image->getPath() ) {
-				        if (file_exists($path)) {
-				            
-				            $galleryTypes = array();
-				            
-				            $imageFile = $image->getFile();
-				            
-				            if ($product->getImage() == $imageFile) {
-				                $galleryTypes[] = 'image';
-				            }
-				            
-				            if ($product->getThumbnail() == $imageFile) {
-				                $galleryTypes[] = 'thumbnail';
-				            }
-				            
-				            if ($product->getSmallImage() == $imageFile) {
-				                $galleryTypes[] = 'small_image';
-				            }
-				            
-				            Mage::log('Image :: '.$imageFile, Zend_Log::DEBUG, 'image_migrations.log', true);
-				            var_dump('Image :: '.$imageFile);
-				            
-				            Mage::log('Media Types :: '.implode('|', $galleryTypes), Zend_Log::DEBUG, 'image_migrations.log', true);
-				            var_dump('Media Types :: '.implode('|', $galleryTypes));
-				            
-				            $newProduct->addImageToMediaGallery($path, $galleryTypes, false, false);
-				            $parentProduct->addImageToMediaGallery($path, $galleryTypes, false, false);
-				        }
-				    }
+				switch (strtolower($post_length)) {
+				    case '5mm':
+				    case '5 mm':
+				        $post_length = '5mm = 3/16"';
+				        break;
+				    case '6.5mm':
+				    case '6.5 mm':
+				        $post_length = '6.5mm = 1/4"';
+				        break;
+				    case '8mm':
+				    case '8 mm':
+				        $post_length = '8mm = 5/16"';
+				        break;
+				    case '9.5mm':
+				    case '9.5 mm':
+				        $post_length = '9.5mm = 3/8"';
+				        break;
+				    case '11mm':
+				    case '11 mm':
+				        $post_length = '11mm = 7/16"';
+				        break;
 				}
 
-				$imageUpdates[$newItemId] = true;
+				if (!empty($newItemId) && (!isset($customPostLengthOptions[$parentItemId]) || !isset($customPostLengthOptions[$parentItemId][$post_length]))) {
+
+					if (!isset($customPostLengthOptions[$parentItemId])) {
+						$customPostLengthOptions[$parentItemId] = array();
+					}
+				
+					Mage::log('NEW ITEM FOUND !!', Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+
+					$skuByProductId[$oldItemId] = $oldItem;
+					$skuByProductId[$newItemId] = $newItem;
+					$skuByProductId[$parentItemId] = $parentItem;
+
+					$postLenths[$parentItem][] = $post_length;
+
+					if (!empty($newItemId)) {
+
+					    $sort_order = count($customPostLengthOptions[$newItemId]) + 1;
+
+					    $customPostLengthOptions[$newItemId][$post_length] = array(
+				            'title'         => $post_length,
+				            'price'         => 0,
+				            'price_type'    => 'fixed',
+				            'sku'           => null,
+				            'is_delete'     => 0,
+				            'sort_order'    => $sort_order
+			            );
+
+			            $customPostLengthOptionsLog[$parentItem][$post_length] = $post_length;
+			        }
+			        
+			        if (!empty($parentItemId)) {
+			            
+			            $sort_order = count($customPostLengthOptions[$parentItemId]) + 1;
+			            
+			            $customPostLengthOptions[$parentItemId][$post_length] = array(
+			                    'title'         => $post_length,
+			                    'price'         => 0,
+			                    'price_type'    => 'fixed',
+			                    'sku'           => null,
+			                    'is_delete'     => 0,
+			                    'sort_order'    => $sort_order
+			            );
+			            
+			            $customPostLengthOptionsLog[$newItem][$post_length] = $post_length;
+			        }
+				}
 			}
+
+			unset($product);
 		}
 
-		unset($product);
+		unset($productCollection);
 	}
 
-	unset($productCollection);
+
+	file_put_contents($skuByProductIdFile, json_encode($skuByProductId));
+	file_put_contents($customPostLengthOptionsFile, json_encode($customPostLengthOptions));
+	file_put_contents($postLengthsFile, json_encode($postLenths));
+} else {
+	$skuByProductId = json_decode(file_get_contents($skuByProductIdFile), true);
+	$customPostLengthOptions = json_decode(file_get_contents($customPostLengthOptionsFile), true);
+	$postLenths = json_decode(file_get_contents($postLengthsFile), true);
 }
+
+//var_dump($skuByProductId);
+//var_dump($customPostLengthOptions);
+//var_dump($postLenths);
+
+//die;
+
+$post_length_custom_options_file = Mage::getBaseDir('var').'/export/postLength_customOptions.csv';
+$post_length_custom_options = fopen($post_length_custom_options_file, 'w');
+
+$skippedSkus = array();
+
+foreach ($customPostLengthOptions as $product_id => $option_values) {
+
+
+	$sku = $skuByProductId[$product_id];
+
+	if (empty($sku) || in_array($sku, $skippedSkus)) {
+		Mage::log('Skipping Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+		var_dump('Skipping Custom Options for SKU:: '.$sku);
+		continue;
+	}
+
+	Mage::log('Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+	var_dump('Adding Custom Options for SKU:: '.$sku);
+
+	if (empty($sku)) {
+		continue;
+	}
+
+	$option = array (
+        'title'			=> 'Post Length',
+        'type'			=> 'drop_down',
+        'is_require'    => 1,
+        'sort_order'    => 0,
+		'is_delete'       => 0,
+        'values'		=> $option_values
+    );
+
+    try {
+
+	    $_product = Mage::getModel("catalog/product")->load($product_id);
+
+		//Mage::getSingleton('catalog/product_option')->unsetOptions();
+		$_product->getOptionInstance()->unsetOptions();
+	    
+	    if ($_product->getOptions() != ''){
+			foreach ($_product->getOptions() as $_option) {
+				$_option->delete();
+			}
+
+			$_product->setHasOptions(0)->save();
+		}
+
+	    $_product->setProductOptions(array($option));
+		$_product->setCanSaveCustomOptions(true);
+
+		$_product->save();
+
+		unset($_product);
+
+		$post_length = implode('|', $postLenths[$sku]);
+
+		Mage::log('Post Length:: '.$post_length, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+		var_dump('Post Length:: '.$post_length);
+
+		fputcsv($post_length_custom_options, array(
+			$sku,
+			$post_length,
+			'OK'
+		));
+	} catch (Exception $e) {
+		Mage::log('Failed Adding Custom Options for SKU:: '.$sku, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+		var_dump('Failed Adding Custom Options for SKU:: '.$sku);
+
+		fputcsv($post_length_custom_options, array(
+			$sku,
+			$post_length,
+			'FAIL:'.$e->getMessage()
+		));
+	}
+}
+
+fclose($post_length_custom_options);

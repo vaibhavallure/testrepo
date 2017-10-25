@@ -78,7 +78,6 @@ foreach ($fixedItems as $fixedSku) {
 				$images = $product->getMediaGalleryImages();
 				
 				foreach ($images as $image) {
-				    // Check if the file path exists
 				    if ( $path = $image->getPath() ) {
 				        if (file_exists($path)) {
 				            
