@@ -178,6 +178,10 @@ class Ebizmarts_BakerlooRestful_Model_OrderManagement
             // Retrieve order
             $order = $service->getOrder();
 
+            if (is_null($order)) {
+                Mage::throwException($this->_helper->__("Could not create order."));
+            }
+
             // Dispatch observer events
             $this->dispatchCheckoutEvents($order, $quote);
             $this->checkAndNotifyReturns($order, $payload);
