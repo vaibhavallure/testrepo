@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Orderdate>
+			<name>Allure - Order Date</name>
+			<version>1.0.0</version>
+		</Allure_Orderdate>
+	</modules>
+
+	<global>
+		<models>
+			<allure_orderdate>
+				<class>Allure_Orderdate_Model</class>
+			</allure_orderdate>
+			
+			<adminhtml>
+                <rewrite>
+            		<sales_order_create>Allure_Orderdate_Model_Adminhtml_Sales_Order_Create</sales_order_create>
+            	</rewrite>
+            </adminhtml>
+			
+		</models>
+	</global>
+	
+</config>

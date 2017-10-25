@@ -564,6 +564,7 @@
                         <block type="adminhtml/sales_order_create_totals" template="sales/order/create/totals.phtml" name="totals" />
                         <block type="adminhtml/template" name="gift_options" template="sales/order/giftoptions.phtml">
                             <block type="adminhtml/sales_order_create_giftmessage" template="sales/order/create/giftmessage.phtml" name="giftmessage" />
+                            <block type="adminhtml/sales_order_create_giftmessage" template="sales/order/create/orderdate.phtml" name="orderdate" />
                         </block>
                         <block type="core/text_list" name="order_item_extra_info"></block>
                     </block>
