@@ -44,7 +44,12 @@ class Allure_Orderdate_Model_Adminhtml_Sales_Order_Create extends Mage_Adminhtml
         /** @var Mage_Sales_Model_Order $order */
         $order = $service->submit();
         if(!empty($createdDate)){
-            $order->setCreatedAt($createdDate)->save();
+            $todayDate = date('Y-m-d');
+            $createdDateOnly = Mage::getModel("core/date")->gmtDate("Y-m-d", $createdDate);
+            $createdDate = Mage::getModel("core/date")->gmtDate("Y-m-d H:i:s", $createdDate);
+            if($todayDate != $createdDateOnly){
+                $order->setCreatedAt($createdDate)->save();
+            }
         }
         $customer = $quote->getCustomer();
         if ((!$customer->getId() || !$customer->isInStore($this->getSession()->getStore()))
