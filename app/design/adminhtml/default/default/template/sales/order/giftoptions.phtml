@@ -25,12 +25,20 @@
  */
 ?>
 <?php if ($this->getChildHtml()): ?>
-<div class="entry-edit">
+<div class="entry-edit box-left">
     <div class="entry-edit-head">
         <h4><?php echo Mage::helper('sales')->__('Gift Options') ?></h4>
     </div>
     <fieldset>
-        <?php echo $this->getChildHtml() ?>
+        <?php echo $this->getChildHtml('giftmessage') ?>
     </fieldset>
 </div>
 <?php endif ?>
+<div class="entry-edit box-right">
+    <div class="entry-edit-head">
+        <h4><?php echo Mage::helper('sales')->__('Order Date') ?></h4>
+    </div>
+    <fieldset>
+        <?php echo $this->getChildHtml('orderdate') ?>
+    </fieldset>
+</div>
