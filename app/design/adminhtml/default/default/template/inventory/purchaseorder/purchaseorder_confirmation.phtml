@@ -66,7 +66,7 @@ print_r($orderItems); */
         <th><?php echo $helper->__('SKU')?></th>
         <th><?php echo $helper->__('Image')?></th>
         <th><?php echo $helper->__('PRODUCT NAME')?></th>
-        <th><?php echo $helper->__('VENDOR NAME')?></th>
+        <th><?php echo $helper->__('VENDOR SKU')?></th>
         <th><?php echo $helper->__('Order Qty')?></th>
         <th><?php echo $helper->__('Cost/Item')?></th>
         <th><?php echo $helper->__('VMT Comment')?></th>
@@ -88,9 +88,11 @@ print_r($orderItems); */
                 <?php ?>
                 <td><img style="width: 75px; height: 75px;" class="product_inventory_thumbnail" src="<?php  echo $thumnailURL  ;?>"/></td>
                 <td><?php echo $product->getName();?></td>
-                <td><?php echo $helper->getVendorName($product->getPrimaryVendor());?></td>
 
-               
+                <td><input id="vendor_sku_<?php  echo $product->getId() ?>" style="width:150px"  
+					 		name="qty[<?php echo $product->getId() ?>][<?php echo "vendor_sku" ?>]" 
+					 		type="text" value="<?php echo $item['vendor_sku']?>"/>
+					</td>
                 <td>
                     <div>
                         <label><?php echo round($item['qty'])?></label>

@@ -75,9 +75,8 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
             "Proposed Qty",
             "VMT Comment",
             "Vendor Comment",
-            "Requested Delivery Date",
-            "Proposed Delivery Date",
-            "Total Cost"
+            "Proposed Delivery Date"
+           
             );
     	fputcsv( $fp, $csvHeader,",");
     	foreach ($orderItems as $item){
@@ -95,10 +94,11 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$comment = $item->getAdminComment();
     		$Vcomment = $item->getVendorComment();
 //    		$status = $item->getStatus();
-    		$reqdelivery = $item->getRequestedDeliveryDate();
+    		//$reqdelivery = $item->getRequestedDeliveryDate();
     		$propdelivery = $item->getProposedDeliveryDate();
-    		$total = $item->getTotalAmount();
-    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$reqdelivery,$propdelivery,$total), ",");
+    		//$total = $item->getTotalAmount();
+    		
+    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$propdelivery), ",");
     	}
     	fclose($fp);
     }
@@ -129,21 +129,61 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         }
         return $vendorName;
     }
-    public function sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,$attachment=FALSE){
+    public function sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,$attachment=FALSE,$diffArray=array()){
         if($attachment)
             $this->createPOAttachment($po_id);
         $path = Mage::getBaseDir('var') . DS . 'export' . DS;
         $name   = 'purchase_order_'.$po_id.'.csv';
         $file = $path . DS . $name;
         //$vendorEmail =  explode(',', $vendorEmail);
+        $emailVariables = array();
+        $detailsTable="";
+        if(!empty($diffArray)){
+        $detailsTable = "
+				<table cellspacing='0' cellpadding='0' border='0' width='650'><tr>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Product Name</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Admin Comment</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Admin Comment</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Vendor Comment</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Vendor Comment</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Delivery Date</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Delivery Date</th></tr>";
+                foreach ($diffArray as $key=>$val)
+                {
+                    if($val['is_custom']){
+                        $_product=Mage::getModel('inventory/customitem')->load($key);
+                    }else {
+                        $_product = Mage::getModel ( 'catalog/product' )->load ($key);
+                    }
+                    
+                    $prodName = $_product->getName();
+                    $oldAdminComment=($val['admin_comment_old'])?$val['admin_comment_old']:'-';
+                    $newAdminComment=($val['admin_comment'])?$val['admin_comment']:'-';
+                    $oldVendorComment=($val['vendor_comment_old'])?$val['vendor_comment_old']:'-';
+                    $newVendorComment=($val['vendor_comment'])?$val['vendor_comment']:'-';
+                    $oldDeliveryDate=($val['proposed_delivery_date_old'])?$val['proposed_delivery_date_old']:'-';
+                    $newDeliveryDate=($val['proposed_delivery_date'])?$val['proposed_delivery_date']:'-';
+                    
+                   $rowColor = '#7ecc84';
+                               
+                   $detailsTable .= "<tr style='background-color:$rowColor'>
+        				<td style='border:1px solid; padding:4px;'>".$prodName."</td>
+        				<td style='border:1px solid; padding:4px;'>".$oldAdminComment."</td>
+        				<td style='border:1px solid; padding:4px;'>".$newAdminComment."</td>
+        				<td style='border:1px solid; padding:4px;'>".$oldVendorComment."</td>
+        			    <td style='border:1px solid; padding:4px;'>".$newVendorComment."</td>
+                        <td style='border:1px solid; padding:4px;'>".$oldDeliveryDate."</td>
+        				<td style='border:1px solid; padding:4px;'>".$newDeliveryDate."</td></tr>";
+                 } //End of Foreach
+        }
        
-        
+        $emailVariables['detail_table'] = $detailsTable;
         $orderData=Mage::getModel("inventory/purchaseorder")->load($po_id);
         $storeId=$orderData->getStoreId();
         $orderItems=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('po_id',$po_id);
         $order_url="";
   
-        $emailVariables = array();
+       
         $emailVariables['items_ordered'] = count($orderItems);
         $emailVariables['order_id'] = $po_id;
         $emailVariables['order_status'] = $this->getOrderStatus($orderData->getStatus());

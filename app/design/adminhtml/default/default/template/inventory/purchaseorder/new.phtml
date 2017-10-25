@@ -29,7 +29,7 @@
   	<button type="button" onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/new')?>'">
   		<?php echo $helper->__('Reset Filter')?></button>
  	<input style="float:right"  type="text" id="refence_no" class="refence_no" 
- 		placeholder="<?php echo $helper->__('Add reference No')?>" ;/>
+ 		placeholder="<?php echo $helper->__('Add reference No')?>" />
 </div>
 
 <div class="pager-inventory">
@@ -41,8 +41,8 @@
 		<th><?php echo $helper->__('SKU')?></th>
 		<th><?php echo $helper->__('Image')?></th>
 		<th><?php echo $helper->__('PRODUCT NAME')?></th>
-        <th><?php echo $helper->__('VENDOR NAME')?></th>
-		<th><?php echo $helper->__('Current Qty')?></th>
+        <th><?php echo $helper->__('Current Qty')?></th>
+		<th><?php echo $helper->__('Vendor Sku')?></th>
 		<th><?php echo $helper->__('Order Qty')?></th>
 		<th><?php echo $helper->__('Cost/Item')?></th>
 		<th><?php echo $helper->__('VMT Comment')?></th>
@@ -65,7 +65,7 @@
 					<td><img style="width: 50px; height: 50px;" class="product_inventory_thumbnail" src="<?php  echo  Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75);?>"/></td>
 					<td><?php echo $_product->getName();?></td>
 					<?php //echo $helper->getVendorName($_product->getPrimaryVendor());?>
-                    <td><?php echo  "MT Factory"; ?></td>
+                   
 						
 					<?php 
 						$inven=Mage::getModel('cataloginventory/stock_item')
@@ -75,6 +75,12 @@
 						<div>
 							<label><?php echo round($inven->getQty())?></label>
 						</div>
+						
+				   </td>
+				    <td><input id="vendor_sku_<?php  echo $product->getId() ?>" style="width:150px"  
+					 		name="qty[<?php echo $product->getId() ?>][<?php echo "vendor_sku" ?>]" 
+					 		type="text" value="<?php echo $product->getVendorItemNo()?>"/>
+					</td>
 					<td>
 					 	<input id="max_qty_<?php  echo $product->getId() ?>" style="width:50px"  
 					 		name="qty[<?php echo $product->getId() ?>][<?php echo "max_qty" ?>]" 
@@ -123,6 +129,7 @@
 	 <div class="pager-inventory">
 		<?php echo $this->getPagerHtml(); ?>
 	</div>
+	<?php if(!Mage::helper('allure_vendor')->isUserVendor()) :?>
      <table style="width:100%">
      	<tr>
       		<td>
@@ -134,7 +141,7 @@
       	 	</td>
       	</tr>
     </table>
- 
+ <?php endif;?>
 </div>     	 
 <div>
     <button id="create_po_btn2" class="create_po_btn"><?php echo $helper->__('Create Order')?></button>

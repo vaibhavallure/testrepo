@@ -142,7 +142,9 @@
                 </li>
             </ul>
         </div>
-<?php */?>        <div class="buttons-set" style="float: right;">
+<?php */?>    
+ <?php  echo $this->getChildHtml('studioforty9.recaptcha.explicit');?>
+    <div class="buttons-set" style="float: right;">
             <p class="back-link"><a href="#" onclick="history.back(); return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
             <button style="float: right; margin:0; padding: 3px 18px;" type="submit" class="button<?php if (!$this->canSend()):?> disabled<?php endif ?>"<?php if (!$this->canSend()):?> disabled="disabled"<?php endif ?>><span><span><?php echo $this->__('Send') ?></span></span></button>
 <?php /*?>            <div id="max_recipient_message" style="display:none;">
