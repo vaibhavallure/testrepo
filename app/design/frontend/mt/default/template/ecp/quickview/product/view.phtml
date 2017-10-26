@@ -159,7 +159,7 @@ $parentVal = ($isCustomOptions)?1:0;
                                 return false;
                             }
                             var pid = jQuery('#pid-hidden').val();
-                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>cpid/<?php echo $_product->getId()?>/product/'+pid +'/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
+                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>product/<?php echo $_product->getId()?>/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
                             
                         }
                     </script>
