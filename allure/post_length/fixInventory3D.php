@@ -16,7 +16,7 @@ $inventoryUpdates = array();
 $skuByProductIdFile = Mage::getBaseDir('var').'/export/postLengthSkuByProductId3D.json';
 $inventoryUpdatesFile = Mage::getBaseDir('var').'/export/postLengthInventoryUpdates3D.json';
 
-$firstTime = false;
+$firstTime = true;
 
 if (!file_exists($skuByProductIdFile)) {
 	$firstTime = true;
