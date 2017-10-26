@@ -43,8 +43,8 @@ if ($firstTime) {
 
 			$oldItem = $product->getSku();
 
-			Mage::log('Found Simple SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
-			var_dump("Found Simple SKU: ".$oldItem);
+			Mage::log('Old SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+			var_dump("Old SKU: ".$oldItem);
 
 			$oldItemSku = explode('|', $oldItem);
 
@@ -55,19 +55,28 @@ if ($firstTime) {
 				$post_length = array_pop($oldItemSku);
 
 				$newItem = implode('|', $oldItemSku);
-
+				
+				if (empty($post_length)) {
+				    Mage::log('Post Length :: NONE', Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				    var_dump("Post Length: NONE");
+				    continue;
+				}
+				
+				Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
 				var_dump("New SKU: ".$newItem);
-
-				//var_dump("Parent Item: ".$parentItem);
+				var_dump("Parent SKU: ".$parentItem);
+				
+				Mage::log('Post Length :: '.$post_length, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
 				var_dump("Post Length: ".$post_length);
 
 				$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
 				$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
 				$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
 
-				Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
-				Mage::log('Original SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
-				Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('Original Id :: '.$oldItemId, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('New Id :: '.$newItemId, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('Parent Id :: '.$parentItemId, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
 				
 				switch (strtolower($post_length)) {
 				    case '5mm':
