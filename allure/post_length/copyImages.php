@@ -77,6 +77,8 @@ foreach ($fixedItems as $fixedSku) {
 				
 				$images = $product->getMediaGalleryImages();
 				
+				$newProduct->setMediaGallery (array('images'=>array (), 'values'=>array ()));
+				
 				foreach ($images as $image) {
 				    if ( $path = $image->getPath() ) {
 				        if (file_exists($path)) {
@@ -104,10 +106,12 @@ foreach ($fixedItems as $fixedSku) {
 				            var_dump('Media Types :: '.implode('|', $galleryTypes));
 				            
 				            $newProduct->addImageToMediaGallery($path, $galleryTypes, false, false);
-				            $parentProduct->addImageToMediaGallery($path, $galleryTypes, false, false);
+				            //$parentProduct->addImageToMediaGallery($path, $galleryTypes, false, false);
 				        }
 				    }
 				}
+				
+				$newProduct->save();
 
 				$imageUpdates[$newItemId] = true;
 			}

@@ -21,9 +21,7 @@ $skuByProductIdFile = Mage::getBaseDir('var').'/export/postLength_SkuByProductId
 $customPostLengthOptionsFile = Mage::getBaseDir('var').'/export/postLength_CustomPostLengthOptions.json';
 $postLengthsFile = Mage::getBaseDir('var').'/export/postLengths.json';
 
-
-$firstTime = false;
-
+$firstTime = true;
 
 if (!file_exists($skuByProductIdFile)) {
 	$firstTime = true;
@@ -43,8 +41,8 @@ if ($firstTime) {
 
 			$oldItem = $product->getSku();
 
-			Mage::log('Found Simple SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
-			var_dump("Found Simple SKU: ".$oldItem);
+			Mage::log('Old SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+			var_dump("Old SKU: ".$oldItem);
 
 			$oldItemSku = explode('|', $oldItem);
 
@@ -55,19 +53,28 @@ if ($firstTime) {
 				$post_length = array_pop($oldItemSku);
 
 				$newItem = implode('|', $oldItemSku);
-
+				
+				if (empty($post_length)) {
+				    Mage::log('Post Length :: NONE', Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				    var_dump("Post Length: NONE");
+				    continue;
+				}
+				
+				Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
 				var_dump("New SKU: ".$newItem);
-
-				//var_dump("Parent Item: ".$parentItem);
+				var_dump("Parent SKU: ".$parentItem);
+				
+				Mage::log('Post Length :: '.$post_length, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
 				var_dump("Post Length: ".$post_length);
 
 				$oldItemId = Mage::getModel('catalog/product')->getIdBySku($oldItem);
 				$newItemId = Mage::getModel('catalog/product')->getIdBySku($newItem);
 				$parentItemId = Mage::getModel('catalog/product')->getIdBySku($parentItem);
 
-				Mage::log('Parent SKU :: '.$parentItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
-				Mage::log('Original SKU :: '.$oldItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
-				Mage::log('New SKU :: '.$newItem, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('Original Id :: '.$oldItemId, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('New Id :: '.$newItemId, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				Mage::log('Parent Id :: '.$parentItemId, Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
 				
 				switch (strtolower($post_length)) {
 				    case '5mm':
@@ -91,52 +98,57 @@ if ($firstTime) {
 				        $post_length = '11mm = 7/16"';
 				        break;
 				}
+				
+				$skuByProductId[$oldItemId] = $oldItem;
+				$skuByProductId[$newItemId] = $newItem;
+				$skuByProductId[$parentItemId] = $parentItem;
 
-				if (!empty($newItemId) && (!isset($customPostLengthOptions[$parentItemId]) || !isset($customPostLengthOptions[$parentItemId][$post_length]))) {
+				if (!empty($newItemId) && (!isset($customPostLengthOptions[$newItemId]) || !isset($customPostLengthOptions[$newItemId][$post_length]))) {
 
 					if (!isset($customPostLengthOptions[$parentItemId])) {
 						$customPostLengthOptions[$parentItemId] = array();
 					}
 				
 					Mage::log('NEW ITEM FOUND !!', Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+					
+					$postLengths[$newItem][] = $post_length;
 
-					$skuByProductId[$oldItemId] = $oldItem;
-					$skuByProductId[$newItemId] = $newItem;
-					$skuByProductId[$parentItemId] = $parentItem;
+				    $sort_order = count($customPostLengthOptions[$newItemId]) + 1;
 
-					$postLenths[$parentItem][] = $post_length;
+				    $customPostLengthOptions[$newItemId][$post_length] = array(
+			            'title'         => $post_length,
+			            'price'         => 0,
+			            'price_type'    => 'fixed',
+			            'sku'           => null,
+			            'is_delete'     => 0,
+			            'sort_order'    => $sort_order
+		            );
 
-					if (!empty($newItemId)) {
-
-					    $sort_order = count($customPostLengthOptions[$newItemId]) + 1;
-
-					    $customPostLengthOptions[$newItemId][$post_length] = array(
-				            'title'         => $post_length,
-				            'price'         => 0,
-				            'price_type'    => 'fixed',
-				            'sku'           => null,
-				            'is_delete'     => 0,
-				            'sort_order'    => $sort_order
-			            );
-
-			            $customPostLengthOptionsLog[$parentItem][$post_length] = $post_length;
-			        }
+				    $customPostLengthOptionsLog[$newItem][$post_length] = $post_length;
+				}
+				
+				if (!empty($newItemId) && (!isset($customPostLengthOptions[$parentItemId]) || !isset($customPostLengthOptions[$parentItemId][$post_length]))) {
+				    
+				    if (!isset($customPostLengthOptions[$parentItemId])) {
+				        $customPostLengthOptions[$parentItemId] = array();
+				    }
+				    
+				    Mage::log('NEW ITEM FOUND !!', Zend_Log::DEBUG, 'post_length_migrations_parsing.log', true);
+				    
+				    $postLengths[$parentItem][] = $post_length;
+				    
+			        $sort_order = count($customPostLengthOptions[$parentItemId]) + 1;
 			        
-			        if (!empty($parentItemId)) {
-			            
-			            $sort_order = count($customPostLengthOptions[$parentItemId]) + 1;
-			            
-			            $customPostLengthOptions[$parentItemId][$post_length] = array(
-			                    'title'         => $post_length,
-			                    'price'         => 0,
-			                    'price_type'    => 'fixed',
-			                    'sku'           => null,
-			                    'is_delete'     => 0,
-			                    'sort_order'    => $sort_order
-			            );
-			            
-			            $customPostLengthOptionsLog[$newItem][$post_length] = $post_length;
-			        }
+			        $customPostLengthOptions[$parentItemId][$post_length] = array(
+			                'title'         => $post_length,
+			                'price'         => 0,
+			                'price_type'    => 'fixed',
+			                'sku'           => null,
+			                'is_delete'     => 0,
+			                'sort_order'    => $sort_order
+			        );
+			        
+			        $customPostLengthOptionsLog[$parentItem][$post_length] = $post_length;
 				}
 			}
 
@@ -149,16 +161,16 @@ if ($firstTime) {
 
 	file_put_contents($skuByProductIdFile, json_encode($skuByProductId));
 	file_put_contents($customPostLengthOptionsFile, json_encode($customPostLengthOptions));
-	file_put_contents($postLengthsFile, json_encode($postLenths));
+	file_put_contents($postLengthsFile, json_encode($postLengths));
 } else {
 	$skuByProductId = json_decode(file_get_contents($skuByProductIdFile), true);
 	$customPostLengthOptions = json_decode(file_get_contents($customPostLengthOptionsFile), true);
-	$postLenths = json_decode(file_get_contents($postLengthsFile), true);
+	$postLengths = json_decode(file_get_contents($postLengthsFile), true);
 }
 
 //var_dump($skuByProductId);
 //var_dump($customPostLengthOptions);
-//var_dump($postLenths);
+//var_dump($postLengths);
 
 //die;
 
@@ -168,7 +180,6 @@ $post_length_custom_options = fopen($post_length_custom_options_file, 'w');
 $skippedSkus = array();
 
 foreach ($customPostLengthOptions as $product_id => $option_values) {
-
 
 	$sku = $skuByProductId[$product_id];
 
@@ -186,13 +197,18 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 	}
 
 	$option = array (
-        'title'			=> 'Post Length',
-        'type'			=> 'drop_down',
-        'is_require'    => 1,
-        'sort_order'    => 0,
+        'title'			  => 'Post Length',
+        'type'			   => 'drop_down',
+        'is_require'        => 1,
+        'sort_order'        => 0,
 		'is_delete'       => 0,
-        'values'		=> $option_values
-    );
+        'values'		      => $option_values
+	);
+	
+	$post_length = implode('|', $postLengths[$sku]);
+	
+	Mage::log('Post Length:: '.$post_length, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
+	var_dump('Post Length:: '.$post_length);
 
     try {
 
@@ -215,11 +231,6 @@ foreach ($customPostLengthOptions as $product_id => $option_values) {
 		$_product->save();
 
 		unset($_product);
-
-		$post_length = implode('|', $postLenths[$sku]);
-
-		Mage::log('Post Length:: '.$post_length, Zend_Log::DEBUG, 'post_length_migrations_processing.log', true);
-		var_dump('Post Length:: '.$post_length);
 
 		fputcsv($post_length_custom_options, array(
 			$sku,
