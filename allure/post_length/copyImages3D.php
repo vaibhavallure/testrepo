@@ -82,6 +82,7 @@ foreach ($fixedItems as $fixedSku) {
 				$images = $product->getMediaGalleryImages();
 				
 				$newProduct->setMediaGallery (array('images'=>array (), 'values'=>array ()));
+				//$parentProduct->setMediaGallery (array('images'=>array (), 'values'=>array ()));
 				
 				foreach ($images as $image) {
 				    if ( $path = $image->getPath() ) {
@@ -118,6 +119,7 @@ foreach ($fixedItems as $fixedSku) {
 				$newProduct->save();
 
 				$imageUpdates[$newItemId] = true;
+				//$imageUpdates[$parentItemId] = true;
 			}
 		}
 
