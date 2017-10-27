@@ -782,13 +782,14 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
             $avial_workDays[] = $workdays;
             
         }
-        /* $available_wdays=array();
+        $available_wdays=array();
         foreach ($avial_workDays as $avail_wd){
             foreach ($avail_wd as $wd){
                 $available_wdays[]=$wd;
             }
-        } */
-        $notAvailableDatesCollection=Mage::getModel('appointments/dates')->getCollection()
+        }
+        
+        /* $notAvailableDatesCollection=Mage::getModel('appointments/dates')->getCollection()
         ->addFieldToFilter('store_id', array('eq' => $storeid))
         ->addFieldToFilter('is_available', array('eq' => '0'))
         ->addFieldToFilter('exclude', array('eq' => '0'));
@@ -813,11 +814,12 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 
                 
             }
-        }
+        } */
+        
         $jsonDATA="";
         
         if(!empty($available_wdays)) {
-            $jsonDATA = json_encode(array_unique($available_wdays));
+            $jsonDATA = json_encode(array_unique($avial_workDays));
         }
         
         $block = $this->getLayout()->createBlock('core/template','appointments_pickurday',array('template' => 'appointments/pickurday.phtml'))->setData("workingdays",$jsonDATA);
