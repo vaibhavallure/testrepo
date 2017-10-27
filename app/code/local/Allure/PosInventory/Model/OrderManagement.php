@@ -177,17 +177,12 @@ class Allure_PosInventory_Model_OrderManagement extends  Ebizmarts_BakerlooRestf
             // Retrieve order
             $order = $service->getOrder();
             
-            $quoteId = $order->getQuoteId();
-            
-            $quote = Mage::getModel('sales/quote')->load($quoteId);
-            
-            
             //allure-02 Start 
             $refundedAmt    = 0;
             $nonRefundedAmt = 0;
             foreach ($order->getAllItems() as $orderItem){
                 $baseRowTotalInclTax = $orderItem->getData('base_row_total_incl_tax');
-                if($orderItem->getData('base_price') < 0){
+                if(/* $orderItem->getData('base_price') */$baseRowTotalInclTax < 0 && $baseRowTotalInclTax!=null){
                     $qty = $orderItem->getData('qty_ordered');
                     $orderItem->setData('qty_refunded',$qty);
                     $orderItem->setData('qty_canceled',$qty);
@@ -201,7 +196,6 @@ class Allure_PosInventory_Model_OrderManagement extends  Ebizmarts_BakerlooRestf
                     $nonRefundedAmt += $baseRowTotalInclTax;
                 }
             }
-            
             if($refundedAmt > 0){
                 $order->setSubtotalRefunded($refundedAmt);
                 $order->setBaseSubtotalRefunded($refundedAmt);
@@ -242,7 +236,6 @@ class Allure_PosInventory_Model_OrderManagement extends  Ebizmarts_BakerlooRestf
                 $order->setBaseTotalPaid($totalPaidAmt);
                 $order->save();
             }
-            
             //allure-02 End 
             
             // Dispatch observer events

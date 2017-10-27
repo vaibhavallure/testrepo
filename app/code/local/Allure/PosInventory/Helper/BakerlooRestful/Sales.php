@@ -443,4 +443,20 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
         
         return false;
     }
+    
+    private function _applyCustomPrice($quoteItem, $price)
+    {
+        
+        //Cannot apply custom price on dynamic bundle, Magento does not allow it.
+        
+        if ($quoteItem->getParentItem()) {
+            $quoteItem->getParentItem()->setCustomPrice($price);
+            $quoteItem->getParentItem()->setOriginalCustomPrice($price);
+            $quoteItem->getParentItem()->setBaseRowTotal($price);
+        } else {
+            $quoteItem->setCustomPrice($price);
+            $quoteItem->setOriginalCustomPrice($price);
+            $quoteItem->setBaseRowTotal($price);
+        }
+    }
 }
