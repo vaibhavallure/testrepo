@@ -24,6 +24,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         $store = Mage::app()->getStore();
 
         $this->getStore()->setCurrentCurrencyCode($data['currency_code']);
+
         Mage::helper('bakerloo_restful/pages')->disableFlatCatalogAndCategory($storeId);
 
         $quote = $this->getQuoteSales()
@@ -53,7 +54,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         if (!is_array($data['products']) or empty($data['products'])) {
             $this->throwBuildQuoteException(Mage::helper('bakerloo_restful')->__('ALERT: No products provided on order.'));
         }
-        
+
         $this->_addProductsToQuote($data['products']);
         //Adding products to Quote
 
@@ -198,7 +199,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         $useSimplePrice = (int)Mage::helper('bakerloo_restful')->config('general/simple_configurable_prices', Mage::app()->getStore()->getId());
         $fastProducts   = (int)Mage::helper('bakerloo_restful')->config('checkout/fast_product_load', Mage::app()->getStore()->getId());
 
-        if (((int)Mage::helper('bakerloo_restful')->config('catalog/allow_backorders'))) {
+        if (((int)Mage::helper('bakerloo_restful')->config('catalog/allow_backorders', $this->getQuote()->getStoreId()))) {
             if (!Mage::registry(Ebizmarts_BakerlooRestful_Model_Rewrite_CatalogInventory_Stock_Item::BACKORDERS_YES)) {
                 Mage::register(Ebizmarts_BakerlooRestful_Model_Rewrite_CatalogInventory_Stock_Item::BACKORDERS_YES, true);
             }
@@ -229,10 +230,9 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                 $buyInfo = $this->getBuyInfo($_product, $product);
                 try {
                     //Skip stock checking
-                    // Update by Allure - Skip Stock Check true always
                     if (Mage::helper('bakerloo_restful')->dontCheckStock()) {
-                        $product->getStockItem()->setData('use_config_manage_stock', 0);
                         $product->getStockItem()->setData('manage_stock', 0);
+                        $product->getStockItem()->setData('use_config_manage_stock', 0);
                     }
 
                     //if simple_configurable_product enabled, use child's price
@@ -302,11 +302,13 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
 
         $productIds = array_keys($products);
         
+        // START Allure Fixes - Add Stock Filter
         $stock = Mage::getModel('cataloginventory/stock');
 
         $stockItemCol = Mage::getResourceModel('cataloginventory/stock_item_collection')
             ->addStockFilter($stock)
             ->addFieldToFilter('product_id', array('in' => $productIds));
+        // END Allure Fixes
 
         foreach ($stockItemCol as $_sItem) {
             $product = $products[$_sItem->getProductId()];
@@ -486,7 +488,7 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         return ($optionType == 'radio' or $optionType == 'select');
     }
 
-    protected function _applyCustomPrice($quoteItem, $price)
+    private function _applyCustomPrice($quoteItem, $price)
     {
 
         //Cannot apply custom price on dynamic bundle, Magento does not allow it.

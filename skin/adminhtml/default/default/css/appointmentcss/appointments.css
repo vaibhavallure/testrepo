@@ -423,6 +423,7 @@ a#foo2_next {
 	pointer-events: none !important;
     cursor: not-allowed !important;	
 }
+
 #fetchpickurday{
 	width: 45%;
     float: left;    

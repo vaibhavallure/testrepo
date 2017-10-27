@@ -423,6 +423,12 @@ a#foo2_next {
 	pointer-events: none !important;
     cursor: not-allowed !important;	
 }
+.custom-disable span{
+    padding: 1px 15px;
+    display: block;
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
 #fetchpickurday{
 	width: 45%;
     float: left;    

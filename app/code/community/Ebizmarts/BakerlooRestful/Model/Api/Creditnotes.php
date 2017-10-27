@@ -144,12 +144,6 @@ class Ebizmarts_BakerlooRestful_Model_Api_Creditnotes extends Ebizmarts_Bakerloo
             }
         }
 
-        /*  'do_offline' => string '0' (length=1)
-      'comment_text' => string '' (length=0)
-      'shipping_amount' => string '0' (length=1)
-      'adjustment_positive' => string '0' (length=1)
-      'adjustment_negative' => string '0' (length=1)*/
-
         $creditMemoData = array();
         $memoItems = array();
 
@@ -166,6 +160,14 @@ class Ebizmarts_BakerlooRestful_Model_Api_Creditnotes extends Ebizmarts_Bakerloo
 
         if (isset($data['shipping_amount_refunded']) and $order->getShippingAmount() != 0) {
             $creditMemoData['shipping_amount'] = $this->getShippingAmountToRefund($data, $order);
+        }
+
+        if (isset($data['adjustment_refund'])) {
+            $creditMemoData['adjustment_positive'] = $data['adjustment_refund'];
+        }
+
+        if (isset($data['adjustment_fee'])) {
+            $creditMemoData['adjustment_negative'] = $data['adjustment_fee'];
         }
 
         $service = $this->getServiceOrder($order);
@@ -213,12 +215,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Creditnotes extends Ebizmarts_Bakerloo
                 }
             }
 
-            /*if (isset($data['do_refund'])) {
-                $creditmemo->setRefundRequested(true);
-            }*/
-            //if (isset($data['do_offline'])) {
             $creditmemo->setOfflineRequested(true);
-            //}
 
             $creditmemo->register();
             if (!empty($data['send_email'])) {
