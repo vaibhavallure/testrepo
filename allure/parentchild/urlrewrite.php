@@ -54,7 +54,6 @@ foreach ($collection as $product)
       
         if($oldLabel=='old')
             array_pop($productUrlArray);
-        
         $withoutOldWordUrl=implode('-', $productUrlArray);
         
         $configSku=$productSkuArray[0];
@@ -77,7 +76,7 @@ foreach ($collection as $product)
                      ->setOptions('RP')
                      ->setIdPath('product_'.$product->getId())
                      ->setTargetPath($configProduct->getUrlKey().'.html')
-                     ->setRequestPath($url.'.html')
+                     ->setRequestPath($withoutOldWordUrl.'.html')
                      ->save();
                     
                     Mage::log($countsucess."-product Id:".$product->getId(),Zend_log::DEBUG,'parentchild_url.log',true);
