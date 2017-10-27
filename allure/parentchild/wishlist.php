@@ -6,6 +6,9 @@ echo "<pre>";
 
 $wishListOptionCollection = Mage::getModel('wishlist/item_option')->getCollection();
 $wishListOptionCollection->addFieldToFilter('wishlist_item_id', array('eq' =>10));
+foreach ($wishListOptionCollection as $itemOption){
+    print_r($itemOption->getData());
+}
 print_r($wishListOptionCollection->getData());
 
 die;
