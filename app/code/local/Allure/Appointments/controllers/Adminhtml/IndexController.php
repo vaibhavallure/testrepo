@@ -819,7 +819,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         $jsonDATA="";
         
         if(!empty($available_wdays)) {
-            $jsonDATA = json_encode(array_unique($avial_workDays));
+            $jsonDATA = json_encode(array_unique($available_wdays));
         }
         
         $block = $this->getLayout()->createBlock('core/template','appointments_pickurday',array('template' => 'appointments/pickurday.phtml'))->setData("workingdays",$jsonDATA);
