@@ -149,7 +149,7 @@ class Ebizmarts_BakerlooPrices_Model_Observer
 
             $hiddenTax = $this->getHiddenTaxAmount($product);
             $lineTotal = round((float)$product['order_line']['subtotal'], 2);
-            $price     = round((float)$product['price'], 2);
+            $price     = round((float)$product['order_line']['unit_price'], 2);
             $discount  = round((float)$product['order_line']['total_discount'], 2);
             $qty       = $product['qty'];
 
@@ -168,6 +168,35 @@ class Ebizmarts_BakerlooPrices_Model_Observer
                 if ($applyTaxAfterDiscount and !$applyDiscountOnPricesInclTax) {
                     $taxAmount += ($item->getHiddenTaxAmount() - $hiddenTax);
                 }
+            }
+
+            $orderItem->setBasePrice($price);
+            $orderItem->setBasePriceInclTax($priceWTax);
+            $orderItem->setBaseDiscountAmount($discount);
+            $orderItem->setBaseTaxAmount($taxAmount);
+            $orderItem->setBaseHiddenTaxAmount($hiddenTax);
+            $orderItem->setBaseRowTotal($lineTotal);
+            $orderItem->setBaseRowTotalInclTax($lineTotal + $taxAmount);
+
+            $item->setBaseCalculationPrice($price);
+            $item->setBaseOriginalPrice($price);
+            $item->setBasePriceInclTax($priceWTax);
+            $item->setBaseDiscountAmount($discount);
+            $item->setBaseTaxAmount($taxAmount);
+            $item->setBaseHiddenTaxAmount($hiddenTax);
+            $item->setBaseRowTotal($lineTotal);
+            $item->setBaseRowTotalInclTax($lineTotal + $taxAmount);
+
+            if ($baseCurrency->getCode() != $currentCurrency->getCode()) {
+                /** @var Ebizmarts_BakerlooPayment_Helper_Data $h */
+                $h = Mage::helper('bakerloo_payment');
+
+                $taxAmount  = $h->convertFromBaseCurrency($taxAmount, $baseCurrency, $currentCurrency);
+                $lineTotal  = $h->convertFromBaseCurrency($lineTotal, $baseCurrency, $currentCurrency);
+                $price      = $h->convertFromBaseCurrency($price, $baseCurrency, $currentCurrency);
+                $priceWTax  = $h->convertFromBaseCurrency($priceWTax, $baseCurrency, $currentCurrency);
+                $discount   = $h->convertFromBaseCurrency($discount, $baseCurrency, $currentCurrency);
+                $hiddenTax  = $h->convertFromBaseCurrency($hiddenTax, $baseCurrency, $currentCurrency);
             }
 
             $orderItem->setPrice($price);
@@ -189,35 +218,6 @@ class Ebizmarts_BakerlooPrices_Model_Observer
             $item->setPriceInclTax($priceWTax);
             $item->setRowTotal($lineTotal);
             $item->setRowTotalInclTax($lineTotal + $taxAmount);
-
-            if ($baseCurrency->getCode() != $currentCurrency->getCode()) {
-                /** @var Ebizmarts_BakerlooPayment_Helper_Data $h */
-                $h = Mage::helper('bakerloo_payment');
-
-                $taxAmount  = $h->convertToBaseCurrency($taxAmount, $baseCurrency, $currentCurrency);
-                $lineTotal  = $h->convertToBaseCurrency($lineTotal, $baseCurrency, $currentCurrency);
-                $price      = $h->convertToBaseCurrency($price, $baseCurrency, $currentCurrency);
-                $priceWTax  = $h->convertToBaseCurrency($priceWTax, $baseCurrency, $currentCurrency);
-                $discount   = $h->convertToBaseCurrency($discount, $baseCurrency, $currentCurrency);
-                $hiddenTax  = $h->convertToBaseCurrency($hiddenTax, $baseCurrency, $currentCurrency);
-            }
-
-            $orderItem->setBasePrice($price);
-            $orderItem->setBasePriceInclTax($priceWTax);
-            $orderItem->setBaseDiscountAmount($discount);
-            $orderItem->setBaseTaxAmount($taxAmount);
-            $orderItem->setBaseHiddenTaxAmount($hiddenTax);
-            $orderItem->setBaseRowTotal($lineTotal);
-            $orderItem->setBaseRowTotalInclTax($lineTotal + $taxAmount);
-
-            $item->setBaseCalculationPrice($price);
-            $item->setBaseOriginalPrice($price);
-            $item->setBasePriceInclTax($priceWTax);
-            $item->setBaseDiscountAmount($discount);
-            $item->setBaseTaxAmount($taxAmount);
-            $item->setBaseHiddenTaxAmount($hiddenTax);
-            $item->setBaseRowTotal($lineTotal);
-            $item->setBaseRowTotalInclTax($lineTotal + $taxAmount);
         }
 
         return $this;
