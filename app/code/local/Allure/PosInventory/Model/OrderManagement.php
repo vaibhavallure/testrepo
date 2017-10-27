@@ -178,8 +178,9 @@ class Allure_PosInventory_Model_OrderManagement extends  Ebizmarts_BakerlooRestf
             $order = $service->getOrder();
             
             //allure-02 Start 
-            $refundedAmt    = 0;
-            $nonRefundedAmt = 0;
+            $refundedAmt            = 0;
+            $nonRefundedAmt         = 0;
+            $refundedDiscountAmt    = 0;
             foreach ($order->getAllItems() as $orderItem){
                 $baseRowTotalInclTax = $orderItem->getData('base_row_total_incl_tax');
                 if(/* $orderItem->getData('base_price') */$baseRowTotalInclTax < 0 && $baseRowTotalInclTax!=null){
@@ -191,6 +192,7 @@ class Allure_PosInventory_Model_OrderManagement extends  Ebizmarts_BakerlooRestf
                     }else {
                         $refundedAmt = $refundedAmt + ($baseRowTotalInclTax);
                     }
+                    $refundedDiscountAmt += $orderItem->getData('discount_amount');
                     $orderItem->save();
                 }else{
                     $nonRefundedAmt += $baseRowTotalInclTax;
@@ -207,9 +209,10 @@ class Allure_PosInventory_Model_OrderManagement extends  Ebizmarts_BakerlooRestf
                     $orderDiscount = $payload['discount']; //$order->getDiscountAmount() ;
                     if($orderDiscount){
                         $orderDiscount *=  (-1);
+                        $refundedDiscountAmt = $refundedDiscountAmt * (-1);
                         $isDiscount = true;
-                        $orderDiscount = $orderDiscount + $refundedAmt;
-                        $extraDiscount = $orderDiscount;
+                        $extraDiscount = $orderDiscount + $refundedAmt;
+                        $orderDiscount = $orderDiscount + ($refundedAmt - $refundedDiscountAmt);
                         $order->setDiscountAmount($orderDiscount);
                         $order->setBaseDiscountAmount($orderDiscount);
                     }
