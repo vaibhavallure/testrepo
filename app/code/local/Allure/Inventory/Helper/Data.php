@@ -65,6 +65,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     	//$this->writeData($websiteId);
     	
     	$orderItems=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('po_id',$id);
+    	$orderItems->getSelect()->order('main_table.product_id DESC');
     	
     	$fp = fopen($file, 'w');
     	$csvHeader = array(
@@ -147,7 +148,9 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
 				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Vendor Comment</th>
 				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Vendor Comment</th>
 				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Delivery Date</th>
-				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Delivery Date</th></tr>";
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Delivery Date</th>
+                <th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Qty</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Qty</th></tr>";
                 foreach ($diffArray as $key=>$val)
                 {
                     if($val['is_custom']){
@@ -163,6 +166,8 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
                     $newVendorComment=($val['vendor_comment'])?$val['vendor_comment']:'-';
                     $oldDeliveryDate=($val['proposed_delivery_date_old'])?$val['proposed_delivery_date_old']:'-';
                     $newDeliveryDate=($val['proposed_delivery_date'])?$val['proposed_delivery_date']:'-';
+                    $oldQty=($val['qty_old'])?$val['qty_old']:'-';
+                    $qty=($val['qty'])?$val['qty']:'-';
                     
                    $rowColor = '#7ecc84';
                                
@@ -173,7 +178,9 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         				<td style='border:1px solid; padding:4px;'>".$oldVendorComment."</td>
         			    <td style='border:1px solid; padding:4px;'>".$newVendorComment."</td>
                         <td style='border:1px solid; padding:4px;'>".$oldDeliveryDate."</td>
-        				<td style='border:1px solid; padding:4px;'>".$newDeliveryDate."</td></tr>";
+        				<td style='border:1px solid; padding:4px;'>".$newDeliveryDate."</td>
+                        <td style='border:1px solid; padding:4px;'>".$oldQty."</td>
+                        <td style='border:1px solid; padding:4px;'>".$qty."</td></tr>";
                  } //End of Foreach
         }
        

@@ -258,4 +258,23 @@ function resetSearch(){
         }
     });
 }
+ function removeSelected(productId,store){
+	 var orderId=$j('#order_id').val();
+	 var key=Allure.ViewPurchaseOrderFormKey;
+	// alert("order:"+orderId+'Store:'+store+'product:'+productId);
+	 if(confirm("Are you sure ?")){
+		 $j.ajax({
+		        url: Allure.InventoryPurchaseItemRemove,
+		        dataType : 'json',
+				type : 'POST',
+				data: {'form_key':key,'store':store,'product':productId,'order':orderId},
+				beforeSend: function() { $j('#loading-mask').show(); },
+		        complete: function() { $j('#loading-mask').hide(); },
+		        success: function(data) {
+		        	//console.log(data.data);
+		        	location.reload() 
+		        }
+		    });
+	   }
+	}
 
