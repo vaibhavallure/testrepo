@@ -548,7 +548,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         $isBackorder = $this->isQuoteContainsBackorder();
         $quoteMain = $this->getQuote(); // this is main quote object.
         $_checkoutHelper = Mage::helper('allure_multicheckout');
-        $this->changeCustsomQuoteStatus();
+        $this->changeCustomQuoteStatus();
         
         if ($isBackorder) {
             $quoteItems = $quoteMain->getAllVisibleItems(); // $quoteMain->getAllItems();
