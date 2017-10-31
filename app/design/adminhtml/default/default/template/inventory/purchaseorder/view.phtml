@@ -19,8 +19,6 @@
     <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW && Mage::helper('allure_vendor')->isUserVendor()):?>
     <button id="accept" class="po_save_btn"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/accept', array('_secure' => true,'id'=>$order->getPoId()));?>'" ><?php echo $helper->__('Accept')?></button>
    <?php endif;?>
-  
-   
    <button onclick="history.back()" class="po_back_btn" ><?php echo $helper->__('Back')?></button>
 </div>
 
@@ -52,9 +50,10 @@
 	</div>
 </div>
 
+
 <div class="prod-data">
 <form id="save_po"  method="post">
-	<input type="hidden" name="order_id" value="<?php echo $order->getPoId()?>">
+	<input type="hidden" id="order_id" name="order_id" value="<?php echo $order->getPoId()?>">
 	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 	<table class="iventory-product table" style="width:100%">
 		
@@ -64,15 +63,23 @@
 		<th><?php echo $helper->__('PRODUCT NAME')?></th>
 		<th><?php echo $helper->__('Ordered Qty')?></th>
 		<th><?php echo $helper->__('VMT Comment')?></th>
+		<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
 		<th><?php echo $helper->__('Shipped Qty')?></th>
+		<?php endif;?>
+	    <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
 		<th><?php echo $helper->__('Remaining Qty')?></th>
+		<?php endif;?>
 		<th><?php echo $helper->__('Expected Ship ')?><br><?php echo $helper->__(' Date')?></th>
+		 <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
 		<th><?php echo $helper->__('Vendor Comment')?></th>
+	    <?php endif;?>
+	     <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('Action')?></th>
+	    <?php endif;?>
 		
     	<?php 
     
     		foreach ($collection as $_product):
-    		
     		 
     		   if(!$_product->getIsCustom())
     			 $product = Mage::getModel ( 'catalog/product' )->load ($_product->getProductId());
@@ -101,37 +108,42 @@
 				<?php if(Mage::helper('allure_vendor')->isUserVendor()):?>
 				<td>
 					<label><?php echo nl2br($_product->getAdminComment())?></label>
-					<textarea hidden="true" <?php if(Mage::helper('allure_vendor')->isUserVendor()){echo 'readonly="readonly"';}?>
-						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="3" >
-						 <?php echo $_product->getAdminComment()?>
-					</textarea>
+					<textarea hidden="true" <?php if(Mage::helper('allure_vendor')->isUserVendor()){echo 'readonly="readonly"';}?>name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="3" ><?php echo trim($_product->getAdminComment())?></textarea>
 				</td>
 				<?php else:?>
 				<td>
 					<textarea  <?php if(Mage::helper('allure_vendor')->isUserVendor()){echo 'readonly="readonly"';}?>
-						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="7" >
-						<?php echo $_product->getAdminComment()?>
-					</textarea>
+						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="7" ><?php echo $_product->getAdminComment()?></textarea>
 				</td>
 				<?php endif;?>
-				
+				<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT): ?>
 				<td>
 					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 
 					 name="order[<?php echo $_product->getProductId() ?>][<?php echo "proposed_qty" ?>]" type="text" 
 					 value="0"  />
 				</td>
+				<?php endif;?>
+				 <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
 				<td>
 					<input id="remaining_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
 						<?php if(Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?>
 						name="order[<?php echo $_product->getProductId() ?>][<?php echo "remaining_qty" ?>]" type="text" 
 						value="<?php echo round($_product->getRemainingQty())?>" />
 				</td>
+				<?php endif;?>
 				<td>
                     <div><?php echo $this->getDate($_product->getProductId(),$_product->getProposedDeliveryDate());?></div>
                 </td>
+                 <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
 				<td>
                     <textarea <?php if(!Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?> name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="13" rows="7" ><?php echo $_product->getVendorComment()?></textarea>
                 </td>
+               <?php endif;?>
+               <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+               <td>
+              		 <a id ="removeItemPO" onclick="removeSelected('<?php echo  $_product->getProductId() ?>','<?php echo $order->getStockId()?>')">Remove</a>
+               </td>
+               <?php endif;?>
 			</tr>		
         <?php endforeach ;?>
   </table>
@@ -148,7 +160,8 @@
       </tr>
   </table>
   <?php endif;?>
-</div>     	 
+</div>
+ 	 
 
     
 <script type="text/javascript">
@@ -162,6 +175,7 @@
 	Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 	Allure.InventoryStoreSwitch = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_stock/store', array('_secure' => true));?>';
 	Allure.InventoryPurcaseCreateOrder = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/createOrder', array('_secure' => true));?>';
+	Allure.InventoryPurchaseItemRemove = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/removeitem', array('_secure' => true));?>';
 </script>
 
 
