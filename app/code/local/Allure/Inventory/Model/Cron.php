@@ -185,7 +185,7 @@ class Allure_Inventory_Model_Cron {
     	       unset($tmp);
     	       
 	        }else{
-	            Mage::log("product Max Qty option not set:".$item['entity_id'].'-'.$product->getSku(),Zend_log::DEBUG,'lowstock_PO_error.log',true);
+	            Mage::log("product Max Qty option not set for Product:".$item['entity_id'].'-'.$product->getSku().'------store id:'.$stockId,Zend_log::DEBUG,'lowstock_PO_error.log',true);
 	        }
 	    }
 	    if(isset($items) && !empty($items)){
