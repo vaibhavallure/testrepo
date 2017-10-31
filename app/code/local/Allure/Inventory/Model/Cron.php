@@ -91,6 +91,7 @@ class Allure_Inventory_Model_Cron {
 			
 			if(count($collection->getData())> 0 && !empty($collection->getData())){
 					
+			    
 				foreach ($collection->getData() as $product){
 						
 					$id = $product['entity_id'];
@@ -102,6 +103,8 @@ class Allure_Inventory_Model_Cron {
 					//fputcsv($fp, array($id,$sku,$qty), ",");
 				}
 				$this->send_email($websiteId);
+				$this->createDraftOrder($collection->getData(),$stockId);
+				
 			}
 		} catch (Exception $e) {
 		    Mage::log("Exception Occured:".$e->getMessage(),Zend_log::DEBUG,'lowstock',true);
@@ -153,6 +156,130 @@ class Allure_Inventory_Model_Cron {
 		} catch (Exception $e) {
 			Mage::log("Exception Sending mail:".$e,Zend_log::DEBUG,'lowstock',true);
 		}
+	}
+	public function createDraftOrder($data,$stockId){
+	    //echo "<pre>";
+	  	$vendor = Mage::getStoreConfig("allure_vendor/manage_vendor/vendor");
+	    $orderStatus = Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT;
+	    $helper = Mage::helper('inventory');
+	    $date = new Zend_Date(Mage::getModel('core/date')->timestamp());
+	    $date->addDay('7');
+	    $date->toString('Y-m-d H:i:s');
+	    
+	    $items = array();
+	    
+	    foreach ($data as $item) {
+	        $product = Mage::getModel('catalog/product')
+	        ->setStoreId($stockId)->load($item['entity_id']);
+	        
+	        if($product->getId() && !empty($product->getMaxQty())){
+    	        if ($product->getPrimaryVendor())
+    	            $vendor = $product->getPrimaryVendor();
+    	       $tmp=array();
+    	       $tmp['item_id']=$product->getId();
+    	       $tmp['qty']=$product->getMaxQty();
+    	       $tmp['is_custom']=0;
+    	       $tmp['vendor_sku']=$product->getVendorItemNo();
+    	       $tmp['cost']=$product->getCost()?$product->getCost():0;
+    	       $items[$vendor][$product->getId()] = $tmp;
+    	       unset($tmp);
+    	       
+	        }else{
+	            Mage::log("product Max Qty option not set for Product:".$item['entity_id'].'-'.$product->getSku().'------store id:'.$stockId,Zend_log::DEBUG,'lowstock_PO_error.log',true);
+	        }
+	    }
+	    if(isset($items) && !empty($items)){
+	        
+	            foreach ($items as $key => $itemArray) {
+	                $vendorId = $key;
+	                $vendorName = Mage::helper('allure_vendor')->getVanderName($vendorId);
+	                $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($vendorId);
+	                if (isset($vendorName) && ! empty($vendorName)) {
+	                    $totalAmount = 0;
+	                    $po_id = null;
+	                    foreach ($itemArray as $item) {
+	                        $totalAmount += $item['qty'] * $item['cost'];
+	                    }
+	                    
+	                    Mage::log('Total:' . $totalAmount, Zend_log::DEBUG, 'mylogs', true);
+	                    $model = Mage::getModel('inventory/purchaseorder');
+	                    $orderData = array(
+	                                'ref_no' => 'lowstock report',
+	                                'vendor_id' => $vendorId,
+	                                'created_date' => date("Y-m-d H:i:s"),
+	                                'updated_date' => date("Y-m-d H:i:s"),
+	                                'vendor_name' => $vendorName,
+	                                'status' => $orderStatus,
+	                                'total_amount' => $totalAmount,
+	                                'stock_id' => $stockId
+	                    );
+	                            
+	                    $model->setData($orderData);
+	                    $po_id = $model->save()->getId();
+	                            
+	                    foreach ($itemArray as $item) {
+                        // Map Order items With Order
+                        // Insert entry in allure_purchase_order_item
+                        
+                        Mage::log("temp:", Zend_log::DEBUG, 'mylogs', true);
+                        Mage::log($item, Zend_log::DEBUG, 'mylogs', true);
+                        $model = Mage::getModel('inventory/orderitems');
+                        $dataItems = array(
+                            'po_id' => $po_id,
+                            'ref_no' => 'lowstock report',
+                            'product_id' => $item['item_id'],
+                            'requested_qty' => $item['qty'],
+                            'remaining_qty' => $item['qty'],
+                            'proposed_qty' => $item['qty'],
+                            'status' => $orderStatus,
+                            'requested_delivery_date' => $date,
+                            'is_custom' => $item['is_custom'],
+                            'admin_comment' => $item['comment'],
+                            'total_amount' => $item['qty'] * $item['cost'],
+                            'stock_id' => $stockId,
+                            'vendor_sku' => $item['vendor_sku']
+                        
+                        );
+                        $model->setData($dataItems);
+                        $model->save();
+                        
+                        // If Item is Custom dont set PO Sent flag
+                            if (! $item['is_custom']) {
+                                $inven = Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($item['item_id'], $stockId);
+                                $inven->setData('po_sent', 1)->save();
+                            }
+                       }
+                        
+                    // Purchase order logs just for extra information
+                    // insert entry in allure_purchase_order_log
+                    $model = Mage::getModel('inventory/orderlogs');
+                    $logData = array(
+                        'po_id' => $po_id,
+                        'vendor_id' => $vendorId,
+                        'date' => date("Y-m-d H:i:s"),
+                        'total_amount' => $totalAmount,
+                        'stock_id' => $stockId
+                    );
+                    $model->setData($logData);
+                    $model->save()->getId();
+                    try {
+                        // Send notification to Admin
+                        $templateId = Mage::getStoreConfig('allure_vendor/general/purchase_order_create', $storeId);
+                        $adminEmail = Mage::getStoreConfig('allure_vendor/general/admin_email', $storeId);
+                        // sendEmail($po_id, $vendorEmail,$templateId,$templateId)
+                        if (! empty($adminEmail)) {
+                            $adminEmail = explode(',', $adminEmail);
+                        }
+                        $helper->sendEmail($po_id, '', $templateId, $adminEmail, true);
+                    } catch (Exception $e) {}
+	                           
+	                            
+	                }  //Vendor loop
+	                
+	            } //foreach items array loop
+	            
+	    }
+	   
 	}
 	
 }

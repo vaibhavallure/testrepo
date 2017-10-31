@@ -81,7 +81,7 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
         						array('name' => 'value')
         						);
         $collection->getSelect()->group('main_table.id');
-        $collection->getSelect()->order('main_table.updated_at DESC');
+        $collection->getSelect()->order('main_table.id DESC');
       
        
       /*   echo  $collection->getSelect();
