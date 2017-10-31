@@ -138,14 +138,14 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Invoice_Default extends Mage_Sales_
                 $lineBlockStockMessage = $lineBlockArr['line_block'];
                 $page = $pdf->drawLineBlocks($page, array($lineBlockStockMessage), array('table_header' => true));
                 $this->setPage($page);
-                
-                $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed);
-                if($salesInstr['is_show']){
-                    $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
-                    $this->setPage($page);
-                    $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
-                    $this->setPage($page);
-                }
+            }
+            
+            $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed);
+            if($salesInstr['is_show']){
+                $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
+                $this->setPage($page);
+                $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
+                $this->setPage($page);
             }
             
             $lineSeparator = $helper->getLineSeparator();
