@@ -148,8 +148,8 @@ class Mage_Sales_Model_Quote_Payment extends Mage_Payment_Model_Info
         $this->getQuote()->collectTotals();
 
         
-        
-        if (strpos($data->getMethod(), 'bakerloo')== false) {
+        if(!preg_match("/bakerloo/", $data->getMethod()))
+        {
             if (!$method->isAvailable($this->getQuote())
                 || !$method->isApplicableToQuote($this->getQuote(), $data->getChecks())
                 ) {
