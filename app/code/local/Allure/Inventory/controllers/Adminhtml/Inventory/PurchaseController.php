@@ -292,6 +292,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             $canFullyShipOrder = 1;
             $diffArray=array();
             foreach ($data['order'] as $product => $key) {
+                
                 $arr = array_filter($data['order'][$product]);
                
                 if (isset($arr) && $arr) {
@@ -310,9 +311,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         'admin_comment' => $arr['admin_comment'],
                         'vendor_comment' => $arr['vendor_comment']
                     );
-        
 
-                    $storeId = Mage::getModel('inventory/purchaseorder')->load($po_id)->getStockId();
+                     $poObj= Mage::getModel('inventory/purchaseorder')->load($po_id);
+                     $storeId=$poObj->getStockId();
 
                     // Tring to get only one first item and updating it
                     $items = Mage::getModel('inventory/orderitems')->getCollection()
@@ -323,6 +324,34 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                             $diffArray[$item->getProductId()]['admin_comment']=$arr['admin_comment'];
                             $diffArray[$item->getProductId()]['admin_comment_old']=$item->getAdminComment();
                             $diffArray[$item->getProductId()]['is_custom']=$item->getIsCustom();
+                        }
+                        if(trim($item->getRequestedQty())!=trim($arr['requested_qty'])){
+                            $diffArray[$item->getProductId()]['qty']=$arr['requested_qty'];
+                            $diffArray[$item->getProductId()]['qty_old']=$item->getRequestedQty();
+                            $diffArray[$item->getProductId()]['is_custom']=$item->getIsCustom();
+                            
+                            $price=Mage::getModel('catalog/product')->setStoreId($storeId)->load($item->getProductId())->getCost();
+                            $oldTotal=$item->getTotalAmount();
+                            $newTotal=$arr['requested_qty']*$price;
+                            if($oldTotal >$newTotal){
+                                $final=$oldTotal-$newTotal;
+                                $poObj->setTotalAmount($poObj->getTotalAmount()-$final);
+                            }
+                            else {
+                                $final=$newTotal-$oldTotal;
+                                $poObj->setTotalAmount($poObj->getTotalAmount()+$final);
+                            }
+                            
+                            
+                            $item->setData('total_amount',($arr['requested_qty']*$price));
+                             
+                            $poObj->save();
+                             //Incase req qty change in draft state update proposed qty and remaining qty
+                             $arr['proposed_qty']=$arr['requested_qty'];
+                             $item->setData('proposed_qty', $arr['requested_qty']);
+                             $item->setData('remaining_qty', $arr['requested_qty']);
+                             
+                            
                         }
                         if(trim($item->getVendorComment())!=trim($arr['vendor_comment'])){
                             $diffArray[$item->getProductId()]['vendor_comment']=$arr['vendor_comment'];
@@ -341,6 +370,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                         $item->setData('admin_comment', $arr['admin_comment']);
                         $item->setData('vendor_comment', $arr['vendor_comment']);
                         $item->setData('requested_qty', $arr['requested_qty']);
+                        
+                        
+                            
                         if ($close || $ship)
                             $item->setData('proposed_qty', $arr['proposed_qty']);
                         $item->save();
@@ -418,7 +450,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     $qtyRemaining=$arr['remaining_qty']-$arr['proposed_qty'];
                     
                     Mage::log("Qty Remain:".$qtyRemaining,Zend_log::DEBUG,"mylogs",true);
-                    if ($qtyRemaining > 0)
+                    if ($qtyRemaining > 0 )
                         $canFullyShipOrder =0;
                     Mage::log("close:".$canFullyShipOrder,Zend_log::DEBUG,"mylogs",true);
                 }
@@ -485,6 +517,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT)
                    $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                 Mage::log("vendorEmail:".$vendorEmail,Zend_log::DEBUG,"mylogs",true);
+               
                 if (!empty($adminEmail)) {
                     $adminEmail =  explode(',', $adminEmail);
                 }
@@ -525,13 +558,16 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         try {
             foreach ($data['order'] as $product => $key) {
                 $arr = array_filter($data['order'][$product]);
+                $arr['proposed_qty']=$arr['proposed_qty']?$arr['proposed_qty']:0;
+               
                 $tempProduct = $items = Mage::getModel('inventory/orderitems')->getCollection()
                     ->addFieldToFilter('product_id', $product)
                     ->addFieldToFilter('po_id', $po_id)
                     ->getFirstItem();
                 Mage::log($tempProduct['is_custom'], Zend_log::DEBUG, 'mylogs', true);
-                if (! $tempProduct['is_custom']) {
+                if (! $tempProduct['is_custom'] &&   $arr['proposed_qty'] > 0) {
                     $updateStock = Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product, $currentOrder->getStockId());
+                    
                     if (! empty($arr) && ! $void) {
                         if (! is_null($updateStock->getItemId()) && ($updateStock->getItemId() != 0)) {
 
@@ -541,6 +577,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                 ->addFieldToFilter('product_id', $product)
                                 ->addFieldToFilter('po_id', $po_id);
                             foreach ($items as $item) {
+                                
                                 if(trim($item->getAdminComment())!=trim($arr['admin_comment'])){
                                     $diffArray[$item->getProductId()]['admin_comment']=$arr['admin_comment'];
                                     $diffArray[$item->getProductId()]['admin_comment_old']=$item->getAdminComment();
@@ -575,15 +612,17 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                 $updateStock->setData('po_sent', 0); // Reset flag on order close
                             $updateStock->setData('qty', $newQty)->save();
 
-                            $inventory = Mage::getModel('inventory/inventory');
-                            $inventory->setProductId($product);
-                            $inventory->setUserId($admin->getUserId());
-                            $inventory->setPreviousQty($previousQty);
-                            $inventory->setAddedQty($arr['proposed_qty']);
-                            $inventory->setUpdatedAt(date("jS F, Y"));
-                            $inventory->setStockId($currentOrder->getStockId());
-                            $inventory->setPoId($po_id);
-                            $inventory->save();
+                            if($arr['proposed_qty'] > 0){
+                                $inventory = Mage::getModel('inventory/inventory');
+                                $inventory->setProductId($product);
+                                $inventory->setUserId($admin->getUserId());
+                                $inventory->setPreviousQty($previousQty);
+                                $inventory->setAddedQty($arr['proposed_qty']);
+                                $inventory->setUpdatedAt(date("jS F, Y"));
+                                $inventory->setStockId($currentOrder->getStockId());
+                                $inventory->setPoId($po_id);
+                                $inventory->save();
+                            }
                         }
                     }
                 } else {
@@ -841,6 +880,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $resource = Mage::getSingleton('core/resource');
         $writeAdapter = $resource->getConnection('core_write');
         $table = $resource->getTableName('cataloginventory/stock_item');
+        
         try {
             foreach ($ids as $id) {
                 if ($id && isset($id)) {
@@ -987,4 +1027,22 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $this->_redirectReferer();
     }
 
+    public function removeitemAction(){
+        $request = $this->getRequest()->getPost();
+        if(isset($request) && !empty($request)){
+            $item = Mage::getModel('inventory/orderitems')->getCollection()
+            ->addFieldToFilter('product_id', $request['product'])
+            ->addFieldToFilter('po_id', $request['order'])->getFirstItem();
+            $cost=$item->getTotalAmount();
+            $item->delete();
+            $order=Mage::getModel('inventory/purchaseorder')->load($request['order']);
+            $order->setTotalAmount($order->getTotalAmount()-$cost);
+            $order->save();
+            
+        }
+        Mage::getSingleton('adminhtml/session')->addSuccess("Item removed from PO");
+        $jsonData = json_encode(compact('success', 'message', 'data'));
+        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setBody($jsonData);
+    }
 }

@@ -340,3 +340,7 @@ input,textarea{
  .order_items_in_grid{
  	max-height: auto !important;
  }
+a#removeItemPO:hover{
+   cursor:pointer;
+ }
+ 

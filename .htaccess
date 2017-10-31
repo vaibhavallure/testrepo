@@ -136,6 +136,11 @@ RewriteRule ^(.git) - [R=404,L]
     RewriteRule ^api/rest api.php?type=rest [QSA,L]
 
 ############################################
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+############################################################
+
 ## workaround for HTTP authorization
 ## in CGI environment
 
