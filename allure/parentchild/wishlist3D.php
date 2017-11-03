@@ -46,6 +46,7 @@ foreach ($wishListItemCollection as $item){
     
     $parentItem = $oldItemSku[0];
     $post_length = $oldItemSku[2];
+    $lengthLabel= $post_length;
     
     
     if (count($oldItemSku) ==  4 && in_array($parentItem, $fixedItems)) {
@@ -114,13 +115,20 @@ foreach ($wishListItemCollection as $item){
                             if(!isset($optionsArray) || empty($optionsArray)){
                                 foreach ($configProduct->getOptions() as $optionsValue){
                                     foreach($optionsValue->getValues() as $value) {
-                                        if(strtolower($lengthLabel)==strtolower($value['title']))
+                                        $lengthLabel=strtolower($lengthLabel);
+                                        $title=strtolower($value['title']);
+                                        if(preg_match("/.$lengthLabel./", $title))
                                         {
                                             $optionsArray[$value['option_id']]=$value['option_type_id'];
                                             break;
                                         }
                                     }
-                                    
+                                    if(empty($optionsArray)){
+                                        foreach($optionsValue->getValues() as $value) {
+                                            $optionsArray[$value['option_id']]=$value['option_type_id'];
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                             
@@ -155,7 +163,11 @@ foreach ($wishListItemCollection as $item){
                                         }
                                         
                                     }
-                                    
+                                    $itemOptionColl1 = Mage::getModel('wishlist/item_option')->getCollection();
+                                    $itemOptionColl1->addFieldToFilter('wishlist_item_id', array('eq' =>$item->getWishlistItemId()));
+                                    $itemOptionColl1->addFieldToFilter('code', 'info_buyRequest');
+                                    if(!empty($itemOptionColl1->getFirstItem()))
+                                        $itemOptionColl1->getFirstItem()->setProductId($configProduct->getId())->save();
                                     
                                     
                     }

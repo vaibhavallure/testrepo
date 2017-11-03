@@ -5,6 +5,17 @@ Mage::app();
 $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
+echo "<pre>";
+$str='a:14:{s:4:"uenc";s:136:"aHR0cDovL3d3dy52ZW51c2J5bWFyaWF0YXNoLmNvbS9qZXdlbHJ5L2VhcmxvYmUvMzUtMjVtbS1zcGlrZS1zdHVkLWVhcmxvYmUuaHRtbD9fX19TSUQ9VSZvcHRpb25JZD00Njg,";s:7:"product";s:4:"6824";s:8:"form_key";s:16:"Ikl25b7At0xqFH9h";s:7:"pconfig";s:4:"6824";s:15:"related_product";s:0:"";s:11:"reloadmedia";s:1:"v";s:18:"check_option_color";s:1:"1";s:24:"gift-special-instruction";s:0:"";s:8:"optionid";s:3:"468";s:14:"count_attriute";s:1:"2";s:15:"super_attribute";a:1:{i:209;s:3:"468";}s:3:"qty";s:1:"1";s:14:"store_category";s:8:"Probando";s:7:"options";a:1:{i:1478966;s:7:"2685102";}}';
+$str=unserialize($str);
+if($str['pconfig'])
+    unset($str['pconfig']);
+if($str['count_attriute'])
+    unset($str['count_attriute']);
+if($str['optionid'])
+   unset($str['optionid']);
+echo serialize($str);
+die;
 
 
 if(empty($lower) || empty($upper)){

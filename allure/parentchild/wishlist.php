@@ -63,109 +63,112 @@ foreach ($wishListItemCollection as $item){
             
             $wishListOptionCollection = Mage::getModel('wishlist/item_option')->getCollection();
             $wishListOptionCollection->addFieldToFilter('wishlist_item_id', array('eq' =>$item->getWishlistItemId()));
-           try {
-               
-               foreach ($wishListOptionCollection as $wishListOption){
-                   if($wishListOption->getCode()=='info_buyRequest'){
-                       $buyRequest=unserialize($wishListOption->getValue());
-                       $qty=$buyRequest['qty'];
-                       if(!isset($qty)){
-                           $qty=1;
-                           $buyRequest['qty']= $qty;
-                       }
-                       $cpid=$buyRequest['cpid'];
-                       if(isset($cpid))
-                           unset($buyRequest['cpid']);
-                           
-                           // echo $item->getWishlistItemId();
-                           /*  print_r($buyRequest);
-                            die; */
-                           
-                           $superAttribute=$buyRequest['super_attribute'];
-                           
-                           foreach ($superAttribute as $key=>$value){
-                               if($key==189){  // Post lengths
-                                   unset($superAttribute[$key]);
-                               }
-                               
-                           }
-                           
-                           //$superAttribute=array();
-                           if (!in_array(209, $superAttribute)){
-                             // echo strtolower($colorLabel);//check metel color is prsent in super_attribute
-                            //   echo "<br>";
-                               foreach ($optionsMetal as $options) {
-                             //     print_r(strtolower($options['label']));
-                                   if(trim(strtolower($colorLabel)) == trim(strtolower($options['label']))){
-                                       $superAttribute[209]=$options['value'];
-                                       break;
-                                   }
-                               }
-                           }
-                           $buyRequest['super_attribute']=$superAttribute;
-                           
-                           $temp = array();
-                           $temp['attributes'] = serialize($buyRequest['super_attribute']);
-                           
-                           $optionsArray=$buyRequest['options'];
-                           if(!isset($optionsArray) || empty($optionsArray)){
-                               foreach ($configProduct->getOptions() as $optionsValue){
-                                   foreach($optionsValue->getValues() as $value) {
-                                       if(strtolower($lengthLabel)==strtolower($value['title']))
-                                       {
-                                           $optionsArray[$value['option_id']]=$value['option_type_id'];
-                                           break;
-                                       }
-                                   }
-                                   
-                               }
-                           }
-                           
-                           if(isset($configProductId)&& !empty($configProductId))
-                               $buyRequest['product']=$configProductId;  //set as configurable product
-                               
-                               
-                               if(isset($optionsArray) && !empty($optionsArray))
-                                   $buyRequest['options']=$optionsArray;
-                                   $wishListOption->setValue(serialize($buyRequest));
-                                   
-                                   $wishListOption->setProductId($configProductId)->save();
-                                   
-                                   foreach ($optionsArray as $key=>$value){
-                                       $temp['option_ids'] = $key;
-                                       $tkey = 'option_'.$key;
-                                       $temp[$tkey] = $value;
-                                   }
-                                   
-                                   foreach ($temp as $key => $tData){
-                                       $wishListOptionCollection1 = Mage::getModel('wishlist/item_option')->getCollection();
-                                       $wishListOptionCollection1->addFieldToFilter('wishlist_item_id', array('eq' =>$item->getWishlistItemId()));
-                                       $wishListOptionCollection1->addFieldToFilter('code', $key);
-                                       if(count($wishListOptionCollection1)<=0){
-                                           $modelOption= Mage::getModel('wishlist/item_option');
-                                           $modelOption->setWishlistItemId($item->getWishlistItemId())
-                                           ->setProductId($configProductId)
-                                           ->setCode($key)
-                                           ->setValue($tData)
-                                           ->save();
-                                           $modelOption=null;
-                                       }
-                                       
-                                   }
-                                   
-                                   
-                                   
+            try {
+                
+                foreach ($wishListOptionCollection as $wishListOption){
+                    
+                if($wishListOption->getCode()=='info_buyRequest'){
+                   
+                    $buyRequest=unserialize($wishListOption->getValue());
+                    $qty=$buyRequest['qty'];
+                    if(!isset($qty)){
+                            $qty=1;
+                            $buyRequest['qty']= $qty;
+                    }
+                    $cpid=$buyRequest['cpid'];
+                    if(isset($cpid))
+                      unset($buyRequest['cpid']);
+                    $superAttribute=$buyRequest['super_attribute'];
+                    foreach ($superAttribute as $key=>$value){
+                          if($key==189){  // Post lengths
+                                    unset($superAttribute[$key]);
+                                }
+                                
+                    }
+                    if (! in_array(209, $superAttribute)) {
+                                foreach ($optionsMetal as $options) {
+                                    if (trim(strtolower($colorLabel)) == trim(strtolower($options['label']))) {
+                                        $superAttribute[209] = $options['value'];
+                                        break;
+                                    }
+                                }
+                    }
+                            
+                   $buyRequest['super_attribute'] = $superAttribute;
+                            
+                   $temp = array();
+                   $temp['attributes'] = serialize($buyRequest['super_attribute']);
+                            
+                   $optionsArray = $buyRequest['options'];
+                   if (! isset($optionsArray) || empty($optionsArray)) {
+                            foreach ($configProduct->getOptions() as $optionsValue) {
+                                foreach ($optionsValue->getValues() as $value) {
+                                    $lengthLabel = strtolower($lengthLabel);
+                                    $title = strtolower($value['title']);
+                                    if (preg_match("/.$lengthLabel./", $title)){
+                                        $optionsArray[$value['option_id']] = $value['option_type_id'];
+                                    break;
+                                }
+                            }
+                            if(empty($optionsArray)){
+                                foreach($optionsValue->getValues() as $value) {
+                                    $optionsArray[$value['option_id']]=$value['option_type_id'];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                   if(isset($configProductId)&& !empty($configProductId))
+                        $buyRequest['product']=$configProductId;  //set as configurable product
+                        
+                        
+                   if(isset($optionsArray) && !empty($optionsArray))
+                       $buyRequest['options']=$optionsArray;
+                   $wishListOption->setValue(serialize($buyRequest));
+                   $wishListOption->setProductId($configProductId)->save();
+                            
+                   foreach ($optionsArray as $key => $value) {
+                                $temp['option_ids'] = $key;
+                                $tkey = 'option_' . $key;
+                                $temp[$tkey] = $value;
                    }
-                   //$item->getWishlistItemId();
-                   $item->setProductId($configProductId)->save();
-                   $count++;
-                   Mage::log($count.'-WishlistItemId::'.$item->getWishlistItemId().'------WishlistId::'.$item->getWishlistId(),Zend_log::DEBUG,'parentchild_wishlist.log',true);
-               }
-           } catch (Exception $e) {
-               var_dump($e->getMessage());
-               $failCount++;
-               Mage::log($failCount.'-WishlistItemId::'.$item->getWishlistItemId().'------WishlistId::'.$item->getWishlistId(),Zend_log::DEBUG,'parentchild_wishlist-error.log',true);
-           }
+                   foreach ($temp as $key => $tData) {
+                        $wishListOptionCollection1 = Mage::getModel('wishlist/item_option')->getCollection();
+                        $wishListOptionCollection1->addFieldToFilter('wishlist_item_id', array(
+                            'eq' => $item->getWishlistItemId()
+                        ));
+                        $wishListOptionCollection1->addFieldToFilter('code', $key);
+                        if (count($wishListOptionCollection1) <= 0) {
+                            $modelOption = Mage::getModel('wishlist/item_option');
+                            $modelOption->setWishlistItemId($item->getWishlistItemId())
+                                ->setProductId($configProductId)
+                                ->setCode($key)
+                                ->setValue($tData)
+                                ->save();
+                            $modelOption = null;
+                        }
+                    }
+                    $wishListOptionCollection2 = Mage::getModel('wishlist/item_option')->getCollection();
+                    $wishListOptionCollection2->addFieldToFilter('wishlist_item_id', array(
+                        'eq' => $item->getWishlistItemId()
+                    ));
+                    $wishListOptionCollection2->addFieldToFilter('code', 'info_buyRequest');
+                    if(!empty($wishListOptionCollection2->getFirstItem()))
+                        $wishListOptionCollection2->getFirstItem()->setProductId($configProduct->getId())->save();
+                            
+                            
+                }
+                //$item->getWishlistItemId();
+                $item->setProductId($configProductId)->save();
+                $count++;
+                Mage::log($count.'-WishlistItemId::'.$item->getWishlistItemId().'------WishlistId::'.$item->getWishlistId(),Zend_log::DEBUG,'parentchild_wishlist.log',true);
+            }
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+            $failCount++;
+            Mage::log($failCount.'-WishlistItemId::'.$item->getWishlistItemId().'------WishlistId::'.$item->getWishlistId(),Zend_log::DEBUG,'parentchild_wishlist-error.log',true);
+        }
             
            
            
