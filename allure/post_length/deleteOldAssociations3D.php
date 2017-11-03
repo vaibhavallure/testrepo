@@ -111,7 +111,6 @@ $writeAdapter   = $resource->getConnection('core_write');
 $recordIndex = 0;
 $writeAdapter->beginTransaction();
 
-var_dump($newAssociations);die;
 foreach ($newAssociations as $product_id => $associations) {
 
 	$sku = $skuByProductId[$product_id];
@@ -142,10 +141,10 @@ foreach ($newAssociations as $product_id => $associations) {
         
         $recordIndex += 1;
 
-	    //$_product = Mage::getModel("catalog/product")->load($product_id);
+	    $_product = Mage::getModel("catalog/product")->load($product_id);
 
-	    //Mage::getResourceModel('catalog/product_type_configurable')->saveProducts($_product, $associations);
-	    continue;
+	    Mage::getResourceModel('catalog/product_type_configurable')->saveProducts($_product, $associations);
+	    
 	    foreach ($oldAssociations[$product_id] as $productId) {
 	        $product = Mage::getModel("catalog/product")->load($productId);
 	        $product->setStatus(Mage_Catalog_Model_Product_Status::STATUS_DISABLED)->save();
@@ -166,3 +165,4 @@ foreach ($newAssociations as $product_id => $associations) {
 	    $writeAdapter->beginTransaction();
 	}
 }
+$writeAdapter->commit();
