@@ -112,7 +112,7 @@
 					</td>
 					<td>
 						<div>
-							<input id="<?php echo $product->getId()?>" type="checkbox" name="inclide"/>
+							<input id="<?php echo $product->getId()?>" type="checkbox" class="include_items" name="inclide"/>
 							<br/>
 							<?php $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product->getId())
 							->addFieldToFilter('is_custom',0)->addFieldToFilter('stock_id',$stockId)->setOrder('po_id','DESC');

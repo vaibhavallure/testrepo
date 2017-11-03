@@ -16,6 +16,11 @@
     <?php } ?>
    <?php endif;?>
    
+    <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT && !Mage::helper('allure_vendor')->isUserVendor()):?>
+    <button id="ship_save_btn" form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/saveOrder', array('_secure' => true,'remove'=>true));?>"><?php echo $helper->__('Remove Selected and Save')?></button>
+   <?php endif;?>
+   
+   
     <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW && Mage::helper('allure_vendor')->isUserVendor()):?>
     <button id="accept" class="po_save_btn"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/accept', array('_secure' => true,'id'=>$order->getPoId()));?>'" ><?php echo $helper->__('Accept')?></button>
    <?php endif;?>
@@ -74,9 +79,8 @@
 		<th><?php echo $helper->__('Vendor Comment')?></th>
 	    <?php endif;?>
 	     <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
-		<th><?php echo $helper->__('Action')?></th>
+		<th><?php echo $helper->__('Remove')?></th>
 	    <?php endif;?>
-		
     	<?php 
     
     		foreach ($collection as $_product):
@@ -139,9 +143,10 @@
                     <textarea <?php if(!Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?> name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="13" rows="7" ><?php echo $_product->getVendorComment()?></textarea>
                 </td>
                <?php endif;?>
+               
                <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
                <td>
-              		 <a id ="removeItemPO" onclick="removeSelected('<?php echo  $_product->getProductId() ?>','<?php echo $order->getStockId()?>')">Remove</a>
+              		 <input id="include_<?php  echo $_product->getProductId() ?>" type="checkbox" name="order[<?php echo $_product->getProductId() ?>][<?php echo "include" ?>]" >
                </td>
                <?php endif;?>
 			</tr>		
