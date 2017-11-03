@@ -283,7 +283,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
             $this->setHasError(true)
             ->setMessage($e->getMessage());
             $this->getQuote()->setHasError(true)
-            ->addMessage(Mage::helper('sales')->__('Some of the products below do not have all the required options.'));
+            ->addMessage(Mage::helper('sales')->__('Some of the products below do not have all the required options. Please remove '.$this->_getData('name')." from cart and try again."));
         } catch (Exception $e) {
             $this->setHasError(true)
             ->setMessage(Mage::helper('sales')->__('Item options declaration error.'));

@@ -58,6 +58,11 @@ foreach ($collection as $product)
         $newItem = implode('|', array($parentItem, $oldItemSku[1], $oldItemSku[3]));
         $product=Mage::getModel('catalog/product')->load($product->getId());
         $url=$product->getUrlKey();
+        $productUrlArray = explode('-', $url);
+        $oldLabel= end($productUrlArray);
+        if($oldLabel=='old')
+            array_pop($productUrlArray);
+        $withoutOldWordUrl=implode('-', $productUrlArray);
         
         if (empty($post_length)) {
             var_dump("Post Length: NONE");
@@ -66,35 +71,42 @@ foreach ($collection as $product)
         $withoutPostlengthId= Mage::getModel('catalog/product')->getIdBySku($newItem);
         $withoutPostlengthProduct=Mage::getModel('catalog/product')->load($withoutPostlengthId);
         if($withoutPostlengthProduct->getId()){
+            $configProductId=Mage::getModel('catalog/product')->getIdBySku($parentItem);
+            $configProduct=Mage::getModel('catalog/product')->load($parentItem);
+            try {
                 
-                try {
-                    
-                    $product->setUrlKey($url.'-old');
-                    $product->setStatus(Mage_Catalog_Model_Product_Status::STATUS_DISABLED);
-                    $product->setData('save_rewrites_history', false);
-                    $product->save();
-                    
-                    Mage::log($countsucess."-product Id:".$product->getId(),Zend_log::DEBUG,'parentchild_urlupdate_3D.log',true);
-                    Mage::log("Request Url:".$product->getUrlKey().'.html',Zend_log::DEBUG,'parentchild_urlupdate_3D.log',true);
-                    $countsucess++;
-                    
-                    
-                } catch (Exception $e) {
-                    
-                    Mage::log($countfail."-product Id:".$product->getId(),Zend_log::DEBUG,'parentchild_urlupdate_fail_3D.log',true);
-                    Mage::log("Request Url:".$product->getUrlKey().'.html',Zend_log::DEBUG,'parentchild_urlupdate_fail_3D.log',true);
-                    $countfail++;
-                    
-                }
+                Mage::getModel('core/url_rewrite')
+                ->setIsSystem(0)
+                ->setStoreId(1)
+                ->setOptions('RP')
+                ->setIdPath('product_'.$product->getId())
+                ->setTargetPath($configProduct->getUrlKey().'.html')
+                ->setRequestPath($withoutOldWordUrl.'.html')
+                ->save();
                 
-                if (($recordIndex % 250) == 0) {
-                    $writeAdapter->commit();
-                    $writeAdapter->beginTransaction();
-                }
-                $recordIndex += 1;
+                Mage::log($countsucess."-product Id:".$product->getId(),Zend_log::DEBUG,'parentchild_url_3D.log',true);
+                Mage::log("Target Url:".$configProduct->getUrlKey().'.html',Zend_log::DEBUG,'parentchild_url_3D.log',true);
+                Mage::log("Request Url:".$withoutOldWordUrl.'.html',Zend_log::DEBUG,'parentchild_url_3D.log',true);
+                Mage::log("Product Url:".$url.'.html',Zend_log::DEBUG,'parentchild_url_3D.log',true);
+                $countsucess++;
+                
+                
+            } catch (Exception $e) {
+                
+                Mage::log($countfail."-product Id:".$product->getId(),Zend_log::DEBUG,'parentchild_url_fail_3D.log',true);
+                Mage::log("Request Url:".$url.'.html',Zend_log::DEBUG,'parentchild_url_fail_3D.log',true);
+                $countfail++;
+                
             }
+            
+            if (($recordIndex % 250) == 0) {
+                $writeAdapter->commit();
+                $writeAdapter->beginTransaction();
+            }
+            $recordIndex += 1;
         }
-        
+    }
+    
 }
 
 $writeAdapter->commit();
