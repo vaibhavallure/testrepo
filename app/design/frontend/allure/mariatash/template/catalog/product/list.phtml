@@ -366,7 +366,7 @@ $mode  = $this->getMode();
                                               
                                                 
                                                 <?php if ($this->helper('wishlist')->isAllow()) : ?>
-                                                    <a onclick="addProductToWishlist(this)" data-product="<?php echo $productId?>" data-redirect-url="<?php echo $this->getUrl("wishlist/index");?>" data-href="<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>" class="button link-wishlist glyphicon glyphicon-star">
+                                                    <a onclick="addProductToWishlist(this)" data-product="<?php echo $productId?>" data-redirect-url="<?php echo $this->getUrl("myaccount")."#wishlist";?>" data-href="<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>" class="button link-wishlist glyphicon glyphicon-star">
                                                         <span><?php echo $this->__('Add to Wishlist') ?></span>
                                                     </a>
                                                 <?php endif; ?>
