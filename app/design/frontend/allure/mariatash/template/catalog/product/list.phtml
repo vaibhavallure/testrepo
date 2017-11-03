@@ -366,7 +366,7 @@ $mode  = $this->getMode();
                                               
                                                 
                                                 <?php if ($this->helper('wishlist')->isAllow()) : ?>
-                                                    <a onclick="addProductToWishlist(this)" data-product="<?php echo $productId?>" data-href="<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>" class="button link-wishlist glyphicon glyphicon-star">
+                                                    <a onclick="addProductToWishlist(this)" data-product="<?php echo $productId?>" data-redirect-url="<?php echo $this->getUrl("wishlist/index");?>" data-href="<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>" class="button link-wishlist glyphicon glyphicon-star">
                                                         <span><?php echo $this->__('Add to Wishlist') ?></span>
                                                     </a>
                                                 <?php endif; ?>
@@ -522,6 +522,7 @@ $mode  = $this->getMode();
         var url 					= jQuery(evt).attr("data-href");
         url = url.replace('wishlist/index', 'ajaxwishlist/index');
         //.replace('https://', '//');
+        var redirectUrl = jQuery(evt).attr("data-redirect-url");
         var metal   				= 209;
         var productId 				= jQuery(evt).attr("data-product");
         var superAttr 				= jQuery("#super-attribute-"+productId);
@@ -552,12 +553,13 @@ $mode  = $this->getMode();
              success: function (data) {               
                  if (data.status == 'ERROR') {
                      if(data.message == 'login'){
-                         parent.location.href = '<?php echo Mage::helper('customer')->getLoginUrl(); ?>';
+                         window.location.href = '<?php echo Mage::helper('customer')->getLoginUrl(); ?>';
                      } else {
                          alert(data.message);
                      }
                  } else {
                 	 alert(data.message);
+                	 window.location.href = redirectUrl;
                  }
              }
          });
