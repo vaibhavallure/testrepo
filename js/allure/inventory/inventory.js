@@ -4,7 +4,7 @@ if (typeof Allure == "undefined") {
 }
 $j(document).ready(function (){
 	var data=getStoredData();
-	$j("input:checkbox").change(function(){
+	$j(".include_items").change(function(){
 		var selected = [];
         var ischecked= $j(this).is(':checked');
         

@@ -247,17 +247,38 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
 
 
     public function saveOrderAction() {
-        $admin  = Mage::getSingleton('admin/session')->getUser();
-        $data   = $this->getRequest()->getPost();
-        $po_id  = $data['order_id'];
+        $admin = Mage::getSingleton('admin/session')->getUser();
+        $data = $this->getRequest()->getPost();
+        $remove = Mage::app()->getRequest()->getParam('remove');
+        echo "<pre>";
+        $resource = Mage::getSingleton('core/resource');
+        $writeAdapter = $resource->getConnection('core_write');
+      
+        $po_id = $data['order_id'];
         $helper = Mage::helper('inventory');
-
+        $deleteArray=array();
+        if($remove){
+            foreach ($data['order'] as $product => $key) {
+                if(isset($key['include']) && $key['include']=='on'){
+                    $deleteArray[]=$product;
+                    unset($data['order'][$product]);
+                }
+            }
+            if(!empty($deleteArray)){
+                $productids=implode(',', $deleteArray);
+                $table = $resource->getTableName('inventory/orderitems');
+                $query = "delete from {$table} where product_id IN ({$productids}) AND po_id = {$po_id}";
+                $writeAdapter->query($query);
+            }
+        }
+       
         // get aditional paramters
         try {
             $ship   = Mage::app()->getRequest()->getParam('ship');
             $close  = Mage::app()->getRequest()->getParam('close');
             $canFullyShipOrder = 1;
-            $diffArray = array();
+            $diffArray=array();
+            $totalPrice=0;
             foreach ($data['order'] as $product => $key) {
                 $arr = array_filter($data['order'][$product]);
                 if (isset($arr) && $arr) {
@@ -284,34 +305,35 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                 ->addFieldToFilter('product_id', $product)
                                 ->addFieldToFilter('po_id', $po_id);
                     foreach ($items as $item) {
-                        $itemProductId = $item->getProductId();
-                        if(trim($item->getAdminComment()) != trim($arr['admin_comment'])){
-                            $diffArray[$itemProductId]['admin_comment'] = $arr['admin_comment'];
-                            $diffArray[$itemProductId]['admin_comment_old'] = $item->getAdminComment();
-                            $diffArray[$itemProductId]['is_custom'] = $item->getIsCustom();
+                        $price=Mage::getModel('catalog/product')->setStoreId($storeId)->load($item->getProductId())->getCost();
+                        $totalPrice=$totalPrice+($arr['requested_qty']*$price);
+                        
+                        if(trim($item->getAdminComment())!=trim($arr['admin_comment'])){
+                            $diffArray[$item->getProductId()]['admin_comment']=$arr['admin_comment'];
+                            $diffArray[$item->getProductId()]['admin_comment_old']=$item->getAdminComment();
+                            $diffArray[$item->getProductId()]['is_custom']=$item->getIsCustom();
                         }
                         if(trim($item->getRequestedQty()) != trim($arr['requested_qty'])){
                             $diffArray[$itemProductId]['qty'] = $arr['requested_qty'];
                             $diffArray[$itemProductId]['qty_old'] = $item->getRequestedQty();
                             $diffArray[$itemProductId]['is_custom'] = $item->getIsCustom();
                             
-                            $price = Mage::getModel('catalog/product')
-                                        ->setStoreId($storeId)
-                                        ->load($itemProductId)
-                                        ->getCost();
-                            $oldTotal   = $item->getTotalAmount();
-                            $newTotal   = $arr['requested_qty'] * $price;
-                            $poTotalAmt = $poObj->getTotalAmount();
-                            if($oldTotal > $newTotal){
-                                $final = $oldTotal - $newTotal;
-                                $poTotalAmt = $poTotalAmt - $final;
-                            }else {
-                                $final = $newTotal - $oldTotal;
-                                $poTotalAmt = $poTotalAmt + $final;
+                           
+                           /*  $oldTotal=$item->getTotalAmount();
+                            $newTotal=$arr['requested_qty']*$price;
+                            if($oldTotal >$newTotal){
+                                $final=$oldTotal-$newTotal;
+                                $poObj->setTotalAmount($poObj->getTotalAmount()-$final);
                             }
-                            $poObj->setTotalAmount($poTotalAmt);
-                            $item->setData('total_amount',($arr['requested_qty'] * $price));
-                            $poObj->save();
+                            else {
+                                $final=$newTotal-$oldTotal;
+                                $poObj->setTotalAmount($poObj->getTotalAmount()+$final);
+                            } */
+                            
+                            
+                            $item->setData('total_amount',($arr['requested_qty']*$price));
+                             
+                            //$poObj->save();
                              //Incase req qty change in draft state update proposed qty and remaining qty
                              $arr['proposed_qty'] = $arr['requested_qty'];
                              $item->setData('proposed_qty', $arr['requested_qty']);
@@ -422,6 +444,11 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
             $currentDate->toString('jS F, Y');
             $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
+            
+            //update order total only for Draftstate
+            if($order->getTotalAmount()!=$totalPrice && $order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT)
+                $order->setTotalAmount($totalPrice);
+                
             if (($close || $ship) && isset($status))
                 $order->setData('status', $status);
 
