@@ -6,7 +6,6 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
-
 if(empty($lower) || empty($upper)){
     die('Please add Upper and Lower limit');
 }
