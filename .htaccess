@@ -136,7 +136,10 @@ RewriteRule ^(.git) - [R=404,L]
     RewriteRule ^api/rest api.php?type=rest [QSA,L]
 
 ############################################
-RewriteCond %{HTTP_HOST} ^(www)?.mariatash.com
+RewriteCond %{HTTP_HOST} ^mariatash.com
+RewriteRule ^ https://www.venusbymariatash.com%{REQUEST_URI} [L,R=301,NE]
+
+RewriteCond %{HTTP_HOST} ^www.mariatash.com
 RewriteRule ^ https://www.venusbymariatash.com%{REQUEST_URI} [L,R=301,NE]
 
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
