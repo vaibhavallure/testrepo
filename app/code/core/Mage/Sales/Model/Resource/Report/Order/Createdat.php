@@ -50,7 +50,6 @@ class Mage_Sales_Model_Resource_Report_Order_Createdat extends Mage_Sales_Model_
      * @param mixed $to
      * @return Mage_Sales_Model_Resource_Report_Order_Createdat
      */
-    
     public function aggregate($from = null, $to = null)
     {
         return $this->_aggregateByField('created_at', $from, $to);
