@@ -24,26 +24,21 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-
 /**
- * Adminhtml AdminNotification Severity Renderer
+ * System config symlink backend model
  *
- * @category   Mage
- * @package    Mage_Adminhtml
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @category Mage
+ * @package  Mage_Adminhtml
  */
-class Mage_Adminhtml_Block_Notification_Grid_Renderer_Notice
-    extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
+class Mage_Adminhtml_Model_System_Config_Backend_Symlink extends Mage_Core_Model_Config_Data
 {
     /**
-     * Renders grid column
+     * Save object data
      *
-     * @param   Varien_Object $row
-     * @return  string
+     * @return Mage_Core_Model_Abstract
      */
-    public function render(Varien_Object $row)
+    public function save()
     {
-        return '<span class="grid-row-title">' . $this->escapeHtml($row->getTitle()) . '</span>'
-            . ($row->getDescription() ? '<br />' . $this->escapeHtml($row->getDescription()) : '');
+        return $this;
     }
 }
