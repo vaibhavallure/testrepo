@@ -68,12 +68,12 @@
                    
 						
 					<?php 
-						$inven=Mage::getModel('cataloginventory/stock_item')
-								->loadByProductAndStock($_product,$stockId)
+						/* $inven=Mage::getModel('cataloginventory/stock_item')
+								->loadByProductAndStock($_product,$stockId) */
 					?>
 					<td>
 						<div>
-							<label><?php echo round($inven->getQty())?></label>
+							<label><?php echo round($_product->getQty())?></label>
 						</div>
 						
 				   </td>
