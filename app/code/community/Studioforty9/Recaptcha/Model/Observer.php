@@ -37,7 +37,6 @@ class Studioforty9_Recaptcha_Model_Observer
         
         $route = $controller->getFullActionName();
         
-        Mage::log($route,Zend_Log::DEBUG,'ajay.log',true);
         
         if (! Mage::helper('studioforty9_recaptcha')->isAllowed($route)) return;
         
