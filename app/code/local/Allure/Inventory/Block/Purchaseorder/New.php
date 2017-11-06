@@ -107,7 +107,7 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		$pager->setCollection($this->getCollection());
 		$pager->setTemplate('inventory/pager.phtml');
 		$this->setChild('pager', $pager);
-		//$this->getCollection()->load();
+		$this->getCollection()->load();
 		return $this;
 	}
 

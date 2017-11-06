@@ -72,7 +72,7 @@ class Allure_Inventory_Block_Pagination extends Mage_Page_Block_Html_Pager
 		$pager->setCollection($this->getCollection());
 		$pager->setTemplate('inventory/pager.phtml');
 		$this->setChild('pager', $pager);
-		//$this->getCollection()->load();
+		$this->getCollection()->load();
 		return $this;
 	}
 	
