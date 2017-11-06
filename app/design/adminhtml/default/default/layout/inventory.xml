@@ -21,7 +21,7 @@
         <reference name="content">
             <block type="inventory/pagination" name="stock_css" template="inventory/stock/receiving.phtml">
             	<block type="core/template" name="inventory_store" template="inventory/store.phtml" ></block>
-				<block type="inventory/pagination" name="pager" template="inventory/pager.phtml" ></block>
+				<!-- <block type="inventory/pagination" name="pager" template="inventory/pager.phtml" ></block> -->
             </block>            
         </reference>
     </adminhtml_inventory_stock_index>
@@ -36,7 +36,7 @@
         <reference name="content">
             <block type="inventory/minmax" name="stock_css" template="inventory/stock/minmax.phtml">
             	<block type="core/template" name="inventory_store" template="inventory/store.phtml" ></block>
-				<block type="inventory/minmax" name="pager" template="inventory/pager.phtml" ></block>
+				<!-- <block type="inventory/minmax" name="pager" template="inventory/pager.phtml" ></block> -->
             </block>            
         </reference>
     </adminhtml_inventory_stock_minmax>
@@ -51,7 +51,7 @@
         <reference name="content">
             <block type="inventory/pagination" name="stock_css" template="inventory/stock/transfer.phtml">
             	<block type="core/template" name="inventory_store" template="inventory/store.phtml" ></block>
-				<block type="inventory/pagination" name="pager" template="inventory/pager.phtml" ></block>
+				<!-- <block type="inventory/pagination" name="pager" template="inventory/pager.phtml" ></block> -->
             </block>            
         </reference>
     </adminhtml_inventory_stock_transfer>
@@ -91,7 +91,7 @@
         <reference name="content">
             <block type="inventory/purchaseorder_new" name="purchaseorder_new" template="inventory/purchaseorder/new.phtml">
 				<block type="core/template" name="inventory_store" template="inventory/store.phtml" ></block>
-				<block type="inventory/purchaseorder_new" name="pager" template="inventory/pager.phtml" ></block>
+				<!-- <block type="inventory/purchaseorder_new" name="pager" template="inventory/pager.phtml" ></block> -->
             </block>            
         </reference>
     </adminhtml_inventory_purchase_new>
