@@ -2,8 +2,10 @@ before_script:
   - echo 'Start Deployment'
 stages:
   - develop
-  - stage
+  - staging
+  - alpha
   - bugfix
+  - upgrade
   - deploy
 develop:
   environment: development
@@ -15,14 +17,25 @@ develop:
   script:
     - mage-deploy mariatash
     - echo 'Deployed on Allure Local Dev'
-stage:
+staging:
   environment: staging
-  stage: stage
+  stage: staging
+  tags:
+    - staging
+  only:
+    - staging
+  script:
+    - mage_deploy_stage mariatash
+    - echo 'Deployed on Staging'
+alpha:
+  environment: alpha
+  stage: alpha
   tags:
     - staging
   only:
     - master
   script:
+    - env
     - mage-deploy mt
     - echo 'Deployed on Staging'
 bugfix:
@@ -35,6 +48,29 @@ bugfix:
   script:
     - mage-deploy mt-bugfixes
     - echo 'Deployed on Bugfixes Staging'
+upgrade:
+  environment: upgrade
+  stage: upgrade
+  tags:
+    - staging
+  only:
+    - upgrade
+  script:
+    - mage-deploy upgrade.mariatash
+    - echo 'Deployed on Upgrade Staging'
+    
+staging_new:
+  environment: staging
+  stage: staging
+  tags:
+    - staging
+  only:
+    - staging
+  script:
+    - mage-deploy stage-mariatash
+    - echo 'Deployed on Staging'
+    
+    
 deploy:
   environment: production
   stage: deploy

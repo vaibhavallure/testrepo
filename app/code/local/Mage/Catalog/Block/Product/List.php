@@ -366,4 +366,13 @@ class Mage_Catalog_Block_Product_List extends Mage_Catalog_Block_Product_Abstrac
            }
            return array();                
         }
+        
+        public function getCustomOptions($productId){
+            $product = Mage::getModel("catalog/product")->load($productId);
+            $options = $product->getOptions();
+            if(count($options) > 0){
+                return $options;
+            }
+            return null;
+        }
 }

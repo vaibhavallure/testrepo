@@ -34,13 +34,22 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
         }
         Mage::getSingleton('checkout/session')->setCartWasUpdated(false);
         Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('*/*/*', array('_secure' => true)));
-        $this->_initLayoutMessages('checkout/session');
+
         $this->_getCheckout()->initCheckout();
-        $this->loadLayout();
+        $this->loadLayout()
+            ->_initLayoutMessages('checkout/session');
 
         // Ajax Modal
         if($this->getRequest()->getParam('ajax')){
             $this->getLayout()->getBlock('root')->setTemplate('page/popup.phtml');
+        }
+
+        // Add EE gift wrapping options
+        if (Mage::helper('core')->isModuleEnabled('Enterprise_GiftWrapping')) {
+            $block = $this->getLayout()
+                ->createBlock('enterprise_giftwrapping/checkout_options', 'checkout.options')
+                ->setTemplate('giftwrapping/checkout/options.phtml');
+            $this->getLayout()->getBlock('content')->append($block);
         }
 
         $this->getLayout()->getBlock('head')->setTitle($this->__('Checkout'));
@@ -109,6 +118,42 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
     }
 
     /**
+     * Widget Address select action
+     */
+    public function addressSelectAction()
+    {
+        if ($this->_expireAjax()) {
+            return;
+        }
+
+        $this->_saveShipping();
+        $this->_getCheckout()->getQuote()->collectTotals()->save();
+
+        $shipping_block = 'checkout_amazon_payments_shippingmethod';
+
+        // Use ShipperHQ template for split rates
+        if (Mage::helper('core')->isModuleEnabled('Shipperhq_Shipper')) {
+            $splitRates = $this->_getCheckout()->getQuote()->getShippingAddress()->getSplitRates();
+            if((Mage::helper('shipperhq_shipper')->isModuleEnabled('Shipperhq_Splitrates') && $splitRates == 1)
+                || Mage::helper('core')->isModuleEnabled('Shipperhq_Pickup')) {
+                    $shipping_block = 'checkout_amazon_payments_shippingmethod_shipperhq';
+            }
+        }
+
+        $result = array(
+            'shipping_method' => $this->_getBlockHtml($shipping_block),
+            'review'          => $this->_getBlockHtml('checkout_amazon_payments_review'),
+        );
+
+        // Validate country
+        if (!$this->isCountryAllowed($this->_getCheckout()->getQuote()->getShippingAddress()->getCountry())) {
+            $result['shipping_method'] = $this->__('This order cannot be shipped to the selected country. Please use a different shipping address.');
+        }
+
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+
+    /**
      * Shipping method action
      */
     public function shippingMethodAction()
@@ -122,6 +167,30 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
         $this->loadLayout(false);
         $this->renderLayout();
     }
+
+    /**
+     * Additional options action (e.g. gift options)
+     */
+    public function additionalAction()
+    {
+        if ($this->_expireAjax()) {
+            return;
+        }
+
+        if ($this->getRequest()->isPost()) {
+            Mage::dispatchEvent(
+                'checkout_controller_onepage_save_shipping_method',
+                array(
+                    'request' => $this->getRequest(),
+                    'quote'   => $this->_getCheckout()->getQuote()));
+
+            $this->_getCheckout()->getQuote()->collectTotals()->save();
+
+        }
+
+        $this->getResponse()->setBody($this->_getBlockHtml('checkout_amazon_payments_review'));
+    }
+
 
     /**
      * Review page action
@@ -219,9 +288,26 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
                 }
             }
 
-            $additional_information = array(
-                'order_reference' => $this->getAmazonOrderReferenceId()
-            );
+            // Validate shipping method
+            if (!$this->_getCheckout()->getQuote()->isVirtual()) {
+                $address = $this->_getCheckout()->getQuote()->getShippingAddress();
+                $method  = $address->getShippingMethod();
+                $rate    = $address->getShippingRateByCode($method);
+                if (!$this->_getCheckout()->getQuote()->isVirtual() && (!$method || !$rate)) {
+                    Mage::throwException(Mage::helper('sales')->__('Please specify a shipping method.'));
+                }
+            }
+
+
+            $additional_information = array();
+
+            if ($this->getAmazonBillingAgreementId()) {
+                $additional_information['billing_agreement_id'] = $this->getAmazonBillingAgreementId();
+                $additional_information['billing_agreement_consent'] = $this->getAmazonBillingAgreementConsent();
+            }
+            else {
+                $additional_information['order_reference'] = $this->getAmazonOrderReferenceId();
+            }
 
             if ($this->getRequest()->getPost('sandbox')) {
                 $additional_information['sandbox'] = $this->getRequest()->getPost('sandbox');
@@ -291,7 +377,80 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
+    /**
+     * Initialize coupon
+     */
+    public function couponPostAction()
+    {
 
+        $couponCode = (string) $this->getRequest()->getParam('coupon_code');
+        if ($this->getRequest()->getParam('remove') == 1) {
+            $couponCode = '';
+        }
+        $oldCouponCode = $this->_getQuote()->getCouponCode();
+
+        try {
+            $codeLength = strlen($couponCode);
+            $isCodeLengthValid = $codeLength && $codeLength <= Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH;
+
+            $this->_getQuote()->getShippingAddress()->setCollectShippingRates(true);
+            $this->_getQuote()->setCouponCode($isCodeLengthValid ? $couponCode : '')
+                ->collectTotals()
+                ->save();
+
+            if ($codeLength) {
+                if ($isCodeLengthValid && $couponCode == $this->_getQuote()->getCouponCode()) {
+                    $this->_getSession()->addSuccess(
+                        $this->__('Coupon code "%s" was applied.', Mage::helper('core')->escapeHtml($couponCode))
+                    );
+                } else {
+                    $this->_getSession()->addError(
+                        $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->escapeHtml($couponCode))
+                    );
+                }
+            } else {
+                $this->_getSession()->addSuccess($this->__('Coupon code was canceled.'));
+            }
+
+        } catch (Mage_Core_Exception $e) {
+            $this->_getSession()->addError($e->getMessage());
+        } catch (Exception $e) {
+            $this->_getSession()->addError($this->__('Cannot apply the coupon code.'));
+            Mage::logException($e);
+        }
+
+        $this->_redirect($this->_checkoutUrl);
+    }
+
+    /**
+     * Get checkout session model instance
+     *
+     * @return Mage_Checkout_Model_Session
+     */
+    protected function _getSession()
+    {
+        return Mage::getSingleton('checkout/session');
+    }
+
+    /**
+     * Get current active quote instance
+     *
+     * @return Mage_Sales_Model_Quote
+     */
+    protected function _getQuote()
+    {
+        return $this->_getCart()->getQuote();
+    }
+
+    /**
+     * Retrieve shopping cart model object
+     *
+     * @return Mage_Checkout_Model_Cart
+     */
+    protected function _getCart()
+    {
+        return Mage::getSingleton('checkout/cart');
+    }
 
     /**
      * Create invoice
@@ -321,6 +480,24 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
     protected function _getReviewHtml()
     {
         return $this->getLayout()->getBlock('root')->toHtml();
+    }
+
+    /**
+     * Render block HTML
+     *
+     * @string $node block name
+     */
+    protected function _getBlockHtml($node)
+    {
+        $cache = Mage::app()->getCacheInstance();
+        $cache->banUse('layout');
+
+        $layout = $this->getLayout();
+        $update = $layout->getUpdate();
+        $update->load($node);
+        $layout->generateXml();
+        $layout->generateBlocks();
+        return $layout->getOutput();
     }
 
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Allure_PosInventory>
+			<name>Allure - eBizMarts POS Inventory</name>
+			<version>1.1.0</version>
+			<depends>
+				<Allure_Core />
+			</depends>
+		</Allure_PosInventory>
+	</modules>
+	<global>
+		<helpers>
+			<allure_posinventory>
+				<class>Allure_PosInventory_Helper</class>
+			</allure_posinventory>
+            <bakerloo_restful>
+                <rewrite>
+                    <sales>Allure_PosInventory_Helper_BakerlooRestful_Sales</sales>
+                </rewrite>
+            </bakerloo_restful>
+		</helpers>
+		<models>
+			<allure_posinventory>
+				<class>Allure_PosInventory_Model</class>
+			</allure_posinventory>
+			<sales>
+            	<rewrite>
+                    <quote>Allure_PosInventory_Model_Quote</quote>
+                </rewrite>
+            </sales>
+            
+            <bakerloo_restful>
+                <rewrite>
+            		<orderManagement>Allure_PosInventory_Model_OrderManagement</orderManagement>
+            	</rewrite>
+            </bakerloo_restful>
+            
+		</models>
+		<blocks>
+			<allure_posinventory>
+				<class>Allure_PosInventory_Block</class>
+			</allure_posinventory>
+		</blocks>
+		
+		<events>
+			<pos_get_inventory>
+				<observers>
+					<allure_posinventory>
+						<class>allure_posinventory/observer</class>
+						<method>updateInventoryByStock</method>
+					</allure_posinventory>
+				</observers>
+			</pos_get_inventory>
+		</events>
+	</global>
+	
+	<frontend>
+		<events>
+			<pos_get_inventory>
+				<observers>
+					<allure_posinventory_updateinventorybystock>
+						<class>allure_posinventory/observer</class>
+						<method>updateInventoryByStock</method>
+					</allure_posinventory_updateinventorybystock>
+				</observers>
+			</pos_get_inventory>
+		</events>
+	</frontend>
+</config>

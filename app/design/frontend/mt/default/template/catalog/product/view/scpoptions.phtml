@@ -3,6 +3,8 @@
 ?>
 <?php $_options = Mage::helper('core')->decorateArray($this->getOptions()) ?>
 <?php
+//@allure
+$countOfOptions = count($_options);
 if (count($_options) || $this->getProduct()->isConfigurable()):
 //if (count($_options)):
 ?>
@@ -115,17 +117,30 @@ if (count($_options) || $this->getProduct()->isConfigurable()):
                                 if (selectOption.selected) {
 
                                     //allure code  start
-                                	/*  if (this.config[optionId][selectOption.value]) {
-                                        if (this.config[optionId][selectOption.value].price!="NaN" 
-                                            || this.config[optionId][selectOption.value].price!="undefined") 
-                                            price += parseFloat(this.config[optionId][selectOption.value].price);
-                                        else
-                                        	price += parseFloat(this.config[optionId][selectOption.value]);
-                                     } */
-                                	//allure code  end
-                                     if (this.config[optionId][selectOption.value]) {
-                                        	price += parseFloat(this.config[optionId][selectOption.value]);
-                                    } 
+                                    //parent child code
+                                	var flagF = false;
+                                    if(jQuery('#parent-child-product').length){ 
+                                    	var checkParentChild = jQuery('#parent-child-product').val();
+                                    	if(checkParentChild == 1){
+                                    		flagF = true;
+                                    	}
+                                    }
+                                    
+                                     if(flagF){
+                                    	 if (this.config[optionId][selectOption.value]) {
+                                            if (this.config[optionId][selectOption.value].price!="NaN" 
+                                                || this.config[optionId][selectOption.value].price!="undefined") 
+                                                price += parseFloat(this.config[optionId][selectOption.value].price);
+                                            else
+                                            	price += parseFloat(this.config[optionId][selectOption.value]);
+                                         }
+                                     }else{
+                                		//non parent child code
+                                		//existing code
+                                        if (this.config[optionId][selectOption.value]) {
+                                            price += parseFloat(this.config[optionId][selectOption.value]);
+                                        } 
+                                    }
                                 }
                             });
                         }

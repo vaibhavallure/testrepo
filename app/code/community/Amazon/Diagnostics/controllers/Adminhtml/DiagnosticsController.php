@@ -19,6 +19,8 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
     private $_logs = array();
     private $_global_results = array();
 
+    protected $output = array();
+
     public function checkAction() {
 
         ini_set("auto_detect_line_endings", true);
@@ -37,7 +39,7 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
         $this->getLogs();
 
         /* send the response */
-        Mage::app()->getResponse()->setBody();
+        Mage::app()->getResponse()->setBody(implode("\n", $this->output));
     }
 
     private function getMagento() {
@@ -62,8 +64,11 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
 
     private function getPayments() {
 
+
+        $_config = Mage::getSingleton('amazon_payments/config');
+
         $this->log("\n===== PAYMENT SETTINGS =====");
-        $payments_secret_key = Mage::helper('core')->decrypt(Mage::getStoreConfig('payment/amazon_payments/access_secret'));
+        $payments_secret_key = Mage::getStoreConfig('payment/amazon_payments/access_secret');
         if (strlen($payments_secret_key) > 6) {
             $payments_secret_key = substr($payments_secret_key, 0, 3) . "..." . substr($payments_secret_key, strlen($payments_secret_key - 3), 3);
         }
@@ -102,6 +107,8 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
         $payments_payment_option = (Mage::getStoreConfig('payment/amazon_payments/use_in_checkout') == 1 ? 'yes' : 'no');
         $payments_async = (Mage::getStoreConfig('payment/amazon_payments/is_async') == 1 ? 'yes' : 'no');
         $payments_sandbox = (Mage::getStoreConfig('payment/amazon_payments/sandbox') == 1 ? 'yes' : 'no');
+        $region = $_config->getRegion();
+        $locale = Mage::getStoreConfig('general/country/default');
 
         $this->log("enabled: ". $enabled);
         $this->log("sandbox: ". $payments_sandbox);
@@ -114,6 +121,8 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
         $this->log("secure_cart: ". $payments_secure_cart);
         $this->log("payment_option: ". $payments_payment_option);
         $this->log("async: ". $payments_async);
+        $this->log("api region: ". $region);
+        $this->log("locale: ". $locale);
     }
 
     private function getLogin() {
@@ -193,7 +202,7 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
                                     $mxml = json_decode($mxml, true);
 
                                     /* get version */
-                                    $this->log("    version: ". $mxml['modules'][$k]['version']);
+                                    $this->log("    version: " . (isset($mxml['modules']) ? $mxml['modules'][$k]['version'] : 'unknown'));
 
                                     /* get global blocks */
                                     $this->log("    [blocks]");
@@ -219,7 +228,7 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
     private function getLogs() {
 
         try {
-            echo "\n===== EXCEPTION LOG =====\n";
+            $this->log("\n===== EXCEPTION LOG =====\n");
             /* get list of log files */
             if ($h = opendir($this->_logpath)) {
 
@@ -228,7 +237,7 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
 
                     /* we don't want . and ..
                      * modified to only check exception.log for now. will remove if needed
-                     * but it felt extaneous.
+                     * but it felt extraneous.
                      */
                     if ($entry !== "." && $entry !== ".." && $entry == "exception.log") {
 
@@ -259,7 +268,7 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
                             }
                         } else {
                             /* couldn't read the file */
-                            echo "Could not read ". $logname ." log.\n";
+                            $this->log("Could not read ". $logname ." log.\n");
                         }
 
                         $newa = array(); // new temporary array to store lines
@@ -283,9 +292,9 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
                             if($buffer !== "") {
                                 foreach($newa as $k => $v) {
                                     if($cnt == $k) {
-                                        echo $buffer ."\n";
+                                        $this->log($buffer);
                                         if($v == 0) {
-                                            echo "\n---------- snip ----------\n\n";
+                                            $this->log("\n---------- snip ----------\n");
                                         }
                                     }
                                 }
@@ -305,6 +314,16 @@ class Amazon_Diagnostics_Adminhtml_DiagnosticsController extends Mage_Adminhtml_
     }
 
     private function log($s) {
-        echo $s ."\n";
+        $this->output[] = $s;
+    }
+
+    /**
+     * Acl checking
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('system/config/amazon_payments');
     }
 }

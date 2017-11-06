@@ -122,8 +122,9 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
    		$value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId())); */
    			
    		
-   		$block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store']);
+   		$block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store'])->setData("id",$request['id']);
    		$output = $block->toHtml();
+   		
    		$result['success'] = true;
    		$result['msg'] = $time;
    		$result['output'] = $output;
@@ -139,6 +140,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     public function saveAction ()
     {
     	$post_data = $this->getRequest()->getPost();
+    	
     	$embeded = $this->getRequest()->getParam('embedded');
     	$storep = $this->getRequest()->getParam('store');
     	
@@ -156,7 +158,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     	}
     	
     	if ($post_data) {
+    		Mage::log(" ***********Register appointment**********",Zend_Log::DEBUG,'appointments-register.log',true);
+    		Mage::log($post_data,Zend_Log::DEBUG,'appointments-register.log',true);
     		try {
+    		    if(isset($post_data['id'])){
+    		        $old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
+    		        if(empty($post_data['app_date']))
+    		            $post_data['app_date']=date('m/d/Y' ,strtotime($old_appointment->getAppointmentStart()));
+    		    }
     			 $post_data['appointment_start'] = $post_data['app_date']." ". $post_data['appointment_start'];
     			 $post_data['appointment_start'] = strtotime($post_data['appointment_start'].":00");
     			 $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
@@ -172,9 +181,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     			 $phno = preg_replace('/\s+/', '', $post_data['phone']);//remove the whitespaces from phone no
     			 $post_data['phone'] = $phno;
     			 $storeId=$post_data['store_id'];
-    			 if(isset($post_data['id'])){
-    			 	$old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
-    			 }
+    			 
     			 $model = Mage::getModel('appointments/appointments')->addData($post_data)
     				->save();
     				
@@ -193,29 +200,45 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     			 }  //End of If creating customer
     				
     			//IF appointment is modified then send updates to ADMIN & PIERCER & CUSTOMER
+    			 
     			if($old_appointment)
     			{
-	         		//If SMS is checked for notify me.
-	    			if($post_data['notification_pref'] === '2')
-	    		    {
-	    		    	Mage::log("Modifing appointment",Zend_Log::DEBUG,'appointments',true);
-	    			    $smsText = Mage::getStoreConfig("appointments/api/smstext_modified",$storeId);
-	    				$smsText.= " ".$model->getAppointmentStart();
-	    			    if($post_data['phone']){
-	    				   $smsdata = Mage::helper('appointments')->sendsms($post_data['phone'],$smsText,$storeId);
-	    				   Mage::log("Appointment Modification Email Sent",Zend_Log::DEBUG,'appointments',true);
-	    				   $model->setSmsStatus($smsdata);
-	    				   $model->save();
-	    				   }
-	    				}
+    	         		//If SMS is checked for notify me.
+        				$oldAppointmentStart=date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
+        				$oldAppointmentEnd=date("F j, Y H:i", strtotime($old_appointment->getAppointmentEnd()));
+        				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+        				$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+        				
+    	    			if($post_data['notification_pref'] === '2')
+    	    		    {
+    	    		    
+    	    			    $smsText = Mage::getStoreConfig("appointments/api/smstext_modified",$storeId);
+    	    			  
+    	    			    $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+    	    			    $time=date('h:i A', strtotime($model->getAppointmentStart()));
+    	    			    $smsText=str_replace("(time)",$time,$smsText);
+    	    			    $smsText=str_replace("(date)",$date,$smsText);
+    	    			    
+    	    			    Mage::log($smsText,Zend_Log::DEBUG,'appointments',true);
+    	    			    
+    	    			    //Do not send mofify link for Modify again
+    	    			    
+    	    			    if($post_data['phone']){
+    	    			       $smsdata = Mage::helper('appointments')->sendsms($post_data['phone'],$smsText,$storeId);
+    	    				   Mage::log("Appointment Modification Email Sent",Zend_Log::DEBUG,'appointments',true);
+    	    				   $model->setSmsStatus($smsdata);
+    	    				   $model->save();
+    	    				}
+    	    		    }
 	    				$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
 	    				
 	    				//Notifiy Customer by Email
+	    				
 	    				if($toSend)
 	    				{
 	    					$templateId = Mage::getStoreConfig("appointments/customer/customer_modify_template",$storeId);
 	    					$mailSubject="Appointment Modified";
-	    					$sender     = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    					$sender     = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    					$email = $model->getEmail();
 	    					$name = $model->getFirstname()." ".$model->getLastname();
 	    					$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
@@ -227,8 +250,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    							'pre_no_of_pier' => $old_appointment->getPiercingQty(),
 	    							'pre_piercing_loc' => $old_appointment->getPiercingLoc(),
 	    							'pre_special_notes' => $old_appointment->getSpecialNotes(),
-	    							'pre_apt_starttime'  => $old_appointment->getAppointmentStart(),
-	    							'pre_apt_endtime'    => $old_appointment->getAppointmentEnd(),
+	    							'pre_apt_starttime'  => $oldAppointmentStart,
+	    							'pre_apt_endtime'    => $oldAppointmentEnd,
 	    							
 	    							'name'        => $model->getFirstname()." ".$model->getLastname(),
 	    							'customer_name'        => $model->getFirstname()." ".$model->getLastname(),
@@ -237,8 +260,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    							'no_of_pier' => $model->getPiercingQty(),
 	    							'piercing_loc' => $model->getPiercingLoc(),
 	    							'special_notes' => $model->getSpecialNotes(),
-	    							'apt_starttime'  => $model->getAppointmentStart(),
-	    							'apt_endtime'    => $model->getAppointmentEnd(),
+	    							'apt_starttime'  => $appointmentStart,
+	    							'apt_endtime'    => $appointmentEnd,
+	    							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+	    							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+	    							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+	    							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+	    							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+	    							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
 	    							'apt_modify_link'=> $apt_modify_link);
 	    					$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
 	    				}
@@ -250,7 +279,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    					$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
 	    					$adminEmail=explode(",",$adminEmail);
 	    					$mailSubject="Appointment Modified";
-	    					$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    					$email = $adminEmail;
 	    					$name = "Admin";
 	    					$vars = array(
@@ -261,8 +290,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    							'pre_no_of_pier' => $old_appointment->getPiercingQty(),
 	    							'pre_piercing_loc' => $old_appointment->getPiercingLoc(),
 	    							'pre_special_notes' => $old_appointment->getSpecialNotes(),
-	    							'pre_apt_starttime'  => $old_appointment->getAppointmentStart(),
-	    							'pre_apt_endtime'    => $old_appointment->getAppointmentEnd(),
+	    							'pre_apt_starttime'  => $oldAppointmentStart,
+	    							'pre_apt_endtime'    => $oldAppointmentEnd,
 	    							
 	    							'name'        => $model->getFirstname()." ".$model->getLastname(),
 	    							'customer_name'        => $model->getFirstname()." ".$model->getLastname(),
@@ -271,8 +300,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    							'no_of_pier' => $model->getPiercingQty(),
 	    							'piercing_loc' => $model->getPiercingLoc(),
 	    							'special_notes' => $model->getSpecialNotes(),
-	    							'apt_starttime'  => $model->getAppointmentStart(),
-	    							'apt_endtime'    => $model->getAppointmentEnd());
+	    							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+	    							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+	    							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+	    							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+	    							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+	    							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+	    							'apt_starttime'  => $appointmentStart,
+	    							'apt_endtime'    => $appointmentEnd);
 	    					
 	    					$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
 	    				}
@@ -285,7 +320,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    				{
 	    					$templateId = Mage::getStoreConfig("appointments/piercer/piercer_modify_template",$storeId);
 	    					$mailSubject="Appointment Modified";
-	    					$sender = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    					$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    					$email = $piercer->getEmail();
 	    					$name = $piercer->getFirstname()." ".$piercer->getLastname();
 	    					$vars = array(
@@ -296,8 +331,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    							'pre_no_of_pier' => $old_appointment->getPiercingQty(),
 	    							'pre_piercing_loc' => $old_appointment->getPiercingLoc(),
 	    							'pre_special_notes' => $old_appointment->getSpecialNotes(),
-	    							'pre_apt_starttime'  => $old_appointment->getAppointmentStart(),
-	    							'pre_apt_endtime'    => $old_appointment->getAppointmentEnd(),
+	    							'pre_apt_starttime'  => $oldAppointmentStart,
+	    							'pre_apt_endtime'    =>$oldAppointmentEnd,
 	    							
 	    							'name'        => $piercer->getFirstname()." ".$piercer->getLastname(),
 	    							'customer_name'        => $model->getFirstname()." ".$model->getLastname(),
@@ -306,8 +341,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    							'no_of_pier' => $model->getPiercingQty(),
 	    							'piercing_loc' => $model->getPiercingLoc(),
 	    							'special_notes' => $model->getSpecialNotes(),
-	    							'apt_starttime'  => $model->getAppointmentStart(),
-	    							'apt_endtime'    => $model->getAppointmentEnd());
+	    							'apt_starttime'  => $appointmentStart,
+	    							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+	    							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+	    							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+	    							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+	    							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+	    							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+	    							'apt_endtime'    => $appointmentEnd);
 	    					$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
 	    				}
 	    				
@@ -315,11 +356,22 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     				else //FOR new appointment book
     				{
     					//If SMS is checked for notify me.
+    					
+    					$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+    					$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+    					
     					if($model->getNotificationPref() === '2')
     					{
     						Mage::log("New appointment Bookig",Zend_Log::DEBUG,'appointments',true);
     						$smsText = Mage::getStoreConfig("appointments/api/smstext_book",$storeId);
-    						$smsText.= " ".$model->getAppointmentStart();
+    						$date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+    						$time=date('h:i A', strtotime($model->getAppointmentStart()));
+    						$smsText=str_replace("(time)",$time,$smsText);
+    						$smsText=str_replace("(date)",$date,$smsText);
+    						$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
+    						$shortUrl=Mage::helper('appointments')->getShortUrl($apt_modify_link);
+    						$smsText=str_replace("(modify_link)",$shortUrl,$smsText);
+    						Mage::log($smsText,Zend_Log::DEBUG,'appointments',true);
     						if($model->getPhone()){
     							$smsdata = Mage::helper('appointments')->sendsms($model->getPhone(),$smsText,$storeId);
     							$model->setSmsStatus($smsdata);
@@ -329,14 +381,22 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     					}
     				    //Customer Email Code
     					$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
+    					
+    					
+    					Mage::log(" *********** appointment Start**********",Zend_Log::DEBUG,'appointments-register.log',true);
+    					Mage::log($appointmentStart,Zend_Log::DEBUG,'appointments-register.log',true);
+    					Mage::log(" *********** appointment End**********",Zend_Log::DEBUG,'appointments-register.log',true);
+    					Mage::log($appointmentEnd,Zend_Log::DEBUG,'appointments-register.log',true);
+    					
     					if($toSend)
     					{
     						$templateId = Mage::getStoreConfig("appointments/customer/customer_template",$storeId);
     						$mailSubject="Appointment booking";
-    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
     						$email = $model->getEmail();
     						$name = $model->getFirstname()." ".$model->getLastname();
     						$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
+    					
     						$vars = array(
     								'name'        => $model->getFirstname()." ".$model->getLastname(),
     								'customer_name'        => $model->getFirstname()." ".$model->getLastname(),
@@ -345,8 +405,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     								'no_of_pier' => $model->getPiercingQty(),
     								'piercing_loc' => $model->getPiercingLoc(),
     								'special_notes' => $model->getSpecialNotes(),
-    								'apt_starttime'  => $model->getAppointmentStart(),
-    								'apt_endtime'    => $model->getAppointmentEnd(),
+    								'apt_starttime'  => $appointmentStart,
+    								'apt_endtime'    => $appointmentEnd,
+    								'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+    								'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+    								'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+    								'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+    								'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+    								'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
     								'apt_modify_link'=> $apt_modify_link);
     						$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
     					}
@@ -358,7 +424,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     						$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
     						$recipientArr=explode(",",$adminEmail);
     						$mailSubject="Appointment booking";
-    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
     						$email = $adminEmail;
     						$name = "Admin";
     						$vars = array(
@@ -369,8 +435,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     								'no_of_pier' => $model->getPiercingQty(),
     								'piercing_loc' => $model->getPiercingLoc(),
     								'special_notes' => $model->getSpecialNotes(),
-    								'apt_starttime'  => $model->getAppointmentStart(),
-    								'apt_endtime'    => $model->getAppointmentEnd());
+    								'apt_starttime'  => $appointmentStart,
+    								'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+    								'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+    								'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+    								'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+    								'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+    								'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+    								'apt_endtime'    =>$appointmentEnd);
     						$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
     					}
     					//Piercer Email Code
@@ -381,7 +453,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     					{
     						$templateId = Mage::getStoreConfig("appointments/piercer/piercer_template",$storeId);
     						$mailSubject="Appointment Booking";
-    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+    						$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
     						$email = $piercer->getEmail();
     						$name = $piercer->getFirstname()." ".$piercer->getLastname();
     						$vars = array(
@@ -392,8 +464,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     								'no_of_pier' => $model->getPiercingQty(),
     								'piercing_loc' => $model->getPiercingLoc(),
     								'special_notes' => $model->getSpecialNotes(),
-    								'apt_starttime'  => $model->getAppointmentStart(),
-    								'apt_endtime'    => $model->getAppointmentEnd());
+    								'apt_starttime'  =>$appointmentStart,
+    								'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+    								'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+    								'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+    								'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+    								'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+    								'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+    								'apt_endtime'    =>$appointmentEnd);
     						$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
     					}
     					/*End of Piercer Email Code*/
@@ -546,23 +624,35 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    			{
 		    			//$smsText = "Your Appointment is Cancelled successfully";
 	    				$smsText = Mage::getStoreConfig("appointments/api/smstext_cancel",$storeId);
-		    			$smsText .= " ".$model->getAppointmentStart();
+	    				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+	    				$date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+	    				$time=date('h:i A', strtotime($model->getAppointmentStart()));
+	    				
+	    				$booking_link= Mage::getBaseUrl('web').'appointments/';
+	    				$booking_link=Mage::helper('appointments')->getShortUrl($booking_link);
+	    				$smsText=str_replace("(time)",$time,$smsText);
+	    				$smsText=str_replace("(date)",$date,$smsText);
+	    				$smsText=str_replace("(book_link)",$booking_link,$smsText);
+	    				
+	    				Mage::log($smsText,Zend_Log::DEBUG,'appointments',true);
 		    			if($model->getPhone()){	    			
 		    				$phno_forsms = preg_replace('/\s+/', '', $model->getPhone());
 		    				$smsdata = Mage::helper('appointments')->sendsms($phno_forsms,$smsText,$storeId);
 		    				$model->setSmsStatus($smsdata);
 		    				$model->save();
-		    				Mage::log(" sms send Cancelled ",Zend_Log::DEBUG,'appointments',true);
+		    				
 		    			}
 	    			}
 	    			//SMS CODE TO CANCEL Appointment end
+	    			$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+	    			$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
 	    			
 	    			$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
 	    			if($toSend)
 	    			{
 	    				$templateId = Mage::getStoreConfig("appointments/customer/customer_cancel_template",$storeId);
 	    				$mailSubject="Appointment Cancellation";
-	    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    				$email = $model->getEmail();
 	    				$name = $model->getFirstname()." ".$model->getLastname();
 	    				$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
@@ -575,8 +665,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    						'no_of_pier' => $model->getPiercingQty(),
 	    						'piercing_loc' => $model->getPiercingLoc(),
 	    						'special_notes' => $model->getSpecialNotes(),
-	    						'apt_starttime'  => $model->getAppointmentStart(),
-	    						'apt_endtime'    => $model->getAppointmentEnd(),
+	    						'apt_starttime'  => $appointmentStart,
+	    						'apt_endtime'    => $appointmentEnd,
+	    						'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+	    						'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+	    						'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+	    						'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+	    						'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+	    						'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
 	    						'apt_modify_link'=> $apt_modify_link);
 	    				$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
 	    			}
@@ -590,7 +686,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    				$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
 	    				$adminEmail=explode(",",$adminEmail);
 	    				$mailSubject="Appointment Cancellation";
-	    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    				$email = $adminEmail;
 	    				$name = "Admin";
 	    				$vars = array(
@@ -601,8 +697,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    						'no_of_pier' => $model->getPiercingQty(),
 	    						'piercing_loc' => $model->getPiercingLoc(),
 	    						'special_notes' => $model->getSpecialNotes(),
-	    						'apt_starttime'  => $model->getAppointmentStart(),
-	    						'apt_endtime'    => $model->getAppointmentEnd());
+	    						'apt_starttime'  => $appointmentStart,
+	    						'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+	    						'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+	    						'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+	    						'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+	    						'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+	    						'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+	    						'apt_endtime'    => $appointmentEnd);
 	    				$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
 	    			}
 	    			/*End of Email Code*/
@@ -616,7 +718,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    			{
 	    				$templateId = Mage::getStoreConfig("appointments/piercer/piercer_cancel_template",$storeId);
 	    				$mailSubject="Appointment Cancellation";
-	    				$sender = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+	    				$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 	    				$email = $piercer->getEmail();
 	    				$name = $piercer->getFirstname()." ".$piercer->getLastname();
 	    				$vars = array(
@@ -627,8 +729,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 	    						'no_of_pier' => $model->getPiercingQty(),
 	    						'piercing_loc' => $model->getPiercingLoc(),
 	    						'special_notes' => $model->getSpecialNotes(),
-	    						'apt_starttime'  => $model->getAppointmentStart(),
-	    						'apt_endtime'    => $model->getAppointmentEnd());
+	    						'apt_starttime'  => $appointmentStart,
+	    						'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+	    						'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+	    						'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+	    						'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+	    						'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+	    						'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+	    						'apt_endtime'    => $appointmentEnd);
 	    				$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
 	    			}
 	    			/*End of Email Code*/
@@ -648,7 +756,15 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     {
     	$result = array('success' => false);
     	$storeid = $this->getRequest()->getParam('storeid');
-    	 
+    	$id = $this->getRequest()->getParam('id');
+    	if($id)
+    	{
+    	    $models = Mage::getModel('appointments/appointments')->load($id);
+    	    //$models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email)->addFieldToFilter('app_status',array('in'=>array(Allure_Appointments_Model_Appointments::STATUS_REQUEST,Allure_Appointments_Model_Appointments::STATUS_ASSIGNED)));
+    	    if($models->getId())
+    	        Mage::register('apt_modify_data',$models);
+    	   
+    	}
     	//To modify the appointment get the data from registry end
     	$piercers = Mage::getModel('appointments/piercers')->getCollection()
     				->addFieldToFilter('store_id', array('eq' => $storeid))
@@ -668,6 +784,34 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     			$available_wdays[]=$wd;
     		}
     	}
+    	
+    	/* $notAvailableDatesCollection=Mage::getModel('appointments/dates')->getCollection()
+    	->addFieldToFilter('store_id', array('eq' => $storeid))
+    	->addFieldToFilter('is_available', array('eq' => '0'))
+    	->addFieldToFilter('exclude', array('eq' => '0'));
+    	
+    	$notAvailabledays=array();
+    	
+    	foreach ($notAvailableDatesCollection as $singeDate){
+    	    $formattedDate=date("m/d/Y", strtotime($singeDate->getDate()));
+    	    $notAvailabledays[strtotime($singeDate->getDate())]=$formattedDate;
+    	}
+    	
+    	
+    	$available_wdays=array();
+    	foreach ($avial_workDays as $avail_wd){
+    	    foreach ($avail_wd as $wd){
+    	        if(!$notAvailabledays[strtotime($wd)]){
+    	            $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
+    	            if($dateCurrent<=$wd){
+    	                $available_wdays[strtotime($wd)]=$wd;
+    	                }
+    	            }
+    	            
+    	           
+    	    }
+    	} */
+    	
     	$jsonDATA="";
 
     	if(!empty($available_wdays)) {
@@ -677,9 +821,10 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     	$block = $this->getLayout()->createBlock('core/template','appointments_pickurday',array('template' => 'appointments/pickurday.phtml'))->setData("workingdays",$jsonDATA);
     	
     	$output = $block->toHtml();
-        
+    	$schedule= Mage::getStoreConfig("appointments/piercer_schedule/schedule",$storeid);
     	$result['success'] = true;
     	$result['output'] = $output;
+    	$result['schedule'] = $schedule;
     	 
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }

@@ -1,0 +1,279 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0"> 
+  	<myaccount_index_index>  
+  		<update handle="customer_account"/>
+	    <reference name="my.account.wrapper">   
+	      <block type="myaccount/myproducts" name="my_products" as="my_products" template="allure/myaccount/myproducts.phtml">
+	      	<block type="core/template" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />
+	      	
+	      	<!-- Sales order history template -->
+	      	<block type="myaccount/order_history" name="sales.order.history_list" template="allure/myaccount/historylist.phtml">
+	      		<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml" />
+	      	</block>
+	      		
+	      	<!-- open orders -->
+            <block type="myaccount/order_openorder" name="sales.order.openorder_list" template="allure/myaccount/openorders/openorderlist.phtml">
+	      		<block type="myaccount/order_openorder" name="sales.order.openorder" template="allure/myaccount/openorders/openorder.phtml" />
+	      	</block>
+	      	
+	      	<!-- Customer Edit -->
+	      	<block type="customer/form_edit" name="customer_edit" template="allure/myaccount/customer/form/edit.phtml"/>
+            
+            <!-- Customer Address -->
+            <block type="customer/address_book" name="address_book" before="-" template="allure/myaccount/customer/address/book.phtml"/>
+            
+            <block type="checkout/cart" name="checkout.cart">
+                <action method="setCartTemplate"><value>allure/myaccount/checkout/cart.phtml</value></action>
+                <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
+                <action method="chooseTemplate"/>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+
+                <block type="core/text_list" name="checkout.cart.top_methods" as="top_methods" translate="label">
+                    <label>Payment Methods Before Checkout Button</label>
+                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
+                </block>
+
+                <block type="page/html_wrapper" name="checkout.cart.form.before" as="form_before" translate="label">
+                    <label>Shopping Cart Form Before</label>
+                </block>
+
+                <block type="core/text_list" name="checkout.cart.methods" as="methods" translate="label">
+                    <label>Payment Methods After Checkout Button</label>
+                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
+                    <block type="checkout/multishipping_link" name="checkout.cart.methods.multishipping" template="checkout/multishipping/link.phtml"/>
+                </block>
+
+                <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="allure/myaccount/checkout/cart/coupon.phtml"/>
+                
+                 <block type="giftcards/coupon" before="coupon" name="checkout.cart.giftcards" as="giftcards" template="allure/myaccount/checkout/giftcards/coupon.phtml"/>
+                
+                <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+                <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
+
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
+            </block>
+           
+            
+            <block type="wishlist/customer_wishlist" name="customer.wishlist" template="allure/myaccount/wishlist/view.phtml">
+                <action method="setTitle" translate="title">
+                    <title>My Wishlist</title>
+                </action>
+                <block type="wishlist/customer_wishlist_items" name="customer.wishlist.items" as="items" template="wishlist/item/list.phtml">
+                    <block type="wishlist/customer_wishlist_item_column_image" name="customer.wishlist.item.image" template="allure/myaccount/wishlist/item/column/image.phtml" />
+                    <block type="wishlist/customer_wishlist_item_column_comment" name="customer.wishlist.item.info" template="allure/myaccount/wishlist/item/column/info.phtml">
+                        <action method="setTitle" translate="title">
+                            <title>Product Details and Comment</title>
+                        </action>
+                    </block>
+                    <block type="wishlist/customer_wishlist_item_column_cart" name="customer.wishlist.item.cart" template="allure/myaccount/wishlist/item/column/cart.phtml">
+                        <action method="setTitle" translate="title">
+                            <title>Add to Cart</title>
+                        </action>
+                        <block type="wishlist/customer_wishlist_item_options" name="customer.wishlist.item.options" />
+                    </block>
+                    <block type="wishlist/customer_wishlist_item_column_remove" name="customer.wishlist.item.remove" template="allure/myaccount/wishlist/item/column/remove.phtml" />
+                </block>
+                <block type="core/text_list" name="customer.wishlist.buttons" as="control_buttons">
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.share" template="allure/myaccount/wishlist/button/share.phtml" />
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.toCart" template="allure/myaccount/wishlist/button/tocart.phtml" />
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.update" template="allure/myaccount/wishlist/button/update.phtml" />
+                </block>
+                
+                <block type="core/text_list" name="wishlist.sharing_form">
+                	<block type="wishlist/customer_sharing" name="wishlist.sharing" template="allure/myaccount/wishlist/sharing.phtml" />
+                </block>
+            </block>
+            
+            <!-- Purchased Item -->
+            <block type="myaccount/purchase" name="purchased_items" template="allure/myaccount/purchase/purchase.phtml">
+            	<action method="setTitle" translate="title">
+                    <title>My Products</title>
+                </action>
+                <block type="myaccount/purchase" name="purchased_items_list" template="allure/myaccount/purchase/item/default.phtml" />
+            </block>
+            
+            
+            <block type="tokenbase/customer_wrapper" name="tokenbase_customer_wrapper" template="allure/myaccount/paradoxlabs/tokenbase/customer/wrapper.phtml" >
+            	<block type="core/template" name="tokenbase_manage_authnetcim" template="allure/myaccount/paradoxlabs/tokenbase/customer/method.phtml">
+					<block type="tokenbase/customer_cards" name="tokenbase_manage_authnetcim_cards" as="tokenbase_customer_method_left" template="allure/myaccount/paradoxlabs/tokenbase/customer/cards.phtml" />
+					<block type="tokenbase/customer_form" name="tokenbase_manage_authnetcim_form" as="tokenbase_customer_method_right" template="allure/myaccount/paradoxlabs/authnetcim/customer/form.phtml" />
+				</block>
+            </block>
+            
+	      		
+	      </block> 
+	      <block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>  
+	    </reference>   
+  	</myaccount_index_index>  
+  	
+  	<myaccount_sales_order_history>
+  		<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml" />
+  	</myaccount_sales_order_history>
+  	
+  	<myaccount_sales_order_openorders>
+  		<block type="myaccount/order_openorder" name="sales.order.openorder" template="allure/myaccount/openorders/openorder.phtml" />
+  	</myaccount_sales_order_openorders>
+  	
+  	<myaccount_customer_form_edit>
+  		<block type="customer/form_edit" name="customer_edit" template="allure/myaccount/customer/form/edit.phtml"/>
+  	</myaccount_customer_form_edit>
+  	
+  	<myaccount_customer_address_edit>
+  		<block type="customer/address_edit" name="customer_address_edit" template="allure/myaccount/customer/address/edit.phtml"/>
+  	</myaccount_customer_address_edit>
+  	
+  	<myaccount_customer_address_new>
+  		<block type="customer/address_edit" name="customer_address_new" template="allure/myaccount/customer/address/edit.phtml"/>
+  	</myaccount_customer_address_new>
+  	
+  	<myaccount_customer_address_data>
+  		<reference name="head">
+            <block type="core/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml" />
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="customer/address_edit" name="customer_address_edit" template="allure/myaccount/customer/address/book.phtml"/>
+        </reference>
+  	</myaccount_customer_address_data>
+  	
+  	
+  	<myaccount_purchase_item_load>
+  		 <block type="myaccount/purchase" name="purchased_items" template="allure/myaccount/purchase/item/default.phtml" />
+  	</myaccount_purchase_item_load>
+  	
+  	
+  	<myaccount_pay_card_data>
+  		<block type="tokenbase/customer_wrapper" name="tokenbase_customer_wrapper" template="allure/myaccount/paradoxlabs/tokenbase/customer/wrapper.phtml" >
+            <block type="core/template" name="tokenbase_manage_authnetcim" template="allure/myaccount/paradoxlabs/tokenbase/customer/method.phtml">
+				<block type="tokenbase/customer_cards" name="tokenbase_manage_authnetcim_cards" as="tokenbase_customer_method_left" template="allure/myaccount/paradoxlabs/tokenbase/customer/cards.phtml" />
+				<block type="tokenbase/customer_form" name="tokenbase_manage_authnetcim_form" as="tokenbase_customer_method_right" template="allure/myaccount/paradoxlabs/authnetcim/customer/form.phtml" />
+			</block>
+         </block>
+  	</myaccount_pay_card_data>
+  	
+  	<myaccount_pay_card_edit>
+  		<block type="tokenbase/customer_form" name="tokenbase_manage_authnetcim_form" as="tokenbase_customer_method_right" template="allure/myaccount/paradoxlabs/authnetcim/customer/form.phtml" />
+  	</myaccount_pay_card_edit>
+  	
+  	
+  	<myaccount_wishlist_layout>
+  		<!-- Wishlist -->
+            <block type="wishlist/customer_wishlist" name="customer.wishlist_myaccount" template="allure/myaccount/wishlist/view.phtml">
+                <action method="setTitle" translate="title">
+                    <title>My Wishlist</title>
+                </action>
+                <block type="wishlist/customer_wishlist_items" name="customer.wishlist.items" as="items" template="wishlist/item/list.phtml">
+                    <block type="wishlist/customer_wishlist_item_column_image" name="customer.wishlist.item.image" template="allure/myaccount/wishlist/item/column/image.phtml" />
+                    <block type="wishlist/customer_wishlist_item_column_comment" name="customer.wishlist.item.info" template="allure/myaccount/wishlist/item/column/info.phtml">
+                        <action method="setTitle" translate="title">
+                            <title>Product Details and Comment</title>
+                        </action>
+                    </block>
+                    <block type="wishlist/customer_wishlist_item_column_cart" name="customer.wishlist.item.cart" template="allure/myaccount/wishlist/item/column/cart.phtml">
+                        <action method="setTitle" translate="title">
+                            <title>Add to Cart</title>
+                        </action>
+                        <block type="wishlist/customer_wishlist_item_options" name="customer.wishlist.item.options" />
+                    </block>
+                    <block type="wishlist/customer_wishlist_item_column_remove" name="customer.wishlist.item.remove" template="allure/myaccount/wishlist/item/column/remove.phtml" />
+                </block>
+                <block type="core/text_list" name="customer.wishlist.buttons" as="control_buttons">
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.share" template="allure/myaccount/wishlist/button/share.phtml" />
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.toCart" template="allure/myaccount/wishlist/button/tocart.phtml" />
+                    <block type="wishlist/customer_wishlist_button" name="customer.wishlist.button.update" template="allure/myaccount/wishlist/button/update.phtml" />
+                </block>
+            </block>
+            
+            <block type="checkout/cart" name="checkout.cart_myaccount">
+                <action method="setCartTemplate"><value>allure/myaccount/checkout/cart.phtml</value></action>
+                <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
+                <action method="chooseTemplate"/>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+
+                <block type="core/text_list" name="checkout.cart.top_methods" as="top_methods" translate="label">
+                    <label>Payment Methods Before Checkout Button</label>
+                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
+                </block>
+
+                <block type="page/html_wrapper" name="checkout.cart.form.before" as="form_before" translate="label">
+                    <label>Shopping Cart Form Before</label>
+                </block>
+
+                <block type="core/text_list" name="checkout.cart.methods" as="methods" translate="label">
+                    <label>Payment Methods After Checkout Button</label>
+                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
+                    <block type="checkout/multishipping_link" name="checkout.cart.methods.multishipping" template="checkout/multishipping/link.phtml"/>
+                </block>
+
+                <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="allure/myaccount/checkout/cart/coupon.phtml"/>
+                
+                 <block type="giftcards/coupon" before="coupon" name="checkout.cart.giftcards" as="giftcards" template="allure/myaccount/checkout/giftcards/coupon.phtml"/>
+                
+                <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+                <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
+
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
+            </block>
+  	</myaccount_wishlist_layout>
+  	
+  	
+  	<myaccount_checkout_cart_layout>
+  		<block type="checkout/cart" name="checkout.cart_myaccount">
+                <action method="setCartTemplate"><value>allure/myaccount/checkout/cart.phtml</value></action>
+                <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
+                <action method="chooseTemplate"/>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>allure/myaccount/checkout/cart/item/default.phtml</template></action>
+
+                <block type="core/text_list" name="checkout.cart.top_methods" as="top_methods" translate="label">
+                    <label>Payment Methods Before Checkout Button</label>
+                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
+                </block>
+
+                <block type="page/html_wrapper" name="checkout.cart.form.before" as="form_before" translate="label">
+                    <label>Shopping Cart Form Before</label>
+                </block>
+
+                <block type="core/text_list" name="checkout.cart.methods" as="methods" translate="label">
+                    <label>Payment Methods After Checkout Button</label>
+                    <block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
+                    <block type="checkout/multishipping_link" name="checkout.cart.methods.multishipping" template="checkout/multishipping/link.phtml"/>
+                </block>
+
+                <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="allure/myaccount/checkout/cart/coupon.phtml"/>
+                
+                 <block type="giftcards/coupon" before="coupon" name="checkout.cart.giftcards" as="giftcards" template="allure/myaccount/checkout/giftcards/coupon.phtml"/>
+                
+                <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
+                <block type="checkout/cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="checkout/cart/crosssell.phtml"/>
+
+                <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
+            </block>
+  	</myaccount_checkout_cart_layout>
+  	
+  	<myaccount_index_track>
+  		 <label>Shipment Tracking Popup</label>
+        <reference name="root">
+            <action method="setTemplate"><template>allure/myaccount/page/popup.phtml</template></action>
+        </reference>
+        <!--<reference name="head">
+            <action method="addJs"><script>scriptaculous/scriptaculous.js</script></action>
+        </reference>-->
+        <reference name="content">
+            <block type="shipping/tracking_popup" name="shipping.tracking.popup" template="allure/myaccount/shipping/tracking/popup.phtml" />
+        </reference>
+  	</myaccount_index_track>
+  	
+  	<sales_order_view translate="label"> 
+          <reference name="order_items">  
+              <action method="setTemplate">
+                  <template>allure/myaccount/sales/order/view/items.phtml</template>
+              </action>          
+        </reference>   
+    </sales_order_view> 
+  	
+</layout>

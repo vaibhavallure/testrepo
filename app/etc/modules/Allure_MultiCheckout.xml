@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_MultiCheckout>
+			<active>true</active>
+			<codePool>local</codePool>
+			<depends>
+				<Allure_Core />
+				<Amasty_Customerattr />
+			</depends>
+		</Allure_MultiCheckout>
+	</modules>
+</config>

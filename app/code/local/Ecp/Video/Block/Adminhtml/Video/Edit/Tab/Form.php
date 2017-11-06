@@ -71,6 +71,11 @@ class Ecp_Video_Block_Adminhtml_Video_Edit_Tab_Form extends Mage_Adminhtml_Block
           'required'  => false,
           'name'      => 'video',
 	    ));
+      $fieldset->addField('position', 'text', array(
+          'label'     => Mage::helper('ecp_video')->__('Position'),
+          'required'  => false,
+          'name'      => 'position',
+      ));
 
       $fieldset->addField('status', 'select', array(
           'label'     => Mage::helper('ecp_press')->__('Status:'),

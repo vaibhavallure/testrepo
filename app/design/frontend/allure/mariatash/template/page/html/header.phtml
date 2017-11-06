@@ -45,7 +45,11 @@
 		      <a class="navbar-brand" href="<?php echo $this->getUrl('') ?>"  alt="Venus by Maria Tash" title="Venus by Maria Tash" class="logo"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
 		      <?php $_counter = $this->helper('checkout/cart')->getSummaryCount();?>
 		      <div class="navbar-icons navbar-right">
-		      	<a href="<?php echo Mage::getBaseUrl();?>customer/account" class="navbar-icon glyphicon glyphicon-user"><span>My Account</span></a>
+		      	 <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
+				<a href="<?php echo Mage::getBaseUrl();?>customer/account" class="navbar-icon glyphicon glyphicon-user"><span>My Account</span></a>
+                <?php else:?>
+				<a id="sign_in_label" href="#" class="navbar-icon glyphicon glyphicon-user"><span>My Account</span></a>
+                <?php endif;?>
 		      	<a href="<?php echo Mage::getBaseUrl();?>checkout/cart" class="navbar-icon glyphicon glyphicon-shopping-cart" <?php if ($_counter) :?>counter="<?php echo $_counter;?>"<?php endif;?>><span>Cart</span></a>
 		      	
 		      	<?php //allure store currency swticher?>
@@ -65,23 +69,23 @@
 		</nav>
     </div>
     <?php echo $this->getChildHtml('topContainer'); ?>
-</div>
-<script type="text/javascript">
-if(Mage.Cookies.get('is_logged_in') && Mage.Cookies.get('frontend_timeout'))  {
-	jQuery('#sign_in_label').addClass('display_none');	
-} else {
-	//document.title = 'Customer Sign in';
-	jQuery('#sign_out_label').addClass('display_none');
-}
-var pathname = window.location.pathname;
-if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
-else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
-var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
-// jQuery( document ).ready(function() {
-//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
-// });
-// jQuery( window ).resize(function() {
-//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
-// });
+	<script type="text/javascript">
+		if(Mage.Cookies.get('is_logged_in') && Mage.Cookies.get('frontend_timeout'))  {
+			jQuery('#sign_in_label').addClass('display_none');	
+		} else {
+			//document.title = 'Customer Sign in';
+			jQuery('#sign_out_label').addClass('display_none');
+		}
+		var pathname = window.location.pathname;
+		if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
+		else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
+		var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
+		// jQuery( document ).ready(function() {
+		//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+		// });
+		// jQuery( window ).resize(function() {
+		//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+		// });
 
-</script>
+	</script>
+</div>

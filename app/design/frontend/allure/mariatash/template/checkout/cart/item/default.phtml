@@ -232,14 +232,33 @@
     <tr class="table-messages">
         <td colspan="6">
             <div class="item-msg <?php echo $message['type'] ?>">
-            <?php if ( intval($_item->getProduct()->getStockItem()->getQty()) < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() ) : ?>
+            
+            <?php if(0): //commented to add Parent child code?>
+            <?php if ( intval($_item->getProduct()->getStockItem()->getQty()) < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() && $_item->getProduct()->getStockItem()->getManageStock()==1 ) : ?>
                 <p>This product is not available in the requested quantity. <?php echo $_item->getQty()-intval($_item->getProduct()->getStockItem()->getQty()); ?> of the items will be backordered.</p>
             <?php else : ?>
                 <?php foreach ($messages as $message): ?>
                     <?php $html .= $message['text']; ?>
                 <?php endforeach;?>
                     <p>* <?php echo $html; ?></p>
-            <?php endif; ?>        
+            <?php endif; ?>    
+            <?php endif; //commented to add Parent child code?>
+            
+            
+            <?php //Parent child code starts
+              $storeId=Mage::app()->getStore()->getStoreId();
+              $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$_item->getProduct()->getSku());
+              $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($_product,$storeId);
+            ?>
+            <?php if ( intval($stock->getQty()) < $_item->getQty() && $stock->getIsInStock() && $stock->getManageStock()==1 ) : ?>
+                <p>This product is not available in the requested quantity. <?php echo $_item->getQty()-intval($_product->getStockItem()->getQty()); ?> of the items will be backordered.</p>
+            <?php else : ?>
+                <?php foreach ($messages as $message): ?>
+                    <?php $html .= $message['text']; ?>
+                <?php endforeach;?>
+                    <p>* <?php echo $html; ?></p>
+            <?php endif;   //End of Parent-child code ?>  
+                
             </div>
         </td>
     </tr>

@@ -21,8 +21,11 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         
         //$collection->addFieldToFilter('admin_comment', array('like' => '%'.'Demo'.'%'));
       
-        if(isset($vendor) && $vendor)
+        if(isset($vendor) && $vendor){
+            $collection->addFieldToFilter('status',array('nin' =>Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT));
         	$collection->addFieldToFilter('vendor_id',$vendor);
+        
+        }
         
         if($_GET['search']!=null){
         	$subCollection = Mage::getModel('inventory/orderitems')->getCollection()->addFieldToSelect('po_id');
@@ -44,7 +47,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         	$collection->addFieldToFilter('po_id', array('in' => $ids));
         	
         	}
-        $collection->setOrder('updated_date', 'DESC');
+        	 $collection->setOrder('po_id', 'DESC');
         
         $this->setCollection($collection);
         return parent::_prepareCollection();
@@ -59,12 +62,14 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     			'index'     =>'po_id',
     			'filter'    =>'adminhtml/widget_grid_column_filter_range',
     	));
+    	
     	if(!Mage::helper('allure_vendor')->isUserVendor())
     	{
 	    	$this->addColumn('vendor_name', array(
 	    			'header'    => Mage::helper('reports')->__('Vendor Name'),
 	    			'align'     =>'left',
-	    			'index'     => 'vendor_name',
+	    	        'index'     => 'vendor_name',
+	    	        'renderer'     => 'inventory/adminhtml_purchaseorder_renderer_vendor'
 	    	));
     	}
     	$this->addColumn('ref_no', array(
@@ -81,13 +86,15 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     	));
     	
     	
-    
+    	if(!Mage::helper('allure_vendor')->isUserVendor())
+    	{
         
         $this->addColumn('total_amount', array(
         		'header'    =>Mage::helper('reports')->__('Amount(USD)'),
         		'sortable'  =>True,
         		'index'     =>'total_amount'
         ));
+    	}
         $this->addColumn('stock_id', array(
         		'header'    =>Mage::helper('reports')->__('Store'),
         		'sortable'  =>True,
@@ -125,6 +132,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         		array(
         				'header'=> Mage::helper('catalog')->__('Action'),
         				'index' => 'po_id',
+        		        'is_system' => true,
         				'renderer'  => 'Allure_Inventory_Block_Adminhtml_Purchaseorder_Renderer_Action',// THIS IS WHAT THIS POST IS ALL ABOUT
         		));
        
@@ -139,5 +147,30 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     	return $this->getUrl('*/*/view', array('id' => $row->getId()));
     
     }
+    
+    protected function _prepareMassaction()
+    {
+    
+    	$this->setMassactionIdField('po_id');
+    	$this->getMassactionBlock()->setFormFieldName('po_id');
+    	$this->getMassactionBlock()->setUseSelectAll(false);
+    	
+    	if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/cancel')) {
+    		$this->getMassactionBlock()->addItem('cancel_order', array(
+    				'label'=> Mage::helper('sales')->__('Cancel'),
+    				'url'  => $this->getUrl('*/*/massCancel'),
+    				'confirm' => Mage::helper('sales')->__('Are you sure?')
+    		));
+    		
+    		$this->getMassactionBlock()->addItem('approve_order', array(
+    		    'label'=> Mage::helper('sales')->__('Approve'),
+    		    'url'  => $this->getUrl('*/*/massApprove'),
+    		    'confirm' => Mage::helper('sales')->__('Are you sure?')
+    		));
+    	}
+    	
+    	return $this;
+    }
+    
     
 }

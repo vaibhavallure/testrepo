@@ -102,8 +102,31 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                 
                 <?php //mt-allure code added?>
                  <tr>
-                      <td class="label"><label><?php echo Mage::helper('sales')->__('Order Type') ?></label></td>
-                      <td class="value"><strong><?php if($_order->getOrderType()!=null)echo $_order->getOrderType();?></strong></td>
+                      <td class="label"><label><?php echo Mage::helper('sales')->__('Delivery Mode') ?></label></td>
+                      <td class="value"><strong><?php if($_order->getOrderType()!=null) echo ($_order->getDeliveryMethod() == 'two_ship' ? 'Multiple' : 'Single');?></strong></td>
+                 </tr>
+                 <?php
+                        $_orderType = $_order->getOrderType();
+
+                        $_orderTypeArray = array();
+
+                        if ($_orderType) {
+                            $_orderTypeArray = explode(' - ', $_orderType);
+                            $_orderType = ucfirst($_orderTypeArray[1]);
+                        }
+
+                        if (!$_orderType) {
+                            $_orderType = ($_order->getIsChildOrder() ? 'Backorder' : 'Main');
+                        }
+
+                 ?>
+                 <tr>
+                      <td class="label"><label><?php echo Mage::helper('sales')->__('Delivery Type') ?></label></td>
+                      <td class="value"><strong><?php echo $_orderType;?></strong></td>
+                 </tr>
+                 <tr>
+                      <td class="label"><label><?php echo Mage::helper('sales')->__('Payment Mode') ?></label></td>
+                      <td class="value"><strong><?php if($_order->getOrderType()!=null) {echo ($_order->getWholesalePayOption() ? ($_order->getWholesalePayOption()  == 'pay_on_ship' ? 'Pay As Ship' : 'Pay Now') : (($_order->getIsReadyToShip() && $_order->getIsChildOrder()) ? 'Pay As Ship' : 'Pay Now'));}?></strong></td>
                  </tr>
             </table>
         </div>

@@ -26,7 +26,7 @@
 		<jobs>
 			<allure_productwebsite_schedule>
 				<schedule>
-					<cron_expr>0 */6 * * *</cron_expr>
+					<cron_expr>50 */3 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>allure_productwebsite/observer::assignWebsiteToProduct</model>

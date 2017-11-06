@@ -250,12 +250,43 @@ class Allure_CheckoutStep_OnepageController extends MT_Checkout_OnepageControlle
                 		strtolower($_checkoutstepHelper::TWO_SHIP)){
                 	
                 	$giftMessageId = $this->getOnepage()->getQuote()->getGiftMessageId();
-                	if(isset($giftMessageId) && !empty($giftMessageId)){
-                		if($this->getOnepage()->getQuoteOrdered())
-	                		$this->getOnepage()->getQuoteOrdered()->setGiftMessageId($giftMessageId)->save();
-	                	if($this->getOnepage()->getQuoteBackordered())
-	                		$this->getOnepage()->getQuoteBackordered()->setGiftMessageId($giftMessageId)->save();
-                	} 
+                	$quoteItems = $this->getOnepage()->getQuote()->getAllVisibleItems();
+                	if($this->getOnepage()->getQuoteOrdered()){
+                		if(isset($giftMessageId) && !empty($giftMessageId)){
+	                		$this->getOnepage()->getQuoteOrdered()
+	                			->setGiftMessageId($giftMessageId)->save();
+                		}
+                		$this->getOnepage()->getQuoteOrdered()
+                			->setData('no_signature_delivery', $no_signature_delivery)->save();
+                		
+                	}
+	                if($this->getOnepage()->getQuoteBackordered()){
+	                	if(isset($giftMessageId) && !empty($giftMessageId)){
+	                		$this->getOnepage()->getQuoteBackordered()
+	                			->setGiftMessageId($giftMessageId)->save();
+	                	}
+	                	$this->getOnepage()->getQuoteBackordered()
+	                		->setData('no_signature_delivery', $no_signature_delivery)->save();
+	                }
+	                
+	                foreach ($quoteItems as $item){
+	                	$sku = $item->getSku();
+	                	if($this->getOnepage()->getQuoteOrdered()){
+	                		foreach ($this->getOnepage()->getQuoteOrdered()->getAllVisibleItems() as $item1){
+	                			$sku1 = $item1->getSku();
+	                			if($sku==$sku1)
+	                				$item1->setGiftMessageId($item->getGiftMessageId())->save();
+	                		}
+	                	}
+	                	if($this->getOnepage()->getQuoteBackordered()){
+	                		foreach ($this->getOnepage()->getQuoteBackordered()->getAllVisibleItems() as $item2){
+	                			$sku2 = $item2->getSku();
+	                			if($sku == $sku2)
+	                				$item2->setGiftMessageId($item->getGiftMessageId())->save();
+	                		}
+	                	}
+	                }
+	                
                }
 
                /*  $result['goto_section'] = 'delivery_option';
@@ -437,6 +468,7 @@ class Allure_CheckoutStep_OnepageController extends MT_Checkout_OnepageControlle
             );
         } catch (Mage_Core_Exception $e) {
             Mage::logException($e);
+            Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
             Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
             $result['success'] = false;
             $result['error'] = true;
@@ -460,6 +492,7 @@ class Allure_CheckoutStep_OnepageController extends MT_Checkout_OnepageControlle
             }
         } catch (Exception $e) {
             Mage::logException($e);
+            Mage::helper('allure_exception')->notifyExceptionForPayment($this->getOnepage()->getQuote(), $e);
             Mage::helper('checkout')->sendPaymentFailedEmail($this->getOnepage()->getQuote(), $e->getMessage());
             $result['success']  = false;
             $result['error']    = true;

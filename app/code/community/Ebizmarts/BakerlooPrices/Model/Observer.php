@@ -2,15 +2,80 @@
 
 class Ebizmarts_BakerlooPrices_Model_Observer
 {
+    private $_bannedPaymentMethods = array(
+        'bakerloo_storecredit', 'bakerloo_magestorecredit'
+    );
 
     public function isPosRequest()
     {
-        return Mage::app()->getRequest()->getHeader(Mage::helper('bakerloo_restful')->getApiKeyHeader());
+        return Mage::helper('bakerloo_restful')->isPosRequest(Mage::app()->getRequest());
     }
 
     public function getRequestJson()
     {
+        $request = Mage::app()->getRequest();
+        if ($request->getControllerName() == Ebizmarts_BakerlooRestful_Helper_Data::BAKERLOO_ORDERS_CONTROLLER) {
+            if ($request->getActionName() == Ebizmarts_BakerlooRestful_Helper_Data::BAKERLOO_ORDERS_ACTION) {
+                return $this->getRequestJsonFromForm();
+            } else {
+                return $this->getJsonFromOrder();
+            }
+        } else {
+            return $this->getRequestJsonFromPostBody();
+        }
+    }
+
+    private function getRequestJsonFromPostBody()
+    {
         return Mage::helper('bakerloo_restful/http')->getJsonPayload(Mage::app()->getRequest(), true);
+    }
+
+    private function getRequestJsonFromForm()
+    {
+        $postData = Mage::app()->getRequest()->getPost('order', array());
+
+        if (isset($postData['json_payload'])) {
+            $postData = $postData['json_payload'];
+        }
+
+        if (is_string($postData) and !empty($postData)) {
+            $postData = json_decode($postData, true);
+        }
+
+        if (!is_array($postData)) {
+            $postData = array();
+        }
+
+        return $postData;
+    }
+
+    private function getJsonFromOrder() {
+        $order = Mage::registry(Ebizmarts_BakerlooRestful_Model_OrderManagement::ORDER_REGISTRY_KEY);
+        if (!$order or !($order instanceof Ebizmarts_BakerlooRestful_Model_Order)) {
+            return null;
+        }
+
+        $postData = $order->getJsonPayload();
+        if (is_string($postData) and !empty($postData)) {
+            $postData = json_decode($postData, true);
+        }
+
+        return $postData;
+    }
+
+    public function shouldMatchPrices(Mage_Sales_Model_Quote $quote)
+    {
+        $shouldMatch = false;
+
+        if ($this->isPosRequest() and $this->priceMatchEnabled()) {
+            $payment = $quote->getPayment();
+
+            if (!is_null($payment) and !in_array($payment->getMethod(), $this->_bannedPaymentMethods)) {
+                $shouldMatch = true;
+            }
+        }
+
+        return $shouldMatch;
     }
 
     public function priceMatchEnabled()
@@ -26,6 +91,11 @@ class Ebizmarts_BakerlooPrices_Model_Observer
     public function applyTaxAfterDiscount()
     {
         return (int)$this->getConfigValue('tax/calculation/apply_after_discount');
+    }
+
+    public function applyDiscountOnPricesIncludingTax()
+    {
+        return (int)$this->getConfigValue('tax/calculation/discount_tax');
     }
 
     /**
@@ -51,10 +121,13 @@ class Ebizmarts_BakerlooPrices_Model_Observer
 
     public function priceMatch(Varien_Event_Observer $observer)
     {
-        if ($this->isPosRequest() and $this->priceMatchEnabled()) {
+        /** @var Mage_Sales_Model_Order_Item $orderItem */
+        $orderItem = $observer->getEvent()->getOrderItem();
 
-            $orderItem = $observer->getEvent()->getOrderItem();
-            $item      = $observer->getEvent()->getItem();
+        /** @var Mage_Sales_Model_Quote_Item $item */
+        $item      = $observer->getEvent()->getItem();
+
+        if ($this->shouldMatchPrices($item->getQuote())) {
 
             if ($item->getParentItem()) {
                 return $this;
@@ -64,6 +137,7 @@ class Ebizmarts_BakerlooPrices_Model_Observer
             $currentCurrency = $this->getCurrentCurrency();
             $priceIncludesTax      = $this->priceIncludesTax();
             $applyTaxAfterDiscount = $this->applyTaxAfterDiscount();
+            $applyDiscountOnPricesInclTax = $this->applyDiscountOnPricesIncludingTax();
 
             $product = $item->getPosProductLine();
 
@@ -73,33 +147,59 @@ class Ebizmarts_BakerlooPrices_Model_Observer
 
             $product = unserialize($product);
 
-            $hiddenTax = round((float)$product['order_line']['taxOfDiscount'], 2);
+            $hiddenTax = $this->getHiddenTaxAmount($product);
             $lineTotal = round((float)$product['order_line']['subtotal'], 2);
-            $price     = round((float)$product['price'], 2);
+            $price     = round((float)$product['order_line']['unit_price'], 2);
             $discount  = round((float)$product['order_line']['total_discount'], 2);
+            $qty       = $product['qty'];
 
             //get tax rate from vat_breakdown, as POS tax_rate is unreliable
-            list($taxPercent, $taxAmount, $taxesForItem) = $this->getTaxesForItem($product['order_line']);
+            list($taxPercent, $taxesForItem) = $this->getTaxesForItem($product['order_line']);
+            $taxAmount = round((float)$product['order_line']['tax_amount'], 2);
 
             //update item tax rates in quote
             $this->setItemTaxesToQuote($item, $taxesForItem);
             $item->setPosAppliedTaxes(serialize($taxesForItem));
             $orderItem->setPosAppliedTaxes(serialize($taxesForItem));
 
-            $priceWTax = $priceIncludesTax ? $price : $price + $taxAmount;
+            $priceWTax = $priceIncludesTax ? $price : $price + ($taxAmount / $qty);
 
             if ($item->getHiddenTaxAmount()) {
-                if ($applyTaxAfterDiscount) {
+                if ($applyTaxAfterDiscount and !$applyDiscountOnPricesInclTax) {
                     $taxAmount += ($item->getHiddenTaxAmount() - $hiddenTax);
-                }
-
-                if ($product['is_custom_price']) {
-                    $lineTotal += round(($product['order_line']['grand_total'] - ($lineTotal + $product['order_line']['tax_amount'] - $discount)), 2);
                 }
             }
 
+            $orderItem->setBasePrice($price);
+            $orderItem->setBasePriceInclTax($priceWTax);
+            $orderItem->setBaseDiscountAmount($discount);
+            $orderItem->setBaseTaxAmount($taxAmount);
+            $orderItem->setBaseHiddenTaxAmount($hiddenTax);
+            $orderItem->setBaseRowTotal($lineTotal);
+            $orderItem->setBaseRowTotalInclTax($lineTotal + $taxAmount);
+
+            $item->setBaseCalculationPrice($price);
+            $item->setBaseOriginalPrice($price);
+            $item->setBasePriceInclTax($priceWTax);
+            $item->setBaseDiscountAmount($discount);
+            $item->setBaseTaxAmount($taxAmount);
+            $item->setBaseHiddenTaxAmount($hiddenTax);
+            $item->setBaseRowTotal($lineTotal);
+            $item->setBaseRowTotalInclTax($lineTotal + $taxAmount);
+
+            if ($baseCurrency->getCode() != $currentCurrency->getCode()) {
+                /** @var Ebizmarts_BakerlooPayment_Helper_Data $h */
+                $h = Mage::helper('bakerloo_payment');
+
+                $taxAmount  = $h->convertFromBaseCurrency($taxAmount, $baseCurrency, $currentCurrency);
+                $lineTotal  = $h->convertFromBaseCurrency($lineTotal, $baseCurrency, $currentCurrency);
+                $price      = $h->convertFromBaseCurrency($price, $baseCurrency, $currentCurrency);
+                $priceWTax  = $h->convertFromBaseCurrency($priceWTax, $baseCurrency, $currentCurrency);
+                $discount   = $h->convertFromBaseCurrency($discount, $baseCurrency, $currentCurrency);
+                $hiddenTax  = $h->convertFromBaseCurrency($hiddenTax, $baseCurrency, $currentCurrency);
+            }
+
             $orderItem->setPrice($price);
-            $orderItem->setOriginalPrice($price);
             $orderItem->setDiscountAmount($discount);
             $orderItem->setTaxPercent($taxPercent);
             $orderItem->setTaxAmount($taxAmount);
@@ -118,53 +218,42 @@ class Ebizmarts_BakerlooPrices_Model_Observer
             $item->setPriceInclTax($priceWTax);
             $item->setRowTotal($lineTotal);
             $item->setRowTotalInclTax($lineTotal + $taxAmount);
-
-            if ($baseCurrency->getCode() != $currentCurrency->getCode()) {
-                /** @var Ebizmarts_BakerlooPayment_Helper_Data $h */
-                $h = Mage::helper('bakerloo_payment');
-
-                $taxAmount  = $h->convertToBaseCurrency($taxAmount, $baseCurrency, $currentCurrency);
-                $lineTotal  = $h->convertToBaseCurrency($lineTotal, $baseCurrency, $currentCurrency);
-                $price      = $h->convertToBaseCurrency($price, $baseCurrency, $currentCurrency);
-                $priceWTax  = $h->convertToBaseCurrency($priceWTax, $baseCurrency, $currentCurrency);
-                $discount   = $h->convertToBaseCurrency($discount, $baseCurrency, $currentCurrency);
-                $hiddenTax  = $h->convertToBaseCurrency($hiddenTax, $baseCurrency, $currentCurrency);
-            }
-
-            $orderItem->setBasePrice($price);
-            $orderItem->setBaseOriginalPrice($price);
-            $orderItem->setBasePriceInclTax($priceWTax);
-            $orderItem->setBaseDiscountAmount($discount);
-            $orderItem->setBaseTaxAmount($taxAmount);
-            $orderItem->setBaseHiddenTaxAmount($hiddenTax);
-            $orderItem->setBaseRowTotal($lineTotal);
-            $orderItem->setBaseRowTotalInclTax($lineTotal + $taxAmount);
-
-            $item->setBaseCalculationPrice($price);
-            $item->setBaseOriginalPrice($price);
-            $item->setBasePriceInclTax($priceWTax);
-            $item->setBaseDiscountAmount($discount);
-            $item->setBaseTaxAmount($taxAmount);
-            $item->setBaseHiddenTaxAmount($hiddenTax);
-            $item->setBaseRowTotal($lineTotal);
-            $item->setBaseRowTotalInclTax($lineTotal + $taxAmount);
         }
 
         return $this;
     }
 
+    private function getHiddenTaxAmount($product) {
+        $lineTotal = round((float)$product['order_line']['subtotal'], 2);
+        $discount  = round((float)$product['order_line']['total_discount'], 2);
+        $hiddenTax = max((float)$product['order_line']['taxOfDiscount'], (float)$product['order_line']['taxOfCustomDiscount']);
+        $calculatedHiddenTax = round(($product['order_line']['grand_total'] - ($lineTotal + $product['order_line']['tax_amount'] - $discount)), 2);
+
+        if ($product['is_custom_price']) {
+            $hiddenTax = $calculatedHiddenTax;
+        }
+        elseif (isset($product['order_line']['calculatedOnline']) and $product['order_line']['calculatedOnline'] === true) {
+            $hiddenTax = $calculatedHiddenTax;
+        }
+
+        return $hiddenTax;
+    }
+
     public function priceMatchAddress(Varien_Event_Observer $observer)
     {
-        if ($this->isPosRequest() and $this->priceMatchEnabled()) {
+        /** @var Mage_Sales_Model_Order $order */
+        $order   = $observer->getEvent()->getOrder();
+
+        /** @var Mage_Sales_Model_Quote_Address $address */
+        $address = $observer->getEvent()->getAddress();
+
+        if ($this->shouldMatchPrices($address->getQuote())) {
 
             $json  = $this->getRequestJson();
 
             if (!is_array($json)) {
                 return $this;
             }
-
-            $order   = $observer->getEvent()->getOrder();
-            $address = $observer->getEvent()->getAddress();
 
             list($taxPercent, $appliedTaxes) = $this->getTaxesForQuoteAddress($json, $address);
             $address->setAppliedTaxes($appliedTaxes);
@@ -281,8 +370,7 @@ class Ebizmarts_BakerlooPrices_Model_Observer
             $taxPercent = 100 * ($taxPercent - 1);
         }
 
-        $taxAmount = round((float)$orderLine['tax_amount'] / $qty, 2);
-        return array(round($taxPercent, 4), $taxAmount, $taxBreakdown);
+        return array(round($taxPercent, 4), $taxBreakdown);
     }
 
     /**

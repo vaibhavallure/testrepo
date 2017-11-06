@@ -1,22 +1,44 @@
 <?xml version="1.0"?>
 <config>
-    <modules>
-        <Allure_Counterpoint>
-            <version>0.0.1</version>
-        </Allure_Counterpoint>
-    </modules>
-    
-    <global>
-    
-    	<blocks>
+	<modules>
+		<Allure_Counterpoint>
+			<name>Allure - Counterpoint Bridge</name>
+			<version>1.0.0</version>
+			<depends>
+				<Allure_Core />
+			</depends>
+		</Allure_Counterpoint>
+	</modules>
+
+	<global>
+
+		<helpers>
+			<allure_counterpoint>
+				<class>Allure_Counterpoint_Helper</class>
+			</allure_counterpoint>
+		</helpers>
+
+		<models>
+			<allure_counterpoint>
+				<class>Allure_Counterpoint_Model</class>
+			</allure_counterpoint>
+			<core>
+				<rewrite>
+					<store_api>Allure_Counterpoint_Model_Core_Store_Api</store_api>
+					<store_api_v2>Allure_Counterpoint_Model_Core_Store_Api_V2</store_api_v2>
+				</rewrite>
+			</core>
+		</models>
+
+		<blocks>
 			<adminhtml>
 				<rewrite>
 					<customer_grid>Allure_Counterpoint_Block_Adminhtml_Customer_Grid</customer_grid>
 				</rewrite>
 			</adminhtml>
 		</blocks>
-    
-	    <resources>
+
+		<resources>
 			<allure_counterpoint_setup>
 				<setup>
 					<module>Allure_Counterpoint</module>
@@ -25,21 +47,47 @@
 				<connection>
 					<use>default_setup</use>
 				</connection>
-			 </allure_counterpoint_setup>
-	     </resources>  
-	      	
-	     <fieldsets>
-	        <sales_convert_quote>
-	            <create_order_method>
-	                <to_order>*</to_order>
-	             </create_order_method>
-	             <counterpoint_order_id>
-	                <to_order>*</to_order>
-	             </counterpoint_order_id>
-	    	</sales_convert_quote>
-	    </fieldsets>
-        
-    </global>
-    
-    
+			</allure_counterpoint_setup>
+		</resources>
+
+		<fieldsets>
+			<sales_convert_quote>
+				<create_order_method>
+					<to_order>*</to_order>
+				</create_order_method>
+				<counterpoint_order_id>
+					<to_order>*</to_order>
+				</counterpoint_order_id>
+			</sales_convert_quote>
+		</fieldsets>
+
+		<!-- <events>
+			<customer_save_after>
+				<observers>
+					<allure_counterpoint>
+						<class>allure_counterpoint/observer</class>
+						<method>sendCustomerInfoToSugarcrm</method>
+					</allure_counterpoint>
+				</observers>
+			</customer_save_after>
+
+			<customer_address_save_after>
+				<observers>
+					<allure_counterpoint>
+						<class>allure_counterpoint/observer</class>
+						<method>sendCustomerAddressInfoToSugarcrm</method>
+					</allure_counterpoint>
+				</observers>
+			</customer_address_save_after>
+
+		</events> -->
+	</global>
+	<default>
+		<allure_counterpoint>
+			<general>
+				<stores>0</stores>
+				<debug>0</debug>
+			</general>
+		</allure_counterpoint>
+	</default>
 </config>

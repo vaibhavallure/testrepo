@@ -421,6 +421,12 @@ a#foo2_next {
 	pointer-events: none !important;
     cursor: not-allowed !important;	
 }
+.custom-disable span{
+    padding: 1px 15px;
+    display: block;
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
 #fetchpickurday{
 	width: 45%;
     float: left;    
@@ -443,4 +449,7 @@ a#foo2_next {
 }
 .pwdele_width{
 	width:335px;padding: 6px 9px;
+}
+#app_create_account{
+	margin-top: 25px;
 }

@@ -1,4 +1,5 @@
 /downloader/connect.cfg
+/downloader/cache.cfg
 /downloader/.cache
 /app/etc/local.xml
 /var
@@ -13,4 +14,5 @@ errors/local.xml
 .hg
 .hgignore
 sftp-config.json
+*.komodoproject
 .DS_Store

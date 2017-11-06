@@ -66,18 +66,35 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			$storeId=$appointment->getStoreId();
 			$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
 			$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
-			$sender = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"),
-					'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+			$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId),
+			    'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 			
 			$toSendAdmin = Mage::getStoreConfig("appointments/admin/send_admin_email",$storeId);
 			
 			$sendEmail = false;
 			$sendSms = false;
+			
 			$startDate = $appointment->getAppointmentStart();
 			$bookedDate = $appointment->getBookingTime();
 			$notification_pref = $appointment->getNotificationPref();
 			$phone = $appointment->getPhone();
 			$appstatus = $appointment->getAppStatus();
+			
+			$date=Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s');
+			$dStart = new DateTime($appointment->getLastNotified());
+			$dEnd  = new DateTime($date);
+			$dDiff = $dStart->diff($dEnd);
+			$dDiff->format('%R'); // use for point out relation: smaller/greater
+			$dDiff->days;
+			
+			if($dDiff->days <= 0)
+			   continue;
+			
+			
+			$appointment->setLastNotified($date);
+			$appointment->save();
+			
+			   
 			Mage::log(" notication type  ".$notification_pref,Zend_Log::DEBUG,'appointments',true);
 			if($notification_pref == 2){
 				$sendSms = true;
@@ -85,13 +102,15 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			}else{
 				$sendEmail = true;
 			}
-			
+			$model = $appointment;
+			$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+			$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
 			if($sendEmail){
-				$model = $appointment;
+				
 				/*Email Code*/
 				if($toSend){
 					$mailSubject="Appointment booking Reminder";
-					
+					$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
 					$email = $model->getEmail();
 					$name = $model->getFirstname()." ".$model->getLastname();
 					$vars = array(
@@ -102,8 +121,15 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 							'no_of_pier' => $model->getPiercingQty(),
 							'piercing_loc' => $model->getPiercingLoc(),
 							'special_notes' => $model->getSpecialNotes(),
-							'apt_starttime'  => $model->getAppointmentStart(),
-							'apt_endtime'    => $model->getAppointmentEnd());
+							'apt_starttime'  => $appointmentStart,
+							'apt_endtime'    => $appointmentEnd,
+							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+							'apt_modify_link'=> $apt_modify_link);
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
 					->sendTransactional($templateId,$sender,$email,$name,$vars);
@@ -116,7 +142,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 					$templateId = Mage::getStoreConfig("appointments/admin/admin_template",$storeId);
 					$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
 					$mailSubject="Appointment booking Reminder";
-					$sender         = array('name'=>Mage::getStoreConfig("trans_email/ident_general/name"), 'email'=> Mage::getStoreConfig("trans_email/ident_general/email"));
+					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 					$email = $adminEmail;
 					$name = "Admin";
 					$vars = array(
@@ -127,8 +153,14 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 							'no_of_pier' => $model->getPiercingQty(),
 							'piercing_loc' => $model->getPiercingLoc(),
 							'special_notes' => $model->getSpecialNotes(),
-							'apt_starttime'  => $model->getAppointmentStart(),
-							'apt_endtime'    => $model->getAppointmentEnd());
+							'apt_starttime'  => $appointmentStart,
+							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+							'apt_endtime'    => $appointmentEnd);
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
 					->sendTransactional($templateId,$sender,$email,$name,$vars);
@@ -145,12 +177,20 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 				$url = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_BASEURL);
 				$smsfrom = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_FROM);
 				$smsText = Mage::getStoreConfig("appointments/api/smstext_reminder",$storeId);
-				$text = $smsText." ".$model->getAppointmentStart();
+				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+				$date = date("F j, Y ", strtotime($model->getAppointmentStart()));
+				$time=date('h:i A', strtotime($model->getAppointmentStart()));
+				/* $booking_link= Mage::getBaseUrl('web').'appointments/';
+				$booking_link=Mage::helper('appointments')->getShortUrl($booking_link); */
+				$smsText=str_replace("(time)",$time,$smsText);
+				$smsText=str_replace("(date)",$date,$smsText);
+		/* 		$smsText=str_replace("(book_link)",$booking_link,$smsText); */
+				
 				if($phone){//if NotificationPref set to text sms i.e. 2
 					$api = new SoapClient($url,array( 'cache_wsdl' => WSDL_CACHE_NONE,'soap_version' => SOAP_1_1));
 					$session = $api->apiValidateLogin($username,$password);
 					preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
-					$status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $text, 'text', '0', '0');
+					$status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $smsText, 'text', '0', '0');
 					preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
 				
 					Mage::log("******************************",Zend_Log::DEBUG,'appointments_sms_log',true);

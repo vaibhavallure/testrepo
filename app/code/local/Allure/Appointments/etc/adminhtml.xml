@@ -17,16 +17,31 @@
 								<sort_order>2</sort_order>
 								<action>admin_appointments/adminhtml_appointments/viewCalender</action>
 							</appointments_calender>
+							<piercers_calender module="appointments">
+								<title>View Piercers on Calender</title>
+								<sort_order>2</sort_order>
+								<action>admin_appointments/adminhtml_appointmentpiercers/viewCalender</action>
+							</piercers_calender>
 							<piercers module="appointments">
 								<title>Manage Piercers</title>
 								<sort_order>3</sort_order>
-								<action>admin_appointments/adminhtml_appointmentpiercers</action>
+								<action>admin_appointments/adminhtml_appointmentpiercers/index</action>
 							</piercers>
 							<timing module="appointments">
 								<title>Manage Piercing Timing</title>
 								<sort_order>4</sort_order>
 								<action>admin_appointments/adminhtml_piercingtiming</action>
 							</timing>
+							<print module="appointments">
+								<title>Print Appointments</title>
+								<sort_order>5</sort_order>
+								<action>admin_appointments/adminhtml_appointments/print</action>
+							</print>
+							<settings module="appointments">
+								<title>Settings</title>
+								<sort_order>6</sort_order>
+								<action>adminhtml/system_config/edit/section/appointments</action>
+							</settings>
 						</children>
 					</appointments>
 			</children>
@@ -56,16 +71,26 @@
 									<sort_order>2</sort_order>
 									<action>admin_appointments/adminhtml_appointments/viewCalender</action>
 								</appointments_calender>
+								<piercers_calender module="appointments">
+									<title>View Piercers on Calender</title>
+									<sort_order>3</sort_order>
+									<action>admin_appointments/adminhtml_appointmentpiercers/viewCalender</action>
+								</piercers_calender>
 								<piercers module="appointments">
 									<title>Manage Piercers</title>
-									<sort_order>3</sort_order>
+									<sort_order>4</sort_order>
 									<action>admin_appointments/adminhtml_appointmentpiercers</action>
 								</piercers>
 								<timing module="appointments">
 									<title>Manage Piercing Timing</title>
-									<sort_order>4</sort_order>
+									<sort_order>5</sort_order>
 									<action>admin_appointments/adminhtml_piercingtiming</action>
 								</timing>
+							   <print module="appointments">
+										<title>Print Appointments</title>
+										<sort_order>5</sort_order>
+										<action>admin_appointments/adminhtml_appointments/print</action>
+							   </print>
 							</children>
 						</appointments>
 					</children>

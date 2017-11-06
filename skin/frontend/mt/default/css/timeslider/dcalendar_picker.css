@@ -37,6 +37,12 @@
 .calendar span {
 	padding: 1px 15px;
 	display: block;
+	font-weight: bold;
+	font-size: 16px;
+}
+.calendar .disabled span {
+    font-size: 12px;
+    font-weight: normal;
 }
 .calendar .month {
 	padding: 15px;

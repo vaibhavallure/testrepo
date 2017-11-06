@@ -4,9 +4,6 @@
     <Allure_Managestock>
       <active>false</active>
       <codePool>local</codePool>
-      <depends>
-      	<Magestore_Webpos/>
-      </depends>
     </Allure_Managestock>
   </modules>
 </config>

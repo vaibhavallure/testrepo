@@ -334,17 +334,51 @@ $mode  = $this->getMode();
                                                     </ul>                                                   
                                                     <?php endif;?>
                                                 </div>
+                                                
+                                               <?php //allure code start?>
+                                               <?php 
+                                                    $customOptions = $this->getCustomOptions($productId);
+                                               ?>
+                                               <?php if(count($customOptions)):?> 
+                                               <?php foreach ($customOptions as $_option):?>
+                                               <?php if(strtolower($_option->getTitle()) == "post length"):?>
+                                               <dl id="mt-post-length-<?php echo $productId;?>" class="last">
+													<dt style="font-size: 13px;font-weight: normal;width: 48%;float: left;padding-left: 67px;">
+														<label style="font-weight: normal;" class="required"><em>*</em><?php echo $_option->getTitle()?></label>
+													</dt>
+                                                    <dd class="last" style="margin-bottom: 10px;width: 48%;float: left;padding-right: 60px;">
+                                                        <div class="input-box">
+                                                            <select style="width: 90px;color:#000;font-size: 10px;" 
+                                                            	name="options[<?php echo $_option->getId()?>]" data-option-id="<?php echo $_option->getId()?>" id="custom-option-select-<?php echo $productId?>" 
+                                                            	class=" required-entry product-custom-option" >
+                                                            	<?php foreach($_option->getValues() as $_value):?>
+                                                            	<option value="<?php echo $_value['option_type_id']?>"><?php echo $_value['title']?></option>
+                                                            	<?php endforeach;?>
+                                                            </select>
+                                                        </div>
+                                                    </dd>
+                                              </dl>
+                                              <?php endif;?>
+                                              <?php endforeach;?>  
+                                              <?php endif;?>
+                                              <?php //allure code end?>
+                                              
+                                              
+                                                
                                                 <?php if ($this->helper('wishlist')->isAllow()) : ?>
-                                                    <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>" class="button link-wishlist glyphicon glyphicon-star">
+                                                    <a onclick="addProductToWishlist(this)" data-product="<?php echo $productId?>" data-redirect-url="<?php echo $this->getUrl("myaccount")."#wishlist";?>" data-href="<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>" class="button link-wishlist glyphicon glyphicon-star">
                                                         <span><?php echo $this->__('Add to Wishlist') ?></span>
                                                     </a>
                                                 <?php endif; ?>
-                                                <a class="button btn-directcart glyphicon glyphicon-shopping-cart"
+                                                
+                                                <?php //hiding becuase of paret child?>
+                                               
+                                              <!--   <a class="button btn-directcart glyphicon glyphicon-shopping-cart"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $_product->getProductUrl(); ?>"
                                                    data-id='<?php echo $_product->getId() ?>'
                                                    data-url="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product)?>"
-                                                   title="<?php echo $this->__('Add to Cart') ?>"><span><?php echo $this->__('Add to Cart') ?></span></a>
+                                                   title="<?php echo $this->__('Add to Cart') ?>"><span><?php echo $this->__('Add to Cart') ?></span></a>-->
                                                 <!-- <a class="fancybox fancybox.iframe button btn-quickview"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $quickViewUrl; ?><?php if($firstOption) echo "?optionId=$firstOption";?>"
@@ -478,4 +512,57 @@ $mode  = $this->getMode();
             }
         }
     });
+
+
+    //allure code start
+    function addProductToWishlist(evt){
+    	var data = {};
+    	var supArr = {};
+    	var custOpArr = {};
+        var url 					= jQuery(evt).attr("data-href");
+        url = url.replace('wishlist/index', 'ajaxwishlist/index');
+        //.replace('https://', '//');
+        var redirectUrl = jQuery(evt).attr("data-redirect-url");
+        var metal   				= 209;
+        var productId 				= jQuery(evt).attr("data-product");
+        var superAttr 				= jQuery("#super-attribute-"+productId);
+        var customOpSelect			= jQuery("#custom-option-select-"+productId);
+
+        if(superAttr.length){
+        	 var superAttrVal 			= jQuery("#color-icons-"+productId+" .active").attr("value");
+        	 supArr[metal] 			    = superAttrVal;
+        	 data['super_attribute'] 	= supArr;
+        }
+
+        if(customOpSelect.length){
+        	var custName				= customOpSelect.attr("name");
+            var custOptId				= customOpSelect.attr("data-option-id");
+            var custVal 				= customOpSelect.val();
+            custOpArr[custOptId] 	    = custVal;
+            data['optionid'] 			= custVal;
+            data['options'] 			= custOpArr;
+        }
+        
+        data['qty'] = 1;
+
+        jQuery.ajax({
+             url: url,
+             dataType: 'json',
+             type: 'post',
+             data: data,
+             success: function (data) {               
+                 if (data.status == 'ERROR') {
+                     if(data.message == 'login'){
+                         window.location.href = '<?php echo Mage::helper('customer')->getLoginUrl(); ?>';
+                     } else {
+                         alert(data.message);
+                     }
+                 } else {
+                	 alert(data.message);
+                	 window.location.href = redirectUrl;
+                 }
+             }
+         });
+    }
+    //allure code end
 </script>

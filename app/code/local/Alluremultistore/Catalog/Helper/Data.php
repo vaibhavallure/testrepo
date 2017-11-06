@@ -70,5 +70,18 @@ class Alluremultistore_Catalog_Helper_Data extends Mage_Core_Helper_Abstract
 		return Mage::helper('alluremultistore_catalog/catalog_product');
 	}
 	
+	/**
+	 * check product has custom option present or not
+	 * for parent child
+	 */
+	public function isCustomOptionsAvailable($productId){
+	    $product   = Mage::getModel("catalog/product")->load($productId);
+	    $isOptions = false;
+	    if (count($product->getOptions()) > 0){
+	        $isOptions = true;
+	    }
+	    return $isOptions;
+	}
+	
 	
 }

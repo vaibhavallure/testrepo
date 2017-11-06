@@ -7,27 +7,19 @@ ini_set('xdebug.var_display_max_data', 1024);
 
 require_once('../app/Mage.php');
 umask(0);
-Mage::app();
+Mage::app('london');
 
-$client = new SoapClient(Mage::getBaseUrl('link', true).'api/v2_soap?wsdl=1', array( 'connection_timeout' => 120));
+$stock = Mage::getSingleton('cataloginventory/stock');
+$stock_item = Mage::getSingleton('cataloginventory/stock_item');
+var_dump($stock->getId());
+var_dump($stock_item->getStockId());
+var_dump(get_class($stock));
+var_dump(get_class($stock_item));
 
-// If somestuff requires api authentification,
-// then get a session token
-$session = $client->login(array('username' => 'sureshinde','apiKey' => 'sunevenus'));
+//$api = Mage::getSingleton('core/store_api_v2');
+
+//$storeList = $api->items();
+
+//var_dump($storeList);die;
 
 //var_dump($session);
-
-//var_dump($client->__getFunctions());
-
-$orderIncrementId = '2017003752-B';
-
-if (isset($_GET['orderIncrementId'])) {
-	$orderIncrementId = $_GET['orderIncrementId'];
-}
-
-$orderInfo = $client->salesOrderInfo(array('sessionId'=> $session->result, 'orderIncrementId'=>$orderIncrementId));
-
-var_dump($orderInfo);
-
-// If you don't need the session anymore
-$client->endSession(array('sessionId' => $session->result));

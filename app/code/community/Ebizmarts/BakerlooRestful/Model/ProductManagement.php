@@ -48,16 +48,20 @@ class Ebizmarts_BakerlooRestful_Model_ProductManagement {
             if ($storeId) {
                 $this->_collection->addStoreFilter($storeId);
             }
+            
+            // START Allure Fixes - Add Stock Filter
+            $stockId = Mage::getModel('cataloginventory/stock_item')->getStockId();
 
             if ($withStock) {
                 $this->_collection
                     ->getSelect()
                     ->joinLeft(
                         array('cisi' => $this->_collection->getTable('cataloginventory/stock_item')),
-                        'cisi.stock_id = 1 AND cisi.product_id = e.entity_id',
+                        'cisi.stock_id = '.$stockId.' AND cisi.product_id = e.entity_id',
                         array()
                     );
             }
+            // END Allure Fixes
         }
 
         return $this->_collection;

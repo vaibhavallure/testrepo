@@ -19,7 +19,7 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		->loadByCode($entityTypeId, 'description')
 		->getAttributeId(); */
 		
-		$category=Mage::getModel('catalog/category')->load(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
+	/*	$category=Mage::getModel('catalog/category')->load(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
 		$collection = Mage::getResourceModel('reports/product_lowstock_collection')
 		->addAttributeToSelect('*')
 		->addAttributeToSelect('description')
@@ -30,27 +30,21 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		->useNotifyStockQtyFilter($storeId)
 		->setOrder('sku', Varien_Data_Collection::SORT_ORDER_ASC);
 		$collection->addAttributeToFilter('stock_id', array('eq' => $stockId));
-		$collection->addAttributeToFilter('type_id', 'simple');
+		$collection->addAttributeToFilter('type_id', 'simple');*/
 		//$collection->addCategoryFilter($category);
 		
+		$collection=Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
+			$collection->addAttributeToSelect('*')->setStoreId($storeId);
+
 		if($_GET['search']!=null){
-			//$searchText=iconv("UTF-8", "ISO-8859-1//TRANSLIT", $_GET['search']);
-			//$searchString = $_GET['search'];
-			$searchString = str_replace("\\", "\\\\",$_GET['search']);
-			if(strtolower($searchString[0]) == "s"|| strtolower($searchString[0]) == "c"){
+			$searchString = $_GET['search'];
+			$searchString = str_replace("\\", "\\\\",$searchString);
 			$collection->addAttributeToFilter(
 					array(
-							array('attribute' => 'name', 'like' => $searchText.'%'),
-					   )
-					);
-		}else{
-			$collection->addAttributeToFilter(
-					array(
-							array('attribute' => 'sku', 'like' => $searchText.'%'),
-							array('attribute' => 'name', 'like' => $searchText.'%'),
+							array('attribute' => 'sku', 'like' =>'%'.$searchString.'%'),
+							array('attribute' => 'name', 'like' => '%'.$searchString.'%'),
 					)
-					);
-		}
+			);
 		}
 		/* $collection->addAttributeToFilter(
 				array(
@@ -70,7 +64,7 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		if( $storeId ) {
 			$collection->addStoreFilter($storeId);
 		}
-	    $collection->getSelect()->where('lowstock_inventory_item.po_sent=0');
+	  //  $collection->getSelect()->where('lowstock_inventory_item.po_sent=0');
 	    $collection->getSelect()->group('e.entity_id');
 		$collection->addAttributeToFilter('sku', array('nlike' => 'c%','nlike' => 'c%'));
 		$collection->addAttributeToFilter('sku', array('nlike' => 's%','nlike' => 's%'));

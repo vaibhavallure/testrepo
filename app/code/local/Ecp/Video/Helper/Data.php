@@ -34,8 +34,10 @@
 class Ecp_Video_Helper_Data extends Mage_Core_Helper_Abstract
 {
     public function getDefaultVideo(){
-        return Mage::getModel('ecp_video/video')->getCollection()
-                ->addFieldToFilter('status',1)
-                ->getFirstItem();
+        $collection=Mage::getModel('ecp_video/video')->getCollection()
+        ->addFieldToFilter('status',1);
+        $collection->getSelect()->order('position', 'ASC');;
+       return $collection->getFirstItem();
+        
     }
 }

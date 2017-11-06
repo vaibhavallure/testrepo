@@ -70,13 +70,13 @@ if ($session->isLoggedIn()) {
 					  	<div class="fieldDiv">
 					  	   	<label>First Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php //echo $firstName?>" />-->
-					    	<input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
+					    	<input class="ele_width required-entry" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
 					    </div>
 						
 						<div class="fieldDiv">
 					    	<label>Last Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php //echo $lastName?>" />-->
-					    	<input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
+					    	<input class="ele_width required-entry" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
 					    </div>
 					
 					  	<div class="fieldDiv">
@@ -84,9 +84,8 @@ if ($session->isLoggedIn()) {
 					    	<!-- <input class="ele_width required-entry validate-email" type="text" name="email" value="<?php //echo $email?>" />-->
 					    	<input class="ele_width required-entry validate-email" type="text" name="email" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" />
 					    </div>
-						<div class="">
+						<div class="fieldDiv appt_ph">
 					    	<label>Phone Number*:</label><br/>
-					    	<!-- <input class="ele_width required-entry validate-number" type="text" name="phone" value="<?php //echo $telephone?>" />-->
 					    	<input class="ele_width required-entry validate-phone-len" type="text" id="phone" name="phone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>" />
 					    </div>
 					
@@ -96,7 +95,7 @@ if ($session->isLoggedIn()) {
 						    <input class="ele_width" type="text" name="street" value="<?php if($f_street):echo $f_street;else: echo $street['0'];endif;?>">
 						</div>	
 								
-						<div class="fieldDiv">
+						<div class="fieldDiv appt_country">
 					    	<?php 
 					    	$countryList = Mage::getResourceModel('directory/country_collection')
 							        ->loadData()
@@ -149,18 +148,21 @@ if ($session->isLoggedIn()) {
 					    </div>
 		  	</div>
 		  	<div class="createaccDiv" >
+		  			<div id="piercer_schedule" class="fieldDiv">
+		  			
+		  			</div>
 			  	  	<div class="fieldDiv splnotesDiv">
 				  	   	<label>Special Notes:</label>			    		
-				    	<textarea class="splnotesTxtarea" name="special_notes" rows="4" ><?php if($f_special_notes):
+				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced or desired piercer for appointment" ?>" rows="4" ><?php if($f_special_notes):
 				    	echo $f_special_notes;
 				    	endif;?></textarea>		    	
 				    </div>
 					<div class="fieldDiv">
-				    	<label>Noitify Me:</label><br/>
+				    	<label>Notify Me:</label><br/>
 				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
 				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message</p></div>
 				    </div>
-				    <div class="fieldDiv">
+				    <div class="fieldDiv " id="app_create_account">
 				    	<?php if(!$session->isLoggedIn()):?>
 						 <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;">Create Account:
 						 <div class="pwdBlock">

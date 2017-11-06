@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_Pdf>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Allure_Pdf>
+  </modules>
+</config>

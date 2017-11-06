@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Gene_ApplePay>
+            <active>false</active>
+            <codePool>community</codePool>
+            <depends>
+                <Gene_Braintree/>
+            </depends>
+        </Gene_ApplePay>
+    </modules>
+</config>
+
+

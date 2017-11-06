@@ -32,6 +32,18 @@ body {
 	  height: 100%;
 	  color: #000;
 }
+
+body.modal-popup-body { 
+    position: fixed !important; 
+} 
+
+button.apple-pay-button-with-text.apple-pay-button-black-with-text {
+  min-height: 30px !important;
+  height: 20px !important;
+  margin-top: -2px !important;
+  border-radius: 0 !important;
+}
+
 .owl-carousel,#zoom-btn {z-index:0 !important}
 p {  word-wrap: break-word;}
 #zoom-btn {
@@ -76,6 +88,11 @@ h1 {font-size: 28px;}
   text-align: center;
   position: absolute;
   width: 100%;
+}
+
+.pager{
+  margin-bottom: 0px;
+  margin-top: 25px;
 }
 
 .product-image-gallery img.gallery-image {
@@ -348,7 +365,7 @@ color: #666;
   border: 1px solid #ddd;
   padding: 15px;
   position: relative;
-  overflow: hidden;
+  overflow: inherit;
   clear: both;
 }
 #sns_tab_products .tab-content>.tab-pane {display:block}
@@ -1304,7 +1321,10 @@ ul#narrow-by-list {
 .selected-filters {
 }
 
-i.glyphicon.glyphicon-remove {float:right;}
+i.glyphicon.glyphicon-remove {
+  float:right;
+  top: 6px;
+}
 
 #block-filters {
   font-size: 12px;
@@ -2116,3 +2136,321 @@ iframe[name=google_conversion_frame] {display:none}
 *		Currency Switcher End
 *	======================================
 */
+input.special-inst-product {
+    width: 100%;
+}
+
+
+/* popop css added by Ajay */
+
+.popupLoginModel {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top:-20px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	background: rgba(0,0,0,0.8);
+}
+.popupLoginModel:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.popupLoginModel > div {
+	width: 320px;
+    position: relative;
+    margin: 10% auto;
+    /* padding: 5px 20px 13px 20px; */
+    padding: 20px;
+    /* border-radius: 10px; */
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px
+}
+.popupLoginModel #login-msg{
+	color:#f00;
+}
+
+.close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover { background: #00d9ff; }
+
+#signin-btn{
+	float:right;
+}
+
+
+
+
+.popupRegisterModel {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: -20px;;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	background: rgba(0,0,0,0.8);
+}
+.popupRegisterModel:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.popupRegisterModel > div {
+	width: 320px;
+    position: relative;
+    margin: 10% auto;
+    /* padding: 5px 20px 13px 20px; */
+    padding: 20px;
+    /* border-radius: 10px; */
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px
+}
+.popupRegisterModel #login-msg{
+	color:#f00;
+}
+
+.close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover { background: #ecc388;
+color: #fff;
+ }
+
+
+
+.pop-title{
+border-bottom: 1px solid #999;
+margin-bottom: 10px;
+}
+.pop-title h2{
+   margin: 0 0 10px
+}
+label.popup-login-lbl{
+width: 100%;
+   float: left;
+   font-size: 14px;
+}
+.popupLoginModel input{
+   width: 96%;
+   margin: 2px 0 10px;
+   border-top: 1px solid #b2b2b2;
+   border-bottom: 0px;
+   border-left: 0px;
+   border-right: 0;
+   padding: 5px;
+   border-radius: 0;
+}
+.popupRegisterModel input{
+   width: 96%;
+   margin: 2px 0 10px;
+   border-top: 1px solid #b2b2b2;
+   border-bottom: 0px;
+   border-left: 0px;
+   border-right: 0;
+   padding: 5px;
+}
+.pop-link a{
+   outline: 0;
+   text-decoration: underline;
+   color: #000;
+cursor: pointer;
+   font-size: 13px;
+   letter-spacing: 1px;
+}
+.pop-link p{
+	clear: both;
+	letter-spacing: 0.7px;
+}
+
+.pop-link a:hover{
+   outline: 0;
+   text-decoration: none;
+   color: #000;
+}
+.popupLoginModel #signin-btn-popup {
+   /* float: right;
+   margin: 20px 0 10px; */
+   color: #fff;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+   background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
+}
+#popup_is_subscribed{
+	width: 20px;
+    height: 20px;
+}
+#popup_is_subscribed{
+	left: 0;
+	margin: 3px 20px;
+}
+.popupcheckbox_lbl{
+	padding: 3px 0 0 25px  !important;
+}
+.popuporlbl{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#signup-btn-popup{
+	 background: transparent url(../images/bkg_black_btn.png) repeat-x;
+    height: 26px;
+    color: #fff;
+    border: none;
+    margin-top: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: normal;
+    letter-spacing: 2px;
+}
+.popup-benifits  {
+       list-style-type: disc;
+    margin-left: 25px;
+}
+.pop-link .new_account{
+	text-align: center;
+    margin-top: 10px;
+}
+.popupRegisterModel .pop-link{
+	display: inline-flex;
+    margin-top: 16px;
+}
+#reg_msg_div{
+	text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#reg_msg_div #register-msg{
+	margin: auto;
+	color: #790000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+}
+#login_msg_div{
+	text-align: left;
+    margin-bottom: 5px;
+    display: none;
+}
+#login_msg_div #login-msg{
+	margin: auto;
+	color: #790000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.63636363636;
+}
+.popupResetPasswordModel input{
+  width: 96%;
+  margin: 2px 0 10px;
+  border-top: 1px solid #b2b2b2;
+  border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0;
+  padding: 5px;
+  border-radius: 0;
+}
+.popupResetPasswordModel .pop-link{
+  margin-bottom: 30px;
+  clear: both;
+}
+
+.popupResetPasswordModel {
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  top:-20px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 99999;
+  opacity:0;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+  background: rgba(0,0,0,0.8);
+}
+.popupResetPasswordModel:target {
+  opacity:1;
+  pointer-events: auto;
+}
+
+.popupResetPasswordModel > div {
+  width: 320px;
+  position: relative;
+  margin: 10% auto;
+  /* padding: 5px 20px 13px 20px; */
+  padding: 20px;
+  /* border-radius: 10px; */
+  background: #fff;
+  background: -moz-linear-gradient(#fff, #999);
+  background: -webkit-linear-gradient(#fff, #999);
+  background: -o-linear-gradient(#fff, #999);
+  background: #dcdcdc;
+  box-shadow: 0px 0px 6px
+}
+.popupResetPasswordModel #reset_pass_btn{
+  float: right;
+  margin-top: 10px;
+}
+.popupResetPasswordModel .submit-login{
+  padding-bottom: 10px;
+}

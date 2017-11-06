@@ -2,6 +2,31 @@
 
 class Ebizmarts_BakerlooRestful_Adminhtml_BakerlooordersController extends Mage_Adminhtml_Controller_Action
 {
+    private $order;
+    private $orderManager;
+
+    public function __construct(
+        Zend_Controller_Request_Abstract $request,
+        Zend_Controller_Response_Abstract $response,
+        array $invokeArgs = array(),
+        $orderModel = null,
+        $orderManager = null
+    )
+    {
+        parent::__construct($request, $response, $invokeArgs);
+
+        if (is_null($orderModel)) {
+            $this->order = Mage::getModel('bakerloo_restful/order');
+        } else {
+            $this->order = $orderModel;
+        }
+
+        if (is_null($orderManager)) {
+            $this->orderManager = Mage::getModel('bakerloo_restful/orderManagement');
+        } else {
+            $this->orderManager = $orderManager;
+        }
+    }
 
     public function indexAction()
     {
@@ -131,129 +156,97 @@ class Ebizmarts_BakerlooRestful_Adminhtml_BakerlooordersController extends Mage_
         $this->_redirect('adminhtml/bakerlooorders/');
     }
 
-    public function massPlaceAction()
-    {
-        $helper     = Mage::helper('bakerloo_restful');
-        $session    = Mage::getSingleton('adminhtml/session');
-        $ids        = $this->getRequest()->getParam('order');
-        $httpHelper = Mage::helper('bakerloo_restful/http');
+    public function massPlaceAction() {
+        $helper = Mage::helper('bakerloo_restful');
+        $ids = $this->getRequest()->getParam('order');
+
         if (!is_array($ids)) {
-            $session->addError($helper->__('Please select at least one order.'));
+            $this->_getSession()->addError($helper->__('Please select at least one order.'));
         } else {
-            try {
-                foreach ($ids as $orderId) {
-                    $order = Mage::getModel('bakerloo_restful/order')->load($orderId);
-                    if ($order->getOrderId()) {
-                        $session->addError($helper->__('Order #%s is already processed.', $orderId));
-                    } else {
-                        $response = $httpHelper->POST($order->getRequestUrl(), $order->getJsonPayload(), $order->getHttpHeaders());
-                        $objResponse = json_decode($response, true);
-
-                        if (!is_array($objResponse)) {
-                            $session->addError($helper->__('Could not process order #%s, please try again. Response: %s', $orderId, $response));
-                            $order->setFailMessage($response)->save();
-                        } else {
-                            if (isset($objResponse['error'])) {
-                                $message = $objResponse['error->message'];
-                                $session->addError($helper->__('Could not process order #%s, please try again. Error: %s', $orderId, $message));
-                                $order->setFailMessage($message)->save();
-                            } else {
-                                if ((isset($objResponse['order_status']) && $objResponse['order_status'] == "notsaved")
-                                    or !isset($objResponse['order_number'])) {
-                                    $errorMessage = '';
-
-                                    if (isset($objResponse['error_message'])) {
-                                        $errorMessage = $objResponse['error_message'];
-                                    }
-
-                                    $session->addError($helper->__('Could not process order #%s, please try again. Error: %s', $orderId, $errorMessage));
-                                    $order->setFailMessage($errorMessage)->save();
-                                } else {
-                                    //Set CreatedAt to real CreatedAt instead of now since using now is not correct.
-                                    $order->setRealCreatedAtToParent();
-
-                                    $session->addSuccess($helper->__('Order #%s placed OK.', $orderId));
-                                }
-                            }
-                        }
-                    }
+            foreach ($ids as $id) {
+                try {
+                    $order = $this->placeOrder($id);
+                    $this->_getSession()->addSuccess($helper->__('Order #%s placed OK.', $id));
+                } catch (Exception $e) {
+                    $this->_getSession()->addError($helper->__('Error submitting order #%s: %s', $id, $e->getMessage()));
                 }
-            } catch (Mage_Core_Exception $e) {
-                $session->addError($e->getMessage());
-            } catch (Exception $e) {
-                $session->addException($e, $helper->__('An error occurred %s.', $e->getMessage()));
             }
         }
+
         $this->_redirect('*/*/');
     }
 
-    /**
-     * Try to POST order again.
-     */
-    public function placeAction()
-    {
+    public function placeAction() {
         $orderId = (int)$this->getRequest()->getParam('id');
+        $postData = $this->getRequest()->getPost('order', array());
 
         if ($orderId) {
-            $postData = $this->getRequest()->getPost('order', array());
-
-            $order = Mage::getModel('bakerloo_restful/order')
-                       ->load($orderId);
-
-            if (!empty($postData)) {
-                $order->addData($postData)->save();
-            }
-
-            if (!$order->getId()) {
-                $this->_getSession()->addError(Mage::helper('bakerloo_restful')->__('The order does not exist.'));
-            } else {
-                try {
-                    //Throw error if Magento order already exists
-                    if ($order->getOrderId()) {
-                        Mage::throwException(Mage::helper('bakerloo_restful')->__('This order is already processed.'));
-                    }
-
-                    //POST
-                    $response = Mage::helper('bakerloo_restful/http')->POST($order->getRequestUrl(), $order->getJsonPayload(), $order->getHttpHeaders());
-
-                    $objResponse = json_decode($response, true);
-
-                    if (!is_array($objResponse)) {
-                        $this->_getSession()->addError(Mage::helper('bakerloo_restful')->__('Could not process order, please try again. Response: %s', $response));
-
-                        $order->setFailMessage($response)->save();
-                    } else {
-                        if (isset($objResponse['error'])) {
-                            $message = $objResponse['error']['message'];
-                            $this->_getSession()->addError(Mage::helper('bakerloo_restful')->__('Could not process order, please try again. Error: %s', $message));
-                            $order->setFailMessage($message)->save();
-                        } else {
-                            if ((isset($objResponse['order_status']) && $objResponse['order_status'] == "notsaved")
-                                or !isset($objResponse['order_number'])) {
-                                if (isset($objResponse['error_message'])) {
-                                    $response = $objResponse['error_message'];
-                                    $order->setFailMessage($response)->save();
-                                }
-
-                                $this->_getSession()->addError(Mage::helper('bakerloo_restful')->__('Could not save order, please try again. Error message: "%s"', $response));
-                            } else {
-                                //Set CreatedAt to real CreatedAt instead of now since using now is not correct.
-                                $order->setRealCreatedAtToParent();
-
-                                $this->_getSession()->addSuccess(Mage::helper('bakerloo_restful')->__('Order created correctly #%s', $objResponse['order_number']));
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    $this->_getSession()->addError($e->getMessage());
-                }
-
-                $this->_redirect('adminhtml/bakerlooorders/edit', array('id' => $orderId));
-                return;
+            try {
+                $order = $this->placeOrder($orderId, $postData);
+                $this->_getSession()->addSuccess(Mage::helper('bakerloo_restful')->__('Order created correctly #%s', $order->getOrderIncrementId()));
+            } catch (Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
             }
         }
 
-        $this->_redirect('adminhtml/bakerlooorders/');
+        if ($orderId) {
+            $this->_redirect('adminhtml/bakerlooorders/edit', array('id' => $orderId));
+        } else {
+            $this->_redirect('adminhtml/bakerlooorders/');
+        }
+    }
+
+    /**
+     * @param $orderId
+     * @param $orderData
+     * @return $order
+     */
+    public function placeOrder($orderId, $orderData = array()) {
+        $helper = Mage::helper('bakerloo_restful');
+        $order = $this->order->load($orderId);
+
+        if (!empty($orderData)) {
+            $order->addData($orderData)->save();
+        }
+
+        // Check POS order exists
+        if (!$order->getId()) {
+            Mage::throwException($helper->__('The order does not exist.'));
+        }
+
+        // Check order hasn't been processed
+        if ($order->getOrderId()) {
+            Mage::throwException($helper->__('This order is already processed.'));
+        }
+
+        // Place order
+        $objResponse = $this->orderManager->place($order->getId());
+
+        if (!is_array($objResponse)) {
+            $order->setFailMessage($objResponse)->save();
+            Mage::throwException($helper->__('Could not process order, please try again. Response: %s', $objResponse));
+        }
+
+        if (isset($objResponse['error'])) {
+            $message = $objResponse['error']['message'];
+            $order->setFailMessage($message)->save();
+
+            Mage::throwException($helper->__('Could not process order, please try again. Error: %s', $message));
+        }
+
+        if ((isset($objResponse['order_status']) && $objResponse['order_status'] == "notsaved") or !isset($objResponse['order_number'])) {
+            $message = '';
+
+            if (isset($objResponse['error_message'])) {
+                $message = $objResponse['error_message'];
+                $order->setFailMessage($message)->save();
+            }
+
+            Mage::throwException($helper->__('Could not save order, please try again. Error message: "%s"', $message));
+        }
+
+        $order->setRealCreatedAtToParent();
+        return $order;
     }
 
     public function downloadreceiptAction()

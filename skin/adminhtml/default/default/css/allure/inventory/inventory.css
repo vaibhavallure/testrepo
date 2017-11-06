@@ -265,6 +265,11 @@ button.create_po_btn {
     margin-top: 10px;
     margin-right: 10px;
 }
+button.reset_po_btn {
+   
+    margin-top: 10px;
+     float: right;
+}
 button#create_po_btn {
 	 float: right;
 }
@@ -326,3 +331,16 @@ div.ajax-loading{
 input,textarea{
 	margin: 5px;
 }
+.adminhtml-inventory-purchase-addcustomitem .wrapper {
+     min-width: auto;
+ }
+ .adminhtml-inventory-purchase-addcustomitem .wrapper .middle{
+     min-height: auto;
+ }
+ .order_items_in_grid{
+ 	max-height: auto !important;
+ }
+a#removeItemPO:hover{
+   cursor:pointer;
+ }
+ 

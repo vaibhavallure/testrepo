@@ -8,11 +8,19 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Images extends 
         $order_item_collection = $order->getAllVisibleItems();
         $helper = Mage::helper('catalog/image');
         $count = 0;
+       // var_dump($order_item_collection);
         $cell = "<div class='iwd_om_prod_images hide'>";
         foreach($order_item_collection as $item){
+          
             $product_id = $item->getProductId();
+            $sku = $item->getSku();
+          
             try{
-                $_product = Mage::getModel('catalog/product')->load($product_id);
+                if($product_id)
+                    $_product = Mage::getModel('catalog/product')->load($product_id);  
+                else {
+                    $_product = Mage::getModel('catalog/product');
+                    $_product = Mage::getModel('catalog/product')->load($_product->getIdBySku($sku)); }
                 $url_min = $helper->init($_product, 'small_image')->resize(50);
                 $url_max = $helper->init($_product, 'image')->resize(200);
                 if($count%3 == 0){$class = ($count < 3) ? "show":""; $cell .= "<div class='iwd_om_image_row $class'>";}

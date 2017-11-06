@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_Category>
+            <version>0.1.0</version>
+        </Allure_Category>
+    </modules>
+    <global>
+        <resources>
+            <allure_category_setup>
+              <setup>
+                   <module>Allure_Category</module>
+                   <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+              </setup>
+          </allure_category_setup>
+        </resources>  
+    </global>
+</config> 

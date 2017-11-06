@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<sections>
+		<allure_counterpoint translate="label" module="allure_counterpoint">
+			<label>CounterPoint</label>
+			<tab>allure</tab>
+			<sort_order>40</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label">
+					<label>General API Configuration</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>0</show_in_website>
+					<show_in_store>0</show_in_store>
+					<fields>
+						<stores translate="title" module="allure_counterpoint">
+							<label>Limit to Store</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>allure_counterpoint/store</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default><!-- can be 0 or 1 -->
+							<show_in_website>0</show_in_website><!-- can be 0 or 1 -->
+							<show_in_store>0</show_in_store><!-- can be 0 or 1 -->
+						</stores>
+						<debug translate="label">
+							<label>Debug</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</debug>
+					</fields>
+				</general>
+
+				<counterpoint_settings translate="label" module="allure_counterpoint">
+					<label>CounterPoint Connection Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>20</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<host>
+							<label>Host Name</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</host>
+						<username>
+							<label>DB Username</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</username>
+
+						<passwd>
+							<label>DB Password</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</passwd>
+
+						<cp_store>
+							<label>Store Id to Save Order</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>60</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Set store Id where to add counterpont order's data</comment>
+						</cp_store>
+
+						<cp_payment_method>
+							<label>Payment Method</label>
+							<frontend_type>select</frontend_type>
+							<source_model>allure_counterpoint/entity_paymentMethods</source_model>
+							<sort_order>70</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</cp_payment_method>
+
+						<cp_shipping_method_code>
+							<label>Shipping Method Code</label>
+							<frontend_type>select</frontend_type>
+							<source_model>allure_counterpoint/entity_shippingMethods</source_model>
+							<sort_order>80</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</cp_shipping_method_code>
+
+						<!-- <cp_shipping_method_name>
+                            <label>Shipping Method Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cp_shipping_method_name> -->
+
+						<cp_website_code>
+							<label>Website code</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>100</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>counterpoint website code</comment>
+						</cp_website_code>
+
+					</fields>
+				</counterpoint_settings>
+
+				<crm_settings module="allure_counterpoint">
+					<label>SugarCRM Connection Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>30</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<status>
+							<label>Status</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<sort_order>0</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</status>
+
+						<api_url>
+							<label>Sugarcrm Url</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</api_url>
+
+						<username>
+							<label>Username</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</username>
+
+						<passwd>
+							<label>Password</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</passwd>
+
+						<client_id>
+							<label>Client Id</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</client_id>
+
+						<client_secret>
+							<label>Client Secret</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</client_secret>
+
+						<grant_type>
+							<label>Grant Type</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</grant_type>
+
+						<platform>
+							<label>Platform</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>60</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</platform>
+
+						<debug_log>
+							<label>Debug Log</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<sort_order>70</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+						</debug_log>
+
+					</fields>
+				</crm_settings>
+			</groups>
+		</allure_counterpoint>
+	</sections>
+</config>

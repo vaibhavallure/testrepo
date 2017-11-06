@@ -1,46 +1,47 @@
-<?php 
+<?php
 $appointment = Mage::registry('allure_appointment');
 /* Initializing variables */
 //$appStartDate = $appointment->getAppointmentStart();
 //$appStartDate = Mage::helper('core')->formatTime($appStartDate);
-$appStartDate= new Zend_Date(strtotime($appointment->getAppointmentStart()));
-$appStartDate = $appStartDate->toString();
 
-$appEndDate= new Zend_Date(strtotime($appointment->getAppointmentEnd()));
-$appEndDate = $appEndDate->toString();
-
-$bookingTime= new Zend_Date(strtotime($appointment->getBookingTime()));
-$bookingTime = $bookingTime->toString();
+$appStartDate=date("F j, Y H:i", strtotime($appointment->getAppointmentStart()));
+$appEndDate=date("F j, Y H:i", strtotime($appointment->getAppointmentEnd()));
+$bookingTime=date("F j, Y H:i", strtotime($appointment->getBookingTime()));
 
 $store = $appointment->getStoreId();
+$storeId=$appointment->getStoreId();
 if($store)
-	$format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($store);
-else
-	$format = "EST";
-$store = Mage::app()->getStore($store)->getName();
-
-$piercingQty = $appointment->getPiercingQty();
-$piercingLoc = $appointment->getPiercingLoc();
-
-$appStatus = $appointment->getAppStatus();
-$appStatus = Mage::getModel('appointments/appointments')->getStatus($appStatus);
-
-$piercerId = $appointment->getPiercerId();
-$piercerName = Mage::helper('appointments')->getPiercerName($piercerId);
-
-$name = $appointment->getFirstname()." ".$appointment->getLastname();
-$custId = $appointment->getCustomerId();
-$email = $appointment->getEmail();
-$phone = $appointment->getPhone();
-$street = $appointment->getStreet();
-$city = $appointment->getCity();
-$country = $appointment->getCountry();
-$postCode = $appointment->getPostalCode();
-$notificationPref = $appointment->getNotificationPref();
-$lastNotified = $appointment->getLastNotified();
-
-$specialNotes = $appointment->getSpecialNotes();
-?>
+    $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($store);
+    else
+        $format = "EST";
+        
+        
+        $store = Mage::app()->getStore($store)->getName();
+        
+        $piercingQty = $appointment->getPiercingQty();
+        $piercingLoc = $appointment->getPiercingLoc();
+        
+        $appStatus = $appointment->getAppStatus();
+        $appStatus = Mage::getModel('appointments/appointments')->getStatus($appStatus);
+        
+        $piercerId = $appointment->getPiercerId();
+        $piercerName = Mage::helper('appointments')->getPiercerName($piercerId);
+        
+        $name = $appointment->getFirstname()." ".$appointment->getLastname();
+        $firstname = $appointment->getFirstname();
+        $lastname = $appointment->getLastname();
+        $custId = $appointment->getCustomerId();
+        $email = $appointment->getEmail();
+        $phone = $appointment->getPhone();
+        $street = $appointment->getStreet();
+        $city = $appointment->getCity();
+        $country = $appointment->getCountry();
+        $postCode = $appointment->getPostalCode();
+        $notificationPref = $appointment->getNotificationPref();
+        $lastNotified = $appointment->getLastNotified();
+        
+        $specialNotes = $appointment->getSpecialNotes();
+        ?>
 <div class="box-left">
     <!--Billing Address-->
     <div class="entry-edit">
@@ -59,7 +60,7 @@ $specialNotes = $appointment->getSpecialNotes();
                 <td class="value"><strong><?php echo $appEndDate." ".$format ?></strong></td>
             </tr>
             <tr>
-                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Booking Time') ?></label></td>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('Booking Time') ?></label></td>
                 <td class="value"><strong><?php echo $bookingTime." ".$format ?></strong></td>
             </tr>
             <tr>
@@ -67,21 +68,25 @@ $specialNotes = $appointment->getSpecialNotes();
                 <td class="value"><strong><?php echo $store ?></strong></td>
             </tr>
             <tr>
-                <td class="label"><label><?php echo Mage::helper('appointments')->__('No. of Piercing') ?></label></td>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('No of People in Group') ?></label></td>
                 <td class="value"><strong><?php echo $piercingQty ?></strong></td>
             </tr>
+            <?php if(!empty($piercingLoc)):?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Piercing Location') ?></label></td>
                 <td class="value"><strong><?php echo $piercingLoc ?></strong></td>
             </tr>
+            <?php endif;?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Appointment Status') ?></label></td>
                 <td class="value"><strong><?php echo $appStatus ?></strong></td>
             </tr>
+            <?php if(!empty($specialNotes)):?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Special Notes') ?></label></td>
                 <td class="value"><strong><?php echo $specialNotes ?></strong></td>
             </tr>
+            <?php endif;?>
             </table>
         </div>
     </div>
@@ -97,50 +102,69 @@ $specialNotes = $appointment->getSpecialNotes();
             <h4 class="icon-head head-appointment-information"><?php echo Mage::helper('appointments')->__('Customer Information') ?></h4>
             <div class="tools"></div>
         </div>
+         <form action="<?php echo $this->getUrl('admin_appointments/adminhtml_index/savedetails')?>" method="post">
+          <?php echo $this->getBlockHtml('formkey')?>
        <div class="fieldset">
             <table cellspacing="0" class="form-list">
             <tr>
-                <td class="label"><label><?php echo Mage::helper('appointments')->__('Customer Name') ?></label></td>
-                <td class="value"><strong><?php echo $name ?></strong></td>
+               
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('First Name') ?></label></td>
+                <td class="value"> <input type="hidden" name="id" value="<?php echo $appointment->getId();?>"><input name="firstname" value="<?php echo $firstname ;?>"></td>
             </tr>
+             <tr>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('Last Name') ?></label></td>
+                <td class="value"><input name="lastname" value="<?php echo $lastname ;?>"></td>
+            </tr>
+            <?php if(!empty($custId)):?>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Customer Id') ?></label></td>
-                <td class="value"><strong><?php echo $custId ?></strong></td>
+                <td class="value"><input value="<?php echo $custId?>"></td>
             </tr>
+            <?php endif;?>
+            
             <tr>
                  <td class="label"><label><?php echo Mage::helper('appointments')->__('Email') ?></label></td>
-                <td class="value"><strong><?php echo $email ?></strong></td>
+                <td class="value"><input name="email" value="<?php echo $email?>"></td>
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Phone') ?></label></td>
-                <td class="value"><strong><?php echo $phone ?></strong></td>
+                <td class="value"><input name="phone" value="<?php echo $phone?>"></td>
+                
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Street') ?></label></td>
-                <td class="value"><strong><?php echo $street ?></strong></td>
+                <td class="value"><input name="street" value="<?php echo $street?>"></td>
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('City') ?></label></td>
-                <td class="value"><strong><?php echo $city ?></strong></td>
+                <td class="value"><input name="city" value="<?php echo $city?>"></td>
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Country') ?></label></td>
-                <td class="value"><strong><?php echo $country ?></strong></td>
+                <td class="value"><input name="country" value="<?php echo $country?>"></td>
             </tr>
             <tr>
                 <td class="label"><label><?php echo Mage::helper('appointments')->__('Postal Code') ?></label></td>
-                <td class="value"><strong><?php echo $postCode ?></strong></td>
+                <td class="value"><input name="post_code" value="<?php echo $postCode?>"></td>
             </tr>
+             <tr>
+                <td class="label"><label><?php echo Mage::helper('appointments')->__('Special Notes') ?></label></td>
+                <td class="value"><textarea name="special_notes" style="height: 5em;width: 166px;" id="special_notes_app" rows="5" cols="5"><?php echo $specialNotes?></textarea></td>
+            </tr>
+         
             <tr>
-                <td class="label"><label><?php echo Mage::helper('appointments')->__('Notification Preference') ?></label></td>
-                <td class="value"><strong><?php echo $notificationPref ?></strong></td>
+              <td class="label"><label><?php echo Mage::helper('appointments')->__('Notification Preference') ?></label></td>
+              <td class="value"><select name="notification_pref" style="width:173px;">
+                		<option value="1" <?php if($notificationPref==1){echo "selected";}?>><?php echo "Email"?></option>
+                		<option value="2" <?php if($notificationPref==2){echo "selected";}?>><?php echo "Phone"?></option>
+               </select>
+               <button style="margin-left: 10px;" type="submit">Save</button>
+              </td>
             </tr>
-            <tr>
-                <td class="label"><label><?php echo Mage::helper('appointments')->__('Last Notified On') ?></label></td>
-                <td class="value"><strong><?php echo $lastNotified ?></strong></td>
-            </tr>
+         
             </table>
         </div>
+        </form>
     </div>
 </div>
 
@@ -161,15 +185,21 @@ $specialNotes = $appointment->getSpecialNotes();
             </tr>
             <tr>
                 <td class="label"><label><?php if($piercerId):echo Mage::helper('appointments')->__('Change Piercer'); else: echo Mage::helper('appointments')->__('Allocate Piercer'); endif;?></label></td>
-                <?php $piercers  = Mage::getModel('appointments/adminhtml_source_piercer')->toArray();
+                <?php //$piercers  = Mage::getModel('appointments/adminhtml_source_piercer')->toArray();
+                    $piercersArray=Mage::helper('appointments')->getAvailablePiercers($appointment->getId());
+                ?>
+                 <?php $piercers = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
+                 ->addFieldToFilter('id', array('in' =>$piercersArray));
                 ?>
                 <td class="value">
                 <form action="<?php echo $this->getActionUrl()?>" method="post">
                 <?php echo $this->getBlockHtml('formkey')?>
                 	<select name="appointment_piercer" style="width:200px;">
-                		<?php foreach ($piercers as $key=>$piercer):?>
-                		<option value="<?php echo $key?>" <?php if($piercerId==$key){echo "selected";}?>><?php echo $piercer?></option>
+                	<?php if(count($piercers)>=1):?>
+                		<?php foreach ($piercers as $piercer):?>
+                		<option value="<?php echo $piercer->getId()?>" <?php if($piercerId==$piercer->getId()){echo "selected";}?>><?php echo $piercer->getFirstname()." ".$piercer->getLastname()?></option>
                 		<?php endforeach;?>
+                		<?php endif;?>
                 	</select>
                 	<button type="submit" style="margin-left:20px;"><?php if($piercerId):echo Mage::helper('appointments')->__('Change'); else: echo Mage::helper('appointments')->__('Allocate'); endif;?></button>
                 </form>

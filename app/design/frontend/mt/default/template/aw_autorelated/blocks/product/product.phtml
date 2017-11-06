@@ -30,11 +30,44 @@
 <?php
 $_product = Mage::registry('current_product');
 $productId = $_product->getId();
-$sku = $_product->getSku();
-if(preg_match("/_/", $sku))
-	$sku = substr($sku, 0,strpos($sku, "_"));
+$sku_main = $_product->getSku();
+$old_sku = $sku_main;
+$skForwordingArray=array();
+$childProductArr = array();
+$childProductArr[] = $productId;
+//MT-362 SKu forwording logic
 
-	$childProductArr = array();
+if($old_sku[0]=='X' || $old_sku[0]=='x'){
+    $E_sku = 'E'.substr($old_sku, 1);
+    $E_ProductId=Mage::getModel("catalog/product")->getIdBySku($E_sku);
+    if (isset($E_ProductId) && !empty($E_ProductId)){
+        $skForwordingArray[]=$E_ProductId;
+        $childProductArr[] = $E_ProductId;
+     
+    }
+}
+if($old_sku[0]=='C' || $old_sku[0]=='S'||$old_sku[0]=='N'||$old_sku[0]=='c'||$old_sku[0]=='s'||$old_sku[0]=='n'){
+    $E_sku = 'E'.substr($old_sku, 1);
+    $E_ProductId=Mage::getModel("catalog/product")->getIdBySku($E_sku);
+    if (isset($E_ProductId) && !empty($E_ProductId)){
+        $skForwordingArray[]=$E_ProductId;
+        $childProductArr[] = $E_ProductId;
+    }
+    $X_sku = 'X'.substr($old_sku, 1);
+    $X_ProductId=Mage::getModel("catalog/product")->getIdBySku($X_sku);
+    if (isset($X_ProductId) && !empty($X_ProductId)){
+        $skForwordingArray[]=$X_ProductId;
+        $childProductArr[] = $X_ProductId;
+    }
+    
+}
+    
+//MT-362 SKu forwording logic
+
+if(preg_match("/_/", $sku_main))
+    //$sku_main = substr($sku_main, 0,strpos($sku_main, "_"));
+
+	
 	$childProductArr[] = $productId;
 	if($_product->getTypeId()=="configurable"){
 		$currentchildrenIds = $_product->getTypeInstance()->getChildrenIds($productId);
@@ -45,13 +78,16 @@ if(preg_match("/_/", $sku))
 
 	
 	$parentItemNumber = $_product->getParentItemNumber();
-	$childrenProducts= Mage::getModel('catalog/product')->getCollection()
-		/* ->addAttributeToFilter( array(
-				array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%'))); */
-	->addAttributeToFilter( array(
-			array('attribute'=> 'type_id','eq'=>'configurable')))
-	->addAttributeToFilter( array(
-			array('attribute'=> 'sku','like' => ''.$sku.'%')));
+	$childrenProducts= Mage::getModel('catalog/product')->getCollection();
+	if(isset($parentItemNumber))
+	    $childrenProducts->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => '%'.$parentItemNumber.'%')));
+	else {
+	     $childrenProducts->addAttributeToFilter( array(
+	     array('attribute'=> 'sku','like' => ''.$sku_main.'%')));
+	}
+	$childrenProducts->addAttributeToFilter( array(
+			array('attribute'=> 'type_id','eq'=>'configurable')));
+
     
 	$collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
      $str = '';
@@ -59,19 +95,23 @@ if(preg_match("/_/", $sku))
      if($childrenProducts->getSize()>0){    //if(!empty($childrenProducts)){
      	foreach ($childrenProducts as $product){
      		$cnt = $cnt+1;
-     		if($product->getTypeId()=="configurable"){
-     			$childrenIds = $product->getTypeInstance()->getChildrenIds($product->getId());
-     			foreach ($childrenIds[0] as $childrenId) {
-     				$str .= ' FIND_IN_SET(('.$childrenId.'),`product_ids`) OR ';
-     			}
-     		}else{
-     			$str .= ' FIND_IN_SET(('.$product->getId().'),`product_ids`) OR ';
-     		}
+
+     		$str .= ' FIND_IN_SET(('.$product->getId().'),`product_ids`) OR ';
+
      	}
      	
      }
+     //Adding as per MT-362 ESKU forwarding
+   
+     if(!empty($skForwordingArray)){
+          foreach ($skForwordingArray as $id){
+              $str .= ' FIND_IN_SET(('.$id.'),`product_ids`) OR ';
+          }
+     }
      $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
 	 $collection->getSelect()->where( 'status = 1 AND ('.$str.')');
+
+
 ?>
 
 <?php if (($collection && $collection->getSize())) : ?>
@@ -80,7 +120,9 @@ if(preg_match("/_/", $sku))
     </div>
     <div class="image_carousel">
         <ul id="foo6" style="overflow: hidden">
-            <?php foreach ($collection as $feeds): ?>
+            <?php
+            $count=0;
+            foreach ($collection as $feeds): ?>
                 <?php
                     $feed = Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
                     $instagramObj = unserialize($feed->getInstagramData());
@@ -104,20 +146,45 @@ if(preg_match("/_/", $sku))
                     $points = "";
                     $productsLinks = "";
                     $numberOfProducts = 0;
-                    foreach ($_options as $option){
-                    	$sku = $option->text;
-                    	$numberOfProducts += 1;
-                    	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-                    	$productName = $product->getName();
-                    	$productId = $product->getId();
+					$temp_sku="";
+                    foreach ($_options as $option) {
+                        $sku = $option->text;
+                        $temp_sku = $sku;
+                        $temp_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                        if(empty($temp_product))
+                            continue;
+                        if (!empty($temp_product))
+                            $temp_product_parent=$temp_product->getParentItemNumber();
+                        /* if (preg_match("/_/", $temp_sku))
+                            $temp_sku = substr($temp_sku, 0, strpos($temp_sku, "_")); */  //commented by Ajay to enable Check by Parent Item Number
+                        
+                        $numberOfProducts += 1;
+                        
+                        if (isset($temp_product_parent) && $temp_product_parent == $parentItemNumber) {
+                            Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
+                            $sku = $old_sku;
+                        }
+                        if (substr($temp_sku, 1)==substr($sku_main, 1)) {
+                            Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
+                            $sku = $old_sku;
+                        }
+                        
+                        $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                        if(!empty($product)){
+                            $productName = $product->getName();
+                            $productId = $product->getId();
+                            $productUrl = $product->getProductUrl();
+                        }else{
+							$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$temp_sku);
+							if(!empty($product)){
+							$productName = $product->getName();
+							$productId = $product->getId();
+							$productUrl = $product->getProductUrl();
+							}
+						}
                     
-                    	$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
-                    	$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-                    	$productUrl = $product->getProductUrl();
-                    	if(!is_null($parentId)){
-                    		$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
-                    	}
-                    	
+
+
                     	$current_product_class = "";
                     	if(in_array($productId, $childProductArr))
                     		$current_product_class = "fs_current_product";
@@ -150,10 +217,10 @@ if(preg_match("/_/", $sku))
                     <div style="display: none;" id="details-insta-<?php echo $media_id?>"
 								data-user-name="<?php $_post->getUsername()?>" data-img-url="<?php echo $_post->getStandardResolution()?>"
 							 	data-create-date="<?php echo $createDate?>" data-share-url="<?php echo $shareUrl?>">
-							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo $_post->getCaption() ?></div>
+							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo json_decode($_post->getCaption()) ?></div>
 								<div id="insta-product-mark-<?php echo $media_id?>" style="display: none;"><?php echo $points ?></div>
 								<div id="insta-product-details-<?php echo $media_id?>" style="display: none;"><?php echo $productsLinks ?></div>
-							</div>
+					</div>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -302,12 +369,12 @@ if(preg_match("/_/", $sku))
 
 		jQuery("#fs-prev-post").click(function(){
 			var mediaId = jQuery(this).attr('media-id');
-			jQuery('#fs-post-'+mediaId).trigger('click');
+			jQuery('#product-quickview-'+mediaId).trigger('click');
 		});
 
 		jQuery("#fs-next-post").click(function(){
 			var mediaId = jQuery(this).attr('media-id');
-			jQuery('#fs-post-'+mediaId).trigger('click');
+			jQuery('#product-quickview-'+mediaId).trigger('click');
 		});
 		
 	</script>

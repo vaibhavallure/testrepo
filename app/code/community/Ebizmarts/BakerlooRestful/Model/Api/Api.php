@@ -90,6 +90,10 @@ class Ebizmarts_BakerlooRestful_Model_Api_Api
             }
         }
 
+        // Set store locale
+        $localeCode = Mage::getStoreConfig('general/locale/code', $this->getStoreId());
+        Mage::app()->getLocale()->setLocaleCode($localeCode);
+
         $this->_since = $this->_getQueryParameter('since');
         //Return static files data
         if (!is_null($this->_since) && 0 === intval($this->_since)) {
@@ -756,11 +760,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Api
 
     public function formatDateISO($date)
     {
-        if (!is_numeric($date)) {
-            $date = strtotime($date);
-        }
-
-        return date('c', $date);
+        return $this->getHelper('bakerloo_restful')->formatDateISO($date);
     }
 
     protected function _getIo($resource)

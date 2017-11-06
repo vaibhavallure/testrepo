@@ -376,7 +376,7 @@ class Allure_InstaCatalog_Adminhtml_Allure_InstaCatalog_FeedController extends A
     			array('attribute'=> 'name','like' => $searchQuery . '%'),
     			array('attribute'=> 'sku','like' => $searchQuery . '%'), 
     			 ) )
-    			 ->addAttributeToFilter('type_id', array('eq' => 'simple'));
+    			 ->addAttributeToFilter('type_id', array('eq' => 'configurable'));
     	
     	//Mage::log($collection->getSelect()->__toString(),Zend_Log::DEBUG,'abc',true);
     	
@@ -401,8 +401,13 @@ class Allure_InstaCatalog_Adminhtml_Allure_InstaCatalog_FeedController extends A
     		$productIds = array();
     		foreach(json_decode($hotspots) as $key) {
     			//var_dump($key);
-    			if($key->product);
+    			if($key->product)
     				$productIds[] = $key->product;
+    			else {
+    			    $productId=Mage::getModel("catalog/product")->getIdBySku($key->text);
+    			    if($productId)
+    			        $productIds[]=$productId;
+    			}
     		}
     		Mage::log($productIds,Zend_log::DEBUG,'abc',true);
     		$products="";

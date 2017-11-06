@@ -30,18 +30,32 @@
 </script>
 <?php 
 $_helper = $this->helper('catalog/output'); ?>
-<?php $_product = $this->getProduct(); ?>
+<?php $_product = $this->getProduct();
+
+$prHelper        = Mage::helper("alluremultistore_catalog");
+$isCustomOptions = $prHelper->isCustomOptionsAvailable($_product->getId());
+$parentVal = ($isCustomOptions)?1:0;
+
+?>
 <script type="text/javascript">
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view sample-size">
 <div class="product-essential">
-<form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" target="_top" method="post"
+ <?php if(!$isCustomOptions):?>
+ 
+<form action="<?php echo $this->getSubmitUrl($_product). 'cpid/'.$_product->getId().'/' ?>" target="_top" method="post"
       id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+      <?php else:?>
+      <form action="<?php echo $this->getSubmitUrl($_product). /* 'cpid/'.$_product->getId(). */'/' ?>" target="_top" method="post"
+      id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+      
+        <?php endif;?>
     <div class="no-display">
         <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
         <input type="hidden" name="related_product" id="related-products-field" value=""/>
+        <input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
     </div>
 
     <div class="product-shop-quickview">
@@ -70,6 +84,8 @@ $_helper = $this->helper('catalog/output'); ?>
 					</div>
 					<div class="special-instruction-textarea">
 						<textarea name="gift-special-instruction" class="special-inst-product" id="gift-special-instr-<?php echo $_product->getId(); ?>" rows="3" cols="40" placeholder="Post Length & Gauge Request"></textarea>
+						<br/>
+						(Special requests might delay your order due to production time)
 					</div>
 				</div>
 
@@ -143,7 +159,7 @@ $_helper = $this->helper('catalog/output'); ?>
                                 return false;
                             }
                             var pid = jQuery('#pid-hidden').val();
-                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>cpid/<?php echo $_product->getId()?>/product/'+pid +'/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
+                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>product/<?php echo $_product->getId()?>/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
                             
                         }
                     </script>
