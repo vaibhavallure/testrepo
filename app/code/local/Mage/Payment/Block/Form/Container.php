@@ -120,10 +120,11 @@ class Mage_Payment_Block_Form_Container extends Mage_Core_Block_Template
                         $this->_assignMethod($method);
                         $methods[] = $method;
                     }
-                    if ($method->getCode()=="bakerloo_cash" &&  Mage::app()->getRequest()->getModuleName()=='admin'){
+                    if ($method->getCode()=="bakerloo_cash" &&  Mage::app()->getRequest()->getModuleName()=='MariaTashGOadmin'){
                         $this->_assignMethod($method);
                         $methods[] = $method;
                     }
+                    
             }
             $this->setData('methods', $methods);
         }
