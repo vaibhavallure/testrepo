@@ -27,7 +27,7 @@
 <?php if ($_item = $this->getItem()): ?>
 <table cellspacing="0" class="qty-table">
     <tr>
-        <td><?php echo Mage::helper('sales')->__('Ordered')?></td>
+        <td><?php echo Mage::helper('sales')->__('Ordered') ?></td>
         <td><strong><?php echo $_item->getQtyOrdered()*1 ?></strong></td>
     </tr>
     <?php if ((float) $_item->getQtyInvoiced()): ?>
