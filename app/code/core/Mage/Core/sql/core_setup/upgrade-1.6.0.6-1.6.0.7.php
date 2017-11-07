@@ -19,31 +19,22 @@
  * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
- * @package     Mage_Adminhtml
+ * @package     Mage_Core
  * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
+/* @var $installer Mage_Core_Model_Resource_Setup */
+$installer = $this;
 
-/**
- * Adminhtml AdminNotification Severity Renderer
- *
- * @category   Mage
- * @package    Mage_Adminhtml
- * @author      Magento Core Team <core@magentocommerce.com>
- */
-class Mage_Adminhtml_Block_Notification_Grid_Renderer_Notice
-    extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
-{
-    /**
-     * Renders grid column
-     *
-     * @param   Varien_Object $row
-     * @return  string
-     */
-    public function render(Varien_Object $row)
-    {
-        return '<span class="grid-row-title">' . $this->escapeHtml($row->getTitle()) . '</span>'
-            . ($row->getDescription() ? '<br />' . $this->escapeHtml($row->getDescription()) : '');
-    }
-}
+$installer->startSetup();
+$connection = $installer->getConnection();
+
+$connection->delete(
+    $this->getTable('core_config_data'),
+    $connection->prepareSqlCondition('path', array(
+        'like' => 'dev/template/allow_symlink'
+    ))
+);
+
+$installer->endSetup();
