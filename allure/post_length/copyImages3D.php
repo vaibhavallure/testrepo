@@ -13,12 +13,6 @@ $fixedItems = array("ZSTH","XWB15BKD","XWB10D","XWB10BKD","XTHMQD","XTHD4","XTHD
 $skuByProductId = array();
 $imageUpdates = array();
 
-$skuByProductIdFile = Mage::getBaseDir('var').'/export/skuByProductId3D.json';
-$customPostLengthOptionsFile = Mage::getBaseDir('var').'/export/customPostLengthOptions3D.json';
-$inventoryUpdatesFile = Mage::getBaseDir('var').'/export/inventoryUpdates3D.json';
-$postLenthsFile = Mage::getBaseDir('var').'/export/postLenths3D.json';
-
-
 foreach ($fixedItems as $fixedSku) {
 	Mage::log('Parsing Fixed SKU:: '.$fixedSku, Zend_Log::DEBUG, 'image_migrations.log', true);
 	var_dump("Fixed SKU: ".$fixedSku);

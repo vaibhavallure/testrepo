@@ -15,12 +15,6 @@ $fixedItems = array("CCLV7DPS_C","CCLV7DPS_R","XCLVD","CCLVD","CCLVD_B","CCLVD_C
 $skuByProductId = array();
 $imageUpdates = array();
 
-$skuByProductIdFile = Mage::getBaseDir('var').'/export/skuByProductId.json';
-$customPostLengthOptionsFile = Mage::getBaseDir('var').'/export/customPostLengthOptions.json';
-$inventoryUpdatesFile = Mage::getBaseDir('var').'/export/inventoryUpdates.json';
-$postLenthsFile = Mage::getBaseDir('var').'/export/postLenths.json';
-
-
 foreach ($fixedItems as $fixedSku) {
 	Mage::log('Parsing Fixed SKU:: '.$fixedSku, Zend_Log::DEBUG, 'image_migrations.log', true);
 	var_dump("Fixed SKU: ".$fixedSku);
