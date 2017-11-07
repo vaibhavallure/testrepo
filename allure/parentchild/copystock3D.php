@@ -11,7 +11,7 @@ if(empty($stockId)){
     die('Please insert Stock Id');
 }
 
-
+$count=0;
 $resource     = Mage::getSingleton('core/resource');
 $writeAdapter   = $resource->getConnection('core_write');
 echo "<pre>";
@@ -20,13 +20,14 @@ $fixedItems = array("ZSTH","XWB15BKD","XWB10D","XWB10BKD","XTHMQD","XTHD4","XTHD
 
 //$fixedItems=array('CCLV7DPS_C','CCLV7DPS_R','XCLVD');
 $recordIndex = 0;
+$name=Mage::getModel('core/website')->load($stockId)->getCode();
 
 $writeAdapter->beginTransaction();
 
 foreach ($fixedItems as $fixedSku) {
-    
-    Mage::log('Parent SKU :: '.$fixedSku, Zend_Log::DEBUG, 'copystock3D.log', true);
-    Mage::log('Stock ID  :: '.$stockId, Zend_Log::DEBUG, 'copystock3D.log', true);
+    $count++;
+    Mage::log('Count::'.$count.'-Parent SKU :: '.$fixedSku, Zend_Log::DEBUG, 'copystock_'.$name.'_3D.log', true);
+    Mage::log('Stock ID  :: '.$stockId, Zend_Log::DEBUG, 'copystock_'.$name.'_3D.log', true);
     $productId = Mage::getModel('catalog/product')->getIdBySku($fixedSku);
     $_product = Mage::getModel('catalog/product')->load($productId);
     
@@ -65,8 +66,8 @@ foreach ($fixedItems as $fixedSku) {
                         $newItemQty=$newItemInventory->getQty();
                         $qty=$newItemInventory->getQty()+$oldItemInventory->getQty();
                         $newItemInventory->setQty($qty)->save();
-                        Mage::log('Old product(Source):: '.$oldItemId."--SKU::".$oldItem."---Qty=".$oldItemInventory->getQty(),  Zend_Log::DEBUG, 'copystock3D.log', true);
-                        Mage::log('New Product(destination):: '.$newItemId."--SKU::".$newItem."---Qty=".$newItemQty."---Total Qty::".$newItemInventory->getQty(), Zend_Log::DEBUG, 'copystock3D.log', true);
+                        Mage::log('Old product(Source):: '.$oldItemId."--SKU::".$oldItem."---Qty=".$oldItemInventory->getQty(),  Zend_Log::DEBUG, 'copystock_'.$name.'_3D.log', true);
+                        Mage::log('New Product(destination):: '.$newItemId."--SKU::".$newItem."---Qty=".$newItemQty."---Total Qty::".$newItemInventory->getQty(), Zend_Log::DEBUG, 'copystock_'.$name.'_3D.log', true);
                         if (($recordIndex % 250) == 0) {
                             $writeAdapter->commit();
                             $writeAdapter->beginTransaction();
@@ -75,16 +76,19 @@ foreach ($fixedItems as $fixedSku) {
                         
                     }
                     else {
-                        var_dump("Old product(Source): ".$oldItemId);
-                        var_dump("New Product(destination) ".$newItemId);
+                        var_dump("Old product(Source) ID: ".$oldItemId."-SKU::".$oldItem);
+                        var_dump("New Product(destination) ID".$newItemId."-SKU::".$newItem);
                         Mage::log('Old product(Source):: '.$oldItemId, Zend_Log::DEBUG, 'copystock3D_error.log', true);
                         Mage::log('New Product(destination):: '.$newItemId, Zend_Log::DEBUG, 'copystock3D_error.log', true);
+                        
+                        Mage::log('Old product(Source) ID:: '.$oldItemId."-SKU::".$oldItem, Zend_Log::DEBUG, 'copystock_'.$name.'_3D_error.log', true);
+                        Mage::log('New Product(destination) ID:: '.$newItemId."-SKU::".$newItem, Zend_Log::DEBUG, 'copystock_'.$name.'_3D_error.log', true);
                     }
                         
                 }
             } catch (Exception $e) {
                 var_dump($e->getMessage());
-                Mage::log('Exception Occured:: '.$e->getMessage(), Zend_Log::DEBUG, 'copystock3D_error.log', true);
+                Mage::log('Exception Occured:: '.$e->getMessage(), Zend_Log::DEBUG, 'copystock_'.$name.'_3D_error.log', true);
             }
             
           //  Mage::log('Original Id :: '.$oldItemId, Zend_Log::DEBUG, 'copystock2D.log', true);
@@ -94,7 +98,7 @@ foreach ($fixedItems as $fixedSku) {
     
     }
     
-     Mage::log('====================================== ', Zend_Log::DEBUG, 'copystock3D.log', true);
+     Mage::log('====================================== ', Zend_Log::DEBUG, 'copystock_'.$name.'_3D.log', true);
    }
 
 $writeAdapter->commit();
