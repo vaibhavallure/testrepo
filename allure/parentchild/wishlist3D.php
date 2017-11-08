@@ -8,8 +8,8 @@ $atributeCode = 'metal_color';
 $attribute = Mage::getModel('eav/config')->getAttribute('catalog_product',$atributeCode);
 $optionsMetal = $attribute->getSource()->getAllOptions();
 
-$lower = $_GET['lower'];
-$upper= $_GET['upper'];
+$lower = 1;$_GET['lower'];
+$upper= 10000;$_GET['upper'];
 
 
 if(empty($lower) || empty($upper)){
@@ -52,7 +52,7 @@ foreach ($wishListItemCollection as $item){
     if (count($oldItemSku) ==  4 && in_array($parentItem, $fixedItems)) {
         
         
-        
+        var_dump($item->getWishlistItemId());die;
         $newItem = implode('|', array($parentItem, $oldItemSku[1], $oldItemSku[3]));
         
         if (empty($post_length)) {
@@ -86,7 +86,6 @@ foreach ($wishListItemCollection as $item){
                             unset($buyRequest['cpid']);
                             
                             $superAttribute=$buyRequest['super_attribute'];
-                            
                             foreach ($superAttribute as $key=>$value){
                                 if($key==189){  // Post lengths
                                     unset($superAttribute[$key]);
@@ -94,22 +93,29 @@ foreach ($wishListItemCollection as $item){
                                 
                             }
                             
-                            //$superAttribute=array();
-                            if (!in_array(209, $superAttribute)){
-                                // echo strtolower($colorLabel);//check metel color is prsent in super_attribute
-                                //   echo "<br>";
-                                foreach ($optionsMetal as $options) {
-                                    //     print_r(strtolower($options['label']));
+                            if (!array_key_exists(209, $superAttribute)){
+                                /* foreach ($optionsMetal as $options) {
                                     if(trim(strtolower($colorLabel)) == trim(strtolower($options['label']))){
                                         $superAttribute[209]=$options['value'];
                                         break;
+                                    }
+                                } */
+                                
+                                $productAttributeOptions = $configProduct->getTypeInstance(true)
+                                ->getConfigurableAttributesAsArray($configProduct);
+                                foreach ($productAttributeOptions as $masterAttribute) {
+                                    foreach ($masterAttribute['values'] as $attributeValue) {
+                                        if(trim(strtolower($colorLabel)) == trim(strtolower($attributeValue['label']))) {
+                                            $superAttribute[209] = $attributeValue['value_index'];
+                                            break;
+                                        }
                                     }
                                 }
                             }
                             $buyRequest['super_attribute']=$superAttribute;
                             
                             $temp = array();
-                            $temp['attributes'] = serialize($buyRequest['super_attribute']);
+                            $temp['attributes'] = serialize($superAttribute);
                             
                             $optionsArray=$buyRequest['options'];
                             if(!isset($optionsArray) || empty($optionsArray)){
@@ -172,10 +178,14 @@ foreach ($wishListItemCollection as $item){
                                     
                     }
                     //$item->getWishlistItemId();
-                    $item->setProductId($configProductId)->save();
+                    //$item->setProductId($configProductId)->save();
                     $count++;
                     Mage::log($count.'-WishlistItemId::'.$item->getWishlistItemId().'------WishlistId::'.$item->getWishlistId(),Zend_log::DEBUG,'parentchild_wishlist_3d.log',true);
                 }
+                
+                $wishlistItem = Mage::getModel("wishlist/item")->load($item->getWishlistItemId());
+                $wishlistItem->setProductId($configProductId)->save();
+                
             } catch (Exception $e) {
                 var_dump($e->getMessage());
                 $failCount++;
