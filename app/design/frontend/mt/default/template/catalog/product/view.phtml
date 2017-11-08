@@ -436,6 +436,8 @@ if ($_product->getSizeSample() == 1) {
                 <?php endif;?>
 				
 				<?php //echo $this->getChildHtml('special_instruction')?>
+				
+		       <?php if ($_product->getShowSpecialInstruction()):?>
 				<div class="product-special-instructions">
 					<div class="special-instruction-label">
 						<label>Special Instructions:</label>
@@ -447,6 +449,7 @@ if ($_product->getSizeSample() == 1) {
                         <div style="width: 250px">Special requests might delay your order due to production time)</div>
 					</div>
 				</div>
+				<?php endif;?>
 				
                 <?php echo $this->getChildHtml('product_additional_data') ?>
             </div>
