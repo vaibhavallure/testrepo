@@ -4,23 +4,24 @@ class Allure_Inventory_Block_Pagination extends Mage_Page_Block_Html_Pager
 {
 	public function __construct()
 	{
-	    
 		//block for receiving and transfer
-		
-		// Default Website - Main
+		//Default Website - Main
+	    $helper = Mage::helper("inventory");
+	    $childCategoryId = $helper->getChildCategoryId();
+	    if(empty($childCategoryId)){
+	        $childCategoryId = $helper->getParentCategoryId();
+	    }
+	    
 		$websiteId = 1;
-
 		if (!empty(Mage::getSingleton('core/session')->getMyWebsiteId())) {
 			$websiteId = Mage::getSingleton('core/session')->getMyWebsiteId();
 		}
-
 		$website = Mage::getModel("core/website")->load($websiteId);
 		$storeId = $website->getDefaultGroup()->getDefaultStoreId();
 		$stockId = $website->getStockId();
-		
 
-		// Get Products from "Parent Items" Category
-	    $collection = Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
+		$collection = Mage::getResourceModel('catalog/product_collection')
+		      ->addAttributeToFilter('type_id', array('eq' => 'simple'));
 	    $collection->addAttributeToSelect('sku')
 	       ->addAttributeToSelect('name')
 	       ->addAttributeToSelect('image')
@@ -28,6 +29,16 @@ class Allure_Inventory_Block_Pagination extends Mage_Page_Block_Html_Pager
 	       ->addAttributeToSelect('cost')
 	       ->addAttributeToSelect('attribute_set_id')
 	       ->setStoreId($storeId);
+	       
+	      $collection->getSelect()->join(
+	           array('category_product' => 'catalog_category_product'),
+	           'category_product.product_id = e.entity_id',
+	           array('category_id')
+	           );
+	       
+	      $collection->getSelect()
+	               ->where('category_product.category_id = '.$childCategoryId); 
+	       
 	    
 		if (isset($_GET['search']) && $_GET['search'] != null) {
 			$searchString = $_GET['search'];
@@ -61,7 +72,6 @@ class Allure_Inventory_Block_Pagination extends Mage_Page_Block_Html_Pager
 		$collection->addAttributeToFilter('type_id', 'simple');
 		$collection->getSelect()->group('e.entity_id');
 		$collection->setOrder('sku','ASC');
-		
 		$this->setCollection($collection);
 	}
 	protected function _prepareLayout()
@@ -72,7 +82,7 @@ class Allure_Inventory_Block_Pagination extends Mage_Page_Block_Html_Pager
 		$pager->setCollection($this->getCollection());
 		$pager->setTemplate('inventory/pager.phtml');
 		$this->setChild('pager', $pager);
-		$this->getCollection()->load();
+		//$this->getCollection()->load();
 		return $this;
 	}
 	

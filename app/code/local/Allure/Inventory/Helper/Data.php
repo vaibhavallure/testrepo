@@ -12,6 +12,17 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     const ORDER_STATUS_PARTIALLY_SHIPPED="partially_shipped";
     const ORDER_STATUS_FULLY_SHIPPED="fully_shipped";
     
+    const XML_PARENT_CATEGORY_ID = "inventory/category/parent_category_id";
+    const XML_CHILD_CATEGGORY_ID = "inventory/category/child_category_id";
+    
+    public function getParentCategoryId(){
+        return Mage::getStoreConfig(self::XML_PARENT_CATEGORY_ID);
+    }
+    
+    public function getChildCategoryId(){
+        return Mage::getStoreConfig(self::XML_CHILD_CATEGGORY_ID);
+    }
+    
 	public function getOrderStatusArray(){
 	
 		$statusArray=array();

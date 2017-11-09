@@ -138,4 +138,12 @@
             </inventory_read>
         </resources>
     </global>
+    
+    <default>
+	     <inventory>
+	     		<category>
+	     			<parent_category_id>426</parent_category_id>
+	     		</category>
+	     </inventory>
+    </default>
 </config>
