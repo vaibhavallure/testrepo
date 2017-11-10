@@ -4,16 +4,8 @@
 ?>
 
 <div class="content-header">
-    <h3 class="icon-head"><?php echo $helper->__('Create  Purchase Order')?></h3>
-  		
-    <button id="create_po_btn" class="create_po_btn" ><?php echo $helper->__('Create Order')?></button>
-     <button type="button"  style="float: right;
-    margin-top: 10px;"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/confirm')?>'">
-  		<?php echo $helper->__('View Items')?></button>
-  		
-    <button id="reset_po_btn" class="reset_po_btn" ><?php echo $helper->__('Reset')?></button>
-    <button id="add_custom_item" style="float: right;
-    margin-top: 10px;" class="add_custom_item" onclick="javascript:openMyPopup()" ><?php echo $helper->__('Add Custom Item')?></button>
+    <h3 class="icon-head"><?php echo $helper->__('Add items to PO')?></h3>
+    <button id="close" style="float:right" class="close" onclick="closeWindow();" ><?php echo $helper->__('Close')?></button>
 </div>
 
 <div class="success" style="display: none;"></div>
@@ -28,8 +20,6 @@
   	<button type="button" onclick="submitsearch()"><?php echo $helper->__('Search')?></button>
   	<button type="button" onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/new')?>'">
   		<?php echo $helper->__('Reset Filter')?></button>
- 	<input style="float:right"  type="text" id="refence_no" class="refence_no" 
- 		placeholder="<?php echo $helper->__('Add reference No')?>" />
 </div>
 
 <div class="pager-inventory">
@@ -80,7 +70,7 @@
 					 		type="text" value="<?php echo $product->getVendorItemNo()?>"/>
 					</td>
 					<td>
-					 	<input id="max_qty_<?php  echo $product->getId() ?>" style="width:50px"  
+					 	<input id="requested_qty_<?php  echo $product->getId() ?>" style="width:50px"  
 					 		name="qty[<?php echo $product->getId() ?>][<?php echo "max_qty" ?>]" 
 					 		type="text" value="<?php echo round($product->getMaxQty())?>"/>
 					</td>
@@ -105,12 +95,12 @@
 					<td>
 						<div>
 							<input type="hidden" id="is_custom_<?php echo $_product->getId()?>"name="qty[<?php echo $_product->getId() ?>][<?php echo "is_custom" ?>]" value="0">
-							<textarea id="comment_<?php echo $_product->getId()?>" cols="15" rows="3"  name="qty[<?php echo $_product->getId() ?>][<?php echo "admin_comment" ?>]"/></textarea>
+							<textarea id="admin_comment_<?php echo $_product->getId()?>" cols="15" rows="3"  name="qty[<?php echo $_product->getId() ?>][<?php echo "admin_comment" ?>]"/></textarea>
 						</div>
 					</td>
 					<td>
 						<div>
-							<input id="<?php echo $product->getId()?>" type="checkbox" class="include_items" name="inclide"/>
+							<input id="<?php echo $product->getId()?>" type="checkbox" class="include_product" name="inclide"/>
 							<br/>
 							<?php $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product->getId())
 							->addFieldToFilter('is_custom',0)->addFieldToFilter('stock_id',$stockId)->setOrder('po_id','DESC');
@@ -127,75 +117,17 @@
 	 <div class="pager-inventory">
 		<?php echo $this->getPagerHtml(); ?>
 	</div>
-	<?php if(!Mage::helper('allure_vendor')->isUserVendor()) :?>
-     <table style="width:100%">
-     	<tr>
-      		<td>
-      	 		<div style="float:right;margin-right: 10px">
-      	 			<label><?php echo $helper->__('Order Total:')?></label>
-      	 			<input disabled="disabled" id="order_total" style="margin-bottom: 10px" 
-      	 				type="text" value="0">
-      	 		</div>
-      	 	</td>
-      	</tr>
-    </table>
- <?php endif;?>
-</div>     	 
-<div>
-    <button id="create_po_btn2" class="create_po_btn"><?php echo $helper->__('Create Order')?></button>
-</div>
-
-
-
-<?php 
-$podataCount=0;
-$podata = Mage::getSingleton('core/session')->getMyItemsInfo();
-if($podata['items'])
-	$podataCount=count($podata['items']);
-?>
-    
+</div>  
 <script type="text/javascript">
-	jQuery.noConflict();
-</script>
-<script type="text/javascript">
-	if (typeof Allure == "undefined") {
+if (typeof Allure == "undefined") {
 	   var Allure = {};
 	}
-	Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-	Allure.InventoryStoreSwitch = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_stock/store', array('_secure' => true));?>';
-	Allure.AddPurchaseItem = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addpurchaseitem', array('_secure' => true));?>';
-	Allure.GetStoredInfo = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/getstoredinfo', array('_secure' => true));?>';
-	Allure.InventoryPurcaseCreateOrder = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/createOrder', array('_secure' => true));?>';
-	Allure.Reset = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/reset', array('_secure' => true));?>';
-
-	function openMyPopup() {
-
-        var url = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addCustomItem') ?>?';
-
-        var dialogWindow = Dialog.info(null, {
-            closable:true,
-            resizable:false,
-            draggable:true,
-            className:'magento',
-            windowClassName:'popup-window',
-            title:'Add custom item to purchase order',
-            top:50,
-            width:600,
-            height:200,
-            zIndex:1000,
-            recenterAuto:false,
-            hideEffect:Element.hide,
-            showEffect:Element.show,
-            id:'browser_window',
-            url:url,
-            onClose:function (param, el) {
-               // alert('onClose');
-            	getStoredData();
-            }
-        });
-    }
-
-    function closePopup() {
-        Windows.close('browser_window');
-    }
-	</script>
+Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+Allure.PoId = '<?php echo $this->getRequest()->getParam('po_id'); ?>';
+Allure.Store = '<?php echo $this->getRequest()->getParam('store'); ?>';
+Allure.AddConfirmProduct = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addconfirmproduct', array('_secure' => true));?>';
+Allure.GetDraftSelectedItems = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/getdraftselecteditems', array('_secure' => true));?>';
+function closeWindow() {
+	open(location, '_self').close();
+}
+</script>   	 

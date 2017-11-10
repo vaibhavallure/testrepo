@@ -114,6 +114,9 @@
                      <customitem>
                          <table>allure_inventory_custom_item</table>
                      </customitem>
+                     <draftitems>
+                         <table>allure_inventory_purchase_draft</table>
+                     </draftitems>
 	             </entities>
 	       </allure_inventory_resource>
         </models>

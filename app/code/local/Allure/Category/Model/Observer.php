@@ -9,8 +9,10 @@ class Allure_Category_Model_Observer{
 	    $data = $category->getData();
 	    $productData = $data['posted_products'];
 	    $affectedProduct = $data['affected_product_ids'];
+	    $helper = Mage::helper("inventory");
+	    $parentCategoryId = $helper->getParentCategoryId();
 	    try{
-	        if($data['entity_id'] == 426){
+	        if($data['entity_id'] == $parentCategoryId){
 	            $collection = Mage::getResourceModel('catalog/product_collection')
 	               ->addAttributeToFilter('type_id', array('eq' => 'simple'));
 	            
