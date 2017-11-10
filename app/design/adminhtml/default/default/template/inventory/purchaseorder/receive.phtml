@@ -51,7 +51,6 @@
 	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 	<table class="iventory-product table" style="width: 100%">
 		<th><?php echo $helper->__('Image')?></th>
-		<th><?php echo $helper->__('SKU')?></th>
 		<th><?php echo $helper->__('PRODUCT NAME')?></th>
 		<th><?php echo $helper->__('Qty Ordered')?></th>
 		<th><?php echo $helper->__('VMT Comment')?></th>
@@ -74,9 +73,11 @@
 							src="<?php  echo Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(100);?>"/>
 					<?php endif;?>
 				</td>	
-				<td><?php echo $product->getSku();?></td>
 						
-				<td><?php echo $product->getName();?></td>
+				<td style="padding-left:20px;text-align:left">
+						<p><?php echo $product->getName();?></p>
+						<p><strong>SKU:</strong> <?php echo $product->getSku();?></p>
+				</td>
 						
 				<td>
 					<input id="requested_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
