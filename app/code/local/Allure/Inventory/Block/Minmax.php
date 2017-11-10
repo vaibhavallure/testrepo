@@ -7,10 +7,11 @@ class Allure_Inventory_Block_Minmax extends Mage_Page_Block_Html_Pager
 	public function __construct()
 	{
 			$websiteId=1;
-			if(Mage::getSingleton('core/session')->getMyWebsiteId())
+			if(!empty(Mage::getSingleton('core/session')->getMyWebsiteId()))
 				$websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
-			$website=Mage::getModel( "core/website" )->load($websiteId);
-			$storeId=$website->getStoreId();
+			$website = Mage::getModel( "core/website" )->load($websiteId);
+			$storeId = $website->getDefaultGroup()->getDefaultStoreId();
+			$stockId = $website->getStockId();
 			
 			//avoid by desciption
 			/* $entityTypeId = Mage::getModel('eav/entity')
@@ -32,11 +33,27 @@ class Allure_Inventory_Block_Minmax extends Mage_Page_Block_Html_Pager
 						)
 					);
 			}
+			
+			if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
+			    $collection->getSelect()->joinLeft(array("stock_item" => 'cataloginventory_stock_item'), 
+			        "(stock_item.product_id = e.entity_id) and stock_item.stock_id=".$stockId,array('qty','notify_stock_qty'));
+			}
+			
+			$collection->joinAttribute(
+			    'cost',
+			    'catalog_product/cost',
+			    'entity_id',
+			    null,
+			    'inner',
+			    $storeId
+			    );
+			
 			$collection->addAttributeToFilter('type_id', 'simple');
 			$collection->getSelect()->group('e.entity_id');
 			/* $collection->addAttributeToFilter('sku', array('nlike' => 'c%','nlike' => 'c%'));
 			 $collection->addAttributeToFilter('sku', array('nlike' => 's%','nlike' => 's%')); */
 			$collection->setOrder('sku','ASC');
+			
 			$this->setCollection($collection);
 
 	}
@@ -45,8 +62,9 @@ class Allure_Inventory_Block_Minmax extends Mage_Page_Block_Html_Pager
 		parent::_prepareLayout();
 
 		$pager = $this->getLayout()->createBlock('page/html_pager', 'custom.pager');
-		$pager->setAvailableLimit(array(20=>20,50=>50,100=>100,'all'=>'all'));
+		$pager->setAvailableLimit(array(10=>10,20=>20,50=>50));
 		$pager->setCollection($this->getCollection());
+		$pager->setTemplate('inventory/pager.phtml');
 		$this->setChild('pager', $pager);
 		$this->getCollection()->load();
 		return $this;

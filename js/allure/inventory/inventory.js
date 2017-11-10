@@ -242,6 +242,10 @@ function resetSearch(){
 }
  function getStoredData(){
     var store=$j('#store').val();
+    if(Allure.currentStore == store){
+    	return;
+    }
+    Allure.currentStore = store;
 	var key=Allure.ViewPurchaseOrderFormKey;
 	$j.ajax({
         url: Allure.GetStoredInfo,
