@@ -17,16 +17,16 @@
                         <name>Yahoo Finance</name>
                         <model>Allure_CurrencyServices_Model_Yahoo</model>
                     </yahoofinance>
-                    <googlefinance>
+                    <!-- <googlefinance>
                         <name>Google Finance</name>
                         <model>Allure_CurrencyServices_Model_Google</model>
-                    </googlefinance>
+                    </googlefinance> -->
                 </services>
             </import>
         </currency>
         <models>
             <allure_currencyservices>
-                <class>Allure_CurrencyServices_Model_Yahoo</class>
+                <class>Allure_CurrencyServices_Model</class>
             </allure_currencyservices>
         </models>
     </global>
