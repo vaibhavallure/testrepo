@@ -211,7 +211,7 @@ function updateTotal(data){
 		if(data[key].include)
 		$j("#"+key).prop( "checked", true );
 	}*/
-	$j('#order_total').val(sum)
+	$j('#order_total').val(sum);
 	return sum;
 }	
 
@@ -403,7 +403,7 @@ function updateDraft(data){
 	    $j('#vendor_sku_'+value['item_id']).val(value['vendor_sku']);
 	    $j('#vendor_sku_'+value['item_id']).prop('disabled', true);
 	});
-
-	//$j('#order_total').val(sum)
+	if(sum >0 )
+		$j('#order_total').val(sum);
 	return sum;
 }	

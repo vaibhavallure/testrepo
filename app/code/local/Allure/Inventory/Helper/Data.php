@@ -84,7 +84,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
             "Vendor Code",
             "Item Desciption",
             "Requested Qty",
-            "Proposed Qty",
+          /*   "Proposed Qty", */
             "VMT Comment",
             "Vendor Comment",
             "Proposed Delivery Date"
@@ -102,7 +102,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$vendorCode = $_product->getVendorItemNo();
     		$name = $_product->getName();
     		$qty = $item->getRequestedQty();
-    		$pqty = $item->getProposedQty();
+    	//	$pqty = $item->getProposedQty();
     		$comment = $item->getAdminComment();
     		$Vcomment = $item->getVendorComment();
 //    		$status = $item->getStatus();
@@ -110,7 +110,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$propdelivery = $item->getProposedDeliveryDate();
     		//$total = $item->getTotalAmount();
     		
-    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$propdelivery), ",");
+    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$comment,$Vcomment,$propdelivery), ",");
     	}
     	fclose($fp);
     }

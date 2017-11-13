@@ -110,7 +110,13 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                     ->updateAttributes(array($product->getId()),
                                          array ('vendor_item_no' => $_item['vendor_sku']), 
                                         $storeId );
-                            }    
+                            } 
+                            if(!empty($_item['cost'])){
+                                Mage::getResourceSingleton('catalog/product_action')
+                                ->updateAttributes(array($product->getId()),
+                                    array ('cost' => $_item['cost']),
+                                    $storeId );
+                            }
                         }
                         $items[$vendor][$itemId] = $_item;
                     }
