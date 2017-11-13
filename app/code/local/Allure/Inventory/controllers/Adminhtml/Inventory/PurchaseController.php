@@ -319,10 +319,11 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                             $diffArray[$item->getProductId()]['admin_comment_old']=$item->getAdminComment();
                             $diffArray[$item->getProductId()]['is_custom']=$item->getIsCustom();
                         }
+                       
                         if(trim($item->getRequestedQty()) != trim($arr['requested_qty'])){
-                            $diffArray[$itemProductId]['qty'] = $arr['requested_qty'];
-                            $diffArray[$itemProductId]['qty_old'] = $item->getRequestedQty();
-                            $diffArray[$itemProductId]['is_custom'] = $item->getIsCustom();
+                            $diffArray[$item->getProductId()]['qty'] = $arr['requested_qty'];
+                            $diffArray[$item->getProductId()]['qty_old'] = $item->getRequestedQty();
+                            $diffArray[$item->getProductId()]['is_custom'] = $item->getIsCustom();
                             
                            
                            /*  $oldTotal=$item->getTotalAmount();
@@ -346,15 +347,15 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                              $item->setData('remaining_qty', $arr['requested_qty']);
                         }
                         if(trim($item->getVendorComment()) != trim($arr['vendor_comment'])){
-                            $diffArray[$itemProductId]['vendor_comment'] = $arr['vendor_comment'];
-                            $diffArray[$itemProductId]['vendor_comment_old'] = $item->getVendorComment();
-                            $diffArray[$itemProductId]['is_custom'] = $item->getIsCustom();
+                            $diffArray[$item->getProductId()]['vendor_comment'] = $arr['vendor_comment'];
+                            $diffArray[$item->getProductId()]['vendor_comment_old'] = $item->getVendorComment();
+                            $diffArray[$item->getProductId()]['is_custom'] = $item->getIsCustom();
                         }
                         if(isset($arr['proposed_delivery_date'])){
                             if(date('m/d/Y',strtotime($item->getProposedDeliveryDate())) != $arr['proposed_delivery_date']){
-                                $diffArray[$itemProductId]['proposed_delivery_date'] = $date;
-                                $diffArray[$itemProductId]['proposed_delivery_date_old'] = ($item->getProposedDeliveryDate())?date('F j, Y', strtotime($item->getProposedDeliveryDate())):'-';
-                                $diffArray[$itemProductId]['is_custom'] = $item->getIsCustom();
+                                $diffArray[$item->getProductId()]['proposed_delivery_date'] = $date;
+                                $diffArray[$item->getProductId()]['proposed_delivery_date_old'] = ($item->getProposedDeliveryDate())?date('F j, Y', strtotime($item->getProposedDeliveryDate())):'-';
+                                $diffArray[$item->getProductId()]['is_custom'] = $item->getIsCustom();
                             }
                         }
                         if ($date)
