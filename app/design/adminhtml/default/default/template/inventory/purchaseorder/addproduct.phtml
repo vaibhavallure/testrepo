@@ -118,10 +118,14 @@
 		<?php echo $this->getPagerHtml(); ?>
 	</div>
 </div>  
+<?php if($this->getRequest()->getParam('po_id')):?>
+<?php $order=Mage::getModel('inventory/purchaseorder')->load($this->getRequest()->getParam('po_id'));?>
+<?php endif;?>
 <script type="text/javascript">
 if (typeof Allure == "undefined") {
 	   var Allure = {};
 	}
+Allure.OrderStatus = '<?php echo $order->getStatus(); ?>';
 Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 Allure.PoId = '<?php echo $this->getRequest()->getParam('po_id'); ?>';
 Allure.Store = '<?php echo $this->getRequest()->getParam('store'); ?>';

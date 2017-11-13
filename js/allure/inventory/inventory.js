@@ -366,27 +366,30 @@ function getDraftSelectedItems(){
     var store=$j('#store').val();
     var po_id=$j('#po_id').val();
 
-    if(typeof po_id == 'undefined')
-    	po_id=Allure.PoId;
-    if(typeof store == 'undefined')
-    	store=Allure.Store;
-    	
-    Allure.currentStore = store;
-	var key=Allure.ViewPurchaseOrderFormKey;
-	$j.ajax({
-        url: Allure.GetDraftSelectedItems,
-        dataType : 'json',
-		type : 'POST',
-		data: {'form_key':key,'store':store,'po_id':po_id},
-		beforeSend: function() { $j('#loading-mask').show(); },
-        complete: function() { $j('#loading-mask').hide(); },
-        success: function(data) {
-        	//console.log(data.data);
-        	if(data.data){
-        			updateDraft(data.data);
-	        	}
-        }
-    });
+	$status=Allure.OrderStatus;
+	if($status=="draft"){
+	    if(typeof po_id == 'undefined')
+	    	po_id=Allure.PoId;
+	    if(typeof store == 'undefined')
+	    	store=Allure.Store;
+	    	
+	    Allure.currentStore = store;
+		var key=Allure.ViewPurchaseOrderFormKey;
+		$j.ajax({
+	        url: Allure.GetDraftSelectedItems,
+	        dataType : 'json',
+			type : 'POST',
+			data: {'form_key':key,'store':store,'po_id':po_id},
+			beforeSend: function() { $j('#loading-mask').show(); },
+	        complete: function() { $j('#loading-mask').hide(); },
+	        success: function(data) {
+	        	//console.log(data.data);
+	        	if(data.data){
+	        			updateDraft(data.data);
+		        	}
+	        }
+	    });
+	 }
 }
 
 function updateDraft(data){
