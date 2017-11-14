@@ -11,6 +11,8 @@ $fixedItems = array("ZSTH","XWB15BKD","XWB10D","XWB10BKD","XTHMQD","XTHD4","XTHD
 
 $fixedItems = array("XWB15BKD");//CSQGPS_E XCLVD
 
+$reversedItems = array("XTHD4","XTHD2","XTHBF6","XTHBF2D","XTHBF25D","XTHBF","XTHBF","XTHBAD");
+
 $skippedSkus = array();
 
 $skuByProductId = array();
@@ -40,9 +42,19 @@ foreach ($fixedItems as $fixedSku) {
 
 		    $parentItem = $oldItemSku[0];
 		    
-		    $post_length = $oldItemSku[2];
-		    
-		    $newItem = implode('|', array($parentItem, $oldItemSku[1], $oldItemSku[3]));
+		    if (in_array($fixedSku, $reversedItems)) {
+		        
+		        $post_length = $oldItemSku[3];
+		        
+		        $newItem = implode('|', array($parentItem, $oldItemSku[1], $oldItemSku[2]));
+		        
+		    } else {
+		        
+		        $post_length = $oldItemSku[2];
+		        
+		        $newItem = implode('|', array($parentItem, $oldItemSku[1], $oldItemSku[3]));
+		        
+		    }
 			
 			if (empty($post_length)) {
 			    Mage::log('Post Length: NONE', Zend_Log::DEBUG, 'post_length_associations_parsing.log', true);
