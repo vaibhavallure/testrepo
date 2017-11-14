@@ -35,7 +35,6 @@ alpha:
   only:
     - master
   script:
-    - env
     - mage-deploy mt
     - echo 'Deployed on Staging'
 bugfix:
@@ -85,7 +84,7 @@ deploy:
   environment: production
   stage: deploy
   tags:
-    - cloud
+    - mariatash
   only:
     - cloud
   script:
