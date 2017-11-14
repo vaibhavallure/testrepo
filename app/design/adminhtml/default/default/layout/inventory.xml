@@ -189,5 +189,30 @@
     </adminhtml_inventory_purchase_viewreceive>
 
 
+	<adminhtml_inventory_purchase_addproduct>
+    <update handle="adminhtml_inventory_layout" />
+        <reference name="root">
+            <remove name="header"/>
+            <remove name="footer" />
+            <remove name="notifications" />
+            <remove name="top.menu" />
+            <remove name="menu" />
+            <remove name="top.links" />
+            <remove name="top.container" />
+            <remove name="nav-bar" />
+
+        </reference>
+        <reference name="head">
+            <action method="addJs"><file>allure/jquery.js</file></action>
+            <action method="addJs"><file>allure/inventory/inventory.js</file></action>
+            <action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>
+        </reference>
+        <reference name="content">
+            <block  type="inventory/purchaseorder_new" name="purchaseorder_new" template="inventory/purchaseorder/addproduct.phtml">
+            </block>
+        </reference>
+
+    </adminhtml_inventory_purchase_addproduct>
+
     
 </layout>

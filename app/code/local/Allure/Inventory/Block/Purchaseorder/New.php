@@ -4,11 +4,17 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 {
 	public function __construct()
 	{
-		
+	    $helper = Mage::helper("inventory");
+	    $childCategoryId = $helper->getChildCategoryId();
+	    if(empty($childCategoryId)){
+	        $childCategoryId = $helper->getParentCategoryId();
+	    }
+	    
 		$websiteId=1;
 		if(Mage::getSingleton('core/session')->getMyWebsiteId())
 			$websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
-		$website=Mage::getModel( "core/website" )->load($websiteId);
+		
+		$website = Mage::getModel( "core/website" )->load($websiteId);
 		$storeId = $website->getDefaultGroup()->getDefaultStoreId();
 		$stockId = $website->getStockId();
 		
@@ -33,8 +39,11 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		$collection->addAttributeToFilter('type_id', 'simple');*/
 		//$collection->addCategoryFilter($category);
 		
-		$collection=Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
-			$collection->addAttributeToSelect('*')->setStoreId($storeId);
+		//$collection=Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
+		$collection = Mage::getResourceModel('catalog/product_collection')
+		->addAttributeToFilter('type_id', array('eq' => 'simple'));
+		
+		$collection->addAttributeToSelect('*')->setStoreId($storeId);
 
 		if($_GET['search']!=null){
 			$searchString = $_GET['search'];
@@ -64,6 +73,15 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		if( $storeId ) {
 			$collection->addStoreFilter($storeId);
 		}
+		
+		$collection->getSelect()->join(
+		    array('category_product' => 'catalog_category_product'),
+		    'category_product.product_id = e.entity_id',
+		    array('category_id')
+		    );
+		
+		$collection->getSelect()
+		->where('category_product.category_id = '.$childCategoryId);
 		
 		if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
 		    $collection->joinField('qty',
