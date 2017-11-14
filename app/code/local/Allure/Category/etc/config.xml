@@ -6,6 +6,13 @@
         </Allure_Category>
     </modules>
     <global>
+    	
+    	<models>
+			<allure_category>
+				<class>Allure_Category_Model</class>
+			</allure_category>
+		</models>
+    
         <resources>
             <allure_category_setup>
               <setup>
@@ -14,5 +21,17 @@
               </setup>
           </allure_category_setup>
         </resources>  
+        
+        <events>
+			<catalog_category_save_commit_after>
+            	<observers>
+					<allure_category>
+						<class>allure_category/observer</class>
+						<method>setProductToCategory</method>
+					</allure_category>
+				</observers>
+        </catalog_category_save_commit_after>
+		</events>
+		
     </global>
 </config> 

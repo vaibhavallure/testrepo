@@ -11,7 +11,7 @@ $installer->addAttribute('catalog_product', 'show_special_instruction', array(
             'source'            => 'eav/entity_attribute_source_boolean',
             'filterable'      => 0,
             'searchable'      => 0,
-            'default'         => 0,
+            'default'         => 1,
             'comparable'      => 0,
             'user_defined'    => 1,
             'is_configurable' => 0,

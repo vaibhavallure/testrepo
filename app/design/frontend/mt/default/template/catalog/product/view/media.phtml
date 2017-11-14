@@ -208,6 +208,7 @@ function loadBaseImage(){
 
 var loadTimes=0;
 function loadVideo(video){
+	jQuery('.containerImage img').hide();
      var player = document.getElementById('video_' + video);
      if(player){
          var src = player.src;     
@@ -220,6 +221,7 @@ function loadVideo(video){
 }
 
 function closeVideo(){
+	jQuery('.containerImage img').show();
     var player = jQuery('[id^="video-"] iframe');
     if(player){
         player.each(function(index,iframe) {

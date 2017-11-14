@@ -12,6 +12,17 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     const ORDER_STATUS_PARTIALLY_SHIPPED="partially_shipped";
     const ORDER_STATUS_FULLY_SHIPPED="fully_shipped";
     
+    const XML_PARENT_CATEGORY_ID = "inventory/category/parent_category_id";
+    const XML_CHILD_CATEGGORY_ID = "inventory/category/child_category_id";
+    
+    public function getParentCategoryId(){
+        return Mage::getStoreConfig(self::XML_PARENT_CATEGORY_ID);
+    }
+    
+    public function getChildCategoryId(){
+        return Mage::getStoreConfig(self::XML_CHILD_CATEGGORY_ID);
+    }
+    
 	public function getOrderStatusArray(){
 	
 		$statusArray=array();
@@ -73,7 +84,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
             "Vendor Code",
             "Item Desciption",
             "Requested Qty",
-            "Proposed Qty",
+          /*   "Proposed Qty", */
             "VMT Comment",
             "Vendor Comment",
             "Proposed Delivery Date"
@@ -91,7 +102,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$vendorCode = $_product->getVendorItemNo();
     		$name = $_product->getName();
     		$qty = $item->getRequestedQty();
-    		$pqty = $item->getProposedQty();
+    	//	$pqty = $item->getProposedQty();
     		$comment = $item->getAdminComment();
     		$Vcomment = $item->getVendorComment();
 //    		$status = $item->getStatus();
@@ -99,7 +110,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$propdelivery = $item->getProposedDeliveryDate();
     		//$total = $item->getTotalAmount();
     		
-    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$propdelivery), ",");
+    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$comment,$Vcomment,$propdelivery), ",");
     	}
     	fclose($fp);
     }
