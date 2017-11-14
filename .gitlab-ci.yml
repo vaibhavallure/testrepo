@@ -70,7 +70,6 @@ staging_new:
     - mage-deploy stage-mariatash
     - echo 'Deployed on Staging'
     
-    
 deploy:
   environment: production
   stage: deploy
@@ -81,3 +80,14 @@ deploy:
   script:
     - mage-deploy
     - echo 'Deployed on Production'
+    
+deploy:
+  environment: production
+  stage: deploy
+  tags:
+    - cloud
+  only:
+    - cloud
+  script:
+    - mage-deploy
+    - echo 'Deployed on Production Cloud'
