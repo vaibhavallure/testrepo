@@ -17,9 +17,8 @@ $helper = Mage::helper("inventory");
    <?php endif;?>
    
     <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT && !Mage::helper('allure_vendor')->isUserVendor()):?>
-    <button id="ship_save_btn" form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/confirmdraftorder', array('_secure' => true));?>"><?php echo $helper->__('Confirm order with Selected Items')?></button>
-    <button id="add_custom_item" style="float: right;
-   " class="add_custom_item" onclick="javascript:addProductPopup('<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addProduct',array(_secure=>true,'po_id'=>$order->getPoId(),'store'=>$order->getStockId()))?>')" ><?php echo $helper->__('Add Product')?></button>
+    <button id="ship_save_btn" form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/confirmdraftorder', array('_secure' => true));?>"><?php echo $helper->__('Send to Factory')?></button>
+    <button id="add_custom_item" style="float: right;" class="add_custom_item" onclick="javascript:addProductPopup('<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addProduct',array(_secure=>true,'po_id'=>$order->getPoId(),'store'=>$order->getStockId()))?>')" ><?php echo $helper->__('Add Product')?></button>
    
    <?php endif;?>
    
