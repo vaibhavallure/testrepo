@@ -301,7 +301,9 @@ $j(document).ready(function (){
         //alert("id:"+id+" Qty::"+qty+" Cost::"+cost+" vendor_sku::"+vendor_sku+"comment:"+comment);
         var totalAmount = parseInt($j('#order_total').val());
         //alert(store);
-        
+        //alert(isOneChecked());
+        //console.log("check");
+        //console.log(isOneChecked());
         if(typeof po_id == 'undefined')
     		po_id=Allure.PoId;
     	if(typeof store == 'undefined')
@@ -313,6 +315,8 @@ $j(document).ready(function (){
 	        	 $j(this).removeAttr('checked');
 	        }
 	        else{ 
+	        	if(!isOneChecked())
+	        		totalAmount=0;
 	        	totalAmount=totalAmount + (qty * cost);
 	        	var include = 1;
 	        	var item ={
@@ -368,7 +372,7 @@ function getDraftSelectedItems(){
 
 	$status=Allure.OrderStatus;
 	if($status=="draft"){
-	    if(typeof po_id == 'undefined')
+	   if(typeof po_id == 'undefined')
 	    	po_id=Allure.PoId;
 	    if(typeof store == 'undefined')
 	    	store=Allure.Store;
@@ -392,6 +396,10 @@ function getDraftSelectedItems(){
 	 }
 }
 
+function isOneChecked() {
+	//console.log($j(".include_product:checked").length);
+    return ($j(".include_product:checked").length > 1);
+}
 function updateDraft(data){
 	var sum = 0;
 	data.forEach(function(value) {
