@@ -1851,3 +1851,86 @@ width: 245px;
 	position: absolute;
 	margin-top: 10px;
 }
+
+.mt-myaccount-new .messages{
+	width: 80%;
+    float: right;
+}
+
+.mt-myaccount-new.sales-order-shipment .block-account a {
+    font-size: 12px ! important;
+}
+
+
+
+
+
+#load-open-order-data .order-info{
+	margin-top: 8px;
+	margin-bottom: 20px;
+}
+
+#load-complete-order-data .order-info{
+	margin-top: -2px;
+	margin-bottom: 20px;
+}
+
+
+li.open-custom-order-info-tabs,li.complete-custom-order-info-tabs {
+	cursor: pointer;
+}
+
+li.open-custom-order-info-tabs.active,li.complete-custom-order-info-tabs.active {
+	font-weight: bold ! important;
+	cursor: auto;
+}
+
+
+#load-open-order-data #order-info-tabs ,#load-complete-order-data #order-info-tabs{
+	display: none;
+}
+
+#load-complete-order-data .box-title{
+	display: block ! important;
+}
+
+#load-complete-order-data .box-content , #load-open-order-data .box-content{
+	margin-left: 10px;
+}
+
+.complete-order-view tbody td a , .open-order-view tbody td a{
+	cursor: pointer;
+}
+
+.custom-order-info-ul{
+	float: right;
+}
+.custom-order-info-tabs.order-info-tab-back{
+	float: left;
+}
+
+.complete-order-view #my-orders-table{
+	background: #cfcfd1;
+	margin-top: -18px;
+}
+
+
+.mt-myaccount-new.sales-order-view .col2-left-layout .col-left{
+	width: 18%;
+}
+.mt-myaccount-new.sales-order-view .col2-left-layout .col-main{
+	width: 80%;
+}
+
+
+
+
+.mt-default-addr-delete-link{
+	margin-left: 10px;
+}
+
+
+li.order-info-tab-back{
+	float: right;
+	cursor: pointer;
+}

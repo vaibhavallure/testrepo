@@ -1,0 +1,53 @@
+
+<?php $_links       = $this->getOrderLinks();?>
+<?php $orderType    = $this->getOrderType();?>
+
+<dl class="order-info">
+	<dd>
+        <ul id="custom-order-info-tabs">
+        	<li class="custom-order-info-tabs order-info-tab-back" onclick="<?php if($orderType == "open"):?>closeOpenOrderView()<?php else:?>closeOrderView()<?php endif;?>">Back</li>
+        	<ul class="custom-order-info-ul">
+        		<li onclick="changeOrderView(this)" data-order-type="<?php echo $orderType?>" data-key="info" class="current first <?php echo $orderType?>-custom-order-info-tabs active">Order Information</li>
+        	<?php foreach ($_links as $key => $link):?>
+            	<li class=""> | </li>
+            	<li onclick="changeOrderView(this)" data-order-type="<?php echo $orderType?>" data-key="<?php echo $key?>" class="<?php echo $orderType?>-custom-order-info-tabs">  <?php echo $link?> </li>
+            <?php endforeach;?>
+            </ul>
+       </ul>
+   </dd>
+</dl>
+
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-info" style="display: block;"><?php echo $this->getOrderInfoHtml()?></div>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-invoice" style="display: none;"><?php echo $this->getInvoiceInfoHtml()?></div>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-shipment" style="display: none;"><?php echo $this->getShipmentInfoHtml()?></div>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-creditmemo" style="display: none;"><?php echo $this->getCreditmemoInfoHtml()?></div>
+
+<script>
+jQuery(document).ready(function(){
+	
+});
+
+function closeOpenOrderView(){
+	 jQuery('.open-order-view').show();
+     jQuery('#load-open-order-data').hide();
+     jQuery('.mt-myaccount-new').removeClass('sales-order-view');
+}
+
+function closeOrderView(){
+	 jQuery('.complete-order-view').show();
+     jQuery('#load-complete-order-data').hide();
+     jQuery('.mt-myaccount-new').removeClass('sales-order-view');
+}
+
+function changeOrderView(evt){
+	var order_type = jQuery(evt).attr("data-order-type");
+	var order_key  = jQuery(evt).attr("data-key");
+	jQuery('.'+order_type+'-section').css({"display":"none"});
+	jQuery('#'+order_type+'-order-'+order_key).show();
+	jQuery('.'+order_type+'-custom-order-info-tabs').css({"font-weight":"normal"});
+	jQuery('.'+order_type+'-custom-order-info-tabs').removeClass('active');
+	jQuery(evt).addClass('active');
+}
+	
+</script>
+  

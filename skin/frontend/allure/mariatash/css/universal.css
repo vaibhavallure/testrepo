@@ -1026,3 +1026,36 @@ td.a-right.mt-td-order-view-block{
 /* .mt-myaccount-page .nav-tabs{
 	z-index: 1000 ! important;
 } */
+
+
+
+
+.custom-tab-hr-bar,.custom-tab-hr-bar.last-l{
+	margin: -3px 0 0 0 ;
+}
+
+li.complete-custom-order-info-tabs.active,li.open-custom-order-info-tabs.active{
+	font-weight: bold ! important;
+	margin-top: -3px;
+}
+
+#complete-order-info .back a, #open-order-info .back a{
+	display: none;
+}
+
+li.complete-custom-order-info-tabs,li.open-custom-order-info-tabs{
+	font-size: 12px;
+}
+
+#load-complete-order-data #order-info-tabs,#load-open-order-data #order-info-tabs{
+	display: none;
+}
+
+.order-info li{
+	padding-bottom: 7px;
+}
+
+
+ul#custom-order-info-tabs{
+	margin-top: 10px;
+}
