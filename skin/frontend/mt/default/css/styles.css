@@ -19607,9 +19607,9 @@ input.m-slider {
 .sales-order-view .my-account .data-table td {
     padding: 0 10px;
 }
-.sales-order-view .my-account .data-table td.a-center {
+/* .sales-order-view .my-account .data-table td.a-center {
 	text-align: left!important;
-}
+} */
 
 .product-info-right-quickview .product-special-instructions{
 	margin-bottom: 15px;
