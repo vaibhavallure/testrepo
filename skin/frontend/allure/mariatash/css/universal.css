@@ -1055,6 +1055,10 @@ li.complete-custom-order-info-tabs,li.open-custom-order-info-tabs{
 	padding-bottom: 7px;
 }
 
+.order-info-tab-back{
+	text-decoration: none ! important;
+}
+
 
 ul#custom-order-info-tabs{
 	margin-top: 10px;
