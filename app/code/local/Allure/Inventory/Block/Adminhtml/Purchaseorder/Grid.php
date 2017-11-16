@@ -78,12 +78,12 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     			'index'     => 'ref_no',
     	));
     	
-    	$this->addColumn('items_ordered', array(
+    	/* $this->addColumn('items_ordered', array(
     			'header'    =>Mage::helper('reports')->__('Items Ordered'),
     			'sortable'  =>false,
     			'index'     =>'po_id',
     			'renderer'  => 'inventory/adminhtml_purchaseorder_renderer_items'
-    	));
+    	)); */
     	
     	
     	if(!Mage::helper('allure_vendor')->isUserVendor())
