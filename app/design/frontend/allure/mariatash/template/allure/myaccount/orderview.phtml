@@ -30,12 +30,14 @@ jQuery(document).ready(function(){
 });
 
 function closeOpenOrderView(){
+	jQuery('#mt-openorders-tab #mt-filter-toolbar').show();
 	 jQuery('.open-order-view').show();
      jQuery('#load-open-order-data').hide();
      jQuery('.mt-myaccount-new').removeClass('sales-order-view');
 }
 
 function closeOrderView(){
+	 jQuery('#mt-report-tab #mt-filter-toolbar').show();
 	 jQuery('.complete-order-view').show();
      jQuery('#load-complete-order-data').hide();
      jQuery('.mt-myaccount-new').removeClass('sales-order-view');

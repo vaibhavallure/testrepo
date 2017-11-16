@@ -178,8 +178,8 @@ div.tab button:hover {
 /* Create an active/current tablink class */
 div.tab button.active {
     background-color: #fff;/*#ccc;*/
-    
-    border: none;;
+    border: none;
+    transition-duration: 1s;
 }
 
 /* Style the tab content */
@@ -1866,13 +1866,19 @@ width: 245px;
 
 
 #load-open-order-data .order-info{
-	margin-top: 8px;
-	margin-bottom: 20px;
+	/* margin-top: 8px;
+	margin-bottom: 20px; */
+	margin-top: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 #load-complete-order-data .order-info{
-	margin-top: -2px;
-	margin-bottom: 20px;
+	/* margin-top: -2px;
+	margin-bottom: 20px; */
+	margin-top: 10px;
+	padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 
@@ -1914,6 +1920,24 @@ li.open-custom-order-info-tabs.active,li.complete-custom-order-info-tabs.active 
 	margin-top: -18px;
 }
 
+.mt-custom-order-info{
+	border-bottom: 9px solid #DEDEDE;
+}
+
+.mt-custom-order-info dd{
+	margin-bottom: 10px;
+}
+
+#load-open-order-data #back-to-url,
+#load-complete-order-data #back-to-url{
+	display: none;
+}
+
+#load-open-order-data .my-account .order-date,
+#load-complete-order-data .my-account .order-date {
+    margin-top: 0px;
+}
+
 
 .mt-myaccount-new.sales-order-view .col2-left-layout .col-left{
 	width: 18%;
@@ -1933,4 +1957,15 @@ li.open-custom-order-info-tabs.active,li.complete-custom-order-info-tabs.active 
 li.order-info-tab-back{
 	float: right;
 	cursor: pointer;
+}
+
+.mt-myaccount-page #shopping-cart-table,
+.mt-myaccount-page .data-table#wishlist-table{
+	margin-top: 0px ! important;
+}
+
+
+.complete-order-view #my-orders-table td,
+.open-order-view #my-openorders-table td{
+	padding-top: 6px;
 }

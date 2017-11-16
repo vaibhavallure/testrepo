@@ -97,6 +97,7 @@ function loadOrderView(evt){
 		data: {'order_id':orderId,'order_type':'complete'},
         success: function(data) {
             jQuery('#load-complete-order-data').html(data.data.html);
+            jQuery('#new-mt-myproduct-receipts .block-layered-nav-bg').hide();
             jQuery('.complete-order-view').hide();
             jQuery('#load-complete-order-data').show();
             hideLoadingFancybox1('box-history');

@@ -1063,3 +1063,18 @@ li.complete-custom-order-info-tabs,li.open-custom-order-info-tabs{
 ul#custom-order-info-tabs{
 	margin-top: 10px;
 }
+
+
+/*order items styles*/
+
+.mt-order-view-column{
+	font-weight: 600;
+}
+#load-complete-order-data .item-options{
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+#load-complete-order-data .item-options dt{
+	font-style:normal;
+}
+

@@ -2,7 +2,7 @@
 <?php $_links       = $this->getOrderLinks();?>
 <?php $orderType    = $this->getOrderType();?>
 
-<dl class="order-info">
+<dl class="order-info mt-custom-order-info">
 	<dd>
         <ul id="custom-order-info-tabs">
         	<li class="custom-order-info-tabs order-info-tab-back" onclick="<?php if($orderType == "open"):?>closeOpenOrderView()<?php else:?>closeOrderView()<?php endif;?>">Back</li>
@@ -28,12 +28,14 @@ jQuery(document).ready(function(){
 });
 
 function closeOpenOrderView(){
+	 jQuery('#new-mt-myproduct-openorders .block-layered-nav-bg').show();
 	 jQuery('.open-order-view').show();
      jQuery('#load-open-order-data').hide();
      jQuery('.mt-myaccount-new').removeClass('sales-order-view');
 }
 
 function closeOrderView(){
+	 jQuery('#new-mt-myproduct-receipts .block-layered-nav-bg').show();
 	 jQuery('.complete-order-view').show();
      jQuery('#load-complete-order-data').hide();
      jQuery('.mt-myaccount-new').removeClass('sales-order-view');

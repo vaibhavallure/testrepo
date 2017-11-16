@@ -29,13 +29,13 @@
 <tr class="border mt-order-view-tr" id="order-item-row-<?php echo $_item->getId() ?>">
     <td class="mt-td-order-view-block mt-order-veiw-pr-name">
         <div class="mt-deiv-order-view-allre" style="margin-bottom: 10px">
-            <p style="margin-bottom: 0px">PRODUCT:</p>
+            <p class="mt-order-view-column" style="margin-bottom: 0px">Product Name:</p>
             <h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options">
         <?php foreach ($_options as $_option) : ?>
-            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-            <?php if (!$this->getPrintStatus()): ?>
+            <dt><span class="mt-order-view-column"><?php echo $this->escapeHtml($_option['label']) ?></span><?php echo " - ". $this->escapeHtml( (isset($_option['print_value']) ? $_option['print_value'] : $_option['value']) ) ?></dt>
+            <?php if (0 && !$this->getPrintStatus()): //allure 0 ?>
                 <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
                 <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>>
                     <?php echo $_formatedOptionValue['value'] ?>
@@ -49,7 +49,9 @@
                     <?php endif; ?>
                 </dd>
             <?php else: ?>
+            	<?php if(0): //allure?>
                 <dd><?php echo $this->escapeHtml( (isset($_option['print_value']) ? $_option['print_value'] : $_option['value']) ) ?></dd>
+            	<?php endif; ?>
             <?php endif; ?>
         <?php endforeach; ?>
         </dl>
@@ -73,10 +75,10 @@
             <?php endif; ?>
 
             <span class="nobr">
-            SKU : <?php echo $_item->getSku() ?><br />
+            <span class="mt-order-view-column">SKU :</span> <?php echo $_item->getSku() ?><br />
     	</span>
             <span class="nobr">
-                Shipped Qty : <strong><?php echo $_item->getQty()*1 ?></strong><br />
+                <span class="mt-order-view-column">Shipped Qty :</span> <strong><?php echo $_item->getQty()*1 ?></strong><br />
     	</span>
           <!--  <span>Price : </span>
             <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>

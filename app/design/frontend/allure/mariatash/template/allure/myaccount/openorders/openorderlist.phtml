@@ -230,6 +230,7 @@ function loadOpenOrderView(evt){
 		data: {'order_id':orderId,'order_type':'open'},
         success: function(data) {
             jQuery('#load-open-order-data').html(data.data.html);
+            jQuery('#mt-openorders-tab #mt-filter-toolbar').hide();
             jQuery('.open-order-view').hide();
             jQuery('#load-open-order-data').show();
             hideLoadingFancybox();
