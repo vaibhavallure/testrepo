@@ -1070,10 +1070,12 @@ ul#custom-order-info-tabs{
 .mt-order-view-column{
 	font-weight: 600;
 }
+#load-open-order-data .item-options,
 #load-complete-order-data .item-options{
 	margin-bottom: 0px;
 	padding-bottom: 0px;
 }
+#load-open-order-data .item-options dt,
 #load-complete-order-data .item-options dt{
 	font-style:normal;
 }
