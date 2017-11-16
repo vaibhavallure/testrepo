@@ -39,9 +39,11 @@
 		<th><?php echo $helper->__('PRODUCT NAME')?></th>
 		<th><?php echo $helper->__('ATTRIBUTE')?></th>
 		<th><?php echo $helper->__('CURRENT QTY')?></th>
-		<th><?php echo $helper->__('COST')?></th>
+		<th><?php echo $helper->__('COST/ITEM')?></th>
 		<th><?php echo $helper->__('RECEIVED QTY')?></th>
+		<th><?php echo $helper->__('TOTAL COST')?></th>
 		<th><?php echo $helper->__('TOTAL QTY')?></th>
+		
     	<?php 
     		foreach ($collection as $_product):
     		//$product = Mage::getModel ( 'catalog/product' )->setStoreId($stockId)->load ( $_product->getId() );
@@ -72,27 +74,23 @@
 			</td>
 			<td>
 				
-				<input style="width:50px"  name="qty[<?php echo $_product->getId() ?>][<?php echo "cost" ?>]" 
-					type="text" value=""/>
-				<div>
-					<span>
-						<?php 
-						if($_product->getCost()){
-						    echo round($_product->getCost(),2);
-							}else {
-								echo "Not Set";
-							}
-						?>
-					</span>
-				</div>
+				<input style="width:50px" id="currentcost_<?php echo $_product->getId() ?>"  name="qty[<?php echo $_product->getId() ?>][<?php echo "cost" ?>]" 
+					type="text" value="<?php echo round($_product->getCost(),2)?>" onkeyup="updateTotalCost('<?php echo $_product->getId()?>')"/>
+				
 			</td>
 			<td>
 				<div><span><?php $staockId=0;?></span></div>
-				<input style="width:50px" id="<?php echo $_product->getId() ?>" 
+				<input style="width:50px" class="addedQty_<?php echo $_product->getId() ?>" id="<?php echo $_product->getId() ?>" 
 				name="qty[<?php echo $_product->getId() ?>][<?php echo $staockId ?>]" 
 				type="text" value="" onkeyup='updateReceivingTotalQty(this)'/>
 			</td>
-					
+			<td>
+				<div>
+					<span id="total_cost_<?php echo $_product->getId() ?>">
+						<?php echo "0";?>
+					</span>
+				</div>
+			</td>	
 			<td>
 				<div>
 					<span id="total_<?php echo $_product->getId() ?>">
@@ -100,6 +98,7 @@
 					</span>
 				</div>
 			</td>
+			
 		</tr>		
         <?php endforeach ;?>
     </table>

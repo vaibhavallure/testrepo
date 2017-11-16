@@ -235,6 +235,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         else 
             $sendEmail = $adminEmail;
         
+        
         $copyMethod = Mage::getStoreConfig('allure_vendor/general/copy_method');
        
         if ($copyTo && $copyMethod == 'bcc') {
@@ -276,13 +277,13 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
                 $emailVariables
                 );
         } catch (Exception $e) {
-            Mage::log("Exception Occured".$e->getMessage(), Zend_Log::DEBUG,'mylogs',true);
+            Mage::log("Exception Occured".$e->getMessage(), Zend_Log::DEBUG,'PO_order.log',true);
         }
         if (!$emailTemplate->getSentSuccess()) {
             Mage::log('Mail Exception:', Zend_Log::DEBUG, 'PO_order.log', true);
         }
         else {
-            Mage::log('Email Sucess', Zend_Log::DEBUG, 'PO_order.log', true);
+            Mage::log('Email Sucess:'.$po_id, Zend_Log::DEBUG, 'PO_order.log', true);
         }
     } 
 }
