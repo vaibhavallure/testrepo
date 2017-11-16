@@ -47,7 +47,7 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
         try {
             foreach ($data['qty'] as $product => $key) {
                 $arr = array_filter($data['qty'][$product]);
-                if (! empty($arr)) {
+                if (! empty($arr) && $arr[0]!=0) {
                     $updateStock = Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock(
                             $product, $stockId);
                     if (! is_null($updateStock->getItemId()) &&
@@ -64,6 +64,7 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
                         $inventory->setProductId($product);
                         $inventory->setUserId($admin->getUserId());
                         $inventory->setPreviousQty($previousQty);
+                        $inventory->setCost($arr['cost']);
                         $inventory->setAddedQty($arr[0]);
                         $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
                         $inventory->setStockId($stockId);
@@ -88,6 +89,7 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
                             $inventory->setProductId($product);
                             $inventory->setUserId($admin->getUserId());
                             $inventory->setPreviousQty($previousQty);
+                            $inventory->setCost($arr['cost']);
                             $inventory->setAddedQty($arr[0]);
                             $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
                             $inventory->setStockId($stockId);
