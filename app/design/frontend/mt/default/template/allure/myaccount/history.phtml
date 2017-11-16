@@ -14,13 +14,13 @@
 <?php foreach ($_orders as $_order): ?>
 	<tr>
         <td style="padding-left:10px;">
-        	<a href="<?php echo $this->getViewUrl($_order).'#receipt' ?>" >
+        	<a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>" >
         		<?php echo $_order->getRealOrderId() ?>
         	</a>
         </td>
         
         <td class="a-left" style="padding-left:20px;">
-        	<a href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
+        	<a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
         		<span class="nobr">
 					<?php echo Mage::app()->getLocale()->date(strtotime($_order->getCreatedAtStoreDate()), null, null, false)->toString('MM/dd/yyyy') ?>
 					<?php //echo $this->formatDate($_order->getCreatedAtStoreDate()) ?>
@@ -29,19 +29,19 @@
 		</td>
 		
         <td class="a-left" style="padding-left:0;">
-            <a href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
+            <a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
             	<?php echo $_order->getShippingAddress() ? $this->htmlEscape($_order->getShippingAddress()->getName()) : '&nbsp;' ?>
             </a>
         </td>
         
         <td class="a-left" style="padding-left:18px;">
-            <a href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
+            <a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
                <?php echo $_order->formatPrice($_order->getGrandTotal()) ?>
             </a>
         </td>
                     
         <td class="a-left" style="padding-left:15px;">
-            <a href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
+            <a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
                <?php //echo $_order->getStatusLabel() ?>
                <?php $status = $orderStatusArr[$_order->getState()]?$orderStatusArr[$_order->getState()]:$orderStatusArr1[$_order->getState()]?>
                <?php echo $status?>
@@ -50,7 +50,7 @@
                     
         <td class="a-left" style="padding-left:10px;">
             <span class="nobr">
-            	<a href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
+            	<a onclick="loadOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#receipt' ?>">
             		<?php echo $this->__('View Order') ?>
             	</a>
                 <?php /*<span class="separator">|</span><a href="<?php echo $this->getTrackUrl($_order) ?>"><?php echo $this->__('Track Order') ?></a>&nbsp;*/ ?>

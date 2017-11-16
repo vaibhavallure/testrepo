@@ -310,8 +310,10 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
     			$customerForm->compactData($customerData);
     			$errors = array();
     			
-    			if (!$customer->validatePassword($this->getRequest()->getPost('current_password'))) {
-    				$errors[] = $this->__('Invalid current password');
+    			if($this->getRequest()->getPost('is_change') == 1){ //allure code
+    			    if (!$customer->validatePassword($this->getRequest()->getPost('current_password'))) {
+    			        $errors[] = $this->__('Invalid current password');
+    			    }
     			}
     			
     			// If email change was requested then set flag
