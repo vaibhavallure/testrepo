@@ -1,0 +1,42 @@
+<?php
+
+class Allure_Counterpoint_Block_Adminhtml_Sales_Order_Payment extends Mage_Adminhtml_Block_Sales_Order_Payment
+{
+    protected function _toHtml()
+    {
+        if($this->getParentBlock()->getOrder()->getCreateOrderMethod() == 1){
+            $paymentsData = $this->getParentBlock()->getOrder()->getPayment()->getAdditionalData();
+            $paymentsData = unserialize($paymentsData);
+            if(count($paymentsData) > 1){
+                $params = Mage::app()->getRequest()->getParams();
+                $paymentId = $this->getParentBlock()->getOrder()->getPayment()->getId();
+                if(array_key_exists('invoice_id', $params)){
+                    $paymentArr = $paymentsData[$params['invoice_id']];
+                    $custPaymentId = $paymentArr['payment_id'];
+                    if($paymentId!=$custPaymentId){
+                        $paymentObj = Mage::getModel("sales/order_payment")->load($custPaymentId);
+                        $this->setPayment($paymentObj);
+                    }
+                }else{
+                    $i = 0;
+                    foreach ($paymentsData as $data){
+                        $paymentObj = Mage::getModel("sales/order_payment")
+                                        ->load($data['payment_id']);
+                        $paymentInfoBlock = Mage::helper('payment')->getInfoBlock($paymentObj);
+                        $this->setChild('info_'.$i, $paymentInfoBlock);
+                        $i++;
+                    }
+                    $info = "";
+                    $cnt = 1;
+                    for ($j=0;$j<$i;$j++){
+                        $info = $info ."Payment :- ".$cnt."  ".$this->getChildHtml('info_'.$j)."\n";
+                        $cnt++;
+                    }
+                    return $info;
+                }
+            }
+        }
+        return $this->getChildHtml('info');
+    }
+
+}

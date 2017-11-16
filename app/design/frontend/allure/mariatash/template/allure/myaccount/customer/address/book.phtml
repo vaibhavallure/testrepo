@@ -48,13 +48,18 @@
 
     <div class="addresses-primary">
         <ol>
-        <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()): ?>
+        <?php $_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()?>
+        <?php $billAddrId = Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId();?>
+        <?php if($billAddrId): ?>
             <li class="item">
                 <h3><?php echo $this->__('Primary Billing Address ') ?></h3>
                 <address>
                     <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
                 </address>
-                <p><a data-id=<?php echo Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId()?> onclick="editAddressData(this)" data-url="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a></p>
+                <p>
+                	<a data-id=<?php echo Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId()?> onclick="editAddressData(this)" data-url="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
+                	<a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $billAddrId ?>');"><?php echo $this->__('Delete') ?></a>
+                </p>
            </li>
         <?php else: ?>
             <li class="item">
@@ -65,14 +70,19 @@
         </ol>
     </div>
     <div class="addresses-primary">
-       <ol> 
-        <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()): ?>
+       <ol>
+       	<?php $_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()?> 
+        <?php $shipAddrId = Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId();?>
+        <?php if($shipAddrId): ?>
             <li class="item">
                 <h3><?php echo $this->__('Primary Shipping Address ') ?></h3>
                 <address>
                     <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
                 </address>
-                <p><a data-id="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId()?>" onclick="editAddressData(this)" data-url="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a></p>
+                <p>
+                	<a data-id="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId()?>" onclick="editAddressData(this)" data-url="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
+                	<a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $shipAddrId ?>');"><?php echo $this->__('Delete') ?></a>
+                </p>
             </li>
         <?php else: ?>
             <li class="item empty">
@@ -116,11 +126,13 @@
             </tr>
         <?php endif; ?>
     <?php else: ?>
+    	<?php if(0):?>
         <tr>
             <td class="item empty">
                 <p><?php echo $this->__('You have no additional address entries in your address book.') ?></p>
             </td>
         </tr>
+        <?php endif ?>
     <?php endif ?>
     </table>
     <button onclick="createNewAddress()" type="button" title="<?php echo $this->__('Add New Address') ?>" data-temp="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>

@@ -275,5 +275,12 @@
               </action>          
         </reference>   
     </sales_order_view> 
+    
+    <myaccount_sales_order_view>
+    	<reference name="content">
+    		<block type="myaccount/orderview" name="myaccount.order_view" template="allure/myaccount/orderview.phtml">
+	    	</block>
+	    </reference>
+    </myaccount_sales_order_view>
   	
 </layout>
