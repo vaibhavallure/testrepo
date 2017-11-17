@@ -226,6 +226,18 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 					if ($item->addToCart($cart, $isOwner)) {
 						$addedItems[] = $item->getProduct();
 						$addCnt++;
+					}else{//realted to counterpoint
+					    $productId = $item->getProductId();
+					    if($productId){
+					        $product = Mage::getModel('catalog/product')
+					        ->setStoreId(Mage::app()->getStore()->getId())
+					        ->load($item->getProductId());
+					        $params = array();
+					        $params['qty'] = $item->getQty();
+					        $cart->addProduct($product, $params);
+					        $cart->save()->getQuote()->collectTotals();
+					        $addCnt++;
+					    }
 					}
 					
 				} catch (Mage_Core_Exception $e) {
@@ -343,7 +355,7 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 			
 			$result['top_qty'] = Mage::helper('checkout/cart')->getSummaryCount();
 			
-			$this->loadLayout('myaccount_checkout_cart_layout');
+			//$this->loadLayout('myaccount_checkout_cart_layout');
 			$cart_html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
 			
 			$result['cart_html'] = $cart_html;
