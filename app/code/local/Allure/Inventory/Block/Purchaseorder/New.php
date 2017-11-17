@@ -91,7 +91,7 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		        '{{table}}.stock_id='.$stockId,
 		        'left');
 		}
-		
+		$collection->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
 	  //  $collection->getSelect()->where('lowstock_inventory_item.po_sent=0');
 	    $collection->getSelect()->group('e.entity_id');
 		$collection->addAttributeToFilter('sku', array('nlike' => 'c%','nlike' => 'c%'));
