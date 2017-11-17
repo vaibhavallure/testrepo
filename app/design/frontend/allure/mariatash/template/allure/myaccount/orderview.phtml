@@ -19,10 +19,19 @@
    </dd>
 </dl>
 
-<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-info" style="display: block;"><?php echo $this->getOrderInfoHtml()?></div>
-<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-invoice" style="display: none;"><?php echo $this->getInvoiceInfoHtml()?></div>
-<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-shipment" style="display: none;"><?php echo $this->getShipmentInfoHtml()?></div>
-<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-creditmemo" style="display: none;"><?php echo $this->getCreditmemoInfoHtml()?></div>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-info" style="display: block;"><?php echo $this->getChildHtml("sales_order_view_info");//$this->getOrderInfoHtml()?></div>
+
+<?php if($this->getIsInvoice()):?>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-invoice" style="display: none;"><?php echo $this->getChildHtml("sales_order_invoice_info");//$this->getInvoiceInfoHtml()?></div>
+<?php endif;?>
+
+<?php if($this->getIsShipment()):?>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-shipment" style="display: none;"><?php echo $this->getChildHtml("sales_order_shipment_info");//$this->getShipmentInfoHtml()?></div>
+<?php endif;?>
+
+<?php if($this->getIsCreditmemo()):?>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-creditmemo" style="display: none;"><?php echo $this->getChildHtml("sales_order_creditmemo_info");//$this->getCreditmemoInfoHtml()?></div>
+<?php endif;?>
 
 <script>
 jQuery(document).ready(function(){

@@ -122,51 +122,30 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 	    $order     = Mage::getModel('sales/order')->load($request['order_id']);
 	    $orderType = $request['order_type'];
 	    Mage::register('current_order', $order);
-	    //Mage::log($request,Zend_log::DEBUG,'abc',true);
 	    
-	    $this->loadLayout('sales_order_view');
-	    $info_html = $this->getLayout()->getBlock('my.account.wrapper')->toHtml();
-	    
-	    $invoice_html      = "";
-	    $shipment_html     = "";
-	    $creditmemo_html   = "";
+	    $isInvoice      = false;
+	    $isShipment     = false;
+	    $isCreditmemo   = false;
 	    
 	    if ($order->hasInvoices()) {
-	        $this->loadLayout('sales_order_invoice');
-	        $invoice_html = $this->getLayout()->getBlock('my.account.wrapper')->toHtml();
+	        $isInvoice = true;
 	    }
 	    if ($order->hasShipments()) {
-	        $this->loadLayout('sales_order_shipment');
-	        $shipment_html = $this->getLayout()->getBlock('my.account.wrapper')->toHtml();
+	        $isShipment = true;
 	    }
 	    if ($order->hasCreditmemos()) {
-	        $this->loadLayout('sales_order_creditmemo');
-	        $creditmemo_html = $this->getLayout()->getBlock('my.account.wrapper')->toHtml();
+	        $isCreditmemo = true;
 	    }
 	    
 	    $this->loadLayout('myaccount_sales_order_view');
 	    $block = $this->getLayout()->getBlock('myaccount.order_view');
+	    $html  = $block->setOrderType($orderType)
+	               ->setIsInvoice($isInvoice)
+	               ->setIsShipment($isShipment)
+	               ->setIsCreditmemo($isCreditmemo) 
+	               ->toHtml();
 	    
-	    $html = $this->getLayout()
-	           ->createBlock('myaccount/orderview')
-	           ->setTemplate('allure/myaccount/orderview.phtml')
-	           ->setOrderType($orderType)
-	           ->setOrderInfoHtml($info_html)
-	           ->setShipmentInfoHtml($shipment_html)
-	           ->setInvoiceInfoHtml($invoice_html)
-	           ->setCreditmemoInfoHtml($creditmemo_html)
-	           ->toHtml();
-	    
-	   /*  $html = $block->setOrderInfoHtml($info_html)
-	           ->setOrderType($orderType)
-	           ->setShipmentInfoHtml($shipment_html)
-	           ->setInvoiceInfoHtml($invoice_html)
-	           ->setCreditmemoInfoHtml($creditmemo_html)
-	           ->toHtml(); */
-	    
-	           $data = array('html'=>$html);
-	    /* $data = array('info_html'=>$info_html,'invoice_html'=>$invoice_html,
-	        'shipment_html'=>$shipment_html,'creditmemo_html'=>$creditmemo_html); */
+	    $data = array('html'=>$html);
 	    $jsonData = json_encode(compact('success', 'message', 'data'));
 	    $this->getResponse()->setHeader('Content-type', 'application/json');
 	    $this->getResponse()->setBody($jsonData);
