@@ -236,6 +236,9 @@ function loadOrderView(evt){
             jQuery('.complete-order-view').hide();
             jQuery('#load-complete-order-data').show();
             hideLoadingFancybox();
+            var type = window.location.hash.substr(1);
+            var order_id   = jQuery(evt).attr("data-order-id");
+            window.location.hash = type+"#info#"+order_id;
         }
     });
 }

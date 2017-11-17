@@ -102,6 +102,9 @@ function loadOpenOrderView(evt){
             jQuery('.open-order-view').hide();
             jQuery('#load-open-order-data').show();
             hideLoadingFancybox1('box-history');
+            var type = window.location.hash.substr(1);
+            var order_id   = jQuery(evt).attr("data-order-id");
+            window.location.hash = type+"#info#"+order_id;
         }
     });
 }
