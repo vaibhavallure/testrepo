@@ -140,6 +140,7 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 	    $this->loadLayout('myaccount_sales_order_view');
 	    $block = $this->getLayout()->getBlock('myaccount.order_view');
 	    $html  = $block->setOrderType($orderType)
+	               ->setOrderId($order->getId())
 	               ->setIsInvoice($isInvoice)
 	               ->setIsShipment($isShipment)
 	               ->setIsCreditmemo($isCreditmemo) 
