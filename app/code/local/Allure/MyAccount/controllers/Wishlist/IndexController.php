@@ -226,18 +226,6 @@ class Allure_MyAccount_Wishlist_IndexController extends Mage_Wishlist_IndexContr
 					if ($item->addToCart($cart, $isOwner)) {
 						$addedItems[] = $item->getProduct();
 						$addCnt++;
-					}else{//realted to counterpoint
-					    $productId = $item->getProductId();
-					    if($productId){
-					        $product = Mage::getModel('catalog/product')
-					        ->setStoreId(Mage::app()->getStore()->getId())
-					        ->load($item->getProductId());
-					        $params = array();
-					        $params['qty'] = $item->getQty();
-					        $cart->addProduct($product, $params);
-					        $cart->save()->getQuote()->collectTotals();
-					        $addCnt++;
-					    }
 					}
 					
 				} catch (Mage_Core_Exception $e) {
