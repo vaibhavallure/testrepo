@@ -1211,10 +1211,6 @@
                         <class>sales/quote_address_total_nominal</class>
                         <before>subtotal</before>
                     </nominal>
-                    <discount>
-						<class>sales/order_invoice_total_discount</class>
-						<after>subtotal</after>
-					</discount>
                     <subtotal>
                         <class>sales/quote_address_total_subtotal</class>
                         <after>nominal</after>
