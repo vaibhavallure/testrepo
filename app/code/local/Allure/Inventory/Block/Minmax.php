@@ -61,9 +61,11 @@ class Allure_Inventory_Block_Minmax extends Mage_Page_Block_Html_Pager
 			 'inner',
 			 $storeId
 	   );
-			
+	
+	   $collection->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
 	   $collection->addAttributeToFilter('type_id', 'simple');
 	   $collection->getSelect()->group('e.entity_id');
+	   
 	   /* $collection->addAttributeToFilter('sku', array('nlike' => 'c%','nlike' => 'c%'));
 		  $collection->addAttributeToFilter('sku', array('nlike' => 's%','nlike' => 's%')); */
 	   $collection->setOrder('sku','ASC');

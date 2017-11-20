@@ -68,7 +68,7 @@ class Allure_Inventory_Block_Pagination extends Mage_Page_Block_Html_Pager
 		    'inner',
 		    $stockId
 		    );
-		
+		$collection->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
 		$collection->addAttributeToFilter('type_id', 'simple');
 		$collection->getSelect()->group('e.entity_id');
 		$collection->setOrder('sku','ASC');
