@@ -1,4 +1,6 @@
 <?php
+use Mage\Adminhtml\Test\Block\Sales\Order\Comments;
+
 class Allure_Inventory_Block_Minmax extends Mage_Page_Block_Html_Pager
 {
 	const  PARENT_ITEMS_CATEGORY_ID=426;
@@ -39,13 +41,15 @@ class Allure_Inventory_Block_Minmax extends Mage_Page_Block_Html_Pager
 			);
 		}
 		
-		$collection->getSelect()->join(
+		//Temperory commented as CPMAGENTO Parent category issue
+		
+	/* 	$collection->getSelect()->join(
 		    array('category_product' => 'catalog_category_product'),
 		    'category_product.product_id = e.entity_id',
 		    array('category_id')
-		    );
+		    ); */
 		
-		$collection->getSelect()->where('category_product.category_id = '.$childCategoryId);
+	//	$collection->getSelect()->where('category_product.category_id = '.$childCategoryId);
 			
 		if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
 			 $collection->getSelect()
