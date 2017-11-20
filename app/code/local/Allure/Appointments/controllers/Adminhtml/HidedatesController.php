@@ -28,7 +28,7 @@ class Allure_Appointments_Adminhtml_HidedatesController extends Mage_Adminhtml_C
     
     public function editAction ()
     {
-        $this->_title($this->__("Edit Service Locations"));
+        $this->_title($this->__("Edit Hide Dates"));
         
         $id = $this->getRequest()->getParam("id");
         $model = Mage::getModel('appointments/dates')->load($id);
@@ -36,10 +36,10 @@ class Allure_Appointments_Adminhtml_HidedatesController extends Mage_Adminhtml_C
             Mage::register('appointment_hidedates_data', $model);
             $this->loadLayout();
             $this->_setActiveMenu("allure/appointments");
-            $this->_addBreadcrumb(Mage::helper("adminhtml")->__("Service Location Manager"),
-                Mage::helper("adminhtml")->__("Service Location Manager"));
-            $this->_addBreadcrumb(Mage::helper("adminhtml")->__("Service Location Description"),
-                Mage::helper("adminhtml")->__("Service Location Description"));
+            $this->_addBreadcrumb(Mage::helper("adminhtml")->__("Edit Hide Dates"),
+                Mage::helper("adminhtml")->__("Edit Hide Dates"));
+            $this->_addBreadcrumb(Mage::helper("adminhtml")->__("Edit Hide Dates"),
+                Mage::helper("adminhtml")->__("Edit Hide Dates"));
             $this->getLayout()
             ->getBlock("head")
             ->setCanLoadExtJs(true);
@@ -67,7 +67,7 @@ class Allure_Appointments_Adminhtml_HidedatesController extends Mage_Adminhtml_C
         
         $this->loadLayout();
         //$this->_setActiveMenu('blog/posts');
-        $this->_title('Add new Service Location');
+        $this->_title('Add new Date');
         
         $this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
         
