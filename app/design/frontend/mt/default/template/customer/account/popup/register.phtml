@@ -51,6 +51,10 @@
             <?php endif;?>
             
             <?php 
+            
+                echo $this->getLayout()->createBlock('amazon_payments/script')
+                    ->setTemplate('amazon_payments/script.phtml')->toHtml();
+            
                 echo $this->getLayout()->createBlock('amazon_payments/button')
                     ->setTemplate('amazon_payments/button.phtml')->toHtml(); 
             ?>
