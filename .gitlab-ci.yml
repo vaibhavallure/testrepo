@@ -47,17 +47,16 @@ bugfix:
   script:
     - mage-deploy mt-bugfixes
     - echo 'Deployed on Bugfixes Staging'
-upgrade:
-  environment: upgrade
-  stage: upgrade
+apple_pay:
+  environment: apple_pay
+  stage: staging
   tags:
     - staging
   only:
-    - upgrade
+    - apple_pay
   script:
-    - mage-deploy upgrade.mariatash
-    - echo 'Deployed on Upgrade Staging'
-    
+    - mage-deploy applepay-mariatash
+    - echo 'Deployed on apple_pay Staging'
 staging_new:
   environment: staging
   stage: staging
