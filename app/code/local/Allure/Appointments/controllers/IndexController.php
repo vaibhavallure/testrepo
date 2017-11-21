@@ -785,7 +785,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     		}
     	}
     	
-    	/* $notAvailableDatesCollection=Mage::getModel('appointments/dates')->getCollection()
+    	$notAvailableDatesCollection=Mage::getModel('appointments/dates')->getCollection()
     	->addFieldToFilter('store_id', array('eq' => $storeid))
     	->addFieldToFilter('is_available', array('eq' => '0'))
     	->addFieldToFilter('exclude', array('eq' => '0'));
@@ -803,14 +803,14 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     	    foreach ($avail_wd as $wd){
     	        if(!$notAvailabledays[strtotime($wd)]){
     	            $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
-    	            if($dateCurrent<=$wd){
+    	            if(strtotime($dateCurrent)<=strtotime($wd)){
     	                $available_wdays[strtotime($wd)]=$wd;
     	                }
     	            }
     	            
     	           
     	    }
-    	} */
+    	}
     	
     	$jsonDATA="";
 

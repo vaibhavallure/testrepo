@@ -9259,7 +9259,8 @@ background: url(../images/checkbox-login.png) no-repeat 0 -20px;
 }
 
 .product-view .product-shop .product-options dd {
-    height: 24px;
+    /* height: 24px; */
+    height:auto; /*allure ws02*/
     margin-bottom: 14px;
 }
 
@@ -9919,4 +9920,14 @@ input.giftcard-radio1 {
     display: block;
     /* position: absolute; */
     width: 100% !important;
+}
+
+.mt-mob-wishlist-msg.faveSuccess{
+	text-align: center;
+    width: 100%;
+    margin-left: 0;
+}
+
+#qty-box>div #qty{
+	text-align: center;
 }
