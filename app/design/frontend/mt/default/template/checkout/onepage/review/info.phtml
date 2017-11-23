@@ -137,17 +137,14 @@ switch ($payment->getMethod()) {
     <?php echo $this->getChildHtml('agreements') ?>
     <div class="buttons-set" id="review-buttons-container">
     
-    	<?php  $currentCurrencyCode   = Mage::app()->getStore()->getCurrentCurrencyCode();?>
-    	<?php if(strtoupper($currentCurrencyCode) != "USD"):?>
-        <p class="mt-review-charge-note"><strong>Note: </strong>
-        <?php 
-            $quoteData      = Mage::getModel('checkout/session')->getQuote()->getData();
-            $grandTotal     = $quoteData['grand_total'];
-            $currencyRate   = $quoteData['base_to_quote_rate'];
-            $totalAmt       = round(($grandTotal / $currencyRate),2);
-            echo $this->__("All orders are charged in USD. You will be charged $".$totalAmt);
-        ?>
-        </p>
+    	<?php  $baseGrandTotal = Mage::helper("currencymanager")
+    	               ->getGrandTotalWithBaseCurrency();?>
+    	<?php if(!empty($baseGrandTotal)):?>
+            <p class="mt-review-charge-note"><strong>Note: </strong>
+            <?php 
+            echo $this->__("All orders are charged in USD. You will be charged ".$baseGrandTotal);
+            ?>
+            </p>
         <?php endif;?>
         
         <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a></p>
