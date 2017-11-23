@@ -6,7 +6,7 @@
  * Time: 14:52
  * To change this template use File | Settings | File Templates.
  */
-class Webtex_Giftcards_Model_Sales_Order extends Allure_CheckoutStep_Model_Sales_Order //Mage_Sales_Model_Order
+class Webtex_Giftcards_Model_Sales_Order extends Allure_MultiCheckout_Model_Sales_Order //Mage_Sales_Model_Order
 {
     /**
      * Retrieve order credit memo (refund) availability
