@@ -19705,3 +19705,10 @@ input.giftcard-radio1 {
 .mt-review-charge-note{
 	margin-bottom: 0px !important;
 }
+
+.mt-cart-charge-note{
+	display: block;
+    float: right;
+    width: 250px;
+    text-align: right;
+}
