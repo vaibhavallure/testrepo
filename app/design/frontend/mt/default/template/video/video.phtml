@@ -86,6 +86,14 @@ $videourl = $this->videosArray['video'][0]['url'];
         var iframesrc = urlvideo + videos.video[idVideo].id;
         var iframe = document.getElementById('videoView');
         var url = videos.video[idVideo].url;
+
+        //allure code ws02 start
+        if(url.indexOf(':/') !=- 1){
+        	var newUrl = url.slice( url.indexOf(':/') + 1 );
+        	url = newUrl;
+        }
+      	//allure code end
+        
         var result = url.length;
         var subs = result - 3;
         var ext = url.substring(subs);
