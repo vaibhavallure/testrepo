@@ -19712,3 +19712,10 @@ input.giftcard-radio1 {
     width: 250px;
     text-align: right;
 }
+.paypal-express-review .info-set .box {
+margin: 0 !important;
+}
+.paypal-express-review small {
+font-size: 100% !important;
+}
+
