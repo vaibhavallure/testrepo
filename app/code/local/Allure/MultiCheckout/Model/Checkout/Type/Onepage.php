@@ -545,11 +545,11 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
     {
         // Mage::log(json_encode($this->getQuote()->getShippingAddress()->getData()),Zend_log::DEBUG,'abc',true);
         /* Mage::log($data['shipping_method'],Zend_log::DEBUG,'abc',true); */
-        $isBackorder = $this->isQuoteContainsBackorder();
+        //$isBackorder = $this->isQuoteContainsBackorder();
         $quoteMain = $this->getQuote(); // this is main quote object.
         $_checkoutHelper = Mage::helper('allure_multicheckout');
         $this->changeCustomQuoteStatus();
-        
+        $isBackorder = $_checkoutHelper->isQuoteContainsBackorderProduct();
         if ($isBackorder) {
             $quoteItems = $quoteMain->getAllVisibleItems(); // $quoteMain->getAllItems();
             
@@ -677,13 +677,15 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         $isBackorderAvailable = false;
         $quote = $this->getQuote();
         $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
+        $storeId=Mage::app()->getStore()->getStoreId();
         foreach ($qouteItems as $item) :
-            $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
+        $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+        $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
                 ->getQty();
             
-            $stock_qty = intval($item->getProduct()
+            /* $stock_qty = intval($item->getProduct()
                 ->getStockItem()
-                ->getQty());
+                ->getQty()); */
             if ($stock_qty < $item->getQty()) :
                 $isBackorderAvailable = true;
                 break;
