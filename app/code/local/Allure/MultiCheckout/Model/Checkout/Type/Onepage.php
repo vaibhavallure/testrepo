@@ -1066,7 +1066,6 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     $this->_prepareCustomerQuote();
                     break;
             }
-            Mage::log("Entry",Zend_log::DEBUG,'abc',true);
             /* 1st : In stock product order Start */
             $backOrderedQuote = $this->getQuoteBackordered();
             $quote = $this->getQuoteOrdered();
@@ -1230,17 +1229,15 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                             ));
                     $redirectUrl = $quote->getPayment()->getOrderPlaceRedirectUrl();
                     $redirectUrl2 = $redirectUrl;
-                    Mage::log("BEFORE IF",Zend_log::DEBUG,'abc',true);
                     if ((! $redirectUrl1 && $firstOrder->getCanSendNewEmailFlag()) &&
                              (! $redirectUrl2 && $secondOrder->getCanSendNewEmailFlag())) {
                         try {
-                            Mage::log("IN IF",Zend_log::DEBUG,'abc',true);
                             Mage::log(get_class($firstOrder),Zend_log::DEBUG,'abc',true);
                             
                             $firstOrder->queueNewOrderSplitEmail($secondOrder->getId());
                         } catch (Exception $e) {
                             Mage::logException($e);
-                            Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,'abc',true);
+                            Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,'multiorder.log',true);
                             
                         }
                     }

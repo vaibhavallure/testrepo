@@ -25,7 +25,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
         $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
         $storeId = Mage::app()->getStore()->getStoreId();
         foreach ($qouteItems as $item) :
-        $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+        $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
         $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
             ->getQty();
             
