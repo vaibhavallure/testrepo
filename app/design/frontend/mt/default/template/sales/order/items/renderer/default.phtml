@@ -30,8 +30,8 @@
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options">
         <?php foreach ($_options as $_option) : ?>
-            <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
-            <?php if (!$this->getPrintStatus()): ?>
+            <dt><?php echo $this->htmlEscape($_option['label']) ?><?php echo " -  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? $_option['print_value'] : $_option['value']) )) ?></dt>
+            <?php if (0 && !$this->getPrintStatus()): //allure add 0?>
                 <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
                 <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>>
                     <?php echo $_formatedOptionValue['value'] ?>
@@ -45,9 +45,11 @@
                     <?php endif; ?>
                 </dd>
             <?php else: ?>
+            	<?php if(0): //allure add?>
                 <dd>
                     <?php echo nl2br($this->htmlEscape( (isset($_option['print_value']) ? $_option['print_value'] : $_option['value']) )) ?>
                 </dd>
+                <?php endif;?>
             <?php endif; ?>
         <?php endforeach; ?>
         </dl>
@@ -198,7 +200,7 @@
             </span>
         <?php endif; ?>
     </td>
-    <td class="a-right">
+    <td class="a-center">
         <span class="nobr">
             <strong><?php echo $this->getItem()->getQtyOrdered()*1 ?></strong><br />
                 <!--<?php // if ($this->getItem()->getQtyOrdered() > 0): ?>
@@ -215,7 +217,7 @@
         <?php // endif; ?>-->
         </span>
     </td>
-    <td class="a-right print-price">
+    <td class="a-center print-price">
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
             <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>

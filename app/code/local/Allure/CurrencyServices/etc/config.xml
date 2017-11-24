@@ -13,6 +13,14 @@
         <currency>
             <import>
                 <services>
+                    <currencylayer>
+                        <name>Currency Layer</name>
+                        <model>Allure_CurrencyServices_Model_CurrencyLayer</model>
+                    </currencylayer>
+                    <fixer>
+                        <name>Fixer</name>
+                        <model>Allure_CurrencyServices_Model_Fixer</model>
+                    </fixer>
                     <yahoofinance>
                         <name>Yahoo Finance</name>
                         <model>Allure_CurrencyServices_Model_Yahoo</model>
@@ -26,7 +34,7 @@
         </currency>
         <models>
             <allure_currencyservices>
-                <class>Allure_CurrencyServices_Model_Yahoo</class>
+                <class>Allure_CurrencyServices_Model</class>
             </allure_currencyservices>
         </models>
     </global>

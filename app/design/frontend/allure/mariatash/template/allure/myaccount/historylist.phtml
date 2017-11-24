@@ -42,7 +42,7 @@
 
 <?php $totalPages = $_orders->getLastPageNumber();?>
 	
-<div class="col2-set">
+<div class="col2-set complete-order-view">
     <div class="box">
         <div class="box-title">
             <h3>
@@ -120,6 +120,10 @@
     </div>
     
 </div>
+
+<div id="load-complete-order-data" style="width: 100%; display: none;"></div>
+        
+
 <?php endif;?>
 
 
@@ -216,6 +220,27 @@ function moveToNextPage(evt){
 		loadOrdersData();
 	}
 	
+}
+
+function loadOrderView(evt){
+	var orderId = jQuery(evt).attr("data-order-id");
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/loadOrderView';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'order_id':orderId,'order_type':'complete'},
+        success: function(data) {
+            jQuery('#load-complete-order-data').html(data.data.html);
+            jQuery('#mt-report-tab #mt-filter-toolbar').hide();
+            jQuery('.complete-order-view').hide();
+            jQuery('#load-complete-order-data').show();
+            hideLoadingFancybox();
+            var type = window.location.hash.substr(1);
+            var order_id   = jQuery(evt).attr("data-order-id");
+            window.location.hash = type+"#info#"+order_id;
+        }
+    });
 }
 
 </script>
