@@ -19701,3 +19701,21 @@ input.giftcard-radio1 {
 .email_delivery_option2{
 	    margin-left: 138px !important;
 }
+
+.mt-review-charge-note{
+	margin-bottom: 0px !important;
+}
+
+.mt-cart-charge-note{
+	display: block;
+    float: right;
+    width: 250px;
+    text-align: right;
+}
+.paypal-express-review .info-set .box {
+margin: 0 !important;
+}
+.paypal-express-review small {
+font-size: 100% !important;
+}
+

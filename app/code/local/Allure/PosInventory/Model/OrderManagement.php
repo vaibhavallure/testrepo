@@ -226,20 +226,19 @@ class Allure_PosInventory_Model_OrderManagement extends  Ebizmarts_BakerlooRestf
                     $baseGrandTotal += $extraDiscount;
                 }
                 
-                if($subtotal >= $refundedAmt){
-                    $refundedAmt = $subtotal - $refundedAmt;
+                $totalPaidAmt = $payload['payment']['amountAsPaid'];
+                if($subtotal < 0){
+                    $refundedAmt  =  (-1) * $subtotal;
+                    $totalPaidAmt = 0;
                 }else{
-                    if($subtotal < 0){
-                        $refundedAmt = $refundedAmt + $subtotal;
-                    }else{
-                        $refundedAmt = $refundedAmt - $subtotal;
-                    }
+                    $refundedAmt = 0;
+                    //$totalPaidAmt = $subtotal;
                 }
+                
                 $order->setSubtotalRefunded($refundedAmt);
                 $order->setBaseSubtotalRefunded($refundedAmt);
                 $order->setTotalRefunded($refundedAmt);
                 
-                $totalPaidAmt = $payload['payment']['amountAsPaid'];
                 $order->setSubtotal($subtotal);
                 $order->setBaseSubtotal($baseSubtotal);
                 $order->setGrandTotal($grandTotal);
