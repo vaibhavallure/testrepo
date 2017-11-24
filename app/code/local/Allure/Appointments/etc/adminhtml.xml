@@ -37,9 +37,14 @@
 								<sort_order>5</sort_order>
 								<action>admin_appointments/adminhtml_appointments/print</action>
 							</print>
+							<hidedates module="appointments">
+								<title>Hide Dates from Frontend</title>
+								<sort_order>6</sort_order>
+								<action>admin_appointments/adminhtml_hidedates</action>
+							</hidedates>
 							<settings module="appointments">
 								<title>Settings</title>
-								<sort_order>6</sort_order>
+								<sort_order>7</sort_order>
 								<action>adminhtml/system_config/edit/section/appointments</action>
 							</settings>
 						</children>

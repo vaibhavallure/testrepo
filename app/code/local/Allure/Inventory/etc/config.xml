@@ -4,7 +4,7 @@
     <modules>
         <Allure_Inventory>
 			<name>Allure - Inventory Management</name>
-            <version>1.0.2</version>
+            <version>1.0.5</version>
         </Allure_Inventory>
     </modules>
     <frontend>
@@ -114,6 +114,9 @@
                      <customitem>
                          <table>allure_inventory_custom_item</table>
                      </customitem>
+                     <draftitems>
+                         <table>allure_inventory_purchase_draft</table>
+                     </draftitems>
 	             </entities>
 	       </allure_inventory_resource>
         </models>
@@ -138,4 +141,12 @@
             </inventory_read>
         </resources>
     </global>
+    
+    <default>
+	     <inventory>
+	     		<category>
+	     			<parent_category_id>426</parent_category_id>
+	     		</category>
+	     </inventory>
+    </default>
 </config>

@@ -1,0 +1,137 @@
+<?php 
+	$collection = $this->getCollection();
+	$helper = Mage::helper("inventory");
+?>
+
+<div class="content-header">
+    <h3 class="icon-head"><?php echo $helper->__('Add items to PO')?></h3>
+    <button id="close" style="float:right" class="close" onclick="closeWindow();" ><?php echo $helper->__('Close')?></button>
+</div>
+
+<div class="success" style="display: none;"></div>
+<div class="input-group">
+	<label><?php echo $helper->__('STORE')?></label>
+	<?php echo $this->getChildHtml('inventory_store');?>
+	
+  	<label><?php echo $helper->__('SCAN OR ENTER')?></label>
+  	<input id="search" name="search" type="text" maxlength="150" placeholder="Sku,Name" 
+  		value="<?php if($_GET['search']!=null){echo $_GET['search'];}?>" 
+  		class="form-control"  aria-describedby="basic-addon2"/>
+  	<button type="button" onclick="submitsearch()"><?php echo $helper->__('Search')?></button>
+  	<button type="button" onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/new')?>'">
+  		<?php echo $helper->__('Reset Filter')?></button>
+</div>
+
+<div class="pager-inventory">
+	<?php echo $this->getPagerHtml(); ?>
+</div>
+<div class="prod-data">
+
+	<table class="iventory-product table" style="width: 100%">
+		<th><?php echo $helper->__('Image')?></th>
+		<th><?php echo $helper->__('PRODUCT NAME')?></th>
+        <th><?php echo $helper->__('Current Qty')?></th>
+		<th><?php echo $helper->__('Vendor Sku')?></th>
+		<th><?php echo $helper->__('Order Qty')?></th>
+		<th><?php echo $helper->__('Cost/Item')?></th>
+		<th><?php echo $helper->__('VMT Comment')?></th>
+		<th><?php echo $helper->__('Include ?')?></th>
+					
+		<?php 
+		$websiteId=1;
+		if(Mage::getSingleton('core/session')->getMyWebsiteId())
+			$websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
+		$website=Mage::getModel( "core/website" )->load($websiteId);
+		$stockId=$website->getStockId();
+		?>
+					
+	    <?php 
+	    	foreach ($collection as $_product):
+	    	$product = Mage::getModel ( 'catalog/product' )->setStoreId($stockId)->load ( $_product->getId() );
+	    ?>
+			    <tr id="inventory-row-<?php echo $_product->getId(); ?>" class="inventory_tr">
+
+					<td><img style="width: 50px; height: 50px;" class="product_inventory_thumbnail" src="<?php  echo  Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75);?>"/></td>
+					
+					<td style="padding-left:20px;text-align:left">
+						<p><?php echo $product->getName();?></p>
+						<p><strong>SKU:</strong><?php echo $product->getSku();?></p>
+				    </td>
+				
+					
+					<td>
+						<div>
+							<label><?php echo round($_product->getQty())?></label>
+						</div>
+						
+				   </td>
+				    <td><input id="vendor_sku_<?php  echo $product->getId() ?>" style="width:150px"  
+					 		name="qty[<?php echo $product->getId() ?>][<?php echo "vendor_sku" ?>]" 
+					 		type="text" value="<?php echo $product->getVendorItemNo()?>"/>
+					</td>
+					<td>
+					 	<input id="requested_qty_<?php  echo $product->getId() ?>" style="width:50px"  
+					 		name="qty[<?php echo $product->getId() ?>][<?php echo "max_qty" ?>]" 
+					 		type="text" value="<?php echo round($product->getMaxQty())?>"/>
+					</td>
+						
+					<td>
+						<input id="cost_<?php  echo $product->getId() ?>" style="width:50px"  
+							 name="qty[<?php echo $product->getId() ?>][<?php echo "cost" ?>]" 
+							type="text" value="<?php echo round($product->getCost(),2)?>" />
+							
+						<div>
+							<span>
+								<?php 
+								if($product->getCost()){ 
+									echo  round($product->getCost(),2);
+									}else {
+										echo "0";
+									}
+								?>
+							</span>
+						</div>
+					</td>
+					<td>
+						<div>
+							<input type="hidden" id="is_custom_<?php echo $_product->getId()?>"name="qty[<?php echo $_product->getId() ?>][<?php echo "is_custom" ?>]" value="0">
+							<textarea id="admin_comment_<?php echo $_product->getId()?>" cols="15" rows="3"  name="qty[<?php echo $_product->getId() ?>][<?php echo "admin_comment" ?>]"/></textarea>
+						</div>
+					</td>
+					<td>
+						<div>
+							<input id="<?php echo $product->getId()?>" type="checkbox" class="include_product" name="inclide"/>
+							<br/>
+							<?php $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product->getId())
+							->addFieldToFilter('is_custom',0)->addFieldToFilter('stock_id',$stockId)->setOrder('po_id','DESC');
+							if(count($items)):
+							$orderDetails=Mage::getModel('inventory/purchaseorder')->load($items->getFirstItem()->getPoId());
+							?>
+							<label><?php echo date('Y-m-d',strtotime($orderDetails->getCreatedDate()))."(".$items->getFirstItem()->getRequestedQty().")"?></label>
+						   <?php endif;?>
+						</div>
+					</td>
+				</tr>		
+	    <?php endforeach ;?>
+	 </table>
+	 <div class="pager-inventory">
+		<?php echo $this->getPagerHtml(); ?>
+	</div>
+</div>  
+<?php if($this->getRequest()->getParam('po_id')):?>
+<?php $order=Mage::getModel('inventory/purchaseorder')->load($this->getRequest()->getParam('po_id'));?>
+<?php endif;?>
+<script type="text/javascript">
+if (typeof Allure == "undefined") {
+	   var Allure = {};
+	}
+Allure.OrderStatus = '<?php echo $order->getStatus(); ?>';
+Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+Allure.PoId = '<?php echo $this->getRequest()->getParam('po_id'); ?>';
+Allure.Store = '<?php echo $this->getRequest()->getParam('store'); ?>';
+Allure.AddConfirmProduct = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addconfirmproduct', array('_secure' => true));?>';
+Allure.GetDraftSelectedItems = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/getdraftselecteditems', array('_secure' => true));?>';
+function closeWindow() {
+	open(location, '_self').close();
+}
+</script>   	 

@@ -52,7 +52,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         // mt-allure code
         $this->getQuote()->setDeliveryMethod('one_ship');
         // change custom quote status
-        $this->changeCustsomQuoteStatus();
+        $this->changeCustomQuoteStatus();
         
         if ($collectTotals) {
             $this->getQuote()->collectTotals();
@@ -404,12 +404,17 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         }
         $quote = $this->getQuote();
         $_checkoutHelper = Mage::helper('allure_multicheckout');
+
+        $quote->setIsReadyToShip(0);
+        $quote->setWholesalePayOption($_checkoutHelper::PAY_NOW);
         
         if (isset($data['wholesale_pay_option']) && ! empty($data['wholesale_pay_option'])) {
             if ($_checkoutHelper::PAY_AS_SHIP == $data['wholesale_pay_option']) {
-                if ($this->isQuoteContainsBackorder() &&
-                         strtolower($quote->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP))
+
+                if ($this->isQuoteContainsBackorder() && strtolower($quote->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP)) {
+                    $quote->setWholesalePayOption($_checkoutHelper::PAY_AS_SHIP);
                     $quote->setIsReadyToShip(1);
+                }
             }
         }
         
@@ -446,8 +451,10 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             if (isset($data['wholesale_pay_option']) && ! empty($data['wholesale_pay_option'])) {
                 if ($_checkoutHelper::PAY_AS_SHIP == $data['wholesale_pay_option']) {
                     $quote->setIsReadyToShip(1);
+                    $quote->setWholesalePayOption($_checkoutHelper::PAY_AS_SHIP);
                 } else {
                     $quote->setIsReadyToShip(0);
+                    $quote->setWholesalePayOption($_checkoutHelper::PAY_NOW);
                 }
                 $quote->save();
             }
@@ -462,11 +469,15 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
 
     private function applyPaymentToSecondShipment ($data)
     {
-        $quoteOrdered = $this->getQuoteOrdered();
-        $quoteBackOrdered = $this->getQuoteBackordered();
         $_checkoutHelper = Mage::helper('allure_multicheckout');
+
+        $quoteOrdered = $this->getQuoteOrdered();
+
         if ($quoteOrdered) {
             $quoteOrdered->getPayment()->setId(null);
+            $quoteOrdered->setWholesalePayOption($_checkoutHelper::PAY_NOW);
+            $quoteOrdered->setIsReadyToShip(0);
+
             if ($quoteOrdered->isVirtual()) {
                 $quoteOrdered->getBillingAddress()->setPaymentMethod(isset($data['method']) ? $data['method'] : null);
             } else {
@@ -489,13 +500,19 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             
             $quoteOrdered->save();
         }
+
+        $quoteBackOrdered = $this->getQuoteBackordered();
         
         if ($quoteBackOrdered) {
             $quoteBackOrdered->getPayment()->setId(null);
+            $quoteBackOrdered->setWholesalePayOption($_checkoutHelper::PAY_NOW);
+            $quoteBackOrdered->setIsReadyToShip(0);
+
             if (isset($data['wholesale_pay_option']) && ! empty($data['wholesale_pay_option'])) {
-                if ($_checkoutHelper::PAY_AS_SHIP == $data['wholesale_pay_option'])
-                    
+                if ($_checkoutHelper::PAY_AS_SHIP == $data['wholesale_pay_option']) {
+                    $quoteBackOrdered->setWholesalePayOption($_checkoutHelper::PAY_AS_SHIP);
                     $quoteBackOrdered->setIsReadyToShip(1);
+                }
             }
             
             if ($quoteBackOrdered->isVirtual()) {
@@ -528,11 +545,11 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
     {
         // Mage::log(json_encode($this->getQuote()->getShippingAddress()->getData()),Zend_log::DEBUG,'abc',true);
         /* Mage::log($data['shipping_method'],Zend_log::DEBUG,'abc',true); */
-        $isBackorder = $this->isQuoteContainsBackorder();
+        //$isBackorder = $this->isQuoteContainsBackorder();
         $quoteMain = $this->getQuote(); // this is main quote object.
         $_checkoutHelper = Mage::helper('allure_multicheckout');
-        $this->changeCustsomQuoteStatus();
-        
+        $this->changeCustomQuoteStatus();
+        $isBackorder = $_checkoutHelper->isQuoteContainsBackorderProduct();
         if ($isBackorder) {
             $quoteItems = $quoteMain->getAllVisibleItems(); // $quoteMain->getAllItems();
             
@@ -568,9 +585,8 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 //Added in parent child
                 
                 $storeId=Mage::app()->getStore()->getStoreId();
-                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
-                $productInvryCount = Mage::getModel('cataloginventory/stock_item')
-                ->loadByProduct($_product,$storeId);
+                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
+                $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product,$storeId);
                 
                 $stock_qty = intval($productInvryCount->getQty());
                 if ($stock_qty < $item->getQty() ){
@@ -661,13 +677,15 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         $isBackorderAvailable = false;
         $quote = $this->getQuote();
         $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
+        $storeId=Mage::app()->getStore()->getStoreId();
         foreach ($qouteItems as $item) :
-            $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
+        $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+        $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
                 ->getQty();
             
-            $stock_qty = intval($item->getProduct()
+            /* $stock_qty = intval($item->getProduct()
                 ->getStockItem()
-                ->getQty());
+                ->getQty()); */
             if ($stock_qty < $item->getQty()) :
                 $isBackorderAvailable = true;
                 break;
@@ -684,7 +702,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         return $isBackorderAvailable;
     }
 
-    public function changeCustsomQuoteStatus ()
+    public function changeCustomQuoteStatus ()
     {
         $_checkoutHelper = Mage::helper('allure_multicheckout');
         $orederdQuoteId = $this->getCheckoutOrdered()->getOrdered();
@@ -1026,6 +1044,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
 
     public function saveCustomOrder ($data)
     {
+       
         $_checkoutHelper = Mage::helper('allure_multicheckout');
         if (strtolower($this->getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP) ||
                  $this->getQuote()->getDeliveryMethod() == "") {
@@ -1047,7 +1066,6 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     $this->_prepareCustomerQuote();
                     break;
             }
-            
             /* 1st : In stock product order Start */
             $backOrderedQuote = $this->getQuoteBackordered();
             $quote = $this->getQuoteOrdered();
@@ -1064,6 +1082,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             Mage::log(json_encode($data), Zend_log::DEBUG, 'multiorder.log', true);
             Mage::log("\n********************** IN STOCK END **************************", Zend_Log::DEBUG,
                     'multiorder.log', true);
+           
             if (! $quote->getIsCheckoutCart()) {
                 $quote->collectTotals()->save();
                 $quote->getPayment()->importData($data);
@@ -1210,13 +1229,16 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                             ));
                     $redirectUrl = $quote->getPayment()->getOrderPlaceRedirectUrl();
                     $redirectUrl2 = $redirectUrl;
-                    
                     if ((! $redirectUrl1 && $firstOrder->getCanSendNewEmailFlag()) &&
                              (! $redirectUrl2 && $secondOrder->getCanSendNewEmailFlag())) {
                         try {
+                            Mage::log(get_class($firstOrder),Zend_log::DEBUG,'abc',true);
+                            
                             $firstOrder->queueNewOrderSplitEmail($secondOrder->getId());
                         } catch (Exception $e) {
                             Mage::logException($e);
+                            Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,'multiorder.log',true);
+                            
                         }
                     }
                     
