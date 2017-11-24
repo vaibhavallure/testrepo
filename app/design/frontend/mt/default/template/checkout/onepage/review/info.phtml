@@ -138,11 +138,13 @@ switch ($payment->getMethod()) {
     <div class="buttons-set" id="review-buttons-container">
     
     	<?php  $baseGrandTotal = Mage::helper("currencymanager")
-    	               ->getGrandTotalWithBaseCurrency();?>
+    	               ->getGrandTotalWithBaseCurrency();
+    	       $currentCurrency = strtoupper(Mage::app()->getStore()->getBaseCurrencyCode());
+    	?>
     	<?php if(!empty($baseGrandTotal)):?>
             <p class="mt-review-charge-note"><strong>Note: </strong>
             <?php 
-            echo $this->__("All orders are charged in USD. You will be charged ".$baseGrandTotal);
+            echo $this->__("All orders are charged in ".$currentCurrency.". You will be charged ".$baseGrandTotal);
             ?>
             </p>
         <?php endif;?>
