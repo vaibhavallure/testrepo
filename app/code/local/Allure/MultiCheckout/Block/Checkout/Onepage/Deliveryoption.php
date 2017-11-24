@@ -23,16 +23,16 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
         $isBackorderAvailable = false;
         $quote = $this->getQuote();
         $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
+        $storeId = Mage::app()->getStore()->getStoreId();
         foreach ($qouteItems as $item) :
-            $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
-                ->getQty();
+        $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+        $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
+            ->getQty();
             
-            $stock_qty = intval($item->getProduct()
+            /* $stock_qty = intval($item->getProduct()
                 ->getStockItem()
-                ->getQty());
-            if ($stock_qty < $item->getQty() && $item->getProduct()
-                ->getStockItem()
-                ->getIsInStock()) :
+                ->getQty()); */
+            if ($stock_qty < $item->getQty() ) :
                 // if($productInventoryQty<=0):
                 $isBackorderAvailable = true;
                 break;
@@ -48,16 +48,18 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
         $isAvailable = false;
         $quote = $this->getQuote();
         $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
+        $storeId = Mage::app()->getStore()->getStoreId();
         foreach ($qouteItems as $item) :
-            $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
+            /* $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
                 ->getQty();
             
             $stock_qty = intval($item->getProduct()
                 ->getStockItem()
-                ->getQty());
-            if (! ($stock_qty < $item->getQty() && $item->getProduct()
-                ->getStockItem()
-                ->getIsInStock())) :
+                ->getQty()); */
+            $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+            $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
+                ->getQty();
+            if (! ($stock_qty < $item->getQty())) :
                 // if($productInventoryQty > 0):
                 $isAvailable = true;
                 break;
@@ -70,7 +72,9 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
 
     public function isShowTwoShipment ()
     {
-        $isBackOrder = $this->isQuoteContainsBackorder();
+        //$isBackOrder = $this->isQuoteContainsBackorder();
+        $_checkoutHelper = Mage::helper('allure_multicheckout');
+        $isBackOrder =  $_checkoutHelper->isQuoteContainsBackorderProduct();
         $isAvailable = $this->isQuoteContainsAvailableProducts();
         if ($isBackOrder && $isAvailable)
             return true;
@@ -79,7 +83,9 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
 
     public function isContainsBackorder ()
     {
-        return $this->isQuoteContainsBackorder();
+        $_checkoutHelper = Mage::helper('allure_multicheckout');
+        return $_checkoutHelper->isQuoteContainsBackorderProduct();
+        //return $this->isQuoteContainsBackorder();
     }
 
     public function isUSCountry ()

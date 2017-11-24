@@ -115,4 +115,29 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
         else
             return false;
     }
+    
+    /**
+     * return true|false if quote contains out of stock product
+     */
+    public function isQuoteContainsBackorderProduct(){
+        $isBackOrderProduct = false;
+        $storeId            = Mage::app()->getStore()->getStoreId();
+        $quote              = Mage::getSingleton("checkout/session")->getQuote();
+        $qouteItems         = $quote->getAllVisibleItems();
+        foreach ($qouteItems as $item){
+            $sku = $item->getProduct()->getSku();
+            $_product = Mage::getModel('catalog/product')
+                            ->setStoreId($storeId)
+                            ->loadByAttribute('sku',$sku);
+            $stock_qty = Mage::getModel('cataloginventory/stock_item')
+                            ->loadByProduct($_product)
+                            ->getQty();
+            
+           if ($stock_qty < $item->getQty()) {
+               $isBackOrderProduct = true;
+               break;
+           }
+        }
+        return $isBackOrderProduct;
+    }
 }
