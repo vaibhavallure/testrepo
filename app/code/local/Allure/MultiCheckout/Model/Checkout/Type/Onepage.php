@@ -585,7 +585,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 //Added in parent child
                 
                 $storeId=Mage::app()->getStore()->getStoreId();
-                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
                 $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product,$storeId);
                 
                 $stock_qty = intval($productInvryCount->getQty());

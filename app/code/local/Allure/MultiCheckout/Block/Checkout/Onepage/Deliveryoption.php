@@ -56,7 +56,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
             $stock_qty = intval($item->getProduct()
                 ->getStockItem()
                 ->getQty()); */
-            $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+            $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
             $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
                 ->getQty();
             if (! ($stock_qty < $item->getQty())) :
