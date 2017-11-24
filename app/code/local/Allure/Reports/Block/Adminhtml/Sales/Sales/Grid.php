@@ -178,6 +178,13 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                 addFieldToFilter("status",array("in"=>$order_status));
         }
         
+        $counterpointStationIds = $filterData['counterpoint_sta_id'];
+        if(!empty($counterpointStationIds)){
+              $counterpointStationIds = explode(",", $counterpointStationIds[0]);
+              $collection = $collection->
+              addFieldToFilter("counterpoint_sta_id",array("in"=>$counterpointStationIds));
+        }
+        
         $reportType = $filterData['report_type'];
         $order_date_col= "created_at";
         if($reportType != "created_at_order"){

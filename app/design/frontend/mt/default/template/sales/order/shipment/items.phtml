@@ -37,10 +37,16 @@
     <?php  if ($_order->getTracksCollection()->count()) : ?>
         <a class="track-all-shipments arrow-active" href="javascript:;" title="<?php echo $this->__('Track all shipment(s)') ?>"><?php echo $this->__('Track all shipments') ?></a> <span class="separator">|</span>
     <?php endif; ?>
-    <a href="<?php echo $this->getPrintAllShipmentsUrl($_order) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print All Shipments') ?></a>
+    <?php 
+        $_allShipmentPrintUrl = Mage::getUrl('sales/order/printShipment', array('order_id' => $_order->getId()));
+    ?>
+    <a href="<?php echo $_allShipmentPrintUrl;//$this->getPrintAllShipmentsUrl($_order) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print All Shipments') ?></a>
 </p>
 <?php foreach ($_order->getShipmentsCollection() as $_shipment): ?>
-<h2 class="sub-title"><?php echo $this->__('Shipment #') ?><?php echo $_shipment->getIncrementId(); ?> <span class="separator">|</span> <a href="<?php echo $this->getPrintShipmentUrl($_shipment) ?>" onclick="this.target='_blank'" class="link-print link-print-abs"><?php echo $this->__('Print Shipment') ?></a></h2>
+<?php 
+    $_shipmentPrintUrl = Mage::getUrl('sales/order/printShipment', array('shipment_id' => $_shipment->getId()));
+?>
+<h2 class="sub-title"><?php echo $this->__('Shipment #') ?><?php echo $_shipment->getIncrementId(); ?> <span class="separator">|</span> <a href="<?php echo $_shipmentPrintUrl;//$this->getPrintShipmentUrl($_shipment) ?>" onclick="this.target='_blank'" class="link-print link-print-abs"><?php echo $this->__('Print Shipment') ?></a></h2>
 <?php $tracks = $_shipment->getTracksCollection(); ?>
 <?php  if ($tracks->count()): ?>
 	<div style="clear: both;"></div>
@@ -74,23 +80,23 @@
     </table>
     <script type="text/javascript">decorateTable('my-tracking-table-<?php echo $_shipment->getId(); ?>')</script>
 <?php  endif; ?>
-<h3 class="table-caption"><?php echo $this->__('Items Shipped') ?></h3>
+<h2 class="table-caption"><?php echo $this->__('Items Shipped') ?></h2>
 <table class="data-table" id="my-shipment-table-<?php echo $_shipment->getId(); ?>">
     <col />
     <col width="1" />
     <col width="1" />
     <thead>
         <tr>
-            <th><?php echo $this->__('Product Name') ?></th>
-            <th><?php echo $this->__('SKU') ?></th>
-            <th class="a-center"><span class="nobr"><?php echo $this->__('Qty Shipped') ?></span></th>
+            <th bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Product Name') ?></th>
+            <th class="mt-header-sku" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('SKU') ?></th>
+            <th bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px" class="a-center"><span class="nobr"><?php echo $this->__('Qty Shipped') ?></span></th>
         </tr>
     </thead>
     <?php $_items = $_shipment->getAllItems(); ?>
     <?php $_count = count($_items) ?>
-    <?php foreach ($_items as $_item): ?>
-    <?php if ($_item->getOrderItem()->getParentItem()) continue; ?>
-    <tbody>
+    <?php $i=0; foreach ($_items as $_item): ?>
+    <?php if ($_item->getOrderItem()->getParentItem()) continue;else $i++; ?>
+    <tbody <?php echo $i%2 ? ' bgcolor="#F6F6F6"' : '' ?>>
         <?php echo $this->getItemHtml($_item) ?>
     </tbody>
     <?php endforeach; ?>

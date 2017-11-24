@@ -51,13 +51,18 @@
 <div class="mt-myaccount-address-primary-div">
     <div class="col-1 addresses-primary">
         <ol>
-        <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()): ?>
+        <?php $_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()?>
+        <?php $billAddrId = Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId();?>
+        <?php if($billAddrId): ?>
             <li class="item">
                 <h3><?php echo $this->__('Primary Billing Address ') ?></h3>
                 <address>
                     <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
                 </address>
-                <p><a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a></p>
+                <p>
+                	<a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
+                	<a href="#" class="link-remove mt-default-addr-delete-link" onclick="return deleteAddress('<?php echo $billAddrId ?>');"><?php echo $this->__('Delete') ?></a>
+                </p>
            </li>
         <?php else: ?>
             <li class="item">
@@ -69,13 +74,18 @@
     </div>
     <div class="col-2 addresses-primary">
        <ol> 
-        <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping()): ?>
+        <?php $_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping();?>
+       	<?php $shipAddrId = Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId();?>
+        <?php if($shipAddrId): ?>
             <li class="item">
                 <h3><?php echo $this->__('Primary Shipping Address ') ?></h3>
                 <address>
                     <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
                 </address>
-                <p><a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a></p>
+                <p>
+                	<a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
+                	<a href="#" class="link-remove mt-default-addr-delete-link" onclick="return deleteAddress('<?php echo $shipAddrId ?>');"><?php echo $this->__('Delete') ?></a>
+                </p>
             </li>
         <?php else: ?>
             <li class="item empty">
@@ -113,9 +123,11 @@
         
         <?php endforeach; ?>
     <?php else: ?>
+    	<?php if(0):?>
             <li class="item empty">
                 <p><?php echo $this->__('You have no additional address entries in your address book.') ?></p>
             </li>
+        <?php endif ?>
     <?php endif ?>
     </ul>
     </div>

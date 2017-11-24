@@ -46,7 +46,7 @@
 	</div>
 	
 	<div id="new-mt-myproduct-receipts" class="tabcontent tab4">
-	  <div class="mt-my-orders">
+	  <div class="mt-my-orders" style="min-height: 70px">
 	  		<?php echo $this->getChildHtml("myaccount_filter");?>
 	  		<?php echo $this->getChildHtml('sales.order.history_list')?>
 	  </div>
@@ -78,9 +78,17 @@
 	var Filter_Store = '<?php echo $_GET['m_store']?>';
 	jQuery(document).ready(function(){
 		var type = window.location.hash.substr(1);
+		var typeArr = type.split("#");
+		type = typeArr[0];
 		if(type!="" && type!="undefined" && type!=null){
 			var element = jQuery('.mt-myaccount-page .tab').find('button[data-link='+type+']')
 			changeTab(element);
+			if(typeArr.length >=2 ){
+				var info_typ = typeArr[1];
+				var order_no = typeArr[2];
+				autoLoadOrderData(type,info_typ,order_no);
+			}
+			
 		}else{
 			var element = jQuery('.mt-myaccount-page .tab .tablinks.active');
 			changeTab(element);
@@ -111,6 +119,38 @@
 		});
 			
 	});
+
+	function autoLoadOrderData(type,info_typ,ord_no){
+		var order_typ = "open";
+		if(type == "receipt"){
+			order_typ = "complete";
+		}
+
+		showLoadingFancybox();
+		jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/loadOrderView';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: {'order_id':ord_no,'order_type':order_typ},
+	        success: function(data) {
+	        	if(type == "receipt"){
+    	            jQuery('#load-complete-order-data').html(data.data.html);
+    	            jQuery('#new-mt-myproduct-receipts .block-layered-nav-bg').hide();
+    	            jQuery('.complete-order-view').hide();
+    	            jQuery('#load-complete-order-data').show();
+    	            jQuery('#load-complete-order-data #custom-order-info-tabs li[data-key="'+info_typ+'"]').trigger('click');
+	        	}else{
+	        		jQuery('#load-open-order-data').html(data.data.html);
+	                jQuery('#new-mt-myproduct-openorders .block-layered-nav-bg').hide();
+	                jQuery('.open-order-view').hide();
+	                jQuery('#load-open-order-data').show();
+	                jQuery('#load-open-order-data #custom-order-info-tabs li[data-key="'+info_typ+'"]').trigger('click');
+	        	}
+	        	window.location.hash = type+"#"+info_typ+"#"+ord_no;
+	        	hideLoadingFancybox();
+	        }
+	    });
+	}
 
 	function getParams(mkey,mval){
 		var uri = window.location;
