@@ -125,7 +125,7 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
         $quote              = Mage::getSingleton("checkout/session")->getQuote();
         $qouteItems         = $quote->getAllVisibleItems();
         foreach ($qouteItems as $item){
-            $sku = $item->getProduct()->getSku();
+            $sku = $item->getSku();
             $_product = Mage::getModel('catalog/product')
                             ->setStoreId($storeId)
                             ->loadByAttribute('sku',$sku);
