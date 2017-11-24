@@ -76,27 +76,7 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
 
     public function isQuoteContainOutOfStockProducts ()
     {
-        $isBackorderAvailable = false;
-        $quote = $this->getQuote();
-        $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
-        foreach ($qouteItems as $item) :
-            $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
-                ->getQty();
-            
-            $stock_qty = intval($item->getProduct()
-                ->getStockItem()
-                ->getQty());
-            if ($stock_qty < $item->getQty() && $item->getProduct()
-                ->getStockItem()
-                ->getIsInStock()) :
-                // if($productInventoryQty<=0):
-                $isBackorderAvailable = true;
-                break;
-	    	endif;
-            
-        endforeach
-        ;
-        return $isBackorderAvailable;
+        return $this->isQuoteContainsBackorderProduct();
     }
 
     public function getFedexFreeShippingMethod ()
