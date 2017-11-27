@@ -39,18 +39,14 @@ class Allure_Store_Adminhtml_System_StoreController extends Mage_Adminhtml_Syste
 	private function AddProductShareToStoreStatus($storeModel,$websiteModel){
 		try{
 			if($storeModel->getId()!=null && $websiteModel->getId()!=null){
-				$productShareObj = Mage::getModel('allure_productsharetostore/productshare')
-					->load($websiteModel->getId(),'website_id');
-				$helper = Mage::helper('allure_productsharetostore');
-				if($productShareObj->getPsId()==0){
-					$productShareObj = Mage::getModel('allure_productsharetostore/productshare');
+				$helper = Mage::helper('allure_productshare');
+				$_collection = Mage::getModel('allure_productshare/productshare')->getCollection();
+				$_collection->addFieldToFilter('website_id', array('eq' =>$websiteModel->getId()));
+				$_collection->addFieldToFilter('store_id', array('eq' =>$storeModel->getId()));
+				if(!count($_collection)>0){
+					$productShareObj = Mage::getModel('allure_productshare/productshare');
 					$productShareObj->setStatus($helper::PENDING);
 					$productShareObj->setStatusCode($helper::PENDING_CODE);
-					$productShareObj->setWebsiteCode($websiteModel->getCode());
-					$productShareObj->setWebsiteId($websiteModel->getId());
-					$productShareObj->setStoreId($storeModel->getId());
-					$productShareObj->save();
-				}else{
 					$productShareObj->setWebsiteCode($websiteModel->getCode());
 					$productShareObj->setWebsiteId($websiteModel->getId());
 					$productShareObj->setStoreId($storeModel->getId());
@@ -169,7 +165,9 @@ class Allure_Store_Adminhtml_System_StoreController extends Mage_Adminhtml_Syste
                         //if($eventName == 'store_add'){
                         	if($postData['store']['is_copy_old_product']==1){
                         		$websiteModel = Mage::getModel('core/website')->load($groupModel->getWebsiteId());
-                        		$this->AddProductShareToStoreStatus($storeModel,$websiteModel);
+                        		if($storeModel->getId()!=1){
+                        			$this->AddProductShareToStoreStatus($storeModel,$websiteModel);
+                        		}
                         		//$this->copyOldProductIntoNewStore($storeModel->getId(),$groupModel->getWebsiteId());
                         	}
                         //}

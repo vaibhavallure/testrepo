@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-  <modules>
-    <Alluremultistore_Managestock>
-      <active>true</active>
-      <codePool>local</codePool>
-    </Alluremultistore_Managestock>
-  </modules>
-</config>

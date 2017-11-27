@@ -41,7 +41,7 @@ $_product = $this->getProduct();
 $_productId = $_product->getId();
 
 //parent child check
-$prHelper        = Mage::helper("alluremultistore_catalog");
+$prHelper        = Mage::helper("allure_catalog");
 $isCustomOptions = $prHelper->isCustomOptionsAvailable($_productId);
 $parentVal = ($isCustomOptions)?1:0;
 

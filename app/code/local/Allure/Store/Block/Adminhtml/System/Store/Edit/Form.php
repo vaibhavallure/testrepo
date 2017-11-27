@@ -2,6 +2,18 @@
 class Allure_Store_Block_Adminhtml_System_Store_Edit_Form extends Mage_Adminhtml_Block_System_Store_Edit_Form{
     protected function _prepareForm(){
         parent::_prepareForm();
+        
+        if (Mage::registry('store_type') == 'website'){
+        	$websiteModel = Mage::registry('store_data');
+        	$fieldset = $this->getForm()->getElement('website_fieldset');
+        	$fieldset->addField('website_price_rule', 'text', array(
+        			'name'      => 'website[website_price_rule]',
+        			'label'     => Mage::helper('core')->__('Price Rule'),
+        			'value'     => $websiteModel->getWebsitePriceRule(),
+        			'required'  => false,
+        	));
+        }
+        
         if (Mage::registry('store_type') == 'store'){
             $storeModel = Mage::registry('store_data');
             $fieldset = $this->getForm()->getElement('store_fieldset');

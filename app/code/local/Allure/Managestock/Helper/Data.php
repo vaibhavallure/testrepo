@@ -26,6 +26,7 @@ class Allure_Managestock_Helper_Data extends Mage_Core_Helper_Abstract
 	private function getStoreIdByAdminControllerAction(){
 		$controllerName = Mage::app()->getRequest()->getControllerName();
 		$actionName = Mage::app()->getRequest()->getActionName();
+		
 		$storeId = self::DEFAULT_STORE_ID;
 		if($controllerName=="catalog_product"){
 			$storeParam = Mage::app()->getRequest()->getParam('store');
@@ -35,11 +36,51 @@ class Allure_Managestock_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 		}else{
 			//if($actionName=="massCancel" || $actionName=="cancel"){
-				$session_store_id = $_SESSION[self::KEY_CUSTOM_STORE_ID];
-				if(isset($session_store_id) && !empty($session_store_id)){
+			if($controllerName == "system_convert_gui"){
+				$profileIdArr = Mage::app()->getRequest()->getParams();('batch_id');
+				if(array_key_exists('batch_id',$profileIdArr)){
+					$profileId = $profileIdArr['batch_id'];
+					$profile = Mage::getModel('dataflow/batch')->load($profileId);
+				}
+				
+				if(array_key_exists('id',$profileIdArr)){
+					$profileId = $profileIdArr['id'];
+					$profile = Mage::getModel('dataflow/profile')->load($profileId);
+				}
+				
+				if($profile->getProfileId()!=0){
+					$storeId = $profile->getStoreId();
+				}
+				
+			}
+			elseif ((strpos($controllerName,"inp_")!==false) || (strpos($controllerName,"inph_")!==false)
+					|| (strpos($controllerName,"inw_")!==false) || (strpos($controllerName,"inl_")!==false)){
+				$storeId = 2;
+			} 
+			else{
+				if(isset($_SESSION[self::KEY_CUSTOM_STORE_ID]) && !empty($_SESSION[self::KEY_CUSTOM_STORE_ID])){
 					$storeId = $_SESSION[self::KEY_CUSTOM_STORE_ID];
 				}
-			//}
+				
+				if($controllerName == "sales_order_create"){
+					$store = Mage::getSingleton('adminhtml/session_quote')->getStoreId();
+					if(isset($store)&& !empty($store)){
+						$storeId = $store;
+					}
+				}elseif ($controllerName=="sales_orderr" || $controllerName=="sales_order"){
+				    $params = Mage::app()->getRequest()->getParams();
+				    if(array_key_exists("order_id", $params)){
+				        $order = Mage::getModel("sales/order")->load($params['order_id']);
+				        $storeId = $order->getStoreId();
+				    }elseif (array_key_exists("store_id", $params)){
+				        $storeId = $params['store_id'];
+				    }elseif (array_key_exists("store", $params)){
+				        $storeId = $params['store'];
+				    }else{
+				        $storeId = Mage::app()->getStore()->getId();
+				    }
+				}
+			}
 		}
 		return $storeId;
 	}
