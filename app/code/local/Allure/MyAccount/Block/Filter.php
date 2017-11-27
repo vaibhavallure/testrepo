@@ -24,14 +24,14 @@ class Allure_MyAccount_Block_Filter extends Mage_Core_Block_Template{
      * get current filter of open order status
      */
     public function getCurrentFilterOpenOrderStatus(){
-        return $_GET['m_order'];
+        return (!empty($_GET['m_order']) ? $_GET['m_order'] : self::OPEN_ORDER_STATUS);
     }
     
     /**
      * get current filter of all order status
      */
     public function getCurrentFilterAllOrderStatus(){
-        return $_GET['m_aorder'];
+        return (!empty($_GET['m_aorder']) ? $_GET['m_aorder'] : self::ALL_ORDER_STATUS);
     }
     
     /**
