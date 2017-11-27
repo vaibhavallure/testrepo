@@ -166,4 +166,20 @@
         </tbody>
         <?php }?>
     </table>
+    
+      <?php
+        $moduleName = Mage::app()->getRequest()->getModuleName();
+        if($moduleName == strtolower("checkout")):
+      ?>
+    	<?php  $baseGrandTotal = Mage::helper("currencymanager")
+    	               ->getGrandTotalWithBaseCurrency();?>
+    	<?php if(!empty($baseGrandTotal)):?>
+            <p class="mt-cart-charge-note">
+            <?php 
+            echo $this->__("( ".$baseGrandTotal." )");
+            ?>
+            </p>
+        <?php endif;?>
+     <?php endif;?>
+        
 <?php endif; ?>

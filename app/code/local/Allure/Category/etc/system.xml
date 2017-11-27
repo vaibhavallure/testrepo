@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <merchandiser>
+            <class>merchandiser-top</class>
+            <label>Visual Merchandiser</label>
+            <tab>catalog</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>40</sort_order>
+            <show_in_default>1</show_in_default>
+            <groups>
+                <options translate="label">
+                    <label>Visual Merchandising options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <expanded>1</expanded>
+                    <fields>
+                         <hide_simple_products translate="label">
+                            <label>Category Id to hide simple products in VM</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>81</sort_order>
+                            <comment><![CDATA[Comma-separated ]]></comment>
+                            <show_in_default>1</show_in_default>
+                        </hide_simple_products>
+                    </fields>
+                </options>
+            </groups>
+        </merchandiser>
+    </sections>
+</config>

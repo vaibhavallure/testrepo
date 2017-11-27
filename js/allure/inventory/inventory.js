@@ -232,7 +232,27 @@ function updateReceivingTotalQty(e){
     var value =parseInt(e.value);
     var prevQty=parseInt(jQuery('#current_'+id).val());
     var qty = value+ prevQty;
-    jQuery("#total_"+id).text(qty);
+    if(!isNaN(qty)){
+    	jQuery("#total_"+id).text(qty);
+    	updateTotalReciving(id,value);
+    }
+}
+function updateTotalReciving(id,qty){
+ 	var currcost=parseInt(jQuery('#currentcost_'+id).val());
+    var cost = currcost*qty;
+    if(!isNaN(cost))
+    	jQuery("#total_cost_"+id).text(cost);
+}
+function updateTotalCost(e){
+    var id = e; // get the value.
+    var value =parseInt(jQuery('#currentcost_'+id).val());
+    var qty=parseInt(jQuery('.addedQty_'+id).val());
+    
+    //alert(value);
+    var cost = value*qty;
+    //alert(cost);
+    if(!isNaN(cost))
+    	jQuery("#total_cost_"+id).text(cost);
 }
 function resetSearch(){
 	var url ="";

@@ -558,6 +558,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if (! $tempProduct['is_custom'] &&   $arr['proposed_qty'] > 0) {
                     $updateStock = Mage::getModel('cataloginventory/stock_item')
                             ->loadByProductAndStock($product, $currentOrder->getStockId());
+                   $cost=Mage::getModel('catalog/product')->setStoreId($currentOrder->getStockId())->load($product)->getCost();
                     
                     if (! empty($arr) && ! $void) {
                         if (! is_null($updateStock->getItemId()) && ($updateStock->getItemId() != 0)) {
@@ -615,6 +616,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                 $inventory->setUserId($admin->getUserId());
                                 $inventory->setPreviousQty($previousQty);
                                 $inventory->setAddedQty($arr['proposed_qty']);
+                                $inventory->setCost($cost);
                                 $inventory->setUpdatedAt(date("jS F, Y"));
                                 $inventory->setStockId($currentOrder->getStockId());
                                 $inventory->setPoId($po_id);
@@ -1277,10 +1279,10 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                             if (!empty($adminEmail)) {
                                                 $adminEmail =  explode(',', $adminEmail);
                                             }
+                                            $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
                                             //sendEmail($po_id, $vendorEmail,$templateId,$templateId)
                                             $helper->sendEmail($po_id, $vendorEmail, $templateId, $adminEmail,true);
                                         } catch (Exception $e) {}
-                                    
                         }
                     }
                     $message = "Purchase order created successfully.";

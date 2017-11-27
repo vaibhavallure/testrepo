@@ -52,8 +52,42 @@ var addProductDirectToCart = function (e) {
 		if ($selectedConfiguration) {
 			$location = $location.replace($id,$selectedConfiguration);
 		}
+		//location.href = $location;
 		
-		location.href = $location;
+		//allure code start
+		var productId   = $(this).attr('data-id');
+		var data 		= {};
+    	var supArr 		= {};
+    	var custOpArr 	= {};
+    	
+    	var metal   				= 209;
+        var superAttr 				= jQuery("#super-attribute-"+productId);
+        var customOpSelect			= jQuery("#custom-option-select-"+productId);
+
+        if(superAttr.length){
+        	 var superAttrVal 			= jQuery("#color-icons-"+productId+" .active").attr("value");
+        	 supArr[metal] 			    = superAttrVal;
+        	 data['super_attribute'] 	= supArr;
+        }
+
+        if(customOpSelect.length){
+        	var custName				= customOpSelect.attr("name");
+            var custOptId				= customOpSelect.attr("data-option-id");
+            var custVal 				= customOpSelect.val();
+            custOpArr[custOptId] 	    = custVal;
+            data['optionid'] 			= custVal;
+            data['options'] 			= custOpArr;
+        }
+        
+        data['qty'] = 1;
+        
+        var dataUrl = $(this).attr('data-url');
+        var strJson = JSON.stringify(data);
+        var jqxhr = jQuery.get(dataUrl, data, function (data) {
+        	window.location.reload();
+        });
+        
+        //allure code end
 	}
 	
 	return false;

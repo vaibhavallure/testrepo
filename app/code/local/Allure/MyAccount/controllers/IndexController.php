@@ -117,4 +117,39 @@ class Allure_MyAccount_IndexController extends Mage_Core_Controller_Front_Action
 		$this->renderLayout();
 	}
 	
+	public function loadOrderViewAction(){
+	    $request   = $this->getRequest()->getPost();
+	    $order     = Mage::getModel('sales/order')->load($request['order_id']);
+	    $orderType = $request['order_type'];
+	    Mage::register('current_order', $order);
+	    
+	    $isInvoice      = false;
+	    $isShipment     = false;
+	    $isCreditmemo   = false;
+	    
+	    if ($order->hasInvoices()) {
+	        $isInvoice = true;
+	    }
+	    if ($order->hasShipments()) {
+	        $isShipment = true;
+	    }
+	    if ($order->hasCreditmemos()) {
+	        $isCreditmemo = true;
+	    }
+	    
+	    $this->loadLayout('myaccount_sales_order_view');
+	    $block = $this->getLayout()->getBlock('myaccount.order_view');
+	    $html  = $block->setOrderType($orderType)
+	               ->setOrderId($order->getId())
+	               ->setIsInvoice($isInvoice)
+	               ->setIsShipment($isShipment)
+	               ->setIsCreditmemo($isCreditmemo) 
+	               ->toHtml();
+	    
+	    $data = array('html'=>$html);
+	    $jsonData = json_encode(compact('success', 'message', 'data'));
+	    $this->getResponse()->setHeader('Content-type', 'application/json');
+	    $this->getResponse()->setBody($jsonData);
+	}
+	
 }
