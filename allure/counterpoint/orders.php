@@ -97,13 +97,13 @@ if($conn){
                     LEFT JOIN PS_TKT_HIST_DISC DISC_TABLE ON ( MAIN_TABLE.DOC_ID = DISC_TABLE.DOC_ID AND DISC_TABLE.LIN_SEQ_NO is null)
                     
                     WHERE 
-                    -- MAIN_TABLE.STR_ID NOT IN(3,7) 
-                    -- AND MAIN_TABLE.TKT_TYP = 'T' 
-                    -- MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
-                    -- AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
-                    -- AND CONTACT_TABLE.CONTACT_ID = ".$state."
+                    MAIN_TABLE.STR_ID NOT IN(3,7) 
+                    AND MAIN_TABLE.TKT_TYP = 'T' 
+                    AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
+                    AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
+                    AND CONTACT_TABLE.CONTACT_ID = ".$state."
                     -- AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
-                     MAIN_TABLE.TKT_NO = '285570' 
+                    -- MAIN_TABLE.TKT_NO = '285570' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
         $result = odbc_exec($conn, $query);
@@ -195,8 +195,8 @@ function getSoapWSDLOptions(){
 try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
-    //$client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    //$session = $client->login($_AUTH_DETAILS_ARR);
+    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    $session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -209,11 +209,11 @@ try{
         'is_memory_limit' => 1
     );
     
-    //$result  = $client->counterpointOrderList($_RequestData);
-    $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
+    $result  = $client->counterpointOrderList($_RequestData);
+    //$result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
-    //$client->endSession(array('sessionId' => $session->result));
+    $client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);

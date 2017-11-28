@@ -416,7 +416,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                     $order_type = $ctpnt_order_data['order_type'];
                     $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'increment_id');
                     if(!$orderObj->getId()){
-                        //$orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
+                        $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_order_id');
                         if($order_type == "ord"){
                             $orderObj = Mage::getModel('sales/order')->load($ctpnt_order_id,'counterpoint_orig_tkt_no');
                         }
