@@ -38,6 +38,17 @@ class Allure_Inventory_Adminhtml_Inventory_ReportsController extends Allure_Inve
     	->_addBreadcrumb(Mage::helper('reports')->__('Low Stock'), Mage::helper('reports')->__('Low Stock'))->renderLayout();
     	
     }
+    public function minmaxAction() {
+       
+        $admin = Mage::getSingleton('admin/session')->getUser();
+        $this->_title($this->__('Reports'))
+        ->_title($this->__('Min max'));
+        
+        $this->_initAction()
+        ->_setActiveMenu('report/product/minmax')
+        ->_addBreadcrumb(Mage::helper('reports')->__('Min max'), Mage::helper('reports')->__('Min max'))->renderLayout();
+        
+    }
     public function stocktransferAction()
     {
     	

@@ -80,6 +80,13 @@
             </block>            
         </reference>
     </adminhtml_inventory_reports_stocktransfer>
+     <adminhtml_inventory_reports_minmax>      
+        <update handle="adminhtml_inventory_layout" />  
+        <reference name="content">
+            <block type="inventory/adminhtml_reports_minmax" name="inventory_minmax">
+            </block>            
+        </reference>
+    </adminhtml_inventory_reports_minmax>
 
     <adminhtml_inventory_purchase_new>      
         <update handle="adminhtml_inventory_layout" /> 
