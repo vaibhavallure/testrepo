@@ -71,7 +71,7 @@ if($conn){
                     -- AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
                     -- AND MAIN_TABLE.TKT_TYP = 'T'
                     -- AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
-                    AND MAIN_TABLE.TKT_NO = '215849' 
+                    AND MAIN_TABLE.TKT_NO = '285570' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
         $result = odbc_exec($conn, $query);

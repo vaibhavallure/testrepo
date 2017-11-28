@@ -84,22 +84,26 @@ if($conn){
                     CONCAT(ITEM_TABLE.ITEM_NO,'|',ITEM_TABLE.CELL_DESCR) sku,
                     ITEM_TABLE.QTY_SOLD qty, ITEM_TABLE.PRC prc, ITEM_TABLE.DESCR pname,
                     ITEM_TABLE.lin_seq_no,
-                    CONTACT_TABLE.EMAIL_ADRS_1 as email, CONTACT_TABLE.NAM name, CONTACT_TABLE.NAM_TYP nam_typ, CONTACT_TABLE.ADRS_1 street, CONTACT_TABLE.CITY city,
+                    CONTACT_TABLE.EMAIL_ADRS_1 as email, CONTACT_TABLE.NAM name, AR_CUST_TABLE.CUST_NAM_TYP nam_typ, CONTACT_TABLE.ADRS_1 street, CONTACT_TABLE.CITY city,
                     CONTACT_TABLE.STATE state, CONTACT_TABLE.ZIP_COD zip_code , CONTACT_TABLE.CNTRY as country, CONTACT_TABLE.PHONE_1 phone,
                     DISC_TABLE.DISC_AMT dis_amount, DISC_TABLE.DISC_PCT dis_pct
 
                     FROM PS_TKT_HIST MAIN_TABLE 
                     JOIN PS_TKT_HIST_LIN ITEM_TABLE ON ( MAIN_TABLE.TKT_NO = ITEM_TABLE.TKT_NO )
                     JOIN PS_TKT_HIST_CONTACT CONTACT_TABLE ON ( MAIN_TABLE.DOC_ID = CONTACT_TABLE.DOC_ID )
+                    
+                    JOIN AR_CUST AR_CUST_TABLE ON( AR_CUST_TABLE.CUST_NO = MAIN_TABLE.CUST_NO )
+
                     LEFT JOIN PS_TKT_HIST_DISC DISC_TABLE ON ( MAIN_TABLE.DOC_ID = DISC_TABLE.DOC_ID AND DISC_TABLE.LIN_SEQ_NO is null)
+                    
                     WHERE 
-                    MAIN_TABLE.STR_ID NOT IN(3,7) 
-                    AND MAIN_TABLE.TKT_TYP = 'T' 
-                    AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
-                    AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
-                    AND CONTACT_TABLE.CONTACT_ID = ".$state."
+                    -- MAIN_TABLE.STR_ID NOT IN(3,7) 
+                    -- AND MAIN_TABLE.TKT_TYP = 'T' 
+                    -- MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
+                    -- AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
+                    -- AND CONTACT_TABLE.CONTACT_ID = ".$state."
                     -- AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
-                    -- AND MAIN_TABLE.TKT_NO = '215849' 
+                     MAIN_TABLE.TKT_NO = '285570' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
         $result = odbc_exec($conn, $query);
@@ -191,8 +195,8 @@ function getSoapWSDLOptions(){
 try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
-    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    $session = $client->login($_AUTH_DETAILS_ARR);
+    //$client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    //$session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -205,11 +209,11 @@ try{
         'is_memory_limit' => 1
     );
     
-    $result  = $client->counterpointOrderList($_RequestData);
-    //$result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
+    //$result  = $client->counterpointOrderList($_RequestData);
+    $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
-    $client->endSession(array('sessionId' => $session->result));
+    //$client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);
