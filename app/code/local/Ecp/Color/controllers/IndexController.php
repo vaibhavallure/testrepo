@@ -101,15 +101,15 @@ class Ecp_Color_IndexController extends Mage_Core_Controller_Front_Action
 	        $block->setProduct($product);
 	        $config = $block->getJsonConfig();
         } else {
-        	Mage::log('TYPE:'.$product->getTypeId(),Zend_Log::DEBUG,'jsonconfig.log',true);
-        	Mage::log('ID:'.$product->getId(),Zend_Log::DEBUG,'jsonconfig.log',true);
+        	Mage::log('TYPE ELSE:'.$product->getTypeId(),Zend_Log::DEBUG,'jsonconfig.log',true);
+        	Mage::log('ID ELSE:'.$product->getId(),Zend_Log::DEBUG,'jsonconfig.log',true);
         }
 
         Mage::log('TYPE:'.$product->getTypeId(),Zend_Log::DEBUG,'jsonconfig.log',true);
         Mage::log('ID:'.$product->getId(),Zend_Log::DEBUG,'jsonconfig.log',true);
         Mage::log('CLASS:'.get_class($product),Zend_Log::DEBUG,'jsonconfig.log',true);
         
-        if ($product->getTypeId() != 'simple') {
+        if ($product->getTypeId() != 'simple' && !empty($block)) {
             $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
             $count_superAttribute = count($productAttributeOptions);
             if ($count_superAttribute == 1) {

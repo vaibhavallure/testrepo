@@ -47,7 +47,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         	$collection->addFieldToFilter('po_id', array('in' => $ids));
         	
         	}
-        $collection->setOrder('updated_date', 'DESC');
+        	 $collection->setOrder('po_id', 'DESC');
         
         $this->setCollection($collection);
         return parent::_prepareCollection();
@@ -62,6 +62,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     			'index'     =>'po_id',
     			'filter'    =>'adminhtml/widget_grid_column_filter_range',
     	));
+    	
     	if(!Mage::helper('allure_vendor')->isUserVendor())
     	{
 	    	$this->addColumn('vendor_name', array(
@@ -77,21 +78,23 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     			'index'     => 'ref_no',
     	));
     	
-    	$this->addColumn('items_ordered', array(
+    	/* $this->addColumn('items_ordered', array(
     			'header'    =>Mage::helper('reports')->__('Items Ordered'),
     			'sortable'  =>false,
     			'index'     =>'po_id',
     			'renderer'  => 'inventory/adminhtml_purchaseorder_renderer_items'
-    	));
+    	)); */
     	
     	
-    
+    	if(!Mage::helper('allure_vendor')->isUserVendor())
+    	{
         
         $this->addColumn('total_amount', array(
         		'header'    =>Mage::helper('reports')->__('Amount(USD)'),
         		'sortable'  =>True,
         		'index'     =>'total_amount'
         ));
+    	}
         $this->addColumn('stock_id', array(
         		'header'    =>Mage::helper('reports')->__('Store'),
         		'sortable'  =>True,
@@ -129,6 +132,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         		array(
         				'header'=> Mage::helper('catalog')->__('Action'),
         				'index' => 'po_id',
+        		        'is_system' => true,
         				'renderer'  => 'Allure_Inventory_Block_Adminhtml_Purchaseorder_Renderer_Action',// THIS IS WHAT THIS POST IS ALL ABOUT
         		));
        

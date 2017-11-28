@@ -49,6 +49,7 @@ class Ebizmarts_BakerlooRestful_Model_ProductManagement {
                 $this->_collection->addStoreFilter($storeId);
             }
             
+            // START Allure Fixes - Add Stock Filter
             $stockId = Mage::getModel('cataloginventory/stock_item')->getStockId();
 
             if ($withStock) {
@@ -60,6 +61,7 @@ class Ebizmarts_BakerlooRestful_Model_ProductManagement {
                         array()
                     );
             }
+            // END Allure Fixes
         }
 
         return $this->_collection;

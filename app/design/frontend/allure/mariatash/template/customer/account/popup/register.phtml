@@ -1,11 +1,11 @@
 <div id="openModal" class="popupRegisterModel">
-	<div>
+	<div id="register-modal-container" class="modal-container">
     	<form class="form-signup" method="post" id="popup-register-form">
     		<div class="pop-title">
     			<a href="#close" title="Close" class="close">X</a>
     			<h2><?php echo $this->__("New account")?></h2>
     		</div>
-    		<div>
+    		<div class="pop-content">
     			<div id="reg_msg_div">
     				<span id="register-msg"></span>
     			</div>
@@ -41,12 +41,12 @@
     		</div>
         </form>
 	</div>
-</div>
 
-<script type="text/javascript">
-if (typeof Allure == "undefined") {
-	 var Allure = {};
-}
-Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
-</script> 
+    <script type="text/javascript">
+        if (typeof Allure == "undefined") {
+             var Allure = {};
+        }
+        Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+        Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
+    </script> 
+</div>

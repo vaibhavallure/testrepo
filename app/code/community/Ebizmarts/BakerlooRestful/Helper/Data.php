@@ -701,10 +701,11 @@ class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
                     $_attr = $customer->getAttribute($_attributeCode);
 
                     $result []= array(
-                        'name'  => $_attributeCode,
-                        'label' => $_attr->getFrontendLabel(),
-                        'type'  => $_attr->getFrontendInput(),
-                        'value' => $_attributeValue,
+                        'name'     => $_attributeCode,
+                        'label'    => $_attr->getFrontendLabel(),
+                        'type'     => $_attr->getFrontendInput(),
+                        'value'    => $_attributeValue,
+                        'required' => false
                     );
                 }
             }

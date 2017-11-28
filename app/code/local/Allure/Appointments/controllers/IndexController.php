@@ -784,6 +784,34 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     			$available_wdays[]=$wd;
     		}
     	}
+    	
+    	$notAvailableDatesCollection=Mage::getModel('appointments/dates')->getCollection()
+    	->addFieldToFilter('store_id', array('eq' => $storeid))
+    	->addFieldToFilter('is_available', array('eq' => '0'))
+    	->addFieldToFilter('exclude', array('eq' => '0'));
+    	
+    	$notAvailabledays=array();
+    	
+    	foreach ($notAvailableDatesCollection as $singeDate){
+    	    $formattedDate=date("m/d/Y", strtotime($singeDate->getDate()));
+    	    $notAvailabledays[strtotime($singeDate->getDate())]=$formattedDate;
+    	}
+    	
+    	
+    	$available_wdays=array();
+    	foreach ($avial_workDays as $avail_wd){
+    	    foreach ($avail_wd as $wd){
+    	        if(!$notAvailabledays[strtotime($wd)]){
+    	            $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
+    	            if(strtotime($dateCurrent)<=strtotime($wd)){
+    	                $available_wdays[strtotime($wd)]=$wd;
+    	                }
+    	            }
+    	            
+    	           
+    	    }
+    	}
+    	
     	$jsonDATA="";
 
     	if(!empty($available_wdays)) {

@@ -14,7 +14,8 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
 		->joinAttribute('billing_city', 'customer_address/city', 'default_billing', null, 'left')
 		->joinAttribute('billing_telephone', 'customer_address/telephone', 'default_billing', null, 'left')
 		->joinAttribute('billing_region', 'customer_address/region', 'default_billing', null, 'left')
-		->joinAttribute('billing_country_id', 'customer_address/country_id', 'default_billing', null, 'left');
+		->joinAttribute('billing_country_id', 'customer_address/country_id', 'default_billing', null, 'left')
+		->joinAttribute('billing_company', 'customer_address/company', 'default_billing', null, 'left');
 		
 		$this->setCollection($collection);
 		
@@ -118,6 +119,18 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
             'header'    => Mage::helper('customer')->__('State/Province'),
             'width'     => '100',
             'index'     => 'billing_region',
+        ));
+        
+        $this->addColumn('billing_city', array(
+            'header'    => Mage::helper('customer')->__('City'),
+            'width'     => '100',
+            'index'     => 'billing_city',
+        ));
+        
+        $this->addColumn('billing_company', array(
+            'header'    => Mage::helper('customer')->__('Company Name'),
+            'width'     => '100',
+            'index'     => 'billing_company',
         ));
 
         $this->addColumn('customer_since', array(

@@ -208,6 +208,7 @@ function loadBaseImage(){
 
 var loadTimes=0;
 function loadVideo(video){
+	jQuery('.containerImage img').hide();
      var player = document.getElementById('video_' + video);
      if(player){
          var src = player.src;     
@@ -220,6 +221,7 @@ function loadVideo(video){
 }
 
 function closeVideo(){
+	jQuery('.containerImage img').show();
     var player = jQuery('[id^="video-"] iframe');
     if(player){
         player.each(function(index,iframe) {
@@ -276,7 +278,7 @@ function windOpn(url){
 
 function sharePinit(){
     jQuery('#pinit').click(function(){
-        windOpn('http://pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl();?>&media='+jQuery(".containerImage img").attr("src")+'&description=<?php echo htmlspecialchars($_product->getName(),ENT_QUOTES);?>');
+        windOpn('//pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl();?>&media='+jQuery(".containerImage img").attr("src")+'&description=<?php echo htmlspecialchars($_product->getName(),ENT_QUOTES);?>');
     });
 }
 
@@ -482,7 +484,7 @@ if ($isAjaxCall) {
     $_pinlink['url'] = $_product->getProductUrl();
     $_pinlink['media'] = $this->helper('catalog/image')->init($_product, 'image')->__toString();
     $_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name') . " - " . strip_tags($_product->getDescription());
-    $_pinlinkHref = 'http://pinterest.com/pin/create/button/?' . http_build_query($_pinlink);
+    $_pinlinkHref = '//pinterest.com/pin/create/button/?' . http_build_query($_pinlink);
 }
  ?>
 <script>
@@ -490,7 +492,7 @@ if ($isAjaxCall) {
 		onYouTubeIframeAPIReady();
 	<?php else: ?>
       		var tag = document.createElement('script');
-      		tag.src = "http://www.youtube.com/iframe_api";
+      		tag.src = "//www.youtube.com/iframe_api";
       		var firstScriptTag = document.getElementsByTagName('script')[0];
       		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -523,7 +525,7 @@ if ($isAjaxCall) {
         <?php if ($isAjaxCall): ?>
         // re-render pint it button
         jQuery('#pinterest-button-load').html('<a href="<?php echo $_pinlinkHref ?>" class="pin-it-button"></a>');
-        jQuery.ajax({ url: 'http://assets.pinterest.com/js/pinit.js', dataType: 'script', cache: true});
+        jQuery.ajax({ url: '//assets.pinterest.com/js/pinit.js', dataType: 'script', cache: true});
         <?php endif; ?>
         var id = 'amconf-image-<?php echo $colorOptionId ;?>';        
         if($(id)){
