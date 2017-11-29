@@ -42,14 +42,14 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
             ), 'show_order_statuses');
             
             $fieldset->addField('show_order_paymentmethod', 'select', array(
-                'name'      => 'show_order_statuses',
+                'name'      => 'show_order_paymentmethod',
                 'label'     => Mage::helper('reports')->__('Order Payment Method'),
                 'options'   => array(
                     '0' => Mage::helper('reports')->__('Any'),
                     '1' => Mage::helper('reports')->__('Specified'),
                 ),
                 'note'      => Mage::helper('reports')->__('Applies to Any of the Specified Order Payments'),
-            ), 'payment_methods');
+            ), 'to');
             
             $fieldset->addField('payment_methods', 'multiselect', array(
                 'name'      => 'payment_methods',
@@ -114,6 +114,7 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                         ->addFieldMap("{$htmlIdPrefix}show_order_statuses", 'show_order_statuses')
                         ->addFieldMap("{$htmlIdPrefix}order_statuses", 'order_statuses')
                         ->addFieldDependence('order_statuses', 'show_order_statuses', '1')
+                        
                         ->addFieldMap("{$htmlIdPrefix}show_counterpoint_sta_id", 'show_counterpoint_sta_id')
                         ->addFieldMap("{$htmlIdPrefix}counterpoint_sta_id", 'counterpoint_sta_id')
                         ->addFieldDependence('counterpoint_sta_id', 'show_counterpoint_sta_id', '1')
