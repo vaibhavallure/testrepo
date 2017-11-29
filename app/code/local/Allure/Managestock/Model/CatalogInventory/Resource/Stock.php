@@ -1,6 +1,6 @@
 <?php
 
-class Alluremultistore_Managestock_Model_CatalogInventory_Resource_Stock extends Mage_CatalogInventory_Model_Resource_Stock
+class Allure_Managestock_Model_CatalogInventory_Resource_Stock extends Mage_CatalogInventory_Model_Resource_Stock
 {
     /**
      * add join to select only in stock products
