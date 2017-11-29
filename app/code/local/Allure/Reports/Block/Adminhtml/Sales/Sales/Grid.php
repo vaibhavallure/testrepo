@@ -264,7 +264,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->columns('ABS(sum((IFNULL(main_table.base_discount_amount,0))-IFNULL(main_table.base_discount_canceled,0))) total_discount_amount')
                      ->columns('sum(IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0)) total_discount_amount_actual')
                      ->where($condition);
-                     //echo $collection->getSelect();
+                    // echo $collection->getSelect();
         $this->setCollection($collection);
         //echo $collection->getSelect();
         return parent::_prepareCollection();
