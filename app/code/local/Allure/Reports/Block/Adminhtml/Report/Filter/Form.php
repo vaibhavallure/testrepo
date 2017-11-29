@@ -41,6 +41,39 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                 'display'   => 'none'
             ), 'show_order_statuses');
             
+            $fieldset->addField('show_order_paymentmethod', 'select', array(
+                'name'      => 'show_order_statuses',
+                'label'     => Mage::helper('reports')->__('Order Payment Method'),
+                'options'   => array(
+                    '0' => Mage::helper('reports')->__('Any'),
+                    '1' => Mage::helper('reports')->__('Specified'),
+                ),
+                'note'      => Mage::helper('reports')->__('Applies to Any of the Specified Order Payments'),
+            ), 'payment_methods');
+            
+            $fieldset->addField('payment_methods', 'multiselect', array(
+                'name'      => 'payment_methods',
+                'values'    => $this->getActivPaymentMethods(),
+                'display'   => 'none'
+            ), 'show_order_paymentmethod');
+            
+            $fieldset->addField('show_card_type', 'select', array(
+                'name'      => 'show_card_type',
+                'label'     => Mage::helper('reports')->__('Card Type'),
+                'options'   => array(
+                    '0' => Mage::helper('reports')->__('Any'),
+                    '1' => Mage::helper('reports')->__('Specified'),
+                ),
+                'note'      => Mage::helper('reports')->__('Applies to Any of the Specified Order Payments'),
+            ), 'card_type');
+            
+            $fieldset->addField('card_type', 'multiselect', array(
+                'name'      => 'card_type',
+                'values'    => $this->getWppPeCcTypesAsOptionArray(),
+                'display'   => 'none'
+            ), 'show_card_type');
+            
+            
             $data = $this->getFilterData()->getData();
             $store_ids = $data['store_ids'];
             $isCounterpointStore = false;
@@ -84,12 +117,29 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                         ->addFieldMap("{$htmlIdPrefix}show_counterpoint_sta_id", 'show_counterpoint_sta_id')
                         ->addFieldMap("{$htmlIdPrefix}counterpoint_sta_id", 'counterpoint_sta_id')
                         ->addFieldDependence('counterpoint_sta_id', 'show_counterpoint_sta_id', '1')
+                        
+                        ->addFieldMap("{$htmlIdPrefix}show_order_paymentmethod", 'show_order_paymentmethod')
+                        ->addFieldMap("{$htmlIdPrefix}payment_methods", 'payment_methods')
+                        ->addFieldDependence('payment_methods', 'show_order_paymentmethod', '1')
+                        
+                        ->addFieldMap("{$htmlIdPrefix}show_card_type", 'show_card_type')
+                        ->addFieldMap("{$htmlIdPrefix}card_type", 'card_type')
+                        ->addFieldDependence('card_type', 'show_card_type', '1')
+                        
                         );
                 }else{
                     $this->setChild('form_after', $this->getLayout()->createBlock('adminhtml/widget_form_element_dependence')
                         ->addFieldMap("{$htmlIdPrefix}show_order_statuses", 'show_order_statuses')
                         ->addFieldMap("{$htmlIdPrefix}order_statuses", 'order_statuses')
                         ->addFieldDependence('order_statuses', 'show_order_statuses', '1')
+                        
+                        ->addFieldMap("{$htmlIdPrefix}show_order_paymentmethod", 'show_order_paymentmethod')
+                        ->addFieldMap("{$htmlIdPrefix}payment_methods", 'payment_methods')
+                        ->addFieldDependence('payment_methods', 'show_order_paymentmethod', '1')
+                        
+                        ->addFieldMap("{$htmlIdPrefix}show_card_type", 'show_card_type')
+                        ->addFieldMap("{$htmlIdPrefix}card_type", 'card_type')
+                        ->addFieldDependence('card_type', 'show_card_type', '1')
                         );
                 }
             }
@@ -116,5 +166,32 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
             }
         }
         return $values;
+    }
+    public function getActivPaymentMethods()
+    {
+        $resource = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $tableName = Mage::getSingleton('core/resource')->getTableName('sales/order_payment');
+        $results = $resource->fetchAll("SELECT DISTINCT `method` FROM `$tableName`");
+        
+        $methods = array();
+        
+        foreach ($results as $paymentCode) {
+            $paymentCode = $paymentCode['method'];
+            // $title= $paymentCode['title'];
+            //   $methods[$code] = Mage::getStoreConfig('payment/' . $paymentCode . '/title');
+            $paymentTitle = Mage::getStoreConfig('payment/'.$paymentCode.'/title');
+            $methods[$paymentCode] = array(
+                'label'   => $paymentTitle,
+                'value' => $paymentCode,
+            );
+        }
+        
+        return $methods;
+        
+    }
+    public function getWppPeCcTypesAsOptionArray()
+    {
+        $model = Mage::getModel('payment/source_cctype')->setAllowedTypes(array('VI', 'MC', 'SM', 'SO', 'OT', 'AE'));
+        return $model->toOptionArray();
     }
 }
