@@ -18,6 +18,12 @@
             		<sales_order_create>Allure_Orderdate_Model_Adminhtml_Sales_Order_Create</sales_order_create>
             	</rewrite>
             </adminhtml>
+            
+            <iwd_ordermanager>
+            	<rewrite>
+            		<order_info>Allure_Orderdate_Model_IWD_OrderManager_Order_Info</order_info>
+            	</rewrite>
+            </iwd_ordermanager>
 			
 		</models>
 	</global>
