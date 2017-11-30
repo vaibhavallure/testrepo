@@ -35,10 +35,10 @@
                     <title>Sales</title>
                     <sort_order>10</sort_order>
                     <children>
-                        <sales translate="title" module="reports">
+                        <!-- <sales translate="title" module="reports">
                             <title>Orders</title>
                             <action>adminhtml/report_sales/sales</action>
-                        </sales>
+                        </sales> -->
                         <tax translate="title" module="reports">
                             <title>Tax</title>
                             <action>adminhtml/report_sales/tax</action>
