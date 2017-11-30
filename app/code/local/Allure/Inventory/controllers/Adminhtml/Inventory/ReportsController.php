@@ -83,6 +83,40 @@ class Allure_Inventory_Adminhtml_Inventory_ReportsController extends Allure_Inve
     	->getCsv();
     	$this->_prepareDownloadResponse($fileName, $content);
     }
+    public function exportTransferExcelAction()
+    {
+        $fileName   = 'inventory_transfer.xlsx';
+        $content    = $this->getLayout()->createBlock('inventory/adminhtml_reports_transfer_grid')
+        ->setSaveParametersInSession(true)
+        ->getExcel($fileName);
+        
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
+    public function exportTransferCsvAction()
+    {
+        $fileName   = 'inventory_transfer.csv';
+        $content    = $this->getLayout()->createBlock('inventory/adminhtml_reports_transfer_grid')
+        ->setSaveParametersInSession(true)
+        ->getCsv();
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
+    public function exportSalesminmaxExcelAction()
+    {
+        $fileName   = 'inventory_minmax.xlsx';
+        $content    = $this->getLayout()->createBlock('inventory/adminhtml_reports_minmax_grid')
+        ->setSaveParametersInSession(true)
+        ->getExcel($fileName);
+        
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
+    public function exportSalesminmaxCsvAction()
+    {
+        $fileName   = 'inventory_minmax.csv';
+        $content    = $this->getLayout()->createBlock('inventory/adminhtml_reports_minmax_grid')
+        ->setSaveParametersInSession(true)
+        ->getCsv();
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
     public function exportLowStcokExcelAction()
     {
     	$websiteId=1;
