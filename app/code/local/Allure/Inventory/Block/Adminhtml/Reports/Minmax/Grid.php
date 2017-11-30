@@ -182,8 +182,8 @@ class Allure_Inventory_Block_Adminhtml_Reports_Minmax_Grid extends Mage_Adminhtm
         ));
         
       
-        $this->addExportType('*/*/exportDownloadsCsv', Mage::helper('reports')->__('CSV'));
-        $this->addExportType('*/*/exportDownloadsExcel', Mage::helper('reports')->__('Excel'));
+        $this->addExportType('*/*/exportSalesminmaxCsv', Mage::helper('reports')->__('CSV'));
+        $this->addExportType('*/*/exportSalesminmaxExcel', Mage::helper('reports')->__('Excel'));
 
         return parent::_prepareColumns();
     }
