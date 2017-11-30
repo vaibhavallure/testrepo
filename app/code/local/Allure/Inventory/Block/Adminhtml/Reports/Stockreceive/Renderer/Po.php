@@ -9,4 +9,9 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Renderer_Po extends 
 		$output='<lable>'.$value.'</lable>';
 		return $output;
 	}
+	public function renderExport(Varien_Object $row)
+	{
+	    $value      = $row->getData($this->getColumn()->getIndex());
+	    return $value;
+	}
 }
