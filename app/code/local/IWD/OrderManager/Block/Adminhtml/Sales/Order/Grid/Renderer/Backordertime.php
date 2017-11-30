@@ -1,7 +1,7 @@
 <?php
 class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Backordertime extends IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Abstract
 {
-    protected function loadItems()
+    protected function loadItems11()
     {
         $order_id = $this->getOrderId();
         $order = Mage::getModel('sales/order')->load($order_id);
@@ -46,6 +46,23 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Backordertime e
             }
         }
 
+        return $items;
+    }
+    
+    protected function loadItems()
+    {
+        $order_id = $this->getOrderId();
+        $order = Mage::getModel('sales/order')->load($order_id);
+        $order_item_collection = $order->getAllVisibleItems();
+        $items = array();
+        $storeId=$order->getStoreId();
+        foreach($order_item_collection as $item){
+            if($item->getBackorderTime() != null) {  //Allure new code
+                $items[] = $item->getBackorderTime();
+            } else {
+                 $items[] = '&nbsp;';
+            }
+        }
         return $items;
     }
 
