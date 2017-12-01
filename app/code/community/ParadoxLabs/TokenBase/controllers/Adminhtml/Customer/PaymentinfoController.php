@@ -20,25 +20,6 @@
 class ParadoxLabs_TokenBase_Adminhtml_Customer_PaymentinfoController extends Mage_Adminhtml_Controller_Action
 {
 	/**
-	 * Load the customer record.
-	 */
-	public function preDispatch()
-	{
-		parent::preDispatch();
-		
-		$customer = Mage::getModel('customer/customer');
-		$customer->load( $this->getRequest()->getParam('id') );
-		if( !$customer || $customer->getId() < 1 || $customer->getId() != $this->getRequest()->getParam('id') ) {
-			$this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Could not load customer.') ) ) );
-			exit;
-		}
-		
-		Mage::register( 'current_customer', $customer, true );
-		
-		return $this;
-	}
-	
-	/**
 	 * Inject a layout handle to pull in the current active method.
 	 */
 	public function addActionLayoutHandles()
@@ -55,6 +36,10 @@ class ParadoxLabs_TokenBase_Adminhtml_Customer_PaymentinfoController extends Mag
 	 */
 	public function indexAction()
 	{
+		if( $this->_loadCustomer() !== true ) {
+			return;
+		}
+		
 		/**
 		 * Check for active method, or pick one if none given.
 		 */
@@ -97,6 +82,10 @@ class ParadoxLabs_TokenBase_Adminhtml_Customer_PaymentinfoController extends Mag
 	 */
 	public function loadAction()
 	{
+		if( $this->_loadCustomer() !== true ) {
+			return;
+		}
+		
 		$id			= intval( $this->getRequest()->getParam('card_id') );
 		$method		= $this->getRequest()->getParam('method');
 		
@@ -130,6 +119,10 @@ class ParadoxLabs_TokenBase_Adminhtml_Customer_PaymentinfoController extends Mag
 	 */
 	public function saveAction()
 	{
+		if( $this->_loadCustomer() !== true ) {
+			return;
+		}
+		
 		$method		= $this->getRequest()->getParam('method');
 		$input 		= $this->getRequest()->getParam( $method );
 		$id			= intval( $input['card_id'] );
@@ -243,6 +236,10 @@ class ParadoxLabs_TokenBase_Adminhtml_Customer_PaymentinfoController extends Mag
 	 */
 	public function deleteAction()
 	{
+		if( $this->_loadCustomer() !== true ) {
+			return;
+		}
+		
 		$id			= intval( $this->getRequest()->getParam('card_id') );
 		$method		= $this->getRequest()->getParam('method');
 		
@@ -283,6 +280,24 @@ class ParadoxLabs_TokenBase_Adminhtml_Customer_PaymentinfoController extends Mag
 	 */
 	protected function _formKeyIsValid()
 	{
+		return true;
+	}
+	
+	/**
+	 * Load the customer record.
+	 */
+	protected function _loadCustomer()
+	{
+		$customer = Mage::getModel('customer/customer');
+		$customer->load( $this->getRequest()->getParam('id') );
+		if( !$customer || $customer->getId() < 1 || $customer->getId() != $this->getRequest()->getParam('id') ) {
+			$this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Could not load customer.') ) ) );
+			
+			return false;
+		}
+		
+		Mage::register( 'current_customer', $customer, true );
+		
 		return true;
 	}
 	
