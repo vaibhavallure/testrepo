@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Allure_AuthorizeNetApplePay>
+			<active>true</active>
+			<codePool>local</codePool>
+			<depends>
+				<ParadoxLabs_AuthorizeNetCim />
+			</depends>
+		</Allure_AuthorizeNetApplePay>
+	</modules>
+</config>
