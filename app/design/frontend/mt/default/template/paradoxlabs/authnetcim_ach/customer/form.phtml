@@ -1,10 +1,9 @@
-<?php $code   = Mage::registry('tokenbase_method'); ?>
-<?php $method = Mage::helper('payment')->getMethodInstance( $code ); ?>
+<?php $code = Mage::registry('tokenbase_method'); ?>
 
 <?php if( $this->isEdit() ): ?>
-	<h2><?php echo $this->__('Editing Card %s', $this->getCard()->getLabel() ); ?></h2>
+	<h2><?php echo $this->__('Editing %s', $this->getCard()->getLabel() ); ?></h2>
 <?php else: ?>
-	<h2><?php echo $this->__('Add A Credit Card'); ?></h2>
+	<h2><?php echo $this->__('Add A Bank Account (eCheck)'); ?></h2>
 <?php endif; ?>
 
 <form action="<?php echo $this->getAction(); ?>" method="post" id="form-validate">
@@ -12,10 +11,7 @@
 	<input type="hidden" name="id" value="<?php echo $this->getCard()->getId(); ?>" />
 	<input type="hidden" name="method" value="<?php echo $code; ?>" />
 	<ul class="form-list">
-		<li><h4><?php echo $this->__('Cardholder Information'); ?></h4></li>
-<?php /*		<li>
-			<div class="input-box"><?php echo $this->getAddressesHtmlSelect('billing'); ?></div>
-		</li> */ ?>
+		<li><h4><?php echo $this->__('Customer Information'); ?></h4></li>
 		<li id="billing-new-address-form">
 			<div class="">
 				<ul>
@@ -93,7 +89,7 @@
 			</div>
 		</li>
 		
-		<li><h4><?php echo $this->__('Credit Card Information'); ?></h4></li>
+		<li><h4><?php echo $this->__('Bank Information'); ?></h4></li>
 		<?php if( $this->isEdit() ): ?>
 			<li>
 				<input type="radio" class="left" name="payment[sameCard]" value="1" id="<?php echo $code; ?>_sameCard_1" checked="checked" /> <label for="<?php echo $code; ?>_sameCard_1"><?php echo $this->__( 'Continue using payment data %s', $this->getCard()->getLabel() ); ?></label><br />
@@ -102,56 +98,39 @@
 		<?php endif; ?>
 		<?php $style = ( $this->isEdit() ) ? ' style="display:none"' : ''; ?>
 		<li class="<?php echo $code; ?>_add"<?php echo $style; ?>>
-			<label for="<?php echo $code; ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type'); ?></label>
+			<label for="<?php echo $code; ?>_echeck_account_name" class="required"><em>*</em><?php echo $this->__('Name on Account') ?></label>
 			<div class="input-box">
-				<select id="<?php echo $code; ?>_cc_type" name="payment[cc_type]" class="<?php echo $code; ?>_require validate-cc-type-select <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
-					<option value=""><?php echo $this->__('--Please Select--')?></option>
-					<?php foreach( Mage::helper('tokenbase')->getCcAvailableTypes( $code ) as $k => $v ): ?>
-						<option value="<?php echo $k ?>" <?php if( $k == $this->getCard()->getAdditional('cc_type') ): ?>selected="selected"<?php endif; ?>><?php echo $v ?></option>
-					<?php endforeach ?>
-				</select>
+				<input type="text" id="<?php echo $code; ?>_echeck_account_name" name="payment[echeck_account_name]" title="<?php echo $this->__('Name on Account') ?>" class="input-text <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>" value="<?php echo $this->escapeHtml( $this->getCard()->getAdditional('echeck_account_name') ); ?>" maxlength="22" />
 			</div>
 		</li>
 		<li class="<?php echo $code; ?>_add"<?php echo $style; ?>>
-			<label for="<?php echo $code; ?>_cc_number" class="required"><em>*</em><?php echo $this->__('Credit Card Number'); ?></label>
+			<label for="<?php echo $code; ?>_echeck_bank_name" class="required"><em>*</em><?php echo $this->__('Bank Name') ?></label>
 			<div class="input-box">
-				<input type="text" id="<?php echo $code; ?>_cc_number" autocomplete="off" name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number'); ?>" class="input-text <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-number<?php endif; ?>" value="<?php echo $this->getCard()->getLabel(); ?>" />
+				<input type="text" id="<?php echo $code; ?>_echeck_bank_name" name="payment[echeck_bank_name]" title="<?php echo $this->__('Bank Name') ?>" class="input-text <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>" value="<?php echo $this->escapeHtml( $this->getCard()->getAdditional('echeck_bank_name') ); ?>" maxlength="50" autocomplete="off" />
 			</div>
 		</li>
-		<li id="<?php echo $code; ?>_cc_type_exp_div" class="<?php echo $code; ?>_add sp-methods"<?php echo $style; ?>>
-			<label for="<?php echo $code; ?>_expiration" class="required"><em>*</em><?php echo $this->__('Expiration Date'); ?></label>
+		<li class="<?php echo $code; ?>_add"<?php echo $style; ?>>
+			<label for="<?php echo $code; ?>_echeck_routing_number" class="required"><em>*</em><?php echo $this->__('Routing Number') ?></label>
 			<div class="input-box">
-				<div class="v-fix">
-					<select id="<?php echo $code; ?>_cc_exp_month" name="payment[cc_exp_month]" class="month <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
-						<option value=""><?php echo $this->__('Month'); ?></option>
-						<?php $_ccExpMonth = $this->getCard()->getAdditional('cc_exp_month'); ?>
-						<?php foreach( Mage::helper('tokenbase')->getCcMonths() as $k=>$v ): ?>
-							<option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpMonth): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-				<div class="v-fix">
-					<select id="<?php echo $code; ?>_cc_exp_year" name="payment[cc_exp_year]" class="year <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
-						<option value=""><?php echo $this->__('Year'); ?></option>
-						<?php $_ccExpYear = $this->getCard()->getAdditional('cc_exp_year'); ?>
-						<?php foreach( Mage::helper('tokenbase')->getCcYears() as $k=>$v ): ?>
-							<option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpYear): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
+				<input type="text" id="<?php echo $code; ?>_echeck_routing_no" name="payment[echeck_routing_no]" title="<?php echo $this->__('Routing Number') ?>" class="input-text <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>" value="<?php if( $this->getCard()->getId() && $this->getCard()->getAdditional('echeck_routing_number_last4') != '' ): ?>XXXX<?php echo $this->getCard()->getAdditional('echeck_routing_number_last4'); ?><?php endif; ?>" maxlength="9" autocomplete="off" />
 			</div>
 		</li>
-		<?php if( $method->getConfigData('useccv') ): ?>
-			<?php $requireCvv = $method->getAdvancedConfigData('require_ccv'); ?>
-			<li id="<?php echo $code; ?>_cc_type_cvv_div" <?php if( $requireCvv == 0 ): ?>class="<?php echo $code; ?>_add"<?php echo $style; ?><?php endif; ?>>
-				<label for="<?php echo $code; ?>_cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number'); ?></label>
-				<div class="input-box">
-					<div class="v-fix">
-						<input type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
-					</div>
-				</div>
-			</li>
-		<?php endif; ?>
+		<li class="<?php echo $code; ?>_add"<?php echo $style; ?>>
+			<label for="<?php echo $code; ?>_echeck_account_number" class="required"><em>*</em><?php echo $this->__('Account Number') ?></label>
+			<div class="input-box">
+				<input type="text" id="<?php echo $code; ?>_echeck_account_no" name="payment[echeck_account_no]" title="<?php echo $this->__('Account Number') ?>" class="input-text <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>" value="<?php if( $this->getCard()->getId() && $this->getCard()->getAdditional('echeck_account_number_last4') != '' ): ?>XXXX<?php echo $this->getCard()->getAdditional('echeck_account_number_last4'); ?><?php endif; ?>" maxlength="17" autocomplete="off" />
+			</div>
+		</li>
+		<li class="<?php echo $code; ?>_add"<?php echo $style; ?>>
+			<label for="<?php echo $code; ?>_echeck_account_type" class="required"><em>*</em><?php echo $this->__('Account Type') ?></label>
+			<div class="input-box">
+				<?php $typeValue = ( $this->getCard()->getAdditional('echeck_account_type') != '' ) ? $this->getCard()->getAdditional('echeck_account_type') : 'checking'; ?>
+				<?php foreach( Mage::helper('authnetcim_ach')->getAchAccountTypes() as $k => $v ): ?>
+					<input type="radio" name="payment[echeck_account_type]" id="<?php echo $code; ?>_echeck_account_type_<?php echo $k; ?>" value="<?php echo $k; ?>" <?php if( $k == $typeValue ): ?>checked="checked"<?php endif ?> class="validate-one-required-by-name" />
+					<label for="<?php echo $code; ?>_echeck_account_type_<?php echo $k; ?>"><?php echo $v; ?></label><br />
+				<?php endforeach ?>
+			</div>
+		</li>
 		<li class="buttons-set">
 			<button class="button" type="submit"><span><span><?php echo $this->__('Submit'); ?></span></span></button>
 			<a href="<?php echo $this->getUrl('*/*', array('_secure' => true)); ?>"><?php echo $this->__('Cancel'); ?></a>
@@ -160,15 +139,6 @@
 </form>
 <script type="text/javascript">
 //<![CDATA[
-<?php /*	$('billing-address-select').observe( 'change', function(e) {
-		if( $(this).value == '' ) {
-			$('billing-new-address-form').show();
-		}
-		else {
-			$('billing-new-address-form').hide();
-		}
-	}); */ ?>
-	
 	$('region_id').setAttribute('defaultValue', '<?php echo $this->getCard()->getAddress("region_id"); ?>');
 	
 	var dataForm = new VarienForm('form-validate', true);
