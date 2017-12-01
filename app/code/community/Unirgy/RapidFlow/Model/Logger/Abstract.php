@@ -2,6 +2,9 @@
 
 abstract class Unirgy_RapidFlow_Model_Logger_Abstract extends Varien_Object
 {
+    protected $_column;
+    protected $_line;
+
     public function getIo()
     {
         if (!$this->hasData('io')) {
@@ -76,36 +79,44 @@ abstract class Unirgy_RapidFlow_Model_Logger_Abstract extends Varien_Object
         return $this;
     }
 
-    public function warning($message)
+    public function success($message = null)
+    {
+        return $this;
+    }
+    public function warning($message = null)
     {
         return $this;
     }
 
-    public function error($message)
+    public function error($message = null)
     {
         return $this;
     }
 
     public function setLine($line)
     {
-        $this->setData('line', $line);
+//        $this->setData('line', $line);
+        $this->_line = $line;
         return $this;
     }
 
     public function setColumn($col)
     {
-        $this->setData('column', $col);
+        $this->_column = $col;
+//        $this->setData('column', $col);
         return $this;
     }
 
     public function getLine()
     {
-        return $this->_getData('line');
+        return $this->_line;
+//        return $this->_getData('line');
     }
 
     public function getColumn()
     {
-        return $this->_getData('column');
+        return $this->_column;
+//        return $this->_getData('column');
     }
 
     public function formatAsExcel()

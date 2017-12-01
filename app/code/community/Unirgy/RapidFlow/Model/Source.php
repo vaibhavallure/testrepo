@@ -53,14 +53,14 @@ class Unirgy_RapidFlow_Model_Source extends Unirgy_RapidFlow_Model_Source_Abstra
                 'export' => $this->__('Export'),
             );
             break;
-            
+
         case 'urapidflow/import_options/date_processor':
             $options = array(
                 'strtotime' => $this->__('strtotime'),
                 'zend_date' => $this->__('Zend_Date'),
             );
             if (version_compare(phpversion(), '5.3.0', '>=')) {
-            	$options['date_parse_from_format'] = $this->__('date_parse_from_format (PHP >= 5.3.0)');
+                $options['date_parse_from_format'] = $this->__('date_parse_from_format (PHP >= 5.3.0)');
             }
             break;
 
@@ -93,12 +93,12 @@ class Unirgy_RapidFlow_Model_Source extends Unirgy_RapidFlow_Model_Source_Abstra
 
         case 'row_type':
             $rowTypes = Mage::getSingleton('urapidflow/config')->getRowTypes($this->getDataType());
-            foreach ($rowTypes as $k=>$c) {
-                $label = (string)$c->title;
+            foreach ($rowTypes as $k => $c) {
+                $label = (string) $c->title;
                 if ($this->getStripFromLabel()) {
                     $label = preg_replace($this->getStripFromLabel(), '', $label);
                 }
-                $options[$k] = $k.': '.$this->__($label);
+                $options[$k] = $k . ': ' . $this->__($label);
             }
             break;
 
@@ -196,12 +196,29 @@ class Unirgy_RapidFlow_Model_Source extends Unirgy_RapidFlow_Model_Source_Abstra
             );
             break;
 
+        case 'import_image_existing_file':
+            $options = array(
+                'skip' => $this->__('WARNING and skip image field update'),
+                'replace' => $this->__('WARNING and replace existing image'),
+                'save_new' => $this->__('WARNING and save image as new by appending suffix'),
+            );
+            break;
+
         case 'store_value_same_as_default':
             $options = array(
                 'default' => $this->__('Use default values'),
                 'duplicate' => $this->__('Create the values for store level'),
             );
             break;
+
+        case 'empty_value_strategy':
+            $options = [
+                '' => 'Use default value for new rows, leave existing row value intact',
+//                'default' => 'Use default value if exists',
+                'empty' => 'Set empty value always',
+            ];
+            break;
+
 
         case 'category_display_mode':
             $options = array(
@@ -340,7 +357,7 @@ class Unirgy_RapidFlow_Model_Source extends Unirgy_RapidFlow_Model_Source_Abstra
             break;
 
         default:
-            Mage::throwException($this->__('Invalid request for source options: '.$this->getPath()));
+            $this->throwInvalidSourcePathException();
         }
 
         if ($selector) {
@@ -361,11 +378,11 @@ class Unirgy_RapidFlow_Model_Source extends Unirgy_RapidFlow_Model_Source_Abstra
     protected $_withDefaultWebsite = true;
     public function withDefaultWebsite($flag)
     {
-    	$oldFlag = $this->_withDefaultWebsite;
-    	$this->_withDefaultWebsite = (bool)$flag;
-    	return $oldFlag;
+        $oldFlag = $this->_withDefaultWebsite;
+        $this->_withDefaultWebsite = (bool)$flag;
+        return $oldFlag;
     }
-    
+
     public function getStores()
     {
         $options = array();
@@ -375,5 +392,10 @@ class Unirgy_RapidFlow_Model_Source extends Unirgy_RapidFlow_Model_Source_Abstra
             }
         }
         return $options;
+    }
+
+    protected function throwInvalidSourcePathException()
+    {
+        Mage::throwException($this->__('Invalid request for source options: ' . $this->getPath()));
     }
 }
