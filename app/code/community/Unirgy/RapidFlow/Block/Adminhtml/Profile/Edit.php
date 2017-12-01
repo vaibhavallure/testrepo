@@ -47,19 +47,19 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit extends Mage_Adminhtml_Block
                 if ($profile->getRunStatus()=='paused') {
                     $this->_addButton('resume', array(
                         'label'     => $this->__('Resume'),
-                        'onclick'   => "location.href = '".$this->getUrl('urapidflowadmin/adminhtml_profile/resume', array('id'=>$id))."'",
+                        'onclick'   => "location.href = '".$this->getUrl('adminhtml/urapidflowadmin_profile/resume', array('id'=>$id))."'",
                     ), 0);
                 } else {
                     $this->_addButton('pause', array(
                         'label'     => $this->__('Pause'),
-                        'onclick'   => "location.href = '".$this->getUrl('urapidflowadmin/adminhtml_profile/pause', array('id'=>$id))."'",
+                        'onclick'   => "location.href = '".$this->getUrl('adminhtml/urapidflowadmin_profile/pause', array('id'=>$id))."'",
                     ), 0);
                 }
             }
 
             $this->_addButton('stop', array(
                 'label'     => $this->__('Stop'),
-                'onclick'   => "location.href = '".$this->getUrl('urapidflowadmin/adminhtml_profile/stop', array('id'=>$id))."'",
+                'onclick'   => "location.href = '".$this->getUrl('adminhtml/urapidflowadmin_profile/stop', array('id'=>$id))."'",
                 'class'     => 'delete',
             ), 0);
             break;
