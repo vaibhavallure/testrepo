@@ -34,9 +34,14 @@ class Unirgy_RapidFlow_Model_Rule extends Mage_Rule_Model_Rule
 
     public function getProductIds($profile)
     {
-        $productCollection = Mage::getModel('catalog/product')->getCollection();
+        $storeId = $profile->getStoreId();
+        $store = Mage::app()->getStore($storeId);
+        $isFlat = $store->getConfig('catalog/frontend/flat_catalog_product');
+        $store->setConfig('catalog/frontend/flat_catalog_product', 0);
+//        $productCollection = Mage::getModel('catalog/product')->getCollection();
         $collection = Mage::getResourceModel('urapidflow/catalog_product_collection')
-            ->setStore($profile->getStoreId());
+            ->setStore($storeId);
+        $store->setConfig('catalog/frontend/flat_catalog_product', $isFlat);
 
         // collect conditions and join validated attributes
         $where = $this->getConditions()->asSqlWhere($collection);
@@ -45,7 +50,9 @@ class Unirgy_RapidFlow_Model_Rule extends Mage_Rule_Model_Rule
         if (!$where && !$_wf && !$_scs) {
             return true;
         }
-        if ($where) $collection->getSelect()->where($where);
+        if ($where) {
+            $collection->getSelect()->where($where);
+        }
         if ($_wf && !$collection->hasFlag('websites_filtered')) {
             $collection->getSelect()->join(
                 array('__pw'=>$collection->getTable('catalog/product_website')),

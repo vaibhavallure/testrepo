@@ -2,6 +2,7 @@
 
 $this->startSetup();
 
+/* refactored in Unirgy_RapidFlow_Adminhtml_ProfileController::_fixWebsitePriceInGlobalScope
 if (Mage::helper('catalog')->isPriceGlobal()) {
     $delAttrIdsSel = $this->_conn->select()
         ->from(array('a' => $this->getTable('eav/attribute')), array('attribute_id'))
@@ -15,5 +16,6 @@ if (Mage::helper('catalog')->isPriceGlobal()) {
     );
     $this->run($delAttrValuesSql);
 }
+*/
 
 $this->endSetup();
