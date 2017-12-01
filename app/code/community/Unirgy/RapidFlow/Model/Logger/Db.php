@@ -2,7 +2,7 @@
 
 class Unirgy_RapidFlow_Model_Logger_Db extends Unirgy_RapidFlow_Model_Logger_Abstract
 {
-    public function start()
+    public function start($mode)
     {
         return $this;
     }
@@ -17,12 +17,12 @@ class Unirgy_RapidFlow_Model_Logger_Db extends Unirgy_RapidFlow_Model_Logger_Abs
         return $this;
     }
 
-    public function success()
+    public function success($message)
     {
         return $this;
     }
 
-    public function error()
+    public function error($message)
     {
         return $this;
     }
