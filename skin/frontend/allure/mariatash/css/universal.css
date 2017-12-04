@@ -212,19 +212,21 @@
 	#mt-openorders-tab .sales-order-history .pager .pages,
 	#mt-report-tab .sales-order-history .pager .pages {
     	margin-right: 0px;
+    	float: none;
+    	display: inline-block;
 	}
 
 	#mt-openorders-tab .pager-mt-1 .limiter,
 	#mt-report-tab .pager-mt-1 .limiter {
-		float: left;
-		margin-left: 17%;
+		float: none;
+		/* margin-left: 17%; */
 	}
 }
 
 @media only screen and (max-device-width : 320px){
 	#mt-openorders-tab .pager-mt-1 .limiter,
 	#mt-report-tab .pager-mt-1 .limiter {
-		margin-left: 5%;
+		/* margin-left: 5%; */
 	}
 }
 	

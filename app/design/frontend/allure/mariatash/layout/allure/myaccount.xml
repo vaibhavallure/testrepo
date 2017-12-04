@@ -5,6 +5,8 @@
 	    <reference name="my.account.wrapper">   
 	      <block type="myaccount/myproducts" name="my_products" as="my_products" template="allure/myaccount/myproducts.phtml">
 	      	<block type="core/template" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />
+	      	<block type="myaccount/filter" name="myaccount_filter_openorder" template="allure/myaccount/filter/openorder_filter.phtml" />
+	      	<block type="myaccount/filter" name="myaccount_filter_allorder" template="allure/myaccount/filter/allorder_filter.phtml" />
 	      	
 	      	<!-- Sales order history template -->
 	      	<block type="myaccount/order_history" name="sales.order.history_list" template="allure/myaccount/historylist.phtml">
