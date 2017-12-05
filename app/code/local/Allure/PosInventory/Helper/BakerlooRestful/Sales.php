@@ -325,7 +325,7 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
                     }
 
                     //allure-02 start 
-                    if(array_key_exists("options", $buyInfo)){
+                   /*  if(array_key_exists("options", $buyInfo)){
                         if(count($buyInfo['options']) > 0){
                             if(array_key_exists("super_attribute", $buyInfo)){
                                 foreach ($buyInfo['super_attribute'] as $keyC => $valueC){
@@ -335,7 +335,7 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
                                 }
                             }
                         }
-                    }
+                    } */
                     if($buyInfo['qty'] > 0){
                         $quoteItem = $this->getQuote()->addProduct($product, new Varien_Object($buyInfo));
                     }else{
