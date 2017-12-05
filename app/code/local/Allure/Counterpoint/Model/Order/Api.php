@@ -1212,7 +1212,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         
         if(empty($email)){
             $emailName = $firstName."".$lastName;
-            $email = strtolower($emailName)."@mariatash.com";
+            $email = strtolower($emailName)."@customers.mariatash.com";
         }
         $email = strtolower($email);
         $customer = Mage::getModel('customer/customer')
