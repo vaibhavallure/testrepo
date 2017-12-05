@@ -64,7 +64,7 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                     '0' => Mage::helper('reports')->__('Any'),
                     '1' => Mage::helper('reports')->__('Specified'),
                 ),
-                'note'      => Mage::helper('reports')->__('Applies to Any of the Specified Order Payments'),
+                'note'      => Mage::helper('reports')->__('Applies to Any of the Specified Order Payments card type'),
             ), 'card_type');
             
             $fieldset->addField('card_type', 'multiselect', array(
