@@ -73,6 +73,23 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                 'display'   => 'none'
             ), 'show_card_type');
             
+            $fieldset->addField('show_customer_group', 'select', array(
+                'name'      => 'show_customer_group',
+                'label'     => Mage::helper('reports')->__('Customer Group'),
+                'options'   => array(
+                    '0' => Mage::helper('reports')->__('Any'),
+                    '1' => Mage::helper('reports')->__('Specified'),
+                ),
+                'note'      => Mage::helper('reports')->__('Applies to Any of the Specified Customer Group'),
+            ), 'customer_group');
+            
+            
+            $fieldset->addField('customer_group', 'multiselect', array(
+                'name'      => 'customer_group',
+                'values'    => $this->getCustomerGroupAsOptionArray(),
+                'display'   => 'none'
+            ), 'show_customer_group');
+            
             
             $data = $this->getFilterData()->getData();
             $store_ids = $data['store_ids'];
@@ -127,6 +144,10 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                         ->addFieldMap("{$htmlIdPrefix}card_type", 'card_type')
                         ->addFieldDependence('card_type', 'show_card_type', '1')
                         
+                        ->addFieldMap("{$htmlIdPrefix}show_customer_group", 'show_customer_group')
+                        ->addFieldMap("{$htmlIdPrefix}customer_group", 'customer_group')
+                        ->addFieldDependence('customer_group', 'show_customer_group', '1')
+                        
                         );
                 }else{
                     $this->setChild('form_after', $this->getLayout()->createBlock('adminhtml/widget_form_element_dependence')
@@ -141,6 +162,10 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                         ->addFieldMap("{$htmlIdPrefix}show_card_type", 'show_card_type')
                         ->addFieldMap("{$htmlIdPrefix}card_type", 'card_type')
                         ->addFieldDependence('card_type', 'show_card_type', '1')
+                        
+                        ->addFieldMap("{$htmlIdPrefix}show_customer_group", 'show_customer_group')
+                        ->addFieldMap("{$htmlIdPrefix}customer_group", 'customer_group')
+                        ->addFieldDependence('customer_group', 'show_customer_group', '1')
                         );
                 }
             }
@@ -194,5 +219,10 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
     {
         $model = Mage::getModel('payment/source_cctype')->setAllowedTypes(array('VI', 'MC', 'SM', 'SO', 'OT', 'AE','DI'));
         return $model->toOptionArray();
+    }
+    public function getCustomerGroupAsOptionArray()
+    {
+        $customer = Mage::getModel('customer/group')->getCollection();
+        return $customer->toOptionArray();
     }
 }
