@@ -211,7 +211,15 @@ function loadVideo(video){
 	jQuery('.containerImage img').hide();
      var player = document.getElementById('video_' + video);
      if(player){
-         var src = player.src;     
+         var src = player.src;
+
+         //allure code ws02 start
+         if(src.indexOf(':/') != -1){
+         	var newUrl = src.slice( src.indexOf(':/') + 1 );
+         	src = newUrl;
+         }
+       	//allure code end
+           
          if(src.search("autoplay=0") != -1){
             src = src.replace("autoplay=0","autoplay=1");
          }        

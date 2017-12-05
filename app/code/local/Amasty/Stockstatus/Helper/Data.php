@@ -420,7 +420,7 @@ INLINECSS;
     	    }
     	    
             if($storeId == 1){ //only for main website
-        		$productId = Mage::getModel('catalog/product')->getIdBySku($sku);
+        		/* $productId = Mage::getModel('catalog/product')->getIdBySku($sku);
         		$product = Mage::getModel('catalog/product')->load($productId);
         		$stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
         		$stockQty  = intval($stockItem->getQty());
@@ -430,15 +430,17 @@ INLINECSS;
         		if ($stockQty < 0) {
         			$isBackordered = true;
         		}
-        		
-        		if ($isBackordered && $product->getStockItem()->getManageStock()==1) {
+        		 */
+        		//if ($isBackordered && $product->getStockItem()->getManageStock()==1) {
+                $stockMsg = $item->getBackorderTime();
+                if (!empty($stockMsg)) {
         			$message = "";
-        			$stockMsg = $this->getCustomStockMessage($product);
+        			//$stockMsg = $this->getCustomStockMessage($product);
         			if(!empty($stockMsg))
         				$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
         			else
         				$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
-        		    return " (".$message.")";
+        				return " (".$message.")";
         		} else {
         			return " (In Stock: Ships Within 24 hours (Mon-Fri).)";
         		}

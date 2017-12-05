@@ -4,7 +4,7 @@
     <modules>
         <Allure_Inventory>
 			<name>Allure - Inventory Management</name>
-            <version>1.0.5</version>
+            <version>1.0.6</version>
         </Allure_Inventory>
     </modules>
     <frontend>
@@ -117,6 +117,9 @@
                      <draftitems>
                          <table>allure_inventory_purchase_draft</table>
                      </draftitems>
+                      <minmaxlog>
+	                    <table>allure_inventory_min_max_log</table>
+	                 </minmaxlog>
 	             </entities>
 	       </allure_inventory_resource>
         </models>

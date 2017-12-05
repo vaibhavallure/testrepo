@@ -10,7 +10,8 @@ class OpsWay_CustomOrderManager_Model_Observer {
 	    
 	    //Allure Inc, Modification Date:21/06/2017 
 	    ////START
-	    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
+	    $productId = Mage::getSingleton('catalog/product')->getIdBySku($item->getSku());
+	    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
 	    $stockQty = intval($stockItem->getQty());
 	    if ($stockQty <= 0) {
 	    	$item->setBackorderTime($product->getBackorderTime());
