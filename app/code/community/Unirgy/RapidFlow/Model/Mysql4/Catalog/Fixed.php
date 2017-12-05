@@ -9,6 +9,7 @@ class Unirgy_RapidFlow_Model_Mysql4_Catalog_Fixed
         foreach ($this->_newRows as $lineNum=>$row) {
             $cmd = $row[0][0];
             $rowType = $cmd==='+' || $cmd==='-' || $cmd==='%' ? substr($row[0], 1) : $row[0];
+            $rowType = strtoupper($rowType); // make sure to catch lower case codes
             if (empty($this->_rowTypeFields[$rowType]['columns'])) {
                 continue;
             }
@@ -27,14 +28,14 @@ class Unirgy_RapidFlow_Model_Mysql4_Catalog_Fixed
             $skus = array_merge($skus, $fieldValues['selection_sku']);
         }
         if (!empty($skus)) {
-            if (sizeof($this->_skus)>$this->_maxCacheItems['sku']) {
+            if (count($this->_skus) > $this->_maxCacheItems['sku']) {
                 $this->_skus = array();
             }
             $skus1 = array();
             foreach ($skus as $sku) {
                 $skus1[] = is_numeric($sku) ? "'".$sku."'" : $this->_write->quote($sku);
             }
-            $rows = $this->_read->fetchAll("select entity_id, sku from {$this->_t('catalog/product')} where sku in (".join(',', $skus1).")");
+            $rows = $this->_read->fetchAll("SELECT entity_id, sku FROM {$this->_t('catalog/product')} WHERE sku IN (" . implode(',', $skus1) . ')');
             foreach ($rows as $r) {
                 $this->_skus[$r['sku']] = $r['entity_id'];
             }

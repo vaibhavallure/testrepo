@@ -38,6 +38,17 @@ class Allure_Inventory_Adminhtml_Inventory_ReportsController extends Allure_Inve
     	->_addBreadcrumb(Mage::helper('reports')->__('Low Stock'), Mage::helper('reports')->__('Low Stock'))->renderLayout();
     	
     }
+    public function minmaxAction() {
+       
+        $admin = Mage::getSingleton('admin/session')->getUser();
+        $this->_title($this->__('Reports'))
+        ->_title($this->__('Min max'));
+        
+        $this->_initAction()
+        ->_setActiveMenu('report/product/minmax')
+        ->_addBreadcrumb(Mage::helper('reports')->__('Min max'), Mage::helper('reports')->__('Min max'))->renderLayout();
+        
+    }
     public function stocktransferAction()
     {
     	
@@ -71,6 +82,40 @@ class Allure_Inventory_Adminhtml_Inventory_ReportsController extends Allure_Inve
     	->setSaveParametersInSession(true)
     	->getCsv();
     	$this->_prepareDownloadResponse($fileName, $content);
+    }
+    public function exportTransferExcelAction()
+    {
+        $fileName   = 'inventory_transfer.xlsx';
+        $content    = $this->getLayout()->createBlock('inventory/adminhtml_reports_transfer_grid')
+        ->setSaveParametersInSession(true)
+        ->getExcel($fileName);
+        
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
+    public function exportTransferCsvAction()
+    {
+        $fileName   = 'inventory_transfer.csv';
+        $content    = $this->getLayout()->createBlock('inventory/adminhtml_reports_transfer_grid')
+        ->setSaveParametersInSession(true)
+        ->getCsv();
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
+    public function exportSalesminmaxExcelAction()
+    {
+        $fileName   = 'inventory_minmax.xlsx';
+        $content    = $this->getLayout()->createBlock('inventory/adminhtml_reports_minmax_grid')
+        ->setSaveParametersInSession(true)
+        ->getExcel($fileName);
+        
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
+    public function exportSalesminmaxCsvAction()
+    {
+        $fileName   = 'inventory_minmax.csv';
+        $content    = $this->getLayout()->createBlock('inventory/adminhtml_reports_minmax_grid')
+        ->setSaveParametersInSession(true)
+        ->getCsv();
+        $this->_prepareDownloadResponse($fileName, $content);
     }
     public function exportLowStcokExcelAction()
     {

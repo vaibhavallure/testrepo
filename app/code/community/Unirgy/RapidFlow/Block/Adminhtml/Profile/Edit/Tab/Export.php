@@ -41,6 +41,14 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Export extends Mage_Admi
             'values'    => $source->setPath('yesno')->toOptionArray(),
             'value'     => $profile->getData('options/export/image_https'),
         ));
+
+        $fieldset->addField('export_image_retain_folders', 'select', array(
+            'label'     => $this->__('Export Image Retain Folder Structure'),
+            'name'      => 'options[export][image_retain_folders]',
+            'values'    => $source->setPath('yesno')->toOptionArray(),
+            'value'     => $profile->getData('options/export/image_retain_folders'),
+            'note'      => $this->__("When exporting images keep folder structure as stored in database or export flat folder with images.")
+        ));
         $fieldset->addField('export_invalid_values', 'select', array(
             'label'     => $this->__('Export invalid values'),
             'name'      => 'options[export][invalid_values]',
@@ -53,7 +61,7 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Export extends Mage_Admi
             'values'    => $source->setPath('yesno')->toOptionArray(),
             'value'     => $profile->getData('options/export/internal_values'),
         ));
-        
+
         $fieldset->addField('export_configurable_qty_as_sum', 'select', array(
             'label'     => $this->__('Calculate qty of configurable products as sum of subproducts'),
             'name'      => 'options[export][configurable_qty_as_sum]',
@@ -87,6 +95,14 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Export extends Mage_Admi
             'label'     => $this->__('Add Markup (%)'),
             'name'      => 'options[export][markup]',
             'value'     => $profile->getData('options/export/markup'),
+        ));
+
+        $fieldset->addField('export_load_product', 'select', array(
+            'label'     => $this->__('Load Product'),
+            'name'      => 'options[export][load_product]',
+            'values'    => $source->setPath('yesno')->toOptionArray(),
+            'value'     => $profile->getData('options/export/load_product'),
+            'note'      => $this->__("If Price Index Is Empty some prices can be calculated, but product needs to be loaded.<br/>Loading products will slow down overall profile execution.")
         ));
 
         return parent::_prepareForm();

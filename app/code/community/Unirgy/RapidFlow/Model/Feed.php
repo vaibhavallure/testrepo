@@ -2,7 +2,7 @@
 
 class Unirgy_RapidFlow_Model_Feed extends Mage_AdminNotification_Model_Feed
 {
-    const FEED_URL = 'download.unirgy.com/Unirgy_RapidFlow-notifications.feed';
+    const FEED_URL = 'https://download.unirgy.com/Unirgy_RapidFlow-notifications.feed';
 
     public function getFeedUrl()
     {
