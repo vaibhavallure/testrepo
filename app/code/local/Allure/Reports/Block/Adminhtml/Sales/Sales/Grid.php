@@ -211,15 +211,17 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         
         if(!empty($card_types)){
             $card_types = explode(",", $card_types);
-            $str='';
+           /*  $str='';
             $te = array();
             foreach ($card_types as $card){
                 // $str = "'like " . '%"cc_type";s:2:"VI"%';
                // $te[] ="'". '%"cc_type";s:2:'.'"'.$card.'"%'."'";
                 $te[] ="'$card'";
             }
-            $str = implode(" OR ", $te);
-            $collection->getSelect()->where("cc_type like ".$str);
+            $str = implode(",", $te);
+            $collection->getSelect()->where("cc_type IN ".array($str)); */
+            
+            $collection = $collection->addFieldToFilter("payment.cc_type",array("in"=>$card_types));
         }
         
         $reportType = $filterData['report_type'];
@@ -264,7 +266,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->columns('ABS(sum((IFNULL(main_table.base_discount_amount,0))-IFNULL(main_table.base_discount_canceled,0))) total_discount_amount')
                      ->columns('sum(IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0)) total_discount_amount_actual')
                      ->where($condition);
-                    // echo $collection->getSelect();
+                     echo $collection->getSelect();
         $this->setCollection($collection);
         //echo $collection->getSelect();
         return parent::_prepareCollection();
