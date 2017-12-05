@@ -14,8 +14,12 @@ $fixedItems3D = array("ZSTH","XWB15BKD","XWB10D","XWB10BKD","XTHMQD","XTHD4","XT
 
 //$fixedItems = array("CSQGPS_E");//CSQGPS_E XCLVD
 
+$escapeSkus=array("XTHD2","XTHD4","XTHBF","XTHBF6","XTHBF2D","XTHBF25D","XTHBAD");
 
 foreach ($fixedItems2D as $fixedSku) {
+ 
+    if(in_array($fixedSku, $escapeSkus))
+        continue;
     
 	$productCollection = Mage::getModel('catalog/product')->getCollection()
 		->addAttributeToFilter('type_id', 'simple')
@@ -72,6 +76,9 @@ foreach ($fixedItems2D as $fixedSku) {
 
 
 foreach ($fixedItems3D as $fixedSku) {
+    
+    if(in_array($fixedSku, $escapeSkus))
+        continue;
     
     $productCollection = Mage::getModel('catalog/product')->getCollection()
     ->addAttributeToFilter('type_id', 'simple')
