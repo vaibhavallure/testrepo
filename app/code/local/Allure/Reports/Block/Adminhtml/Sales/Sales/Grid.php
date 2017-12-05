@@ -78,7 +78,8 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         if($reportType != "created_at_order"){
             $order_date_col = "updated_at";
         }
-        $groupClause = "DATE_FORMAT(".$order_date_col.", '".$format."')";
+       // $groupClause = "DATE_FORMAT(".$order_date_col.", '".$format."')";
+        $groupClause="customer_group_id";
         return $groupClause;
     }
     
@@ -192,6 +193,19 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         }
         
         
+        $customerGroup = $filterData['customer_group'];
+        if(!empty($customerGroup)){
+            $customerGroup = $customerGroup[0];
+        }
+        
+        if(!empty($customerGroup)){
+            $customerGroup = explode(",", $customerGroup);
+            $collection = $collection->
+            addFieldToFilter("customer_group_id",array("in"=>$customerGroup));
+            $collection->getSelect()->group('customer_group_id');
+        }
+        
+        
         
         $payment_methods = $filterData['payment_methods'];
         if(!empty($payment_methods)){
@@ -211,15 +225,17 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         
         if(!empty($card_types)){
             $card_types = explode(",", $card_types);
-            $str='';
+           /*  $str='';
             $te = array();
             foreach ($card_types as $card){
                 // $str = "'like " . '%"cc_type";s:2:"VI"%';
                // $te[] ="'". '%"cc_type";s:2:'.'"'.$card.'"%'."'";
                 $te[] ="'$card'";
             }
-            $str = implode(" OR ", $te);
-            $collection->getSelect()->where("cc_type like ".$str);
+            $str = implode(",", $te);
+            $collection->getSelect()->where("cc_type IN ".array($str)); */
+            
+            $collection = $collection->addFieldToFilter("payment.cc_type",array("in"=>$card_types));
         }
         
         $reportType = $filterData['report_type'];
@@ -228,6 +244,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
            $order_date_col = "updated_at";
         }
        
+        
         $collection->getSelect()
             ->reset(Zend_Db_Select::COLUMNS);
         
@@ -239,6 +256,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
    
          
             $collection->getSelect()
+            ->columns('main_table.customer_group_id')
             ->columns('count(IFNULL(.main_table.entity_id,0)) orders_count')
             ->columns('sum(IFNULL(main_table.total_qty_ordered,0)) total_qty_ordered')
             ->columns('sum(IFNULL(main_table.base_grand_total,0)-IFNULL(main_table.base_total_canceled,0)) total_income_amount')
@@ -264,7 +282,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->columns('ABS(sum((IFNULL(main_table.base_discount_amount,0))-IFNULL(main_table.base_discount_canceled,0))) total_discount_amount')
                      ->columns('sum(IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0)) total_discount_amount_actual')
                      ->where($condition);
-                    // echo $collection->getSelect();
+                //    echo $collection->getSelect();
         $this->setCollection($collection);
         //echo $collection->getSelect();
         return parent::_prepareCollection();
@@ -317,7 +335,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
     
     protected function _prepareColumns()
     {
-       /*  $this->addColumn('period', array(
+/*         $this->addColumn('period', array(
             'header'        => Mage::helper('sales')->__('Period'),
             'index'         => 'created_at',
             'width'         => 100,
@@ -326,8 +344,24 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             'renderer'      => 'adminhtml/report_sales_grid_column_renderer_date',
             'totals_label'  => Mage::helper('sales')->__('Total'),
             'html_decorators' => array('nobr'),
+        )); */
+        
+        $customerGroup = $this->getFilterData()->getCustomerGroup();
+        if(!empty($customerGroup)){
+            $customerGroup = $customerGroup[0];
+        }
+        if(!empty($customerGroup)){
+            $customerGroup = explode(",", $customerGroup);
+        }
+        if(!empty($customerGroup)){
+        $this->addColumn('customer_group_id', array(
+            'header'    => Mage::helper('sales')->__('Customer Group'),
+            'index'     => 'customer_group_id',
+            'width' => '50px',
+            'type'      => 'options',
+            'options'   => Mage::getModel('customer/group')->getCollection()->toOptionHash()
         ));
-         */
+        }
         
         $this->addColumn('orders_count', array(
             'header'    => Mage::helper('sales')->__('Orders'),
