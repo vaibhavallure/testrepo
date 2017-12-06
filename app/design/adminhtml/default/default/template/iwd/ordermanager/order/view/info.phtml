@@ -128,6 +128,18 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                       <td class="label"><label><?php echo Mage::helper('sales')->__('Payment Mode') ?></label></td>
                       <td class="value"><strong><?php if($_order->getOrderType()!=null) {echo ($_order->getWholesalePayOption() ? ($_order->getWholesalePayOption()  == 'pay_on_ship' ? 'Pay As Ship' : 'Pay Now') : (($_order->getIsReadyToShip() && $_order->getIsChildOrder()) ? 'Pay As Ship' : 'Pay Now'));}?></strong></td>
                  </tr>
+                 
+                 <?php if($_order->getCreateOrderMethod()):?>
+                 <tr>
+                 	<td class="label"><label><?php echo Mage::helper('sales')->__('Counterpoint Ticket Number') ?></label></td>
+                    <td class="value"><strong><?php echo $_order->getCounterpointOrderId();?></strong></td>
+                 </tr>	
+                 <tr>
+                 	<td class="label"><label><?php echo Mage::helper('sales')->__('Counterpoint Doc Id') ?></label></td>
+                    <td class="value"><strong><?php echo $_order->getCounterpointDocId();?></strong></td>
+                 </tr>	
+                 <?php endif;?>
+                 
             </table>
         </div>
     </div>

@@ -9,7 +9,7 @@ ini_set('memory_limit', '-1');
 $startDate = $_GET['start'];
 $endDate   = $_GET['end'];
 $state     = $_GET['state'];
-//die;
+die;
 if(empty($state)){
     die("Please mention data in 'state' field.");
 }else{
@@ -84,14 +84,18 @@ if($conn){
                     CONCAT(ITEM_TABLE.ITEM_NO,'|',ITEM_TABLE.CELL_DESCR) sku,
                     ITEM_TABLE.QTY_SOLD qty, ITEM_TABLE.PRC prc, ITEM_TABLE.DESCR pname,
                     ITEM_TABLE.lin_seq_no,
-                    CONTACT_TABLE.EMAIL_ADRS_1 as email, CONTACT_TABLE.NAM name, CONTACT_TABLE.NAM_TYP nam_typ, CONTACT_TABLE.ADRS_1 street, CONTACT_TABLE.CITY city,
+                    CONTACT_TABLE.EMAIL_ADRS_1 as email, CONTACT_TABLE.NAM name, AR_CUST_TABLE.CUST_NAM_TYP nam_typ, CONTACT_TABLE.ADRS_1 street, CONTACT_TABLE.CITY city,
                     CONTACT_TABLE.STATE state, CONTACT_TABLE.ZIP_COD zip_code , CONTACT_TABLE.CNTRY as country, CONTACT_TABLE.PHONE_1 phone,
                     DISC_TABLE.DISC_AMT dis_amount, DISC_TABLE.DISC_PCT dis_pct
 
                     FROM PS_TKT_HIST MAIN_TABLE 
                     JOIN PS_TKT_HIST_LIN ITEM_TABLE ON ( MAIN_TABLE.TKT_NO = ITEM_TABLE.TKT_NO )
                     JOIN PS_TKT_HIST_CONTACT CONTACT_TABLE ON ( MAIN_TABLE.DOC_ID = CONTACT_TABLE.DOC_ID )
+                    
+                    JOIN AR_CUST AR_CUST_TABLE ON( AR_CUST_TABLE.CUST_NO = MAIN_TABLE.CUST_NO )
+
                     LEFT JOIN PS_TKT_HIST_DISC DISC_TABLE ON ( MAIN_TABLE.DOC_ID = DISC_TABLE.DOC_ID AND DISC_TABLE.LIN_SEQ_NO is null)
+                    
                     WHERE 
                     MAIN_TABLE.STR_ID NOT IN(3,7) 
                     AND MAIN_TABLE.TKT_TYP = 'T' 
@@ -99,7 +103,7 @@ if($conn){
                     AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
                     AND CONTACT_TABLE.CONTACT_ID = ".$state."
                     -- AND MAIN_TABLE.DOC_ID NOT IN(SELECT DOC_ID FROM PS_TKT_HIST_ORIG_DOC)
-                    -- AND MAIN_TABLE.TKT_NO = '215849' 
+                    -- MAIN_TABLE.TKT_NO = '285570' 
                     ORDER BY MAIN_TABLE.TKT_DT DESC";
         
         $result = odbc_exec($conn, $query);
