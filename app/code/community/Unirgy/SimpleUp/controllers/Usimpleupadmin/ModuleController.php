@@ -31,9 +31,6 @@ class Unirgy_SimpleUp_Usimpleupadmin_ModuleController extends Mage_Adminhtml_Con
             Mage::helper('usimpleup')->checkUpdates();
             Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__('Version updates have been fetched'));
         } catch (Exception $e) {
-echo "<pre>";
-print_r($e);
-exit;
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
         }
         $this->_redirect('*/*/');
