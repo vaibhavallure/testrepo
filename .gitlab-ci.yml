@@ -49,8 +49,8 @@ bugfix:
     - echo 'Deployed on Bugfixes Staging'
     
 universal:
-  environment: universal
-  stage: universal
+  environment: staging
+  stage: staging
   tags:
     - staging
   only:
