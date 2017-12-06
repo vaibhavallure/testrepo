@@ -3,7 +3,7 @@
    <sections>
 		<payment>
 			<groups>
-				<authnetapplepay translate="label" module="authnetapplepay">
+				<authnetapplepay translate="label" module="allure_authnetapplepay">
 					<label>Apple Pay (Authorize.Net Accept.js)</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>780</sort_order>

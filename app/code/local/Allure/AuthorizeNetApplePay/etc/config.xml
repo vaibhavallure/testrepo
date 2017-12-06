@@ -18,14 +18,17 @@
 			<allure_authnetapplepay>
 				<class>Allure_AuthorizeNetApplePay_Helper</class>
 			</allure_authnetapplepay>
+			<authnetapplepay>
+				<class>Allure_AuthorizeNetApplePay_Helper</class>
+			</authnetapplepay>
 		</helpers>
 		<models>
-			<authnetapplepay>
-				<class>Allure_AuthorizeNetApplePay_Model</class>
-			</authnetapplepay>
 			<allure_authnetapplepay>
 				<class>Allure_AuthorizeNetApplePay_Model</class>
 			</allure_authnetapplepay>
+			<authnetapplepay>
+				<class>Allure_AuthorizeNetApplePay_Model</class>
+			</authnetapplepay>
 		</models>
 	</global>
 	<default>
@@ -43,8 +46,8 @@
 	<frontend>
 		<layout>
 			<updates>
-				<authnetapplepay module="Allure_AuthorizeNetApplePay">
-					<file>allure/AuthorizeNetApplePay.xml</file>
+				<authnetapplepay module="allure_authnetapplepay">
+					<file>allure/authnetapplepay.xml</file>
 				</authnetapplepay>
 			</updates>
 		</layout>
@@ -52,8 +55,8 @@
 	<adminhtml>
 		<layout>
 			<updates>
-				<authnetapplepay module="Allure_AuthorizeNetApplePay">
-					<file>allure/AuthorizeNetApplePay.xml.xml</file>
+				<authnetapplepay module="allure_authnetapplepay">
+					<file>allure/authnetapplepay.xml</file>
 				</authnetapplepay>
 			</updates>
 		</layout>
