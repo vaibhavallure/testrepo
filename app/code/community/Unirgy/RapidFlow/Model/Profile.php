@@ -1253,10 +1253,18 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
             switch ($code) {
                 case 'clean_media':
                     $this->activity(Mage::helper('urapidflow')->__('Refreshing: %s', $code));
-                    Mage::getModel('catalog/product_image')->clearCache();
-                    Mage::dispatchEvent('clean_catalog_images_cache_after');
                     Mage::getModel('core/design_package')->cleanMergedJsCss();
                     Mage::dispatchEvent('clean_media_cache_after');
+                    break;
+                case 'clean_images':
+                    $this->activity(Mage::helper('urapidflow')->__('Refreshing: %s', $code));
+                    Mage::getModel('catalog/product_image')->clearCache();
+                    Mage::dispatchEvent('clean_catalog_images_cache_after');
+                    break;
+                case 'clean_swatches':
+                    $this->activity(Mage::helper('urapidflow')->__('Refreshing: %s', $code));
+                    Mage::helper('configurableswatches/productimg')->clearSwatchesCache();
+                    Mage::dispatchEvent('clean_configurable_swatches_cache_after');
                     break;
 
                 default:

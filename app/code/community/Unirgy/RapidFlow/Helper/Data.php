@@ -147,6 +147,9 @@ class Unirgy_RapidFlow_Helper_Data extends Mage_Core_Helper_Data
                 $flag = $this->compareMageVer('1.4', '1.6');
                 break;
 
+            case 'catalog.swatches':
+                $flag = $this->compareMageVer('1.9.1', '1.14.1');
+                break;
             case 'category.include_in_menu':
                 $flag = $this->compareMageVer('1.4.1', '1.8');
                 break;
@@ -158,7 +161,7 @@ class Unirgy_RapidFlow_Helper_Data extends Mage_Core_Helper_Data
                 $flag = $this->isModuleActive('Enterprise_Enterprise') && $this->compareMageVer('1.13.0.2');
                 break;
             case 'multiple_uploader':
-                $flag = class_exists(Mage::getConfig()->getBlockClassName('uploader/multiple'));
+                $flag = $this->isModuleActive('Mage_Uploader');
                 break;
             }
             $this->_hasMageFeature[$feature] = $flag;

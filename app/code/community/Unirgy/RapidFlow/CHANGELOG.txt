@@ -1,3 +1,9 @@
+===== 2017-12-06 2.0.0.40 =====
+  * Fixed multiple_uploader mage feature check
+
+===== 2017-11-29 2.0.0.39 =====
+  * Added separate flush cache options for Images, Swatch Images, JavaScript/CSS
+
 ===== 2017-11-29 2.0.0.38 =====
   * Added CURL options in "Fine Tuning" section of global config
 
