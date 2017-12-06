@@ -10,11 +10,11 @@ class Allure_Shell_POProducts extends Mage_Shell_Abstract
 	public function run()
 	{
 		Mage::app('admin')->setCurrentStore(0);
-		//$model = Mage::getModel('allure_category/observer');
-		$model = Mage::getModel('core/email_queue');
-		$model->send();
+	    $model = Mage::getModel('allure_category/observer');
+		//$model = Mage::getModel('core/email_queue');
+		//$model->send();
 		// Import Products:
-		//$model->setProductToChildCategory();
+		$model->setProductToChildCategory();
 	}
 }
 
