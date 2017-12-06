@@ -253,7 +253,7 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 	protected function _arrayToXml( $rootName, $array )
 	{
 		$xml = Mage::getModel('tokenbase/gateway_xml')->createXML( $rootName, $array );
-		
+
 		return $xml->saveXML();
 	}
 	
