@@ -47,8 +47,8 @@
 <?php 
 echo "<h4>Shipping address</h4>";
  
-$checkout = Mage::getSingleton('checkout/session')->getQuote();
-$shipping = $checkout->getShippingAddress();
+$quote = Mage::getSingleton('checkout/session')->getQuote();
+$shipping = $quote->getShippingAddress();
 echo '<p>' . $shipping->getFormated('html') . '</p>';
 ?>
 
@@ -62,8 +62,7 @@ echo '<p>' . $shipping->getFormated('html') . '</p>';
 <div class="billing-address-mt">
 <h4>Billing Address</h4>
 <?php
-$checkout = Mage::getSingleton('checkout/session')->getQuote();
-$billing = $checkout->getBillingAddress();
+$billing = $quote->getBillingAddress();
 echo '<p>' . $billing->getFormated('html') . '</p>';
 ?>
 
@@ -73,12 +72,10 @@ echo '<p>' . $billing->getFormated('html') . '</p>';
 <?php endif; ?>
 </div>
 
-
 <div class="shipping-method-mt">
 <?php 
 echo "<h4>Shipping method</h4>";
-$checkout = Mage::getSingleton('checkout/session')->getQuote();
-$shippingAddress = $checkout->getShippingAddress();
+$shippingAddress = $quote->getShippingAddress();
 
 echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 ?>
@@ -87,7 +84,7 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
 
 <div class="payment-method-mt">
 <?php
-$payment = $checkout->getPayment();
+$payment = $quote->getPayment();
 echo "<h4>Payment method</h4>";
 switch ($payment->getMethod()) {
     case 'authorizenet':
@@ -108,6 +105,18 @@ switch ($payment->getMethod()) {
 <script type="text/javascript">
 //<![CDATA[
     truncateOptions();
+
+    
+
+	<?php if ($payment->getMethod() == 'authnetapplepay'):?>
+	AllureApplePay.lineTotal = <?php echo $quote->getGrandTotal();?>;
+	AllureApplePay.lineItems = [];
+
+	<?php $items = $quote->getAllVisibleItems();?>
+	<?php foreach ($items as $_item) :?>
+	AllureApplePay.lineItems.push({type: 'final',label: '<?php echo $_item->getProduct()->getName()?>', amount: '<?php echo $_item->getProduct()->getPrice()?>' });
+	<?php endforeach;?>
+	<?php endif;?>
 //]]>
 </script>
 <div id="checkout-review-submit">
