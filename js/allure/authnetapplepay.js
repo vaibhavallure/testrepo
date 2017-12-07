@@ -20,9 +20,9 @@ function createTransaction(dataObj) {
 	console.log(dataObj);
 	
 	let objJsonStr = JSON.stringify(dataObj);
-	console.log(objJsonStr);
-        let objJsonB64 = window.btoa(objJsonStr);
-	console.log(objJsonB64);
+	//console.log(objJsonStr);
+    let objJsonB64 = window.btoa(objJsonStr);
+	//console.log(objJsonB64);
 	
 	return true;
 	

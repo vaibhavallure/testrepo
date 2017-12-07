@@ -2,7 +2,7 @@
 	<script type="text/javascript">
 	//<![CDATA[
 		<?php /** We have to load our scripts dynamically as such, because opc will not load them otherwise. Injecting via layout would only cause compatibility problems. **/ ?>
-		if( typeof AllureApplePay == 'undefined' ) {
+		if ( typeof AllureApplePay == 'undefined' ) {
 			var AllureApplePay = {};
 
 			AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
@@ -17,6 +17,18 @@
 
 			AllureApplePay.Initialised = true;
 		}
+
+		<?php 
+		  
+		      $items = Mage::getSingleton('checkout/session')->getQuote()->getAllVisibleItems();
+		      
+		      foreach ($items as $_item) {
+		          ?>
+		          AllureApplePay.lineItems[] = <?php eco json_encode($_item->getData())?>;
+		          <?php 
+		      }
+		?>
+		
 	//]]>
 	</script>
 <?php endif; ?>
