@@ -1,34 +1,38 @@
-<?php if( $this->getMethod()->isAcceptJsEnabled() === true ): ?>
-	<script type="text/javascript">
-	//<![CDATA[
-		<?php /** We have to load our scripts dynamically as such, because opc will not load them otherwise. Injecting via layout would only cause compatibility problems. **/ ?>
-		if ( typeof AllureApplePay == 'undefined' ) {
-			var AllureApplePay = {};
-
-			AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
-			AllureApplePay.MerchantId = '<?php $this->getMethod()->getConfigData('merchant_id') ?>';
-			AllureApplePay.MerchantName = '<?php $this->getMethod()->getConfigData('merchant_name') ?>';
-			
-			var s = document.createElement('script');
-			s.type = "text/javascript";
-			s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'allure/authnetapplepay.js'; ?>";
-			var fs = document.getElementsByTagName('script')[1];
-			fs.parentNode.insertBefore(s, fs);
-
-			AllureApplePay.Initialised = true;
-		}
-
-		<?php 
-		  
-		      $items = Mage::getSingleton('checkout/session')->getQuote()->getAllVisibleItems();
-		      
-		      foreach ($items as $_item) {
-		          ?>
-		          AllureApplePay.lineItems[] = <?php echo json_encode($_item->getData())?>;
-		          <?php 
-		      }
-		?>
-		
-	//]]>
-	</script>
-<?php endif; ?>
+<ul class="form-list" id="payment_form_authnetapplepay" style="display:none;">
+    <?php if( $this->getMethod()->isAcceptJsEnabled() === true ): ?>
+    <li class="form-alt">Pay with Apple Pay from your Phone
+    	<script type="text/javascript">
+    	//<![CDATA[
+    		<?php /** We have to load our scripts dynamically as such, because opc will not load them otherwise. Injecting via layout would only cause compatibility problems. **/ ?>
+    		if ( typeof AllureApplePay == 'undefined' ) {
+    			var AllureApplePay = {};
+    
+    			AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
+    			AllureApplePay.MerchantId = '<?php $this->getMethod()->getConfigData('merchant_id') ?>';
+    			AllureApplePay.MerchantName = '<?php $this->getMethod()->getConfigData('merchant_name') ?>';
+    			
+    			var s = document.createElement('script');
+    			s.type = "text/javascript";
+    			s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'allure/authnetapplepay.js'; ?>";
+    			var fs = document.getElementsByTagName('script')[1];
+    			fs.parentNode.insertBefore(s, fs);
+    
+    			AllureApplePay.Initialised = true;
+    		}
+    
+    		<?php 
+    		  
+    		      $items = Mage::getSingleton('checkout/session')->getQuote()->getAllVisibleItems();
+    		      
+    		      foreach ($items as $_item) {
+    		          ?>
+    		          AllureApplePay.lineItems[] = <?php echo json_encode($_item->getData())?>;
+    		          <?php 
+    		      }
+    		?>
+    		
+    	//]]>
+    	</script>
+    	</li>
+    <?php endif; ?>
+ </ul>
