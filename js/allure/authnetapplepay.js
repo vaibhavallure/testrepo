@@ -23,8 +23,8 @@ function createTransaction(dataObj) {
 	//console.log(objJsonStr);
     let objJsonB64 = window.btoa(objJsonStr);
 	//console.log(objJsonB64);
-	
-	return true;
+
+    return true;
 	
 	jQuery.ajax({
 		
@@ -120,10 +120,12 @@ function initApplePay(){
 			console.log(returnFromGateway);
 			console.log("defaulting to successful payment by the Token");
 
-			if ( returnFromGateway == true )
+			if ( returnFromGateway == true ) {
 				resolve(true);
-			else
+			    review.save();
+			} else {
 				reject;
+			}
 		});
 	}
 
