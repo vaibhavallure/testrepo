@@ -1,6 +1,6 @@
 <?php
 
-class Allure_AuthorizeNetApplePay_Block_Form extends ParadoxLabs_TokenBase_Block_Form
+class Allure_AuthorizeNetApplePay_Block_Form extends Mage_Payment_Block_Form
 {
 	/**
 	 * Instantiate with ACH payment form.
