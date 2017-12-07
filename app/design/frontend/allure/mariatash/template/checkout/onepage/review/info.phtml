@@ -107,12 +107,16 @@ switch ($payment->getMethod()) {
     truncateOptions();
 
 	<?php if ($payment->getMethod() == 'authnetapplepay'):?>
-	AllureApplePay.lineTotal = <?php echo $quote->getGrandTotal();?>;
+	AllureApplePay.lineTotal = <?php echo round($quote->getBaseGrandTotal(), 2);?>;
 	AllureApplePay.lineItems = [];
 
 	<?php $items = $quote->getAllVisibleItems();?>
 	<?php foreach ($items as $_item) :?>
-	AllureApplePay.lineItems.push({type: 'final',label: '<?php echo $_item->getProduct()->getName()?>', amount: '<?php echo $_item->getProduct()->getPrice()?>' });
+	AllureApplePay.lineItems.push({type: 'final',label: '<?php echo $_item->getProduct()->getName()?>', amount: '<?php echo round($_item->getProduct()->getPrice(), 2)?>' });
+	<?php endforeach;?>
+	<?php $totals = $quote->getTotals();?>
+	<?php foreach ($totals as $_total_name => $_total) :?>
+	AllureApplePay.lineItems.push({type: 'final',label: '<?php echo $_total_name?>', amount: '<?php echo round($_total->getValue(), 2)?>' });
 	<?php endforeach;?>
 	<?php endif;?>
 //]]>
