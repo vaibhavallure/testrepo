@@ -3,14 +3,19 @@
 	<script type="text/javascript">
 	//<![CDATA[
 		<?php /** We have to load our scripts dynamically as such, because opc will not load them otherwise. Injecting via layout would only cause compatibility problems. **/ ?>
-		if( typeof AllureApplePayInitialised == 'undefined' ) {
+		if( typeof AllureApplePay == 'undefined' ) {
+			var AllureApplePay = {};
+
+			AllureApplePay.MerchantId = '<?php $this->getMethod()->getConfigData('merchant_id') ?>';
+			AllureApplePay.MerchantName = '<?php $this->getMethod()->getConfigData('merchant_name') ?>';
+			
 			var s = document.createElement('script');
 			s.type = "text/javascript";
 			s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'allure/authnetapplepay.js'; ?>";
 			var fs = document.getElementsByTagName('script')[1];
 			fs.parentNode.insertBefore(s, fs);
 
-			var AllureApplePayInitialised = true;
+			AllureApplePay.Initialised = true;
 		}
 	//]]>
 	</script>
