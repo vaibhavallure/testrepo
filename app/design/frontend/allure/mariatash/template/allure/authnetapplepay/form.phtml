@@ -24,7 +24,7 @@
 		      
 		      foreach ($items as $_item) {
 		          ?>
-		          AllureApplePay.lineItems[] = <?php eco json_encode($_item->getData())?>;
+		          AllureApplePay.lineItems[] = <?php echo json_encode($_item->getData())?>;
 		          <?php 
 		      }
 		?>
