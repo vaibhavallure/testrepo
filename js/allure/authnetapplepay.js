@@ -87,7 +87,7 @@ function initApplePay(){
 	session.onpaymentmethodselected = function(event) {
 		console.log('starting onpaymentmethodselected');
 		console.log(event);
-		var newTotal = { type: 'final', label: 'Test Spices', amount: '15.00' };
+		var newTotal = { type: 'final', label: 'Venus By Maria Tash', amount: '15.00' };
 		var newLineItems =[{type: 'final',label: 'Spice #202', amount: '15.00' }]
 		session.completePaymentMethodSelection( newTotal, newLineItems);
 	}
