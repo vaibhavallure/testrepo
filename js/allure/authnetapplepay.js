@@ -8,7 +8,7 @@ if (window.ApplePaySession) {
       }else{
       	console.log("Apple Pay is available but not activated yet");
       }
-	}); 
+	});
 }
 else{
 	console.log("Apple Pay not available in this browser");
