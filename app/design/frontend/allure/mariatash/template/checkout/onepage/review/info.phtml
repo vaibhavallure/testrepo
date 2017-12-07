@@ -115,7 +115,7 @@ switch ($payment->getMethod()) {
     <?php echo $this->getChildHtml('agreements') ?>
     <div class="buttons-set" id="review-buttons-container">
     		<?php if ($payment->getMethod() == 'authnetapplepay'):?>
-    		<button id="applePayButton" class='apple-pay-button-with-text apple-pay-button-white-with-text'  onclick="initApplePay()"><span class="logo"></span><span class="text">Apple Pay</span></button>
+    		<button id="applePayButton" class='apple-pay-button-with-text apple-pay-button-black-with-text'  onclick="initApplePay()"><span class="text">Pay with</span><span class="logo"></span></button>
     		<?php else:?>
         <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a></p>
         <?php echo $this->getChildHtml('button') ?>
