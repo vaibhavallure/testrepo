@@ -38,10 +38,11 @@ body.modal-popup-body {
 } 
 
 button.apple-pay-button-with-text.apple-pay-button-black-with-text {
-  min-height: 30px !important;
-  height: 20px !important;
-  margin-top: -2px !important;
-  border-radius: 0 !important;
+ 	margin-top: 10px !important;
+}
+
+button.apple-pay-button-with-text.apple-pay-button-black-with-text  + a {
+	margin-top: 7px;
 }
 
 .owl-carousel,#zoom-btn {z-index:0 !important}
