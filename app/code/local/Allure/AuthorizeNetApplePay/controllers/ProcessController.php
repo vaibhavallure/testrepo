@@ -17,12 +17,20 @@ class Allure_AuthorizeNetApplePay_ProcessController extends Mage_Core_Controller
         $validationUrl="https://apple-pay-gateway-cert.apple.com/paymentservices/startSession";
         
         $pemPwd = '';
-        $domainName = 'www.venusbymariatash.com';
-        $merchantId = 'merchant.com.mariatash.authorizenet';
+        $displayName    = "Venus By Maria Tash";
+        $domainName     = $_SERVER['HTTP_HOST'];
+        $merchantId     = 'merchant.com.mariatash.authorizenet';
         
+        $payload = array (
+                "merchantIdentifier" => $merchantId,
+                "domainName"    => $domainName,
+                "displayName"   => $displayName
+        );
         
         // JSON Payload
-        $validationPayload = '{"merchantIdentifier": "merchant.com.mariatash.authorizenet","domainName": "www.venusbymariatash.com","displayName":"Venus By Maria Tash"}';
+        //$validationPayload = '{"merchantIdentifier": "merchant.com.mariatash.authorizenet","domainName": "www.venusbymariatash.com","displayName":"Venus By Maria Tash"}';
+        
+        $validationPayload = json_encode($payload);
         
         try{	//setting the curl parameters.
             $ch = curl_init();
@@ -37,13 +45,14 @@ class Allure_AuthorizeNetApplePay_ProcessController extends Mage_Core_Controller
                 // The following two curl SSL options are set to "false" for ease of development/debug purposes only.
                 // Any code used in production should either remove these lines or set them to the appropriate
                 // values to properly use secure connections for PCI-DSS compliance.
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);	//for production, set value to true or 1
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);	//for production, set value to 2
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);	//for production, set value to true or 1
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);	//for production, set value to 2
                 curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-                curl_setopt($ch, CURLOPT_SSLCERT, dirname(__FILE__).'/../certs/VenusByMariaTash.pem');
+                curl_setopt($ch, CURLOPT_SSLCERT, dirname(__FILE__).'/../certs/Identity_VenusByMariaTash.pem');
                 curl_setopt($ch, CURLOPT_SSLCERTPASSWD, $pemPwd);
                 curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false );
                 $content = curl_exec($ch);
+                
                 if (FALSE === $content)
                 {
                     print_r(curl_error($ch));
@@ -57,6 +66,5 @@ class Allure_AuthorizeNetApplePay_ProcessController extends Mage_Core_Controller
         } catch (Exception $e) {
             trigger_error(sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()), E_USER_ERROR);
         }
-        
     }
 }
