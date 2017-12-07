@@ -4,7 +4,7 @@ if (window.ApplePaySession) {
    promise.then( function (canMakePayments) {
       if (canMakePayments){
       	console.log("Apple Pay Payment Available");
-      	$("#applePayButton").prop('disabled', false);
+      	jQuery("#applePayButton").prop('disabled', false);
       }else{
       	console.log("Apple Pay is available but not activated yet");
       }
@@ -24,7 +24,7 @@ function createTransaction(dataObj) {
         let objJsonB64 = window.btoa(objJsonStr);
 	console.log(objJsonB64);
 	
-	$.ajax({
+	jQuery.ajax({
 		
 		url: "transactionCaller.php",
 		data: {amount: '15.00', dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: objJsonB64},
@@ -43,7 +43,7 @@ function createTransaction(dataObj) {
 	return true;
 }
 
-function applePayButtonClicked(){
+function initApplePay(){
 
 	console.log('Apple Pay Initiated');
 

@@ -4759,7 +4759,6 @@ ol#checkoutSteps.opc li.active {
 }
 .checkout-onepage-index #checkout-review-load.order-review p.f-left {
     margin: 0 0 0 0px;
-  text-indent:10px;
 }
 .checkout-onepage-index #checkout-review-load #review-buttons-container p {
    /*  float: none !important; */
@@ -9872,9 +9871,7 @@ float: right;
 .checkout-back,
 #review-buttons-container #review-back{
 	float: left;
-    margin-top: -2px;
 }
-
 
 .checkout-onepage-success .col2-right-layout .col-right{
 	display: none;
