@@ -44,6 +44,15 @@
 		 </payment>
 	</default>
 	<frontend>
+		<routers>
+			<allure_authnetapplepay>
+				<use>standard</use>
+				<args>
+					<module>Allure_AuthorizeNetApplePay</module>
+					<frontName>applepay</frontName>
+				</args>
+			</allure_authnetapplepay>
+		</routers>
 		<layout>
 			<updates>
 				<authnetapplepay module="allure_authnetapplepay">

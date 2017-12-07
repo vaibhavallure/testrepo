@@ -24,6 +24,8 @@ function createTransaction(dataObj) {
         let objJsonB64 = window.btoa(objJsonStr);
 	console.log(objJsonB64);
 	
+	return true;
+	
 	jQuery.ajax({
 		
 		url: "transactionCaller.php",
@@ -76,7 +78,7 @@ function initApplePay(){
 				resolve(data);
 			};
 			xhr.onerror = reject;
-			xhr.open('POST', 'validateApplePayMerchant.php', true);
+			xhr.open('POST', AllureApplePay.BaseUrl+'validateMerchant', true);
 			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 			xhr.send('validationUrl='+valURL);
 		});

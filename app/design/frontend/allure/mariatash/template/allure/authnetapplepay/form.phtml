@@ -1,12 +1,11 @@
 <?php if( $this->getMethod()->isAcceptJsEnabled() === true ): ?>
-	APPLE PAY
 	<script type="text/javascript">
 	//<![CDATA[
 		<?php /** We have to load our scripts dynamically as such, because opc will not load them otherwise. Injecting via layout would only cause compatibility problems. **/ ?>
 		if( typeof AllureApplePay == 'undefined' ) {
 			var AllureApplePay = {};
 
-			AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('authnetapplepay'); ?>';
+			AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
 			AllureApplePay.MerchantId = '<?php $this->getMethod()->getConfigData('merchant_id') ?>';
 			AllureApplePay.MerchantName = '<?php $this->getMethod()->getConfigData('merchant_name') ?>';
 			
