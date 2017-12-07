@@ -106,8 +106,6 @@ switch ($payment->getMethod()) {
 //<![CDATA[
     truncateOptions();
 
-    
-
 	<?php if ($payment->getMethod() == 'authnetapplepay'):?>
 	AllureApplePay.lineTotal = <?php echo $quote->getGrandTotal();?>;
 	AllureApplePay.lineItems = [];

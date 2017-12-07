@@ -54,7 +54,7 @@ function initApplePay(){
 	  currencyCode: 'USD',
 	  supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 	  merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
-	  total: { label: 'Venus By Maria Tash', amount: '15.00' },
+	  total: { label: 'Venus By Maria Tash', amount: AllureApplePay.lineTotal },
 	}
 	
 	var session = new ApplePaySession(1, request);
