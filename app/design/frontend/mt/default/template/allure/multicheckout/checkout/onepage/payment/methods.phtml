@@ -58,6 +58,10 @@
 <?php
     foreach ($methods as $_method):
         $_code = $_method->getCode();
+    
+        if ($_code == 'authnetapplepay') {
+            continue;
+        }
 ?>
     <dt class="<?php echo (in_array($_code,$payNowArr)?"mt-pay-now":""); 
     	echo (in_array($_code,$payAsShipArr)?" mt-pay-as-ship":"");?>"
