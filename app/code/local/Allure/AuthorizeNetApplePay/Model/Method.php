@@ -1,6 +1,6 @@
 <?php
 
-class Allure_AuthorizeNetApplePay_Model_Method extends ParadoxLabs_TokenBase_Model_Method
+class Allure_AuthorizeNetApplePay_Model_Method extends Mage_Payment_Model_Method_Abstract
 {
 	protected $_formBlockType			= 'authnetapplepay/form';
 	protected $_infoBlockType			= 'authnetapplepay/info';

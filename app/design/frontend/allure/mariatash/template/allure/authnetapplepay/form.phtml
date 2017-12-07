@@ -6,6 +6,7 @@
 		if( typeof AllureApplePay == 'undefined' ) {
 			var AllureApplePay = {};
 
+			AllureApplePay.BaseUrl = '<?php echo Mage::getBaseUrl('authnetapplepay/'); ?>';
 			AllureApplePay.MerchantId = '<?php $this->getMethod()->getConfigData('merchant_id') ?>';
 			AllureApplePay.MerchantName = '<?php $this->getMethod()->getConfigData('merchant_name') ?>';
 			
