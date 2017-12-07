@@ -41,7 +41,7 @@
         <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
         <?php $oneMethod = $_code; ?>
     <?php endif; ?>
-        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?><?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="radio payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?><?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
     </dt>
     <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
     <dd>
@@ -241,14 +241,14 @@
                       var payment = jQuery(this).val(); 
                       if(payment){
                         if(jQuery(this).is(':checked')){                        
-                           jQuery(this).attr('class','payment-checked');
+                           jQuery(this).attr('class','radio payment-checked');
                            if(payment == 'authorizenet'){
                                jQuery('#payment_form_'+payment).show();
                            }
                         }
                         jQuery('#label-'+payment).click(function(){                         
                             uncheckPayment();
-                            jQuery(this).attr('class','payment-checked');
+                            jQuery(this).attr('class','radio payment-checked');
                         });
                       }
                       
@@ -263,14 +263,14 @@
                                   var payment = jQuery(this).val();      
                                   if(payment){                                   
                                     if(jQuery(this).is(':checked')){                                           
-                                           jQuery(this).attr('class','payment-checked');
+                                           jQuery(this).attr('class','radio payment-checked');
                                            if(payment == 'authorizenet'){
                                                jQuery('#payment_form_'+payment).show();
                                            }
                                     }
                                     jQuery('#label-'+payment).click(function(){                         
                                        uncheckPayment();
-                                       jQuery(this).attr('class','payment-checked');
+                                       jQuery(this).attr('class','radio payment-checked');
                                     });
                                   }
 
