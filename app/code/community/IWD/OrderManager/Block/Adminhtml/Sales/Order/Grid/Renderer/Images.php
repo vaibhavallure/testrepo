@@ -16,11 +16,17 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Images extends 
             $sku = $item->getSku();
           
             try{
-                if($product_id)
-                    $_product = Mage::getModel('catalog/product')->load($product_id);  
-                else {
+                if($sku){
+                    //updated because of parent child
+                  //  $_product = Mage::getModel('catalog/product')->load($product_id );  
                     $_product = Mage::getModel('catalog/product');
-                    $_product = Mage::getModel('catalog/product')->load($_product->getIdBySku($sku)); }
+                    $_product = Mage::getModel('catalog/product')->load($_product->getIdBySku($sku)); 
+                }
+                else {
+                    $_product = Mage::getModel('catalog/product')->load($product_id );
+                       //$_product = Mage::getModel('catalog/product');
+                    //$_product = Mage::getModel('catalog/product')->load($_product->getIdBySku($sku)); 
+                }
                 $url_min = $helper->init($_product, 'small_image')->resize(50);
                 $url_max = $helper->init($_product, 'image')->resize(200);
                 if($count%3 == 0){$class = ($count < 3) ? "show":""; $cell .= "<div class='iwd_om_image_row $class'>";}
