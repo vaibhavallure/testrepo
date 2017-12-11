@@ -67,7 +67,7 @@
 		<jobs>
 			<allure_productsharetostore_schedule>
 				<schedule>
-					<cron_expr>30 1 * * *</cron_expr>
+					<cron_expr>50 1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>productshare/observer::shareAvailableProductsToStore</model>
