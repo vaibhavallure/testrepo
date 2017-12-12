@@ -23,13 +23,10 @@ function createTransaction(dataObj) {
 	//console.log(objJsonStr);
     let objJsonB64 = window.btoa(objJsonStr);
 	//console.log(objJsonB64);
-
-    return true;
-	
+    
 	jQuery.ajax({
-		
-		url: "transactionCaller.php",
-		data: {amount: '15.00', dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: objJsonB64},
+		url: AllureApplePay.BaseUrl+'saveTransaction',
+		data: {amount: '15.00', dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64},
 		method: 'POST',
 		timeout: 5000
 		
@@ -38,7 +35,6 @@ function createTransaction(dataObj) {
 		console.log('Success');
 		
 	}).fail(function(){
-		
 		console.log('Error');
 	})
 	

@@ -67,4 +67,13 @@ class Allure_AuthorizeNetApplePay_ProcessController extends Mage_Core_Controller
             trigger_error(sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()), E_USER_ERROR);
         }
     }
+    
+    public function saveTransactionAction() {
+        
+        $data = $_POST;
+        
+        Mage::log(json_encode($data), Zend_Log::DEBUG, 'applepay.log', true);
+        
+        die('DONE');
+    }
 }
