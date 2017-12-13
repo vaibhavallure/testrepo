@@ -545,11 +545,11 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
     {
         // Mage::log(json_encode($this->getQuote()->getShippingAddress()->getData()),Zend_log::DEBUG,'abc',true);
         /* Mage::log($data['shipping_method'],Zend_log::DEBUG,'abc',true); */
-        $isBackorder = $this->isQuoteContainsBackorder();
+        //$isBackorder = $this->isQuoteContainsBackorder();
         $quoteMain = $this->getQuote(); // this is main quote object.
         $_checkoutHelper = Mage::helper('allure_multicheckout');
         $this->changeCustomQuoteStatus();
-        
+        $isBackorder = $_checkoutHelper->isQuoteContainsBackorderProduct();
         if ($isBackorder) {
             $quoteItems = $quoteMain->getAllVisibleItems(); // $quoteMain->getAllItems();
             
@@ -585,7 +585,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 //Added in parent child
                 
                 $storeId=Mage::app()->getStore()->getStoreId();
-                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
                 $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product,$storeId);
                 
                 $stock_qty = intval($productInvryCount->getQty());
@@ -677,13 +677,15 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         $isBackorderAvailable = false;
         $quote = $this->getQuote();
         $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
+        $storeId=Mage::app()->getStore()->getStoreId();
         foreach ($qouteItems as $item) :
-            $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
+        $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
+        $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
                 ->getQty();
             
-            $stock_qty = intval($item->getProduct()
+            /* $stock_qty = intval($item->getProduct()
                 ->getStockItem()
-                ->getQty());
+                ->getQty()); */
             if ($stock_qty < $item->getQty()) :
                 $isBackorderAvailable = true;
                 break;
@@ -844,19 +846,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             /* 2nd : Out of stock product order Start */
             $backOrderedQuote = $this->getQuoteBackordered();
             $quote = $this->getQuoteBackordered();
-            Mage::log("\n********************** OUT OF STOCK START **************************", Zend_Log::DEBUG,
-                    'multiorder.log', true);
-            Mage::log("\n----------Quote Data-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getData()), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n----------Shipping Address-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getShippingAddress()->getData()), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n----------Shipping Method-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getShippingAddress()->getShippingMethod()), Zend_log::DEBUG, 'multiorder.log',
-                    true);
-            Mage::log("\n----------Payment Data-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($data), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n********************** OUT OF STOCK END **************************", Zend_Log::DEBUG,
-                    'multiorder.log', true);
+            
             if (! $quote->getIsCheckoutCart()) {
                 $quote->collectTotals()->save();
                 $quote->getPayment()->importData($data);
@@ -931,19 +921,6 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             
             /* 1st : In stock product order Start */
             $quote = $this->getQuoteOrdered();
-            Mage::log("\n********************** IN STOCK START **************************", Zend_Log::DEBUG,
-                    'multiorder.log', true);
-            Mage::log("\n----------Quote Data-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getData()), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n----------Shipping Address-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getShippingAddress()->getData()), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n----------Shipping Method-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getShippingAddress()->getShippingMethod()), Zend_log::DEBUG, 'multiorder.log',
-                    true);
-            Mage::log("\n----------Payment Data-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($data), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n********************** IN STOCK END **************************", Zend_Log::DEBUG,
-                    'multiorder.log', true);
             if (! $quote->getIsCheckoutCart()) {
                 
                 $quote->collectTotals()->save();
@@ -1042,6 +1019,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
 
     public function saveCustomOrder ($data)
     {
+       
         $_checkoutHelper = Mage::helper('allure_multicheckout');
         if (strtolower($this->getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP) ||
                  $this->getQuote()->getDeliveryMethod() == "") {
@@ -1063,23 +1041,11 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     $this->_prepareCustomerQuote();
                     break;
             }
-            
             /* 1st : In stock product order Start */
             $backOrderedQuote = $this->getQuoteBackordered();
             $quote = $this->getQuoteOrdered();
-            Mage::log("\n********************** IN STOCK START **************************", Zend_Log::DEBUG,
-                    'multiorder.log', true);
-            Mage::log("\n----------Quote Data-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getData()), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n----------Shipping Address-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getShippingAddress()->getData()), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n----------Shipping Method-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getShippingAddress()->getShippingMethod()), Zend_log::DEBUG, 'multiorder.log',
-                    true);
-            Mage::log("\n----------Payment Data-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($data), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n********************** IN STOCK END **************************", Zend_Log::DEBUG,
-                    'multiorder.log', true);
+           
+           
             if (! $quote->getIsCheckoutCart()) {
                 $quote->collectTotals()->save();
                 $quote->getPayment()->importData($data);
@@ -1179,19 +1145,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             /* 2nd : Out of stock product order Start */
             
             $quote = $this->getQuoteBackordered();
-            Mage::log("\n********************** OUT OF STOCK START **************************", Zend_Log::DEBUG,
-                    'multiorder.log', true);
-            Mage::log("\n----------Quote Data-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getData()), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n----------Shipping Address-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getShippingAddress()->getData()), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n----------Shipping Method-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($quote->getShippingAddress()->getShippingMethod()), Zend_log::DEBUG, 'multiorder.log',
-                    true);
-            Mage::log("\n----------Payment Data-------", Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log(json_encode($data), Zend_log::DEBUG, 'multiorder.log', true);
-            Mage::log("\n********************** OUT OF STOCK END **************************", Zend_Log::DEBUG,
-                    'multiorder.log', true);
+           
             if (! $quote->getIsCheckoutCart()) {
                 $quote->collectTotals()->save();
                 $quote->getPayment()->importData($data);
@@ -1226,13 +1180,15 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                             ));
                     $redirectUrl = $quote->getPayment()->getOrderPlaceRedirectUrl();
                     $redirectUrl2 = $redirectUrl;
-                    
                     if ((! $redirectUrl1 && $firstOrder->getCanSendNewEmailFlag()) &&
                              (! $redirectUrl2 && $secondOrder->getCanSendNewEmailFlag())) {
                         try {
+                            Mage::log(get_class($firstOrder),Zend_log::DEBUG,'abc',true);
+                            
                             $firstOrder->queueNewOrderSplitEmail($secondOrder->getId());
                         } catch (Exception $e) {
                             Mage::logException($e);
+                            
                         }
                     }
                     

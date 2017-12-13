@@ -109,8 +109,8 @@ class Allure_Inventory_Block_Adminhtml_Reports_Transfer_Grid extends Mage_Adminh
 			)
 		);
 		
-		$this->addExportType('*/*/exportDownloadsCsv', Mage::helper('reports')->__('CSV'));
-		$this->addExportType('*/*/exportDownloadsExcel', Mage::helper('reports')->__('Excel'));
+		$this->addExportType('*/*/exportTransferCsv', Mage::helper('reports')->__('CSV'));
+		$this->addExportType('*/*/exportTransferExcel', Mage::helper('reports')->__('Excel'));
 		
 		return parent::_prepareColumns();
 	}

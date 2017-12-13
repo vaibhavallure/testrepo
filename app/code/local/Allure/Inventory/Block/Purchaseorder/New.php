@@ -4,13 +4,19 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 {
 	public function __construct()
 	{
-		
+	    $helper = Mage::helper("inventory");
+	    $childCategoryId = $helper->getChildCategoryId();
+	    if(empty($childCategoryId)){
+	        $childCategoryId = $helper->getParentCategoryId();
+	    }
+	    
 		$websiteId=1;
 		if(Mage::getSingleton('core/session')->getMyWebsiteId())
 			$websiteId=Mage::getSingleton('core/session')->getMyWebsiteId();
-		$website=Mage::getModel( "core/website" )->load($websiteId);
-		$storeId=$website->getStoreId();
-		$stockId=$website->getStockId();
+		
+		$website = Mage::getModel( "core/website" )->load($websiteId);
+		$storeId = $website->getDefaultGroup()->getDefaultStoreId();
+		$stockId = $website->getStockId();
 		
 		/* $entityTypeId = Mage::getModel('eav/entity')
 		->setType('catalog_product')
@@ -33,8 +39,11 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		$collection->addAttributeToFilter('type_id', 'simple');*/
 		//$collection->addCategoryFilter($category);
 		
-		$collection=Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
-			$collection->addAttributeToSelect('*')->setStoreId($storeId);
+		//$collection=Mage::getModel('catalog/product')->getUsedCategoryProductCollection(Allure_Inventory_Block_Minmax::PARENT_ITEMS_CATEGORY_ID);
+		$collection = Mage::getResourceModel('catalog/product_collection')
+		->addAttributeToFilter('type_id', array('eq' => 'simple'));
+		
+		$collection->addAttributeToSelect('*')->setStoreId($storeId);
 
 		if($_GET['search']!=null){
 			$searchString = $_GET['search'];
@@ -64,6 +73,26 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		if( $storeId ) {
 			$collection->addStoreFilter($storeId);
 		}
+		
+		//Temperory commented as CPMAGENTO Parent category issue
+		
+		$collection->getSelect()->join(
+		    array('category_product' => 'catalog_category_product'),
+		    'category_product.product_id = e.entity_id',
+		    array('category_id')
+		    );
+		
+		$collection->getSelect()->where('category_product.category_id = '.$childCategoryId);
+		
+		if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
+		    $collection->joinField('qty',
+		        'cataloginventory/stock_item',
+		        'qty',
+		        'product_id=entity_id',
+		        '{{table}}.stock_id='.$stockId,
+		        'left');
+		}
+		$collection->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
 	  //  $collection->getSelect()->where('lowstock_inventory_item.po_sent=0');
 	    $collection->getSelect()->group('e.entity_id');
 		$collection->addAttributeToFilter('sku', array('nlike' => 'c%','nlike' => 'c%'));
@@ -93,8 +122,9 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 	{
 		parent::_prepareLayout();
 		$pager = $this->getLayout()->createBlock('page/html_pager', 'custom.pager');
-		$pager->setAvailableLimit(array(10=>10,20=>20,50=>50,'all'=>'all'));
+		$pager->setAvailableLimit(array(10=>10,20=>20,50=>50));
 		$pager->setCollection($this->getCollection());
+		$pager->setTemplate('inventory/pager.phtml');
 		$this->setChild('pager', $pager);
 		$this->getCollection()->load();
 		return $this;

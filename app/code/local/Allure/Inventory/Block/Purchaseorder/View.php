@@ -14,6 +14,7 @@ class Allure_Inventory_Block_Purchaseorder_view extends Mage_Page_Block_Html_Pag
 		->getAttributeId();
 		
 		$id=Mage::app()->getRequest()->getParam('id');
+		
 		$collection=Mage::getModel('inventory/orderitems')->getCollection()
 		->addFieldToFilter("po_id",$id);
 		$collection->getSelect()->joinLeft('catalog_product_entity', 'catalog_product_entity.entity_id = main_table.product_id', array('sku'));

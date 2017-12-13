@@ -134,7 +134,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         if (in_array('payment_method', $selected_columns)) {
             $collection->getSelect()->joinLeft($tableName_sales_order_payment,
                 "main_table.entity_id={$tableName_sales_order_payment}.parent_id",
-                array('payment_method' => 'method')
+                array('payment_method' => 'method','card_type' => 'cc_type')
             );
         }
 
@@ -242,6 +242,8 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'qty' => $helper->__('Product Quantity'),
 
             'payment_method' => $helper->__('Payment Method'),
+            
+            'card_type' => $helper->__('Card Type'),
 
             'weight' => $helper->__('Product Weight'),
             'shipping_description' => $helper->__('Shipping Method'),
@@ -559,6 +561,16 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'filter_index' => 'method',
                 'column_css_class' => 'nowrap',
                 'options' => Mage::getModel('iwd_ordermanager/payment_payment')->GetPaymentMethods(),
+            ),
+            'card_type' => array(
+                'header' => $helper->__('Card Type'),
+                'index' => 'card_type',
+                'type' => 'options',
+                'width' => '70px',
+                'column_css_class' => 'nowrap',
+                'filter_index' => "{$tableName_sales_order_payment}.card_type",
+                'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Card(),
+                
             ),
 
             'shipping_description' => array(

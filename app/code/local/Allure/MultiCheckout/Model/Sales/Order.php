@@ -3,9 +3,9 @@
 class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // Webtex_Giftcards_Model_Sales_Order
 {
 
-    const XML_MULTIORDER_EMAIL_TEMPLATE = 'sales_email/multipleorder_sales_email/template';
+    const XML_MULTIORDER_EMAIL_TEMPLATE = 'sales_email/allure_multicheckout_sales_email/template';
 
-    const XML_MULTIORDER_EMAIL_GUEST_TEMPLATE = 'sales_email/multipleorder_sales_email/guest_template';
+    const XML_MULTIORDER_EMAIL_GUEST_TEMPLATE = 'sales_email/allure_multicheckout_sales_email/guest_template';
 
     /*
      * Send email to customer that contains In stock and
@@ -17,7 +17,7 @@ class Allure_MultiCheckout_Model_Sales_Order extends Mage_Sales_Model_Order // W
         $storeId = $this->getStore()->getId();
         
         // Mage::log($this->getId(),Zend_log::DEBUG,'abc',true);
-        // Mage::log($outOfStockOrderId,Zend_log::DEBUG,'abc',true);
+        Mage::log($outOfStockOrderId,Zend_log::DEBUG,'abc',true);
         
         $outOfStockOrder = Mage::getModel('sales/order')->load($outOfStockOrderId);
         

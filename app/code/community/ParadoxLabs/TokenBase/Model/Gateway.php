@@ -250,10 +250,6 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 	protected function _arrayToXml( $rootName, $array )
 	{
 		$xml = Mage::getModel('tokenbase/gateway_xml')->createXML( $rootName, $array );
-
-		Mage::log("Xml Request",Zend_Log::DEBUG,'authcim_allure',true);
-		Mage::log($xml,Zend_Log::DEBUG,'authcim_allure',true);
-		
 		return $xml->saveXML();
 	}
 	
@@ -274,8 +270,6 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 			
 			//return Mage::getModel('tokenbase/gateway_xml')->createArray( $xml );
 			$arr = Mage::getModel('tokenbase/gateway_xml')->createArray( $xml );
-			Mage::log("_xmlToArray",Zend_Log::DEBUG,'authcim_allure',true);
-			Mage::log($arr,Zend_Log::DEBUG,'authcim_allure',true);
 			return $arr;
 		}
 		catch( Exception $e ) {

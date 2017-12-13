@@ -47,7 +47,7 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
         try {
             foreach ($data['qty'] as $product => $key) {
                 $arr = array_filter($data['qty'][$product]);
-                if (! empty($arr)) {
+                if (! empty($arr) && $arr[0]!=0) {
                     $updateStock = Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock(
                             $product, $stockId);
                     if (! is_null($updateStock->getItemId()) &&
@@ -64,6 +64,7 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
                         $inventory->setProductId($product);
                         $inventory->setUserId($admin->getUserId());
                         $inventory->setPreviousQty($previousQty);
+                        $inventory->setCost($arr['cost']);
                         $inventory->setAddedQty($arr[0]);
                         $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
                         $inventory->setStockId($stockId);
@@ -88,6 +89,7 @@ class Allure_Inventory_Adminhtml_Inventory_StockController extends Allure_Invent
                             $inventory->setProductId($product);
                             $inventory->setUserId($admin->getUserId());
                             $inventory->setPreviousQty($previousQty);
+                            $inventory->setCost($arr['cost']);
                             $inventory->setAddedQty($arr[0]);
                             $inventory->setUpdatedAt(date("Y-m-d H:i:s"));
                             $inventory->setStockId($stockId);
@@ -376,57 +378,81 @@ Mage::getSingleton('adminhtml/session')->addSuccess("stock tranfered");
 $this->_redirectReferer();
 }
 
-public function minmaxUpdateAction ()
-{
-$admin = Mage::getSingleton('admin/session')->getUser();
-$data = $this->getRequest()->getPost();
-$websiteId = 1;
-if (Mage::getSingleton('core/session')->getMyWebsiteId())
-$websiteId = Mage::getSingleton('core/session')->getMyWebsiteId();
-$website = Mage::getModel("core/website")->load($websiteId);
-$stockId = $website->getStockId();
-$post_data = array_filter($data['qty']);
-
-$resource = Mage::getSingleton('core/resource');
-$writeAdapter = $resource->getConnection('core_write');
-$writeAdapter->beginTransaction();
-
-try {
-foreach ($post_data as $product => $key) {
-$arr = array_filter($post_data[$product]);
-if (! empty($arr)) {
-    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock(
-            $product, $stockId);
-    if ($arr['qty'] || $arr['notify_stock_qty']) {
+public function minmaxUpdateAction()
+    {
+        $admin = Mage::getSingleton('admin/session')->getUser();
+        $data = $this->getRequest()->getPost();
+        $websiteId = 1;
+        if (Mage::getSingleton('core/session')->getMyWebsiteId())
+            $websiteId = Mage::getSingleton('core/session')->getMyWebsiteId();
+        $website = Mage::getModel("core/website")->load($websiteId);
+        $stockId = $website->getStockId();
+        $post_data = array_filter($data['qty']);
+        
         $resource = Mage::getSingleton('core/resource');
         $writeAdapter = $resource->getConnection('core_write');
-        $table = $resource->getTableName('cataloginventory/stock_item');
-        $query = "update {$table} set";
-        if ($arr['qty'])
-            $query .= " qty = '{$arr["qty"]}'";
-        if ($arr['qty'] && $arr['notify_stock_qty'])
-            $query .= ",";
-        if ($arr['notify_stock_qty'])
-            $query .= " notify_stock_qty = '{$arr['notify_stock_qty']}'";
-        $query .= " where product_id = '{$product}' AND stock_id = '{$stockId}'";
-        $writeAdapter->query($query);
+        $writeAdapter->beginTransaction();
+        
+        try {
+            foreach ($post_data as $product => $key) {
+                $arr = array_filter($post_data[$product]);
+                if (! empty($arr)) {
+                    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product, $stockId);
+                    if ($arr['qty'] || $arr['notify_stock_qty']) {
+                        $resource = Mage::getSingleton('core/resource');
+                        $writeAdapter = $resource->getConnection('core_write');
+                        $table = $resource->getTableName('cataloginventory/stock_item');
+                        $query = "update {$table} set";
+                        if ($arr['qty'])
+                            $query .= " qty = '{$arr["qty"]}'";
+                        if ($arr['qty'] && $arr['notify_stock_qty'])
+                            $query .= ",";
+                        if ($arr['notify_stock_qty'])
+                            $query .= " notify_stock_qty = '{$arr['notify_stock_qty']}'";
+                        $query .= " where product_id = '{$product}' AND stock_id = '{$stockId}'";
+                        $writeAdapter->query($query);
+                    }
+                    
+                    $product = Mage::getModel('catalog/product')->setStoreId($stockId)->load($product);
+                    $model = Mage::getModel('inventory/minmaxlog');
+                    $model->setProductId($product->getId());
+                    $model->setOldMin($stockItem->getNotifyStockQty());
+                    if ($arr['notify_stock_qty'])
+                        $model->setMin($arr['notify_stock_qty']);
+                    else
+                        $model->setMin($stockItem->getNotifyStockQty());
+                    $model->setOldMax($product->getMaxQty());
+                    if ($arr['max_qty'])
+                        $model->setMax($arr['max_qty']);
+                    else
+                        $model->setMax($product->getMaxQty());
+                    $model->setOldCost($product->getCost());
+                    if ($arr['cost'])
+                        $model->setCost($arr['cost']);
+                    else
+                        $model->setCost($product->getCost());
+                    
+                    $model->setUpdatedAt(date("Y-m-d H:i:s"));
+                    $model->setStockId($stockId);
+                    $model->setUserId($admin->getUserId());
+                    
+                    $model->save();
+                    
+                    if ($arr['max_qty'])
+                        $product->setMaxQty($arr['max_qty']);
+                    if ($arr['cost'])
+                        $product->setStoreId($stockId)->setCost($arr['cost']);
+                    $product->save();
+                }
+            }
+            
+            $writeAdapter->commit();
+        } catch (Exception $e) {
+            $writeAdapter->rollback();
+        }
+        Mage::getSingleton('adminhtml/session')->addSuccess("stock updated");
+        $this->_redirectReferer();
     }
-    $product = Mage::getModel('catalog/product')->load($product);
-    if ($arr['max_qty'])
-        $product->setMaxQty($arr['max_qty']);
-    if ($arr['cost'])
-        $product->setStoreId($stockId)->setCost($arr['cost']);
-    $product->save();
-}
-}
-
-$writeAdapter->commit();
-} catch (Exception $e) {
-$writeAdapter->rollback();
-}
-Mage::getSingleton('adminhtml/session')->addSuccess("stock updated");
-$this->_redirectReferer();
-}
 
 public function exportLowstockExcelAction ()
 {
