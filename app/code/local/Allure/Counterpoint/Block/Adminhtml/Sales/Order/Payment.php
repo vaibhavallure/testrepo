@@ -21,7 +21,7 @@ class Allure_Counterpoint_Block_Adminhtml_Sales_Order_Payment extends Mage_Admin
                     $i = 0;
                     $payAmt = array();
                     foreach ($paymentsData as $data){
-                        $amtP = $data['amt'];
+                        $amtP = round($data['amt'],2);
                         if($amtP >= 0){
                             $amtP = "$".$amtP;
                         }else{ 
@@ -38,7 +38,7 @@ class Allure_Counterpoint_Block_Adminhtml_Sales_Order_Payment extends Mage_Admin
                     $info = "";
                     $cnt = 1;
                     for ($j=0;$j<$i;$j++){
-                        $info = $info ."Payment :- ".$cnt."  ".$this->getChildHtml('info_'.$j)." ( ".$payAmt[$j]." )"."<br>";
+                        $info = $info ."Payment :- ".$cnt."  ".$this->getChildHtml('info_'.$j)." ( ".$payAmt[$j]." )"."<br><br>";
                         $cnt++;
                     }
                     return $info;
