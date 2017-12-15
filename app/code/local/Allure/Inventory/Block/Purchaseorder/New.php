@@ -76,13 +76,13 @@ class Allure_Inventory_Block_Purchaseorder_New extends Mage_Page_Block_Html_Page
 		
 		//Temperory commented as CPMAGENTO Parent category issue
 		
-		/* $collection->getSelect()->join(
+		$collection->getSelect()->join(
 		    array('category_product' => 'catalog_category_product'),
 		    'category_product.product_id = e.entity_id',
 		    array('category_id')
 		    );
 		
-		$collection->getSelect()->where('category_product.category_id = '.$childCategoryId); */
+		$collection->getSelect()->where('category_product.category_id = '.$childCategoryId);
 		
 		if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
 		    $collection->joinField('qty',
