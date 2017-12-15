@@ -82,8 +82,9 @@ try {
         $storePrice = $productByStore->getPrice();
         $newPrice = round($mainStorePrice * $priceRule);
         if($newPrice!=$storePrice){
-        if(round($mainStorePrice * $priceRule, 0, PHP_ROUND_HALF_UP)==$storePrice|| round($mainStorePrice * $priceRule, 0, PHP_ROUND_HALF_DOWN)==$storePrice)
-            continue;
+        if(round($mainStorePrice * $priceRule, 0, PHP_ROUND_HALF_UP)==round($storePrice)|| round($mainStorePrice * $priceRule, 0, PHP_ROUND_HALF_DOWN)==round($storePrice)||(round($mainStorePrice * $priceRule, 0, PHP_ROUND_HALF_DOWN)-1)==round($storePrice))
+           continue;
+        
         $data[]=array($productId,$product->getSku(),$mainStorePrice,$storePrice,$newPrice);
         Mage::log('product_id-:'.$productId.' ::SKU '.$product->getSku(), Zend_Log::DEBUG, $storeName, true);
         Mage::log('Main Store Price-:'.$mainStorePrice, Zend_Log::DEBUG, $storeName, true);
