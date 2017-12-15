@@ -147,6 +147,9 @@ class Unirgy_RapidFlow_Helper_Data extends Mage_Core_Helper_Data
                 $flag = $this->compareMageVer('1.4', '1.6');
                 break;
 
+            case 'catalog.swatches':
+                $flag = $this->compareMageVer('1.9.1', '1.14.1');
+                break;
             case 'category.include_in_menu':
                 $flag = $this->compareMageVer('1.4.1', '1.8');
                 break;
@@ -158,12 +161,58 @@ class Unirgy_RapidFlow_Helper_Data extends Mage_Core_Helper_Data
                 $flag = $this->isModuleActive('Enterprise_Enterprise') && $this->compareMageVer('1.13.0.2');
                 break;
             case 'multiple_uploader':
-                $flag = class_exists(Mage::getConfig()->getBlockClassName('uploader/multiple'));
+                $flag = $this->isModuleActive('Mage_Uploader');
                 break;
             }
             $this->_hasMageFeature[$feature] = $flag;
         }
         return $this->_hasMageFeature[$feature];
+    }
+
+    public function getMultiCheckSql($casesResults, $defaultValue = null)
+    {
+        if (empty($casesResults)) {
+            return is_null($defaultValue) ? new Zend_Db_Expr("''") : $defaultValue;
+        }
+        reset($casesResults);
+        $key = key($casesResults);
+        $value = array_shift($casesResults);
+        return $this->getCheckSql($key, $value, $this->getMultiCheckSql($casesResults, $defaultValue));
+    }
+    public function getCaseSql($valueName, $casesResults, $defaultValue = null)
+    {
+        $expression = 'CASE ' . $valueName;
+        foreach ($casesResults as $case => $result) {
+            $expression .= ' WHEN ' . $case . ' THEN ' . $result;
+        }
+        if ($defaultValue !== null) {
+            $expression .= ' ELSE ' . $defaultValue;
+        }
+        $expression .= ' END';
+
+        return new Zend_Db_Expr($expression);
+    }
+
+    public function getCheckSql($expression, $true, $false)
+    {
+        if ($expression instanceof Zend_Db_Expr || $expression instanceof Zend_Db_Select) {
+            $expression = sprintf("IF((%s), %s, %s)", $expression, $true, $false);
+        } else {
+            $expression = sprintf("IF(%s, %s, %s)", $expression, $true, $false);
+        }
+
+        return new Zend_Db_Expr($expression);
+    }
+
+    public function getIfNullSql($expression, $value = 0)
+    {
+        if ($expression instanceof Zend_Db_Expr || $expression instanceof Zend_Db_Select) {
+            $expression = sprintf("IFNULL((%s), %s)", $expression, $value);
+        } else {
+            $expression = sprintf("IFNULL(%s, %s)", $expression, $value);
+        }
+
+        return new Zend_Db_Expr($expression);
     }
 
     protected $_isoToPhpFormatConvertRegex;

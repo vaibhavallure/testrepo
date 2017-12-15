@@ -94,6 +94,8 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
     protected $_curlConnectTimeout = 5;
     protected $_curlTimeout = 10;
     protected $_curlUserAgent;
+    protected $_curlHeaders;
+    protected $_curlCustomRequest;
 
     protected $_locale;
 
@@ -544,6 +546,9 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
             return false;
         }
         $basename = basename($filename);
+        if ($remote) {
+            $basename = basename(parse_url($filename, PHP_URL_PATH));
+        }
 
         $fromDir = rtrim($fromDir, '/\\');
         $toDir   = rtrim($toDir, '/\\');
@@ -581,6 +586,10 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
                 } else {
                     $filename = $basename;
                 }
+                $filename = str_replace(
+                    [' ', '%'],
+                    '-',
+                    urldecode($filename));
             }
         } else {
             $slashPos     = strpos($filename, $ds);
@@ -600,6 +609,14 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
             $this->_profile->getLogger()->warning($this->__('%s is not valid file, skipping copy', $fromFilename));
 
             return true;
+        }
+
+        $warning = '';
+        $origBasename = basename($filename);
+        $cleanBasename = Mage_Core_Model_File_Uploader::getCorrectFileName($origBasename);
+        if ($origBasename!=$cleanBasename) {
+            $filename = str_replace($origBasename, $cleanBasename, $filename);
+            $warning .= __(' Corrected image name: %1.', $filename);
         }
 
         $toFilename = $toDir . $ds . ltrim($filename, $ds);
@@ -625,7 +642,7 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
 
         if ($import && $toExists && $this->_existingImageAction) {
             $this->_profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
-            $warning = $this->__('Imported image file already exists.');
+            $warning .= $this->__('Imported image file already exists.');
             if ($filename === $oldValue) {
                 // new file name is same as current value
                 $warning .= $this->__(' %s is same as current value, %s.', $filename, $oldValue);
@@ -659,7 +676,7 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
         }
 
         if (!$fromExists) {
-            $warning = $this->__('Source image file does not exist: %s', $fromFilename);
+            $warning .= $this->__('Source image file does not exist: %s', $fromFilename);
             if ($this->_missingImageAction === 'error') {
                 throw new Unirgy_RapidFlow_Exception_Row($warning);
             } else {
@@ -700,7 +717,18 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
             if (!($ch = curl_init($fromFilename))) {
                 $error = $this->__('Unable to open remote file: %s', $fromFilename);
             } else {
+                /*
+                $dumpFilename = realpath(Mage::getBaseDir('var')).'/log/rf_dwnl_dump';
+                $dumpFp = fopen($dumpFilename, 'a');
+                curl_setopt($ch, CURLOPT_VERBOSE, true);
+                curl_setopt($ch, CURLOPT_STDERR, $dumpFp);
+                */
+                if ($this->_curlCustomRequest) curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->_curlCustomRequest);
                 if ($this->_curlUserAgent) curl_setopt($ch, CURLOPT_USERAGENT, $this->_curlUserAgent);
+                if ($this->_curlHeaders) {
+                    curl_setopt($ch, CURLOPT_HEADER, true);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, $this->_curlHeaders);
+                }
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->_curlConnectTimeout);
                 curl_setopt($ch, CURLOPT_TIMEOUT, $this->_curlTimeout);
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -736,6 +764,9 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
             }
             if (!empty($fp)) {
                 fclose($fp);
+            }
+            if (!empty($dumpFp)) {
+                fclose($dumpFp);
             }
             if (!empty($error)) {
                 $this->_profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
@@ -979,7 +1010,11 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
         $path     = null;
         $eId      = isset($row['entity_id'])? $row['entity_id']: null;
         $rcID     = $this->_getRootCatId();
-        $rootPath = $rcID? '1/' . $rcID . '/': '1/';
+        if (isset($row['root_category_path'])) {
+            $rootPath = $row['root_category_path'].'/';
+        } else {
+            $rootPath = $rcID ? '1/' . $rcID . '/' : '1/';
+        }
         $entities = $this->_getCategoryUrlEntities();
         if (!empty($row[$dataKey])) {
             //$rootPath    = $this->_rootCatId ? '1/' . $this->_rootCatId . '/' : '1/';
@@ -1038,12 +1073,17 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract extends Mage_Core_Model_Mysql4_Abst
             $eav        = Mage::getSingleton('eav/config');
             $categories = array();
             $storeId    = $this->_profile->getStoreId();
+            $sortDir = 'desc';
+            if ($storeId==0) {
+                $storeId = Mage::app()->getDefaultStoreView()->getId();
+                $sortDir = 'asc';
+            }
             $table      = $this->_t('catalog/category');
             foreach (array('url_key', 'url_path') as $k) {
                 $attrId = $eav->getAttribute('catalog_category', $k)->getAttributeId();
                 // fetch attribute values for all categories
                 $tableName = ($k == 'url_key')? $table . '_url_key': $table . '_varchar';
-                $sql       = "select entity_id, value from {$tableName} where attribute_id={$attrId} and store_id in (0, {$storeId}) order by store_id desc";
+                $sql       = "select entity_id, value from {$tableName} where attribute_id={$attrId} and store_id in (0, {$storeId}) order by store_id ".$sortDir;
                 $rows      = $this->_read->fetchAll($sql);
                 foreach ($rows as $r) {
                     // load values for specific store OR default
