@@ -19,7 +19,16 @@ class Allure_Counterpoint_Block_Adminhtml_Sales_Order_Payment extends Mage_Admin
                     }
                 }else{
                     $i = 0;
+                    $payAmt = array();
                     foreach ($paymentsData as $data){
+                        $amtP = round($data['amt'],2);
+                        if($amtP >= 0){
+                            $amtP = "$".$amtP;
+                        }else{ 
+                            $amtP = (-1)*$amtP;
+                            $amtP = "-$".$amtP;
+                        }
+                        $payAmt[$i] = $amtP;
                         $paymentObj = Mage::getModel("sales/order_payment")
                                         ->load($data['payment_id']);
                         $paymentInfoBlock = Mage::helper('payment')->getInfoBlock($paymentObj);
@@ -29,7 +38,7 @@ class Allure_Counterpoint_Block_Adminhtml_Sales_Order_Payment extends Mage_Admin
                     $info = "";
                     $cnt = 1;
                     for ($j=0;$j<$i;$j++){
-                        $info = $info ."Payment :- ".$cnt."  ".$this->getChildHtml('info_'.$j)."\n";
+                        $info = $info ."Payment :- ".$cnt."  ".$this->getChildHtml('info_'.$j)." ( ".$payAmt[$j]." )"."<br><br>";
                         $cnt++;
                     }
                     return $info;

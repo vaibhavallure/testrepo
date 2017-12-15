@@ -47,27 +47,20 @@ bugfix:
   script:
     - mage-deploy mt-bugfixes
     - echo 'Deployed on Bugfixes Staging'
-upgrade:
-  environment: upgrade
-  stage: upgrade
-  tags:
-    - staging
-  only:
-    - upgrade
-  script:
-    - mage-deploy upgrade.mariatash
-    - echo 'Deployed on Upgrade Staging'
     
-staging_new:
+universal:
   environment: staging
   stage: staging
   tags:
     - staging
   only:
-    - staging
+    - universal
   script:
-    - mage-deploy stage-mariatash
-    - echo 'Deployed on Staging'
+    - mage-deploy universal
+    - echo 'Deployed on Universal Staging'
+
+    
+
     
 deploy-cloud:
   environment: production

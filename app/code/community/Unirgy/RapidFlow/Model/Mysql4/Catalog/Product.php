@@ -1247,6 +1247,9 @@ $oldValues = array();
                 }
                 // walk the attributes
                 foreach ($p as $k=>$newValue) {
+                    if($k=='max_qty' || $k=='stock.notify_stock_qty')
+                        continue;
+                    
                     $logger->setColumn(isset($this->_fieldsCodes[$k]) ? $this->_fieldsCodes[$k]+1 : 0);
 
                     $oldValue = !$pId ? null : (
@@ -1260,10 +1263,14 @@ $oldValues = array();
                     $this->_cleanupValues($attr, $oldValue, $newValue);
 
                     if (strpos($k, 'stock.')===0) {
-                        if ($oldValue!==$newValue && $newValue !== null) {
-                            list(, $f) = explode('.', $k, 2);
+                        if ($k == "stock.qty")
+                            $allowQty = true;
+                        else
+                            $allowQty = false;
+                        if (($oldValue !== $newValue && $newValue !== null) || $allowQty) {
+                            list (, $f) = explode('.', $k, 2);
                             $this->_changeStock[$sku][$f] = $newValue;
-                            if (!$isNew && isset($this->_fieldsCodes[$k])) {
+                            if (! $isNew && isset($this->_fieldsCodes[$k])) {
                                 $logger->success(null, null, $newValue, $oldValue);
                             }
                             $isUpdated = true;

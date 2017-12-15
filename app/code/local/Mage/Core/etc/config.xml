@@ -467,7 +467,6 @@
                     </protected>
                 </public_files_valid_paths>
             </file>
-            <!-- NOTE: If you turn off images reprocessing, then your upload images process may cause security risks. -->
             <reprocess_images>
                 <active>1</active>
             </reprocess_images>
@@ -493,7 +492,7 @@
         <jobs>
             <core_clean_cache>
                 <schedule>
-                    <cron_expr>30 2 * * *</cron_expr>
+                    <cron_expr>35 2 * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>core/observer::cleanCache</model>
