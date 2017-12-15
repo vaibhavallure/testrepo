@@ -65,6 +65,12 @@ class Unirgy_RapidFlow_Model_Mysql4_Catalog_Product
         if (!empty($tune['curl_useragent'])) {
             $this->_curlUserAgent = $tune['curl_useragent'];
         }
+        if (!empty($tune['curl_customrequest'])) {
+            $this->_curlCustomRequest = $tune['curl_customrequest'];
+        }
+        if (!empty($tune['curl_headers'])) {
+            $this->_curlHeaders = array_filter(preg_split("/\r\n|\n\r|\r|\n/", $tune['curl_headers']));
+        }
 
         $profile = $this->_profile;
         $logger = $profile->getLogger();
@@ -425,6 +431,12 @@ if ($benchmark) Mage::log('_fetchCategoryValues: ' . memory_get_usage() . ', ' .
         }
         if (!empty($tune['curl_useragent'])) {
             $this->_curlUserAgent = $tune['curl_useragent'];
+        }
+        if (!empty($tune['curl_customrequest'])) {
+            $this->_curlCustomRequest = $tune['curl_customrequest'];
+        }
+        if (!empty($tune['curl_headers'])) {
+            $this->_curlHeaders = array_filter(preg_split("/\r\n|\n\r|\r|\n/", $tune['curl_headers']));
         }
 
         $profile = $this->_profile;
