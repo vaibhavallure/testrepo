@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Unirgy_RapidFlowPro>
-            <version>2.0.0.24</version>
+            <version>2.0.0.26</version>
             <usimpleup remote="https://download.unirgy.com/simple/client_api/version/"
                 changelog="https://unirgy.com/release-notes"
                 uninstall="urapidflowpro/observer::usimpleup_uninstall"/>

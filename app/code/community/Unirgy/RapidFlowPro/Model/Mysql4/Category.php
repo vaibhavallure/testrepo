@@ -55,6 +55,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
             $this->_pageSleepDelay = (int)$tune['page_sleep_delay'];
         }
 
+        $rfHlp = Mage::helper('urapidflow');
         $profile = $this->_profile;
         $logger = $profile->getLogger();
 
@@ -106,7 +107,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
         $noUrlPath = Mage::helper('urapidflow')->hasMageFeature('no_url_path');
 
         if($noUrlPath){
-            $select->joinLeft(array('up'=>$table.'_varchar'), "up.entity_id=e.entity_id and up.attribute_id={$upAttrId} and up.store_id=0", array());
+            $select->joinLeft(array('up'=>$table.'_varchar'), "up.entity_id=e.entity_id and up.attribute_id={$ukAttrId} and up.store_id=0", array());
             $select->joinLeft(array('upk'=>$table.'_url_key'), "upk.entity_id=e.entity_id and upk.attribute_id={$ukAttrId} and upk.store_id=0", array());
         } else{
             $select->join(array('up'=>$table.'_varchar'), "up.entity_id=e.entity_id and up.attribute_id={$upAttrId} and up.value<>'' and up.value is not null and up.store_id=0", array());
@@ -114,10 +115,17 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
 
         if ($this->_upPrependRoot && !empty($this->_rootCatPaths)) {
             $_rcPaths = array();
+            $_rcMatchCases = array();
             foreach ($this->_rootCatPaths as $_rcPath => $_rcName) {
-                $_rcPaths[] = $this->_read->quoteInto('path=?', $_rcPath);
-                $_rcPaths[] = $this->_read->quoteInto('path like ?', $_rcPath.'/%');
+                $__pathEqSql = $this->_read->quoteInto('path=?', $_rcPath);
+                $__pathLikeSql = $this->_read->quoteInto('path like ?', $_rcPath.'/%');
+                $__pathMatchSql = $__pathEqSql.' OR '.$__pathLikeSql;
+                $_rcPaths[] = $__pathEqSql;
+                $_rcPaths[] = $__pathLikeSql;
+                $_rcMatchCases[$__pathMatchSql] = $this->_read->quote($_rcPath);
             }
+            $_rcMatchCaseSql = $rfHlp->getMultiCheckSql($_rcMatchCases);
+            $select->columns(array('root_category_path'=>$_rcMatchCaseSql));
             $select->where(implode(' OR ', $_rcPaths));
         } else {
             $select->where(
@@ -133,14 +141,16 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
                               . $this->_read->quoteInto(" and upks.store_id=?", $storeId),
                               array("url_key" => "IFNULL(upk.value, upks.value)"));
 //                $select->columns(array("url_key" => "IFNULL(upk.value, upks.value)"));
+            } else {
+                $select->joinLeft(array('ups' => $table . '_varchar'), "ups.entity_id=e.entity_id and ups.attribute_id={$upAttrId} and ups.value<>'' and up.value is not null and ups.store_id='{$storeId}'", array());
+                $select->columns(array('url_path' => 'IFNULL(ups.value, up.value)'));
             }
-            $select->joinLeft(array('ups'=>$table.'_varchar'), "ups.entity_id=e.entity_id and ups.attribute_id={$upAttrId} and ups.value<>'' and up.value is not null and ups.store_id='{$storeId}'", array());
-            $select->columns(array('url_path'=>'IFNULL(ups.value, up.value)'));
         } else {
             if($noUrlPath){
                 $select->columns(array("url_key" => "upk.value"));
+            } else {
+                $select->columns(array('url_path' => 'up.value'));
             }
-            $select->columns(array('url_path'=>'up.value'));
         }
 
         $this->_attrJoined = array($upAttrId);
