@@ -23,7 +23,7 @@ header('Expires: 0');
 }
 $file = fopen('php://output', 'w');
 
-fputcsv($file, array('id', 'title', 'description', 'availability', 'condition','price','link','image_link','additional_image_link','product_type','shipping_weight','brand','google_product_category'));
+fputcsv($file, array('id', 'title', 'description', 'availability', 'condition','price','link','image_link','additional_image_link','shipping_weight','brand','product_type'));
 $data = array();
 
 $collection=Mage::getModel("catalog/product")->getCollection();
@@ -56,7 +56,7 @@ foreach ($collection as $_product){
     $additional_image_link=implode(',', $imgAray);
     $product_type="configurable";
     $weight=$product->getWeight() ."lb";
-    $data[]=array($productId,$name,$description,$stockStatus,$condition,$price,$link,$imageMain,$additional_image_link,$product_type,$weight,'Maria Tash',$cat);
+    $data[]=array($productId,$name,$description,$stockStatus,$condition,$price,$link,$imageMain,$additional_image_link,$weight,'Maria Tash',$cat);
 }
 foreach ($data as $row)
 {
