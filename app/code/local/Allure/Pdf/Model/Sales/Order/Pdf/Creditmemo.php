@@ -298,8 +298,9 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Creditmemo extends Mage_Sales_Model_Order
             /* Add table head */
             $this->_drawHeader($page);
             /* Add body */
-            $cnt = 1;
+            $cnt = 0;
             foreach ($creditmemo->getAllItems() as $item){
+                $cnt ++;
                 if ($item->getOrderItem()->getParentItem()) {
                     continue;
                 }
@@ -310,7 +311,7 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Creditmemo extends Mage_Sales_Model_Order
                 }else{
                     $this->_drawItem($item, $page, $order);
                 }
-                $cnt ++;
+                
                 $page = end($pdf->pages);
             }
             /* Add totals */
