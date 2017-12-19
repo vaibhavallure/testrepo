@@ -67,8 +67,12 @@ if($configProduct->isConfigurable()){
     $allAtributes = $configProduct->getTypeInstance(true)->getConfigurableAttributes($configProduct);
     foreach ($allAtributes as $attribute) {
         $productAttribute = $attribute->getProductAttribute();
+        if(is_null($productAttribute)){
+            Mage::log("Issue with Product::".$_cpid,Zend_log::DEBUG,'product_errors.log',true);
+        }
         $attrid = $productAttribute->getId();
-        $allowAttrs[] = $productAttribute->getAttributeCode();         
+        $allowAttrs[] = $productAttribute->getAttributeCode();     
+       
     }
     $colors = Mage::getStoreconfig('ecp_color/color_attr');
     $colors = explode(",", $colors);
