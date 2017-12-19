@@ -4,9 +4,9 @@ umask(0);
 Mage::app();
 Mage::app()->setCurrentStore(0);
 
-$customer=Mage::getModel("customer/customer")->load(3329);
+/* $customer=Mage::getModel("customer/customer")->load(3329);
 var_dump($customer->getData());
-die;
+die; */
 
 $customers  = Mage::getModel('customer/customer')
     ->getCollection()
@@ -14,17 +14,17 @@ $customers  = Mage::getModel('customer/customer')
     //->addAttributeToFilter('entity_id', array('eq' => 3288))
     ->addAttributeToFilter('entity_id',
         array(
-            'gteq' => 3311
+            'gteq' => 53905
         )
     )
     ->addAttributeToFilter('entity_id', 
         array(
-            'lteq' => 3330
+            'lteq' => 53905
         )
     )
     ->load();
 
-$_url         = "https://api.teamworksvs.com/externalapi2/customers/register";
+$_url         = "https://api.teamworksvs.com/externalapi3/customers/register";
 $_accessToken = "bWFyaWF0dGVzdCA1NzMyNTY4NTQ4NzY5NzkyIDYzM3paNTZ1Z0w4V3puOU1VUTlNcDUzblZYVGNzZlN3";
 
 
@@ -34,34 +34,39 @@ foreach ($customers as $customer){
     $request = array();
     $request['firstName'] = $data['firstname'];
     $request['lastName']  = $data['lastname'];
-    $request['email1']    = $data['email'];
+    if(!empty($data['email'])){
+        $request['email1']    = (object) array("email"=>$data['email']);
+    }
+    $request['customText1'] = $data['website_id'];
+    $request['customFlag1'] = ($data['group_id'] == 2 )?true:false;
     $billingAddr  = $customer->getDefaultBillingAddress();
     $shippingAddr = $customer->getDefaultShippingAddress();
     if($billingAddr){
         $billingAddrData = $billingAddr->getData();
-        $request['address1'] =$billingAddrData['street'];
-        $request['state'] = $billingAddrData['state'];
-        $request['city'] = $billingAddrData['city'];
-        $request['countryCode'] = $billingAddrData['country_id'];
-        $request['postalCode'] = $billingAddrData['postcode'];
-        $request['phone1'] = $billingAddrData['telephone'];
+        $request['address1'] = ($billingAddrData['street'])?$billingAddrData['street']:null;
+        $request['state'] = ($billingAddrData['state'])?$billingAddrData['state']:null;
+        $request['city'] = ($billingAddrData['city'])?$billingAddrData['city']:null;
+        $request['countryCode'] = ($billingAddrData['country_id'])?$billingAddrData['country_id']:null;
+        $request['postalCode'] = ($billingAddrData['postcode'])?$billingAddrData['postcode']:null;
+        $request['phone1'] = ($billingAddrData['telephone'])?$billingAddrData['telephone']:null;
     }
     
     if($shippingAddr){
         $shippingAddrData = $shippingAddr->getData();
-        $request['addresses'] = array(
+        /* $request['addresses'] = array(
             array(
                 "firstName" =>  $shippingAddrData['firstname'],
                 "lastName"  =>  $shippingAddrData['lastname'],
-                "address1"  =>  $shippingAddrData['street'],
-                "city"    =>  $shippingAddrData['city'],
-                "region"    =>  $shippingAddrData['state'],
-                "countryCode"   =>  $shippingAddrData['country_id'],
-                "postalCode"    =>  $shippingAddrData['country_id'],
-                "phone" =>  $shippingAddrData['telephone']
+                "address1"  =>  ($shippingAddrData['street'])?$shippingAddrData['street']:null,
+                "city"    =>  ($shippingAddrData['city'])?$shippingAddrData['city']:null,
+                "region"    =>  ($shippingAddrData['state'])?$shippingAddrData['state']:null,
+                "countryCode"   =>  ($shippingAddrData['country_id'])?$shippingAddrData['country_id']:null,
+                "postalCode"    =>  ($shippingAddrData['postcode'])?$shippingAddrData['postcode']:null,
+                "phone" =>  ($shippingAddrData['telephone'])?$shippingAddrData['telephone']:null
             )
-        );
+        ); */
     }
+    
     
     $sendRequest = curl_init($_url);
     curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
@@ -80,15 +85,16 @@ foreach ($customers as $customer){
     curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
     $response = curl_exec($sendRequest); 
     $responseObj = json_decode($response);
+    print_r($response);
     if(!$responseObj->errorCode){
-        $teamworkCustomerId = $responseObj->customerID;
+        $teamworkCustomerId = $responseObj->customer->customerID;
         $customerObj = Mage::getModel("customer/customer")->load($customer_id);
         $customerObj->setTeamworkCustomerId($teamworkCustomerId);
         $customerObj->save();
         echo $teamworkCustomerId."<br>";
     }
     else {
-        echo "<br>Error";
+        echo "<br>Error".json_encode($responseObj);
     }
 }
 
