@@ -295,8 +295,9 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Shipment extends Mage_Sales_Model_Order_P
             /* Add table */
             $this->_drawHeader($page);
             /* Add body */
-            $cnt = 1;
+            $cnt = 0;
             foreach ($shipment->getAllItems() as $item) {
+                $cnt ++;
                 if ($item->getOrderItem()->getParentItem()) {
                     continue;
                 }
@@ -307,7 +308,7 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Shipment extends Mage_Sales_Model_Order_P
                 }else{
                     $this->_drawItem($item, $page, $order);
                 }
-                $cnt ++;
+                
                 $page = end($pdf->pages);
             }
         }
