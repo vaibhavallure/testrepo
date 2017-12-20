@@ -6,14 +6,52 @@
         		<?php /** We have to load our scripts dynamically as such, because opc will not load them otherwise. Injecting via layout would only cause compatibility problems. **/ ?>
         		if ( typeof AllureApplePay == 'undefined' ) {
         			var AllureApplePay = {};
-        
-        			AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
+
+        			AllureApplePay.session = null;
+        			AllureApplePay.request = {};
+
+
+
+        			AllureApplePay.request = {
+        			  	countryCode: 'US',
+        			  	currencyCode: 'INR',
+        			  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
+        			  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
+        			  	total: { label: 'Venus By Maria Tash', amount: AllureApplePay.lineTotal },
+        			  	shippingMethods: [{    
+                		    "label": "International Flat Rate",
+                		    "detail": "Arrives in 5 to 7 days",
+                		    "amount": 49.95,
+                		    "identifier": "flatrate_flatrate"
+        				},
+        				{
+        				    "identifier": "express_shipping",
+        				    "label": "Fedex Express",
+        				    "detail": "1-2 working days",
+        				    "amount": 100.0
+        				}],
+        				shippingType: 'delivery',
+        				requiredBillingContactFields: [
+        				    "postalAddress"
+        				],
+        				requiredShippingContactFields: [
+        				    "postalAddress",
+        				    "name",
+        				    "phone",
+        				    "email"
+        				],
+        				applicationData: {
+            				"order_id": 101010
+        				}
+        			};
+
+        			AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process', array('_secure' => true)); ?>';
         			AllureApplePay.MerchantId = '<?php $this->getMethod()->getConfigData('merchant_id') ?>';
         			AllureApplePay.MerchantName = '<?php $this->getMethod()->getConfigData('merchant_name') ?>';
         			
         			var s = document.createElement('script');
         			s.type = "text/javascript";
-        			s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'allure/authnetapplepay.js'; ?>";
+        			s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'allure/authnetapplepay.js'; ?>";
         			var fs = document.getElementsByTagName('script')[1];
         			fs.parentNode.insertBefore(s, fs);
         

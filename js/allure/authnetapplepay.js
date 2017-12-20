@@ -44,23 +44,15 @@ function createTransaction(dataObj) {
 function initApplePay(){
 
 	console.log('Apple Pay Initiated');
-
-	var request = {
-	  countryCode: 'US',
-	  currencyCode: 'USD',
-	  supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
-	  merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
-	  total: { label: 'Venus By Maria Tash', amount: AllureApplePay.lineTotal },
-	}
 	
-	var session = new ApplePaySession(1, request);
+	AllureApplePay.session = new ApplePaySession(3, AllureApplePay.request);
 
 	// Merchant Validation
-	session.onvalidatemerchant = function (event) {
+	AllureApplePay.session.onvalidatemerchant = function (event) {
 		console.log(event);
 		var promise = performValidation(event.validationURL);
 		promise.then(function (merchantSession) {
-			session.completeMerchantValidation(merchantSession);
+			AllureApplePay.session.completeMerchantValidation(merchantSession);
 		}); 
 	}
 
@@ -80,15 +72,15 @@ function initApplePay(){
 		});
 	}
 
-	session.onpaymentmethodselected = function(event) {
+	AllureApplePay.session.onpaymentmethodselected = function(event) {
 		console.log('starting onpaymentmethodselected');
 		console.log(event);
 		var newTotal = { type: 'final', label: 'Venus By Maria Tash', amount: AllureApplePay.lineTotal };
 		var newLineItems =[{type: 'final',label: 'Spice #202', amount: '15.00' }]
-		session.completePaymentMethodSelection( newTotal, AllureApplePay.lineItems);
+		AllureApplePay.session.completePaymentMethodSelection( newTotal, AllureApplePay.lineItems);
 	}
 
-	session.onpaymentauthorized = function (event) {
+	AllureApplePay.session.onpaymentauthorized = function (event) {
 		console.log('starting session.onpaymentauthorized');
 		console.log(event);
 		var promise = sendPaymentToken(event.payment.token);
@@ -101,7 +93,7 @@ function initApplePay(){
 				status = ApplePaySession.STATUS_FAILURE;
 			}		
 			console.log( "result of sendPaymentToken() function =  " + success );
-			session.completePayment(status);
+			AllureApplePay.session.completePayment(status);
 		});
 	}
 
@@ -126,11 +118,11 @@ function initApplePay(){
 	}
 
 	
-	session.oncancel = function(event) {
+	AllureApplePay.session.oncancel = function(event) {
 		console.log('starting session.cancel');
 		console.log(event);
 	}
 	
-	session.begin();
+	AllureApplePay.session.begin();
 
 }
