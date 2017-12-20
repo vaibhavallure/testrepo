@@ -1,0 +1,22 @@
+<?php
+/**
+ * Apple Pay
+ *
+ * @category    Allure
+ * @package     Allure_ApplePay
+ * @copyright   Copyright (c) 2017 Allure Inc
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+?>
+<?php if ($this->isEnabled()) : ?>
+<!-- Apple Pay Script -->
+<script type='text/javascript'>
+    if ( typeof Allure == 'undefined' ) var Allure = {};
+    
+    if ( typeof Allure.ApplePay == 'undefined' ) Allure.ApplePay = {};
+
+    Allure.ApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process', array('_secure' => true)); ?>';
+    Allure.ApplePay.MerchantId = '<?php $this->getMethod()->getConfigData('merchant_id') ?>';
+    Allure.ApplePay.MerchantName = '<?php $this->getMethod()->getConfigData('merchant_name') ?>';
+</script>
+<?php endif;?>

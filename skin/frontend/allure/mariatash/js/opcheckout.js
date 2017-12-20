@@ -903,6 +903,13 @@ Payment.prototype = {
         if (method) {
             this.lastUsedMethod = method;
         }
+        
+        if (method == 'applepay'){
+          	jQuery('.payment-continue-button').hide();
+          } else {
+        	  	jQuery('.payment-continue-button').show();
+          }
+        
         this.currentMethod = method;
     },
 

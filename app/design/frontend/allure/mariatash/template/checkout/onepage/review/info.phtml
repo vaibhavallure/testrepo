@@ -108,6 +108,11 @@ switch ($payment->getMethod()) {
     truncateOptions();
 
 	<?php if ($payment->getMethod() == 'applepay'):?>
+	
+	if ( typeof Allure == 'undefined' ) var Allure = {};
+
+	if ( typeof Allure.ApplePay == 'undefined' ) Allure.ApplePay = {};
+	
 	Allure.ApplePay.lineTotal = <?php echo round($quote->getBaseGrandTotal(), 2);?>;
 	Allure.ApplePay.lineItems = [];
 

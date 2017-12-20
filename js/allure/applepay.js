@@ -19,7 +19,9 @@ if (window.ApplePaySession) {
 	  	currencyCode: 'INR',
 	  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 	  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
-	  	total: { label: 'Venus By Maria Tash', amount: Allure.ApplePay.lineTotal },
+	  	total: function(){
+	  		return { label: 'Venus By Maria Tash', amount: Allure.ApplePay.lineTotal };
+	  	},
 	  	shippingMethods: [{    
 		    "label": "International Flat Rate",
 		    "detail": "Arrives in 5 to 7 days",

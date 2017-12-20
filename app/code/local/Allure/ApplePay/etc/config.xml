@@ -35,11 +35,14 @@
 	<default>
 		<payment>
 			<applepay>
-				<active>0</active>
+				<active>1</active>
 				<title>Apple Pay (Authorize.Net)</title>
-				<cctypes>AE,VI,MC,DI</cctypes>
 				<login backend_model="adminhtml/system_config_backend_encrypted" />
 				<model>applepay/method</model>
+                <secure_cart>1</secure_cart>
+                <show_pay_cart>0</show_pay_cart>
+                <visible_on_product>0</visible_on_product>
+                <payment_action>authorize_capture</payment_action>
 				<order_status>pending</order_status>
 			</applepay>
 		 </payment>

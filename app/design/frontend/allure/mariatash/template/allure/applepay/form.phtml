@@ -1,21 +1,37 @@
-<ul class="form-list" id="payment_form_applepay" style="display:none;">
-    <?php if( $this->getMethod()->isAcceptJsEnabled() === true ): ?>
-    <li class="form-alt">Pay with Apple Pay from your Phone
-        	<script type="text/javascript">
-        		//<![CDATA[
-        			
-        			var s = document.createElement('script');
-        			s.type = "text/javascript";
-        			s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'allure/applepay.js'; ?>";
-        			var fs = document.getElementsByTagName('script')[1];
-        			fs.parentNode.insertBefore(s, fs);
+<?php
+/**
+ * Apple Pay
+ *
+ * @category    Allure
+ * @package     Allure_ApplePay
+ * @copyright   Copyright (c) 2017 Allure Inc
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+?>
+<script type='text/javascript'>
+//<![CDATA[
+Element.prototype.triggerEvent = function(eventName) {
+    if (document.createEvent) {
+        var evt = document.createEvent('HTMLEvents');
+        evt.initEvent(eventName, true, true);
+        return this.dispatchEvent(evt);
+    }
+    if (this.fireEvent)
+        return this.fireEvent('on' + eventName);
+}
 
-        			Allure.ApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process', array('_secure' => true)); ?>';
-        			Allure.ApplePay.MerchantId = '<?php $this->getMethod()->getConfigData('merchant_id') ?>';
-        			Allure.ApplePay.MerchantName = '<?php $this->getMethod()->getConfigData('merchant_name') ?>';
-        
-            	//]]>
-    		</script>
-    	</li>
-    <?php endif; ?>
- </ul>
+// Display login on radio select
+$$("input[name='payment[method]']").each(function(el) {
+    el.observe('change', function() {
+        if (el.value == 'applepay') {
+            $$("#payment_form_applepay img")[0].triggerEvent('click');
+        }
+    })
+})
+
+if ($$("input[name='payment[method]']:checked").length) {
+	$$("input[name='payment[method]']:checked")[0].click();
+}
+
+//]]>
+</script>
