@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<Allure_ApplePay>
+			<version>1.0.0</version>
+		</Allure_ApplePay>
+	</modules>
+	<global>
+		<blocks>
+			<allure_applepay>
+				<class>Allure_ApplePay_Block</class>
+			</allure_applepay>
+			<applepay>
+				<class>Allure_ApplePay_Block</class>
+			</applepay>
+		</blocks>
+		<helpers>
+			<allure_applepay>
+				<class>Allure_ApplePay_Helper</class>
+			</allure_applepay>
+			<applepay>
+				<class>Allure_ApplePay_Helper</class>
+			</applepay>
+		</helpers>
+		<models>
+			<allure_applepay>
+				<class>Allure_ApplePay_Model</class>
+			</allure_applepay>
+			<applepay>
+				<class>Allure_ApplePay_Model</class>
+			</applepay>
+		</models>
+	</global>
+	<default>
+		<payment>
+			<applepay>
+				<active>0</active>
+				<title>Apple Pay (Authorize.Net)</title>
+				<cctypes>AE,VI,MC,DI</cctypes>
+				<login backend_model="adminhtml/system_config_backend_encrypted" />
+				<model>applepay/method</model>
+				<order_status>pending</order_status>
+			</applepay>
+		 </payment>
+	</default>
+	<frontend>
+		<routers>
+			<allure_applepay>
+				<use>standard</use>
+				<args>
+					<module>Allure_ApplePay</module>
+					<frontName>applepay</frontName>
+				</args>
+			</allure_applepay>
+		</routers>
+		<layout>
+			<updates>
+				<applepay module="allure_applepay">
+					<file>allure/applepay.xml</file>
+				</applepay>
+			</updates>
+		</layout>
+	</frontend>
+	<adminhtml>
+		<layout>
+			<updates>
+				<applepay module="allure_applepay">
+					<file>allure/applepay.xml</file>
+				</applepay>
+			</updates>
+		</layout>
+	</adminhtml>
+</config>
