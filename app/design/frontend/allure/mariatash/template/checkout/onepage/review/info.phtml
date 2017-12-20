@@ -107,13 +107,13 @@ switch ($payment->getMethod()) {
 //<![CDATA[
     truncateOptions();
 
-	<?php if ($payment->getMethod() == 'authnetapplepay'):?>
-	AllureApplePay.lineTotal = <?php echo round($quote->getBaseGrandTotal(), 2);?>;
-	AllureApplePay.lineItems = [];
+	<?php if ($payment->getMethod() == 'applepay'):?>
+	Allure.ApplePay.lineTotal = <?php echo round($quote->getBaseGrandTotal(), 2);?>;
+	Allure.ApplePay.lineItems = [];
 
 	<?php $totals = $quote->getTotals();?>
 	<?php foreach ($totals as $_total_name => $_total) : if ($_total_name == 'grand_total') continue;?>
-	AllureApplePay.lineItems.push({type: 'final',label: '<?php echo $_total_name?>', amount: '<?php echo round($_total->getValue() / $quote->getBaseToQuoteRate(), 2)?>' });
+	Allure.ApplePay.lineItems.push({type: 'final',label: '<?php echo $_total_name?>', amount: '<?php echo round($_total->getValue() / $quote->getBaseToQuoteRate(), 2)?>' });
 	<?php endforeach;?>
 	<?php endif;?>
 //]]>
@@ -122,7 +122,7 @@ switch ($payment->getMethod()) {
 
     <?php echo $this->getChildHtml('agreements') ?>
     <div class="buttons-set" id="review-buttons-container">
-    		<?php if ($payment->getMethod() == 'authnetapplepay'):?>
+    		<?php if ($payment->getMethod() == 'applepay'):?>
     		<button id="applePayButton" class='apple-pay-button-with-text apple-pay-button-black-with-text'  onclick="initApplePay()"><span class="text">Pay with</span><span class="logo"></span></button>
     		<?php else:?>
         <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a></p>
