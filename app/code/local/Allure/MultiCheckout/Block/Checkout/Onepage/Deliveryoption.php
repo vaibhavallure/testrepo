@@ -26,13 +26,13 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
         $storeId = Mage::app()->getStore()->getStoreId();
         foreach ($qouteItems as $item) :
         $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
-        $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
-            ->getQty();
+        $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+        $stock_qty=$stock->getQty();
             
             /* $stock_qty = intval($item->getProduct()
                 ->getStockItem()
                 ->getQty()); */
-            if ($stock_qty < $item->getQty() ) :
+        if ($stock_qty < $item->getQty()&& $stock->getManageStock()==1) :
                 // if($productInventoryQty<=0):
                 $isBackorderAvailable = true;
                 break;
@@ -57,9 +57,9 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
                 ->getStockItem()
                 ->getQty()); */
             $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
-            $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
-                ->getQty();
-            if (! ($stock_qty < $item->getQty())) :
+            $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+            $stock_qty=$stock->getQty();
+                if (! ($stock_qty < $item->getQty()) || $stock->getManageStock()==0) :
                 // if($productInventoryQty > 0):
                 $isAvailable = true;
                 break;
@@ -78,7 +78,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
         $isAvailable = $this->isQuoteContainsAvailableProducts();
         if ($isBackOrder && $isAvailable)
             return true;
-        return false;
+        return true;
     }
 
     public function isContainsBackorder ()

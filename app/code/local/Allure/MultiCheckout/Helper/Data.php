@@ -109,11 +109,10 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
             $_product = Mage::getModel('catalog/product')
                             ->setStoreId($storeId)
                             ->loadByAttribute('sku',$sku);
-            $stock_qty = Mage::getModel('cataloginventory/stock_item')
-                            ->loadByProduct($_product)
-                            ->getQty();
-            
-           if ($stock_qty < $item->getQty()) {
+           $stock = Mage::getModel('cataloginventory/stock_item')
+            ->loadByProduct($_product);
+           $stock_qty=$stock->getQty();
+           if ($stock_qty < $item->getQty() && $stock->getManageStock()==1) {
                $isBackOrderProduct = true;
                break;
            }
