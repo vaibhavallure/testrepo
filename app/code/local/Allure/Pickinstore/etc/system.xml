@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Mage
+ * @package     Mage_Shipping
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <sections>
+        <carriers translate="label" >
+            <label>Shipping Methods</label>
+            <tab>sales</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>320</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <allure_pickinstore>
+					<label>Pick In Store(Main Store)</label>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<active translate="label">
+							<label>Enabled</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</active>
+						<title translate="label">
+							<label>Shipping Method Name</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</title>
+						<sallowspecific translate="label">
+							<label>For selected countries only</label>
+							<frontend_type>select</frontend_type>
+							<frontend_class>shipping-applicable-country</frontend_class>
+							<source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+							<sort_order>3</sort_order>
+							<show_in_default>3</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</sallowspecific>
+						<specificcountry translate="label">
+							<label>Ship to specific countries</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>adminhtml/system_config_source_country</source_model>
+							<sort_order>4</sort_order>
+							<show_in_default>4</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</specificcountry>
+						<allowspecificproduct translate="label">
+							<label>For selected Products only</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>3</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</allowspecificproduct>
+						<specificproduct translate="label">
+							<label>Allow to Specific Product attribute Set</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>allure_pickinstore/attribute</source_model>
+							<sort_order>6</sort_order>
+							<show_in_default>4</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</specificproduct>
+						 <address_firstname>
+                            <label>Store Address - First Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </address_firstname>
+                        <address_lastname>
+                            <label>Store Address - Last Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </address_lastname>
+                        <address_company>
+                            <label>Store Address - Company</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </address_company>
+                        <address_line1>
+                            <label>Store Address - Line 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </address_line1>
+                        <address_line2>
+                            <label>Store Address - Line 2</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </address_line2>
+                        <address_city>
+                            <label>Store Address - City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </address_city>
+                        <address_region>
+                            <label>Store Address - Region</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>105</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If the collection country requires region (as per General->States Options) make sure this field is set. If not you will receive an error at the final step of the checkout.</comment>
+                        </address_region>
+                        <address_postcode>
+                            <label>Store Address - Postcode</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </address_postcode>
+                        <address_telephone>
+                            <label>Store Address - Telephone</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </address_telephone>
+                        <address_country>
+                            <label>Store Address - Country</label>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </address_country>
+					</fields>
+				</allure_pickinstore>
+            </groups>
+        </carriers>
+    </sections>
+</config>

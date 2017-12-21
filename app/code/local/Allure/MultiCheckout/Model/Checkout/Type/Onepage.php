@@ -586,10 +586,10 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 
                 $storeId=Mage::app()->getStore()->getStoreId();
                 $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
-                $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product,$storeId);
+                $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
                 
                 $stock_qty = intval($productInvryCount->getQty());
-                if ($stock_qty < $item->getQty() ){
+                if ($stock_qty < $item->getQty()&& $productInvryCount->getManageStock()==1){
                     //if( $productInvryCount <= 0 ){
                     //$backorder_quote->addItem($item->setId(null));
                     $backorder_quote->addProduct($item->getProduct(), $item->getBuyRequest());
@@ -680,25 +680,26 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         $storeId=Mage::app()->getStore()->getStoreId();
         foreach ($qouteItems as $item) :
         $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getProduct()->getSku());
-        $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)
-                ->getQty();
-            
+        $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+        if(!is_null($stock->getItemId())):
+            $stock_qty= $stock->getQty();
             /* $stock_qty = intval($item->getProduct()
                 ->getStockItem()
                 ->getQty()); */
-            if ($stock_qty < $item->getQty()) :
+            if ($stock_qty < $item->getQty() && $stock->getManageStock()==1) :
                 $isBackorderAvailable = true;
                 break;
 			endif;
-            
+	   endif;
+			
             /*
              * if($productInventoryQty<=0):
              * $isBackorderAvailable = true;
              * break;
              * endif;
              */
-        endforeach
-        ;
+        endforeach ;
+       
         return $isBackorderAvailable;
     }
 
