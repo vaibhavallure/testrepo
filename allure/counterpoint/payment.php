@@ -8,7 +8,7 @@ ini_set('memory_limit', '-1');
 $startDate = $_GET['start'];
 $endDate   = $_GET['end'];
 $state     = $_GET['state'];
-die;
+//die;
 if(empty($state)){
     die("Please mention data in 'state' field.");
 }else{
@@ -42,7 +42,7 @@ $helper = Mage::helper('allure_counterpoint');
 $hostName   = $helper->getHostName();
 $dbUsername = $helper->getDBUserName();//"sa";
 $dbPassword = $helper->getDBPassword();//"root";
-$dbName = "Venus84";
+$dbName = "CPSQL";
 $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
 if($conn){
     try{

@@ -4,13 +4,13 @@
  */
 class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstract{
     
-    protected $_ctpnt_logs_file_name    = "counterpoint_api";
+    protected $_ctpnt_logs_file_name    = "counterpoint_api.log";
     
-    protected $_ctpnt_logs_invoice      = "counterpoint_invoice";
-    protected $_ctpnt_logs_shipment     = "counterpoint_shipment";
+    protected $_ctpnt_logs_invoice      = "counterpoint_invoice.log";
+    protected $_ctpnt_logs_shipment     = "counterpoint_shipment.log";
     
-    protected $_ctpnt_logs_update_tkt   = "counterpoint_update_ticket";
-    protected $_ctpnt_logs_orignal_tkt  = "counterpoint_orignal_ticket";
+    protected $_ctpnt_logs_update_tkt   = "counterpoint_update_ticket.log";
+    protected $_ctpnt_logs_orignal_tkt  = "counterpoint_orignal_ticket.log";
     
     protected $_storeId                 = -1;
     protected $_websiteId               = -1;
