@@ -4,6 +4,20 @@ umask(0);
 Mage::app();
 Mage::app()->setCurrentStore(0);
 
+$start = $_GET['start'];
+$end   = $_GET['end'];
+
+if(empty($start)){
+    die("Mention start");
+}
+
+if(empty($end)){
+    die("Mention end");
+}
+
+//var_dump(getGuid4());
+//die;
+
 /* $customer=Mage::getModel("customer/customer")->load(3329);
 var_dump($customer->getData());
 die; */
@@ -14,49 +28,67 @@ $customers  = Mage::getModel('customer/customer')
     //->addAttributeToFilter('entity_id', array('eq' => 3288))
     ->addAttributeToFilter('entity_id',
         array(
-            'gteq' => 4500
+            'gteq' => $start
         )
     )
     ->addAttributeToFilter('entity_id', 
         array(
-            'lteq' => 4600
+            'lteq' => $end
         )
     )
     ->load();
 
-$_url         = "https://api.teamworksvs.com/externalapi2/customers/register";
+$_url         = "https://api.teamworksvs.com/externalapi3/customers/register";
 $_accessToken = "bWFyaWF0dGVzdCA1NzMyNTY4NTQ4NzY5NzkyIDYzM3paNTZ1Z0w4V3puOU1VUTlNcDUzblZYVGNzZlN3";
 
-$teamwoek_log_file = "teamwork_mag_customer.log";
+$teamwoek_log_file = "teamwork_mag_customer_3.log";
 
 foreach ($customers as $customer){
-    try{
+   try{
         $data    = $customer->getData();
         $customer_id = $customer->getId();
         $request = array();
         $request['firstName'] = $data['firstname'];
         $request['lastName']  = $data['lastname'];
         if(!empty($data['email'])){
-            $request['email1']    = $data['email']; //(object) array("email"=>$data['email']);
+            $request['email1']    = (object) array("email"=> $data['email']);
         }
         $request['customText1'] = $data['website_id'];
         $request['customFlag1'] = ($data['group_id'] == 2 )?true:false;
+        //$request['isEmployee']  = true;
+        
         $billingAddr  = $customer->getDefaultBillingAddress();
         $shippingAddr = $customer->getDefaultShippingAddress();
+        
+        //$billingAddrData = $billingAddr->getData();
+        
+        $addressArr =  array();
+        
         if($billingAddr){
             $billingAddrData = $billingAddr->getData();
-            $request['address1'] = ($billingAddrData['street'])?$billingAddrData['street']:null;
-            $request['state'] = ($billingAddrData['state'])?$billingAddrData['state']:null;
-            $request['city'] = ($billingAddrData['city'])?$billingAddrData['city']:null;
-            $request['countryCode'] = ($billingAddrData['country_id'])?$billingAddrData['country_id']:null;
-            $request['postalCode'] = ($billingAddrData['postcode'])?$billingAddrData['postcode']:null;
-            $request['phone1'] = ($billingAddrData['telephone'])?$billingAddrData['telephone']:null;
+            $guid1 = getGuid4();
+            $addressArr[] = (object) array(
+                        "addressID" => $guid1,
+                        "firstName" =>  $billingAddrData['firstname'],
+                        "lastName"  =>  $billingAddrData['lastname'],
+                        "address1"  =>  ($billingAddrData['street'])?$billingAddrData['street']:null,
+                        "city"    =>  ($billingAddrData['city'])?$billingAddrData['city']:null,
+                        "region"    =>  ($billingAddrData['state'])?$billingAddrData['state']:null,
+                        "countryCode"   =>  ($billingAddrData['country_id'])?$billingAddrData['country_id']:null,
+                        "postalCode"    =>  ($billingAddrData['postcode'])?$billingAddrData['postcode']:null,
+                        "phone" =>  ($billingAddrData['telephone'])?$billingAddrData['telephone']:null
+                );
+            $request['defaultBillingAddressID'] = $guid1;
         }
+        
+        $request['phone1'] = (object) array("number"=>
+            ($billingAddrData['telephone'])?$billingAddrData['telephone']:null);
         
         if($shippingAddr){
             $shippingAddrData = $shippingAddr->getData();
-            $request['addresses'] = array(
-                array(
+            $guid2 = getGuid4();
+            $addressArr[] =  (object) array(
+                    "addressID" => $guid2,
                     "firstName" =>  $shippingAddrData['firstname'],
                     "lastName"  =>  $shippingAddrData['lastname'],
                     "address1"  =>  ($shippingAddrData['street'])?$shippingAddrData['street']:null,
@@ -65,10 +97,15 @@ foreach ($customers as $customer){
                     "countryCode"   =>  ($shippingAddrData['country_id'])?$shippingAddrData['country_id']:null,
                     "postalCode"    =>  ($shippingAddrData['postcode'])?$shippingAddrData['postcode']:null,
                     "phone" =>  ($shippingAddrData['telephone'])?$shippingAddrData['telephone']:null
-                )
             );
+            $request['defaultShippingAddressID'] = $guid2;
         }
         
+        $request['addresses'] = $addressArr;
+        
+        
+        //print_r(json_encode($request));
+        //die;
         
         $sendRequest = curl_init($_url);
         curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
@@ -86,16 +123,15 @@ foreach ($customers as $customer){
         $json_arguments = json_encode($request);
         curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
         $response = curl_exec($sendRequest); 
-        curl_close($sendRequest);
         $responseObj = json_decode($response);
         //print_r($response);
         if(!$responseObj->errorCode){
-            $teamworkCustomerId = $responseObj->customerID;
+            $teamworkCustomerId = $responseObj->customer->customerID;
             $customerObj = Mage::getModel("customer/customer")->load($customer_id);
             $customerObj->setTeamworkCustomerId($teamworkCustomerId);
             $customerObj->save();
-            Mage::log("id-:".$customer->getId()." email-:".$data['email']." == teamwork_id-:".$teamworkCustomerId,Zend_log::DEBUG,$teamwoek_log_file,true);
             //echo $teamworkCustomerId."<br>";
+            Mage::log("id-:".$customer->getId()." email-:".$data['email']." == teamwork_id-:".$teamworkCustomerId,Zend_log::DEBUG,$teamwoek_log_file,true);
         }
         else {
             //echo "<br>Error".json_encode($responseObj);
@@ -106,7 +142,25 @@ foreach ($customers as $customer){
         //die;
     }
 }
+
 Mage::log("Finish...",Zend_log::DEBUG,$teamwoek_log_file,true);
+
+//get guid
+function getGuid4(){
+    $charid = strtolower(md5(uniqid(rand(), true)));
+    $hyphen = chr(45);                  // "-"
+    $lbrace = "";//$trim ? "" : chr(123);    // "{"
+    $rbrace = "";//$trim ? "" : chr(125);    // "}"
+    $guidv4 = $lbrace.
+    substr($charid,  0,  8).$hyphen.
+    substr($charid,  8,  4).$hyphen.
+    substr($charid, 12,  4).$hyphen.
+    substr($charid, 16,  4).$hyphen.
+    substr($charid, 20, 12).
+    $rbrace;
+    return strtoupper($guidv4);
+}
+
 die;
 
 //teamwork api url
