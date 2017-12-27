@@ -7,7 +7,6 @@
     -->
     <default>
         <block type="allure_applepay/script" name="allure_applepay.script" template="allure/applepay/script.phtml">
-            <action method="setIsDefault"><is_default>1</is_default></action>
         </block>
         <block type="allure_applepay/script" name="allure_applepay.script.async" template="allure/applepay/script_async.phtml" />
         <block type="allure_applepay/button" name="ApplePayButtonSideCart" template="allure/applepay/button.phtml"/>
@@ -85,8 +84,8 @@
             <block type="core/text_list" name="col1_before" />
             <block type="core/text_list" name="col2_before" />
 
-            <reference name="col1_before">
-                <block type="allure_applepay/button" name="ApplePayButtonBefore" template="allure/applepay/onepage/button.phtml"/>
+            <reference name="col1s_before">
+                <block type="allure_applepay/button" name="ApplePayButtonCheckoutLogin" template="allure/applepay/onepage/button.phtml"/>
             </reference>
 
             <reference name="col2_before">
@@ -101,7 +100,7 @@
     -->
     <catalog_product_view>
 
-        <block type="allure_applepay/button" name="ApplePayButtonProduct" template="allure/applepay/button_shortcut.phtml" />
+        <block type="allure_applepay/button" name="ApplePayButtonProduct" template="allure/applepay/button_product.phtml" />
         <block type="allure_applepay/script" name="allure_applepay.script" template="allure/applepay/script.phtml" />
         
         <reference name="head">

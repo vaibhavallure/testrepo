@@ -10,6 +10,5 @@
 ?>
 <?php if ($this->isEnabled() && !$this->isLoaded()) : ?>
 <!-- Apple Pay Async Script -->
-<script async='async' type='text/javascript' src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'allure/applepay.js'; ?>'></script>
-
+<script async='async' type='text/javascript' src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'allure/applepay.js?ts='.now(); ?>'></script>
 <?php endif; ?>

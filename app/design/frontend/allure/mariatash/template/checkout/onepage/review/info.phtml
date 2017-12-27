@@ -106,21 +106,6 @@ switch ($payment->getMethod()) {
 <script type="text/javascript">
 //<![CDATA[
     truncateOptions();
-
-	<?php if ($payment->getMethod() == 'applepay'):?>
-	
-	if ( typeof Allure == 'undefined' ) var Allure = {};
-
-	if ( typeof Allure.ApplePay == 'undefined' ) Allure.ApplePay = {};
-	
-	Allure.ApplePay.lineTotal = <?php echo round($quote->getBaseGrandTotal(), 2);?>;
-	Allure.ApplePay.lineItems = [];
-
-	<?php $totals = $quote->getTotals();?>
-	<?php foreach ($totals as $_total_name => $_total) : if ($_total_name == 'grand_total') continue;?>
-	Allure.ApplePay.lineItems.push({type: 'final',label: '<?php echo $_total_name?>', amount: '<?php echo round($_total->getValue() / $quote->getBaseToQuoteRate(), 2)?>' });
-	<?php endforeach;?>
-	<?php endif;?>
 //]]>
 </script>
 <div id="checkout-review-submit">
