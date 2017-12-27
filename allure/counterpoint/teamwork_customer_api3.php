@@ -123,6 +123,7 @@ foreach ($customers as $customer){
         $json_arguments = json_encode($request);
         curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
         $response = curl_exec($sendRequest); 
+        curl_close($sendRequest);
         $responseObj = json_decode($response);
         //print_r($response);
         if(!$responseObj->errorCode){
