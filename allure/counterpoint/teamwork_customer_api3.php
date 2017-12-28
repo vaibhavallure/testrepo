@@ -45,7 +45,7 @@ $teamwoek_log_file = "teamwork_mag_customer_3.log";
 
 $helper = Mage::helper("allure_teamwork");
 $status = $helper->getTeamworkStatus();
-if($status){
+if($status == 0){
     die("Teamwork status is Inactive");
 }
 
