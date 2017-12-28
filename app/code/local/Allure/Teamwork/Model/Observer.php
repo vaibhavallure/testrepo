@@ -20,7 +20,7 @@ class Allure_Teamwork_Model_Observer{
             if($latestItemId){
                 
                 $start = $latestItemId + 1;
-                $end   = $start + 1000;
+                $end   = $start + 100;
             
                 $customers  = Mage::getModel('customer/customer')
                     ->getCollection()
