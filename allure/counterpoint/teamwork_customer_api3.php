@@ -149,6 +149,7 @@ foreach ($customers as $customer){
         }
         
         $model->setCustomerId($customer_id)
+            ->setEmail($data['email'])
             ->setAutoGenBillId($guid1)
             ->setAutoGenShipId($guid2);
         
@@ -158,14 +159,15 @@ foreach ($customers as $customer){
             $customerObj->setTeamworkCustomerId($teamworkCustomerId);
             $customerObj->save();
             
-            $model->setTeamworkCustomerId($teamworkCustomerId);
+            $model->setResponse($response)
+                ->setTeamworkCustomerId($teamworkCustomerId);
             
             //echo $teamworkCustomerId."<br>";
             Mage::log("id-:".$customer->getId()." email-:".$data['email']." == teamwork_id-:".$teamworkCustomerId,Zend_log::DEBUG,$teamwoek_log_file,true);
         }
         else {
             $model->setIsError(1)
-                ->setError($response);
+            ->setResponse($response);
             //echo "<br>Error".json_encode($responseObj);
             Mage::log("id-:".$customer->getId()." email-:".$data['email']." == error-:".$response,Zend_log::DEBUG,$teamwoek_log_file,true);
         }
