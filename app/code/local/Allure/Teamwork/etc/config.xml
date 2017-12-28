@@ -40,4 +40,17 @@
 		</models>
 	</global>
 	
+	<crontab>
+		<jobs>
+			<allure_teamwork>
+				<schedule>
+					<cron_expr>*/10 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::addCustomers</model>
+				</run>
+			</allure_teamwork>
+		</jobs>
+	</crontab>
+	
 </config>
