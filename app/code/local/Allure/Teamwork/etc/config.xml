@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<config>
+	<modules>
+		<Allure_Teamwork>
+			<version>0.1.0</version>
+		</Allure_Teamwork>
+	</modules>
+	<global>
+		<resources>
+			<allure_teamwork_setup>
+				<setup>
+                    <module>Allure_Teamwork</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+			</allure_teamwork_setup>
+		</resources>
+		
+		<helpers>
+			<allure_teamwork>
+				<class>Allure_Teamwork_Helper</class>
+			</allure_teamwork>
+		</helpers>
+		
+		<models>
+			<allure_teamwork>
+				<class>Allure_Teamwork_Model</class>
+				<resourceModel>allure_teamwork_resource</resourceModel>
+			</allure_teamwork>
+			<allure_teamwork_resource>
+				<class>Allure_Teamwork_Model_Resource</class>
+				<entities>
+					<teamwork>
+						<table>allure_teamwork_customer</table>
+					</teamwork>
+				</entities>
+			</allure_teamwork_resource>
+		</models>
+	</global>
+	
+</config>
