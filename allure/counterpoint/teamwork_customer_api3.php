@@ -39,9 +39,25 @@ $customers  = Mage::getModel('customer/customer')
     ->load();
 
 $_url         = "https://api.teamworksvs.com/externalapi3/customers/register";
-$_accessToken = "bWFyaWF0dGVzdCA1NzMyNTY4NTQ4NzY5NzkyIDYzM3paNTZ1Z0w4V3puOU1VUTlNcDUzblZYVGNzZlN3";
+//$_accessToken = "bWFyaWF0dGVzdCA1NzMyNTY4NTQ4NzY5NzkyIDYzM3paNTZ1Z0w4V3puOU1VUTlNcDUzblZYVGNzZlN3";
 
 $teamwoek_log_file = "teamwork_mag_customer_3.log";
+
+$helper = Mage::helper("allure_teamwork");
+$status = $helper->getTeamworkStatus();
+if($status){
+    die("Teamwork status is Inactive");
+}
+
+$_accessToken = $helper->getTeamworkAccessToken();
+if(empty($_accessToken)){
+    die("Please Specify access token");
+}
+
+$model  = Mage::getModel("allure_teamwork/teamwork");
+
+$guid1 = "";
+$guid2 = "";
 
 foreach ($customers as $customer){
    try{
@@ -126,18 +142,36 @@ foreach ($customers as $customer){
         curl_close($sendRequest);
         $responseObj = json_decode($response);
         //print_r($response);
+        
+        $model = Mage::getModel("allure_teamwork/teamwork")->load($customer_id,'customer_id');
+        if(!$model->getId()){
+            $model = Mage::getModel("allure_teamwork/teamwork");
+        }
+        
+        $model->setCustomerId($customer_id)
+            ->setAutoGenBillId($guid1)
+            ->setAutoGenShipId($guid2);
+        
         if(!$responseObj->errorCode){
             $teamworkCustomerId = $responseObj->customer->customerID;
             $customerObj = Mage::getModel("customer/customer")->load($customer_id);
             $customerObj->setTeamworkCustomerId($teamworkCustomerId);
             $customerObj->save();
+            
+            $model->setTeamworkCustomerId($teamworkCustomerId);
+            
             //echo $teamworkCustomerId."<br>";
             Mage::log("id-:".$customer->getId()." email-:".$data['email']." == teamwork_id-:".$teamworkCustomerId,Zend_log::DEBUG,$teamwoek_log_file,true);
         }
         else {
+            $model->setIsError(1)
+                ->setError($response);
             //echo "<br>Error".json_encode($responseObj);
             Mage::log("id-:".$customer->getId()." email-:".$data['email']." == error-:".$response,Zend_log::DEBUG,$teamwoek_log_file,true);
         }
+        
+        $model->save();
+        $model = null;
     }catch (Exception $e){
         Mage::log("id-:".$customer->getId(). " email-:".$data['email']." == Exception-:".$e->getMessage(),Zend_log::DEBUG,$teamwoek_log_file,true);
         //die;
