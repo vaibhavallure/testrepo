@@ -7,6 +7,8 @@ class Allure_Teamwork_Model_Observer{
     public function addCustomers(){
         $helper = Mage::helper("allure_teamwork");
         $status = $helper->getTeamworkStatus();
+        $teamwoek_log_file = "teamwork_mag_customer_3.log";
+        Mage::log("Teamwork Cron start",Zend_log::DEBUG,$teamwoek_log_file,true);
         if($status){
             
             $collection = Mage::getModel("allure_teamwork/teamwork")
