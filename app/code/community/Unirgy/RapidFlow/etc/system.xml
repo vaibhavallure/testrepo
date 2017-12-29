@@ -97,6 +97,24 @@
                             <show_in_store>0</show_in_store>
                             <comment><![CDATA[User-Agent header string to use by CURL during image download]]></comment>
                         </curl_useragent>
+                        <curl_headers translate="label comment" module="urapidflow">
+                            <label>CURL Extra Headers</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>75</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Extra headers to use by CURL during image download]]></comment>
+                        </curl_headers>
+                        <curl_customrequest translate="label comment" module="urapidflow">
+                            <label>CURL Custom Request</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>85</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Provide value for CURLOPT_CUSTOMREQUEST curl option]]></comment>
+                        </curl_customrequest>
                         <!--
                         <save_attributes_method>
                             <label>Save Attributes Method</label>
