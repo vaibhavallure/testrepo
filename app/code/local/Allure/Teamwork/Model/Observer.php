@@ -78,8 +78,9 @@ class Allure_Teamwork_Model_Observer{
                                 $request['defaultBillingAddressID'] = $guid1;
                             }
                             
-                            $request['phone1'] = (object) array("number"=>
-                                ($billingAddrData['telephone'])?$billingAddrData['telephone']:null);
+                            if(!empty($billingAddrData['telephone'])){
+                                $request['phone1'] = (object) array("number"=>$billingAddrData['telephone']);
+                            }
                             
                             if($shippingAddr){
                                 $shippingAddrData = $shippingAddr->getData();

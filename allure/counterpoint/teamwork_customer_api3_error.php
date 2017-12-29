@@ -15,33 +15,22 @@ if(empty($end)){
     die("Mention end");
 }
 
-//var_dump(getGuid4());
-//die;
-
-/* $customer=Mage::getModel("customer/customer")->load(3329);
-var_dump($customer->getData());
-die; */
-
 $customers  = Mage::getModel('customer/customer')
     ->getCollection()
-    ->addAttributeToSelect('*')
-    //->addAttributeToFilter('entity_id', array('eq' => 3288))
-    ->addAttributeToFilter('entity_id',
-        array(
-            'gteq' => $start
-        )
-    )
-    ->addAttributeToFilter('entity_id', 
-        array(
-            'lteq' => $end
-        )
-    )
-    ->load();
+    ->addAttributeToSelect('*');
+
+$customers->getSelect()
+    ->join(array('teamwork' => 'allure_teamwork_customer'),
+            'teamwork.customer_id = e.entity_id AND teamwork.is_error=1'.
+            ' AND(teamwork.customer_id>='.$start.' AND teamwork.customer_id<='.$end.')',
+            array('teamwork.id')
+      );
+
 
 $_url         = "https://api.teamworksvs.com/externalapi3/customers/register";
 //$_accessToken = "bWFyaWF0dGVzdCA1NzMyNTY4NTQ4NzY5NzkyIDYzM3paNTZ1Z0w4V3puOU1VUTlNcDUzblZYVGNzZlN3";
 
-$teamwoek_log_file = "teamwork_mag_customer_3.log";
+$teamwoek_log_file = "teamwork_mag_error_customer_3.log";
 
 $helper = Mage::helper("allure_teamwork");
 $status = $helper->getTeamworkStatus();
@@ -161,6 +150,7 @@ foreach ($customers as $customer){
             $customerObj->save();
             
             $model->setResponse($response)
+                ->setIsError(0)
                 ->setTeamworkCustomerId($teamworkCustomerId);
             
             //echo $teamworkCustomerId."<br>";
