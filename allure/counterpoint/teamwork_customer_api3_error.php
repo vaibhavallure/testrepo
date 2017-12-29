@@ -87,7 +87,8 @@ foreach ($customers as $customer){
         }
         
         if(!empty($billingAddrData['telephone'])){
-            $request['phone1'] = (object) array("number"=>$billingAddrData['telephone']);
+            if($billingAddrData['telephone'] !="000-000-0000")
+                $request['phone1'] = (object) array("number"=>$billingAddrData['telephone']);
         }
         
         if($shippingAddr){
