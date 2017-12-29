@@ -79,6 +79,7 @@ class Allure_Teamwork_Model_Observer{
                             }
                             
                             if(!empty($billingAddrData['telephone'])){
+                                if($billingAddrData['telephone'] !="000-000-0000")
                                 $request['phone1'] = (object) array("number"=>$billingAddrData['telephone']);
                             }
                             
