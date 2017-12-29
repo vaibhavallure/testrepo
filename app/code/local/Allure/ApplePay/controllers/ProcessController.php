@@ -80,6 +80,10 @@ class Allure_ApplePay_ProcessController extends Mage_Core_Controller_Front_Actio
         
         $data = $_POST;
         
+        $session = Mage::getSingleton('applepay/session');
+        
+        var_dump($session->getQuote()->getData());die;
+        
         Mage::log(json_encode($data), Zend_Log::DEBUG, 'applepay.log', true);
         
         die('DONE');

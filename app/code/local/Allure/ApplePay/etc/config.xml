@@ -31,6 +31,27 @@
 				<class>Allure_ApplePay_Model</class>
 			</applepay>
 		</models>
+		
+        <resources>
+            <applepay_setup>
+                <setup>
+                    <module>Allure_ApplePay</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </applepay_setup>
+            <allure_applepay_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </allure_applepay_read>
+            <allure_applepay_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </allure_applepay_write>
+        </resources>
 	</global>
 	<default>
 		<payment>
