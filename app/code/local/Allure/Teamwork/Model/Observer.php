@@ -50,8 +50,9 @@ class Allure_Teamwork_Model_Observer{
                             $request = array();
                             $request['firstName'] = $data['firstname'];
                             $request['lastName']  = $data['lastname'];
+                            $email = strtolower($data['email']);
                             if(!empty($data['email'])){
-                                $request['email1']    = (object) array("email"=> $data['email']);
+                                $request['email1']    = (object) array("email"=> $email);
                             }
                             $request['customText1'] = $data['website_id'];
                             $request['customFlag1'] = ($data['group_id'] == 2 )?true:false;
@@ -127,7 +128,7 @@ class Allure_Teamwork_Model_Observer{
                             }
                             
                             $model->setCustomerId($customer_id)
-                                ->setEmail($data['email'])
+                                ->setEmail($email)
                                 ->setAutoGenBillId($guid1)
                                 ->setAutoGenShipId($guid2);
                             
@@ -140,18 +141,18 @@ class Allure_Teamwork_Model_Observer{
                                 $model->setResponse($response)
                                     ->setTeamworkCustomerId($teamworkCustomerId);
                                 
-                                Mage::log("id-:".$customer->getId()." email-:".$data['email']." == teamwork_id-:".$teamworkCustomerId,Zend_log::DEBUG,$teamwoek_log_file,true);
+                                    Mage::log("id-:".$customer->getId()." email-:".$email." == teamwork_id-:".$teamworkCustomerId,Zend_log::DEBUG,$teamwoek_log_file,true);
                             }
                             else {
                                 $model->setIsError(1)
                                 ->setResponse($response);
-                                Mage::log("id-:".$customer->getId()." email-:".$data['email']." == error-:".$response,Zend_log::DEBUG,$teamwoek_log_file,true);
+                                Mage::log("id-:".$customer->getId()." email-:".$email." == error-:".$response,Zend_log::DEBUG,$teamwoek_log_file,true);
                             }
                             
                             $model->save();
                             $model = null;
                         }catch (Exception $e){
-                            Mage::log("id-:".$customer->getId(). " email-:".$data['email']." == Exception-:".$e->getMessage(),Zend_log::DEBUG,$teamwoek_log_file,true);
+                            Mage::log("id-:".$customer->getId(). " email-:".$email." == Exception-:".$e->getMessage(),Zend_log::DEBUG,$teamwoek_log_file,true);
                         }
                    }
               }
