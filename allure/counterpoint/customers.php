@@ -115,12 +115,12 @@ if($conn){
 
 echo "<pre>";
 print_r(count($mainArr));
-//print_r(($mainArr));
-// die; 
+print_r(($mainArr));
+die; 
 
 
 //remote site wsdl url
-$_URL       = "http://mariatash.ws02.allure.inc/api/v2_soap/?wsdl=1";
+$_URL       = "https://mt.allurecommerce.com/api/v2_soap/?wsdl=1";
 
 /**
  * @return array of magento credentials.
