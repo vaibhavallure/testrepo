@@ -1372,9 +1372,13 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         $address = Mage::getModel("customer/address");
                         $address->setData($_billing_address)
                             ->setCustomerId($customer->getId())
-                            ->setIsDefaultBilling('1')
-                            //->setIsDefaultShipping('1')
-                            ->setSaveInAddressBook('1');
+                            ->setIsDefaultBilling('1');
+                            
+                        if(count($customerAddress) == 1){
+                            $address->setIsDefaultShipping('1');
+                        }
+                        
+                        $address->setSaveInAddressBook('1');
                         $address->save();
                         
                         if(count($customerAddress) == 2){
