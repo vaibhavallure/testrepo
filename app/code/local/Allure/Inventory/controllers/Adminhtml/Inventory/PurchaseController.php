@@ -204,7 +204,9 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                 'user_id' => $admin->getUserId(),
                                 'date' => date("Y-m-d H:i:s"),
                                 'total_amount' => $totalAmount,
-                                'stock_id' => $stockId
+                                'stock_id' => $stockId,
+                                'action'=>'create'
+                                
                             );
                             $model->setData($logData);
                             $model->save()->getId();
@@ -451,6 +453,18 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
             $currentDate->toString('jS F, Y');
             $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
+            $stockId=$order->getStockId();
+            $vendorId=$order->getVendorId();
+            $orderlogsmodel = Mage::getModel('inventory/orderlogs');
+            $logData = array(
+                'po_id' => $po_id,
+                'vendor_id' => $vendorId,
+                'user_id' => $admin->getUserId(),
+                'date' => date("Y-m-d H:i:s"),
+                'stock_id' => $stockId
+            );
+            $orderlogsmodel->setData($logData);
+            $orderlogsmodel->save()->getId();
             
             //update order total only for Draftstate
             if($order->getTotalAmount()!=$totalPrice && $order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT)
@@ -680,7 +694,8 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             if ($void)
                 $status = Allure_Inventory_Helper_Data::ORDER_STATUS_REJECT;
             $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
-            
+            $vendorId=$order->getVendorId();
+            $stockId=$order->getStockId();
              if ($close){
                     //Fully ship and closed
                     
@@ -705,7 +720,17 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                    $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true,$diffArray);
                }
              }
-           
+             $orderlogsmodel = Mage::getModel('inventory/orderlogs');
+             $logData = array(
+                 'po_id' => $po_id,
+                 'vendor_id' => $vendorId,
+                 'user_id' => $admin->getUserId(),
+                 'date' => date("Y-m-d H:i:s"),
+                 'stock_id' => $stockId
+             );
+             $orderlogsmodel->setData($logData);
+             $orderlogsmodel->save()->getId();
+             
             $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
             $currentDate->toString('jS F, Y');
          
@@ -736,6 +761,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $this->_prepareDownloadResponse($fileName, $content);
     }
     public function acceptAction(){
+        $admin = Mage::getSingleton('admin/session')->getUser();
         $id=Mage::app()->getRequest()->getParam('id');
         $helper = Mage::helper('inventory');
         try {
@@ -749,7 +775,20 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if (isset($status))
                     $order->setData('status', $status);
                 $order->setData('updated_date', $currentDate)->save();
-
+                $vendorId=$order->getVendorId();
+                $stockId=$order->getStockId();
+                $orderlogsmodel = Mage::getModel('inventory/orderlogs');
+                $logData = array(
+                    'po_id' => $order->getPoId(),
+                    'vendor_id' => $vendorId,
+                    'user_id' => $admin->getUserId(),
+                    'date' => date("Y-m-d H:i:s"),
+                    'acton' => 'accept',
+                    'stock_id' => $stockId
+                );
+                $orderlogsmodel->setData($logData);
+                $orderlogsmodel->save()->getId();
+                
                 $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_accept',$storeId);
                 $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
                 $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($order->getVendorId());
@@ -757,6 +796,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if (!empty($adminEmail)) {
                     $adminEmail =  explode(',', $adminEmail);
                 }
+                
                 $helper->sendEmail($id,$vendorEmail,$templateId,$adminEmail,false);
 
             }
@@ -768,6 +808,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $this->_redirect('*/*/orders');
     }
     public function approveAction(){
+        $admin = Mage::getSingleton('admin/session')->getUser();
         $id=Mage::app()->getRequest()->getParam('id');
         $helper = Mage::helper('inventory');
         try {
@@ -781,6 +822,19 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 if (isset($status))
                     $order->setData('status', $status);
                     $order->setData('updated_date', $currentDate)->save();
+                    
+                    $orderlogsmodel = Mage::getModel('inventory/orderlogs');
+                    $logData = array(
+                        'po_id' => $order->getPoId(),
+                        'vendor_id' => $order->getVendorId(),
+                        'user_id' => $admin->getUserId(),
+                        'date' => date("Y-m-d H:i:s"),
+                        'acton' => 'approve',
+                        'stock_id' => $order->getStockId()
+                    );
+                    
+                    $orderlogsmodel->setData($logData);
+                    $orderlogsmodel->save()->getId();
                     
                     $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_accept',$storeId);
                     $adminEmail=Mage::getStoreConfig('allure_vendor/general/admin_email',$storeId);
@@ -908,6 +962,20 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                     $order = Mage::getModel('inventory/purchaseorder')->load($id);
                     $statusExisting=$order->getStatus();
                     $storeId=$order->getStoreId();
+                    
+                    $orderlogsmodel = Mage::getModel('inventory/orderlogs');
+                    $logData = array(
+                        'po_id' => $order->getPoId(),
+                        'vendor_id' => $order->getVendorId(),
+                        'user_id' => $admin->getUserId(),
+                        'date' => date("Y-m-d H:i:s"),
+                        'acton' => 'cancel',
+                        'stock_id' => $order->getStockId()
+                    );
+                    
+                    $orderlogsmodel->setData($logData);
+                    $orderlogsmodel->save()->getId();
+                    
                     if ($statusExisting== Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT ||$order->getStatus()== Allure_Inventory_Helper_Data::ORDER_STATUS_NEW) {
                         $orderItems = Mage::getModel('inventory/orderitems')->getCollection($id, 'po_id');
                         foreach ($orderItems as $item) {
@@ -1267,6 +1335,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                         'user_id' => $admin->getUserId(),
                                         'date' => date("Y-m-d H:i:s"),
                                         'total_amount' => $totalAmount,
+                                        'action' => 'confirmorder',
                                         'stock_id' => $stockId
                                     );
                                     $model->setData($logData);

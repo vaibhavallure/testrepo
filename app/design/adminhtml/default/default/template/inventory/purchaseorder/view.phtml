@@ -4,6 +4,12 @@ $helper = Mage::helper("inventory");
 
 ?>
 <?php $order=Mage::getModel('inventory/purchaseorder')->load($collection->getFirstItem()->getPoId())?>		
+<?php $updatedInfo=Mage::getModel('inventory/orderlogs')->getCollection();
+$updatedInfo->addFieldToFilter('po_id',$collection->getFirstItem()->getPoId());
+$updatedInfo->getSelect()->joinLeft('admin_user', 'admin_user.user_id = main_table.user_id', array('username','firstname','lastname'));
+//$updatedInfo->getSelect();
+$updatedInfo->setOrder('date', 'DESC');
+$updatedInfo=$updatedInfo->getFirstItem();?>
 <?php $orderTotal=$order->getTotalAmount()?>
 <div class="content-header">
    <h3 class="icon-head"><?php echo $helper->__('View Purchase Order')?></h3>
@@ -60,6 +66,11 @@ $helper = Mage::helper("inventory");
 				<?php echo $order->getRefNo()?>
 				<?php endif;?>
 				</label>
+			<?php endif;?>
+			<?php if(!empty($updatedInfo->getUsername())):?>
+			<label><span><?php echo $helper->__('Last Updated By:'); ?></span>
+			<?php echo $updatedInfo->getFirstname()." ".$updatedInfo->getLastname().'('.$updatedInfo->getDate().')';?>
+			</label>
 			<?php endif;?>
 			</div>
 		</div>
