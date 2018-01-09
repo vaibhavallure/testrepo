@@ -48,14 +48,14 @@
 					<model>inventory/cron::autoProcessLowstockReports</model>
 				</run>
 			</inventory_schedule>
-			<inventory_schedule>
+			<product_backorder_date>
 				<schedule>
 					<cron_expr>0 9 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>inventory/cron::updateBackorderDate</model>
 				</run>
-			</inventory_schedule>
+			</product_backorder_date>
 		</jobs>
 	</crontab>
     <adminhtml>
