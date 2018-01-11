@@ -30,6 +30,11 @@
 			<applepay>
 				<class>Allure_ApplePay_Model</class>
 			</applepay>
+			<sales_resource>
+	            	<rewrite>
+	                    <quote>Allure_ApplePay_Model_Resource_Quote</quote>
+	             </rewrite>
+            </sales_resource>
 		</models>
 		
         <resources>

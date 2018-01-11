@@ -21,7 +21,7 @@ if (window.ApplePaySession) {
 	
 	Allure.ApplePay.data.request = {
 	  	countryCode: 'US',
-	  	currencyCode: 'INR',
+	  	currencyCode: 'USD',
 	  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 	  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
 	  	total: function(){
@@ -62,7 +62,7 @@ if (window.ApplePaySession) {
       
 		if (canMakePayments) {
 		   
-		   console.log("Apple Pay Payment Available");
+			console.log("Apple Pay Payment Available");
 
 			Allure.ApplePay.flag.enabled = true;
 			
@@ -76,41 +76,69 @@ if (window.ApplePaySession) {
 	});
 	
 	Allure.ApplePay.event.onValidateMerchant = function (event) {
+		console.log('START EVENT: onValidateMerchant');
 		console.log(event);
+		console.log('START ACTION: performValidation');
 		var promise = Allure.ApplePay.action.performValidation(event.validationURL);
+		console.log('END ACTION: performValidation');
 		promise.then(function (merchantSession) {
+			console.log('START ACTION: completeMerchantValidation');
 			Allure.ApplePay.session.completeMerchantValidation(merchantSession);
+			console.log('END ACTION: completeMerchantValidation');
 		}); 
+		console.log('END EVENT: onValidateMerchant');
 	};
 	
 	Allure.ApplePay.event.onPaymentMethodSelected = function(event) {
-		console.log('starting onpaymentmethodselected');
+		console.log('START EVENT: onPaymentMethodSelected');
 		console.log(event);
-		var newTotal = { type: 'final', label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal };
-		var newLineItems =[{type: 'final',label: 'Spice #202', amount: '15.00' }]
+		var newTotal = { type: 'final', label: 'Maria Tash', amount: Allure.ApplePay.data.cartyResponse.total };
+		var newLineItems = [{type: 'final', label: 'Spice #202', amount: '15.00' }]
 		Allure.ApplePay.session.completePaymentMethodSelection( {newTotal : newTotal, newLineItems: Allure.ApplePay.data.lineItems});//, Allure.ApplePay.data.lineItems
+
+		console.log('END EVENT: onPaymentMethodSelected');
 	};
 	
 	Allure.ApplePay.event.onPaymentAuthorized = function (event) {
-		console.log('starting session.onpaymentauthorized');
+		console.log('START EVENT: onPaymentAuthorized');
 		console.log(event);
+		console.log('START ACTION: sendPaymentToken');
 		var promise = Allure.ApplePay.action.sendPaymentToken(event.payment.token);
+		console.log('END ACTION: sendPaymentToken');
 		promise.then(function (success) {	
 			var status;
-			if (success){
+			if (success) {
 				status = ApplePaySession.STATUS_SUCCESS;
 				console.log('Apple Pay Payment SUCCESS ');
 			} else {
 				status = ApplePaySession.STATUS_FAILURE;
 			}		
 			console.log( "result of sendPaymentToken() function =  " + success );
+
+			console.log('START ACTION: completePayment');
 			Allure.ApplePay.session.completePayment(status);
+			console.log('END ACTION: completePayment');
 		});
+		console.log('END EVENT: onPaymentAuthorized');
+	};
+	
+	Allure.ApplePay.event.onShippingContactSelected = function(event) {
+		console.log('START EVENT: onShippingContactSelected');
+		console.log(event);
+
+		console.log('END EVENT: onShippingContactSelected');
+	};
+	
+	Allure.ApplePay.event.onShippingMethodSelected = function(event) {
+		console.log('START EVENT: onShippingMethodSelected');
+		console.log(event);
+		console.log('END EVENT: onShippingMethodSelected');
 	};
 	
 	Allure.ApplePay.event.onCancel = function(event) {
-		console.log('starting session.cancel');
+		console.log('START EVENT: onCancel');
 		console.log(event);
+		console.log('END EVENT: onCancel');
 	};
 	
 
@@ -139,6 +167,10 @@ if (window.ApplePaySession) {
 			Allure.ApplePay.session.onpaymentmethodselected = Allure.ApplePay.event.onPaymentMethodSelected
 	
 			Allure.ApplePay.session.onpaymentauthorized = Allure.ApplePay.event.onPaymentAuthorized;
+			
+			Allure.ApplePay.session.onshippingcontactselected = Allure.ApplePay.event.onShippingContactSelected;
+			
+			Allure.ApplePay.session.onshippingmethodselected = Allure.ApplePay.event.onShippingMethodSelected;
 			
 			Allure.ApplePay.session.oncancel = Allure.ApplePay.event.onCancel;
 			
@@ -172,7 +204,7 @@ if (window.ApplePaySession) {
 			  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 			  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
 			  	total: { label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal },
-			  	shippingMethods: Allure.ApplePay.data.shippingMethods,
+			  	shippingMethods: Allure.ApplePay.data.request.shippingMethods,
 				shippingType: 'delivery',
 				requiredBillingContactFields: [
 				    "postalAddress"
@@ -224,8 +256,40 @@ if (window.ApplePaySession) {
 			};
 		}
 		
+		if (Allure.ApplePay.data.checkoutType  != 'undefined' && Allure.ApplePay.data.checkoutType == 'ApplePayButtonProduct') {
+			
+			Allure.ApplePay.data.cartyResponse = Allure.ApplePay.action.addProductToCart(jQuery('#pid-hidden').val(), jQuery('#qty').val());
+			
+			requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.cartyResponse.total };
+		}
+		
 		return requestData;
 	}
+	
+	Allure.ApplePay.action.addProductToCart = function (product, qty) {
+		var cartResponse = {};
+		jQuery.ajax({
+			url: 	Allure.ApplePay.data.baseUrl+'addProduct',
+			async: 	false,
+			dataType: 'json',
+			data: 	{
+				product: product, 
+				qty: qty
+			},
+			method: 	'POST',
+			timeout:	5000
+			
+		}).done(function(data){
+			console.log(data);
+			cartResponse = data;
+			console.log('Success');
+			
+		}).fail(function() {
+			console.log('Error');
+		})
+		
+		return cartResponse;
+	};
 	
 	Allure.ApplePay.action.createTransaction = function(dataObj) {
 		
@@ -238,7 +302,7 @@ if (window.ApplePaySession) {
 		//console.log(objJsonB64);
 	    
 		jQuery.ajax({
-			url: Allure.ApplePay.baseUrl+'saveTransaction',
+			url: Allure.ApplePay.data.baseUrl+'saveTransaction',
 			data: {amount: '15.00', dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64},
 			method: 'POST',
 			timeout: 5000

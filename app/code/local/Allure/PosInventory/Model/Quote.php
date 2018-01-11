@@ -140,4 +140,16 @@ class Allure_PosInventory_Model_Quote extends Mage_Sales_Model_Quote
         
         return $item;
     }
+    
+    public function loadByApplePayCustomer($customer) {
+        if ($customer instanceof Mage_Customer_Model_Customer) {
+            $customerId = $customer->getId();
+        }
+        else {
+            $customerId = (int) $customer;
+        }
+        $this->_getResource()->loadByApplePayCustomerId($this, $customerId);
+        $this->_afterLoad();
+        return $this;
+    }
 }
