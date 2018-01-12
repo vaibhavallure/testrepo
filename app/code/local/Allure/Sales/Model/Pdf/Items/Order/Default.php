@@ -144,7 +144,7 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                 $this->setPage($page);
             }
             
-            $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed);
+            $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed,true);
             if($salesInstr['is_show']){
                 $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
                 $this->setPage($page);
