@@ -143,13 +143,13 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
     
-    public function getSalesOrderItemSpecialInstruction($item,$feed = 35){
+    public function getSalesOrderItemSpecialInstruction($item,$feed = 35,$flag1=false){
         try{
             $flag = false;
             $orderItemId = $item->getOrderItemId();
             $actionName = Mage::app()->getRequest()->getActionName();
             $orderItem = $item->getOrderItem();//Mage::getModel("sales/order_item")->load($orderItemId);
-            if($actionName == "pdforders"){
+            if($flag1){
                 $orderItem = $item;
             }
             
