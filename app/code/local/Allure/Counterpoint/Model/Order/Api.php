@@ -12,6 +12,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     protected $_ctpnt_logs_update_tkt   = "counterpoint_update_ticket.log";
     protected $_ctpnt_logs_orignal_tkt  = "counterpoint_orignal_ticket.log";
     
+    protected $_ctpnt_logs_customer     = "counterpoint_customer.log";
+    
     protected $_storeId                 = -1;
     protected $_websiteId               = -1;
     
@@ -74,6 +76,10 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
     
     private function addLogOrignalOrder($logData){
         Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_orignal_tkt,true);
+    }
+    
+    private function addLogCustomer($logData){
+        Mage::log($logData,Zend_log::DEBUG,$this->_ctpnt_logs_customer,true);
     }
     
     /**
@@ -1261,5 +1267,160 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             $this->AddLog("new customer create.customer_id-:".$customer->getId());
         }
         return $customer;
+    }
+    
+    
+    /**
+     * create new customers in magento
+     */
+    public function addCustomer($customer_data){
+        $customer_data = utf8_decode($customer_data);
+        $customer_data = trim($customer_data,'"');
+        $customer_data = stripslashes($customer_data);
+        $customertData = unserialize($customer_data);
+        $this->addLogCustomer("Customer count -:".count($customertData));
+        $this->addCustomerData($customertData);
+        return 1;
+    }
+    
+    private function addCustomerData($customertData){
+        $this->prepareCounterpointSettings();
+        $cnt = 1;
+        foreach ($customertData as $customer){
+            try{
+                $this->addLogCustomer("customer count -:".$cnt);
+                $cnt++;
+                $customerAddress    = $customer['customer_detail'];
+                $customerDetailArr  = $customerAddress[1];
+                $extraInfo  = $customer['extra'];
+                
+                $storeId    = "";
+                $websiteId  = "";
+                if($extraInfo['str_id'] == 1){
+                    $storeId    = $this->_store_vba;
+                    $websiteId  = $this->_website_vba;
+                }elseif($extraInfo['str_id'] == 2){
+                    $storeId    = $this->_store_vmt;
+                    $websiteId  = $this->_website_vmt;
+                }else{
+                    $storeId    = $this->_store_vmt;
+                    $websiteId  = $this->_website_vmt;
+                }
+                
+                $email      = $customerDetailArr['email'];
+                $street     = $customerDetailArr['street'];
+                $city       = $customerDetailArr['city'];
+                $state      = $customerDetailArr['state'];
+                $country    = $customerDetailArr['country']?$customerDetailArr['country']:"";
+                $zip_code   = $customerDetailArr['zip_code'];
+                $phone      = $customerDetailArr['phone'];
+                $name       = $customerDetailArr['name'];
+                
+                $group      = ($extraInfo['nam_typ'])?$extraInfo['nam_typ']:"P";
+                
+                $name        = explode(" ", $name);
+                $firstName  = $name[0];
+                $lastName   = $name[0];
+                if(count($name) > 1){
+                    $lastName = $name[1];
+                }
+                    
+                    if(empty($email)){
+                        $emailName = $firstName."".$lastName;
+                        $email = strtolower($emailName)."@customers.mariatash.com";
+                    }
+                    $email = strtolower($email);
+                    
+                    $this->addLogCustomer("customer email -:".$email);
+                    
+                    $customer = Mage::getModel('customer/customer')
+                        ->setWebsiteId($websiteId)
+                        ->loadByEmail($email);
+                    
+                    if(!$customer->getId()){
+                        $groupId = self::GENERAL_CUSTOMER;
+                        if($group == "B"){
+                            $groupId = self::WHOLESELLER_CUSTOMER;
+                        }
+                        
+                        $password = $this->generateRandomPassword();
+                        $customer = Mage::getModel("customer/customer");
+                        $customer->setWebsiteId($websiteId)
+                            ->setStoreId($storeId)
+                            ->setGroupId($groupId)
+                            ->setFirstname($firstName)
+                            ->setLastname($lastName)
+                            ->setEmail($email)
+                            ->setPassword($password)
+                            ->setCustomerType(self::COUNTERPOINT_CUSTOMER)  //counterpoint
+                            ->save();
+                        
+                        $_billing_address = array (
+                            'firstname'  => $customer->getFirstname(),
+                            'lastname'   => $customer->getLastname(),
+                            'street'     => array (
+                                '0' => $street
+                            ),
+                            'city'       => $city,
+                            'postcode'   => $zip_code,
+                            'country_id' => $country,
+                            'region' 	=> 	$state,
+                            'telephone'  => $phone,
+                            'fax'        => '',
+                        );
+                        
+                        $address = Mage::getModel("customer/address");
+                        $address->setData($_billing_address)
+                            ->setCustomerId($customer->getId())
+                            ->setIsDefaultBilling('1');
+                            
+                        if(count($customerAddress) == 1){
+                            $address->setIsDefaultShipping('1');
+                        }
+                        
+                        $address->setSaveInAddressBook('1');
+                        $address->save();
+                        
+                        if(count($customerAddress) == 2){
+                            $shipAddr = $customerAddress[2];
+                            
+                            $firstName  = $shipAddr['fst_nam']; 
+                            $lastName   = $shipAddr['lst_nam'];
+                            
+                            if(!empty($shipAddr['street'])){
+                                $_shipping_address = array (
+                                    'firstname'  => $firstName,
+                                    'lastname'   => $lastName,
+                                    'street'     => array (
+                                        '0' => $shipAddr['street']
+                                    ),
+                                    'city'       => $shipAddr['city'],
+                                    'postcode'   => $shipAddr['zip_code'],
+                                    'country_id' => $shipAddr['country']?$shipAddr['country']:"",
+                                    'region' 	=> 	$shipAddr['state'],
+                                    'telephone'  => $shipAddr['phone'],
+                                    'fax'        => '',
+                                );
+                                $addressShip = Mage::getModel("customer/address");
+                                $addressShip->setData($_shipping_address)
+                                    ->setCustomerId($customer->getId())
+                                    ->setIsDefaultShipping('1')
+                                    ->setSaveInAddressBook('1');
+                                $addressShip->save();
+                                $this->addLogCustomer("New shipping address add.");
+                                $addressShip  = null;
+                            }
+                        }
+                        $address = null;
+                        $this->addLogCustomer("New customer create.customer_id-:".$customer->getId());
+                    }else{
+                        $this->addLogCustomer("customer already present");
+                    }
+                    $customer = null;
+            }catch (Exception $e){
+                $this->addLogCustomer("Exception -: ".$e->getMessage());
+            }
+        }
+        $this->addLogCustomer("Finish...");
     }
 }
