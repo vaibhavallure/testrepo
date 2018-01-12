@@ -35,7 +35,6 @@ $updatedInfo=$updatedInfo->getFirstItem();?>
    <button onclick="history.back()" class="po_back_btn" ><?php echo $helper->__('Back')?></button>
 </div>
 
-
 <div>
 	<div id="parent">
 		<div id="child">
@@ -75,6 +74,9 @@ $updatedInfo=$updatedInfo->getFirstItem();?>
 			</div>
 		</div>
 	</div>
+</div>
+<div class="pager-inventory">
+	<?php echo $this->getPagerHtml(); ?>
 </div>
 
 

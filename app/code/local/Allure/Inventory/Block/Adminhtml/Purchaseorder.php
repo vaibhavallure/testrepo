@@ -13,7 +13,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder extends Mage_Adminhtml_Bloc
 		if(Mage::helper('allure_vendor')->isUserVendor())
 		{
 			$this->_removeButton('add');
-			$this->_headerText = Mage::helper("inventory")->__("Purchase Orders For"." ".Mage::helper('allure_vendor')->getCurrentUserVendorName());
+			$this->_headerText = Mage::helper("inventory")->__("Purchase Orders");
 			
 		}
 
