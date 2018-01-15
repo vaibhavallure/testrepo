@@ -953,4 +953,6 @@ label.popup-login-lbl{
     margin-top: 16px;
     margin-left: 15px;
 }
-
+.custom_recaptcha .recaptcha{
+	float:right;
+}
