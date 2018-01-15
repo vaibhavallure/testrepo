@@ -31,8 +31,9 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
         );
         
         // draw QTY
+        Mage::log("QTy:".json_encode($item->getQtyOrdered()),Zend_log::DEBUG,'ajay.log',true);
         $lines[0][] = array(
-            'text'  => $item->getQty() * 1,
+            'text'  => $item->getQtyOrdered() * 1,
             'feed'  => 435,
             'align' => 'right'
         );
