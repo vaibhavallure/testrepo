@@ -20,6 +20,7 @@
  */
 class Studioforty9_Recaptcha_Block_Explicit extends Mage_Core_Block_Template
 {
+ 
     protected $_languages = array(
         'ar_DZ|ar_SA|ar_KW|ar_MA|ar_EG|az_AZ|' => 'ar',
         'bg_BG' => 'bg',

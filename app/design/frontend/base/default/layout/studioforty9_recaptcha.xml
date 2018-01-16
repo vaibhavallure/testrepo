@@ -73,5 +73,11 @@
 	            </reference>
 			</reference>
 	</wishlist_index_share>
+	<appointments_index_index>
+	<update handle = "default_app" /> 
+        <reference name="appointments_signin_register">
+            <block type="studioforty9_recaptcha/explicit" name="studioforty9.recaptcha.explicit" template="studioforty9/recaptcha/explicit.phtml"/>
+        </reference>
+    </appointments_index_index>
 	    
 </layout>
