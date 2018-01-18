@@ -139,6 +139,11 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     
     public function saveAction ()
     {
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+    
     	$post_data = $this->getRequest()->getPost();
     	
     	$embeded = $this->getRequest()->getParam('embedded');
@@ -166,6 +171,9 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     		        if(empty($post_data['app_date']))
     		            $post_data['app_date']=date('m/d/Y' ,strtotime($old_appointment->getAppointmentStart()));
     		    }
+    		    
+    		   // http://www.geoplugin.net/php.gp?ip=219.91.251.70
+    		    $post_data['ip']= $this->get_client_ip();
     			 $post_data['appointment_start'] = $post_data['app_date']." ". $post_data['appointment_start'];
     			 $post_data['appointment_start'] = strtotime($post_data['appointment_start'].":00");
     			 $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
@@ -827,5 +835,21 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     	$result['schedule'] = $schedule;
     	 
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+    function get_client_ip()
+    {
+        if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
+        {
+            $ip=$_SERVER['HTTP_CLIENT_IP'];
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
+        {
+            $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        else
+        {
+            $ip=$_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
     }
 }

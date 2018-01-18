@@ -41,6 +41,11 @@ class Ecp_Contactus_IndexController extends Mage_Core_Controller_Front_Action
     }
     
     public function sendMailAction(){
+      
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+            return;
+        }
         $response = array();
         if ($data = $this->getRequest()->getParams()) {
             $response['success'] = false;
