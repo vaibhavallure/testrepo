@@ -139,6 +139,11 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     
     public function saveAction ()
     {
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+        
     	$post_data = $this->getRequest()->getPost();
     	
     	$embeded = $this->getRequest()->getParam('embedded');
