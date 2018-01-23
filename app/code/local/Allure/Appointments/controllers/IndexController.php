@@ -144,6 +144,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             return;
         }
     
+    
     	$post_data = $this->getRequest()->getPost();
     	
     	$embeded = $this->getRequest()->getParam('embedded');
