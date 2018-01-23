@@ -11,4 +11,22 @@
 <?php if ($this->isEnabled() && !$this->isLoaded()) : ?>
 <!-- Apple Pay Async Script -->
 <script async='async' type='text/javascript' src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'allure/applepay.js?ts='.now(); ?>'></script>
+<div class="applepay-popup" id="applepay-popup">
+	<div class="applepay-popup-container">Hey<br/></div>
+</div>
+<<style>
+<!--
+
+div#applepay-popup {
+	min-height: 200px;
+	background-color: white;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: -2000px;
+	z-index: 9999999999;
+	transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+}
+-->
+</style>
 <?php endif; ?>

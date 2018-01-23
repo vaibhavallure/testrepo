@@ -87,6 +87,18 @@ ul#payment_form_applepay {
     background-color: white;
 }
 
+div#applepay-popup {
+	min-height: 200px;
+	background-color: white;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: -2000px;
+	z-index: 9999999999;
+	transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+}
+
+
 /* Apple Pay */
 @supports (-webkit-appearance: -apple-pay-button) {
     
