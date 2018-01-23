@@ -32,7 +32,6 @@ class Studioforty9_Recaptcha_Model_Source_Routes
         $routes->add('wishlist_index_share', Mage::helper('studioforty9_recaptcha')->__('Share My Account Wishlist Email'));
         $routes->add('myaccount_index_index', Mage::helper('studioforty9_recaptcha')->__('Share Wishlist Email'));
         $routes->add('contacts_index_index', Mage::helper('studioforty9_recaptcha')->__('Contact Form'));
-        $routes->add('appointments_index_index', Mage::helper('studioforty9_recaptcha')->__('Appointment Booking'));
         $routes->add('review_product', Mage::helper('studioforty9_recaptcha')->__('Product Review Form'));
         $routes->add('customer_account_create', Mage::helper('studioforty9_recaptcha')->__('Account Registration Form'));
         $routes->add('sendfriend_product_send', Mage::helper('studioforty9_recaptcha')->__('Send to Friend Form'));
