@@ -481,15 +481,15 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     } //End of New Piearcer
                     
                     Mage::getSingleton("core/session")->setData('appointment_submitted',$model);
-                    $this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+                    $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
                     return;
                 } catch (Exception $e) {
                     Mage::getSingleton("core/session")->addError($e->getMessage());
-                    $this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+                    $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
                     return;
                 }
             }
-            $this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+            $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
     }
     
     /* Create the customer by bhagya*/
