@@ -187,7 +187,7 @@ class Allure_Teamwork_Model_Observer{
         $latestItemId = $_collection->getLastItem()->getLastId();
         $count=$latestItemId;
         $start = $_collection->getLastItem()->getId();
-        $end = $start + 300;
+        $end = $start + 400;
         
         $collection = Mage::getModel("allure_teamwork/teamwork")->getCollection()
             ->addFieldToFilter('id', array(
