@@ -4,5 +4,4 @@ class Ebizmarts_BakerlooPayment_Model_Cash extends Ebizmarts_BakerlooPayment_Mod
 {
 
     protected $_code  = "bakerloo_cash";
-    
 }

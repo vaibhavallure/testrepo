@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ebizmarts_BakerlooLoyalty>
-            <version>0.0.1</version>
+            <version>1.0.0</version>
         </Ebizmarts_BakerlooLoyalty>
     </modules>
     <global>
@@ -22,6 +22,25 @@
                 </rewrite>
             </salesrule>
         </models>
+        <events>
+            <pos_cart_data_return_before>
+                <observers>
+                    <bakerloo_loyalty_cart_data>
+                        <type>model</type>
+                        <class>bakerloo_loyalty/observer</class>
+                        <method>cartDataReturnBefore</method>
+                    </bakerloo_loyalty_cart_data>
+                </observers>
+            </pos_cart_data_return_before>
+            <sales_order_place_before>
+                <observers>
+                    <bakerloo_loyalty_order_place_before>
+                        <class>bakerloo_loyalty/observer</class>
+                        <method>awSessionRefresh</method>
+                    </bakerloo_loyalty_order_place_before>
+                </observers>
+            </sales_order_place_before>
+        </events>
     </global>
     <default>
         <bakerloo_loyalty>

@@ -242,6 +242,7 @@ class Ebizmarts_BakerlooRestful_Model_OrderManagement
             $this->updateBakerlooOrder($order, $payload, $this->_bakerlooOrder->getId());
         }
 
+        $this->_salesHelper->clearSessions();
         return $returnData;
     }
 
