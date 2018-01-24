@@ -1378,4 +1378,63 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         ->getData();
         return $collection;
     }
+    public function exportAction(){
+        $id=Mage::app()->getRequest()->getParam('id');
+        $helper = Mage::helper('inventory');
+        if($id && isset($id))
+        try {
+           
+            $csvFile = 'purchaseorder_'.$id;
+            
+            header('Content-Disposition: attachment; filename='.$csvFile.'.csv');
+            header('Content-type: text/csv');
+            header('Pragma: no-cache');
+            header('Expires: 0');
+          
+            $file = fopen('php://output', 'w');
+            
+            fputcsv($file, array('ID', 'NAME','COLOR', 'SKU', 'VENDOR SKU', 'ORDERED QTY','VMT COMMENT','REMAINING QTY','EXPECTED SHIP 
+                    DATE','VENDOR COMMENT'));
+            $data = array();
+            $order=Mage::getModel('inventory/purchaseorder')->load(id);
+            $collection=Mage::getModel('inventory/orderitems')->getCollection()
+            ->addFieldToFilter("po_id",$id);
+            $productModel = Mage::getModel('catalog/product');
+            $attr = $productModel->getResource()->getAttribute("metal_color");
+            foreach ($collection as $_product){
+                
+                if(!$_product->getIsCustom())
+                    $product = Mage::getModel ( 'catalog/product' )->setStoreId($order->getStockId())->load ($_product->getProductId());
+                else
+                    $product = Mage::getModel ( 'inventory/customitem' )->load ($_product->getProductId());
+                    
+                $productId=$product->getId();
+                $name=$product->getName();
+                $sku=$product->getSku();
+                $vendorSku=$_product->getVendorSku();
+                $orderedQty=$_product->getRequestedQty();
+                $vmtComment=$_product->getAdminComment();
+               // $shippedQty=$_product->getProposedQty();
+                $remainingQty=$_product->getRemainingQty();
+                $shipDate=$_product->getProposedDeliveryDate();
+                $vendorComment=$_product->getVendorComment();
+                $color_label='';
+                if ($attr->usesSource()) {
+                    $color_label = $attr->getSource()->getOptionText($product->getMetalColor());
+                }
+            
+                $data[]=array($productId,$name,$color_label,$sku,$vendorSku,$orderedQty,$vmtComment,$remainingQty,$shipDate,$vendorComment);
+            }
+            foreach ($data as $row)
+            {
+                fputcsv($file, $row);
+            }
+            
+            
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+        }
+        
+       // $this->_redirect('*/*/orders');
+    }
 }

@@ -31,12 +31,13 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         	$subCollection = Mage::getModel('inventory/orderitems')->getCollection()->addFieldToSelect('po_id');
         	$subCollection->getSelect()->joinLeft('catalog_product_entity', 'catalog_product_entity.entity_id = main_table.product_id', array('sku'));
         	$subCollection->addFieldToFilter(
-        			array('admin_comment', 'vendor_comment','ref_no','sku'),
+        			array('admin_comment', 'vendor_comment','ref_no','sku','vendor_sku'),
         			array(
         					array('like'=>'%'.$_GET['search'].'%'),
         					array('like'=>'%'.$_GET['search'].'%'),
         					array('like'=>'%'.$_GET['search'].'%'),
-        					array('like'=>'%'.$_GET['search'].'%')
+        					array('like'=>'%'.$_GET['search'].'%'),
+        			        array('like'=>'%'.$_GET['search'].'%')
         			)
         			);
         	$subCollection->getSelect()->group('main_table.po_id');
@@ -137,6 +138,16 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         				'renderer'  => 'Allure_Inventory_Block_Adminhtml_Purchaseorder_Renderer_Action',// THIS IS WHAT THIS POST IS ALL ABOUT
         		));
         */
+        
+       
+        $this->addColumn('export',
+        array(
+        'header'=> Mage::helper('catalog')->__('Export'),
+        'index' => 'po_id',
+        'is_system' => true,
+        'renderer'  => 'Allure_Inventory_Block_Adminhtml_Purchaseorder_Renderer_Export',// THIS IS WHAT THIS POST IS ALL ABOUT
+        ));
+       
         $this->addColumn('lastupdatedby', array(
             'header'    => Mage::helper('reports')->__('Last Updated By'),
             'align'     =>'left',
