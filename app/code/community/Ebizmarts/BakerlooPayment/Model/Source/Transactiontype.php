@@ -3,11 +3,14 @@
 class Ebizmarts_BakerlooPayment_Model_Source_Transactiontype {
 
     private function _getTypes() {
-        return array(
-            'cash'         => Mage::helper('bakerloo_payment')->__('Cash'),
-            'credit_card'  => Mage::helper('bakerloo_payment')->__('Credit Card'),
-            'debit_card'   => Mage::helper('bakerloo_payment')->__('Debit Card'),
-        );
+        $helper = Mage::helper('bakerloo_payment');
+        
+        $types = Mage::getConfig()->getNode('default/payment/bakerloo_pay_at_till/types')->asArray();
+        foreach ($types as $k => $v) {
+            $types[$k] = $helper->__($v);            
+        }
+        
+        return $types;
     }
 
     public function toOptionArray() {

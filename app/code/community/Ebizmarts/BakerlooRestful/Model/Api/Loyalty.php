@@ -2,7 +2,7 @@
 
 class Ebizmarts_BakerlooRestful_Model_Api_Loyalty extends Ebizmarts_BakerlooRestful_Model_Api_Api
 {
-
+    const TYPE_LOYALTY  = 'loyalty';
     protected $_model   = "bakerloo_restful/integrationDispatcher";
 
     public function get()
@@ -35,11 +35,11 @@ class Ebizmarts_BakerlooRestful_Model_Api_Loyalty extends Ebizmarts_BakerlooRest
         $data = $this->getJsonPayload(true);
 
         $loyalty = Mage::getModel(
-            'bakerloo_restful/integrationDispatcher',
-            array('integration_type' => 'loyalty')
+            $this->_model,
+            array('integration_type' => self::TYPE_LOYALTY)
         );
 
-        $h = Mage::helper('bakerloo_restful/sales');
+        $h = $this->getHelper('bakerloo_restful/sales');
 
         $quote = $h->buildQuote($this->getStoreId(), $data, false);
 
@@ -83,8 +83,8 @@ class Ebizmarts_BakerlooRestful_Model_Api_Loyalty extends Ebizmarts_BakerlooRest
         }
 
         $loyalty = Mage::getModel(
-            'bakerloo_restful/integrationDispatcher',
-            array('integration_type' => 'loyalty', 'customer' => $customer)
+            $this->_model,
+            array('integration_type' => self::TYPE_LOYALTY, 'customer' => $customer)
         );
 
         $options = $loyalty->productRedeemOptions($customer, $product);
@@ -108,19 +108,20 @@ class Ebizmarts_BakerlooRestful_Model_Api_Loyalty extends Ebizmarts_BakerlooRest
 
         $data     = $this->getJsonPayload(true);
 
-        $customer = Mage::getModel('customer/customer')->load($data['customer']['customer_id']);
+        $customer = $this->getModel('customer/customer')->load($data['customer']['customer_id']);
 
-        $loyalty  = Mage::getModel(
-            'bakerloo_restful/integrationDispatcher',
+        $loyalty  = $this->getModel(
+            $this->_model,
+            false,
             array(
-                'integration_type'  => 'loyalty',
+                'integration_type'  => self::TYPE_LOYALTY,
                 'website_id'        => Mage::app()->getStore()->getWebsiteId(),
                 'customer'          => $customer
             )
         );
 
 
-        $h = Mage::helper('bakerloo_restful/sales');
+        $h = $this->getHelper('bakerloo_restful/sales');
 
         $quote = $h->buildQuote($this->getStoreId(), $data, false);
 
@@ -148,9 +149,11 @@ class Ebizmarts_BakerlooRestful_Model_Api_Loyalty extends Ebizmarts_BakerlooRest
 
         $data = $this->getJsonPayload(true);
 
-        $h = Mage::helper('bakerloo_restful/sales');
+        $h = $this->getHelper('bakerloo_restful/sales');
 
         $quote = $h->buildQuote($this->getStoreId(), $data, false);
+
+        $quote->setTotalsCollectedFlag(false)->collectTotals();
 
         $cartData = $h->getCartData($quote, false, true);
 
