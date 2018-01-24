@@ -79,6 +79,35 @@ $allow_change_state = Mage::getModel('iwd_ordermanager/order')->isAllowChangeOrd
                 </select>
             </td>
         </tr>
+        
+        <?php //allure code start?>
+        <tr>
+        	<td class="label">
+        		<label for="state"><?php echo $helper->__("Order Date"); ?></label>
+        	</td>
+        	<td class="value">
+        	<?php 
+                	$form = new Varien_Data_Form(array(
+                	    'id'        => 'edit_form',
+                	));
+                	$element = new Varien_Data_Form_Element_Date(
+                	    array(
+                	        'name' => 'created_at',
+                	        'label' => Mage::helper('adminhtml')->__('Date'),
+                	        'tabindex' => 1,
+                	        'image' => $this->getSkinUrl('images/grid-cal.gif'),
+                	        'format' => Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT),
+                	        'value' => $order->getCreatedAt()//Mage::getModel('core/date')->date('m/d/Y')
+                	    )
+                	);
+                	$element->setForm($form);
+                	$element->setId('order_date');
+                	echo $element->getElementHtml();
+                	?>
+        	</td>
+        </tr>
+        <?php //allure code end?>
+        
         </tbody>
     </table>
 

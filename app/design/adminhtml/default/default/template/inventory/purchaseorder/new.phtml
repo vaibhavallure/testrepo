@@ -38,7 +38,6 @@
 <div class="prod-data">
 
 	<table class="iventory-product table" style="width: 100%">
-		<th><?php echo $helper->__('SKU')?></th>
 		<th><?php echo $helper->__('Image')?></th>
 		<th><?php echo $helper->__('PRODUCT NAME')?></th>
         <th><?php echo $helper->__('Current Qty')?></th>
@@ -61,19 +60,18 @@
 	    	$product = Mage::getModel ( 'catalog/product' )->setStoreId($stockId)->load ( $_product->getId() );
 	    ?>
 			    <tr id="inventory-row-<?php echo $_product->getId(); ?>" class="inventory_tr">
-					<td><?php echo $_product->getSku();?></td>
+
 					<td><img style="width: 50px; height: 50px;" class="product_inventory_thumbnail" src="<?php  echo  Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(75);?>"/></td>
-					<td><?php echo $_product->getName();?></td>
-					<?php //echo $helper->getVendorName($_product->getPrimaryVendor());?>
-                   
-						
-					<?php 
-						$inven=Mage::getModel('cataloginventory/stock_item')
-								->loadByProductAndStock($_product,$stockId)
-					?>
+					
+					<td style="padding-left:20px;text-align:left">
+						<p><?php echo $product->getName();?></p>
+						<p><strong>SKU:</strong><?php echo $product->getSku();?></p>
+				    </td>
+				
+					
 					<td>
 						<div>
-							<label><?php echo round($inven->getQty())?></label>
+							<label><?php echo round($_product->getQty())?></label>
 						</div>
 						
 				   </td>
@@ -112,7 +110,7 @@
 					</td>
 					<td>
 						<div>
-							<input id="<?php echo $product->getId()?>" type="checkbox" name="inclide"/>
+							<input id="<?php echo $product->getId()?>" type="checkbox" class="include_items" name="inclide"/>
 							<br/>
 							<?php $items=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('product_id',$product->getId())
 							->addFieldToFilter('is_custom',0)->addFieldToFilter('stock_id',$stockId)->setOrder('po_id','DESC');

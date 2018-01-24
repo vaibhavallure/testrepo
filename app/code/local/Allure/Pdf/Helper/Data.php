@@ -43,6 +43,44 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
     }
     
     /**
+     * 
+     */
+    public function getOrderItemStockStatus($item , $order,$feed = 35){
+        $message   = $this->getOrderSalesProductStockStatus($item , $order);
+        $flag      = true;
+        if(!empty($message)){
+            $flag = true;
+        }
+        $lines[][] = array(
+            'text'  => $message,
+            'font' => 'italic',
+            'feed' => $feed
+        );
+        
+        $lineBlock = array(
+            'lines'  => $lines,
+            'height' => 20
+        );
+        
+        return array("is_show"=>$flag , "line_block" => $lineBlock);
+    }
+    
+    public function getOrderSalesProductStockStatus($item , $order){
+        $storeId = $order->getStoreId();
+        $message = "";
+        if($storeId == 1){
+            $backTimeMsg = $item->getBackorderTime();
+            if (!empty($backTimeMsg)) {
+                $message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$backTimeMsg.".";
+            } else {
+                $message = " (In Stock: Ships Within 24 hours (Mon-Fri).)";
+            }
+        }
+        return $message;
+    }
+    
+    
+    /**
      * get product stock status message
      */
     public function getSalesProductStockStatus($item , $order){
@@ -52,7 +90,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         $product->setStoreId($storeId)
                 ->load($product->getIdBySku($sku));
         $message = "";
-        if($storeId == 1){
+        /*if($storeId == 1){
             if(!empty($product)){
                 $store      = Mage::getModel('core/store')->load($storeId);
                 $websiteId  = $store->getWebsiteId();
@@ -78,7 +116,17 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
                     $message = "( ".$orderItem->getBackorderTime()." )";
                 }
             }
+        }*/
+        
+        if($storeId == 1){
+            $backTimeMsg = $item->getBackorderTime();
+            if (!empty($backTimeMsg)) {
+                $message = $backTimeMsg;
+            } else {
+                $message = "";
+            }
         }
+        
         return $message;
     }
     
@@ -87,7 +135,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function addSignatureRequiredToPdf($page ,$top ,$order){
         $actionName = Mage::app()->getRequest()->getActionName();
-        if($actionName == "pdfdocs"){
+        if($actionName == "pdfdocs" || $actionName="pdforders"){
             $signature = ($order->getNoSignatureDelivery()) ? "Yes" : "No";
             $page->drawText(
                 Mage::helper('sales')->__('Is Signature Required : ') . $signature, 400, ($top -= 30), 'UTF-8'
@@ -95,11 +143,16 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
     
-    public function getSalesOrderItemSpecialInstruction($item,$feed = 35){
+    public function getSalesOrderItemSpecialInstruction($item,$feed = 35,$flag1=false){
         try{
             $flag = false;
             $orderItemId = $item->getOrderItemId();
+            $actionName = Mage::app()->getRequest()->getActionName();
             $orderItem = $item->getOrderItem();//Mage::getModel("sales/order_item")->load($orderItemId);
+            if($flag1){
+                $orderItem = $item;
+            }
+            
             $giftHelper = Mage::helper('giftmessage/message');
             if($giftHelper->getIsMessagesAvailable('order_item', $orderItem) && $orderItem->getGiftMessageId() && $giftHelper->getEscapedGiftMessage($orderItem)!=''){
                 $message = $giftHelper->getEscapedGiftMessage($orderItem);
@@ -135,6 +188,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getOrderGiftMessage($order){
         try{
+            Mage::log($order->getId(),Zend_log::DEBUG,'abc',true);
             $giftHelper = Mage::helper('giftmessage/message');
             if($giftHelper->getIsMessagesAvailable('order', $order) && $order->getGiftMessageId()){
                 $_giftMessage = $giftHelper->getGiftMessageForEntity($order);

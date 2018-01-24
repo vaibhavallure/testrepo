@@ -8,7 +8,7 @@
                 <?php foreach ($_orders as $_order): ?>
                 <tr>
                     <td style="padding-left:10px;">
-                    	<a class="mt-oder-num" href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
+                    	<a class="mt-oder-num" onclick="loadOpenOrderView(this)" data-order-id="<?php echo $_order->getId()?>" data-href="<?php echo $this->getViewUrl($_order).'#openorders' ?>">
                     		<?php echo $_order->getRealOrderId() ?>
                     	</a>
                     </td>

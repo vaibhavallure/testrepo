@@ -77,8 +77,8 @@ $parentVal = ($isCustomOptions)?1:0;
                 <?php // echo $this->getChildHtml('description') ?>
                 <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_product->getShortDescription(), 'short description') ?>
             </div>
-            
-            <div class="product-special-instructions">
+             <?php if ($_product->getShowSpecialInstruction()):?>
+           	 <div class="product-special-instructions">
 					<div class="special-instruction-label">
 						<label>Special Instructions:</label>
 					</div>
@@ -87,7 +87,8 @@ $parentVal = ($isCustomOptions)?1:0;
 						<br/>
 						(Special requests might delay your order due to production time)
 					</div>
-				</div>
+			</div>
+			<?php endif;?>
 
                 <?php if (!$this->hasOptions()): ?>
                     <div class="add-to-box">
@@ -159,7 +160,7 @@ $parentVal = ($isCustomOptions)?1:0;
                                 return false;
                             }
                             var pid = jQuery('#pid-hidden').val();
-                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>cpid/<?php echo $_product->getId()?>/product/'+pid +'/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
+                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>product/<?php echo $_product->getId()?>/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
                             
                         }
                     </script>

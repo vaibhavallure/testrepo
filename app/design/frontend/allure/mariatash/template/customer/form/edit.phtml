@@ -41,6 +41,8 @@
 					<div class="input-box">
 						<input type="text" name="email" id="email" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry validate-email" />
 					</div>
+					<?php //allure temp field?>
+					<input type="hidden" style="display: none;" value="0" id="is_change" name="is_change" />
 				</div>
             </li>
         <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
@@ -101,12 +103,13 @@
             $('current_password').addClassName('required-entry');
             $('password').addClassName('required-entry');
             $('confirmation').addClassName('required-entry');
-
+            jQuery('#is_change').val(1);
         }else{
             $('current_password').up(4).hide();
             $('current_password').removeClassName('required-entry');
             $('password').removeClassName('required-entry');
             $('confirmation').removeClassName('required-entry');
+            jQuery('#is_change').val(0);
         }
     }
     <?php if($this->getCustomer()->getChangePassword()): ?>

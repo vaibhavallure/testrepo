@@ -81,7 +81,7 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
         						array('name' => 'value')
         						);
         $collection->getSelect()->group('main_table.id');
-        $collection->getSelect()->order('main_table.updated_at DESC');
+        $collection->getSelect()->order('main_table.id DESC');
       
        
       /*   echo  $collection->getSelect();
@@ -138,6 +138,16 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
         		'index'     =>'id',
         		'renderer'  => 'inventory/adminhtml_reports_stockreceive_renderer_total'
         ));
+        $this->addColumn('cost', array(
+            'header'    =>Mage::helper('reports')->__('Cost'),
+            'sortable'  =>false,
+            'index'     =>'cost'
+        ));
+        $this->addColumn('total', array(
+            'header'    =>Mage::helper('reports')->__('Total Cost'),
+            'sortable'  =>false,
+            'renderer'  => 'inventory/adminhtml_reports_stockreceive_renderer_totalcost'
+        ));
         
         
         $this->addColumn('username', array(
@@ -163,7 +173,12 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
         		"type" =>   "datetime",
         ));
         
-     
+        $this->addColumn('po_id', array(
+            'header'    =>Mage::helper('reports')->__('Reference PO'),
+            'sortable'  =>false,
+            'index'     =>'po_id',
+            'renderer'  => 'inventory/adminhtml_reports_stockreceive_renderer_po'
+        ));
         $this->addExportType('*/*/exportDownloadsCsv', Mage::helper('reports')->__('CSV'));
         $this->addExportType('*/*/exportDownloadsExcel', Mage::helper('reports')->__('Excel'));
 

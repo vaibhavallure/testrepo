@@ -28,7 +28,7 @@
 <?php $_items = $this->getItems(); ?>
 <div id="order-giftmessage">
 <div class="clear"></div>
-<div class="giftmessage-order-create box-left">
+<div class="giftmessage-order-create">
     <div class="entry-edit">
         <div><?php echo Mage::helper('sales')->__('Gift Message for the Entire Order') ?></div><br />
         <div class="fieldset">
@@ -44,6 +44,12 @@
         </div>
     </div>
 </div>
+<style>
+#order-giftmessage textarea{
+    height: 12em ! important;
+}
+</style>
+
 <script type="text/javascript">
     order.giftmessageFieldsBind('order-giftmessage');
 </script>

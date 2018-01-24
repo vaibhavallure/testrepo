@@ -76,27 +76,7 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
 
     public function isQuoteContainOutOfStockProducts ()
     {
-        $isBackorderAvailable = false;
-        $quote = $this->getQuote();
-        $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
-        foreach ($qouteItems as $item) :
-            $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
-                ->getQty();
-            
-            $stock_qty = intval($item->getProduct()
-                ->getStockItem()
-                ->getQty());
-            if ($stock_qty < $item->getQty() && $item->getProduct()
-                ->getStockItem()
-                ->getIsInStock()) :
-                // if($productInventoryQty<=0):
-                $isBackorderAvailable = true;
-                break;
-	    	endif;
-            
-        endforeach
-        ;
-        return $isBackorderAvailable;
+        return $this->isQuoteContainsBackorderProduct();
     }
 
     public function getFedexFreeShippingMethod ()
@@ -114,5 +94,29 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
             return true;
         else
             return false;
+    }
+    
+    /**
+     * return true|false if quote contains out of stock product
+     */
+    public function isQuoteContainsBackorderProduct(){
+        $isBackOrderProduct = false;
+        $storeId            = Mage::app()->getStore()->getStoreId();
+        $quote              = Mage::getSingleton("checkout/session")->getQuote();
+        $qouteItems         = $quote->getAllVisibleItems();
+        foreach ($qouteItems as $item){
+            $sku = $item->getSku();
+            $_product = Mage::getModel('catalog/product')
+                            ->setStoreId($storeId)
+                            ->loadByAttribute('sku',$sku);
+           $stock = Mage::getModel('cataloginventory/stock_item')
+            ->loadByProduct($_product);
+           $stock_qty=$stock->getQty();
+           if ($stock_qty < $item->getQty() && $stock->getManageStock()==1) {
+               $isBackOrderProduct = true;
+               break;
+           }
+        }
+        return $isBackOrderProduct;
     }
 }
