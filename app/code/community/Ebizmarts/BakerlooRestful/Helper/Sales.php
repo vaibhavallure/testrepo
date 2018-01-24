@@ -3,6 +3,7 @@
 class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
 {
     const CART_ITEM_RETURN_BEFORE = 'pos_cart_item_return_before';
+    const CART_DATA_RETURN_BEFORE = 'pos_cart_data_return_before';
 
     /** @var Mage_Sales_Model_Quote  */
     private $_quote         = null;
@@ -118,13 +119,6 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
             $this->getQuote()
                 ->setCustomer($customer)
                 ->setPasswordHash($customer->encryptPassword($customer->getPassword()));
-
-            /*Fix for TBT_Rewards, points not saved to customer otherwise.*/
-//            if ($canUseLoyalty && Mage::helper('bakerloo_loyalty')->isSweetTooth($this->_loyalty)) {
-//                Mage::getSingleton('customer/session')->loginById($customerId);
-//                $this->getQuote()->save();
-//            }
-            /*Fix for TBT_Rewards, points not saved to customer otherwise.*/
         }
 
         if ($data['shipping'] == 'bakerloo_ship_to_store_bakerloo_ship_to_store') {
@@ -165,9 +159,9 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         
         /* prevent totals from collecting twice if using Magestore Extensions */
         if ((Mage::helper('bakerloo_gifting')->getIntegrationFromConfig() == 'Magestore_Giftvoucher' and !empty($giftCards))
-            || $data['payment']['method'] == 'bakerloo_magestorecredit'
+            || $data['payment']['method'] == 'bakerloo_magestorecredit' || !empty($data['loyalty'])
         ) {
-            $quote->setTotalsCollectedFlag(true);
+            $this->getQuote()->setTotalsCollectedFlag(true);
         }
         
         if ($data['total_amount'] != 0) {
@@ -177,8 +171,6 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
             $this->setFreePaymentMethodToQuote(!empty($giftCards));
         }
 
-        //Commented on January, 6 2015 to fix issue with coupons applied twice on bundle products.
-        //$this->getQuote()->collectTotals()->save();
         $this->getQuote()->save();
 
         //If coupon was provided and does not validate, throw error.
@@ -250,15 +242,17 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
                     }
 
                     $quoteItem = $this->getQuote()->addProduct($product, new Varien_Object($buyInfo));
+
+                    if (is_string($quoteItem) or is_null($quoteItem)) {
+                        $this->throwBuildQuoteException($quoteItem . ' Product ID: ' . $_product['product_id']);
+                    }
+
                     //Rewards integrations
                     $this->applyRewardsToQuoteItem($_product, $product, $quoteItem);
 
+
                 } catch (Exception $qex) {
                     $this->throwBuildQuoteException("An error occurred, Product SKU: {$product->getSku()}. Error Message: {$qex->getMessage()}");
-                }
-
-                if (is_string($quoteItem)) {
-                    $this->throwBuildQuoteException($quoteItem . ' Product ID: ' . $_product['product_id']);
                 }
 
                 if (isset($_product['guid'])) {
@@ -678,14 +672,14 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         
         $cartData = array(
             'quote_currency_code'         => $quote->getQuoteCurrencyCode(),
-            'grand_total'                 => $quote->getGrandTotal(),
-            'base_grand_total'            => $quote->getBaseGrandTotal(),
-            'sub_total'                   => $quote->getSubtotal(),
-            'base_subtotal'               => $quote->getBaseSubtotal(),
-            'subtotal_with_discount'      => $quote->getSubtotalWithDiscount(),
-            'base_subtotal_with_discount' => $quote->getBaseSubtotalWithDiscount(),
-            'discount'                    => $quote->getSubtotal() - $quote->getSubtotalWithDiscount(),
-            'base_discount'               => $quote->getBaseSubtotal() - $quote->getBaseSubtotalWithDiscount(),
+            'grand_total'                 => (double)$quote->getGrandTotal(),
+            'base_grand_total'            => (double)$quote->getBaseGrandTotal(),
+            'sub_total'                   => (double)$quote->getSubtotal(),
+            'base_subtotal'               => (double)$quote->getBaseSubtotal(),
+            'subtotal_with_discount'      => (double)$quote->getSubtotalWithDiscount(),
+            'base_subtotal_with_discount' => (double)$quote->getBaseSubtotalWithDiscount(),
+            'discount'                    => (double)$quote->getSubtotal() - $quote->getSubtotalWithDiscount(),
+            'base_discount'               => (double)$quote->getBaseSubtotal() - $quote->getBaseSubtotalWithDiscount(),
             'total_tax'                   => 0,
             'items'                       => array()
         );
@@ -748,10 +742,6 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
         $applyTaxAfterDiscount = (bool)(int)Mage::getStoreConfig('tax/calculation/apply_after_discount');
         $discPricesInclTax     = (bool)(int)Mage::getStoreConfig('tax/calculation/discount_tax');
 
-        if ($checkAppliedRules) {
-            $applyTaxAfterDiscount = !$checkAppliedRules;
-        }
-
         $quoteItems = $quote->getItemsCollection(false)->getItems();
         $quoteItemTaxes = $quote->getTaxesForItems();
         $childrenAux = $this->getChildDiscounts($quoteItems);
@@ -768,7 +758,11 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
 
         $cartData['items'] = array_values($cartData['items']);
 
-        return $cartData;
+        $cartData = new Varien_Object($cartData);
+
+        Mage::dispatchEvent(self::CART_DATA_RETURN_BEFORE, array('quote' => $quote, 'cart_data' => $cartData));
+
+        return $cartData->getData();
     }
 
     public function getChildDiscounts($quoteItems)
@@ -1067,18 +1061,11 @@ class Ebizmarts_BakerlooRestful_Helper_Sales extends Mage_Core_Helper_Abstract
      */
     protected function setRewardsToQuote($rules)
     {
-        if (empty($rules))
+        if (empty($rules) or is_null($this->_loyalty)) {
             return;
-
-        $applied = Mage::getModel('rewards/salesrule_list_applied')->initQuote($this->getQuote());
-
-        foreach ($rules as $rule) {
-            if ($rule['points_amount'] > 0) {
-                $this->getQuote()->setPointsSpending($rule['points_amount']);
-            }
-
-            $applied->add($rule['rule_id'])->saveToQuote($this->getQuote());
         }
+
+        $this->_loyalty->applyRewardsToQuote($this->getQuote(), $rules);
     }
 
     /**

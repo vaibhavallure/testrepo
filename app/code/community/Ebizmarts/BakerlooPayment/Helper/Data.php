@@ -89,7 +89,7 @@ class Ebizmarts_BakerlooPayment_Helper_Data extends Mage_Core_Helper_Abstract
                     //Transaction types
                     $tTypes = $method->getConfigData('transaction_types', $store);
                     if($tTypes) {
-                        $typeOptions = Mage::getModel('bakerloo_payment/source_transactionType')->toOption();
+                        $typeOptions = Mage::getModel('bakerloo_payment/source_transactiontype')->toOption();
                         $tTypes = explode(',', $tTypes);
 
                         foreach($tTypes as $tCode)

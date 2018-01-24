@@ -173,4 +173,102 @@ class Allure_Teamwork_Model_Observer{
         $rbrace;
         return strtoupper($guidv4);
     }
+    
+    public function updateCustomers(){
+        $_url         = "https://api.teamworksvs.com/externalapi3/customers/update";
+        $_accessToken = "bWFyaWF0dGVzdDIgNTYyOTQ5OTUzNDIxMzEyMCB1ZnlQM3VIM05nN1g1WTJYODdaWk5PSk91SjF1dXEzUw==";
+        
+        $teamwoek_log_file = "teamwork_mag_customer_3_update.log";
+        
+        $_collection = Mage::getModel('allure_teamwork/teamwork')->getCollection();
+        $_collection->getSelect()
+        ->where("last_id = (select max(last_id) from allure_teamwork_customer)");
+        
+        $latestItemId = $_collection->getLastItem()->getLastId();
+        $count=$latestItemId;
+        $start = $_collection->getLastItem()->getId();
+        $end = $start + 400;
+        
+        $collection = Mage::getModel("allure_teamwork/teamwork")->getCollection()
+            ->addFieldToFilter('id', array(
+            'gteq' => $start
+        ))
+            ->addFieldToFilter('id', array(
+            'lteq' => $end
+        ))
+     /*        ->addFieldToFilter('is_counterpoint_cust', array(
+            'eq' => 1
+        )) */
+            ->addFieldToFilter('teamwork_customer_id', array(
+            'notnull' => true
+        ));
+        foreach ($collection as $teamwork) {
+            try {
+                $count ++;
+                $email = $teamwork->getEmail();
+                if (! empty($email)) {
+                    $request = array();
+                    $request['customerID'] = $teamwork->getTeamworkCustomerId();
+                    
+                    $magentoCustomerId = $teamwork->getCustomerId();
+                    if ($magentoCustomerId != 0) {
+                        $request['magentoID'] = $magentoCustomerId;
+                        $customer = Mage::getModel("customer/customer")->load($magentoCustomerId);
+                        if ($customer->getId()) {
+                            if (! empty($customer->getTaxvat())) {
+                                $request['VATRegistrationNumber'] = $customer->getTaxvat();
+                            }
+                        }
+                    }
+                    
+                    if (! empty($email)) {
+                        $request['email1'] = (object) array(
+                            "email" => $email,
+                            'acceptMarketing' => true
+                        );
+                    }
+                    
+                    $customerNote = $teamwork->getCustomerNote();
+                    if (! empty($customerNote)) {
+                        $request['largeMemo'] = $customerNote;
+                    }
+                    
+                    $counterpntCustNo = $teamwork->getCounterpointCustNo();
+                    $isCounterpointCust = $teamwork->getIsCounterpointCust();
+                    
+                    $request['customText4'] = $counterpntCustNo;
+                    $sendRequest = curl_init($_url);
+                    curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+                    curl_setopt($sendRequest, CURLOPT_HEADER, false);
+                    curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
+                    curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
+                    curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
+                    
+                    curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
+                        "Content-Type: application/json",
+                        "Access-Token: {$_accessToken}"
+                    ));
+                    
+                    $json_arguments = json_encode($request);
+                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+                    $response = curl_exec($sendRequest);
+                    curl_close($sendRequest);
+                    $responseObj = json_decode($response);
+                    echo "<pre>";
+                    // print_r($responseObj);
+                    Mage::log("id-:" . $teamwork->getId() . " email-:" . $email . " updated", Zend_log::DEBUG, 'teamwork_mag_customer_3_update_response.log', true);
+                    Mage::log("id-:" . $teamwork->getId() . " Response-:" . $response, Zend_log::DEBUG, 'teamwork_mag_customer_3_update_response.log', true);
+                    Mage::log("id-:" . $teamwork->getId() . " email-:" . $email . " updated", Zend_log::DEBUG, $teamwoek_log_file, true);
+                    
+                    $model = Mage::getModel('allure_teamwork/teamwork')->load($teamwork->getId());
+                    if ($model->getId()) {
+                        $model->setLastId($count)->save();
+                    }
+                }
+            } catch (Exception $e) {
+                Mage::log("id-:" . $customer->getId() . " email-:" . $email . " == Exception-:" . $e->getMessage(), Zend_log::DEBUG, $teamwoek_log_file, true);
+            }
+        }
+    }
 }
