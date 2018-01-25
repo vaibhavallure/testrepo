@@ -28,6 +28,10 @@
                     	<title>add orignal ticket</title>
                         <acl>allure_counterpoint/order</acl>
                     </addOrignalTicket>
+                    <addCustomer>
+                    	<title>add customer</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </addCustomer>
 			    </methods>
 			</counterpoint_order>
 		</resources>
