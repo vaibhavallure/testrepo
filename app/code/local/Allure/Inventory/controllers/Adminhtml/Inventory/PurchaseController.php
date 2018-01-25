@@ -313,6 +313,16 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                 ->addFieldToFilter('product_id', $product)
                                 ->addFieldToFilter('po_id', $po_id);
                     foreach ($items as $item) {
+                        if(!$item->getIsCustom()){
+                            if($arr['vendor_sku']!=$item->getVendorSku()){
+                                Mage::getResourceSingleton('catalog/product_action')
+                                ->updateAttributes(array($item->getProductId()), array(
+                                    'vendor_item_no' => $arr['vendor_sku']
+                                ), $storeId);
+                                $item->setData('vendor_sku', $arr['vendor_sku']);
+                            }
+                        }
+                        
                         $price=Mage::getModel('catalog/product')->setStoreId($storeId)->load($item->getProductId())->getCost();
                         $totalPrice=$totalPrice+($arr['requested_qty']*$price);
                         
