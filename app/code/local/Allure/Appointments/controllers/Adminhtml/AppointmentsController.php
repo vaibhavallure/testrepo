@@ -103,6 +103,10 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			if($model->getAppStatus() == Allure_Appointments_Model_Appointments::STATUS_REQUEST)
     				$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     			$model->setData('piercer_id',$post_data['appointment_piercer'])->save();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
     
     			/*Email Code*/
     			$toSend = Mage::getStoreConfig("appointments/piercer/send_piercer_email",$storeId);
@@ -204,6 +208,10 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			->setId($this->getRequest()
     					->getParam("id"))
     					->save();
+    			
+    			//add logs
+    		    $helperLogs = $this->getLogsHelper();
+    		    $helperLogs->saveLogs("admin");
     
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Piercer saved sucessfully"));
@@ -238,6 +246,11 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
     			$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_CANCELLED);
     			$model->save();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
+    			
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Appointment was successfully Cancelled"));
     					$this->_redirect("*/*/");
@@ -259,6 +272,11 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
     			$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     			$model->save();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
+    			
     			Mage::getSingleton("adminhtml/session")->addSuccess(
     					Mage::helper("adminhtml")->__("Appointment was successfully Resheduled"));
     			$this->_redirect("*/*/");
@@ -282,6 +300,11 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model->setId($this->getRequest()
     					->getParam("id"))
     					->delete();
+    			
+    		    //add logs
+    		    $helperLogs = $this->getLogsHelper();
+    		    $helperLogs->saveLogs("admin");
+    					
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Piercer was successfully deleted"));
     					$this->_redirect("*/*/");
@@ -421,6 +444,13 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
             $this->_redirect('*/*/print');
         }
         
+    }
+    
+    /**
+     * return logs helper object
+     */
+    private function getLogsHelper(){
+        return Mage::helper("appointments/logs");
     }
     
 }
