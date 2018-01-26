@@ -85,6 +85,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         $this->truncateCart();
 
         $this->cleanQuotes();
+        
+        $this->getOnepage()->initCheckout();
 
         $params = $this->getRequest()->getParams();
 
@@ -128,8 +130,11 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     'quote_id'      => $this->_getQuote()->getId(),
                     'currency'      => $this->_getQuote()->getGlobalCurrencyCode(),
                     'grand_total'   => $this->_getQuote()->getBaseGrandTotal(),
-                    'total'         => $product->getFinalPrice()
+                    'total'         => $product->getFinalPrice(),
+                    //'session'       => $this->_getSession()->getData()
             );
+            
+            $this->_getQuote()->save();
 
             $this->getResponse()->setBody(json_encode($data));
             return;
@@ -141,6 +146,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             Mage::logException($e);
             return;
         }
+        var_dump(Mage::getSingleton('allure_applepay/session')->getData());die;
 
         Mage::log(json_encode($data), Zend_Log::DEBUG, 'applepay.log', true);
     }
@@ -149,11 +155,15 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * save checkout billing address
      */
     public function saveBillingAction() {
-
+        
         if ($this->getRequest()->isPost()) {
-            //            $postData = $this->getRequest()->getPost('billing', array());
-            //            $data = $this->_filterPostData($postData);
             $data = $this->getRequest()->getPost('billing', array());
+            $quoteId = $this->getRequest()->getPost('quote_id', null);
+            
+            $this->_getSession()->setQuoteId($quoteId);
+            $quote = Mage::getModel('sales/quote')->load($quoteId);
+            $this->_getCart()->setQuote($quote);
+            
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
 
             if (isset($data['email'])) {
@@ -182,6 +192,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $result['goto_section'] = 'shipping';
                 }
             }
+            
+            $result['quote'] = $this->getOnepage()->getCheckout()->getData();
 
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
@@ -290,51 +302,44 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      */
     public function saveOrderAction ()
     {
+        
+        if ($this->_expireAjax()) {
+            return;
+        }
+        
         $result = array();
         $_checkoutHelper = Mage::helper('allure_multicheckout');
+        
         try {
-            $requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds();
-            if ($requiredAgreements) {
-                $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
-                $diff = array_diff($requiredAgreements, $postedAgreements);
-                if ($diff) {
-                    $result['success'] = false;
-                    $result['error'] = true;
-                    $result['error_messages'] = $this->__(
-                            'Please agree to all the terms and conditions before placing the order.');
-                    $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-                    return;
-                }
-            }
-
+            
             $data = $this->getRequest()->getPost('payment', array());
-            // Mage::log($data,Zend_log::DEBUG,'abc',true);
+            
             if ($data) {
-                // Mage::log($data,Zend_log::DEBUG,'abc',true);die;
                 $data['checks'] = Mage_Payment_Model_Method_Abstract::CHECK_USE_CHECKOUT |
-                Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_COUNTRY |
-                Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_CURRENCY |
-                Mage_Payment_Model_Method_Abstract::CHECK_ORDER_TOTAL_MIN_MAX |
-                Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL;
-
+                    Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_COUNTRY |
+                    Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_CURRENCY |
+                    Mage_Payment_Model_Method_Abstract::CHECK_ORDER_TOTAL_MIN_MAX |
+                    Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL;
+                
                 if (strtolower($this->getOnepage()->getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP)) {
                     $this->getOnepage()
                     ->getQuote()
                     ->getPayment()
                     ->importData($data);
                 } else {
-                    if (! $this->getOnepage()->getQuoteOrdered()->getIsCheckoutCart())
+                    if (! $this->getOnepage()->getQuoteOrdered()->getIsCheckoutCart()) {
                         $this->getOnepage()
                         ->getQuoteOrdered()
                         ->getPayment()
                         ->importData($data);
-                        // Mage::log($this->getOnepage()->getQuoteOrdered()->getPayment()->getCcNumber(),Zend_log::DEBUG,'abc',true);
-                        if (! $this->getOnepage()->getQuoteBackordered()->getIsCheckoutCart())
-                            $this->getOnepage()
-                            ->getQuoteBackordered()
-                            ->getPayment()
-                            ->importData($data);
-                            // Mage::log($this->getOnepage()->getQuoteBackordered()->getPayment()->getCcNumber(),Zend_log::DEBUG,'abc',true);
+                    }
+                    
+                    if (! $this->getOnepage()->getQuoteBackordered()->getIsCheckoutCart()) {
+                        $this->getOnepage()
+                        ->getQuoteBackordered()
+                        ->getPayment()
+                        ->importData($data);
+                    }
                 }
             }
 
@@ -425,37 +430,37 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                             ->save();
                         }
                     }
-                } else {
-                    $this->getOnepage()
-                    ->getQuoteOrdered()
-                    ->save();
-                    $this->getOnepage()
-                    ->getQuoteBackordered()
-                    ->save();
-                    if ($result['success']) {
-                        Mage::getSingleton('checkout/session')->getQuote()
-                        ->setIsActive(false)
-                        ->save();
-                        $this->getOnepage()
-                        ->getQuoteOrdered()
-                        ->setIsActive(false)
-                        ->save();
-                        $this->getOnepage()
-                        ->getQuoteBackordered()
-                        ->setIsActive(false)
-                        ->save();
-                    }
-                }
+        } else {
+            $this->getOnepage()
+            ->getQuoteOrdered()
+            ->save();
+            $this->getOnepage()
+            ->getQuoteBackordered()
+            ->save();
+            if ($result['success']) {
+                Mage::getSingleton('checkout/session')->getQuote()
+                ->setIsActive(false)
+                ->save();
+                $this->getOnepage()
+                ->getQuoteOrdered()
+                ->setIsActive(false)
+                ->save();
+                $this->getOnepage()
+                ->getQuoteBackordered()
+                ->setIsActive(false)
+                ->save();
+            }
+        }
 
-                /**
-                 * when there is redirect to third party, we don't want to save order
-                 * yet.
-                 * we will save the order in return action.
-                 */
-                if (isset($redirectUrl)) {
-                    $result['redirect'] = $redirectUrl;
-                }
-                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        /**
+         * when there is redirect to third party, we don't want to save order
+         * yet.
+         * we will save the order in return action.
+         */
+        if (isset($redirectUrl)) {
+            $result['redirect'] = $redirectUrl;
+        }
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
     public function saveTransactionAction() {
@@ -463,15 +468,24 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         $data = $_POST;
 
         $session = $this->_getSession();
+        $checkoutSession = $this->_getCheckoutSession();
 
         $cart = $this->_getCart();
 
+        $masterQuote = $checkoutSession->getQuote();
         $quote = $session->getQuote();
-
-        //var_dump($quote);
-        var_dump($cart->getQuote()->getData());die;
-
-        Mage::log(json_encode($data), Zend_Log::DEBUG, 'applepay.log', true);
+        
+        $paymentData = array('method' => 'applepay'); 
+        
+        $this->getRequest()->setPost('payment', $paymentData);
+        
+        $checkoutSession->setQuoteId($quote->getId());
+        $checkoutSession->replaceQuote($quote);
+        
+        $this->saveOrderAction();
+        
+        $checkoutSession->setQuoteId($masterQuote->getId());
+        $checkoutSession->replaceQuote($masterQuote);
 
         die('DONE');
     }
@@ -523,7 +537,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * @return Mage_Checkout_Model_Type_Onepage
      */
     public function getOnepage() {
-        return Mage::getSingleton('allure_applepay/type_onepage');
+        return Mage::getSingleton('allure_applepay/checkout_type_onepage');
     }
 
     /**
@@ -573,5 +587,65 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             }
         }
         return false;
+    }
+    
+    /**
+     * Validate ajax request and redirect on failure
+     *
+     * @return bool
+     */
+    protected function _expireAjax() {
+        if (!$this->getOnepage()->getQuote()->hasItems()
+                || $this->getOnepage()->getQuote()->getHasError()
+                || $this->getOnepage()->getQuote()->getIsMultiShipping()) {
+                    $this->_ajaxRedirectResponse();
+                    return true;
+                }
+                $action = $this->getRequest()->getActionName();
+                if (Mage::getSingleton('allure_applepay/session')->getCartWasUpdated(true)
+                        && !in_array($action, array('index', 'progress'))) {
+                            $this->_ajaxRedirectResponse();
+                            return true;
+                        }
+                        
+                        return false;
+    }
+    
+    protected function _ajaxRedirectResponse() {
+        $this->getResponse()
+        ->setHeader('HTTP/1.1', '403 Session Expired')
+        ->setHeader('Login-Required', 'true')
+        ->sendResponse();
+        return $this;
+    }
+    
+    /**
+     * Get shipping method step html
+     *
+     * @return string
+     */
+    protected function _getShippingMethodsHtml() {
+        $layout = $this->getLayout();
+        $update = $layout->getUpdate();
+        $update->load('checkout_onepage_shippingmethod');
+        $layout->generateXml();
+        $layout->generateBlocks();
+        $output = $layout->getOutput();
+        return $output;
+    }
+    
+    /**
+     * Get payment method step html
+     *
+     * @return string
+     */
+    protected function _getPaymentMethodsHtml() {
+        $layout = $this->getLayout();
+        $update = $layout->getUpdate();
+        $update->load('checkout_onepage_paymentmethod');
+        $layout->generateXml();
+        $layout->generateBlocks();
+        $output = $layout->getOutput();
+        return $output;
     }
 }

@@ -43,4 +43,46 @@ class Allure_ApplePay_Model_Cart extends Mage_Checkout_Model_Cart
     {
         return Mage::getSingleton('allure_applepay/session');
     }
+    
+    public function getProductIds()
+    {
+        $quoteId = Mage::getSingleton('allure_applepay/session')->getQuoteId();
+        if (null === $this->_productIds) {
+            $this->_productIds = array();
+            if ($this->getSummaryQty()>0) {
+                foreach ($this->getQuote()->getAllItems() as $item) {
+                    $this->_productIds[] = $item->getProductId();
+                }
+            }
+            $this->_productIds = array_unique($this->_productIds);
+        }
+        return $this->_productIds;
+    }
+    
+    /**
+     * Get shopping cart items summary (includes config settings)
+     *
+     * @return int|float
+     */
+    public function getSummaryQty()
+    {
+        $quoteId = Mage::getSingleton('allure_applepay/session')->getQuoteId();
+        
+        //If there is no quote id in session trying to load quote
+        //and get new quote id. This is done for cases when quote was created
+        //not by customer (from backend for example).
+        if (!$quoteId && Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $quote = Mage::getSingleton('checkout/session')->getQuote();
+            $quoteId = Mage::getSingleton('checkout/session')->getQuoteId();
+        }
+        
+        if ($quoteId && $this->_summaryQty === null) {
+            if (Mage::getStoreConfig('checkout/cart_link/use_qty')) {
+                $this->_summaryQty = $this->getItemsQty();
+            } else {
+                $this->_summaryQty = $this->getItemsCount();
+            }
+        }
+        return $this->_summaryQty;
+    }
 }

@@ -48,10 +48,7 @@ if (window.ApplePaySession) {
 		    "name",
 		    "phone",
 		    "email"
-		],
-		applicationData: {
-			"order_id": 101010
-		}
+		]
 	};
 	
 	Allure.ApplePay.data.merchantId = 'merchant.com.mariatash.authorizenet';
@@ -92,9 +89,12 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.event.onPaymentMethodSelected = function(event) {
 		console.log('START EVENT: onPaymentMethodSelected');
 		console.log(event);
-		var newTotal = { type: 'final', label: 'Maria Tash', amount: Allure.ApplePay.data.cartyResponse.total };
-		var newLineItems = [{type: 'final', label: 'Spice #202', amount: '15.00' }]
-		Allure.ApplePay.session.completePaymentMethodSelection( {newTotal : newTotal, newLineItems: Allure.ApplePay.data.lineItems});//, Allure.ApplePay.data.lineItems
+		var newTotal = { type: 'final', label: 'Maria Tash', amount: (typeof Allure.ApplePay.data.cartResponse == 'undefined') ? Allure.ApplePay.data.lineTotal : Allure.ApplePay.data.cartResponse.total };
+		var newLineItems = (typeof Allure.ApplePay.data.lineItems == 'undefined') ? [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.cartResponse.total }] : Allure.ApplePay.data.lineItems;
+		
+		console.log({newTotal : newTotal, newLineItems: newLineItems});
+		
+		Allure.ApplePay.session.completePaymentMethodSelection( {newTotal : newTotal, newLineItems: newLineItems});//, Allure.ApplePay.data.lineItems
 
 		console.log('END EVENT: onPaymentMethodSelected');
 	};
@@ -125,6 +125,56 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.event.onShippingContactSelected = function(event) {
 		console.log('START EVENT: onShippingContactSelected');
 		console.log(event);
+		
+		var shippingContact = event.shippingContact;
+		
+		var quote_id = null;
+		
+		if (typeof Allure.ApplePay.data.cartResponse != 'undefined') {
+			quote_id = Allure.ApplePay.data.cartResponse.quote_id;
+		}
+		
+		Allure.ApplePay.action.sendRequest('saveBilling', {
+			'quote_id' : quote_id,
+			'billing[firstname]': 'ApplePay', 
+			'billing[lastname]': 'Customer',
+			'billing[company]': '',
+			'billing[email]':'applepay@mariatash.com',
+			'billing[country_id]': shippingContact.countryCode,
+			'billing[street][0]': 'ApplePay',
+			'billing[street][1]': '',
+			'billing[city]': shippingContact.locality,
+			'billing[region_id]': '',
+			'billing[region]': shippingContact.administrativeArea,
+			'billing[postcode]': shippingContact.postalCode,
+			'billing[telephone]': '9999999999',
+			'billing[fax]': '',
+			'billing[use_for_shipping]': 1
+		});
+		
+		/*Allure.ApplePay.action.sendRequest('saveShipping', {
+			'shipping[firstname]': 'ApplePay', 
+			'shipping[lastname]': 'Customer',
+			'shipping[company]': '',
+			'shipping[email]':'applepay@mariatash.com',
+			'shipping[country_id]': shippingContact.countryCode,
+			'shipping[street][0]': 'ApplePay',
+			'shipping[street][1]': '',
+			'shipping[city]': shippingContact.locality,
+			'shipping[region_id]': '',
+			'shipping[region]': shippingContact.administrativeArea,
+			'shipping[postcode]': shippingContact.postalCode,
+			'shipping[telephone]': '9999999999',
+			'shipping[fax]': ''
+		});*/
+		
+		var newTotal = { type: 'final', label: 'Maria Tash', amount: (typeof Allure.ApplePay.data.cartResponse == 'undefined') ? Allure.ApplePay.data.lineTotal : Allure.ApplePay.data.cartResponse.total };
+		var newLineItems = (typeof Allure.ApplePay.data.lineItems == 'undefined') ? [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.cartResponse.total }] : Allure.ApplePay.data.lineItems;
+		
+		console.log({newTotal : newTotal, newLineItems: newLineItems});
+		
+		Allure.ApplePay.session.completeShippingContactSelection( {newShippingMethods: Allure.ApplePay.data.request.shippingMethods, newTotal : newTotal, newLineItems: newLineItems});//, Allure.ApplePay.data.lineItems
+		
 
 		console.log('END EVENT: onShippingContactSelected');
 	};
@@ -132,6 +182,14 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.event.onShippingMethodSelected = function(event) {
 		console.log('START EVENT: onShippingMethodSelected');
 		console.log(event);
+		
+		var newTotal = { type: 'final', label: 'Maria Tash', amount: (typeof Allure.ApplePay.data.cartResponse == 'undefined') ? Allure.ApplePay.data.lineTotal : Allure.ApplePay.data.cartResponse.total };
+		var newLineItems = (typeof Allure.ApplePay.data.lineItems == 'undefined') ? [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.cartResponse.total }] : Allure.ApplePay.data.lineItems;
+		
+		console.log({newTotal : newTotal, newLineItems: newLineItems});
+		
+		Allure.ApplePay.session.completeShippingMethodSelection( { newTotal : newTotal, newLineItems: newLineItems});//, Allure.ApplePay.data.lineItems
+		
 		console.log('END EVENT: onShippingMethodSelected');
 	};
 	
@@ -164,13 +222,13 @@ if (window.ApplePaySession) {
 	
 			Allure.ApplePay.session.onvalidatemerchant = Allure.ApplePay.event.onValidateMerchant;
 	
-			Allure.ApplePay.session.onpaymentmethodselected = Allure.ApplePay.event.onPaymentMethodSelected
-	
-			Allure.ApplePay.session.onpaymentauthorized = Allure.ApplePay.event.onPaymentAuthorized;
+			Allure.ApplePay.session.onpaymentmethodselected = Allure.ApplePay.event.onPaymentMethodSelected;
 			
 			Allure.ApplePay.session.onshippingcontactselected = Allure.ApplePay.event.onShippingContactSelected;
 			
 			Allure.ApplePay.session.onshippingmethodselected = Allure.ApplePay.event.onShippingMethodSelected;
+
+			Allure.ApplePay.session.onpaymentauthorized = Allure.ApplePay.event.onPaymentAuthorized;
 			
 			Allure.ApplePay.session.oncancel = Allure.ApplePay.event.onCancel;
 			
@@ -205,19 +263,12 @@ if (window.ApplePaySession) {
 			  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
 			  	total: { label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal },
 			  	shippingMethods: Allure.ApplePay.data.request.shippingMethods,
-				shippingType: 'delivery',
-				requiredBillingContactFields: [
-				    "postalAddress"
-				],
 				requiredShippingContactFields: [
 				    "postalAddress",
 				    "name",
 				    "phone",
 				    "email"
-				],
-				applicationData: {
-					"order_id": 101010
-				}
+				]
 		};
 		
 		if (typeof Allure.ApplePay.data.shippingAddress != 'undefined') {
@@ -258,9 +309,12 @@ if (window.ApplePaySession) {
 		
 		if (Allure.ApplePay.data.checkoutType  != 'undefined' && Allure.ApplePay.data.checkoutType == 'ApplePayButtonProduct') {
 			
-			Allure.ApplePay.data.cartyResponse = Allure.ApplePay.action.addProductToCart(jQuery('#pid-hidden').val(), jQuery('#qty').val());
+			Allure.ApplePay.data.cartResponse = Allure.ApplePay.action.sendRequest('addProduct', {
+				product: jQuery('#pid-hidden').val(), 
+				qty: jQuery('#qty').val()
+			});
 			
-			requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.cartyResponse.total };
+			requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.cartResponse.total };
 		}
 		
 		return requestData;
@@ -289,6 +343,28 @@ if (window.ApplePaySession) {
 		})
 		
 		return cartResponse;
+	};
+	
+	Allure.ApplePay.action.sendRequest = function (requestType, requestData) {
+		var responseData = {};
+		jQuery.ajax({
+			url: 	Allure.ApplePay.data.baseUrl+requestType,
+			async: 	false,
+			dataType: 'json',
+			data: 	requestData,
+			method: 	'POST',
+			timeout:	5000
+			
+		}).done(function(data){
+			console.log(data);
+			responseData = data;
+			console.log(requestType+'::Success');
+			
+		}).fail(function() {
+			console.log(requestType+'::Error');
+		})
+		
+		return responseData;
 	};
 	
 	Allure.ApplePay.action.createTransaction = function(dataObj) {

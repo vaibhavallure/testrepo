@@ -1,14 +1,5 @@
 <?php
-/**
- * Apple Pay
- *
- * @category    Allure
- * @package     Allure_ApplePay
- * @copyright   Copyright (c) 2017 Allure Inc
- * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
- */
-
-class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
+class Allure_ApplePay_Model_Session_Backordered extends Mage_Core_Model_Session_Abstract
 {
     const CHECKOUT_STATE_BEGIN = 'begin';
 
@@ -45,7 +36,7 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
      */
     public function __construct()
     {
-        $this->init('allure_applepay');
+        $this->init('allure_multicheckout');
     }
 
     /**
@@ -97,8 +88,8 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
      * @return Mage_Sales_Model_Quote
      */
     public function getQuote()
-    {   
-        $this->_quote = null;
+    {
+        Mage::dispatchEvent('custom_quote_process', array('checkout_session' => $this));
 
         if ($this->_quote === null) {
             /** @var $quote Mage_Sales_Model_Quote */
@@ -109,7 +100,6 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
                 } else {
                     $quote->loadActive($this->getQuoteId());
                 }
-                
                 if ($quote->getId()) {
                     /**
                      * If current currency code of quote is not equal current currency code of store,
@@ -136,13 +126,12 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
             if (!$this->getQuoteId()) {
                 if ($customerSession->isLoggedIn() || $this->_customer) {
                     $customer = ($this->_customer) ? $this->_customer : $customerSession->getCustomer();
-                    $quote->loadByApplePayCustomer($customer);
+                    $quote->loadByCustomer($customer);
                     $this->setQuoteId($quote->getId());
                 } else {
                     $quote->setIsCheckoutCart(true);
-                    Mage::dispatchEvent('applepay_checkout_quote_init', array('quote'=>$quote));
+                    Mage::dispatchEvent('checkout_quote_init', array('quote'=>$quote));
                 }
-                
             }
 
             if ($this->getQuoteId()) {
@@ -153,7 +142,6 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
             }
 
             $quote->setStore(Mage::app()->getStore());
-            $quote->setIsApplepay(true);
             $this->_quote = $quote;
         }
 
@@ -162,13 +150,12 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
             $xForwardIp = Mage::app()->getRequest()->getServer('HTTP_X_FORWARDED_FOR');
             $this->_quote->setXForwardedFor($xForwardIp);
         }
-        
         return $this->_quote;
     }
 
     protected function _getQuoteIdKey()
     {
-        return 'quote_id_' . Mage::app()->getStore()->getWebsiteId();
+        return 'back_quote_id_' . Mage::app()->getStore()->getWebsiteId();
     }
 
     public function setQuoteId($quoteId)
@@ -192,9 +179,11 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
             return $this;
         }
 
+        Mage::dispatchEvent('load_customer_quote_before', array('checkout_session' => $this));
+
         $customerQuote = Mage::getModel('sales/quote')
             ->setStoreId(Mage::app()->getStore()->getId())
-            ->loadByApplePayCustomerId(Mage::getSingleton('customer/session')->getCustomerId());
+            ->loadByCustomer(Mage::getSingleton('customer/session')->getCustomerId());
 
         if ($customerQuote->getId() && $this->getQuoteId() != $customerQuote->getId()) {
             if ($this->getQuoteId()) {
@@ -351,10 +340,10 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
 
     public function clear()
     {
-        Mage::dispatchEvent('applepay_checkout_quote_destroy', array('quote'=>$this->getQuote()));
+        Mage::dispatchEvent('checkout_quote_destroy', array('quote'=>$this->getQuote()));
         $this->_quote = null;
         $this->setQuoteId(null);
-        $this->setLastSuccessQuoteId(null);
+        $this->setSecondLastSuccessQuoteId(null);
     }
 
     /**
@@ -362,11 +351,11 @@ class Allure_ApplePay_Model_Session extends Mage_Core_Model_Session_Abstract
      */
     public function clearHelperData()
     {
-        $this->setLastBillingAgreementId(null)
+        $this->setSecondLastBillingAgreementId(null)
             ->setRedirectUrl(null)
-            ->setLastOrderId(null)
-            ->setLastRealOrderId(null)
-            ->setLastRecurringProfileIds(null)
+            ->setSecondLastOrderId(null)
+            ->setSecondLastRealOrderId(null)
+            ->setSecondLastRecurringProfileIds(null)
             ->setAdditionalMessages(null)
         ;
     }
