@@ -63,7 +63,7 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                             <label><?php echo Mage::helper('sales')->__('Link to the New Order') ?></label></td>
                         <td class="value"><a href="<?php echo $this->getViewUrl($_order->getRelationChildId()) ?>">
                                 <?php echo $_order->getRelationChildRealId() ?>
-                            </a></td>
+                         </a></td>
                     </tr>
                 <?php endif; ?>
                 <?php if ($_order->getRelationParentId()): ?>
