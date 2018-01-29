@@ -114,8 +114,9 @@ if (window.ApplePaySession) {
 				console.log('Apple Pay Payment SUCCESS ');
 			} else {
 				status = ApplePaySession.STATUS_FAILURE;
-			}		
-			console.log( "result of sendPaymentToken() function =  " + success );
+			}
+			
+			console.log( "sendPaymentToken =  " + success );
 
 			console.log('START ACTION: completePayment');
 			Allure.ApplePay.session.completePayment(status);
@@ -234,6 +235,14 @@ if (window.ApplePaySession) {
 			if (typeof Allure.ApplePay.data.lineTotal == "undefined") Allure.ApplePay.data.lineTotal = 1;
 			
 			Allure.ApplePay.data.request = Allure.ApplePay.action.prepareRequest({});
+			
+			if (typeof Allure.ApplePay.data.lineTotal == 'undefined' || Allure.ApplePay.data.lineTotal == null) {
+				console.log('Error: No Product Selected');
+				alert('Error: No Product Selected');
+				
+				Allure.ApplePay.flag.active = false;
+				return false;
+			}
 			
 			Allure.ApplePay.session = new ApplePaySession(3, Allure.ApplePay.data.request);
 	
@@ -369,18 +378,22 @@ if (window.ApplePaySession) {
 		jQuery.ajax({
 			url: 	Allure.ApplePay.data.baseUrl+requestType,
 			async: 	false,
+			cache: 	false,
 			dataType: 'json',
 			data: 	requestData,
 			method: 	'POST',
-			timeout:	5000
+			xhrFields: {
+				withCredentials: true
+			},
+			//timeout: 50000
 			
 		}).done(function(data){
 			console.log(data);
 			responseData = data;
 			console.log(requestType+'::Success');
 			
-		}).fail(function() {
-			console.log(requestType+'::Error');
+		}).fail(function(xhr, status, error) {
+			console.log(requestType+'::Error => '+error);
 		})
 		
 		return responseData;

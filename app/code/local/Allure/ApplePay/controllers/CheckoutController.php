@@ -80,13 +80,11 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
         $cart   = $this->_getCart();
 
-        $cart->init()->save();
-
         $this->truncateCart();
 
-        $this->cleanQuotes();
+        //$this->cleanQuotes();
         
-        $this->getOnepage()->initCheckout();
+        //$this->getOnepage()->initCheckout();
 
         $params = $this->getRequest()->getParams();
 
@@ -99,6 +97,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             }
 
             $product = $this->_initProduct();
+            
             $related = $this->getRequest()->getParam('related_product');
 
             /**
@@ -114,27 +113,28 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             if (!empty($related)) {
                 $cart->addProductsByIds(explode(',', $related));
             }
-
-            $this->_getQuote()->setTotalsCollectedFlag(false);
-
-            $this->_getSession()->setCartWasUpdated(true);
-            
-            $this->_getQuote()->setTotalsCollectedFlag(false);
             
             $cart->save();
-
+            
+            $this->_getSession()->setCartWasUpdated(true);
+            
+            Mage::dispatchEvent('checkout_cart_add_product_complete',
+                array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
+            );
+            
+            $quote = $cart->getQuote();
+            
             $data = array(
                     //'request' => $this->getRequest(),
                     'params'        => $this->getRequest()->getParams(),
-                    'totals'        => $this->_getQuote()->getTotals(),
-                    'quote_id'      => $this->_getQuote()->getId(),
-                    'currency'      => $this->_getQuote()->getGlobalCurrencyCode(),
-                    'grand_total'   => $this->_getQuote()->getBaseGrandTotal(),
+                    'totals'        => $quote->getTotals(),
+                    'quote_id'      => $quote->getId(),
+                    'currency'      => $quote->getGlobalCurrencyCode(),
+                    'subtotal'      => $quote->getBaseSubtotal(),
+                    'grand_total'   => $quote->getBaseGrandTotal(),
                     'total'         => $product->getFinalPrice(),
-                    //'session'       => $this->_getSession()->getData()
+                    //'session'       => $quote->getShippingAddress()->getData()
             );
-            
-            $this->_getQuote()->save();
 
             $this->getResponse()->setBody(json_encode($data));
             return;
@@ -142,11 +142,11 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $this->getResponse()->setBody($e->getMessage());
             return;
         } catch (Exception $e) {
-            $this->getResponse()->setBody('Cannot add the item to shopping cart.');
+            $this->getResponse()->setBody('Cannot add the item to shopping cart.'.$e->getMessage());
             Mage::logException($e);
             return;
         }
-        var_dump(Mage::getSingleton('allure_applepay/session')->getData());die;
+        var_dump($this->_getSession()->getData());die;
 
         Mage::log(json_encode($data), Zend_Log::DEBUG, 'applepay.log', true);
     }
@@ -180,7 +180,14 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                             //'html' => $this->_getPaymentMethodsHtml()
                     );
                 } elseif (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
+                    $address = $this->getOnepage()->getQuote()->getShippingAddress();
+                    
+                    $shippingMethods = array();
+                    foreach($address->getAllShippingRates() as $rate){
+                        $shippingMethods[$rate->getCode()] = $rate->getData();
+                    }
                     $result['goto_section'] = 'shipping_method';
+                    $result['shipping_methods'] = $shippingMethods;
                     $result['update_section'] = array(
                             'name' => 'shipping-method',
                             //'html' => $this->_getShippingMethodsHtml()
@@ -553,7 +560,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      */
     protected function _getQuote()
     {
-        return $this->_getSession()->getQuote();
+        return $this->_getCart()->getQuote();
     }
 
     /**
@@ -605,17 +612,16 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         if (!$this->getOnepage()->getQuote()->hasItems()
                 || $this->getOnepage()->getQuote()->getHasError()
                 || $this->getOnepage()->getQuote()->getIsMultiShipping()) {
-                    $this->_ajaxRedirectResponse();
-                    return true;
-                }
-                $action = $this->getRequest()->getActionName();
-                if (Mage::getSingleton('allure_applepay/session')->getCartWasUpdated(true)
-                        && !in_array($action, array('index', 'progress'))) {
-                            $this->_ajaxRedirectResponse();
-                            return true;
-                        }
-                        
-                        return false;
+                $this->_ajaxRedirectResponse();
+                return true;
+            }
+            $action = $this->getRequest()->getActionName();
+            if ($this->_getSession()->getCartWasUpdated(true) && !in_array($action, array('index', 'progress'))) {
+                $this->_ajaxRedirectResponse();
+                return true;
+            }
+            
+            return false;
     }
     
     protected function _ajaxRedirectResponse() {
