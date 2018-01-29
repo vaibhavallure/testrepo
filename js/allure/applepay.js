@@ -7,6 +7,8 @@ Allure.ApplePay.flag.available = false;
 
 Allure.ApplePay.flag.enabled = false;
 
+Allure.ApplePay.flag.active = false;
+
 if (window.ApplePaySession) {
 
 	Allure.ApplePay.flag.available = true;
@@ -197,10 +199,25 @@ if (window.ApplePaySession) {
 		console.log('START EVENT: onCancel');
 		console.log(event);
 		console.log('END EVENT: onCancel');
+		
+		Allure.ApplePay.flag.active = false;
 	};
 	
 
+	Allure.ApplePay.action.initProduct = function(){
+		Allure.ApplePay.modal.data('type','product')
+		Allure.ApplePay.modal.attr('data-type','product')
+		Allure.ApplePay.modal.modal('show');
+		return false;
+	};
+
 	Allure.ApplePay.action.init = function(){
+		
+		if (Allure.ApplePay.flag.active) {
+			return false;
+		} else {
+			Allure.ApplePay.flag.active = true;
+		}
 
 		console.log('Apple Pay Initiated');
 		
@@ -236,6 +253,8 @@ if (window.ApplePaySession) {
 		//} catch (e) {
 		//	console.log(e);
 		//}
+		
+		return false;
 
 	};
 	

@@ -9,15 +9,6 @@
  */
 ?>
 <?php if ($this->isApplePayButtonEnabled()): ?>
-<style>
-<!--
-
-button#ApplePayButtonProduct.apple-pay-button {
-	width: 100%;
-	height: 40px;
-}
--->
-</style>
 <button id="<?php echo $this->getApplePayButtonId(); ?>" class='apple-pay-button apple-pay-button-buy apple-pay-button-black-with-line'  onclick="return Allure.ApplePay.Callbacks.<?php echo $this->getApplePayButtonId(); ?>()"><span class="text">Buy with</span><span class="logo"></span></button>
 
 <script type="text/javascript">
@@ -32,10 +23,22 @@ button#ApplePayButtonProduct.apple-pay-button {
 
         Allure.ApplePay.data.checkoutType = "<?php echo $this->getApplePayButtonId(); ?>";
         //ApplePayButtonProduct
-        Allure.ApplePay.action.init();
+        Allure.ApplePay.action.initProduct();
 
         return false;
 	};
+
+	Allure.ApplePay.Callbacks["ApplePayButtonProductPay"] = function() {
+
+		console.log("<?php echo $this->getApplePayButtonId(); ?>Pay");
+
+        Allure.ApplePay.data.checkoutType = "<?php echo $this->getApplePayButtonId(); ?>";
+        
+        //ApplePayButtonProduct
+        Allure.ApplePay.action.init();
+    
+        return false;
+    };
 </script>
 
 <?php endif; ?>

@@ -11,22 +11,137 @@
 <?php if ($this->isEnabled() && !$this->isLoaded()) : ?>
 <!-- Apple Pay Async Script -->
 <script async='async' type='text/javascript' src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'allure/applepay.js?ts='.now(); ?>'></script>
-<div class="applepay-popup" id="applepay-popup">
-	<div class="applepay-popup-container">Hey<br/></div>
+<div class="applepay-popup modal fade" id="applepay-popup">
+    <div class="applepay-popup-container modal-content">
+    		<div class="modal-header">
+            <h4 class="modal-title">Maria Tash Checkout</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    			<span aria-hidden="true">×</span>
+            </button>
+        </div>
+    		<div class="modal-body">
+			<div id="applepay-coupons">
+        			<div class="cart-mt">
+                    <div class="cart-collaterals">
+                        <div class="collat-wrap">
+                            <div class="coupons-mt">
+                                <div class="coupons">
+                                    <div class="discount">
+                                        <h2>Gift Cards</h2>
+                                    
+                                        <div class="discount-form">
+                                            <form method="post" action="https://mariatash.sureshinde.in/giftcards/cart/activateGiftCard/" id="applePayActivateGiftCard">
+                                                <div class="input-box">
+                                                    <input value="" name="giftcard_code" id="giftcard_code" class="input-text">
+                                                </div>
+                                                <div class="buttons-set">
+                                                    <button value="Activate" onclick="giftCardForm.submit(true)" class="button" title="Apply" type="button"><span><span>Apply</span></span>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                    
+                                                        </div>
+                                        <script type="text/javascript">
+                                            //&lt;![CDATA[
+                                            var ApplePayGiftCardForm = new VarienForm('applePayActivateGiftCard');
+                                            //]]&gt;
+                                        </script>
+                                    
+                                    </div>
+                                    <br>
+                                    <div class="discount">        
+                                        <h2>Promo Code</h2>
+                                        <div class="discount-form">
+                                    		<form id="applepay-discount-coupon-form" action="/checkout/cart/couponPost/" method="post">
+                                                <input type="hidden" name="remove" id="remove-coupone" value="0">
+                                                <div class="input-box">
+                                                    <input class="input-text required-entry" id="coupon_code2" name="coupon_code" value="">
+                                                </div>
+                                                <div class="buttons-set">                
+                                                	<button type="button" title="Apply" class="button" onclick="discountForm.submit()" value="Apply"><span><span>Apply</span></span></button>                
+                                                </div>
+                                    		</form>
+                                        </div>
+                                        	<script type="text/javascript">
+                                        	//<![CDATA[
+                                            	var ApplePayDiscountForm = new VarienForm('applepay-discount-coupon-form');
+                                            	Validation.add('emptycustomvalidation','This is a required field',function(myInput){
+                                            	    if( myInput != '' )
+                                            	    {
+                                            	        return true;
+                                            	    }
+                                            	    return false;
+                                            	});
+                                            	
+                                            	ApplePayDiscountForm.submit = function (remove) {
+                                            	    $('coupon_code2').addClassName('required-entry');
+                                            	    $('coupon_code2').addClassName('emptycustomvalidation');        
+                                            	    $('remove-coupone').value = "0";
+                                            	    if (this.validator.validate()) {
+                                            	        if (remove) {
+                                            	            $('coupon_code2').removeClassName('required-entry');
+                                            	            $('remove-coupone').value = "1";            
+                                            	        } else {
+                                            	            $('coupon_code2').addClassName('required-entry');
+                                            	            $('coupon_code2').addClassName('emptycustomvalidation');        
+                                            	            $('remove-coupone').value = "0";
+                                            	        }
+                                            	        return VarienForm.prototype.submit.bind(ApplePayDiscountForm)();
+                                            	    }
+                                            	   return false;
+                                            	}
+                                        	//]]>
+                                        	</script>               
+                                    </div>
+                					</div>
+                            </div>
+                			</div>
+                    </div>
+                </div>
+    			</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="applepay-btn-cancel" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Cancel</button>
+            <button type="button" id="applepay-btn-submit" class="btn btn-secondary btn-sm">Submit</button>
+            <button type="button" id="applepay-btn-pay" class="btn btn-secondary btn-sm apple-pay-button apple-pay-button apple-pay-button-black-with-line" onclick="return Allure.ApplePay.Callbacks.ApplePayButtonProductPay();">Apple Pay</button>
+        </div>
+    </div>
 </div>
-<<style>
+<style type="text/css">
 <!--
 
 div#applepay-popup {
-	min-height: 200px;
-	background-color: white;
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: -2000px;
-	z-index: 9999999999;
-	transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+    min-height: 10px;
+    background-color: transparent;
+    position: fixed;
+    z-index: 9999999999;
+    margin: 0px;
+    top: auto;
+}
+
+div#applepay-popup .modal-content {
+    bottom: -2000px;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    border-radius: 0;
+    background-color: rgb(248, 250, 247);
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+    -moz-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+    -o-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+    transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
+}
+
+div#applepay-popup.modal.fade.in .modal-content {
+    bottom: 0;
+    opacity: 1;
 }
 -->
 </style>
+<script type="text/javascript">
+<!--
+Allure.ApplePay.modal = jQuery('#applepay-popup').modal({show: false});
+//-->
+</script>
 <?php endif; ?>

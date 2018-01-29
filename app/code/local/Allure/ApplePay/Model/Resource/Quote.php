@@ -1,7 +1,7 @@
 <?php
 class Allure_ApplePay_Model_Resource_Quote extends Mage_Sales_Model_Resource_Quote
 {
-    public function loadByApplePayCustomerId($quote, $customerId)
+    public function loadByApplePayCustomerIdX($quote, $customerId)
     {
         $adapter = $this->_getReadAdapter();
         $select  = $this->_getLoadSelect('customer_id', $customerId, $quote)
@@ -32,7 +32,7 @@ class Allure_ApplePay_Model_Resource_Quote extends Mage_Sales_Model_Resource_Quo
      * @param int $customerId
      * @return Mage_Sales_Model_Resource_Quote
      */
-    public function loadByCustomerId($quote, $customerId)
+    public function loadByCustomerIdX($quote, $customerId)
     {
         $adapter = $this->_getReadAdapter();
         $select  = $this->_getLoadSelect('customer_id', $customerId, $quote)

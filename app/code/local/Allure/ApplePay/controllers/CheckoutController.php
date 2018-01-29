@@ -158,11 +158,11 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('billing', array());
-            $quoteId = $this->getRequest()->getPost('quote_id', null);
             
-            $this->_getSession()->setQuoteId($quoteId);
-            $quote = Mage::getModel('sales/quote')->load($quoteId);
-            $this->_getCart()->setQuote($quote);
+//             $quoteId = $this->getRequest()->getPost('quote_id', null);
+//             $this->_getSession()->setQuoteId($quoteId);
+//             $quote = Mage::getModel('sales/quote')->load($quoteId);
+//             $this->_getCart()->setQuote($quote);
             
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
 
@@ -177,13 +177,13 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $result['goto_section'] = 'payment';
                     $result['update_section'] = array(
                             'name' => 'payment-method',
-                            'html' => $this->_getPaymentMethodsHtml()
+                            //'html' => $this->_getPaymentMethodsHtml()
                     );
                 } elseif (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
                     $result['goto_section'] = 'shipping_method';
                     $result['update_section'] = array(
                             'name' => 'shipping-method',
-                            'html' => $this->_getShippingMethodsHtml()
+                            //'html' => $this->_getShippingMethodsHtml()
                     );
 
                     $result['allow_sections'] = array('shipping');
@@ -193,7 +193,11 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 }
             }
             
-            $result['quote'] = $this->getOnepage()->getCheckout()->getData();
+            //$result['billing_address'] = $this->_getQuote()->getBillingAddress()->getFirstname();
+            
+            //$result['shipping_address'] = $this->_getQuote()->getShippingAddress()->getFirstname();
+            
+            $this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
 
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
@@ -528,7 +532,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      */
     protected function _getCart()
     {
-        return Mage::getSingleton('allure_applepay/cart');
+        return Mage::getSingleton('checkout/cart');
+        //return Mage::getSingleton('allure_applepay/cart');
     }
 
     /**
@@ -537,7 +542,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * @return Mage_Checkout_Model_Type_Onepage
      */
     public function getOnepage() {
-        return Mage::getSingleton('allure_applepay/checkout_type_onepage');
+        return Mage::getSingleton('checkout/type_onepage');
+        //return Mage::getSingleton('allure_applepay/checkout_type_onepage');
     }
 
     /**
@@ -547,7 +553,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      */
     protected function _getQuote()
     {
-        return $this->_getCart()->getQuote();
+        return $this->_getSession()->getQuote();
     }
 
     /**
@@ -557,7 +563,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      */
     protected function _getSession()
     {
-        return Mage::getSingleton('allure_applepay/session');
+        return Mage::getSingleton('checkout/session');
+        //return Mage::getSingleton('allure_applepay/session');
     }
 
     /**
