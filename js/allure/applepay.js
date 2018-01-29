@@ -27,9 +27,11 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.data.lineItems = [];
 	Allure.ApplePay.data.shippingMethods = [];
 	
+	Allure.ApplePay.data.currencyCode = 'USD';
+	
 	Allure.ApplePay.data.request = {
 	  	countryCode: 'US',
-	  	currencyCode: 'USD',
+	  	currencyCode: Allure.ApplePay.data.currencyCode,
 	  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 	  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
 	  	total: function(){
@@ -189,6 +191,10 @@ if (window.ApplePaySession) {
 					});
 				});
 			}
+			
+			if (typeof Allure.ApplePay.data.response.saveBilling.currency != 'undefined') {
+				Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.saveBilling.currency;
+			}
 		}
 		
 		/*Allure.ApplePay.action.sendRequest('saveShipping', {
@@ -223,7 +229,7 @@ if (window.ApplePaySession) {
 		
 		if (event.shippingMethod) {
 			Allure.ApplePay.data.response.saveShippingMethod = Allure.ApplePay.action.sendRequest('saveShippingMethod', {
-				'shipping_method': event.shippingMethod
+				'shipping_method': event.shippingMethod.identifier
 			});
 			
 			if (Allure.ApplePay.data.response.saveShippingMethod) {
@@ -243,6 +249,10 @@ if (window.ApplePaySession) {
 							    type: "final"
 						});
 					});
+				}
+				
+				if (typeof Allure.ApplePay.data.response.saveShippingMethod.currency != 'undefined') {
+					Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.saveShippingMethod.currency;
 				}
 			}
 		}
@@ -347,7 +357,7 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.action.prepareRequest = function(requestData) {
 		var requestData = {
 			  	countryCode: 'US',
-			  	currencyCode: 'USD',
+			  	currencyCode: Allure.ApplePay.data.currencyCode,
 			  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 			  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
 			  	total: { label: Allure.ApplePay.data.merchantName, amount: Allure.ApplePay.data.lineTotal },
@@ -410,22 +420,26 @@ if (window.ApplePaySession) {
 					Allure.ApplePay.data.lineItems = [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.lineTotal }];
 				}
 				
-				if (typeof Allure.ApplePay.data.response.addProduct.totals != 'undefined') {
-					Allure.ApplePay.data.lineItems = [];
-					
-					jQuery.each(Allure.ApplePay.data.response.addProduct.totals, function(totalCode, totalData){
-						if (totalCode == 'grand_total') {
-							Allure.ApplePay.data.total.amount = totalData.value;
-							return;
-						}
-						
-						Allure.ApplePay.data.lineItems.push({
-							    label: totalData.title,
-							    amount: totalData.value,
-							    type: "final"
-						});
-					});
+				if (typeof Allure.ApplePay.data.response.addProduct.currency != 'undefined') {
+					Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.addProduct.currency;
 				}
+				
+//				if (typeof Allure.ApplePay.data.response.addProduct.totals != 'undefined') {
+//					Allure.ApplePay.data.lineItems = [];
+//					
+//					jQuery.each(Allure.ApplePay.data.response.addProduct.totals, function(totalCode, totalData){
+//						if (totalCode == 'grand_total') {
+//							Allure.ApplePay.data.total.amount = totalData.value;
+//							return;
+//						}
+//						
+//						Allure.ApplePay.data.lineItems.push({
+//							    label: totalData.title,
+//							    amount: totalData.value,
+//							    type: "final"
+//						});
+//					});
+//				}
 			}
 			
 			requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal };

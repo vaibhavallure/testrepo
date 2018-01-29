@@ -129,6 +129,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     'params'        => $this->getRequest()->getParams(),
                     'totals'        => $quote->getTotals(),
                     'quote_id'      => $quote->getId(),
+                    'global_currency'  => $quote->getGlobalCurrencyCode(),
                     'currency'      => $quote->getGlobalCurrencyCode(),
                     'subtotal'      => $quote->getBaseSubtotal(),
                     'grand_total'   => $quote->getBaseGrandTotal(),
@@ -229,6 +230,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 
                 $this->getOnepage()->getQuote()->collectTotals()->save();
                 
+                $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
+                $result['currency']      = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
+                
                 $result['totals'] = array();
                 
                 foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
@@ -303,6 +307,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             }
             
             $this->getOnepage()->getQuote()->collectTotals()->save();
+            
+            $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
+            $result['currency']      = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
             
             $result['totals'] = array();
             
