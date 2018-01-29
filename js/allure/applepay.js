@@ -22,12 +22,16 @@ if (window.ApplePaySession) {
 	
 	Allure.ApplePay.event = {};
 	
-	Allure.ApplePay.data.response = {};
-	Allure.ApplePay.data.total = { type: 'final', label: 'Maria Tash', amount: 0.00};
-	Allure.ApplePay.data.lineItems = [];
-	Allure.ApplePay.data.shippingMethods = [];
-	
-	Allure.ApplePay.data.currencyCode = 'USD';
+	if (typeof Allure.ApplePay.data.response == 'undefined')
+		Allure.ApplePay.data.response = {};
+	if (typeof Allure.ApplePay.data.total == 'undefined')
+		Allure.ApplePay.data.total = { type: 'final', label: 'Maria Tash', amount: 0.00};
+	if (typeof Allure.ApplePay.data.lineItems == 'undefined')
+		Allure.ApplePay.data.lineItems = [];
+	if (typeof Allure.ApplePay.data.shippingMethods == 'undefined')
+		Allure.ApplePay.data.shippingMethods = [];
+	if (typeof Allure.ApplePay.data.currencyCode == 'undefined')
+		Allure.ApplePay.data.currencyCode = 'USD';
 	
 	Allure.ApplePay.data.request = {
 	  	countryCode: 'US',

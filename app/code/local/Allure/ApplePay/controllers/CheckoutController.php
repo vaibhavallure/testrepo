@@ -133,7 +133,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     'currency'      => $quote->getGlobalCurrencyCode(),
                     'subtotal'      => $quote->getBaseSubtotal(),
                     'grand_total'   => $quote->getBaseGrandTotal(),
-                    'total'         => $product->getFinalPrice(),
+                    'total'         => Mage::helper('core')->currency($product->getFinalPrice(), false, false)
                     //'session'       => $quote->getShippingAddress()->getData()
             );
             

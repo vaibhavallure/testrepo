@@ -21,6 +21,7 @@ $current_product = Mage::registry('current_product');
     Allure.ApplePay.data.merchantId = '<?php echo Mage::helper('allure_applepay')->getMerchantId() ?>';
     Allure.ApplePay.data.merchantName = '<?php echo Mage::helper('allure_applepay')->getMerchantName() ?>';
 
+    Allure.ApplePay.data.currencyCode = '<?php echo Mage::app()->getStore()->getCurrentCurrencyCode();?>';
     <?php
     $onCatalog = false;
     if(Mage::registry('current_product')) {
