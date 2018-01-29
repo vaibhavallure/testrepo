@@ -226,21 +226,24 @@ if (window.ApplePaySession) {
 				'shipping_method': event.shippingMethod
 			});
 			
-			if (typeof Allure.ApplePay.data.response.saveShippingMethod.totals != 'undefined') {
-				Allure.ApplePay.data.lineItems = [];
-				
-				jQuery.each(Allure.ApplePay.data.response.saveShippingMethod.totals, function(totalCode, totalData){
-					if (totalCode == 'grand_total') {
-						Allure.ApplePay.data.total.amount = totalData.value;
-						return;
-					}
+			if (Allure.ApplePay.data.response.saveShippingMethod) {
+				if (typeof Allure.ApplePay.data.response.saveShippingMethod.totals != 'undefined') {
+		
+					Allure.ApplePay.data.lineItems = [];
 					
-					Allure.ApplePay.data.lineItems.push({
-						    label: totalData.title,
-						    amount: totalData.value,
-						    type: "final"
+					jQuery.each(Allure.ApplePay.data.response.saveShippingMethod.totals, function(totalCode, totalData){
+						if (totalCode == 'grand_total') {
+							Allure.ApplePay.data.total.amount = totalData.value;
+							return;
+						}
+						
+						Allure.ApplePay.data.lineItems.push({
+							    label: totalData.title,
+							    amount: totalData.value,
+							    type: "final"
+						});
 					});
-				});
+				}
 			}
 		}
 		
