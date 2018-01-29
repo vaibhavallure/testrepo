@@ -278,9 +278,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * Shipping method save action
      */
     public function saveShippingMethodAction() {
-        if ($this->_expireAjax()) {
-            return;
-        }
+//         if ($this->_expireAjax()) {
+//             return;
+//         }
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping_method', '');
             $no_signature_delivery = $this->getRequest()->getPost('no_signature_delivery', '');
