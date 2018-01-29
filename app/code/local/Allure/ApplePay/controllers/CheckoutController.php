@@ -136,9 +136,14 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     //'session'       => $quote->getShippingAddress()->getData()
             );
             
+            /*
             $cart->init()->save();
             
             $this->getOnepage()->getQuote()->setTotalsCollectedFlag(false)->collectTotals()->save();
+            
+            
+            $result['subtotal']      = $this->getOnepage()->getQuote()->getBaseSubtotal();
+            $result['grand_total']   = $this->getOnepage()->getQuote()->getBaseGrandTotal();
             
             $result['totals'] = array();
             
@@ -148,6 +153,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                         'value'=> $total->getValue()
                 );
             }
+            */
 
             $this->getResponse()->setBody(json_encode($result));
             return;
