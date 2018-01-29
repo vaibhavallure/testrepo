@@ -113,6 +113,7 @@ div#applepay-popup .modal-content {
     transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
 }
 
+div#applepay-popup.modal.fade.in .modal-content,
 div#applepay-popup.modal.fade.show .modal-content {
     bottom: 0;
     opacity: 1;
