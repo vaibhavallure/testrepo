@@ -400,10 +400,29 @@ if (window.ApplePaySession) {
 				qty: jQuery('#qty').val()
 			});
 			
-			if (Allure.ApplePay.data.response.addProduct && typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
-				Allure.ApplePay.data.lineTotal = Allure.ApplePay.data.response.addProduct.total;
-				Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
-				Allure.ApplePay.data.lineItems = [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.lineTotal }];
+			if (Allure.ApplePay.data.response.addProduct) {
+				if (typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
+					Allure.ApplePay.data.lineTotal = Allure.ApplePay.data.response.addProduct.total;
+					Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
+					Allure.ApplePay.data.lineItems = [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.lineTotal }];
+				}
+				
+				if (typeof Allure.ApplePay.data.response.addProduct.totals != 'undefined') {
+					Allure.ApplePay.data.lineItems = [];
+					
+					jQuery.each(Allure.ApplePay.data.response.addProduct.totals, function(totalCode, totalData){
+						if (totalCode == 'grand_total') {
+							Allure.ApplePay.data.total.amount = totalData.value;
+							return;
+						}
+						
+						Allure.ApplePay.data.lineItems.push({
+							    label: totalData.title,
+							    amount: totalData.value,
+							    type: "final"
+						});
+					});
+				}
 			}
 			
 			requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal };
