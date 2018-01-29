@@ -164,7 +164,7 @@ if (window.ApplePaySession) {
 		if (Allure.ApplePay.data.response.saveBilling) {
 			if (typeof Allure.ApplePay.data.response.saveBilling.shipping_methods != 'undefined') {
 				Allure.ApplePay.data.shippingMethods = [];
-				$.each(Allure.ApplePay.data.response.saveBilling.shipping_methods, function(shippingCode, shippingData){
+				jQuery.each(Allure.ApplePay.data.response.saveBilling.shipping_methods, function(shippingCode, shippingData){
 						Allure.ApplePay.data.shippingMethods.push({
 							identifier: shippingCode, 
 							label: shippingData.carrier_title+' - '+shippingData.method_title, 
