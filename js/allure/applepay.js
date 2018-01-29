@@ -191,7 +191,7 @@ if (window.ApplePaySession) {
 			'shipping[fax]': ''
 		});*/
 		
-		var newTotal = Allure.ApplePay.data.tota;
+		var newTotal = Allure.ApplePay.data.total;
 		var newLineItems = Allure.ApplePay.data.lineItems;
 		
 		console.log({newTotal : newTotal, newLineItems: newLineItems});
@@ -205,7 +205,7 @@ if (window.ApplePaySession) {
 		console.log('START EVENT: onShippingMethodSelected');
 		console.log(event);
 		
-		var newTotal = Allure.ApplePay.data.total.amount;
+		var newTotal = Allure.ApplePay.data.total;
 		var newLineItems = Allure.ApplePay.data.lineItems;
 		
 		console.log({newTotal : newTotal, newLineItems: newLineItems});
