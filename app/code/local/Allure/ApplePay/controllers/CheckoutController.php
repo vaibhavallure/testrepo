@@ -127,10 +127,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $result = array(
                     //'request' => $this->getRequest(),
                     'params'        => $this->getRequest()->getParams(),
-                    'totals'        => $quote->getTotals(),
                     'quote_id'      => $quote->getId(),
                     'global_currency'  => $quote->getGlobalCurrencyCode(),
-                    'currency'      => $quote->getGlobalCurrencyCode(),
+                    'currency'      => Mage::app()->getStore()->getCurrentCurrencyCode(),
                     'subtotal'      => $quote->getBaseSubtotal(),
                     'grand_total'   => $quote->getBaseGrandTotal(),
                     'total'         => Mage::helper('core')->currency($product->getFinalPrice(), false, false)
@@ -231,7 +230,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 $this->getOnepage()->getQuote()->collectTotals()->save();
                 
                 $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
-                $result['currency']      = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
+                $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
                 
                 $result['totals'] = array();
                 
@@ -287,29 +286,37 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 //         }
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping_method', '');
-            $no_signature_delivery = $this->getRequest()->getPost('no_signature_delivery', '');
             $result = $this->getOnepage()->saveShippingMethod($data);
-            $this->getOnepage()->getQuote()->setData('no_signature_delivery', $no_signature_delivery)->save();
+            
             /*
              $result will have erro data if shipping method is empty
              */
             if (!$result) {
                 Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method', array('request' => $this->getRequest(),
                         'quote' => $this->getOnepage()->getQuote()));
+                
+                $result['totals'] = array();
+                
+                foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
+                    $result['totals'][$code] = array(
+                            'title' => $total->getTitle(),
+                            'value'=> $total->getValue()
+                    );
+                }
 
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
                 $result['goto_section'] = 'payment';
                 $result['update_section'] = array(
                         'name' => 'payment-method',
-                        'html' => $this->_getPaymentMethodsHtml()
+                        //'html' => $this->_getPaymentMethodsHtml()
                 );
             }
             
             $this->getOnepage()->getQuote()->collectTotals()->save();
             
             $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
-            $result['currency']      = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
+            $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
             
             $result['totals'] = array();
             
