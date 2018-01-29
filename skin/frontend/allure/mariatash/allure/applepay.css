@@ -113,6 +113,15 @@ div#applepay-popup .modal-content {
     transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
 }
 
+div#applepay-popup .modal-header {
+	border-bottom: 1px solid #d1d1d1;
+	padding: 10px 15px;
+}
+
+div#applepay-popup .modal-footer {
+	border-top: 1px solid #d1d1d1;
+}
+
 div#applepay-popup.modal.fade.in .modal-content,
 div#applepay-popup.modal.fade.show .modal-content {
     bottom: 0;
@@ -123,6 +132,10 @@ button#applepay-btn-pay {
 	font-size: 0;
 	border: none !important;
 	border-radius: 0 !important;
+}
+
+button#applepay-btn-cancel {
+	outline: 1px solid #adadad !important;
 }
 
 div#applepay-popup[data-type='product'] #applepay-btn-submit {
