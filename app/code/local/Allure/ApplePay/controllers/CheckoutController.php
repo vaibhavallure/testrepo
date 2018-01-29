@@ -204,6 +204,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $result['goto_section'] = 'shipping';
                 }
                 
+                $this->getOnepage()->getQuote()->collectTotals()->save();
+                
                 $result['totals'] = $this->getOnepage()->getQuote()->getTotals();
             }
             
@@ -226,6 +228,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $data = $this->getRequest()->getPost('shipping', array());
             $customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
             $result = $this->getOnepage()->saveShipping($data, $customerAddressId);
+            
+            $this->getOnepage()->getQuote()->collectTotals()->save();
 
             if (!isset($result['error'])) {
                 $result['totals'] = $this->getOnepage()->getQuote()->getTotals();
@@ -258,7 +262,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             if (!$result) {
                 Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method', array('request' => $this->getRequest(),
                         'quote' => $this->getOnepage()->getQuote()));
-                $this->getOnepage()->getQuote()->collectTotals();
+
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
                 $result['goto_section'] = 'payment';
@@ -268,6 +272,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 );
             }
             $this->getOnepage()->getQuote()->collectTotals()->save();
+            $result['totals'] = $this->getOnepage()->getQuote()->getTotals();
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }

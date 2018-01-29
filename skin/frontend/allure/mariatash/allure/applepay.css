@@ -24,11 +24,6 @@ button#ApplePayPaymentMethodsButton {
 	margin-top: 0px !important;
 }
 
-ul#payment_form_applepay {
-	/* margin-top: -30px;
-	margin-left: 10px; */
-}
-
 .apple-pay-button-with-text {
 	 --apple-pay-scale: 1;
 	 display: inline-flex;
@@ -141,10 +136,12 @@ button#applepay-btn-cancel {
 div#applepay-popup[data-type='product'] #applepay-btn-submit {
 	display:none;
 }
+
 .cart-mt .discount-form {
 	overflow: hidden;
 	position: relative;
 }
+
 div#applepay-popup .cart-mt .coupons .buttons-set {
 	position: absolute;
 	margin: 0;
