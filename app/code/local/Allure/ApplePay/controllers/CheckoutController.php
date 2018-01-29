@@ -183,14 +183,18 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $address = $this->getOnepage()->getQuote()->getShippingAddress();
                     
                     $shippingMethods = array();
-                    foreach($address->getAllShippingRates() as $rate){
+                    
+                    foreach($address->getGroupedAllShippingRates() as $rates){
                         
-                        if ($rate->getErrorMessage() || $rate->getErrorMessage() != '') {
-                            continue;
+                        foreach ($rates as $rate) {
+                            if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
+                                continue;
+                            }
+                            
+                            $shippingMethods[$rate->getCode()] = $rate->getData();
                         }
-                        
-                        $shippingMethods[$rate->getCode()] = $rate->getData();
                     }
+                    
                     $result['goto_section'] = 'shipping_method';
                     $result['shipping_methods'] = $shippingMethods;
                     $result['update_section'] = array(
@@ -206,7 +210,14 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 
                 $this->getOnepage()->getQuote()->collectTotals()->save();
                 
-                $result['totals'] = $this->getOnepage()->getQuote()->getTotals();
+                $result['totals'] = array();
+                
+                foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
+                    $result['totals'][$code] = array(
+                            'title' => $total->getTitle(),
+                            'value'=> $total->getValue()
+                    );
+                }
             }
             
             //$result['billing_address'] = $this->_getQuote()->getBillingAddress()->getFirstname();
@@ -271,8 +282,18 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                         'html' => $this->_getPaymentMethodsHtml()
                 );
             }
+            
             $this->getOnepage()->getQuote()->collectTotals()->save();
-            $result['totals'] = $this->getOnepage()->getQuote()->getTotals();
+            
+            $result['totals'] = array();
+            
+            foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
+                $result['totals'][$code] = array(
+                        'title' => $total->getTitle(),
+                        'value'=> $total->getValue()
+                );
+            }
+            
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
