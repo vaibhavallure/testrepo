@@ -523,7 +523,36 @@ if (window.ApplePaySession) {
 				reject;
 			}
 		});
-	}
+	};
+	
+	Allure.ApplePay.action.addGiftCard = function() {
+		console.log(this);
+		return false;
+	};
+	
+	Allure.ApplePay.action.removeGiftCard = function(cardNumber) {
+		console.log(cardNumber);
+		return false;
+	};
+	
+	Allure.ApplePay.action.toggleCouponCode = function () {
+
+		console.log(jQuery('#applepay-btn-coupon'));
+		
+		Allure.ApplePay.data.response.applyCoupon = Allure.ApplePay.action.sendRequest('applyCoupon', {
+			'coupon_code': jQuery('#applepay-discount-coupon-form #coupon_code2').val(),
+			"action" : jQuery('#applepay-btn-coupon').data('action')
+		});
+		
+		if (Allure.ApplePay.data.response.applyCoupon) {
+			if (!Allure.ApplePay.data.response.applyCoupon.error && jQuery('#applepay-btn-coupon').data('action') == 'remove') {
+				jQuery('#applepay-discount-coupon-form #coupon_code2').val('');
+				jQuery('#applepay-discount-coupon-form #coupon_code2').attr('data-action','apply').data('action','apply');
+			} 
+		}
+		
+		return false;
+	};
 } else {
 	Allure.ApplePay.data.available = false;
 	console.log("Apple Pay not available in this browser");

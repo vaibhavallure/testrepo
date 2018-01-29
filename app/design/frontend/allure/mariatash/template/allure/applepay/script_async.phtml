@@ -7,6 +7,18 @@
  * @copyright   Copyright (c) 2017 Allure Inc
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
+
+$quote = Mage::getSingleton('checkout/session')->getQuote();
+
+$couponCode = '';
+$giftCardCodes = array();
+
+if ($quote && $quote->getCouponCode()) {
+    $couponCode = $quote->getCouponCode();
+}
+
+$giftCardCodes = Mage::getSingleton('giftcards/session')->getCardIds();
+
 ?>
 <?php if ($this->isEnabled() && !$this->isLoaded()) : ?>
 <!-- Apple Pay Async Script -->
@@ -29,18 +41,24 @@
                                     <div class="discount">
                                         <h2>Gift Cards</h2>
                                     
-                                        <div class="discount-form">
-                                            <form method="post" action="https://mariatash.sureshinde.in/giftcards/cart/activateGiftCard/" id="applePayActivateGiftCard">
+                                        <div class="discount-form" style="display: none">
+                                            <form method="post" action="/giftcards/cart/activateGiftCard/" id="applePayActivateGiftCard">
+                                            	   <?php foreach ($giftCardCodes as $giftCardCode):?>
                                                 <div class="input-box">
-                                                    <input value="" name="giftcard_code" id="giftcard_code" class="input-text">
+                                                    <input value="<?php echo $giftCardCode;?>" name="giftcard_code" id="giftcard_code" class="input-text giftcard_code giftcard_code_saved" readonly="readonly">
                                                 </div>
                                                 <div class="buttons-set">
-                                                    <button value="Activate" onclick="giftCardForm.submit(true)" class="button" title="Apply" type="button"><span><span>Apply</span></span>
-                                                    </button>
+                                                    <button value="Remove" id="applepay-btn-giftcard-remove" onclick="return Allure.ApplePay.action.removeGiftCard('<?php echo $giftCardCode;?>')" class="button giftcard_button giftcard_button_remove" title="Remove Gift Card" type="button"><span><span>Apply</span></span></button>
+                                                </div>
+                                                <?php endforeach;?>
+                                                <div class="input-box">
+                                                    <input value="" name="giftcard_code" id="giftcard_code" class="input-text giftcard_code giftcard_code_new required-entry">
+                                                </div>
+                                                <div class="buttons-set">
+                                                    <button value="Add" id="applepay-btn-giftcard-add" onclick="return Allure.ApplePay.action.addGiftCard()" class="button giftcard_button giftcard_button_remove" title="Add Gift Card" type="button"><span><span>Apply</span></span></button>
                                                 </div>
                                             </form>
-                                    
-                                                        </div>
+                                        </div>
                                         <script type="text/javascript">
                                             //&lt;![CDATA[
                                             var ApplePayGiftCardForm = new VarienForm('applePayActivateGiftCard');
@@ -55,41 +73,17 @@
                                     		<form id="applepay-discount-coupon-form" action="/checkout/cart/couponPost/" method="post">
                                                 <input type="hidden" name="remove" id="remove-coupone" value="0">
                                                 <div class="input-box">
-                                                    <input class="input-text required-entry" id="coupon_code2" name="coupon_code" value="">
+                                                    	<input class="input-text required-entry" id="coupon_code2" name="coupon_code" value="<?php echo ($couponCode ? $couponCode : '');?>" <?php echo ($couponCode ? 'readonly="readonly"' : '');?> />
                                                 </div>
                                                 <div class="buttons-set">                
-                                                	<button type="button" title="Apply" class="button" onclick="discountForm.submit()" value="Apply"><span><span>Apply</span></span></button>                
+                                                		<button type="button" id="applepay-btn-coupon" title="Coupon Code" class="button" onclick="return Allure.ApplePay.action.toggleCouponCode()" data-action="<?php echo ($couponCode ? 'remove' : 'apply');?>" value="Save"><span><span><?php echo ($couponCode ? 'Remove' : 'Apply');?></span></span></button>                
                                                 </div>
                                     		</form>
                                         </div>
                                         	<script type="text/javascript">
                                         	//<![CDATA[
                                             	var ApplePayDiscountForm = new VarienForm('applepay-discount-coupon-form');
-                                            	Validation.add('emptycustomvalidation','This is a required field',function(myInput){
-                                            	    if( myInput != '' )
-                                            	    {
-                                            	        return true;
-                                            	    }
-                                            	    return false;
-                                            	});
                                             	
-                                            	ApplePayDiscountForm.submit = function (remove) {
-                                            	    $('coupon_code2').addClassName('required-entry');
-                                            	    $('coupon_code2').addClassName('emptycustomvalidation');        
-                                            	    $('remove-coupone').value = "0";
-                                            	    if (this.validator.validate()) {
-                                            	        if (remove) {
-                                            	            $('coupon_code2').removeClassName('required-entry');
-                                            	            $('remove-coupone').value = "1";            
-                                            	        } else {
-                                            	            $('coupon_code2').addClassName('required-entry');
-                                            	            $('coupon_code2').addClassName('emptycustomvalidation');        
-                                            	            $('remove-coupone').value = "0";
-                                            	        }
-                                            	        return VarienForm.prototype.submit.bind(ApplePayDiscountForm)();
-                                            	    }
-                                            	   return false;
-                                            	}
                                         	//]]>
                                         	</script>               
                                     </div>
