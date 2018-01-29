@@ -205,6 +205,12 @@ if (window.ApplePaySession) {
 		console.log('START EVENT: onShippingMethodSelected');
 		console.log(event);
 		
+		if (event.shippingMethod) {
+			Allure.ApplePay.data.response.saveShipping = Allure.ApplePay.action.sendRequest('saveShippingMethod', {
+				'shipping_method': event.shippingMethod
+			});
+		}
+		
 		var newTotal = Allure.ApplePay.data.total;
 		var newLineItems = Allure.ApplePay.data.lineItems;
 		

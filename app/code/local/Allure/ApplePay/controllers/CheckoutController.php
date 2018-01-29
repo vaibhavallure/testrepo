@@ -203,6 +203,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 } else {
                     $result['goto_section'] = 'shipping';
                 }
+                
+                $result['totals'] = $this->getOnepage()->getQuote()->getTotals();
             }
             
             //$result['billing_address'] = $this->_getQuote()->getBillingAddress()->getFirstname();
@@ -226,6 +228,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $result = $this->getOnepage()->saveShipping($data, $customerAddressId);
 
             if (!isset($result['error'])) {
+                $result['totals'] = $this->getOnepage()->getQuote()->getTotals();
+                
                 $result['goto_section'] = 'shipping_method';
                 $result['update_section'] = array(
                         'name' => 'shipping-method',
