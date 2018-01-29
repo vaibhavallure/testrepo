@@ -342,14 +342,18 @@ if (window.ApplePaySession) {
 				qty: jQuery('#qty').val()
 			});
 			
-			requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.cartResponse.total };
+			if (Allure.ApplePay.data.cartResponse && typeof Allure.ApplePay.data.cartResponse.total != 'undefined') {
+				Allure.ApplePay.data.lineTotal = Allure.ApplePay.data.cartResponse.total;
+			}
+			
+			requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal };
 		}
 		
 		return requestData;
 	}
 	
 	Allure.ApplePay.action.addProductToCart = function (product, qty) {
-		var cartResponse = {};
+		var cartResponse = null;
 		jQuery.ajax({
 			url: 	Allure.ApplePay.data.baseUrl+'addProduct',
 			async: 	false,
@@ -374,7 +378,7 @@ if (window.ApplePaySession) {
 	};
 	
 	Allure.ApplePay.action.sendRequest = function (requestType, requestData) {
-		var responseData = {};
+		var responseData = null;
 		jQuery.ajax({
 			url: 	Allure.ApplePay.data.baseUrl+requestType,
 			async: 	false,
