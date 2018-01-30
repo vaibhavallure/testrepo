@@ -539,16 +539,23 @@ if (window.ApplePaySession) {
 
 		console.log(jQuery('#applepay-btn-coupon'));
 		
-		Allure.ApplePay.data.response.applyCoupon = Allure.ApplePay.action.sendRequest('applyCoupon', {
-			'coupon_code': jQuery('#applepay-discount-coupon-form #coupon_code2').val(),
-			"action" : jQuery('#applepay-btn-coupon').data('action')
-		});
+		if (ApplePayDiscountForm.validator.validate()) {
 		
-		if (Allure.ApplePay.data.response.applyCoupon) {
-			if (!Allure.ApplePay.data.response.applyCoupon.error && jQuery('#applepay-btn-coupon').data('action') == 'remove') {
-				jQuery('#applepay-discount-coupon-form #coupon_code2').val('');
-				jQuery('#applepay-discount-coupon-form #coupon_code2').attr('data-action','apply').data('action','apply');
-			} 
+			Allure.ApplePay.data.response.applyCoupon = Allure.ApplePay.action.sendRequest('applyCoupon', {
+				'coupon_code': jQuery('#applepay-discount-coupon-form #coupon_code2').val(),
+				"action" : jQuery('#applepay-btn-coupon').data('action')
+			});
+			
+			if (Allure.ApplePay.data.response.applyCoupon) {
+				if (!Allure.ApplePay.data.response.applyCoupon.error && jQuery('#applepay-btn-coupon').data('action') == 'remove') {
+					jQuery('#applepay-discount-coupon-form #coupon_code2').removeAttr('readonly');
+					jQuery('#applepay-discount-coupon-form #coupon_code2').val('');
+					jQuery('#applepay-discount-coupon-form #coupon_code2').attr('data-action','apply').data('action','apply');
+				}  else if (!Allure.ApplePay.data.response.applyCoupon.error) {
+					jQuery('#applepay-discount-coupon-form #coupon_code2').attr('readonly','readonly');
+					jQuery('#applepay-discount-coupon-form #coupon_code2').attr('data-action','remove').data('action','remove');
+				}
+			}
 		}
 		
 		return false;
