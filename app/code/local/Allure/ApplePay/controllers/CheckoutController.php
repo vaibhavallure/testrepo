@@ -600,6 +600,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         }
         
         $couponCode = (string)$this->getRequest()->getParam('coupon_code');
+        $couponCode = trim($couponCode);
+        
         if ($this->getRequest()->getParam('action') == 'remove') {
             $couponCode = '';
         }

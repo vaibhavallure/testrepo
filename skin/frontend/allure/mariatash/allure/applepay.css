@@ -130,7 +130,7 @@ button#applepay-btn-pay {
 }
 
 button#applepay-btn-cancel {
-	outline: 1px solid #adadad !important;
+	border: 1px solid #adadad !important;
 }
 
 div#applepay-popup[data-type='product'] #applepay-btn-submit {
