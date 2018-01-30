@@ -1209,6 +1209,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     }
     
     public function facebookAction(){
+      //  header('Access-Control-Allow-Origin: *');
+        
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
         
