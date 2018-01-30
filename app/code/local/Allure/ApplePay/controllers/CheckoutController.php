@@ -388,12 +388,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * Create order action
      */
     public function saveOrderAction ()
-    {
-        
-        if ($this->_expireAjax()) {
-            return;
-        }
-        
+    {   
         $result = array();
         $_checkoutHelper = Mage::helper('allure_multicheckout');
         
