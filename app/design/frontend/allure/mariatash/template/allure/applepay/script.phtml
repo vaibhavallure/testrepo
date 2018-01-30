@@ -15,6 +15,8 @@ $current_product = Mage::registry('current_product');
     if ( typeof Allure == 'undefined' ) var Allure = {};
     if ( typeof Allure.ApplePay == 'undefined' ) Allure.ApplePay = {};
     if ( typeof Allure.ApplePay.data == 'undefined' ) Allure.ApplePay.data = {};
+    if ( typeof Allure.ApplePay.flag == 'undefined' ) Allure.ApplePay.flag = {};
+    
     if ( typeof Allure.ApplePay.data.total == 'undefined' ) Allure.ApplePay.data.total = {type: 'final', label: '<?php echo Mage::helper('allure_applepay')->getMerchantName() ?>', amount: 0.00};
 
     Allure.ApplePay.data.baseUrl = '<?php echo Mage::getUrl('applepay/checkout', array('_secure' => true)); ?>';
