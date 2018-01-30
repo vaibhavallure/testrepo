@@ -124,11 +124,14 @@ if (window.ApplePaySession) {
 		
 		var shippingContact = event.payment.shippingContact;
 		
+		Allure.ApplePay.flag.lastStatus = false;
+		
 		promise.then(function (success) {	
 			var status;
 			if (success) {
 				status = ApplePaySession.STATUS_SUCCESS;
 				console.log('Apple Pay Payment SUCCESS ');
+				Allure.ApplePay.flag.lastStatus = true;
 			} else {
 				status = ApplePaySession.STATUS_FAILURE;
 			}
@@ -139,6 +142,11 @@ if (window.ApplePaySession) {
 			Allure.ApplePay.session.completePayment(status);
 			console.log('END ACTION: completePayment');
 		});
+		
+		if (Allure.ApplePay.flag.lastStatus) {
+			location.href = '/checkout/onepage/success';
+		}
+		
 		console.log('END EVENT: onPaymentAuthorized');
 	};
 	
@@ -577,7 +585,6 @@ if (window.ApplePaySession) {
 
 			if ( returnFromGateway == true ) {
 				resolve(true);
-				location.href = '/checkout/onepage/success';
 			    //review.save();
 			} else {
 				reject;
