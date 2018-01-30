@@ -589,7 +589,7 @@ XML;
         
         $transRequestXml->transactionRequest->amount=$_POST['amount'];
         $transRequestXml->transactionRequest->payment->opaqueData->dataDescriptor=$_POST['dataDesc'];
-        $transRequestXml->transactionRequest->payment->opaqueData->dataValue=$_POST['dataValue'];
+        $transRequestXml->transactionRequest->payment->opaqueData->dataValue=$_POST['dataBinary'];
         
         if ($_POST['dataDesc'] === 'COMMON.VCO.ONLINE.PAYMENT') {
             $transRequestXml->transactionRequest->addChild('callId',$_POST['callId']);
