@@ -401,7 +401,7 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.action.prepareRequest = function(requestData) {
 		var requestData = {
 			  	countryCode: 'US',
-			  	currencyCode: Allure.ApplePay.data.currencyCode,
+			  	currencyCode: (Allure.ApplePay.flag.sandbox ? 'USD' : Allure.ApplePay.data.currencyCode),
 			  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 			  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
 			  	total: { label: Allure.ApplePay.data.merchantName, amount: (Allure.ApplePay.flag.sandbox ? 1 : Allure.ApplePay.data.total.amount) },
