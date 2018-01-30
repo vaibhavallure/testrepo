@@ -33,7 +33,7 @@ $current_product = Mage::registry('current_product');
     $quote = Mage::getSingleton('checkout/session')->getQuote(); 
     if (!$onCatalog && $quote && $quote->hasItems()):
     ?>
-	Allure.ApplePay.data.lineTotal = <?php echo round($quote->getBaseGrandTotal(), 2);?>;
+	Allure.ApplePay.data.lineTotal = <?php echo round($quote->getBaseGrandTotal() / $quote->getBaseToQuoteRate(), 2);?>;
 
 	if (!Allure.ApplePay.flag.sandbox) {
 		Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
