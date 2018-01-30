@@ -664,6 +664,7 @@ a#foo2_next {
 }
 .appointments-index-facebook .field {
     padding: 10px 2px 10px 20px !important;
+    width: 98%;
 }
 @-moz-document url-prefix() { 
 	 .appointments-index-facebook .appt_ph input {
