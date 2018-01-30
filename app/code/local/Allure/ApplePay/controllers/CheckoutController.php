@@ -554,25 +554,25 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
         $data = $_POST;
 
-        $session = $this->_getSession();
-        $checkoutSession = $this->_getCheckoutSession();
+        //$session = $this->_getSession();
+        //$checkoutSession = $this->_getCheckoutSession();
 
-        $cart = $this->_getCart();
+        //$cart = $this->_getCart();
 
-        $masterQuote = $checkoutSession->getQuote();
-        $quote = $session->getQuote();
+        //$masterQuote = $checkoutSession->getQuote();
+        //$quote = $session->getQuote();
         
         $paymentData = array('method' => 'applepay'); 
         
         $this->getRequest()->setPost('payment', $paymentData);
         
-        $checkoutSession->setQuoteId($quote->getId());
-        $checkoutSession->replaceQuote($quote);
+        //$checkoutSession->setQuoteId($quote->getId());
+        //$checkoutSession->replaceQuote($quote);
         
         $this->saveOrderAction();
         
-        $checkoutSession->setQuoteId($masterQuote->getId());
-        $checkoutSession->replaceQuote($masterQuote);
+        //$checkoutSession->setQuoteId($masterQuote->getId());
+        //$checkoutSession->replaceQuote($masterQuote);
 
         die('DONE');
     }

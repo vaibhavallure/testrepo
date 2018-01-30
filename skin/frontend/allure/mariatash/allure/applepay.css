@@ -100,7 +100,6 @@ div#applepay-popup .modal-content {
     border-bottom: none;
     border-left: none;
     border-radius: 0;
-    background-color: #e1e1e1;
     opacity: 0;
     -webkit-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
     -moz-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
@@ -111,6 +110,7 @@ div#applepay-popup .modal-content {
 div#applepay-popup .modal-header {
 	border-bottom: 1px solid #d1d1d1;
 	padding: 10px 15px;
+	background-color: #e1e1e1;
 }
 
 div#applepay-popup .modal-footer {
