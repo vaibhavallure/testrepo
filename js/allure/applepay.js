@@ -10,7 +10,7 @@ Allure.ApplePay.flag.enabled = false;
 
 Allure.ApplePay.flag.active = false;
 
-Allure.ApplePay.flag.sandbox = true;
+Allure.ApplePay.flag.sandbox = false;
 
 if (window.ApplePaySession) {
 
@@ -37,7 +37,7 @@ if (window.ApplePaySession) {
 	
 	Allure.ApplePay.data.request = {
 	  	countryCode: 'US',
-	  	currencyCode: Allure.ApplePay.data.currencyCode,
+	  	currencyCode: 'USD', //Allure.ApplePay.data.currencyCode,
 	  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 	  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
 	  	total: function(){
@@ -380,7 +380,7 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.action.prepareRequest = function(requestData) {
 		var requestData = {
 			  	countryCode: 'US',
-			  	currencyCode: (Allure.ApplePay.flag.sandbox ? 'USD' : Allure.ApplePay.data.currencyCode),
+			  	currencyCode: 'USD',//(Allure.ApplePay.flag.sandbox ? 'USD' : Allure.ApplePay.data.currencyCode),
 			  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 			  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
 			  	total: { label: Allure.ApplePay.data.merchantName, amount: (Allure.ApplePay.flag.sandbox ? 1 : Allure.ApplePay.data.total.amount) },

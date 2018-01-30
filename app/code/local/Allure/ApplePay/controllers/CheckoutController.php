@@ -245,7 +245,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
                     $result['totals'][$code] = array(
                             'title' => $total->getTitle(),
-                            'value'=> $total->getValue()
+                            'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)//$total->getValue()
                     );
                 }
             }
@@ -302,15 +302,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             if (!$result) {
                 Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method', array('request' => $this->getRequest(),
                         'quote' => $this->getOnepage()->getQuote()));
-                
-                $result['totals'] = array();
-                
-                foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
-                    $result['totals'][$code] = array(
-                            'title' => $total->getTitle(),
-                            'value'=> $total->getValue()
-                    );
-                }
 
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
@@ -331,7 +322,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
                 $result['totals'][$code] = array(
                         'title' => $total->getTitle(),
-                        'value'=> $total->getValue()
+                        'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)
                 );
             }
             
