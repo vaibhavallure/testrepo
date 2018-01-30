@@ -142,7 +142,7 @@ if (window.ApplePaySession) {
 			Allure.ApplePay.session.completePayment(status);
 			console.log('END ACTION: completePayment');
 			
-			if (Allure.ApplePay.flag.lastStatus) {
+			if (success) {
 
 				Allure.ApplePay.modal.modal('hide');
 				
@@ -551,15 +551,12 @@ if (window.ApplePaySession) {
 			
 		}).done(function(responseData){
 			console.log(responseData);
-			
-			if (responseData && responseData.success) {
-				status = responseData.success;
-			}
+			status = responseData.success;
 		}).fail(function(){
 			console.log('Error');
 		})
 		
-		console.log('TransactStatus::'+status);
+		console.log('TransactionStatus::'+status);
 		
 		return status;
 	};
