@@ -141,13 +141,16 @@ if (window.ApplePaySession) {
 			console.log('START ACTION: completePayment');
 			Allure.ApplePay.session.completePayment(status);
 			console.log('END ACTION: completePayment');
-		});
-		
-		if (Allure.ApplePay.flag.lastStatus) {
-			location.href = '/checkout/onepage/success';
+			
+			if (Allure.ApplePay.flag.lastStatus) {
 
-			Allure.ApplePay.modal.modal('hide');
-		}
+				Allure.ApplePay.modal.modal('hide');
+				
+				location.href = '/checkout/onepage/success';
+			}
+			
+			Allure.ApplePay.flag.active = false;
+		});
 		
 		console.log('END EVENT: onPaymentAuthorized');
 	};
@@ -542,6 +545,7 @@ if (window.ApplePaySession) {
 			url: Allure.ApplePay.data.baseUrl+'saveTransaction',
 			data: {amount: Allure.ApplePay.data.total.amount, dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64},
 			method: 'POST',
+			dataType: 'json',
 			async: false,
 			timeout: 50000
 			
@@ -549,7 +553,7 @@ if (window.ApplePaySession) {
 			console.log(responseData);
 			
 			if (responseData && responseData.success) {
-				status = true;
+				status = responseData.success;
 			}
 		}).fail(function(){
 			console.log('Error');
