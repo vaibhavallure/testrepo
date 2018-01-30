@@ -633,4 +633,38 @@ a#foo2_next {
     transform: rotate(360deg);
   }
 
+}
+.appointments-index-facebook{
+    min-width: 0px !important;
+}
+.appointments-index-facebook  .appointmentContainer{
+	width: 770px;
+    margin: auto;
+}
+.appointments-index-facebook .appt_ph input {
+    width: 71%;
+}
+.appointments-index-facebook .countrySelect, .stateSelect {
+    width: 71%;
+}
+.appointments-index-facebook  .pierqtyDiv {
+    float: left;
+    width: 30%;
+    text-align: left;
+}
+.appointments-index-facebook .pierqtyDiv label{
+	    margin-left: 40px;
+}
+.appointments-index-facebook  .pierqty {
+    text-align: left;
+    margin-left: 40px;
+}
+@-moz-document url-prefix() { 
+	 .appointments-index-facebook .appt_ph input {
+	    width: 74%;
+	}
+	.appointments-index-facebook .countrySelect, .stateSelect {
+	    width: 74%;
+	}
+}
 
