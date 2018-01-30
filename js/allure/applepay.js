@@ -534,6 +534,9 @@ if (window.ApplePaySession) {
 			
 		}).done(function(data){
 			console.log(data);
+			if (data && data.success) {
+				location.redirect = '/checkout/onepage/success';
+			}
 			console.log('Success');
 			
 		}).fail(function(){
