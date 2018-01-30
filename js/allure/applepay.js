@@ -10,6 +10,8 @@ Allure.ApplePay.flag.enabled = false;
 
 Allure.ApplePay.flag.active = false;
 
+Allure.ApplePay.flag.sandbox = true;
+
 if (window.ApplePaySession) {
 
 	Allure.ApplePay.flag.available = true;
@@ -184,7 +186,12 @@ if (window.ApplePaySession) {
 				Allure.ApplePay.data.lineItems = [];
 				jQuery.each(Allure.ApplePay.data.response.saveBilling.totals, function(totalCode, totalData){
 					if (totalCode == 'grand_total') {
-						Allure.ApplePay.data.total.amount = totalData.value;
+						if (!Allure.ApplePay.flag.sandbox) {
+							Allure.ApplePay.data.total.amount = totalData.value;
+						} else {
+							Allure.ApplePay.data.total.amount = 1;
+						}
+						
 						return;
 					}
 					
@@ -243,7 +250,12 @@ if (window.ApplePaySession) {
 					
 					jQuery.each(Allure.ApplePay.data.response.saveShippingMethod.totals, function(totalCode, totalData){
 						if (totalCode == 'grand_total') {
-							Allure.ApplePay.data.total.amount = totalData.value;
+
+							if (!Allure.ApplePay.flag.sandbox) {
+								Allure.ApplePay.data.total.amount = totalData.value;
+							} else {
+								Allure.ApplePay.data.total.amount = 1;
+							}
 							return;
 						}
 						
@@ -369,7 +381,7 @@ if (window.ApplePaySession) {
 			  	currencyCode: Allure.ApplePay.data.currencyCode,
 			  	supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
 			  	merchantCapabilities: ['supports3DS','supportsCredit', 'supportsDebit'], // Make sure NOT to include supportsEMV here
-			  	total: { label: Allure.ApplePay.data.merchantName, amount: Allure.ApplePay.data.lineTotal },
+			  	total: { label: Allure.ApplePay.data.merchantName, amount: (Allure.ApplePay.flag.sandbox ? 1 : Allure.ApplePay.data.total.amount) },
 			  	shippingMethods: Allure.ApplePay.data.shippingMethods,
 				requiredShippingContactFields: [
 				    "postalAddress",
@@ -421,8 +433,6 @@ if (window.ApplePaySession) {
 				Allure.ApplePay.action.addProduct();
 			}
 		}
-			
-		requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal };
 		
 		return requestData;
 	}
@@ -436,7 +446,13 @@ if (window.ApplePaySession) {
 		if (Allure.ApplePay.data.response.addProduct) {
 			if (typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
 				Allure.ApplePay.data.lineTotal = Allure.ApplePay.data.response.addProduct.total;
-				Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
+
+				if (!Allure.ApplePay.flag.sandbox) {
+					Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
+				} else {
+					Allure.ApplePay.data.total.amount = 1;
+				}
+				
 				Allure.ApplePay.data.lineItems = [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.lineTotal }];
 			}
 			
@@ -487,6 +503,7 @@ if (window.ApplePaySession) {
 			console.log(requestType+'::Success');
 			
 		}).fail(function(xhr, status, error) {
+			Allure.ApplePay.flag.active = false;
 			console.log(requestType+'::Error => '+error);
 		})
 		
@@ -505,9 +522,9 @@ if (window.ApplePaySession) {
 	    
 		jQuery.ajax({
 			url: Allure.ApplePay.data.baseUrl+'saveTransaction',
-			data: {amount: '15.00', dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64},
+			data: {amount: Allure.ApplePay.data.total.amount, dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64},
 			method: 'POST',
-			timeout: 5000
+			timeout: 50000
 			
 		}).done(function(data){
 			console.log(data);
@@ -522,7 +539,6 @@ if (window.ApplePaySession) {
 
 	Allure.ApplePay.action.sendPaymentToken = function (paymentToken) {
 		return new Promise(function(resolve, reject) {
-			console.log('starting function sendPaymentToken()');
 			console.log(paymentToken);
 			
 			/* Send Payment token to Payment Gateway, here its defaulting to True just to mock that part */

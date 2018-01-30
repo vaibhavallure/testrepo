@@ -34,7 +34,13 @@ $current_product = Mage::registry('current_product');
     if (!$onCatalog && $quote && $quote->hasItems()):
     ?>
 	Allure.ApplePay.data.lineTotal = <?php echo round($quote->getBaseGrandTotal(), 2);?>;
-	Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
+
+	if (!Allure.ApplePay.flag.sandbox) {
+		Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
+	} else {
+		Allure.ApplePay.data.total.amount = 1;
+	}
+	
 	Allure.ApplePay.data.lineItems = [];
 
 	<?php if ($quote->getBillingAddress() && !empty($quote->getBillingAddress()->getEmail()) && is_null($quote->getBillingAddress()->getEmail())) {?>
