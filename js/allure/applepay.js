@@ -526,6 +526,8 @@ if (window.ApplePaySession) {
 	    let objJsonB64 = window.btoa(objJsonStr);
 		//console.log(objJsonB64);
 	    
+	    var status = false;
+	    
 		jQuery.ajax({
 			url: Allure.ApplePay.data.baseUrl+'saveTransaction',
 			data: {amount: Allure.ApplePay.data.total.amount, dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64},
@@ -536,13 +538,13 @@ if (window.ApplePaySession) {
 			console.log(responseData);
 			
 			if (responseData && responseData.success) {
-				location.href = '/checkout/onepage/success';
+				status = true;
 			}
 		}).fail(function(){
 			console.log('Error');
 		})
 		
-		return true;
+		return status;
 	};
 
 	Allure.ApplePay.action.sendPaymentToken = function (paymentToken, shippingContact) {
@@ -575,7 +577,8 @@ if (window.ApplePaySession) {
 
 			if ( returnFromGateway == true ) {
 				resolve(true);
-			    review.save();
+				location.href = '/checkout/onepage/success';
+			    //review.save();
 			} else {
 				reject;
 			}
