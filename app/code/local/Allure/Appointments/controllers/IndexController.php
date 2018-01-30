@@ -487,7 +487,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     				} //End of New Piearcer 
     				
     				Mage::getSingleton("core/session")->setData('appointment_submitted',$model);
-    				$this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+    				//$this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+    				$this->_redirectReferer().$appendUrl;
     				return;
     		} catch (Exception $e) {
     			Mage::getSingleton("core/session")->addError($e->getMessage());
@@ -495,7 +496,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     			return;
     		}
     	}
-    	$this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+    	$this->_redirectReferer().$appendUrl;
+    	//$this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
     }
     
     /* Create the customer by bhagya*/
@@ -851,5 +853,29 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             $ip=$_SERVER['REMOTE_ADDR'];
         }
         return $ip;
+    }
+    public function facebookAction(){
+        $apt_id = $this->getRequest()->getParam('id');
+        $apt_email = $this->getRequest()->getParam('email');
+        
+        if($apt_id && $apt_email)
+        {
+            $models = Mage::getModel('appointments/appointments')->getCollection();
+            $models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email);
+            if(count($models)){
+                foreach ($models as $model){
+                    $model=$model;break;
+                }
+                Mage::register('apt_modify_data',$model);
+                Mage::getSingleton("core/session")->setData('appointmentData_availablity',true);
+            }
+            else{
+                Mage::getSingleton("core/session")->setData('appointmentData_availablity',false);
+            }
+        }
+        $this->loadLayout();
+        $this->getLayout()->getBlock("head")->setTitle($this->__("Appointments"));
+
+        $this->renderLayout();
     }
 }
