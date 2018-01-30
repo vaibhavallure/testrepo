@@ -955,6 +955,7 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
      */
     public function _exportIterateCollection($callback, array $args)
     {
+ 
         $originalCollection = $this->getCollection();
         $count = null;
         $page  = 1;
@@ -978,6 +979,7 @@ class Mage_Adminhtml_Block_Widget_Grid extends Mage_Adminhtml_Block_Widget
             foreach ($collection as $item) {
                 call_user_func_array(array($this, $callback), array_merge(array($item), $args));
             }
+            $break=true;
         }
     }
 

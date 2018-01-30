@@ -3,7 +3,7 @@
 class Ebizmarts_BakerlooRestful_Model_Adminhtml_System_Config_Source_CustomerEditableAttribute
 {
 
-    private $_allowedTypes = array('text', 'date');
+    private $_allowedTypes = array('text', 'date', 'select');
     private $_bannedCodes  = array('firstname', 'lastname', 'email', 'default_shipping', 'default_billing');
 
     /**
@@ -22,7 +22,7 @@ class Ebizmarts_BakerlooRestful_Model_Adminhtml_System_Config_Source_CustomerEdi
         $options []= array('value' => '','label' => '');
 
         foreach ($attributes as $attribute) {
-            //@TODO: multiselect, select, boolean coming soon.
+            //@TODO: multiselect, boolean coming soon.
 
             if (in_array($attribute->getFrontendInput(), $this->_allowedTypes)
                 and !in_array($attribute->getAttributeCode(), $this->_bannedCodes)
