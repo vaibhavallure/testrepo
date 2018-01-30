@@ -659,6 +659,12 @@ a#foo2_next {
     text-align: left;
     margin-left: 40px;
 }
+.appointments-index-facebook .calendar span {
+    padding: 1px 13px;
+}
+.appointments-index-facebook .field {
+    padding: 10px 2px 10px 20px !important;
+}
 @-moz-document url-prefix() { 
 	 .appointments-index-facebook .appt_ph input {
 	    width: 74%;
