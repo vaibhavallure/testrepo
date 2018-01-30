@@ -532,13 +532,12 @@ if (window.ApplePaySession) {
 			method: 'POST',
 			timeout: 50000
 			
-		}).done(function(data){
-			console.log(data);
-			if (data && data.success) {
+		}).done(function(responseData){
+			console.log(responseData);
+			
+			if (responseData && responseData.success) {
 				location.href = '/checkout/onepage/success';
 			}
-			console.log('Success');
-			
 		}).fail(function(){
 			console.log('Error');
 		})
