@@ -207,6 +207,10 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     
                     $shippingMethods = array();
                     
+                    if ($address->getShippingMethod() && $address->getShippingMethod() != '') {
+                        $shippingMethods[$address->getShippingMethod()] = array();
+                    }
+                    
                     foreach($address->getGroupedAllShippingRates() as $rates){
                         
                         foreach ($rates as $rate) {
