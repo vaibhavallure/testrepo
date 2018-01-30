@@ -85,6 +85,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         //$this->cleanQuotes();
         
         //$this->getOnepage()->initCheckout();
+        
+        //$cart->init()->save();
 
         $params = $this->getRequest()->getParams();
 
@@ -114,9 +116,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 $cart->addProductsByIds(explode(',', $related));
             }
             
-            $cart->save();
-            
             $this->_getSession()->setCartWasUpdated(true);
+            
+            $cart->save();
             
             Mage::dispatchEvent('checkout_cart_add_product_complete',
                 array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
@@ -125,15 +127,17 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $quote = $cart->getQuote();
             
             $result = array(
-                    //'request' => $this->getRequest(),
-                    'params'        => $this->getRequest()->getParams(),
-                    'quote_id'      => $quote->getId(),
-                    'global_currency'  => $quote->getGlobalCurrencyCode(),
-                    'currency'      => Mage::app()->getStore()->getCurrentCurrencyCode(),
-                    'subtotal'      => $quote->getBaseSubtotal(),
-                    'grand_total'   => $quote->getBaseGrandTotal(),
-                    'total'         => Mage::helper('core')->currency($product->getFinalPrice(), false, false)
-                    //'session'       => $quote->getShippingAddress()->getData()
+                //'request' => $this->getRequest(),
+                'params'        => $this->getRequest()->getParams(),
+                'quote_id'      => $quote->getId(),
+                'global_currency'  => $quote->getGlobalCurrencyCode(),
+                'currency'      => Mage::app()->getStore()->getCurrentCurrencyCode(),
+                'coupon_code'   => $quote->getCouponCode(),
+                'subtotal'      => $quote->getBaseSubtotal(),
+                'grand_total'   => $quote->getBaseGrandTotal(),
+                'items'         => $quote->getItemsCount(),
+                'total'         => Mage::helper('core')->currency($product->getFinalPrice(), false, false),
+                'quote'         => $quote->getData()
             );
             
             /*
@@ -587,15 +591,16 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     public function applyCouponAction()
     {
         $response = array(
-                'error' => true,
-                'message' => '',
-                'disable' => false
+            'error' => true,
+            'message' => ''
         );
         
         /**
          * No reason continue with empty shopping cart
          */
-        if (!$this->_getCart()->getQuote()->getItemsCount()) {
+        if (!$this->_getQuote()->getItemsCount()) {
+            $response['message'] = 'Cart is empty';
+            die(json_encode($response));
             return;
         }
         

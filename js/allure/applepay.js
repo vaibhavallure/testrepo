@@ -283,6 +283,11 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.action.initProduct = function(){
 		Allure.ApplePay.modal.data('type','product')
 		Allure.ApplePay.modal.attr('data-type','product')
+		
+		if (typeof Allure.ApplePay.data.response.addProduct == 'undefined' || !Allure.ApplePay.data.response.addProduct) {
+			Allure.ApplePay.action.addProduct();
+		}
+		
 		Allure.ApplePay.modal.modal('show');
 		return false;
 	};
@@ -412,45 +417,55 @@ if (window.ApplePaySession) {
 		
 		if (Allure.ApplePay.data.checkoutType  != 'undefined' && Allure.ApplePay.data.checkoutType == 'ApplePayButtonProduct') {
 			
-			Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', {
-				product: jQuery('#pid-hidden').val(), 
-				qty: jQuery('#qty').val()
-			});
-			
-			if (Allure.ApplePay.data.response.addProduct) {
-				if (typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
-					Allure.ApplePay.data.lineTotal = Allure.ApplePay.data.response.addProduct.total;
-					Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
-					Allure.ApplePay.data.lineItems = [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.lineTotal }];
-				}
-				
-				if (typeof Allure.ApplePay.data.response.addProduct.currency != 'undefined') {
-					Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.addProduct.currency;
-				}
-				
-//				if (typeof Allure.ApplePay.data.response.addProduct.totals != 'undefined') {
-//					Allure.ApplePay.data.lineItems = [];
-//					
-//					jQuery.each(Allure.ApplePay.data.response.addProduct.totals, function(totalCode, totalData){
-//						if (totalCode == 'grand_total') {
-//							Allure.ApplePay.data.total.amount = totalData.value;
-//							return;
-//						}
-//						
-//						Allure.ApplePay.data.lineItems.push({
-//							    label: totalData.title,
-//							    amount: totalData.value,
-//							    type: "final"
-//						});
-//					});
-//				}
+			if (typeof Allure.ApplePay.data.response.addProduct == 'undefined' || !Allure.ApplePay.data.response.addProduct) {
+				Allure.ApplePay.action.addProduct();
 			}
-			
-			requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal };
 		}
+			
+		requestData.total = { label: 'Maria Tash', amount: Allure.ApplePay.data.lineTotal };
 		
 		return requestData;
 	}
+	
+	Allure.ApplePay.action.addProduct = function () {
+		Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', {
+			product: jQuery('#pid-hidden').val(), 
+			qty: jQuery('#qty').val()
+		});
+		
+		if (Allure.ApplePay.data.response.addProduct) {
+			if (typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
+				Allure.ApplePay.data.lineTotal = Allure.ApplePay.data.response.addProduct.total;
+				Allure.ApplePay.data.total.amount = Allure.ApplePay.data.lineTotal;
+				Allure.ApplePay.data.lineItems = [{type: 'final', label: 'Sub Total', amount: Allure.ApplePay.data.lineTotal }];
+			}
+			
+			if (typeof Allure.ApplePay.data.response.addProduct.currency != 'undefined') {
+				Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.addProduct.currency;
+			}
+			
+//			if (typeof Allure.ApplePay.data.response.addProduct.totals != 'undefined') {
+//				Allure.ApplePay.data.lineItems = [];
+//				
+//				jQuery.each(Allure.ApplePay.data.response.addProduct.totals, function(totalCode, totalData){
+//					if (totalCode == 'grand_total') {
+//						Allure.ApplePay.data.total.amount = totalData.value;
+//						return;
+//					}
+//					
+//					Allure.ApplePay.data.lineItems.push({
+//						    label: totalData.title,
+//						    amount: totalData.value,
+//						    type: "final"
+//					});
+//				});
+//			}
+			jQuery('#applepay-discount-coupon-form #coupon_code2').removeAttr('readonly');
+			jQuery('#applepay-discount-coupon-form #coupon_code2').val('');
+			jQuery('#applepay-discount-coupon-form #coupon_code2').attr('data-action','apply').data('action','apply');
+			jQuery('#applepay-btn-coupon span span').text('Apply');
+		}
+	};
 	
 	Allure.ApplePay.action.sendRequest = function (requestType, requestData) {
 		var responseData = null;
