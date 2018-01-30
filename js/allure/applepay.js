@@ -124,23 +124,6 @@ if (window.ApplePaySession) {
 		
 		var shippingContact = event.payment.shippingContact;
 		
-		Allure.ApplePay.data.response.saveBilling = Allure.ApplePay.action.sendRequest('saveBilling', {
-			'billing[firstname]': shippingContact.givenName, 
-			'billing[lastname]': shippingContact.familyName,
-			'billing[company]': '',
-			'billing[email]': shippingContact.emailAddress,
-			'billing[country_id]': shippingContact.countryCode,
-			'billing[street]': shippingContact.addressLines[0],
-			//'billing[street][1]': '',
-			'billing[city]': shippingContact.locality,
-			'billing[region_id]': '',
-			'billing[region]': shippingContact.administrativeArea,
-			'billing[postcode]': shippingContact.postalCode,
-			'billing[telephone]': shippingContact.phoneNumber,
-			'billing[fax]': '',
-			'billing[use_for_shipping]': 1
-		});
-		
 		promise.then(function (success) {	
 			var status;
 			if (success) {
@@ -153,7 +136,28 @@ if (window.ApplePaySession) {
 			console.log( "sendPaymentToken =  " + success );
 
 			console.log('START ACTION: completePayment');
-			Allure.ApplePay.session.completePayment(status);
+			
+
+			
+			Allure.ApplePay.data.response.saveBilling = Allure.ApplePay.action.sendRequest('saveBilling', {
+				'billing[firstname]': shippingContact.givenName, 
+				'billing[lastname]': shippingContact.familyName,
+				'billing[company]': '',
+				'billing[email]': shippingContact.emailAddress,
+				'billing[country_id]': shippingContact.countryCode,
+				'billing[street]': shippingContact.addressLines[0],
+				//'billing[street][1]': '',
+				'billing[city]': shippingContact.locality,
+				'billing[region_id]': '',
+				'billing[region]': shippingContact.administrativeArea,
+				'billing[postcode]': shippingContact.postalCode,
+				'billing[telephone]': shippingContact.phoneNumber,
+				'billing[fax]': '',
+				'billing[use_for_shipping]': 1
+			}, function() {
+				Allure.ApplePay.session.completePayment(status);
+			});
+			
 			console.log('END ACTION: completePayment');
 		});
 		console.log('END EVENT: onPaymentAuthorized');
@@ -502,7 +506,7 @@ if (window.ApplePaySession) {
 		}
 	};
 	
-	Allure.ApplePay.action.sendRequest = function (requestType, requestData) {
+	Allure.ApplePay.action.sendRequest = function (requestType, requestData, requestCallback) {
 		var responseData = null;
 		jQuery.ajax({
 			url: 	Allure.ApplePay.data.baseUrl+requestType,
@@ -520,6 +524,10 @@ if (window.ApplePaySession) {
 			console.log(data);
 			responseData = data;
 			console.log(requestType+'::Success');
+			
+			if (typeof requestCallback != 'undefined') {
+				requestCallback();
+			}
 			
 		}).fail(function(xhr, status, error) {
 			Allure.ApplePay.flag.active = false;
