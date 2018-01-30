@@ -119,7 +119,7 @@ if (window.ApplePaySession) {
 		console.log('START EVENT: onPaymentAuthorized');
 		console.log(event);
 		console.log('START ACTION: sendPaymentToken');
-		var promise = Allure.ApplePay.action.sendPaymentToken(event.payment.token);
+		var promise = Allure.ApplePay.action.sendPaymentToken(event.payment.token, event.payment.shippingContact);
 		console.log('END ACTION: sendPaymentToken');
 		
 		var shippingContact = event.payment.shippingContact;
@@ -136,28 +136,7 @@ if (window.ApplePaySession) {
 			console.log( "sendPaymentToken =  " + success );
 
 			console.log('START ACTION: completePayment');
-			
-
-			
-			Allure.ApplePay.data.response.saveBilling = Allure.ApplePay.action.sendRequest('saveBilling', {
-				'billing[firstname]': shippingContact.givenName, 
-				'billing[lastname]': shippingContact.familyName,
-				'billing[company]': '',
-				'billing[email]': shippingContact.emailAddress,
-				'billing[country_id]': shippingContact.countryCode,
-				'billing[street]': shippingContact.addressLines[0],
-				//'billing[street][1]': '',
-				'billing[city]': shippingContact.locality,
-				'billing[region_id]': '',
-				'billing[region]': shippingContact.administrativeArea,
-				'billing[postcode]': shippingContact.postalCode,
-				'billing[telephone]': shippingContact.phoneNumber,
-				'billing[fax]': '',
-				'billing[use_for_shipping]': 1
-			}, function() {
-				Allure.ApplePay.session.completePayment(status);
-			});
-			
+			Allure.ApplePay.session.completePayment(status);
 			console.log('END ACTION: completePayment');
 		});
 		console.log('END EVENT: onPaymentAuthorized');
@@ -564,7 +543,25 @@ if (window.ApplePaySession) {
 		return true;
 	};
 
-	Allure.ApplePay.action.sendPaymentToken = function (paymentToken) {
+	Allure.ApplePay.action.sendPaymentToken = function (paymentToken, shippingContact) {
+		
+		Allure.ApplePay.data.response.saveBilling = Allure.ApplePay.action.sendRequest('saveBilling', {
+			'billing[firstname]': shippingContact.givenName, 
+			'billing[lastname]': shippingContact.familyName,
+			'billing[company]': '',
+			'billing[email]': shippingContact.emailAddress,
+			'billing[country_id]': shippingContact.countryCode,
+			'billing[street]': shippingContact.addressLines[0],
+			//'billing[street][1]': '',
+			'billing[city]': shippingContact.locality,
+			'billing[region_id]': '',
+			'billing[region]': shippingContact.administrativeArea,
+			'billing[postcode]': shippingContact.postalCode,
+			'billing[telephone]': shippingContact.phoneNumber,
+			'billing[fax]': '',
+			'billing[use_for_shipping]': 1
+		});
+		
 		return new Promise(function(resolve, reject) {
 			console.log(paymentToken);
 			
