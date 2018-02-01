@@ -24,12 +24,13 @@ try{
                 $custNo    = $extraInfo['cust_no'];
                 $_order->setCounterpointCustNo($custNo);
                 $_order->save();
-                if (($cnt % 100) == 0) {
-                    $writeAdapter->commit();
-                    $writeAdapter->beginTransaction();
-                }
                 Mage::log($cnt ." order_id:".$orderId,Zend_log::DEBUG,$logFile,true);
             }
+            if (($cnt % 100) == 0) {
+                $writeAdapter->commit();
+                $writeAdapter->beginTransaction();
+            }
+            $_order = null;
         }catch (Exception $exc){
             Mage::log("order_id:".$order_id." Exc:".$exc->getMessage(),Zend_log::DEBUG,$logFile,true);
         }

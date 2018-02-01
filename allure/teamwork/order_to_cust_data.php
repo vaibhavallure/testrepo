@@ -6,10 +6,24 @@ Mage::app()->setCurrentStore(0);
 ini_set('memory_limit', '-1');
 $logFile = "cntr_customer_prepare.log";
 
+$page = $_GET["page"];
+$size = $_GET['size'];
+if(empty($page)){
+    die("Please add page");
+}
+
+if(empty($size)){
+    $size = 100;
+}
+
 try{
     $collection = Mage::getModel("sales/order")->getCollection();
     $collection->addFieldToFilter( 'create_order_method', array('eq'=>1));
+    $collection->setCurPage($page);
+    $collection->setPageSize($size);
+    $collection->setOrder('entity_id', 'asc');
     $collection->getSelect()->group('customer_email');
+    
     Mage::log("count = ".$collection->getSize(),Zend_log::DEBUG,$logFile,true);
     $cnt = 0;
     $resource       = Mage::getSingleton('core/resource');
@@ -27,11 +41,12 @@ try{
                 $customer->setCounterpointCustNo($custNo);
                 $customer->setTempEmail($email);
                 $customer->save();
-                if (($cnt % 100) == 0) {
-                    $writeAdapter->commit();
-                    $writeAdapter->beginTransaction();
-                }
                 Mage::log($cnt ." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+            }
+            $customer = null;
+            if (($cnt % 100) == 0) {
+                $writeAdapter->commit();
+                $writeAdapter->beginTransaction();
             }
         }catch (Exception $exc){
             Mage::log("customer_id:".$customerId." Exc:".$exc->getMessage(),Zend_log::DEBUG,$logFile,true);
