@@ -43,8 +43,8 @@ try{
                 $model->setCustNo($custNo);
                 $model->setEmail($email);
                 $model->setTempEmail($emailTemp);
-                $model->setCustomerId();
-                $model->save($customerId);
+                $model->setCustomerId($customerId);
+                $model->save();
                 Mage::log($cnt ." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
             }
             $customer = null;
