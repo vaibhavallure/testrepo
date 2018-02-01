@@ -9,7 +9,7 @@ $logFile = "cntr_order_prepare.log";
 try{
     $collection = Mage::getModel("sales/order")->getCollection();
     $collection->addFieldToFilter( 'create_order_method', array('eq'=>1));
-    //$collection->getSelect()->group('customer_email');
+    $collection->getSelect()->group('customer_email');
     Mage::log("count = ".$collection->getSize(),Zend_log::DEBUG,$logFile,true);
     $cnt = 0;
     $resource       = Mage::getSingleton('core/resource');
