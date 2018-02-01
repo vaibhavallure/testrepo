@@ -22,7 +22,7 @@ try{
     $collection->setCurPage($page);
     $collection->setPageSize($size);
     $collection->setOrder('entity_id', 'asc');
-    $collection->getSelect()->group('customer_email');
+    $collection->getSelect()->group('customer_id');
     
     Mage::log("count = ".$collection->getSize(),Zend_log::DEBUG,$logFile,true);
     $cnt = 0;
@@ -45,8 +45,9 @@ try{
                 $model->setTempEmail($emailTemp);
                 $model->setCustomerId($customerId);
                 $model->save();
-                Mage::log($cnt ." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+                Mage::log($cnt ." save customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
             }
+            Mage::log("customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
             $customer = null;
             $model = null;
             if (($cnt % 100) == 0) {
