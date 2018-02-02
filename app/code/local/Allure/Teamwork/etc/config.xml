@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Allure_Teamwork>
-			<version>1.0.2</version>
+			<version>1.0.3</version>
 		</Allure_Teamwork>
 	</modules>
 	<global>
@@ -38,6 +38,12 @@
 					<customer>
 						<table>allure_customer_counterpoint</table>
 					</customer>
+					<log>
+						<table>allure_teamwork_log_table</table>
+					</log>
+					<cpcustomer>
+						<table>allure_teamwork_ar_cust_cp</table>
+					</cpcustomer>
 				</entities>
 			</allure_teamwork_resource>
 		</models>

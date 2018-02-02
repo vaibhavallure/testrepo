@@ -27,8 +27,8 @@ try{
     Mage::log("count = ".$collection->getSize(),Zend_log::DEBUG,$logFile,true);
     $cnt = 0;
     $resource       = Mage::getSingleton('core/resource');
-    /* $writeAdapter   = $resource->getConnection('core_write');
-    $writeAdapter->beginTransaction(); */
+    $writeAdapter   = $resource->getConnection('core_write');
+    $writeAdapter->beginTransaction();
     foreach ($collection as $order){
         $customerId = $order->getCustomerId();
         $email      = $order->getCustomerEmail();
@@ -43,11 +43,11 @@ try{
                 $customer->save();
                 Mage::log($cnt ." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
             }
-            /* $customer = null;
+            $customer = null;
             if (($cnt % 100) == 0) {
                 $writeAdapter->commit();
                 $writeAdapter->beginTransaction();
-            } */
+            }
         }catch (Exception $exc){
             Mage::log("customer_id:".$customerId." Exc:".$exc->getMessage(),Zend_log::DEBUG,$logFile,true);
         }

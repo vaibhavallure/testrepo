@@ -6,6 +6,10 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+Mage::getModel("allure_teamwork/observer")->addCpCustomerIntoMagento();
+
+die;
+
 if(empty($lower) || empty($upper)){
     die('Please add Upper and Lower limit');
 }
