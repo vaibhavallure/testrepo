@@ -44,6 +44,9 @@ try{
                 $model->setEmail($email);
                 $model->setTempEmail($emailTemp);
                 $model->setCustomerId($customerId);
+                if($customer->getCustomerType()){
+                    $model->setIsNonMagCust(1);
+                }
                 $model->save();
                 Mage::log($cnt ." save customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
             }
