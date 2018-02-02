@@ -16,7 +16,7 @@ try{
     $collection = Mage::getModel("allure_teamwork/customer")->getCollection();
     $collection->addFieldToFilter( 'is_non_mag_cust', array('eq'=>1));
     $collection->addFieldToFilter('cust_no', array('nlike' => '%WALK%'));
-    
+    $resource       = Mage::getSingleton('core/resource');
     $writeAdapter   = $resource->getConnection('core_write');
     $writeAdapter->beginTransaction();
     $cnt = 0;
