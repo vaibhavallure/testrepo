@@ -17,5 +17,6 @@ $this->addAttribute('order', 'temp_email', array(
     'default'		=> null
 ));
 
+$this->endSetup();
 
 ?>
