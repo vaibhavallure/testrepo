@@ -52,11 +52,11 @@ try{
                 $customerId2 = $cust1->getCustomerId();
                 $custNo2 = $cust1->getCustNo();
                 if($custNo1 == $custNo2){
-                    /* if($customerId1 < $customerId2){
+                    if($customerId1 < $customerId2){
                         var_dump(" 1 ".$customerId2);
                     }elseif ($customerId1 > $customerId2){
                         var_dump(" 2 ".$customerId1);
-                    } */
+                    }
                     var_dump($custNo1);
                     break;
                 }

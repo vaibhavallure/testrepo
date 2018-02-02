@@ -34,7 +34,7 @@ try{
         $emailTemp      = $order->getCustomerEmail();
         try{
             $customer = Mage::getModel("customer/customer")->load($customerId);
-            $model = Mage::getModel("allure_teamwork/customer")
+            /* $model = Mage::getModel("allure_teamwork/customer")
                 ->load($customerId,"customer_id");
             if(!$model->getId()){
                 $email = $customer->getEmail();
@@ -49,7 +49,39 @@ try{
                 }
                 $model->save();
                 Mage::log($cnt ." save customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+            } */
+            
+            if($customer->getCustomerType()){
+                $extraInfo = unserialize($order->getCounterpointExtraInfo());
+                $custNo    = $extraInfo['cust_no'];
+                $model = Mage::getModel("allure_teamwork/customer")
+                    ->load($custNo,"cust_no");
+                if(!$model->getId()){
+                    $email = $customer->getEmail();
+                    $model->setCustNo($custNo);
+                    $model->setEmail($email);
+                    $model->setTempEmail($emailTemp);
+                    $model->setCustomerId($customerId);
+                    $model->setIsNonMagCust(1);
+                    $model->save();
+                    Mage::log($cnt ." save customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+                }
+            }else{
+                $model = Mage::getModel("allure_teamwork/customer")
+                ->load($customerId,"customer_id");
+                if(!$model->getId()){
+                    $email = $customer->getEmail();
+                    $extraInfo = unserialize($order->getCounterpointExtraInfo());
+                    $custNo    = $extraInfo['cust_no'];
+                    $model->setCustNo($custNo);
+                    $model->setEmail($email);
+                    $model->setTempEmail($emailTemp);
+                    $model->setCustomerId($customerId);
+                    $model->save();
+                    Mage::log($cnt ." save customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+                } 
             }
+            
             Mage::log("customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
             $customer = null;
             $model = null;
