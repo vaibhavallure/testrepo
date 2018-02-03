@@ -312,6 +312,12 @@ class Allure_Teamwork_Model_Observer{
                             if($customer->getCustomerType() == 0){
                                 $customer->setCustomerType(4);   //magento cust
                             }
+                            
+                            $model = Mage::getModel("allure_teamwork/cpcustomer")->load($custNo,"cust_no");
+                            if(!$model->getId()){
+                                $cust_note = $model->getCustNote();
+                                $customer->setCustNote($cust_note);
+                            }
                             $customer->setCounterpointCustNo($custNo);
                             $customer->setTempEmail($email);
                             $customer->save();

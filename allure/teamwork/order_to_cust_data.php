@@ -22,7 +22,7 @@ try{
     $collection->setCurPage($page);
     $collection->setPageSize($size);
     $collection->setOrder('entity_id', 'asc');
-    $collection->getSelect()->group('customer_email');
+    $collection->getSelect()->group('customer_id');
     
     Mage::log("count = ".$collection->getSize(),Zend_log::DEBUG,$logFile,true);
     $cnt = 0;
@@ -37,6 +37,11 @@ try{
             if($customer->getId()){
                 $extraInfo = unserialize($order->getCounterpointExtraInfo());
                 $custNo    = $extraInfo['cust_no'];
+                $model = Mage::getModel("allure_teamwork/cpcustomer")->load($custNo,"cust_no");
+                if(!$model->getId()){
+                    $cust_note = $model->getCustNote();
+                    $customer->setCustNote($cust_note);
+                }
                 $customer->setCustomerType(1);
                 $customer->setCounterpointCustNo($custNo);
                 $customer->setTempEmail($email);
