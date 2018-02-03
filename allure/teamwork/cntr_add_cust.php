@@ -26,6 +26,8 @@ try{
     /* echo "<pre>";
     print_r($csvData);die; */
     
+    $arrCust = array();
+    
     while($csvData = $io->streamReadCsv()){
         try{
             $custNo = $csvData[0];
@@ -43,6 +45,31 @@ try{
             $email2 = $csvData[23];
             $group = $csvData[177];
             $strId = $csvData[31];
+            
+            $arrCust[$custNo] = array(
+                'cust_no'   =>$custNo,
+                'name'      =>$name,
+                'fst_name'  =>$fstName,
+                'lst_name'  =>$lstName,
+                'addr1'     =>$addr1,
+                'addr2'     =>$addr2,
+                'city'      =>$city,
+                'state'     =>$state,
+                'country'   =>$country,
+                'zip_code'  =>$zipCode,
+                'phone'     =>$phone,
+                'email1'    =>$email1,
+                'email2'    =>$email2,
+                'group'     =>$group,
+                'str_id'    =>$strId
+            );
+        }catch (Exception $e){
+            Mage::log("csv read exc:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
+        }
+    }
+    
+    foreach ($arrCust as $key=>$value){
+        try{
             /* if(empty($email1)){
                 if(!empty($email2)){
                     $email1 = $email2;
@@ -58,31 +85,34 @@ try{
                 }
             } */
             
-            $model = Mage::getModel("allure_teamwork/cpcustomer")->load($custNo,"cust_no");
+            $model = Mage::getModel("allure_teamwork/cpcustomer")->load($value['cust_no'],"cust_no");
             if(!$model->getId()){
-                $model->setCustNo($custNo)
-                ->setEmail($email1)
-                ->setOptionalEmail($email2)
-                ->setName($name)
-                ->setFstName($fstName)
-                ->setLstName($lstName)
-                ->setAddr1($addr1)
-                ->setAddr2($addr2)
-                ->setCity($city)
-                ->setState($state)
-                ->setZipCode($zipCode)
-                ->setPhone($phone)
-                ->setCountry($country)
-                ->setGroup($group)
-                ->setStrId($strId)
+                $model->setCustNo($value['cust_no'])
+                ->setEmail($value['email1'])
+                ->setOptionalEmail($value['email2'])
+                ->setName($value['name'])
+                ->setFstName($value['fst_name'])
+                ->setLstName($value['lst_name'])
+                ->setAddr1($value['addr1'])
+                ->setAddr2($value['addr2'])
+                ->setCity($value['city'])
+                ->setState($value['state'])
+                ->setZipCode($value['zip_code'])
+                ->setPhone($value['phone'])
+                ->setCountry($value['country'])
+                ->setGroup($value['group'])
+                ->setStrId($value['str_id'])
                 ->save();
                 Mage::log($cnt." add id:".$model->getId(),Zend_log::DEBUG,$logFile,true);
+            
+                if (($cnt % 500) == 0) {
+                    $writeAdapter->commit();
+                    $writeAdapter->beginTransaction();
+                }
+            
             }
             
-            if (($cnt % 100) == 0) {
-                $writeAdapter->commit();
-                $writeAdapter->beginTransaction();
-            }
+            $model = null;
             Mage::log($cnt." exist id:".$model->getId(),Zend_log::DEBUG,$logFile,true);
             
         }catch (Exception $e){
