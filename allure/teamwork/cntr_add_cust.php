@@ -112,9 +112,8 @@ try{
             
             }
             
-            $model = null;
             Mage::log($cnt." exist id:".$model->getId(),Zend_log::DEBUG,$logFile,true);
-            
+            $model = null;
         }catch (Exception $e){
             Mage::log("exc:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
         }
