@@ -69,12 +69,12 @@ try{
                     $modelDupl = Mage::getModel("allure_teamwork/duplcustomer")
                         ->load($customerId,"customer_id");
                     if(!$modelDupl->getId()){
-                        $modelDupl = $customer->getEmail();
-                        $modelDupl->setCustNo($custNo);
+                        $email = $customer->getEmail();
                         $modelDupl->setEmail($email);
                         $modelDupl->setTempEmail($emailTemp);
                         $modelDupl->setCustomerId($customerId);
                         $modelDupl->setIsNonMagCust(1);
+                        $modelDupl->setCustNo($custNo);
                         $modelDupl->save();
                     }
                 }
