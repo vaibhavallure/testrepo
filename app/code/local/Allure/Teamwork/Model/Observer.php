@@ -284,6 +284,7 @@ class Allure_Teamwork_Model_Observer{
         $operation = "al_cust_to_mag_cust";
         $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
         $page = $mLog->getPage();
+        $size = $mLog->getSize();
         try{
             $collection = Mage::getModel("sales/order")->getCollection();
             $collection->addFieldToFilter( 'create_order_method', array('eq'=>1));
@@ -353,6 +354,7 @@ class Allure_Teamwork_Model_Observer{
             $operation = "arr_cust_csv_to_mag_cust";
             $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
             $page = $mLog->getPage();
+            $size = $mLog->getSize();
             
             $resource       = Mage::getSingleton('core/resource');
             $writeAdapter   = $resource->getConnection('core_write');

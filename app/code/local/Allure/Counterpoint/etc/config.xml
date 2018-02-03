@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_Counterpoint>
 			<name>Allure - Counterpoint Bridge</name>
-			<version>1.0.4</version>
+			<version>1.0.5</version>
 			<depends>
 				<Allure_Core />
 			</depends>

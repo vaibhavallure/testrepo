@@ -39,6 +39,7 @@ if (Mage::helper('core')->isModuleEnabled('Allure_Teamwork')){
                 `id` int(11) unsigned NOT NULL auto_increment,
                 `operation` varchar(255) DEFAULT NULL,
                 `page` int DEFAULT 0,
+                `size` int DEFAULT 0,
                  PRIMARY KEY  (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         

@@ -31,7 +31,7 @@ try{
                     array("customer_id"  => $model->getCustomerId(),
                         "customer_email" => $model->getEmail()
                     ),
-                    "counterpoint_cust_no = {$custNo}"
+                    "counterpoint_cust_no = '{$custNo}'"
                 );
                 Mage::log($cnt." customer_id:".$model->getCustomerId(),Zend_log::DEBUG,$logFile,true);
             }

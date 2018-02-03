@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Allure_Teamwork>
-			<version>1.0.3</version>
+			<version>1.0.4</version>
 		</Allure_Teamwork>
 	</modules>
 	<global>
@@ -44,6 +44,9 @@
 					<cpcustomer>
 						<table>allure_teamwork_ar_cust_cp</table>
 					</cpcustomer>
+					<duplcustomer>
+						<table>allure_teamwork_duplicate_customer</table>
+					</duplcustomer>
 				</entities>
 			</allure_teamwork_resource>
 		</models>
@@ -67,6 +70,24 @@
 					<model>allure_teamwork/observer::updateCustomers</model>
 				</run>
 			</allure_teamwork_update>-->
+			
+			<!--	<allure_teamwork_ord_cust>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::addCustomerDataUsingOrder</model>
+				</run>
+			</allure_teamwork_ord_cust>-->
+			
+			<!--	<allure_teamwork_cp_cust>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::addCpCustomerIntoMagento</model>
+				</run>
+			</allure_teamwork_cp_cust>-->
 		</jobs>
 	</crontab>
 	

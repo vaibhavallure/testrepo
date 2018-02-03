@@ -65,6 +65,18 @@ try{
                     $model->setIsNonMagCust(1);
                     $model->save();
                     Mage::log($cnt ." save customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+                }else{
+                    $modelDupl = Mage::getModel("allure_teamwork/duplcustomer")
+                        ->load($customerId,"customer_id");
+                    if(!$modelDupl->getId()){
+                        $modelDupl = $customer->getEmail();
+                        $modelDupl->setCustNo($custNo);
+                        $modelDupl->setEmail($email);
+                        $modelDupl->setTempEmail($emailTemp);
+                        $modelDupl->setCustomerId($customerId);
+                        $modelDupl->setIsNonMagCust(1);
+                        $modelDupl->save();
+                    }
                 }
             }else{
                 $model = Mage::getModel("allure_teamwork/customer")

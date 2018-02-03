@@ -29,12 +29,20 @@ try{
         $cust_no = $csvData[0];
         $cust_note   = $csvData[5];
         try{
-            $customer    = Mage::getModel("customer/customer")
+            /* $customer    = Mage::getModel("customer/customer")
                 ->load($cust_no,"counterpoint_cust_no"); 
             if($customer->getId()){
                 $customer->setCustNote($cust_no);
                 $customer->save();
                 Mage::log($cnt." cust_no:".$cust_no,Zend_log::DEBUG,$logFile,true);
+            } */
+            
+            
+            //add cust note from csv
+            $model = Mage::getModel("allure_teamwork/cpcustomer")->load($cust_no,"cust_no");
+            if(!$model->getId()){
+                $model->setCustNote($cust_note);
+                $model->save();
             }
             
             if (($cnt % 100) == 0) {
