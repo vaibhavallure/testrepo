@@ -42,7 +42,10 @@ try{
                     $cust_note = $model->getCustNote();
                     $customer->setCustNote($cust_note);
                 }
-                $customer->setCustomerType(1);
+                
+                if($customer->getCustomerType() == 0){
+                    $customer->setCustomerType(4);   //magento cust
+                }
                 $customer->setCounterpointCustNo($custNo);
                 $customer->setTempEmail($email);
                 $customer->save();
