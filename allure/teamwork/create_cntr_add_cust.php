@@ -7,14 +7,19 @@ ini_set('memory_limit', '-1');
 
 $logFile = "cntr_create_cust_in_mag.log";
 $page = $_GET['page'];
+$size = $_GET['size'];
 if(empty($page)){
     die("please specify page");
 }
 
 
+if(empty($size)){
+    $size   = 100;
+}
+
+
 try{
     $cnt    = 0;
-    $size   = 100;
     
     $resource       = Mage::getSingleton('core/resource');
     $writeAdapter   = $resource->getConnection('core_write');
@@ -59,12 +64,20 @@ try{
                 }else {
                     if(!empty($name)){
                         $email = str_replace(' ', '', $name);
-                        $email = $email."@customers.mariatash.com";
+                        if(preg_match("/OL/", $custNo)){
+                            $custNum = str_replace('-', '', $custNo);
+                            $email = $email.$custNum;
+                        }
                     }else{
                         if(!empty($fstName) && !empty($lstName)){
-                            $email = $fstName.$lstName."@customers.mariatash.com";
+                            $email = $fstName.$lstName;
+                            if(preg_match("/OL/", $custNo)){
+                                $custNum = str_replace('-', '', $custNo);
+                                $email = $email.$custNum;
+                            }
                         }
                     }
+                    $email = $email."@customers.mariatash.com";
                 }
             }
             
