@@ -40,15 +40,17 @@ try{
             
             //add cust note from csv
             $model = Mage::getModel("allure_teamwork/cpcustomer")->load($cust_no,"cust_no");
-            if(!$model->getId()){
+            if($model->getId()){
                 $model->setCustNote($cust_note);
                 $model->save();
+                Mage::log($cnt." cust_no:".$cust_no,Zend_log::DEBUG,$logFile,true);
             }
             
             if (($cnt % 100) == 0) {
                 $writeAdapter->commit();
                 $writeAdapter->beginTransaction();
             }
+            $model = null;
         }catch (Exception $e){
             Mage::log("cust_no:".$cust_no." exc:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
         }
