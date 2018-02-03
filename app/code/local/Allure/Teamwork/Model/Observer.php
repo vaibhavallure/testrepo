@@ -271,4 +271,249 @@ class Allure_Teamwork_Model_Observer{
             }
         }
     }
+    
+    
+    /**
+     * add cp customer related info into mage customer
+     * table allure_customer_counterpoint
+     *
+     */
+    public function addCustomerDataUsingOrder(){
+        $logFile = "cntr_customer_prepare.log";
+        $size = 100;
+        $operation = "al_cust_to_mag_cust";
+        $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
+        $page = $mLog->getPage();
+        $size = $mLog->getSize();
+        try{
+            $collection = Mage::getModel("sales/order")->getCollection();
+            $collection->addFieldToFilter( 'create_order_method', array('eq'=>1));
+            $collection->setCurPage($page);
+            $collection->setPageSize($size);
+            $collection->setOrder('entity_id', 'asc');
+            $collection->getSelect()->group('customer_email');
+            
+            $lastPage = $collection->getLastPageNumber();
+            if($page < $lastPage){
+            
+                Mage::log("count = ".$collection->getSize(),Zend_log::DEBUG,$logFile,true);
+                $cnt = 0;
+                $resource       = Mage::getSingleton('core/resource');
+                $writeAdapter   = $resource->getConnection('core_write');
+                $writeAdapter->beginTransaction();
+                foreach ($collection as $order){
+                    $customerId = $order->getCustomerId();
+                    $email      = $order->getCustomerEmail();
+                    try{
+                        $customer   = Mage::getModel("customer/customer")->load($customerId);
+                        if($customer->getId()){
+                            $extraInfo = unserialize($order->getCounterpointExtraInfo());
+                            $custNo    = $extraInfo['cust_no'];
+                            if($customer->getCustomerType() == 0){
+                                $customer->setCustomerType(4);   //magento cust
+                            }
+                            
+                            $model = Mage::getModel("allure_teamwork/cpcustomer")->load($custNo,"cust_no");
+                            if(!$model->getId()){
+                                $cust_note = $model->getCustNote();
+                                $customer->setCustNote($cust_note);
+                            }
+                            $customer->setCounterpointCustNo($custNo);
+                            $customer->setTempEmail($email);
+                            $customer->save();
+                            Mage::log($cnt ." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+                        }
+                        $customer = null;
+                        if (($cnt % 100) == 0) {
+                            $writeAdapter->commit();
+                            $writeAdapter->beginTransaction();
+                        }
+                    }catch (Exception $exc){
+                        Mage::log("customer_id:".$customerId." Exc:".$exc->getMessage(),Zend_log::DEBUG,$logFile,true);
+                    }
+                    $cnt++;
+                }
+                $writeAdapter->commit();
+                $page +=1;
+                if($mLog->getId()){
+                    $mLog->setPage($page)->save();
+                }
+            }
+        }catch (Exception $e){
+            Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
+        }
+        Mage::log("Finish...",Zend_log::DEBUG,$logFile,true);
+    }
+    
+    
+    /**
+     * add arr_cust csv of cptr into magento customer
+     * table allure_teamwork_ar_cust_cp
+     */
+    public function addCpCustomerIntoMagento(){
+        $logFile = "cntr_create_cust_in_mag.log";
+        
+        
+        try{
+            $cnt    = 0;
+            $size = 100;
+            $operation = "arr_cust_csv_to_mag_cust";
+            $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
+            $page = $mLog->getPage();
+            $size = $mLog->getSize();
+            
+            $resource       = Mage::getSingleton('core/resource');
+            $writeAdapter   = $resource->getConnection('core_write');
+            $writeAdapter->beginTransaction();
+            
+            $collection = Mage::getModel("allure_teamwork/cpcustomer")->getCollection();
+            $collection->setCurPage($page);
+            $collection->setPageSize($size);
+            $collection->setOrder('id', 'asc');
+            
+            $lastPage = $collection->getLastPageNumber();
+            if($page < $lastPage){
+                
+                $store = 'counterpoint_vmt';
+                
+                $storeVMT   = Mage::getModel('core/store')->load($store,'code');
+                $storeId    = $storeVMT->getId();
+                $websiteId  = $storeVMT->getWebsiteId();
+                
+                $alphabets = range('A','Z');
+                $numbers = range('0','9');
+                $additional_characters = array('#','@','$');
+                
+                foreach ($collection as $cpcust){
+                    try{
+                        $custNo = $cpcust->getCustNo();
+                        $name  = $cpcust->getName();
+                        $fstName = $cpcust->getFstName();
+                        $lstName = $cpcust->getLstName();
+                        $addr1 = $cpcust->getAddr1();
+                        $addr2 = $cpcust->getAddr2();
+                        $city = $cpcust->getCity();
+                        $state = $cpcust->getState();
+                        $country = $cpcust->getCountry();
+                        $zipCode = $cpcust->getZipCode();
+                        $phone = $cpcust->getPhone();
+                        $email1 = $cpcust->getEmail();
+                        $email2 = $cpcust->getOptionalEmail();
+                        $group = $cpcust->getGroup();
+                        $strId = $cpcust->getStrId();
+                        $custNote = $cpcust->getCustNote();
+                        if(empty($email1)){
+                            if(!empty($email2)){
+                                $email1 = $email2;
+                            }else {
+                                if(!empty($name)){
+                                    $email = str_replace(' ', '', $name);
+                                    $email = $email."@customers.mariatash.com";
+                                }else{
+                                    if(!empty($fstName) && !empty($lstName)){
+                                        $email = $fstName.$lstName."@customers.mariatash.com";
+                                    }
+                                }
+                            }
+                        }
+                        
+                        $firstName = $fstName;
+                        $lastName  = $lstName;
+                        
+                        if(empty($firstName) && empty($lastName)){
+                            $name        = explode(" ", $name);
+                            $firstName  = $name[0];
+                            $lastName   = $name[0];
+                            if(count($name) > 1){
+                                $lastName = $name[1];
+                            }
+                        }
+                        
+                        $email = strtolower($email);
+                        
+                        $collection  = Mage::getModel('customer/customer')
+                        ->getCollection()
+                        ->addAttributeToSelect('*')
+                        ->addAttributeToFilter('counterpoint_cust_no', array('eq' => $custNo));
+                        
+                        if(!($collection->getSize()>0)){
+                            $groupId = 1; //general;
+                            if($group == "B"){
+                                $groupId = 2; //wholesale;
+                            }
+                            
+                            $final_array = array_merge($alphabets,$numbers,$additional_characters);
+                            $password = '';
+                            $length = 6;  //password length
+                            while($length--) {
+                                $keyV = array_rand($final_array);
+                                $password .= $final_array[$keyV];
+                            }
+                            
+                            //$password = $this->generateRandomPassword();
+                            $customer = Mage::getModel("customer/customer");
+                            $customer->setWebsiteId($websiteId)
+                            ->setStoreId($storeId)
+                            ->setGroupId($groupId)
+                            ->setFirstname($firstName)
+                            ->setLastname($lastName)
+                            ->setEmail($email)
+                            ->setPassword($password)
+                            ->setCustomerType(3)  //counterpoint arr_cust
+                            ->setCounterpointCustNo($custNo)
+                            ->setCustNote($custNote)
+                            ->save();
+                            
+                            $_billing_address = array (
+                                'firstname'  => $customer->getFirstname(),
+                                'lastname'   => $customer->getLastname(),
+                                'street'     => array (
+                                    '0' => (!empty($addr1))?$addr1:$addr2,
+                                    '1' => $addr2
+                                ),
+                                'city'       => $city,
+                                'postcode'   => $zipCode,
+                                'country_id' => $country,
+                                'region' 	=> 	$state,
+                                'telephone'  => $phone,
+                                'fax'        => '',
+                            );
+                            
+                            $address = Mage::getModel("customer/address");
+                            $address->setData($_billing_address)
+                            ->setCustomerId($customer->getId())
+                            ->setIsDefaultBilling('1')
+                            ->setIsDefaultShipping('1')
+                            ->setSaveInAddressBook('1')
+                            ->save();
+                            Mage::log($cnt." add id:".$customer->getId(),Zend_log::DEBUG,$logFile,true);
+                        }else{
+                            Mage::log($cnt." exist id:".$customer->getId(),Zend_log::DEBUG,$logFile,true);
+                        }
+                        
+                        $address  = null;
+                        $customer = null;
+                        
+                        if (($cnt % 100) == 0) {
+                            $writeAdapter->commit();
+                            $writeAdapter->beginTransaction();
+                        }
+                        
+                    }catch (Exception $e){
+                        Mage::log("exc:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
+                    }
+                    $cnt++;
+                }
+                $page +=1;
+                if($mLog->getId()){
+                    $mLog->setPage($page)->save();
+                }
+                $writeAdapter->commit();
+                
+            }
+        }catch (Exception $e){
+            Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
+        }
+        Mage::log("Finish...",Zend_log::DEBUG,$logFile,true);
+    }
 }
