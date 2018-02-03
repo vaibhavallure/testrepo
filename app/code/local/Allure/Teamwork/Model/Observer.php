@@ -322,12 +322,14 @@ class Allure_Teamwork_Model_Observer{
                             $customer->setTempEmail($email);
                             $customer->save();
                             Mage::log($cnt ." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+                            
+                            if (($cnt % 100) == 0) {
+                                $writeAdapter->commit();
+                                $writeAdapter->beginTransaction();
+                            }
                         }
                         $customer = null;
-                        if (($cnt % 100) == 0) {
-                            $writeAdapter->commit();
-                            $writeAdapter->beginTransaction();
-                        }
+                        
                     }catch (Exception $exc){
                         Mage::log("customer_id:".$customerId." Exc:".$exc->getMessage(),Zend_log::DEBUG,$logFile,true);
                     }
@@ -408,12 +410,20 @@ class Allure_Teamwork_Model_Observer{
                             }else {
                                 if(!empty($name)){
                                     $email = str_replace(' ', '', $name);
-                                    $email = $email."@customers.mariatash.com";
+                                    if(preg_match("/OL/", $custNo)){
+                                        $custNum = str_replace('-', '', $custNo);
+                                        $email = $email.$custNum;
+                                    }
                                 }else{
                                     if(!empty($fstName) && !empty($lstName)){
-                                        $email = $fstName.$lstName."@customers.mariatash.com";
+                                        $email = $fstName.$lstName;
+                                        if(preg_match("/OL/", $custNo)){
+                                            $custNum = str_replace('-', '', $custNo);
+                                            $email = $email.$custNum;
+                                        }
                                     }
                                 }
+                                $email = $email."@customers.mariatash.com";
                             }
                         }
                         
