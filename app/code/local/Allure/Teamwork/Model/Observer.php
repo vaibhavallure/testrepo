@@ -314,7 +314,7 @@ class Allure_Teamwork_Model_Observer{
                             }
                             
                             $model = Mage::getModel("allure_teamwork/cpcustomer")->load($custNo,"cust_no");
-                            if(!$model->getId()){
+                            if($model->getId()){
                                 $cust_note = $model->getCustNote();
                                 $customer->setCustNote($cust_note);
                             }

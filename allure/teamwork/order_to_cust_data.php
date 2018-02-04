@@ -38,7 +38,7 @@ try{
                 $extraInfo = unserialize($order->getCounterpointExtraInfo());
                 $custNo    = $extraInfo['cust_no'];
                 $model = Mage::getModel("allure_teamwork/cpcustomer")->load($custNo,"cust_no");
-                if(!$model->getId()){
+                if($model->getId()){
                     $cust_note = $model->getCustNote();
                     $customer->setCustNote($cust_note);
                 }
