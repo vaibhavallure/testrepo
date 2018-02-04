@@ -152,7 +152,7 @@ try{
                     ->save();
                 Mage::log($cnt." add id:".$customer->getId(),Zend_log::DEBUG,$logFile,true);
             }else{
-                Mage::log($cnt." exist id:".$customer->getId(),Zend_log::DEBUG,$logFile,true);
+                Mage::log($cnt." exist id",Zend_log::DEBUG,$logFile,true);
             }
             $collectionCust = null;
             
