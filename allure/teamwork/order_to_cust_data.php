@@ -61,7 +61,7 @@ try{
         }
         $cnt++;
     }
-   // $writeAdapter->commit();
+    $writeAdapter->commit();
 }catch (Exception $e){
     Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
 }
