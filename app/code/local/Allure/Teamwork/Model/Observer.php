@@ -441,12 +441,12 @@ class Allure_Teamwork_Model_Observer{
                         
                         $email = strtolower($email);
                         
-                        $collection  = Mage::getModel('customer/customer')
+                        $collectionCust  = Mage::getModel('customer/customer')
                         ->getCollection()
                         ->addAttributeToSelect('*')
                         ->addAttributeToFilter('counterpoint_cust_no', array('eq' => $custNo));
                         
-                        if(!($collection->getSize()>0)){
+                        if(!($collectionCust->getSize()>0)){
                             $groupId = 1; //general;
                             if($group == "B"){
                                 $groupId = 2; //wholesale;
@@ -500,7 +500,7 @@ class Allure_Teamwork_Model_Observer{
                         }else{
                             Mage::log($cnt." exist id:".$customer->getId(),Zend_log::DEBUG,$logFile,true);
                         }
-                        
+                        $collectionCust = null;
                         $address  = null;
                         $customer = null;
                         
