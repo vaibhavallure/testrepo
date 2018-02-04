@@ -134,6 +134,20 @@ try{
                          $tempModel->save();
                          Mage::log($cnt." add customer_id:".$customerId." into temp table",Zend_log::DEBUG,$logFile,true);
                      }
+                     
+                     try{
+                         $customerObj->setCustNote($custNote);
+                         if(!$customerObj->getCustomerType() ){
+                             $customerObj->setCustomerType(6);   //magento cust
+                         }
+                         $customerObj->setCounterpointCustNo($custNo);
+                         $customerObj->setTempEmail($email);
+                         $customerObj->save();
+                         Mage::log($cnt." update customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+                     }catch (Exception $ee){
+                         Mage::log("excep:".$ee->getMessage()." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
+                     }
+                     
                 }else{
                     Mage::log("come in add",Zend_log::DEBUG,$logFile,true);
                     
