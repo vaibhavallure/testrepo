@@ -41,7 +41,7 @@ try{
                 $customer->save();
                 Mage::log($cnt ." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
             }
-            $customer = null;
+            
             if (($cnt % 100) == 0) {
                 $writeAdapter->commit();
                 $writeAdapter->beginTransaction();
@@ -51,7 +51,7 @@ try{
         }
         $cnt++;
     }
-   // $writeAdapter->commit();
+    $writeAdapter->commit();
 }catch (Exception $e){
     Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
 }
