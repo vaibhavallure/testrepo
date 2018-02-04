@@ -461,42 +461,64 @@ class Allure_Teamwork_Model_Observer{
                             }
                             
                             //$password = $this->generateRandomPassword();
-                            $customer = Mage::getModel("customer/customer");
-                            $customer->setWebsiteId($websiteId)
-                            ->setStoreId($storeId)
-                            ->setGroupId($groupId)
-                            ->setFirstname($firstName)
-                            ->setLastname($lastName)
-                            ->setEmail($email)
-                            ->setPassword($password)
-                            ->setCustomerType(3)  //counterpoint arr_cust
-                            ->setCounterpointCustNo($custNo)
-                            ->setCustNote($custNote)
-                            ->save();
                             
-                            $_billing_address = array (
-                                'firstname'  => $customer->getFirstname(),
-                                'lastname'   => $customer->getLastname(),
-                                'street'     => array (
-                                    '0' => (!empty($addr1))?$addr1:$addr2,
-                                    '1' => $addr2
-                                ),
-                                'city'       => $city,
-                                'postcode'   => $zipCode,
-                                'country_id' => $country,
-                                'region' 	=> 	$state,
-                                'telephone'  => $phone,
-                                'fax'        => '',
-                            );
+                            $customerObj = Mage::getModel('customer/customer')
+                            ->setWebsiteId(0)
+                            ->loadByEmail($email);
                             
-                            $address = Mage::getModel("customer/address");
-                            $address->setData($_billing_address)
-                            ->setCustomerId($customer->getId())
-                            ->setIsDefaultBilling('1')
-                            ->setIsDefaultShipping('1')
-                            ->setSaveInAddressBook('1')
-                            ->save();
-                            Mage::log($cnt." add id:".$customer->getId(),Zend_log::DEBUG,$logFile,true);
+                            if($customerObj->getId()){
+                                $customerId = $customerObj->getId();
+                                $tempModel = Mage::getModel("allure_teamwork/temp")->load($customerId,"customer_id");
+                                if(!$tempModel->getId()){
+                                    $emailCustomer = $customerObj->getEmail();
+                                    $tempModel->setCustNo($custNo);
+                                    $tempModel->setCustNote($custNote);
+                                    $tempModel->setEmail($emailCustomer);
+                                    $tempModel->setTempEmail($email);
+                                    $tempModel->setCustomerId($customerId);
+                                    $tempModel->save();
+                                    Mage::log($cnt." add customer_id:".$customerId." into temp table",Zend_log::DEBUG,$logFile,true);
+                                }
+                            }else{
+                                Mage::log("come in add",Zend_log::DEBUG,$logFile,true);
+                                
+                                $customer = Mage::getModel("customer/customer");
+                                $customer->setWebsiteId($websiteId)
+                                ->setStoreId($storeId)
+                                ->setGroupId($groupId)
+                                ->setFirstname($firstName)
+                                ->setLastname($lastName)
+                                ->setEmail($email)
+                                ->setPassword($password)
+                                ->setCustomerType(3)  //counterpoint arr_cust
+                                ->setCounterpointCustNo($custNo)
+                                ->setCustNote($custNote)
+                                ->save();
+                                
+                                $_billing_address = array (
+                                    'firstname'  => $customer->getFirstname(),
+                                    'lastname'   => $customer->getLastname(),
+                                    'street'     => array (
+                                        '0' => (!empty($addr1))?$addr1:$addr2,
+                                        '1' => $addr2
+                                    ),
+                                    'city'       => $city,
+                                    'postcode'   => $zipCode,
+                                    'country_id' => $country,
+                                    'region' 	=> 	$state,
+                                    'telephone'  => $phone,
+                                    'fax'        => '',
+                                );
+                                
+                                $address = Mage::getModel("customer/address");
+                                $address->setData($_billing_address)
+                                ->setCustomerId($customer->getId())
+                                ->setIsDefaultBilling('1')
+                                ->setIsDefaultShipping('1')
+                                ->setSaveInAddressBook('1')
+                                ->save();
+                                Mage::log($cnt." add id:".$customer->getId(),Zend_log::DEBUG,$logFile,true);
+                            }
                         }else{
                             Mage::log($cnt." exist id",Zend_log::DEBUG,$logFile,true);
                         }
