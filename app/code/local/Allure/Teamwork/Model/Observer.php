@@ -699,11 +699,15 @@ class Allure_Teamwork_Model_Observer{
                                   if(!$model->getId()){
                                      $model = Mage::getModel("allure_teamwork/teamwork");
                                   }
-                                        
+                                    
+                                  $custType = $customer->getCustomerType();
                                   $model->setCustomerId($customer_id)
                                         ->setEmail($email)
                                         ->setAutoGenBillId($guid1)
-                                        ->setAutoGenShipId($guid2);
+                                        ->setAutoGenShipId($guid2)
+                                        ->setCounterpointCustNo($cpCustNo)
+                                        ->setCustomerNote($customerNote)
+                                        ->setIsCounterpointCust($custType);
                                         
                                   if(!$responseObj->errorCode){
                                         $teamworkCustomerId = $responseObj->customer->customerID;
