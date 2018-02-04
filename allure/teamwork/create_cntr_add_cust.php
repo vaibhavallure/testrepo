@@ -141,6 +141,7 @@ try{
                              $customerObj->setCustomerType(6);   //magento cust
                          }
                          $customerObj->setCounterpointCustNo($custNo);
+                         $customerObj->setCustNote($custNote);
                          $customerObj->setTempEmail($email);
                          $customerObj->save();
                          Mage::log($cnt." update customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
