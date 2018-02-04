@@ -291,7 +291,7 @@ class Allure_Teamwork_Model_Observer{
             $collection->setCurPage($page);
             $collection->setPageSize($size);
             $collection->setOrder('entity_id', 'asc');
-            $collection->getSelect()->group('customer_email');
+            $collection->getSelect()->group('customer_id');
             
             $lastPage = $collection->getLastPageNumber();
             if($page < $lastPage){
