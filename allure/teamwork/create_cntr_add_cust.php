@@ -60,7 +60,7 @@ try{
             $custNote = $cpcust->getCustNote();
             if(empty($email1)){
                 if(!empty($email2)){
-                    $email1 = $email2;
+                    $email = $email2;
                 }else {
                     if(!empty($name)){
                         $email = str_replace(' ', '', $name);
@@ -79,6 +79,8 @@ try{
                     }
                     $email = $email."@customers.mariatash.com";
                 }
+            }else{
+                $email = $email1;
             }
             
             $firstName = $fstName;

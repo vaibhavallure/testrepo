@@ -406,7 +406,7 @@ class Allure_Teamwork_Model_Observer{
                         $custNote = $cpcust->getCustNote();
                         if(empty($email1)){
                             if(!empty($email2)){
-                                $email1 = $email2;
+                                $email = $email2;
                             }else {
                                 if(!empty($name)){
                                     $email = str_replace(' ', '', $name);
@@ -425,6 +425,8 @@ class Allure_Teamwork_Model_Observer{
                                 }
                                 $email = $email."@customers.mariatash.com";
                             }
+                        }else{
+                            $email = $email1;
                         }
                         
                         $firstName = $fstName;
@@ -653,7 +655,7 @@ class Allure_Teamwork_Model_Observer{
                                         
                                  if(!empty($billingAddrData['telephone'])){
                                     if($billingAddrData['telephone'] !="000-000-0000"){
-                                        $request['phone1'] = (object) array("number"=>$billingAddrData['telephone']);
+                                        $request['phone2'] = (object) array("number"=>$billingAddrData['telephone']);
                                     }
                                  }
                                         
