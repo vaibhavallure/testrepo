@@ -7,6 +7,18 @@ ini_set('memory_limit', '-1');
 
 $teamwoek_log_file = "transfer_failed_customer_into_teamwork.log";
 
+$page = $_GET['page'];
+$size = $_GET['limit'];
+
+if(!empty($page)){
+    die("Please specify the page");
+}
+
+if(empty($size)){
+    $size = 100;
+}
+
+
 try{
     $helper = Mage::helper("allure_teamwork");
     $status = $helper->getTeamworkStatus();
@@ -19,8 +31,8 @@ try{
         'teamwork.customer_id = e.entity_id AND teamwork.is_error=1',
         array('teamwork.id as teamwork_id','teamwork.response')
     );
-    $collection->setCurPage(1);
-    $collection->setPageSize(100);
+    $collection->setCurPage($page);
+    $collection->setPageSize($size);
     
     $_accessToken = $helper->getTeamworkAccessToken();
     $_url         = "https://api.teamworksvs.com/externalapi3/customers/register";
@@ -30,7 +42,7 @@ try{
     foreach ($collection as $customer){
         $response    = $customer->getResponse();
         $responseObj = json_decode($response);
-        if($responseObj->errorCode == 5){
+        if($responseObj->errorCode == 8){
             try{
                 $data           = $customer->getData();
                 if(!$customer->getIsDuplicate()){
