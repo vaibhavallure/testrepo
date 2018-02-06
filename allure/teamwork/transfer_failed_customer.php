@@ -10,7 +10,7 @@ $teamwoek_log_file = "transfer_failed_customer_into_teamwork.log";
 $page = $_GET['page'];
 $size = $_GET['limit'];
 
-if(!empty($page)){
+if(empty($page)){
     die("Please specify the page");
 }
 
