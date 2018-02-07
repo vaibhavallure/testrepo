@@ -46,4 +46,9 @@ class Ebizmarts_BakerlooLoyalty_Model_EnterpriseRewards extends Ebizmarts_Bakerl
     {
         return false;
     }
+
+    public function applyRewardsToQuote(Mage_Sales_Model_Quote $quote, $rules = array())
+    {
+
+    }
 }

@@ -92,7 +92,8 @@ class Ebizmarts_BakerlooRestful_Model_Api_Stores extends Ebizmarts_BakerlooRestf
                     'customer_search_by_attribute_online' => (string)$this->getModel('bakerloo_restful/api_customers')->getSearchByOnlineConfig($store),
                     'newsletter_subscribe_checked'   => (int)$store->getConfig('bakerloorestful/checkout/newsletter_subscribe_checked'),
                     'salespersons'                   => $bhelper->getSalespersonsOptions($store->getId()),
-                    'uses_loyalty'                   => (bool)$this->getHelper('bakerloo_restful/integrations')->canUse('loyalty')
+                    'uses_loyalty'                   => (bool)$this->getHelper('bakerloo_restful/integrations')->canUse('loyalty'),
+                    'loyalty_integration'            => (string)$this->getHelper('bakerloo_restful/integrations')->getIntegrationFromConfig('loyalty')
                 );
 
                 $storeAddress = $bhelper->getStoreAddress($id);

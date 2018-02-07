@@ -4,6 +4,12 @@ $helper = Mage::helper("inventory");
 
 ?>
 <?php $order=Mage::getModel('inventory/purchaseorder')->load($collection->getFirstItem()->getPoId())?>		
+<?php $updatedInfo=Mage::getModel('inventory/orderlogs')->getCollection();
+$updatedInfo->addFieldToFilter('po_id',$collection->getFirstItem()->getPoId());
+$updatedInfo->getSelect()->joinLeft('admin_user', 'admin_user.user_id = main_table.user_id', array('username','firstname','lastname'));
+//$updatedInfo->getSelect();
+$updatedInfo->setOrder('date', 'DESC');
+$updatedInfo=$updatedInfo->getFirstItem();?>
 <?php $orderTotal=$order->getTotalAmount()?>
 <div class="content-header">
    <h3 class="icon-head"><?php echo $helper->__('View Purchase Order')?></h3>
@@ -19,16 +25,13 @@ $helper = Mage::helper("inventory");
     <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT && !Mage::helper('allure_vendor')->isUserVendor()):?>
     <button id="ship_save_btn" form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/confirmdraftorder', array('_secure' => true));?>"><?php echo $helper->__('Send to Factory')?></button>
     <button id="add_custom_item" style="float: right;" class="add_custom_item" onclick="javascript:addProductPopup('<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addProduct',array(_secure=>true,'po_id'=>$order->getPoId(),'store'=>$order->getStockId()))?>')" ><?php echo $helper->__('Add Product')?></button>
-   
    <?php endif;?>
-   
    
     <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW && Mage::helper('allure_vendor')->isUserVendor()):?>
     <button id="accept" class="po_save_btn"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/accept', array('_secure' => true,'id'=>$order->getPoId()));?>'" ><?php echo $helper->__('Accept')?></button>
    <?php endif;?>
    <button onclick="history.back()" class="po_back_btn" ><?php echo $helper->__('Back')?></button>
 </div>
-
 
 <div>
 	<div id="parent">
@@ -61,10 +64,16 @@ $helper = Mage::helper("inventory");
 				<?php endif;?>
 				</label>
 			<?php endif;?>
+			<?php if(!empty($updatedInfo->getUsername())):?>
+			<label><span><?php echo $helper->__('Last Updated By:'); ?></span>
+			<?php echo $updatedInfo->getFirstname()." ".$updatedInfo->getLastname().'('.$updatedInfo->getDate().')';?>
+			</label>
+			<?php endif;?>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 
 <div class="prod-data">
@@ -73,13 +82,9 @@ $helper = Mage::helper("inventory");
 	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 	<table class="iventory-product table" style="width:100%">
 		
-		
-		<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
-		<th><?php echo $helper->__('Vendor Sku')?></th>
-	    <?php endif;?>
-	    
 		<th><?php echo $helper->__('Image')?></th>
 		<th><?php echo $helper->__('PRODUCT NAME')?></th>
+		<th><?php echo $helper->__('PRODUCT COLOR')?></th>
 		
 		<?php //	vedor sku editable only for Draft orders?>
 		<?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
@@ -94,6 +99,11 @@ $helper = Mage::helper("inventory");
 	    <?php endif;?>
 		
 		<th><?php echo $helper->__('VMT Comment')?></th>
+		
+		<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('Vendor Sku')?></th>
+	    <?php endif;?>
+	    
 		<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
 		<th><?php echo $helper->__('Shipped Qty')?></th>
 		<?php endif;?>
@@ -131,9 +141,7 @@ $helper = Mage::helper("inventory");
 			    <input type="hidden" name="po_id" id="po_id" value='<?php echo  $order->getPoId()?>' >
 			    <input type="hidden" name="is_custom" id="is_custom_<?php echo $_product->getProductId(); ?>" value='<?php echo  $_product->getIsCustom()?>' >
 				
-				<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
-				<td><?php echo (!$_product->getIsCustom()) ? $_product->getVendorSku() : "" ;?></td>
-				<?php endif;?>
+				
 				
 				<td>
 				<?php if(!$_product->getIsCustom()):?>
@@ -145,6 +153,14 @@ $helper = Mage::helper("inventory");
 				<td style="padding-left:20px;text-align:left">
 					<p><?php echo $product->getName();?></p>
 				    <p><strong>SKU:</strong><?php echo $product->getSku();?></p>
+				</td>
+				<td style="padding-left:20px;text-align:left">
+					<?php $productModel = Mage::getModel('catalog/product');
+                            $attr = $productModel->getResource()->getAttribute("metal_color");
+                            if ($attr->usesSource()) {
+                                 $color_label = $attr->getSource()->getOptionText($product->getMetalColor());
+                            }?>
+					<p><?php echo $color_label;?></p>
 				</td>
 				
 			   <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT): ?>
@@ -186,6 +202,14 @@ $helper = Mage::helper("inventory");
 						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="3" ><?php echo $_product->getAdminComment()?></textarea>
 				</td>
 				<?php endif;?>
+				
+				<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+				<td>
+				<input id="vendor_sku_<?php  echo $_product->getProductId() ?>" style="width:100px" 
+					 name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_sku" ?>]" type="text" 
+					 value="<?php echo (!$_product->getIsCustom()) ? $_product->getVendorSku() : "" ; ?>"  /></td>
+				<?php endif;?>
+				
 				<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT): ?>
 				<td>
 					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 

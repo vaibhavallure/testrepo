@@ -296,8 +296,9 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
             /* Add table */
             $this->_drawHeader($page);
             /* Add body */
-            $cnt = 1;
+            $cnt = 0;
             foreach ($invoice->getAllItems() as $item){
+                $cnt ++;
                 if ($item->getOrderItem()->getParentItem()) {
                     continue;
                 }
@@ -308,7 +309,6 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
                 }else{
                     $this->_drawItem($item, $page, $order);
                 }
-                $cnt ++;
                 $page = end($pdf->pages);
             }
             

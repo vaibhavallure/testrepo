@@ -190,6 +190,10 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     $model = Mage::getModel('appointments/appointments')->addData($post_data)
                     ->save();
                     
+                    //add logs
+                    $helperLogs = $this->getLogsHelper();
+                    $helperLogs->saveLogs("admin");
+                    
                     //$this->createCust($model);
                     
                     if($post_data['password']!=null || $post_data['password']!=''){
@@ -481,15 +485,15 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     } //End of New Piearcer
                     
                     Mage::getSingleton("core/session")->setData('appointment_submitted',$model);
-                    $this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+                    $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
                     return;
                 } catch (Exception $e) {
                     Mage::getSingleton("core/session")->addError($e->getMessage());
-                    $this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+                    $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
                     return;
                 }
             }
-            $this->getResponse()->setRedirect(Mage::getUrl("*/*/",array('_secure' => true)).$appendUrl);
+            $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
     }
     
     /* Create the customer by bhagya*/
@@ -592,6 +596,11 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 }
                 Mage::register('appointment_modified',$model);
                 Mage::getSingleton("core/session")->setData('appointment_availablity',true);
+                
+                //add logs
+                $helperLogs = $this->getLogsHelper();
+                $helperLogs->saveLogs("admin");
+                
             }
             else{
                 Mage::getSingleton("core/session")->setData('appointment_availablity',false);
@@ -619,6 +628,9 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 $model->setId($apt_id)->save();
                 echo "Your scheduled Appointment is Cancelled successfully.";
                 
+                //add logs
+                $helperLogs = $this->getLogsHelper();
+                $helperLogs->saveLogs("admin");
                 
                 /*Customer Email Code to cancel the Appointment*/
                 
@@ -841,6 +853,11 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 $post_data['appointment_end']=$model->getAppointmentEnd();
                 $model = Mage::getModel('appointments/appointments')->addData($post_data)
                 ->save();
+                
+                //add logs
+                $helperLogs = $this->getLogsHelper();
+                $helperLogs->saveLogs("admin");
+                
                 Mage::getSingleton("adminhtml/session")->addSuccess(Mage::helper("appointments")->__("Appointment details updated successfully"));
                 $this->_redirect("admin_appointments/adminhtml_appointments/view/id",array('id'=>$post_data['id']));
             }else {
@@ -928,6 +945,13 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
             $this->_redirect("admin_appointments/adminhtml_appointments/");
         }
         
+    }
+    
+    /**
+     * return logs helper object
+     */
+    private function getLogsHelper(){
+        return Mage::helper("appointments/logs");
     }
    
 }

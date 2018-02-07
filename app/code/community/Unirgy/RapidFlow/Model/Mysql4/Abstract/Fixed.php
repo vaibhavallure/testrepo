@@ -41,6 +41,15 @@ class Unirgy_RapidFlow_Model_Mysql4_Abstract_Fixed
         if (!empty($tune['curl_timeout'])) {
             $this->_curlTimeout = (int)$tune['curl_timeout'];
         }
+        if (!empty($tune['curl_useragent'])) {
+            $this->_curlUserAgent = $tune['curl_useragent'];
+        }
+        if (!empty($tune['curl_customrequest'])) {
+            $this->_curlCustomRequest = $tune['curl_customrequest'];
+        }
+        if (!empty($tune['curl_headers'])) {
+            $this->_curlHeaders = array_filter(preg_split("/\r\n|\n\r|\r|\n/", $tune['curl_headers']));
+        }
 
         $this->_cnt = array();
         $rowNum = 0;
@@ -293,6 +302,12 @@ if ($benchmark) Mage::log("_importSaveRows: ".memory_get_usage(true).', '.memory
         }
         if (!empty($tune['curl_useragent'])) {
             $this->_curlUserAgent = $tune['curl_useragent'];
+        }
+        if (!empty($tune['curl_customrequest'])) {
+            $this->_curlCustomRequest = $tune['curl_customrequest'];
+        }
+        if (!empty($tune['curl_headers'])) {
+            $this->_curlHeaders = array_filter(preg_split("/\r\n|\n\r|\r|\n/", $tune['curl_headers']));
         }
 
         $this->_profile->activity($this->__('Preparing data'));

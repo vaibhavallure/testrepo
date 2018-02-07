@@ -104,9 +104,27 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $from = $filterData->getData('from')." 00:00:00";
         $to = $filterData->getData('to')." 23:59:59";
         
+        
+        $local_tz = new DateTimeZone('UTC');
+        $local = new DateTime('now', $local_tz);
+       
+        $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$storeId));
+        $user = new DateTime('now', $user_tz);
+        
+        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
+        $localsTime = new DateTime($local->format('Y-m-d H:i:s'));
+        $offset = $local_tz->getOffset($local) - $user_tz->getOffset($user);
+        $interval = $usersTime->diff($localsTime);
+        
+        if($offset > 0)
+            $diffZone=$interval->h .' hours'.' '. $interval->i .' minutes';
+        else
+            $diffZone= '-'.$interval->h .' hours'.' '. $interval->i .' minutes';
+            
+                
         if(!empty($filterData->getData('from')) && !empty($filterData->getData('to')) ){
-            $from = date("Y-m-d H:i:s",strtotime("4 hours",strtotime($from)));
-            $to = date("Y-m-d H:i:s",strtotime("4 hours",strtotime($to)));
+            $from = date("Y-m-d H:i:s",strtotime($diffZone,strtotime($from)));
+            $to = date("Y-m-d H:i:s",strtotime($diffZone,strtotime($to)));
         }
       
         

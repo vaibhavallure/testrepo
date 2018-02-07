@@ -10,6 +10,45 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
     protected $_rates_twoship_outofstock;
 
     protected $_address_twoship_outofstock;
+    
+    public function getShippingRates()
+    {
+        
+        if (empty($this->_rates)) {
+            $this->getAddress()->collectShippingRates()->save();
+            $storeId=Mage::app()->getStore()->getStoreId();
+            $groups = $this->getAddress()->getGroupedAllShippingRates();
+            foreach ($groups as $code => $_rates){
+                if($code="allure_pickinstore"){
+                    $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
+                    $allowSpecificAttributeProductsArray=explode(',', $allowSpecificAttributeProducts);
+                    $quote=Mage::getSingleton('checkout/session')->getQuote();
+                    $quoteItems=$quote->getAllVisibleItems();
+                    $isSingleGiftCardItem=true;
+                    foreach ($quoteItems as $item){
+                        if(!in_array($item->getProduct()->getAttributeSetId(), $allowSpecificAttributeProductsArray)){
+                            $isSingleGiftCardItem=false;
+                            break;
+                        }
+                    }
+                    $attributeFlag=false;
+                    foreach ($quoteItems as $item){
+                        if(in_array($item->getProduct()->getAttributeSetId(), $allowSpecificAttributeProductsArray)){
+                            $attributeFlag=true;
+                            break;
+                        }
+                    }
+                    if(!$attributeFlag || !$isSingleGiftCardItem){
+                        unset($groups[$code]);
+                    }
+                }
+            }
+            
+            return $this->_rates = $groups;
+        }
+        
+        return $this->_rates;
+    }
 
     /* Two ship in stock products shipping ratess */
     public function getShippingRatesForTwoShipInStockProducts ()
@@ -24,6 +63,33 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                 ->collectShippingRates()
                 ->save();
             $groups = $this->getAddressForTwoShipInStockProducts()->getGroupedAllShippingRates();
+            $storeId=Mage::app()->getStore()->getStoreId();
+            foreach ($groups as $code => $_rates){
+                if($code="allure_pickinstore"){
+                    $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
+                    $allowSpecificAttributeProductsArray=explode(',', $allowSpecificAttributeProducts);
+                    $quote=Mage::getSingleton("allure_multicheckout/ordered_session")->getQuote();
+                    $quoteItems=$quote->getAllVisibleItems();
+                    
+                    $isSingleGiftCardItem=true;
+                    foreach ($quoteItems as $item){
+                        if(!in_array($item->getProduct()->getAttributeSetId(), $allowSpecificAttributeProductsArray)){
+                            $isSingleGiftCardItem=false;
+                            break;
+                        }
+                    }
+                    $attributeFlag=false;
+                    foreach ($quoteItems as $item){
+                        if(in_array($item->getProduct()->getAttributeSetId(), $allowSpecificAttributeProductsArray)){
+                            $attributeFlag=true;
+                            break;
+                        }
+                    }
+                    if(!$attributeFlag || !$isSingleGiftCardItem){
+                        unset($groups[$code]);
+                    }
+                }
+            }
             // $this->getCheckout()->replaceQuote($oldQuote);
             return $this->_rates_twoship_instock = $groups;
         }
@@ -42,6 +108,32 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                 ->collectShippingRates()
                 ->save();
             $groups = $this->getAddressForTwoShipOutOfStockProducts()->getGroupedAllShippingRates();
+            $storeId=Mage::app()->getStore()->getStoreId();
+            foreach ($groups as $code => $_rates){
+                if($code="allure_pickinstore"){
+                    $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
+                    $allowSpecificAttributeProductsArray=explode(',', $allowSpecificAttributeProducts);
+                    $quote=Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote();
+                    $quoteItems=$quote->getAllVisibleItems();
+                    $isSingleGiftCardItem=true;
+                    foreach ($quoteItems as $item){
+                        if(!in_array($item->getProduct()->getAttributeSetId(), $allowSpecificAttributeProductsArray)){
+                            $isSingleGiftCardItem=false;
+                            break;
+                        }
+                    }
+                    $attributeFlag=false;
+                    foreach ($quoteItems as $item){
+                        if(in_array($item->getProduct()->getAttributeSetId(), $allowSpecificAttributeProductsArray)){
+                            $attributeFlag=true;
+                            break;
+                        }
+                    }
+                    if(!$attributeFlag || !$isSingleGiftCardItem){
+                        unset($groups[$code]);
+                    }
+                }
+            }
             // $this->getCheckout()->replaceQuote($oldQuote);
             return $this->_rates_twoship_outofstock = $groups;
         }
