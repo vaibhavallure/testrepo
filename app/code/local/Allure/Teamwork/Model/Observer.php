@@ -759,13 +759,14 @@ class Allure_Teamwork_Model_Observer{
       $additional_characters = array('#','@','$');
       
       try{
-          $lastQueryTime = $helper->getLastSyncQueryTime();
+          $lastQueryTime = (int) $helper->getLastSyncQueryTime();
           $syncURL   = $helper::SYNC_TEAMWORK_CUSTOMER_URLPATH;
-          $pageLimit = $helper->getTeamworkPageLimit();
+          $pageLimit = (int) $helper->getTeamworkPageLimit();
           Mage::log("Teamwork sync start",Zend_log::DEBUG,$logFile,true);
           $teamworkClient = Mage::helper('allure_teamwork/teamworkClient');
           $request = array();
           $request['pageSize']      = $pageLimit;
+          Mage::log($lastQueryTime,Zend_log::DEBUG,$logFile,true);
           $request['modifiedAfter'] = $lastQueryTime;
           $response     = $teamworkClient->send($syncURL,$request);
           $responseObj  = json_decode($response);
