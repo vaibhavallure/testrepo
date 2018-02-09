@@ -6,7 +6,7 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
-Mage::getModel("allure_teamwork/observer")->addCpCustomerIntoMagento();
+Mage::getModel("allure_teamwork/observer")->syncTeamworkCustomer();
 
 die;
 
