@@ -52,17 +52,17 @@
 	</frontend>
 	 <crontab>
 	<jobs>
-		<allure_customer_schedule>
+		<!-- <allure_customer_schedule>
 			<schedule>
 				<cron_expr>* 12 * * *</cron_expr>
 			</schedule>
 			<run>
 				<model>allure_customer/observer::setcustomerStatusActive</model>
 			</run>
-		</allure_customer_schedule>
+		</allure_customer_schedule> -->
 		<allure_wholesale_schedule>
 			<schedule>
-				<cron_expr>*/5 * * * *</cron_expr>
+				<cron_expr>*/30 * * * *</cron_expr>
 			</schedule>
 			<run>
 				<model>allure_customer/observer::setcustomerGroup</model>
