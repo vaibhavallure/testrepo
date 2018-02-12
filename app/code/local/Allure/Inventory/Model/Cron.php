@@ -328,7 +328,7 @@ class Allure_Inventory_Model_Cron {
 	    }
 	    
 	    try {
-	        $backDate='in 4 to 6 Weeks';
+	        $backDate='in 6 to 8 weeks';
 	        if(count($productArr) > 0){
 	            Mage::getResourceSingleton('catalog/product_action')
 	            ->updateAttributes($productArr, array(
