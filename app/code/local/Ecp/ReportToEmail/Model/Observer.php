@@ -45,10 +45,29 @@ class Ecp_ReportToEmail_Model_Observer
                     $from = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($from)));
                     $to = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($to)));
                 } */
-                $from = date("Y-m-d H:i:s",strtotime("-1 day 4 hours",strtotime($from)));
-                $to = date("Y-m-d H:i:s",strtotime("-1 day 4 hours",strtotime($to)));
+                
+                $local_tz = new DateTimeZone('UTC');
+                $local = new DateTime('now', $local_tz);
+                
+                $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$storeId));
+                $user = new DateTime('now', $user_tz);
+                
+                $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
+                $localsTime = new DateTime($local->format('Y-m-d H:i:s'));
+                
+                $offset = $local_tz->getOffset($local) - $user_tz->getOffset($user);
+                
+                $interval = $usersTime->diff($localsTime);
+                if ($offset > 0)
+                    $diffZone = $interval->h . ' hours' . ' ' . $interval->i . ' minutes';
+                else
+                    $diffZone = '-' . $interval->h . ' hours' . ' ' . $interval->i . ' minutes';
+                
+                $from = date("Y-m-d H:i:s",strtotime("-1 day".$diffZone,strtotime($from)));
+                $to = date("Y-m-d H:i:s",strtotime("-1 day".$diffZone,strtotime($to)));
                 
                 $time = (int) trim(Mage::getStoreConfig('report/scheduled_reports/time'));
+                
                 $curTime = new DateTime();
                 if ($time != (int) $curTime->format("H"))
                     return;
@@ -82,7 +101,7 @@ class Ecp_ReportToEmail_Model_Observer
                      ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
                      ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
                      ->where("store_id IN('$storesId') AND (created_at >='$from' AND created_at <='$to')");
-           
+                  
                 $currency=Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
                 $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
                 Mage::app()->getStore()->setId($storeId);
