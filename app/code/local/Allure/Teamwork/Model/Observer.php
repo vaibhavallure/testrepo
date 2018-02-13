@@ -779,6 +779,8 @@ class Allure_Teamwork_Model_Observer{
           $mLog->setPage($nextSyncTime)->save();
           //Mage::getConfig()->saveConfig($helper::XML_NEXT_QUERY_SYNC_TIME, $nextSyncTime);
           
+          Mage::log("Total-:".count($responseObj->entities),Zend_log::DEBUG,$logFile,true);
+          
           if(count($responseObj->entities) > 0){
               foreach ($responseObj->entities as $customer){
                   try{
@@ -835,7 +837,7 @@ class Allure_Teamwork_Model_Observer{
                                 $magentoId  = $customerObj->getId();
                                 $requestObj = array();
                                 $requestObj['customerID'] = $teamworkId;
-                                $request['magentoID'] = $magentoId;
+                                $requestObj['magentoID'] = $magentoId;
                                 $updateURL = $helper::UPADTE_CUSTOMER_URLPATH;
                                 $response1 = $teamworkClient->send($updateURL,$requestObj);
                                 Mage::log("update request called for magento id:".$magentoId,Zend_log::DEBUG,$logFile,true);
@@ -856,6 +858,7 @@ class Allure_Teamwork_Model_Observer{
           }else{
               Mage::log("No New Teamwork customer",Zend_log::DEBUG,$logFile,true);
           }
+          Mage::log("Finish...",Zend_log::DEBUG,$logFile,true);
       }catch (Exception $e){
           Mage::log("Exc :".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
       }
