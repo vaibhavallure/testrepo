@@ -9,6 +9,8 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     const XML_NEXT_QUERY_SYNC_TIME          = "allure_teamwork/teamwork_settings/last_sync_query_time";
     const XML_TEAMWORK_PAGE_LIMIT           = "allure_teamwork/teamwork_settings/page_limit";
     
+    const XML_TEAMWORK_LOG_STATUS           = "allure_teamwork/teamwork_settings/log_status";
+    
     const SYNC_TEAMWORK_CUSTOMER_URLPATH    = "/customers/listmodified";
     const UPADTE_CUSTOMER_URLPATH           = "/customers/update";
     
@@ -47,5 +49,12 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
      */
     public function getTeamworkPageLimit(){
         return Mage::getStoreConfig(self::XML_TEAMWORK_PAGE_LIMIT);
+    }
+    
+    /**
+     * get log status 
+     */
+    public function getLogStatus(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_LOG_STATUS);
     }
 }
