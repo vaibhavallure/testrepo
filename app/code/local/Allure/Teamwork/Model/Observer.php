@@ -763,14 +763,17 @@ class Allure_Teamwork_Model_Observer{
           $mLog = Mage::getModel("allure_teamwork/log")
             ->load($operation,'operation');
           
+          $logStatus = $helper->getLogStatus();
+          $logStatus = ($logStatus)?true:false;
+          
           $lastQueryTime = (int) $mLog->getPage();//$helper->getLastSyncQueryTime();
           $syncURL   = $helper::SYNC_TEAMWORK_CUSTOMER_URLPATH;
           $pageLimit = (int) $helper->getTeamworkPageLimit();
-          Mage::log("Teamwork sync start",Zend_log::DEBUG,$logFile,true);
+          Mage::log("Teamwork sync start",Zend_log::DEBUG,$logFile,$logStatus);
           $teamworkClient = Mage::helper('allure_teamwork/teamworkClient');
           $request = array();
           $request['pageSize']      = $pageLimit;
-          Mage::log($lastQueryTime,Zend_log::DEBUG,$logFile,true);
+          Mage::log($lastQueryTime,Zend_log::DEBUG,$logFile,$logStatus);
           $request['modifiedAfter'] = $lastQueryTime;
           $response     = $teamworkClient->send($syncURL,$request);
           $responseObj  = json_decode($response);
@@ -779,7 +782,7 @@ class Allure_Teamwork_Model_Observer{
           $mLog->setPage($nextSyncTime)->save();
           //Mage::getConfig()->saveConfig($helper::XML_NEXT_QUERY_SYNC_TIME, $nextSyncTime);
           
-          Mage::log("Total-:".count($responseObj->entities),Zend_log::DEBUG,$logFile,true);
+          Mage::log("Total-:".count($responseObj->entities),Zend_log::DEBUG,$logFile,$logStatus);
           
           if(count($responseObj->entities) > 0){
               foreach ($responseObj->entities as $customer){
@@ -805,7 +808,7 @@ class Allure_Teamwork_Model_Observer{
                                   $customerObj->setCustNote($customerNote)
                                     ->setTeamworkCustomerId($teamworkId)
                                     ->save();
-                                    Mage::log("upadte customer id:".$customerObj->getId()." email:".$email,Zend_log::DEBUG,$logFile,true);
+                                  Mage::log("upadte customer id:".$customerObj->getId()." email:".$email,Zend_log::DEBUG,$logFile,$logStatus);
                               }else{
                                   $final_array = array_merge($alphabets,$numbers,$additional_characters);
                                   $password = '';
@@ -829,7 +832,7 @@ class Allure_Teamwork_Model_Observer{
                                     ->setTeamworkCustomerId($teamworkId)
                                     ->setTaxvat($taxVatId)
                                     ->save();
-                                  Mage::log("new customer id:".$customerObj->getId()." email:".$email,Zend_log::DEBUG,$logFile,true);
+                                    Mage::log("new customer id:".$customerObj->getId()." email:".$email,Zend_log::DEBUG,$logFile,$logStatus);
                               }
                               
                               //send magento id to teamwork
@@ -840,29 +843,28 @@ class Allure_Teamwork_Model_Observer{
                                 $requestObj['magentoID'] = $magentoId;
                                 $updateURL = $helper::UPADTE_CUSTOMER_URLPATH;
                                 $response1 = $teamworkClient->send($updateURL,$requestObj);
-                                Mage::log("update request called for magento id:".$magentoId,Zend_log::DEBUG,$logFile,true);
+                                Mage::log("update request called for magento id:".$magentoId,Zend_log::DEBUG,$logFile,$logStatus);
                               }else{
-                                  Mage::log("magento id:".$magentoId." already present in teamwork",Zend_log::DEBUG,$logFile,true);
+                                Mage::log("magento id:".$magentoId." already present in teamwork",Zend_log::DEBUG,$logFile,$logStatus);
                               }
                               
                           }else{
-                              Mage::log("Customer email is empty",Zend_log::DEBUG,$logFile,true);
+                              Mage::log("Customer email is empty",Zend_log::DEBUG,$logFile,$logStatus);
                           }
                       }else{
-                          Mage::log("Can't create customer",Zend_log::DEBUG,$logFile,true);
+                          Mage::log("Can't create customer",Zend_log::DEBUG,$logFile,$logStatus);
                       }
                   }catch (Exception $e){
-                      Mage::log("Excp :".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
+                      Mage::log("Excp :".$e->getMessage(),Zend_log::DEBUG,$logFile,$logStatus);
                   }
               }
           }else{
-              Mage::log("No New Teamwork customer",Zend_log::DEBUG,$logFile,true);
+              Mage::log("No New Teamwork customer",Zend_log::DEBUG,$logFile,$logStatus);
           }
-          Mage::log("Finish...",Zend_log::DEBUG,$logFile,true);
       }catch (Exception $e){
-          Mage::log("Exc :".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
+          Mage::log("Exc :".$e->getMessage(),Zend_log::DEBUG,$logFile,$logStatus);
       }
-      Mage::log("Finish...",Zend_log::DEBUG,$logFile,true);
+      Mage::log("Finish...",Zend_log::DEBUG,$logFile,$logStatus);
   }
   
 }
