@@ -22,6 +22,8 @@ class Allure_Teamwork_Helper_TeamworkClient extends Mage_Core_Helper_Data
         $response = null;
         try{
             $status = $helper->getTeamworkStatus();
+            $logStatus = $helper->getLogStatus();
+            $logStatus = ($logStatus)?true:false;
             if($status){
                 $URL  = $helper->getTeamworkUrl();
                 $_url = $URL."".$_url;
@@ -42,10 +44,10 @@ class Allure_Teamwork_Helper_TeamworkClient extends Mage_Core_Helper_Data
                 $response = curl_exec($sendRequest);
                 curl_close($sendRequest);
             }else{
-                Mage::log("Teamwork not enable at this moment.",Zend_log::DEBUG,$logFile,true);
+                Mage::log("Teamwork not enable at this moment.",Zend_log::DEBUG,$logFile,$logStatus);
             }
         }catch (Exception $e){
-            Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
+            Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,$logFile,$logStatus);
         }
         return $response;
     }
