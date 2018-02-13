@@ -57,6 +57,14 @@
 	
 	<crontab>
 		<jobs>
+			<allure_teamwork>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::syncTeamworkCustomer</model>
+				</run>
+			</allure_teamwork>
 			<!-- <allure_teamwork>
 				<schedule>
 					<cron_expr>*/5 * * * *</cron_expr>
