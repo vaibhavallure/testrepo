@@ -57,6 +57,12 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                     <td class="label"><label><?php echo Mage::helper('sales')->__('Purchased From') ?></label></td>
                     <td class="value"><strong><?php echo $this->getOrderStoreName() ?></strong></td>
                 </tr>
+                <?php if(!is_null($this->getOrderOldStoreName())):?>
+                <tr>
+                    <td class="label"><label><?php echo Mage::helper('sales')->__('Old Store Name') ?></label></td>
+                    <td class="value"><strong><?php  echo $this->getOrderOldStoreName() ?></strong></td>
+                </tr>
+                <?php endif?>
                 <?php if ($_order->getRelationChildId()): ?>
                     <tr>
                         <td class="label">
