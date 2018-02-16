@@ -315,7 +315,8 @@ if (window.ApplePaySession) {
 			Allure.ApplePay.action.addProduct();
 		}
 		
-		Allure.ApplePay.modal.modal('show');
+		Allure.ApplePay.action.init();
+		//Allure.ApplePay.modal.modal('show');
 		return false;
 	};
 
