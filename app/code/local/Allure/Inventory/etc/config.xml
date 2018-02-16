@@ -4,7 +4,7 @@
     <modules>
         <Allure_Inventory>
 			<name>Allure - Inventory Management</name>
-            <version>1.0.6</version>
+            <version>1.0.7</version>
         </Allure_Inventory>
     </modules>
     <frontend>
@@ -48,6 +48,14 @@
 					<model>inventory/cron::autoProcessLowstockReports</model>
 				</run>
 			</inventory_schedule>
+			<product_backorder_date>
+				<schedule>
+					<cron_expr>0 9 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>inventory/cron::updateBackorderDate</model>
+				</run>
+			</product_backorder_date>
 		</jobs>
 	</crontab>
     <adminhtml>

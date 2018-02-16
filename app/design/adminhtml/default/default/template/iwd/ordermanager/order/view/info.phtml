@@ -63,7 +63,7 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                             <label><?php echo Mage::helper('sales')->__('Link to the New Order') ?></label></td>
                         <td class="value"><a href="<?php echo $this->getViewUrl($_order->getRelationChildId()) ?>">
                                 <?php echo $_order->getRelationChildRealId() ?>
-                            </a></td>
+                         </a></td>
                     </tr>
                 <?php endif; ?>
                 <?php if ($_order->getRelationParentId()): ?>
@@ -126,7 +126,7 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                  </tr>
                  <tr>
                       <td class="label"><label><?php echo Mage::helper('sales')->__('Payment Mode') ?></label></td>
-                      <td class="value"><strong><?php if($_order->getOrderType()!=null) {echo ($_order->getWholesalePayOption() ? ($_order->getWholesalePayOption()  == 'pay_on_ship' ? 'Pay As Ship' : 'Pay Now') : (($_order->getIsReadyToShip() && $_order->getIsChildOrder()) ? 'Pay As Ship' : 'Pay Now'));}?></strong></td>
+                      <td class="value"><strong><?php if($_order->getOrderType()!=null) {echo ($_order->getWholesalePayOption() ? ($_order->getWholesalePayOption()  == 'pay_as_ship' ? 'Pay As Ship' : 'Pay Now') : (($_order->getIsReadyToShip() && $_order->getIsChildOrder()) ? 'Pay As Ship' : 'Pay Now'));}?></strong></td>
                  </tr>
                  
                  <?php if($_order->getCreateOrderMethod()):?>

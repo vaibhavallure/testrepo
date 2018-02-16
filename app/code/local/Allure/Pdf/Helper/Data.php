@@ -90,7 +90,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         $product->setStoreId($storeId)
                 ->load($product->getIdBySku($sku));
         $message = "";
-        if($storeId == 1){
+        /*if($storeId == 1){
             if(!empty($product)){
                 $store      = Mage::getModel('core/store')->load($storeId);
                 $websiteId  = $store->getWebsiteId();
@@ -116,7 +116,17 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
                     $message = "( ".$orderItem->getBackorderTime()." )";
                 }
             }
+        }*/
+        
+        if($storeId == 1){
+            $backTimeMsg = $item->getBackorderTime();
+            if (!empty($backTimeMsg)) {
+                $message = $backTimeMsg;
+            } else {
+                $message = "";
+            }
         }
+        
         return $message;
     }
     
@@ -133,13 +143,13 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
     
-    public function getSalesOrderItemSpecialInstruction($item,$feed = 35){
+    public function getSalesOrderItemSpecialInstruction($item,$feed = 35,$flag1=false){
         try{
             $flag = false;
             $orderItemId = $item->getOrderItemId();
             $actionName = Mage::app()->getRequest()->getActionName();
             $orderItem = $item->getOrderItem();//Mage::getModel("sales/order_item")->load($orderItemId);
-            if($actionName="pdforders"){
+            if($flag1){
                 $orderItem = $item;
             }
             

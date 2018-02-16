@@ -146,6 +146,9 @@ if ($session->isLoggedIn()) {
 					    	<!-- <input class="ele_width" type="text" name="postal_code" value="<?php //echo $postcode?>" /> -->
 					    	<input class="ele_width" type="text" name="postal_code" value="<?php if($f_postcode):echo $f_postcode;else: echo $postcode;endif;?>" />
 					    </div>
+					    <div class="fieldDiv">
+					     <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit')?>
+					    </div>
 		  	</div>
 		  	<div class="createaccDiv" >
 		  			<div id="piercer_schedule" class="fieldDiv">

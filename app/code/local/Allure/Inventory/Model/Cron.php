@@ -299,5 +299,47 @@ class Allure_Inventory_Model_Cron {
 	    }
 	   
 	}
-	
+	function validateDate($date, $format = 'Y-m-d H:i:s')
+	{
+	    $d = DateTime::createFromFormat($format, $date);
+	    return $d && $d->format($format) == $date;
+	    
+	}
+	public function updateBackorderDate(){
+	    $storeId=1;
+	    $productArr=array();
+	    
+	    $collection = Mage::getModel('catalog/product')->getCollection()
+	    ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
+	    $ids=$collection->getAllIds();
+	    $todaysDate=date('d-m-Y');
+	    foreach ($ids as $id){
+	        $productBackTime=Mage::getModel('catalog/product')->setStoreId($storeId)->load($id)->getBackorderTime();
+	        if(!is_null($productBackTime) && !empty($productBackTime)){
+	            if($this->validateDate($productBackTime, 'F j, Y')){
+	                $productDate=date('d-m-Y', strtotime( $productBackTime));
+	                if(strtotime($productDate) < strtotime($todaysDate)){
+	                    $productArr[]=$id;
+	                }
+	            }
+	        }
+	        unset($productBackTime);
+	        
+	    }
+	    
+	    try {
+	        $backDate='in 6 to 8 weeks';
+	        if(count($productArr) > 0){
+	            Mage::getResourceSingleton('catalog/product_action')
+	            ->updateAttributes($productArr, array(
+	                'backorder_time' => $backDate
+	            ), $storeId);
+	            Mage::log("Product Backorder date::".json_encode($productArr),Zend_log::DEBUG,'backorder_date.log',true);
+	        }
+	        
+	    } catch (Exception $e) {
+	        
+	    }
+	    
+	}
 }

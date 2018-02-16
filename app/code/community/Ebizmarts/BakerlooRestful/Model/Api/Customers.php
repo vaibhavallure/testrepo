@@ -575,7 +575,12 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
         $config = $this->_getEditableAttributeConfig();
         foreach ($attributes as $attr) {
             if (in_array($attr['name'], $config)) {
-                $customer->setData($attr['name'], $attr['value']);
+		if ($attr['type'] === 'select') {
+		    $selectAttr = $customer->getAttribute($attr['name']);
+		    $customer->setData($attr['name'], $selectAttr->getSource()->getOptionId($attr['value']));
+		} else {
+                    $customer->setData($attr['name'], $attr['value']);
+		}
             }
         }
         $customer->save();
@@ -665,20 +670,22 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
         if (!empty($editableAttributes)) {
             $entityType = Mage::getSingleton('eav/config')->getEntityType('customer');
 
-            $ca = Mage::getModel('customer/attribute');
-
             foreach ($editableAttributes as $attr) {
-                $attribute = $ca->loadByCode($entityType, $attr);
+                $attribute = Mage::getModel('customer/attribute')->loadByCode($entityType, $attr);
 
-                $config []= array(
+                $attributeConfig = array(
                     'name'     => $attribute->getAttributeCode(),
                     'label'    => $attribute->getFrontendLabel(),
                     'type'     => $attribute->getFrontendInput(),
-                    'required' => false
+                    'required' => false,
+                    'options'  => array()
                 );
 
-                $ca->unsetOldData();
-                $ca->unsetData();
+                if ($attribute->getFrontendInput() == 'select') {
+                    $attributeConfig['options'] = $attribute->getSource()->getAllOptions(false);
+                }
+
+                $config []= $attributeConfig;
             }
         }
 
@@ -741,10 +748,10 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
      */
     public function _updateExistingAddress($addressData, Mage_Customer_Model_Address $addressObject)
     {
-        //$addressObject->addData((array)$addressData);
         $addressObject->addData($addressData);
-        //$addressObject->setStreet(array($addressData->street, $addressData->street2));
         $addressObject->setStreet(array($addressData['street'], $addressData['street2']));
+        $addressObject->setIsDefaultBilling(((int)$addressData['is_billing_address']))
+            ->setIsDefaultShipping(((int)$addressData['is_shipping_address']));
 
         $addressObject->save();
     }
