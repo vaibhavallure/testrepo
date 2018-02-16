@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <teamwork_service translate="label">
+            <label>Service settings</label>
+            <tab>teamwork</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <debug translate="label">
+                    <label>Debug / Logs</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <log_api_requests>
+                            <label>Log API methods start</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </log_api_requests>
+                        <log_api_responses>
+                            <label>Log API methods finish</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </log_api_responses>
+                        <log_api_minimize_size>
+                            <label>Minimize File When Size More</label>
+                            <comment>Amount in Megabytes, 0 not to minimize</comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits validate-number validate-zero-or-greater validate-number-range number-range-1-100000</validate>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </log_api_minimize_size>
+                    </fields>
+                </debug>
+                <dam translate="label">
+                    <label>DAM</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled>
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enabled>
+                        <url translate="label">
+                            <label>Server Host Url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <comment><![CDATA[<strong style="color:green">Example: </strong> https://teamwork-dam.appspot.com/]]></comment>
+                        </url>
+                        <token translate="label">
+                            <label>Server Access Token</label>
+                            <frontend_type>obscure</frontend_type>
+                            <sort_order>30</sort_order>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <show_in_default>1</show_in_default>
+                            <comment>
+                                <model>teamwork_service/token</model>
+                            </comment>
+                        </token>
+                        <dam_scheduler_subscribe translate="label">
+                            <label>DAM Scheduler</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>teamwork_service/adminhtml_dam_subscribebutton</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </dam_scheduler_subscribe>
+                        <debug_to_log>
+                            <label>Log interaction with DAM</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </debug_to_log>
+                    </fields>
+                </dam>
+            </groups>
+        </teamwork_service>
+    </sections>
+</config>

@@ -1,0 +1,93 @@
+<config>
+    <api>
+        <resources>
+            <service translate="title" module="teamwork_service">
+                <model>teamwork_service/api</model>
+                <title>Service</title>
+                <acl>service</acl>
+                <methods>
+                    <getdata translate="title" module="teamwork_service">
+                        <title>Get Data</title>
+                        <acl>service/getdata</acl>
+                    </getdata>
+                    <getorders translate="title" module="teamwork_service">
+                        <title>Get Orders</title>
+                        <acl>service/getorders</acl>
+                    </getorders>
+                    <getsettings translate="title" module="teamwork_service">
+                        <title>Get Settings</title>
+                        <acl>service/getsettings</acl>
+                    </getsettings>
+                    <getversion translate="title" module="teamwork_service">
+                        <title>Get Version</title>
+                        <acl>service/getversion</acl>
+                    </getversion>
+                    <setstatus translate="title" module="teamwork_service">
+                        <title>Set Weborder Status</title>
+                        <acl>service/setstatus</acl>
+                    </setstatus>
+                    <setstatusoms translate="title" module="teamwork_service">
+                        <title>Set Weborder Status (with XML from OMS)</title>
+                        <acl>service/setstatusoms</acl>
+                    </setstatusoms>                    
+                    <setmapping translate="title" module="teamwork_service">
+                        <title>Get Mapping</title>
+                        <acl>service/setmapping</acl>
+                    </setmapping>
+                    <setsettings translate="title" module="teamwork_service">
+                        <title>Get Mapping</title>
+                        <acl>service/setsettings</acl>
+                    </setsettings>
+                    <getecmstatus translate="title" module="teamwork_service">
+                        <title>Get Ecm Status</title>
+                        <acl>service/getecmstatus</acl>
+                    </getecmstatus>
+                    <getmagentoproducts translate="title" module="teamwork_service">
+                        <title>Get Magento Products</title>
+                        <acl>service/getmagentoproducts</acl>
+                    </getmagentoproducts>
+                    <getproductimages translate="title" module="teamwork_service">
+                        <title>Get Product Images</title>
+                        <acl>service/getproductimages</acl>
+                    </getproductimages>
+                </methods>
+                <faults module="teamwork_service">
+                </faults>
+            </service>
+        </resources>
+        <acl>
+            <resources>
+                <service translate="title" module="teamwork_service">
+                    <title>Service</title>
+                        <getdata translate="title" module="teamwork_service">
+                            <title>Get Data</title>
+                        </getdata>
+                        <getorders translate="title" module="teamwork_service">
+                            <title>Get Orders</title>
+                        </getorders>
+                        <getsettings translate="title" module="teamwork_service">
+                            <title>Get Settings</title>
+                        </getsettings>
+                        <getversion translate="title" module="teamwork_service">
+                            <title>Get Version</title>
+                        </getversion>
+                        <setstatus translate="title" module="teamwork_service">
+                            <title>Set Weborder Status</title>
+                        </setstatus>
+                        <setmapping translate="title" module="teamwork_service">
+                            <title>Get Mapping</title>
+                        </setmapping>
+                        <getecmstatus translate="title" module="teamwork_service">
+                            <title>Get Ecm Status</title>
+                        </getecmstatus>
+                        <getmagentoproducts translate="title" module="teamwork_service">
+                            <title>Get Magento Products</title>
+                        </getmagentoproducts>
+                        <getproductimages translate="title" module="teamwork_service">
+                            <title>Get Product Images</title>
+                        </getproductimages>
+                </service>
+            </resources>
+        </acl>
+    </api>
+</config>
