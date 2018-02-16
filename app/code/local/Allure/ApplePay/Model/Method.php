@@ -121,9 +121,12 @@ class Allure_ApplePay_Model_Method extends ParadoxLabs_TokenBase_Model_Method//M
 	 *
 	 * @return string
 	 */
-	public function getTitle()
+	public function getTitle($original = false)
 	{
-	    return Mage::app()->getLayout()->createBlock('allure_applepay/button','ApplePayPaymentMethodsButton')->setTemplate('allure/applepay/button.phtml')->toHtml();
-	    return $this->getConfigData('title');
+	    if ($original) {
+	        return $this->getConfigData('title');
+	    } else {
+	       return Mage::app()->getLayout()->createBlock('allure_applepay/button','ApplePayPaymentMethodsButton')->setTemplate('allure/applepay/button.phtml')->toHtml();
+	    }
 	}
 }
