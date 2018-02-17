@@ -207,15 +207,24 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     
                     $shippingMethods = array();
                     
+                    $hasDefaultMethod = false;
+                    
                     if ($address->getShippingMethod() && $address->getShippingMethod() != '') {
                         $shippingMethods[$address->getShippingMethod()] = array();
+                        $this->_getSession()->setDefaultShippingMethod($address->getShippingMethod());
+                        $hasDefaultMethod = true;
                     }
                     
+                    
                     foreach($address->getGroupedAllShippingRates() as $rates){
-                        
                         foreach ($rates as $rate) {
                             if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
                                 continue;
+                            }
+                            
+                            if (!$hasDefaultMethod) {
+                                $this->_getSession()->setDefaultShippingMethod($rate->getCode());
+                                $hasDefaultMethod = true;
                             }
                             
                             $shippingMethods[$rate->getCode()] = $rate->getData();
@@ -538,20 +547,35 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         }
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
-
+    
     public function saveTransactionAction() {
+        
+        $data = $_POST;
+        
+        Mage::log("BEGIN: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+        
+        Mage::log(json_encode($_POST),Zend_Log::DEBUG, 'applepay.log', true);
+
+        if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
+            $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
+        }
+        
+        $paymentData = array('method' => 'applepay');
+        
+        $this->getRequest()->setPost('payment', $paymentData);
+        
+        Mage::log("END: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+        return $this->saveOrderAction($paymentData);
+    }
+
+    public function saveOrderTransactionAction() {
 
         $data = $_POST;
-
-        //$session = $this->_getSession();
-        //$checkoutSession = $this->_getCheckoutSession();
-
-        //$cart = $this->_getCart();
-
-        //$masterQuote = $checkoutSession->getQuote();
-        //$quote = $session->getQuote();
         
-        /*
+        Mage::log("BEGIN: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+        
+        Mage::log(json_encode($_POST),Zend_Log::DEBUG, 'applepay.log', true);
+        
         
         $transRequestXmlStr=<<<XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -579,7 +603,7 @@ XML;
         $transRequestXml->merchantAuthentication->addChild('name',$loginId);
         $transRequestXml->merchantAuthentication->addChild('transactionKey',$transactionKey);
         
-        $transRequestXml->transactionRequest->amount=$_POST['amount'];
+        $transRequestXml->transactionRequest->amount = $_POST['amount'];
         $transRequestXml->transactionRequest->payment->opaqueData->dataDescriptor=$_POST['dataDesc'];
         $transRequestXml->transactionRequest->payment->opaqueData->dataValue=$_POST['dataBinary'];
         
@@ -626,20 +650,15 @@ XML;
                     
         }catch(Exception $e) {
             trigger_error(sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()), E_USER_ERROR);
-        }*/
+        }
         
         
         $paymentData = array('method' => 'applepay'); 
         
         $this->getRequest()->setPost('payment', $paymentData);
         
-        //$checkoutSession->setQuoteId($quote->getId());
-        //$checkoutSession->replaceQuote($quote);
-        
+        Mage::log("END: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
         return $this->saveOrderAction($paymentData);
-        
-        //$checkoutSession->setQuoteId($masterQuote->getId());
-        //$checkoutSession->replaceQuote($masterQuote);
     }
     
     public function testTransactionAction() {
@@ -681,7 +700,7 @@ XML;
         $transRequestXml->merchantAuthentication->addChild('name',$loginId);
         $transRequestXml->merchantAuthentication->addChild('transactionKey',$transactionKey);
         
-        $transRequestXml->transactionRequest->amount=1;
+        $transRequestXml->transactionRequest->amount = 1;
         $transRequestXml->transactionRequest->payment->opaqueData->dataDescriptor='COMMON.APPLE.INAPP.PAYMENT';
         $transRequestXml->transactionRequest->payment->opaqueData->dataValue='eyJ2ZXJzaW9uIjoiRUNfdjEiLCJkYXRhIjoiY2NEU24vb0o5M0ZBRUQ1WU14Wm1ldXQvZlFDNjdBRTNvUE1LZWEyaFhTc0tUUnlXR3NIK2hEaDgvdjVVVzhJQ01VeWkxT2FsL2NPaDFxQ0FOaS9DZWdmM3FuWk0zL21sUTIrRjByWVh3OHZrOVIvcEZkaVF6UWZ4LzUxZk8zNTF3WU5qVkczODVJMWZDRndabVNYYmxFTzZSWnl3NDNGc250RTZDVm9DUFpkNEZObTlYRDVud1g0VENydS95UWdZSWx5WGJGNXlySFp6WTM5YnU4bXNrellCNzFqQ0lvblJ0blpZeXN5U2t3N3NYWUVQQlVweEQyNDdGemJaV3kwaWU0aGRDb1dicXJXWUxxOVVyRk5xNStGdTZoaUFjUEdQUmNOcDFFN0hHRExiZWNQL1MraHN3K013bGF3OWxLM0h2Ty9VMWhIeVByQkxOVENFVU56S0NFOFhIYVRsYzhRRldnNUxJVy94WGtzOEpYU0Nad1ViSE93N085aEc3UGk1cXo4RXNKMTlscExMbzJna1ZMWVNyMmxXM3lHMEZmUHZndy9NcUREeW1BPT0iLCJzaWduYXR1cmUiOiJNSUFHQ1NxR1NJYjNEUUVIQXFDQU1JQUNBUUV4RHpBTkJnbGdoa2dCWlFNRUFnRUZBRENBQmdrcWhraUc5dzBCQndFQUFLQ0FNSUlENGpDQ0E0aWdBd0lCQWdJSUpFUHlxQWFkOVhjd0NnWUlLb1pJemowRUF3SXdlakV1TUN3R0ExVUVBd3dsUVhCd2JHVWdRWEJ3YkdsallYUnBiMjRnU1c1MFpXZHlZWFJwYjI0Z1EwRWdMU0JITXpFbU1DUUdBMVVFQ3d3ZFFYQndiR1VnUTJWeWRHbG1hV05oZEdsdmJpQkJkWFJvYjNKcGRIa3hFekFSQmdOVkJBb01Da0Z3Y0d4bElFbHVZeTR4Q3pBSkJnTlZCQVlUQWxWVE1CNFhEVEUwTURreU5USXlNRFl4TVZvWERURTVNRGt5TkRJeU1EWXhNVm93WHpFbE1DTUdBMVVFQXd3Y1pXTmpMWE50Y0MxaWNtOXJaWEl0YzJsbmJsOVZRelF0VUZKUFJERVVNQklHQTFVRUN3d0xhVTlUSUZONWMzUmxiWE14RXpBUkJnTlZCQW9NQ2tGd2NHeGxJRWx1WXk0eEN6QUpCZ05WQkFZVEFsVlRNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUV3aFYzN2V2V3g3SWhqMmpkY0pDaElZM0hzTDF2TENnOWhHQ1YyVXIwcFVFYmcwSU8yQkh6UUg2RE14OGNWTVAzNnpJZzFyclYxTy8wa29tSlBud1BFNk9DQWhFd2dnSU5NRVVHQ0NzR0FRVUZCd0VCQkRrd056QTFCZ2dyQmdFRkJRY3dBWVlwYUhSMGNEb3ZMMjlqYzNBdVlYQndiR1V1WTI5dEwyOWpjM0F3TkMxaGNIQnNaV0ZwWTJFek1ERXdIUVlEVlIwT0JCWUVGSlJYMjIvVmRJR0dpWWwyTDM1WGhRZm5tMWdrTUF3R0ExVWRFd0VCL3dRQ01BQXdId1lEVlIwakJCZ3dGb0FVSS9KSnhFK1Q1TzhuNXNUMktHdy9vcnY5TGtzd2dnRWRCZ05WSFNBRWdnRVVNSUlCRURDQ0FRd0dDU3FHU0liM1kyUUZBVENCL2pDQnd3WUlLd1lCQlFVSEFnSXdnYllNZ2JOU1pXeHBZVzVqWlNCdmJpQjBhR2x6SUdObGNuUnBabWxqWVhSbElHSjVJR0Z1ZVNCd1lYSjBlU0JoYzNOMWJXVnpJR0ZqWTJWd2RHRnVZMlVnYjJZZ2RHaGxJSFJvWlc0Z1lYQndiR2xqWVdKc1pTQnpkR0Z1WkdGeVpDQjBaWEp0Y3lCaGJtUWdZMjl1WkdsMGFXOXVjeUJ2WmlCMWMyVXNJR05sY25ScFptbGpZWFJsSUhCdmJHbGplU0JoYm1RZ1kyVnlkR2xtYVdOaGRHbHZiaUJ3Y21GamRHbGpaU0J6ZEdGMFpXMWxiblJ6TGpBMkJnZ3JCZ0VGQlFjQ0FSWXFhSFIwY0RvdkwzZDNkeTVoY0hCc1pTNWpiMjB2WTJWeWRHbG1hV05oZEdWaGRYUm9iM0pwZEhrdk1EUUdBMVVkSHdRdE1Dc3dLYUFub0NXR0kyaDBkSEE2THk5amNtd3VZWEJ3YkdVdVkyOXRMMkZ3Y0d4bFlXbGpZVE11WTNKc01BNEdBMVVkRHdFQi93UUVBd0lIZ0RBUEJna3Foa2lHOTJOa0JoMEVBZ1VBTUFvR0NDcUdTTTQ5QkFNQ0EwZ0FNRVVDSUhLS253K1NveXE1bVhRcjFWNjJjMEJYS3BhSG9kWXU5VFdYRVBVV1BwYnBBaUVBa1RlY2ZXNitXNWwwcjBBRGZ6VENQcTJZdGJTMzl3MDFYSWF5cUJOeThiRXdnZ0x1TUlJQ2RhQURBZ0VDQWdoSmJTKy9PcGphbHpBS0JnZ3Foa2pPUFFRREFqQm5NUnN3R1FZRFZRUUREQkpCY0hCc1pTQlNiMjkwSUVOQklDMGdSek14SmpBa0JnTlZCQXNNSFVGd2NHeGxJRU5sY25ScFptbGpZWFJwYjI0Z1FYVjBhRzl5YVhSNU1STXdFUVlEVlFRS0RBcEJjSEJzWlNCSmJtTXVNUXN3Q1FZRFZRUUdFd0pWVXpBZUZ3MHhOREExTURZeU16UTJNekJhRncweU9UQTFNRFl5TXpRMk16QmFNSG94TGpBc0JnTlZCQU1NSlVGd2NHeGxJRUZ3Y0d4cFkyRjBhVzl1SUVsdWRHVm5jbUYwYVc5dUlFTkJJQzBnUnpNeEpqQWtCZ05WQkFzTUhVRndjR3hsSUVObGNuUnBabWxqWVhScGIyNGdRWFYwYUc5eWFYUjVNUk13RVFZRFZRUUtEQXBCY0hCc1pTQkpibU11TVFzd0NRWURWUVFHRXdKVlV6QlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJQQVhFWVFaMTJTRjFScGVKWUVIZHVpQW91L2VlNjVONEkzOFM1UGhNMWJWWmxzMXJpTFFsM1lOSWs1N3VnajlkaGZPaU10MnUyWnd2c2pvS1lUL1ZFV2pnZmN3Z2ZRd1JnWUlLd1lCQlFVSEFRRUVPakE0TURZR0NDc0dBUVVGQnpBQmhpcG9kSFJ3T2k4dmIyTnpjQzVoY0hCc1pTNWpiMjB2YjJOemNEQTBMV0Z3Y0d4bGNtOXZkR05oWnpNd0hRWURWUjBPQkJZRUZDUHlTY1JQaytUdkorYkU5aWhzUDZLNy9TNUxNQThHQTFVZEV3RUIvd1FGTUFNQkFmOHdId1lEVlIwakJCZ3dGb0FVdTdEZW9WZ3ppSnFraXBuZXZyM3JyOXJMSktzd053WURWUjBmQkRBd0xqQXNvQ3FnS0lZbWFIUjBjRG92TDJOeWJDNWhjSEJzWlM1amIyMHZZWEJ3YkdWeWIyOTBZMkZuTXk1amNtd3dEZ1lEVlIwUEFRSC9CQVFEQWdFR01CQUdDaXFHU0liM1kyUUdBZzRFQWdVQU1Bb0dDQ3FHU000OUJBTUNBMmNBTUdRQ01EclBjb05SRnBteGh2czF3MWJLWXIvMEYrM1pEM1ZOb282KzhaeUJYa0szaWZpWTk1dFpuNWpWUVEyUG5lbkMvZ0l3TWkzVlJDR3dvd1YzYkYzek9EdVFaLzBYZkN3aGJaWlB4bkpwZ2hKdlZQaDZmUnVaeTVzSmlTRmhCcGtQQ1pJZEFBQXhnZ0dMTUlJQmh3SUJBVENCaGpCNk1TNHdMQVlEVlFRRERDVkJjSEJzWlNCQmNIQnNhV05oZEdsdmJpQkpiblJsWjNKaGRHbHZiaUJEUVNBdElFY3pNU1l3SkFZRFZRUUxEQjFCY0hCc1pTQkRaWEowYVdacFkyRjBhVzl1SUVGMWRHaHZjbWwwZVRFVE1CRUdBMVVFQ2d3S1FYQndiR1VnU1c1akxqRUxNQWtHQTFVRUJoTUNWVk1DQ0NSRDhxZ0duZlYzTUEwR0NXQ0dTQUZsQXdRQ0FRVUFvSUdWTUJnR0NTcUdTSWIzRFFFSkF6RUxCZ2txaGtpRzl3MEJCd0V3SEFZSktvWklodmNOQVFrRk1ROFhEVEU0TURFek1ERXpNVFF4TlZvd0tnWUpLb1pJaHZjTkFRazBNUjB3R3pBTkJnbGdoa2dCWlFNRUFnRUZBS0VLQmdncWhrak9QUVFEQWpBdkJna3Foa2lHOXcwQkNRUXhJZ1FnZ0Q5dEtjaHhLNVpqbjA0SkJaVE5sZFlEb3FvOEk5L28xclliVlZkRCtDMHdDZ1lJS29aSXpqMEVBd0lFUmpCRUFpQm5UN1lGVW9QQXVQZ0NzQUJaOVpxR01TRzN2MXJsYkpvZW1TVGtMV0d6REFJZ0MyUHZYYXpja2dDM1BTUjFoanlraldmck8yUzBSZzZsUWt4RHlScEE4a0lBQUFBQUFBQT0iLCJoZWFkZXIiOnsiZXBoZW1lcmFsUHVibGljS2V5IjoiTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFK0tQTXRJYUlQOU5weW04b2dQMVJuc3R0c1RuZm1iWkIxcVJCVVNsVjU0Wm82L0IwUUhMNUZsckJDaHh0VWlNMmY1b3NBQU5BZzRnTkl1UXB4d01Kd2c9PSIsInB1YmxpY0tleUhhc2giOiJpZTZHMTJEQmt2cVVxUTlCdHhPb045RlZCeEM4L2dvbG9seDZqNitTMkY0PSIsInRyYW5zYWN0aW9uSWQiOiIyNjg5M2FiNjZjYWFlMmQ3MmNiNGFjOTQwZDJjODg4NWM5Y2Q1ZmM2NDI1MjJhZmU0ZjI3ZGQ1OTE4ZmM3OGRmIn19';
         

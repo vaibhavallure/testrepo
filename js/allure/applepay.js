@@ -10,7 +10,7 @@ Allure.ApplePay.flag.enabled = false;
 
 Allure.ApplePay.flag.active = false;
 
-Allure.ApplePay.flag.sandbox = false;
+Allure.ApplePay.flag.sandbox = true;
 
 if (window.ApplePaySession) {
 
