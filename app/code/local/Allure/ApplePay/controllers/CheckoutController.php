@@ -78,6 +78,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
     public function addProductAction() {
         Mage::log("BEGIN: addProductAction",Zend_Log::DEBUG, 'applepay.log', true);
+        
+        Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
 
         $cart   = $this->_getCart();
 
@@ -181,8 +183,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      */
     public function saveBillingAction() {
         
+        Mage::log("BEGIN: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
         if ($this->getRequest()->isPost()) {
-            Mage::log("BEGIN: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
             $data = $this->getRequest()->getPost('billing', array());
             
 //             $quoteId = $this->getRequest()->getPost('quote_id', null);
@@ -280,7 +283,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     public function saveShippingAction() {
         
         Mage::log("BEGIN: saveShippingAction",Zend_Log::DEBUG, 'applepay.log', true);
-
+        
+        Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping', array());
             $customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
@@ -307,6 +311,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      */
     public function saveShippingMethodAction() {
         Mage::log("BEGIN: saveShippingMethodAction",Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
 //         if ($this->_expireAjax()) {
 //             return;
 //         }
@@ -565,7 +570,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         
         Mage::log("BEGIN: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
         
-        Mage::log(json_encode($_POST),Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
 
         if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
             $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
@@ -772,6 +777,9 @@ XML;
             'message' => ''
         );
         
+        Mage::log("BEGIN: applyCouponAction",Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
+        
         /**
          * No reason continue with empty shopping cart
          */
@@ -823,6 +831,8 @@ XML;
             $response['message'] = $this->__('Cannot apply the coupon code.');
             Mage::logException($e);
         }
+        
+        Mage::log("END: applyCouponAction",Zend_Log::DEBUG, 'applepay.log', true);
         
         die(json_encode($response));
     }
