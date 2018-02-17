@@ -47,6 +47,18 @@ bugfix:
   script:
     - mage-deploy mt-bugfixes
     - echo 'Deployed on Bugfixes Staging'
+
+universal:  
+  environment: staging
+  stage: staging
+  tags:
+    - staging
+  only:
+    - universal
+  script:
+    - mage-deploy universal
+    - echo 'Deployed on Universal Staging'
+
 apple_pay:
   environment: apple_pay
   stage: staging
@@ -57,17 +69,18 @@ apple_pay:
   script:
     - mage-deploy applepay-mariatash
     - echo 'Deployed on apple_pay Staging'
-universal:
-  environment: staging
+
+new_apple_pay:
+  environment: apple_pay
   stage: staging
   tags:
-    - staging
+    - alpha
   only:
-    - universal
+    - apple_pay
   script:
-    - mage-deploy universal
-    - echo 'Deployed on Universal Staging'
-    
+    - mage-deploy applepay
+    - echo 'Deployed on apple_pay Staging'
+
 deploy-cloud:
   environment: production
   stage: deploy
