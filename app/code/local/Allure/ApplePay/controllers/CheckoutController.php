@@ -77,6 +77,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
 
     public function addProductAction() {
+        Mage::log("BEGIN: addProductAction",Zend_Log::DEBUG, 'applepay.log', true);
 
         $cart   = $this->_getCart();
 
@@ -160,6 +161,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             */
 
             $this->getResponse()->setBody(json_encode($result));
+            Mage::log("END: addProductAction",Zend_Log::DEBUG, 'applepay.log', true);
             return;
         } catch (Mage_Core_Exception $e) {
             $this->getResponse()->setBody($e->getMessage());
@@ -180,6 +182,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     public function saveBillingAction() {
         
         if ($this->getRequest()->isPost()) {
+            Mage::log("BEGIN: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
             $data = $this->getRequest()->getPost('billing', array());
             
 //             $quoteId = $this->getRequest()->getPost('quote_id', null);
@@ -264,6 +267,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             //$result['shipping_address'] = $this->_getQuote()->getShippingAddress()->getFirstname();
             
             $this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
+            
+            Mage::log("END: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
 
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
@@ -273,6 +278,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * Shipping address save action
      */
     public function saveShippingAction() {
+        
+        Mage::log("BEGIN: saveShippingAction",Zend_Log::DEBUG, 'applepay.log', true);
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping', array());
@@ -290,6 +297,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                         'html' => $this->_getShippingMethodsHtml()
                 );
             }
+            Mage::log("END: saveShippingAction",Zend_Log::DEBUG, 'applepay.log', true);
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
@@ -298,6 +306,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * Shipping method save action
      */
     public function saveShippingMethodAction() {
+        Mage::log("BEGIN: saveShippingMethodAction",Zend_Log::DEBUG, 'applepay.log', true);
 //         if ($this->_expireAjax()) {
 //             return;
 //         }
@@ -334,6 +343,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                         'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)
                 );
             }
+            
+            Mage::log("END: saveShippingMethodAction",Zend_Log::DEBUG, 'applepay.log', true);
             
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
