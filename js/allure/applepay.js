@@ -544,6 +544,7 @@ if (window.ApplePaySession) {
 	    
 		jQuery.ajax({
 			url: Allure.ApplePay.data.baseUrl+'saveTransaction',
+			//url: Allure.ApplePay.data.baseUrl+'saveOrderTransaction',
 			data: {amount: Allure.ApplePay.data.total.amount, dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64},
 			method: 'POST',
 			dataType: 'json',
@@ -580,6 +581,45 @@ if (window.ApplePaySession) {
 			'billing[fax]': '',
 			'billing[use_for_shipping]': 1
 		});
+		
+		if (Allure.ApplePay.data.response.saveBilling) {
+			if (typeof Allure.ApplePay.data.response.saveBilling.shipping_methods != 'undefined') {
+				Allure.ApplePay.data.shippingMethods = [];
+				jQuery.each(Allure.ApplePay.data.response.saveBilling.shipping_methods, function(shippingCode, shippingData){
+						Allure.ApplePay.data.shippingMethods.push({
+							identifier: shippingCode, 
+							label: shippingData.carrier_title+' / '+shippingData.method_title, 
+							detail: shippingData.method_title+(shippingData.method_description ? ' - '+shippingData.method_description : ''), 
+							amount: shippingData.price
+					});
+				});
+			}
+			
+			if (typeof Allure.ApplePay.data.response.saveBilling.totals != 'undefined') {
+				Allure.ApplePay.data.lineItems = [];
+				jQuery.each(Allure.ApplePay.data.response.saveBilling.totals, function(totalCode, totalData){
+					if (totalCode == 'grand_total') {
+						if (!Allure.ApplePay.flag.sandbox) {
+							Allure.ApplePay.data.total.amount = totalData.value;
+						} else {
+							Allure.ApplePay.data.total.amount = 1;
+						}
+						
+						return;
+					}
+					
+					Allure.ApplePay.data.lineItems.push({
+						    label: totalData.title,
+						    amount: totalData.value,
+						    type: "final"
+					});
+				});
+			}
+			
+			if (typeof Allure.ApplePay.data.response.saveBilling.currency != 'undefined') {
+				Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.saveBilling.currency;
+			}
+		}
 		
 		return new Promise(function(resolve, reject) {
 			console.log(paymentToken);

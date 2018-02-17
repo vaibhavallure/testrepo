@@ -127,6 +127,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
             );
             
+            $couponCode = '4uWruyuc';
+            $this->_getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')->collectTotals()->save();
+            
             $quote = $cart->getQuote();
             
             $result = array(
@@ -198,6 +201,23 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             if (isset($data['email'])) {
                 $data['email'] = trim($data['email']);
             }
+            
+            if (!isset($data['region_id']) || empty($data['region_id'])) {
+                $regionName = $data['region'];
+                
+                $region  = Mage::getModel('directory/region')->loadByCode($regionName, $data['country_id']);
+                
+                if (!$region->getId()) {
+                    $region = Mage::getModel('directory/region')->loadByName($regionName, $data['country_id']);
+                }
+                
+                if ($region->getId()) {
+                    $data['region_id'] = $region->getId();
+                }
+            }
+            
+            Mage::log("NEW DATA: ".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
+            
             $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
 
             if (!isset($result['error'])) {
@@ -271,6 +291,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             
             $this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
             
+            Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
             Mage::log("END: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
 
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
