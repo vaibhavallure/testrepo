@@ -17,23 +17,23 @@
  * @license		http://store.paradoxlabs.com/license.html
  */
 
-class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Controller_Front_Action
+class ParadoxLabs_TokenBase_Adminhtml_Customer_PaymentinfoController extends Mage_Adminhtml_Controller_Action
 {
 	/**
-	 * Ensure customers log in/register before getting to this controller.
+	 * Load the customer record.
 	 */
 	public function preDispatch()
 	{
 		parent::preDispatch();
 		
-		if( !Mage::getSingleton('customer/session')->authenticate($this) ) {
-			$this->getResponse()->setRedirect( Mage::helper('customer')->getLoginUrl() );
-			$this->setFlag( '', self::FLAG_NO_DISPATCH, true );
+		$customer = Mage::getModel('customer/customer');
+		$customer->load( $this->getRequest()->getParam('id') );
+		if( !$customer || $customer->getId() < 1 || $customer->getId() != $this->getRequest()->getParam('id') ) {
+			$this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Could not load customer.') ) ) );
+			exit;
 		}
-		elseif( count( Mage::helper('tokenbase')->getActiveMethods() ) == 0 ) {
-			$this->getResponse()->setRedirect( Mage::helper('customer')->getAccountUrl() );
-			$this->setFlag( '', self::FLAG_NO_DISPATCH, true );
-		}
+		
+		Mage::register( 'current_customer', $customer, true );
 		
 		return $this;
 	}
@@ -45,7 +45,7 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 	{
 		parent::addActionLayoutHandles();
 		
-		Mage::getSingleton('core/layout')->getUpdate()->addHandle( 'customer_paymentinfo_' . strtolower( $this->getRequest()->getRequestedActionName() ) . '_' . Mage::registry('tokenbase_method') );
+		Mage::getSingleton('core/layout')->getUpdate()->addHandle( 'adminhtml_customer_edit_paymentinfo_' . strtolower( $this->getRequest()->getRequestedActionName() ) . '_' . Mage::registry('tokenbase_method') );
 		
 		return $this;
 	}
@@ -67,8 +67,7 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 				Mage::register( 'tokenbase_method', $methods[0] );
 			}
 			else {
-				Mage::getSingleton('core/session')->addError( $this->__('No payment methods are currently available.') );
-				return $this->_redirect( '*' );
+				return $this->__('No payment methods are currently available.');
 			}
 		}
 		
@@ -77,21 +76,8 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 		/**
 		 * Check for card input and validate if present.
 		 */
-		$id	= intval( $this->getRequest()->getPost('id') );
-		
-		if( $id <= 0 || $this->_formKeyIsValid() !== true ) {
-			$id = 0;
-			
-			if( Mage::getSingleton('customer/session')->hasTokenbaseFormData() ) {
-				$data = Mage::getSingleton('customer/session')->getTokenbaseFormData();
-				
-				if( isset( $data['id'] ) && intval( $data['id'] ) > 0 ) {
-					$id = intval( $data['id'] );
-				}
-			}
-		}
-		
-		if( $id > 0 ) {
+		$id	= intval( $this->getRequest()->getParam('card_id') );
+		if( $id > 0  && $this->_formKeyIsValid() === true ) {
 			$card = Mage::getModel( $method . '/card' )->load( $id );
 			
 			if( $card && $card->getId() == $id && $card->hasOwner( Mage::helper('tokenbase')->getCurrentCustomer()->getId() ) ) {
@@ -103,28 +89,15 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 		 * Output management interface
 		 */
 		$this->loadLayout();
-		
-		// Add title and breadcrumbs.
-		$methodTitle = Mage::getSingleton( Mage::registry('tokenbase_method') . '/method' )->getConfigData('title');
-		
-		$this->_title( Mage::helper('tokenbase')->__('My Payment Data' ) )
-			 ->_title( $methodTitle );
-		
-		$breadcrumbs = $this->getLayout()->getBlock('breadcrumbs');
-		//if( $breadcrumbs && $breadcrumbs instanceof Mage_Core_Block_Template ) {
-		//	$breadcrumbs->addCrumb( 'tokenbase', array( 'label' => Mage::helper('tokenbase')->__('My Payment Data'), 'title' => Mage::helper('tokenbase')->__('My Payment Data'), 'link' => Mage::getUrl('*/*') ) );
-		//	$breadcrumbs->addCrumb( 'tokenbase_method', array( 'label' => $methodTitle, 'title' => $methodTitle, 'link' => Mage::getUrl( '*/*/*', array( 'method' => Mage::registry('tokenbase_method') ) ) ) );
-		//}
-		
 		$this->renderLayout();
 	}
 	
 	/**
 	 * Load a card for edit
 	 */
-	public function ajaxLoadAction()
+	public function loadAction()
 	{
-		$id			= intval( $this->getRequest()->getPost('id') );
+		$id			= intval( $this->getRequest()->getParam('card_id') );
 		$method		= $this->getRequest()->getParam('method');
 		
 		if( $this->_formKeyIsValid() === true && $this->_methodIsValid() === true ) {
@@ -138,14 +111,14 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 					Mage::register( 'active_card', $card );
 				}
 				else {
-					Mage::getSingleton('core/session')->addError( $this->__('Invalid Request.') );
-					return 0;
+					$this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Invalid Request.') ) ) );
+					return;
 				}
 			}
 		}
 		else {
-			Mage::getSingleton('core/session')->addError( $this->__('Invalid Request.') );
-			return 0;
+			$this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Invalid Request.') ) ) );
+			return;
 		}
 		
 		$this->loadLayout();
@@ -157,8 +130,9 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 	 */
 	public function saveAction()
 	{
-		$id			= intval( $this->getRequest()->getPost('id') );
 		$method		= $this->getRequest()->getParam('method');
+		$input 		= $this->getRequest()->getParam( $method );
+		$id			= intval( $input['card_id'] );
 		
 		if( $this->_formKeyIsValid() === true && $this->_methodIsValid() === true ) {
 			/**
@@ -175,7 +149,7 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 					/**
 					 * Process address data
 					 */
-					$newAddrId	= intval( Mage::app()->getRequest()->getParam('shipping_address_id') );
+					$newAddrId	= isset( $input['shipping_address_id'] ) ? intval( $input['shipping_address_id'] ) : 0;
 					
 					// Existing address
 					if( $newAddrId > 0 ) {
@@ -190,7 +164,7 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 						$newAddr = Mage::getModel('customer/address');
 						$newAddr->setCustomerId( $customer->getId() );
 						
-						$data = Mage::app()->getRequest()->getPost( 'billing', array() );
+						$data = isset( $input['billing'] ) ? $input['billing'] : array();
 						
 						$addressForm    = Mage::getModel('customer/form');
 						$addressForm->setFormCode('customer_address_edit');
@@ -213,7 +187,7 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 					/**
 					 * Process payment data
 					 */
-					$cardData = Mage::app()->getRequest()->getParam('payment');
+					$cardData = isset( $input['payment'] ) ? $input['payment'] : array();
 					$cardData['method']		= $method;
 					$cardData['card_id']	= $card->getId();
 					
@@ -221,32 +195,14 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 						$cardData['cc_last4']	= substr( $cardData['cc_number'], -4 );
 					}
 					
+					$quote = Mage::getModel('sales/quote');
+					$quote->setStoreId( Mage::helper('tokenbase')->getCurrentStoreId() );
+					$quote->setCustomerId( $card->getCustomerId() );
 					
-					Mage::log(Mage::getSingleton('checkout/session')->getQuote()->getId(),Zend_log::DEBUG,'abc',true);
-					//die;
 					$newPayment = Mage::getModel('sales/quote_payment');
-					$newPayment->setQuote( Mage::getSingleton('checkout/session')->getQuote() );
+					$newPayment->setQuote( $quote );
 					$newPayment->getQuote()->getBillingAddress()->setCountryId( $newAddr->getCountryId() );
-					//$newPayment->importData( $cardData );
-					
-					$cardData= new Varien_Object($cardData);
-					
-					Mage::dispatchEvent(
-							'sales_quote_payment'. '_import_data_before',
-							array(
-									'payment'=>$newPayment,
-									'input'=>$cardData,
-							)
-							);
-					$newPayment->setMethod($cardData->getMethod());
-					$newPayment1= $newPayment->getMethodInstance();
-					Mage::getSingleton('checkout/session')->getQuote()->collectTotals();
-					
-					$newPayment1->assignData($cardData);
-					/*
-					 * validating the payment data
-					 */
-					$newPayment1->validate();
+					$newPayment->importData( $cardData );
 					
 					/**
 					 * Save payment data
@@ -258,31 +214,28 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 					$card->importPaymentInfo( $newPayment );
 					$card->save();
 					
-					Mage::getSingleton('customer/session')->unsTokenbaseFormData();
+					Mage::getSingleton('adminhtml/session')->unsTokenbaseFormData();
 				}
 				else {
-					Mage::getSingleton('core/session')->addError( $this->__('Invalid Request.') );
-					return $this->_redirectReferer();
+					$this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Invalid Request.') ) ) );
+					return;
 				}
 			}
 			catch( Exception $e ) {
-				Mage::getSingleton('customer/session')->setTokenbaseFormData( Mage::app()->getRequest()->getPost() );
+				Mage::getSingleton('adminhtml/session')->setTokenbaseFormData( $input );
 				
 				Mage::helper('tokenbase')->log( $method, (string)$e );
-				Mage::getSingleton('core/session')->addError( $e->getMessage() );
-				Mage::log($e,Zend_log::DEBUG,'abc',true);
-				
-				return $this->_redirectReferer();
+				$this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__( 'ERROR: %s', $e->getMessage() ) ) ) );
+				return;
 			}
 		}
 		else {
-			Mage::getSingleton('core/session')->addError( $this->__('Invalid Request.') );
-			return $this->_redirectReferer();
+			$this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Invalid Request.') ) ) );
+			return;
 		}
 		
-		Mage::getSingleton('core/session')->addSuccess( $this->__('Payment data saved successfully.') );
-		
-		$this->_redirect( '*/*', array( 'method' => $method ) );
+		$this->loadLayout();
+		$this->renderLayout();
 	}
 	
 	/**
@@ -290,49 +243,48 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 	 */
 	public function deleteAction()
 	{
-		$id			= intval( $this->getRequest()->getPost('id') );
+		$id			= intval( $this->getRequest()->getParam('card_id') );
 		$method		= $this->getRequest()->getParam('method');
-		
+	
 		if( $this->_formKeyIsValid() === true && $this->_methodIsValid() === true && $id > 0 ) {
 			try {
 				/**
 				 * Load the card and verify we are actually the cardholder before doing anything.
 				 */
 				$card = Mage::getModel( $method . '/card' )->load( $id );
+				
 				if($card && $card->getId() == $id && $card->hasOwner( Mage::helper('tokenbase')->getCurrentCustomer()->getId() ) )
 				{
 				    $collection=Mage::getModel('sales/order_payment')->getCollection();
 				    $collection->addAttributeToFilter('tokenbase_id', array('eq' => $card->getId()));
 				    if(count($collection) > 0){
 				        $this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Payment record can not deleted as it is associted with some orders.') ) ) );
-				        Mage::getSingleton('core/session')->addError( $this->__('Payment record can not deleted as it is associted with some orders.') );
-				        return $this->_redirectReferer();
+				        return;
 				    }
 				}
-				
 				if( $card && $card->getId() == $id && $card->hasOwner( Mage::helper('tokenbase')->getCurrentCustomer()->getId() ) ) {
 					$card->queueDeletion()
 						 ->save();
-					
-					Mage::getSingleton('core/session')->addSuccess( $this->__('Payment record deleted.') );
 				}
 				else {
-					Mage::getSingleton('core/session')->addError( $this->__('Invalid Request.') );
-					return $this->_redirectReferer();
+					$this->getResponse()->setBody( json_encode( array( 'success' => false, 'error' => $this->__('Invalid Request.') ) ) );
+					return;
 				}
 			}
 			catch( Exception $e ) {
 				Mage::helper('tokenbase')->log( $method, (string)$e );
 				
-				Mage::getSingleton('core/session')->addError( $e->getMessage() );
+				$this->getResponse()->setBody( json_encode( array( 'success' => false, 'error' => $this->__( 'ERROR: %s', $e->getMessage() ) ) ) );
+				return;
 			}
 		}
 		else {
-			Mage::getSingleton('core/session')->addError( $this->__('Invalid Request.') );
-			return $this->_redirectReferer();
+			$this->getResponse()->setBody( json_encode( array( 'success' => false, 'error' => $this->__('Invalid Request.') ) ) );
+			return;
 		}
 		
-		$this->_redirect( '*/*', array( 'method' => $method ) );
+		$this->getResponse()->setBody( json_encode( array( 'success' => true, 'error' => $this->__('Payment record deleted.') ) ) );
+		return;
 	}
 	
 	/**
@@ -340,13 +292,7 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 	 */
 	protected function _formKeyIsValid()
 	{
-		$formKey	= $this->getRequest()->getParam('form_key');
-		
-		if( $formKey == Mage::getSingleton('core/session')->getFormKey() ) {
-			return true;
-		}
-		
-		return false;
+		return true;
 	}
 	
 	/**
@@ -363,5 +309,13 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Check ACP perms
+	 */
+	protected function _isAllowed()
+	{
+		return Mage::getSingleton('admin/session')->isAllowed('customer/manage');
 	}
 }
