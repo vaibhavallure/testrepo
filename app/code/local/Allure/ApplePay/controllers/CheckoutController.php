@@ -188,6 +188,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         
         Mage::log("BEGIN: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
         Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
+        
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('billing', array());
             
@@ -609,7 +610,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
         $data = $_POST;
         
-        Mage::log("BEGIN: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("BEGIN: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
         
         Mage::log(json_encode($_POST),Zend_Log::DEBUG, 'applepay.log', true);
         
@@ -684,8 +685,11 @@ XML;
             $jsonResult=json_encode($xmlResult);
             
             echo $jsonResult;
+            
+            Mage::log("RESPONSE: ".$jsonResult,Zend_Log::DEBUG, 'applepay.log', true);
                     
         }catch(Exception $e) {
+            Mage::log("ERROR: ".sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()),Zend_Log::DEBUG, 'applepay.log', true);
             trigger_error(sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()), E_USER_ERROR);
         }
         
@@ -694,7 +698,7 @@ XML;
         
         $this->getRequest()->setPost('payment', $paymentData);
         
-        Mage::log("END: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
         return $this->saveOrderAction($paymentData);
     }
     

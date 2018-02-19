@@ -505,13 +505,13 @@ if (window.ApplePaySession) {
 			url: 	Allure.ApplePay.data.baseUrl+requestType,
 			async: 	false,
 			cache: 	false,
+			method: 	'POST',
 			dataType: 'json',
 			data: 	requestData,
-			method: 	'POST',
 			xhrFields: {
 				withCredentials: true
 			},
-			//timeout: 50000
+			timeout: 20000 // 20 seconds
 			
 		}).done(function(data){
 			console.log(data);
@@ -542,7 +542,17 @@ if (window.ApplePaySession) {
 	    
 	    var status = false;
 	    
-		jQuery.ajax({
+	    var data = {amount: Allure.ApplePay.data.total.amount, dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64};
+	    
+	    var response = Allure.ApplePay.action.sendRequest('saveOrderTransaction', data);
+	    //var response = Allure.ApplePay.action.sendRequest('saveTransaction', data);
+
+		console.log('saveTransaction response::');
+		console.log(response);
+	    
+	    status = response.success;
+	    
+		/*jQuery.ajax({
 			url: Allure.ApplePay.data.baseUrl+'saveTransaction',
 			//url: Allure.ApplePay.data.baseUrl+'saveOrderTransaction',
 			data: {amount: Allure.ApplePay.data.total.amount, dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64},
@@ -556,7 +566,7 @@ if (window.ApplePaySession) {
 			status = responseData.success;
 		}).fail(function(){
 			console.log('Error');
-		})
+		})*/
 		
 		console.log('TransactionStatus::'+status);
 		
@@ -571,8 +581,8 @@ if (window.ApplePaySession) {
 			'billing[company]': '',
 			'billing[email]': shippingContact.emailAddress,
 			'billing[country_id]': shippingContact.countryCode,
-			'billing[street]': shippingContact.addressLines[0],
-			//'billing[street][1]': '',
+			'billing[street][0]': shippingContact.addressLines[0],
+			'billing[street][1]': '',
 			'billing[city]': shippingContact.locality,
 			'billing[region_id]': '',
 			'billing[region]': shippingContact.administrativeArea,
