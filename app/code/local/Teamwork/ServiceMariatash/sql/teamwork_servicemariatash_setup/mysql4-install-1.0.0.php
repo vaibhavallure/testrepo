@@ -28,9 +28,12 @@ $installer->addAttribute('catalog_product', 'teamwork_plu', array(
     {
         $set = Mage::getModel('eav/entity_attribute_set')->load($a->getId());
         $setId = $set->getId();
+        $group = Mage::getModel('eav/entity_attribute_group')->getCollection()->addFieldToFilter('attribute_set_id',$setId)->setOrder('attribute_group_id',"ASC")->getFirstItem();
+        $groupId = $group->getId();
         $newItem = Mage::getModel('eav/entity_attribute');
         $newItem->setEntityTypeId($attSet->getId()) 
                   ->setAttributeSetId($setId)
+                  ->setAttributeGroupId($groupId)
                   ->setAttributeId($attId)
                   ->setSortOrder(10)
                   ->save();

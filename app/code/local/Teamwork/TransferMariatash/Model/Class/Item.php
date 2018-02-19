@@ -1,6 +1,119 @@
 <?php
 class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_Transfer_Model_Class_Item
 {
+	
+	protected function _beforeAddData(&$productData, &$style, &$typeId, &$item, &$topProduct)
+	{   
+		if ($topProduct)
+		{
+			/*ring_closing_mechanism*/
+			if (!empty($style['customlongtext16']))
+			{
+				$optionId = null;
+				$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ring_closing_mechanism');
+					if ($attr->usesSource()) 
+					{
+						$optionId = $attr->getSource()->getOptionId($style['customlongtext16']);
+					}
+				$productData['ring_closing_mechanism'] = $optionId;
+			}
+			/*ring_closing_mechanism*/
+			
+			/*ring_diameter_as_filter*/
+			if (!empty($style['customlongtext17']))
+			{
+				$optionId = null;
+				$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ring_diameter_as_filter');
+					if ($attr->usesSource()) 
+					{
+						$optionId = $attr->getSource()->getOptionId($style['customlongtext17']);
+					}
+				$productData['ring_diameter_as_filter'] = $optionId;
+			}
+			/*ring_diameter_as_filter*/
+			
+			/*diamond_color*/
+			if (!empty($style['custommultiselect1']))
+			{
+				$attrValues = unserialize($style['custommultiselect1']);
+				$optionId = array();
+				if(isset($attrValues['LookupName']))
+				{
+					$attrValues = $attrValues['LookupName'];
+					foreach ($attrValues as $val)
+					{
+						$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
+						if ($attr->usesSource()) 
+						{
+							$optionId[] = $attr->getSource() ->getOptionId($val);
+						}
+						
+					}
+				}
+			}
+			
+			$productData['diamond_color'] = $optionId;
+			/*diamond_color*/
+			
+			/*gemstone*/
+			if (!empty($style['custommultiselect2']))
+			{
+				$attrValues = unserialize($style['custommultiselect2']);
+				$optionId = array();
+				if(isset($attrValues['LookupName']))
+				{
+				$attrValues = $attrValues['LookupName'];
+					foreach ($attrValues as $val)
+					{
+						$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
+						if ($attr->usesSource()) 
+						{
+							$optionId[] = $attr->getSource()->getOptionId($val);
+						}
+						
+					}
+				}
+			}
+			
+			$productData['gemstone'] = $optionId;
+			/*gemstone*/
+		}
+		else
+		{
+			/*vendor_item_no*/
+			if (!empty($item['c_vlu']))
+			{
+				$productData['vendor_item_no'] = $item['c_vlu'];
+			}
+			/*vendor_item_no*/
+			/*thread_type*/
+			if (!empty($item['Attribute3']))
+			{
+				$optionId = null;
+				$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('thread_type');
+				if ($attr->usesSource()) 
+				{
+					$optionId = $attr->getSource()->getOptionId($item['Attribute3']);
+				}
+				$productData['thread_type'] = $optionId;
+			}
+			/*thread_type*/
+
+			/*ball_size*/
+			if (!empty($item['Attribute3']))
+			{
+				$optionId = null;
+				$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('ball_size');
+				if ($attr->usesSource()) 
+				{
+					$optionId = $attr->getSource()->getOptionId($item['Attribute3']);
+				}
+			$productData['ball_size'] = $optionId;
+			}
+			/*ball_size*/
+		}
+	}
+	
 	protected function _getProductData(&$style, $typeId = Mage_Catalog_Model_Product_Type::TYPE_SIMPLE, $item = null)
     {
         if($typeId == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE || $this->_productTypes[$style[Teamwork_Service_Model_Mapping::FIELD_STYLE_INVETTYPE]] == Mage_Catalog_Model_Product_Type::TYPE_SIMPLE)
@@ -99,7 +212,6 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             {
                 $prefix = !empty($style['no']) ? $style['no'] : '';
                 $productData['sku'] = $prefix . $suffix;
-				Mage::log($style, null, 'tempSku.log');
             }
 			
         }
