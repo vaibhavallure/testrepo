@@ -59,7 +59,27 @@ universal:
     - mage-deploy universal
     - echo 'Deployed on Universal Staging'
 
-    
+apple_pay:
+  environment: apple_pay
+  stage: staging
+  tags:
+    - staging
+  only:
+    - apple_pay
+  script:
+    - mage-deploy applepay-mariatash
+    - echo 'Deployed on apple_pay Staging'
+
+new_apple_pay:
+  environment: apple_pay
+  stage: staging
+  tags:
+    - alpha
+  only:
+    - apple_pay
+  script:
+    - mage-deploy applepay
+    - echo 'Deployed on apple_pay Staging'
 
     
 deploy-cloud:
