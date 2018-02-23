@@ -180,7 +180,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                     'product_id'    => $item['item_id'],
                                     'requested_qty' => $item['qty'],
                                     'remaining_qty' => $item['qty'],
-                                    'proposed_qty'  => $item['qty'],
+                                    'proposed_qty'  => 0,
                                     'status'        => 'new',
                                     'requested_delivery_date' => $date,
                                     'is_custom'     => $item['is_custom'],
@@ -387,6 +387,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                             $days = Mage::getStoreConfig('allure_vendor/backorder/backorder_time');
                         
                        /*      update Back-ordered time update to child items */
+                            
                       if (!$item->getIsCustom()){
                         $_product = Mage::getModel('catalog/product')->load($product);
                         $parentSKu = '';
@@ -740,6 +741,7 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                    $helper->sendEmail($po_id,$vendorEmail,$templateId,$adminEmail,true,$diffArray);
                }
              }
+             
              $orderlogsmodel = Mage::getModel('inventory/orderlogs');
              $logData = array(
                  'po_id' => $po_id,
