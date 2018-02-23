@@ -150,6 +150,7 @@ class Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product extends Teamwork_C
         {
             $itemGuid = $this->_getElement($item, 'ItemId');
             $this->_populateIdentifier($item);
+            // $this->_populatePrice($item,$channelId);
             foreach($item->EChannels->children() as $itemChannel)
             {
                 if( $channelName == $this->_getAttribute($itemChannel, 'Name') )
@@ -159,8 +160,8 @@ class Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product extends Teamwork_C
                     {
                         $processedItems[] = $itemGuid;
                         $itemEntity = Mage::getModel('teamwork_common/staging_items')->loadByChannelAndGuid($channelId, $itemGuid);
-						
-						$itemEntity->setData($itemEntity->getGuidField(), $itemGuid)
+                        
+                        $itemEntity->setData($itemEntity->getGuidField(), $itemGuid)
                             ->setChannelId($channelId)
                             ->setRequestId($this->chqStaging->getData('ApiDocumentId'))
                             ->setStyleId($this->_getElement($style, 'StyleId'))
@@ -227,7 +228,6 @@ class Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product extends Teamwork_C
                         ->save();
                         $this->_populateCategories($itemGuid,$channelId,$itemChannel->children(),true);
                         $this->_populateRelations($style,$item);
-                        $this->_populateUsedAttributes($itemEntity);
                     }
                     break;
                 }
