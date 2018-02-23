@@ -221,5 +221,18 @@
 
     </adminhtml_inventory_purchase_addproduct>
 
+	<adminhtml_inventory_purchase_vendorview>      
+        <update handle="adminhtml_inventory_layout" />
+        <reference name="head">
+	         <action method="addJs"><file>allure/jquery.js</file></action>
+	         <action method="addJs"><file>allure/inventory/vendor.js</file></action>
+	         <action method="addCss"><stylesheet>css/allure/inventory/inventory.css</stylesheet></action>
+        </reference> 
+        <reference name="content">
+            <block type="inventory/purchaseorder_view" name="purchaseorder_new" template="inventory/purchaseorder/vendor_view.phtml">
+				<block type="inventory/purchaseorder_view" name="pager" template="inventory/pager.phtml" ></block>
+            </block>
+        </reference>
+    </adminhtml_inventory_purchase_vendorview>
     
 </layout>

@@ -1,6 +1,8 @@
 <?php
 
 
+use Braintree\Exception\NotFound;
+
 class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inventory_Controller_Action {
 
     protected function _initAction() {
@@ -252,8 +254,6 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody($jsonData);
     }
-
-
     public function saveOrderAction() {
         $admin = Mage::getSingleton('admin/session')->getUser();
         $data = $this->getRequest()->getPost();
@@ -545,7 +545,6 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         }
         $this->_redirect('*/*/orders');
     }
-
     
     public function receivelistAction()
     {
@@ -612,8 +611,8 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                                         $diffArray[$product]['is_custom'] = $tempProduct['is_custom'];
                                     }
                                 }
-                                $remainingQty = $tempProduct['remaining_qty'] - $arr['proposed_qty'];
-                                $tempProduct['remaining_qty'] = $remainingQty;
+                               /*  $remainingQty = $tempProduct['remaining_qty'] - $arr['proposed_qty'];
+                                $tempProduct['remaining_qty'] = $remainingQty; */
                                 $tempProduct['admin_comment'] = $arr['admin_comment'];
                                 $tempProduct['vendor_comment'] = $arr['vendor_comment'];
                                 $tempProduct['requested_qty'] = $arr['requested_qty'];
@@ -667,8 +666,8 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                             $diffArray[$product]['is_custom'] = $tempProduct['is_custom'];
                         }
                     }
-                    $remainingQty = $tempProduct['remaining_qty'] - $arr['proposed_qty'];
-                    $tempProduct['remaining_qty'] = $remainingQty;
+                   /*  $remainingQty = $tempProduct['remaining_qty'] - $arr['proposed_qty'];
+                    $tempProduct['remaining_qty'] = $remainingQty; */
                     $tempProduct['admin_comment'] = $arr['admin_comment'];
                     $tempProduct['vendor_comment'] = $arr['vendor_comment'];
                     $tempProduct['requested_qty'] = $arr['requested_qty'];
@@ -698,15 +697,26 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                // } // End Of else
             } // End of foreach
 
-            $status = Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_CLOSED;
-            if ($close)
-                $status = Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED;
-            if ($void)
-                $status = Allure_Inventory_Helper_Data::ORDER_STATUS_REJECT;
+           
             $order = Mage::getModel('inventory/purchaseorder')->load($po_id);
             $vendorId=$order->getVendorId();
             $stockId=$order->getStockId();
-             if ($close){
+            $canFullyShipOrder=1;
+            $itemCollection = Mage::getModel('inventory/orderitems')->getCollection()
+            ->addFieldToFilter('po_id', $po_id);
+            foreach ($itemCollection as $tempItem){
+                if($tempItem->getRemainingQty() > 0){
+                    $canFullyShipOrder=0;
+                    break;
+                }
+            }
+            $status = Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_CLOSED;
+            if ($close && $canFullyShipOrder)
+                $status = Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED;
+            if ($void)
+                $status = Allure_Inventory_Helper_Data::ORDER_STATUS_REJECT;
+            
+            if ($close && $canFullyShipOrder){
                     //Fully ship and closed
                     
                     $templateId=Mage::getStoreConfig('allure_vendor/general/purchase_order_close',$storeId);
@@ -1446,5 +1456,301 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         }
         
        // $this->_redirect('*/*/orders');
+    }
+    public function vendorviewAction(){
+        $this->_initAction();
+        $this->_title($this->__('Inventory'))
+        ->_title($this->__('Purchase Order'));
+        $this->renderLayout();
+    }
+   
+    public function addVendorItemAction(){
+        $request = $this->getRequest()->getPost();
+        $model = Mage::getModel('inventory/vendorwork');
+        if ($request['item']['include']) {
+            $orderItem = $this->loadVendorItemByIdAndPO($request['item']['id'],$request['item']['po_id']);
+            
+            $insertData = array(
+                'product_id' => $request['item']['id'],
+                'shipped_qty' => $request['item']['qty'],
+                'vendor_comment' => $request['item']['comment'],
+                'is_custom' => $request['item']['is_custom'],
+                'ship_date' => $request['item']['date'],
+                'po_id' => $request['item']['po_id'],
+                'vendor_sku' => $request['item']['vendor_sku']
+            );
+            if($orderItem->getId()){
+                $model=$orderItem;
+                $model->setData($insertData);
+                $model->save();
+            }else {
+                $model->setData($insertData);
+                $model->save();
+            }
+            
+        } else {
+            
+            try {
+                $item = $this->loadVendorItemByIdAndPO($request['item']['id'], $request['item']['po_id']);
+                if($item->getId()){
+                    $item->delete();
+                }
+                // echo "Data deleted successfully.";
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+        }
+       // Mage::log(json_encode($request),Zend_log::DEBUG,'ajay.log',TRUE);
+        $jsonData = json_encode(compact('success', 'message', 'data'));
+        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setBody($jsonData);
+    }
+    
+    public function loadVendorItemByIdAndPO($id,$poId){
+        $model = Mage::getModel('inventory/vendorwork')->getCollection()
+        ->addFieldToFilter('product_id', $id)
+        ->addFieldToFilter('po_id', $poId);
+        return $model->getFirstItem();
+    }
+    public function getVendorSelecteditemsAction(){
+        
+        $request = $this->getRequest()->getPost();
+        
+        Mage::log(json_encode($request),Zend_log::DEBUG,'ajay.log',TRUE);
+        
+        if ($request = $this->getRequest()->getParam('po_id'))
+            $poid = $request = $this->getRequest()->getParam('po_id');
+        else
+            $poid = $request['po_id'];
+        
+        $data = Mage::getModel('inventory/vendorwork')->getCollection()
+            ->addFieldToFilter('po_id', $poid)
+            ->getData();
+        
+        Mage::log($data,Zend_log::DEBUG,'ajay.log',true);
+        $jsonData = json_encode(compact('success', 'message', 'data'));
+        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setBody($jsonData);
+    }
+    public function shipOrderAction() {
+        $admin = Mage::getSingleton('admin/session')->getUser();
+        $data = $this->getRequest()->getPost();
+        $resource = Mage::getSingleton('core/resource');
+        $writeAdapter = $resource->getConnection('core_write');
+        $po_id = $data['order_id'];
+        $helper = Mage::helper('inventory');
+        // get aditional paramters
+        try {
+            $ship   = Mage::app()->getRequest()->getParam('ship');
+            $close  = Mage::app()->getRequest()->getParam('close');
+            $canFullyShipOrder = 1;
+            $diffArray=array();
+            $poObj = Mage::getModel('inventory/purchaseorder')->load($po_id);
+            $storeId = $poObj->getStockId();
+            
+            $vendorCollection = Mage::getModel('inventory/vendorwork')->getCollection()
+            ->addFieldToFilter('po_id', $po_id);
+            
+            if(count($vendorCollection) == 0){
+                Mage::getSingleton('adminhtml/session')->addError("Please select items to ship ");
+                $this->_redirect('*/*/orders');
+                return '';
+            }
+           
+            foreach ($vendorCollection as $vendorItem){
+                $date='';
+                $item = Mage::getModel('inventory/orderitems')->getCollection()
+                ->addFieldToFilter('product_id', $vendorItem->getProductId())
+                ->addFieldToFilter('po_id', $po_id);
+                $item=$item->getFirstItem();
+                /* print_r($item->getData());
+                die; */
+                if(!$item->getIsCustom()){
+                    if($vendorItem->getVendorSku()!=$item->getVendorSku()){
+                        Mage::getResourceSingleton('catalog/product_action')
+                        ->updateAttributes(array($item->getProductId()), array(
+                            'vendor_item_no' => $vendorItem->getVendorSku()
+                        ), $storeId);
+                        $item->setData('vendor_sku', $vendorItem->getVendorSku());
+                    }
+                }
+               
+                if($vendorItem->getShippedQty()!=0){
+                    $diffArray[$item->getProductId()]['qty'] = $vendorItem->getShippedQty();
+                    $diffArray[$item->getProductId()]['qty_old'] = $item->getRequestedQty();
+                    $diffArray[$item->getProductId()]['is_custom'] = $item->getIsCustom();
+                    
+                    $qtyRemaining=$item->getRemainingQty()-$vendorItem->getShippedQty();
+                    $item->setData('proposed_qty', $vendorItem->getShippedQty());
+                    $item->setData('remaining_qty', $qtyRemaining);
+                    
+                    
+                }
+                if(trim($item->getVendorComment()) != trim($vendorItem->getVendorComment())){
+                    $diffArray[$item->getProductId()]['vendor_comment'] = $vendorItem->getVendorComment();
+                    $diffArray[$item->getProductId()]['vendor_comment_old'] = $item->getVendorComment();
+                    $diffArray[$item->getProductId()]['is_custom'] = $item->getIsCustom();
+                    $item->setData('vendor_comment', $vendorItem->getVendorComment());
+                    
+                }
+                if(!is_null($vendorItem->getShipDate())){
+                    if(date('m/d/Y',strtotime($item->getProposedDeliveryDate())) != $vendorItem->getShipDate()){
+                        $date = date('F j, Y', strtotime($vendorItem->getShipDate()));
+                        $diffArray[$item->getProductId()]['proposed_delivery_date'] = $date;
+                        $diffArray[$item->getProductId()]['proposed_delivery_date_old'] = ($item->getProposedDeliveryDate())?date('F j, Y', strtotime($item->getProposedDeliveryDate())):'-';
+                        $diffArray[$item->getProductId()]['is_custom'] = $item->getIsCustom();
+                        $item->setData('proposed_delivery_date', $vendorItem->getShipDate());
+                    }
+                }
+                try {
+                    $item->save();
+                    $vendorItem->delete();
+                } catch (Exception $e) {
+                    Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+                    
+                }
+                
+                if ($date) {
+                    $days = "7";
+                    if (Mage::getStoreConfig('allure_vendor/backorder/backorder_time'))
+                        $days = Mage::getStoreConfig('allure_vendor/backorder/backorder_time');
+                        
+                        /*      update Back-ordered time update to child items */
+                        if (!$item->getIsCustom()){
+                            $_product = Mage::getModel('catalog/product')->load($item->getProductId());
+                            $parentSKu = '';
+                            $subString = '';
+                            $skuString = explode('|', $_product->getSku());
+                            $parentSKu = (string)$skuString[0];
+                            unset($skuString[0]);
+                            $subString = implode('|',$skuString);
+                            
+                            $childrenProducts = Mage::getModel('catalog/product')->getCollection();
+                            $childrenProducts->addAttributeToFilter( array(array('attribute'=> 'parent_item_number','like' => $parentSKu)));
+                            $childProductArr = array();
+                            $childProductArr[] = $product;
+                            foreach ($childrenProducts as $child){
+                                $child=Mage::getModel('catalog/product')->load($child->getId());
+                                $childSku=explode('|', $child->getSku());
+                                if(!isset($subString) && count($childSku)==1){
+                                    $childProductArr[] = $child->getId();
+                                    continue;
+                                }
+                                unset($childSku[0]);
+                                if($subString==implode('|',$childSku))
+                                {
+                                    $childProductArr[] = $child->getId();
+                                    continue;
+                                }
+                                
+                                if($child->getTypeId()=="configurable"){
+                                    $currentchildrenIds = $child->getTypeInstance()->getChildrenIds($child->getId());
+                                    foreach ($currentchildrenIds[0] as $childrenId) {
+                                        $sbuChild=Mage::getModel('catalog/product')->load($childrenId);
+                                        $subChildSku=explode('|', $sbuChild->getSku());
+                                        unset($subChildSku[0]);
+                                        if($subString==implode('|',$subChildSku))
+                                            $childProductArr[] = $childrenId;
+                                            
+                                    }
+                                    
+                                }
+                                
+                            }
+                            $childProductArr=array_unique($childProductArr);
+                            $backDate = date_create($date);
+                            date_add($backDate, date_interval_create_from_date_string($days . " days"));
+                            
+                            $backDate = date_format($backDate, "F j, Y");
+                            
+                            if (!$item->getIsCustom()) {
+                                try {
+                                    Mage::getResourceSingleton('catalog/product_action')
+                                    ->updateAttributes($childProductArr, array(
+                                        'backorder_time' => $backDate
+                                    ), $storeId);
+                                    
+                                } catch (Exception $e) {
+                                    
+                                }
+                            }
+                        }
+                        
+                } //End
+            }
+            
+            $itemCollection = Mage::getModel('inventory/orderitems')->getCollection()
+            ->addFieldToFilter('po_id', $po_id);
+            foreach ($itemCollection as $tempItem){
+                if($tempItem->getRemainingQty() > 0){
+                    $canFullyShipOrder=0;
+                    break;
+                }
+            }
+            
+            if ($close && $canFullyShipOrder)
+                $status = Allure_Inventory_Helper_Data::ORDER_STATUS_FULLY_SHIPPED;
+            if (($ship || $close) && $canFullyShipOrder==0)
+                $status = Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_SHIPPED;
+            $currentDate = new Zend_Date(Mage::getModel('core/date')->timestamp());
+            $currentDate->toString('jS F, Y');
+            $vendorId = $poObj->getVendorId();
+            $orderlogsmodel = Mage::getModel('inventory/orderlogs');
+            $logData = array(
+                'po_id' => $po_id,
+                'vendor_id' => $vendorId,
+                'user_id' => $admin->getUserId(),
+                'date' => date("Y-m-d H:i:s"),
+                'stock_id' => $stockId
+            );
+            $orderlogsmodel->setData($logData);
+            $orderlogsmodel->save()->getId();
+            if (($close || $ship) && isset($status)){
+                $poObj->setData('status', $status);
+                $poObj->setData('updated_date', $currentDate)->save();
+            }
+            Mage::log(json_encode($diffArray),Zend_log::DEBUG,'ajay.log',TRUE);
+            
+            if ($close && $canFullyShipOrder) {
+                // fully Shipped
+                $templateId = Mage::getStoreConfig('allure_vendor/general/purchase_order_shipment', $storeId);
+                $adminEmail = Mage::getStoreConfig('allure_vendor/general/admin_email', $storeId);
+                if (! empty($adminEmail)) {
+                    $adminEmail = explode(',', $adminEmail);
+                }
+                $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($vendorId);
+                $helper->sendEmail($po_id, $vendorEmail, $templateId, $adminEmail, true, $diffArray);
+                
+                Mage::getSingleton('adminhtml/session')->addSuccess("Order shipped fully.");
+            } elseif ($close) {
+                // Partially Ship
+                
+                $templateId = Mage::getStoreConfig('allure_vendor/general/purchase_order_shipment', $storeId);
+                $adminEmail = Mage::getStoreConfig('allure_vendor/general/admin_email', $storeId);
+                if (! empty($adminEmail)) {
+                    $adminEmail = explode(',', $adminEmail);
+                }
+                $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($vendorId);
+                Mage::log("vendorEmail:" . $templateId, Zend_log::DEBUG, "mylogs", true);
+                $helper->sendEmail($po_id, $vendorEmail, $templateId, $adminEmail, true, $diffArray);
+                Mage::getSingleton('adminhtml/session')->addSuccess("Order shipped partially, as some of items remaining to ship.");
+            } elseif ($ship) {
+                // Partially Ship
+                
+                $templateId = Mage::getStoreConfig('allure_vendor/general/purchase_order_shipment', $storeId);
+                $adminEmail = Mage::getStoreConfig('allure_vendor/general/admin_email', $storeId);
+                if (! empty($adminEmail)) {
+                    $adminEmail = explode(',', $adminEmail);
+                }
+                $vendorEmail = Mage::helper('allure_vendor')->getVanderEmail($vendorId);
+                Mage::log("vendorEmail:" . $vendorEmail, Zend_log::DEBUG, "mylogs", true);
+                $helper->sendEmail($po_id, $vendorEmail, $templateId, $adminEmail, true, $diffArray);
+                Mage::getSingleton('adminhtml/session')->addSuccess("Order Shipped partially.");
+            }
+                            
+        } catch (Exception $e){
+            Mage::getSingleton('adminhtml/session')->addError($e);
+        }
+        $this->_redirect('*/*/orders');
     }
 }
