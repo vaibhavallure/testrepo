@@ -4,30 +4,44 @@ class Teamwork_Common_Model_Chq
     protected $_chqApiScriptName = 'Api.ashx';
     protected $_chqApiStatusScriptName = 'ApiStatus.ashx';
     protected $_processor;
-    //TODO rename folder Xml into Format/Xml; Xml.php transfer into Format folder; add class Format
     
     public function __construct()
     {
-        $this->_processor = Mage::getModel('teamwork_common/chq_' . Mage::helper('teamwork_common/format')->getFormat());
+        $this->_processor = Mage::getModel('teamwork_common/chq_xml');
     }
     
-    public function generateEcm($apiType,$forceRegistration=false)
+    public function generateEcm($apiType)
     {
-        if( !count(Mage::getModel('teamwork_common/staging_chq')->getAwaitingDocuments()) || $forceRegistration ) //TODO? AND when success and are not fully convertDocumentIntoEcm
+        if( !count(Mage::getModel('teamwork_common/staging_chq')->getAwaitingDocuments()) )
         {
-            foreach(Mage::getModel('teamwork_common/chq_api_dependency')->getDependency($apiType) as $dependedType)
-            {
-                $this->generateEcm( $dependedType, true );
-            }
-            
-            if( Mage::helper('teamwork_common/staging_chq')->allowProcess($apiType) )
-            {
-                $this->_registrateDocument( $apiType );
-            }
+            $this->_buildWithPreDependency($apiType);
         }
-        if(!$forceRegistration)
+        $this->_checkAwaitingDocuments();
+    }
+    
+    protected function _buildWithPreDependency($apiType)
+    {
+        foreach(Mage::getModel('teamwork_common/chq_api_dependency')->getPreDependency($apiType) as $dependedType)
         {
-            $this->_checkAwaitingDocuments();
+            $this->_buildWithPreDependency( $dependedType );
+        }
+        
+        if( Mage::helper('teamwork_common/staging_chq')->allowProcess($apiType) )
+        {
+            $this->_registrateDocument( $apiType );
+        }
+    }
+    
+    protected function _buildPostDependency($document)
+    {
+        foreach(Mage::getModel('teamwork_common/chq_api_dependency')->getPostDependency($document->getApiType()) as $dependedType)
+        {
+            if( Mage::helper('teamwork_common/staging_chq')->allowProcess($dependedType) && $document->getRunDependency() )
+            {
+                $hostDocument = new Varien_Object();
+                $hostDocument->setHostDocumentId($document->getDocumentId());
+                $this->_registrateDocument( $dependedType, $hostDocument );
+            }
         }
     }
     
@@ -48,90 +62,130 @@ class Teamwork_Common_Model_Chq
             $chqStaging->addData((array)$mergeData->getData());
         }
         
-        $registerData = $this->_processor->getFormatedDataForRegisterApi($chqStaging);
-        $response = Mage::getModel('teamwork_common/chq_http')->request($this->_getApiRegisterUrl(), $registerData);
+        $response = Mage::getModel('teamwork_common/chq_http')->request(
+            $this->_getApiRegisterUrl(),
+            $this->_processor->getFormatedDataForRegisterApi($chqStaging)
+        );
         if($response)
         {
-            $this->_processor->deserialize($response);
-            if($this->_processor->getData('ApiDocumentId') && $this->_processor->getData('Status'))
+            $responseObj = $this->_processor->deserialize($response);
+            if($responseObj->getData('ApiDocumentId') && $responseObj->getData('Status'))
             {
-                $chqStaging->setDocumentId( $this->_processor->getData('ApiDocumentId') );
-                $chqStaging->setStatus( $this->_processor->getData('Status') );
-                try
-                {
-                    $chqStaging->save();
-                }
-                catch(Exception $e)
-                {
-                    Mage::log($e->getMessage());
-                    //TODO ERROR HANDLE
-                }
+                $chqStaging->setDocumentId( $responseObj->getData('ApiDocumentId') )
+                    ->setStatus( $responseObj->getData('Status') )
+                ->save();
             }
         }
     }
     
     protected function _checkAwaitingDocuments()
     {
+        $reInit = false;
         foreach(Mage::getModel('teamwork_common/staging_chq')->getAwaitingDocuments() as $awaitingDocument)
         {
-            if( $this->checkDocumentStatus($awaitingDocument) )
+            if($this->checkDocumentStatus($awaitingDocument))
             {
-                $this->_checkAwaitingDocuments();
-                break;
+                $reInit = true;
             }
+        }
+        if($reInit)
+        {
+            $this->_checkAwaitingDocuments();
         }
     }
     
     public function checkDocumentStatus($awaitingDocument)
     {
-        $helper = Mage::helper('teamwork_common/staging_chq');
-        $response = Mage::getModel('teamwork_common/chq_http')->request( $this->_getApiStatusUrl(), $this->_processor->getFormatedDataForStatusApi($awaitingDocument) );
+        $response = Mage::getModel('teamwork_common/chq_http')->request(
+            $this->_getApiStatusUrl(),
+            $this->_processor->getFormatedDataForStatusApi($awaitingDocument)
+        );
+        $reInit = false;
+        
         if($response)
         {
-            $this->_processor->deserialize($response);
-            
-            $status = $this->_processor->getData('Status');
-            if($helper->isWaitStatus($status) && $this->_isDocumentWaitingOverdue($awaitingDocument))
+            $chqHelper = Mage::helper('teamwork_common/staging_chq');
+            $responseObj = $this->_processor->deserialize($response);
+        
+            $status = $responseObj->getData('Status');
+            $lastUpdatedTime = $responseObj->getData('ApiRequestTime');
+            if($chqHelper->isWaitStatus($status) && $this->_isDocumentWaitingOverdue($awaitingDocument))
             {
                 $status = Teamwork_Common_Model_Chq_Api_Status::CHQ_API_STATUS_ERROR;
             }
             
-            if( $helper->isSuccessfulStatus($status) )
+            if( $chqHelper->isSuccessfulStatus($status) )
             {
-                $awaitingDocument->setLastUpdatedTime( $this->_processor->getData('ApiRequestTime') );
+                $this->_processor->convertDocumentIntoStaging($responseObj, $awaitingDocument);
                 
-                $this->_processor->convertDocumentIntoEcm($awaitingDocument);
-                if( $this->_processor->continueCallChain() && !$awaitingDocument->getParentDocumentId() )
+                if($awaitingDocument->getHostDocumentId() && $this->_isPostDependencyProcessed($awaitingDocument))
                 {
-                    $this->_createChainDocuments($awaitingDocument);
+                    $this->_createCallback($awaitingDocument);
+                    $reInit = true;
                 }
+                elseif( $responseObj->getData('TotalRecords') &&
+                    Teamwork_Common_Model_Chq_Api_Type::isChainedType($awaitingDocument->getApiType()) &&
+                    !$awaitingDocument->getParentDocumentId() &&
+                    !$awaitingDocument->getHostDocumentId()
+                )
+                {
+                    $this->_createChainDocuments($awaitingDocument, $responseObj->getData('TotalRecords'));
+                    $reInit = true;
+                }
+                
+                if( $awaitingDocument->getApiType() == Teamwork_Common_Model_Chq_Api_Type::CHQ_API_TYPE_INVEN_PRICES_EXPORT &&
+                    !$awaitingDocument->getParentDocumentId()
+                ) //TODO change price hardcode!!!
+                {
+                    $lastUpdatedTime = $awaitingDocument->getCreatedAt();
+                }
+                
+                $this->_buildPostDependency($awaitingDocument);
             }
-            elseif( $helper->isErrorStatus($status) && $awaitingDocument->getTry() < 3 ) //TODO remove hardcode: 3
+            elseif( $chqHelper->isErrorStatus($status) && $awaitingDocument->getTry() < 3 ) //TODO(?) remove hardcode: 3
             {
-                $awaitingDocument->setTry( $awaitingDocument->getTry() + 1 );
-                $awaitingDocument->setCreatedAt( $awaitingDocument->getUpdatedAt());
-                $awaitingDocument->unsDocumentId();
-                $awaitingDocument->unsStatus();
-                $this->_registrateDocument($awaitingDocument->getApiType(), $awaitingDocument);
-                return true;
+                $this->_restartDocument($awaitingDocument);
+                $reInit = true;
             }
-            $awaitingDocument->setStatus( $status );
             
-            try
+            if($awaitingDocument->getHostDocumentId())
             {
-                $awaitingDocument->save();
+                $lastUpdatedTime = null;
             }
-            catch(Exception $e)
-            {
-                Mage::log($e->getMessage()); //TODO ERROR HANDLE
-            }
+            
+            $awaitingDocument->setStatus( $status )
+                ->setLastUpdatedTime( $lastUpdatedTime )
+            ->save();
+        }
+        return $reInit;
+    }
+    
+    protected function _createCallback($awaitingDocument)
+    { 
+        $hostDocument = Mage::getModel('teamwork_common/staging_chq')->loadByGuid($awaitingDocument->getHostDocumentId());
+        if( !empty($hostDocument) )
+        {
+            $callMethod = Mage::getModel('teamwork_common/chq_api_dependency')->getPostDependencyCallback( $hostDocument->getApiType() );
+            Mage::getModel('teamwork_common/chq_callback')->{$callMethod}($hostDocument);
         }
     }
     
-    protected function _createChainDocuments($awaitingDocument)
+    protected function _restartDocument($awaitingDocument)
     {
-        $totalRecords = $this->_processor->getData('TotalRecords');
-        $entitiesPerChunk = (int)(Mage::helper('teamwork_common/adminsettings')->getEntitiesPerButch());
+        $restartDocument = clone $awaitingDocument;
+        $restartDocument->setTry( $restartDocument->getTry() + 1 );
+        $restartDocument->setCreatedAt( $restartDocument->getUpdatedAt());
+        $restartDocument->unsDocumentId();
+        $restartDocument->unsStatus();
+        $restartDocument->unsEntityId();
+        $this->_registrateDocument($restartDocument->getApiType(), $restartDocument);
+    }
+    
+    protected function _createChainDocuments($awaitingDocument, $totalRecords)
+    {
+        $entitiesPerChunk = (int)(Mage::helper('teamwork_common/adminsettings')->getEntitiesPerButch(
+            Teamwork_Common_Model_Chq_Api_Type::getSettingForChunk($awaitingDocument->getApiType())
+        ));
         
         if($totalRecords > $entitiesPerChunk)
         {
@@ -158,9 +212,20 @@ class Teamwork_Common_Model_Chq
         return Mage::helper('teamwork_common/adminsettings')->getServerLink() . $this->_chqApiStatusScriptName;
     }
     
+    protected function _isPostDependencyProcessed($awaitingDocument)
+    {
+        $documents = Mage::getModel('teamwork_common/staging_chq')->getWaitingDocumentsByHostId(
+            $awaitingDocument->getHostDocumentId(),
+            $awaitingDocument->getDocumentId()
+        );
+        return !count($documents);
+    }
+    
     protected function _isDocumentWaitingOverdue($document)
     {
-        //TODO: remove hardcode: 20
-        return (((strtotime(Varien_Date::now()) - strtotime($document->getCreatedAt())) / 60) > 5) ? true : false ;
+        return ( ((strtotime(Varien_Date::now()) - strtotime($document->getCreatedAt())) / 60) >
+            Mage::helper('teamwork_common/adminsettings')->getWaitApiTime() ) ?
+            true :
+        false ; 
     }
 }

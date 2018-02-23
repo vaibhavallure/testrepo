@@ -253,7 +253,7 @@ class Teamwork_CEGiftcards_Model_Svs extends Mage_Core_Model_Abstract
 
         if (Mage::helper('teamwork_cegiftcards')->pinIsEnabled()
             && Mage::helper('teamwork_cegiftcards')->pinGenerationIsEnabled()) {
-            $params['giftcard_pin'] = $giftcardPin;
+            $params['pin'] = $giftcardPin;
         }
 
         $result = $this->_request($params, self::API_SVS_GIFTCARDS_CREATE_METHOD);

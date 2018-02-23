@@ -2,7 +2,7 @@
 class Teamwork_Common_Model_Chq_Xml implements Teamwork_Common_Model_Chq_ProcessorInterface
 {
     public static $rootElement = 'ApiDocument';
-    protected $_deserializedObject, $_requestModel, $_responseModel;
+    protected $_requestModel, $_responseModel;
     
     public function __construct()
     {
@@ -24,40 +24,27 @@ class Teamwork_Common_Model_Chq_Xml implements Teamwork_Common_Model_Chq_Process
     
     public function deserialize($string)
     {
-        $this->_deserializedObject = new Varien_Object();
+        $deserializedObject = new Varien_Object();
         
         $xmlObject = Mage::helper('teamwork_common/parser')->deserializeXml($string);
         if($xmlObject)
         {
             foreach( $xmlObject->attributes() as $attributeKey => $attributeValue )
             {
-                $this->_deserializedObject->setData($attributeKey, (string)$attributeValue);
+                $deserializedObject->setData($attributeKey, (string)$attributeValue);
             }
             if(isset($xmlObject->Response))
             {
-                $this->_deserializedObject->setResponse($xmlObject->Response);
+                $deserializedObject->setResponse($xmlObject->Response);
             }
         }
+        return $deserializedObject;
     }
     
-    public function convertDocumentIntoEcm($document)
+    public function convertDocumentIntoStaging($responseObject, $awaitingDocument)
     {
-        if( !empty($document) )
-        {
-            $this->_deserializedObject->addData((array)$document->getData());
-        }
+        $responseObject->addData( (array)$awaitingDocument->getData() ); // TODO: BAD APPROACH!!
         
-        $this->_responseModel->setChqStaging($this->_deserializedObject);
-        $this->_responseModel->parse();
-    }
-    
-    public function continueCallChain()
-    { 
-        return $this->_requestModel->isChainedType();
-    }
-    
-    public function getData($key)
-    {
-        return $this->_deserializedObject->getData($key);
+        $this->_responseModel->getClassLoader($responseObject, $awaitingDocument)->parse();
     }
 }

@@ -1,10 +1,11 @@
 <?php
 class Teamwork_Common_Model_Chq_Xml_Response_Abstract
 {
-    public $chqStaging;
-    public function __construct(Varien_Object $chqStaging)
+    public $chqStaging, $workingDocument;
+    public function __construct(array $arguments)
     {
-        $this->chqStaging = $chqStaging;
+        $this->chqStaging = $arguments['chqStaging'];
+        $this->workingDocument = $arguments['workingDocument'];
     }
     
     public function parse()
@@ -12,9 +13,17 @@ class Teamwork_Common_Model_Chq_Xml_Response_Abstract
         
     }
     
-    protected function _getElement(SimpleXMLElement $node, $name)
+    protected function _getElement(SimpleXMLElement $node, $name, $isBool=false)
     {
-        $string = Mage::helper('teamwork_common/parser')->getXmlElementString($node,$name);
+        
+        if(!$isBool)
+        {
+            $string = Mage::helper('teamwork_common/parser')->getXmlElementString($node,$name);
+        }
+        else
+        {
+            $string = Mage::helper('teamwork_common/parser')->getXmlElementBool($node,$name);
+        }
         if( Mage::helper('teamwork_common/guid')->isGuidString($string,false) )
         {
             $string = strtolower($string);
@@ -22,9 +31,17 @@ class Teamwork_Common_Model_Chq_Xml_Response_Abstract
         return $string;
     }
     
-    protected function _getAttribute(SimpleXMLElement $node, $name)
+    protected function _getAttribute(SimpleXMLElement $node, $name, $isBool=false)
     {
-        $string = Mage::helper('teamwork_common/parser')->getXmlElementString($node,null,$name);
+        if(!$isBool)
+        {
+            $string = Mage::helper('teamwork_common/parser')->getXmlElementString($node,null,$name);
+        }
+        else
+        {
+            $string = Mage::helper('teamwork_common/parser')->getXmlElementBool($node,null,$name);
+        }
+        
         if( Mage::helper('teamwork_common/guid')->isGuidString($string,false) )
         {
             $string = strtolower($string);
@@ -63,33 +80,6 @@ class Teamwork_Common_Model_Chq_Xml_Response_Abstract
     
     protected function _registrateEcm($channelId, $requestId, $type, $status, $noSalt = false)
     {
-        $saltedGuid = $requestId;
-        if(!$noSalt)
-        {
-            $saltedGuid = Mage::helper('teamwork_common/staging_abstract')->getSaltedRequestId( $requestId, $channelId );
-        }
-        
-        $serviceEntity = Mage::getModel('teamwork_common/staging_service')->loadByChannelAndGuid($channelId, $saltedGuid);
-        if( !$serviceEntity->getData($serviceEntity->getGuidField()) )
-        {
-            $serviceEntity->setRecCreation(Varien_Date::now());
-        }
-        
-        $serviceEntity->setData($serviceEntity->getGuidField(), $requestId)
-            ->setChannelId($channelId)
-            ->setStatus($status)
-            ->setChunk(1)
-            ->setNoSalt($noSalt)
-            ->setTotalChunks(1)
-            ->setResponse( serialize(
-                array(
-                    $type => array(
-                        'status'    => 'Wait',
-                        'errors'    => array(),
-                        'warnings'  => array(),
-                    )
-                )
-            ))
-        ->save();
+        Mage::helper('teamwork_common')->registrateEcm($channelId, $requestId, $type, $status, $noSalt);
     }
 }

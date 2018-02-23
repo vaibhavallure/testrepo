@@ -86,13 +86,14 @@ class Teamwork_Common_Model_Chq_Xml_Response_Product extends Teamwork_Common_Mod
                         if($channelId && in_array($ecType, $this->_helper->getProcessedEcTypes()))
                         {
                             $this->_collectTaxMapping($channelId);
-                            $this->_collectPriceMapping($channelId);
+                            // $this->_collectPriceMapping($channelId);
                             $styleEntity = Mage::getModel('teamwork_common/staging_style')->loadByChannelAndGuid($channelId, $styleGuid);
                             $this->_populateCategories($styleGuid, $channelId, $channel->children());
                             
                             $processedItems = $this->_parseItem($style,$channel);
                             if($processedItems)
                             {
+                                $this->workingDocument->setRunDependency(true);
                                 $itemsForRta = array_unique( array_merge($itemsForRta,$processedItems) );
                                 if( !in_array($channelId,$processedChannels) )
                                 {
@@ -190,11 +191,6 @@ class Teamwork_Common_Model_Chq_Xml_Response_Product extends Teamwork_Common_Mod
             if( !empty($processedChannels) )
             {
                 $this->_populateInventory($itemsForRta,$processedChannels);
-                
-                foreach($processedChannels as $channelId)
-                {
-                   $this->_registrateEcm($channelId, $requestId, Teamwork_Common_Model_Staging_Service::PROCESSABLE_TYPE_STYLES, Teamwork_Common_Model_Staging_Service::STATUS_NEW); 
-                }
             }
         }
     }
@@ -208,7 +204,7 @@ class Teamwork_Common_Model_Chq_Xml_Response_Product extends Teamwork_Common_Mod
         {
             $itemGuid = $this->_getElement($item, 'ItemId');
             $this->_populateIdentifier($item);
-            $this->_populatePrice($item,$channelId);
+            // $this->_populatePrice($item,$channelId);
             foreach($item->EChannels->children() as $itemChannel)
             {
                 if( $channelName == $this->_getAttribute($itemChannel, 'Name') )
@@ -481,10 +477,6 @@ class Teamwork_Common_Model_Chq_Xml_Response_Product extends Teamwork_Common_Mod
                                 ->setRelatedStyleType($relationType)
                             ->setRelationKind($relationKind);
                             
-                            /* echo '<pre>';
-                                print_r( $filter->getData() );
-                                echo "\n";
-                            echo '</pre>'; */
                             $relationEntity = Mage::getModel('teamwork_common/staging_relation')->loadCollectionByVarienFilter($filter);
                             
                             

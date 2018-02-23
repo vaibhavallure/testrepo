@@ -29,6 +29,8 @@ class Teamwork_Service_Model_Resource_Dam extends Mage_Core_Model_Mysql4_Abstrac
         if ($callback && !$portionSize) $portionSize = 1;
 
         $data = array('limit' => $this->_batchLimit);
+        
+        Mage::app()->getStore()->resetConfig();
 
         if (($modifiedAfterTime === false || is_null($modifiedAfterTime)) && $modifiedAfterTime = Mage::getStoreConfig(Teamwork_Service_Helper_Config::XML_PATH_DAM_LAST_UPDATE_TIME))
         {

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Teamwork_Service>
-            <version>5.0.7</version>
+            <version>5.1.3</version>
         </Teamwork_Service>
     </modules>
     <admin>

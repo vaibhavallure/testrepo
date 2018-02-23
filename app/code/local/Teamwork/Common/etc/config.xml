@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Teamwork_Common>
-            <version>5.0.5</version>
+            <version>5.1.1</version>
         </Teamwork_Common>
     </modules>
     <admin>
@@ -289,6 +289,8 @@
             </chq>
             <chq_request>
                 <style_per_butch>100</style_per_butch>
+                <price_per_butch>1000</price_per_butch>
+                <max_api_chunk_interval>10</max_api_chunk_interval>
             </chq_request>
         </teamwork_common>
     </default>

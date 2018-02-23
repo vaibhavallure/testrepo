@@ -134,7 +134,31 @@ class Teamwork_Common_Model_Chq_Xml_Response_Channel extends Teamwork_Common_Mod
                     ->setChannelId($this->_channelId)
                     ->setSettingValue($settings)
                 ->save();
+                
+                switch($settingKey)
+                {
+                    case Teamwork_Common_Model_Staging_Settings::SETTING_NAME_PAYMENTMETHODSETTINGS: 
+                        $this->_populatePayment($settings);
+                    break;
+                    //TODO ?
+                }
             }
+        }
+    }
+    
+    protected function _populatePayment($settings)
+    {
+        foreach($settings->children() as $setting)
+        {
+            $settingKey = $this->_getElement($setting, 'EcomPaymentMethod');
+            $settingEntity = Mage::getModel('teamwork_common/staging_settingpayment')->loadByChannelAndGuid($this->_channelId, $settingKey);
+            $settingEntity->setData($settingEntity->getGuidField(), $settingKey)
+                ->setChannelId($this->_channelId)
+                ->setDescription($this->_getElement($setting, 'EcomDescription')) 
+                ->setAllowAuthorizeOnly($this->_getElement($setting, 'AllowAuthorizeOnly',true)) 
+                ->setRefundInTeamwork($this->_getElement($setting, 'RefundOnCancel',true)) 
+                ->setPaymentMethodId($this->_getElement($setting, 'PaymentMethodId'))
+            ->save();
         }
     }
 }

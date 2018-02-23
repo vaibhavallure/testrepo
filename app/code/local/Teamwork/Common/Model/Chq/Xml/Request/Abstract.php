@@ -1,7 +1,7 @@
 <?php
 class Teamwork_Common_Model_Chq_Xml_Request_Abstract
 {
-    protected $_xmlElement, $_requestData, $_chainedType = false;
+    protected $_xmlElement, $_requestData;
     
     public function __construct(Varien_Object $requestData)
     {
@@ -39,15 +39,18 @@ class Teamwork_Common_Model_Chq_Xml_Request_Abstract
         }
     }
     
-    protected function addSettings()
+    protected function addSettings($addSettings=false)
     {
-        // $this->_xmlElement->Request->addChild('Settings');
+        if($addSettings)
+        {
+            return $this->_xmlElement->Request->addChild('Settings');
+        }
     }
     
-    protected function addFilters()
+    protected function addFilters($addRecModified=true)
     {
         $filters = $this->_xmlElement->Request->addChild('Filters');
-        if($this->_requestData->getMaxDate())
+        if($addRecModified && $this->_requestData->getMaxDate())
         {
             $filter = $filters->addChild('Filter');
             $filter->addAttribute('Field', 'RecModified');
@@ -57,17 +60,16 @@ class Teamwork_Common_Model_Chq_Xml_Request_Abstract
         return $filters;
     }
     
-    protected function addSortDescriptions()
+    protected function addSortDescriptions($addSortDescription=true)
     {
         $sortDescriptions = $this->_xmlElement->Request->addChild('SortDescriptions');
-        $sortDescription = $sortDescriptions->addChild('SortDescription');
-        $sortDescription->addAttribute('Name', 'RecModified');
-        $sortDescription->addAttribute('Direction', 'Ascending');
-    }
-    
-    public function isChainedType()
-    {
-        return $this->_chainedType;
+        if($sortDescriptions)
+        {
+            $sortDescription = $sortDescriptions->addChild('SortDescription');
+            $sortDescription->addAttribute('Name', 'RecModified');
+            $sortDescription->addAttribute('Direction', 'Ascending');
+        }
+        return $sortDescriptions;
     }
     
     protected function addTop()

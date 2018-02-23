@@ -13,12 +13,27 @@ class Teamwork_Common_Model_Staging_Chq extends Teamwork_Common_Model_Staging_Ab
     public function getAwaitingDocuments()
     {
         $helper = Mage::helper('teamwork_common/staging_chq');
-        
         return $this->getCollection()
             ->addFieldToFilter(
                 'status', array('in' => $helper->getWaitStatuses())
             )
             ->setOrder('entity_id', Varien_Data_Collection::SORT_ORDER_ASC)
+        ->load();
+    }
+    
+    public function getWaitingDocumentsByHostId($hostDocumentId, $skipDocumentId)
+    {
+        $helper = Mage::helper('teamwork_common/staging_chq');
+        return $this->getCollection()
+            ->addFieldToFilter(
+                'host_document_id', array('in' => $hostDocumentId)
+            )
+            ->addFieldToFilter(
+                'document_id', array('nin' => $skipDocumentId)
+            )
+            ->addFieldToFilter(
+                'status', array('in' => $helper->getWaitStatuses())
+            )
         ->load();
     }
     

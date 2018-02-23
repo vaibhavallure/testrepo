@@ -40,6 +40,15 @@ class Teamwork_Common_Model_Staging_Settings extends Teamwork_Common_Model_Stagi
         $this->_init('teamwork_common/settings');
     }
     
+    /* public function getSettingValue()
+    {
+        if( is_string($this->getData('setting_value')) )
+        {
+            $this->_deserializeFields();
+        }
+        return $this->getData('setting_value');
+    }*/
+    
     protected function _beforeSave()
     {
         if( in_array($this->getData($this->_guidField),$this->_xmlGroup) && $this->getSettingValue() ) //TODO check instanceof SimpleXMLElement
@@ -47,14 +56,10 @@ class Teamwork_Common_Model_Staging_Settings extends Teamwork_Common_Model_Stagi
             $this->setSettingValue($this->getSettingValue()->asXml());
         }
         
-        /* if( in_array($this->getData($this->_guidField),$this->_serializedGroup) && $this->getSettingValue() )
-        {
-            // $this->setSettingValue(serialize($this->getSettingValue())); //TODO when transfer would change into collections
-        } */
         return parent::_beforeSave();
     }
     
-    protected function _afterLoad()
+    protected function _deserializeFields()
     {
         if( in_array($this->getData($this->_guidField),$this->_xmlGroup) && $this->getSettingValue() ) //TODO check instanceof SimpleXMLElement
         {
@@ -62,5 +67,12 @@ class Teamwork_Common_Model_Staging_Settings extends Teamwork_Common_Model_Stagi
             
             $this->setSettingValue($xmlObject->children());
         }
+    }
+    
+    protected function _afterLoad()
+    {
+        $this->_deserializeFields();
+        
+        return parent::_afterLoad();
     }
 }

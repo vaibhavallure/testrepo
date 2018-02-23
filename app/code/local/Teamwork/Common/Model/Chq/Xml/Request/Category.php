@@ -3,9 +3,9 @@ class Teamwork_Common_Model_Chq_Xml_Request_Category extends Teamwork_Common_Mod
 {
     protected $_channelList = array();
     
-    protected function addFilters()
+    protected function addFilters($addRecModified=true)
     {
-        $filters = parent::addFilters();
+        $filters = parent::addFilters($addRecModified);
 
         $this->_channelList = Mage::getModel('teamwork_common/staging_channel')->getChannels();
         if( !empty($this->_channelList) )

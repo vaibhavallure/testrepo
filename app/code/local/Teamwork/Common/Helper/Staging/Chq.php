@@ -19,12 +19,12 @@ class Teamwork_Common_Helper_Staging_Chq extends Mage_Core_Helper_Abstract
     {
         $this->_skipProcess = array(
             Teamwork_Common_Model_Chq_Api_Type::CHQ_API_TYPE_ECOMMERCE_CATEGORY_EXPORT => array(
-                Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_INVENTORY),
-                Mage::getStoreConfig(Teamwork_Transfer_Helper_Config::XML_PATH_IMPORT_CATEGORIES),
+                !Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_INVENTORY),
+                !Mage::getStoreConfig(Teamwork_Transfer_Helper_Config::XML_PATH_IMPORT_CATEGORIES),
             ),
             Teamwork_Common_Model_Chq_Api_Type::CHQ_API_TYPE_INVENTORY_EXPORT => array(
-                Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_INVENTORY),
-                Mage::getStoreConfig(Teamwork_Transfer_Helper_Config::XML_PATH_IMPORT_PRODUCTS),
+                !Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_INVENTORY),
+                !Mage::getStoreConfig(Teamwork_Transfer_Helper_Config::XML_PATH_IMPORT_PRODUCTS),
             ),
         );
     }
@@ -32,6 +32,11 @@ class Teamwork_Common_Helper_Staging_Chq extends Mage_Core_Helper_Abstract
     public function getWaitStatuses()
     {
         return $this->_waitStatuses;
+    }
+    
+    public function getSuccessfulStatuses()
+    {
+        return $this->_successfulStatuses;
     }
     
     public function isWaitStatus($status)

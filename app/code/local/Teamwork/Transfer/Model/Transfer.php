@@ -456,7 +456,7 @@ class Teamwork_Transfer_Model_Transfer extends Teamwork_Transfer_Model_Abstract
         $select = $this->_db->select()
             ->from(Mage::getSingleton('core/resource')->getTableName('service'))
             ->where("{$column} IN(?)", $columnValue)
-        ->order('rec_creation');
+        ->order('entity_id');
         $results = $this->_db->fetchAll($select);
         foreach($results as $key => $result)
         {

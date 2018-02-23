@@ -62,7 +62,7 @@ class Teamwork_Common_Model_Staging_Abstract extends Mage_Core_Model_Abstract
         return $this;
     }
     
-    public function loadCollectionByVarienFilter(Varien_Object $filter)
+    public function loadCollectionByVarienFilter(Varien_Object $filter,$customFilter=array(),$orderField='entity_id',$orderDirection='DESC')
     {
         $collection = $this->getCollection();
         if($filter->getData())
@@ -76,7 +76,13 @@ class Teamwork_Common_Model_Staging_Abstract extends Mage_Core_Model_Abstract
                 $collection->addFieldToFilter($attributeName, $attributeFilter);
             }
         }
-        return $collection->load();
+        
+        foreach($customFilter as $fields )
+        {
+            $collection->addFieldToFilter($fields[0], $fields[1]);
+        }
+        
+        return $collection->setOrder($orderField, $orderDirection)->load();
     }
     
     protected function _beforeSave()
@@ -86,6 +92,11 @@ class Teamwork_Common_Model_Staging_Abstract extends Mage_Core_Model_Abstract
         $columns = $helper->getTableDescriptionByResource( $this->getResource() );
         foreach($columns as $columnName => $column)
         {
+            if( is_array($this->getData($columnName)) )
+            {
+                $this->setData($columnName, serialize($this->getData($columnName)));
+            }
+            
             if( $helper->isGuidColumn($column) && $this->getData($columnName) )
             {
                 $this->setData($columnName, strtolower($this->getData($columnName)));

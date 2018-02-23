@@ -44,9 +44,4 @@ class Teamwork_Common_Model_Chq_Xml_Request
             return Mage::getModel( $defaultModelClass, $this->chqStaging );
         }
     }
-    
-    public function isChainedType()
-    {
-        return $this->_loader->isChainedType();
-    }
 }

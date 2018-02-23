@@ -2,7 +2,6 @@
 class Teamwork_Common_Model_Chq_Xml_Request_Product extends Teamwork_Common_Model_Chq_Xml_Request_Abstract
 {
     protected $_supportedEcTypes = array('EcOffer','EcSuspended','EcDiscontinued');
-    protected $_chainedType = true;
     protected function addTop()
     {
         parent::addTop();
@@ -17,9 +16,9 @@ class Teamwork_Common_Model_Chq_Xml_Request_Product extends Teamwork_Common_Mode
         }
     }
     
-    protected function addFilters()
+    protected function addFilters($addRecModified=true)
     {
-        $filters = parent::addFilters();
+        $filters = parent::addFilters($addRecModified);
         
         $styleFilter = $filters->addChild('Filter');
         $styleFilter->addAttribute('Field', 'ECType');
@@ -35,5 +34,11 @@ class Teamwork_Common_Model_Chq_Xml_Request_Product extends Teamwork_Common_Mode
         $itemFilter->addAttribute('Field', 'Item.ECType');
         $itemFilter->addAttribute('Operator', 'Contains');
         $itemFilter->addAttribute('Value', implode(',', $this->_supportedEcTypes));
+    }
+    
+    protected function addSettings($addSettings=false)
+    {
+        $settings = parent::addSettings(true);
+        $settings->addChild('ExcludePricesSetting', 'Yes');
     }
 }

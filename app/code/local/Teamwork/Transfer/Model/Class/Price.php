@@ -99,7 +99,7 @@ class Teamwork_Transfer_Model_Class_Price extends Teamwork_Transfer_Model_Transf
                 {
                     $select = $this->_db->select()
                         ->from(array('pr' => Mage::getSingleton('core/resource')->getTableName('service_price')), array('price', 'price_level'))
-                        ->join(array('it' => Mage::getSingleton('core/resource')->getTableName('service_items')), "pr.item_id = it.item_id AND it.internal_id IS NOT NULL AND it.request_id != '{$this->_globalVars['request_id']}'", array('internal_id', 'attribute1_id', 'attribute2_id', 'attribute3_id'))
+                        ->join(array('it' => Mage::getSingleton('core/resource')->getTableName('service_items')), "pr.item_id = it.item_id AND it.internal_id IS NOT NULL AND it.request_id != '{$this->_globalVars['request_id']}'", array('plu', 'internal_id', 'attribute1_id', 'attribute2_id', 'attribute3_id'))
                         ->join(array('st' => Mage::getSingleton('core/resource')->getTableName('service_style')), "st.style_id = it.style_id AND st.internal_id in ({$style_ids})", array('style_internal_id' => 'st.internal_id', 'attributeset1', 'attributeset2', 'attributeset3', 'inventype'))
                         ->where('pr.request_id = ?', $this->_globalVars['request_id'])
                     ->order(array('st.internal_id desc', 'it.internal_id asc', 'price_level asc'));
@@ -126,6 +126,7 @@ class Teamwork_Transfer_Model_Class_Price extends Teamwork_Transfer_Model_Transf
                 $data[$item['style_internal_id']]['attributes'][$item['internal_id']]['attribute1_id'] = $item['attribute1_id'];
                 $data[$item['style_internal_id']]['attributes'][$item['internal_id']]['attribute2_id'] = $item['attribute2_id'];
                 $data[$item['style_internal_id']]['attributes'][$item['internal_id']]['attribute3_id'] = $item['attribute3_id'];
+                $data[$item['style_internal_id']]['attributes'][$item['internal_id']]['plu'] = $item['plu'];
                 $data[$item['style_internal_id']]['style']['attributeset1'] = $item['attributeset1'];
                 $data[$item['style_internal_id']]['style']['attributeset2'] = $item['attributeset2'];
                 $data[$item['style_internal_id']]['style']['attributeset3'] = $item['attributeset3'];
