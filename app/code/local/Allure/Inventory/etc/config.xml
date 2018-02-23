@@ -4,7 +4,7 @@
     <modules>
         <Allure_Inventory>
 			<name>Allure - Inventory Management</name>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
         </Allure_Inventory>
     </modules>
     <frontend>
@@ -128,6 +128,9 @@
                       <minmaxlog>
 	                    <table>allure_inventory_min_max_log</table>
 	                 </minmaxlog>
+	                  <vendorwork>
+	                    <table>allure_inventory_po_vendor_work</table>
+	                 </vendorwork>
 	             </entities>
 	       </allure_inventory_resource>
         </models>

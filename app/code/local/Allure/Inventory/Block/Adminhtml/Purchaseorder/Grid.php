@@ -162,10 +162,13 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         return parent::_prepareColumns();
     }
     public function getRowUrl($row)
-    {
-    
-    	return $this->getUrl('*/*/view', array('id' => $row->getId()));
-    
+    {    
+        if(Mage::helper('allure_vendor')->isUserVendor())
+        {
+            return $this->getUrl('*/*/vendorview', array('id' => $row->getId()));
+        }else{
+            return $this->getUrl('*/*/view', array('id' => $row->getId()));
+        }
     }
     
     protected function _prepareMassaction()
