@@ -221,4 +221,257 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
 
         return $productData;
     }
+    
+    public function getConfigurableAttributesData($product, &$children, &$style, $forceSetParentPrices = true)
+    {
+        $configurableAttributesTempAttributes = array();
+        $optionSets = array();
+        $pricingTempAttributes = array();
+
+        $minChildPrice = null;
+        $minPriceChildProd = null;
+        $maxChildPrice = null;
+        $maxPriceChildProd = null;
+
+        $disabledAll = true;
+        foreach($children as $childId => $childAttributes)
+        {
+            foreach($childAttributes as $childAttribute)
+            {
+                if ($childAttribute['product_status'] == Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+                {
+                    $disabledAll = false;
+                    break 2;
+                }
+                break;
+            }
+        }
+        
+        foreach($children as $childId => $childAttributes)
+        {
+            foreach($childAttributes as $childAttribute)
+            {
+                $optionSets[$childAttribute['plu']][$childAttribute['attribute_id']] = $childAttribute['value_index'];
+                
+                $price = floatval($childAttribute['pricing_value']);
+                if (($disabledAll || $childAttribute['product_status'] == Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+                        && (is_null($minChildPrice) || $price < $minChildPrice))
+                {
+                    $minChildPrice = $price;
+                    $minPriceChildProd = $childAttribute['price_data_object'];
+                }
+                if (($disabledAll || $childAttribute['product_status'] == Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+                        && (is_null($maxChildPrice) || $price > $maxChildPrice))
+                {
+                    $maxChildPrice = $price;
+                    $maxPriceChildProd = $childAttribute['price_data_object'];
+                }
+
+                $configurableAttributesTempAttributes[$childAttribute['attribute_id']][$childAttribute['value_index']] = $childAttribute;
+                if(!isset($pricingTempAttributes[$childAttribute['attribute_id']]))
+                {
+                    $pricingTempAttributes[$childAttribute['attribute_id']] = array('skip me' => false, 'values' => array());
+                }
+
+                if($pricingTempAttributes[$childAttribute['attribute_id']]['skip me'])
+                {
+                    continue;
+                }
+
+                if(!isset($pricingTempAttributes[$childAttribute['attribute_id']]['values'][$childAttribute['value_index']]))
+                {
+                    $pricingTempAttributes[$childAttribute['attribute_id']]['values'][$childAttribute['value_index']] = $price;
+                }
+                elseif($pricingTempAttributes[$childAttribute['attribute_id']]['values'][$childAttribute['value_index']] != $price)
+                {
+                    $pricingTempAttributes[$childAttribute['attribute_id']]['skip me'] = true;
+                    unset($pricingTempAttributes[$childAttribute['attribute_id']]['values']);
+                }
+            }
+        }
+       
+        /*get attributes to skip using collected data*/
+        $skipPricingAttributeIds = array();
+        $foundPricingAttr = 0;
+        /*get attributes to skip using collected data*/
+        foreach($pricingTempAttributes as $attrId => $data)
+        {
+            if ($data['skip me'] || $foundPricingAttr) {
+                $skipPricingAttributeIds[] = $attrId;
+            } else {
+                $foundPricingAttr = true;
+            }
+        }
+
+        unset($pricingTempAttributes);
+
+        $priceStyle = $minChildPrice;
+
+        /*if found no pricing attributes*/
+        if (!$foundPricingAttr)
+        {
+            $priceStyle = $maxChildPrice;
+
+            $styleNo = "";
+            if (empty($style['no']))
+            {
+                if (!empty($style['internal_id']))
+                {
+                    $select = $this->_db->select()
+                        ->from(Mage::getSingleton('core/resource')->getTableName('service_style'), array('no'))
+                    ->where('internal_id = ?', $style['internal_id']);
+                    $noTemp = $this->_db->fetchOne($select);
+                    if (!empty($noTemp))
+                    {
+                        $styleNo = $noTemp;
+                    }
+                }
+            }
+            else
+            {
+                $styleNo = $style['no'];
+            }
+
+            if (strlen($styleNo))
+            {
+                if (!isset($this->_cache['error']['pricing']['style_no'][$styleNo]))
+                {
+                    $this->_cache['error']['pricing']['style_no'][$styleNo] = true;
+                    if(Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_THROW_WRONG_PRICING_ERRORS))
+                    {
+                        $this->_addWarningMsg(sprintf("Pricing error detected for style no %s, %s price will be used for all variants", $styleNo, $priceStyle), false);
+                    }
+                }
+            }
+            else if (!empty($style['internal_id']))
+            {
+                if (!isset($this->_cache['error']['pricing']['internal_id'][$style['internal_id']]))
+                {
+                    $this->_cache['error']['pricing']['internal_id'][$style['internal_id']] = true;
+                    if(Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_THROW_WRONG_PRICING_ERRORS))
+                    {
+                        $this->_addWarningMsg(sprintf("Pricing error detected (magento internal id: %s), %s price will be used for all variants", $style['internal_id'], $priceStyle), false);
+                    }
+                }
+            }
+            else
+            {
+                if(Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_THROW_WRONG_PRICING_ERRORS))
+                {
+                    $this->_addWarningMsg("Pricing error detected.", false);
+                }
+            }
+            if(Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_THROW_WRONG_PRICING_ERRORS))
+            {
+                $this->_getLogger()->addMessage(sprintf("Error occured while detecting pricing attributes: sku: %s: detected the following attribute ids: %s", $product->getSku(), implode(',', $skipPricingAttributeIds)), Zend_Log::ERR);
+            }
+        }
+        
+        $superAttributes = array();
+        if( !empty($style['internal_id']) )
+        {
+            $superAttributes = (array)$product->getTypeInstance(true)->getConfigurableAttributes($product)->getData();
+            /* $product->getTypeInstance()->setUsedProductAttributeIds(
+                array_keys($configurableAttributesTempAttributes)
+            ); */
+        }
+
+        $configurableAttributesData = array();
+        $unnasignedChildren = array();
+        $position = 1;
+        foreach($configurableAttributesTempAttributes as $attribute_id => $options)
+        {
+            $superAttributeId = null;
+            if( count($superAttributes) > 0 )
+            {
+                foreach($superAttributes as $superAttribute)
+                {
+                    if($superAttribute['attribute_id'] == $attribute_id)
+                    {
+                        $superAttributeId = $superAttribute['product_super_attribute_id'];
+                        break;
+                    }
+                    if( !in_array($superAttribute['attribute_id'],array_keys($configurableAttributesTempAttributes)) )
+                    {
+                        $superAttributeForDelete = Mage::getModel('catalog/product_type_configurable_attribute')
+                           ->setId($superAttribute['product_super_attribute_id'])
+                        ->setProductId($style['internal_id']);
+                        
+                        $superAttributeForDelete->isDeleted(true);
+                        $superAttributeForDelete->save();
+                    }
+                }
+            }
+
+            $attribute = current($options);
+            $attributeToSave = array(
+                'id'                 => $superAttributeId,
+                'attribute_id'       => $attribute_id,
+                'attribute_code'     => $attribute['attribute_code'],
+                'label'              => $attribute['attribute_name'],
+                'frontend_label'     => $attribute['attribute_name'],
+                'store_label'        => $attribute['attribute_name'],
+                'use_default'        => Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_DEFAULT_VALUE_FOR_CONFIGURABLE_ATTRIBUTE) || $product->getStoreId() == Mage_Catalog_Model_Abstract::DEFAULT_STORE_ID || !Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_SEVERAL_STORES),
+                'html_id'            => 'configurable__attribute_' . ($position-1),
+                'position'           => $position++,
+            );
+
+            foreach($options as $option)
+            {
+                $pricingValue = in_array($attribute_id, $skipPricingAttributeIds) ? 0 : $option['pricing_value'] - $priceStyle;
+                $attributeToSave['values'][$option['value_index']] = array(
+                    'product_super_attribute_id'   => $superAttributeId,
+                    'pricing_value'                => $pricingValue,
+                    'value_index'                  => $option['value_index'],
+                    'label'                        => $option['value_label'],
+                    'default_label'                => $option['value_label'],
+                    'store_label'                  => $option['value_label'],
+                    'is_percent'                   => 0,
+                    //'use_default_value'            => true,
+                    'use_default_value'            => Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_SEVERAL_STORES) ? false : true,
+                    'can_edit_price'               => true,
+                    'can_read_price'               => true,
+                );
+            }
+            $configurableAttributesData[$attribute_id] = $attributeToSave;
+            $this->_unassignWrongChildren($children, $attribute_id, $unnasignedChildren);
+        }
+
+        if( !empty($unnasignedChildren) )
+        {
+            $productIds = Mage::getModel('catalog/product')->getResource()->getProductsSku($unnasignedChildren);
+            $skus = array();
+            foreach($productIds as $productId)
+            {
+                $skus[] = $productId['sku'];
+            }
+            $this->_addWarningMsg( sprintf("Product %s has not accepted some items to be assigned: %s", $product->getSku(), implode(', ', $skus)) );
+        }
+        
+        if( !$this->_checkDoubledAttributeUsage($children, $configurableAttributesData, $product) )
+        {
+            $this->_checkDoubledAttributeOptionUsage($optionSets, $configurableAttributesData);
+        }
+
+        if ($forceSetParentPrices)
+        {
+            $sourceProduct = $foundPricingAttr ? $minPriceChildProd : $maxPriceChildProd;
+            if ($sourceProduct instanceof Varien_Object)
+            {
+                /*copy price attributes from child but skip style mapped to prevent overwriting*/
+                $this->copyPriceData($sourceProduct, $product, $this->getMappedStyleAttributes());
+            }
+            else
+            {
+                $message =  'Wrong items attributes data';
+                if (!empty($style['no']))
+                {
+                    $message .= ": Style #{$style['no']}";
+                }
+                $message .= ", sku #{$product->getSku()}. Please check style configuration.";
+                $this->_addWarningMsg($message);
+            }
+        }
+        return $configurableAttributesData;
+    }
 }
