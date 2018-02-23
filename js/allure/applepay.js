@@ -542,7 +542,30 @@ if (window.ApplePaySession) {
 	    
 	    var status = false;
 	    
-	    var data = {amount: Allure.ApplePay.data.total.amount, dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', dataValue: dataObj,  dataBinary: objJsonB64};
+	    var shippingContact = Allure.ApplePay.data.shippingContact;
+	    
+	    var data = {
+			'billing[firstname]': shippingContact.givenName, 
+			'billing[lastname]': shippingContact.familyName,
+			'billing[company]': '',
+			'billing[email]': shippingContact.emailAddress,
+			'billing[country_id]': shippingContact.countryCode,
+			'billing[street][0]': shippingContact.addressLines[0],
+			'billing[street][1]': '',
+			'billing[city]': shippingContact.locality,
+			'billing[region_id]': '',
+			'billing[region]': shippingContact.administrativeArea,
+			'billing[postcode]': shippingContact.postalCode,
+			'billing[telephone]': shippingContact.phoneNumber,
+			'billing[fax]': '',
+			'billing[use_for_shipping]': 1,
+			
+			
+	    		amount: Allure.ApplePay.data.total.amount, 
+	    		dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', 
+	    		dataValue: dataObj,  
+	    		dataBinary: objJsonB64
+	    	};
 	    
 	    var response = Allure.ApplePay.action.sendRequest('saveOrderTransaction', data);
 	    //var response = Allure.ApplePay.action.sendRequest('saveTransaction', data);
@@ -575,22 +598,24 @@ if (window.ApplePaySession) {
 
 	Allure.ApplePay.action.sendPaymentToken = function (paymentToken, shippingContact) {
 		
-		Allure.ApplePay.data.response.saveBilling = Allure.ApplePay.action.sendRequest('saveBilling', {
-			'billing[firstname]': shippingContact.givenName, 
-			'billing[lastname]': shippingContact.familyName,
-			'billing[company]': '',
-			'billing[email]': shippingContact.emailAddress,
-			'billing[country_id]': shippingContact.countryCode,
-			'billing[street][0]': shippingContact.addressLines[0],
-			'billing[street][1]': '',
-			'billing[city]': shippingContact.locality,
-			'billing[region_id]': '',
-			'billing[region]': shippingContact.administrativeArea,
-			'billing[postcode]': shippingContact.postalCode,
-			'billing[telephone]': shippingContact.phoneNumber,
-			'billing[fax]': '',
-			'billing[use_for_shipping]': 1
-		});
+		Allure.ApplePay.data.shippingContact = shippingContact;
+		
+//		Allure.ApplePay.data.response.saveBilling = Allure.ApplePay.action.sendRequest('saveBilling', {
+//			'billing[firstname]': shippingContact.givenName, 
+//			'billing[lastname]': shippingContact.familyName,
+//			'billing[company]': '',
+//			'billing[email]': shippingContact.emailAddress,
+//			'billing[country_id]': shippingContact.countryCode,
+//			'billing[street][0]': shippingContact.addressLines[0],
+//			'billing[street][1]': '',
+//			'billing[city]': shippingContact.locality,
+//			'billing[region_id]': '',
+//			'billing[region]': shippingContact.administrativeArea,
+//			'billing[postcode]': shippingContact.postalCode,
+//			'billing[telephone]': shippingContact.phoneNumber,
+//			'billing[fax]': '',
+//			'billing[use_for_shipping]': 1
+//		});
 		
 		if (Allure.ApplePay.data.response.saveBilling) {
 			if (typeof Allure.ApplePay.data.response.saveBilling.shipping_methods != 'undefined') {

@@ -614,6 +614,34 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         
         Mage::log(json_encode($_POST),Zend_Log::DEBUG, 'applepay.log', true);
         
+        if (isset($data['billing'])) {
+            $billingData = $data['billing'];
+            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
+            
+            if (isset($billingData['email'])) {
+                $billingData['email'] = trim($billingData['email']);
+            }
+            
+            if (!isset($billingData['region_id']) || empty($billingData['region_id'])) {
+                $regionName = $billingData['region'];
+                
+                $region  = Mage::getModel('directory/region')->loadByCode($regionName, $billingData['country_id']);
+                
+                if (!$region->getId()) {
+                    $region = Mage::getModel('directory/region')->loadByName($regionName, $billingData['country_id']);
+                }
+                
+                if ($region->getId()) {
+                    $billingData['region_id'] = $region->getId();
+                }
+            }
+            
+            Mage::log("NEW DATA: ".json_encode($billingData),Zend_Log::DEBUG, 'applepay.log', true);
+            
+            $this->getOnepage()->saveBilling($billingData, $customerAddressId);
+            $this->getOnepage()->saveShipping($billingData, $customerAddressId);
+        }
+        
         
         $transRequestXmlStr=<<<XML
 <?xml version="1.0" encoding="UTF-8"?>
