@@ -1,0 +1,103 @@
+<?php
+    $pinIsEnabled = Mage::helper('teamwork_cegiftcards')->pinIsEnabled();
+?>
+
+<form id="teamwork-giftcard-form" action="<?php echo $this->getUrl('teamwork_cegiftcards/quote/applygc') ?>" method="post">
+    <div class="discount">
+        <h2><?php echo $this->__('Gift Card') ?></h2>
+        <div class="discount-form">
+            <label for="gc_code"><?php echo $pinIsEnabled ? $this->__('Code') : $this->__('Enter gift card code if you have one.') ?></label>
+            <div class="input-box">
+                <input class="input-text" id="gc_code" name="gc_code" value="" />
+            </div>
+
+            <?php if ($pinIsEnabled):?>
+            <label for="gc_pin"><?php echo $this->__('PIN') ?></label>
+            <div class="input-box">
+                <input class="input-text" type="password" id="gc_pin" name="gc_pin" value="" />
+            </div>
+            <?php endif; ?>
+
+            <div class="buttons-set">
+                <button type="button" title="<?php echo $this->__('Check') ?>" class="button" onclick="checkGCBalance()" value="<?php echo $this->__('Check') ?>"><span><span><?php echo $this->__('Check') ?></span></span></button>
+                <span class="please-wait" id="gc-info-please-wait" style="display:none;">
+                    <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Please wait...') ?>" title="<?php echo $this->__('Please wait...') ?>" class="v-middle" /> <?php echo $this->__('Please wait...') ?>
+                </span>
+                <button type="button" title="<?php echo $this->__('Apply') ?>" class="button" onclick="giftcardForm.submit()" value="<?php echo $this->__('Apply') ?>"><span><span><?php echo $this->__('Apply') ?></span></span></button>
+            </div>
+            
+            
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var giftcardForm = new VarienForm('teamwork-giftcard-form');
+giftcardForm.submit = function () {
+    $('teamwork-giftcard-form').select('button').each(function(element){
+        element.addClassName('disabled');
+        element.disabled = true;
+        });
+//    $('gc_code').disabled = true;
+    $('gc-info-please-wait').show();
+    return VarienForm.prototype.submit.bind(giftcardForm)();
+}
+function checkGCBalance() {
+    var gc_code = $('gc_code').value.trim();
+    if (gc_code.length) {
+        $('teamwork-giftcard-form').select('button').each(function(element){
+            element.addClassName('disabled');
+            element.disabled = true;
+            });
+        $('gc_code').disabled = true;
+
+        <?php if (!$pinIsEnabled): ?>
+        var parameters = {'gc_code': gc_code}
+        <?php else: ?>
+        $('gc_pin').disabled = true;
+        var parameters = {'gc_code': gc_code, 'gc_pin': $('gc_pin').value.trim()}
+        <?php endif; ?>
+
+        
+        new Ajax.Request("<?php echo $this->getUrl('teamwork_cegiftcards/quote/checkgcajax') ?>", {
+            parameters: parameters,
+            onLoading: function(){$('gc-info-please-wait').show();},
+            onComplete: function(response) {
+                $('teamwork-giftcard-form').select('button').each(function(element){
+                    element.removeClassName('disabled');
+                    element.disabled = false;
+                });
+                $('gc_code').disabled = false;
+                <?php if ($pinIsEnabled): ?>
+                $('gc_pin').disabled = false;
+                <?php endif; ?>
+                
+                $('gc-info-please-wait').hide();
+                var error = false;
+                if (200 == response.status) {
+                    if (response.responseText.isJSON()) {
+                        response = response.responseText.evalJSON();
+                        if (response.error) {
+                            error = true;
+                        } else {
+                            if (response.active) {
+                                alert("Gift card with code \"" + response.code + "\" exists. Balance is " + response.balance);
+                            } else {
+                                alert("Gift card with code \"" + response.code + "\" doesn't exist.");
+                            }
+                        }
+                    } else {
+                        error = true;
+                    }
+                } else {
+                    error = true;
+                }
+                if (error) {
+                    alert('Error occured while gift card info requesting. Please try later.');
+                }
+            }
+        });
+    }
+}
+//]]>
+</script>
