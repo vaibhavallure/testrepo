@@ -1,0 +1,280 @@
+<?php
+$collection = $this->getCollection();
+$helper = Mage::helper("inventory");
+
+?>
+<?php $order=Mage::getModel('inventory/purchaseorder')->load($collection->getFirstItem()->getPoId())?>		
+<?php $updatedInfo=Mage::getModel('inventory/orderlogs')->getCollection();
+$updatedInfo->addFieldToFilter('po_id',$collection->getFirstItem()->getPoId());
+$updatedInfo->getSelect()->joinLeft('admin_user', 'admin_user.user_id = main_table.user_id', array('username','firstname','lastname'));
+//$updatedInfo->getSelect();
+$updatedInfo->setOrder('date', 'DESC');
+$updatedInfo=$updatedInfo->getFirstItem();?>
+<?php $orderTotal=$order->getTotalAmount()?>
+<div class="content-header">
+   <h3 class="icon-head"><?php echo $helper->__('View Purchase Order')?></h3>
+   <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_PARTIALLY_SHIPPED && $order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_FULLY_SHIPPED && $order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED && $order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CANCEL):?>
+   <?php if($order->getStatus()!="new" && Mage::helper('allure_vendor')->isUserVendor()){?>
+   <button id="ship_save_btn" form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/shipOrder', array('_secure' => true,'ship'=>true));?>"><?php echo $helper->__('Ship Partially')?></button>
+   <button id="ship_close_btn" form="save_po" class="po_save_btn"  formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/shipOrder', array('_secure' => true,'close'=>true));?>" ><?php echo $helper->__('Ship Completely')?></button>
+  
+    <?php } ?>
+   <?php endif;?>
+   
+    <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT && !Mage::helper('allure_vendor')->isUserVendor()):?>
+    <button id="ship_save_btn" form="save_po" class="po_save_btn" formaction="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/confirmdraftorder', array('_secure' => true));?>"><?php echo $helper->__('Send to Factory')?></button>
+    <button id="add_custom_item" style="float: right;" class="add_custom_item" onclick="javascript:addProductPopup('<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addProduct',array(_secure=>true,'po_id'=>$order->getPoId(),'store'=>$order->getStockId()))?>')" ><?php echo $helper->__('Add Product')?></button>
+   <?php endif;?>
+   
+    <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_NEW && Mage::helper('allure_vendor')->isUserVendor()):?>
+    <button id="accept" class="po_save_btn"  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/accept', array('_secure' => true,'id'=>$order->getPoId()));?>'" ><?php echo $helper->__('Accept')?></button>
+   <?php endif;?>
+   <button onclick="history.back()" class="po_back_btn" ><?php echo $helper->__('Back')?></button>
+</div>
+
+<div>
+	<div id="parent">
+		<div id="child">
+			<div>
+			<label><span><?php echo $helper->__('Purchase Order #');?></span>
+			<?php echo $order->getPoId()?>
+			</label>
+			<label><span><?php echo $helper->__('Order Date #'); ?></span>
+			<?php echo $order->getCreatedDate()?>
+			</label>
+			
+			<label><span><?php echo $helper->__('Vendor:'); ?></span>
+			<?php echo Mage::helper('allure_vendor')->isUserVendor()? $order->getVendorName():"MT Factory";?>
+			</label>
+			<label><span><?php echo $helper->__('Store:'); ?></span>
+			<?php echo Mage::getModel('core/website')->load($order->getStockId())->getName()?>
+			</label>
+			</div>
+			<div>
+			<label><span><?php echo $helper->__('Order Status:'); ?></span>
+			<?php echo Mage::helper('inventory')->getOrderStatus($order->getStatus())?>
+			</label>
+			<?php if($order->getRefNo()):?>
+				<label><span><?php echo $helper->__('Order Feference #'); ?></span>
+				<?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+				<input type="text"  id="refence_no" class="refence_no"  value="<?php echo $order->getRefNo()?>">
+				<?php else: ?>
+				<?php echo $order->getRefNo()?>
+				<?php endif;?>
+				</label>
+			<?php endif;?>
+			<?php if(!empty($updatedInfo->getUsername())):?>
+			<label><span><?php echo $helper->__('Last Updated By:'); ?></span>
+			<?php echo $updatedInfo->getFirstname()." ".$updatedInfo->getLastname().'('.$updatedInfo->getDate().')';?>
+			</label>
+			<?php endif;?>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="prod-data">
+<form id="save_po"  method="post">
+	<input type="hidden" id="order_id" name="order_id" value="<?php echo $order->getPoId()?>">
+	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+	<table class="iventory-product table" style="width:100%">
+		
+		<th><?php echo $helper->__('Image')?></th>
+		<th><?php echo $helper->__('PRODUCT NAME')?></th>
+		<th><?php echo $helper->__('PRODUCT COLOR')?></th>
+		
+		<?php //	vedor sku editable only for Draft orders?>
+		<?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('Vendor Sku')?></th>
+	    <?php endif;?>
+	    
+		<th><?php echo $helper->__('Ordered Qty')?></th>
+		
+		<?php //	vedor sku editable only for Draft orders?>
+		<?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('COST/ITEM')?></th>
+	    <?php endif;?>
+		
+		<th><?php echo $helper->__('VMT Comment')?></th>
+		
+		<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('Vendor Sku')?></th>
+	    <?php endif;?>
+	    
+		<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('Shipped Qty')?></th>
+		<?php endif;?>
+		
+		
+	    
+	    
+	    <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('Remaining Qty')?></th>
+		<?php endif;?>
+		
+		
+	    <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('Expected Ship ')?><br><?php echo $helper->__(' Date')?></th>
+	    <?php endif;?>
+	    
+		<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+		<th><?php echo $helper->__('Vendor Comment')?></th>
+	    <?php endif;?>
+	    
+	     <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED):?>
+		<th><?php echo $helper->__('Include')?></th>
+	    <?php endif;?>
+    	<?php 
+    
+    		foreach ($collection as $_product):
+    		 
+    		   if(!$_product->getIsCustom())
+                 $product = Mage::getModel ( 'catalog/product' )->setStoreId($order->getStockId())->load ($_product->getProductId());
+    		   else 
+    		     $product = Mage::getModel ( 'inventory/customitem' )->load ($_product->getProductId());
+    	?>
+			<tr id="inventory-row-<?php echo $_product->getProductId(); ?>" class="inventory_tr">
+				<input type="hidden" name="store" id="store" value='<?php echo  $order->getStockId()?>' >
+			    <input type="hidden" name="po_id" id="po_id" value='<?php echo  $order->getPoId()?>' >
+			    <input type="hidden" name="is_custom" id="is_custom_<?php echo $_product->getProductId(); ?>" value='<?php echo  $_product->getIsCustom()?>' >
+				
+				
+				
+				<td>
+				<?php if(!$_product->getIsCustom()):?>
+					<img style="width: 50px; height: 50px;" class="product_inventory_thumbnail" 
+							src="<?php  echo Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(50);?>"/>
+				<?php endif;?>
+				</td>
+			
+				<td style="padding-left:20px;text-align:left">
+					<p><?php echo $product->getName();?></p>
+				    <p><strong>SKU:</strong><?php echo $product->getSku();?></p>
+				</td>
+				<td style="padding-left:20px;text-align:left">
+					<?php $productModel = Mage::getModel('catalog/product');
+                            $attr = $productModel->getResource()->getAttribute("metal_color");
+                            if ($attr->usesSource()) {
+                                 $color_label = $attr->getSource()->getOptionText($product->getMetalColor());
+                            }?>
+					<p><?php echo $color_label;?></p>
+				</td>
+				
+			   <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT): ?>
+				<td>
+					<input id="vendor_sku_<?php  echo $_product->getProductId() ?>" style="width:150px"  
+						
+						name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_sku" ?>]" type="text" 
+						value="<?php echo  (!$_product->getIsCustom()) ? $_product->getVendorSku() : "" ;?>"/>
+				</td>
+			   <?php endif;?>
+						
+						
+						
+				<td>
+					<input id="requested_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
+						<?php if(Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?>
+						name="order[<?php echo $_product->getProductId() ?>][<?php echo "requested_qty" ?>]" type="text" 
+						value="<?php echo round($_product->getRequestedQty())?>"/>
+				</td>
+				
+				 <?php if($order->getStatus()==Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT): ?>
+				<td>
+					<input id="cost_<?php  echo $_product->getProductId() ?>" style="width:50px"  
+						
+						name="order[<?php echo $_product->getProductId() ?>][<?php echo "cost" ?>]" type="text" 
+						value="<?php echo round($product->getCost(),2)?>"/>
+				</td>
+			   <?php endif;?>
+			   
+				
+				<?php if(Mage::helper('allure_vendor')->isUserVendor()):?>
+				<td>
+					<label><?php echo nl2br($_product->getAdminComment())?></label>
+					<textarea hidden="true" <?php if(Mage::helper('allure_vendor')->isUserVendor()){echo 'readonly="readonly"';}?>name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="3" ><?php echo trim($_product->getAdminComment())?></textarea>
+				</td>
+				<?php else:?>
+				<td>
+					<textarea  <?php if(Mage::helper('allure_vendor')->isUserVendor()){echo 'readonly="readonly"';}?> id="admin_comment_<?php  echo $_product->getProductId() ?>"
+						 name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="13" rows="3" ><?php echo $_product->getAdminComment()?></textarea>
+				</td>
+				<?php endif;?>
+				
+				<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+				<td>
+				<input id="vendor_sku_<?php  echo $_product->getProductId() ?>" style="width:100px" 
+					 name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_sku" ?>]" type="text" 
+					 value="<?php echo (!$_product->getIsCustom()) ? $_product->getVendorSku() : "" ; ?>"  /></td>
+				<?php endif;?>
+				
+				<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT): ?>
+				<td>
+					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 
+					 name="order[<?php echo $_product->getProductId() ?>][<?php echo "proposed_qty" ?>]" type="text" 
+					 value="0"  />
+				</td>
+				<?php endif;?>
+				
+				<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+				<td>
+					<input id="remaining_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
+						<?php if(Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?>
+						name="order[<?php echo $_product->getProductId() ?>][<?php echo "remaining_qty" ?>]" type="text" 
+						value="<?php echo round($_product->getRemainingQty())?>" />
+				</td>
+				<?php endif;?>
+				<?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+				<td>
+                    <div><?php echo $this->getDate($_product->getProductId(),$_product->getProposedDeliveryDate());?></div>
+                </td>
+                <?php endif;?>
+                
+                <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_DRAFT):?>
+				<td>
+                    <textarea id="vendor_comment_<?php  echo $_product->getProductId() ?>" <?php if(!Mage::helper('allure_vendor')->isUserVendor()){ echo 'readonly="readonly"';}?> name="order[<?php echo $_product->getProductId() ?>][<?php echo "vendor_comment" ?>]" cols="13" rows="7" ><?php echo $_product->getVendorComment()?></textarea>
+                </td>
+               <?php endif;?>
+               
+               <?php if($order->getStatus()!=Allure_Inventory_Helper_Data::ORDER_STATUS_CLOSED):?>
+               <td>
+              			<input id="<?php echo $product->getId()?>" type="checkbox" class="add_item" name="inclide"/>
+               </td>
+               <?php endif;?>
+			</tr>		
+        <?php endforeach ;?>
+  </table>
+  </form>
+  <?php if(!Mage::helper('allure_vendor')->isUserVendor()) :?>
+  <table style="width:100%">
+      <tr>
+      	 <td>
+      	 	<div style="float:right;margin-right: 10px">
+      	 		<label>Order Total:</label>
+      	 		<input readonly="readonly" id="order_total" style="margin-bottom: 10px" type="text" value="<?php echo $orderTotal?>">
+      	 	</div>
+      	 </td>
+      </tr>
+  </table>
+  <?php endif;?>
+</div>
+ 	 
+
+    
+<script type="text/javascript">
+	jQuery.noConflict();
+</script>
+
+<script type="text/javascript">
+	if (typeof Allure == "undefined") {
+	   var Allure = {};
+	}
+	Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+	Allure.OrderStatus = '<?php echo $order->getStatus(); ?>';
+	Allure.InventoryStoreSwitch = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_stock/store', array('_secure' => true));?>';
+	Allure.GetVendorSelectedItems = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/getVendorSelecteditems', array('_secure' => true));?>';
+	Allure.AddVendorItem = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/addVendorItem', array('_secure' => true));?>';
+</script>
+
+
