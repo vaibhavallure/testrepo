@@ -40,14 +40,25 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
 				if(isset($attrValues['LookupName']))
 				{
 					$attrValues = $attrValues['LookupName'];
-					foreach ($attrValues as $val)
+					if(is_array($attrValues))
+					{
+						foreach ($attrValues as $val)
+						{
+							$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
+							if ($attr->usesSource()) 
+							{
+								$optionId[] = $attr->getSource() ->getOptionId($val);
+							}
+							
+						}
+					}
+					else
 					{
 						$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('diamond_color');
 						if ($attr->usesSource()) 
 						{
-							$optionId[] = $attr->getSource() ->getOptionId($val);
+							$optionId[] = $attr->getSource() ->getOptionId($attrValues);
 						}
-						
 					}
 				}
 			}
@@ -62,15 +73,26 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
 				$optionId = array();
 				if(isset($attrValues['LookupName']))
 				{
-				$attrValues = $attrValues['LookupName'];
-					foreach ($attrValues as $val)
+					$attrValues = $attrValues['LookupName'];
+					if(is_array($attrValues))
+					{
+						foreach ($attrValues as $val)
+						{
+							$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
+							if ($attr->usesSource()) 
+							{
+								$optionId[] = $attr->getSource()->getOptionId($val);
+							}
+							
+						}
+					}
+					else
 					{
 						$attr = Mage::getModel('catalog/product')->getResource()->getAttribute('gemstone');
 						if ($attr->usesSource()) 
 						{
-							$optionId[] = $attr->getSource()->getOptionId($val);
+							$optionId[] = $attr->getSource() ->getOptionId($attrValues);
 						}
-						
 					}
 				}
 			}
