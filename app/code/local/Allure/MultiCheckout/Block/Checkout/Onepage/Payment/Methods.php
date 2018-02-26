@@ -96,4 +96,10 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Payment_Methods extends Mage_C
         
         return $isBackorderAvailable;
     }
+    public  function isDeleiveryMethodTwoShipment(){
+        if($this->getQuote()->getDeliveryMethod()=='two_ship')
+            return TRUE;
+        else 
+            return FALSE;
+    }
 }
