@@ -296,10 +296,16 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    return $piercersArray;
 	}
 	public  function  storeOptionArray(){
-	    $stores=Mage::getModel('core/store')->getCollection();
-	    $stores->setOrder('store_id', 'ASC');
 	    $storeArray=array();
 	    $storeArray[0]= 'Any';
+	    if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+	        $stores=Mage::getModel('allure_virtualstore/store')->getCollection();
+	        $stores->addFieldToFilter('store_id',array('neq'=>0));
+	        $stores->setOrder('store_id', 'ASC');
+	    }else{
+	        $stores=Mage::getModel('core/store')->getCollection();
+	        $stores->setOrder('store_id', 'ASC');
+	    }
         foreach ($stores as $store): 
         $storeArray[$store->getId()]=$store->getName();
 		endforeach;

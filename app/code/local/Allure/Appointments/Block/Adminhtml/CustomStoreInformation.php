@@ -36,31 +36,32 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         });
 
         function enableStoreContainer(evt,inx){
+            //alert(jQuery(evt).parent().next().next().attr("class"));
             var selectVal = jQuery(evt).val();
             if(selectVal == 1){
-                jQuery("#enable-store-container_"+inx).addClass("active");
-                jQuery("#enable-store-hr_"+inx).addClass("active");
+                jQuery(evt).parent().next().addClass("active");
+                jQuery(evt).parent().next().next().addClass("active");
             }else{
-                jQuery("#enable-store-container_"+inx).removeClass("active");
-                jQuery("#enable-store-hr_"+inx).removeClass("active");
+               jQuery(evt).parent().next().removeClass("active");
+               jQuery(evt).parent().next().next().removeClass("active");
             }
         } 
 
         function enableCustomerEmail(evt,inx){
             var selectVal = jQuery(evt).val();
             if(selectVal == 1){
-                jQuery("#customer-email-container-"+inx).addClass("active");
+                 jQuery(evt).parent().next().addClass("active");
             }else{
-                jQuery("#customer-email-container-"+inx).removeClass("active");
+                 jQuery(evt).parent().next().removeClass("active");
             }
         } 
 
         function enablePiercerEmail(evt,inx){
             var selectVal = jQuery(evt).val();
             if(selectVal == 1){
-                jQuery("#piercer-email-container-"+inx).addClass("active");
+                 jQuery(evt).parent().next().addClass("active");
             }else{
-                jQuery("#piercer-email-container-"+inx).removeClass("active");
+                 jQuery(evt).parent().next().removeClass("active");
             }
         } 
 
@@ -68,9 +69,9 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         function enableAdminEmail(evt,inx){
             var selectVal = jQuery(evt).val();
             if(selectVal == 1){
-                jQuery("#admin-email-container-"+inx).addClass("active");
+                 jQuery(evt).parent().next().addClass("active");
             }else{
-                jQuery("#admin-email-container-"+inx).removeClass("active");
+                 jQuery(evt).parent().next().removeClass("active");
             }
         } 
 
@@ -117,9 +118,9 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $isEnableStore = $this->_getValue('enable_store/' . $rowIndex);
         $enableStoreClass = ($isEnableStore)?"active":"";
         
-        $html .= '<hr id="enable-store-hr_'.$rowIndex.'" class="appointment-setting-hr enable-store-hr '.$enableStoreClass.'">';
+        $html .= '<hr id="enable-store-hr-'.$rowIndex.'" class="appointment-setting-hr enable-store-hr '.$enableStoreClass.'">';
         
-        $html .= '<div id="enable-store-container_'.$rowIndex.'" class="enable-store-container '.$enableStoreClass.'">';
+        $html .= '<div id="enable-store-container-'.$rowIndex.'" class="enable-store-container '.$enableStoreClass.'">';
         
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="appointments_store_name">Store Name </label>';

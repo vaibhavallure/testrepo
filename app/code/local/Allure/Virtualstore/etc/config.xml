@@ -24,6 +24,12 @@
 			</allure_virtualstore>
 		</helpers>
 		
+		<blocks>
+			<allure_virtualstore>
+				<class>Allure_Virtualstore_Block</class>
+			</allure_virtualstore>
+		</blocks>
+		
 		<models>
 			<allure_virtualstore>
 				<class>Allure_Virtualstore_Model</class>

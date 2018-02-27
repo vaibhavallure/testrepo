@@ -127,4 +127,17 @@ class Allure_Virtualstore_Model_Adminhtml_Store extends Varien_Object
     }
     
     
+    /**
+     * get store key value pair
+     */
+    public function getStoreOptionHash(){
+        $stores = $this->_virtualStoreHelper->getVirtualStores();
+        $options = array();
+        foreach ($stores as $store){
+            $options[$store->getId()] = $store->getName();
+        }
+        return $options;
+    }
+    
+    
 }
