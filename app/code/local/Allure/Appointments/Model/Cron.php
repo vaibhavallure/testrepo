@@ -3,11 +3,17 @@
 class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 {
 
+    /**
+     * return array of store mapping
+     */
+    private function getAppointmentStoreMapping(){
+        return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+    }
 	
 	public  function autoProcess(){
 		
 		//Get all stores with time zone
-		$config=Mage::getStoreConfig('appointments/general/storemapping');
+		/* $config=Mage::getStoreConfig('appointments/general/storemapping');
 		$config=unserialize($config);
 		foreach ($config as $conf)
 		{
@@ -18,7 +24,23 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			Mage::log("Store Time Zone:".$conf['timezone'],Zend_Log::DEBUG,'appointments',true);
 			$this->processCollection($storeDate,$conf['store'],$conf['timezone']);
 			date_default_timezone_set("UTC");
-		}
+		} */
+	    
+	    $config = $this->getAppointmentStoreMapping();
+	    foreach ($config['stores'] as $store)
+	    {
+	        if($val == 0){
+	            continue;
+	        }
+	        $timezone = $config['timezones'][$store];
+	        date_default_timezone_set($timezone);
+	        $storeDate=date('Y-m-d H:i:s');
+	        
+	        //Send notification at store date time only
+	        Mage::log("Store Time Zone:".$timezone,Zend_Log::DEBUG,'appointments',true);
+	        $this->processCollection($storeDate,$store,$timezone);
+	        date_default_timezone_set("UTC");
+	    }
 	}
 	
 	
@@ -61,16 +83,18 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		$sendEmail = false;
 		$sendSms = false;
 		
-		
+		$configData = $this->getAppointmentStoreMapping();
 		foreach ($allAppointments as $appointment){
 			$storeId=$appointment->getStoreId();
-			$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
-			$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
+			//$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
+			$toSend = $configData['customer_email_enable'][$storeId];
+			//$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
+			$templateId = $configData['email_template_appointment_remind'][$storeId];
 			$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId),
 			    'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 			
-			$toSendAdmin = Mage::getStoreConfig("appointments/admin/send_admin_email",$storeId);
-			
+			//$toSendAdmin = Mage::getStoreConfig("appointments/admin/send_admin_email",$storeId);
+			$toSendAdmin = $configData['admin_email_enable'][$storeId];
 			$sendEmail = false;
 			$sendSms = false;
 			
@@ -123,12 +147,12 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 							'special_notes' => $model->getSpecialNotes(),
 							'apt_starttime'  => $appointmentStart,
 							'apt_endtime'    => $appointmentEnd,
-							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+					        'store_name'	=> $configData['store_name'][$storeId],// Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+					        'store_address'	=> $configData['store_address'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+					        'store_email_address'	=> $configData['store_email'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+					        'store_phone'	=> $configData['store_phone'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+					        'store_hours'	=> $configData['store_hours_operation'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+					        'store_map'	=> $configData['store_map'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
 							'apt_modify_link'=> $apt_modify_link);
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
@@ -139,9 +163,11 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 				/*Admin Email Code*/
 				
 				if($toSendAdmin){
-					$templateId = Mage::getStoreConfig("appointments/admin/admin_template",$storeId);
-					$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
-					$mailSubject="Appointment booking Reminder";
+					//$templateId = Mage::getStoreConfig("appointments/admin/admin_template",$storeId);
+				    $templateId = $configData['admin_email_template'][$storeId];
+					//$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
+				    $adminEmail = $configData['admin_email_id'][$storeId];
+				    $mailSubject="Appointment booking Reminder";
 					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
 					$email = $adminEmail;
 					$name = "Admin";
@@ -154,12 +180,12 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 							'piercing_loc' => $model->getPiercingLoc(),
 							'special_notes' => $model->getSpecialNotes(),
 							'apt_starttime'  => $appointmentStart,
-							'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-							'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-							'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-							'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-							'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-							'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+					        'store_name'	=> $configData['store_name'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+					        'store_address'	=> $configData['store_address'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+					        'store_email_address'	=> $configData['store_email'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+					        'store_phone'	=> $configData['store_phone'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+					        'store_hours'	=> $configData['store_hours_operation'][$storeId],// Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+					        'store_map'	=> $configData['store_map'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
 							'apt_endtime'    => $appointmentEnd);
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
@@ -176,7 +202,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 				$password = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_PASSWORD);
 				$url = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_BASEURL);
 				$smsfrom = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_FROM);
-				$smsText = Mage::getStoreConfig("appointments/api/smstext_reminder",$storeId);
+				//$smsText = Mage::getStoreConfig("appointments/api/smstext_reminder",$storeId);
+				$smsText = $configData['reminder_sms_message'][$storeId];
 				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
 				$date = date("F j, Y ", strtotime($model->getAppointmentStart()));
 				$time=date('h:i A', strtotime($model->getAppointmentStart()));

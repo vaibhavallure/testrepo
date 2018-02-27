@@ -6,6 +6,12 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+$stores = Mage::getSingleton('adminhtml/system_store')
+->getStoreValuesForForm(false, false);
+echo "<pre>";
+print_r($stores);
+die;
+
 if(empty($lower) || empty($upper)){
     die('Please add Upper and Lower limit');
 }
