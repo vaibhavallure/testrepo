@@ -21,10 +21,15 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	
 	public function getTimingSelect()
 	{
-	
-		$startTime = Mage::getStoreConfig('appointments/general/working_start_time');
+	    $configData     = $this->getAppointmentStoreMapping();
+	    $currentStoreId = Mage::app()->getStore()->getId();
+	    $storeKey = array_search ($currentStoreId, $configData['stores']);
+	    
+		//$startTime = Mage::getStoreConfig('appointments/general/working_start_time');
+	    $startTime = $configData['start_work_time'][$storeKey];
 		//var_dump($startTime);
-		$endTime = Mage::getStoreConfig('appointments/general/working_end_time');
+		//$endTime = Mage::getStoreConfig('appointments/general/working_end_time');
+	    $endTime = $configData['end_work_time'][$storeKey];
 		//var_dump($endTime);
 		$timing =array();
 		$timings=Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
@@ -124,7 +129,8 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 	public function getTimezoneForeStore($storeId){
 		$timezone="";
-		$config=Mage::getStoreConfig('appointments/general/storemapping');
+		
+		/* $config=Mage::getStoreConfig('appointments/general/storemapping');
 		$config=unserialize($config);
 		foreach ($config as $conf)
 		{
@@ -133,12 +139,18 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 				$timezone=$conf['timezoneabbr'];
 				break;
 			}
-		}
+		} */
+		
+		$configData     = $this->getAppointmentStoreMapping();
+		$currentStoreId = Mage::app()->getStore()->getId();
+		$storeKey = array_search ($currentStoreId, $configData['stores']);
+		$timezone = $configData['timezone_abbr'][$storeKey];
+		
 		return $timezone;
 	}
 	public function getTimezoneShortCodeForeStore($storeId){
 		$timezone="EST";
-		$config=Mage::getStoreConfig('appointments/general/storemapping');
+		/* $config=Mage::getStoreConfig('appointments/general/storemapping');
 		$config=unserialize($config);
 		foreach ($config as $conf)
 		{
@@ -147,7 +159,13 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 				$timezone=$conf['timezoneabbr'];
 				break;
 			}
-		}
+		} */
+		
+		$configData     = $this->getAppointmentStoreMapping();
+		$currentStoreId = Mage::app()->getStore()->getId();
+		$storeKey = array_search ($currentStoreId, $configData['stores']);
+		$timezone = $configData['timezone_abbr'][$storeKey];
+		
 		return $timezone;
 	}
 	public function getTimeByValue($value){
@@ -299,6 +317,13 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    endforeach;
 	    return $piercerArray;
 	    
+	}
+	
+	/**
+	 * return array of store mapping
+	 */
+	private function getAppointmentStoreMapping(){
+	    return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
 	}
 }
 	 

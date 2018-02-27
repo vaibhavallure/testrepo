@@ -112,12 +112,13 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			//$toSend = Mage::getStoreConfig("appointments/piercer/send_piercer_email",$storeId);
     			
     			$configData = $this->getAppointmentStoreMapping();     //new code store clnup
-    			$toSend = $configData['piercer_email_enable'][$storeId]; //new code store clnup
+    			$storeKey = array_search ($storeId, $configData['stores']);
+    			$toSend = $configData['piercer_email_enable'][$storeKey]; //new code store clnup
     			if($toSend)
     			{
     				//$templateId = Mage::getStoreConfig("appointments/piercer/piercer_welcome_template",$storeId);
     				
-    			    $templateId = $configData['piercer_email_template_welcome'][$storeId];
+    			    $templateId = $configData['piercer_email_template_welcome'][$storeKey];
     				$mailSubject="sample subject";
     				
     				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
@@ -132,12 +133,12 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     						'piercing_loc' => $model->getPiercingLoc(),
     						'special_notes' => $model->getSpecialNotes(),
     						'apt_starttime'  => $model->getAppointmentStart(),
-    				        'store_name'	=> $configData['store_name'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-    				        'store_address'	=> $configData['store_address'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-    				        'store_email_address'	=> $configData['store_email'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-    				        'store_phone'	=> $configData['store_phone'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-    				        'store_hours'	=> $configData['store_hours_operation'][$storeId],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-    				        'store_map'	=> $configData['store_map'][$storeId],// Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+    				        'store_name'	=> $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+    				        'store_address'	=> $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+    				        'store_email_address'	=> $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+    				        'store_phone'	=> $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+    				        'store_hours'	=> $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+    				        'store_map'	=> $configData['store_map'][$storeKey],// Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
     						'apt_endtime'    => $model->getAppointmentEnd());
     				$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
     			}
