@@ -31,6 +31,52 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= $this->_getAddRowButtonHtml('appointmentblocker_container',
             'appointmentblocker_template', $this->__('Add New Store'));
         
+        $html .= '<script>';
+        $html .= 'jQuery(document).ready(function(){
+        });
+
+        function enableStoreContainer(evt,inx){
+            var selectVal = jQuery(evt).val();
+            if(selectVal == 1){
+                jQuery("#enable-store-container_"+inx).addClass("active");
+                jQuery("#enable-store-hr_"+inx).addClass("active");
+            }else{
+                jQuery("#enable-store-container_"+inx).removeClass("active");
+                jQuery("#enable-store-hr_"+inx).removeClass("active");
+            }
+        } 
+
+        function enableCustomerEmail(evt,inx){
+            var selectVal = jQuery(evt).val();
+            if(selectVal == 1){
+                jQuery("#customer-email-container-"+inx).addClass("active");
+            }else{
+                jQuery("#customer-email-container-"+inx).removeClass("active");
+            }
+        } 
+
+        function enablePiercerEmail(evt,inx){
+            var selectVal = jQuery(evt).val();
+            if(selectVal == 1){
+                jQuery("#piercer-email-container-"+inx).addClass("active");
+            }else{
+                jQuery("#piercer-email-container-"+inx).removeClass("active");
+            }
+        } 
+
+
+        function enableAdminEmail(evt,inx){
+            var selectVal = jQuery(evt).val();
+            if(selectVal == 1){
+                jQuery("#admin-email-container-"+inx).addClass("active");
+            }else{
+                jQuery("#admin-email-container-"+inx).removeClass("active");
+            }
+        } 
+
+        ';
+        $html .= '</script>';
+        
         return $html;
     }
     
@@ -53,6 +99,27 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
                 </div>';
         
         $html .= '<div class="fieldset">';
+        
+        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $timeOptArr = array("0"=>"No","1"=>"Yes");
+        $EnableStoreOpt = '';
+        foreach ($timeOptArr as $key=>$name){
+            $selectOpt = "";
+            if($this->_getValue('enable_store/' . $rowIndex) == $key){
+                $selectOpt = "selected='selected'";
+            }
+            $EnableStoreOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
+        }
+        $html .= '<label for="appointments_enable_store">Enable Store </label>';
+        $html .= '<select onclick="enableStoreContainer(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[enable_store][]'.'" style="">'.$EnableStoreOpt.'</select>';
+        $html .= '</div>';
+        
+        $isEnableStore = $this->_getValue('enable_store/' . $rowIndex);
+        $enableStoreClass = ($isEnableStore)?"active":"";
+        
+        $html .= '<hr id="enable-store-hr_'.$rowIndex.'" class="appointment-setting-hr enable-store-hr '.$enableStoreClass.'">';
+        
+        $html .= '<div id="enable-store-container_'.$rowIndex.'" class="enable-store-container '.$enableStoreClass.'">';
         
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="appointments_store_name">Store Name </label>';
@@ -212,9 +279,13 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $custEmailEnableOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
         }
         $html .= '<label for="appointments_customer_email_enable">Enable Customer Email </label>';
-        $html .= '<select class="appointment-setting-select" name="'. $this->getElement()->getName().'[customer_email_enable][]'.'" style="">'.$custEmailEnableOpt.'</select>';
+        $html .= '<select onclick="enableCustomerEmail(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[customer_email_enable][]'.'" style="">'.$custEmailEnableOpt.'</select>';
         $html .= '</div>';
         
+        $isCustomerEmailActive = $this->_getValue('customer_email_enable/' . $rowIndex);
+        $customerEmailContainerClass = ($isCustomerEmailActive)?"active":"";
+        
+        $html .= '<div id="customer-email-container-'.$rowIndex.'" class="customer-email-container '.$customerEmailContainerClass.'">';
         
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="customer_eamil_template_appointment">Customer Email Temaplate Appointment </label>';
@@ -237,6 +308,8 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= $this->prepareEmailTemplate($rowIndex,"modify");
         $html .= '</div>';
         
+        $html .= '</div>';
+        
         $html .= '<hr class="appointment-setting-hr">';
         
         $html .= '<div class="appointment-setting-common apt-row-1">';
@@ -250,9 +323,13 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $custEmailEnableOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
         }
         $html .= '<label for="appointments_piercer_email_enable">Piercer Email Enable </label>';
-        $html .= '<select class="appointment-setting-select" name="'. $this->getElement()->getName().'[piercer_email_enable][]'.'" style="">'.$custEmailEnableOpt.'</select>';
+        $html .= '<select onclick="enablePiercerEmail(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[piercer_email_enable][]'.'" style="">'.$custEmailEnableOpt.'</select>';
         $html .= '</div>';
         
+        $isPiercerEmailEnable = $this->_getValue('piercer_email_enable/' . $rowIndex);
+        $piercerContainerClass = ($isPiercerEmailEnable)?"active":"";
+        
+        $html .= '<div id="piercer-email-container-'.$rowIndex.'" class="piercer-email-container '.$piercerContainerClass.'">';
         
         $html .= '<div class="appointment-setting-common apt-row-1 right">';
         $html .= '<label for="piercer_welcome_email">Piercer Welcome Email  </label>';
@@ -276,6 +353,8 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= $this->preparePircerEmailTemplate($rowIndex,"modify");
         $html .= '</div>';
         
+        $html .= '</div>';
+        
         $html .= '<hr class="appointment-setting-hr">';
         
         $html .= '<div class="appointment-setting-common apt-row-1">';
@@ -289,9 +368,13 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $custEmailEnableOpt .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
         }
         $html .= '<label for="admin_email_enable">Admin Email Enable </label>';
-        $html .= '<select class="appointment-setting-select" name="'. $this->getElement()->getName().'[admin_email_enable][]'.'" style="">'.$custEmailEnableOpt.'</select>';
+        $html .= '<select onclick="enableAdminEmail(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[admin_email_enable][]'.'" style="">'.$custEmailEnableOpt.'</select>';
         $html .= '</div>';
         
+        $isAdminEmailEnable = $this->_getValue('admin_email_enable/' . $rowIndex);
+        $adminContainerClass = ($isAdminEmailEnable)?"active":"";
+        
+        $html .= '<div id="admin-email-container-'.$rowIndex.'" class="admin-email-container '.$adminContainerClass.'">';
         
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="admin_email_template">Admin Email Template  </label>';
@@ -315,6 +398,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
                 . $this->_getValue('admin_email_id/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
         $html .= '</div>';
         
+        $html .= '</div>';
         
         $html .= '<hr class="appointment-setting-hr">';
         
@@ -329,6 +413,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         
         $html .= '</div>';
         
+        $html .= '</div>';
         
         $html .= '</div>';
         
