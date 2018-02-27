@@ -452,5 +452,61 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     private function getLogsHelper(){
         return Mage::helper("appointments/logs");
     }
-    
+    public function transferAction(){
+        $this->loadLayout();
+        //$this->_setActiveMenu('blog/posts');
+        $this->_title('Transfer Appointments');
+        
+        $this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+        
+        $this
+        ->_addContent($this->getLayout()->createBlock('appointments/adminhtml_appointments_transfer'))
+        ->_addLeft($this->getLayout()->createBlock('appointments/adminhtml_appointments_transfer_tabs'))
+        ;
+        $this->getLayout()->getBlock('head')->setCanLoadTinyMce(true);
+        $this->renderLayout();
+    }
+    public function doTransferAction(){
+        $post_data = $this->getRequest()->getPost();
+        if($post_data['source_piercer']==$post_data['destination_piercer']){
+            $this->_getSession()->addError($this->__('Source Piercer and Destination Piercer can not be same.'));
+            $this->_redirect('*/*/transfer');
+        }else{
+            echo "<pre>";
+            $fromDate = date('Y-m-d', strtotime($post_data['date']))." 00:00:00";
+            $toDate = date('Y-m-d', strtotime($post_data['date']))." 23:59:00";
+            $appCollection = Mage::getModel('appointments/appointments')->getCollection();
+            $appCollection->addFieldToFilter('appointment_start', array('from'=>$fromDate, 'to'=>$toDate))
+            ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+            ->addFieldToFilter('piercer_id', array('eq' => $post_data['source_piercer']));
+            $notTransfer=array();
+            foreach ($appCollection as $app){
+             
+                $appCollection1 = Mage::getModel('appointments/appointments')->getCollection();
+                $appCollection1->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$app->getAppointmentStart(), 'to'=>$app->getAppointmentEnd())))
+                ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+                ->addFieldToFilter('piercer_id', array('eq' =>  $post_data['destination_piercer']));
+              /*   print_r($appCollection1->getData());
+                die; */
+                if(count($appCollection1)){
+                    $notTransfer[]=$appCollection1->getFirstItem()->getId();
+                    continue;
+                }
+                else 
+                {
+                    try {
+                        $app->setPiercerId($post_data['destination_piercer'])->save();
+                    } catch (Exception $e) {
+                    }
+                }
+            }
+            if(count($notTransfer))
+                $this->_getSession()->addError($this->__('Unbale to transfer some of appointments as timeslot is not availbale'));
+            else 
+                $this->_getSession()->addSuccess($this->__('Appointments transfered succesfully'));
+            $this->_redirect('*/*/transfer');
+        }
+            
+       // print_r($post_data);
+    }
 }
