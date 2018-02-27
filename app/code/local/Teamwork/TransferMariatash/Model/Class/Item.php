@@ -1,9 +1,9 @@
 <?php
 class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_Transfer_Model_Class_Item
 {
-	
 	protected function _beforeAddData(&$productData, &$style, &$typeId, &$item, &$topProduct)
-	{   
+	{
+        $productData['teamwork_plu'] = $item['plu'];
 		if ($topProduct)
 		{
 			/*ring_closing_mechanism*/
