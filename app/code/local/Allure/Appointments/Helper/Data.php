@@ -49,6 +49,28 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		//$timing[$i]= sprintf("%02d", $i).":00";
 		return $timing;
 	}
+	
+	
+	public function getTimingSelectNew($storeId = 1)
+	{
+	    $configData     = $this->getAppointmentStoreMapping();
+	    $storeKey       = array_search ($storeId, $configData['stores']);
+	    
+	    $startTime = $configData['start_work_time'][$storeKey];
+	    $endTime = $configData['end_work_time'][$storeKey];
+	    $timing =array();
+	    $timings=Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
+	    foreach ($timings as $time){
+	        if ($startTime<=$time['value'] && $endTime>=$time['value']){
+	            $key = (string)$time['value'];
+	            $value = $time['label'];
+	            $timing[$key]= $value;
+	        }
+	    }
+	    return $timing;
+	}
+	
+	
 	public function  getDaysSelect(){
 		$daysArray=array();
 		$daysArray['Sunday']='Sunday';
@@ -83,6 +105,24 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		$output.="";
 		return $output;
 	}
+	
+	/**
+	 * used for virtual stores
+	 * @return string
+	 */
+	public function getTimeSelectHtmlNew($val=null,$storeId = 1)
+	{
+	    $output = "";
+	    $timing = $this->getTimingSelectNew($storeId);
+	    foreach ($timing as $key => $time)
+	    {
+	        $selected = ($val==$key) ? 'selected' : '';
+	        $output .= "<option value=".$key." $selected>".$time."</option>";
+	    }
+	    $output.="";
+	    return $output;
+	}
+	
 	public function getPiercerName($id)
 	{
 		$model = Mage::getModel('appointments/piercers')->load($id);

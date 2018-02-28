@@ -17,6 +17,7 @@ class Allure_Appointments_Helper_Storemapping extends Mage_Core_Helper_Abstract
 	    $this->_store_config_data = Mage::getStoreConfig(self::XML_APPOINTMENTS_STORE_MAPPING);
 	    if(!empty($this->_store_config_data)){
 	        $this->_store_config_data =  unserialize($this->_store_config_data);
+	        unset($this->_store_config_data['stores'][0]);
 	        return $this->_store_config_data;
 	    }
 	    return array();
