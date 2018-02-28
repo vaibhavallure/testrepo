@@ -108,7 +108,7 @@ if($fetch_model){
 		//echo $totalSlot;
 		
 		/* logic for getting workday Piercer */
-		$storeId= 1;//$this->getData("store_id");
+		$storeId= $this->getData("store_id");
 		$collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
 			->addFieldToFilter('is_active', array('eq' => '1'));
 		
