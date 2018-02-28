@@ -77,12 +77,17 @@ class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Edit_Tab_Form exte
 				)); */
 		
 		if (!Mage::app()->isSingleStoreMode()) {
+		    if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+		        $storeOptions = Mage::getSingleton('allure_virtualstore/adminhtml_store')->getStoreOptionHash();
+		    }else{
+		        $storeOptions = Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash();
+		    }
 			$fieldset->addField('store_id', 'select', array(
 					'name' => 'store_id',
 					'label' => Mage::helper('appointments')->__('Store Views'),
 					'title' => Mage::helper('appointments')->__('Store Views'),
 					'required' => true,
-					'values' => Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
+			        'values' => $storeOptions,//Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
 			));
 		} else {
 			$fieldset->addField('store_id', 'hidden', array(
