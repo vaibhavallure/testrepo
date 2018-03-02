@@ -495,11 +495,15 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                 else 
                 {
                     try {
+                        Mage::log("Updating Piercer for appointment:",Zend_log::DEBUG,'appointments.log',true);
+                        Mage::log(json_encode($app->getData()),Zend_log::DEBUG,'appointments.log',true);
                         $app->setPiercerId($post_data['destination_piercer'])->save();
                     } catch (Exception $e) {
                     }
                 }
             }
+            $helperLogs = $this->getLogsHelper();
+            $helperLogs->saveLogs("admin");
             if(count($notTransfer))
                 $this->_getSession()->addError($this->__('Unbale to transfer some of appointments as timeslot is not availbale'));
             else 
