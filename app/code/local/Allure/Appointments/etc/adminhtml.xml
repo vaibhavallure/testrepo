@@ -37,14 +37,19 @@
 								<sort_order>5</sort_order>
 								<action>admin_appointments/adminhtml_appointments/print</action>
 							</print>
+							<transfer module="appointments">
+								<title>Transfer Appointments</title>
+								<sort_order>6</sort_order>
+								<action>admin_appointments/adminhtml_appointments/transfer</action>
+							</transfer>
 							<hidedates module="appointments">
 								<title>Hide Dates from Frontend</title>
-								<sort_order>6</sort_order>
+								<sort_order>7</sort_order>
 								<action>admin_appointments/adminhtml_hidedates</action>
 							</hidedates>
 							<settings module="appointments">
 								<title>Settings</title>
-								<sort_order>7</sort_order>
+								<sort_order>8</sort_order>
 								<action>adminhtml/system_config/edit/section/appointments</action>
 							</settings>
 						</children>
@@ -81,6 +86,11 @@
 									<sort_order>3</sort_order>
 									<action>admin_appointments/adminhtml_appointmentpiercers/viewCalender</action>
 								</piercers_calender>
+								<transfer module="appointments">
+									<title>Transfer Appointments</title>
+									<sort_order>6</sort_order>
+									<action>admin_appointments/adminhtml_appointments/transfer</action>
+								</transfer>
 								<piercers module="appointments">
 									<title>Manage Piercers</title>
 									<sort_order>4</sort_order>
