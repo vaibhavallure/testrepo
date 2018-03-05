@@ -416,7 +416,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<hr class="appointment-setting-hr">';
         
         
-        $html .= '<div class="appointment-setting-common">';
+        $html .= '<div class="appointment-setting-common apt-row-1">';
         $html .= '<label for="piercers_available">Piercers Available </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
             . $this->getElement()->getName() . '[piercers_available][]" value="'
