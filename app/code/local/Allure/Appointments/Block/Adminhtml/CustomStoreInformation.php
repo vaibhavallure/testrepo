@@ -39,11 +39,11 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             //alert(jQuery(evt).parent().next().next().attr("class"));
             var selectVal = jQuery(evt).val();
             if(selectVal == 1){
-                jQuery(evt).parent().next().addClass("active");
                 jQuery(evt).parent().next().next().addClass("active");
+                jQuery(evt).parent().next().next().next().addClass("active");
             }else{
-               jQuery(evt).parent().next().removeClass("active");
                jQuery(evt).parent().next().next().removeClass("active");
+               jQuery(evt).parent().next().next().next().removeClass("active");
             }
         } 
 
@@ -115,6 +115,11 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<select onclick="enableStoreContainer(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[enable_store][]'.'" style="">'.$EnableStoreOpt.'</select>';
         $html .= '</div>';
         
+        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<label for="appointments_store_name">Store Name </label>';
+        $html .= $this->prepareStoreData($rowIndex ,$styleCss);
+        $html .= '</div>';
+        
         $isEnableStore = $this->_getValue('enable_store/' . $rowIndex);
         $enableStoreClass = ($isEnableStore)?"active":"";
         
@@ -122,10 +127,6 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         
         $html .= '<div id="enable-store-container-'.$rowIndex.'" class="enable-store-container '.$enableStoreClass.'">';
         
-        $html .= '<div class="appointment-setting-common apt-row-1 left">';
-        $html .= '<label for="appointments_store_name">Store Name </label>';
-        $html .= $this->prepareStoreData($rowIndex ,$styleCss);
-        $html .= '</div>';
         
         $html .= '<div class="appointment-setting-common apt-row-1 right">';
         $html .= '<label for="appointments_appear_name">Appear Name </label>';
@@ -464,7 +465,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             ->setType('button')
             ->setClass('delete v-middle ' . $this->_getDisabled())
             ->setLabel($this->__($title))
-            ->setOnClick("Element.remove($(this).up('" . $selector . "'))")
+            ->setOnClick("if(confirm('Are you sure you want to remove the store settings?')){Element.remove($(this).up('" . $selector . "'))}else{return false;}")
             ->setDisabled($this->_getDisabled())
             ->toHtml();
         }
