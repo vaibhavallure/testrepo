@@ -75,6 +75,17 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             }
         } 
 
+        function openCollapseView(evt){
+            jQuery(evt).parent().next().toggle();
+            if(jQuery(evt).parent().next().is(":hidden")){
+                jQuery(evt).addClass("unopen");
+                jQuery(evt).removeClass("open");
+            }else{
+                jQuery(evt).addClass("open");
+                jQuery(evt).removeClass("unopen");
+            }
+        }
+
         ';
         $html .= '</script>';
         
@@ -95,11 +106,11 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         
         $styleCss = "";
         
-        $html .= '<div class="entry-edit-head">
-                <a id="appointments_opt-head" onclick="" >Store Settings</a>
+        $html .= '<div class="entry-edit-head collapseable appointment-collapse">
+                <a id="appointments_opt-head" class="unopen" onclick="openCollapseView(this);" >'.$this->getStoreName($rowIndex).'</a>
                 </div>';
         
-        $html .= '<div class="fieldset">';
+        $html .= '<div class="fieldset appointment-fieldset unopen">';
         
         $html .= '<div class="appointment-setting-common apt-row-1">';
         $timeOptArr = array("0"=>"No","1"=>"Yes");
@@ -415,11 +426,13 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         
         $html .= '</div>';
         
-        $html .= '</div>';
-        
-        $html .= '</div>';
-        
         $html .= $this->_getRemoveRowButtonHtml();
+        
+        $html .= '</div>';
+        
+        $html .= '</div>';
+        
+        //$html .= $this->_getRemoveRowButtonHtml();
         
         
         //$html .= '</div>';
@@ -472,6 +485,31 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         return $this->_removeRowButtonHtml;
     }
     
+    private function getStoreName($rowIndex){
+        $allStores = array();
+        if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+            $virtualStoreHelper = Mage::helper("allure_virtualstore");
+            $allStores = $virtualStoreHelper->getVirtualStores();
+        }else{
+            $allStores = Mage::app()->getStores();
+        }
+        $flag = false;
+        $storeName = "Store";
+        foreach ($allStores as $_eachStoreId => $val)
+        {
+            $_storeName = $val->getName();
+            $_storeId   = $val->getId();
+            $selectedClass = "";
+            if($this->_getValue('stores/' . $rowIndex) == $_storeId ){
+                $flag = true;
+                $storeName = $_storeName;
+                break;
+            }
+        }
+        $storeName .= " Settings";
+        return $storeName;
+    }
+    
     private function prepareStoreData($rowIndex ,$styleCss){
         $allStores = array();
         if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
@@ -483,8 +521,8 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         
         foreach ($allStores as $_eachStoreId => $val)
         {
-            $_storeName = $val->getName(); 
-            $_storeId   = $val->getId(); 
+            $_storeName = $val->getName();
+            $_storeId   = $val->getId();
             $selectedClass = "";
             if($this->_getValue('stores/' . $rowIndex) == $_storeId ){
                 $selectedClass = "selected='selected'";

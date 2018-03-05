@@ -28,3 +28,5 @@
 .enable-store-hr{display: none;}
 .enable-store-hr.active{display: block;}
 #appointmentblocker_container .entry-edit-head a{text-decoration: none;}
+.appointment-fieldset.unopen{display: none;}
+.appointment-collapse > a{cursor: pointer;}
