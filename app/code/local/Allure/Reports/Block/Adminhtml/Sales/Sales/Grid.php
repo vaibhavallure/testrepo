@@ -92,7 +92,8 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         if(!empty($requestParams)){
             $storeId = $requestParams;
         }
-        Mage::app()->getStore()->setId($storeId);
+        $defaultStoreId = 1;
+        Mage::app()->getStore()->setId($defaultStoreId);
     
         
        // $from = date('Y-m-d', strtotime($filterData->getData('from')));
@@ -108,7 +109,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $local_tz = new DateTimeZone('UTC');
         $local = new DateTime('now', $local_tz);
        
-        $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$storeId));
+        $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$defaultStoreId));
         $user = new DateTime('now', $user_tz);
         
         $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
@@ -193,8 +194,8 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         
         //apply store condition
         if($storeId){
-            $collection = $collection->
-                addFieldToFilter("store_id",array("in"=>array($storeId)));
+            //$collection = $collection->addFieldToFilter("store_id",array("in"=>array($storeId)));
+            $collection = $collection->addFieldToFilter("old_store_id",array("in"=>array($storeId)));
         }
         
         if(!empty($order_status)){
@@ -339,7 +340,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $requestParams = $this->getRequest()->getParam('store_ids');
         $storeId = 1;
         if(!empty($requestParams)){
-            $storeId = $requestParams;
+            //$storeId = $requestParams; store cleanup 
             return Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
         }else {
             return "USD";
