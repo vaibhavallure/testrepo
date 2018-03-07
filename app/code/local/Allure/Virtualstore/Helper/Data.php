@@ -51,4 +51,33 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
         }
         return $this->_websiteCollection;
     }
+    
+    /**
+     * get name of virtual store for order view in admin
+     */
+    public function getOrderStoreName($order)
+    {
+        if ($order) {
+            $storeId    = $order->getStoreId();
+            $oldStoreId = $order->getOldStoreId();
+            $oldStore   = Mage::getSingleton("core/store")->load($oldStoreId);
+            if (!$oldStore->getStoreId()) {
+                $oldStore   = Mage::getSingleton("allure_virtualstore/store")->load($oldStoreId);
+                $deleted    = Mage::helper('adminhtml')->__(' [deleted]');
+                return nl2br($oldStore->getName()) . $deleted;
+            }else{
+                $store = Mage::app()->getStore($storeId);
+                if($oldStore->getStoreId()){
+                    $store = $oldStore;
+                }
+                $name = array(
+                    $store->getWebsite()->getName(),
+                    $store->getGroup()->getName(),
+                    $store->getName()
+                );
+                return implode('<br/>', $name);
+            }
+        }
+        return null;
+    }
 }

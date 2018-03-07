@@ -140,6 +140,12 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
 
         //shipping_description, customer_email, coupon_code, weight, customer_note
         $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','counterpoint_order_id');
+        
+        //store cleanup
+        if ($this->isVirtualStoreActive()){
+            $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','old_store_id');
+        }
+        
         $selected_col = array_intersect($selected_columns, $sales_flat_order);
         if (!empty($selected_col)) {
             $collection->getSelect()->joinLeft($tableName_sales_flat_order,
@@ -220,7 +226,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
     {
         $helper = Mage::helper('iwd_ordermanager');
 
-        return array(
+        $gridColumn =  array(
             /*** sales_flat_order_grid (base table) ***/
             'increment_id' => $helper->__('*Order #'),
             'status' => $helper->__('*Status'),
@@ -295,6 +301,12 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'action' => $helper->__('Action'),
             'reorder' => $helper->__('Reorder'),
         );
+        
+        if($this->isVirtualStoreActive()){
+            $gridColumn['old_store_id'] = $helper->__('Old Purchase Store');
+        }
+        
+        return $gridColumn;
     }
 
     public function prepareColumns(Mage_Adminhtml_Block_Widget_Grid $grid, $selected_columns = null)
@@ -791,6 +803,18 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Actions(),
             );
         }
+        
+        //store cleanup
+        if($this->isVirtualStoreActive()){
+            $columns['old_store_id'] = array(
+                'header' => $helper->__('Old Purchase Store'),
+                'index' => 'old_store_id',
+                'type' => 'options',
+                'width' => '70px',
+                'filter_index' => "{$tableName_sales_flat_order}.old_store_id",
+                'options' => Mage::getSingleton('allure_virtualstore/adminhtml_store')->getStoreOptionHash(),
+            );
+        }
 
         return $columns;
     }
@@ -829,5 +853,14 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             , "%$value%");
 
         return $this;
+    }
+    
+    /**
+     * return true | false
+     */
+    private function isVirtualStoreActive(){
+        if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore'))
+            return true;
+        return false;
     }
 }

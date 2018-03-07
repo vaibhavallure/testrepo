@@ -55,7 +55,11 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                 </tr>
                 <tr>
                     <td class="label"><label><?php echo Mage::helper('sales')->__('Purchased From') ?></label></td>
+                    <?php  if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')):?>
+                    <td class="value"><strong><?php echo Mage::helper("allure_virtualstore")->getOrderStoreName($_order) ?></strong></td>
+                    <?php else:?>
                     <td class="value"><strong><?php echo $this->getOrderStoreName() ?></strong></td>
+                    <?php endif;?>
                 </tr>
                 <?php if(!is_null($this->getOrderOldStoreName())):?>
                 <tr>
