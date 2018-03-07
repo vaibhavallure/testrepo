@@ -12,6 +12,8 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
 	const OPEN_ORDER = 1;
 	const ALL_ORDER  = 2;
 	
+	const MAIN_STORE_ID = 1;
+	
     public function getStoreColorConfig(){
     	$storeColorConfig = Mage::getStoreConfig(self::STORE_COLOR_MAPPING_XML);
     	$config=unserialize($storeColorConfig);
@@ -178,9 +180,13 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         if(!empty($store)){
             if($store!='all'){
                 if($this->isVirtualStoreActive()){
-                    $collection->addFieldToFilter('main_table.old_store_id',$store); 
+                    if($store == self::MAIN_STORE_ID){
+                        $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
+                    }else{
+                        $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    }
                 }else{
-                    $collection->addFieldToFilter('main_table.store_id',$store); 
+                    $collection->addFieldToFilter('main_table.store_id',$store);
                 }
             }
         }
@@ -249,7 +255,11 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         if(!empty($store)){
             if($store!='all'){
                 if($this->isVirtualStoreActive()){
-                    $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    if($store == self::MAIN_STORE_ID){
+                        $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
+                    }else{
+                        $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    }
                 }else{
                     $collection->addFieldToFilter('main_table.store_id',$store);
                 }
