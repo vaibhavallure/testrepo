@@ -180,11 +180,12 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         if(!empty($store)){
             if($store!='all'){
                 if($this->isVirtualStoreActive()){
-                    if($store == self::MAIN_STORE_ID){
+                   /*  if($store == self::MAIN_STORE_ID){
                         $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
                     }else{
                         $collection->addFieldToFilter('main_table.old_store_id',$store);
-                    }
+                    } */
+                    $collection->addFieldToFilter('orders.old_store_id',$store);
                 }else{
                     $collection->addFieldToFilter('main_table.store_id',$store);
                 }
@@ -255,11 +256,12 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         if(!empty($store)){
             if($store!='all'){
                 if($this->isVirtualStoreActive()){
-                    if($store == self::MAIN_STORE_ID){
+                   /*  if($store == self::MAIN_STORE_ID){
                         $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
                     }else{
                         $collection->addFieldToFilter('main_table.old_store_id',$store);
-                    }
+                    } */
+                    $collection->addFieldToFilter('main_table.old_store_id',$store);
                 }else{
                     $collection->addFieldToFilter('main_table.store_id',$store);
                 }

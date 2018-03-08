@@ -144,7 +144,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         //store cleanup
         if ($this->isVirtualStoreActive()){
             $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','old_store_id');
-        }
+        } 
         
         $selected_col = array_intersect($selected_columns, $sales_flat_order);
         if (!empty($selected_col)) {
@@ -304,7 +304,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         
         if($this->isVirtualStoreActive()){
             $gridColumn['old_store_id'] = $helper->__('Old Purchase Store');
-        }
+        } 
         
         return $gridColumn;
     }
@@ -806,15 +806,15 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         
         //store cleanup
         if($this->isVirtualStoreActive()){
-            $columns['old_store_id'] = array(
-                'header' => $helper->__('Old Purchase Store'),
+            $columns['store_id'] =array(
+                'header' => $helper->__('Purchased From (Store)'),
                 'index' => 'old_store_id',
-                'type' => 'options',
-                'width' => '70px',
+                'type' => 'store_v',
+                'store_view' => true,
+                'display_deleted' => true,
                 'filter_index' => "{$tableName_sales_flat_order}.old_store_id",
-                'options' => Mage::getSingleton('allure_virtualstore/adminhtml_store')->getStoreOptionHash(),
             );
-        }
+        } 
 
         return $columns;
     }

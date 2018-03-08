@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Allure_Virtualstore>
-			<version>0.1.0</version>
+			<version>1.0.0</version>
 		</Allure_Virtualstore>
 	</modules>
 	<global>
@@ -28,6 +28,11 @@
 			<allure_virtualstore>
 				<class>Allure_Virtualstore_Block</class>
 			</allure_virtualstore>
+			<adminhtml>
+				<rewrite>
+					<widget_grid_column>Allure_Virtualstore_Block_Adminhtml_Widget_Grid_Column</widget_grid_column>
+				</rewrite>
+			</adminhtml>
 		</blocks>
 		
 		<models>
@@ -52,6 +57,37 @@
 			</allure_virtualstore_resource>
 			
 		</models>
+		
+		<events>
+            <sales_order_place_after>
+                <observers>
+                    <allure_virtualstore>
+                        <type>singleton</type>
+                        <class>allure_virtualstore/observer</class>
+                        <method>setDataToOrder</method>
+                    </allure_virtualstore>
+                </observers>
+            </sales_order_place_after>
+        </events>
+        
+        <fieldsets>
+        	<sales_convert_quote>
+				<old_store_id>
+					<to_order>*</to_order>
+				</old_store_id>
+			</sales_convert_quote>
+		    <sales_convert_quote_item>
+		        <old_store_id>
+		            <to_order_item>*</to_order_item>
+		        </old_store_id>
+		    </sales_convert_quote_item>
+		    <sales_convert_order_item>
+		        <old_store_id>
+		            <to_quote_item>*</to_quote_item>
+		        </old_store_id>
+		    </sales_convert_order_item>
+		</fieldsets>
+		
 	</global>
 	
 </config>
