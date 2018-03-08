@@ -48,11 +48,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 	public function processCollection($storeDate, $storeId){
 		
 		//Send notification before one day
-		Mage::log("*************** Server Time*************",Zend_Log::DEBUG,'appointments',true);
 		$nextTime = date("Y-m-d H:i:00",strtotime("1 day",strtotime($storeDate)));
-		Mage::log("nextTime After 1 day:".$nextTime,Zend_Log::DEBUG,'appointments',true);
 		$next2Time= date("Y-m-d H:i:59",strtotime("1 day 15 minutes",strtotime($storeDate)));
-		Mage::log("next2Time After 1 day 15 min:".$next2Time,Zend_Log::DEBUG,'appointments',true);
 		
 		$allAppointments = Mage::getModel('appointments/appointments')->getCollection();
 		$allAppointments->addFieldToFilter('appointment_start', array('gteq' => $nextTime));
@@ -60,7 +57,6 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		$allAppointments->addFieldToFilter('app_status',Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
 		$allAppointments->addFieldToFilter('store_id', array('eq' => $storeId));
 		if(count($allAppointments) > 0){
-			Mage::log(" diff is less than 1 days",Zend_Log::DEBUG,'appointments',true);
 			$this->sendNotification($allAppointments);
 		}
 		Mage::log("Check more than 7 day remaining appointments",Zend_Log::DEBUG,'appointments',true);
@@ -92,8 +88,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			$toSend = $configData['customer_email_enable'][$storeKey];
 			//$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
 			$templateId = $configData['email_template_appointment_remind'][$storeKey];
-			$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId),
-			    'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
+			$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",1),
+			    'email'=> Mage::getStoreConfig("trans_email/bookings/email",1));
 			
 			//$toSendAdmin = Mage::getStoreConfig("appointments/admin/send_admin_email",$storeId);
 			$toSendAdmin = $configData['admin_email_enable'][$storeKey];
@@ -170,7 +166,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 					//$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email",$storeId);
 				    $adminEmail = $configData['admin_email_id'][$storeKey];
 				    $mailSubject="Appointment booking Reminder";
-					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
+					$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",1), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",1));
 					$email = $adminEmail;
 					$name = "Admin";
 					$vars = array(
@@ -192,7 +188,6 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
 					->sendTransactional($templateId,$sender,$email,$name,$vars);
-					Mage::log(" mail send true",Zend_Log::DEBUG,'appointments',true);
 				}
 				/*End of Email Code*/
 			}/* END sendemail if */
@@ -209,8 +204,6 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
 				$date = date("F j, Y ", strtotime($model->getAppointmentStart()));
 				$time=date('h:i A', strtotime($model->getAppointmentStart()));
-				/* $booking_link= Mage::getBaseUrl('web').'appointments/';
-				$booking_link=Mage::helper('appointments')->getShortUrl($booking_link); */
 				$smsText=str_replace("(time)",$time,$smsText);
 				$smsText=str_replace("(date)",$date,$smsText);
 		/* 		$smsText=str_replace("(book_link)",$booking_link,$smsText); */
@@ -221,12 +214,6 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 					preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
 					$status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $smsText, 'text', '0', '0');
 					preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
-				
-					Mage::log("******************************",Zend_Log::DEBUG,'appointments_sms_log',true);
-					Mage::log("From Cron",Zend_Log::DEBUG,'appointments_sms_log',true);
-					Mage::log(" Mobile Number:".$phone,Zend_Log::DEBUG,'appointments_sms_log',true);
-					Mage::log(" Text Message: ".$session,Zend_Log::DEBUG,'appointments_sms_log',true);
-					Mage::log("**************************************",Zend_Log::DEBUG,'appointments_sms_log',true);
 				}
 			}
 		}

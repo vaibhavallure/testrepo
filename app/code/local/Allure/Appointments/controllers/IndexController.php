@@ -516,183 +516,91 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             try {
                 $model->setId($apt_id)->save();
                 echo "Your scheduled Appointment is Cancelled successfully.";
-                
                 $configData = $this->getAppointmentStoreMapping(); 
-                
                 $storeKey = array_search ($storeId, $configData['stores']);
                 
-                /* Customer Email Code to cancel the Appointment */
-                
-                // SMS CODE TO CANCEL Appointment start
                 if ($model->getNotificationPref() === '2') {
-                    // $smsText = "Your Appointment is Cancelled successfully";
-                    //$smsText = Mage::getStoreConfig("appointments/api/smstext_cancel", $storeId);
                     $smsText = $configData['cancel_sms_message'][$storeKey];
-                    $appointmentStart = date("F j, Y H:i",
-                        strtotime($model->getAppointmentStart()));
-                    $date = date("F j, Y ",
-                        strtotime($model->getAppointmentStart()));
-                    $time = date('h:i A',
-                        strtotime($model->getAppointmentStart()));
+                    $appointmentStart = date("F j, Y H:i",strtotime($model->getAppointmentStart()));
+                    $date = date("F j, Y ",strtotime($model->getAppointmentStart()));
+                    $time = date('h:i A', strtotime($model->getAppointmentStart()));
                     
                     $booking_link = Mage::getBaseUrl('web') . 'appointments/';
-                    $booking_link = Mage::helper('appointments')->getShortUrl(
-                        $booking_link);
+                    $booking_link = Mage::helper('appointments')->getShortUrl($booking_link);
                     $smsText = str_replace("(time)", $time, $smsText);
                     $smsText = str_replace("(date)", $date, $smsText);
-                    $smsText = str_replace("(book_link)", $booking_link,
-                        $smsText);
+                    $smsText = str_replace("(book_link)", $booking_link,$smsText);
                     
-                    Mage::log($smsText, Zend_Log::DEBUG, 'appointments', true);
                     if ($model->getPhone()) {
-                        $phno_forsms = preg_replace('/\s+/', '',
-                            $model->getPhone());
-                        $smsdata = Mage::helper('appointments')->sendsms(
-                            $phno_forsms, $smsText, $storeId);
+                        $phno_forsms = preg_replace('/\s+/', '', $model->getPhone());
+                        $smsdata = Mage::helper('appointments')->sendsms($phno_forsms, $smsText, $storeId);
                         $model->setSmsStatus($smsdata);
                         $model->save();
                     }
                 }
                 // SMS CODE TO CANCEL Appointment end
-                $appointmentStart = date("F j, Y H:i",
-                    strtotime($model->getAppointmentStart()));
-                $appointmentEnd = date("F j, Y H:i",
-                    strtotime($model->getAppointmentEnd()));
+                $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+                $vars = array(
+                    'name' => $model->getFirstname() . " " .$model->getLastname(),
+                    'customer_name' => $model->getFirstname() ." " . $model->getLastname(),
+                    'customer_email' => $model->getEmail(),
+                    'customer_phone' => $model->getPhone(),
+                    'no_of_pier' => $model->getPiercingQty(),
+                    'piercing_loc' => $model->getPiercingLoc(),
+                    'special_notes' => $model->getSpecialNotes(),
+                    'apt_starttime' => $appointmentStart,
+                    'apt_endtime' => $appointmentEnd,
+                    'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+                    'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+                    'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+                    'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+                    'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+                    'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+                    'apt_modify_link' => $apt_modify_link
+                );
                 
-                //$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email", $storeId);
-                $toSend  = $configData['customer_email_enable'][$storeKey];
-                if ($toSend) {
-                    //$templateId = Mage::getStoreConfig("appointments/customer/customer_cancel_template",$storeId);
-                    $templateId = $configData['email_template_appointment_cancel'][$storeKey];
-                    $mailSubject = "Appointment Cancellation";
-                    $sender = array(
-                        'name' => Mage::getStoreConfig(
-                            "trans_email/bookings/name", $storeId),
-                        'email' => Mage::getStoreConfig(
-                            "trans_email/bookings/email", $storeId)
-                    );
-                    $email = $model->getEmail();
-                    $name = $model->getFirstname() . " " . $model->getLastname();
-                    $apt_modify_link = Mage::getUrl('appointments/index/modify',
-                        array(
-                            'id' => $model->getId(),
-                            'email' => $model->getEmail(),
-                            '_secure' => true
-                        ));
-                    
-                    $vars = array(
-                        'name' => $model->getFirstname() . " " .
-                        $model->getLastname(),
-                        'customer_name' => $model->getFirstname() .
-                        " " . $model->getLastname(),
-                        'customer_email' => $model->getEmail(),
-                        'customer_phone' => $model->getPhone(),
-                        'no_of_pier' => $model->getPiercingQty(),
-                        'piercing_loc' => $model->getPiercingLoc(),
-                        'special_notes' => $model->getSpecialNotes(),
-                        'apt_starttime' => $appointmentStart,
-                        'apt_endtime' => $appointmentEnd,
-                        'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-                        'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-                        'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-                        'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-                        'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-                        'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-                        'apt_modify_link' => $apt_modify_link
-                    );
-                    $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                        $mailSubject)->sendTransactional($templateId, $sender,
-                            $email, $name, $vars);
-                }
-                /* End of Email Code */
+                //send Customer email
+                $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
+                $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
+                $enablePiercerEmail = $configData['piercer_email_enable'][$storeKey];
+                $sender = array(
+                    'name' => Mage::getStoreConfig("trans_email/bookings/name"),
+                    'email' => Mage::getStoreConfig("trans_email/bookings/email")
+                );
                 
-                /* Admin Email Code to cancel the Appointment */
-               // $toSend = Mage::getStoreConfig("appointments/admin/send_admin_email", $storeId);
-                $toSend = $configData['admin_email_enable'][$storeKey];
-                if ($toSend) {
-                    //$templateId = Mage::getStoreConfig("appointments/admin/admin_cancel_template", $storeId);
-                    $templateId = $configData['admin_email_template_cancel'][$storeKey];
-                    //$adminEmail = Mage::getStoreConfig("appointments/admin/admin_email", $storeId);
-                    $adminEmail = $configData['admin_email_id'][$storeKey];
-                    $adminEmail = explode(",", $adminEmail);
-                    $mailSubject = "Appointment Cancellation";
-                    $sender = array(
-                        'name' => Mage::getStoreConfig(
-                            "trans_email/bookings/name", $storeId),
-                        'email' => Mage::getStoreConfig(
-                            "trans_email/bookings/email", $storeId)
-                    );
-                    $email = $adminEmail;
-                    $name = "Admin";
-                    $vars = array(
-                        'name' => $model->getFirstname() . " " .
-                        $model->getLastname(),
-                        'customer_name' => $model->getFirstname() .
-                        " " . $model->getLastname(),
-                        'customer_email' => $model->getEmail(),
-                        'customer_phone' => $model->getPhone(),
-                        'no_of_pier' => $model->getPiercingQty(),
-                        'piercing_loc' => $model->getPiercingLoc(),
-                        'special_notes' => $model->getSpecialNotes(),
-                        'apt_starttime' => $appointmentStart,
-                        'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-                        'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-                        'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-                        'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-                        'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-                        'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-                        'apt_endtime' => $appointmentEnd
-                    );
-                    $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                        $mailSubject)->sendTransactional($templateId, $sender,
-                            $email, $name, $vars);
+                try {
+                   
+                        if($enableCustomerEmail){
+                            $email=$model->getEmail();
+                            $name=$model->getFirstname() . " " .$model->getLastname();
+                            $templateId=$configData['email_template_appointment_cancel'][$storeKey];
+                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+                                $mailSubject)->sendTransactional($templateId,
+                                    $sender, $email, $name, $vars);
+                        }
+                        if($enableAdminEmail){
+                            $adminEmail=$configData['admin_email_id'][$storeKey];
+                            $name='';
+                            $templateId=$configData['admin_email_template_cancel'][$storeKey];
+                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+                                $mailSubject)->sendTransactional($templateId,
+                                    $sender, $email, $name, $vars);
+                        }
+                        if($enablePiercerEmail){
+                            $piercer=Mage::getModel('appointment/piercer')->load($model->getPiercerId());
+                            $email=$piercer->getEmail();
+                            $name=$piercer->getFirstname();
+                            $templateId=$configData['piercer_email_template_cancel'][$storeKey];
+                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+                                $mailSubject)->sendTransactional($templateId,
+                                    $sender, $email, $name, $vars);
+                        }
+                }catch(Exception $e){
+                    echo $e->getMessage();
                 }
-                /* End of Email Code */
+                   
                 
-                /* Piercer Email Code to cancel the Appointment */
-                /* Email Code */
-                //$toSend = Mage::getStoreConfig("appointments/piercer/send_piercer_email", $storeId);
-                $toSend = $configData['piercer_email_enable'][$storeKey];
-                $piercer_id = $model->getPiercerId();
-                $piercer = Mage::getModel('appointments/piercers')->load(
-                    $piercer_id);
-                if ($toSend) {
-                    //$templateId = Mage::getStoreConfig("appointments/piercer/piercer_cancel_template",$storeId);
-                    $templateId = $configData['piercer_email_template_cancel'][$storeKey];
-                    $mailSubject = "Appointment Cancellation";
-                    $sender = array(
-                        'name' => Mage::getStoreConfig(
-                            "trans_email/bookings/name", $storeId),
-                        'email' => Mage::getStoreConfig(
-                            "trans_email/bookings/email", $storeId)
-                    );
-                    $email = $piercer->getEmail();
-                    $name = $piercer->getFirstname() . " " .
-                        $piercer->getLastname();
-                        $vars = array(
-                            'name' => $piercer->getFirstname() . " " .
-                            $piercer->getLastname(),
-                            'customer_name' => $model->getFirstname() .
-                            " " . $model->getLastname(),
-                            'customer_email' => $model->getEmail(),
-                            'customer_phone' => $model->getPhone(),
-                            'no_of_pier' => $model->getPiercingQty(),
-                            'piercing_loc' => $model->getPiercingLoc(),
-                            'special_notes' => $model->getSpecialNotes(),
-                            'apt_starttime' => $appointmentStart,
-                            'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-                            'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-                            'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-                            'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-                            'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-                            'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-                            'apt_endtime' => $appointmentEnd
-                        );
-                        $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                            $mailSubject)->sendTransactional($templateId, $sender,
-                                $email, $name, $vars);
-                }
-                /* End of Email Code */
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
