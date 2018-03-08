@@ -51,6 +51,13 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         
         // mt-allure code
         $this->getQuote()->setDeliveryMethod('one_ship');
+        
+        if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+            $storeId = $this->getQuote()->getStoreId();
+            $this->getQuote()->setOldStoreId($storeId);
+            $quoteSave = true;
+        }
+        
         // change custom quote status
         $this->changeCustomQuoteStatus();
         
