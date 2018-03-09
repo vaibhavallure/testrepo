@@ -483,7 +483,7 @@ class Allure_InstaCatalog_Adminhtml_Allure_InstaCatalog_FeedController extends A
     public function syncExistingFeedAction(){
     	$params = $this->getRequest()->getParams();
     	$allure = $params['type'];
-    	$key = $params['key'];
+    	$key = $params['akey'];
     	$url = "https://foursixty.com/api/v2/MariaTash/admin-timeline/?admin=true&scheduled=false&uploaded=false&from_connector=10037";
     	if(!empty($allure) && !empty($key)){
     		if($allure=="allure" && $key=="mariatash")
