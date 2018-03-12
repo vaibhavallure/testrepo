@@ -14,4 +14,13 @@ class Allure_Virtualstore_Block_Adminhtml_Store_Switcher extends Mage_Adminhtml_
     public function getVirtualStores(){
         return Mage::helper("allure_virtualstore")->getVirtualStores();
     }
+    
+    protected function _toHtml()
+    {
+        if (!$this->getTemplate()) {
+            return '';
+        }
+        $html = $this->renderView();
+        return $html;
+    }
 }
