@@ -23,4 +23,9 @@ class Allure_Virtualstore_Block_Adminhtml_Store_Switcher extends Mage_Adminhtml_
         $html = $this->renderView();
         return $html;
     }
+    
+    public function isShow()
+    {
+        return true; //!Mage::app()->isSingleStoreMode();
+    }
 }
