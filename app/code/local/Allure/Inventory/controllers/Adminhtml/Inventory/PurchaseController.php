@@ -1502,7 +1502,6 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 echo $e->getMessage();
             }
         }
-       // Mage::log(json_encode($request),Zend_log::DEBUG,'ajay.log',TRUE);
         $jsonData = json_encode(compact('success', 'message', 'data'));
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody($jsonData);
@@ -1518,7 +1517,6 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
         
         $request = $this->getRequest()->getPost();
         
-        Mage::log(json_encode($request),Zend_log::DEBUG,'ajay.log',TRUE);
         
         if ($request = $this->getRequest()->getParam('po_id'))
             $poid = $request = $this->getRequest()->getParam('po_id');
@@ -1529,7 +1527,6 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
             ->addFieldToFilter('po_id', $poid)
             ->getData();
         
-        Mage::log($data,Zend_log::DEBUG,'ajay.log',true);
         $jsonData = json_encode(compact('success', 'message', 'data'));
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody($jsonData);
@@ -1711,7 +1708,6 @@ class Allure_Inventory_Adminhtml_Inventory_PurchaseController extends Allure_Inv
                 $poObj->setData('status', $status);
                 $poObj->setData('updated_date', $currentDate)->save();
             }
-            Mage::log(json_encode($diffArray),Zend_log::DEBUG,'ajay.log',TRUE);
             
             if ($close && $canFullyShipOrder) {
                 // fully Shipped
