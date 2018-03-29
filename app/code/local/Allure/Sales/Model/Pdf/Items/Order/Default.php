@@ -31,7 +31,6 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
         );
         
         // draw QTY
-        Mage::log("QTy:".json_encode($item->getQtyOrdered()),Zend_log::DEBUG,'ajay.log',true);
         $lines[0][] = array(
             'text'  => $item->getQtyOrdered() * 1,
             'feed'  => 435,
@@ -156,7 +155,7 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
             $lineSeparator = $helper->getLineSeparator();
             $page = $pdf->drawLineBlocks($page, array($lineSeparator), array('table_header' => true));
             $this->setPage($page);
-            $isLastItem = true;//$item->getIsLastItem();
+            $isLastItem = $item->getIsLastItem();
             if($isLastItem){
                 $orderInfo = $helper->getOrderGiftMessage($order);
                 if($orderInfo['is_show']){
