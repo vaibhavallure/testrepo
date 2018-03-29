@@ -212,7 +212,7 @@ abstract class Mage_Api_Model_Server_Handler_Abstract
      */
     public function login($username, $apiKey = null)
     {
-        if(Mage::getStoreConfig("enable_logs/log/enable_logs")){
+        if(Mage::getStoreConfig("api/logs/enable_logs")){
             Mage::log("LOGIN: $username",Zend_Log::DEBUG, 'api.log', true);
         }
         if (empty($username) || empty($apiKey)) {
@@ -225,7 +225,7 @@ abstract class Mage_Api_Model_Server_Handler_Abstract
         } catch (Exception $e) {
             return $this->_fault('access_denied');
         }
-        if(Mage::getStoreConfig("enable_logs/log/enable_logs")){
+        if(Mage::getStoreConfig("api/logs/enable_logs")){
             Mage::log("LOGIN: $username : OK",Zend_Log::DEBUG, 'api.log', true);
         }
         return $this->_getSession()->getSessionId();
@@ -242,7 +242,7 @@ abstract class Mage_Api_Model_Server_Handler_Abstract
     public function call($sessionId, $apiPath, $args = array())
     {
         $this->_startSession($sessionId);
-        if(Mage::getStoreConfig("enable_logs/log/enable_logs")){
+        if(Mage::getStoreConfig("api/logs/enable_logs")){
             Mage::log("CALL: $apiPath",Zend_Log::DEBUG, 'api.log', true);
             Mage::log("ARGS: ".json_encode($args),Zend_Log::DEBUG, 'api.log', true);
         }
