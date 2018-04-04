@@ -63,8 +63,14 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
             $oldStore   = Mage::getSingleton("core/store")->load($oldStoreId);
             if (!$oldStore->getStoreId()) {
                 $oldStore   = Mage::getSingleton("allure_virtualstore/store")->load($oldStoreId);
-                $deleted    = Mage::helper('adminhtml')->__(' [deleted]');
-                return nl2br($oldStore->getName()) . $deleted;
+                $oldWebsite = Mage::getSingleton("allure_virtualstore/website")->load($oldStore->getWebsiteId());
+                $oldGroup   = Mage::getSingleton("allure_virtualstore/group")->load($oldStore->getGroupId());
+                $name = array(
+                    $oldWebsite->getName(),
+                    $oldGroup->getName(),
+                    $oldStore->getName()
+                );
+                return implode('<br/>', $name);
             }else{
                 $store = Mage::app()->getStore($storeId);
                 if($oldStore->getStoreId()){
@@ -79,5 +85,16 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
             }
         }
         return null;
+    }
+    
+    /**
+     * get store name by using store id
+     */
+    public function getStoreName($storeId){
+        $store = Mage::getSingleton("core/store")->load($storeId);
+        if (!$store->getStoreId()) {
+            $store = Mage::getSingleton("allure_virtualstore/store")->load($storeId);
+        }
+        return $store->getName();
     }
 }

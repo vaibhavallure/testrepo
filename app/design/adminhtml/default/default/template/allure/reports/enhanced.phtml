@@ -63,9 +63,35 @@
 <?php if ($this->hasDefaultOption()): ?>
     <option value=""><?php echo $this->getDefaultStoreName() ?></option>
 <?php endif; ?>
-    <?php foreach ($stores as $store): ?>
-      <option value="<?php echo $this->escapeHtml($store->getId()) ?>"<?php if($this->getStoreId() == $store->getId()): ?> selected="selected"<?php endif; ?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($store->getName()) ?></option>
-    <?php endforeach; ?>
+	
+	<?php if(0):?>
+        <?php foreach ($stores as $store): ?>
+          <option value="<?php echo $this->escapeHtml($store->getId()) ?>"<?php if($this->getStoreId() == $store->getId()): ?> selected="selected"<?php endif; ?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($store->getName()) ?></option>
+        <?php endforeach; ?>
+    <?php endif;?>
+    
+    <?php $websites = $this->getVirtualWebsites();?>
+	<?php foreach ($websites as $website): ?>
+		<?php $showWebsite = false; ?>
+		<?php foreach ($this->getGroups($website->getId()) as $group): ?>
+			<?php $showGroup = false; ?>
+				<?php foreach ($this->getStores($group->getId()) as $store): ?>
+					<?php if ($showWebsite == false): ?>
+						<?php $showWebsite = true; ?>
+						<optgroup label="<?php echo $this->escapeHtml($website->getName()) ?>"></optgroup>
+					<?php endif; ?>
+					<?php if ($showGroup == false): ?>
+						<?php $showGroup = true; ?>
+                    	<optgroup label="&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($group->getName()) ?>">
+                    <?php endif; ?>
+                    <option value="<?php echo $this->escapeHtml($store->getId()) ?>"<?php if($this->getStoreId() == $store->getId()): ?> selected="selected"<?php endif; ?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($store->getName()) ?></option>
+                 <?php endforeach; ?>
+				<?php if ($showGroup): ?>
+					</optgroup>
+				<?php endif; ?>
+		<?php endforeach; ?>
+<?php endforeach; ?>
+    
 </select>
 <?php echo $this->getHintHtml() ?>
 </p>

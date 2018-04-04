@@ -22,7 +22,7 @@ class Allure_Appointments_Block_Adminhtml_Hidedates_Edit_Tab_Form extends Mage_A
 		    
 		));
 	
-		if (!Mage::app()->isSingleStoreMode()) {
+		//if (!Mage::app()->isSingleStoreMode()) {
 		    
 		    if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
 		        $storeOptions = Mage::getSingleton('allure_virtualstore/adminhtml_store')->getStoreOptionHash();
@@ -38,12 +38,13 @@ class Allure_Appointments_Block_Adminhtml_Hidedates_Edit_Tab_Form extends Mage_A
 			        'value' => '2',
 			        'values' => $storeOptions,//Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
 			));
-		} else {
+		//} 
+		/* else {
 			$fieldset->addField('store_id', 'hidden', array(
 					'name' => 'store_id',
 					'value' => Mage::app()->getStore(true)->getStoreId()
 			));
-		}
+		} */
 		
 		$fieldset->addField("is_available", "select",
 				array(

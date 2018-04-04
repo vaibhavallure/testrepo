@@ -464,7 +464,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             ->setType('button')
             ->setClass('add ' . $this->_getDisabled())
             ->setLabel($this->__($title))
-            ->setOnClick("Element.insert($('" . $container . "'), {bottom: $('" . $template . "').innerHTML})")
+            ->setOnClick("Element.insert($('" . $container . "'), {bottom: $('" . $template . "').innerHTML});var selector = jQuery('ul#appointmentblocker_container li:last-child');selector.find('.fieldset').removeClass('unopen');selector.find('#appointments_opt-head').text('Store Settings')")
             ->setDisabled($this->_getDisabled())
             ->toHtml();
         }

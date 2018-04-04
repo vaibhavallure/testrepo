@@ -30,7 +30,7 @@ class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Grid extends Mage_
 				'index'  => 'id'
 		));
 
-		if (!Mage::app()->isSingleStoreMode()) {
+		//if (!Mage::app()->isSingleStoreMode()) {
 		    if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
 		        $storeOptions = Mage::getSingleton('allure_virtualstore/adminhtml_store')->getStoreOptionHash();
 		    }else{
@@ -43,7 +43,7 @@ class Allure_Appointments_Block_Adminhtml_Appointmentpiercers_Grid extends Mage_
 					'index' => 'store_id',
 					'sortable' => false,
 			));
-		}
+		//}
 		
 		$this->addColumn('firstname', array(
 				'header' => $helper->__('Name'),
