@@ -339,7 +339,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     return;
                 }
             }
-            $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
+         $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
     }
     
     /* Create the customer by bhagya*/
@@ -575,78 +575,95 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
     //To get the Working days depend on storeid by bhagya
     public function ajaxGetWorkingDaysAction()
     {
-        $result = array('success' => false);
+        $result = array(
+            'success' => false
+        );
         $storeid = $this->getRequest()->getParam('storeid');
         $id = $this->getRequest()->getParam('id');
-        if($id)
-        {
+        if ($id) {
             $models = Mage::getModel('appointments/appointments')->load($id);
-            //$models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email)->addFieldToFilter('app_status',array('in'=>array(Allure_Appointments_Model_Appointments::STATUS_REQUEST,Allure_Appointments_Model_Appointments::STATUS_ASSIGNED)));
-            if($models->getId())
-                Mage::register('apt_modify_data',$models);
-                
+            // $models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email)->addFieldToFilter('app_status',array('in'=>array(Allure_Appointments_Model_Appointments::STATUS_REQUEST,Allure_Appointments_Model_Appointments::STATUS_ASSIGNED)));
+            if ($models->getId())
+                Mage::register('apt_modify_data', $models);
         }
-        //To modify the appointment get the data from registry end
+        // To modify the appointment get the data from registry end
         $piercers = Mage::getModel('appointments/piercers')->getCollection()
-        ->addFieldToFilter('store_id', array('eq' => $storeid))
-        ->addFieldToFilter('is_active', array('eq' => '1'));
+        ->addFieldToFilter('store_id', array(
+            'eq' => $storeid
+        ))
+        ->addFieldToFilter('is_active', array(
+            'eq' => '1'
+        ));
         
         $avial_workDays = array();
         
-        foreach ($piercers as $piercer){
-            //$workdays = explode(",",$piercer->getWorkingDays());
-            $workdays = array_map('trim', explode(',', $piercer->getWorkingDays()));
+        foreach ($piercers as $piercer) {
+            // $workdays = explode(",",$piercer->getWorkingDays());
+            $workdays = array_map('trim',
+                explode(',', $piercer->getWorkingDays()));
             $avial_workDays[] = $workdays;
-            
         }
-        $available_wdays=array();
-        foreach ($avial_workDays as $avail_wd){
-            foreach ($avail_wd as $wd){
-                $available_wdays[]=$wd;
+        $available_wdays = array();
+        foreach ($avial_workDays as $avail_wd) {
+            foreach ($avail_wd as $wd) {
+                $available_wdays[] = $wd;
             }
         }
         
-        /* $notAvailableDatesCollection=Mage::getModel('appointments/dates')->getCollection()
-        ->addFieldToFilter('store_id', array('eq' => $storeid))
-        ->addFieldToFilter('is_available', array('eq' => '0'))
-        ->addFieldToFilter('exclude', array('eq' => '0'));
+        $notAvailableDatesCollection = Mage::getModel('appointments/dates')->getCollection()
+        ->addFieldToFilter('store_id', array(
+            'eq' => $storeid
+        ))
+        ->addFieldToFilter('is_available', array(
+            'eq' => '0'
+        ))
+        ->addFieldToFilter('exclude', array(
+            'eq' => '0'
+        ));
         
-        $notAvailabledays=array();
+        $notAvailabledays = array();
         
-        foreach ($notAvailableDatesCollection as $singeDate){
-            $formattedDate=date("m/d/Y", strtotime($singeDate->getDate()));
-            $notAvailabledays[strtotime($singeDate->getDate())]=$formattedDate;
+        foreach ($notAvailableDatesCollection as $singeDate) {
+            $formattedDate = date("m/d/Y", strtotime($singeDate->getDate()));
+            $notAvailabledays[strtotime($singeDate->getDate())] = $formattedDate;
         }
         
-        
-        $available_wdays=array();
-        foreach ($avial_workDays as $avail_wd){
-            foreach ($avail_wd as $wd){
-                if(!$notAvailabledays[strtotime($wd)]){
-                    $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
-                    if($dateCurrent<=$wd){
-                        $available_wdays[strtotime($wd)]=$wd;
+        $available_wdays = array();
+        foreach ($avial_workDays as $avail_wd) {
+            foreach ($avail_wd as $wd) {
+                if (! $notAvailabledays[strtotime($wd)]) {
+                    $dateCurrent = Mage::getModel('core/date')->date('m/d/Y');
+                    if (strtotime($dateCurrent) <= strtotime($wd)) {
+                        $available_wdays[strtotime($wd)] = $wd;
                     }
                 }
-                
-                
             }
-        } */
+        }
         
-        $jsonDATA="";
+        $jsonDATA = "";
         
-        if(!empty($available_wdays)) {
+        if (! empty($available_wdays)) {
             $jsonDATA = json_encode(array_unique($available_wdays));
         }
         
-        $block = $this->getLayout()->createBlock('core/template','appointments_pickurday',array('template' => 'appointments/pickurday.phtml'))->setData("workingdays",$jsonDATA);
+        $configData = $this->getAppointmentStoreMapping();
+        $storeKey = array_search ($storeid, $configData['stores']);
         
-        $output = $block->toHtml();
-        
-        $result['success'] = true;
-        $result['output'] = $output;
-        
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        $block = $this->getLayout()
+        ->createBlock('core/template', 'appointments_pickurday',
+            array(
+                'template' => 'appointments/pickurday.phtml'
+            ))
+            ->setData("workingdays", $jsonDATA);
+            
+            $output = $block->toHtml();
+            //$schedule = Mage::getStoreConfig("appointments/piercer_schedule/schedule", $storeid);
+            $schedule = $configData['piercers_available'][$storeKey];
+            $result['success'] = true;
+            $result['output'] = $output;
+            $result['schedule'] = $schedule;
+            
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
     public function savedetailsAction(){
         $post_data = $this->getRequest()->getPost();
@@ -766,6 +783,20 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
      */
     private function getAppointmentStoreMapping(){
         return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+    }
+    function get_client_ip ()
+    {
+        if (! empty($_SERVER['HTTP_CLIENT_IP'])) // check ip from share internet
+        {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) // to check ip is pass
+        // from proxy
+        {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
     }
    
 }
