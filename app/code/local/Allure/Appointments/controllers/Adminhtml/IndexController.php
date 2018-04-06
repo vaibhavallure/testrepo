@@ -31,17 +31,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         
         $this->loadLayout();
         $this->getLayout()->getBlock("head")->setTitle($this->__("Appointments"));
-        /*        $breadcrumbs = $this->getLayout()->getBlock("breadcrumbs");
-         $breadcrumbs->addCrumb("home", array(
-         "label" => $this->__("Home Page"),
-         "title" => $this->__("Home Page"),
-         "link"  => Mage::getBaseUrl()
-         ));
-         
-         $breadcrumbs->addCrumb("appointments", array(
-         "label" => $this->__("Appointments"),
-         "title" => $this->__("Appointments")
-         )); */
+
         $this->renderLayout();
     }
     
@@ -329,17 +319,24 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                                         $sender, $email, $name, $vars);
                             }
                         }
+                       
                     } catch (Exception $e) {
                         Mage::log("Exception Occured",Zend_log::DEBUG,'appointments.log',true);
                         Mage::log($e->getMessage(),Zend_log::DEBUG,'appointments.log',true);
                     }
-                } catch (Exception $e) {
+                    Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
+                    $this->getResponse()->setRedirect(Mage::getUrl("*/*/new", array('_secure' => true)) . $appendUrl);
+                    //Mage::log($this->_redirectReferer() . $appendUrl,Zend_log::DEBUG,'ajay.log',TRUE);
+                    $this->_redirect("admin_appointments/adminhtml_appointments/new");
+                    return;
+                } catch(Exception $e) {
                     Mage::getSingleton("core/session")->addError($e->getMessage());
-                    $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
+                    $this->_redirect("admin_appointments/adminhtml_appointments/new");
                     return;
                 }
             }
-         $this->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("*/*/",array('_secure' => true)).$appendUrl);
+         //   $this->_redirectReferer().$appendUrl;
+            // $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
     }
     
     /* Create the customer by bhagya*/
