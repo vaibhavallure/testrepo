@@ -206,7 +206,11 @@ class Mage_Adminhtml_Block_Sales_Order_Invoice_View extends Mage_Adminhtml_Block
         }
         return $this;
     }
-
+    public function getCaptureUrl()
+    {
+        return $this->getUrl('*/*/capture', array('invoice_id'=>$this->getInvoice()->getId()));
+    }
+    
     /**
      * Check whether is allowed action
      *
