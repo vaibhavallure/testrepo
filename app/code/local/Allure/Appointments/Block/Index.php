@@ -53,7 +53,8 @@ public function getActiveStore()
     
     $configData     = $this->getAppointmentStoreMapping();
     $storesAdded    = $configData['stores'];
-    $storesEnabled    = $configData['enable_store'];
+    $storesEnabled  = $configData['enable_store'];
+    $appearsName    = $configData['appears'];
     $activeStores   = array();
     if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
         $virtualStoreHelper = Mage::helper("allure_virtualstore");
@@ -66,7 +67,7 @@ public function getActiveStore()
         if($key == 0 || $storesEnabled[$key]==0){
             continue;
         }
-        $activeStores[$val] = $stores[$val]->getName();
+        $activeStores[$val] = ($appearsName[$key])?$appearsName[$key]:$stores[$val]->getName();
     }
 	return $activeStores;
 }
