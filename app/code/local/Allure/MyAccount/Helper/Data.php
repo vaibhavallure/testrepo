@@ -12,6 +12,8 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
 	const OPEN_ORDER = 1;
 	const ALL_ORDER  = 2;
 	
+	const MAIN_STORE_ID = 1;
+	
     public function getStoreColorConfig(){
     	$storeColorConfig = Mage::getStoreConfig(self::STORE_COLOR_MAPPING_XML);
     	$config=unserialize($storeColorConfig);
@@ -84,6 +86,11 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         $orderType  = Mage::app()->getRequest()->getParam('order_type');
         $stockMsg = "";
         $isShow = false;
+        
+        if($this->isVirtualStoreActive()){
+            $storeId = $item->getOldStoreId();
+        }
+        
         if(empty($storeId)){
             return array("is_show"=>$isShow,"message"=>$stockMsg);
         }
@@ -172,12 +179,22 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         
         if(!empty($store)){
             if($store!='all'){
-                $collection->addFieldToFilter('main_table.store_id',$store);
+                if($this->isVirtualStoreActive()){
+                   /*  if($store == self::MAIN_STORE_ID){
+                        $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
+                    }else{
+                        $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    } */
+                    $collection->addFieldToFilter('orders.old_store_id',$store);
+                }else{
+                    $collection->addFieldToFilter('main_table.store_id',$store);
+                }
             }
         }
         if(!empty($sortOrder)){
             $collection->setOrder('main_table.created_at', $sortOrder);
         }
+        
         $collection->setCurPage($pageNo);
         $collection->setPageSize($limit);
         return $collection;
@@ -238,7 +255,16 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         
         if(!empty($store)){
             if($store!='all'){
-                $collection->addFieldToFilter('main_table.store_id',$store);
+                if($this->isVirtualStoreActive()){
+                   /*  if($store == self::MAIN_STORE_ID){
+                        $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
+                    }else{
+                        $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    } */
+                    $collection->addFieldToFilter('main_table.old_store_id',$store);
+                }else{
+                    $collection->addFieldToFilter('main_table.store_id',$store);
+                }
             }
         }
                 
@@ -246,6 +272,15 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         $collection->setCurPage($pageNo);
         $collection->setPageSize($limit);
         return $collection;
+    }
+    
+    /**
+     * return true | false
+     */
+    public function isVirtualStoreActive(){
+        if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore'))
+            return true;
+        return false;
     }
         
 }

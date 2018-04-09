@@ -479,7 +479,6 @@ class Allure_InstaCatalog_Adminhtml_Allure_InstaCatalog_FeedController extends A
         Mage::getModel('allure_instacatalog/cron')->syncShopFeeds();
         $this->_redirect('*/*/shop');
     }
-    
     public function syncExistingFeedAction(){
         $params = $this->getRequest()->getParams();
         $allure = $params['type'];
@@ -546,5 +545,4 @@ class Allure_InstaCatalog_Adminhtml_Allure_InstaCatalog_FeedController extends A
             $this->_redirect('*/*/index');
             
     }
-    
 }
