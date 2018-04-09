@@ -102,73 +102,73 @@ foreach ($collection as $prod){
             //}
         }
         
-}
-
-$product = Mage::getModel('catalog/product')->load($productId);
-$product->setProductOptions($multipleOptions);
-$product->setCanSaveCustomOptions(true);
-$product->save();
-
-echo $productId ." - Option Added successfully<br>";
-
-
-
-$websitesCollection = Mage::getModel("core/website")->getCollection()
-->addFieldToFilter('stock_id',array('neq'=>0));
-$websiteArr = array();
-foreach ($websitesCollection as $website){
-    $websiteArr[$website->getId()] = $website->getStockId();
-}
-
-$mainArr = array();
-foreach ($options as $prodOptions){
-    $count = 0;
-    $value = $prodOptions['value'];
-    $inventory = array();
-    $productId = 0;
-    foreach ($childProducts as $child){
-        if($value==$child->getMetalColor()){
-            $count+=1;
-            $websiteIds = $child->getWebsiteIds();
-            foreach ($websiteIds as $websiteId){
-                $stock = Mage::getModel('cataloginventory/stock_item')
-                ->loadByProductAndStock($child,$websiteArr[$websiteId]);
-                $inventory[$websiteId] += $stock->getQty();
-            }
-            
-            if($count==1){
-                $productId = $child->getId();
-            }
-        }
     }
-    if($productId!=0)
-        $mainArr[$productId] = $inventory;
-        
-}
-
-//var_dump($mainArr);
-
-foreach ($childProducts as $child){
-    $productId = $child->getId();
+    
     $product = Mage::getModel('catalog/product')->load($productId);
-    $sku = "";
-    $name = "";
-    if(array_key_exists($productId, $mainArr)){
-        $sku = $mainSku."|".$colorArr[$child->getMetalColor()];
-        $name = $mainName."-".$colorArr[$child->getMetalColor()];
-        $product->setName($name);
-        $product->setSku($sku)->save();
-        foreach ($mainArr[$productId] as $stockId=>$qty){
-            $stock = Mage::getModel('cataloginventory/stock_item')
-            ->loadByProductAndStock($child,$stockId);
-            $stock->setQty($qty)->save();
-        }
-    }else{
-        $product->delete();
+    $product->setProductOptions($multipleOptions);
+    $product->setCanSaveCustomOptions(true);
+    $product->save();
+    
+    echo $productId ." - Option Added successfully<br>";
+    
+    
+    
+    $websitesCollection = Mage::getModel("core/website")->getCollection()
+    ->addFieldToFilter('stock_id',array('neq'=>0));
+    $websiteArr = array();
+    foreach ($websitesCollection as $website){
+        $websiteArr[$website->getId()] = $website->getStockId();
     }
-}
-
-echo "Operation Successfull";
+    
+    $mainArr = array();
+    foreach ($options as $prodOptions){
+        $count = 0;
+        $value = $prodOptions['value'];
+        $inventory = array();
+        $productId = 0;
+        foreach ($childProducts as $child){
+            if($value==$child->getMetalColor()){
+                $count+=1;
+                $websiteIds = $child->getWebsiteIds();
+                foreach ($websiteIds as $websiteId){
+                    $stock = Mage::getModel('cataloginventory/stock_item')
+                    ->loadByProductAndStock($child,$websiteArr[$websiteId]);
+                    $inventory[$websiteId] += $stock->getQty();
+                }
+                
+                if($count==1){
+                    $productId = $child->getId();
+                }
+            }
+        }
+        if($productId!=0)
+            $mainArr[$productId] = $inventory;
+            
+    }
+    
+    //var_dump($mainArr);
+    
+    foreach ($childProducts as $child){
+        $productId = $child->getId();
+        $product = Mage::getModel('catalog/product')->load($productId);
+        $sku = "";
+        $name = "";
+        if(array_key_exists($productId, $mainArr)){
+            $sku = $mainSku."|".$colorArr[$child->getMetalColor()];
+            $name = $mainName."-".$colorArr[$child->getMetalColor()];
+            $product->setName($name);
+            $product->setSku($sku)->save();
+            foreach ($mainArr[$productId] as $stockId=>$qty){
+                $stock = Mage::getModel('cataloginventory/stock_item')
+                ->loadByProductAndStock($child,$stockId);
+                $stock->setQty($qty)->save();
+            }
+        }else{
+            $product->delete();
+        }
+    }
+    
+    echo "Operation Successfull";
 }
 die;
 
