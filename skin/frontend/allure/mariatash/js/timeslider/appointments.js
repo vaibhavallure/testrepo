@@ -130,7 +130,7 @@ var count = 1;
 			success : function(response){
 				jQuery("#fetchpickurday").html(response.output);
 				if(response.schedule)
-					jQuery("#piercer_schedule").html(response.schedule);
+				  jQuery("#piercer_schedule").html(response.schedule);
 				 //If the customer come from modified onclick link getthe date and show time start
 
 				 if(document.getElementById("datepicker-13_hidden")!= null )
@@ -151,6 +151,7 @@ var count = 1;
 				 			type : 'POST',
 				 			data: {request:request},
 				 			success : function(response){
+				 				
 				 				jQuery("#pick_ur_time_div").html(response.output);
 				 				window.sample = 30;
 				 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
@@ -218,10 +219,3 @@ var count = 1;
 	 
 	
 }); 
- 
- 
- 
- 
- 
-
- 
