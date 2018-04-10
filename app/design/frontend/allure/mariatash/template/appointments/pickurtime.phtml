@@ -31,36 +31,35 @@ if($fetch_model){
 		$time_pref = 24;
 		$helper=Mage::helper('appointments');
 		//$storeSerializeData = Mage::getStoreConfig("appointments/general/storemapping");
-		
 		$configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
 		$selectedStoreId = intval($this->getData("store_id"));
 		
+		$selectedStoreId = intval($this->getData("store_id"));
 		//if($storeSerializeData){
 		//	$storeUnSerializeData = unserialize($storeSerializeData);
-		
 		$storeKey = array_search ($selectedStoreId, $configData['stores']);
 		if(count($configData) > 0){
-		
-			$selectedStoreId = intval($selectedStoreId);
-			$storeKey = array_search ($selectedStoreId, $configData['stores']);
-			
-			/* if($selectedStoreId){
-				foreach($storeUnSerializeData as $de){
-					//$allStores = Mage::app()->getStores();
-					$storeId = intval($de['store']);
-					//echo "STORE= ".$storeId . "  ".$selectedStoreId;
-					if($storeId == $selectedStoreId){
-						
-						$time_pref = intval($de['time']);			//24 or 12	hrs		
-					}
-				}
-			} */
-			
-			if($selectedStoreId){
-			    $time_pref = intval($configData['time_pref'][$storeKey]);	
-			}
-			
-			
+		    
+		    $selectedStoreId = intval($selectedStoreId);
+		    $storeKey = array_search ($selectedStoreId, $configData['stores']);
+		    
+		    /* if($selectedStoreId){
+		     foreach($storeUnSerializeData as $de){
+		     //$allStores = Mage::app()->getStores();
+		     $storeId = intval($de['store']);
+		     //echo "STORE= ".$storeId . "  ".$selectedStoreId;
+		     if($storeId == $selectedStoreId){
+		     
+		     $time_pref = intval($de['time']);			//24 or 12	hrs
+		     }
+		     }
+		     } */
+		    
+		    if($selectedStoreId){
+		        $time_pref = intval($configData['time_pref'][$storeKey]);
+		    }
+		    
+		    
 		}
 		$intervalTime=$helper->getTimeByStoreAndPeople(1,$selectedStoreId);
 		
