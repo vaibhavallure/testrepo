@@ -271,7 +271,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $result['goto_section'] = 'shipping';
                 }
                 
-                $this->getOnepage()->getQuote()->collectTotals()->save();
+                //$this->getOnepage()->getQuote()->collectTotals()->save();
                 
                 $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
                 $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
@@ -685,6 +685,8 @@ XML;
         }
         
         $url="https://api.authorize.net/xml/v1/request.api";
+        
+        Mage::log("REQUEST: ".$transRequestXml->asXML(),Zend_Log::DEBUG, 'applepay.log', true);
         
         print_r($transRequestXml->asXML());
         

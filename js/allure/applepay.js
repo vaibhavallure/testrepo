@@ -67,6 +67,8 @@ if (window.ApplePaySession) {
 		]
 	};
 	
+	jQuery.ajaxSetup({timeout: 0});
+	
 	Allure.ApplePay.data.merchantId = 'merchant.com.mariatash.authorizenet';
 	
 	var promise = ApplePaySession.canMakePaymentsWithActiveCard(Allure.ApplePay.data.merchantId);
@@ -118,11 +120,12 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.event.onPaymentAuthorized = function (event) {
 		console.log('START EVENT: onPaymentAuthorized');
 		console.log(event);
-		console.log('START ACTION: sendPaymentToken');
-		var promise = Allure.ApplePay.action.sendPaymentToken(event.payment.token, event.payment.shippingContact);
-		console.log('END ACTION: sendPaymentToken');
 		
 		var shippingContact = event.payment.shippingContact;
+		
+		console.log('START ACTION: sendPaymentToken');
+		var promise = Allure.ApplePay.action.sendPaymentToken(event.payment.token, shippingContact);
+		console.log('END ACTION: sendPaymentToken');
 		
 		Allure.ApplePay.flag.lastStatus = false;
 		
@@ -511,7 +514,7 @@ if (window.ApplePaySession) {
 			xhrFields: {
 				withCredentials: true
 			},
-			timeout: 20000 // 20 seconds
+			timeout: 0 // 20 seconds
 			
 		}).done(function(data){
 			console.log(data);
@@ -563,7 +566,7 @@ if (window.ApplePaySession) {
 			
 	    		amount: Allure.ApplePay.data.total.amount, 
 	    		dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', 
-	    		dataValue: dataObj,  
+	    		dataValue: objJsonStr,  
 	    		dataBinary: objJsonB64
 	    	};
 	    
