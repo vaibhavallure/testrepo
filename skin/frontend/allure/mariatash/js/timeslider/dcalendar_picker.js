@@ -23,7 +23,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 			this.today = new Date();	//system date
 			this.options = options;
 			
-			//console.log(this.calendar.prev().val());
+			
 			//current selected date, default is today if no value given
 			if(this.calendar.prev().val() === '') {
 				this.date = new Date();
@@ -272,13 +272,11 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 								}
 								var alld = date1month + '/' + date1day  + '/' + date1.getFullYear();						
 								//Get all the dates in mm/dd/yy formatted date  to match the json date and this formatted date End
-							
-							
-							
+
 								var jsonDate = $('#availablewdays').data('original');
 							
 								//To show disabled date for allocated Piercer start 
-								if (jsonDate != null)
+								if(jsonDate != null)
 								{
 									
 									//Disable the dates before the todays date & Disable the all dates
@@ -348,10 +346,9 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 							}
 						}
 					}*/
-					//console.log(temp);
 					cal.push(temp);
 				}
-				/* Code to Pre Selected Date */
+
 				var selDateObj = new Date($('#datepicker-13_hidden').val());
 				var selectDate = selDateObj.getDate();
 				var selectMonth = selDateObj.getMonth();
@@ -455,7 +452,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				data[opts]();
 			} else {
 				cal = $('<table class="calendar"></table>');
-				that.wrap($('<div class="datepicker" style="display:inline-block;position:relative;"></div>'));
+				that.wrap($('<div class="datepicker" id="appointments_datepicker" style="display:inline-block;position:relative;"></div>'));
 				cal.css({
 					//position:'absolute',
 					left:0, 
@@ -494,7 +491,6 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				 				"qty":qty,
 				 				"store":storeid,
 				 				"date":e.date
-				 				"id":Allure.appointmentId
 				 	 		};
 				 	 $.ajax({
 				        	url : Allure.ajaxGetTimeUrl,
