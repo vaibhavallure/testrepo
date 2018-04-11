@@ -116,23 +116,24 @@ if ($session->isLoggedIn()) {
 					    <div class="fieldDiv">
 						    <label for="state"><?php echo Mage::helper('appointments')->__('State') ?>:</label>
 						    <div class="input-box1" id='statediv'>
-						    
 						    <?php 
-						    if($state):
-						    $statearray = Mage::getModel('directory/region')->getResourceCollection()->addCountryFilter($cntry)->load();
-						    if(count($statearray) > 0){
+
+						    $statearray = array();
+						    if ($cntry) {
+						    	$statearray = Mage::getModel('directory/region')->getResourceCollection()->addCountryFilter($cntry)->load();
+						    }
+
+						    if(count($statearray) > 0) :
 						    	$html .= "<select name='state' class='ele_width stateSelect'><option value=''>--Please Select--</option>";
 						    	foreach ($statearray as $_state) {
-						    		$selected = ($state==$_state->getDefaultName()) ? "selected" : "";
+						    		$selected = ($state == $_state->getDefaultName()) ? "selected" : "";
 						    		$html .= "<option value='" . $_state->getCode() . "' $selected>" . $_state->getDefaultName() . "</option>";
 						    	}
 						    	$html .= "</select>";
-						    }
-						    echo $html;
-						    else:
+						    	echo $html;
+						    else :
 						    ?>
-                    			<!-- <input name="state" id="state" title="<?php //echo Mage::helper('appointments')->__('State') ?>" value="" class="ele_width" type="text" /> -->
-                    			<input name="state" id="state" title="<?php echo Mage::helper('appointments')->__('State') ?>" value="<?php if($f_state): echo $f_state; endif;?>" class="ele_width" type="text" />
+                    			<input name="state" id="state" title="<?php echo Mage::helper('appointments')->__('State') ?>" value="<?php if($f_state): echo $f_state; else: echo $state; endif;?>" class="ele_width" type="text" />
  							<?php endif;?>
                 			</div>		    	
 					    </div>
@@ -154,16 +155,16 @@ if ($session->isLoggedIn()) {
 		  			</div>
 			  	  	<div class="fieldDiv splnotesDiv">
 				  	   	<label>Special Notes:</label>			    		
-				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php echo  "Optional:Please specify names of people being pierced or desired piercer for appointment" ?>" rows="4" ><?php if($f_special_notes):
+				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced or desired piercer for appointment" ?>" rows="4" ><?php if($f_special_notes):
 				    	echo $f_special_notes;
-				    	endif;?></textarea>			    	
+				    	endif;?></textarea>		    	
 				    </div>
 					<div class="fieldDiv">
 				    	<label>Notify Me:</label><br/>
 				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
 				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message</p></div>
 				    </div>
-				    <div class="fieldDiv" id="app_create_account">
+				    <div class="fieldDiv " id="app_create_account">
 				    	<?php if(!$session->isLoggedIn()):?>
 						 <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;">Create Account:
 						 <div class="pwdBlock">
@@ -176,7 +177,7 @@ if ($session->isLoggedIn()) {
 								<input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
 							 </div>
 						</div>
-					   <?php endif;?>
+						<?php endif;?>
 					</div>
 					<div class="fieldDiv">
 					     <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit')?>
