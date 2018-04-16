@@ -96,6 +96,7 @@ $updatedInfo=$updatedInfo->getFirstItem();?>
 						name="order[<?php echo $_product->getProductId() ?>][<?php echo "requested_qty" ?>]" type="text" 
 						value="<?php echo round($_product->getRequestedQty())?>"/>
 				</td>
+				
 				<td><textarea name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="15" rows="7" ><?php echo $_product->getAdminComment()?></textarea></td>
 				<td>
 					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 

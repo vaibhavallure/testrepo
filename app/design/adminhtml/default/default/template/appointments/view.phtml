@@ -16,7 +16,12 @@ if($store)
         $format = "EST";
         
         
-        $store = Mage::app()->getStore($store)->getName();
+        //$store = Mage::app()->getStore($store)->getName();
+        if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+            $store = Mage::helper("allure_virtualstore")->getStoreName($storeId);
+        }else{
+            $store = Mage::app()->getStore($store)->getName();
+        }
         
         $piercingQty = $appointment->getPiercingQty();
         $piercingLoc = $appointment->getPiercingLoc();

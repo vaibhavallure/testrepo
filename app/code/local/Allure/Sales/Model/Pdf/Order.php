@@ -108,7 +108,7 @@ class Allure_Sales_Model_Pdf_Order extends Allure_Sales_Model_Pdf_Abstract
         $this->_drawHeader($page);
         /* Add body */
         $cnt = 0;
-        foreach ($order->getAllItems() as $item){
+        foreach ($order->getAllVisibleItems() as $item){
             $cnt ++;
             if ($item->getParentItem()) {
                 continue;
@@ -116,7 +116,7 @@ class Allure_Sales_Model_Pdf_Order extends Allure_Sales_Model_Pdf_Abstract
             /* Draw item */
             //$this->_drawItem($item, $page, $order);
                 
-            if(count($order->getAllItems()) == $cnt){
+            if(count($order->getAllVisibleItems()) == $cnt){
                 $item = $item->setIsLastItem(1);
                 $this->_drawItem($item, $page, $order);
             }else{

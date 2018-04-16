@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-  <modules>
-    <Allure_Orderdate>
-      <active>true</active>
-      <codePool>local</codePool>
-    </Allure_Orderdate>
-  </modules>
-</config>

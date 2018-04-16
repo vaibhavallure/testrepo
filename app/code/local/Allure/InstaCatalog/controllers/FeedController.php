@@ -159,12 +159,18 @@ class Allure_InstaCatalog_FeedController extends Mage_Core_Controller_Front_Acti
 	    				$sku = $option->text;
 	    				$numberOfProducts += 1;
 	    				$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-	    				$productName = $product->getName();
-	    				$productId = $product->getId();
+	    				$productName = "";
+	    				$productId = 0;
+	    				$productUrl = "";
+	    				if($product){
+	    				    $productName = $product->getName();
+	    				    $productId = $product->getId();
+	    				    $productUrl = $product->getProductUrl();
+	    				}
 	    				
 	    				$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
 	    				$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-	    				$productUrl = $product->getProductUrl();
+	    				
 	    				if(!is_null($parentId)){
 	    					$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
 	    				}
