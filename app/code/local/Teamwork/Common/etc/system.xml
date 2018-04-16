@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <teamwork translate="label">
+            <label>Teamwork</label>
+            <sort_order>100</sort_order>
+        </teamwork>
+    </tabs>
+    <sections>
+        <teamwork_common translate="label" module="teamwork_common">
+            <label>Common settings</label>
+            <tab>teamwork</tab>
+            <sort_order>5</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <chq translate="label">
+                    <label>Chq API</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <path translate="label" module="teamwork_common">
+                            <label>Server Host Url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[<strong style="color:green">Example: </strong>https://qa2chq.teamworkinsight.com/]]></comment>
+                        </path>
+                        <access_token translate="label" module="teamwork_common">
+                            <label>Access Token</label>
+                            <frontend_type>obscure</frontend_type>
+                            <sort_order>20</sort_order>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>
+                                <model>teamwork_common/comment_channelavailability</model>
+                            </comment>
+                        </access_token>
+                        <log_api translate="label" module="teamwork_common">
+                            <label>Log API interactions</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </log_api>
+                        <channel_usage translate="label" module="teamwork_common">
+                            <label>Use that channel</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </channel_usage>
+                    </fields>
+                </chq>
+                <chq_request translate="label">
+                    <label>Api Request</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <style_per_butch translate="label" module="teamwork_common">
+                            <label>Style Limit Per Butch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </style_per_butch>
+                        <price_per_butch translate="label" module="teamwork_common">
+                            <label>Prices Limit Per Butch</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </price_per_butch>
+                        <max_api_chunk_interval translate="label" module="teamwork_common">
+                            <label>Max chunk wait time (minutes)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </max_api_chunk_interval>
+                    </fields>
+                </chq_request>
+            </groups>
+        </teamwork_common>
+    </sections>
+</config>

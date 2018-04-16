@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Teamwork_CommonMariatash>
+            <version>1.0.0</version>
+        </Teamwork_CommonMariatash>
+    </modules>
+    <global>
+        <models>
+            <teamwork_commonmariatash>
+                <class>Teamwork_CommonMariatash_Model</class>
+            </teamwork_commonmariatash>
+            <teamwork_common>
+                <rewrite>
+                    <chq_xml_response_product>Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product</chq_xml_response_product>
+                </rewrite>
+            </teamwork_common>
+        </models>
+    </global>
+</config>
