@@ -10,7 +10,7 @@
 <config>
     <modules>
         <Teamwork_Transfer>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Teamwork_Service />
