@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Teamwork_TransferMariatash>
-            <version>5.0.1</version>
+            <version>5.0.2</version>
         </Teamwork_TransferMariatash>
     </modules>
     <global>
@@ -13,6 +13,7 @@
             <teamwork_transfer>
                 <rewrite>
                     <class_item>Teamwork_TransferMariatash_Model_Class_Item</class_item>
+                    <webstaging>Teamwork_TransferMariatash_Model_Webstaging</webstaging>
                     <class_price>Teamwork_TransferMariatash_Model_Class_Price</class_price>
 					<class_specialattribute_sku>Teamwork_TransferMariatash_Model_Class_Specialattribute_Sku</class_specialattribute_sku>
                 </rewrite>
