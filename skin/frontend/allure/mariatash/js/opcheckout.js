@@ -150,7 +150,7 @@ Checkout.prototype = {
         if (($('billing:use_for_shipping_yes')) && ($('billing:use_for_shipping_yes').checked)) {
             shipping.syncWithBilling();
             $('opc-shipping').addClassName('allow');
-            //this.gotoSection('shipping_method');
+          //  this.gotoSection('shipping_method');
             this.gotoSection('delivery_option');
         } else if (($('billing:use_for_shipping_no')) && ($('billing:use_for_shipping_no').checked)) {
             $('shipping:same_as_billing').checked = false;
@@ -179,8 +179,8 @@ Checkout.prototype = {
     setShipping: function() {
         //console.log('setshipping');
         //this.nextStep();
-        //this.gotoSection('shipping_method');
-    	this.gotoSection('delivery_option');
+       // this.gotoSection('shipping_method');
+        this.gotoSection('delivery_option');
         //this.accordion.openNextSection(true);
     },
 
@@ -690,7 +690,6 @@ ShippingMethod.prototype = {
                     parameters: Form.serialize(this.form)
                 }
             );
-
         }
     },
 
@@ -830,6 +829,7 @@ Delivery.prototype = {
         checkout.setDelivery();
     }
 }
+
 
 
 
@@ -1000,7 +1000,6 @@ Payment.prototype = {
                     parameters: Form.serialize(this.form)
                 }
             );
-
         }
     },
 

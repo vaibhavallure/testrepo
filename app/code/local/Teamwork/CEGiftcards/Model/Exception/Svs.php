@@ -1,0 +1,3 @@
+<?php
+class Teamwork_CEGiftcards_Model_Exception_Svs extends Teamwork_CEGiftcards_Model_Exception
+{}

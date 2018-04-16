@@ -12,6 +12,8 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
 	const OPEN_ORDER = 1;
 	const ALL_ORDER  = 2;
 	
+	const MAIN_STORE_ID = 1;
+	
     public function getStoreColorConfig(){
     	$storeColorConfig = Mage::getStoreConfig(self::STORE_COLOR_MAPPING_XML);
     	$config=unserialize($storeColorConfig);
@@ -80,17 +82,22 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
     /*
      * get product current stock status
      */
-    public function getProductCurrentStatus($sku,$qty,$storeId){
+    public function getProductCurrentStatus($item,$sku,$qty,$storeId){
         $orderType  = Mage::app()->getRequest()->getParam('order_type');
         $stockMsg = "";
         $isShow = false;
+        
+        if($this->isVirtualStoreActive()){
+            $storeId = $item->getOldStoreId();
+        }
+        
         if(empty($storeId)){
             return array("is_show"=>$isShow,"message"=>$stockMsg);
         }
         
         if($storeId == 1){
             if($orderType=="open"){
-                $store      = Mage::getModel('core/store')->load($storeId);
+                /* $store      = Mage::getModel('core/store')->load($storeId);
                 $websiteId  = $store->getWebsiteId();
                 $website    = Mage::getModel('core/website')->load($websiteId);
                 $stockId    = $website->getStockId();
@@ -110,7 +117,15 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
                         $stockMsg = "(The metal color or length combination you selected is backordered. Order now and It will ship "." - ".$backTime.")";
                     else 
                         $stockMsg = "(The metal color or length combination you selected is backordered.)";
+                } */
+                
+                $backTimeMsg = $item->getBackorderTime();
+                if (!empty($backTimeMsg)) {
+                    $stockMsg = "The metal color or length combination you selected is backordered. Order now and It will ship ".$backTimeMsg.".";
+                } else {
+                    $stockMsg = " (In Stock: Ships Within 24 hours (Mon-Fri).)";
                 }
+                
                 $isShow = true;
             }
         }
@@ -164,12 +179,22 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         
         if(!empty($store)){
             if($store!='all'){
-                $collection->addFieldToFilter('main_table.store_id',$store);
+                if($this->isVirtualStoreActive()){
+                   /*  if($store == self::MAIN_STORE_ID){
+                        $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
+                    }else{
+                        $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    } */
+                    $collection->addFieldToFilter('orders.old_store_id',$store);
+                }else{
+                    $collection->addFieldToFilter('main_table.store_id',$store);
+                }
             }
         }
         if(!empty($sortOrder)){
             $collection->setOrder('main_table.created_at', $sortOrder);
         }
+        
         $collection->setCurPage($pageNo);
         $collection->setPageSize($limit);
         return $collection;
@@ -230,7 +255,16 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         
         if(!empty($store)){
             if($store!='all'){
-                $collection->addFieldToFilter('main_table.store_id',$store);
+                if($this->isVirtualStoreActive()){
+                   /*  if($store == self::MAIN_STORE_ID){
+                        $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
+                    }else{
+                        $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    } */
+                    $collection->addFieldToFilter('main_table.old_store_id',$store);
+                }else{
+                    $collection->addFieldToFilter('main_table.store_id',$store);
+                }
             }
         }
                 
@@ -238,6 +272,15 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         $collection->setCurPage($pageNo);
         $collection->setPageSize($limit);
         return $collection;
+    }
+    
+    /**
+     * return true | false
+     */
+    public function isVirtualStoreActive(){
+        if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore'))
+            return true;
+        return false;
     }
         
 }

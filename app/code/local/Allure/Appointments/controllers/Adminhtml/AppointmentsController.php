@@ -103,13 +103,24 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			if($model->getAppStatus() == Allure_Appointments_Model_Appointments::STATUS_REQUEST)
     				$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     			$model->setData('piercer_id',$post_data['appointment_piercer'])->save();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
     
     			/*Email Code*/
-    			$toSend = Mage::getStoreConfig("appointments/piercer/send_piercer_email",$storeId);
+    			//$toSend = Mage::getStoreConfig("appointments/piercer/send_piercer_email",$storeId);
+    			
+    			$configData = $this->getAppointmentStoreMapping();     //new code store clnup
+    			$storeKey = array_search ($storeId, $configData['stores']);
+    			$toSend = $configData['piercer_email_enable'][$storeKey]; //new code store clnup
     			if($toSend)
     			{
-    				$templateId = Mage::getStoreConfig("appointments/piercer/piercer_welcome_template",$storeId);
+    				//$templateId = Mage::getStoreConfig("appointments/piercer/piercer_welcome_template",$storeId);
+    				
+    			    $templateId = $configData['piercer_email_template_welcome'][$storeKey];
     				$mailSubject="sample subject";
+    				
     				$sender         = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",$storeId), 'email'=> Mage::getStoreConfig("trans_email/bookings/email",$storeId));
     				$email = $piercer->getEmail();
     				$name = $piercer->getFirstname()." ".$piercer->getLastname();
@@ -122,12 +133,12 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     						'piercing_loc' => $model->getPiercingLoc(),
     						'special_notes' => $model->getSpecialNotes(),
     						'apt_starttime'  => $model->getAppointmentStart(),
-    						'store_name'	=> Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-    						'store_address'	=> Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-    						'store_email_address'	=> Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-    						'store_phone'	=> Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-    						'store_hours'	=> Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-    						'store_map'	=> Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+    				        'store_name'	=> $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+    				        'store_address'	=> $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+    				        'store_email_address'	=> $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+    				        'store_phone'	=> $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+    				        'store_hours'	=> $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+    				        'store_map'	=> $configData['store_map'][$storeKey],// Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
     						'apt_endtime'    => $model->getAppointmentEnd());
     				$mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
     			}
@@ -204,6 +215,10 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			->setId($this->getRequest()
     					->getParam("id"))
     					->save();
+    			
+    			//add logs
+    		    $helperLogs = $this->getLogsHelper();
+    		    $helperLogs->saveLogs("admin");
     
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Piercer saved sucessfully"));
@@ -238,6 +253,11 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
     			$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_CANCELLED);
     			$model->save();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
+    			
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Appointment was successfully Cancelled"));
     					$this->_redirect("*/*/");
@@ -259,6 +279,11 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
     			$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     			$model->save();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
+    			
     			Mage::getSingleton("adminhtml/session")->addSuccess(
     					Mage::helper("adminhtml")->__("Appointment was successfully Resheduled"));
     			$this->_redirect("*/*/");
@@ -282,6 +307,11 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model->setId($this->getRequest()
     					->getParam("id"))
     					->delete();
+    			
+    		    //add logs
+    		    $helperLogs = $this->getLogsHelper();
+    		    $helperLogs->saveLogs("admin");
+    					
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Piercer was successfully deleted"));
     					$this->_redirect("*/*/");
@@ -421,6 +451,80 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
             $this->_redirect('*/*/print');
         }
         
+    }
+    
+    /**
+     * return logs helper object
+     */
+    private function getLogsHelper(){
+        return Mage::helper("appointments/logs");
+    }
+    public function transferAction(){
+        $this->loadLayout();
+        //$this->_setActiveMenu('blog/posts');
+        $this->_title('Transfer Appointments');
+        
+        $this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+        
+        $this
+        ->_addContent($this->getLayout()->createBlock('appointments/adminhtml_appointments_transfer'))
+        ->_addLeft($this->getLayout()->createBlock('appointments/adminhtml_appointments_transfer_tabs'))
+        ;
+        $this->getLayout()->getBlock('head')->setCanLoadTinyMce(true);
+        $this->renderLayout();
+    }
+    public function doTransferAction(){
+        $post_data = $this->getRequest()->getPost();
+        if($post_data['source_piercer']==$post_data['destination_piercer']){
+            $this->_getSession()->addError($this->__('Source Piercer and Destination Piercer can not be same.'));
+            $this->_redirect('*/*/transfer');
+        }else{
+            echo "<pre>";
+            $fromDate = date('Y-m-d', strtotime($post_data['date']))." 00:00:00";
+            $toDate = date('Y-m-d', strtotime($post_data['date']))." 23:59:00";
+            $appCollection = Mage::getModel('appointments/appointments')->getCollection();
+            $appCollection->addFieldToFilter('appointment_start', array('from'=>$fromDate, 'to'=>$toDate))
+            ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+            ->addFieldToFilter('piercer_id', array('eq' => $post_data['source_piercer']));
+            $notTransfer=array();
+            foreach ($appCollection as $app){
+             
+                $appCollection1 = Mage::getModel('appointments/appointments')->getCollection();
+                $appCollection1->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$app->getAppointmentStart(), 'to'=>$app->getAppointmentEnd())))
+                ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
+                ->addFieldToFilter('piercer_id', array('eq' =>  $post_data['destination_piercer']));
+              /*   print_r($appCollection1->getData());
+                die; */
+                if(count($appCollection1)){
+                    $notTransfer[]=$appCollection1->getFirstItem()->getId();
+                    continue;
+                }
+                else 
+                {
+                    try {
+                        Mage::log("Updating Piercer for appointment:",Zend_log::DEBUG,'appointments.log',true);
+                        Mage::log(json_encode($app->getData()),Zend_log::DEBUG,'appointments.log',true);
+                        $app->setPiercerId($post_data['destination_piercer'])->save();
+                    } catch (Exception $e) {
+                    }
+                }
+            }
+            $helperLogs = $this->getLogsHelper();
+            $helperLogs->saveLogs("admin");
+            if(count($notTransfer))
+                $this->_getSession()->addError($this->__('Unbale to transfer some of appointments as timeslot is not availbale'));
+            else 
+                $this->_getSession()->addSuccess($this->__('Appointments transfered succesfully'));
+            $this->_redirect('*/*/transfer');
+        }
+            
+       // print_r($post_data);
+    }
+    /**
+     * return array of store mapping
+     */
+    private function getAppointmentStoreMapping(){
+        return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     }
     
 }

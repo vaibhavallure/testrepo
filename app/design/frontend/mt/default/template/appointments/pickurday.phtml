@@ -21,7 +21,7 @@ usort($workingdaysArray, "date_sort");
 //print_r($workingdaysArray);
 
 if (!$fetch_date){
-    $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
+ //   $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
     foreach ($workingdaysArray as $value){
         if($dateCurrent<=$value){
             $fetch_date =$value ;

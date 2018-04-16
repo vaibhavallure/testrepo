@@ -9,7 +9,7 @@ InstagramView.prototype = {
 	show:function(e){
 		var id = jQuery(e).attr('media-id');
 		var url = this.url+'/id/'+id;
-		
+
 		var selector = jQuery("#details-insta-"+id);
 		var username = selector.attr('data-user-name');
 		var img = selector.attr('data-img-url');

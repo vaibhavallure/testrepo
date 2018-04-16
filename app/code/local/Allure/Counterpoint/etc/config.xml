@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_Counterpoint>
 			<name>Allure - Counterpoint Bridge</name>
-			<version>1.0.2</version>
+			<version>1.0.5</version>
 			<depends>
 				<Allure_Core />
 			</depends>
@@ -35,6 +35,7 @@
 				<rewrite>
 					<customer_grid>Allure_Counterpoint_Block_Adminhtml_Customer_Grid</customer_grid>
 					<sales_order_payment>Allure_Counterpoint_Block_Adminhtml_Sales_Order_Payment</sales_order_payment>
+					<sales_order_view_tab_invoices>Allure_Counterpoint_Block_Adminhtml_Sales_Order_View_Tab_Invoices</sales_order_view_tab_invoices>
 				</rewrite>
 			</adminhtml>
 		</blocks>

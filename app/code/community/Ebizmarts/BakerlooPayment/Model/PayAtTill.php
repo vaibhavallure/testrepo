@@ -29,4 +29,28 @@ class Ebizmarts_BakerlooPayment_Model_PayAtTill extends Ebizmarts_BakerlooPaymen
 
         return $this;
     }
+
+    public function getAdditionalDetails($data)
+    {
+        if (!($data instanceof Varien_Object)) {
+            $data = new Varien_Object($data);
+        }
+
+        $helper = Mage::helper('bakerloo_payment');
+        $output = parent::getAdditionalDetails($data);
+
+        if ($data->getData('payReference')) {
+            $output .= "<br />" . $helper->__("Till reference: %s", $data->getData('payReference'));
+        }
+
+        if ($data->getTransactionType()) {
+            $typeOptions = Mage::getModel('bakerloo_payment/source_transactiontype')->toOption();
+
+            if(isset($typeOptions[$data->getTransactionType()])) {
+                $output .= "<br />" . $helper->__("Payment method: %s", $typeOptions[$data->getTransactionType()]);
+            }
+        }
+
+        return $output;
+    }
 }

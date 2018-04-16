@@ -3,6 +3,13 @@
 	$helper = Mage::helper("inventory");
 ?>
 <?php $order=Mage::getModel('inventory/purchaseorder')->load($collection->getFirstItem()->getPoId())?>		
+<?php $updatedInfo=Mage::getModel('inventory/orderlogs')->getCollection();
+$updatedInfo->addFieldToFilter('po_id',$collection->getFirstItem()->getPoId());
+$updatedInfo->getSelect()->joinLeft('admin_user', 'admin_user.user_id = main_table.user_id', array('username','firstname','lastname'));
+//$updatedInfo->getSelect();
+$updatedInfo->setOrder('date', 'DESC');
+$updatedInfo=$updatedInfo->getFirstItem();?>
+<?php ?>
 <?php $orderTotal=$order->getTotalAmount()?>
 
 <div class="content-header">
@@ -41,6 +48,11 @@
 			<label><span><?php echo $helper->__('Order Status:'); ?></span>
 			<?php echo Mage::helper('inventory')->getOrderStatus($order->getStatus())?>
 			</label>
+			<?php if(!empty($updatedInfo->getUsername())):?>
+			<label><span><?php echo $helper->__('Last Updated By:'); ?></span>
+			<?php echo $updatedInfo->getFirstname()." ".$updatedInfo->getLastname().'('.$updatedInfo->getDate().')';?>
+			</label>
+			<?php endif;?>
 		</div>
 	</div>
 </div>
@@ -84,6 +96,7 @@
 						name="order[<?php echo $_product->getProductId() ?>][<?php echo "requested_qty" ?>]" type="text" 
 						value="<?php echo round($_product->getRequestedQty())?>"/>
 				</td>
+				
 				<td><textarea name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="15" rows="7" ><?php echo $_product->getAdminComment()?></textarea></td>
 				<td>
 					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 

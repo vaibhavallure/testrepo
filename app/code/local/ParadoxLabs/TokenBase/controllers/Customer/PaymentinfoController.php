@@ -299,6 +299,16 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 				 * Load the card and verify we are actually the cardholder before doing anything.
 				 */
 				$card = Mage::getModel( $method . '/card' )->load( $id );
+				if($card && $card->getId() == $id && $card->hasOwner( Mage::helper('tokenbase')->getCurrentCustomer()->getId() ) )
+				{
+				    $collection=Mage::getModel('sales/order_payment')->getCollection();
+				    $collection->addAttributeToFilter('tokenbase_id', array('eq' => $card->getId()));
+				    if(count($collection) > 0){
+				        $this->getResponse()->setBody( json_encode( array( 'success' => false, 'message' => $this->__('Payment record can not deleted as it is associted with some orders.') ) ) );
+				        Mage::getSingleton('core/session')->addError( $this->__('Payment record can not deleted as it is associted with some orders.') );
+				        return $this->_redirectReferer();
+				    }
+				}
 				
 				if( $card && $card->getId() == $id && $card->hasOwner( Mage::helper('tokenbase')->getCurrentCustomer()->getId() ) ) {
 					$card->queueDeletion()

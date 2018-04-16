@@ -31,6 +31,7 @@
 ?>
 
 <?php if ($this->isShow()): ?>
+<?php if(!Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')):?>
 <p class="switcher"><label for="store_switcher"><?php echo $this->__('Show Report For:') ?></label>
 <select name="store_switcher" id="store_switcher" onchange="return switchStore(this);">
     <?php foreach ($this->getWebsiteCollection() as $_website): ?>
@@ -56,6 +57,46 @@
 </select>
 <?php echo $this->getHintHtml() ?>
 </p>
+<?php elseif ($stores = $this->getVirtualStores()):?>
+<p class="switcher"><label for="store_switcher"><?php echo $this->__('Choose Store View:') ?></label>
+<select name="store_switcher" id="store_switcher" onchange="return switchStore(this);">
+<?php if ($this->hasDefaultOption()): ?>
+    <option value=""><?php echo $this->getDefaultStoreName() ?></option>
+<?php endif; ?>
+	
+	<?php if(0):?>
+        <?php foreach ($stores as $store): ?>
+          <option value="<?php echo $this->escapeHtml($store->getId()) ?>"<?php if($this->getStoreId() == $store->getId()): ?> selected="selected"<?php endif; ?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($store->getName()) ?></option>
+        <?php endforeach; ?>
+    <?php endif;?>
+    
+    <?php $websites = $this->getVirtualWebsites();?>
+	<?php foreach ($websites as $website): ?>
+		<?php $showWebsite = false; ?>
+		<?php foreach ($this->getGroups($website->getId()) as $group): ?>
+			<?php $showGroup = false; ?>
+				<?php foreach ($this->getStores($group->getId()) as $store): ?>
+					<?php if ($showWebsite == false): ?>
+						<?php $showWebsite = true; ?>
+						<optgroup label="<?php echo $this->escapeHtml($website->getName()) ?>"></optgroup>
+					<?php endif; ?>
+					<?php if ($showGroup == false): ?>
+						<?php $showGroup = true; ?>
+                    	<optgroup label="&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($group->getName()) ?>">
+                    <?php endif; ?>
+                    <option value="<?php echo $this->escapeHtml($store->getId()) ?>"<?php if($this->getStoreId() == $store->getId()): ?> selected="selected"<?php endif; ?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($store->getName()) ?></option>
+                 <?php endforeach; ?>
+				<?php if ($showGroup): ?>
+					</optgroup>
+				<?php endif; ?>
+		<?php endforeach; ?>
+<?php endforeach; ?>
+    
+</select>
+<?php echo $this->getHintHtml() ?>
+</p>
+<?php endif;?>
+
 <script type="text/javascript">
     function switchStore(obj){
         var storeParam = obj.value ? 'store_ids/' + obj.value + '/' : '';

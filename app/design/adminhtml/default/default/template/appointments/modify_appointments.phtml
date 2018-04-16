@@ -66,11 +66,10 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 				         <button type="button" class="button" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
 				    </div>
 				    <div class="apt-modify-buttons-set">
-				         <button type="button" class="button" title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('admin_appointments/adminhtml_index/index',array('id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
+				         <button type="button" class="button" title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo Mage::helper('adminhtml')->getUrl('admin_appointments/adminhtml_index/index',array('id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
 				    </div>
-				    
 				   	<div class="apt-buttons-set">
-				         <button type="button" class="button" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo Mage::getBaseUrl('web').'admin_appointments/adminhtml_appointments/new'?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+				         <button type="button" class="button" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo Mage::helper('adminhtml')->getUrl('admin_appointments/adminhtml_appointments/new')?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
 					</div>
 				</div>
 			</div>
@@ -93,7 +92,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 		
 		if (result) {
 		    //Logic to cancel the apt
-			var reloadurl = '<?php echo $this->getUrl('*/adminhtml_index/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
+			var reloadurl = '<?php echo Mage::helper('adminhtml')->getUrl('*/adminhtml_index/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
 		    jQuery.ajax({
 		        url: reloadurl, //Relative or absolute path to response.php file
 		        method: 'get',

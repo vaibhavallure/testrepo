@@ -125,6 +125,10 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     			->setId($this->getRequest()
     					->getParam("id"))
     					->save();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
     
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Piercer saved sucessfully"));
@@ -160,6 +164,11 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     			$model->setId($this->getRequest()
     					->getParam("id"))
     					->delete();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
+    			
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Piercer was successfully deleted"));
     					$this->_redirect("*/*/");
@@ -315,5 +324,11 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     	$this->getResponse ()->setBody ( $jsonData );
     }
    
+    /**
+     * return logs helper object
+     */
+    private function getLogsHelper(){
+        return Mage::helper("appointments/logs");
+    }
     
 }

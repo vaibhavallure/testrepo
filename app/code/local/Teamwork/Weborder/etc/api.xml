@@ -1,0 +1,29 @@
+<config>
+    <api>
+        <resources>
+            <teamwork_weborder translate="title" module="teamwork_weborder">
+                <model>teamwork_weborder/api</model>
+                <title>Get weborder</title>
+                <acl>teamwork_weborder</acl>
+                <methods>
+                    <getsimpleweborder translate="title" module="teamwork_weborder">
+                        <title>Get Data</title>
+                        <acl>teamwork_weborder/getsimpleweborder</acl>
+                    </getsimpleweborder>
+                </methods>
+                <faults module="teamwork_weborder">
+                </faults>
+            </teamwork_weborder>
+        </resources>
+        <acl>
+            <resources>
+                <teamwork_weborder translate="title" module="teamwork_weborder">
+                    <title>Get weborder</title>
+                    <getsimpleweborder translate="title" module="teamwork_weborder">
+                        <title>Get Data</title>
+                    </getsimpleweborder>
+                </teamwork_weborder>
+            </resources>
+        </acl>
+    </api>
+</config>

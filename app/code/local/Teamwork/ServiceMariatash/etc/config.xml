@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Teamwork_ServiceMariatash>
+            <version>1.0.3</version>
+        </Teamwork_ServiceMariatash>
+    </modules>
+    <global>
+		<resources>
+            <teamwork_servicemariatash_setup>
+                <setup>
+                    <module>Teamwork_ServiceMariatash</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </teamwork_servicemariatash_setup>
+        </resources>
+    </global>
+</config>

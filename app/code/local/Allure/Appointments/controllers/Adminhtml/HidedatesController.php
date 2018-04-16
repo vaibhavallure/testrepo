@@ -91,6 +91,11 @@ class Allure_Appointments_Adminhtml_HidedatesController extends Mage_Adminhtml_C
                 ->setId($this->getRequest()
                     ->getParam("id"))
                     ->save();
+                
+                    //add logs
+                    $helperLogs = $this->getLogsHelper();
+                    $helperLogs->saveLogs("admin");
+                    
                     
                     Mage::getSingleton("adminhtml/session")->addSuccess(
                         Mage::helper("adminhtml")->__("Hide date saved sucessfully"));
@@ -126,6 +131,11 @@ class Allure_Appointments_Adminhtml_HidedatesController extends Mage_Adminhtml_C
                 $model->setId($this->getRequest()
                     ->getParam("id"))
                     ->delete();
+                
+                //add logs
+                $helperLogs = $this->getLogsHelper();
+                $helperLogs->saveLogs("admin");
+                    
                     Mage::getSingleton("adminhtml/session")->addSuccess(
                         Mage::helper("adminhtml")->__("Item was successfully deleted"));
                     $this->_redirect("*/*/");
@@ -158,5 +168,12 @@ class Allure_Appointments_Adminhtml_HidedatesController extends Mage_Adminhtml_C
         $fileName = 'Piercingdates.xml';
         $grid = $this->getLayout()->createBlock('appointments/adminhtml_hidedates_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
+    }
+    
+    /**
+     * return logs helper object
+     */
+    private function getLogsHelper(){
+        return Mage::helper("appointments/logs");
     }
 }
