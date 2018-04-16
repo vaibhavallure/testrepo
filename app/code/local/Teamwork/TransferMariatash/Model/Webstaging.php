@@ -103,7 +103,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 	
 	public function isValidForChq($completedOnly)
     {
-        /**/$createdAtLimitation = '2018-03-01';
+        /**/$createdAtLimitation = '2018-04-04';
         if( $this->_order->getCreatedAt() < $createdAtLimitation )
         {
             return false;
@@ -133,5 +133,72 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
             break;
         }
         return false;
+    }
+    
+    public function generateWeborderFromOrder($order)
+    {
+        Mage::helper('teamwork_service')->fatalErrorObserver();
+        $this->_order = $order;
+        $channelId = $this->_getChannelId();
+        $select = $this->_db->select()
+            ->from(Mage::getSingleton('core/resource')->getTableName('service_settings'), array('setting_value'))
+            ->where('setting_name = ?', Teamwork_Service_Model_Settings::CONST_COMPLETED_ORDERS)
+        ->where('channel_id = ?', $channelId);
+
+        if ($this->isValidForChq($this->_db->fetchOne($select)))
+        {
+            /*set shipping as billing if no shipping*/
+            $billing = $order->getBillingAddress();
+            $shipping = $order->getShippingAddress();
+            //$old_isSendShipEmail = $this->_isSendShipEmail;
+            if (!$shipping && $billing) {
+                $shipping = clone $billing;
+                $shipping->unsetData('entity_id');
+                if (!$shipping->getEmail()) $shipping->setEmail($order->getCustomerEmail());
+                $order->setShippingAddress($shipping);
+                $this->_isSendShipEmail = true;
+            }
+
+            /*generate giftcards if needed*/
+            $observerObject = new Varien_Event_Observer();
+            $observerObject->setEvent(new Varien_Object());
+            $observerObject->getEvent()->setOrder($order);
+            Mage::getSingleton("teamwork_cegiftcards/observer")->generateGiftCards($observerObject);
+        }
+        
+        if( !empty($channelId) )
+        {
+            try
+            {
+                $select = $this->_db->select()
+                    ->from(Mage::getSingleton('core/resource')->getTableName('service_settings'), array('setting_value'))
+                    ->where('setting_name = ?', Teamwork_Service_Model_Settings::CONST_COMPLETED_ORDERS)
+                ->where('channel_id = ?', $channelId);
+                $completedOnly = $this->_db->fetchOne($select);
+                
+                Mage::dispatchEvent('webstaging_validate_before', array('order' => $this->_order));
+                if( $this->isValidForChq($completedOnly) )
+                {
+                    $this->_createWebOrder();
+
+                    if(!empty($this->_webOrderId))
+                    {
+                        $this->_createWebOrderDiscount();
+                        /*fix for possible customization to prevent extra items taxes accumulation*/
+                        $this->_lineTaxAmountAccumulator = 0;
+                        $this->_createWebOrderItems(); /*should be before $this->_createWebOrderFee()*/
+                        $this->_createWebOrderFee();
+                        $this->_createWebOrderItemsDiscount(); /*should be after _createWebOrderItems*/
+                        $this->_createWebOrderPayment();
+                    }
+                }
+            }
+            catch(Exception $e)
+            {
+                $this->_getLogger()->addException($e);
+            }
+        }
+
+        return $this;
     }
 }

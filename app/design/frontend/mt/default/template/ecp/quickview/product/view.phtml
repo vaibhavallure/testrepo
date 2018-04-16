@@ -32,7 +32,7 @@
 $_helper = $this->helper('catalog/output'); ?>
 <?php $_product = $this->getProduct();
 
-$prHelper        = Mage::helper("alluremultistore_catalog");
+$prHelper        = Mage::helper("allure_catalog");
 $isCustomOptions = $prHelper->isCustomOptionsAvailable($_product->getId());
 $parentVal = ($isCustomOptions)?1:0;
 

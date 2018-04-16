@@ -23,8 +23,10 @@ DELETE loc1
 WHERE loc1.entity_id>loc2.entity_id;
 
 ALTER TABLE `{$this->getTable('service_location')}`
+    DROP PRIMARY KEY,
 	DROP COLUMN `channel_id`,
-DROP COLUMN `enabled`;
+    DROP COLUMN `enabled`,
+ADD PRIMARY KEY (`location_id`);
 
 DELETE rel1
     FROM `{$this->getTable('service_style_related')}` rel1
