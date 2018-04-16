@@ -9,7 +9,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Receive extends Mage_Adminh
 		$this->_controller = "adminhtml_purchaseorder_receive";
 		$this->_blockGroup = "inventory";
 		$this->_headerText = Mage::helper("inventory")->__("Receive Purchase Orders");
-		$this->_addButtonLabel = Mage::helper("productshare")->__("Add New Item");
+		$this->_addButtonLabel = Mage::helper("core")->__("Add New Item");
 		parent::__construct();
 
 	}
