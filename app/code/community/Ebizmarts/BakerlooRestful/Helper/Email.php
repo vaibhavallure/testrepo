@@ -166,6 +166,11 @@ class Ebizmarts_BakerlooRestful_Helper_Email extends Mage_Core_Helper_Abstract
         $this->_emailInfo->unsetData();
         $this->_emailInfo->addTo($customer->getEmail(), $customer->getName());
 
+        if ($customer->getId()) {
+            $newResetPasswordLinkToken =  $this->getCustomerHelper()->generateResetPasswordLinkToken();
+            $customer->changeResetPasswordLinkToken($newResetPasswordLinkToken);
+        }
+
         $this->_template
             ->setDesignConfig(array('area' => 'frontend', 'store' => $storeId))
             ->sendTransactional(
@@ -252,5 +257,13 @@ class Ebizmarts_BakerlooRestful_Helper_Email extends Mage_Core_Helper_Abstract
         }
 
         return $this;
+    }
+
+    /**
+     * @return Mage_Core_Helper_Abstract
+     */
+    protected function getCustomerHelper()
+    {
+        return Mage::helper('customer');
     }
 }

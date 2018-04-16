@@ -299,6 +299,12 @@ class Allure_Inventory_Model_Cron {
 	    }
 	   
 	}
+	function validateDate($date, $format = 'Y-m-d H:i:s')
+	{
+	    $d = DateTime::createFromFormat($format, $date);
+	    return $d && $d->format($format) == $date;
+	    
+	}
 	public function updateBackorderDate(){
 	    $storeId=1;
 	    $productArr=array();
@@ -310,7 +316,7 @@ class Allure_Inventory_Model_Cron {
 	    foreach ($ids as $id){
 	        $productBackTime=Mage::getModel('catalog/product')->setStoreId($storeId)->load($id)->getBackorderTime();
 	        if(!is_null($productBackTime) && !empty($productBackTime)){
-	            if(validateDate($productBackTime, 'F j, Y')){
+	            if($this->validateDate($productBackTime, 'F j, Y')){
 	                $productDate=date('d-m-Y', strtotime( $productBackTime));
 	                if(strtotime($productDate) < strtotime($todaysDate)){
 	                    $productArr[]=$id;
@@ -320,14 +326,9 @@ class Allure_Inventory_Model_Cron {
 	        unset($productBackTime);
 	        
 	    }
-	    function validateDate($date, $format = 'Y-m-d H:i:s')
-	    {
-	        $d = DateTime::createFromFormat($format, $date);
-	        return $d && $d->format($format) == $date;
-	        
-	    }
+	    
 	    try {
-	        $backDate='in 4 to 6 Weeks';
+	        $backDate='in 6 to 8 weeks';
 	        if(count($productArr) > 0){
 	            Mage::getResourceSingleton('catalog/product_action')
 	            ->updateAttributes($productArr, array(

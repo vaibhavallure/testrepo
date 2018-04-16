@@ -208,20 +208,7 @@ var count = 1;
 	     });
 		 //ajax start to get the working days of piercers according to store
 		
-		 	
-		 	 
-		 	 
-		 	 
 	 });
 	 
-	 
-	 
-	
 }); 
- 
- 
- 
- 
- 
-
  

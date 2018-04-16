@@ -10,7 +10,6 @@
 	$storeId = $this->getRequest()->getParam('store');
 	$storeId_arr = explode(",", $storeId);
 	$activeStores = $this->getActiveStore();
-	 
 	$multi_stores=array();
 	
 	if(count($storeId_arr) >= 1){
