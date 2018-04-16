@@ -1,7 +1,7 @@
 <?php
 class Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product extends Teamwork_Common_Model_Chq_Xml_Response_Product
 {
-	protected function _parseStyle()
+    protected function _parseStyle()
     {
         $xmlObject = $this->chqStaging->getResponse();
         $requestId = $this->chqStaging->getData('ApiDocumentId');
@@ -23,20 +23,20 @@ class Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product extends Teamwork_C
                         if($channelId && in_array($ecType, $this->_helper->getProcessedEcTypes()))
                         {
                             $this->_collectTaxMapping($channelId);
-                            $this->_collectPriceMapping($channelId);
+                            // $this->_collectPriceMapping($channelId);
                             $styleEntity = Mage::getModel('teamwork_common/staging_style')->loadByChannelAndGuid($channelId, $styleGuid);
                             $this->_populateCategories($styleGuid, $channelId, $channel->children());
                             
                             $processedItems = $this->_parseItem($style,$channel);
                             if($processedItems)
                             {
+                                $this->workingDocument->setRunDependency(true);
                                 $itemsForRta = array_unique( array_merge($itemsForRta,$processedItems) );
                                 if( !in_array($channelId,$processedChannels) )
                                 {
                                     $processedChannels[] = $channelId;
                                 }
                                 $isStyleProcessed=true;
-								
                                 $styleEntity->setData($styleEntity->getGuidField(), $styleGuid)
                                     ->setChannelId($channelId)
                                     ->setRequestId($requestId)
@@ -111,10 +111,10 @@ class Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product extends Teamwork_C
                                     ->setCustomlongtext8($this->_getElement($style, 'CustomLongText8'))
                                     ->setCustomlongtext9($this->_getElement($style, 'CustomLongText9'))
                                     ->setCustomlongtext10($this->_getElement($style, 'CustomLongText10'))
-									->setCustomlongtext16($this->_getElement($style, 'CustomLongText16'))
+                                    ->setCustomlongtext16($this->_getElement($style, 'CustomLongText16'))
                                     ->setCustomlongtext17($this->_getElement($style, 'CustomLongText17'))
-									->setCustommultiselect1(serialize((array)$style->CustomMultiselects1))
-									->setCustommultiselect2(serialize((array)$style->CustomMultiselects2))
+                                    ->setCustommultiselect1(serialize((array)$style->CustomMultiselects1))
+                                    ->setCustommultiselect2(serialize((array)$style->CustomMultiselects2))
                                     ->setDateavailable($this->_getElement($style, 'DateavAilable'))
                                     ->setInactive($this->_getElement($style, 'Inactive'))
                                 ->save();
@@ -132,15 +132,10 @@ class Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product extends Teamwork_C
             if( !empty($processedChannels) )
             {
                 $this->_populateInventory($itemsForRta,$processedChannels);
-                
-                foreach($processedChannels as $channelId)
-                {
-                   $this->_registrateEcm($channelId, $requestId, Teamwork_Common_Model_Staging_Service::PROCESSABLE_TYPE_STYLES, Teamwork_Common_Model_Staging_Service::STATUS_NEW); 
-                }
             }
         }
     }
-	
+    
 	protected function _parseItem($style,$styleChannel)
     {
         $channelName = $this->_getAttribute($styleChannel, 'Name');
