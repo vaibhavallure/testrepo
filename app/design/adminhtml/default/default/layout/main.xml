@@ -21,7 +21,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
@@ -104,9 +104,6 @@ Default layout, loads most of the pages
                 <action method="addItem"><type>js_css</type><name>extjs/resources/css/ext-all.css</name><params/><if/><condition>can_load_ext_js</condition></action>
                 <action method="addItem"><type>js_css</type><name>extjs/resources/css/ytheme-magento.css</name><params/><if/><condition>can_load_ext_js</condition></action>
 
-				<!-- allure custom appointment css -->
-				<action method="addCss"><name>custom_appointment.css</name></action>
-				
                 <action method="addItem"><type>js</type><name>mage/adminhtml/rules.js</name><params/><if/><condition>can_load_rules_js</condition></action>
 
                 <action method="addItem"><type>js</type><name>mage/adminhtml/wysiwyg/tiny_mce/setup.js</name><params/><if/><condition>can_load_tiny_mce</condition></action>
