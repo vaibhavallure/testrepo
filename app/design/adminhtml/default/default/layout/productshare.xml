@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<layout version="0.1.0">
-  <productshare_adminhtml_productshare_index>
-	<reference name="content">
-	  <block type="productshare/adminhtml_productshare" name="productshare" />
-	</reference>
-  </productshare_adminhtml_productshare_index>
-</layout>
