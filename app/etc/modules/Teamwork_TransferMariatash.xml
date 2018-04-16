@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Teamwork_TransferMariatash>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Teamwork_TransferMariatash>
     </modules>
