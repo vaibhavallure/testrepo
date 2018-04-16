@@ -16,14 +16,14 @@
 				<class>Allure_Indexer_Model</class>
 			</allure_indexer>
 
-			<catalog_resource>
+			<!-- <catalog_resource>
 				<rewrite>
 					<product_indexer_eav_source>Allure_Indexer_Model_Resource_Rewrite_Catalog_Product_Indexer_Eav_Source
 					</product_indexer_eav_source>
 					<product_indexer_price_default>Allure_Indexer_Model_Resource_Rewrite_Catalog_Product_Indexer_Price_Default
 					</product_indexer_price_default>
 				</rewrite>
-			</catalog_resource>
+			</catalog_resource> -->
 
 		</models>
 

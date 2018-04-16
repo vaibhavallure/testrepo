@@ -10,7 +10,7 @@
 <config>
     <modules>
         <Teamwork_Service>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Teamwork_Service>
     </modules>
