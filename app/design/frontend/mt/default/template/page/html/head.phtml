@@ -42,6 +42,19 @@ $image = Mage::getBaseUrl('media') . DS . 'logo' . DS . Mage::getStoreConfig('de
 $description = 'Description';
 $type = 'product';
 
+$currenturl = Mage::helper('core/url')->getCurrentUrl();
+$urlData=explode("/",$currenturl);
+$metaCollection=Mage::getModel("metadata/metadata")->getCollection();
+foreach ($metaCollection as $meta){
+    if(in_array($meta->getTerm(), $urlData)){
+        $title = $meta->getTitle();
+        $description = $meta->getDescription();
+       // $description="Test Test";
+    }
+    
+}
+
+
 if ($this->getRequest()->getParam('fb', false)) {
     if ($this->getRequest()->getParam('imgpressfb', false)) {
         $pressimgTmp = explode('-', $this->getRequest()->getParam('imgpressfb'));
