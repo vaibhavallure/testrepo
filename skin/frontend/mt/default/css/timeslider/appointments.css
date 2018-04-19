@@ -676,9 +676,11 @@ a#foo2_next {
 }
 
 /*Piercing Pricing start*/
+.appointments-piercing-pricing{
+	background: #fff;
+}
 .piercing-pricing-table{
 	width: 100%;
-	background: #fff;
 }
 
 .piercing-pricing-table .pricing-th{
@@ -706,6 +708,12 @@ a#foo2_next {
 .pricing-td .piercer-type{
 	word-wrap: break-word;
 	width: 140px;
+}
+
+.piercing-pricing-note{
+	margin-top: 15px;
+	padding: 0px 0px 10px 10px;
+    font-weight: 600;
 }
 
 
