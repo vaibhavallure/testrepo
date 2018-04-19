@@ -161,6 +161,21 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             $result['msg'] = $time;
             $result['output'] = $output;
             
+            $collection = Mage::getModel("appointments/pricing")->getCollection()
+            ->addFieldToFilter('store_id',$request['store']);
+            
+            $helper = Mage::helper("appointments/storemapping");
+            $configData = $helper->getStoreMappingConfiguration();
+            $storeKey = array_search ($request['store'], $configData['stores']);
+            $storeMap = $configData['store_map'][$storeKey];
+            
+            $pricingBlock = $this->getLayout()->createBlock('appointments/pricing','appointments_piercing_pricing',
+                array('template' => 'appointments/pricing.phtml'))
+                ->setPricingCollection($collection)
+                ->setStoreMap($storeMap);;
+                $pricingHtml = $pricingBlock->toHtml();
+                $result['pricing_html'] = $pricingHtml;
+            
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
             
             // $block =
