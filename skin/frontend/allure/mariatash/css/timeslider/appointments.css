@@ -475,6 +475,10 @@ a#foo2_next {
 	text-align: center;
 }
 
+.pricing-th.pricing-type-th{
+	text-align: left ! important;
+}
+
 .pricing-th.service-cost{
 	width: 25%;
 }
