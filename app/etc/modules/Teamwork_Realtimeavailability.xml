@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Teamwork_Realtimeavailability>
+            <active>false</active>
+            <codePool>local</codePool>
+            <depends>
+                <Teamwork_Transfer />
+            </depends>
+        </Teamwork_Realtimeavailability>
+    </modules>
+</config>

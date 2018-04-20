@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Teamwork_Realtimeavailability>
+            <version>5.0.1</version>
+        </Teamwork_Realtimeavailability>
+    </modules>
+    <admin>
+        <routers>
+            <teamwork_realtimeavailability>
+                <use>admin</use>
+                <args>
+                    <module>Teamwork_Realtimeavailability</module>
+                    <frontName>teamwork_realtimeavailability</frontName>
+                </args>
+            </teamwork_realtimeavailability>
+        </routers>
+    </admin>
+
+    <frontend>
+        <routers>
+            <teamwork_realtimeavailability>
+                <use>standard</use>
+                <args>
+                    <module>Teamwork_Realtimeavailability</module>
+                    <frontName>teamwork_realtimeavailability</frontName>
+                </args>
+            </teamwork_realtimeavailability>
+        </routers>
+        <layout>
+             <updates>
+                  <teamwork_realtimeavailability>
+                        <file>teamwork_realtimeavailability.xml</file>
+                  </teamwork_realtimeavailability>
+             </updates>
+        </layout>
+    </frontend>
+
+    <global>
+        <helpers>
+            <teamwork_realtimeavailability>
+                <class>Teamwork_Realtimeavailability_Helper</class>
+            </teamwork_realtimeavailability>
+        </helpers>
+        <models>
+            <teamwork_realtimeavailability>
+                <class>Teamwork_Realtimeavailability_Model</class>
+            </teamwork_realtimeavailability>
+        </models>
+        <resources>
+            <teamwork_realtimeavailability_setup>
+                <setup>
+                    <module>Teamwork_Realtimeavailability</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </teamwork_realtimeavailability_setup>
+        </resources>
+        <events>
+            <!-- <sales_order_save_after>
+                <observers>
+                    <teamwork_realtimeavailability_sales_order_save_after>
+                        <type>singleton</type>
+                        <class>teamwork_realtimeavailability/observer</class>
+                        <method>registerSvsOrder</method>
+                    </teamwork_realtimeavailability_sales_order_save_after>
+                </observers>
+            </sales_order_save_after>
+            
+            <sales_model_service_quote_submit_after>
+                <observers>
+                    <teamwork_realtimeavailability_sales_model_service_quote_submit_after>
+                        <type>singleton</type>
+                        <class>teamwork_realtimeavailability/observer</class>
+                        <method>registerSvsOrder</method>
+                    </teamwork_realtimeavailability_sales_model_service_quote_submit_after>
+                </observers>
+            </sales_model_service_quote_submit_after>
+            
+            <webstaging_validate_before>
+                <observers>
+                    <teamwork_realtimeavailability_webstaging_validate_before>
+                        <type>singleton</type>
+                        <class>teamwork_realtimeavailability/observer</class>
+                        <method>setRtaOrderAttributes</method>
+                    </teamwork_realtimeavailability_webstaging_validate_before>
+                </observers>
+            </webstaging_validate_before>
+            
+            <add_extra_webstagind_data>
+                <observers>
+                    <teamwork_realtimeavailability_add_extra_webstagind_data>
+                        <type>singleton</type>
+                        <class>teamwork_realtimeavailability/observer</class>
+                        <method>addWebOrderData</method>
+                    </teamwork_realtimeavailability_add_extra_webstagind_data>
+                </observers>
+            </add_extra_webstagind_data> -->
+        </events>
+    </global>
+
+    <crontab>
+        <jobs>
+            <teamwork_realtimeavailability_test>
+                <schedule>
+                    <config_path>teamwork_realtimeavailability/options/update_time</config_path>
+                </schedule>
+                <run>
+                    <model>teamwork_realtimeavailability/observer::scheduleTask</model>
+                </run>
+            </teamwork_realtimeavailability_test>
+        </jobs>
+    </crontab>
+
+    <default>
+        <teamwork_realtimeavailability>
+            <options>
+                <default_location></default_location>
+                <default_channel></default_channel>
+                <negative_inventory>1</negative_inventory>
+                <update_time>*/5 * * * *</update_time>
+            </options>
+        </teamwork_realtimeavailability>
+    </default>
+</config>

@@ -5,14 +5,14 @@ Mage::app();
 Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
 $name = $_GET['file'];
 if (empty($name))
-    die("Please provide file path");
+//    die("Please provide file path");
 
-$teamworIndex = 0;
-$skuIndex = 1;
+$teamworIndex = 1;
+$skuIndex = 0;
 
 
 $prodCount = 0;
-$csv = Mage::getBaseDir('var') . DS . "teamwork" . DS . $name;
+$csv = Mage::getBaseDir('var') . DS . "teamwork" . DS .'teamwork1.csv';
 $productNotFound = array();
 
 $io = new Varien_Io_File();
@@ -53,9 +53,9 @@ try{
         $product=Mage::getModel('catalog/product')->load($id)->setTeamworkId($teamworkId);
         $product->save();
         $prodCount=$prodCount+count($id);
-        Mage::log("Product Id:".$id." ##TEameork ID: ".$teamworkId,Zend_log::DEBUG,'teamwork_id.log',true);
+       // Mage::log("Product Id:".$id." ##TEameork ID: ".$teamworkId,Zend_log::DEBUG,'teamwork_id.log',true);
         Mage::log("Product Count:".$prodCount,Zend_log::DEBUG,'teamwork_id.log',true);
-        if (($recordIndex % 250) == 0) {
+        if (($recordIndex % 2000) == 0) {
             $writeAdapter->commit();
             $writeAdapter->beginTransaction();
         }
