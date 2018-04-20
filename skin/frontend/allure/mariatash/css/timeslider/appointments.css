@@ -516,3 +516,7 @@ a#foo2_next {
 	padding: 5px;
     text-align: center;
 }
+
+.appointment-pricing-textarea{
+	height: 35px ! important;
+}

@@ -497,7 +497,7 @@ a#foo2_next {
 	margin-top: 25px;
 }
 .splnotesTxtarea{
-	height: 25px !important; /*68px !important;*/
+	height: 15px !important; /*68px !important;*/
 	width: 308px;
 }
 .appt_ph .intl-tel-input{
@@ -732,5 +732,6 @@ a#foo2_next {
 	padding: 5px;
     text-align: center;
 }
+
 
 
