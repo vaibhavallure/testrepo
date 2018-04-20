@@ -23,6 +23,8 @@ class Allure_Appointments_Block_Pricing extends Mage_Core_Block_Template{
         $storeKey = array_search ($storeId, $configData['stores']);
         $storeMap = $configData['store_map'][$storeKey];
         $this->setStoreMap($storeMap);
+        $blockIdentifier = $configData['piercing_pricing_block'][$storeKey];
+        $this->setCmsBlockId($blockIdentifier);
     }
 
 }
