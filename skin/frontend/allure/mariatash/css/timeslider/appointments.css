@@ -494,7 +494,7 @@ a#foo2_next {
 .pricing-td .piercer-type{
 	word-wrap: break-word;
 	width: 140px;
-	text-align: center;
+	text-align: justify;
 }
 
 .piercing-pricing-note{
