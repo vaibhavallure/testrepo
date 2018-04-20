@@ -273,8 +273,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<div class="appointment-setting-common apt-row-1">';
         $html .= '<label for="appointments_store_map">Store Map </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
-            . $this->getElement()->getName() . '[store_map][]" value="'
-                . $this->_getValue('store_map/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('store_map/' . $rowIndex).'</textarea> ';
+            . $this->getElement()->getName() . '[store_map][]" value="" ' . $this->_getDisabled() . '>'.$this->_getValue('store_map/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
         
         
