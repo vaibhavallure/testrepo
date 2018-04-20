@@ -31,7 +31,7 @@ class Allure_Appointments_Block_Adminhtml_Pricing_Edit extends Mage_Adminhtml_Bl
     {
         if (Mage::registry("pricing_data") && Mage::registry("pricing_data")->getId()) {
             
-            return Mage::helper("productshare")->__("Edit Item '%s'", 
+            return Mage::helper("appointments")->__("Edit Item '%s'", 
                     $this->htmlEscape(Mage::registry("pricing_data")->getId()));
         } else {
             
