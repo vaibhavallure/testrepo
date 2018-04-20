@@ -497,7 +497,7 @@ a#foo2_next {
 	margin-top: 25px;
 }
 .splnotesTxtarea{
-	height: 68px !important;
+	height: 25px !important; /*68px !important;*/
 }
 .appt_ph .intl-tel-input{
 	width: 100% !important;
@@ -674,4 +674,46 @@ a#foo2_next {
 	    width: 74%;
 	}
 }
+
+/*Piercing Pricing start*/
+.appointments-piercing-pricing{
+	background: #fff;
+}
+.piercing-pricing-table{
+	width: 100%;
+}
+
+.piercing-pricing-table .pricing-th{
+	width: 30%;
+	text-transform: uppercase;
+	padding: 10px;
+}
+
+.pricing-th.service-cost{
+	width: 25%;
+}
+
+.piercing-pricing-table .pricing-td{
+	width: 30% ! important;
+	padding: 0px 0px 0px 10px;
+    border-bottom: 0.5px solid rgb(153, 153, 153);
+}
+
+.pricing-td.jewelry-at,
+.pricing-td.service-cost{
+	text-align: center;
+	vertical-align: middle;
+}
+
+.pricing-td .piercer-type{
+	word-wrap: break-word;
+	width: 140px;
+}
+
+.piercing-pricing-note{
+	margin-top: 15px;
+	padding: 0px 0px 10px 10px;
+    font-weight: 600;
+}
+
 
