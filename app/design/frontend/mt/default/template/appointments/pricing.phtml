@@ -1,10 +1,15 @@
-<?php $collection = $this->getPricingCollection();?>
+<?php //$collection = $this->getPricingCollection();?>
 
 <div class="appointment-storemap">
-<?php echo $this->getStoreMap()?>
+<?php //echo $this->getStoreMap()?>
 </div>
 
-<?php if($collection->getSize() > 0):?>
+<div>
+	<?php echo $this->getLayout()->createBlock('cms/block')
+	->setBlockId($this->getCmsBlockId())->toHtml();?>
+</div>
+
+<?php if(false /* $collection->getSize() > 0 */):?>
 
 	<div class="piercing_block">
 		<h3><?php echo $this->__('PRICING')?></h3>

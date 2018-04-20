@@ -169,10 +169,13 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             $storeKey = array_search ($request['store'], $configData['stores']);
             $storeMap = $configData['store_map'][$storeKey];
             
+            $blockIdentifier = $configData['piercing_pricing_block'][$storeKey];
+            
             $pricingBlock = $this->getLayout()->createBlock('appointments/pricing','appointments_piercing_pricing',
                 array('template' => 'appointments/pricing.phtml'))
                 ->setPricingCollection($collection)
-                ->setStoreMap($storeMap);;
+                ->setStoreMap($storeMap)
+                ->setCmsBlockId($blockIdentifier);
                 $pricingHtml = $pricingBlock->toHtml();
                 $result['pricing_html'] = $pricingHtml;
             
