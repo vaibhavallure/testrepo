@@ -1,10 +1,15 @@
-<?php $collection = $this->getPricingCollection();?>
+<?php //$collection = $this->getPricingCollection();?>
 
 <div class="appointment-storemap">
-<?php echo $this->getStoreMap()?>
+<?php //echo $this->getStoreMap()?>
 </div>
 
-<?php if($collection->getSize() > 0):?>
+<div>
+	<?php echo $this->getLayout()->createBlock('cms/block')
+	->setBlockId($this->getCmsBlockId())->toHtml();?>
+</div>
+
+<?php if(false/* $collection->getSize() > 0 */):?>
 
 	<div class="piercing_block">
 		<h3><?php echo $this->__('PRICING')?></h3>
@@ -14,7 +19,7 @@
     	<table class="piercing-pricing-table">
     		<thead>
     			<tr>
-    				<th class="pricing-th pricing-type-th"><?php echo $this->__('Type of Piercing')?></th>
+    				<th class="pricing-th"><?php echo $this->__('Type of Piercing')?></th>
     				<th class="pricing-th service-cost"><?php echo $this->__('Service Cost Each')?></th>
     				<th class="pricing-th"><?php echo $this->__('Jewelry Starts At each')?></th>
     			</tr>
