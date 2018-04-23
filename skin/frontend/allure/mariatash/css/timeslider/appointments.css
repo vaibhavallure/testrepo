@@ -524,3 +524,7 @@ a#foo2_next {
 .appointment-pricing-textarea{
 	height: 35px ! important;
 }
+
+.appointment-login-popup-header{
+	font-size: 14px;
+}
