@@ -66,6 +66,11 @@ apple_pay:
     - staging
   only:
     - apple_pay
+  cache:
+    paths:
+    - var
+    - media
+    - app/etc/local.xml
   script:
     - env
     - deploy-magento applepay-mariatash
