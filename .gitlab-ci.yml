@@ -67,7 +67,8 @@ apple_pay:
   only:
     - apple_pay
   script:
-    - mage-deploy applepay-mariatash
+    - env
+    - deploy-magento applepay-mariatash
     - echo 'Deployed on apple_pay Staging'
 
 new_apple_pay:
