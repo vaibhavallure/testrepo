@@ -156,6 +156,9 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             $giftHelper = Mage::helper('giftmessage/message');
             if($giftHelper->getIsMessagesAvailable('order_item', $orderItem) && $orderItem->getGiftMessageId() && $giftHelper->getEscapedGiftMessage($orderItem)!=''){
                 $message = $giftHelper->getEscapedGiftMessage($orderItem);
+            }else{
+                $message="";
+            }
                 $lines[][] = array(
                     'text'  => Mage::helper('core/string')->str_split($message, 80, true, true),
                     'font' => 'italic',
@@ -178,7 +181,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
                 );
                 
                 return array("is_show"=>true,'label_block'=>$lineBlockHdr,'value_block'=>$lineBlock);
-            }
+           
             return array("is_show"=>$flag);
         }catch (Exception $e){}
     }
@@ -195,7 +198,11 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
                 $from = "From : ".$this->htmlEscape($_giftMessage->getSender());
                 $to   = "To : ".$this->htmlEscape($_giftMessage->getRecipient());
                 $message = $giftHelper->getEscapedGiftMessage($order);
-                
+            }else {
+                $from = "From : ";
+                $to   = "To : ";
+                $message = " ";;
+            }
                 $lines[][] = array(
                     'text'  => "Gift Message for this order",
                     'font' => 'bold',
@@ -238,14 +245,35 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
                     'height' => 20
                 );
                 
+                
                 return array(
                     "is_show"=>true,"from"=>$lineBlockFrom,
                     "to"=>$lineBlockTo,"message"=>$lineBlockMsg,
-                    "label"=>$lineBlock
+                    "label"=>$lineBlock, "break"=>$breaks
                 );
-            }
+         
             return array("is_show"=>false);
         }catch (Exception $e){}
+    }
+    
+    
+    /**
+     * aws02
+     * calculate height of address with new added extra field
+     */
+    public function calHeightExtraData($y,$data){
+        foreach ($data as $value){
+            if ($value !== '') {
+                $text = array();
+                foreach (Mage::helper('core/string')->str_split($value, 55, true, true) as $_value) {
+                    $text[] = $_value;
+                }
+                foreach ($text as $part) {
+                    $y += 15;
+                }
+            }
+        }
+        return $y;
     }
     
     

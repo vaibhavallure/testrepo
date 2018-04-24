@@ -20,35 +20,17 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php $controllerName = Mage::app()->getRequest()->getControllerName();?>
 <?php if ($this->getChildHtml()): ?>
-<div class="entry-edit <?php echo ($controllerName != "sales_order") ? " box-left":" "?>">
+<div class="entry-edit">
     <div class="entry-edit-head">
         <h4><?php echo Mage::helper('sales')->__('Gift Options') ?></h4>
     </div>
-    <?php if($controllerName != "sales_order"):?>
-        <fieldset>
-            <?php echo $this->getChildHtml('giftmessage') ?>
-        </fieldset>
-    <?php else:?>
-    	<fieldset>
-            <?php echo $this->getChildHtml() ?>
-        </fieldset>
-    <?php endif ?>
-</div>
-<?php endif ?>
-
-<?php if($controllerName != "sales_order"):?>
-<div class="entry-edit box-right">
-    <div class="entry-edit-head">
-        <h4><?php echo Mage::helper('sales')->__('Order Date') ?></h4>
-    </div>
     <fieldset>
-        <?php echo $this->getChildHtml('orderdate') ?>
+        <?php echo $this->getChildHtml() ?>
     </fieldset>
 </div>
 <?php endif ?>

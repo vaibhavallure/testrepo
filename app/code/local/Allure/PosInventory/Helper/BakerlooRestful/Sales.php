@@ -209,7 +209,6 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
                     $this->getQuote()->getShippingAddress()->setShippingMethod($data['shipping']);
             }
         }
-       // Mage::log($this->getQuote()->getData(),Zend_log::DEBUG,'ajay.log',true);
         $billingAddress  = $this->_getAddress($data['customer']['billing_address'], $data['customer']['email']);
         $this->getQuote()
             ->getBillingAddress()

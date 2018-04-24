@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -28,7 +28,7 @@
 <?php $_items = $this->getItems(); ?>
 <div id="order-giftmessage">
 <div class="clear"></div>
-<div class="giftmessage-order-create">
+<div class="giftmessage-order-create box-left">
     <div class="entry-edit">
         <div><?php echo Mage::helper('sales')->__('Gift Message for the Entire Order') ?></div><br />
         <div class="fieldset">
@@ -44,12 +44,6 @@
         </div>
     </div>
 </div>
-<style>
-#order-giftmessage textarea{
-    height: 12em ! important;
-}
-</style>
-
 <script type="text/javascript">
     order.giftmessageFieldsBind('order-giftmessage');
 </script>

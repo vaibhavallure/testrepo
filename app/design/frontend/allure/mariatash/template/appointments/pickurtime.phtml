@@ -1,17 +1,18 @@
-<?php
+<?php 
 $fetch_model = Mage::registry('apt_modify_data');
 
+
 if($fetch_model){
-    
-    $f_pickurday = $fetch_model->getAppointmentStart();
-    $timestamp = strtotime($f_pickurday);
-    $fetch_starttime = date('H:i', $timestamp);
-    
-    $f_pickurendtime = $fetch_model->getAppointmentEnd();
-    $timestamp = strtotime($f_pickurendtime);
-    $fetch_endtime = date('H:i', $timestamp);
+	
+	$f_pickurday = $fetch_model->getAppointmentStart();
+	$timestamp = strtotime($f_pickurday);
+	$fetch_starttime = date('H:i', $timestamp);
+	
+	$f_pickurendtime = $fetch_model->getAppointmentEnd();
+	$timestamp = strtotime($f_pickurendtime);
+	$fetch_endtime = date('H:i', $timestamp);
 }
-?>
+?> 
 <div class="pickur_time_main_container">
 	<label class="pickurtimeLable" for="pick_your_time" >Pick Your Time:</label><br/>
 
@@ -30,26 +31,36 @@ if($fetch_model){
 		$timeslot_col_size = 7;
 		$time_pref = 24;
 		$helper=Mage::helper('appointments');
-		$storeSerializeData = Mage::getStoreConfig("appointments/general/storemapping");
+		//$storeSerializeData = Mage::getStoreConfig("appointments/general/storemapping");
+		$configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
 		$selectedStoreId = intval($this->getData("store_id"));
-		if($storeSerializeData){
-			$storeUnSerializeData = unserialize($storeSerializeData);
 		
-			
-		
-			$selectedStoreId = intval($selectedStoreId);
-			
-			if($selectedStoreId){
-				foreach($storeUnSerializeData as $de){
-					//$allStores = Mage::app()->getStores();
-					$storeId = intval($de['store']);
-					//echo "STORE= ".$storeId . "  ".$selectedStoreId;
-					if($storeId == $selectedStoreId){
-						
-						$time_pref = intval($de['time']);			//24 or 12	hrs		
-					}
-				}
-			}
+		$selectedStoreId = intval($this->getData("store_id"));
+		//if($storeSerializeData){
+		//	$storeUnSerializeData = unserialize($storeSerializeData);
+		$storeKey = array_search ($selectedStoreId, $configData['stores']);
+		if(count($configData) > 0){
+		    
+		    $selectedStoreId = intval($selectedStoreId);
+		    $storeKey = array_search ($selectedStoreId, $configData['stores']);
+		    
+		    /* if($selectedStoreId){
+		     foreach($storeUnSerializeData as $de){
+		     //$allStores = Mage::app()->getStores();
+		     $storeId = intval($de['store']);
+		     //echo "STORE= ".$storeId . "  ".$selectedStoreId;
+		     if($storeId == $selectedStoreId){
+		     
+		     $time_pref = intval($de['time']);			//24 or 12	hrs
+		     }
+		     }
+		     } */
+		    
+		    if($selectedStoreId){
+		        $time_pref = intval($configData['time_pref'][$storeKey]);
+		    }
+		    
+		    
 		}
 		$intervalTime=$helper->getTimeByStoreAndPeople(1,$selectedStoreId);
 		
@@ -67,16 +78,16 @@ if($fetch_model){
 		}
 		Mage::log($appointmentId,Zend_log::DEBUG,'mylogs',true);
 		
-		$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
-		
+		//$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
+		$startTime = $configData['start_work_time'][$storeKey];
 		//echo $startTime." isd sajofasf";
 		
 		//$selectedTime = sprintf('%02d', $startTime ).":00";
 		$selectedTime = $helper->getTimeByValue($startTime);
 		
 		
-		$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time",$selectedStoreId);
-		
+		//$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time",$selectedStoreId);
+		$endTimeSystem = $configData['end_work_time'][$storeKey];
 		
 		$selectedStartTime = strtotime($selectedTime);
 	
@@ -114,7 +125,7 @@ if($fetch_model){
 			$collection->addFieldToFilter('working_days', array('like' => '%'.$date.'%'));
 			Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments', true );
 			/* If piercer is not free logic start*/
-			if(!$collection->count()){
+			if(empty($collection->getData())){
 			
 				echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
 			}

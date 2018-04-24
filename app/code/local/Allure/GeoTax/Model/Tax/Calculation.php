@@ -155,7 +155,9 @@ class Allure_GeoTax_Model_Tax_Calculation extends Mage_Tax_Model_Calculation
                     if ($geoAddress) {
                         $address = $geoAddress;
                         $geolocation = Mage::getSingleton('allure_geolocation/geoLocation');
-                        Mage::log(sprintf("IP::%s, COUNTRY:: %s, TAXCLASS:: %s",$geolocation->getIpAddress(), $geolocation->getCountryCode(), $customerTaxClass), Zend_Log::DEBUG, 'allure_geotax.log', $this->_geoTaxHelper->getDebugMode());
+                        if($this->_geoTaxHelper->getDebugMode()){
+                             Mage::log(sprintf("IP::%s, COUNTRY:: %s, TAXCLASS:: %s",$geolocation->getIpAddress(), $geolocation->getCountryCode(), $customerTaxClass), Zend_Log::DEBUG, 'allure_geotax.log', $this->_geoTaxHelper->getDebugMode());
+                        }
                     }
                 }
 

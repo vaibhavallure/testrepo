@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Teamwork_CEGiftcards>
+            <version>5.1.0</version>
+        </Teamwork_CEGiftcards>
+    </modules>
+    <adminhtml>
+        <layout>
+            <updates>
+                <teamwork_cegiftcards>
+                    <file>teamwork_cegiftcards.xml</file>
+                </teamwork_cegiftcards>
+            </updates>
+        </layout>
+        <sales>
+            <order>
+                <create>
+                    <available_product_types>
+                        <teamwork_cegiftcard/>
+                    </available_product_types>
+                </create>
+            </order>
+        </sales>
+    </adminhtml>
+
+    <frontend>
+        <routers>
+            <teamwork_cegiftcards>
+                <use>standard</use>
+                <args>
+                    <module>Teamwork_CEGiftcards</module>
+                    <frontName>teamwork_cegiftcards</frontName>
+                </args>
+            </teamwork_cegiftcards>
+        </routers>
+        <layout>
+             <updates>
+                  <teamwork_cegiftcards>
+                        <file>teamwork_cegiftcards.xml</file>
+                  </teamwork_cegiftcards>
+             </updates>
+        </layout>
+    </frontend>
+    <global>
+        <helpers>
+            <teamwork_cegiftcards>
+                <class>Teamwork_CEGiftcards_Helper</class>
+            </teamwork_cegiftcards>
+        </helpers>
+        <blocks>
+            <teamwork_cegiftcards>
+                <class>Teamwork_CEGiftcards_Block</class>
+            </teamwork_cegiftcards>
+        </blocks>
+        <models>
+            <teamwork_cegiftcards>
+                <class>Teamwork_CEGiftcards_Model</class>
+                <resourceModel>teamwork_cegiftcards_resource</resourceModel>
+            </teamwork_cegiftcards>
+            <teamwork_cegiftcards_resource>
+                <class>Teamwork_CEGiftcards_Model_Resource</class>
+                <entities>
+                    <giftcard_link>
+                        <table>teamwork_cegiftcards_giftcard_link</table>
+                    </giftcard_link>
+                    <giftcard_transaction>
+                        <table>teamwork_cegiftcards_giftcard_transaction</table>
+                    </giftcard_transaction>
+                    <order_invoice_link>
+                        <table>teamwork_cegiftcards_order_invoice_link</table>
+                    </order_invoice_link>
+                    <order_creditmemo_link>
+                        <table>teamwork_cegiftcards_order_creditmemo_link</table>
+                    </order_creditmemo_link>
+                    <amount>
+                        <table>teamwork_cegiftcards_amount</table>
+                    </amount>
+                </entities>
+            </teamwork_cegiftcards_resource>
+
+            <teamwork_cegiftcards_transfer>
+                <class>Teamwork_CEGiftcards_Transfer_Model</class>
+            </teamwork_cegiftcards_transfer>
+            <teamwork_cegiftcards_service>
+                <class>Teamwork_CEGiftcards_Service_Model</class>
+            </teamwork_cegiftcards_service>
+            <teamwork_cegiftcards_paypal>
+                <class>Teamwork_CEGiftcards_Paypal</class>
+            </teamwork_cegiftcards_paypal>
+
+            <teamwork_transfer>
+                <rewrite>
+                    <webstaging>Teamwork_CEGiftcards_Transfer_Model_Webstaging</webstaging>
+                    <class_item>Teamwork_CEGiftcards_Transfer_Model_Class_Item</class_item>
+                </rewrite>
+            </teamwork_transfer>
+            <teamwork_service>
+                <rewrite>
+                    <weborder>Teamwork_CEGiftcards_Service_Model_Weborder</weborder>
+                    <settings>Teamwork_CEGiftcards_Service_Model_Settings</settings>
+                    <service>Teamwork_CEGiftcards_Service_Model_Service</service>
+                </rewrite>
+            </teamwork_service>
+            <paypal>
+                <rewrite>
+                    <api_nvp>Teamwork_CEGiftcards_Paypal_Api_Nvp</api_nvp>
+                </rewrite>
+            </paypal>
+            
+        </models>
+
+        <resources>
+            <teamwork_cegiftcards_setup>
+                <setup>
+                    <module>Teamwork_CEGiftcards</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </teamwork_cegiftcards_setup>
+            <teamwork_cegiftcards_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </teamwork_cegiftcards_write>
+            <teamwork_cegiftcards_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </teamwork_cegiftcards_read>
+        </resources>
+
+        <sales>
+            <quote>
+                <totals>
+                    <teamwork_cegiftcards_amount>
+                        <!-- <class>sales/quote_address_total_nominal</class>-->
+                        <class>teamwork_cegiftcards/quote_address_total</class>
+                        <!-- <after>shipping,subtotal,freeshipping,tax_subtotal</after>
+                        <before>grand_total</before>-->
+                        <!-- <after>grand_total</after>-->
+                        <after>weee,discount,tax,tax_subtotal,grand_total,reward</after>
+                        <before>customerbalance</before>
+                        <renderer>teamwork_cegiftcards/sales_cart_total</renderer>
+                    </teamwork_cegiftcards_amount>
+                </totals>
+            </quote>
+            <order_invoice>
+                <totals>
+                    <teamwork_cegiftcards_amount>
+                        <class>teamwork_cegiftcards/order_invoice_total</class>
+                        <!-- <after>discount,tax,grand_total,reward,giftwrapping</after>
+                        <before>customerbalance</before>-->
+                        <!--<after>grand_total</after>-->
+                        <after>weee,discount,tax,tax_subtotal,grand_total,reward</after>
+                    </teamwork_cegiftcards_amount>
+                </totals>
+            </order_invoice>
+            <order_creditmemo>
+                <totals>
+                    <teamwork_cegiftcards_amount>
+                        <class>teamwork_cegiftcards/order_creditmemo_total</class>
+                        <!-- <after>discount,tax,grand_total,reward,giftwrapping</after>
+                        <before>customerbalance</before>-->
+                        <!--<after>grand_total</after>-->
+                        <after>weee,discount,tax,tax_subtotal,grand_total,reward</after>
+                    </teamwork_cegiftcards_amount>
+                </totals>
+            </order_creditmemo>
+        </sales>
+
+        <events>
+
+            <sales_model_service_quote_submit_before>
+                <observers>
+                    <teamwork_cegiftcards_service_quote_submit_before>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>quotesubmitbefore</method>
+                    </teamwork_cegiftcards_service_quote_submit_before>
+                </observers>
+            </sales_model_service_quote_submit_before>
+
+            <sales_model_service_quote_submit_failure>
+                <observers>
+                    <teamwork_cegiftcards_service_quote_submit_failure>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>quotesubmitfailure</method>
+                    </teamwork_cegiftcards_service_quote_submit_failure>
+                </observers>
+            </sales_model_service_quote_submit_failure>
+
+            <sales_model_service_quote_submit_success>
+                <observers>
+                    <teamwork_cegiftcards_quote_submit_success>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>quotesubmitsuccess</method>
+                    </teamwork_cegiftcards_quote_submit_success>
+                </observers>
+            </sales_model_service_quote_submit_success>
+
+            <sales_order_invoice_save_after>
+                <observers>
+                    <teamwork_cegiftcards_invoice_save_after>
+                        <type>singleton</type>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>invoicesaveafter</method>
+                    </teamwork_cegiftcards_invoice_save_after>
+                </observers>
+            </sales_order_invoice_save_after>
+
+            <sales_order_creditmemo_save_after>
+                <observers>
+                    <teamwork_cegiftcards_creditmemo_save_after>
+                        <type>singleton</type>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>creditmemosaveafter</method>
+                    </teamwork_cegiftcards_creditmemo_save_after>
+                </observers>
+            </sales_order_creditmemo_save_after>
+
+            <sales_order_load_after>
+                <observers>
+                    <teamwork_cegiftcards_order_load_after>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>salesOrderLoadAfter</method>
+                    </teamwork_cegiftcards_order_load_after>
+                </observers>
+            </sales_order_load_after>
+
+            <sales_convert_quote_item_to_order_item>
+                <observers>
+                    <teamwork_cegiftcards_append_additional_data>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>appendGiftcardAdditionalData</method>
+                    </teamwork_cegiftcards_append_additional_data>
+                </observers>
+            </sales_convert_quote_item_to_order_item>
+
+            <sales_order_save_commit_after>
+                <observers>
+                    <teamwork_cegiftcards_append_additional_data>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>generateGiftCards</method>
+                    </teamwork_cegiftcards_append_additional_data>
+                </observers>
+                <observers>
+                    <teamwork_cegiftcards_sales_order_save_after>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>refundGiftcardsAfterCancelOrder</method>
+                    </teamwork_cegiftcards_sales_order_save_after>
+                </observers>
+            </sales_order_save_commit_after>
+
+            <sales_order_payment_place_start>
+                <observers>
+                    <teamwork_sales_order_payment_place_start>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>forceAutorizeCapture</method>
+                    </teamwork_sales_order_payment_place_start>
+                </observers>
+            </sales_order_payment_place_start>
+
+            <paypal_prepare_line_items>
+                <observers>
+                    <teamwork_cegiftcards_paypal_prepare_line_items>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>addPaypalGiftCardItem</method>
+                    </teamwork_cegiftcards_paypal_prepare_line_items>
+                </observers>
+            </paypal_prepare_line_items>
+
+            <adminhtml_sales_order_create_process_data>
+                <observers>
+                    <teamwork_cegiftcards_order_create_process_data>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>processOrderCreationData</method>
+                    </teamwork_cegiftcards_order_create_process_data>
+                </observers>
+            </adminhtml_sales_order_create_process_data>
+
+            <adminhtml_catalog_product_edit_prepare_form>
+                <observers>
+                    <teamwork_cegiftcards_edit_prepare_form>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>adminHtmlAddAmountRenderer</method>
+                    </teamwork_cegiftcards_edit_prepare_form>
+                </observers>
+            </adminhtml_catalog_product_edit_prepare_form>
+
+            <sales_quote_merge_after>
+                <observers>
+                    <teamwork_cegiftcards_mergeQuotes>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>mergeQuotes</method>
+                    </teamwork_cegiftcards_mergeQuotes>
+                </observers>
+            </sales_quote_merge_after>
+
+            <teamwork_transfer_product_loaded>
+                <observers>
+                    <teamwork_cegiftcards_transfer_product_loaded>
+                        <class>teamwork_cegiftcards/observer</class>
+                        <method>transferProductLoaded</method>
+                    </teamwork_cegiftcards_transfer_product_loaded>
+                </observers>
+            </teamwork_transfer_product_loaded>
+
+        </events>
+
+        <catalog>
+            <product>
+                <type>
+                    <teamwork_cegiftcard translate="label" module="teamwork_cegiftcards">
+                        <label>Gift Card</label>
+                        <model>teamwork_cegiftcards/catalog_product_type_giftcard</model>
+                        <price_model>teamwork_cegiftcards/catalog_product_price_giftcard</price_model>
+                        <index_priority>45</index_priority>
+                        <composite>0</composite>
+                        <is_qty>1</is_qty>
+                        <price_indexer>teamwork_cegiftcards/catalog_product_type_giftcard_indexer_price</price_indexer>
+                    </teamwork_cegiftcard>
+                </type>
+            </product>
+        </catalog>
+
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <giftcard_type/>
+                        <giftcard_amount/>
+                        <giftcard_allow_message/>
+                        <giftcard_lifetime/>
+                        <giftcard_email_template/>
+                        <giftcard_email_template_uc/>
+                        <giftcard_open_amount/>
+                        <giftcard_amount_max/>
+                        <giftcard_amount_min/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
+
+         <template>
+            <email>
+                <teamwork_cegiftcards_general_email_template translate="label">
+                    <label>Generated Gift Card Template</label>
+                    <file>teamwork_cegiftcards/giftcard_generated.html</file>
+                    <type>html</type>
+                </teamwork_cegiftcards_general_email_template>
+            </email>
+        </template>
+
+    </global>
+
+    <default>
+        <sales>
+            <totals_sort>
+                <teamwork_cegiftcards_amount>99</teamwork_cegiftcards_amount>
+            </totals_sort>
+        </sales>
+        <teamwork_cegiftcards>
+            <general>
+                <token backend_model="adminhtml/system_config_backend_encrypted"></token>
+                <refund_giftcards>1</refund_giftcards>
+                <code_format>alphanum</code_format>
+                <code_length>12</code_length>
+                <email_identity>general</email_identity>
+                <email_template>teamwork_cegiftcards_general_email_template</email_template>
+                <email_copy_to_gc_sender>1</email_copy_to_gc_sender>
+                <log_svs_requests>1</log_svs_requests>
+                <ena_pin_validation>0</ena_pin_validation>
+                <ena_pin_generation>0</ena_pin_generation>
+                <pin_length>4</pin_length>
+            </general>
+            <import>
+                <min_open_amount>1</min_open_amount>
+                <max_open_amount>200</max_open_amount>
+            </import>
+        </teamwork_cegiftcards>
+    </default>
+
+    <teamwork_cegiftcards>
+        <gc_code_generator_additional>
+            <separator>-</separator>
+            <charset>
+                <alphanum>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</alphanum>
+                <alpha>ABCDEFGHIJKLMNOPQRSTUVWXYZ</alpha>
+                <num>0123456789</num>
+            </charset>
+        </gc_code_generator_additional>
+        <payment_name>teamwork_giftcards</payment_name>
+        <payment_description>Magento CE Giftcards</payment_description>
+        <barcode_dir_temp>teamwork_cegiftcards/barcodes/tmp/</barcode_dir_temp>
+        <barcode_dir>teamwork_cegiftcards/barcodes/</barcode_dir>
+        <pin_characters>0123456789</pin_characters>
+    </teamwork_cegiftcards>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Teamwork Giftcards</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <teamwork_cegiftcards>
+                                            <title>Teamwork Giftcards</title>
+                                        </teamwork_cegiftcards>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+</config>

@@ -25,7 +25,7 @@
  */
 ?>
 
-<?php if($this->isWholeSaleCustomer()):?>
+<?php if($this->isDeleiveryMethodTwoShipment() && $this->isWholeSaleCustomer()):?>
 <div id="wholeseller-payment-methods">
 	<ul class="form-list">
 		<li class="control pay_now_li" onclick="switchPayOptions(this);" name="mt-pay-now">

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block type="teamwork_cegiftcards/adminhtml_sales_order_view_total" name="teamwork_cegiftcards_adminhtml_sales_order_view_total"/>
+        </reference>
+        <update handle="teamwork_cegiftcards_sales_order_object_new"/>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_view>
+        <update handle="teamwork_cegiftcards_sales_order_invoice_total"/>
+        <reference name="invoice_items">
+            <action method="addColumnRender">
+                <column>name</column>
+                <block>teamwork_cegiftcards/adminhtml_sales_order_item_renderer</block>
+                <template>sales/items/column/name.phtml</template>
+                <type>teamwork_cegiftcard</type>
+            </action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+
+    <adminhtml_sales_order_invoice_new>
+        <update handle="teamwork_cegiftcards_sales_order_invoice_total"/>
+        <update handle="teamwork_cegiftcards_sales_order_object_new"/>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <update handle="teamwork_cegiftcards_sales_order_invoice_total"/>
+        <update handle="teamwork_cegiftcards_sales_order_object_new"/>
+    </adminhtml_sales_order_invoice_updateqty>
+
+
+    <teamwork_cegiftcards_sales_order_invoice_total>
+        <reference name="invoice_totals">
+            <block type="teamwork_cegiftcards/adminhtml_sales_order_invoice_total" name="teamwork_cegiftcards_adminhtml_sales_order_invoice_total"/>
+        </reference>
+    </teamwork_cegiftcards_sales_order_invoice_total>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <update handle="teamwork_cegiftcards_sales_order_creditmemo_total"/>
+        <reference name="creditmemo_items">
+            <action method="addColumnRender">
+                <column>name</column>
+                <block>teamwork_cegiftcards/adminhtml_sales_order_item_renderer</block>
+                <template>sales/items/column/name.phtml</template>
+                <type>teamwork_cegiftcard</type>
+            </action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <update handle="teamwork_cegiftcards_sales_order_creditmemo_total"/>
+        <update handle="teamwork_cegiftcards_sales_order_object_new"/>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <update handle="teamwork_cegiftcards_sales_order_creditmemo_total"/>
+        <update handle="teamwork_cegiftcards_sales_order_object_new"/>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <teamwork_cegiftcards_sales_order_creditmemo_total>
+        <reference name="creditmemo_totals">
+            <block type="teamwork_cegiftcards/adminhtml_sales_order_creditmemo_total" name="teamwork_cegiftcards_adminhtml_sales_order_creditmemo_total"/>
+        </reference>
+    </teamwork_cegiftcards_sales_order_creditmemo_total>
+
+    <adminhtml_sales_order_shipment_new>
+        <update handle="teamwork_cegiftcards_sales_order_object_new"/>
+    </adminhtml_sales_order_shipment_new>
+
+    <adminhtml_sales_order_shipment_view>
+        <reference name="shipment_items">
+            <action method="addColumnRender">
+                <column>name</column>
+                <block>teamwork_cegiftcards/adminhtml_sales_order_item_renderer</block>
+                <template>sales/items/column/name.phtml</template>
+                <type>teamwork_cegiftcard</type>
+            </action>
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+
+    <teamwork_cegiftcards_sales_order_object_new>
+        <reference name="order_items">
+            <action method="addColumnRender">
+                <column>name</column>
+                <block>teamwork_cegiftcards/adminhtml_sales_order_item_renderer</block>
+                <template>sales/items/column/name.phtml</template>
+                <type>teamwork_cegiftcard</type>
+            </action>
+        </reference>
+    </teamwork_cegiftcards_sales_order_object_new>
+
+    <PRODUCT_TYPE_teamwork_cegiftcard>
+        <reference name="product.composite.fieldset">
+            <block type="teamwork_cegiftcards/adminhtml_sales_order_create_fieldset_giftcard" name="product.composite.fieldset.giftcard" before="product.composite.fieldset.options" template="teamwork_cegiftcards/sales/order/create/fieldset/giftcard.phtml"/>
+        </reference>
+    </PRODUCT_TYPE_teamwork_cegiftcard>
+
+
+    <adminhtml_sales_order_create_load_block_items>
+        <update handle="teamwork_cegiftcards_sales_order_create_gcpayment"/>
+    </adminhtml_sales_order_create_load_block_items>
+
+    <adminhtml_sales_order_create_load_block_data>
+        <update handle="teamwork_cegiftcards_sales_order_create_gcpayment"/>
+    </adminhtml_sales_order_create_load_block_data>
+
+    <adminhtml_sales_order_create_index>
+        <reference name="js">
+            <block type="adminhtml/template" template="teamwork_cegiftcards/sales/order/create/gcpayment/js.phtml" name="giftcardaccount_js" />
+        </reference>
+        <update handle="teamwork_cegiftcards_sales_order_create_gcpayment"/>
+    </adminhtml_sales_order_create_index>
+
+    <teamwork_cegiftcards_sales_order_create_gcpayment>
+        <reference name="items_grid">
+            <block type="teamwork_cegiftcards/adminhtml_sales_order_create_gcpayment" template="teamwork_cegiftcards/sales/order/create/gcpayment/form.phtml" name="teamwork_cegiftcard" after="-" />
+        </reference>
+    </teamwork_cegiftcards_sales_order_create_gcpayment>
+
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>teamwork_cegiftcards.css</name></action>
+        </reference>
+    </default>
+
+</layout>
