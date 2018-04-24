@@ -796,6 +796,10 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
          <transactionType>authCaptureTransaction</transactionType>
          <amount>assignAMOUNT</amount>
          <currencyCode>USD</currencyCode>
+           <order>
+             <invoiceNumber>INV-12345</invoiceNumber>
+             <description>Product Description</description>
+           </order>
          <payment>
             <opaqueData>
                <dataDescriptor>assignDD</dataDescriptor>
@@ -833,7 +837,7 @@ XML;
         
         Mage::log("REQUEST: ".$transRequestXml->asXML(),Zend_Log::DEBUG, 'applepay.log', true);
         
-        print_r($transRequestXml->asXML());
+        //print_r($transRequestXml->asXML());
         
         try{	//setting the curl parameters.
             $ch = curl_init();
@@ -859,7 +863,7 @@ XML;
             
             $jsonResult=json_encode($xmlResult);
             
-            echo $jsonResult;
+            //echo $jsonResult;
             
             Mage::log("RESPONSE: ".$jsonResult,Zend_Log::DEBUG, 'applepay.log', true);
                     
