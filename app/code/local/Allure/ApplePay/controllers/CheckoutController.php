@@ -298,6 +298,150 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
+    
+    
+    /**
+     * save checkout billing address
+     */
+    public function saveBillingAddressAction() {
+        
+        Mage::log("BEGIN: saveBillingAddressAction",Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
+        
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost('billing', array());
+            
+            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
+            
+            if (isset($data['email'])) {
+                $data['email'] = trim($data['email']);
+            }
+            
+            if (!isset($data['region_id']) || empty($data['region_id'])) {
+                $regionName = $data['region'];
+                
+                $region  = Mage::getModel('directory/region')->loadByCode($regionName, $data['country_id']);
+                
+                if (!$region->getId()) {
+                    $region = Mage::getModel('directory/region')->loadByName($regionName, $data['country_id']);
+                }
+                
+                if ($region->getId()) {
+                    $data['region_id'] = $region->getId();
+                }
+            }
+            
+            Mage::log("NEW DATA: ".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
+            
+            $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
+            
+            if (!isset($result['error'])) {
+                /* check quote for virtual */
+                if ($this->getOnepage()->getQuote()->isVirtual()) {
+                    $result['goto_section'] = 'payment';
+                    $result['update_section'] = array(
+                            'name' => 'payment-method',
+                            //'html' => $this->_getPaymentMethodsHtml()
+                    );
+                } elseif (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
+                    
+                    $result['goto_section'] = 'shipping_method';
+                    $result['update_section'] = array(
+                            'name' => 'shipping-method',
+                            'html' => $this->_getShippingMethodsHtml()
+                    );
+                    
+                    $result['allow_sections'] = array('shipping');
+                    $result['duplicateBillingInfo'] = 'true';
+                } else {
+                    $result['goto_section'] = 'shipping';
+                }
+                
+                $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
+                $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
+                
+                $result['totals'] = array();
+                
+                foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
+                    $result['totals'][$code] = array(
+                            'title' => $total->getTitle(),
+                            'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)//$total->getValue()
+                    );
+                }
+            }
+            
+            //$result['billing_address'] = $this->_getQuote()->getBillingAddress()->getFirstname();
+            
+            //$result['shipping_address'] = $this->_getQuote()->getShippingAddress()->getFirstname();
+            
+            Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
+            Mage::log("END: saveBillingAddressAction",Zend_Log::DEBUG, 'applepay.log', true);
+            
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        }
+    }
+    
+    
+    /**
+     * save checkout billing address
+     */
+    public function loadShippingMethodsAction() {
+        
+        Mage::log("BEGIN: loadShippingMethodsAction",Zend_Log::DEBUG, 'applepay.log', true);
+        
+        $this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
+        
+        $result = array();
+        
+        $address = $this->getOnepage()->getQuote()->getShippingAddress();
+        
+        Mage::log("DATA: ".json_encode($address->getData()),Zend_Log::DEBUG, 'applepay.log', true);
+                    
+        $shippingMethods = array();
+        
+        $hasDefaultMethod = false;
+        
+        if ($address->getShippingMethod() && $address->getShippingMethod() != '') {
+            $shippingMethods[$address->getShippingMethod()] = array();
+            $this->_getSession()->setDefaultShippingMethod($address->getShippingMethod());
+            $hasDefaultMethod = true;
+        }
+        
+        
+        foreach($address->getGroupedAllShippingRates() as $rates){
+            foreach ($rates as $rate) {
+                if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
+                    continue;
+                }
+                
+                if (!$hasDefaultMethod) {
+                    $this->_getSession()->setDefaultShippingMethod($rate->getCode());
+                    $hasDefaultMethod = true;
+                }
+                
+                $shippingMethods[$rate->getCode()] = $rate->getData();
+            }
+        }
+        
+        $result['goto_section'] = 'shipping_method';
+        $result['shipping_methods'] = $shippingMethods;
+        $result['update_section'] = array(
+                'name' => 'shipping-method',
+                //'html' => $this->_getShippingMethodsHtml()
+        );
+        
+        $result['allow_sections'] = array('shipping');
+        $result['duplicateBillingInfo'] = 'true';
+                
+        $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
+        $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
+            
+            
+        Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("END: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
+        
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
 
     /**
      * Shipping address save action
