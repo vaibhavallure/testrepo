@@ -796,10 +796,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
          <transactionType>authCaptureTransaction</transactionType>
          <amount>assignAMOUNT</amount>
          <currencyCode>USD</currencyCode>
-           <order>
-             <invoiceNumber>INV-12345</invoiceNumber>
-             <description>Product Description</description>
-           </order>
          <payment>
             <opaqueData>
                <dataDescriptor>assignDD</dataDescriptor>
