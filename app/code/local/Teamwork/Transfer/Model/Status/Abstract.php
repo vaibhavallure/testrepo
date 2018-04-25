@@ -272,7 +272,7 @@ class Teamwork_Transfer_Model_Status_Abstract extends Teamwork_Transfer_Model_Ab
                         (
                             ($payment->canRefundPartialPerInvoice()
                               && $invoice->canRefund()
-                              && $payment->getAmountPaid() > $payment->getAmountRefunded()) ||
+                              && $payment->getBaseAmountPaid() > $payment->getBaseAmountRefunded()) || /**/
                             ($payment->canRefund() && !$invoice->getIsUsedForRefund())
                         )
                     )

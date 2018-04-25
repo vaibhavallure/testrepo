@@ -93,9 +93,9 @@ class Teamwork_CEGiftcards_Transfer_Model_Webstaging extends Teamwork_Transfer_M
 
                     $product = $gcItem->getProduct();
 
-                    $price = $gcItem->getPrice();
+                    $price = $gcItem->getBasePrice();/**/
 
-                    $lineTaxAmount = $gcItem->getTaxAmount();
+                    $lineTaxAmount = $gcItem->getBaseTaxAmount();/**/
                     /*fix round bug*/
                     $expectedTotalItemPrice = round($qty * $price + $lineTaxAmount, 2);
                     $price = round($price, 2);
