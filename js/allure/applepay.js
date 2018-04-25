@@ -187,7 +187,7 @@ if (window.ApplePaySession) {
 			'billing[use_for_shipping]': 1
 		});
 		
-		Allure.ApplePay.data.response.shippingMethods = Allure.ApplePay.action.sendRequest('loadShippingMethods');
+		//Allure.ApplePay.data.response.shippingMethods = Allure.ApplePay.action.sendRequest('loadShippingMethods');
 		
 		if (Allure.ApplePay.data.response.saveBilling) {
 			if (typeof Allure.ApplePay.data.response.saveBilling.shipping_methods != 'undefined') {

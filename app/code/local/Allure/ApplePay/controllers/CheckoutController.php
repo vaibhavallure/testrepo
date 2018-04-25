@@ -409,7 +409,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         }
         
         
-        foreach($address->getGroupedAllShippingRates() as $rates){
+        foreach($address->getGroupedAllShippingRates() as $rates) {
             foreach ($rates as $rate) {
                 if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
                     continue;
@@ -422,6 +422,11 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 
                 $shippingMethods[$rate->getCode()] = $rate->getData();
             }
+        }
+        
+        if (count($shippingMethods)) {
+            $defaultShippingMethod = each($shippingMethods);
+            $result = $this->getOnepage()->saveShippingMethod($defaultShippingMethod['key']);
         }
         
         $result['goto_section'] = 'shipping_method';
