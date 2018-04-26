@@ -119,6 +119,15 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         echo $html;
     }
 
+    function date_convert($dt, $tz1, $df1, $tz2, $df2) {
+        // create DateTime object
+        $d = DateTime::createFromFormat($df1, $dt, new DateTimeZone($tz1));
+        // convert timezone
+        $d->setTimeZone(new DateTimeZone($tz2));
+        // convert dateformat
+        return $d->format($df2);
+    }
+    
     // To get the time depend on received qty by bhagya
     public function ajaxGetTimeAction ()
     {
@@ -145,6 +154,15 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
          * $value = $connection->fetchRow($sql,
          * array($item->getProductId(),$countryCode->getWarehouseId()));
          */
+        
+        $storeCurrentTime = "";
+        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+        $timeZone = $configData['timezones'][$request['store']];
+        if(!empty($timeZone) && $request['date']==date("m/d/Y")){
+            $storeCurrentTime = $this->date_convert(date('H:i'), 'UTC', 'H:i', $timeZone, 'H:i');
+            $storeCurrentTime = explode(":", $storeCurrentTime);
+            $storeCurrentTime = (($storeCurrentTime[0]*60)+$storeCurrentTime[1]) / 60;
+        }
 
         $block = $this->getLayout()
         ->createBlock('core/template', 'appointments_picktime',
@@ -154,7 +172,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             ->setData("timing", $time)
             ->setData("date", $request['date'])
             ->setData("store_id", $request['store'])
-            ->setData("id", $request['id']);
+            ->setData("id", $request['id'])
+            ->setData("store_current_time",$storeCurrentTime);
             $output = $block->toHtml();
 
             $result['success'] = true;

@@ -80,6 +80,11 @@ if($fetch_model){
 		
 		//$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
 		$startTime = $configData['start_work_time'][$storeKey];
+		$storeCurrentTime = $this->getData("store_current_time");
+		if(!empty($storeCurrentTime)){
+		    if($storeCurrentTime >= $startTime)
+		      $startTime = $storeCurrentTime;
+		}
 		//echo $startTime." isd sajofasf";
 		
 		//$selectedTime = sprintf('%02d', $startTime ).":00";
@@ -194,7 +199,7 @@ if($fetch_model){
 				$workingHours = $piercer->getWorkingHours();
 				$workingHours = unserialize($workingHours);
 				
-				//Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
+				Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
 				foreach ($workingHours as $workSlot)
 				{
 					//$workStart = $workSlot['start'].":00";
@@ -204,7 +209,12 @@ if($fetch_model){
 						
 					}
 					
-					$workStart = $helper->getTimeByValue($workSlot['start']);
+					$workStart = $workSlot['start'];
+					if(!empty($storeCurrentTime)){
+					    if($storeCurrentTime >= $workStart)
+					       $workStart = $storeCurrentTime;
+					}
+					$workStart = $helper->getTimeByValue($workStart);
 					//$workEnd = $workSlot['end'].":00";
 					$workEnd = $helper->getTimeByValue($workSlot['end']);
 					
@@ -325,7 +335,7 @@ if($fetch_model){
 		}
 		
 		if($noSlot){
-			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
+			echo "<div class='ttttt notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
 		}
 		echo "</ul>";
 		echo "<div class='clearfix'></div> <a class='prev apt-prev' id='foo2_prev' href='#'><span>prev</span></a> 
