@@ -54,7 +54,7 @@ class Teamwork_Transfer_Model_Status_Oms extends Teamwork_Transfer_Model_Status_
 
     protected function _getShippingAmount($package, $packageId, $order)
     {
-        return $order->getShippingInvoiced();
+        return $order->getBaseShippingInvoiced();/**/
     }
 
     /**

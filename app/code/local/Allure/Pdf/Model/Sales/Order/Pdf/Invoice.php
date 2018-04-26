@@ -153,6 +153,13 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
                 }
             }
             
+            //aws02 - email & customer group Start
+            $page->drawText(strip_tags(ltrim("{$customerEmail}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            $page->drawText(strip_tags(ltrim("{$groupname}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            //End
+            
             $addressesEndY = min($addressesEndY, $this->y);
             $this->y = $addressesEndY;
             
