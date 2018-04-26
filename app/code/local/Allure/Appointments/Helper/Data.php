@@ -213,7 +213,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		$timings=Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
 		$label="";
 		foreach ($timings as $time){
-			if ($time['value']==$value){
+			if ($time['value'] >= $value){
 				$label = $time['label'];
 				break;
 			}
