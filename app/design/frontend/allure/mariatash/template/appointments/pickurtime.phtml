@@ -80,6 +80,11 @@ if($fetch_model){
 		
 		//$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
 		$startTime = $configData['start_work_time'][$storeKey];
+		$storeCurrentTime = $this->getData("store_current_time");
+		if(!empty($storeCurrentTime)){
+		    if($storeCurrentTime >= $startTime)
+		        $startTime = $storeCurrentTime;
+		}
 		//echo $startTime." isd sajofasf";
 		
 		//$selectedTime = sprintf('%02d', $startTime ).":00";
@@ -204,7 +209,11 @@ if($fetch_model){
 						
 					}
 					
-					$workStart = $helper->getTimeByValue($workSlot['start']);
+					$workStart = $workSlot['start'];
+					if(!empty($storeCurrentTime)){
+					    if($storeCurrentTime >= $workStart)
+					        $workStart = $storeCurrentTime;
+					}
 					//$workEnd = $workSlot['end'].":00";
 					$workEnd = $helper->getTimeByValue($workSlot['end']);
 					
