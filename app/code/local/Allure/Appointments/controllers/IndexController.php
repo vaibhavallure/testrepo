@@ -157,7 +157,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         
         $storeCurrentTime = "";
         $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
-        $timeZone = $configData['timezones'][$request['store']];
+        $storeKey = array_search ($request['store'], $configData['stores']);
+        $timeZone = $configData['timezones'][$storeKey];
         if(!empty($timeZone) && $request['date']==date("m/d/Y")){
             $storeCurrentTime = $this->date_convert(date('H:i'), 'UTC', 'H:i', $timeZone, 'H:i');
             $storeCurrentTime = explode(":", $storeCurrentTime);
