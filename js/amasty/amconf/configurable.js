@@ -78,6 +78,7 @@ Product.Config.prototype.resetChildren = function(element){
 
 Product.Config.prototype.fillSelect = function(element){
     var attributeId = element.id.replace(/[a-z]*/, '');
+    console.log("attributeId:"+attributeId);
     var options = this.getAttributeOptions(attributeId);
     this.clearSelect(element);
     element.options[0] = new Option(this.config.chooseText, '');
@@ -151,7 +152,7 @@ Product.Config.prototype.configureElement = function(element)
 {
     // extension Code
 	var oldIndex = element.nextSetting.selectedIndex; //allure new code add
-	
+	console.log("oldIndex:"+oldIndex);
     optionId = element.value;
     if ($('amconf-image-' + optionId))
     {
