@@ -237,13 +237,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     
                     $hasDefaultMethod = false;
                     
-                    if ($address->getShippingMethod() && $address->getShippingMethod() != '') {
-                        $shippingMethods[$address->getShippingMethod()] = array();
-                        $this->_getSession()->setDefaultShippingMethod($address->getShippingMethod());
-                        $hasDefaultMethod = true;
-                    }
-                    
-                    
                     foreach($address->getGroupedAllShippingRates() as $rates){
                         foreach ($rates as $rate) {
                             if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
