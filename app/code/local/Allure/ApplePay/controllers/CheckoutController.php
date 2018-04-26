@@ -430,6 +430,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             
             Mage::log("defaultShippingMethod: ".($defaultShippingMethod),Zend_Log::DEBUG, 'applepay.log', true);
             $this->getOnepage()->saveShippingMethod($defaultShippingMethod);
+            $this->_getSession()->setDefaultShippingMethod($defaultShippingMethod);
         }
         
         $result['goto_section'] = 'shipping_method';
@@ -880,6 +881,10 @@ XML;
         $paymentData = array('method' => 'applepay'); 
         
         $this->getRequest()->setPost('payment', $paymentData);
+        
+        if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
+            $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
+        }
         
         Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
         return $this->saveOrderAction($paymentData);
