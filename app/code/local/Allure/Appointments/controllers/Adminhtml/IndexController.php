@@ -116,8 +116,20 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
          //Mage::log($country_data,Zend_Log::DEBUG, 'store', true );
          $value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId())); */
         
+        $storeCurrentTime = "";
+        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+        $storeKey = array_search ($request['store'], $configData['stores']);
+        $timeZone = $configData['timezones'][$storeKey];
+        if(!empty($timeZone) && $request['date']==date("m/d/Y")){
+            $storeCurrentTime = $this->date_convert(date('H:i'), 'UTC', 'H:i', $timeZone, 'H:i');
+            $storeCurrentTime = explode(":", $storeCurrentTime);
+            $storeCurrentTime = (($storeCurrentTime[0]*60)+$storeCurrentTime[1]) / 60;
+        }
         
-        $block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store'])->setData("id",$request['id']);
+        
+        $block = $this->getLayout()->createBlock('core/template','appointments_picktime',array('template' => 'appointments/pickurtime.phtml'))->setData("timing",$time)->setData("date",$request['date'])->setData("store_id",$request['store'])
+        ->setData("id",$request['id'])
+        ->setData("store_current_time",$storeCurrentTime);
         $output = $block->toHtml();
         $result['success'] = true;
         $result['msg'] = $time;
