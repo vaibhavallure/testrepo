@@ -1,5 +1,7 @@
 before_script:
   - echo 'Start Deployment'
+variables:
+    CI_PROJECT_DIR: $CI_PROJECT_DIR/$CI_COMMIT_REF_NAME
 stages:
   - develop
   - staging
