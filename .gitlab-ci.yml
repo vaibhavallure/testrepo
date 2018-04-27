@@ -71,7 +71,7 @@ stage_apple_pay:
   environment: apple_pay
   stage: staging
   tags:
-    - staging
+    - beta
   only:
     - apple_pay
   variables:
