@@ -105,12 +105,12 @@ class Allure_Appointments_Block_Adminhtml_Switcher extends Mage_Adminhtml_Block_
 
     public function isShow()
     {
-        return !Mage::app()->isSingleStoreMode();
+        return true;//!Mage::app()->isSingleStoreMode();
     }
 
     protected function _toHtml()
     {
-        if (!Mage::app()->isSingleStoreMode()) {
+        if ($this->isShow()) {
             return parent::_toHtml();
         }
         return '';
