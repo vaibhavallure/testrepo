@@ -80,3 +80,11 @@
 	/* background: url('./icon.png') transparent right no-repeat; */
 	background-size: contain;
 }
+
+.appointments-adminhtml-appointments-new #currDay{
+	color: #3f4048 ! important;
+}
+
+.appointments-adminhtml-appointments-new #currDay.selectedDate{
+	color: white ! important;
+}

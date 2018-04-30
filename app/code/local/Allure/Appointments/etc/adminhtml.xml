@@ -47,11 +47,11 @@
 								<sort_order>7</sort_order>
 								<action>admin_appointments/adminhtml_hidedates</action>
 							</hidedates>
-							<pricing module="appointments">
+							<!-- <pricing module="appointments">
 								<title>Piercing Prices</title>
 								<sort_order>7</sort_order>
 								<action>admin_appointments/adminhtml_pricing</action>
-							</pricing>
+							</pricing> -->
 							<settings module="appointments">
 								<title>Settings</title>
 								<sort_order>8</sort_order>
