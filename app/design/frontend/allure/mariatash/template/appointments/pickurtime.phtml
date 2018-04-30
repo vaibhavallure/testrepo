@@ -215,6 +215,7 @@ if($fetch_model){
 					        $workStart = $storeCurrentTime;
 					}
 					//$workEnd = $workSlot['end'].":00";
+					$workStart = $helper->getTimeByValue($workStart);
 					$workEnd = $helper->getTimeByValue($workSlot['end']);
 					
 					//Break
