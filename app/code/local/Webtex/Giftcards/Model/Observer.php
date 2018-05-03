@@ -105,6 +105,15 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
                                 if ((($curDate == $data['mail_delivery_date']) || empty($data['mail_delivery_date'])) && $data['card_type'] != 'offline') {
                                 	$model->send();
                                 }
+                                //aws02 start added new else block code
+                                else{
+                                    if($model->getMailDeliveryOption() == 2){
+                                        if ($model->getCardType() != 'offline') {
+                                            $model->send();
+                                        }
+                                    }
+                                }
+                                //aws02 end
                             } else {
                                 $model->setCardStatus(0);
                                 $model->save();
