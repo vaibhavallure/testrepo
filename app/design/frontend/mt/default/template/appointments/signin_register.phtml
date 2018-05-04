@@ -146,40 +146,83 @@ if ($session->isLoggedIn()) {
 					    	<!-- <input class="ele_width" type="text" name="postal_code" value="<?php //echo $postcode?>" /> -->
 					    	<input class="ele_width" type="text" name="postal_code" value="<?php if($f_postcode):echo $f_postcode;else: echo $postcode;endif;?>" />
 					    </div>
+					    
+					    <div class="fieldDiv splnotesDiv">
+    				  	   	<label>Special Notes:</label>			    		
+    				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced" ?>" rows="4" ><?php if($f_special_notes):
+    				    	echo $f_special_notes;
+    				    	endif;?></textarea>		    	
+				    	</div>
+					    
+					    <div class="fieldDiv">
+				    		<label>Notify Me:</label><br/>
+				    		<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
+				    		<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message</p></div>
+				    	</div>
+				    	<div class="fieldDiv " id="app_create_account">
+    				    	<?php if(!$session->isLoggedIn()):?>
+    						 <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;">Create Account:
+    						 <div class="pwdBlock">
+    							 <div class="fieldDiv">
+    							 	<label>Password:</label><br/>					    	
+    								<input class="pwdele_width input-text validate-password" type="password" name="password" id="password" value="" />
+    							 </div><!-- validate-password validate-both-passwords -->
+    							 <div class="fieldDiv">
+    							 	<label>Confirm Password:</label><br/>					    	
+    								<input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
+    							 </div>
+    						</div>
+    						<?php endif;?>
+						</div>
+					    
 					    <div class="fieldDiv">
 					     <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit')?>
 					    </div>
+					    
+					    <div class="">
+						<input type="submit" Value="CONFIRM" class="submitbtn" >
+					</div><!-- field end -->
 		  	</div>
 		  	<div class="createaccDiv" >
 		  			<div id="piercer_schedule" class="fieldDiv">
 		  			
 		  			</div>
+		  			
+		  			<?php if(0):?>
 			  	  	<div class="fieldDiv splnotesDiv">
 				  	   	<label>Special Notes:</label>			    		
 				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced or desired piercer for appointment" ?>" rows="4" ><?php if($f_special_notes):
 				    	echo $f_special_notes;
 				    	endif;?></textarea>		    	
 				    </div>
-					<div class="fieldDiv">
-				    	<label>Notify Me:</label><br/>
-				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
-				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message</p></div>
-				    </div>
-				    <div class="fieldDiv " id="app_create_account">
-				    	<?php if(!$session->isLoggedIn()):?>
-						 <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;">Create Account:
-						 <div class="pwdBlock">
-							 <div class="fieldDiv">
-							 	<label>Password:</label><br/>					    	
-								<input class="pwdele_width input-text validate-password" type="password" name="password" id="password" value="" />
-							 </div><!-- validate-password validate-both-passwords -->
-							 <div class="fieldDiv">
-							 	<label>Confirm Password:</label><br/>					    	
-								<input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
-							 </div>
-						</div>
-						<?php endif;?>
+				    
+				    
+    					<div class="fieldDiv">
+    				    	<label>Notify Me:</label><br/>
+    				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
+    				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message</p></div>
+    				    </div>
+    				    <div class="fieldDiv " id="app_create_account">
+    				    	<?php if(!$session->isLoggedIn()):?>
+    						 <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;">Create Account:
+    						 <div class="pwdBlock">
+    							 <div class="fieldDiv">
+    							 	<label>Password:</label><br/>					    	
+    								<input class="pwdele_width input-text validate-password" type="password" name="password" id="password" value="" />
+    							 </div><!-- validate-password validate-both-passwords -->
+    							 <div class="fieldDiv">
+    							 	<label>Confirm Password:</label><br/>					    	
+    								<input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
+    							 </div>
+    						</div>
+    						<?php endif;?>
+    					</div>
+					<?php endif;?>
+					
+					<div id="appointment-pricing">
+					<?php echo $this->getChildHtml('appointments_piercing_pricing')?>
 					</div>
+					
 			</div>
 		</div>
 	

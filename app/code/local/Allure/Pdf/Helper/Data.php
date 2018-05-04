@@ -257,4 +257,24 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
     }
     
     
+    /**
+     * aws02
+     * calculate height of address with new added extra field
+     */
+    public function calHeightExtraData($y,$data){
+        foreach ($data as $value){
+            if ($value !== '') {
+                $text = array();
+                foreach (Mage::helper('core/string')->str_split($value, 55, true, true) as $_value) {
+                    $text[] = $_value;
+                }
+                foreach ($text as $part) {
+                    $y += 15;
+                }
+            }
+        }
+        return $y;
+    }
+    
+    
 }

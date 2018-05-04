@@ -37,6 +37,7 @@ var count = 1;
 
  			success : function(response){
  				jQuery("#pick_ur_time_div").html(response.output);
+ 				jQuery("#appointment-pricing").html(response.pricing_html);
  				window.sample = 30;
  				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
  				simple.sliderDemo();
@@ -80,6 +81,7 @@ var count = 1;
 
   			success : function(response){
   				jQuery("#pick_ur_time_div").html(response.output);
+  				jQuery("#appointment-pricing").html(response.pricing_html);
   				window.sample = 30;
   				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
   				simple.sliderDemo();
@@ -167,6 +169,7 @@ var count = 1;
 				 			success : function(response){
 				 				
 				 				jQuery("#pick_ur_time_div").html(response.output);
+				 				jQuery("#appointment-pricing").html(response.pricing_html);
 				 				window.sample = 30;
 				 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
 				 				simple.sliderDemo();
@@ -219,6 +222,7 @@ var count = 1;
 
 				 			success : function(response){
 				 				jQuery("#pick_ur_time_div").html(response.output);
+				 				jQuery("#appointment-pricing").html(response.pricing_html);
 				 				window.sample = 30;
 				 				var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
 				 				simple.sliderDemo();
