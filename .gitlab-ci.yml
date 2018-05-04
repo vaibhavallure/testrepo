@@ -3,9 +3,6 @@ before_script:
 stages:
   - develop
   - staging
-  - alpha
-  - bugfix
-  - upgrade
   - deploy
 develop:
   environment: development
@@ -30,7 +27,7 @@ stage:
 
 stage_alpha:
   environment: alpha
-  stage: alpha
+  stage: staging
   tags:
     - alpha
   only:
@@ -64,7 +61,7 @@ stage_apple_pay:
     
 alpha_apple_pay:
   environment: apple_pay
-  stage: alpha
+  stage: staging
   tags:
     - staging
   only:
