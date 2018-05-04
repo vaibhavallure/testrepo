@@ -11,34 +11,6 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
 
     protected $_address_twoship_outofstock;
     
-    /**
-     * aws02
-     * check quote contains only sample ring product's
-     */
-    private function checkSampleProduct($type = 0){
-        $helper = Mage::helper("allure_multicheckout");
-        $productSku = ($helper->getProductSku())?$helper->getProductSku():"";
-        $quote = Mage::getSingleton('checkout/session')->getQuote();
-        if($type == 1){
-            $quote = Mage::getSingleton("allure_multicheckout/ordered_session")->getQuote();
-        }elseif ($type == 2){
-            $quote = Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote();
-        }
-        
-        $isSampleProduct = false;
-        if($quote){
-            $items = $quote->getAllItems();
-            if(count($items) > 1){
-                foreach ($items as $item){
-                    if(strtolower($item->getSku()) == strtolower($productSku)){
-                        $isSampleProduct = true;
-                        break;
-                    }
-                }
-            }
-        }
-        return $isSampleProduct;
-    }
     
     public function getShippingRates()
     {
@@ -48,14 +20,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
             $storeId=Mage::app()->getStore()->getStoreId();
             $groups = $this->getAddress()->getGroupedAllShippingRates();
             
-            //aws02 start
-            $isSampleProduct = $this->checkSampleProduct(0); // 0 - for main order
-            $helper = Mage::helper("allure_multicheckout");
-            $removableShippingMethod = ($helper->getShippingMethods()) ?$helper->getShippingMethods():"";
-            //aws02 end
-            
             foreach ($groups as $code => $_rates){
-                $code1 = $code;//aws02 code
                 if($code="allure_pickinstore"){
                     $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
                     $allowSpecificAttributeProductsArray=explode(',', $allowSpecificAttributeProducts);
@@ -79,14 +44,6 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                         unset($groups[$code]);
                     }
                 }
-                
-                //aws02 - start
-                if($isSampleProduct){
-                    if($code1 == $removableShippingMethod){
-                        unset($groups[$code1]);
-                    }
-                }
-                //aws02 - end
             }
             
             return $this->_rates = $groups;
@@ -110,14 +67,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
             $groups = $this->getAddressForTwoShipInStockProducts()->getGroupedAllShippingRates();
             $storeId=Mage::app()->getStore()->getStoreId();
             
-            //aws02 start
-            $isSampleProduct = $this->checkSampleProduct(1); // 1 - for in stock order
-            $helper = Mage::helper("allure_multicheckout");
-            $removableShippingMethod = ($helper->getShippingMethods()) ?$helper->getShippingMethods():"";
-            //aws02 end
-            
             foreach ($groups as $code => $_rates){
-                $code1 = $code;//aws02 code
                 if($code="allure_pickinstore"){
                     $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
                     $allowSpecificAttributeProductsArray=explode(',', $allowSpecificAttributeProducts);
@@ -143,13 +93,6 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                     }
                 }
                 
-                //aws02 - start
-                if($isSampleProduct){
-                    if($code1 == $removableShippingMethod){
-                        unset($groups[$code1]);
-                    }
-                }
-                //aws02 - end
             }
             // $this->getCheckout()->replaceQuote($oldQuote);
             return $this->_rates_twoship_instock = $groups;
@@ -171,14 +114,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
             $groups = $this->getAddressForTwoShipOutOfStockProducts()->getGroupedAllShippingRates();
             $storeId=Mage::app()->getStore()->getStoreId();
             
-            //aws02 start
-            $isSampleProduct = $this->checkSampleProduct(2); // 2 - for back order quote
-            $helper = Mage::helper("allure_multicheckout");
-            $removableShippingMethod = ($helper->getShippingMethods()) ?$helper->getShippingMethods():"";
-            //aws02 end
-            
             foreach ($groups as $code => $_rates){
-                $code1 = $code;//aws02 code
                 if($code="allure_pickinstore"){
                     $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
                     $allowSpecificAttributeProductsArray=explode(',', $allowSpecificAttributeProducts);
@@ -202,14 +138,6 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                         unset($groups[$code]);
                     }
                 }
-                
-                //aws02 - start
-                if($isSampleProduct){
-                    if($code1 == $removableShippingMethod){
-                        unset($groups[$code1]);
-                    }
-                }
-                //aws02 - end
             }
             // $this->getCheckout()->replaceQuote($oldQuote);
             return $this->_rates_twoship_outofstock = $groups;
