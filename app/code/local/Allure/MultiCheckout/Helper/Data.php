@@ -27,6 +27,11 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
 
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_AS_SHIP_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_as_ship';
 
+    //aws02 start
+    const XML_PATH_PRODUCT_SHIPPING_REMOVE_PRODUCT_SKU = 'allure_multicheckout/product_shipping/product_sku';
+    const XML_PATH_PRODUCT_SHIPPING_REMOVE_SHIPPING_METHOD = 'allure_multicheckout/product_shipping/shipping_method';
+    //aws02 end
+    
     public function getWholeCustomerPaymentMethods ()
     {
         $pay1 = $this->getWholesaleCustomersPayNowMethods();
@@ -118,5 +123,21 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
            }
         }
         return $isBackOrderProduct;
+    }
+    
+    /**
+     * aws02
+     * get product sku
+     */
+    public function getProductSku(){
+        return Mage::getStoreConfig(self::XML_PATH_PRODUCT_SHIPPING_REMOVE_PRODUCT_SKU);
+    }
+    
+    /**
+     * aws02
+     * get shipping methods code
+     */
+    public function getShippingMethods(){
+        return Mage::getStoreConfig(self::XML_PATH_PRODUCT_SHIPPING_REMOVE_SHIPPING_METHOD);
     }
 }

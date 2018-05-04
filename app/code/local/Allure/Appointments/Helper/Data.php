@@ -371,5 +371,32 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	private function getAppointmentStoreMapping(){
 	    return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
 	}
+	
+	/**
+	 * aws02
+	 * get list of piercers as an option array
+	 */
+	public function getPiercersAsOptions(){
+	    $piercerArray=array();
+	    $collection=Mage::getModel('appointments/piercers')->getCollection();
+	    foreach ($collection as $percer){
+	        $piercerArray[$percer->getId()]=$percer->getFirstname()." ".$percer->getLastname();
+	    }
+	    return $piercerArray;
+	}
+	
+	/**
+	 * aws02
+	 * check piercer is available at particular date or not
+	 */
+	public function isPiercerAvailable($piercerId,$availabilityDate){
+	    $collection = Mage::getModel('appointments/piercers')->getCollection();
+	    $collection->addFieldToFilter('id',$piercerId)
+	    ->addFieldToFilter('working_days',array('like'=>'%'.$availabilityDate.'%'));
+	    if($collection->getSize() > 0){
+	        return true;
+	    }
+	    return false;
+	}
 }
 	 
