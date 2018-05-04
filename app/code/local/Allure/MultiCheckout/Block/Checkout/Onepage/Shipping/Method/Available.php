@@ -11,6 +11,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
 
     protected $_address_twoship_outofstock;
     
+    
     public function getShippingRates()
     {
         
@@ -18,6 +19,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
             $this->getAddress()->collectShippingRates()->save();
             $storeId=Mage::app()->getStore()->getStoreId();
             $groups = $this->getAddress()->getGroupedAllShippingRates();
+            
             foreach ($groups as $code => $_rates){
                 if($code="allure_pickinstore"){
                     $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
@@ -64,6 +66,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                 ->save();
             $groups = $this->getAddressForTwoShipInStockProducts()->getGroupedAllShippingRates();
             $storeId=Mage::app()->getStore()->getStoreId();
+            
             foreach ($groups as $code => $_rates){
                 if($code="allure_pickinstore"){
                     $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);
@@ -89,6 +92,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                         unset($groups[$code]);
                     }
                 }
+                
             }
             // $this->getCheckout()->replaceQuote($oldQuote);
             return $this->_rates_twoship_instock = $groups;
@@ -109,6 +113,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Shipping_Method_Available exte
                 ->save();
             $groups = $this->getAddressForTwoShipOutOfStockProducts()->getGroupedAllShippingRates();
             $storeId=Mage::app()->getStore()->getStoreId();
+            
             foreach ($groups as $code => $_rates){
                 if($code="allure_pickinstore"){
                     $allowSpecificAttributeProducts=Mage::getStoreConfig('carriers/allure_pickinstore/specificproduct',$storeId);

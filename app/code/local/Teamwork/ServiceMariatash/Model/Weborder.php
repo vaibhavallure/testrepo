@@ -1,5 +1,5 @@
 <?php
-class Teamwork_ServiceMariatash_Model_Weborder extends Teamwork_Service_Model_Weborder
+class Teamwork_ServiceMariatash_Model_Weborder extends Teamwork_CEGiftcards_Service_Model_Weborder
 {
     public function generateXml($params)
     {

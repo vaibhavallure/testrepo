@@ -377,6 +377,13 @@ abstract class Allure_Sales_Model_Pdf_Abstract extends Varien_Object
                     }
                 }
             }
+            
+            //aws02 - email & customer group Start
+            $page->drawText(strip_tags(ltrim("{$customerEmail}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            $page->drawText(strip_tags(ltrim("{$groupname}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            //End
            
             $addressesEndY = min($addressesEndY, $this->y);
             $this->y = $addressesEndY;
