@@ -353,14 +353,14 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
      */
     protected function _createWebOrderFee()
     {
-        if( $this->_order->getShippingAmount() )
+        if( $this->_order->getBaseShippingAmount() )/**/
         {
             $data = array(
                 'WebOrderId'    => $this->_webOrderId,
                 'FeeId'         => $this->getShippingFeeId(),
-                //'TaxAmount'   => $this->_order->getShippingTaxAmount(),
-                'TaxAmount'     => Mage::helper('teamwork_transfer')->floatSubtraction($this->_order->getTaxAmount(), $this->_lineTaxAmountAccumulator),
-                'UnitPrice'     => $this->_order->getShippingAmount(),
+                //'TaxAmount'   => $this->_order->getBaseShippingTaxAmount(),/**/
+                'TaxAmount'     => Mage::helper('teamwork_transfer')->floatSubtraction($this->_order->getBaseTaxAmount(), $this->_lineTaxAmountAccumulator),/**/
+                'UnitPrice'     => $this->_order->getBaseShippingAmount(),/**/
                 'Qty'           => 1
             );
 
@@ -392,7 +392,7 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
 
         if(!empty($discountReasonId))
         {
-            $discount_amount = abs((float)$this->_order->getShippingDiscountAmount());
+            $discount_amount = abs((float)$this->_order->getBaseShippingDiscountAmount());/**/
             if($discount_amount != 0)
             {
                 $data = array(
@@ -456,7 +456,7 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
             $discountReasonId = $this->_getDiscountReasonId(0);
             foreach($items as $item)
             {
-                $discountAmount = floatval($item->getData('discount_amount'));
+                $discountAmount = floatval($item->getData('base_discount_amount'));/**/
                 if (empty($discountAmount)){
                     continue;
                 }
@@ -517,8 +517,8 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
                 
                 if( !empty($product) && $product->getId() )
                 {
-                    $price = $item->getPrice();
-                    $lineTaxAmount = $item->getTaxAmount();
+                    $price = $item->getBasePrice();/**/
+                    $lineTaxAmount = $item->getBaseTaxAmount();/**/
                     /*fix round bug*/
                     $qty = $item->getQtyOrdered();
                     $expectedTotalItemPrice = round($qty * $price + $lineTaxAmount, 2);
@@ -708,7 +708,7 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
             }
             
             $transactionId = null;
-            $isCaptured = ($this->_order->hasInvoices() || !(float)$this->_order->getGrandTotal()) ? 1 : 0;
+            $isCaptured = ($this->_order->hasInvoices() || !(float)$this->_order->getBaseGrandTotal()) ? 1 : 0;/**/
             $paymentDate = $this->_order->getCreatedAt();
             
             $transactionCollection = Mage::getResourceModel('sales/order_payment_transaction_collection')->addOrderIdFilter( $this->_order->getId() );
@@ -908,8 +908,8 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
             return false;
         }
         $allowAuthorizeOnly = Mage::helper('teamwork_transfer/webstaging')->allowAuthorizeOnlyPayment( $this->_order->getPayment()->getMethod(), $this->_getChannelId() );
-        $authorizedAmount = floatval($this->_order->getPayment()->getAmountAuthorized());
-        $paidAmount = floatval( $this->_order->getPayment()->getAmountPaid() );
+        $authorizedAmount = floatval($this->_order->getPayment()->getBaseAmountAuthorized()); /**/
+        $paidAmount = floatval( $this->_order->getPayment()->getBaseAmountPaid() ); /**/
         
         $completedOnly = ($completedOnly == 'false') ? false : true;
         switch($completedOnly)
@@ -921,7 +921,7 @@ class Teamwork_Transfer_Model_Webstaging extends Teamwork_Transfer_Model_Abstrac
                 }
             break;
             case false:
-                if( (!(float)$this->_order->getGrandTotal() || ($paidAmount || ($allowAuthorizeOnly && $authorizedAmount))) && $this->_order->getStatus() != Mage_Sales_Model_Order::STATUS_FRAUD )
+                if( (!(float)$this->_order->getBaseGrandTotal() || ($paidAmount || ($allowAuthorizeOnly && $authorizedAmount))) && $this->_order->getStatus() != Mage_Sales_Model_Order::STATUS_FRAUD )/**/
                 {
                     return true;
                 }

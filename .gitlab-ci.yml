@@ -17,19 +17,9 @@ develop:
   script:
     - mage-deploy mariatash
     - echo 'Deployed on Allure Local Dev'
-staging:
+stage:
   environment: staging
   stage: staging
-  tags:
-    - staging
-  only:
-    - staging
-  script:
-    - mage_deploy_stage mariatash
-    - echo 'Deployed on Staging'
-alpha:
-  environment: alpha
-  stage: alpha
   tags:
     - staging
   only:
@@ -37,51 +27,58 @@ alpha:
   script:
     - mage-deploy mt
     - echo 'Deployed on Staging'
-bugfix:
-  environment: bugfixes
-  stage: bugfix
-  tags:
-    - staging
-  only:
-    - bugfixes
-  script:
-    - mage-deploy mt-bugfixes
-    - echo 'Deployed on Bugfixes Staging'
-    
-universal:
-  environment: staging
-  stage: staging
-  tags:
-    - staging
-  only:
-    - universal
-  script:
-    - mage-deploy universal
-    - echo 'Deployed on Universal Staging'
 
-apple_pay:
-  environment: apple_pay
-  stage: staging
-  tags:
-    - staging
-  only:
-    - apple_pay
-  script:
-    - mage-deploy applepay-mariatash
-    - echo 'Deployed on apple_pay Staging'
-
-new_apple_pay:
-  environment: apple_pay
-  stage: staging
+stage_alpha:
+  environment: alpha
+  stage: alpha
   tags:
     - alpha
   only:
-    - apple_pay
+    - master
+  cache:
+    paths:
+    - var
+    - media
+    - app/etc/local.xml
   script:
-    - mage-deploy applepay
+    - env
+    - deploy-magento applepay-mariatash
     - echo 'Deployed on apple_pay Staging'
 
+stage_apple_pay:
+  environment: apple_pay
+  stage: staging
+  tags:
+    - beta
+  only:
+    - apple_pay
+  cache:
+    paths:
+    - var
+    - media
+    - app/etc/local.xml
+  script:
+    - env
+    - deploy-magento applepay-mariatash
+    - echo 'Deployed on apple_pay Staging'
     
+alpha_apple_pay:
+  environment: apple_pay
+  stage: alpha
+  tags:
+    - staging
+  only:
+    - apple_pay
+  cache:
+    paths:
+    - var
+    - media
+    - app/etc/local.xml
+  script:
+    - env
+    - deploy-magento applepay-mariatash
+    - echo 'Deployed on apple_pay Staging'
+
 deploy-cloud:
   environment: production
   stage: deploy

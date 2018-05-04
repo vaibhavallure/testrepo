@@ -273,8 +273,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<div class="appointment-setting-common apt-row-1">';
         $html .= '<label for="appointments_store_map">Store Map </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
-            . $this->getElement()->getName() . '[store_map][]" value="'
-                . $this->_getValue('store_map/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('store_map/' . $rowIndex).'</textarea> ';
+            . $this->getElement()->getName() . '[store_map][]" value="" ' . $this->_getDisabled() . '>'.$this->_getValue('store_map/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
         
         
@@ -422,6 +421,24 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             . $this->getElement()->getName() . '[piercers_available][]" value="'
                 . $this->_getValue('piercers_available/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('piercers_available/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
+        
+        
+        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<label for="piercing-pricing-block">Piercing Pricing </label>';
+        $html .= $this->getCmsBlock($rowIndex);
+        $html .= '</div>';
+        
+        
+        
+        
+        
+        /* $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<label for="piercing-pricing-block">Piercing Pricing </label>';
+        $html .= '<input class="appointment-setting-input" name="'
+            . $this->getElement()->getName() . '[piercing_pricing_block][]" value="'
+                . $this->_getValue('piercing_pricing_block/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
+        $html .= '</div>'; */
+        
         
         
         $html .= '</div>';
@@ -639,6 +656,22 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $zoneStr .= '<option '.$selectedClass.' value="'.$val[value].'">'.$val[label].'</option>';
         }
         return '<select class="appointment-setting-select" name="' . $this->getElement()->getName().'['.$email_template.'][]' . '" style="">'.$zoneStr.'</select>';
+        
+    }
+    
+    
+    private function getCmsBlock($rowIndex){
+                
+        $collection = Mage::getModel('cms/block')->getCollection()
+        ->addFieldToFilter('identifier',array('like'=>'%appointment%'));
+        foreach ($collection as $block) {
+            $selectedClass = "";
+            if($this->_getValue('piercing_pricing_block'.'/' . $rowIndex) == $block->getIdentifier() ){
+                $selectedClass = "selected='selected'";
+            }
+            $zoneStr .= '<option '.$selectedClass.' value="'.$block->getIdentifier().'">'.$block->getTitle().'</option>';
+        }
+        return '<select class="appointment-setting-select" name="' . $this->getElement()->getName().'['.'piercing_pricing_block'.'][]' . '" style="">'.$zoneStr.'</select>';
         
     }
     

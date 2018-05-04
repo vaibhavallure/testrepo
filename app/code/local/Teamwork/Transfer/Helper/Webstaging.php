@@ -18,7 +18,7 @@ class Teamwork_Transfer_Helper_Webstaging extends Mage_Core_Helper_Abstract
      */
     public function getPaymentPaid($payment)
     {
-        $paid = (float)($payment->getAmountPaid() ? $payment->getAmountPaid() : $payment->getAmountAuthorized());
+        $paid = (float)($payment->getBaseAmountPaid() ? $payment->getBaseAmountPaid() : $payment->getBaseAmountAuthorized());/**/
         return round($paid, 6);
     }
     
