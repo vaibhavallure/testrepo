@@ -24,8 +24,6 @@ stage:
     - staging
   only:
     - master
-  variables:
-    CI_PROJECT_DIR: $CI_PROJECT_DIR/$CI_COMMIT_REF_NAME
   script:
     - mage-deploy mt
     - echo 'Deployed on Staging'
@@ -37,8 +35,6 @@ stage_alpha:
     - alpha
   only:
     - master
-  variables:
-    CI_PROJECT_DIR: $CI_PROJECT_DIR/$CI_COMMIT_REF_NAME
   cache:
     paths:
     - var
@@ -56,8 +52,6 @@ stage_apple_pay:
     - beta
   only:
     - apple_pay
-  variables:
-    CI_PROJECT_DIR: $CI_PROJECT_DIR/$CI_COMMIT_REF_NAME
   cache:
     paths:
     - var
@@ -75,8 +69,6 @@ alpha_apple_pay:
     - beta
   only:
     - apple_pay
-  variables:
-    CI_PROJECT_DIR: $CI_PROJECT_DIR/$CI_COMMIT_REF_NAME
   cache:
     paths:
     - var
