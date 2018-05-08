@@ -1259,9 +1259,9 @@ $oldValues = array();
                 }
                 // walk the attributes
                 foreach ($p as $k=>$newValue) {
-                    if($k=='max_qty' || $k=='stock.notify_stock_qty')
+                    if($k=='max_qty' || $k=='stock.notify_stock_qty' ||  $k=='category.path')
                         continue;
-                    
+                        //'category.path'
                     $logger->setColumn(isset($this->_fieldsCodes[$k]) ? $this->_fieldsCodes[$k]+1 : 0);
 
                     $oldValue = !$pId ? null : (
