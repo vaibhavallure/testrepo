@@ -3,9 +3,6 @@ before_script:
 stages:
   - develop
   - staging
-  - alpha
-  - bugfix
-  - upgrade
   - deploy
 develop:
   environment: development
@@ -30,7 +27,7 @@ stage:
 
 stage_alpha:
   environment: alpha
-  stage: alpha
+  stage: staging
   tags:
     - alpha
   only:
@@ -49,7 +46,7 @@ stage_apple_pay:
   environment: apple_pay
   stage: staging
   tags:
-    - beta
+    - stage-beta
   only:
     - apple_pay
   cache:
@@ -62,11 +59,11 @@ stage_apple_pay:
     - deploy-magento applepay-mariatash
     - echo 'Deployed on apple_pay Staging'
     
-alpha_apple_pay:
+beta_apple_pay:
   environment: apple_pay
-  stage: alpha
+  stage: staging
   tags:
-    - staging
+    - beta
   only:
     - apple_pay
   cache:

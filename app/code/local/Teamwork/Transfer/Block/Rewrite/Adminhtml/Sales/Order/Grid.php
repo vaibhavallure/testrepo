@@ -1,6 +1,6 @@
 <?php
 
-class Teamwork_Transfer_Block_Rewrite_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_Sales_Order_Grid
+class Teamwork_Transfer_Block_Rewrite_Adminhtml_Sales_Order_Grid extends IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid //Mage_Adminhtml_Block_Sales_Order_Grid /**/
 {
     protected function _prepareMassaction()
     {
