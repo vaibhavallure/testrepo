@@ -46,7 +46,7 @@ stage_apple_pay:
   environment: apple_pay
   stage: staging
   tags:
-    - beta
+    - stage-beta
   only:
     - apple_pay
   cache:
@@ -59,7 +59,7 @@ stage_apple_pay:
     - deploy-magento applepay-mariatash
     - echo 'Deployed on apple_pay Staging'
     
-alpha_apple_pay:
+beta_apple_pay:
   environment: apple_pay
   stage: staging
   tags:
