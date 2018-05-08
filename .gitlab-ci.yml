@@ -18,7 +18,7 @@ stage:
   environment: staging
   stage: staging
   tags:
-    - staging
+    - cloud-alpha
   only:
     - master
   script:
@@ -46,7 +46,7 @@ stage_apple_pay:
   environment: apple_pay
   stage: staging
   tags:
-    - stage-beta
+    - cloud-beta
   only:
     - apple_pay
   cache:
@@ -86,14 +86,3 @@ deploy-cloud:
   script:
     - mage-deploy
     - echo 'Deployed on Production'
-    
-deploy-production:
-  environment: production
-  stage: deploy
-  tags:
-    - mariatash
-  only:
-    - cloud
-  script:
-    - mage-deploy
-    - echo 'Deployed on Production Cloud'
