@@ -84,6 +84,13 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
                         if(!isset($data['mail_to_email']) || empty($data['mail_to_email'])){
                             $data['mail_to_email'] = $order->getCustomerEmail();
                         }
+                        
+                        //aws02 - start
+                        $mailFromEmail = $buyRequestArray['mail_from_email'];
+                        if(!empty($mailFromEmail)){
+                            $data['mail_from_email'] = $mailFromEmail;
+                        }
+                        //aws02 - end
 
                         $curDate = date('Y-m-d');
                         for ($i = 0; $i < $item->getQty(); $i++) {
@@ -107,7 +114,7 @@ class Webtex_Giftcards_Model_Observer extends Mage_Core_Model_Abstract
                                 }
                                 //aws02 start added new else block code
                                 else{
-                                    if($model->getMailDeliveryOption() == 2){
+                                    if($model->getMailDeliveryOption() == 2){ //for immediate email
                                         if ($model->getCardType() != 'offline') {
                                             $model->send();
                                         }
