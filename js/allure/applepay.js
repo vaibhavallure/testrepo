@@ -428,10 +428,7 @@ if (window.ApplePaySession) {
 	}
 	
 	Allure.ApplePay.action.addProduct = function () {
-		Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', {
-			product: jQuery('#pid-hidden').val(), 
-			qty: jQuery('#qty').val()
-		});
+		Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#qty').parents('form').serialize());
 		
 		if (Allure.ApplePay.data.response.addProduct) {
 			if (typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
