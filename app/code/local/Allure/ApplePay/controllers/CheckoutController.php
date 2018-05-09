@@ -93,6 +93,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         //$cart->init()->save();
 
         $params = $this->getRequest()->getParams();
+        
+        $specialInstruction = (isset($params['gift-special-instruction']) && !empty($params['gift-special-instruction'])) ? trim($params['gift-special-instruction']) : false;
 
         try {
             if (isset($params['qty'])) {
@@ -124,6 +126,10 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             
             $cart->save();
             
+            if ($specialInstruction) {
+                $this->storeGiftMessage($specialInstruction);
+            }
+            
             Mage::dispatchEvent('checkout_cart_add_product_complete',
                 array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
             );
@@ -135,7 +141,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             
             $result = array(
                 //'request' => $this->getRequest(),
-                'params'        => $this->getRequest()->getParams(),
+                //'params'        => $this->getRequest()->getParams(),
                 'quote_id'      => $quote->getId(),
                 'global_currency'  => $quote->getGlobalCurrencyCode(),
                 'currency'      => Mage::app()->getStore()->getCurrentCurrencyCode(),
