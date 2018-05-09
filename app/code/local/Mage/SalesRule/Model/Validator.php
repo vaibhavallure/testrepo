@@ -249,6 +249,7 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
         $productSku = ($helper->getProductSku())?$helper->getProductSku():"";
         $quote = $address->getQuote();
         $isSampleProduct = false;
+        $singleSku = false;
         if($quote){
             $items = $quote->getAllItems();
             if(count($items) > 1){
@@ -257,6 +258,16 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
                         $isSampleProduct = true;
                         break;
                     }
+                }
+            }else {
+                foreach ($items as $item){
+                    if(strtolower($item->getSku()) == strtolower($productSku)){
+                        $singleSku = true;
+                        break;
+                    }
+                }
+                if(!$singleSku){
+                    $isSampleProduct = true;
                 }
             }
         }
@@ -277,7 +288,10 @@ class Mage_SalesRule_Model_Validator extends Mage_Core_Model_Abstract
                     //aws02 start
                     if($isSampleProduct){
                         $item->setFreeShipping(false);
-                    }else{ //aws02 end
+                    }elseif($singleSku){
+                        $item->setFreeShipping(true);
+                    }
+                    else{ //aws02 end
                         $item->setFreeShipping($rule->getDiscountQty() ? $rule->getDiscountQty() : true);
                     }
                     break;
