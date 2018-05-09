@@ -30,6 +30,7 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
     //aws02 start
     const XML_PATH_PRODUCT_SHIPPING_REMOVE_PRODUCT_SKU = 'allure_multicheckout/product_shipping/product_sku';
     const XML_PATH_PRODUCT_SHIPPING_REMOVE_SHIPPING_METHOD = 'allure_multicheckout/product_shipping/shipping_method';
+    const XML_PATH_PRODUCT_SHIPPING_SALES_RULE = 'allure_multicheckout/product_shipping/sales_rule';
     //aws02 end
     
     public function getWholeCustomerPaymentMethods ()
@@ -139,5 +140,13 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
      */
     public function getShippingMethods(){
         return Mage::getStoreConfig(self::XML_PATH_PRODUCT_SHIPPING_REMOVE_SHIPPING_METHOD);
+    }
+    
+    /**
+     * aws02
+     * get sales ruel
+     */
+    public function getSalesRuleId(){
+        return Mage::getStoreConfig(self::XML_PATH_PRODUCT_SHIPPING_SALES_RULE);
     }
 }
