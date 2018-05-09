@@ -27,4 +27,80 @@ class Webtex_Giftcards_GiftcardsController extends Mage_Core_Controller_Front_Ac
             $this->_redirect('/');
         }
     }
+    public function confirmAction()
+    {
+       try {
+           $giftCardCode = trim((string)$this->getRequest()->getParam('code'));
+          
+           if(!empty($giftCardCode)){
+               $card = Mage::getModel('giftcards/giftcards')->load($giftCardCode, 'card_code');
+               
+               if($card->getOrderId()){
+                   $order = Mage::getModel('sales/order')->load($card->getOrderId());
+                   $mailTemplate = Mage::getModel('core/email_template');
+                   $template='giftcards/email/confirm_template';
+                   $storeId=1;
+                   
+                   $post = array(
+                       'amount'        => $this->_addCurrencySymbol($card->getAmount(),$order->getCurrency()),
+                       'code'          => $card->getCardCode(),
+                       'email-from'    => Mage::getStoreConfig('trans_email/ident_general/email'),
+                       'recipient'     => $order->getCustomerEmail(),
+                       'store-phone'   => Mage::getStoreConfig('general/store_information/phone'),
+                   );
+                   
+                   if(empty($mail)) {
+                       $mail = $order->getCustomerEmail() ;
+                   }
+                   
+                 //  Mage::getModel('giftcards/giftcards')->_send($post, 'giftcards/email/email_template', $mail, $storeId);
+                   
+                   if ($mail) {
+                       $translate = Mage::getSingleton('core/translate');
+                       $translate->setTranslateInline(false);
+                       $postObject = new Varien_Object();
+                       $postObject->setData($post);
+                       $postObject->setStoreId($storeId);
+                       $mailTemplate = Mage::getModel('core/email_template');
+                       $mailTemplate->setDesignConfig(array('area' => 'frontend', 'store' => $storeId))
+                       ->sendTransactional(
+                           Mage::getStoreConfig($template, $storeId),
+                           'general',
+                           $mail,
+                           null,
+                           array('data' => $postObject)
+                           );
+                       $translate->setTranslateInline(true);
+                   } else {
+                       throw new Exception('Invalid recipient email address.');
+                   }
+                   
+                   
+                   
+                   
+                   $this->_redirect("/");
+               }else {
+                   $this->_redirect("/");
+               }
+           }else {
+               $this->_redirect("/");
+           }
+       } catch (Exception $e) {
+           Mage::log("Exception Occured:".$e->getMessage(),Zend_log::DEBUG,'giftcard.log',TRUE);
+       }
+    }
+    public function _addCurrencySymbol($amount, $currencyCode)
+    {
+        if(empty($currencyCode)) {
+            $currencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+        }
+        
+        $currencySymbol = Mage::app()->getLocale()->currency($currencyCode)->getSymbol();
+        if($currencySymbol == '€') {
+            $currencySymbol = '&euro;';
+        } elseif($currencySymbol == '£') {
+            $currencySymbol = '&pound;';
+        }
+        return $currencySymbol.$amount;
+    }
 }
