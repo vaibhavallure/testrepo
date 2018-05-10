@@ -38,7 +38,7 @@ class Webtex_Giftcards_GiftcardsController extends Mage_Core_Controller_Front_Ac
                if($card->getOrderId()){
                    $order = Mage::getModel('sales/order')->load($card->getOrderId());
                    $mailTemplate = Mage::getModel('core/email_template');
-                   $template='giftcards/email/confirm_template';
+                   $template='giftcards/email/read_template';
                    $storeId=1;
                    
                    $post = array(
