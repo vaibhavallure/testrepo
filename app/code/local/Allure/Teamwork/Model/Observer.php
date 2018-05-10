@@ -875,10 +875,11 @@ class Allure_Teamwork_Model_Observer{
       $logFile = "tewamwor_reupdate_customer.log";
       $operation = "reupdate_customer";
       
-      $_url         = "https://api.teamworksvs.com/externalapi3/customers/update";
-      $_accessToken = "bWFyaWF0dGVzdDIgNTYyOTQ5OTUzNDIxMzEyMCB1ZnlQM3VIM05nN1g1WTJYODdaWk5PSk91SjF1dXEzUw==";
-      
       try{
+          $helper = Mage::helper("allure_teamwork");
+          $_url   = $helper->getTeamworkUrl() . $helper::UPADTE_CUSTOMER_URLPATH;
+          $_accessToken = $helper->getTeamworkAccessToken();
+          
           $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
           $page = $mLog->getPage();
           $size = $mLog->getSize();
