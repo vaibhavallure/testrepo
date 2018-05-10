@@ -39,6 +39,7 @@ try{
             $custNo1 = $customer->getCounterpointCustNo();
             if($custNo != $custNo1){
                 $customer->setCounterpointCustNo($custNo);
+                $customer->setCustomerType(10); //reupdated customer
                 $customer->save();
                 Mage::log("customer id:".$customerId." old cust no -:".$custNo1." :: new cust no -:".$custNo,Zend_Log::DEBUG,$logFile,true);
                 Mage::log("customer id:".$customerId." cntr cust_no updated.",Zend_Log::DEBUG,$logFile,true);
