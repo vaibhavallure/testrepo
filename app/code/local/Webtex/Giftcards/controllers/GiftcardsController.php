@@ -38,14 +38,15 @@ class Webtex_Giftcards_GiftcardsController extends Mage_Core_Controller_Front_Ac
                if($card->getOrderId()){
                    $order = Mage::getModel('sales/order')->load($card->getOrderId());
                    $mailTemplate = Mage::getModel('core/email_template');
-                   $template='giftcards/email/confirm_template';
+                   $template='giftcards/email/read_template';
                    $storeId=1;
                    
                    $post = array(
                        'amount'        => $this->_addCurrencySymbol($card->getAmount(),$order->getCurrency()),
                        'code'          => $card->getCardCode(),
+                       'email-to'      => $card->getMailTo(),
                        'email-from'    => Mage::getStoreConfig('trans_email/ident_general/email'),
-                       'recipient'     => $order->getCustomerEmail(),
+                       'recipient'     => $card->getMailToEmail(),
                        'store-phone'   => Mage::getStoreConfig('general/store_information/phone'),
                    );
                    
@@ -74,18 +75,18 @@ class Webtex_Giftcards_GiftcardsController extends Mage_Core_Controller_Front_Ac
                    } else {
                        throw new Exception('Invalid recipient email address.');
                    }
-                   
-                   
-                   
-                   
+                   Mage::getSingleton('adminhtml/session')->addSuccess("Thank you email sent");
                    $this->_redirect("/");
                }else {
+                   Mage::getSingleton('adminhtml/session')->addError("Error Occured");
                    $this->_redirect("/");
                }
            }else {
+               Mage::getSingleton('adminhtml/session')->addError("Error Occured");
                $this->_redirect("/");
            }
        } catch (Exception $e) {
+           Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
            Mage::log("Exception Occured:".$e->getMessage(),Zend_log::DEBUG,'giftcard.log',TRUE);
        }
     }
