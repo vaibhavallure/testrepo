@@ -160,4 +160,12 @@ class Studioforty9_Recaptcha_Helper_Data extends Mage_Core_Helper_Abstract
             ->getModuleConfig("Studioforty9_Recaptcha")
             ->is('active', 'true');
     }
+    public function getCMSPages(){
+        $pages=Mage::getStoreConfig("google/recaptcha/cms_routes");
+        return explode(',', $pages);
+    }
+    public  function isAllowedCMSPage($route){
+        $pages=$this->getCMSPages();
+        return in_array($route, $pages);
+    }
 }

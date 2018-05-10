@@ -75,14 +75,18 @@ class Webtex_Giftcards_GiftcardsController extends Mage_Core_Controller_Front_Ac
                    } else {
                        throw new Exception('Invalid recipient email address.');
                    }
+                   Mage::getSingleton('adminhtml/session')->addSuccess("Thank you email sent");
                    $this->_redirect("/");
                }else {
+                   Mage::getSingleton('adminhtml/session')->addError("Error Occured");
                    $this->_redirect("/");
                }
            }else {
+               Mage::getSingleton('adminhtml/session')->addError("Error Occured");
                $this->_redirect("/");
            }
        } catch (Exception $e) {
+           Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
            Mage::log("Exception Occured:".$e->getMessage(),Zend_log::DEBUG,'giftcard.log',TRUE);
        }
     }

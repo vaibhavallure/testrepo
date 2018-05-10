@@ -97,6 +97,16 @@
                             <comment><![CDATA[Hold Ctrl/Command and click to select<br/>Hold Shift and click to select a range<br/>Routes to allow reCAPTCHA verification - <a href="https://recaptcha.readme.io/v1.5/docs/troubleshooting#understanding-configuration-routes" target="_blank">read docs</a>]]></comment>
                             <depends><enabled>1</enabled></depends>
                         </enabled_routes>
+                        <cms_routes translate="label hint">
+                            <label>CMS Routes</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enabled>1</enabled></depends>
+                            <comment><![CDATA[add comma seprated cms routes]]></comment>
+                        </cms_routes>
                     </fields>
                 </recaptcha>
             </groups>
