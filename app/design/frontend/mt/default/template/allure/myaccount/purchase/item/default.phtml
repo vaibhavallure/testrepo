@@ -103,7 +103,7 @@
 							<td class="cart_col3">
 								<span class="price_multi"></span>
 								<span class="price">
-									<?php echo Mage::helper('checkout')->formatPrice($_item->getPrice())?>
+									<?php echo Mage::helper('core')->currency($_item->getPrice())?>
 								</span>
 							</td>
 			
