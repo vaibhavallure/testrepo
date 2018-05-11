@@ -53,6 +53,7 @@ class Allure_Salesrule_Helper_Data extends Mage_Core_Helper_Abstract
                         
                         if(($attribute == "sku") && ($operator == "!=")){
                             $skuArr = explode("," , $value);
+                            $skuArr = array_map('trim',$skuArr);
                             foreach ($quote->getAllItems() as $item){
                                 $sku = $item->getSku();
                                 if(in_array($sku , $skuArr)){
@@ -75,6 +76,7 @@ class Allure_Salesrule_Helper_Data extends Mage_Core_Helper_Abstract
     public function isValidForFreeShipping($rule, $address){
         $value     = strtolower($this->getProductSkuToAvoidFreeShipping());
         $skuArr    = explode("," , $value);
+        $skuArr = array_map('trim',$skuArr);
         
         $ruleIds   = $this->getSalesRuleIdToAvoidFreeShipping();
         $ruleIdsArr = explode(",", $ruleIds);
