@@ -956,3 +956,14 @@ label.popup-login-lbl{
 .custom_recaptcha .recaptcha{
 	float:right;
 }
+.gift-confirm .gift-confirm-msg{
+	margin-top: 20px;
+    color: #3F4048;
+    font-family: dinmittelschriftregular;
+    font-size: 32px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.gift-confirm  .redirect{
+	margin: 5 px !important;
+}
