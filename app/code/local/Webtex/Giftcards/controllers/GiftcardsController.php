@@ -2,6 +2,12 @@
 
 class Webtex_Giftcards_GiftcardsController extends Mage_Core_Controller_Front_Action
 {
+    protected function _initAction() {
+        $this->loadLayout()
+        ->_setActiveMenu($this->_menu_path);
+      
+        return $this;
+    }
     public function indexAction()
     {
         $this->_redirect('*/*/balance');
@@ -76,7 +82,7 @@ class Webtex_Giftcards_GiftcardsController extends Mage_Core_Controller_Front_Ac
                        throw new Exception('Invalid recipient email address.');
                    }
                    Mage::getSingleton('adminhtml/session')->addSuccess("Thank you email sent");
-                   $this->_redirect("/");
+                   $this->_redirect("*/*/confirmmessage");
                }else {
                    Mage::getSingleton('adminhtml/session')->addError("Error Occured");
                    $this->_redirect("/");
@@ -103,5 +109,10 @@ class Webtex_Giftcards_GiftcardsController extends Mage_Core_Controller_Front_Ac
             $currencySymbol = '&pound;';
         }
         return $currencySymbol.$amount;
+    }
+    public function confirmmessageAction(){
+       
+        $this->loadLayout();
+        $this->renderLayout();
     }
 }

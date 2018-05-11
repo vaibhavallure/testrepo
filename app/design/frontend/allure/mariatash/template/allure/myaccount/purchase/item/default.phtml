@@ -67,7 +67,7 @@
 					   
 	<td class="table-tax a-right">
 		<span class="price">
-			Price:<?php echo Mage::helper('checkout')->formatPrice($_item->getPrice())?>
+			Price:<?php echo Mage::helper('core')->currency($_item->getPrice())?>
 		</span>    
 	</td>
 					    

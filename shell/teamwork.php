@@ -12,7 +12,7 @@ class Allure_Shell_Teamwork extends Mage_Shell_Abstract
 		Mage::app('admin')->setCurrentStore(0);
 	    $model = Mage::getModel('allure_teamwork/observer');
 	
-	    $model->addCustomersIntoTeamwork();
+	    $model->reupdateCustomerToTeamwork();
 	}
 }
 
