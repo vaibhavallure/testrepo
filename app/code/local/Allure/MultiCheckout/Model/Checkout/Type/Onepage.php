@@ -618,36 +618,6 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 $backorder_quote->setOrderType($_checkoutHelper::MULTI_BACK_ORDER);
                 $backorder_quote->save();
                 
-                //aws02 - international free ship
-                $helper = Mage::helper("allure_multicheckout");
-                $productSku = ($helper->getProductSku())?$helper->getProductSku():"";
-                $isSampleProductB = false;
-                $itemsB = $backorder_quote->getAllItems();
-                $countB = 0;
-                    foreach ($itemsB as $itemB){
-                        $countB++;
-                        if(strtolower($itemB->getSku()) == strtolower($productSku)){
-                            $isSampleProductB = true;
-                        }
-                    }
-                
-                $ruleId = $helper->getSalesRuleId();
-                if(($isSampleProductB && $countB > 1) || !$isSampleProductB){
-                    $idsR = $backorder_quote->getAppliedRuleIds();
-                    $idsR = explode(",", $idsR);
-                    if(count($idsR) > 0){
-                        foreach ($idsR as $keyB=>$val){
-                            if($ruleId == $val)
-                            unset($idsR[$keyB]);
-                        }
-                        $idsR1 = implode(",", $idsR);
-                        $backorder_quote->setAppliedRuleIds($idsR1)->save();
-                    }
-                   
-                }
-                
-                //aws02 - international free ship end
-                
                 $backorder_quote->setIsChildOrder(1)->save();
                 
                 $backorder_quote->getShippingAddress()->setCollectShippingRates(true);
@@ -674,37 +644,6 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     ->getData());
                 $order_quote->setOrderType($_checkoutHelper::MULTI_MAIN_ORDER);
                 $order_quote->save();
-                
-                //aws02 - international free ship
-                $helper = Mage::helper("allure_multicheckout");
-                $productSku = ($helper->getProductSku())?$helper->getProductSku():"";
-                $isSampleProductA = false;
-                $itemsA = $order_quote->getAllItems();
-                $countA = 0;
-                 foreach ($itemsA as $itemA){
-                     $countA++;
-                        if(strtolower($itemA->getSku()) == strtolower($productSku)){
-                            $isSampleProductA = true;
-                        }
-                 }
-                
-                
-                $ruleId = $helper->getSalesRuleId();
-                if(($isSampleProductA && $countA > 1) || !$isSampleProductA){
-                    $idsRA = $order_quote->getAppliedRuleIds();
-                    $idsRA = explode(",", $idsRA);
-                    if(count($idsRA) > 0){
-                        foreach ($idsRA as $keyA=>$valA){
-                            if($ruleId == $valA)
-                            unset($idsRA[$keyA]);
-                        }
-                        $idsRA1 = implode(",", $idsRA);
-                        $order_quote->setAppliedRuleIds($idsRA1)->save();
-                    }
-                }
-                
-                //aws02 - international free ship end
-                
                 
                 $order_quote->setIsChildOrder(1)->save();
                 
