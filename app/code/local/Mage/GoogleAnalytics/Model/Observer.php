@@ -57,7 +57,6 @@ class Mage_GoogleAnalytics_Model_Observer
             return;
         }
         // #MT-680 Skip allure orders in Google Analytics
-        
         if(!empty($orderIds)){
             $order= Mage::getModel('sales/order')->load($orderIds);
             if(!is_null($order->getId())){
