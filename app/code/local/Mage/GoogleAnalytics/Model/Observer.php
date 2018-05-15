@@ -43,7 +43,7 @@ class Mage_GoogleAnalytics_Model_Observer
     {
         $this->setGoogleAnalyticsOnOrderSuccessPageView($observer);
     }
-
+    
     /**
      * Add order information into GA block to render on checkout success pages
      *
@@ -53,26 +53,21 @@ class Mage_GoogleAnalytics_Model_Observer
     {
         $orderIds = $observer->getEvent()->getOrderIds();
         
-        
         if (empty($orderIds) || !is_array($orderIds)) {
             return;
         }
-        
-        //#MT-680 Added to skip allure orders in Analytics
+        // #MT-680 Skip allure orders in Google Analytics
         
         if(!empty($orderIds)){
-           $order= Mage::getModel('sales/order')->load($orderIds);
-           if(!is_null($order->getId())){
-               Mage::log($order->getCouponCode(),zend_log::DEBUG,'ajay.log',true);
-               
-               if ((strpos($order->getCustomerEmail(), 'allure') !== false) ||( strtolower($order->getCouponCode())==strtolower('4uWruyuc')))
-               {
-                   return;
-               }
-           }
+            $order= Mage::getModel('sales/order')->load($orderIds);
+            if(!is_null($order->getId())){
+                if ((strpos($order->getCustomerEmail(), 'allure') !== false) ||( strtolower($order->getCouponCode())==strtolower('4uWruyuc')))
+                {
+                    return;
+                }
+            }
         }
-        // End of allure code
-        
+        // end of allure code
         
         
         $block = Mage::app()->getFrontController()->getAction()->getLayout()->getBlock('google_analytics');
