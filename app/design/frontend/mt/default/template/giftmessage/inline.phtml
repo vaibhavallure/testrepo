@@ -120,8 +120,12 @@ billing.onSave = function(evt){
 <?php if ($this->isMessagesAvailable() || $this->isItemsAvailable()): ?>
 <?php switch ($this->getType()): ?>
 <?php case 'onepage_checkout': ?>
+     <div class="gift-messages">
+      <h3><?php echo $this->__('For Saturday delivery options please contact us at cs@mariatash.com.'); ?></h3>
+     </div>
     <div class="gift-messages">
         <h3><?php echo $this->__('Delivery Signature Option.'); ?></h3>
+       
         <p class="control">
             <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="1" class="checkbox" checked="checked" />
             <label for="no_signature_delivery"><?php echo $this->__('Require signature upon delivery.View <a class="fancybox fancybox.iframe scl-popup" style="    color:#3f4048 !important; text-decoration: underline !important;" href="/shipping-policy-popup">shipping policy</a>.') ?></label>
@@ -247,6 +251,9 @@ billing.onSave = function(evt){
 
 <?php break; ?>
 <?php case 'multishipping_adress': ?>
+    <div class="gift-messages">
+      <h3><?php echo $this->__('For Saturday delivery options please contact us at cs@mariatash.com.'); ?></h3>
+    </div>
     <div class="gift-messages">
         <h3><?php echo $this->__('Delivery Signature Option.'); ?></h3>
         <p class="control">
