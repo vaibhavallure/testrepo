@@ -14,6 +14,7 @@
                 <rewrite>
                     <class_item>Teamwork_TransferMariatash_Model_Class_Item</class_item>
                     <webstaging>Teamwork_TransferMariatash_Model_Webstaging</webstaging>
+                    <media>Teamwork_TransferMariatash_Model_Media</media>
                     <class_price>Teamwork_TransferMariatash_Model_Class_Price</class_price>
 					<class_specialattribute_sku>Teamwork_TransferMariatash_Model_Class_Specialattribute_Sku</class_specialattribute_sku>
                 </rewrite>
