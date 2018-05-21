@@ -28,7 +28,7 @@
 			<li>
 				<div class="input-box">
 					<label for="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" class="left"><?php echo $this->__('Card Code'); ?></label>&nbsp;
-					<input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text <?php echo $this->getMethodCode(); ?>_require required-entry validate-digits-range digits-range-001-9999" id="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" name="payment[saved_cc_cid]" autocomplete="off" value="" style="width:4em;" maxlength="4" />
+					<input type="password" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text <?php echo $this->getMethodCode(); ?>_require required-entry validate-digits-range digits-range-001-9999" id="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" name="payment[saved_cc_cid]" autocomplete="off" value="" style="width:4em;" maxlength="4" />
 					<a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
 				</div>
 			</li>
