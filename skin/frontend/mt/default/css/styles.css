@@ -9348,7 +9348,7 @@ ul.crosssell-products-list {
 	margin-top: 5px;
 	color: #555555;
 	float: right;
-	margin-right: 20px;
+	margin-left: 20px;
 }
 
 .multiple-checkout .box-content .sp-methods #payment_form_authorizenet .input-box .cvv-what-is-this
@@ -19725,5 +19725,9 @@ margin: 0 !important;
 }
 .paypal-express-review small {
 font-size: 100% !important;
+}
+
+.checkout-onepage-index #authnetcim_cc_cid{
+	margin-left: 0px;
 }
 
