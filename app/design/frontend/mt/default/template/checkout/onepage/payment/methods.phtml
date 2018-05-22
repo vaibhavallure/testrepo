@@ -382,6 +382,7 @@ function showPaymentForm(){
 		if(payment){
 		   if(jQuery(this).is(':checked')){
 		       jQuery('#payment_form_'+payment).show();
+		       payment.switchMethod(payment);
 		   }
 		}
 	});
