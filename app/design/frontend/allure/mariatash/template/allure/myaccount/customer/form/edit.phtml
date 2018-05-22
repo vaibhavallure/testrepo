@@ -92,10 +92,14 @@
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
         <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
         <button onclick="jQuery('.error-msg').html('');submitAccountInfo()" type="button" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
+        <button id="delete-my-account" onclick="deletemyaccount('<?php echo $this->getCustomer()->getEmail()?>','<?php echo $this->getCustomer()->getId()?>')" title="<?php echo $this->__('Delete My Account') ?>" type="button" class="button"><span><span > <?php echo $this->__('Delete My Account') ?></span></span></button>
     </div>
 </form>
 <script type="text/javascript">
 //<![CDATA[
+    	if (typeof Allure == "undefined") {
+    	   var Allure = {};
+    }
     var dataForm = new VarienForm('form-validate', true);
     function setPasswordForm(arg){
         if(arg){
@@ -116,6 +120,34 @@
         setPasswordForm(true);
     <?php endif; ?>
 //]]>
+
+    function  deletemyaccount(email,id){
+		   if (confirm("Are you sure that you want to delete account?")) {
+			   //alert(email+' '+id);
+			    Allure.DeleteAccountModelFormKey='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+			    var request = {
+						"email":email,
+						"id":id,
+						"form_key":Allure.DeleteAccountModelFormKey
+				};
+			    jQuery.ajax({
+			        url: "<?php echo $this->getUrl('customers/account/deletemyaccount') ?>",
+			        type: "POST",
+			        dataType : 'json',
+			        data: {request:request},
+			        success : function(data){
+						if(data.success){
+							 location.reload();
+						}else{
+							console.log(data.error);
+							$j('#reg_msg_div').css('display','block');
+							$j('#register-msg').html(data.error);
+						 }
+					}
+			    });
+			  }
+
+ }
 function hideMessage(){
 	jQuery('#validate_current_password').html('');
 }

@@ -154,4 +154,29 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 		
 	  }
 	}
+	public function deletemyaccountAction(){
+	    
+	    if ($this->getRequest()->getParam('request'))
+	    {
+	        $request = $this->getRequest()->getParam('request');
+	        if(!empty($request['email']) && !empty($request['id'])){
+	            $customer = Mage::getModel('customer/customer');
+	            $customer->loadByEmail($request['email']);
+	            if($customer->getId()){
+	                $customer->setEmail('del-'.$request['email']); 
+	                $customer->save();
+	                Mage::getSingleton('customer/session')->logout();
+	                $result['success'] = true;
+	                $result['msg'] = Mage::helper('core')->__('Account deleted Sucessfully');
+	                Mage::getSingleton("core/session")->addSuccess("Account deleted Sucessfully"); 
+	            }else {
+	                $result['success'] = false;
+	                $result['msg'] = Mage::helper('core')->__('Unable to delete account');
+	                Mage::getSingleton("core/session")->addError("Unable to delete account");
+	            }
+	        }
+	    }
+	    $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+	    
+	}
 }
