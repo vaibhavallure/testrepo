@@ -127,6 +127,8 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			try{
 				//the save the data and send the new account email.
 				$customer->save();
+				$customer->setPasswordCreatedAt(time());
+				
 				$customer->setConfirmation(null);
 				$customer->save();
 				$customer->sendNewAccountEmail();
