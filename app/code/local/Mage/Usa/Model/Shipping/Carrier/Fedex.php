@@ -332,7 +332,7 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
                 'ShipTimestamp' => date('c'),
                 'PackagingType' => $r->getPackaging(),
                 'TotalInsuredValue' => array(
-                    'Amount'  => 99,
+                    'Amount'  => $r->getValue() ,//99,
                     'Currency' => $this->getCurrencyCode()
                 ),
                 'Shipper' => array(
@@ -378,7 +378,7 @@ class Mage_Usa_Model_Shipping_Carrier_Fedex
 
         if ($purpose == self::RATE_REQUEST_GENERAL) {
             $ratesRequest['RequestedShipment']['RequestedPackageLineItems'][0]['InsuredValue'] = array(
-                'Amount'  => 99,
+                'Amount'  => $r->getValue(),//99,
                 'Currency' => $this->getCurrencyCode()
             );
         } else if ($purpose == self::RATE_REQUEST_SMARTPOST) {
