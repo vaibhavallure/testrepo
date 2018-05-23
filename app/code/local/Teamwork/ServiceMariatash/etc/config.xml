@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Teamwork_ServiceMariatash>
-            <version>1.0.4</version>
+            <version>1.0.5</version>
         </Teamwork_ServiceMariatash>
     </modules>
     <global>
@@ -13,8 +13,14 @@
             <teamwork_service>
                 <rewrite>
 					<weborder>Teamwork_ServiceMariatash_Model_Weborder</weborder>
+                    <dam>Teamwork_ServiceMariatash_Model_Dam</dam>
                 </rewrite>
             </teamwork_service>
+            <service_resource>
+                <rewrite>
+                    <dam_style>Teamwork_ServiceMariatash_Model_Resource_Dam_Style</dam_style>
+                </rewrite>
+            </service_resource>
         </models>
 		<resources>
             <teamwork_servicemariatash_setup>
