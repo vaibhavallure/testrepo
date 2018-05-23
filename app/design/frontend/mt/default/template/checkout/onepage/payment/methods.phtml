@@ -378,11 +378,11 @@ function removeCardClass(method){
 <?php //aws02 -start?>
 function showPaymentForm(){
 	jQuery('input[name="payment[method]"]').each(function () {
-		var payment = jQuery(this).val();
-		if(payment){
+		var paymentM = jQuery(this).val();
+		if(paymentM){
 		   if(jQuery(this).is(':checked')){
-		       jQuery('#payment_form_'+payment).show();
-		       payment.switchMethod(payment);
+		       jQuery('#payment_form_'+paymentM).show();
+		       payment.switchMethod(paymentM);
 		   }
 		}
 	});
