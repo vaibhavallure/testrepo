@@ -19735,3 +19735,17 @@ font-size: 100% !important;
 	background-size:10px ! important;
 }
 
+.mt-terms-condtions-policy #mt-newsl-terms{
+	left: 25px;
+	width: 18px;
+    height: 17px;
+}
+.mt-terms-condtions-policy label {
+	margin-left: 20px;
+    font-size: 11px;
+}
+
+.mt-terms-condtions-policy a{
+	text-decoration: underline;
+}
+
