@@ -30,7 +30,15 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
         <div id="newsletter-input" class="form-subscribe-mt">
             <div class="newsletter-mt">Sign up for Maria Tash's Exclusive Offers and Newsletter</div>
             <div id="newsletter-errors" class="validation-advice" style="display:none"></div>
-            
+            <div class="mt-newletter-subscribe-privacy-policy control">
+					<input type="checkbox" name="mt-privacy-policy-checkbox"
+						id="mt-privacy-policy-checkbox" class="checkbox" />
+    				<label class="privacy-policy-details" for="mt-privacy-policy-checkbox">
+    				Yes, I want to sign up for Maria Tash emails.  
+                By clicking the submit button I agree to receive Maria Tash emails and I agree to the Maria Tash <a href="/terms-conditions/">Terms &amp; conditions</a> and 
+                <a href="/privacy-policy/">Privacy Policy</a> for this website.
+    				</label>
+			</div>
             <div class="input-row">
                 <input type="text" autocomplete="off" name="email" id="email" placeholder="Your Email Address" class="input-text required-entry validate-email" />
 		        <button type="button" onclick="sendNewsletterSubscription(this.form)" title="<?php echo $this->__('Sign up') ?>" class="button">
@@ -50,6 +58,12 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
     function sendNewsletterSubscription(form){
 
         jQuery('#msg-email').text('');
+
+        var ischeck = jQuery("#mt-privacy-policy-checkbox").prop('checked');
+        if(ischeck == false){
+        	alert("Please agree our terms and conditions.");
+            return;
+        }
                     
         var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
         jQuery('.loader').css({display:'inline-block'});
