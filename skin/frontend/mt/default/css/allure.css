@@ -1048,8 +1048,20 @@ label.popup-reg-privacy-lbl {
     margin-right: 12px;
     padding-top: 6px;
 }
+.gdpr_confirmation{
+	margin-left: 10px;
+    margin-bottom: 20px;
+}
+.gdpr_confirmation #checkout_privacry_confirm{
+	    position: initial;
+	    height: 18px;
+	    width:18px;
+}
 
-
+#review-buttons-container.buttons-set .checkout_privacry_link {
+	    float: unset;
+	    margin: 0;
+}
 
 
 
