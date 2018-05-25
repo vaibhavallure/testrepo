@@ -150,6 +150,10 @@ switch ($payment->getMethod()) {
         <?php endif;?>
         
         <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a></p>
+        <div class="gdpr_confirmation">
+            <input type="checkbox" name="checkout_privacry_confirm" id="checkout_privacry_confirm" class="checkbox" />
+            <label for="no_signature_delivery"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?></label>
+        </div>
         <?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
