@@ -19731,3 +19731,7 @@ font-size: 100% !important;
 	margin-left: 0px;
 }
 
+.catalog-product-view .product-shop .button[title="Out of stock"]{
+	background-size:10px ! important;
+}
+
