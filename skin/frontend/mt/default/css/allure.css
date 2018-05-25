@@ -1041,7 +1041,13 @@ label.popup-reg-privacy-lbl {
     left: 0;
     margin: 3px 20px;
 }
-
+.please-wait-popup-del{
+	float: left;
+    margin-left: 301px;
+    margin-top: 16px;
+    margin-right: 12px;
+    padding-top: 6px;
+}
 
 
 

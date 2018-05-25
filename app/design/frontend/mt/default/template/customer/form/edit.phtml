@@ -129,7 +129,7 @@
 <script type="text/javascript">
 //<![CDATA[
 	Allure.DeleteAccountModelFormKey='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-	Allure.DeleteAccuntURL='<?php echo $this->getUrl('customers/account/deletemyaccount'); ?>';
+	Allure.DeleteAccuntURL='<?php echo Mage::getBaseUrl('web').'customers/account/deletemyaccount'; ?>';
     var dataForm = new VarienForm('form-validate', true);
     function setPasswordForm(arg){
         console.log(arg);
