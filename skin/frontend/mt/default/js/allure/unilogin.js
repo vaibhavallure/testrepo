@@ -164,6 +164,61 @@ jQuery(document).ready(function(){
 	/**
 	 *Reset Password Popup End 
 	 */
+	
+	
+	//Account delete
+	
+    $j("#popupcheckbox_delmyacc_confirm").on('click',function(){
+    	
+    	if ($j('#popupcheckbox_delmyacc_confirm').is(":checked"))
+    	{
+    		$j('#delmyacc-btn-popup').css('color','#FFF');
+    	}else{
+    		$j('#delmyacc-btn-popup').css('color','#6f6b5a');
+    	}
+   	// alert($('#popupcheckbox_delmyacc_confirm').val());
+    });
+    
+    $j("#delmyacc-btn-popup").on('click',function(){
+    	
+		if ($j('#popupcheckbox_delmyacc_confirm').is(":checked"))
+		{
+			 var email =$j('#del_acc_email').val();
+			 var id =$j('#del_acc_id').val();
+			 
+			 var request = {
+						"email":email,
+						"id":id,
+						"form_key":Allure.DeleteAccountModelFormKey
+			 };
+			  
+	        $j.ajax({
+			   url : Allure.DeleteAccuntURL,
+			   dataType : 'json',
+			   type : 'POST',
+			   data: {request:request},
+	           beforeSend: function() { $j('.please-wait-popup-del').show(); },
+	           complete: function() { $j('.please-wait-popup-del').hide(); },
+	           type: "POST",
+		       dataType : 'json',
+		       data: {request:request},
+		       success : function(data){
+			   if(data.success){
+						 location.reload();
+			   }else{
+						console.log(data.error);
+						$j('#reg_msg_div').css('display','block');
+						$j('#register-msg').html(data.error);
+			   }
+				}
+			});
+		}
+    });
+    $j(".popupDelMyAccModel .close").on('click',function(){
+    	$j(".popupDelMyAccModel").css({"opacity":"0","pointer-events":"none"});
+    });
+
+    
 });
 
 
@@ -183,4 +238,12 @@ function openRestPasswordModal(){
 	jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupResetPasswordModel").css({"opacity":"1","pointer-events":"auto"});
+};
+
+function openDelMyAccountModal(){
+	jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
+	jQuery(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
+	jQuery(".popupResetPasswordModel").css({"opacity":"0","pointer-events":"none"});
+	jQuery(".popupDelMyAccModel").css({"opacity":"1","pointer-events":"auto"});
+	
 };
