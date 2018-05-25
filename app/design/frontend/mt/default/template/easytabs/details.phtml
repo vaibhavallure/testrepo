@@ -74,10 +74,16 @@ foreach($attributes as $attribute){
             if ($attribute) {
                     $content = $attribute->getFrontend()->getValue($product);
                     if(!empty($content) && (strcasecmp($content, 'yes')!=0 && strcasecmp($content, 'no')!=0)){
-                            echo '<tr>
-                                    <th>' . $attribute->getData('store_label') . '</th>
-                                    <td>' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</td>
-                                  </tr>';
+                        //aws02 - start
+                        $attrLabel = strtolower($attribute->getData('store_label'));
+                        $visibility = ("width" != trim($attrLabel)) ? true : false;
+                        //aws02 - end
+                        if($visibility){
+                            echo '<tr style="display:'.$visibility.'">
+                                        <th>' . $attribute->getData('store_label') . '</th>
+                                        <td>' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</td>
+                                      </tr>';
+                        }
                     }
             }
         }

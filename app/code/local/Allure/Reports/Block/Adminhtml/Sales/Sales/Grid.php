@@ -293,8 +293,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->columns('sum(IFNULL(main_table.base_total_invoiced,0)) total_invoiced_amount')
                      ->columns('sum(IFNULL(main_table.base_total_invoiced,0))
                                 -sum(IFNULL(main_table.base_total_refunded,0))
-                                -sum(IFNULL(main_table.base_tax_amount,0)-IFNULL(main_table.base_tax_canceled,0))
-                                -sum(IFNULL(main_table.base_shipping_amount,0)-IFNULL(main_table.base_shipping_canceled,0))  total_gross_amount')
+                                 total_net_sale')
                      ->columns('sum(IFNULL(main_table.base_total_canceled,0)) total_canceled_amount')
                      ->columns('sum(IFNULL(main_table.base_total_paid,0)) total_paid_amount')
                      ->columns('sum(IFNULL(main_table.base_total_refunded,0)) total_refunded_amount')
@@ -441,9 +440,9 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             'sortable'      => false,
             'rate'          => $rate,
         ));
-        $this->addColumn('total_gross_amount', array(
-            'header'        => Mage::helper('sales')->__('Total Gross'),
-            'index'         => 'total_gross_amount',
+        $this->addColumn('total_net_sale', array(
+            'header'        => Mage::helper('sales')->__('Net Sales'),
+            'index'         => 'total_net_sale',
             'total'         => 'sum',
             'type'          => 'currency',
             'currency_code' => $currencyCode,

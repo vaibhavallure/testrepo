@@ -34,18 +34,21 @@
 			<div class="row">
 	 		    <label for="required fields"><em>*</em><?php echo $this->__("Required Fields")?></label>
 			</div>
-			
 			<div class="row news-letter">
 	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
 	  		    <label class="popup-login-lbl popupcheckbox_lbl"><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
 			</div>
+			<div class="row news-letter">
+	  		    <input type="checkbox" name="is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox required-entry">
+	  		    <label class="popup-reg-privacy-lbl popupcheckbox_lbl"><strong><?php echo $this->__("I understand the terms and conditions of the Maria Tash <a href='https://www.venusbymariatash.com/privacy-policy'  target='_blank' >privacy policy</a>")?></strong></label>
+			</div>
 		
 		</div>
 		<div class="pop-link">
-			<a id="register-back-link" onclick="gotoLoginPage();" class="register-back-link"><?php echo $this->__("Back to login")?></a>
+			
             <button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
 			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
-			
+			<button type="button"  onclick="gotoLoginPage();" id="signup-btn-popup"  class="button"><?php echo $this->__("Back to Login")?></button>
 			<?php if(0):?>
 			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
             <?php endif;?>
