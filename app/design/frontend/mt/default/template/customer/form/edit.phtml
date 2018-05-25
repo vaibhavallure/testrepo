@@ -114,11 +114,22 @@
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
         <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
         <button onclick="jQuery('.error-msg').html('');" type="submit" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
-        <button onclick="deletemyaccount('<?php echo $this->getCustomer()->getEmail()?>','<?php echo $this->getCustomer()->getId()?>')" title="<?php echo $this->__('Delete My Account') ?>" type="button" class="button"><span><span><?php echo $this->__('Delete My Account') ?></span></span></button>
     </div>
 </form>
+<div class="page-title">
+    <p class="deletemyaccount-login-security"><?php echo $this->__('Delete Account') ?></p>
+</div>
+ <div class="buttons-set">
+ 		<input type="hidden" id="del_acc_email" value='<?php echo  $this->htmlEscape($this->getCustomer()->getEmail()); ?>'>
+ 		<input type="hidden" id="del_acc_id" value='<?php echo  $this->htmlEscape($this->getCustomer()->getId()); ?>'>
+ 		<p class="required del-my-acc-note"><?php echo $this->__('I no longer wish to share my information with Maria Tash') ?></p>
+        <button onclick="openDelMyAccountModal()" title="<?php echo $this->__('Delete My Account') ?>" type="button" class="button"><span><span><?php echo $this->__('Delete My Account') ?></span></span></button>
+</div>
+<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/form/popup/delmyaccount.phtml')->toHtml(); ?>
 <script type="text/javascript">
 //<![CDATA[
+	Allure.DeleteAccountModelFormKey='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+	Allure.DeleteAccuntURL='<?php echo $this->getUrl('customers/account/deletemyaccount'); ?>';
     var dataForm = new VarienForm('form-validate', true);
     function setPasswordForm(arg){
         console.log(arg);
@@ -140,35 +151,6 @@
     <?php if($this->getCustomer()->getChangePassword()): ?>
         setPasswordForm(true);
     <?php endif; ?>
-    
-   function  deletemyaccount(email,id){
-	   if (confirm("Are you sure that you want to delete account?")) {
-		   //alert(email+' '+id);
-		    Allure.DeleteAccountModelFormKey='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-		    var request = {
-					"email":email,
-					"id":id,
-					"form_key":Allure.DeleteAccountModelFormKey
-			};
-		    jQuery.ajax({
-		        url: "<?php echo $this->getUrl('customers/account/deletemyaccount') ?>",
-		        type: "POST",
-		        dataType : 'json',
-		        data: {request:request},
-		        success : function(data){
-					if(data.success){
-						 location.reload();
-					}else{
-						console.log(data.error);
-						$j('#reg_msg_div').css('display','block');
-						$j('#register-msg').html(data.error);
-					 }
-				}
-		    });
-		  }
-
-	    
-   }
 //]]>
 function hideMessage(){
 	jQuery('#validate_current_password').html('');
