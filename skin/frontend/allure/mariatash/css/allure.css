@@ -2236,7 +2236,8 @@ input.special-inst-product {
     position: relative;
     margin: 10% auto;
     /* padding: 5px 20px 13px 20px; */
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 10px 20px 10px 20px; 
     /* border-radius: 10px; */
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
@@ -2338,10 +2339,10 @@ cursor: pointer;
 	width: 20px;
     height: 20px;
 }
-#popup_is_subscribed{
+/* #popup_is_subscribed{
 	left: 0;
 	margin: 3px 20px;
-}
+} */
 .popupcheckbox_lbl{
 	padding: 3px 0 0 25px  !important;
 }
@@ -2520,4 +2521,16 @@ cursor: pointer;
     margin: 3px 20px;
     width: 20px;
     height: 20px;
+}
+
+#register-modal-container .form-group {
+	margin-bottom: 0px;
+}
+
+#newsletter-form .newsletter-mt{
+	width: 100%;
+}
+
+#newsletter-form #newsletter-validate-detail button {
+	text-align: center;
 }

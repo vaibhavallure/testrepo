@@ -31,8 +31,12 @@
     			</div>
     			<div class=" form-group news-letter">
     	  		      <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
-    	  		      <label class="popup-login-lbl "><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
+    	  		      <label for="popup_is_subscribed" class="popup-login-lbl "><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
     			</div>
+    			<div class="form-group news-letter">
+	  		    	<input type="checkbox" id="is_privacy_agree" name="is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox required-entry">
+	  		    	<label for="is_privacy_agree"><strong><?php echo $this->__("I understand the terms and conditions of the Maria Tash <a style='text-decoration:underline;' href='https://www.venusbymariatash.com/privacy-policy'  target='_blank' >Privacy Policy</a>")?></strong></label>
+				</div>
     		</div>
     		<div class="pop-link">
     			<button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
