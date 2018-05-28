@@ -27,9 +27,10 @@
 		<?php if( $this->getMethod()->getAdvancedConfigData('require_ccv') ): ?>
 			<li>
 				<div class="input-box">
+					<a href="#" onclick="toggleToolTip(this);" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
 					<label for="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" class="left"><?php echo $this->__('Card Code'); ?></label>&nbsp;
-					<input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text <?php echo $this->getMethodCode(); ?>_require required-entry validate-digits-range digits-range-001-9999" id="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" name="payment[saved_cc_cid]" autocomplete="off" value="" style="width:4em;" maxlength="4" />
-					<a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
+					<input type="password" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text <?php echo $this->getMethodCode(); ?>_require required-entry validate-digits-range digits-range-001-9999" id="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" name="payment[saved_cc_cid]" autocomplete="off" value="" style="width:70px!important;" maxlength="4" />
+
 				</div>
 			</li>
 		<?php endif; ?>
@@ -81,7 +82,7 @@
 			<label for="<?php echo $this->getMethodCode(); ?>_cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number') ?></label>
 			<div class="input-box">
 				<div class="v-fix">
-					<input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text cvv <?php echo $requireClass; ?> <?php if( !$this->haveStoredCards() ): ?>validate-cc-cvn<?php endif; ?>" id="<?php echo $this->getMethodCode(); ?>_cc_cid" name="payment[cc_cid]" autocomplete="cc-csc" value="" maxlength="4" />
+					<input type="password" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text cvv <?php echo $requireClass; ?> <?php if( !$this->haveStoredCards() ): ?>validate-cc-cvn<?php endif; ?>" id="<?php echo $this->getMethodCode(); ?>_cc_cid" name="payment[cc_cid]" autocomplete="off" value="" maxlength="4" />
 				</div>
 				<a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
 			</div>
@@ -102,7 +103,7 @@
 		<li <?php if( $this->haveStoredCards() ): ?>style="display:none"<?php endif; ?> class="<?php echo $newClass; ?>">
 			<label>&nbsp;</label>
 			<input type="hidden" name="payment[save]" value="0" />
-			<input type="checkbox" name="payment[save]" id="<?php echo $this->getMethodCode(); ?>_save" value="1" <?php if( $this->getMethod()->getConfigData('savecard_opt_out') ): ?>checked="checked" <?php endif; ?>autocomplete="on" /> 
+			<input type="checkbox" name="payment[save]" id="<?php echo $this->getMethodCode(); ?>_save" value="1" <?php if( $this->getMethod()->getConfigData('savecard_opt_out') ): ?>checked="checked" <?php endif; ?>autocomplete="on" />
 			<label for="<?php echo $this->getMethodCode(); ?>_save" style="float:none;font-weight:normal;"><?php echo $this->__('Save for next time'); ?></label>
 		</li>
 	<?php elseif( $this->isNominalCheckout() || !$this->isGuestCheckout() ): ?>
@@ -117,45 +118,45 @@
 	//<![CDATA[
 		$('<?php echo $this->getMethodCode(); ?>_add_new').observe( 'click', function(e) {
 			e.preventDefault();
-			
+
 			$$('.<?php echo $newClass; ?>, #payment_form_<?php echo $this->getMethodCode(); ?> .centinel-logos').each(function(el) {
 				el.toggle();
 			});
-			
+
 			$$('.<?php echo $this->getMethodCode(); ?>_require').each(function(el) {
 				el.toggleClassName('required-entry');
 				if( el.hasClassName('cvv') ) {
 					el.toggleClassName('validate-cc-cvn');
 				}
 			});
-			
+
 			$('<?php echo $this->getMethodCode(); ?>_card_id').setValue(0);
-			
+
 			return false;
 		});
-		
+
 		$('<?php echo $this->getMethodCode(); ?>_card_id').observe( 'change', function(e) {
 			$$('.<?php echo $newClass; ?>, #payment_form_<?php echo $this->getMethodCode(); ?> .centinel-logos').each(function(el) {
 				el.hide();
 			});
-			
+
 			$$('.<?php echo $newClass; ?> .<?php echo $this->getMethodCode(); ?>_require').each(function(el) {
 				el.removeClassName('required-entry');
 				if( el.hasClassName('cvv') ) {
 					el.removeClassName('validate-cc-cvn');
 				}
 			});
-			
+
 			$$('#<?php echo $this->getMethodCode(); ?>_saved_cc_cid, #<?php echo $this->getMethodCode(); ?>_card_id').each(function(el) {
 				el.addClassName('required-entry');
 				if( el.hasClassName('cvv') ) {
 					el.addClassName('validate-cc-cvn');
 				}
 			});
-			
+
 			return false;
 		});
-		
+
 		$$('#payment_form_<?php echo $this->getMethodCode(); ?> .centinel-logos').each(function(el) {
 			el.hide();
 		});
@@ -173,7 +174,7 @@
 			var fs = document.getElementsByTagName('script')[0];
 			fs.parentNode.insertBefore(s, fs);
 		}
-		
+
 		if( typeof pdlAcceptJs == 'undefined' ) {
 			var acceptJs_<?php echo $this->getMethodCode(); ?>_init = function() {
 				acceptJs_<?php echo $this->getMethodCode(); ?> = new pdlAcceptJs(
@@ -183,17 +184,17 @@
 					'<?php echo $this->getMethodCode(); ?>',
 					'form button[type=submit], #payment-buttons-container button'
 				);
-				
+
 				if( typeof window['acceptJs_<?php echo $this->getMethodCode(); ?>_callback'] == 'undefined' ) {
 					window['acceptJs_<?php echo $this->getMethodCode(); ?>_callback'] = function(response) {
 						acceptJs_<?php echo $this->getMethodCode(); ?>.handlePaymentResponse(response);
 					}
-					
+
 					<?php /** TODO: Remove following expected 9/2016 fix round with deferred loading support **/ ?>
 					window.isReady = true;
 				}
 			}
-			
+
 			var s = document.createElement('script');
 			s.type = "text/javascript";
 			s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'paradoxlabs/authnetcim/accept.js'; ?>";

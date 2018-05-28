@@ -80,9 +80,7 @@ class Mage_Core_Model_Domainpolicy
         } elseif('frontend' == $action->getLayout()->getArea()) {
             $policy = $this->getFrontendPolicy();
         }
-        Mage::log("Coming to policy",Zend_log::DEBUG,'ajay.log',true);
 
-        Mage::log($policy,Zend_log::DEBUG,'ajay.log',true);
         
         if ($policy) {
             /** @var Mage_Core_Controller_Response_Http $response */

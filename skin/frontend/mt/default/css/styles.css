@@ -9348,7 +9348,7 @@ ul.crosssell-products-list {
 	margin-top: 5px;
 	color: #555555;
 	float: right;
-	margin-right: 20px;
+	margin-left: 20px;
 }
 
 .multiple-checkout .box-content .sp-methods #payment_form_authorizenet .input-box .cvv-what-is-this
@@ -9598,6 +9598,7 @@ ul.crosssell-products-list {
 	background: url(../images/checkbox-login.png) no-repeat 0 0;
 }
 
+.checkout-privacy-policy input:checked+label,
 .gift-messages .control input:checked+label, .input-gif-card-balance  input:checked+label
 	{
 	background: url(../images/checkbox-login.png) no-repeat 0 -20px;
@@ -10127,7 +10128,7 @@ ol#checkoutSteps.opc li.section, ol#checkoutSteps.opc li.active {
 	font: normal 13px/13px Arial, Helvetica, sans-serif;
 	border-bottom: 1px solid #D1D1D1;
 	padding: 0 0 10px;
-	margin: 0 0 0 4px;
+	/* margin: 0 0 0 4px; */
 	color: #3F4048;
 }
 
@@ -19727,3 +19728,39 @@ margin: 0 !important;
 font-size: 100% !important;
 }
 
+.checkout-onepage-index #authnetcim_cc_cid{
+	margin-left: 0px;
+}
+
+.catalog-product-view .product-shop .button[title="Out of stock"]{
+	background-size:10px ! important;
+}
+
+.mt-terms-condtions-policy #mt-newsl-terms{
+	left: 25px;
+	width: 18px;
+    height: 17px;
+}
+.mt-terms-condtions-policy label {
+	margin-left: 20px;
+    font-size: 11px;
+}
+
+.mt-terms-condtions-policy a{
+	text-decoration: underline;
+}
+
+.checkout-privacy-policy{
+	margin-left: -9px;
+    margin-top: -20px;
+}
+
+
+.checkout-privacy-policy input:checked+label {
+    background: url(../images/checkbox-login.png) no-repeat 0 -20px;
+}
+
+.checkout-privacy-policy input+label {
+    padding: 2px 0 2px 30px;
+    background: url(../images/checkbox-login.png) no-repeat 0 0;
+}

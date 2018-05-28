@@ -9928,3 +9928,31 @@ input.giftcard-radio1 {
 #qty-box>div #qty{
 	text-align: center;
 }
+
+.mt-newletter-subscribe-privacy-policy input[type="checkbox"]{
+	top: 37px;
+    height: 20px;
+}
+
+.mt-newletter-subscribe-privacy-policy .privacy-policy-details a{
+	color: #38393c;
+	text-decoration: underline;
+}
+.mt-newletter-subscribe-privacy-policy .privacy-policy-details{
+	color: #38393c;
+    font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif;
+    font-size: 11px;
+    clear: both;
+    font-weight: 100;
+}
+
+.checkout-privacy-policy label{
+	color: #38393c;
+    font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 100;
+}
+
+.checkout-privacy-policy label a{
+	float: none ! important;
+}

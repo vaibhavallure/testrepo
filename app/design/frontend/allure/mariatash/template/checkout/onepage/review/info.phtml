@@ -25,7 +25,7 @@
  */
 ?>
 <?php //echo $this->getChildHtml('items_before'); ?>
-<!-- 
+<!--
 <div id="checkout-review-table-wrapper">
     <table class="data-table cart-table-items" id="checkout-review-table">
         <?php// echo $this->getChildHtml('totals'); ?>
@@ -44,9 +44,9 @@
 -->
 
 <div class="shipping-address-mt">
-<?php 
+<?php
 echo "<h4>Shipping address</h4>";
- 
+
 $quote = Mage::getSingleton('checkout/session')->getQuote();
 $quote_object = Mage::getModel('sales/quote')->load($quote->getId());
 $shipping = $quote->getShippingAddress();
@@ -74,7 +74,7 @@ echo '<p>' . $billing->getFormated('html') . '</p>';
 </div>
 
 <div class="shipping-method-mt">
-<?php 
+<?php
 echo "<h4>Shipping method</h4>";
 $shippingAddress = $quote->getShippingAddress();
 
@@ -116,13 +116,22 @@ switch ($payment->getMethod()) {
     		<button id="applePayButton" class='apple-pay-button-with-text apple-pay-button-black-with-text'  onclick="initApplePay()"><span class="text">Pay with</span><span class="logo"></span></button>
     		<?php else:?>
         <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a></p>
+
+         <div class="checkout-privacy-policy">
+        	<p class="control">
+                <input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
+                <label for="checkout_privacy_confirm"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?></label>
+       		</p>
+    	</div>
+
+         <a id="review-back" class="button" href="#" onclick="checkout.back(); return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
         <?php echo $this->getChildHtml('button') ?>
         <?php endif;?>
         <a id="review-back" class="button" href="#" onclick="checkout.back(); return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
         <span class="please-wait" id="review-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
         </span>
-    
+
     </div>
     <script type="text/javascript">
     //<![CDATA[

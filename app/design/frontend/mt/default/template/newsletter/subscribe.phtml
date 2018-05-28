@@ -57,6 +57,18 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
                 <span>*</span>
                 <span id="msg-country" class="validation-advice"></span>
             </div>
+            
+            <div class="mt-terms-condtions-policy">
+        	<input  type="checkbox" name="mt-newsl-terms"
+        		 id="mt-newsl-terms" value="1" class="checkbox">
+            <label for="policy" >
+            Yes, I want to sign up for Maria Tash emails.  
+            By clicking the submit button I agree to receive Maria Tash emails and I agree to the Maria Tash <a href="/terms-conditions/">Terms &amp; conditions</a> and 
+            <a href="/privacy-policy/">Privacy Policy</a> for this website.
+            </label>
+        </div>
+        
+            
         </div>
         <div class="loader" style="display:none; width: 20px;">
             <img src="<?php echo Mage::getBaseUrl('media') . 'loading.gif' ?>" />
@@ -85,6 +97,12 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
         jQuery('#msg-email').text('');
         jQuery('#msg-name').text('');
         jQuery('#msg-lastname').text('');
+
+        var ischeck = jQuery("#mt-newsl-terms").prop('checked');
+        if(ischeck == false){
+        	alert("Please agree our terms and conditions.");
+            return;
+        }
                     
         var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
         jQuery('.loader').css({display:'inline-block'});

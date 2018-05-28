@@ -617,6 +617,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                             ->getData());
                 $backorder_quote->setOrderType($_checkoutHelper::MULTI_BACK_ORDER);
                 $backorder_quote->save();
+                
                 $backorder_quote->setIsChildOrder(1)->save();
                 
                 $backorder_quote->getShippingAddress()->setCollectShippingRates(true);
@@ -643,6 +644,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     ->getData());
                 $order_quote->setOrderType($_checkoutHelper::MULTI_MAIN_ORDER);
                 $order_quote->save();
+                
                 $order_quote->setIsChildOrder(1)->save();
                 
                 $order_quote->getShippingAddress()->setCollectShippingRates(true);
