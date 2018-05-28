@@ -2236,7 +2236,8 @@ input.special-inst-product {
     position: relative;
     margin: 10% auto;
     /* padding: 5px 20px 13px 20px; */
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 10px 20px 10px 20px; 
     /* border-radius: 10px; */
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
@@ -2338,10 +2339,10 @@ cursor: pointer;
 	width: 20px;
     height: 20px;
 }
-#popup_is_subscribed{
+/* #popup_is_subscribed{
 	left: 0;
 	margin: 3px 20px;
-}
+} */
 .popupcheckbox_lbl{
 	padding: 3px 0 0 25px  !important;
 }
@@ -2468,4 +2469,68 @@ cursor: pointer;
 
 .buttons-set #delete-my-account{
 	margin-right: 10px;
+}
+
+.popupDelMyAccModel {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: -20px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+    background: rgba(0,0,0,0.45);
+}
+.popupDelMyAccModel > div {
+    width: 320px;
+    position: relative;
+    margin: 10% auto;
+    /* padding: 5px 20px 13px 20px; */
+    padding: 20px;
+    /* border-radius: 10px; */
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px;
+}
+.popupDelMyAccModel .submit-delete{
+	    margin-bottom: 45px;
+}
+.popupDelMyAccModel .submit-delete button {
+	margin-top: 20px;
+    float: right;
+    color: #6f6b5a;
+}
+.popupDelMyAccModel .popupcheckbox_lbl_delacc{
+    text-align: justify;
+}
+.popupDelMyAccModel .del_my_acc_confirm_p{
+	padding-bottom: 5px;
+    text-align: justify;
+}
+#popupcheckbox_delmyacc_confirm {
+    left: 0;
+    margin: 3px 20px;
+    width: 20px;
+    height: 20px;
+}
+
+#register-modal-container .form-group {
+	margin-bottom: 0px;
+}
+
+#newsletter-form .newsletter-mt{
+	width: 100%;
+}
+
+#newsletter-form #newsletter-validate-detail button {
+	text-align: center;
 }
