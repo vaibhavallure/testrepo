@@ -783,7 +783,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         try {
             $result = $this->saveOrderAction($paymentData);
             
-            //$this->_chargeCard();
+            $this->_chargeCard();
             
             return $result;
         } catch (Exception $e) {
@@ -796,7 +796,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     
     private function _chargeCard()
     {
-        
         $transRequestXmlStr=<<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
