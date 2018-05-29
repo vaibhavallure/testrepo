@@ -790,19 +790,21 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $this->getOnepage()->saveShipping($billingData, $customerAddressId);
         }
         
-        $paymentData = array('method' => 'applepay'); 
-        
-        $this->getRequest()->setPost('payment', $paymentData);
-        
         if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
             $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
         }
         
+        $paymentData = array('method' => 'applepay');
+        
+        $this->getRequest()->setPost('payment', $paymentData);
+        
         Mage::log("START: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
         try {
-            $this->saveOrderAction($paymentData);
+            $result = $this->saveOrderAction($paymentData);
             
-            $this->_chargeCard();
+            //$this->_chargeCard();
+            
+            return $result;
         } catch (Exception $e) {
             Mage::log("EXCEPTION: ".$e->getMessage(),Zend_Log::DEBUG, 'applepay.log', true);
             throw new Exception($e->getMessage(), $e->getCode());
