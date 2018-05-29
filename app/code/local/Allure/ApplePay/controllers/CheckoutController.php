@@ -793,7 +793,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         
         $transRequestXmlStr=<<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<createTransactionRequest xmlns="https://api.authorize.net/xml/v1/schema/AnetApiSchema.xsd">
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
       <merchantAuthentication></merchantAuthentication>
       <transactionRequest>
          <transactionType>authCaptureTransaction</transactionType>
@@ -824,7 +824,6 @@ XML;
         if ($_POST['dataDesc'] === 'COMMON.VCO.ONLINE.PAYMENT') {
             $transRequestXml->transactionRequest->addChild('callId',$_POST['callId']);
         }
-        
         
         if (isset($_POST['paIndicator'])){
             $transRequestXml->transactionRequest->addChild('cardholderAuthentication');
