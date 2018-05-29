@@ -203,24 +203,14 @@ if (window.ApplePaySession) {
 			}
 			
 			if (typeof Allure.ApplePay.data.response.saveBilling.totals != 'undefined') {
-				Allure.ApplePay.data.lineItems = [];
-				jQuery.each(Allure.ApplePay.data.response.saveBilling.totals, function(totalCode, totalData){
-					if (totalCode == 'grand_total') {
-						if (!Allure.ApplePay.flag.sandbox) {
-							Allure.ApplePay.data.total.amount = totalData.value;
-						} else {
-							Allure.ApplePay.data.total.amount = 1;
-						}
-						
-						return;
-					}
-					
-					Allure.ApplePay.data.lineItems.push({
-						    label: totalData.title,
-						    amount: totalData.value,
-						    type: "final"
-					});
-				});
+				Allure.ApplePay.action.refreshLineItems(Allure.ApplePay.data.response.saveBilling.totals);
+			} else {
+				var totalData = Allure.ApplePay.action.sendRequest('refreshTotals');
+				
+				Allure.ApplePay.action.refreshLineItems(totalData);
+				
+				console.log('totalData::');
+				console.log(totalData);
 			}
 			
 			if (typeof Allure.ApplePay.data.response.saveBilling.currency != 'undefined') {
@@ -353,7 +343,7 @@ if (window.ApplePaySession) {
 		return new Promise(function(resolve, reject) {
 			var xhr = new XMLHttpRequest();
 			xhr.onload = function() {
-				console.log(this.responseText);
+				//console.log(this.responseText);
 				var data = JSON.parse(this.responseText);
 				console.log(data);
 				resolve(data);
@@ -471,6 +461,7 @@ if (window.ApplePaySession) {
 	};
 	
 	Allure.ApplePay.action.sendRequest = function (requestType, requestData, requestCallback) {
+		console.log('sendRequest START::'+requestType);
 		var responseData = null;
 		jQuery.ajax({
 			url: 	Allure.ApplePay.data.baseUrl+requestType,
@@ -485,17 +476,19 @@ if (window.ApplePaySession) {
 			timeout: 0 // 20 seconds
 			
 		}).done(function(data){
-			console.log(data);
 			responseData = data;
-			console.log(requestType+'::Success');
+			console.log(requestType+'::DONE');
+			console.log(data);
 			
 			if (typeof requestCallback != 'undefined') {
 				requestCallback();
 			}
+			console.log('sendRequest END::'+requestType);
 			
 		}).fail(function(xhr, status, error) {
 			Allure.ApplePay.flag.active = false;
-			console.log(requestType+'::Error => '+error);
+			console.log(requestType+'::FAIL => '+error);
+			console.log('sendRequest END::'+requestType);
 		})
 		
 		return responseData;
@@ -584,24 +577,7 @@ if (window.ApplePaySession) {
 			}
 			
 			if (typeof Allure.ApplePay.data.response.saveBilling.totals != 'undefined') {
-				Allure.ApplePay.data.lineItems = [];
-				jQuery.each(Allure.ApplePay.data.response.saveBilling.totals, function(totalCode, totalData){
-					if (totalCode == 'grand_total') {
-						if (!Allure.ApplePay.flag.sandbox) {
-							Allure.ApplePay.data.total.amount = totalData.value;
-						} else {
-							Allure.ApplePay.data.total.amount = 1;
-						}
-						
-						return;
-					}
-					
-					Allure.ApplePay.data.lineItems.push({
-						    label: totalData.title,
-						    amount: totalData.value,
-						    type: "final"
-					});
-				});
+				Allure.ApplePay.action.refreshLineItems(Allure.ApplePay.data.response.saveBilling.totals);
 			}
 			
 			if (typeof Allure.ApplePay.data.response.saveBilling.currency != 'undefined') {
@@ -634,32 +610,36 @@ if (window.ApplePaySession) {
 		
 		if (Allure.ApplePay.data.response.saveShippingMethod) {
 			if (typeof Allure.ApplePay.data.response.saveShippingMethod.totals != 'undefined') {
-	
-				Allure.ApplePay.data.lineItems = [];
-				
-				jQuery.each(Allure.ApplePay.data.response.saveShippingMethod.totals, function(totalCode, totalData){
-					if (totalCode == 'grand_total') {
-
-						if (!Allure.ApplePay.flag.sandbox) {
-							Allure.ApplePay.data.total.amount = totalData.value;
-						} else {
-							Allure.ApplePay.data.total.amount = 1;
-						}
-						return;
-					}
-					
-					Allure.ApplePay.data.lineItems.push({
-						    label: totalData.title,
-						    amount: totalData.value,
-						    type: "final"
-					});
-				});
+				Allure.ApplePay.action.refreshLineItems(Allure.ApplePay.data.response.saveShippingMethod.totals);
 			}
 			
 			if (typeof Allure.ApplePay.data.response.saveShippingMethod.currency != 'undefined') {
 				Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.saveShippingMethod.currency;
 			}
 		}
+	};
+	
+	Allure.ApplePay.action.refreshLineItems  = function (totals) {
+		Allure.ApplePay.data.lineItems = [];
+		jQuery.each(totals, function(totalCode, totalData){
+			if (totalCode == 'grand_total') {
+				if (!Allure.ApplePay.flag.sandbox) {
+					Allure.ApplePay.data.total.amount = totalData.value;
+				} else {
+					Allure.ApplePay.data.total.amount = 1;
+				}
+				
+				return;
+			} else {
+				Allure.ApplePay.data.total.amount = totalData.value;
+			}
+			
+			Allure.ApplePay.data.lineItems.push({
+				    label: totalData.title,
+				    amount: totalData.value,
+				    type: "final"
+			});
+		});
 	};
 	
 	Allure.ApplePay.action.addGiftCard = function() {

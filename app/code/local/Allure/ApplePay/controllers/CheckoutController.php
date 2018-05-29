@@ -152,25 +152,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 'total'         => Mage::helper('core')->currency($product->getFinalPrice(), false, false),
                 'quote'         => $quote->getData()
             );
-            
-            /*
-            $cart->init()->save();
-            
-            $this->getOnepage()->getQuote()->setTotalsCollectedFlag(false)->collectTotals()->save();
-            
-            
-            $result['subtotal']      = $this->getOnepage()->getQuote()->getBaseSubtotal();
-            $result['grand_total']   = $this->getOnepage()->getQuote()->getBaseGrandTotal();
-            
-            $result['totals'] = array();
-            
-            foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
-                $result['totals'][$code] = array(
-                        'title' => $total->getTitle(),
-                        'value'=> $total->getValue()
-                );
-            }
-            */
 
             $this->getResponse()->setBody(json_encode($result));
             Mage::log("END: addProductAction",Zend_Log::DEBUG, 'applepay.log', true);
@@ -199,67 +180,74 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('billing', array());
             
-//             $quoteId = $this->getRequest()->getPost('quote_id', null);
-//             $this->_getSession()->setQuoteId($quoteId);
-//             $quote = Mage::getModel('sales/quote')->load($quoteId);
-//             $this->_getCart()->setQuote($quote);
-            
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
 
             if (isset($data['email'])) {
                 $data['email'] = trim($data['email']);
             }
             
-            if (!isset($data['region_id']) || empty($data['region_id'])) {
-                $regionName = $data['region'];
-                
-                $region  = Mage::getModel('directory/region')->loadByCode($regionName, $data['country_id']);
-                
-                if (!$region->getId()) {
-                    $region = Mage::getModel('directory/region')->loadByName($regionName, $data['country_id']);
-                }
-                
-                if ($region->getId()) {
-                    $data['region_id'] = $region->getId();
+            $calculateRegion = true;
+            
+            if ($calculateRegion) {
+            
+                if (!isset($data['region_id']) || empty($data['region_id'])) {
+                    $regionName = $data['region'];
+                    
+                    $region  = Mage::getModel('directory/region')->loadByCode($regionName, $data['country_id']);
+                    
+                    if (!$region->getId()) {
+                        $region = Mage::getModel('directory/region')->loadByName($regionName, $data['country_id']);
+                    }
+                    
+                    if ($region->getId()) {
+                        $data['region_id'] = $region->getId();
+                    }
                 }
             }
             
             Mage::log("NEW DATA: ".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
             
+            $calculateTotals = true;
+         
+            if (!$calculateTotals) {
+                $this->_getQuote()->getShippingAddress()->setCollectShippingRates(false);
+            }
+            
             $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
 
             if (!isset($result['error'])) {
                 /* check quote for virtual */
-                if ($this->getOnepage()->getQuote()->isVirtual()) {
-                    $result['goto_section'] = 'payment';
-                    $result['update_section'] = array(
-                            'name' => 'payment-method',
-                            //'html' => $this->_getPaymentMethodsHtml()
-                    );
-                } elseif (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
+                if (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
                     $address = $this->getOnepage()->getQuote()->getShippingAddress();
                     
                     $shippingMethods = array();
                     
                     $hasDefaultMethod = false;
                     
-                    foreach($address->getGroupedAllShippingRates() as $rates){
-                        foreach ($rates as $rate) {
-                            if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
-                                continue;
+                    $calculateShippingMethods = true;
+                    
+                    if ($calculateShippingMethods) {
+                    
+                        foreach($address->getGroupedAllShippingRates() as $rates){
+                            foreach ($rates as $rate) {
+                                if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
+                                    continue;
+                                }
+                                
+                                if (!$hasDefaultMethod) {
+                                    $this->_getSession()->setDefaultShippingMethod($rate->getCode());
+                                    $hasDefaultMethod = true;
+                                }
+                                
+                                $shippingMethods[$rate->getCode()] = $rate->getData();
                             }
-                            
-                            if (!$hasDefaultMethod) {
-                                $this->_getSession()->setDefaultShippingMethod($rate->getCode());
-                                $hasDefaultMethod = true;
-                            }
-                            
-                            $shippingMethods[$rate->getCode()] = $rate->getData();
                         }
                     }
                     
-                    $result['goto_section'] = 'shipping_method';
                     $result['shipping_methods'] = $shippingMethods;
+                    
+                    $result['goto_section'] = 'shipping_method';
+                    
                     $result['update_section'] = array(
                             'name' => 'shipping-method',
                             //'html' => $this->_getShippingMethodsHtml()
@@ -271,32 +259,42 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $result['goto_section'] = 'shipping';
                 }
                 
+                //$this->getOnepage()->getQuote()->setTotalsCollectedFlag(false);
                 //$this->getOnepage()->getQuote()->collectTotals()->save();
                 
                 $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
                 $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
                 
-                $result['totals'] = array();
+                if ($calculateTotals) {
+                    
+                    $result['totals'] = array();
                 
-                foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
-                    $result['totals'][$code] = array(
-                            'title' => $total->getTitle(),
-                            'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)//$total->getValue()
-                    );
+                    foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
+                        $result['totals'][$code] = array(
+                                'title' => $total->getTitle(),
+                                'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)//$total->getValue()
+                        );
+                    }
                 }
             }
             
-            //$result['billing_address'] = $this->_getQuote()->getBillingAddress()->getFirstname();
+            $this->_setDeliveryOption();
             
-            //$result['shipping_address'] = $this->_getQuote()->getShippingAddress()->getFirstname();
-            
-            $this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
+            //$this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
             
             Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
             Mage::log("END: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
-
+            
+            $this->getResponse()->setHeader('Content-type', 'application/json');
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
+    }
+    
+    private function _setDeliveryOption()
+    {   
+        $_checkoutHelper = Mage::helper('allure_multicheckout');
+        $this->_getQuote()->setDeliveryMethod('one_ship');
+        $this->_getQuote()->setOrderType($_checkoutHelper::SINGLE_ORDER);
     }
     
     
@@ -370,9 +368,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 }
             }
             
-            //$result['billing_address'] = $this->_getQuote()->getBillingAddress()->getFirstname();
-            
-            //$result['shipping_address'] = $this->_getQuote()->getShippingAddress()->getFirstname();
             
             Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
             Mage::log("END: saveBillingAddressAction",Zend_Log::DEBUG, 'applepay.log', true);
@@ -1028,16 +1023,34 @@ XML;
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
     
-    public function refreshtotalsAction()
+    public function refreshTotalsAction()
     {
         $params = $this->getRequest()->getParams();
         if(!empty($params)){
             $data = $params['shipping_method'];
             $this->getOnepage()->saveShippingMethod($data);
         }
+        
+        $this->_getQuote()->getShippingAddress()->setCollectShippingRates(true);
+        
         $this->_getQuote()->collectTotals()->save();
-        $this->loadLayout();
-        $this->renderLayout();
+        
+        $result = array();
+        
+        $calculateTotals = true;
+        
+        if ($calculateTotals) {
+            
+            foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
+                $result[$code] = array(
+                        'title' => $total->getTitle(),
+                        'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)//$total->getValue()
+                );
+            }
+        }
+        
+        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
     private function cleanQuotes()
@@ -1076,8 +1089,8 @@ XML;
      * @return Mage_Checkout_Model_Type_Onepage
      */
     public function getOnepage() {
-        return Mage::getSingleton('checkout/type_onepage');
-        //return Mage::getSingleton('allure_applepay/checkout_type_onepage');
+        //return Mage::getSingleton('checkout/type_onepage');
+        return Mage::getSingleton('allure_applepay/checkout_type_onepage');
     }
 
     /**

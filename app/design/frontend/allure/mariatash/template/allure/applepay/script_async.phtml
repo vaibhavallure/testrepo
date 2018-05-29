@@ -17,7 +17,7 @@ if ($quote && $quote->getCouponCode()) {
     $couponCode = $quote->getCouponCode();
 }
 
-$giftCardCodes = Mage::getSingleton('giftcards/session')->getCardIds();
+$giftCardCodes = (array) Mage::getSingleton('giftcards/session')->getCardIds();
 
 ?>
 <?php if ($this->isEnabled() && !$this->isLoaded()) : ?>
@@ -43,7 +43,7 @@ $giftCardCodes = Mage::getSingleton('giftcards/session')->getCardIds();
                                     
                                         <div class="discount-form" >
                                             <form method="post" action="/giftcards/cart/activateGiftCard/" id="applePayActivateGiftCard">
-                                            	   <?php foreach ($giftCardCodes as $giftCardCode):?>
+                                            	<?php foreach ($giftCardCodes as $giftCardCode):?>
                                                 <div class="input-box">
                                                     <input value="<?php echo $giftCardCode;?>" name="giftcard_code" id="giftcard_code" class="input-text giftcard_code giftcard_code_saved" readonly="readonly">
                                                 </div>
