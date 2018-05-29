@@ -585,37 +585,18 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 $data = $this->getRequest()->getPost('payment', array());
             }
             
+            Mage::log("PAYMENT_DATA::".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
+            
             if ($data) {
-                $data['checks'] = Mage_Payment_Model_Method_Abstract::CHECK_USE_CHECKOUT |
-                    Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_COUNTRY |
-                    Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_CURRENCY |
-                    Mage_Payment_Model_Method_Abstract::CHECK_ORDER_TOTAL_MIN_MAX |
-                    Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL;
+                $data['checks'] =   Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL |
+                                    Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_COUNTRY ;
                 
-                if (strtolower($this->getOnepage()->getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP)) {
-                    $this->getOnepage()
+                $this->getOnepage()
                     ->getQuote()
                     ->getPayment()
                     ->importData($data);
-                } else {
-                    if (! $this->getOnepage()->getQuoteOrdered()->getIsCheckoutCart()) {
-                        $this->getOnepage()
-                        ->getQuoteOrdered()
-                        ->getPayment()
-                        ->importData($data);
-                    }
-                    
-                    if (! $this->getOnepage()->getQuoteBackordered()->getIsCheckoutCart()) {
-                        $this->getOnepage()
-                        ->getQuoteBackordered()
-                        ->getPayment()
-                        ->importData($data);
-                    }
-                }
             }
-
-            // die;
-            // Mage::log($data,Zend_log::DEBUG,'abc',true);die;
+            
             $this->getOnepage()->saveCustomOrder($data);
 
             $redirectUrl = $this->getOnepage()

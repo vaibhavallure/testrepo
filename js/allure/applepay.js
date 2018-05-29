@@ -509,20 +509,20 @@ if (window.ApplePaySession) {
 	    var shippingContact = Allure.ApplePay.data.shippingContact;
 	    
 	    var data = {
-			'billing[firstname]': shippingContact.givenName, 
-			'billing[lastname]': shippingContact.familyName,
-			'billing[company]': '',
-			'billing[email]': shippingContact.emailAddress,
-			'billing[country_id]': shippingContact.countryCode,
-			'billing[street][0]': shippingContact.addressLines[0],
-			'billing[street][1]': (shippingContact.addressLines.length > 1 ? shippingContact.addressLines[1] : ''),
-			'billing[city]': shippingContact.locality,
-			'billing[region_id]': '',
-			'billing[region]': shippingContact.administrativeArea,
-			'billing[postcode]': shippingContact.postalCode,
-			'billing[telephone]': shippingContact.phoneNumber,
-			'billing[fax]': '',
-			'billing[use_for_shipping]': 1,
+//			'billing[firstname]': shippingContact.givenName, 
+//			'billing[lastname]': shippingContact.familyName,
+//			'billing[company]': '',
+//			'billing[email]': shippingContact.emailAddress,
+//			'billing[country_id]': shippingContact.countryCode,
+//			'billing[street][0]': shippingContact.addressLines[0],
+//			'billing[street][1]': (shippingContact.addressLines.length > 1 ? shippingContact.addressLines[1] : ''),
+//			'billing[city]': shippingContact.locality,
+//			'billing[region_id]': '',
+//			'billing[region]': shippingContact.administrativeArea,
+//			'billing[postcode]': shippingContact.postalCode,
+//			'billing[telephone]': shippingContact.phoneNumber,
+//			'billing[fax]': '',
+//			'billing[use_for_shipping]': 1,
     		amount: Allure.ApplePay.data.total.amount, 
     		dataDesc: 'COMMON.APPLE.INAPP.PAYMENT', 
     		dataValue: objJsonStr,  
@@ -578,6 +578,13 @@ if (window.ApplePaySession) {
 			
 			if (typeof Allure.ApplePay.data.response.saveBilling.totals != 'undefined') {
 				Allure.ApplePay.action.refreshLineItems(Allure.ApplePay.data.response.saveBilling.totals);
+			} else {
+				var totalData = Allure.ApplePay.action.sendRequest('refreshTotals');
+				
+				Allure.ApplePay.action.refreshLineItems(totalData);
+				
+				console.log('totalData::');
+				console.log(totalData);
 			}
 			
 			if (typeof Allure.ApplePay.data.response.saveBilling.currency != 'undefined') {
