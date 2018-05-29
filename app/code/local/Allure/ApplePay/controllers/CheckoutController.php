@@ -783,7 +783,27 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         try {
             $result = $this->saveOrderAction($paymentData);
             
-            $this->_chargeCard();
+            if ($responseData = $this->_chargeCard()) {
+                
+                $responseDataObject = json_decode($responseData, true);
+                
+                if ($responseDataObject['messages']['resultCode'] == 'Ok') {
+                    
+                    if ($responseDataObject['transactionResponse']) {
+                        
+                        $paymentData = $responseDataObject['transactionResponse'];
+                        
+                        $authResponse = new Varien_Object($paymentData);
+                        
+                        $payment = $this->getOnepage()->getQuote()->getPayment();
+                        
+                        $payment->setTransactionId( $authResponse->getTransId());
+                        $payment->setTransactionAdditionalInfo( Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $authResponse->getData() );
+                        
+                        $payment->save();
+                    }
+                }
+            }
             
             return $result;
         } catch (Exception $e) {
@@ -842,8 +862,6 @@ XML;
         
         //print_r($transRequestXml->asXML());
         
-        $status = false;
-        
         try{	//setting the curl parameters.
             $ch = curl_init();
             if (FALSE === $ch) {
@@ -872,17 +890,16 @@ XML;
             
             $jsonResult=json_encode($xmlResult);
             
-            $status = true;
-            
             Mage::log("RESPONSE: ".$jsonResult,Zend_Log::DEBUG, 'applepay.log', true);
+            
+            return $jsonResult;
                     
         } catch (Exception $e) {
             Mage::log("ERROR: ".sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()),Zend_Log::DEBUG, 'applepay.log', true);
             trigger_error(sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()), E_USER_ERROR);
-            $status = false;
         }
         
-        return $status;
+        return false;
     }
 
     public function truncateCart()
