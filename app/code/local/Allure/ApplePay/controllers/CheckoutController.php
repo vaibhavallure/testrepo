@@ -149,7 +149,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 'subtotal'      => $quote->getBaseSubtotal(),
                 'grand_total'   => $quote->getBaseGrandTotal(),
                 'items'         => $quote->getItemsCount(),
-                'total'         => Mage::helper('core')->currency($product->getFinalPrice(), false, false),
+                'total'         => $product->getFinalPrice(),
                 'quote'         => $quote->getData()
             );
 
