@@ -790,6 +790,26 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $this->getOnepage()->saveShipping($billingData, $customerAddressId);
         }
         
+        $paymentData = array('method' => 'applepay'); 
+        
+        $this->getRequest()->setPost('payment', $paymentData);
+        
+        if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
+            $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
+        }
+        
+        Mage::log("START: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
+        
+        $this->saveOrderAction($paymentData);
+        Mage::log("END: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
+        
+        $this->_chargeCard();
+        
+        Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+    }
+    
+    private function _chargeCard()
+    {
         
         $transRequestXmlStr=<<<XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -837,10 +857,13 @@ XML;
         
         //print_r($transRequestXml->asXML());
         
+        $status = false;
+        
         try{	//setting the curl parameters.
             $ch = curl_init();
-            if (FALSE === $ch)
+            if (FALSE === $ch) {
                 throw new Exception('failed to initialize');
+            }
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
             curl_setopt($ch, CURLOPT_POSTFIELDS, $transRequestXml->asXML());
@@ -853,34 +876,28 @@ XML;
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);	//for production, set value to 2
             curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false );
             $content = curl_exec($ch);
-            if (FALSE === $content)
-                throw new Exception(curl_error($ch), curl_errno($ch));
-            curl_close($ch);
             
+            if (FALSE === $content) {
+                throw new Exception(curl_error($ch), curl_errno($ch));
+            }
+            
+            curl_close($ch);
+                
             $xmlResult=simplexml_load_string($content);
             
             $jsonResult=json_encode($xmlResult);
             
-            //echo $jsonResult;
+            $status = true;
             
             Mage::log("RESPONSE: ".$jsonResult,Zend_Log::DEBUG, 'applepay.log', true);
                     
-        }catch(Exception $e) {
+        } catch (Exception $e) {
             Mage::log("ERROR: ".sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()),Zend_Log::DEBUG, 'applepay.log', true);
             trigger_error(sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()), E_USER_ERROR);
+            $status = false;
         }
         
-        
-        $paymentData = array('method' => 'applepay'); 
-        
-        $this->getRequest()->setPost('payment', $paymentData);
-        
-        if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
-            $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
-        }
-        
-        Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
-        return $this->saveOrderAction($paymentData);
+        return $status;
     }
 
     public function truncateCart()
