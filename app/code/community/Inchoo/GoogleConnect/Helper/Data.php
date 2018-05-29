@@ -85,6 +85,9 @@ class Inchoo_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
                     ->setInchooGoogleconnectToken($token)
                     ->setPassword($customer->generatePassword(10))
                     ->save();
+            
+            //aws02 -add password created time to login successfully
+            $customer->setPasswordCreatedAt(time());
 
             $customer->setConfirmation(null);
             $customer->save();
