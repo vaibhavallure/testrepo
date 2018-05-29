@@ -799,12 +799,15 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         }
         
         Mage::log("START: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
-        $this->saveOrderAction($paymentData);
+        try {
+            $this->saveOrderAction($paymentData);
+            
+            $this->_chargeCard();
+        } catch (Exception $e) {
+            Mage::log("EXCEPTION: ".$e->getMessage(),Zend_Log::DEBUG, 'applepay.log', true);
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
         Mage::log("END: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
-        $this->_chargeCard();
-        
         Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
     }
     
