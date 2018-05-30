@@ -236,9 +236,12 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                                 
                                 if (!$hasDefaultMethod) {
                                     $this->_getSession()->setDefaultShippingMethod($rate->getCode());
-                                    $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($rate->getCode());
                                     
-                                    $this->getOnepage()->getQuote()->collectTotals()->save();
+                                    if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
+                                        $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($rate->getCode());
+                                        
+                                        $this->getOnepage()->getQuote()->collectTotals()->save();
+                                    }
 
                                     $hasDefaultMethod = true;
                                 }
