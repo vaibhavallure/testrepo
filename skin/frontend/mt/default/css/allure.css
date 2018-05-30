@@ -169,7 +169,7 @@
     padding-bottom: 0px;
     line-height: normal;
     float:right;
-    margin-top:45px;
+    margin-top:70px;
 }
 #checkout-review-submit .f-left.back-link{
 	margin-top:-20px ! important;
@@ -1061,6 +1061,10 @@ label.popup-reg-privacy-lbl {
 #review-buttons-container.buttons-set .checkout_privacry_link {
 	    float: unset;
 	    margin: 0;
+}
+
+.checkout-onepage-index .two-shipment .checkout-privacy-policy{
+	margin-top: -30px;
 }
 
 
