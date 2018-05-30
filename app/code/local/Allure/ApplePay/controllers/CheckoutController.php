@@ -239,7 +239,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                                     $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($rate->getCode());
                                     
                                     $this->getOnepage()->getQuote()->collectTotals()->save();
-                                    
+
                                     $hasDefaultMethod = true;
                                 }
                                 
