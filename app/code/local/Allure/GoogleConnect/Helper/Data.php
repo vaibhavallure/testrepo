@@ -51,11 +51,16 @@ class Allure_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
                     ->setFirstname($firstName)
                     ->setLastname($lastName)
                     ->setAllureGoogleconnectId($googleId)
-                    ->setAllureGoogleconnectToken($token)
-                    ->setPassword($customer->generatePassword(10))
-                    ->setPasswordCreatedAt(time())
-                    ->save();
-
+                    ->setAllureGoogleconnectToken($token);
+                    //->setPassword($customer->generatePassword(10))
+                    //->setPasswordCreatedAt(time())
+                    //->save();
+            $password = $customer->generatePassword(10);
+            $customer->setData('password', $password);
+            $customer->setData('password_hash',($customer->hashPassword($password)));
+            $customer->setPasswordConfirmation(null);
+            $customer->setPasswordCreatedAt(time());
+                    
             $customer->setConfirmation(null);
             $customer->save();
 
