@@ -29,10 +29,10 @@
                 <button type="button" id="signin-btn-popup" class="button"><?php echo $this->__("Log In")?></button>
             
                 <?php //google connect code?>
-            	<?php if (Mage::helper('core')->isModuleEnabled('Inchoo_GoogleConnect')):?>
+            	<?php if (Mage::helper('core')->isModuleEnabled('Allure_GoogleConnect')):?>
             	<div class="mt-googleconnect-btn">
-            		<?php echo $this->getLayout()->createBlock('inchoo_googleconnect/button')
-            		  ->setTemplate("inchoo/googleconnect/button.phtml")->toHtml(); ?>
+            		<?php echo $this->getLayout()->createBlock('allure_googleconnect/button')
+            		  ->setTemplate("allure/googleconnect/button.phtml")->toHtml(); ?>
             	</div>
             	<?php endif;?>
             
