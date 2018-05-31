@@ -75,7 +75,8 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
         //let's go with e-mail
         
         try {
-        	$standardInfo = $this->_getSession()->getClient()->call("/me");
+        	$standardInfo = $this->_getSession()->getClient()->call("/me",
+        	    array("fields"=>array("email", "first_name", "last_name", "gender")));
         	
 		} catch(Mage_Core_Exception $e) {
     		$this->_getCustomerSession()->addError(

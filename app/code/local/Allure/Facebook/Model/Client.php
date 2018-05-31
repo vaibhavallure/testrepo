@@ -187,7 +187,8 @@ class Allure_Facebook_Model_Client
 				->setUri($url)
 				->setMethod(Zend_Http_Client::POST)
 				->resetParameters()
-				->setParameterPost($params);
+				->setRawData($params);
+				//->setParameterPost($params);
 
 		try {
 			$response = $client->request();
