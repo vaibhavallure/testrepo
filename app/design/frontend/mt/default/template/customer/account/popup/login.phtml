@@ -35,6 +35,15 @@
             		  ->setTemplate("allure/googleconnect/button.phtml")->toHtml(); ?>
             	</div>
             	<?php endif;?>
+            	
+            	
+            	<?php //facebook connect code?>
+            	<?php if (Mage::helper('core')->isModuleEnabled('Allure_Facebook')):?>
+            	<div class="mt-facebookconnect-btn">
+            		<?php echo $this->getLayout()->createBlock('facebook/button')
+            		  ->setTemplate("allure/facebook/button.phtml")->toHtml(); ?>
+            	</div>
+            	<?php endif;?>
             
             </div>
 

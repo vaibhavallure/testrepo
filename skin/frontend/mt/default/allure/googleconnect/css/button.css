@@ -36,13 +36,16 @@ div.allure-google-connect-inner a{
     border: 1px solid #d1d1d1;
 }  
 
-.mt-googleconnect-btn{
-	width: 180px;
-    float: right;
-    clear: both;
-    margin-bottom: 10px;
+
+.checkout-onepage-index #checkout-step-login .mt-googleconnect-btn{
+	margin-bottom: 10px;
+}  
+
+.popupLoginModel .mt-googleconnect-btn a{
+	float: right;
+	clear: both;
 }
 
-.checkout-onepage-index .mt-googleconnect-btn{
-	margin-top: 10px;
-}  
+.mt-googleconnect-btn .gle-img{
+	border: 1px solid #d1d1d1;
+}

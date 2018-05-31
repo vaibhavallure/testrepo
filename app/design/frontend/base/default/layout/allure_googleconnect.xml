@@ -6,7 +6,7 @@
             <action method="addItem"
                     ifconfig="customer/allure_googleconnect/enabled">
                 <type>skin_css</type>
-                <name>allure_googleconnect/css/button.css</name>
+                <name>allure/googleconnect/css/button.css</name>
             </action>
         </reference>
     </default>
@@ -16,7 +16,7 @@
             <action method="addItem"
                     ifconfig="customer/allure_googleconnect/enabled">
                 <type>skin_css</type>
-                <name>allure_googleconnect/css/styles.css</name>
+                <name>allure/googleconnect/css/styles.css</name>
             </action>
         </reference>
         <reference name="content">
@@ -48,7 +48,7 @@
             <action method="addItem"
                     ifconfig="customer/allure_googleconnect/enabled">
                 <type>skin_css</type>
-                <name>allure_googleconnect/css/styles.css</name>
+                <name>allure/googleconnect/css/styles.css</name>
             </action>
         </reference>
         <reference name="my.account.wrapper">
@@ -68,7 +68,7 @@
             <action method="addItem"
                     ifconfig="customer/allure_googleconnect/enabled">
                 <type>skin_css</type>
-                <name>allure_googleconnect/css/styles.css</name>
+                <name>allure/googleconnect/css/styles.css</name>
             </action>
         </reference>
         <reference name="checkout.onepage.login">
