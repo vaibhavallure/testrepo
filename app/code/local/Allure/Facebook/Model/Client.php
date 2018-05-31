@@ -23,7 +23,7 @@ class Allure_Facebook_Model_Client
 		}
 		
 		if(count($args)<2) {
-			trigger_error('Missing arguments for Inchoo_Facebook_Model_Client::__construct()',E_USER_ERROR);
+			trigger_error('Missing arguments for Allure_Facebook_Model_Client::__construct()',E_USER_ERROR);
 		}
 		
 		$this->_apiKey      = $args[0];
