@@ -57,9 +57,13 @@ class Allure_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
                     //->setPasswordCreatedAt(time())
                     //->save();
             $password = $customer->generatePassword(10);
-            $customer->setData('password', $password);
+           /*  $customer->setData('password', $password);
             $customer->setData('password_hash',($customer->hashPassword($password)));
             $customer->setPasswordConfirmation(null);
+             */
+            
+            $customer->setPassword($password);
+            $customer->setPasswordConfirmation($password);
             $customer->setPasswordCreatedAt(time());
                     
             $customer->setConfirmation(null);
@@ -67,8 +71,8 @@ class Allure_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
 
             $customer->sendNewAccountEmail();
             
-            //Mage::getSingleton('customer/session')->setCustomerAsLoggedIn($customer); 
-            Mage::getSingleton('customer/session')->loginById($customer->getId());
+            Mage::getSingleton('customer/session')->setCustomerAsLoggedIn($customer); 
+            //Mage::getSingleton('customer/session')->loginById($customer->getId());
         
     }
     
