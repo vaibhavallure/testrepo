@@ -2,7 +2,8 @@
 
 class Allure_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
 {
-
+    const XML_PATH_ENABLED = 'customer/allure_googleconnect/enabled';
+    
     public function disconnect(Mage_Customer_Model_Customer $customer) {
         $model = Mage::getSingleton('allure_googleconnect/client');
         $client = $model->getClient();
@@ -148,6 +149,11 @@ class Allure_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
         }
         
         return $url;
+    }
+    
+    public function _isEnabled()
+    {
+        return Mage::getStoreConfig(self::XML_PATH_ENABLED, Mage::app()->getStore()->getId());
     }
     
 }
