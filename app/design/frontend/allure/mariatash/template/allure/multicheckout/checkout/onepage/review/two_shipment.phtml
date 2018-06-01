@@ -200,6 +200,12 @@ echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
     <?php echo $this->getChildHtml('agreements') ?>
     <div class="buttons-set" id="review-buttons-container">
         <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" Below.') ?></p>
+         <div class="checkout-privacy-policy">
+        	<p class="control">
+                <input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
+                <label for="checkout_privacy_confirm"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?></label>
+       		</p>
+    	</div>
          <?php if(0){?>
         <p class="f-left"><?php echo $this->__('Forgot an Item?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>" onclick="return confirm('<?php echo Mage::helper('core')->jsQuoteEscape($this->__('Are you sure you want to leave this page? You will need to go through the checkout steps again.')); ?>')"><?php echo $this->__('Edit Your Cart') ?></a></p>
         <?php }?>
