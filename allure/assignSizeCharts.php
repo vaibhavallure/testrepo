@@ -27,13 +27,13 @@ foreach ($collection as $product){
     }elseif(strpos($product->getName(), '7/16')!== false || strpos($product->getName(), '11mm')!== false){
         $sizeChartId=15;
         
-    }elseif(substr($str, 0, 1)=='V' || substr($str, 0, 1)=='v'){
+    }elseif(substr($product->getSku(), 0, 1)=='V' || substr($product->getSku(), 0, 1)=='v'){
         $sizeChartId=7;
         
-    }elseif(substr($str, 0, 1)=='K' || substr($str, 0, 1)=='k'){
+    }elseif(substr($product->getSku(), 0, 1)=='K' || substr($product->getSku(), 0, 1)=='k'){
         $sizeChartId=8;
         
-    }elseif(substr($str, 0, 1)=='F' || substr($str, 0, 1)=='f'){
+    }elseif(substr($product->getSku(), 0, 1)=='F' || substr($product->getSku(), 0, 1)=='f'){
         $sizeChartId=6;
     }
     if(!empty($sizeChartId))

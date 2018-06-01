@@ -389,7 +389,7 @@ class Ecp_Press_Adminhtml_PressController extends Mage_Adminhtml_Controller_acti
                     $model->setUpdateTime(now());
                 }
 
-              //  $model->save();
+                $model->save();
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('ecp_press')->__('Item was successfully saved'));
                 Mage::getSingleton('adminhtml/session')->setFormData(false);
 
