@@ -156,13 +156,13 @@ class Allure_Facebook_Model_Client
 				->request()
 				->getBody();
 			
-		    Mage::log("Acc tok Response",Zend_Log::DEBUG,'abc.log',true);
-		    Mage::log($accessTokenResponse,Zend_Log::DEBUG,'abc.log',true);
 		    
 		    $responseParams = array();
     		parse_str($accessTokenResponse, $responseParams);
-    		if (isset($responseParams['access_token'])) {
-      			$this->_accessToken = $responseParams['access_token'];
+    		
+    		$responseArr = json_decode($accessTokenResponse,true);
+    		if (isset($responseArr['access_token'])) {
+    		    $this->_accessToken = $responseArr['access_token'];
     		}				
 		} catch(Exception $e) {}
 		
@@ -170,8 +170,6 @@ class Allure_Facebook_Model_Client
 			$this->_accessToken = $this->_apiKey .'|'. $this->_secret;
 		}
 		
-		Mage::log("After access token:",Zend_Log::DEBUG,'abc.log',true);
-		Mage::log($this->_accessToken,Zend_Log::DEBUG,'abc.log',true);
 		
 		return $this->_accessToken;
 	}
@@ -208,10 +206,7 @@ class Allure_Facebook_Model_Client
 			throw new Mage_Core_Exception('Service temporarily unavailable.');
 		}
 		
-		Mage::log("Response of url",Zend_Log::DEBUG,'abc.log',true);
-		
 		$result = Zend_Json::decode($response->getBody());
-		Mage::log($result,Zend_Log::DEBUG,'abc.log',true);
 		
 		return $result;			
 	}
