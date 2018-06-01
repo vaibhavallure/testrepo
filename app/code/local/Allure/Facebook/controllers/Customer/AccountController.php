@@ -129,9 +129,15 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 					->setFirstname($standardInfo['first_name'])
 					->setLastname($standardInfo['last_name'])
 					->setEmail($standardInfo['email'])
-					->setPassword($randomPassword)
-					->setConfirmation($randomPassword)
+					//->setPassword($randomPassword)
+					//->setConfirmation($randomPassword)
 					->setFacebookUid($this->_getSession()->getUid());
+		
+					$customer->setData('password',$randomPassword);
+					$customer->setData('password_hash',($customer->hashPassword($randomPassword)));
+					$customer->setPasswordConfirmation($randomPassword);
+					$customer->setPasswordCreatedAt(time());
+					
 
 		//FB: Show my sex in my profile
 		if(isset($standardInfo['gender']) && $gender=Mage::getResourceSingleton('customer/customer')->getAttribute('gender')){
