@@ -2534,3 +2534,9 @@ cursor: pointer;
 #newsletter-form #newsletter-validate-detail button {
 	text-align: center;
 }
+
+.checkout-privacy-policy a.checkout_privacry_link{
+	font-size: 13px ! important;
+    margin: 0px ! important;
+    text-decoration: underline ! important;
+}

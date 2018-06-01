@@ -179,6 +179,33 @@ class Ecp_Press_Block_Adminhtml_Press_Edit_Tab_Form extends Mage_Adminhtml_Block
           if(is_array($tmp)) $press->setImageFour($path.basename($tmp['value']));
           elseif(!empty($tmp)) $press->setImageFour($path.basename($press->getImageFour()));
           
+          $tmp = $press->getImageFive();
+          if(is_array($tmp)) $press->setImageFive($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageFive($path.basename($press->getImageFive()));
+          
+          $tmp = $press->getImageSix();
+          if(is_array($tmp)) $press->setImageSix($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageSix($path.basename($press->getImageSix()));
+          
+          $tmp = $press->getImageSeven();
+          if(is_array($tmp)) $press->setImageSeven($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageSeven($path.basename($press->getImageSeven()));
+          
+          
+          $tmp = $press->getImageEight();
+          if(is_array($tmp)) $press->setImageEight($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageEight($path.basename($press->getImageEight()));
+          
+          $tmp = $press->getImageNine();
+          if(is_array($tmp)) $press->setImageNine($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageNine($path.basename($press->getImageNine()));
+          
+          $tmp = $press->getImageTen();
+          if(is_array($tmp)) $press->setImageTen($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageTen($path.basename($press->getImageTen()));
+          
+          
+          
           $form->setValues($press->getData());
       }
       return parent::_prepareForm();
