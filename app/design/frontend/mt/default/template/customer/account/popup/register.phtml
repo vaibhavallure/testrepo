@@ -34,13 +34,17 @@
 			<div class="row">
 	 		    <label for="required fields"><em>*</em><?php echo $this->__("Required Fields")?></label>
 			</div>
-			<div class="row news-letter">
-	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
-	  		    <label class="popup-login-lbl popupcheckbox_lbl"><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
+			<div class="row news-letter ">
+	  		    <label for="popup_is_privacy_agree" class="mt-custom-checkbox"><strong><?php echo $this->__("I understand the terms and conditions of the Maria Tash <a href='https://www.venusbymariatash.com/privacy-policy'  target='_blank' >privacy policy</a>")?></strong>
+	  		    <input type="checkbox" name="popup_is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox checkout-privacy-policy">
+  				<span class="checkmark"></span>
+	  		    </label>
 			</div>
 			<div class="row news-letter">
-	  		    <input type="checkbox" name="is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox required-entry">
-	  		    <label class="popup-reg-privacy-lbl popupcheckbox_lbl"><strong><?php echo $this->__("I understand the terms and conditions of the Maria Tash <a href='https://www.venusbymariatash.com/privacy-policy'  target='_blank' >privacy policy</a>")?></strong></label>
+	  		    <label class="mt-custom-checkbox"><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong>
+	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
+	  		    <span class="checkmark"></span>
+	  		    </label>
 			</div>
 		
 		</div>

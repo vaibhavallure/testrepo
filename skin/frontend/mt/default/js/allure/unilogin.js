@@ -79,6 +79,18 @@ jQuery(document).ready(function(){
 
 	$j("#signup-btn-popup").on('click',function(){
 		 var myForm = new VarienForm('popup-register-form'); 
+		 
+		 var privacyPolicySelector = $j("#popup-register-form #popup_is_privacy_agree");
+		 var isChecked = privacyPolicySelector.prop("checked");
+		 if(isChecked == false){
+			 privacyPolicySelector.addClass("checkbox-error-validate");
+			 privacyPolicySelector.parent().addClass("label-error-validate");
+			 return;
+		 }else{
+			 privacyPolicySelector.removeClass("checkbox-error-validate");
+			 privacyPolicySelector.parent().removeClass("label-error-validate");
+		 }
+		 
 		 if(myForm.validator.validate()){ 
 			var firstname 		= $j('#firstname').val();
 			var lastname 		= $j('#lastname').val();

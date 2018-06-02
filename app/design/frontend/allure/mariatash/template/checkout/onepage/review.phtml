@@ -30,13 +30,17 @@
 
 <script>
 function placeOrder(){
-	var len = jQuery(".checkout-privacy-policy #checkout_privacy_confirm").length;
+	var checkoutPrivacyPolicySelector = jQuery(".checkout-privacy-policy #checkout_privacy_confirm");
+	var len = checkoutPrivacyPolicySelector.length;
 	if(len){
-		var isCheck = jQuery(".checkout-privacy-policy #checkout_privacy_confirm").prop('checked');
+		var isCheck = checkoutPrivacyPolicySelector.prop('checked');
 		if(isCheck == false){
-		  alert("Please agree our terms and conditions.");
-			  return;
+			checkoutPrivacyPolicySelector.addClass("checkbox-error-validate");
+			checkoutPrivacyPolicySelector.parent().addClass("label-error-validate");
+			return;
 		}else{
+			checkoutPrivacyPolicySelector.removeClass("checkbox-error-validate");
+			checkoutPrivacyPolicySelector.parent().removeClass("label-error-validate");
 			review.save();
 		}
 	}
