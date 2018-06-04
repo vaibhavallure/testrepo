@@ -1063,9 +1063,20 @@ label.popup-reg-privacy-lbl {
 	    margin: 0;
 }
 
+.popupRegisterModel .validation-advice {
+    color: #790000 !important;
+    font-weight: normal !important;
+    
+}
+.popupLoginModel .validation-advice {
+    color: #790000 !important;
+    font-weight: normal !important;
+    
+}
 
-
-
+.popupRegisterModel .news-letter {
+	margin-top: 10px;
+}
 
 
 

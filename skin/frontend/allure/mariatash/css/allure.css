@@ -2540,3 +2540,32 @@ cursor: pointer;
     margin: 0px ! important;
     text-decoration: underline ! important;
 }
+.popupRegisterModel .form-group.news-letter {
+    margin-top: 25px;
+}
+
+.popupRegisterModel label.popup-login-lbl {
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    font-weight: 400;
+}
+.popupLoginModel label.popup-login-lbl {
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    font-weight: 400;
+}
+.popupRegisterModel label.mt-custom-checkbox {
+    font-weight: 400;
+}
+.popupRegisterModel .validation-advice {
+    color: #790000 !important;
+    font-weight: normal !important;
+    
+}
+.popupLoginModel .validation-advice {
+    color: #790000 !important;
+    font-weight: normal !important;
+    
+}
