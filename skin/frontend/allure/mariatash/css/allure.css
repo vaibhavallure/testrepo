@@ -2536,9 +2536,8 @@ cursor: pointer;
 }
 
 .checkout-privacy-policy a.checkout_privacry_link{
-	font-size: 13px ! important;
+	font-size: 12px ! important;
     margin: 0px ! important;
-    text-decoration: underline ! important;
 }
 .popupRegisterModel .form-group.news-letter {
     margin-top: 25px;
