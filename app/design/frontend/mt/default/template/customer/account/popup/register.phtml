@@ -11,36 +11,40 @@
 				<span id="register-msg"></span>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="firstname"><em>*</em><?php echo $this->__("First Name")?></label>
+	 		    <label class="popup-login-lbl" for="firstname"><em>*</em><?php echo $this->__(" First Name")?></label>
 	  		    <input id='firstname' type="text" name='firstname' class="ele_width required-entry"/>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="lastname"><em>*</em><?php echo $this->__("Last Name")?></label>
+	 		    <label class="popup-login-lbl" for="lastname"><em>*</em><?php echo $this->__(" Last Name")?></label>
 	  		       <input id='lastname' type="text" name='lastname' class="ele_width required-entry"/>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo $this->__("Email Address")?></label>
+	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo $this->__(" Email Address")?></label>
 	  		    <input id='email-register' type="text" name='email' class="ele_width required-entry validate-email"/>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__("Password")?></label>
+	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Password")?></label>
 	  		    <input id='password' type="password" name='password' class="ele_width   input-text required-entry validate-password"/>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__("Confirm Password")?></label>
+	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Confirm Password")?></label>
 	  		    <input id='confirmation' type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
 			</div>
 			
 			<div class="row">
-	 		    <label for="required fields"><em>*</em><?php echo $this->__("Required Fields")?></label>
+	 		    <label for="required fields"><em>*</em><?php echo $this->__(" Required Fields")?></label>
+			</div>
+			<div class="row news-letter ">
+	  		    <label for="popup_is_privacy_agree" class="mt-custom-checkbox mt-privacy-label-register"><?php echo $this->__("* I understand the terms and conditions of the Maria Tash <a href='https://www.venusbymariatash.com/privacy-policy'  target='_blank' >privacy policy</a>.")?>
+	  		    <input type="checkbox" name="popup_is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox checkout-privacy-policy">
+  				<span class="checkmark"></span>
+	  		    </label>
 			</div>
 			<div class="row news-letter">
+	  		    <label class="mt-custom-checkbox"><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?>
 	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
-	  		    <label class="popup-login-lbl popupcheckbox_lbl"><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
-			</div>
-			<div class="row news-letter">
-	  		    <input type="checkbox" name="is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox required-entry">
-	  		    <label class="popup-reg-privacy-lbl popupcheckbox_lbl"><strong><?php echo $this->__("I understand the terms and conditions of the Maria Tash <a href='https://www.venusbymariatash.com/privacy-policy'  target='_blank' >privacy policy</a>")?></strong></label>
+	  		    <span class="checkmark"></span>
+	  		    </label>
 			</div>
 		
 		</div>

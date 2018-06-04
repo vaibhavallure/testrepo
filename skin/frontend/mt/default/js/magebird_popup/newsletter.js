@@ -28,16 +28,21 @@
                                                                                                                                                                                                                                                                           /*dpqzsjhiunbhfcjse.dpn*/
 jQuery('.newsletterPopup form').unbind().submit(function() {   
   var parent = jQuery(".newsletterPopup form").parent().parent();
-  var isCheck = jQuery("#"+parent.attr('id')+" input[type='checkbox']").prop('checked');
-  var len = jQuery("#"+parent.attr('id')+" input[type='checkbox']").length;  
+  var privcyPolicySelectorMagebird = jQuery("#"+parent.attr('id')+" input[type='checkbox']");
+  var isCheck = privcyPolicySelectorMagebird.prop('checked');
+  var len = privcyPolicySelectorMagebird.length;  
   
   var widgetId = jQuery(this).attr('data-widgetId');
   if(validateEmail(jQuery(this).closest(".mbdialog").find(".newsletterPopup input[name='email']").val())){  
       if(len){
-		  if(isCheck==false){
-			  alert("Please agree our terms and conditions.");
-			  return;
-		  }
+    	 if(isCheck == false){
+    		 privcyPolicySelectorMagebird.addClass("checkbox-error-validate");
+    		 privcyPolicySelectorMagebird.parent().addClass("label-error-validate");
+ 			 return;
+ 		 }else{
+ 			privcyPolicySelectorMagebird.removeClass("checkbox-error-validate");
+ 			privcyPolicySelectorMagebird.parent().removeClass("label-error-validate");
+ 		 }
       }
 	  
 	  var $this = this;
