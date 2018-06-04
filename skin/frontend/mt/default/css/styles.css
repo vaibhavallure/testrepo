@@ -19939,4 +19939,12 @@ font-size: 100% !important;
 	top: 7px;
 }
 
+.popupRegisterModel .mt-subscribe-register{
+	top: -3px;
+}
+
+.popupRegisterModel .mt-checkmark-reg{
+	top: -3px ! important;
+}
+
 
