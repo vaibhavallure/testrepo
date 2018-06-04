@@ -19742,13 +19742,10 @@ font-size: 100% !important;
     height: 17px;
 }
 .mt-terms-condtions-policy label {
-    font-size: 11px;
-    text-align: justify;
+    font-size: 12px;
+    text-align: left;
 }
 
-.mt-terms-condtions-policy a{
-	text-decoration: underline;
-}
 
 .checkout-privacy-policy{
 	/* margin-left: -9px;
@@ -19787,6 +19784,11 @@ font-size: 100% !important;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.mt-custom-checkbox a{
+	font-size: 12px ! important;
+	color: #906E39 ! important;
 }
 
 .mt-custom-checkbox input {
@@ -19916,6 +19918,33 @@ font-size: 100% !important;
 
 .checkout-privacy-policy .mt-custom-checkbox{
 	margin-bottom: 0px;
+}
+
+
+#newsletter-form .checkmark{
+	top: 30px;
+}
+
+.mt-custom-checkbox a:hover {
+	color: #906E39;
+	text-decoration: none;
+}
+
+.mt-magbird-checkbox a:hover {
+	color: #906E39 ! important;
+	text-decoration: none ! important;
+}
+
+.popupRegisterModel .mt-custom-checkbox.mt-privacy-label-register .checkmark{
+	top: 7px;
+}
+
+.popupRegisterModel .mt-subscribe-register{
+	top: -3px;
+}
+
+.popupRegisterModel .mt-checkmark-reg{
+	top: -3px ! important;
 }
 
 

@@ -83,6 +83,7 @@ jQuery(document).ready(function(){
 		 var privacyPolicySelector = $j("#popup-register-form #popup_is_privacy_agree");
 		 var isChecked = privacyPolicySelector.prop("checked");
 		 if(isChecked == false){
+			 myForm.validator.validate();
 			 privacyPolicySelector.addClass("checkbox-error-validate");
 			 privacyPolicySelector.parent().addClass("label-error-validate");
 			 return;

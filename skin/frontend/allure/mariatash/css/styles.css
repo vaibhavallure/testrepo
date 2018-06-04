@@ -9757,9 +9757,9 @@ float: right;
     text-transform: capitalize;
 }
 #review-buttons-container.buttons-set a {
-    color: #bba473;
+    color: #fff;/*#bba473;*/
     float: right;
-    font-size: 15px;
+    font-size: 14px;/*15px;*/
     margin: 3px 28px 0 10px;
     text-decoration: none;
 }
@@ -10103,8 +10103,12 @@ input.giftcard-radio1 {
 
 .mt-newletter-subscribe-privacy-policy .mt-custom-checkbox{
 	display: inline-block;
-	text-align: justify;
+	text-align: left;
 	font-weight: 100;
+}
+
+.mt-newletter-subscribe-privacy-policy .mt-custom-checkbox .checkmark{
+	top: 25px;
 }
 
 .mt-newletter-subscribe-privacy-policy .mt-custom-checkbox a{
@@ -10115,4 +10119,22 @@ input.giftcard-radio1 {
 .checkout-onepage-index #checkout-review-load.order-review p.f-left{
 	text-indent: 0px;
 	line-height: 20px;
+}
+
+.mt-register-privacy-label .checkmark{
+	top: 7px;
+}
+
+.mt-custom-checkbox a{
+	font-size: 12px ! important;
+	color: #906E39 ! important;
+}
+
+.mt-custom-checkbox a:hover {
+	color: #906E39;
+	text-decoration: none;
+}
+
+.checkout-privacy-policy .checkmark{
+	top: 7px;
 }
