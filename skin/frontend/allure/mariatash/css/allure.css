@@ -2305,6 +2305,7 @@ width: 100%;
    border-left: 0px;
    border-right: 0;
    padding: 5px;
+   height: 22px;
 }
 .pop-link a{
    outline: 0;
@@ -2536,9 +2537,8 @@ cursor: pointer;
 }
 
 .checkout-privacy-policy a.checkout_privacry_link{
-	font-size: 13px ! important;
+	font-size: 12px ! important;
     margin: 0px ! important;
-    text-decoration: underline ! important;
 }
 .popupRegisterModel .form-group.news-letter {
     margin-top: 25px;
@@ -2560,12 +2560,19 @@ cursor: pointer;
     font-weight: 400;
 }
 .popupRegisterModel .validation-advice {
-    color: #790000 !important;
+    color: #830000 !important;
     font-weight: normal !important;
     
 }
 .popupLoginModel .validation-advice {
-    color: #790000 !important;
+    color: #830000 !important;
     font-weight: normal !important;
-    
+}
+
+.popupRegisterModel label {
+	margin-bottom: 0px;
+}
+
+.popupRegisterModel .news-letter-subscribe{
+	margin-top: 10px;
 }
