@@ -103,7 +103,8 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 	
 	public function isValidForChq($completedOnly)
     {
-        /**/$createdAtLimitation = '2018-04-04';
+        // /**/$createdAtLimitation = '2018-04-04';
+        $createdAtLimitation = '2016-03-16';
         if( $this->_order->getCreatedAt() < $createdAtLimitation )
         {
             return false;
