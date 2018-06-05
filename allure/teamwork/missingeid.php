@@ -9,7 +9,7 @@ $ids=Mage::getModel("catalog/product")->getCollection()->getAllIds();
 $count=0;
 foreach ($ids as $id){
     $product=Mage::getModel('catalog/product')->load($id);
-    if(empty($product->getTeamworkId())){
+    if(empty($product->getTeamworkId()) && $product->getTypeId()=="simple" && $product->getStatus()==1){
         echo $product->getSku();
         echo ",";
         $count++;
@@ -18,5 +18,3 @@ foreach ($ids as $id){
 
 echo "Finished";
 echo "Count::".$count;
-
-

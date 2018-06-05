@@ -100,9 +100,17 @@ class Ecp_Press_Adminhtml_PressController extends Mage_Adminhtml_Controller_acti
                     }else Mage::throwException ('You are tryin\'g to delete a thumbnail image without replacing it');
                 }
 
-                if(isset($_FILES['image_one']['size']) && $_FILES['image_two']['size'] && $_FILES['image_tree']['size']  && $_FILES['image_four']['size']){
+                if(isset($_FILES['image_one']['size']) && $_FILES['image_two']['size'] && $_FILES['image_tree']['size']  && $_FILES['image_four']['size'] && $_FILES['image_five']['size']
+                    && $_FILES['image_six']['size'] && $_FILES['image_seven']['size'] && $_FILES['image_eight']['size'] && $_FILES['image_nine']['size'] && $_FILES['image_ten']['size']
+                    ){
                     if(((int)$_FILES['image_one']['size']/1024) > 1024 || ((int)$_FILES['image_two']['size']/1024) > 1024
-                            || ((int)$_FILES['image_tree']['size']/1024) > 1024 || ((int)$_FILES['image_four']['size']/1024) > 1024
+                            || ((int)$_FILES['image_tree']['size']/1024) > 1024 || ((int)$_FILES['image_four']['size']/1024) > 1024 
+           ||((int)$_FILES['image_five']['size']/1024) > 1024
+                        || ((int)$_FILES['image_six']['size']/1024) > 1024
+                        ||((int)$_FILES['image_seven']['size']/1024) > 1024
+                        ||((int)$_FILES['image_eight']['size']/1024) > 1024
+                        ||((int)$_FILES['image_nine']['size']/1024) > 1024
+                        ||((int)$_FILES['image_ten']['size']/1024) > 1024
                     ){
                         Mage::throwException ('Images can\'t be greather than 1 mb');
                     }
@@ -117,6 +125,25 @@ class Ecp_Press_Adminhtml_PressController extends Mage_Adminhtml_Controller_acti
                     
                     $ext = pathinfo($_FILES['image_four']['name'], PATHINFO_EXTENSION);
                     if(!in_array($ext,$validExtensions)) Mage::throwException ('Invalid format image');
+                    
+                    $ext = pathinfo($_FILES['image_five']['name'], PATHINFO_EXTENSION);
+                    if(!in_array($ext,$validExtensions)) Mage::throwException ('Invalid format image');
+                    
+                    $ext = pathinfo($_FILES['image_six']['name'], PATHINFO_EXTENSION);
+                    if(!in_array($ext,$validExtensions)) Mage::throwException ('Invalid format image');
+                    
+                    $ext = pathinfo($_FILES['image_seven']['name'], PATHINFO_EXTENSION);
+                    if(!in_array($ext,$validExtensions)) Mage::throwException ('Invalid format image');
+                    
+                    $ext = pathinfo($_FILES['image_eight']['name'], PATHINFO_EXTENSION);
+                    if(!in_array($ext,$validExtensions)) Mage::throwException ('Invalid format image');
+                    
+                    $ext = pathinfo($_FILES['image_nine']['name'], PATHINFO_EXTENSION);
+                    if(!in_array($ext,$validExtensions)) Mage::throwException ('Invalid format image');
+                    
+                    $ext = pathinfo($_FILES['image_ten']['name'], PATHINFO_EXTENSION);
+                    if(!in_array($ext,$validExtensions)) Mage::throwException ('Invalid format image');
+                    
                     
                 }
                 
@@ -195,9 +222,126 @@ class Ecp_Press_Adminhtml_PressController extends Mage_Adminhtml_Controller_acti
                     $data['image_four'] = $nameImage;
                 }
                 
+                if (isset($data['image_five']['delete'])) {
+                    unlink($path . DS . basename($data['image_five']['value']));
+                    $data['image_five'] = '';
+                }
                 
+                if (isset($_FILES['image_five']['name']) && $_FILES['image_five']['name'] != '') {
+                    try {
+                        
+                        $uploader = new Varien_File_Uploader('image_five');
+                        $uploader->setAllowedExtensions($validExtensions);
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setFilesDispersion(false);
+                        $nameImage = $uuid . "-five" . substr($_FILES['image_five']['name'],  strrpos($_FILES['image_five']['name'],'.'));
+                        $uploader->save($path, $nameImage);
+                    } catch (Exception $e) {
+                        Mage::throwException($e->getMessage());
+                    }
+                    $data['image_five'] = $nameImage;
+                }
                 
-
+                if (isset($data['image_six']['delete'])) {
+                    unlink($path . DS . basename($data['image_six']['value']));
+                    $data['image_six'] = '';
+                }
+                
+                if (isset($_FILES['image_six']['name']) && $_FILES['image_six']['name'] != '') {
+                    try {
+                        
+                        $uploader = new Varien_File_Uploader('image_six');
+                        $uploader->setAllowedExtensions($validExtensions);
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setFilesDispersion(false);
+                        $nameImage = $uuid . "-six" . substr($_FILES['image_six']['name'],  strrpos($_FILES['image_six']['name'],'.'));
+                        $uploader->save($path, $nameImage);
+                    } catch (Exception $e) {
+                        Mage::throwException($e->getMessage());
+                    }
+                    $data['image_six'] = $nameImage;
+                }
+                
+                if (isset($data['image_seven']['delete'])) {
+                    unlink($path . DS . basename($data['image_seven']['value']));
+                    $data['image_seven'] = '';
+                }
+                
+                if (isset($_FILES['image_seven']['name']) && $_FILES['image_seven']['name'] != '') {
+                    try {
+                        
+                        $uploader = new Varien_File_Uploader('image_seven');
+                        $uploader->setAllowedExtensions($validExtensions);
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setFilesDispersion(false);
+                        $nameImage = $uuid . "-seven" . substr($_FILES['image_seven']['name'],  strrpos($_FILES['image_seven']['name'],'.'));
+                        $uploader->save($path, $nameImage);
+                    } catch (Exception $e) {
+                        Mage::throwException($e->getMessage());
+                    }
+                    $data['image_seven'] = $nameImage;
+                }
+                
+                if (isset($data['image_eight']['delete'])) {
+                    unlink($path . DS . basename($data['image_eight']['value']));
+                    $data['image_eight'] = '';
+                }
+                
+                if (isset($_FILES['image_eight']['name']) && $_FILES['image_eight']['name'] != '') {
+                    try {
+                        
+                        $uploader = new Varien_File_Uploader('image_eight');
+                        $uploader->setAllowedExtensions($validExtensions);
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setFilesDispersion(false);
+                        $nameImage = $uuid . "-eight" . substr($_FILES['image_eight']['name'],  strrpos($_FILES['image_eight']['name'],'.'));
+                        $uploader->save($path, $nameImage);
+                    } catch (Exception $e) {
+                        Mage::throwException($e->getMessage());
+                    }
+                    $data['image_eight'] = $nameImage;
+                }
+                
+                if (isset($data['image_nine']['delete'])) {
+                    unlink($path . DS . basename($data['image_nine']['value']));
+                    $data['image_nine'] = '';
+                }
+                
+                if (isset($_FILES['image_nine']['name']) && $_FILES['image_nine']['name'] != '') {
+                    try {
+                        
+                        $uploader = new Varien_File_Uploader('image_nine');
+                        $uploader->setAllowedExtensions($validExtensions);
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setFilesDispersion(false);
+                        $nameImage = $uuid . "-nine" . substr($_FILES['image_nine']['name'],  strrpos($_FILES['image_nine']['name'],'.'));
+                        $uploader->save($path, $nameImage);
+                    } catch (Exception $e) {
+                        Mage::throwException($e->getMessage());
+                    }
+                    $data['image_nine'] = $nameImage;
+                }
+                
+                if (isset($data['image_ten']['delete'])) {
+                    unlink($path . DS . basename($data['image_ten']['value']));
+                    $data['image_ten'] = '';
+                }
+                
+                if (isset($_FILES['image_ten']['name']) && $_FILES['image_ten']['name'] != '') {
+                    try {
+                        
+                        $uploader = new Varien_File_Uploader('image_ten');
+                        $uploader->setAllowedExtensions($validExtensions);
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setFilesDispersion(false);
+                        $nameImage = $uuid . "-ten" . substr($_FILES['image_ten']['name'],  strrpos($_FILES['image_ten']['name'],'.'));
+                        $uploader->save($path, $nameImage);
+                    } catch (Exception $e) {
+                        Mage::throwException($e->getMessage());
+                    }
+                    $data['image_ten'] = $nameImage;
+                }
+                
                 if (is_array($data['image_two']))
                     $data['image_two'] = basename($data['image_two']['value']);
 
@@ -209,16 +353,35 @@ class Ecp_Press_Adminhtml_PressController extends Mage_Adminhtml_Controller_acti
                 
                 if (is_array($data['image_four']))
                     $data['image_four'] = basename($data['image_four']['value']);
+                
+                if (is_array($data['image_five']))
+                      $data['image_five'] = basename($data['image_five']['value']);
+                
+                if (is_array($data['image_six']))
+                    $data['image_six'] = basename($data['image_six']['value']);
+                
+                if (is_array($data['image_seven']))
+                    $data['image_seven'] = basename($data['image_seven']['value']);
+                
+                if (is_array($data['image_eight']))
+                    $data['image_eight'] = basename($data['image_eight']['value']);
+                
+                if (is_array($data['image_nine']))
+                    $data['image_nine'] = basename($data['image_nine']['value']);
+                
+                if (is_array($data['image_ten']))
+                    $data['image_ten'] = basename($data['image_ten']['value']);
 
                 if (empty($data['image_one']) /*|| empty($data['image_two'])*/)
                     Mage::throwException('Thumbnail Image invalid');
 
                 $model = Mage::getModel('ecp_press/press');
                 /* @var $model Ecp_Slideshow_Model_Slideshow */
-
+              /*   echo "<pre>";
+                print_r($data);
+                die; */
                 $model->setData($data)
                         ->setId($this->getRequest()->getParam('id'));
-
                 if ($model->getCreated_date == NULL || $model->getUpdateTime() == NULL) {
                     $model->setCreated_Date(now())
                             ->setUpdateTime(now());
