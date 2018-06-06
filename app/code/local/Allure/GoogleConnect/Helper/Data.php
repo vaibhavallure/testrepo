@@ -71,7 +71,10 @@ class Allure_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
 
             $customer->sendNewAccountEmail();
             
-            Mage::getSingleton('customer/session')->setCustomerAsLoggedIn($customer); 
+            Mage::getSingleton('customer/session')->setCustomer($customer);
+            Mage::getSingleton('customer/session')->renewSession();
+            Mage::getSingleton('core/session')->renewFormKey();
+            //Mage::getSingleton('customer/session')->setCustomerAsLoggedIn($customer); 
             //Mage::getSingleton('customer/session')->loginById($customer->getId());
         
     }
