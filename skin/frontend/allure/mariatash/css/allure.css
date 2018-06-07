@@ -2559,15 +2559,6 @@ cursor: pointer;
 .popupRegisterModel label.mt-custom-checkbox {
     font-weight: 400;
 }
-.popupRegisterModel .validation-advice {
-    color: #830000 !important;
-    font-weight: normal !important;
-    
-}
-.popupLoginModel .validation-advice {
-    color: #830000 !important;
-    font-weight: normal !important;
-}
 
 .popupRegisterModel label {
 	margin-bottom: 0px;
