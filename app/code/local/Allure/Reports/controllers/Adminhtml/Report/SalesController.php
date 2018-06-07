@@ -94,6 +94,13 @@ class Allure_Reports_Adminhtml_Report_SalesController extends Mage_Adminhtml_Rep
         $this->_initReportAction($grid);
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
+    public function exportCatalogreportCsvAction()
+    {
+        $fileName   = 'sales.csv';
+        $grid       = $this->getLayout()->createBlock('allure_reports/adminhtml_catalog_sales_grid');
+        $this->_initReportAction($grid);
+        $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
+    }
 
     /**
      * Export sales report grid to Excel XML format
@@ -102,6 +109,13 @@ class Allure_Reports_Adminhtml_Report_SalesController extends Mage_Adminhtml_Rep
     {
         $fileName   = 'sales.xml';
         $grid       = $this->getLayout()->createBlock('allure_reports/adminhtml_sales_sales_grid');
+        $this->_initReportAction($grid);
+        $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
+    }
+    public function exportCatalogreportExcelAction()
+    {
+        $fileName   = 'sales.xml';
+        $grid       = $this->getLayout()->createBlock('allure_reports/adminhtml_catalog_sales_grid');
         $this->_initReportAction($grid);
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
     }
