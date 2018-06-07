@@ -208,7 +208,7 @@
                     <?php endif; ?>
                 </span>
             <?php endif; ?>
-             <?php if(Mage::registry('current_product')) :?>
+             <?php if(!Mage::registry('current_category')|| ($this->getRequest()->getModuleName() == 'quickview')):?>
              <div class="price_tax_text"><?php echo (method_exists($_taxHelper, 'getTaxDisplaySummary') ? $_taxHelper->getTaxDisplaySummary() : '')?></div>
         	 <?php endif; ?>
         <?php endif; ?>
