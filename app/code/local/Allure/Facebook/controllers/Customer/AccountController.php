@@ -68,6 +68,11 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 			}
 			//
 			$this->_getCustomerSession()->setCustomerAsLoggedIn($uidCustomer);
+			Mage::getSingleton('core/session')
+			->addSuccess(
+			    $this->__('You have successfully logged in using your
+                            Facebook account.')
+			    );
 			$this->_redirectReferer();
 			return;        	
         }
