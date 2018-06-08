@@ -44,6 +44,7 @@ div.allure-google-connect-inner a{
 .popupLoginModel .mt-googleconnect-btn a{
 	float: right;
 	clear: both;
+	margin-right: -7px;
 }
 
 .mt-googleconnect-btn .gle-img{
@@ -58,5 +59,23 @@ div.allure-google-connect-inner a{
 .checkout-onepage-index #checkout-step-login .facebook-checkout-login .mt-googleconnect-btn {
     margin-bottom: 10px;
 }
+
+
+.popupLoginModel .pop-content .form-control{
+	height: 22px;
+}
+
+.popupLoginModel .pop-title h2{
+	font-size: 16px;
+}
+
+.popupLoginModel .pop-title{
+	margin-bottom: 0px;
+}
+
+.popupLoginModel .gle-img{
+	width: 85%;
+}
+
 
 
