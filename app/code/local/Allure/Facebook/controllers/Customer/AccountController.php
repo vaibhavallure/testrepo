@@ -51,7 +51,8 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
  			$currentCustomer->setFacebookUid($this->_getSession()->getUid());
 			$currentCustomer->getResource()->saveAttribute($currentCustomer, 'facebook_uid');        	
 			
-			$this->_getCustomerSession()->addSuccess(
+			Mage::getSingleton('core/session')
+			->addSuccess(
 				$this->__('Your Facebook account has been successfully connected. Now you can fast login using Facebook Connect anytime.')
 			);
 			$this->_redirect('customer/account');
@@ -113,7 +114,8 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 			}
 			
 			$this->_getCustomerSession()->setCustomerAsLoggedIn($customer);
-			$this->_getCustomerSession()->addSuccess(
+			Mage::getSingleton('core/session')
+			->addSuccess(
 				$this->__('Your Facebook account has been successfully connected. Now you can fast login using Facebook Connect anytime.')
 			);
 			$this->_redirect('customer/account');
@@ -182,7 +184,8 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 		if (true === $validationResult) {
 			$customer->save();
 			
-			$this->_getCustomerSession()->addSuccess(
+			Mage::getSingleton('core/session')
+			->addSuccess(
 				$this->__('Thank you for registering with %s', Mage::app()->getStore()->getFrontendName()) .
 				'. ' . 
 				$this->__('You will receive welcome email with registration info in a moment.')

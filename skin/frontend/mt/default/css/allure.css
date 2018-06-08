@@ -1063,6 +1063,10 @@ label.popup-reg-privacy-lbl {
 	    margin: 0;
 }
 
+.main-container.col1-layout .messages{
+	margin-left: 20px ! important;
+    margin-top: 15px ! important;
+}
 
 
 
