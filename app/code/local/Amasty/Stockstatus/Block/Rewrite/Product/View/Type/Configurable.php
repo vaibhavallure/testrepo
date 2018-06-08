@@ -62,7 +62,7 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
                 if ($key)
                 {
                     $aStockStatus[implode(',', $key)] = array(
-                        'is_in_stock'   => $product->isSaleable(),
+                        'is_in_stock'   =>$this->checkStockStatus($product),
                         'custom_status' => $stockStatus,
 			   'custom_status_icon' =>  Mage::helper('amstockstatus')->getStatusIconImage($product),
 			   'custom_status_icon_only' => Mage::getStoreConfig('amstockstatus/general/icononly'),
@@ -82,6 +82,13 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
         }
         $html = $this->helper('amstockstatus')->processViewStockStatus($this->getProduct(), $html);
         return $html;
+    }
+    public function checkStockStatus($product){
+        if($product->isInStock() || ($product->getBackorders()==1 || $product->getBackorders()==2)){
+           return true;
+        }else {
+            return false;
+        }
     }
 
     public function getAllowProducts()
