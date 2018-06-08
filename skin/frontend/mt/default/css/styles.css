@@ -19764,3 +19764,7 @@ font-size: 100% !important;
     padding: 2px 0 2px 30px;
     background: url(../images/checkbox-login.png) no-repeat 0 0;
 }
+
+#checkout-step-login .col2-set .col-2.checkout-amazon-step {
+    height: auto;
+}

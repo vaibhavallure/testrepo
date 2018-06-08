@@ -2534,3 +2534,16 @@ cursor: pointer;
 #newsletter-form #newsletter-validate-detail button {
 	text-align: center;
 }
+
+.mt-amazon-ptag,
+.mt-amazon-brtag{
+	display: none;
+}
+
+.facebook-checkout-login #AmazonPayButtonBefore{
+	margin-bottom: 12px;
+}
+
+.facebook-connect-p-or{
+	margin: 0px;
+}
