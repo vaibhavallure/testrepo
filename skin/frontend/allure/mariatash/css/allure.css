@@ -2547,3 +2547,7 @@ cursor: pointer;
 .facebook-connect-p-or{
 	margin: 0px;
 }
+
+.checkout-onepage-index #checkout-step-login .col-1 li.buttons-set {
+    margin: 0px ! important;
+}
