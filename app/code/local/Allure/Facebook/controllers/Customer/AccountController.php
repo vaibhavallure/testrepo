@@ -198,7 +198,12 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 			
 			$customer->sendNewAccountEmail();
 			
-			$this->_getCustomerSession()->setCustomerAsLoggedIn($customer);
+			//$this->_getCustomerSession()->setCustomerAsLoggedIn($customer);
+			
+			Mage::getSingleton('customer/session')->setCustomer($customer);
+			Mage::getSingleton('customer/session')->renewSession();
+			Mage::getSingleton('core/session')->renewFormKey();
+			
 			$this->_redirect('customer/account');
 			return;
 		
