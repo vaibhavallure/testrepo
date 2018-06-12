@@ -1063,9 +1063,21 @@ label.popup-reg-privacy-lbl {
 	    margin: 0;
 }
 
+
 .popupRegisterModel .news-letter {
 	margin-top: 10px;
 }
+
+.main-container.col1-layout .messages{
+	margin-left: 20px ! important;
+    margin-top: 15px ! important;
+}
+
+.mt-myaccount-new .messages{
+	margin-right: 40px! important;
+}
+
+
 
 
 

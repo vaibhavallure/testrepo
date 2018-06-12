@@ -16,6 +16,30 @@
     			<div class="form-group">
     	 		    <label class="popup-login-lbl" for="password"><em>*</em> <?php echo $this->__("Password")?></label>
     	  		    <input id='passwd-login' type="password" name='passwd-login' class="ele_width form-control required-entry"/>
+    			
+    				<?php //google connect code?>
+                	<?php if (Mage::helper('core')->isModuleEnabled('Allure_GoogleConnect')):?>
+                	<?php $isEnableGoogleSign = Mage::helper("allure_googleconnect")->_isEnabled();?>
+                	<?php if($isEnableGoogleSign):?>
+                	<div class="mt-googleconnect-btn">
+                		<?php echo $this->getLayout()->createBlock('allure_googleconnect/button')
+                		  ->setTemplate("allure/googleconnect/button.phtml")->toHtml(); ?>
+                	</div>
+                	<?php endif;?>
+                	<?php endif;?>
+                	
+                	
+                	<?php //facebook connect code?>
+                	<?php if (Mage::helper('core')->isModuleEnabled('Allure_Facebook')):?>
+                	<?php $isEnableFacebook = Mage::getModel("facebook/config")->isEnabled();?>
+                	<?php if($isEnableFacebook):?>
+                	<div class="mt-facebookconnect-btn">
+                		<?php echo $this->getLayout()->createBlock('facebook/button')
+                		  ->setTemplate("allure/facebook/button.phtml")->toHtml(); ?>
+                	</div>
+                	<?php endif;?>
+                	<?php endif;?>
+    			
     			</div>
     		</div>
     	    <div class="pop-link">

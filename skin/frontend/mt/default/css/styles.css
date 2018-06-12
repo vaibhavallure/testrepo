@@ -19947,4 +19947,7 @@ font-size: 100% !important;
 	top: -3px ! important;
 }
 
+#checkout-step-login .col2-set .col-2.checkout-amazon-step {
+    height: auto;
+}
 

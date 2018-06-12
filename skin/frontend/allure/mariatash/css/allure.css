@@ -2536,6 +2536,7 @@ cursor: pointer;
 	text-align: center;
 }
 
+
 .checkout-privacy-policy a.checkout_privacry_link{
 	font-size: 12px ! important;
     margin: 0px ! important;
@@ -2567,3 +2568,53 @@ cursor: pointer;
 .popupRegisterModel .news-letter-subscribe{
 	margin-top: 10px;
 }
+
+.mt-amazon-ptag,
+.mt-amazon-brtag{
+	display: none;
+}
+
+.facebook-checkout-login #AmazonPayButtonBefore{
+	margin-bottom: 12px;
+}
+
+.facebook-connect-p-or{
+	margin: 0px;
+}
+
+.checkout-onepage-index #checkout-step-login .col-1 li.buttons-set {
+    margin: 0px ! important;
+}
+
+
+.popupLoginModel .mt-facebookconnect-btn a{
+	float: right;
+	margin-right: 3px;
+}
+
+
+.popupLoginModel .mt-facebookconnect-btn .fb-img {
+    width: 180px;
+}
+
+.popupLoginModel .mt-facebookconnect-btn{
+	margin-top: -7px;
+}
+
+.popupLoginModel .pop-link{
+	margin-top: -10px;
+}
+
+.popupLoginModel .pop-link .benifits p{
+	line-height: 15px;
+	margin: 0px 0 5px;
+}
+
+.popupLoginModel > div {
+	margin: 8% auto;	
+}
+
+.popupLoginModel .form-group{
+	margin-bottom: 0px;
+}
+
