@@ -143,6 +143,7 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 					//$customer->setData('password',$randomPassword);
 					//$customer->setData('password_hash',($customer->hashPassword($randomPassword)));
 					$customer->setPassword($randomPassword);
+					$customer->setCustomerType(3);
 					$customer->setPasswordConfirmation($randomPassword);
 					$customer->setPasswordCreatedAt(time());
 					
