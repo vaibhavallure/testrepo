@@ -122,6 +122,13 @@ class Allure_GoogleConnect_IndexController extends Mage_Core_Controller_Front_Ac
 
                 Mage::helper('allure_googleconnect')->loginByCustomer($customer);
 
+               try {
+                   $cust=Mage::getModel('customer/customer')->load($customer->getId());
+                   $cust->setGoogleLoginCount($cust->getGoogleLoginCount()+1);
+                   $cust->save();
+               } catch (Exception $e) {
+               }
+                
                 Mage::getSingleton('core/session')
                     ->addSuccess(
                         $this->__('You have successfully logged in using your
@@ -136,6 +143,13 @@ class Allure_GoogleConnect_IndexController extends Mage_Core_Controller_Front_Ac
                     ->loadByEmail($userInfo['email']);
 
             if($customer->getId())  {
+                try {
+                    $cust=Mage::getModel('customer/customer')->load($customer->getId());
+                    $cust->setGoogleLoginCount($cust->getGoogleLoginCount()+1);
+                    $cust->save();
+                } catch (Exception $e) {
+                }
+                
                 // Email account already exists - attach, login
                 Mage::helper('allure_googleconnect')->connectByGoogleId(
                     $customer,
