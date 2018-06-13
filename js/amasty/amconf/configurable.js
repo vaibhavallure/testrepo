@@ -387,6 +387,7 @@ Product.Config.prototype.updateData = function(key)
                             var tm = setTimeout("applyProductZoom()",2500);
                             confData.currentIsMain = false;
                             $('optionid').value = img_id;
+                            loadCatalogImages();
                         }
                       });
                     }
@@ -423,6 +424,7 @@ Product.Config.prototype.updateData = function(key)
                             if (typeof resizeVideo != "undefined") {
                                 resizeVideo();
                             }
+                            loadCatalogImages();
                         }
                       });
                     }
