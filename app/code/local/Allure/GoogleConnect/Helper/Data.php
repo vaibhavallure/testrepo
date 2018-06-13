@@ -33,8 +33,6 @@ class Allure_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
             $googleId,
             $token)
     {
-        $customer->setGoogleLoginCount($customer->getGoogleLoginCount()+1);
-        
         $customer->setAllureGoogleconnectId($googleId)
                 ->setAllureGoogleconnectToken($token)
                 ->save();

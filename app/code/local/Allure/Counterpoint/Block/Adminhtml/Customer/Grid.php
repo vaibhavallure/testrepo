@@ -166,6 +166,8 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
             'index'     => 'google_login_count',
         )); */
         
+        
+        
         $this->addColumn('customer_type', array(
             'header'    => Mage::helper('customer')->__('Customer Create From'),
             'align'     => 'center',

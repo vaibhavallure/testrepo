@@ -111,7 +111,14 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 		
 		if($customer->getId()){
 			$customer->setFacebookUid($this->_getSession()->getUid());
-			$customer->setFbLoginCount($customer->getFbLoginCount()+1);
+			try {
+			    $cust=Mage::getModel('customer/customer')->load($customer->getId());
+			    $cust->setFbLoginCount($cust->getFbLoginCount()+1);
+			    $cust->save();
+			} catch (Exception $e) {
+			}
+			
+			
 			Mage::getResourceModel('customer/customer')->saveAttribute($customer, 'facebook_uid');
 			
 			if($customer->getConfirmation()){
