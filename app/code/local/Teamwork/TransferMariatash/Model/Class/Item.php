@@ -1,6 +1,12 @@
 <?php
 class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_Transfer_Model_Class_Item
 {
+	protected $_productTypes = array(
+        self::CHQ_PRODUCT_TYPE_SINGLEITEM    => Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE,
+        self::CHQ_PRODUCT_TYPE_SERVICEITEM   => Mage_Catalog_Model_Product_Type::TYPE_SIMPLE,
+        self::CHQ_PRODUCT_TYPE_STYLE         => Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE
+    );
+	
 	protected function _beforeAddData(&$productData, &$style, &$typeId, &$item, &$topProduct)
 	{
         $productData['teamwork_plu'] = $item['plu'];
