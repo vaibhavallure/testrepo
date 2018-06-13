@@ -111,6 +111,7 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 		
 		if($customer->getId()){
 			$customer->setFacebookUid($this->_getSession()->getUid());
+			$customer->setFbLoginCount($customer->getFbLoginCount()+1);
 			Mage::getResourceModel('customer/customer')->saveAttribute($customer, 'facebook_uid');
 			
 			if($customer->getConfirmation()){
@@ -143,7 +144,8 @@ class Allure_Facebook_Customer_AccountController extends Mage_Core_Controller_Fr
 					//$customer->setData('password',$randomPassword);
 					//$customer->setData('password_hash',($customer->hashPassword($randomPassword)));
 					$customer->setPassword($randomPassword);
-					$customer->setCustomerType(3);
+					$customer->setCustomerType(15);
+					$customer->setFbLoginCount(1);
 					$customer->setPasswordConfirmation($randomPassword);
 					$customer->setPasswordCreatedAt(time());
 					
