@@ -7,7 +7,7 @@ require_once('../app/Mage.php');
 umask(0);
 Mage::app();
 
-$customerId = 121810;//52577;
+$customerId = 3349;//52577;
 
 $wishlistLogFile = "wishlist_sku_update_c_to_x.log";
 
@@ -16,7 +16,8 @@ try{
     $NEW_START_CHAR = "X";
     
     //get wishlist model by using customer
-    $wishlist   = Mage::getModel("wishlist/wishlist")->load($customerId,"customer_id");
+    //$wishlist   = Mage::getModel("wishlist/wishlist")->load($customerId,"customer_id");
+    $wishlist   = Mage::getModel("wishlist/wishlist")->getCollection();
     $wishlistId = $wishlist->getId();
     
     //get wishlist item collection
@@ -68,7 +69,7 @@ try{
                             if($dvalue['cpid']){
                                 $dvalue['cpid'] = $parentProduct->getId();
                                 if($dvalue['product']){
-                                    $childPro = Mage::getModel()->load($dvalue['product']);
+                                    $childPro = Mage::getModel('catalog/product')->load($dvalue['product']);
                                     $newSkuChild1 = $NEW_START_CHAR . substr($childPro->getSku(), 1);
                                     $childProductId1 = Mage::getModel("catalog/product")->getIdBySku($newSkuChild1);
                                     $dvalue['product'] = $childProductId1;
@@ -131,6 +132,8 @@ try{
                         $itemOption->save();
                         Mage::log("data is updated".$sku,Zend_Log::DEBUG,$wishlistLogFile,true);
                     }
+                }else {
+                    Mage::log("XSKU NOT FOUD FOR::".$sku,Zend_Log::DEBUG,'WL_missing_sku.log',true);
                 }
             }
         } catch (Exception $e){
