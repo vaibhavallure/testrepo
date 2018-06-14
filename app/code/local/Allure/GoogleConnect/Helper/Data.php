@@ -61,7 +61,8 @@ class Allure_GoogleConnect_Helper_Data extends Mage_Core_Helper_Abstract
             $customer->setData('password_hash',($customer->hashPassword($password)));
             $customer->setPasswordConfirmation(null);
              */
-            $customer->setCustomerType(4);
+            $customer->setGoogleLoginCount(1);
+            $customer->setCustomerType(16);
             $customer->setPassword($password);
             $customer->setPasswordConfirmation($password);
             $customer->setPasswordCreatedAt(time());
