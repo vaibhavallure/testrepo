@@ -43,6 +43,23 @@ try{
                 Mage::log("sku = ".$sku,Zend_Log::DEBUG,$wishlistLogFile,true);
                 $newSku = $NEW_START_CHAR . substr($sku, 1);
                 $parentProductId = Mage::getModel("catalog/product")->getIdBySku($newSku);
+                
+                if(!$parentProductId){
+                    $productTempId = Mage::getModel("catalog/product")->getIdBySku($sku);
+                    if($productTempId){
+                        $productTemp = Mage::getModel("catalog/product")->load($productTempId);
+                        $parentItemNumber = $productTemp->getParentItemNumber();
+                        if($parentItemNumber){
+                            $newSku = $parentItemNumber;
+                            $parentProductId = Mage::getModel("catalog/product")->getIdBySku($parentItemNumber);
+                        }else{
+                            continue;
+                        }
+                    }else {
+                        continue;
+                    }
+                }
+                
                 if($parentProductId){
                     $wishlistItem->setProductId($parentProductId)->save();
                     $parentProduct = Mage::getModel("catalog/product")->load($parentProductId);
