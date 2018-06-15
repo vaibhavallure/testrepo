@@ -8,6 +8,8 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
 		->addNameToSelect()
 		->addAttributeToSelect('email')
 		->addAttributeToSelect('customer_type')  //add status to counterpoint
+		->addAttributeToSelect('fb_login_count') 
+		->addAttributeToSelect('google_login_count') 
 		->addAttributeToSelect('created_at')
 		->addAttributeToSelect('group_id')
 		->joinAttribute('billing_postcode', 'customer_address/postcode', 'default_billing', null, 'left')
