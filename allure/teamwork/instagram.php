@@ -19,6 +19,15 @@ foreach ($collection as $feed){
             $sku= preg_replace('/C/', 'X', $value->text, 1); 
             
             $productId = $productModel->getIdBySku($sku);
+            if(empty($productId)){
+                $Id = $productModel->getIdBySku($value->text);
+                $product=Mage::getModel('catalog/product')->load($Id);
+                $parentSku=$product->getParentNumber();
+                $sku=$parentSku;
+                if(!empty($parentSku))
+                    $productId = $productModel->getIdBySku($parentSku);
+            }
+            
             if($productId){
                 $product_ids=str_replace($value->product,$productId,$feed->getProductIds());
                 $count++;

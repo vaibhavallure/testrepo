@@ -148,7 +148,7 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
             if($product->isConfigurable()){
                 $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
                 foreach ($productAttributeOptions as $productAttribute) {
-                    if($productAttribute['attribute_code'] == 'metal_color'){
+                    if($productAttribute['attribute_code'] == 'metal'/* 'metal_color' */){
                         $selectedColor = $productAttribute['values'][0]['value_index'];
                         break;
                     }
