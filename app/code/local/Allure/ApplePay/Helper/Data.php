@@ -17,7 +17,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::getSingleton('allure_applepay/config');
     }
-    
+
     /**
      * Retrieve Merchant ID
      *
@@ -27,7 +27,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->getConfig()->getMerchantId();
     }
-    
+
     /**
      * Retrieve Merchant Name
      *
@@ -37,7 +37,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->getConfig()->getMerchantName();
     }
-    
+
     /**
      * Return URL to use for checkout
      *
@@ -47,7 +47,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::getUrl('checkout/onepage', array('_secure'=>true));
     }
-    
+
     /**
      * Return onepage checkout URL
      */
@@ -55,7 +55,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::getUrl('applepay', array('_forced_secure'=>true));
     }
-    
+
     /**
      * Retrieve stand alone URL
      *
@@ -65,7 +65,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::getUrl('applepay/process', array('_secure'=>true));
     }
-    
+
     /**
      * Retrieve customer verify url
      *
@@ -75,7 +75,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->_getUrl('amazon_payments/customer/verify');
     }
-    
+
     /**
      * Clear session data
      */
@@ -83,7 +83,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         Mage::getSingleton('checkout/session')->unsApplePayCheckout();
     }
-    
+
     /**
      * Retrieve Apple Pay in session
      */
@@ -91,7 +91,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::getSingleton('customer/session')->getApplePay();
     }
-    
+
     /**
      * Get config by website or store admin scope
      */
@@ -107,7 +107,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
             return Mage::getStoreConfig($path);
         }
     }
-    
+
     /**
      * Transform an Apple Pay address into a standard Magento address
      *
@@ -117,16 +117,16 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
         $name = $amazonAddress->getName();
         $firstName = substr($name, 0, strrpos($name, ' '));
         $lastName  = substr($name, strlen($firstName) + 1);
-        
+
         $data['firstname'] = $firstName;
         $data['lastname'] = $lastName;
         $data['country_id'] = $amazonAddress->getCountryCode();
         $data['city'] = $amazonAddress->getCity();
         $data['postcode'] = $amazonAddress->getPostalCode();
         $data['telephone'] = $amazonAddress->getPhone() ? $amazonAddress->getPhone() : $this->__('000-000-0000');
-        
+
         $data['street'] = array();
-        
+
         $countryCode = $amazonAddress->getCountryCode();
         $addressLine1 = $amazonAddress->getAddressLine1();
         $addressLine2 = $amazonAddress->getAddressLine2();
@@ -154,7 +154,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $data;
     }
-    
+
     /**
      * Get admin/default store id
      */
@@ -172,12 +172,12 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
             return Mage::app()->getDefaultStoreView()->getId();
         }
     }
-    
+
     public function isEnabledOnFrontEnd()
     {
-        return !Mage::app()->getStore()->isAdmin() && $this->isEnabled();
+        return !Mage::app()->getStore()->isAdmin() && $this->isEnabled() && $this->checkValidIpAddress();
     }
-    
+
     /**
      * Is Payment Method enabled?
      */
@@ -185,7 +185,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->isModuleEnabled() && $this->getConfig()->isEnabled();
     }
-    
+
     /**
      * Is button bade (acceptance mark) enabled?
      *
@@ -195,7 +195,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return ($this->getConfig()->isButtonBadgeEnabled() && $this->getConfig()->isEnabled());
     }
-    
+
     /**
      * Does user have Amazon order reference for checkout?
      *
@@ -205,7 +205,7 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return (Mage::getSingleton('checkout/session')->getApplePayCheckout());
     }
-    
+
     /**
      * Is sandbox mode?
      *
@@ -215,7 +215,61 @@ class Allure_ApplePay_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->getConfig()->isSandbox();
     }
-    
+
+    /**
+     * @return mixed|string
+     */
+    public function checkValidIpAddress()
+    {
+        if ($this->getConfig()->isRestrictedByIps()) {
+
+        	$whitelistedIPs = $this->getConfig()->getIpWhitelist();
+
+            $whitelistedIPs = trim($whitelistedIPs);
+
+            $whitelistedIPsArray = explode(',', $whitelistedIPs);
+
+        	if (!empty($whitelistedIPsArray)) {
+
+                $validIdIp = false;
+
+                foreach ($whitelistedIPs as $ip) {
+                    if ($this->_validateIpAddress($ip) && $ip == $this->_getIpAddress) {
+                        $validIdIp = true;
+                    }
+                }
+
+                return $validIdIp;
+        	}
+        }
+
+        return true;
+    }
+
+    protected function _validateIpAddress($ipAddress)
+    {
+    	return filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+    }
+
+    /**
+     * @return mixed|string
+     */
+    protected function _getIpAddress()
+    {
+        if ($this->getConfig()->isProxyMode()) {
+
+        	$proxyIP = $this->getConfig()->getProxyIp();
+
+            $proxyIP = trim($proxyIP);
+
+            if (!empty($proxyIP) && $this->_validateIPAddress($proxyIP)) {
+                return $proxyIP;
+            }
+        }
+
+        return Mage::helper('core/http')->getRemoteAddr();
+    }
+
     /**
      * Does product attribute allow purchase with Apple Pay?
      */

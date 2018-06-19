@@ -25,7 +25,7 @@ class Allure_ApplePay_Model_Config
     const CONFIG_XML_PATH_SHOW_PAY_CART  = 'payment/applepay/show_pay_cart';
     const CONFIG_XML_PATH_SECURE_CART    = 'payment/applepay/secure_cart';
     const CONFIG_XML_PATH_SHOW_COUPON    = 'payment/applepay/show_coupon';
-    
+
     const CONFIG_XML_PATH_RESTRICTED_IPS = 'payment/applepay/restricted_ips';
 
     const CONFIG_XML_PATH_BUTTON_TYPE    = 'payment/applepay/button_type';
@@ -95,7 +95,7 @@ class Allure_ApplePay_Model_Config
     {
         return trim($this->_getStoreConfig(self::CONFIG_XML_PATH_MERCHANT_ID, $store));
     }
-    
+
     /**
      * Get seller/merchant Name
      *
@@ -106,7 +106,7 @@ class Allure_ApplePay_Model_Config
     {
         return trim($this->_getStoreConfig(self::CONFIG_XML_PATH_MERCHANT_NAME, $store));
     }
-    
+
     /**
      * Get Checkout Page type
      *
@@ -205,7 +205,7 @@ class Allure_ApplePay_Model_Config
     {
         return ($this->_getStoreConfig(self::CONFIG_XML_PATH_BUTTON_BADGE, $store));
     }
-    
+
     /**
      * Is Checkout using OnePage?
      *
@@ -226,6 +226,22 @@ class Allure_ApplePay_Model_Config
     public function isShowCoupon($store = null)
     {
         return ($this->_getStoreConfig(self::CONFIG_XML_PATH_SHOW_COUPON, $store));
+    }
+
+    public function getIpWhitelist($store = null) {
+        $this->_getStoreConfig('ip_whitelist', $store);
+    }
+
+    public function isRestrictedByIps($store = null) {
+        $this->_getStoreConfig('restrict_by_ips', $store);
+    }
+
+    public function getProxyIp($store = null) {
+        $this->_getStoreConfig('proxy_ip', $store);
+    }
+
+    public function isProxyMode($store = null) {
+        $this->_getStoreConfig('proxy_mode', $store);
     }
 
 }
