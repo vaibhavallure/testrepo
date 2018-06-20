@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_MultiCheckout>
 			<name>Allure - Multicheckout</name>
-			<version>1.0.3</version>
+			<version>1.0.4</version>
 			<depends>
 				<Allure_Core />
 			</depends>
@@ -121,7 +121,15 @@
 				<order_type>
 					<to_order>*</to_order>
 				</order_type>
+				<purchased_from>
+					<to_order>*</to_order>
+				</purchased_from>
 			</sales_convert_quote>
+			<sales_convert_quote_item> 
+				<purchased_from>
+					 <to_order_item>*</to_order_item> 
+			    </purchased_from> 
+			 </sales_convert_quote_item> 
 		</fieldsets>
 
 		<events>

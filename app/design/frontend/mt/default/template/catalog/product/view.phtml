@@ -400,7 +400,11 @@ if ($_product->getSizeSample() == 1) {
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
-
+            <?php $category='';?>
+			<?php if(Mage::registry('current_category')):?>
+				<?php $category=Mage::registry('current_category')->getName();?>
+			<?php endif;?>
+			<input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
             <?php //echo $this->getPriceHtml($_product) ?>
             <div id="ajax-price"><?php echo $this->getPriceHtml($_product) ?></div>
 
@@ -500,6 +504,7 @@ if ($_product->getSizeSample() == 1) {
         var stockFlowControl;
         productAddToCartForm.submit = function (button, form) {
         var instru = jQuery('.special-inst-product').val();
+        console.log(instru);
 	    <?php 
 	     //$_POST['"product-"'.'$_product->getId()']= document.write(instru);
 	    //Mage::getSingleton('core/session')->setData("product-".$_product->getId(),instru);
