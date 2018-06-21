@@ -34,7 +34,7 @@
 }
 
 #ordered-two-ship .shipment-title,#backordered-two-ship .shipment-title{
-	padding:10px;   
+	padding:10px;
 	border-top: 1px solid #ccc;
 }
 
@@ -120,7 +120,7 @@
     float: left;
     height: auto;
     /*width: 340px;*/
-    
+
     width: 45%;
     padding: 10px;
     background-color: #d1d1d1;
@@ -134,7 +134,7 @@
 	    float: left;
     	height: auto;
     	/*width: 340px;*/
-    	
+
     	width: 45%;
     	padding: 10px;
     	margin-right: 27px;
@@ -292,7 +292,7 @@
 	width: 100%;
 }
 
-.my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text, 
+.my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form .input-box input.input-text,
 #shipping-new-address-form .input-box input.input-text,
 .my-account .manage-payment-method .addresses-list .col-2 #billing-new-address-form select{
     width: 99% !important;
@@ -319,7 +319,7 @@
 	float: right;
 }
 
-#mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box .v-fix{ 
+#mt-credit-card-info #authnetcim_cc_type_cvv_div .input-box .v-fix{
 	width: 30%;
 }
 
@@ -385,7 +385,7 @@
 }
 
 .manage-payment-method .title-add-credit{
-	margin-left: 25px;	
+	margin-left: 25px;
 }
 
 input.special-inst-product {
@@ -486,7 +486,7 @@ ul#account-create {
 }
 
 .account-create{
-	
+
 }
 
 .customer-account-create input:checked + label {
@@ -495,14 +495,14 @@ ul#account-create {
 
 img.snize-item-image[src^=data]::before {
     background-color: red;
-    background-image: url(http://venusbymariatash.com/media/catalog/product/placeholder/default/placeholder-base_1.png);
+    background-image: url(/media/catalog/product/placeholder/default/placeholder-base_1.png);
     content: "";
     display: block;
 }
 
 img.snize-item-image[src^=data]::after {
     background-color: red;
-    background-image: url(http://venusbymariatash.com/media/catalog/product/placeholder/default/placeholder-base_1.png);
+    background-image: url(/media/catalog/product/placeholder/default/placeholder-base_1.png);
     content: "";
     display: block;
 }
@@ -652,7 +652,7 @@ img.snize-item-image[src^=data]::after {
 	font-size: 12px;
     font-weight: bold;
     line-height: 1.63636363636;
-	
+
 }
 
 .close {
@@ -781,7 +781,7 @@ img.snize-item-image[src^=data]::after {
 	box-shadow: 1px 1px 3px #000;
 }
 
-.close:hover { background: #ecc388; 
+.close:hover { background: #ecc388;
     color: #fff;
 }
 
@@ -841,7 +841,7 @@ label.popup-login-lbl{
    color: #000;
    cursor: pointer;
    font-size: 12px;
- 
+
 }
 .pop-link p{
 	clear: both;
@@ -1076,9 +1076,3 @@ label.popup-reg-privacy-lbl {
 .mt-myaccount-new .messages{
 	margin-right: 40px! important;
 }
-
-
-
-
-
-
