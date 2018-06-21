@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <allure>
+            <title>Allure</title>
+            <sort_order>70</sort_order>
+            <children>
+                <settings translate="title">
+                    <title>Settings</title>
+                    <sort_order>20</sort_order>
+                    <children>
+		                <allure_salesforce translate="title" module="allure_salesforce">
+		                    <title>Salesforce</title>
+		                    <action>adminhtml/system_config/edit/section/allure_salesforce</action>
+		                    <sort_order>10</sort_order>
+		                </allure_salesforce>
+		            </children>
+                </settings>
+            </children>
+        </allure>
+    </menu>
+	<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<allure_salesforce translate="title" module="allure_salesforce">
+										<title>Allure - Salesforce</title>
+										<sort_order>1</sort_order>
+									</allure_salesforce>
+								</children>
+							</config>
+						</children>
+					</system>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>
