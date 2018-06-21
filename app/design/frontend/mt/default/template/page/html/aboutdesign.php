@@ -66,7 +66,7 @@ var url = "{{store url=""}}/tattoo/index/send?page={{store url=""}}discover-mari
 // ]]></script>
 </p>
 <div class="content-about-designer">
-<div class="img-designer"><img src="http://dev.venusbymariatash.com//media/wysiwyg/portrait_about_maria.jpg" alt="" />
+<div class="img-designer"><img src="http://dev.mariatash.com//media/wysiwyg/portrait_about_maria.jpg" alt="" />
 <div class="links-maria"><a>Maria's Videos </a><a>Maria's Blog</a></div>
 <div class="botones-social-media">
 <div class="social-mt">
@@ -85,7 +85,7 @@ var url = "{{store url=""}}/tattoo/index/send?page={{store url=""}}discover-mari
 <script type="text/javascript">// <![CDATA[
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 // ]]></script>
-<div id="pinitaboutdesigner"><a href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.venusbymariatash.com%2Fdiscover-maria-tash%2Fabout-the-designer.html&amp;media=http%3A%2F%2Fdev.venusbymariatash.com%2F%2Fmedia%2Fwysiwyg%2Fportrait_about_maria.jpg&amp;description=Maria%20Tash%20About%20Designer" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" alt="" /></a></div>
+<div id="pinitaboutdesigner"><a href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.mariatash.com%2Fdiscover-maria-tash%2Fabout-the-designer.html&amp;media=http%3A%2F%2Fdev.mariatash.com%2F%2Fmedia%2Fwysiwyg%2Fportrait_about_maria.jpg&amp;description=Maria%20Tash%20About%20Designer" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" alt="" /></a></div>
 <!--/PINTERES ENDS/-->
 <div id="mail" style="display: inline-block;">
 <div class="button mail">

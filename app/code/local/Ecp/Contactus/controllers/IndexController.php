@@ -31,7 +31,7 @@
  * @package     Ecp_Contactus
  * @author      Entrepids Core Team <core@entrepids.com>
  */
-header("access-control-allow-origin: http://www.venusbymariatash.com");
+header("access-control-allow-origin: http://www.mariatash.com");
 class Ecp_Contactus_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()
