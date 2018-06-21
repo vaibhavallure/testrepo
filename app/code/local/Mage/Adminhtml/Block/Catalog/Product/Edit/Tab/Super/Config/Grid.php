@@ -129,6 +129,7 @@ class Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Super_Config_Grid extends Ma
             ->addAttributeToSelect('sku')
             ->addAttributeToSelect('attribute_set_id')
             ->addAttributeToSelect('type_id')
+            ->addAttributeToSelect('order')
             ->addAttributeToSelect('price')
             ->addFieldToFilter('attribute_set_id',$product->getAttributeSetId())
             ->addFieldToFilter('type_id', $allowProductTypes)
@@ -143,7 +144,9 @@ class Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Super_Config_Grid extends Ma
             $collection->addAttributeToSelect($attribute->getAttributeCode());
             $collection->addAttributeToFilter($attribute->getAttributeCode(), array('notnull'=>1));
         }
-
+        
+        //echo $collection->getSelect();
+        Mage::log((string)$collection->getSelect(),Zend_log::DEBUG,'ajay.log',true);
         $this->setCollection($collection);
 
         if ($this->isReadonly()) {
@@ -257,7 +260,13 @@ class Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Super_Config_Grid extends Ma
                 'options'   => $productAttribute->getSourceModel() ? $this->getOptions($attribute) : ''
             ));
         }
-
+        $this->addColumn('order', array(
+            'header'    => Mage::helper('catalog')->__('Position'),
+            'width'     => '80px',
+            'renderer'  => 'adminhtml/catalog_product_edit_tab_super_config_renderer_position',
+            'index'     => 'order'
+        ));
+        
          $this->addColumn('action',
             array(
                 'header'    => Mage::helper('catalog')->__('Action'),

@@ -71,6 +71,11 @@ $parentVal = ($isCustomOptions)?1:0;
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
+             <?php $category='';?>
+			<?php if(Mage::registry('current_category')):?>
+				<?php $category=Mage::registry('current_category')->getName();?>
+			<?php endif;?>
+			<input type="hidden" name="puchsed-from-cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
             <?php echo $this->getPriceHtml($_product) ?>
             <?php echo $this->getChildHtml('product_type_data') ?>
             <div id="quickview_des" class="product-collateral">
