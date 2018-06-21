@@ -121,9 +121,6 @@
 				<order_type>
 					<to_order>*</to_order>
 				</order_type>
-				<purchased_from>
-					<to_order>*</to_order>
-				</purchased_from>
 			</sales_convert_quote>
 			<sales_convert_quote_item> 
 				<purchased_from>

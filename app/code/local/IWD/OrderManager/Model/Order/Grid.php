@@ -242,7 +242,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             /*** sales_flat_order_item ***/
             'ordered_products' => $helper->__('Item(s) Ordered'),
             'product_sku' => $helper->__('Product Sku(s)'),
-            'puchased_from' => $helper->__('Puchased From(Category)'),
+            'puchased_from' => $helper->__('Purchased From(Category)'),
             'product_images' => $helper->__('Product Images'),
             'backorder_time' => $helper->__('Product Backorder Time'),
 
