@@ -156,6 +156,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             $giftHelper = Mage::helper('giftmessage/message');
             if($giftHelper->getIsMessagesAvailable('order_item', $orderItem) && $orderItem->getGiftMessageId() && $giftHelper->getEscapedGiftMessage($orderItem)!=''){
                 $message = $giftHelper->getEscapedGiftMessage($orderItem);
+                $flag=true;
             }else{
                 $message="";
             }
@@ -175,17 +176,60 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
                     'font'  => 'bold',
                     'feed' => $feed
                 );
+               
                 $lineBlockHdr = array(
                     'lines'  => $linesHdr,
                     'height' => 12
                 );
                 
-                return array("is_show"=>true,'label_block'=>$lineBlockHdr,'value_block'=>$lineBlock);
+                return array("is_show"=>$flag,'label_block'=>$lineBlockHdr,'value_block'=>$lineBlock);
            
-            return array("is_show"=>$flag);
         }catch (Exception $e){}
     }
     
+    
+    public function getSalesOrderItemPurchasedFrom($item,$feed = 35,$flag1=false){
+        try{
+            $flag = false;
+            $orderItemId = $item->getOrderItemId();
+            $actionName = Mage::app()->getRequest()->getActionName();
+            $orderItem = $item->getOrderItem();//Mage::getModel("sales/order_item")->load($orderItemId);
+            if($flag1){
+                $orderItem = $item;
+            }
+            $message="";
+            if($orderItem->getPurchasedFrom()){
+                $message=$orderItem->getPurchasedFrom();
+                $flag=TRUE;
+            }
+           
+            $lines[][] = array(
+                'text'  => Mage::helper('core/string')->str_split($message, 80, true, true),
+                'font' => 'italic',
+                'feed' => $feed,
+                'height' => 12
+            );
+            $lineBlock = array(
+                'lines'  => $lines,
+                'height' => 20
+            );
+            
+            $linesHdr[][] = array(
+                'text'  => "Purchased From(Category):",
+                'font'  => 'bold',
+                'feed' => $feed
+            );
+            
+            $lineBlockHdr = array(
+                'lines'  => $linesHdr,
+                'height' => 12
+            );
+            
+            return array("is_show"=>$flag,'label_block'=>$lineBlockHdr,'value_block'=>$lineBlock);
+            
+            
+        }catch (Exception $e){}
+    }
     /**
      * get order gift message
      */
