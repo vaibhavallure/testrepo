@@ -333,7 +333,7 @@ INLINECSS;
             $alertBlock->setTemplate('productalert/product/view.phtml');
             $alertBlock->prepareStockAlertData();
             $alertBlock->setHtmlClass('alert-stock link-stock-alert');
-          //  $alertBlock->setSignupLabel($this->__('The metal color or length combination you selected is out of stock.  Please email cs@venusbymariatash.com for updates.'));
+          //  $alertBlock->setSignupLabel($this->__('The metal color or length combination you selected is out of stock.  Please email cs@mariatash.com for updates.'));
             $html = $alertBlock->toHtml();
 
             Mage::unregister('product');

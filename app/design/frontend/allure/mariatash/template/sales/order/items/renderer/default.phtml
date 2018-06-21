@@ -87,6 +87,12 @@
             </dl>
 
         <?php endif; ?>
+         <?php if($_item->getPurchasedFrom()):?>
+         <dl class="item-options">
+           <dt><strong><?php echo $this->escapeHtml('Purchased From(Category)') ?></strong></dt>
+           <dd><?php echo  $_item->getPurchasedFrom();?></dd>
+         </dl>
+        <?php endif;?>
         <br>
             <span class="nobr">
             <span class="mt-order-view-column">SKU :</span> <?php echo $_item->getSku() ?><br />
