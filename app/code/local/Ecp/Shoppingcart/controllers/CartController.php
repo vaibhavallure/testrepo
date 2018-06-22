@@ -120,10 +120,9 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
             if ($purchasedFrom != '') {
                 try {
                     $quoteItem->setPurchasedFrom($purchasedFrom)->save();
-                    Mage::log("Coming to save",Zend_log::DEBUG,'ajay.log',true);
                 }
                 catch (Exception $e) {
-                    Mage::log("Exception".$e->getMessage(),Zend_log::DEBUG,'ajay.log',true);
+                    Mage::log("Exception".$e->getMessage(),Zend_log::DEBUG,'excpetion.log',true);
                 }
             }
         }
