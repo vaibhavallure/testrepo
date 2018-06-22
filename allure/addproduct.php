@@ -10,6 +10,7 @@ die;
 
 $helper = Mage::helper("allure_salesforce/salesforceClient");
 $creditMemo = Mage::getModel("sales/order_creditmemo")->load(17857);
+$items = $creditMemo->getAllItems();
 
 $order = $creditMemo->getOrder();
 $salesforceOrderId = $order->getSalesforceOrderId();
@@ -34,7 +35,7 @@ $taxAmount = $creditMemo->getBaseTaxAmount();
 
 $requestMethod = "GET";
 $urlPath = $helper::CREDIT_MEMO_URL;
-if($salesforceCreditmemoId){
+if(!$salesforceCreditmemoId){
     $requestMethod = "PATCH";
     $urlPath .= "/" .$salesforceCreditmemoId;
 }else{
@@ -66,6 +67,31 @@ if($responseArr["success"]){
     $sql_order = "UPDATE sales_flat_creditmemo SET salesforce_creditmemo_id='".$salesforceId."' WHERE entity_id ='".$creditMemo->getId()."'";
     $write->query($sql_order);
     $helper->salesforceLog("Salesforce Id Added.");
+    
+    $cRequest = array("allOrNone"=>false);
+    $cRequest["records"] = array();
+    $requestMethod = "PATCH";
+    $urlPath = $helper::UPDATE_COMPOSITE_OBJECT_URL;
+    foreach ($items as $item){
+        $orderItemId = $item->getOrderItemId();
+        $orderItem = Mage::getModel("sales/order_item")->load($orderItemId);
+        /* if(!$orderItem){
+            continue;
+        }
+        $salesforceItemId = $orderItem->getSalesforceItemId();
+        if(!$salesforceItemId){
+            continue;
+        } */
+        $tempArr = array(
+            "attributes" => array("type" => "OrderItem"),
+            "id" => "80229000000zm78AAA",
+            "Credit_Memo__c" => $salesforceId
+        );
+        array_push($cRequest["records"],$tempArr);
+    }
+    
+    $response = $helper->sendRequest($urlPath,$requestMethod,$cRequest);
+    $helper->salesforceLog("Salesforce creditmemo updated.");
 }
 
 die;

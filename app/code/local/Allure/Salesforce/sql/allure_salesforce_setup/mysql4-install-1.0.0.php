@@ -131,6 +131,14 @@ $orderSetup->addAttribute('order', 'salesforce_order_id', array(
     'default'		=> null
 ));
 
+$orderSetup->addAttribute('order_item', 'salesforce_item_id', array(
+    'type'          => 'varchar',
+    'label'         => 'Salesforce Item Id',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
 $orderSetup->addAttribute("invoice", "salesforce_invoice_id", array(
     'type'          => 'varchar',
     'label'         => 'Salesforce Invoice Id',

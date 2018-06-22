@@ -27,10 +27,12 @@ class Allure_Salesforce_Model_Observer_Product{
      * after new product is add or update the product information
      */
     public function changeProductToSalesforce(Varien_Event_Observer $observer){
+        $helper         = $this->getHelper();
+        $helper->salesforceLog("changeProductToSalesforce request");
+        
         $product = $observer->getEvent()->getProduct();
-        Mage::log($product->getId(),Zend_Log::DEBUG,'abc.log',true);
+        $helper->salesforceLog("product id :".$product->getId());
         if($product){
-            $helper         = $this->getHelper();
             $objectType     = $helper::PRODUCT_OBJECT;
             $sFieldName     = $helper::S_PRODUCTID;
             
@@ -85,12 +87,11 @@ class Allure_Salesforce_Model_Observer_Product{
             Mage::log($request,Zend_Log::DEBUG,'abc.log',true);
             $response    = $helper->sendRequest($urlPath , $requestMethod , $request);
             $responseArr = json_decode($response,true);
-            Mage::log($response,Zend_Log::DEBUG,'abc.log',true);
             $helper->processResponse($product,$objectType,$sFieldName,$requestMethod,$response);
             
             if($responseArr["success"] || $responseArr == ""){
                 $salesforceProductId = $product->getData("salesforce_product_id");
-                $helper->salesforceLog("salesforce id = ".$salesforceProductId);
+                $helper->salesforceLog("product_id:".$product->getId()." salesforce_id = ".$salesforceProductId);
                 $pricebkUrlPath = $helper::PRODUCT_PRICEBOOK_URL;
                 $requestMethod = "GET";
                 $standardPriceBkId  = $product->getSalesforceStandardPricebk();
@@ -158,7 +159,6 @@ class Allure_Salesforce_Model_Observer_Product{
                 $objectType = $helper::PRODUCT_PRICEBOOK_OBJECT;
                 
                 $response1    = $helper->sendRequest($pricebkUrlPath , $requestMethod , $sRequest);
-                Mage::log($response1,Zend_Log::DEBUG,'abc.log',true);
                 $responseArr1 = json_decode($response1,true);
                 
                 $generalPricebookId     = $product->getData("salesforce_standard_pricebk");
@@ -196,14 +196,16 @@ class Allure_Salesforce_Model_Observer_Product{
      * delete magento product from salesforce product object
      */
     public function deleteProductToSalesforce(Varien_Event_Observer $observer){
+        $helper = $this->getHelper();
+        $helper->salesforceLog("deleteProductToSalesforce request.");
         $product = $observer->getEvent()->getProduct();
         if($product){
             $salesforceId = $product->getSalesforceProductId();
             if($salesforceId){
-                $helper = $this->getHelper();
                 $requestMethod  = "DELETE";
                 $urlPath = $helper::PRODUCT_URL . "/" . $salesforceId;
                 $helper->sendRequest($urlPath , $requestMethod , null);
+                $helper->salesforceLog("delete the product from salesforce.");
             }
         }
     }

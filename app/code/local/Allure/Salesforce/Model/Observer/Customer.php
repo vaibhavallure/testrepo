@@ -16,9 +16,11 @@ class Allure_Salesforce_Model_Observer_Customer{
      * after new customer add or update customer info send data to salesforce
      */
     public function changeCustomerToSalesforce($observer){
+        $helper         = $this->getHelper();
+        $helper->salesforceLog("changeCustomerToSalesforce request");
         $customer = $observer->getEvent()->getCustomer();
         if($customer){
-            $helper         = $this->getHelper();
+            
             $objectType     = $helper::ACCOUNT_OBJECT;
             $sFieldName     = $helper::S_CUSTOMERID;
             
@@ -100,13 +102,13 @@ class Allure_Salesforce_Model_Observer_Customer{
                 //"Gender__c"           => $customer->getGender(),
                 "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
                 "Store__c"            => $customer->getStoreId(),
-                "Group__c"            => "General",//$customer->getGroupId(),
+                "Group__c"            => $customer->getGroupId(),
                 "BillingStreet"       => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : "",
                 "BillingCity"         => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : "",
                 "BillingState"        => ($defaultBillingAddr) ? $state : "",
                 "BillingPostalCode"   => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : "",
                 "BillingCountry"      => ($defaultBillingAddr) ? $countryName : "",
-                "ShippingStreet"      => ($defaultShippingAddr) ? $defaultShippingAddr->getStreet() : "",
+                "ShippingStreet"      => ($defaultShippingAddr) ? implode(", ",$defaultShippingAddr->getStreet()) : "",
                 "ShippingCity"        => ($defaultShippingAddr) ? $defaultShippingAddr->getCity() : "",
                 "ShippingState"       => ($defaultShippingAddr) ? $stateShip : "",
                 "ShippingPostalCode"  => ($defaultShippingAddr) ? $defaultShippingAddr->getPostcode() : "",
@@ -117,26 +119,30 @@ class Allure_Salesforce_Model_Observer_Customer{
                 $request["Birth_Date__c"] =  date("Y-m-d",strtotime($customer->getDob()));
             }
             
-            Mage::log("----- customer data -----",Zend_Log::DEBUG,'abc.log',true);
-            //Mage::log($request,Zend_Log::DEBUG,'abc.log',true);
+            $helper->salesforceLog("----- customer data -----");
+            $helper->salesforceLog($request);
             
             $response    = $helper->sendRequest($urlPath , $requestMethod , $request);
-            Mage::log($response,Zend_Log::DEBUG,'abc.log',true);
+            $helper->salesforceLog($response);
             $helper->processResponse($customer,$objectType,$sFieldName,$requestMethod,$response);
         }
     }
     
     /**
-     * when delete magento csutomer then delete from salesforce also
+     * when delete magento customer then delete from salesforce also
      */
     public function deleteCustomerToSalesforce($observer){
+        $helper         = $this->getHelper();
+        $helper->salesforceLog("deleteCustomerToSalesforce request");
         $customer = $observer->getEvent()->getCustomer();
         if($customer){
             $salesforceId = $customer->getSalesforceCustomerId();
             if($salesforceId){
-                $helper         = $this->getHelper();
+                
                 $requestMethod  = "DELETE";
                 $urlPath        = $helper::ACCOUNT_URL . "/" .$salesforceId;
+                $helper->sendRequest($urlPath , $requestMethod , null);
+                $helper->salesforceLog("delete customer from salesforce");
             }
         }
     }
@@ -147,12 +153,13 @@ class Allure_Salesforce_Model_Observer_Customer{
      * send customer address info into salesforce
      */
     public function changeCustomerAddressToSalesforce($observer){
+        $helper         = $this->getHelper();
+        $helper->salesforceLog("changeCustomerAddressToSalesforce request.");
         $customerAddress = $observer->getCustomerAddress();
         if($customerAddress){
             $customerAddressObj = $customerAddress;
             $customerAddress = $customerAddress->getData();
             $salesforceId   = $customerAddress['salesforce_address_id'];
-            $helper         = $this->getHelper();
             
             $objectType     = $helper::ADDRESS_OBJECT;
             $sFieldName     = $helper::S_ADDRESSID;
@@ -192,10 +199,10 @@ class Allure_Salesforce_Model_Observer_Customer{
                 "Telephone__c"      => $customerAddress['telephone'],
                 "VAT_Id__c"         => $customerAddress['vat_id']
             );
-            Mage::log("----- address data -----",Zend_Log::DEBUG,'abc.log',true);
-            Mage::log($request,Zend_Log::DEBUG,'abc.log',true);
+            $helper->salesforceLog("----- address data -----");
+            $helper->salesforceLog($request);
             $response    = $helper->sendRequest($urlPath , $requestMethod , $request);
-            Mage::log($response,Zend_Log::DEBUG,'abc.log',true);
+            $helper->salesforceLog($response);
             $helper->processResponse($customerAddressObj,$objectType,$sFieldName,$requestMethod,$response);
         }
     }

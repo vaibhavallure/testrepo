@@ -31,7 +31,9 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     //used for order refuned product
     const CREDIT_MEMO_URL                   = "/services/data/v42.0/sobjects/Credit_Memo__c";
     //used for order shipment
-    const SHIPMENT_URL                      = "/services/data/v42.0/sobjects/Shipment__c";
+    const SHIPMENT_URL                      = "/services/data/v42.0/sobjects/Shipment__c"; 
+    //used to update composite objects
+    const UPDATE_COMPOSITE_OBJECT_URL       = "/services/data/v42.0/composite/sobjects";
     
     //Salesforce object's type
     const PRODUCT_OBJECT            = "PRODUCT";
@@ -55,6 +57,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     //product price-book id for retailer & wholesaller in salesforce
     const RETAILER_PRICEBOOK_ID     = "01s6A000006NMtlQAG"; //standard pricebook
     const WHOLESELLER_PRICEBOOK_ID  = "01s290000001ivyAAA"; //wholeseller pricebook
+    
+    const GUEST_CUSTOMER_ACCOUNT    = "0012900000Ls44hAAB";
     
     /**
      * keep track of salesforce log data
