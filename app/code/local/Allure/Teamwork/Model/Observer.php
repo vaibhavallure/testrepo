@@ -871,6 +871,7 @@ class Allure_Teamwork_Model_Observer{
   /**
    * reupdate teamwork customer field with counterpoint customer
    */
+ 
   public function reupdateCustomerToTeamwork(){
       $logFile = "tewamwor_reupdate_customer.log";
       $operation = "reupdate_customer";
@@ -883,42 +884,51 @@ class Allure_Teamwork_Model_Observer{
           $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
           $page = $mLog->getPage();
           $size = $mLog->getSize();
+          // $total= $mLog->getTotal();
+          $total=0;
           $collection = Mage::getModel('customer/customer')
           ->getCollection()
-          ->addAttributeToSelect('*')
-          ->addAttributeToFilter('customer_type', array('eq' => 10));
+          ->addAttributeToSelect('*');
+          // $collection->setOrder('entity_id', 'asc');
+          // $collection->setCurPage($page);
+          // $collection->setPageSize($size);
+          $collection->addFieldToFilter('entity_id',array('gteq'=>$page))
+          ->addFieldToFilter('entity_id',array('lteq'=>$size));
           $collection->setOrder('entity_id', 'asc');
-          $collection->setCurPage($page);
-          $collection->setPageSize($size);
           
-          $lastPage = $collection->getLastPageNumber();
-          if($page < $lastPage){
+          //  $lastPage = $collection->getLastPageNumber();
+          if(true){
               foreach ($collection as $customer){
                   try{
-                      $request = array();
-                      $request['customerID']  = $customer->getTeamworkCustomerId();
-                      $request['customText4'] = $customer->getCounterpointCustNo();
-                      
-                      $sendRequest = curl_init($_url);
-                      curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-                      curl_setopt($sendRequest, CURLOPT_HEADER, false);
-                      curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
-                      curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
-                      curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
-                      curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
-                      
-                      curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
-                          "Content-Type: application/json",
-                          "Access-Token: {$_accessToken}"
-                      ));
-                      
-                      $json_arguments = json_encode($request);
-                      curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
-                      $response = curl_exec($sendRequest);
-                      curl_close($sendRequest);
-                      $responseObj = json_decode($response);
-                      Mage::log("Email-:".$customer->getEmail(),Zend_Log::DEBUG,$logFile,true);
-                      Mage::log("Response -:".$response,Zend_Log::DEBUG,$logFile,true);
+                      $page=$customer->getEntityId();
+                      if(empty($customer->getCounterpointCustNo()))
+                          continue;
+                          $request = array();
+                          $request['customerID']  = $customer->getTeamworkCustomerId();
+                          //  $request['primaryEmail']= array($customer->getEmail());
+                          $request['customText4'] = $customer->getCounterpointCustNo();
+                          //  $page=$customer->getEntityId();
+                          $sendRequest = curl_init($_url);
+                          curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+                          curl_setopt($sendRequest, CURLOPT_HEADER, false);
+                          curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
+                          curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
+                          curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
+                          curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
+                          
+                          curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
+                              "Content-Type: application/json",
+                              "Access-Token: {$_accessToken}"
+                          ));
+                          $total=$total++;
+                          $json_arguments = json_encode($request);
+                          curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+                          $response = curl_exec($sendRequest);
+                          curl_close($sendRequest);
+                          $responseObj = json_decode($response);
+                          Mage::log("Email-:".$customer->getEmail(),Zend_Log::DEBUG,$logFile,true);
+                          Mage::log("ID-:".$customer->getId(),Zend_Log::DEBUG,$logFile,true);
+                          // Mage::log("Response -:".$response,Zend_Log::DEBUG,$logFile,true);
                   }catch (Exception $ee){
                       Mage::log("Customer Id-:".$customer->getId(),Zend_Log::DEBUG,$logFile,true);
                       Mage::log("EXC:".$ee->getMessage(),Zend_Log::DEBUG,$logFile,true);
@@ -926,14 +936,20 @@ class Allure_Teamwork_Model_Observer{
               }
           }
           
-          $page +=1;
-          if($mLog->getId()){
-              $mLog->setPage($page)->save();
-          }
+          $page=$size;
+          $size=$page+250;
+          $resource = Mage::getSingleton('core/resource');
+          $writeAdapter = $resource->getConnection('core_write');
+          $table = $resource->getTableName('allure_teamwork_log_table');
+          $query="";
+          $query = "update {$table} set  page = '{$page}',size = '{$size}' where id = 4";
+          $writeAdapter->query($query);
           
       }catch (Exception $e){
           Mage::log("Exception:".$e->getMessage(),Zend_Log::DEBUG,$logFile,true);
       }
+      //  $this->reupdateCustomerToTeamwork();
   }
+  
   
 }

@@ -7,7 +7,7 @@ jQuery(document).ready(function () {
 });
 
 function addToShoppingCart(button, formId) {
-
+ 
     if (jQuery("div.t_Tooltip_customcart").length) {
         jQuery(".close-tooltip").trigger('click');
     }
@@ -61,7 +61,10 @@ function addToShoppingCart(button, formId) {
 				/*gift message code here added*/
 				var specialInstruction = jQuery("#" + formId.id +" .special-inst-product").val();
                 datos = '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
-		
+                
+                var purchased_from = jQuery("#" + formId.id +" .puchsed-from-cat").val();
+                datos = '' + ',"purchased_from_cat":"'+jQuery.trim(purchased_from)+'"';
+                
               //allure code start
                 var flagP = false;
                 if(jQuery('#parent-child-product').length){ 
@@ -174,6 +177,9 @@ function addToShoppingCartFromQuickView(button, formId) {
             
             var specialInstruction = jQuery("#" + formId.id +" .special-inst-product").val();
             datos += '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
+           
+            var purchased_from = jQuery("#" + formId.id +" .puchsed-from-cat").val();
+            datos = '' + ',"purchased_from_cat":"'+jQuery.trim(purchased_from)+'"';
             
             var qty = parent.document.getElementById(parent.jQuery('iframe.fancybox-iframe').attr('id')).contentWindow.document.getElementById('qty').value;
             var stringJSON = '{"qty":"' + qty + '"' + datos + ',"related_product":""}';

@@ -82,6 +82,12 @@
                 <dt>(Special requests might delay your order due to production time)</dt>
             </dl>
         <?php endif; ?>
+        <?php if($_item->getPurchasedFrom()):?>
+         <dl class="item-options">
+           <dt><strong><?php echo $this->escapeHtml('Purchased From(Category)') ?></strong></dt>
+           <dd><?php echo  $_item->getPurchasedFrom();?></dd>
+         </dl>
+        <?php endif;?>
     </td>
     <td class="a-center nobr-sku"><?php echo $this->htmlEscape(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
     <td class="a-center print-price">

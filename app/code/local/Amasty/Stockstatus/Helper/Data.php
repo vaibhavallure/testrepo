@@ -10,15 +10,15 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::app()->getLayout()->createBlock('amstockstatus/status')->setProduct($product)->toHtml();
     }
-    
+
     public function showStockStatus($product, $addAvail = false, $isProductList = false, $show_stock_message = true)
     {
         if ($show_stock_message){
             if($product->isAvailable()){
-                $result = $this->__('In stock');   
+                $result = $this->__('In stock');
             }
             else{
-                $result = $this->__('Out of stock');   
+                $result = $this->__('Out of stock');
             }
         }
 	    if($isProductList) $result = '';
@@ -26,19 +26,19 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
         if($this->getCustomStockStatusText($product) && ( (!Mage::getStoreConfig('amstockstatus/general/displayforoutonly') || !$product->isSaleable()) || ($product->isInStock() && $stockItem->getData('qty') <= Mage::helper('amstockstatus')->getBackorderQnt() ) )){
             if(Mage::getStoreConfig('amstockstatus/general/icononly')){
                 if($product->getData('hide_default_stock_status') )
-                    $result =  $this->getStatusIconImage($product);  
-                else 
-                    $result .=  $this->getStatusIconImage($product);              
+                    $result =  $this->getStatusIconImage($product);
+                else
+                    $result .=  $this->getStatusIconImage($product);
             }
             else{
                 if($product->getData('hide_default_stock_status') )
-                    $result =  $this->getStatusIconImage($product) . $this->getCustomStockStatusText($product);  
-                else 
+                    $result =  $this->getStatusIconImage($product) . $this->getCustomStockStatusText($product);
+                else
                     $result .=  ' ' . $this->getStatusIconImage($product) . $this->getCustomStockStatusText($product);
             }
         }
         if($addAvail) {
-            $result = $this->__('Availability:') . '<span>' . trim ($result) . '</span>';    
+            $result = $this->__('Availability:') . '<span>' . trim ($result) . '</span>';
         }
         if($isProductList) {
             $result = '<p class="availability" style="padding-bottom: 6px;">' . trim ($result) . '</p>';
@@ -46,7 +46,7 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $result;
     }
-    
+
     public function processViewStockStatus($product, $html)
     {
         $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
@@ -56,7 +56,7 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
             {                                                      // leave empty space here
                                                                       //            v
                 $status = Mage::getStoreConfig('amstockstatus/general/icononly') ? ' ' : Mage::helper('amstockstatus')->getCustomStockStatusText($product);
-                
+
                 if ($status)
                 {
                     $status = $this->getStatusIconImage($product) . '<span class="amstockstatus_' . Mage::helper('amstockstatus')->getCustomStockStatusId($product) . '">' . $status . '</span>';
@@ -67,7 +67,7 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
                         {
                             $html = preg_replace($pattern, '$1$2' . $status . '</span>', $html);
                         }
-                        else 
+                        else
                         {
                             $html = preg_replace($pattern, '$1$2$3 ' . $status . '</span>', $html);
                         }
@@ -78,22 +78,22 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
                         $outStock  = Mage::helper('amstockstatus')->__('Out of stock') . '.?';
                         $inStock1   = Mage::helper('amstockstatus')->__('In Stock');
                         $outStock1  = Mage::helper('amstockstatus')->__('Out of Stock');
-                        
+
                         if (Mage::getStoreConfig('amstockstatus/general/icononly') || $product->getData('hide_default_stock_status') || (!$product->isConfigurable() && ('bundle' != $product->getTypeId()) && $product->isInStock() && $stockItem->getManageStock() && 0 == $stockItem->getData('qty')))
                         {
                             $html = preg_replace("@($inStock|$outStock|$inStock1|$outStock1)[\s]*<@", '' . $status  . '<', $html);
                         }
-                        else 
+                        else
                         {
                             $html = preg_replace("@($inStock|$outStock|$inStock1|$outStock1)[\s]*<@", '$1 ' . $status  . '<', $html);
-                        }    
+                        }
                     }
                 }
             }
         }
         return $html;
     }
-    
+
     public function getStatusIconImage($product)
     {
         $iconHtml = '';
@@ -147,8 +147,8 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
                 }
                 span.tt:hover span.middle{ /* different middle bg for stretch */
                 	display: block;
-                	padding: 0 8px; 
-                	background: url($bubbleFiller) repeat bottom; 
+                	padding: 0 8px;
+                	background: url($bubbleFiller) repeat bottom;
                 }
                 span.tt:hover span.bottom{
                 	display: block;
@@ -167,7 +167,7 @@ INLINECSS;
         }
         return $iconHtml;
     }
-    
+
     public function getCustomStockStatusText(Mage_Catalog_Model_Product $product, $qty=0)
     {
 	if('true' == (string)Mage::getConfig()->getNode('modules/Amasty_Preorder/active') && Mage::helper('ampreorder')->getIsProductPreorder($product)) return Mage::helper('ampreorder')->getProductPreorderNote($product);
@@ -181,18 +181,18 @@ INLINECSS;
 	   // $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$storeId);
 	    $product = Mage::getModel('catalog/product')->setStoreId($storeId)->load($product->getId());
 
-	    //Commented by allure 
+	    //Commented by allure
      /*    if (($product->getData('custom_stock_status_qty_based') || $product->getData('custom_stock_status_quantity_based')) && !$product->isConfigurable())
         {
             $stockItem   = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
 	        if(Mage::getStoreConfig('amstockstatus/general/use_range_rules') && $product->getData('custom_stock_status_qty_rule')){
-                $rangeStatus->loadByQtyAndRule($stockItem->getData('qty')  + $qty, $product->getData('custom_stock_status_qty_rule'));    
+                $rangeStatus->loadByQtyAndRule($stockItem->getData('qty')  + $qty, $product->getData('custom_stock_status_qty_rule'));
             }
             else{
                 $rangeStatus->loadByQty($stockItem->getData('qty') + $qty);
             }
         } */
-        
+
         /* if ($rangeStatus->hasData('status_id'))
         {
             // gettins status for range
@@ -205,21 +205,21 @@ INLINECSS;
                     break;
                 }
             }
-        } elseif (!Mage::getStoreConfig('amstockstatus/general/userangesonly')) 
+        } elseif (!Mage::getStoreConfig('amstockstatus/general/userangesonly'))
         {
             //$status = $product->getAttributeText('custom_stock_status'); //allure comment code
         	$status = $this->getStockStatusMessage($product->getSku(), $qty); //allure code
         } */
-	    
+
 	    $stockItem= Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$stockId);
-        
+
         if($stockItem->getIsInStock()==0 && $stockItem->getUuseConfigBackorders()==0)
         {
-        	$status="The metal color or length combination you selected is out of stock.  Please email cs@venusbymariatash.com for updates.";
+        	$status="The metal color or length combination you selected is out of stock.  Please email cs@mariatash.com for updates.";
         }
         if($stockItem->getIsInStock()==0 && $stockItem->getUuseConfigBackorders()==0)
         {
-            $status="The metal color or length combination you selected is out of stock.  Please email cs@venusbymariatash.com for updates.";
+            $status="The metal color or length combination you selected is out of stock.  Please email cs@mariatash.com for updates.";
         }
         if($stockItem->getIsInStock()==1 && $stockItem->getQty()>=1)
         {
@@ -229,15 +229,15 @@ INLINECSS;
         {
             if($product->getBackorderTime())
                 $status="The metal color or length combination you selected is backordered. Order now and It will ship ".$product->getBackorderTime();
-            else       
+            else
                 $status="The metal color or length combination you selected is backordered.";
         }
         if($product->getStockItem()->getManageStock()==0)
         {
             $status="(In Stock: Ships Within 24 hours (Mon-Fri).)";
         }
-        
-        
+
+
       /*   if (false !== strpos($status, '{qty}'))
         {
         	if (!$stockItem)
@@ -246,7 +246,7 @@ INLINECSS;
         	}
         	$status = str_replace('{qty}', intval($stockItem->getData('qty')  + $qty), $status);
         }
-        
+
         // search for atttribute entries
         preg_match_all('@\{(.+?)\}@', $status, $matches);
         if (isset($matches[1]) && !empty($matches[1]))
@@ -269,42 +269,42 @@ INLINECSS;
         } */
         return $status;
     }
-    
+
     public function getCustomStockStatusId(Mage_Catalog_Model_Product $product)
     {
         $statusId    = null;
         $rangeStatus = Mage::getModel('amstockstatus/range');
-        
+
         if ($product->getData('custom_stock_status_qty_based') || $product->getData('custom_stock_status_quantity_based'))
         {
             $stockItem   = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
             if(Mage::getStoreConfig('amstockstatus/general/use_range_rules') && $product->getData('custom_stock_status_qty_rule')){
-                $rangeStatus->loadByQtyAndRule($stockItem->getData('qty'), $product->getData('custom_stock_status_qty_rule'));    
+                $rangeStatus->loadByQtyAndRule($stockItem->getData('qty'), $product->getData('custom_stock_status_qty_rule'));
             }
             else{
                 $rangeStatus->loadByQty($stockItem->getData('qty'));
             }
         }
-        
+
         if ($rangeStatus->hasData('status_id'))
         {
             $statusId = $rangeStatus->getData('status_id');
-        } elseif (!Mage::getStoreConfig('amstockstatus/general/userangesonly')) 
+        } elseif (!Mage::getStoreConfig('amstockstatus/general/userangesonly'))
         {
             $statusId = $product->getData('custom_stock_status');
         }
-        
+
         return $statusId;
     }
-    
+
     public function getBackorderQnt()
     {
         return 0;
     }
-    
+
     public function getStatusIconUrl($optionId)
     {
-        $uploadDir = Mage::getBaseDir('media') . DIRECTORY_SEPARATOR . 
+        $uploadDir = Mage::getBaseDir('media') . DIRECTORY_SEPARATOR .
                                                     'amstockstatus' . DIRECTORY_SEPARATOR . 'icons' . DIRECTORY_SEPARATOR;
         if (file_exists($uploadDir . $optionId . '.jpg'))
         {
@@ -312,46 +312,46 @@ INLINECSS;
         }
         return '';
     }
-    
+
     public function getStockAlert($product)
     {
         if (!$product->getId() || !Mage::getStoreConfig('amstockstatus/general/stockalert')) // this is the extension's setting.
         {
             return '';
         }
-        
+
         $tempCurrentProduct = Mage::registry('current_product');
         Mage::unregister('product');
         Mage::unregister('current_product');
         Mage::register('current_product', $product);
         Mage::register('product', $product);
-        
+
         $alertBlock = Mage::app()->getLayout()->createBlock('productalert/product_view', 'productalert.stock.'.$product->getId());
-        
+
         if ($alertBlock)
         {
             $alertBlock->setTemplate('productalert/product/view.phtml');
             $alertBlock->prepareStockAlertData();
             $alertBlock->setHtmlClass('alert-stock link-stock-alert');
-          //  $alertBlock->setSignupLabel($this->__('The metal color or length combination you selected is out of stock.  Please email cs@venusbymariatash.com for updates.'));
+          //  $alertBlock->setSignupLabel($this->__('The metal color or length combination you selected is out of stock.  Please email cs@mariatash.com for updates.'));
             $html = $alertBlock->toHtml();
 
             Mage::unregister('product');
             Mage::unregister('current_product');
             Mage::register('current_product', $tempCurrentProduct);
             Mage::register('product', $tempCurrentProduct);
-            
+
             return $html;
         }
-        
+
         Mage::unregister('product');
         Mage::unregister('current_product');
         Mage::register('current_product', $tempCurrentProduct);
         Mage::register('product', $tempCurrentProduct);
-            
+
         return '';
     }
-    
+
     public function getStatusBySku($sku, $qty=1)
     {
         if (Mage::getStoreConfig('amstockstatus/general/displayinemail'))
@@ -368,8 +368,8 @@ INLINECSS;
         }
         return "";
     }
-    
-    
+
+
     //Allure custom stock status message
     public function getCustomStockMessage(Mage_Catalog_Model_Product $product){
     	$message = "";
@@ -377,7 +377,7 @@ INLINECSS;
     		$message = $product->getData('backorder_time');
     	return $message;
     }
-    
+
     //allure order stock status
     public function getStockStatusMessage($sku, $qty=1){
     	if (Mage::getStoreConfig('amstockstatus/general/displayinemail'))
@@ -392,23 +392,23 @@ INLINECSS;
     		if ($stockQty < $backorderedQty || $stockQty <= 0) {
     			$isBackordered = true;
     		}
-    		
+
     		if ($isBackordered && $product->getStockItem()->getManageStock()==1) {
                 $message = "";
                 $stockMsg = $this->getCustomStockMessage($product);
                 if(!empty($stockMsg))
                 	$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-                else 
+                else
                 	$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
                 return " (".$message.")";
 			} else {
 				return " (In Stock: Ships Within 24 hours (Mon-Fri).)";
 			}
-    		
+
     	}
     	return "";
     }
-    
+
     public function getEmailStockStatusMessage($item){
     	if (Mage::getStoreConfig('amstockstatus/general/displayinemail'))
     	{
@@ -418,7 +418,7 @@ INLINECSS;
     	    if(empty($storeId)){
     	        return "";
     	    }
-    	    
+
             if($storeId == 1){ //only for main website
         		/* $productId = Mage::getModel('catalog/product')->getIdBySku($sku);
         		$product = Mage::getModel('catalog/product')->load($productId);

@@ -188,56 +188,121 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
             $optionPrices = array();
             $prices = $attribute->getPrices();
+           
             if (is_array($prices)) {
-                foreach ($prices as $value) {
-                    if(!$this->_validateAttributeValue($attributeId, $value, $options)) {
-                        continue;
-                    }
-                    $currentProduct->setConfigurablePrice(
-                        $this->_preparePrice($value['pricing_value'], $value['is_percent'])
-                    );
-                    $currentProduct->setParentId(true);
-                    Mage::dispatchEvent(
-                        'catalog_product_type_configurable_price',
-                        array('product' => $currentProduct)
-                    );
-                    $configurablePrice = $currentProduct->getConfigurablePrice();
-
-                    if (isset($options[$attributeId][$value['value_index']])) {
-                        $productsIndexOptions = $options[$attributeId][$value['value_index']];
-                        $productsIndex = array();
-                       
-                        foreach ($productsIndexOptions as $productIndex) {
-                        	
-                        	//Existing code
-                        	
-                            /* if ($productStock[$productIndex]) {
-                                $productsIndex[] = $productIndex;
-                            } */
-                        	
-                        	//Allure code
-                        	
-                        	if(!$showOutOfStockProducts){
-                        		if ($productStock[$productIndex]) {
-                        			$productsIndex[] = $productIndex;
-                        		}
-                        	} else{
-                        		$productsIndex[] = $productIndex;
-                        	}
+                if ($productAttribute->getAttributeCode() == 'metal') {
+                    foreach ($this->getAllowProducts() as $product) {
+                        foreach ($prices as $value) {
+                            if ($product->getMetal() != $value['value_index']) {
+                                continue;
+                            }
+                            if (! $this->_validateAttributeValue($attributeId, $value, $options)) {
+                                continue;
+                            }
+                            
+                            $currentProduct->setConfigurablePrice($this->_preparePrice($value['pricing_value'], $value['is_percent']));
+                            $currentProduct->setParentId(true);
+                            Mage::dispatchEvent('catalog_product_type_configurable_price', array(
+                                'product' => $currentProduct
+                            ));
+                            $configurablePrice = $currentProduct->getConfigurablePrice();
+                            
+                            if (isset($options[$attributeId][$value['value_index']])) {
+                                $productsIndexOptions = $options[$attributeId][$value['value_index']];
+                                $productsIndex = array();
+                                
+                                foreach ($productsIndexOptions as $productIndex) {
+                                    
+                                    // Existing code
+                                    
+                                    /*
+                                     * if ($productStock[$productIndex]) {
+                                     * $productsIndex[] = $productIndex;
+                                     * }
+                                     */
+                                    
+                                    // Allure code
+                                    
+                                    if (! $showOutOfStockProducts) {
+                                        if ($productStock[$productIndex]) {
+                                            $productsIndex[] = $productIndex;
+                                        }
+                                    } else {
+                                        $productsIndex[] = $productIndex;
+                                    }
+                                }
+                            } else {
+                                $productsIndex = array();
+                            }
+                            
+                            $info['options'][] = array(
+                                'id' => $value['value_index'],
+                                'label' => $value['label'],
+                                'price' => $configurablePrice,
+                                'oldPrice' => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
+                                'products' => $productsIndex,
+                               
+                            );
+                            
+                            $optionPrices[] = $configurablePrice;
                         }
-                    } else {
-                        $productsIndex = array();
                     }
-
-                    $info['options'][] = array(
-                        'id'        => $value['value_index'],
-                        'label'     => $value['label'],
-                        'price'     => $configurablePrice,
-                        'oldPrice'  => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
-                        'products'  => $productsIndex,
-                    );
-                    $optionPrices[] = $configurablePrice;
+                }else{
+                    foreach ($prices as $value) {
+                       
+                        if (! $this->_validateAttributeValue($attributeId, $value, $options)) {
+                            continue;
+                        }
+                        
+                        $currentProduct->setConfigurablePrice($this->_preparePrice($value['pricing_value'], $value['is_percent']));
+                        $currentProduct->setParentId(true);
+                        Mage::dispatchEvent('catalog_product_type_configurable_price', array(
+                            'product' => $currentProduct
+                        ));
+                        $configurablePrice = $currentProduct->getConfigurablePrice();
+                        
+                        if (isset($options[$attributeId][$value['value_index']])) {
+                            $productsIndexOptions = $options[$attributeId][$value['value_index']];
+                            $productsIndex = array();
+                            
+                            foreach ($productsIndexOptions as $productIndex) {
+                                
+                                // Existing code
+                                
+                                /*
+                                 * if ($productStock[$productIndex]) {
+                                 * $productsIndex[] = $productIndex;
+                                 * }
+                                 */
+                                
+                                // Allure code
+                                
+                                if (! $showOutOfStockProducts) {
+                                    if ($productStock[$productIndex]) {
+                                        $productsIndex[] = $productIndex;
+                                    }
+                                } else {
+                                    $productsIndex[] = $productIndex;
+                                }
+                            }
+                        } else {
+                            $productsIndex = array();
+                        }
+                        
+                        $info['options'][] = array(
+                            'id' => $value['value_index'],
+                            'label' => $value['label'],
+                            'price' => $configurablePrice,
+                            'oldPrice' => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
+                            'products' => $productsIndex,
+                            
+                        );
+                        
+                        $optionPrices[] = $configurablePrice;
+                    }
                 }
+               
+                
             }
             /**
              * Prepare formated values for options choose
@@ -282,6 +347,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
             'inclTaxTitle'      => Mage::helper('catalog')->__('Incl. Tax')
         );
 
+       
         $config = array(
             'attributes'        => $attributes,
             'template'          => str_replace('%s', '#{price}', $store->getCurrentCurrency()->getOutputFormat()),
@@ -297,7 +363,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
         }
 
         $config = array_merge($config, $this->_getAdditionalConfig());
-
+      
         return Mage::helper('core')->jsonEncode($config);
     }
 

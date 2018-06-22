@@ -9756,9 +9756,9 @@ float: right;
     text-transform: capitalize;
 }
 #review-buttons-container.buttons-set a {
-    color: #bba473;
+    color: #fff;/*#bba473;*/
     float: right;
-    font-size: 15px;
+    font-size: 14px;/*15px;*/
     margin: 3px 28px 0 10px;
     text-decoration: none;
 }
@@ -9949,10 +9949,189 @@ input.giftcard-radio1 {
 .checkout-privacy-policy label{
 	color: #38393c;
     font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 100;
 }
 
 .checkout-privacy-policy label a{
 	float: none ! important;
+}
+
+
+
+
+
+
+.mt-custom-checkbox {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mt-custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border: 1px solid #d1d1d1;
+    cursor: pointer;
+}
+
+.mt-custom-checkbox input:checked ~ .checkmark {
+    /* background-color: #2196F3; */
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.mt-custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.mt-custom-checkbox .checkmark:after {
+    left: 6px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.mt-custom-checkbox.label-error-validate{
+	color: #830000;
+}
+
+.mt-custom-checkbox .checkbox-error-validate + .checkmark{
+	border: 1px solid #830000;
+}
+
+
+
+
+
+.mt-magbird-checkbox {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    text-align: justify;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mt-magbird-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark-magebird {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
+    border: 1px solid #d1d1d1;
+    cursor: pointer;
+}
+
+.mt-magbird-checkbox input:checked ~ .checkmark-magebird {
+    /* background-color: #2196F3; */
+}
+
+.checkmark-magebird:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.mt-magbird-checkbox input:checked ~ .checkmark-magebird:after {
+    display: block;
+}
+
+.mt-magbird-checkbox .checkmark-magebird:after {
+    left: 5px;
+    top: 1px;
+    width: 3px;
+    height: 10px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.mt-magbird-checkbox.label-error-validate{
+	color: #830000;
+}
+
+.mt-magbird-checkbox .checkbox-error-validate + .checkmark-magebird{
+	border: 1px solid #830000;
+}
+
+
+.mt-newletter-subscribe-privacy-policy{
+	color: #38393c;
+}
+
+.mt-newletter-subscribe-privacy-policy .mt-custom-checkbox{
+	display: inline-block;
+	text-align: left;
+	font-weight: 100;
+}
+
+.mt-newletter-subscribe-privacy-policy .mt-custom-checkbox .checkmark{
+	top: 25px;
+}
+
+.mt-newletter-subscribe-privacy-policy .mt-custom-checkbox a{
+	color: #bba473;
+}
+
+
+.checkout-onepage-index #checkout-review-load.order-review p.f-left{
+	text-indent: 0px;
+	line-height: 20px;
+}
+
+.mt-register-privacy-label .checkmark{
+	top: 8px;
+}
+
+.mt-custom-checkbox a{
+	font-size: 12px ! important;
+	color: #906E39 ! important;
+}
+
+.mt-custom-checkbox a:hover {
+	color: #906E39;
+	text-decoration: none;
+}
+
+.checkout-privacy-policy .checkmark{
+	top: 10px;
 }
