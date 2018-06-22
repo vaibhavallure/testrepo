@@ -151,6 +151,14 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                 $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
                 $this->setPage($page);
             }
+            $purchasedFrom = $helper->getSalesOrderItemPurchasedFrom($item,$feed,true);
+            if($purchasedFrom['is_show']){
+                $page = $pdf->drawLineBlocks($page, array($purchasedFrom['label_block']), array('table_header' => true));
+                $this->setPage($page);
+                $page = $pdf->drawLineBlocks($page, array($purchasedFrom['value_block']), array('table_header' => true));
+                $this->setPage($page);
+            }
+            
             
             $lineSeparator = $helper->getLineSeparator();
             $page = $pdf->drawLineBlocks($page, array($lineSeparator), array('table_header' => true));

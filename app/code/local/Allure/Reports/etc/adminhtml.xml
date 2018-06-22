@@ -12,8 +12,12 @@
 		                    <title>Orders Report</title>
 		                    <sort_order>0</sort_order>
 		                    <action>adminhtml/report_sales/salesreport</action>
-							
               			 </salesreport>
+              			 <catalogreport translate="title" module="allure_reports">
+		                    <title>Products Report</title>
+		                    <sort_order>0</sort_order>
+		                    <action>adminhtml/report_sales/catalogreport</action>
+              			 </catalogreport>
               			 
                     </children>
                 </salesroot>
