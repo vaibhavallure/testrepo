@@ -6,6 +6,12 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+/* $customer = Mage::getModel("customer/customer")->load(121822);
+$customer->setData('firstname', "AB");
+$customer->setData('lastname', "TEST");
+$customer->getResource()->saveAttribute($customer, 'firstname');
+$customer->getResource()->saveAttribute($customer, 'lastname'); */
+
 die;
 
 $helper = Mage::helper("allure_salesforce/salesforceClient");

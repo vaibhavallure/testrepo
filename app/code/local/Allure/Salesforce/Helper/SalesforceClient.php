@@ -6,7 +6,7 @@
  */
 class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstract{
     
-    protected $_salesforce_log_file = "abc.log";
+    protected $_salesforce_log_file = "salesforce.log";
     protected $_retry_limit         = 1;
     protected $_retry_count         = 0;
     
@@ -43,6 +43,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     const ORDER_OBJECT              = "ORDER";
     const INVOICE_OBJECT            = "INVOICE";
     const CREDITMEMO_OBJECT         = "CREDITMEMO";
+    const SHIPMENT_OBJECT           = "SHIPMENT";
     
     //salesforce magento mapping field
     const S_PRODUCTID           = "salesforce_product_id";
@@ -109,7 +110,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         $tokenUrl = $tokenUrl."grant_type={$grantType}&client_id={$clientId}&".
             "client_secret={$clientSecret}&username={$username}&password={$password}" ;
         
-        Mage::log($tokenUrl,Zend_Log::DEBUG,'abc.log',true);
+        $this->salesforceLog("In refreshToken method of salesforceClient class.");
+        $this->salesforceLog($tokenUrl);
         
         $tokenRequest = curl_init($tokenUrl);
         curl_setopt($tokenRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
@@ -125,7 +127,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         // execute $tokenRequest
         $tokenResponse      = curl_exec($tokenRequest);
         $tokenResponseArr   = json_decode($tokenResponse, true);
-        Mage::log($tokenResponse,Zend_Log::DEBUG,'abc.log',true);
+        $this->salesforceLog($tokenResponse);
         if($tokenResponseArr["access_token"]){ //successfully generate access token
             $this->getSalesforceSession()->setSOauthToken($tokenResponseArr["access_token"]);
             $this->getSalesforceSession()->setSInstanceUrl($tokenResponseArr["instance_url"]);
@@ -179,7 +181,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             $responseArr    = json_decode($response,true);
             //$this->salesforceLog("count = ".$this->_retry_count);
             if($responseArr[0]["errorCode"] == "INVALID_SESSION_ID"){
-                $this->salesforceLog("count1 = ".$this->_retry_count);
+                $this->salesforceLog("retry count is = ".$this->_retry_count);
                 if($this->_retry_count < $this->_retry_limit){
                     $salesfoeceSession->setSOauthToken(null);
                     $salesfoeceSession->setSInstanceUrl(null);

@@ -11,6 +11,34 @@ class Allure_Salesforce_Model_Observer_Customer{
         return Mage::helper("allure_salesforce/salesforceClient");
     }
     
+    /**
+     * process salesforce customer response data and maintaine logs data
+     */
+    private function processCustomer($object , $objectType , $fieldName , $requestMethod , $response){
+        $responseArr = json_decode($response,true);
+        $helper = $this->getHelper();
+        $isFailure = false;
+        if($responseArr["success"]){
+            try{
+                $object->setData($fieldName, $responseArr["id"]);
+                $object->getResource()->saveAttribute($object, $fieldName);
+            }catch (Exception $e){
+                $isFailure = true;
+                $helper->salesforceLog("Exception in processCustomer of object ".$objectType);
+                $helper->salesforceLog("Message :".$e->getMessage());
+            }
+        }else{
+            if(!($responseArr == ""))
+                $isFailure = true;
+        }
+        
+        if($isFailure){
+            $helper->addSalesforcelogRecord($objectType,$requestMethod,$object->getId(),$response);
+        }else{
+            $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $object->getId());
+        }
+    }
+    
     
     /**
      * after new customer add or update customer info send data to salesforce
@@ -99,7 +127,7 @@ class Allure_Salesforce_Model_Observer_Customer{
                 //"Description"         => "",
                 "Email__c"            => $customer->getEmail(),
                 //"Fax"                 => "",
-                //"Gender__c"           => $customer->getGender(),
+                "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 3,
                 "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
                 "Store__c"            => $customer->getStoreId(),
                 "Group__c"            => $customer->getGroupId(),
@@ -119,12 +147,12 @@ class Allure_Salesforce_Model_Observer_Customer{
                 $request["Birth_Date__c"] =  date("Y-m-d",strtotime($customer->getDob()));
             }
             
+            
             $helper->salesforceLog("----- customer data -----");
             $helper->salesforceLog($request);
             
             $response    = $helper->sendRequest($urlPath , $requestMethod , $request);
-            $helper->salesforceLog($response);
-            $helper->processResponse($customer,$objectType,$sFieldName,$requestMethod,$response);
+            $this->processCustomer($customer,$objectType,$sFieldName,$requestMethod,$response);
         }
     }
     
@@ -138,11 +166,13 @@ class Allure_Salesforce_Model_Observer_Customer{
         if($customer){
             $salesforceId = $customer->getSalesforceCustomerId();
             if($salesforceId){
-                
+                $objectType     = $helper::ACCOUNT_OBJECT;
                 $requestMethod  = "DELETE";
                 $urlPath        = $helper::ACCOUNT_URL . "/" .$salesforceId;
-                $helper->sendRequest($urlPath , $requestMethod , null);
-                $helper->salesforceLog("delete customer from salesforce");
+                $response = $helper->sendRequest($urlPath , $requestMethod , null);
+                $this->processCustomer($customer, $objectType, null, $requestMethod, $response);
+                if($response == "")
+                    $helper->salesforceLog("delete customer from salesforce");
             }
         }
     }
@@ -202,8 +232,12 @@ class Allure_Salesforce_Model_Observer_Customer{
             $helper->salesforceLog("----- address data -----");
             $helper->salesforceLog($request);
             $response    = $helper->sendRequest($urlPath , $requestMethod , $request);
-            $helper->salesforceLog($response);
-            $helper->processResponse($customerAddressObj,$objectType,$sFieldName,$requestMethod,$response);
+            /* $responseArr = json_decode($response,true);
+            if($responseArr["success"]){
+                $customerAddressObj->setData($sFieldName, $responseArr["id"]);
+                $customerAddressObj->getResource()->saveAttribute($customerAddressObj, $sFieldName);
+            } */
+            $this->processCustomer($customerAddressObj,$objectType,$sFieldName,$requestMethod,$response);
         }
     }
 }
