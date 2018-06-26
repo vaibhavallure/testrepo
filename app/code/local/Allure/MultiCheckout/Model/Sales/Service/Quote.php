@@ -125,10 +125,10 @@ class Allure_MultiCheckout_Model_Sales_Service_Quote extends Mage_Sales_Model_Se
                 $payment_method = $order->getPayment()
                     ->getMethodInstance()
                     ->getCode();
+                
                 // Keep order status as pending for banktransfer and
                 // purchaseorder for singlecharge
-                if ($payment_method != "banktransfer" || $payment_method != "purchaseorder" ) {
-                    
+                if ($payment_method != "banktransfer" && $payment_method != "purchaseorder" ) {
                    $transId = $this->createBackorderTransaction($mainOrderId, $order->getId());
                    $this->createBackorderInvoice($order->getId(), true);
                    $this->updateInvoice($order->getId(), $transId, $mainOrderId);
@@ -142,7 +142,6 @@ class Allure_MultiCheckout_Model_Sales_Service_Quote extends Mage_Sales_Model_Se
                     $payment_method = $order->getPayment()
                     ->getMethodInstance()
                     ->getCode();
-                    
                     if ($payment_method != "banktransfer" ){
                          $this->createBackorderInvoice($order->getId());
                     }
