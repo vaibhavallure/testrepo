@@ -9,7 +9,7 @@ class Teamwork_TransferMariatash_Model_Class_Quantity extends Teamwork_Transfer_
         ->join( array('it' => Mage::getSingleton('core/resource')->getTableName('service_items')), "sty.style_id = it.style_id  and it.item_id='{$itemId}'", array());*/
 		
 		$select = $this->_db->select()
-            ->from(Mage::getSingleton('core/resource')->getTableName('service_attribute_set'), array('customlookup7'))
+            ->from(Mage::getSingleton('core/resource')->getTableName('service_items'), array('customlookup7'))
         ->where('item_id = ?', $itemId);
         
 		$customLookup = $this->_db->fetchOne($select);
