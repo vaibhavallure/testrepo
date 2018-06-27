@@ -53,7 +53,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $shipingMethod = $order->getShippingMethod();
         $createdAt = $order->getCreatedAt();
         $counterpointOrderId = $order->getCounterpointOrderId();
-        $shippingDescription = $order->getShippingdescription();
+        $shippingDescription = $order->getShippingDescription();
         
         $subtotal = $order->getSubtotal();
         $baseSubtotal = $order->getBaseSubtotal();
