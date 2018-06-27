@@ -101,7 +101,6 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                 
                 $lines[][] = array(
                     'text' => Mage::helper('core/string')->str_split(strip_tags($optionStr), 40, true, true),
-                    'font' => 'italic',
                     'feed' => 35
                 );
                 
