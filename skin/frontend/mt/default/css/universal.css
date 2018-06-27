@@ -1228,11 +1228,11 @@ width: 63%;
 }
 
 .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
-	background-color: #dedede;
-    padding: 0px 20px;
+	background-color: #d1d1d1;
+   /*  padding: 0px 20px; */
     border-radius: 3px;
     position: absolute;
-    bottom: 38px;
+    bottom: 15px;
 }
 
 .mt-new-purchase .cart-table .cart_col4 .qty-wrap{
