@@ -91,6 +91,9 @@
 								<?php endif;?>
 				
 								<span class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime($_item->getCreatedAt()))?></span>
+								<?php if($_item->getPurchasedFrom()):?>
+								<span class="mt-purchase-added-at">Purchased From: <?php echo $_item->getPurchasedFrom();?></span>
+								<?php endif;?>
 								<label <?php echo $storeColor?>  class="purchase-store-name"><?php echo $storeName?></label>
 							</td>
 			

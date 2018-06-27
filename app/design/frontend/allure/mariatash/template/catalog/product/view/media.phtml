@@ -56,7 +56,14 @@ if($configProduct->isConfigurable()){
         }
     }
     
-    $colorOptionId = $this->getRequest()->getParam("optionId");  
+    $optionHelper=Mage::helper('allure_catalog');
+    $metal=$this->getRequest()->getParam("metal");
+    if($metal){
+        $colorOptionId=$optionHelper->getOptionNumber($metal);
+    }elseif($this->getRequest()->getParam("optionId")){
+        $colorOptionId=$this->getRequest()->getParam("optionId");
+    }
+    
     
     $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $configProduct);
     $config_attr = null;   

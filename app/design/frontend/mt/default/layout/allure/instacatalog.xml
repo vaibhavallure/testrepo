@@ -39,9 +39,7 @@
     </allure_instacatalog_feed_index>
     
     <allure_instacatalog_feed_view>
-    	<reference name="root">
-            <action method="setTemplate"><template>page/instagram.phtml</template></action>
-        </reference>
+    
         <reference name="content">
         	 <block type="allure_instacatalog/feed_view" name="post_view" template="allure/instacatalog/feed/instagram_view.phtml" />
         </reference>
@@ -59,5 +57,19 @@
         	 <block type="allure_instacatalog/feed_view" name="post_view" template="allure/instacatalog/feed/share_view.phtml" />
         </reference>
     </allure_instacatalog_feed_shareview>
+    
+    <allure_instacatalog_feed_post translate="label" module="allure_instacatalog">
+        <label>Feed list</label>
+        
+        <reference name="head">
+        	<action method="addItem"><type>skin_js</type><name>js/allure/instagramview.js</name><params/></action>
+        	<action method="addItem"><type>skin_css</type><name>css/instacatalog/instacatalog.css</name><params/></action>
+        	<action method="addItem"><type>skin_css</type><name>css/instacatalog/instacatalog_showcase.css</name><params/></action>
+        </reference>
+        
+        <reference name="content">
+            <block type="allure_instacatalog/feed_list" name="post_list" template="allure/instacatalog/feed/postview.phtml" />
+        </reference>
+    </allure_instacatalog_feed_post>
     
 </layout>
