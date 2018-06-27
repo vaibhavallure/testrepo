@@ -4,9 +4,13 @@ class Teamwork_TransferMariatash_Model_Class_Quantity extends Teamwork_Transfer_
     protected function _getInventoryData($itemId, $quantity, $children=array())
     {
         
-        $select = $this->_db->select()
+        /*$select = $this->_db->select()
             ->from( array('sty' => Mage::getSingleton('core/resource')->getTableName('service_style')), array('sty.customlookup7') )
-        ->join( array('it' => Mage::getSingleton('core/resource')->getTableName('service_items')), "sty.style_id = it.style_id  and it.item_id='{$itemId}'", array());
+        ->join( array('it' => Mage::getSingleton('core/resource')->getTableName('service_items')), "sty.style_id = it.style_id  and it.item_id='{$itemId}'", array());*/
+		
+		$select = $this->_db->select()
+            ->from(Mage::getSingleton('core/resource')->getTableName('service_attribute_set'), array('customlookup7'))
+        ->where('item_id = ?', $itemId);
         
 		$customLookup = $this->_db->fetchOne($select);
         
