@@ -1757,7 +1757,7 @@ p.required { font-size:11px; float: left; color:#EB340A; }
 }
 .messages#timeout-message {
   background: #CFCFD1;
-  border: 2px solid #790000;
+  border: 2px solid #830000;
 }
 .checkout-cart-index ul.messages { position:absolute;}
 .customer-account-index.messages { width:100%;
@@ -1783,7 +1783,7 @@ ul.messages li span {
 .catalog-category-view #productsContainer-wrapper .note-msg {margin-top:0;}
 .category-piercing .note-msg, .notice-msg
 .category-new-arrivals .note-msg, .notice-msg { display:none; }
-.error-msg { color:#790000; }
+.error-msg { color:#830000; }
 .error-msg a, .error-msg a:hover, .error-msg a:visited { color: #906E39 !important; font-size: 11px !important; text-decoration: underline !important; }
 .success-msg { color:#906E39;  }
 .notice-msg { color:#906E39; }
@@ -2102,7 +2102,7 @@ tr.summary-details-excluded { font-style:italic; }
 
 
 /*shopping mt wjzr */
-.priceUpdate { /*background:#d1d1d1;*/ color:#790000; padding:10px; font-size:12px; font-family:'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; font-weight:bold; }
+.priceUpdate { /*background:#d1d1d1;*/ color:#830000; padding:10px; font-size:12px; font-family:'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; font-weight:bold; }
 .cart-mt .data-table th { font-size:13px; padding: 5px 10px; }
 .cart-mt .cart-wrap-table tr {height:1px;}
 .cart-mt .cart-wrap-table td {padding:0; margin:0; height:100%;}
@@ -3318,7 +3318,7 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/ text-align: left; }
 /* Availability */
 .availability { margin:0; }
 .availability span { font-weight:bold;
-    color: #790000;
+    color: #830000;
 }
 .availability.in-stock span {}
 .availability.out-of-stock span { color:#d83820; }
@@ -3825,7 +3825,7 @@ div.styled {
     clear: both;
     width: 200px;
     margin-top: 0;
-    color: #790000;
+    color: #830000;
     font-size: 11px;
     line-height: 13px;
 }
@@ -3979,8 +3979,8 @@ ul.product-tabs{ border-bottom: 1px solid #DDDDDD;  display: block; margin: 0 0 
 .cart-table th { padding:9px 10px; }
 .cart-table td { padding:9px; }
 .cart-table .product-name { font-weight:bold; margin:0; color:#444; padding-bottom:5px; }
-.cart-table .item-msg { margin:2px 9px 15px; font-size:11px; font-weight:bold; color:#790000; line-height: 1.6363636363}
-.item-msg { margin:2px 9px 15px; font-size:11px; font-weight:bold; color:#790000; line-height: 1.6363636363}
+.cart-table .item-msg { margin:2px 9px 15px; font-size:11px; font-weight:bold; color:#830000; line-height: 1.6363636363}
+.item-msg { margin:2px 9px 15px; font-size:11px; /* font-weight:bold; */ color:#830000; line-height: 1.6363636363}
 .cart-table tfoot td { padding:9px 10px; }
 .cart-table .btn-continue { float:left; }
 .cart-table .btn-continue span { }
