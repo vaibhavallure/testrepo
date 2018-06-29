@@ -3,10 +3,6 @@ class Teamwork_TransferMariatash_Model_Class_Quantity extends Teamwork_Transfer_
 {
     protected function _getInventoryData($itemId, $quantity, $children=array())
     {
-        
-        /*$select = $this->_db->select()
-            ->from( array('sty' => Mage::getSingleton('core/resource')->getTableName('service_style')), array('sty.customlookup7') )
-        ->join( array('it' => Mage::getSingleton('core/resource')->getTableName('service_items')), "sty.style_id = it.style_id  and it.item_id='{$itemId}'", array());*/
 		
 		$select = $this->_db->select()
             ->from(Mage::getSingleton('core/resource')->getTableName('service_items'), array('customlookup7'))
@@ -19,12 +15,22 @@ class Teamwork_TransferMariatash_Model_Class_Quantity extends Teamwork_Transfer_
         {
             $manageStock = $this->checkManageStock($itemId);
         }
-
+		
         if (strtolower($customLookup) == 'yes')
         {
             $inventoryData = array(
                 'use_config_backorders'     => 0,
                 'backorders'                => 1,
+                'use_config_manage_stock'   => $manageStock,
+                'qty'                       => $quantity,
+				'is_in_stock'				=> Mage_CatalogInventory_Model_Stock_Status::STATUS_IN_STOCK
+            );
+        }
+		else if (strtolower($customLookup) == 'notify customer')
+        {
+            $inventoryData = array(
+                'use_config_backorders'     => 0,
+                'backorders'                => 2,
                 'use_config_manage_stock'   => $manageStock,
                 'qty'                       => $quantity,
 				'is_in_stock'				=> Mage_CatalogInventory_Model_Stock_Status::STATUS_IN_STOCK
@@ -39,7 +45,7 @@ class Teamwork_TransferMariatash_Model_Class_Quantity extends Teamwork_Transfer_
             );
         }
 
-        if (strtolower($customLookup) != 'yes' && Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_STOCK_AVALIABILITY))
+        if ((strtolower($customLookup) != 'yes' || strtolower($customLookup) != 'notify customer') && Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_STOCK_AVALIABILITY))
         {
             $inventoryData['is_in_stock'] = ( $quantity > 0 || $this->_getChildrenDependedStock($children) ) ?
                 Mage_CatalogInventory_Model_Stock_Status::STATUS_IN_STOCK :
