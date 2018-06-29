@@ -26,7 +26,7 @@ class Teamwork_TransferMariatash_Model_Class_Quantity extends Teamwork_Transfer_
 				'is_in_stock'				=> Mage_CatalogInventory_Model_Stock_Status::STATUS_IN_STOCK
             );
         }
-		else if (strtolower($customLookup) == 'notify customer')
+		elseif (strtolower($customLookup) == 'notify customer')
         {
             $inventoryData = array(
                 'use_config_backorders'     => 0,
@@ -43,13 +43,6 @@ class Teamwork_TransferMariatash_Model_Class_Quantity extends Teamwork_Transfer_
                 'use_config_manage_stock'   => $manageStock,
                 'qty'                       => $quantity,
             );
-        }
-
-        if ((strtolower($customLookup) != 'yes' || strtolower($customLookup) != 'notify customer') && Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_UPDATE_STOCK_AVALIABILITY))
-        {
-            $inventoryData['is_in_stock'] = ( $quantity > 0 || $this->_getChildrenDependedStock($children) ) ?
-                Mage_CatalogInventory_Model_Stock_Status::STATUS_IN_STOCK :
-            Mage_CatalogInventory_Model_Stock_Status::STATUS_OUT_OF_STOCK;
         }
 
         if( !$manageStock )
