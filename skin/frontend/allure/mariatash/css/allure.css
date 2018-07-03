@@ -2382,9 +2382,9 @@ cursor: pointer;
 }
 #reg_msg_div #register-msg{
 	margin: auto;
-	color: #790000;
+	color: #830000;
     font-size: 12px;
-    font-weight: bold;
+   /*  font-weight: bold; */
     line-height: 1.63636363636;
 }
 #login_msg_div{
@@ -2394,9 +2394,9 @@ cursor: pointer;
 }
 #login_msg_div #login-msg{
 	margin: auto;
-	color: #790000;
+	color: #830000;
     font-size: 12px;
-    font-weight: bold;
+ /*    font-weight: bold; */
     line-height: 1.63636363636;
 }
 .popupResetPasswordModel input{
