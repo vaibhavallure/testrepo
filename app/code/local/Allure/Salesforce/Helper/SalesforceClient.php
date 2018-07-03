@@ -34,6 +34,10 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     const SHIPMENT_URL                      = "/services/data/v42.0/sobjects/Shipment__c"; 
     //used to update composite objects
     const UPDATE_COMPOSITE_OBJECT_URL       = "/services/data/v42.0/composite/sobjects";
+    //used to shipment tracking
+    const SHIPMENT_TRACK_URL                = "/services/data/v42.0/composite/tree/Tracking_Information__c";
+    //shipment track url for delete
+    const SHIPMENT_TRACK_URL_1              = "/services/data/v42.0/sobjects/Tracking_Information__c";
     
     //Salesforce object's type
     const PRODUCT_OBJECT            = "PRODUCT";

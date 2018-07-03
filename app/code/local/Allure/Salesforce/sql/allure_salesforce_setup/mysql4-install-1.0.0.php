@@ -157,6 +157,9 @@ $orderSetup->addAttribute("shipment", "salesforce_shipment_id", array(
 
 $installer->run("ALTER TABLE sales_flat_creditmemo ADD COLUMN salesforce_creditmemo_id varchar(255) default null");
 
+$installer->run("ALTER TABLE sales_flat_shipment_track ADD COLUMN salesforce_shipment_track_id varchar(255) default null");
+
+
 $this->endSetup();
 
 

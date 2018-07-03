@@ -109,7 +109,37 @@
 	                    <method>addShipmentToSalesforce</method>
 	                </allure_salesforce>
 	            </observers>
-        </sales_order_shipment_save_after>
+        	</sales_order_shipment_save_after>
+        	
+        	<sales_order_shipment_delete_after>
+	            <observers>
+	                <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>deleteShipmentToSalesforce</method>
+	                </allure_salesforce>
+	            </observers>
+        	</sales_order_shipment_delete_after>
+        
+        	<!-- <sales_order_shipment_track_save_after>
+			    <observers>
+			      <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>addTrackingInfoToSalesforce</method>
+	                </allure_salesforce>
+			    </observers>
+		    </sales_order_shipment_track_save_after> -->
+		    
+		    <sales_order_shipment_track_delete_after>
+			    <observers>
+			      <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>deleteTrackInfoSalesforce</method>
+	                </allure_salesforce>
+			    </observers>
+		    </sales_order_shipment_track_delete_after>
             
 		</events>
 

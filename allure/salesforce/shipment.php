@@ -41,8 +41,8 @@ $header = array(
     "Quantity__c"           => "Quantity__c",
     "Shipping_Label__c"     => "Shipping_Label__c",
     "Weight__c"             => "Weight__c",
-    "Carrier__c"            => "Carrier__c",
-    "Track_Number__c"       => "Track_Number__c",
+    //"Carrier__c"            => "Carrier__c",
+    //"Track_Number__c"       => "Track_Number__c",
     "Order__c"              => "Order__c"
 );
 
@@ -79,7 +79,7 @@ try{
             $totalQty = $shipment->getTotalQty();
             $shippingLabel = $shipment->getShippingLabel();
             $weight = $order->getWeight();
-            $tracksNumCollection = $shipment->getAllTracks();
+            /* $tracksNumCollection = $shipment->getAllTracks();
             $trackNumberArr = array();
             $titlesArr = array();
             foreach ($tracksNumCollection as $track){
@@ -87,7 +87,7 @@ try{
                 $titlesArr[]        = $track->getData("title");
             }
             $carrierTitles = implode(",", $titlesArr);
-            $trackNums = implode(",", $trackNumberArr);
+            $trackNums = implode(",", $trackNumberArr); */
             
             $row = array(
                 "Increment_ID__c"       => $incrementId,
@@ -97,8 +97,8 @@ try{
                 "Quantity__c"           => $totalQty,
                 "Shipping_Label__c"     => "",
                 "Weight__c"             => $weight,
-                "Carrier__c"            => $carrierTitles,
-                "Track_Number__c"       => $trackNums,
+                //"Carrier__c"            => $carrierTitles,
+                //"Track_Number__c"       => $trackNums,
                 "Order__c"              => $salesforceOrderId
             );
             //add row data into .csv file

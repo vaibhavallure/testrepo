@@ -362,12 +362,13 @@ class Allure_Salesforce_Model_Observer_Order{
         $tracksNumCollection = $shipment->getAllTracks();
         $trackNumberArr = array();
         $titlesArr = array();
-        foreach ($tracksNumCollection as $track){
+        /* foreach ($tracksNumCollection as $track){
+            $helper->salesforceLog($track->getData());
             $trackNumberArr[]   = $track->getData("track_number");
             $titlesArr[]        = $track->getData("title");
-        }
-        $carrierTitles = implode(",", $titlesArr);
-        $trackNums = implode(",", $trackNumberArr);
+        } */
+        /* $carrierTitles = implode(",", $titlesArr);
+        $trackNums = implode(",", $trackNumberArr); */
         
         if(!$salesforceOrderId){
             return;
@@ -391,17 +392,18 @@ class Allure_Salesforce_Model_Observer_Order{
             "Quantity__c"       => $totalQty,
             "Shipping_Label__c" => "",
             "Weight__c"         => $weight,
-            "Carrier__c"        => $carrierTitles,
-            "Track_Number__c"   => $trackNums,
+            //"Carrier__c"        => $carrierTitles,
+            //"Track_Number__c"   => $trackNums,
             "Name"              => "Shipment for Order #".$orderIncrementId
         );
-        
+        //$helper->salesforceLog($urlPath);
         $helper->salesforceLog($request);
         
-        $response = $helper->sendRequest($helper::SHIPMENT_URL,$requestMethod,$request);
+        $response = $helper->sendRequest($urlPath,$requestMethod,$request);
         $responseArr    = json_decode($response,true);
         if($responseArr["success"]){
             $salesforceId = $responseArr["id"];
+            $salesforceShipmentId = $salesforceId;
             $helper->salesforceLog("order_id :".$order->getId()." shipment_id :".$shipment->getId()." salesforce_Id :".$salesforceId);
             $coreResource = Mage::getSingleton('core/resource');
             $write = $coreResource->getConnection('core_write');
@@ -411,12 +413,54 @@ class Allure_Salesforce_Model_Observer_Order{
             $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $shipment->getId());
         }else{
             if($responseArr == ""){
-                $helper->salesforceLog("salesforce id not updated into invoice.");
+                $helper->salesforceLog("salesforce id not updated into shipment.");
                 $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $shipment->getId());
             }else{
                 $helper->addSalesforcelogRecord($objectType,$requestMethod,$shipment->getId(),$response);
             }
         }
+        
+        if($salesforceShipmentId){
+            $helper->salesforceLog("In Track Info");
+            $isTrack = false;
+            $requestR["records"] = array();
+            foreach ($tracksNumCollection as $track){
+                if(!$track->getData("salesforce_shipment_track_id")){
+                    $isTrack = true;
+                    $tArr = array(
+                        "attributes"            => array("type" => "Tracking_Information__c","referenceId" => $track->getData("entity_id")),
+                        "Magento_Tracker_Id__c" => $track->getData("entity_id"),
+                        "Name"                  => $track->getData("title"),
+                        "Shipment__c"           => $salesforceShipmentId,
+                        "Tracking_Number__c"    => $track->getData("track_number"),
+                        "Carrier__c"            => $track->getData("carrier_code")
+                    );
+                    array_push($requestR["records"],$tArr);
+                }
+            }
+            if($isTrack){
+                $helper->salesforceLog("In Track Info request");
+                $requestMethod = "POST";
+                $urlPath = $helper::SHIPMENT_TRACK_URL;
+                $responseT = $helper->sendRequest($urlPath,$requestMethod,$requestR);
+                $tResponseArr = json_decode($responseT,true);
+                if($tResponseArr["hasErrors"] == false){
+                    $results = $tResponseArr["results"];
+                    $sql_order = "";
+                    foreach ($results as $res){
+                        $sql_order .= "UPDATE sales_flat_shipment_track SET salesforce_shipment_track_id='".$res["id"]."' WHERE entity_id ='".$res["referenceId"]."';";
+                    }
+                    $coreResource = Mage::getSingleton('core/resource');
+                    $write1 = $coreResource->getConnection('core_write');
+                    //$sql_order = "UPDATE sales_flat_shipment SET salesforce_shipment_id='".$salesforceId."' WHERE entity_id ='".$shipment->getId()."'";
+                    $write1->query($sql_order);
+                    //$helper->salesforceLog($sql_order);
+                }
+            }
+            
+        }
+        
+        
     }
     
     /**
@@ -581,5 +625,73 @@ class Allure_Salesforce_Model_Observer_Order{
             $helper->salesforceLog("made order update api call to salesforce");
             $response = $helper->sendRequest($urlPath,$requestMethod,$request);
         }
+    }
+    
+    public function deleteShipmentToSalesforce(Varien_Event_Observer $observer){
+        $helper = $this->getHelper();
+        $helper->salesforceLog("deleteShipmentToSalesforce request.");
+        $shipment = $observer->getEvent()->getShipment();
+        $salesforceShipmentId = $shipment->getSalesforceShipmentId();
+        if(!$salesforceShipmentId){
+            $helper->salesforceLog("No delete operation perform on shipment #".$shipment->getIncrementId());
+            return ;
+        }
+        $requestMethod = "DELETE";
+        $urlPath = $helper::SHIPMENT_URL . "/" . $salesforceShipmentId;
+        $response = $helper->sendRequest($urlPath,$requestMethod,null);
+    }
+    
+    /**
+     * add tracking info into salesforce
+     */
+    public function addTrackingInfoToSalesforce(Varien_Event_Observer $observer){
+        $event = $observer->getEvent();
+        $track = $event->getTrack();
+        $trackingId = $track->getNumber();
+        $shipment = $track->getShipment();
+        $helper = $this->getHelper();
+        $helper->salesforceLog("Tracking Id:".$trackingId);
+        $salesforceShipmentId = $shipment->getSalesforceShipmentId();
+        if(!$salesforceShipmentId){
+            $helper->salesforceLog("Cant add tracking info into salesforce for shipment #".$shipment->getIncrementId());
+            return ;
+        }
+        
+        $requestMethod = "POST";
+        $urlPath = $helper::SHIPMENT_TRACK_URL_1 ;
+        $request = array(
+            "Magento_Tracker_Id__c" => $track->getData("entity_id"),
+            "Name"                  => $track->getData("title"),
+            "Shipment__c"           => $salesforceShipmentId,
+            "Tracking_Number__c"    => $track->getData("track_number"),
+            "Carrier__c"            => $track->getData("carrier_code")
+        );
+        $response = $helper->sendRequest($urlPath,$requestMethod,$request);
+        $responseArr = json_decode($response,true);
+        if($responseArr["success"]){
+            $sql_order = "UPDATE sales_flat_shipment_track SET salesforce_shipment_track_id='".$responseArr["id"]."' WHERE entity_id ='".$track->getData("entity_id")."';";
+            $coreResource = Mage::getSingleton('core/resource');
+            $write = $coreResource->getConnection('core_write');
+            $write->query($sql_order);
+        }
+    }
+    
+    /**
+     * delete tracking info from salesforce
+     */
+    public function deleteTrackInfoSalesforce(Varien_Event_Observer $observer){
+        $helper->salesforceLog("deleteTrackInfoSalesforce request");
+        $event = $observer->getEvent();
+        $track = $event->getTrack();
+        $shipment = $track->getShipment();
+        $helper = $this->getHelper();
+        $trackSalesforceId = $track->getData("salesforce_shipment_track_id");
+        if(!$trackSalesforceId){
+            $helper->salesforceLog("No delete operation perform on track number shipment #".$shipment->getIncrementId());
+            return ;
+        }
+        $requestMethod = "DELETE";
+        $urlPath = $helper::SHIPMENT_TRACK_URL_1 . "/" . $trackSalesforceId;
+        $response = $helper->sendRequest($urlPath,$requestMethod,null);
     }
 }
