@@ -6,7 +6,7 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 
 //set default page size
-$PAGE_SIZE   = 500;
+$PAGE_SIZE   = 2000;
 //set default page number
 $PAGE_NUMBER = 1;
 //log file name
@@ -34,6 +34,7 @@ if(is_numeric($pageNumber)){
 
 //.csv file header data
 $header = array(
+    "Customer_ID__c"            => "Customer_ID__c",
     "Name"                      => "Name",
     "AccountNumber"             => "AccountNumber",
     "Site"                      => "Site",
@@ -42,7 +43,6 @@ $header = array(
     "Company__c"                => "Company__c",
     "Counterpoint_No__c"        => "Counterpoint_No__c",
     "Created_In__c"             => "Created_In__c",
-    "Customer_ID__c"            => "Customer_ID__c",
     "Customer_Note__c"          => "Customer_Note__c",
     "Default_Billing__c"        => "Default_Billing__c",
     "Default_Shipping__c"       => "Default_Shipping__c",
@@ -141,6 +141,7 @@ try{
             }
             
             $row = array(
+                "Customer_ID__c"      => $customer->getId(),
                 "Name"                => $fullName,
                 "AccountNumber"       => "",
                 "Site"                => "",
@@ -149,7 +150,6 @@ try{
                 "Company__c"          => $customer->getCompany(),
                 "Counterpoint_No__c"  => $customer->getCounterpointCustNo(),
                 "Created_In__c"       => "",
-                "Customer_ID__c"      => $customer->getId(),
                 "Customer_Note__c"    => $customer->getCustomerNote(),
                 "Default_Billing__c"  => $customer->getDefaultBilling(),
                 "Default_Shipping__c" => $customer->getDefaultShipping(),

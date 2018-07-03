@@ -34,7 +34,6 @@ if(is_numeric($pageNumber)){
 
 //.csv file header data
 $header = array(
-    "Magento_Invoice_Id"        => "Magento_Invoice_Id",
     "Invoice_Id__c"             => "Invoice_Id__c",
     "Order_Id__c"               => "Order_Id__c",
     "Name"                      => "Name",
@@ -100,7 +99,6 @@ try{
             $salesforceOrderId = $order->getSalesforceOrderId();
                 
             $row = array(
-                "Magento_Invoice_Id"                => $invoice->getId(),
                 "Invoice_Id__c"             => $invoiceIncrementId,
                 "Order_Id__c"               => $orderIncrementId,
                 "Name"                      => "Invoice for Order #".$orderIncrementId,

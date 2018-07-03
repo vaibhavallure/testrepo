@@ -29,7 +29,8 @@ class Allure_Salesforce_Model_Observer_Order{
             $customer = Mage::getModel("customer/customer")->load($customerId);
             $salesforceAccountId = $customer->getSalesforceCustomerId();
             if(!$salesforceAccountId){
-                $salesforceAccountId = $helper::GUEST_CUSTOMER_ACCOUNT;
+                $guestAccount = Mage::helper('allure_salesforce')->getGuestAccount();
+                $salesforceAccountId = $guestAccount; //$helper::GUEST_CUSTOMER_ACCOUNT;
             }
             /* if(!$salesforceAccountId){
                 $customer->save();
@@ -40,9 +41,9 @@ class Allure_Salesforce_Model_Observer_Order{
         $customerEmail = $order->getCustomerEmail();
         $customerGroup = $order->getCustomerGroupId();
         
-        $pricebookId = $helper::RETAILER_PRICEBOOK_ID;
+        $pricebookId = Mage::helper('allure_salesforce')->getGeneralPricebook(); //$helper::RETAILER_PRICEBOOK_ID;
         if($customerGroup == 2){
-            $pricebookId = $helper::WHOLESELLER_PRICEBOOK_ID;
+            $pricebookId = Mage::helper('allure_salesforce')->getWholesalePricebook(); //$helper::WHOLESELLER_PRICEBOOK_ID;
         }
         
         $totalQty = $order->getTotalQtyOrdered();

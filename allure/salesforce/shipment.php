@@ -34,7 +34,6 @@ if(is_numeric($pageNumber)){
 
 //.csv file header data
 $header = array(
-    "Magento_Shipment_Id"   => "Magento_Shipment_Id",
     "Increment_ID__c"       => "Increment_ID__c",
     "Name"                  => "Name",
     "Customer_Id__c"        => "Customer_Id__c",
@@ -91,7 +90,6 @@ try{
             $trackNums = implode(",", $trackNumberArr);
             
             $row = array(
-                "Magento_Shipment_Id"   => $shipment->getId(),
                 "Increment_ID__c"       => $incrementId,
                 "Name"                  => "Shipment for Order #".$orderIncrementId,
                 "Customer_Id__c"        => $customerId,

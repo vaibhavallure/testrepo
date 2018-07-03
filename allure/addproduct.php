@@ -6,6 +6,14 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+$ids = Mage::getModel('sales/order')->getCollection()
+->addAttributeToFilter('salesforce_order_id', "80129000000H7VUAA0")
+->getAllIds();
+
+var_dump(current($ids));
+
+die;
+
 /* $customer = Mage::getModel("customer/customer")->load(121822);
 $customer->setData('firstname', "AB");
 $customer->setData('lastname', "TEST");

@@ -6,7 +6,7 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 
 //set default page size
-$PAGE_SIZE   = 500;
+$PAGE_SIZE   = 2000;
 //set default page number
 $PAGE_NUMBER = 1;
 //log file name
@@ -39,6 +39,7 @@ if(is_numeric($pageNumber)){
 
 //.csv file header data
 $header = array(
+    "ProductCode"           => "ProductCode",
     "IsActive"              => "IsActive",
     "Diamond_Color__c"      => "Diamond_Color__c",
     "DisplayUrl"            => "DisplayUrl",
@@ -46,7 +47,6 @@ $header = array(
     "Gemstone__c"           => "Gemstone__c",
     "Jewelry_Care__c"       => "Jewelry_Care__c",
     "Metal_Color__c"        => "Metal_Color__c",
-    "ProductCode"           => "ProductCode",
     "Description"           => "Description",
     "Family"                => "Family",
     "Name"                  => "Name",
@@ -94,6 +94,7 @@ try{
             //prepare .csv row data using array
             
             $row = array(
+                "ProductCode"               => $_product->getId(),
                 "IsActive"                  => ($_product->getStatus())?true:false,
                 "Diamond_Color__c"          => "",
                 "DisplayUrl"                => $_product->getUrlKey(),
@@ -101,7 +102,6 @@ try{
                 "Gemstone__c"               => $gemstoneArr[$_product->getGemstone()],
                 "Jewelry_Care__c"           => $_product->getJewelryCare(),
                 "Metal_Color__c"            => $metalColorArr[$_product->getMetal()],
-                "ProductCode"               => $_product->getId(),
                 "Description"               => $_product->getDescription(),
                 "Family"                    => $_product->getTypeId(),
                 "Name"                      => $_product->getName(),

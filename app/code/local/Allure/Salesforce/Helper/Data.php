@@ -12,6 +12,9 @@ class Allure_Salesforce_Helper_Data extends Mage_Core_Helper_Abstract{
     const XML_PATH_SALESFORCE_CLIENT_SECRET     = "allure_salesforce/general/client_secret";
     const XML_PATH_SALESFORCE_USERNAME          = "allure_salesforce/general/username";
     const XML_PATH_SALESFORCE_PASSWORD          = "allure_salesforce/general/password";
+    const XML_PATH_GUEST_ACCOUNT                = "allure_salesforce/general/guest_account";
+    const XML_PATH_GENERAL_PRICEBOOK            = "allure_salesforce/general/general_pricebook";
+    const XML_PATH_WHOLESALE_PRICEBOOK          = "allure_salesforce/general/wholesale_pricebook";
     
     public function isEnabled(){
         return Mage::getStoreConfig(self::XML_PATH_SALESFORCE_ENABLED);
@@ -39,5 +42,17 @@ class Allure_Salesforce_Helper_Data extends Mage_Core_Helper_Abstract{
     
     public function getPassword(){
         return Mage::getStoreConfig(self::XML_PATH_SALESFORCE_PASSWORD);
+    }
+    
+    public function getGuestAccount(){
+        return Mage::getStoreConfig(self::XML_PATH_GUEST_ACCOUNT);
+    }
+    
+    public function getGeneralPricebook(){
+        return Mage::getStoreConfig(self::XML_PATH_GENERAL_PRICEBOOK);
+    }
+    
+    public function getWholesalePricebook(){
+        return Mage::getStoreConfig(self::XML_PATH_WHOLESALE_PRICEBOOK);
     }
 }

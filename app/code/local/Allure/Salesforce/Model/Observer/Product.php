@@ -148,7 +148,7 @@ class Allure_Salesforce_Model_Observer_Product{
                                 "type"          => "PricebookEntry",
                                 "referenceId"   => "general"
                             ),
-                            "Pricebook2Id"  => $helper::RETAILER_PRICEBOOK_ID,
+                            "Pricebook2Id"  => Mage::helper('allure_salesforce')->getGeneralPricebook(),//$helper::RETAILER_PRICEBOOK_ID,
                             "Product2Id"    => $salesforceProductId,
                             "UnitPrice"     => $retailerPrice
                         )
@@ -160,7 +160,7 @@ class Allure_Salesforce_Model_Observer_Product{
                                 "type"          => "PricebookEntry",
                                 "referenceId"   => "wholesale"
                             ),
-                            "Pricebook2Id"  => $helper::WHOLESELLER_PRICEBOOK_ID,
+                            "Pricebook2Id"  => Mage::helper('allure_salesforce')->getWholesalePricebook(),//$helper::WHOLESELLER_PRICEBOOK_ID,
                             "Product2Id"    => $salesforceProductId,
                             "UnitPrice"     => $wholesalePrice
                         );
