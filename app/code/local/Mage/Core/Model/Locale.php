@@ -114,8 +114,7 @@ class Mage_Core_Model_Locale
     public function getDefaultLocale()
     {
         if (!$this->_defaultLocale) {
-            $locale=$this->getLocaleBasedCountryCode();
-            
+           $locale=$this->getLocaleBasedCountryCode();
             if (empty($locale))
                 $locale = Mage::getStoreConfig(self::XML_PATH_DEFAULT_LOCALE);
             
@@ -130,7 +129,6 @@ class Mage_Core_Model_Locale
     public function getLocaleBasedCountryCode()
     {
         $flag = Mage::getStoreConfig('allure_geolocation/switch_locales/status');
-        
         if (! $flag)
             return '';
         
@@ -138,10 +136,10 @@ class Mage_Core_Model_Locale
         
         $country = '';
         
-        if ($ip != '127.0.0.1')
-            $country = Mage::getModel('allure_geolocation/geoLocation')->getGeoInfo();
-        
-        if (! Mage::getStoreConfig('allure_geolocation/switch_locales/test_mode')) {
+        if ($ip != '127.0.0.1'){
+            $country=Mage::helper('allure_translations')->getCountryByIp($ip);
+        }
+        if (Mage::getStoreConfig('allure_geolocation/switch_locales/test_mode')) {
             
             //Allowing test mode for specific ip
             if (Mage::getStoreConfig('allure_geolocation/switch_locales/test_mode') == 2) {
@@ -158,13 +156,12 @@ class Mage_Core_Model_Locale
         
         if (! empty($country)) {
             
-            if (! empty($country['countryCode'])) {
+            if (!empty($country)) {
                 
                 $config = Mage::getStoreConfig('allure_geolocation/switch_locales/mapping');
                 $config = unserialize($config);
-                
                 foreach ($config as $key => $conf) {
-                    if ($conf['countryCode'] == $country['countryCode']) {
+                    if ($conf['countryCode'] == $country) {
                         return $conf['localeCode'];
                         break;
                     }
