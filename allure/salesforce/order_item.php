@@ -71,16 +71,26 @@ try{
                 $product = Mage::getModel("catalog/product")->load($productId);
                 $salesforceProductId = "";
                 if($product){
-                    $salesforcePricebkEntryId = $product->getSalesforceStandardPricebk();
+                    $salesforceProductId = $product->getSalesforceStandardPricebk();
                     if($customerGroup == 2){
-                        $salesforcePricebkEntryId = $product->getSalesforceWholesalePricebk();
+                        $salesforceProductId = $product->getSalesforceWholesalePricebk();
+                    }
+                }
+                
+                $options = $item->getProductOptions()["options"];
+                $postLength = "";
+                foreach ($options as $option){
+                    if($option["label"] == "Post Length"){
+                        $postLength = $option["value"];
+                        break;
                     }
                 }
                 $row = array(
                     "OrderId"               => $order->getSalesforceOrderId(),
                     "PricebookEntryId"      => $salesforceProductId,
                     "UnitPrice"             => $item->getBasePrice(),
-                    "Quantity"              => $item->getQtyOrdered()
+                    "Quantity"              => $item->getQtyOrdered(),
+                    "Post_Length__c"        => $postLength
                 );
                 //add row data into .csv file
                 $io->streamWriteCsv($row);

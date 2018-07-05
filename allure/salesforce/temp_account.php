@@ -6,7 +6,7 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 
 //set default page size
-$PAGE_SIZE   = 300;
+$PAGE_SIZE   = 1000;
 //set default page number
 $PAGE_NUMBER = 1;
 //log file name
@@ -50,39 +50,39 @@ if(is_numeric($pageNumber)){
 }
 
 //.csv file header data
-$header = array(
-    "Customer_ID__c"            => '"Customer_ID__c"',
-    "Name"                      => '"Name"',
+$header[] = array(
+    "Customer_ID__c"            => "Customer_ID__c",
+    "Name"                      => "Name",
     //"AccountNumber"             => "AccountNumber",
     //"Site"                      => "Site",
     //"AccountSource"             => "AccountSource",
-    "Birth_Date__c"             => '"Birth_Date__c"',
-    "Company__c"                => '"Company__c"',
-    "Counterpoint_No__c"        => '"Counterpoint_No__c"',
-    "Created_In__c"             => '"Created_In__c"',
-    "Customer_Note__c"          => '"Customer_Note__c"',
-    "Default_Billing__c"        => '"Default_Billing__c"',
-    "Default_Shipping__c"       => '"Default_Shipping__c"',
+    "Birth_Date__c"             => "Birth_Date__c",
+    "Company__c"                => "Company__c",
+    "Counterpoint_No__c"        => "Counterpoint_No__c",
+    "Created_In__c"             => "Created_In__c",
+    "Customer_Note__c"          => "Customer_Note__c",
+    "Default_Billing__c"        => "Default_Billing__c",
+    "Default_Shipping__c"       => "Default_Shipping__c",
     //"Description"               => "Description",
-    "Email__c"                  => '"Email__c"',
+    "Email__c"                  => "Email__c",
     //"Fax"                       => "Fax",
-    "Gender__c"                 => '"Gender__c"',
-    "Group__c"                  => '"Group__c"',
-    "Phone"                     => '"Phone"',
-    "Store__c"                  => '"Store__c"',
-    "Teamwork_Customer_ID__c"   => '"Teamwork_Customer_ID__c"',
-    "TW_UC_GUID__c"             => '"TW_UC_GUID__c"',
-    "Old_Store__c"              => '"Old_Store__c"',
-    "BillingStreet"             => '"BillingStreet"',
-    "BillingCity"               => '"BillingCity"',
-    "BillingState"              => '"BillingState"',
-    "BillingPostalCode"         => '"BillingPostalCode"',
-    "BillingCountry"            => '"BillingCountry"',
-    "ShippingStreet"            => '"ShippingStreet"',
-    "ShippingCity"              => '"ShippingCity"',
-    "ShippingState"             => '"ShippingState"',
-    "ShippingPostalCode"        => '"ShippingPostalCode"',
-    "ShippingCountry"           => '"ShippingCountry"',
+    "Gender__c"                 => "Gender__c",
+    "Group__c"                  => "Group__c",
+    "Phone"                     => "Phone",
+    "Store__c"                  => "Store__c",
+    "Teamwork_Customer_ID__c"   => "Teamwork_Customer_ID__c",
+    "TW_UC_GUID__c"             => "TW_UC_GUID__c",
+    "Old_Store__c"              => "Old_Store__c",
+    "BillingStreet"             => "BillingStreet",
+    "BillingCity"               => "BillingCity",
+    "BillingState"              => "BillingState",
+    "BillingPostalCode"         => "BillingPostalCode",
+    "BillingCountry"            => "BillingCountry",
+    "ShippingStreet"            => "ShippingStreet",
+    "ShippingCity"              => "ShippingCity",
+    "ShippingState"             => "ShippingState",
+    "ShippingPostalCode"        => "ShippingPostalCode",
+    "ShippingCountry"           => "ShippingCountry",
 );
 
 try{
@@ -93,24 +93,29 @@ try{
     ->setPageSize($PAGE_SIZE)
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'asc');
-    $collection->getSelect()->where("e.old_store_id=".$store);
+    $collection->getSelect()->where("e.old_store_id=".$store);//e.entity_id=3358
     
     //echo $collection->getSelect()->__toString();die;
     
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$accountHistory,true);
     
     //open or create .csv file
-    $io           = new Varien_Io_File();
+    
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "account";
     $filename     = "ACCOUNT_STORE_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
+    
+    
+    $io = new Varien_Io_File();
     $io->setAllowCreateFolders(true);
     $io->open(array("path" => $folderPath));
-    $io->streamOpen($filepath , "w+");
-    $io->streamLock(true);
+    //$io->streamOpen($filepath , "w+");
+    //$io->streamLock(true);
+    
+    $csv = new Varien_File_Csv();
     
     //add header data into .csv file
-    $io->streamWriteCsv($header);
+    $csv->saveData($filepath,$header);
     
     foreach ($collection as $customer){
         try{
@@ -141,6 +146,8 @@ try{
                 }else{
                     $state = $defaultBillingAddr['region'];
                 }
+                //$state = utf8_encode($state);//htmlspecialchars($state, ENT_NOQUOTES, "UTF-8");
+                $state = iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $state);
                 
                 $country = Mage::getModel('directory/country')
                 ->loadByCode($defaultBillingAddr['country_id']);
@@ -159,55 +166,56 @@ try{
                     $stateShip = $defaultShippingAddr['region'];
                 }
                 
+                //$stateShip = utf8_encode($stateShip);
+                $stateShip = iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $stateShip);
+                
                 $country = Mage::getModel('directory/country')
                 ->loadByCode($defaultShippingAddr['country_id']);
                 $countryNameShip = $country->getName();
             }
             
-            $row = array(
-                "Customer_ID__c"      => '"'.$customer->getId().'"',
-                "Name"                => '"'.$fullName.'"',
+            $header[] = array(
+                "Customer_ID__c"      => $customer->getId(),
+                "Name"                => $fullName,
                 //"AccountNumber"       => "",
                 //"Site"                => "",
                 //"AccountSource"       => "",
-                "Birth_Date_c"        => ($customer->getDob()) ? '"'.date("Y-m-d",strtotime($customer->getDob())).'"' : '""',//"YYYY-MM-DD",
-                "Company__c"          => '"'.$customer->getCompany().'"',
-                "Counterpoint_No__c"  => '"'.$customer->getCounterpointCustNo().'"',
-                "Created_In__c"       => '"'.$customer->getCreatedIn().'"',
-                "Customer_Note__c"    => '"'.$customer->getCustomerNote().'"',
-                "Default_Billing__c"  => '"'.$customer->getDefaultBilling().'"',
-                "Default_Shipping__c" => '"'.$customer->getDefaultShipping().'"',
+                "Birth_Date_c"        => ($customer->getDob()) ? date("Y-m-d",strtotime($customer->getDob())) : null,//"YYYY-MM-DD",
+                "Company__c"          => $customer->getCompany(),
+                "Counterpoint_No__c"  => $customer->getCounterpointCustNo(),
+                "Created_In__c"       => $customer->getCreatedIn(),
+                "Customer_Note__c"    => $customer->getCustomerNote(),
+                "Default_Billing__c"  => $customer->getDefaultBilling(),
+                "Default_Shipping__c" => $customer->getDefaultShipping(),
                 //"Description"         => "",
-                "Email__c"            => '"'.$customer->getEmail().'"',
+                "Email__c"            => $customer->getEmail(),
                 //"Fax"                 => "",
-                "Gender__c"           => ($customer->getGender()) ? '"'.$customer->getGender().'"' : '"3"',
-                "Group__c"            => '"'.$customer->getGroupId().'"',
-                "Phone"               => ($defaultBillingAddr) ? '"'.$defaultBillingAddr->getTelephone().'"' : '""',
-                "Store__c"            => '"'.$customer->getStoreId().'"',
-                "Teamwork_Customer_ID__c"   => '"'.$customer->getTeamworkCustomerId().'"',
-                "TW_UC_GUID__c"             => '"'.$customer->getTwUcGuid().'"',
-                "Old_Store__c"          => '"'.$oldStoreArr[$customer->getOldStoreId()].'"',
-                "BillingStreet"       => ($defaultBillingAddr) ? '"'.implode(", ", $defaultBillingAddr->getStreet()).'"' : '""',
-                "BillingCity"         => ($defaultBillingAddr) ? '"'.$defaultBillingAddr->getCity().'"' : '""',
-                "BillingState"        => ($defaultBillingAddr) ? '"'.$state.'"' : '""',
-                "BillingPostalCode"   => ($defaultBillingAddr) ? '"'.$defaultBillingAddr->getPostcode().'"' : '""',
-                "BillingCountry"      => ($defaultBillingAddr) ? '"'.$countryName.'"' : '""',
-                "ShippingStreet"      => ($defaultShippingAddr) ? '"'.implode(", ",$defaultShippingAddr->getStreet()).'"' :'""',
-                "ShippingCity"        => ($defaultShippingAddr) ? '"'.$defaultShippingAddr->getCity().'"' : "",
-                "ShippingState"       => ($defaultShippingAddr) ? '"'.$stateShip.'"' : '""',
-                "ShippingPostalCode"  => ($defaultShippingAddr) ? '"'.$defaultShippingAddr->getPostcode().'"' : '""',
-                "ShippingCountry"     => ($defaultShippingAddr) ? '"'.$countryNameShip.'"' : '""'
+                "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 4,
+                "Group__c"            => $customer->getGroupId(),
+                "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : null,
+                "Store__c"            => $customer->getStoreId(),
+                "Teamwork_Customer_ID__c"   => $customer->getTeamworkCustomerId(),
+                "TW_UC_GUID__c"             => $customer->getTwUcGuid(),
+                "Old_Store__c"          => $oldStoreArr[$customer->getOldStoreId()],
+                "BillingStreet"       => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : null,
+                "BillingCity"         => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : null,
+                "BillingState"        => ($defaultBillingAddr) ? $state : null,
+                "BillingPostalCode"   => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : null,
+                "BillingCountry"      => ($defaultBillingAddr) ? $countryName : null,
+                "ShippingStreet"      => ($defaultShippingAddr) ? implode(", ",$defaultShippingAddr->getStreet()) :null,
+                "ShippingCity"        => ($defaultShippingAddr) ? $defaultShippingAddr->getCity() : null,
+                "ShippingState"       => ($defaultShippingAddr) ? $stateShip : null,
+                "ShippingPostalCode"  => ($defaultShippingAddr) ? $defaultShippingAddr->getPostcode() : null,
+                "ShippingCountry"     => ($defaultShippingAddr) ? $countryNameShip : null
             );
-            
-            //add row data into .csv file
-            $io->streamWriteCsv($row);
-            $row = null;
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$accountHistory,true);
             Mage::log("Occured for Customer Id:".$customer->getId(),Zend_Log::DEBUG,$accountHistory,true);
         }
     }
-    $io->close();
+    //add row data into .csv file
+    $csv->saveData($filepath,$header);
+    //$io->close();
 }catch (Exception $e){
     Mage::log("Main Exception:".$e->getMessage(),Zend_Log::DEBUG,$accountHistory,true);
 }

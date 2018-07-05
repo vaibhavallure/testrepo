@@ -6,6 +6,34 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+$orderItem = Mage::getModel("sales/order_item")->load(342189);
+echo "<pre>";
+print_r($orderItem->getProductOptions()["options"]);
+
+die;
+
+$productID  = Mage::getModel("catalog/product")->getIdBySku("CFL55PKD_T|ROSE GOLD|6.5MM");
+var_dump($productID);
+die;
+$product    = Mage::getModel("catalog/product")->load($productID);
+echo "<pre>";
+foreach ($product->getOptions() as $options){
+    foreach ($options->getValues() as $option){
+        print_r($option->getData());
+    }
+}
+
+die;
+
+
+$customer = Mage::getModel("customer/customer")->load(3358);
+$address = $customer->getDefaultBillingAddress();
+
+$text = htmlspecialchars($address->getData('region'), ENT_NOQUOTES, "UTF-8");// utf8_encode($address->getData('region'));
+var_dump($text);
+
+die;
+
 $ids = Mage::getModel('sales/order')->getCollection()
 ->addAttributeToFilter('salesforce_order_id', "80129000000H7VUAA0")
 ->getAllIds();

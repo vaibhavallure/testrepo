@@ -127,7 +127,7 @@ class Allure_Salesforce_Model_Observer_Customer{
                 //"Description"         => "",
                 "Email__c"            => $customer->getEmail(),
                 //"Fax"                 => "",
-                "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 3,
+                "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 4,
                 "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
                 "Store__c"            => $customer->getStoreId(),
                 "Group__c"            => $customer->getGroupId(),

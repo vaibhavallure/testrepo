@@ -66,7 +66,8 @@ $header = array(
     "ShippingState"             => "ShippingState",
     "ShippingStreet"            => "ShippingStreet",
     "Counterpoint_Order_ID__c"  => "Counterpoint_Order_ID__c",
-    "Customer_Note__c"          => "Customer_Note__c"
+    "Customer_Note__c"          => "Customer_Note__c",
+    "Signature__c"              => "Signature__c"
 );
 
 try{
@@ -205,7 +206,8 @@ try{
                 "ShippingState"             => $stateShip,
                 "ShippingStreet"            => ($shippingAddr) ? $shippingAddr["street"] : "",
                 "Counterpoint_Order_ID__c"  => $counterpointOrderId,
-                "Customer_Note__c"          => ($customerNote) ? $customerNote : ""
+                "Customer_Note__c"          => ($customerNote) ? $customerNote : "",
+                "Signature__c"              => ($order->getNoSignatureDelivery()) ? "Yes" : "No"
             );
             
             //add row data into .csv file

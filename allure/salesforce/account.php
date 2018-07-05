@@ -156,7 +156,7 @@ try{
                 "Description"         => "",
                 "Email__c"            => $customer->getEmail(),
                 "Fax"                 => "",
-                "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 3,
+                "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 4,
                 "Group__c"            => $customer->getGroupId(),
                 "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
                 "Store__c"            => $customer->getStoreId(),

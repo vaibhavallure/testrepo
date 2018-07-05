@@ -124,7 +124,7 @@ class Allure_Salesforce_Model_Observer_Order{
             
             $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
             $product = Mage::getModel("catalog/product")->load($productId);
-            $salesforceProductId = "";
+            $salesforcePricebkEntryId = "";
             if($product){
                 $salesforcePricebkEntryId = $product->getSalesforceStandardPricebk();
                 if($customerGroup == 2){
@@ -144,11 +144,21 @@ class Allure_Salesforce_Model_Observer_Order{
                 "order_id"      => $item->getOrderId()
             );
             
+            $options = $item->getProductOptions()["options"];
+            $postLength = "";
+            foreach ($options as $option){
+                if($option["label"] == "Post Length"){
+                    $postLength = $option["value"];
+                    break;
+                }
+            }
+            
             $itemArray = array(
                 "attributes"        => array("type" => "OrderItem"),
                 "PricebookEntryId"  => $salesforcePricebkEntryId,//"01u290000037WAR",
                 "quantity"          => $item->getQtyOrdered(),
-                "UnitPrice"         => $item->getBasePrice()
+                "UnitPrice"         => $item->getBasePrice(),
+                "Post_Length__c"        => $postLength
             );
             array_push($orderItem["records"],$itemArray);
         }
@@ -206,7 +216,7 @@ class Allure_Salesforce_Model_Observer_Order{
                     "Customer_Email__c"         => $customerEmail,
                     "Counterpoint_Order_ID__c"  => $counterpointOrderId,
                     "Customer_Note__c"          => ($customerNote) ? $customerNote : "",
-                    
+                    "Signature__c"              => ($order->getNoSignatureDelivery()) ? "Yes" : "No",
                     "OrderItems"                => $orderItem
                 )
             );
