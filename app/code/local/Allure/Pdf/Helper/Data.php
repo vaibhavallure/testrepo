@@ -14,7 +14,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         
         $lineBlock = array(
             'lines'  => $lines,
-            'height' => 20
+            'height' => 12
         );
         return $lineBlock;
     }
@@ -195,11 +195,11 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             $lines[][] = array(
                 'text'  => Mage::helper('core/string')->str_split("Purchased From: ".$message, 80, true, true),
                 'feed' => $feed,
-                'height' => 20
+                'height' => 12
             );
             $lineBlock = array(
                 'lines'  => $lines,
-                'height' => 20
+                'height' => 12
             );
            
             
@@ -223,7 +223,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             }else {
                 $from = "From : ";
                 $to   = "To : ";
-                $message = " ";;
+                $message = " ";
             }
                 $lines[][] = array(
                     'text'  => "Gift Message for this order",
