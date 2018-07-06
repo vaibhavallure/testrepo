@@ -86,6 +86,8 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
         // custom options
         $options = $this->getItemOptions();
         if ($options) {
+            
+            $mainPptionStr='';
             foreach ($options as $option) {
                 // draw options label
                 
@@ -97,12 +99,10 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                         $_printValue = strip_tags($option['value']);
                     }
                 }
-                $optionStr = $optionStr ." : ".$_printValue;
+                $optionStr = $optionStr .":  ".strtolower($_printValue);
                 
-                $lines[][] = array(
-                    'text' => Mage::helper('core/string')->str_split(strip_tags($optionStr), 40, true, true),
-                    'feed' => 35
-                );
+                
+                $mainPptionStr=$mainPptionStr."   ".$optionStr;
                 
                 //allure comment
                 /* if ($option['value']) {
@@ -120,6 +120,10 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                     }
                 } */
             }
+            $lines[][] = array(
+                'text' => Mage::helper('core/string')->str_split(strip_tags($mainPptionStr), 40, true, true),
+                'feed' => 35
+            );
         }
         
         $lineBlock = array(

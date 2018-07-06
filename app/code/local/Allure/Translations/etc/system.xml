@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<sections>
+		<allure_geolocation translate="label" module="allure_geolocation">
+			<label>Geo Location</label>
+			<tab>allure</tab>
+			<sort_order>40</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<switch_locales translate="label" module="allure_translations">
+					<label>Locale Switching</label>
+					<sort_order>500</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<status translate="label">
+							<label>Enable Geolocation Based locale Switching</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>21</sort_order>
+						</status>
+						<mapping translate="label">
+							<label>Locale GeoIP Pairing</label>
+							<frontend_model>Allure_Translations_Block_LocaleMap</frontend_model>
+							<backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+
+							<sort_order>22</sort_order>
+						</mapping>
+						<test_mode translate="label">
+							<label>Test Mode</label>
+							<frontend_type>select</frontend_type>
+							<comment>Enable/Disable testing mode. This will disable session storage for the users location</comment>
+							<source_model>allure_geolocation/adminhtml_source_testMode</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>23</sort_order>
+						</test_mode>
+						<ip_whitelist translate="label">
+							<label>IP Whitelist</label>
+							<frontend_type>text</frontend_type>
+							<comment>List of comma seperated IP addresses that are excluded from session storage</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+								<test_mode>2</test_mode>
+							</depends>
+							<sort_order>24</sort_order>
+						</ip_whitelist>
+						<test_locale translate="label">
+							<label>Test locale</label>
+							<frontend_type>text</frontend_type>
+							<comment>Test locale set</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<depends>
+								<status>1</status>
+							</depends>
+							<sort_order>25</sort_order>
+						</test_locale>
+				
+					</fields>
+				</switch_locales>
+			</groups>
+		</allure_geolocation>
+	</sections>
+</config>
