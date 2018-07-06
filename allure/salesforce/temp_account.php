@@ -147,7 +147,7 @@ try{
                     $state = $defaultBillingAddr['region'];
                 }
                 //$state = utf8_encode($state);//htmlspecialchars($state, ENT_NOQUOTES, "UTF-8");
-                $state = iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $state);
+                //$state = iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $state);
                 
                 $country = Mage::getModel('directory/country')
                 ->loadByCode($defaultBillingAddr['country_id']);
@@ -167,7 +167,7 @@ try{
                 }
                 
                 //$stateShip = utf8_encode($stateShip);
-                $stateShip = iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $stateShip);
+                //$stateShip = iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $stateShip);
                 
                 $country = Mage::getModel('directory/country')
                 ->loadByCode($defaultShippingAddr['country_id']);
@@ -176,19 +176,19 @@ try{
             
             $header[] = array(
                 "Customer_ID__c"      => $customer->getId(),
-                "Name"                => $fullName,
+                "Name"                => encodeValue($fullName),
                 //"AccountNumber"       => "",
                 //"Site"                => "",
                 //"AccountSource"       => "",
                 "Birth_Date_c"        => ($customer->getDob()) ? date("Y-m-d",strtotime($customer->getDob())) : null,//"YYYY-MM-DD",
-                "Company__c"          => $customer->getCompany(),
+                "Company__c"          => encodeValue($customer->getCompany()),
                 "Counterpoint_No__c"  => $customer->getCounterpointCustNo(),
                 "Created_In__c"       => $customer->getCreatedIn(),
-                "Customer_Note__c"    => $customer->getCustomerNote(),
+                "Customer_Note__c"    => encodeValue($customer->getCustomerNote()),
                 "Default_Billing__c"  => $customer->getDefaultBilling(),
                 "Default_Shipping__c" => $customer->getDefaultShipping(),
                 //"Description"         => "",
-                "Email__c"            => $customer->getEmail(),
+                "Email__c"            => encodeValue($customer->getEmail()),
                 //"Fax"                 => "",
                 "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 4,
                 "Group__c"            => $customer->getGroupId(),
@@ -196,17 +196,17 @@ try{
                 "Store__c"            => $customer->getStoreId(),
                 "Teamwork_Customer_ID__c"   => $customer->getTeamworkCustomerId(),
                 "TW_UC_GUID__c"             => $customer->getTwUcGuid(),
-                "Old_Store__c"          => $oldStoreArr[$customer->getOldStoreId()],
-                "BillingStreet"       => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : null,
-                "BillingCity"         => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : null,
-                "BillingState"        => ($defaultBillingAddr) ? $state : null,
-                "BillingPostalCode"   => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : null,
-                "BillingCountry"      => ($defaultBillingAddr) ? $countryName : null,
-                "ShippingStreet"      => ($defaultShippingAddr) ? implode(", ",$defaultShippingAddr->getStreet()) :null,
-                "ShippingCity"        => ($defaultShippingAddr) ? $defaultShippingAddr->getCity() : null,
-                "ShippingState"       => ($defaultShippingAddr) ? $stateShip : null,
-                "ShippingPostalCode"  => ($defaultShippingAddr) ? $defaultShippingAddr->getPostcode() : null,
-                "ShippingCountry"     => ($defaultShippingAddr) ? $countryNameShip : null
+                "Old_Store__c"          => encodeValue($oldStoreArr[$customer->getOldStoreId()]),
+                "BillingStreet"       => ($defaultBillingAddr) ? encodeValue(implode(", ", $defaultBillingAddr->getStreet())) : null,
+                "BillingCity"         => ($defaultBillingAddr) ? encodeValue($defaultBillingAddr->getCity()) : null,
+                "BillingState"        => ($defaultBillingAddr) ? encodeValue($state) : null,
+                "BillingPostalCode"   => ($defaultBillingAddr) ? encodeValue($defaultBillingAddr->getPostcode()) : null,
+                "BillingCountry"      => ($defaultBillingAddr) ? encodeValue($countryName) : null,
+                "ShippingStreet"      => ($defaultShippingAddr) ? encodeValue(implode(", ",$defaultShippingAddr->getStreet())) :null,
+                "ShippingCity"        => ($defaultShippingAddr) ? encodeValue($defaultShippingAddr->getCity()) : null,
+                "ShippingState"       => ($defaultShippingAddr) ? encodeValue($stateShip) : null,
+                "ShippingPostalCode"  => ($defaultShippingAddr) ? encodeValue($defaultShippingAddr->getPostcode()) : null,
+                "ShippingCountry"     => ($defaultShippingAddr) ? encodeValue($countryNameShip) : null
             );
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$accountHistory,true);
@@ -219,6 +219,11 @@ try{
 }catch (Exception $e){
     Mage::log("Main Exception:".$e->getMessage(),Zend_Log::DEBUG,$accountHistory,true);
 }
+
+function encodeValue($str){
+    return iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $str);
+}
+
 
 Mage::log("Finish...",Zend_Log::DEBUG,$accountHistory,true);
 die("Finish...");
