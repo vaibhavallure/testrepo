@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Allure_Teamwork>
-			<version>1.0.7</version>
+			<version>1.0.8</version>
 		</Allure_Teamwork>
 	</modules>
 	<global>
