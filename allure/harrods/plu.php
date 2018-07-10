@@ -62,7 +62,7 @@ foreach ($collection as $_product){
     $data['article_type']='ZDMC';
     $data['art_cat']='Generic'; //Single for simple
     $data['size_matrix']='SIZE-LADIESWEAR';
-    $data['GTIN_number']='';   // Need to add later
+    $data['GTIN_number']=$_product->getGstnNumber();   // Need to add later
     $data['cost']='0.00';
     $data['store_retail']=$_product->getPrice();
     $data['airports_retail']='';
@@ -139,7 +139,7 @@ foreach ($collection as $_product){
         $data['article_type']='ZDMC';
         $data['art_cat']='Single'; //Single for simple
         $data['size_matrix']='SIZE-LADIESWEAR';
-        $data['GTIN_number']='';   // Need to add later
+        $data['GTIN_number']=$_product->getGstnNumber();   // Need to add later
         $data['cost']='0.00';
         $data['store_retail']=$_product->getPrice();
         $data['airports_retail']='';
