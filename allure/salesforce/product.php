@@ -112,8 +112,8 @@ try{
     ->addAttributeToSelect("return_policy")
     ->addAttributeToSelect("jewelry_care")
     ->addAttributeToSelect("description")
-    ->addAttributeToFilter( array(
-        array('attribute'=> 'type_id','nin'=>'configurable')))
+    //->addAttributeToFilter( array(
+    //    array('attribute'=> 'type_id','nin'=>'configurable')))
     ->setPageSize($PAGE_SIZE)
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'asc');
