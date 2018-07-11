@@ -26,6 +26,8 @@ echo "<style>
 </style>";
 
 $pageNumber = $_GET["page"];
+$size       = $_GET['size'];
+
 if(empty($pageNumber)){
     die("<p class='salesforce-error'>Please specify page number.</p>");
 }
@@ -35,6 +37,10 @@ if(is_numeric($pageNumber)){
 }else{
     die("<p class='salesforce-error'>Please specify page number in only number format. 
         (eg: 1 or 2 or 3 etc...)</p>");
+}
+
+if(empty(!$size)){
+    $PAGE_SIZE = $size;
 }
 
 //.csv file header data
@@ -111,6 +117,13 @@ try{
     ->setPageSize($PAGE_SIZE)
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'asc');
+    
+    
+    $lastPage = $collection->getLastPageNumber();
+    if(!($PAGE_NUMBER <= $lastPage)){
+        die("<p class='salesforce-error'>No more records.</p>");
+    }
+    
     
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$productHistory,true);
     
