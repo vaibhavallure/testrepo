@@ -197,6 +197,9 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                             "WebOrderId = '{$this->_webOrderId}'"
                         );
                     }
+					
+					Mage::dispatchEvent('sent_in_chq', array('order' => $this->_order));
+					
                 }
             }
             catch(Exception $e)
