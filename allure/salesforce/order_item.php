@@ -6,7 +6,7 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 
 //set default page size
-$PAGE_SIZE   = 500;
+$PAGE_SIZE   = 1000;
 //set default page number
 $PAGE_NUMBER = 1;
 //log file name
@@ -37,7 +37,8 @@ $header = array(
     "OrderId"               => "OrderId",
     "PricebookEntryId"      => "PricebookEntryId",
     "UnitPrice"             => "UnitPrice",
-    "Quantity"              => "Quantity"
+    "Quantity"              => "Quantity",
+    "Post_Length__c"        => "Post_Length__c"
 );
 
 try{
@@ -68,14 +69,26 @@ try{
             $items = $order->getAllVisibleItems();
             foreach ($items as $item){
                 $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
-                $product = Mage::getModel("catalog/product")->load($productId);
-                $salesforceProductId = "";
-                if($product){
-                    $salesforceProductId = $product->getSalesforceStandardPricebk();
-                    if($customerGroup == 2){
-                        $salesforceProductId = $product->getSalesforceWholesalePricebk();
+                if($productId){
+                    $product = Mage::getModel("catalog/product")->load($productId);
+                    $salesforceProductId = "";
+                    if($product){
+                        $salesforceProductId = $product->getSalesforceStandardPricebk();
+                        if($customerGroup == 2){
+                            $salesforceProductId = $product->getSalesforceWholesalePricebk();
+                        }
+                    }
+                }else { //when product is deleted that time use
+                    $oldProduct = Mage::getModel('allure_salesforce/deletedproduct')
+                    ->load($item->getSku(),"sku");
+                    if($oldProduct){
+                        $salesforceProductId = $oldProduct->getSalesforceStandardPricebk();
                     }
                 }
+                
+                /* if(!$salesforceProductId){
+                    Mage::log("order item id:".$item->getId()."product sku:".$item->getSku()." No salesforce_product_id assigned.",Zend_Log::DEBUG,$orderHistory,true);
+                } */
                 
                 $options = $item->getProductOptions()["options"];
                 $postLength = "";
@@ -98,7 +111,7 @@ try{
             }
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$orderHistory,true);
-            Mage::log("Occured for Order Id:".$_product->getId(),Zend_Log::DEBUG,$orderHistory,true);
+            Mage::log("Occured for Order Id:".$order->getId(),Zend_Log::DEBUG,$orderHistory,true);
         }
     }
     $io->close();

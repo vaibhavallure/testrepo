@@ -6,6 +6,41 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+$sets = Mage::getResourceModel('eav/entity_attribute_set_collection')
+->setEntityTypeFilter(Mage::getModel('catalog/product')->getResource()->getTypeId())
+->load()
+->toOptionHash();
+
+echo "<pre>";
+print_r($sets);
+
+die;
+
+$optionArray = array();
+$attribute = Mage::getModel('eav/config')->getAttribute('catalog_product',"s_length");
+$options = $attribute->getSource()->getAllOptions();
+foreach ($options as $option){
+    $optionArray[$option["value"]] = $option["label"];
+}
+echo "<pre>";
+print_r($optionArray);
+die;
+
+
+$product = Mage::getModel("catalog/product")->load(34698);
+//secho $product->getAttributeSetId();
+
+$attributeSetModel = Mage::getModel("eav/entity_attribute_set");
+$attributeSetModel->load($product->getAttributeSetId());
+$attributeSetName = $attributeSetModel->getAttributeSetName();
+echo $attributeSetName;
+
+die;
+
+echo Mage::helper("core")->removeAccents("Gūlsen");//"Gūlsen"."<br/>";
+echo iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', "Gūlsen");
+die;
+
 $orderItem = Mage::getModel("sales/order_item")->load(342189);
 echo "<pre>";
 print_r($orderItem->getProductOptions()["options"]);

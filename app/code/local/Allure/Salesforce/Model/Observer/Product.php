@@ -23,6 +23,17 @@ class Allure_Salesforce_Model_Observer_Product{
         return null;
     }
     
+    
+    private function getOptionLabelArray($attributeCode){
+        $attribute = Mage::getModel('eav/config')->getAttribute('catalog_product',$attributeCode);
+        $options = $attribute->getSource()->getAllOptions();
+        $optionArray = array();
+        foreach ($options as $option){
+            $optionArray[$option["value"]] = $option["label"];
+        }
+        return $optionArray;
+    }
+    
     /**
      * after new product is add or update the product information
      */
@@ -49,6 +60,24 @@ class Allure_Salesforce_Model_Observer_Product{
             $metalColor = $product->getMetal();
             $taxClassId = $product->getTaxClassId();
             $gemstone   = $product->getGemstone();
+            $amount = $product->getAmount();      //amount - select
+            $frSize = $product->getFrSize();      //fr_size - select
+            $sideEar = $product->getSideEar();     //side_ear - select
+            $direction = $product->getDirection(); //direction - select
+            $neckLength = $product->getNeckLengt(); //neck_lengt - select
+            $noseBend = $product->getNoseBend();    //nose_bend - select
+            $cLength = $product->getCLength();      //c_length - select
+            $size = $product->getSize();            //size - select
+            $gauge = $product->getGauge();           //gauge - select
+            $postOption = $product->getPostOptio(); //post_optio - select
+            $rise = $product->getRise();            //rise - select
+            $sLength = $product->getSLength();    //s_length - select
+            $placement = $product->getPlacement(); //placement - select
+            $material = $product->getMaterial(); //material - multiselect
+            
+            $attributeSetModel = Mage::getModel("eav/entity_attribute_set");
+            $attributeSetModel->load($product->getAttributeSetId());
+            $attributeSetName = $attributeSetModel->getAttributeSetName();
             
             $request = array(
                 "IsActive"                  => ($product->getStatus())?true:false,
@@ -65,12 +94,12 @@ class Allure_Salesforce_Model_Observer_Product{
                 "StockKeepingUnit"          => $product->getSku(),
                 "Return_Policy__c"          => $product->getReturnPolicy(),
                 //"Tax_Class_Id__c"           => $product->getTaxClassId(),
-                "Vendor_Item_No__c"         => $product->getVendorItemNo()
+                "Vendor_Item_No__c"         => $product->getVendorItemNo(),
+                "Location__c"               => $attributeSetName,
             );
             
             if($metalColor){
-               $metal_attr = "metal"; 
-               $metalColor = $this->getOptionLabel($metal_attr, $metalColor);
+               $metalColor = $this->getOptionLabel("metal", $metalColor);
                $request["Metal_Color__c"] = $metalColor;
             }
             
@@ -79,9 +108,82 @@ class Allure_Salesforce_Model_Observer_Product{
             }
             
             if($gemstone){
-                $gemstone_attr = "gemstone";
-                $gemstone = $this->getOptionLabel($gemstone_attr, $gemstone);
+                $gemstone = $this->getOptionLabel("gemstone", $gemstone);
                 $request["Gemstone__c"] = $gemstone;
+            }
+            
+            if($amount){
+                $amount = $this->getOptionLabel("amount", $amount);
+                $request["Amount__c"] = $amount;
+            }
+            
+            if($frSize){
+                $frSize = $this->getOptionLabel("fr_size", $frSize);
+                $request["FR_SIZE__c"] = $frSize;
+            }
+            
+            if($sideEar){
+                $sideEar = $this->getOptionLabel("side_ear", $sideEar);
+                $request["SIDE_EAR__c"] = $sideEar;
+            }
+            
+            if($direction){
+                $direction = $this->getOptionLabel("direction", $direction);
+                $request["DIRECTION__c"] = $direction;
+            }
+            
+            if($neckLength){
+                $neckLength = $this->getOptionLabel("neck_lengt", $neckLength);
+                $request["NECK_LENGT__c"] = $neckLength;
+            }
+            
+            if($noseBend){
+                $noseBend = $this->getOptionLabel("nose_bend", $noseBend);
+                $request["NOSE_BEND__c"] = $noseBend;
+            }
+            
+            if($cLength){
+                $cLength = $this->getOptionLabel("c_length", $cLength);
+                $request["C_LENGTH__c"] = $cLength;
+            }
+            
+            if($size){
+                $size = $this->getOptionLabel("size", $size);
+                $request["SIZE__c"] = $size;
+            }
+            
+            if($gauge){
+                $gauge = $this->getOptionLabel("gauge", $gauge);
+                $request["GAUGE__c"] = $gauge;
+            }
+            
+            if($postOption){
+                $postOption = $this->getOptionLabel("post_optio", $postOption);
+                $request["POST_OPTIO__c"] = $$postOption;
+            }
+            
+            if($rise){
+                $rise = $this->getOptionLabel("rise", $rise);
+                $request["RISE__c"] = $rise;
+            }
+            
+            if($sLength){
+                $sLength = $this->getOptionLabel("s_length", $sLength);
+                $request["S_Length__c"] = $sLength;
+            }
+            
+            if($placement){
+                $placement = $this->getOptionLabel("placement", $placement);
+                $request["PLACEMENT__c"] = $placement;
+            }
+            
+            if($material){
+                $tMaterial = array();
+                $materialArr = $this->getOptionLabelArray("material");
+                foreach (explode(",", $material) as $mat){
+                    $tMaterial[] = $materialArr[$mat];
+                }
+                $request["Material__c"] = implode(",", $tMaterial);
             }
             
             $helper->salesforceLog($request);

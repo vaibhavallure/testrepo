@@ -93,7 +93,7 @@ try{
     ->setPageSize($PAGE_SIZE)
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'asc');
-    $collection->getSelect()->where("e.old_store_id=".$store);//e.entity_id=3358
+    $collection->getSelect()->where("e.entity_id=71924");//e.entity_id=3358
     
     //echo $collection->getSelect()->__toString();die;
     
@@ -221,7 +221,8 @@ try{
 }
 
 function encodeValue($str){
-    return iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $str);
+    //iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $str);
+    return @iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $str); 
 }
 
 

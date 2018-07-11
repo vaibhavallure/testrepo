@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_Salesforce>
 			<name>Allure - Salesforce</name>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</Allure_Salesforce>
 	</modules>
 
@@ -25,6 +25,9 @@
 					<salesforcelog>
 						<table>allure_salesforce_log</table>
 					</salesforcelog>
+					<deletedproduct>
+						<table>product_deleted_log</table>
+					</deletedproduct>
 				</entities>
 			</allure_salesforce_resource>
 		</models>
