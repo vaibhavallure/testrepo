@@ -115,7 +115,7 @@ try{
                 $postLength = "";
                 foreach ($options as $option){
                     if($option["label"] == "Post Length"){
-                        $postLength = $option["value"];
+                        $postLength = "'".html_entity_decode($option["value"])."'";
                         break;
                     }
                 }
