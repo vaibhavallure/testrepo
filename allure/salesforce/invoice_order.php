@@ -53,7 +53,7 @@ $header = array(
     "Total_Quantity__c"         => "Total_Quantity__c",
     "Discount_Amount__c"        => "Discount_Amount__c",
     "Discount_Descrition__c"    => "Discount_Descrition__c",
-    "Order__c"                  => "Order__c",
+    "Order__c"                  => "Order__c"
 );
 
 try{
@@ -136,8 +136,8 @@ try{
                 "Tax_Amount__c"             => $basTaxAmount,
                 "Total_Quantity__c"         => $totalQty,
                 "Discount_Amount__c"        => $baseDiscountAmount,
-                "Discount_Descrition__c"    => "for advertisment",
-                "Order__c"                  => $salesforceOrderId,
+                "Discount_Descrition__c"    => "",
+                "Order__c"                  => $salesforceOrderId
             );
             
             //add row data into .csv file

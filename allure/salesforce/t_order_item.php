@@ -62,18 +62,29 @@ try{
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$orderHistory,true);
     
     //open or create .csv file
-    $io           = new Varien_Io_File();
+    /* $io           = new Varien_Io_File();
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "order_item";
     $filename     = "ORDER_ITEM_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     $io->setAllowCreateFolders(true);
     $io->open(array("path" => $folderPath));
     $io->streamOpen($filepath , "w+");
-    $io->streamLock(true);
+    $io->streamLock(true); */
+    
+    $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "order_item";
+    $filename     = "ORDER_ITEM_".$store."_".$PAGE_NUMBER.".csv";
+    $filepath     = $folderPath . DS . $filename;
+    
+    $io = new Varien_Io_File();
+    $io->setAllowCreateFolders(true);
+    $io->open(array("path" => $folderPath));
+    
+    
+    $csv = new Varien_File_Csv();
     
     //add header data into .csv file
-    $io->streamWriteCsv($header);
-    
+    //$io->streamWriteCsv($header);
+    $row = array($header);
     foreach ($collection as $order){
         try{
             $items = $order->getAllVisibleItems();
@@ -108,7 +119,7 @@ try{
                         break;
                     }
                 }
-                $row = array(
+                $row[] = array(
                     "OrderId"               => $order->getSalesforceOrderId(),
                     "PricebookEntryId"      => $salesforceProductId,
                     "UnitPrice"             => $item->getBasePrice(),
@@ -116,15 +127,16 @@ try{
                     "Post_Length__c"        => $postLength
                 );
                 //add row data into .csv file
-                $io->streamWriteCsv($row);
-                $row = null;
+               // $io->streamWriteCsv($row);
+               // $row = null;
             }
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$orderHistory,true);
             Mage::log("Occured for Order Id:".$order->getId(),Zend_Log::DEBUG,$orderHistory,true);
         }
     }
-    $io->close();
+    $csv->saveData($filepath,$row);
+    //$io->close();
 }catch (Exception $e){
     Mage::log("Main Exception:".$e->getMessage(),Zend_Log::DEBUG,$orderHistory,true);
 }
