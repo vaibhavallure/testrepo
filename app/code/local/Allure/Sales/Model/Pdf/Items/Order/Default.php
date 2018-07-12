@@ -101,8 +101,10 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                 }
                 $optionStr = $optionStr .":  ".strtolower($_printValue);
                 
-                
-                $mainPptionStr=$mainPptionStr."   ".$optionStr;
+                if (empty($mainPptionStr))
+                    $mainPptionStr = $optionStr;
+                else
+                    $mainPptionStr = $mainPptionStr . "         " . $optionStr;
                 
                 //allure comment
                 /* if ($option['value']) {
@@ -121,14 +123,14 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                 } */
             }
             $lines[][] = array(
-                'text' => Mage::helper('core/string')->str_split(strip_tags($mainPptionStr), 40, true, true),
-                'feed' => 35
+                'text' => $mainPptionStr,
+                'feed' => 50
             );
         }
         
         $lineBlock = array(
             'lines'  => $lines,
-            'height' => 20
+            'height' => 15
         );
                
         $page = $pdf->drawLineBlocks($page, array($lineBlock), array('table_header' => true));
