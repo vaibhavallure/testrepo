@@ -76,7 +76,8 @@ $header = array(
     "ShippingStreet"            => "ShippingStreet",
     "Counterpoint_Order_ID__c"  => "Counterpoint_Order_ID__c",
     "Customer_Note__c"          => "Customer_Note__c",
-    "Signature__c"              => "Signature__c"
+    "Signature__c"              => "Signature__c",
+    "Pricebook2Id"              => "Pricebook2Id"
 );
 
 try{
@@ -200,6 +201,11 @@ try{
                 $countryNameShip = $country->getName();
             } 
             
+            $pricebookId = Mage::helper('allure_salesforce')->getGeneralPricebook(); //$helper::RETAILER_PRICEBOOK_ID;
+            if($customerGroup == 2){
+                $pricebookId = Mage::helper('allure_salesforce')->getWholesalePricebook(); //$helper::WHOLESELLER_PRICEBOOK_ID;
+            }
+            
             $row = array(
                 "Order_Id__c"               => $order->getId(),
                 "Increment_Id__c"           => $incrementId,
@@ -236,7 +242,8 @@ try{
                 "ShippingStreet"            => ($shippingAddr) ? $shippingAddr["street"] : "",
                 "Counterpoint_Order_ID__c"  => $counterpointOrderId,
                 "Customer_Note__c"          => ($customerNote) ? $customerNote : "",
-                "Signature__c"              => ($order->getNoSignatureDelivery()) ? "Yes" : "No"
+                "Signature__c"              => ($order->getNoSignatureDelivery()) ? "Yes" : "No",
+                "Pricebook2Id"              => $pricebookId
             );
             
             //add row data into .csv file
