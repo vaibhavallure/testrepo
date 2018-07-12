@@ -77,6 +77,17 @@ $header = array(
     "Material__c"           => "Material__c"
 );
 
+
+$header1 = array(
+    "StockKeepingUnit"          => "StockKeepingUnit",
+    "ProductCode"               => "ProductCode",
+    "IsActive"                  => "false",
+    "ExternalId"                => "IsActive",
+    "Metal_Color__c"            => "Metal_Color__c",
+    "Family"                    => "Family",
+    "Name"                      => "Name",
+);
+
 //get array of metal color of product
 $metalColorArr = getOptionArray("metal");
 //get array of gemstones of product
@@ -141,6 +152,10 @@ try{
     $filename     = "PRODUCT_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     
+    $folderPath1   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "old_product";
+    $filename1    = "PRODUCT_".$store."_".$PAGE_NUMBER.".csv";
+    $filepath1     = $folderPath1 . DS . $filename1;
+    
     //add header data into .csv file
     //$io->streamWriteCsv($header);
     
@@ -148,18 +163,47 @@ try{
     $io->setAllowCreateFolders(true);
     $io->open(array("path" => $folderPath));
     
+    $io->open(array("path" => $folderPath1));
+    
     $csv = new Varien_File_Csv();
+    $csv1 = new Varien_File_Csv();
     
     $productArr = array();
+    $row1 = array($header1);
     foreach ($collection as $order){
         $items = $order->getAllVisibleItems();
         foreach ($items as $item){
             $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
             if($productId){
                 $productArr[$productId] = $productId;
+            }else{
+                if($item->getProductType()!="configurable"){
+                    $skuArr = explode("|", $item->getSku());
+                    $metal = "";
+                    if(count($skuArr) > 1){
+                        $metal = $skuArr[1];
+                        if(is_numeric($metal)){
+                            $metal = "";
+                        }
+                    }
+                    
+                    
+                    //prepare .csv row data using array
+                    $row1[] = array(
+                        "StockKeepingUnit"          => $item->getSku(),
+                        "ProductCode"               => $item->getProductId(),
+                        "IsActive"                  => "false",
+                        "ExternalId"                => $item->getProductId(),
+                        "Metal_Color__c"            => $metal,
+                        "Family"                    => ($item->getProductType()=="configurable")?"simple":$item->getProductType(),
+                        "Name"                      => $item->getName(),
+                    );
+                }
             }
         }
     }
+    
+    $csv1->saveData($filepath1,$row1);
     
     $row = array($header);
     foreach ($productArr as $prodId){
