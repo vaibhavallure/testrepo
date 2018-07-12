@@ -29,6 +29,7 @@ $salesforceIdIdx        = 0;
 $salesforceOrderIdIdx   = 1;
 $pricebookEntryIdIdx    = 2;
 
+$coreResource = Mage::getSingleton('core/resource');
 $write = $coreResource->getConnection('core_write');
 while($csvData = $io->streamReadCsv()){
     try{

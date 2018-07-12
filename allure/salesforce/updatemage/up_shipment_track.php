@@ -28,6 +28,7 @@ $io->streamOpen($filepath, 'r');
 $salesforceIdIdx             = 0;
 $shipmentTrackIdIdx          = 1;
 
+$coreResource = Mage::getSingleton('core/resource');
 $write = $coreResource->getConnection('core_write');
 while($csvData = $io->streamReadCsv()){
     try{
