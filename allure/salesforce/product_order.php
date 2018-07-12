@@ -163,9 +163,9 @@ try{
             //prepare .csv row data using array
             $_product = Mage::getModel("catalog/product")->load($prodId);
             $salesforceId = $_product->getSalesforceProductId();
-            if($salesforceId){
+            /* if($salesforceId){
                 continue;
-            }
+            } */
             
             $material = $_product->getMaterial();
             if($material){
