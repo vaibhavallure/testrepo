@@ -32,13 +32,14 @@ $salesforceDataArr = array();
 $helper = Mage::helper("allure_salesforce/salesforceClient");
 $salesforce_customer_field = $helper::S_CUSTOMERID;
 
+$io->streamReadCsv();
 while($csvData = $io->streamReadCsv()){
     try{
         $customerId     = trim($csvData[$customerIdIdx]);
         $salesforceId   = trim($csvData[$salesforceIdIdx]);
         if($customerId){
             $customer = Mage::getModel("customer/customer")->load($customerId);
-            if(!$customer){
+            if(!$customer->getId()){
                 continue;
             }
             $customer->setData($salesforce_customer_field, $salesforceId);
