@@ -14,7 +14,6 @@ $collection->addAttributeToFilter('status', array('eq' => 1));
 $collection->addAttributeToFilter('type_id', array('eq' => 'configurable'));
 $collection->addFieldToFilter('entity_id',array('gteq'=>1));
 $collection->addFieldToFilter('entity_id',array('lteq'=>15000));
-$collection->setOrder('sku', 'asc');
 
 
 
