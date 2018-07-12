@@ -53,12 +53,12 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         }
         $lines[][] = array(
             'text'  => $message,
-            'feed' => $feed
+            'feed' => 50
         );
         
         $lineBlock = array(
             'lines'  => $lines,
-            'height' => 20
+            'height' => 15
         );
         
         return array("is_show"=>$flag , "line_block" => $lineBlock);
@@ -72,7 +72,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             if (!empty($backTimeMsg)) {
                 $message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$backTimeMsg.".";
             } else {
-                $message = "(In Stock: Ships Within 24 hours (Mon-Fri).)";
+                $message = "(In Stock:  Ships Within 24 hours (Mon-Fri).)";
             }
         }
         return $message;
@@ -161,8 +161,9 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             }
                 $lines[][] = array(
                     'text'  => Mage::helper('core/string')->str_split("Special Message: ".$message, 80, true, true),
-                    'feed' => $feed,
+                    'feed' => 50,
                     'height' => 20
+                    
                 );
                 $lineBlock = array(
                     'lines'  => $lines,
@@ -193,8 +194,8 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             }
            
             $lines[][] = array(
-                'text'  => Mage::helper('core/string')->str_split("Purchased From: ".$message, 80, true, true),
-                'feed' => $feed,
+                'text'  => Mage::helper('core/string')->str_split("Purchased From:  ".$message, 80, true, true),
+                'feed' => 50,
                 'height' => 12
             );
             $lineBlock = array(

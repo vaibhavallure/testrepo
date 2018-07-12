@@ -1,9 +1,9 @@
 <?php
 $installer = new Mage_Eav_Model_Entity_Setup('core_setup');
 $installer->startSetup();
-$installer->addAttribute('catalog_product', 'gstn_number', array(
+$installer->addAttribute('catalog_product', 'gtin_number', array(
     'group'           => 'MT',
-    'label'           => 'GSTN Number',
+    'label'           => 'GTIN Number',
     'input'           => 'text',
     'type'            => 'varchar',
     'required'        => 0,
