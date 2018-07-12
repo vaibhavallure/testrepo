@@ -17,7 +17,7 @@ if(empty($fName)){
     die("<p class='salesforce-error'>Please specify file Name.</p>");
 }
 
-$update_product_log = "update_shipment_salesforce_to_magento.log";
+$update_product_log = "update_product_salesforce_to_magento.log";
 
 $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "magento" . DS . "old_product";
 
@@ -29,19 +29,19 @@ $salesforceIdIdx = 0;
 $skuIdx    = 1;
 
 $salesforceDataArr = array();
-
+$io->streamReadCsv();
 while($csvData = $io->streamReadCsv()){
     try{
         $sku      = trim($csvData[$skuIdx]);
         $salesforceId   = trim($csvData[$salesforceIdIdx]);
-        if($product2Id){
+        if($sku){
             $product = Mage::getModel('allure_salesforce/deletedproduct')
             ->load($sku,"sku");
             if(!$product->getId()){
                 continue;
             }
             $product->setSalesforceProductId($salesforceId)->save();
-            Mage::log("product sku:".$sku." salesforce_price_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_general_price_log,true);
+            Mage::log("product sku:".$sku." salesforce_price_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_product_log,true);
         }
     }catch (Exception $e){
         Mage::log("product sku:".$sku." exception:".$e->getMessage(),Zend_Log::DEBUG,$update_product_log,true);

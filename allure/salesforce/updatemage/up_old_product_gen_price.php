@@ -30,6 +30,7 @@ $productSalesforceIdx       = 1;
 
 $salesforceDataArr = array();
 
+$io->streamReadCsv();
 while($csvData = $io->streamReadCsv()){
     try{
         $productSalesforceId      = trim($csvData[$productSalesforceIdx]);
