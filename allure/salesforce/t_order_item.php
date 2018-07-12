@@ -41,6 +41,8 @@ if(empty(!$size)){
 $header = array(
     "OrderId"               => "OrderId",
     "PricebookEntryId"      => "PricebookEntryId",
+    "Magento_Order_Item_Id__c" => "Magento_Order_Item_Id__c",
+    "SKU__c"                => "SKU__c",
     "UnitPrice"             => "UnitPrice",
     "Quantity"              => "Quantity",
     "Post_Length__c"        => "Post_Length__c"
@@ -122,6 +124,8 @@ try{
                 $row[] = array(
                     "OrderId"               => $order->getSalesforceOrderId(),
                     "PricebookEntryId"      => $salesforceProductId,
+                    "Magento_Order_Item_Id__c" => $item->getItemId(),
+                    "SKU__c"                => $item->getSku(),
                     "UnitPrice"             => $item->getBasePrice(),
                     "Quantity"              => $item->getQtyOrdered(),
                     "Post_Length__c"        => $postLength

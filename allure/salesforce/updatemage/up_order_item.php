@@ -28,32 +28,38 @@ $io->streamOpen($filepath, 'r');
 $salesforceIdIdx        = 0;
 $salesforceOrderIdIdx   = 1;
 $pricebookEntryIdIdx    = 2;
+$itemIdIdx = 3;
+$skuIdx = 4;
 
 $coreResource = Mage::getSingleton('core/resource');
 $write = $coreResource->getConnection('core_write');
+$io->streamReadCsv();
 while($csvData = $io->streamReadCsv()){
     try{
         $salesforceOrderId        = trim($csvData[$salesforceOrderIdIdx]);
         $salesforceItemId         = trim($csvData[$salesforceIdIdx]);
         $pricebookEntryId         = trim($csvData[$pricebookEntryIdIdx]);
+        $itemId = trim($csvData[$itemIdIdx]);
+        $sku = trim($csvData[$skuIdx]);
         
         if($salesforceOrderId){
             /* $product = Mage::getModel('catalog/product')
             ->loadByAttribute("salesforce_product_id",$pricebookEntryId); */
-            $collection = Mage::getModel('catalog/product')->getCollection()
+            /* $collection = Mage::getModel('catalog/product')->getCollection()
             ->addAttributeToFilter( array(
                 array('attribute'=> 'salesforce_product_id','eq' => $pricebookEntryId)));
+             */
             
-            
-            $product = $collection->getFirstItem();
+            /* $product = $collection->getFirstItem();
             if(!$product->getId()){
                 continue;
-            }
-            $sku = $product->getSku();
+            } */
+            //$sku = $product->getSku();
             $orderIds = Mage::getModel('sales/order')->getCollection()
             ->addAttributeToFilter('salesforce_order_id', $salesforceOrderId)
             ->getAllIds();
             $orderId = current($orderIds);
+            
             if ($orderId) {
                 $sql_order = "UPDATE sales_flat_order_item SET salesforce_item_id='".$salesforceItemId.
                 "' WHERE order_id ='".$orderId."' AND sku ='".$sku. "'";
