@@ -41,7 +41,7 @@ while($csvData = $io->streamReadCsv()){
             if (!empty($ids)) {
                 reset($ids);
                 $creditmemo = Mage::getModel('sales/order_creditmemo')->load(current($ids));
-                if(!$creditmemo){
+                if(!$creditmemo->getId()){
                     continue;
                 }
                 $sql_order = "UPDATE sales_flat_creditmemo SET salesforce_creditmemo_id='".$salesforceId."' WHERE entity_id ='".$creditmemo->getId()."'";

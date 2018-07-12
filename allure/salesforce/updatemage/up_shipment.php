@@ -35,7 +35,7 @@ while($csvData = $io->streamReadCsv()){
         $salesforceId       = trim($csvData[$salesforceIdIdx]);
         if($incrementId){
             $shipment = Mage::getModel('sales/order_shipment')->loadByIncrementId($incrementId);
-            if(!$shipment){
+            if(!$shipment->getId()){
                 continue;
             }
             $sql_order = "UPDATE sales_flat_shipment SET salesforce_shipment_id='".$salesforceId."' WHERE entity_id ='".$shipment->getId()."'";
