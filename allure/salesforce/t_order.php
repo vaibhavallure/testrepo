@@ -41,6 +41,7 @@ if(empty(!$size)){
 $header = array(
     "Order_Id__c"               => "Order_Id__c",
     "Increment_Id__c"           => "Increment_Id__c",
+    "accountId"                 => "accountId",
     "Customer_Group__c"         => "Customer_Group__c",
     "Customer_Email__c"         => "Customer_Email__c",
     "Store__c"                  => "Store__c",
@@ -104,6 +105,13 @@ try{
             $orderId = $order->getId();
             $status = $order->getStatus();
             $customerId = $order->getCustomerId();
+            
+            $saleforceCustomerId = Mage::helper('allure_salesforce')->getGuestAccount();
+            if($customerId){
+                $customer = Mage::getModel("customer/customer")->load($customerId);
+                if($customer->getId())
+                    $saleforceCustomerId = $customer->getSalesforceCustomerId();
+            }
 
             $customerEmail = $order->getCustomerEmail();
             $customerGroup = $order->getCustomerGroupId();
@@ -181,6 +189,7 @@ try{
             $row = array(
                 "Order_Id__c"               => $order->getId(),
                 "Increment_Id__c"           => $incrementId,
+                "accountId"                 => $saleforceCustomerId,
                 "Customer_Group__c"         => $customerGroup,
                 "Customer_Email__c"         => $customerEmail,
                 "Store__c"                  => $order->getStoreId(),
