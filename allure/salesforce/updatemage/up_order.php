@@ -35,10 +35,12 @@ while($csvData = $io->streamReadCsv()){
         $salesforceId       = trim($csvData[$salesforceIdIdx]);
         if($incrementId){
             $order = Mage::getModel("sales/order")->loadByIncrementId($incrementId);
-            if (!$order) {
+            if ($order->getId()) {
                 $sql_order = "UPDATE sales_flat_order SET salesforce_order_id='".$salesforceId."' WHERE entity_id ='".$order->getId()."'";
                 $write->query($sql_order);
                 Mage::log("order_id:".$incrementId." salesforce_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_order_log,true);
+            }else{
+                Mage::log("order_id:".$incrementId." salesforce_id:".$salesforceId." not updated.",Zend_Log::DEBUG,$update_order_log,true);
             }
         }
     }catch (Exception $e){

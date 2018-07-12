@@ -37,9 +37,15 @@ while($csvData = $io->streamReadCsv()){
         $pricebookEntryId         = trim($csvData[$pricebookEntryIdIdx]);
         
         if($salesforceOrderId){
-            $product = Mage::getModel('catalog/product')
-            ->loadByAttribute("salesforce_product_id",$pricebookEntryId);
-            if(!$product){
+            /* $product = Mage::getModel('catalog/product')
+            ->loadByAttribute("salesforce_product_id",$pricebookEntryId); */
+            $collection = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToFilter( array(
+                array('attribute'=> 'salesforce_product_id','eq' => $pricebookEntryId)));
+            
+            
+            $product = $collection->getFirstItem();
+            if(!$product->getId()){
                 continue;
             }
             $sku = $product->getSku();
@@ -47,11 +53,13 @@ while($csvData = $io->streamReadCsv()){
             ->addAttributeToFilter('salesforce_order_id', $salesforceOrderId)
             ->getAllIds();
             $orderId = current($orderIds);
-            if (!$orderId) {
+            if ($orderId) {
                 $sql_order = "UPDATE sales_flat_order_item SET salesforce_item_id='".$salesforceItemId.
                 "' WHERE order_id ='".$orderId."' AND sku ='".$sku. "'";
                 $write->query($sql_order);
                 Mage::log("salesforce_order_item:".$salesforceItemId,Zend_Log::DEBUG,$update_order_item_log,true);
+            }else{
+                Mage::log("salesforce_order_item:".$salesforceItemId." not updated.",Zend_Log::DEBUG,$update_order_item_log,true);
             }
         }
     }catch (Exception $e){
