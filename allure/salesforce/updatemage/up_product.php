@@ -17,7 +17,7 @@ if(empty($fName)){
     die("<p class='salesforce-error'>Please specify file Name.</p>");
 }
 
-$update_product_log = "update_shipment_salesforce_to_magento.log";
+$update_product_log = "update_product_salesforce_to_magento.log";
 
 $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "magento" . DS . "product";
 
@@ -29,7 +29,7 @@ $salesforceIdIdx = 0;
 $productIdIdx    = 1;
 
 $salesforceDataArr = array();
-
+$csvData = $io->streamReadCsv();
 while($csvData = $io->streamReadCsv()){
     try{
         $productId      = trim($csvData[$productIdIdx]);
