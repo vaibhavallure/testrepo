@@ -43,37 +43,39 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
     public function getValuesHtml()
     {
         $_option = $this->getOption();
-        echo "<pre>";
+      
         $category = Mage::registry('current_category');
-        $lengths=$category->getAssignedLengths();
-        $lengths=explode(',', $lengths);
         
-        $titles=mage::helper('allure_category')->getTitles($lengths);
-        $defaultLength=$category->getDefaultLength();
-        $defaultTitleTxt=mage::helper('allure_category')->getOptionText($defaultLength);
-        
-        
-        $enableLength=$category->getEnablePostlengths();
-        $temparray=array();
-        
-        $count=2;
-        if ($enableLength) {
+        $temparray = array();
+        if ($category) {
+            $lengths = $category->getAssignedLengths();
+            $lengths = explode(',', $lengths);
             
-            foreach ($_option->getValues() as $value) {
-                if (in_array($value->getTitle(), $titles)) {
-                    if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
-                        $temparray[1] = $value;
-                    } else {
-                        $temparray[$count] = $value;
-                        $count ++;
+            $titles = mage::helper('allure_category')->getTitles($lengths);
+            $defaultLength = $category->getDefaultLength();
+            $defaultTitleTxt = mage::helper('allure_category')->getOptionText($defaultLength);
+            
+            $enableLength = $category->getEnablePostlengths();
+           
+            
+            $count = 2;
+            if ($enableLength) {
+                
+                foreach ($_option->getValues() as $value) {
+                    if (in_array($value->getTitle(), $titles)) {
+                        if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
+                            $temparray[1] = $value;
+                        } else {
+                            $temparray[$count] = $value;
+                            $count ++;
+                        }
                     }
                 }
+                ksort($temparray);
+                $temparray = array_values($temparray);
+                $_option->setValues($temparray);
             }
-            ksort($temparray);
-            $temparray = array_values($temparray);
-            $_option->setValues($temparray);
         }
-        
         $configValue = $this->getProduct()->getPreconfiguredValues()->getData('options/' . $_option->getId());
         $store = $this->getProduct()->getStore();
         if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DROP_DOWN

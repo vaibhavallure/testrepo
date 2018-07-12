@@ -1083,7 +1083,9 @@ label.popup-reg-privacy-lbl {
 	width: 130px;
     height: 27px !important;
 }
-
+#myaccount-shopping-cart-table a:hover {
+    color: #906E39;
+}
 
 
 
