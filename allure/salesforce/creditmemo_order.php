@@ -65,7 +65,7 @@ try{
     
     $store = $_GET['store'];
     if($store){
-        $collection->addFieldToFilter("old_store_id",$store);
+        $collection1->addFieldToFilter("old_store_id",$store);
     }
     
     //echo "<pre>";
