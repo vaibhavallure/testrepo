@@ -29,15 +29,19 @@ $salesforceIdIdx = 0;
 $productIdIdx    = 1;
 
 $salesforceDataArr = array();
-$csvData = $io->streamReadCsv();
+echo "<pre>";
+
+$cnt = 0;
+$io->streamReadCsv();
 while($csvData = $io->streamReadCsv()){
     try{
+        
         $productId      = trim($csvData[$productIdIdx]);
         $salesforceId   = trim($csvData[$salesforceIdIdx]);
         if($productId){
             Mage::getResourceSingleton('catalog/product_action')
             ->updateAttributes(array($productId),array('salesforce_product_id' => $salesforceId),1);
-            Mage::log("product_id:".$productId," salesforce_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_product_log,true);
+            Mage::log("product_id:".$productId." salesforce_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_product_log,true);
         }
     }catch (Exception $e){
         Mage::log("product_id:".$productId." exception:".$e->getMessage(),Zend_Log::DEBUG,$update_product_log,true);
