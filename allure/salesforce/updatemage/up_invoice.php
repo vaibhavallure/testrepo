@@ -37,7 +37,7 @@ while($csvData = $io->streamReadCsv()){
         $salesforceId       = trim($csvData[$salesforceIdIdx]);
         if($incrementId){
             $invoice = Mage::getModel('sales/order_invoice')->loadByIncrementId($incrementId);
-            if(!$invoive->getId()){
+            if(!$invoice->getId()){
                 continue;
             }
             $sql_order = "UPDATE sales_flat_invoice SET salesforce_invoice_id='".$salesforceId."' WHERE entity_id ='".$invoice->getId()."'";
