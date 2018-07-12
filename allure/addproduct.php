@@ -6,6 +6,12 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+$product = Mage::getModel('catalog/product')
+->loadByAttribute("salesforce_product_id","01t29000001eGADAA2");
+
+print_r($product->getData());
+die;
+
 $sets = Mage::getResourceModel('eav/entity_attribute_set_collection')
 ->setEntityTypeFilter(Mage::getModel('catalog/product')->getResource()->getTypeId())
 ->load()
