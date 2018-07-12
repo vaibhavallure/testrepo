@@ -99,6 +99,7 @@ class Allure_Catalog_Helper_Data extends Mage_Core_Helper_Abstract
         return $optionsValue;
         
     }
+    
     public function getOptionText($optiomId){
         
         $productModel = Mage::getModel('catalog/product');

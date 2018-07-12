@@ -602,7 +602,7 @@ Product.Config.prototype.updateFormProductId = function(productId){
     //$('product_addtocart_form').action = newcurrentAction;
     //$('product_addtocart_form').product.value = productId;
     
-    var flag = true;
+    var flag = false;
     if(jQuery('#parent-child-product').length){ 
     	var checkParentChild = jQuery('#parent-child-product').val();
     	if(checkParentChild == 1){
