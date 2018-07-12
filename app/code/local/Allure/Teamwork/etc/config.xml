@@ -53,6 +53,16 @@
 				</entities>
 			</allure_teamwork_resource>
 		</models>
+		<events>
+			<sent_in_chq>
+				<observers>
+					<allure_teamwork_changeorderstatus>
+						<class>allure_teamwork/observer</class>
+						<method>changeOrderStatus</method>
+					</allure_teamwork_changeorderstatus>
+				</observers>
+			</sent_in_chq>
+		</events>
 	</global>
 	
 	<crontab>
