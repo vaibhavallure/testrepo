@@ -66,17 +66,32 @@ try{
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$creditmemoHistory,true);
     
     //open or create .csv file
-    $io           = new Varien_Io_File();
+    /* $io           = new Varien_Io_File();
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "creditmemo_item";
     $filename     = "CREDITMEMO_ITEM_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     $io->setAllowCreateFolders(true);
     $io->open(array("path" => $folderPath));
     $io->streamOpen($filepath , "w+");
-    $io->streamLock(true);
+    $io->streamLock(true); */
+    
+    $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "creditmemo";
+    $filename     = "CREDITMEMO_".$store."_".$PAGE_NUMBER.".csv";
+    $filepath     = $folderPath . DS . $filename;
+    
+    $io = new Varien_Io_File();
+    $io->setAllowCreateFolders(true);
+    $io->open(array("path" => $folderPath));
+    
+    $csv = new Varien_File_Csv();
     
     //add header data into .csv file
-    $io->streamWriteCsv($header);
+    //$io->streamWriteCsv($header);
+    
+    $row = array($header);
+    
+    //add header data into .csv file
+    //$io->streamWriteCsv($header);
     
     foreach ($collection as $creditMemo){
         try{
@@ -84,24 +99,25 @@ try{
             foreach ($items as $item){
                 $orderItemId = $item->getOrderItemId();
                 $orderItem = Mage::getModel("sales/order_item")->load($orderItemId);
-                if(!$orderItem){
+                if(!$orderItem->getId()){
                     continue;
                 }
                 $salesforceItemId = $orderItem->getSalesforceItemId();
-                $row = array(
+                $row[] = array(
                     "ID"                => $salesforceItemId,
                     "Credit_Memo__c"    => $creditMemo->getSalesforceCreditmemoId()
                 );
                 //add row data into .csv file
-                $io->streamWriteCsv($row);
-                $row = null;
+                //$io->streamWriteCsv($row);
+                //$row = null;
             }
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$creditmemoHistory,true);
             Mage::log("Occured for Shipment Id:".$_product->getId(),Zend_Log::DEBUG,$creditmemoHistory,true);
         }
     }
-    $io->close();
+    $csv->saveData($filepath,$row);
+    //$io->close();
 }catch (Exception $e){
     Mage::log("Main Exception:".$e->getMessage(),Zend_Log::DEBUG,$creditmemoHistory,true);
 }
