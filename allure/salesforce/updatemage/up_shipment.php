@@ -30,6 +30,7 @@ $shipmentIncrementIdIdx      = 1;
 
 $coreResource = Mage::getSingleton('core/resource');
 $write = $coreResource->getConnection('core_write');
+$io->streamReadCsv();
 while($csvData = $io->streamReadCsv()){
     try{
         $incrementId        = trim($csvData[$shipmentIncrementIdIdx]);
@@ -41,7 +42,7 @@ while($csvData = $io->streamReadCsv()){
             }
             $sql_order = "UPDATE sales_flat_shipment SET salesforce_shipment_id='".$salesforceId."' WHERE entity_id ='".$shipment->getId()."'";
             $write->query($sql_order);
-            Mage::log("shipment_id:".$incrementId," salesforce_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_shipment_log,true);
+            Mage::log("shipment_id:".$incrementId." salesforce_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_shipment_log,true);
         }
     }catch (Exception $e){
         Mage::log("shipment_id:".$incrementId." exception:".$e->getMessage(),Zend_Log::DEBUG,$update_shipment_log,true);

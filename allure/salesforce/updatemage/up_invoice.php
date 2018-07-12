@@ -30,6 +30,7 @@ $invoiceIncrementIdIdx      = 1;
 
 $coreResource = Mage::getSingleton('core/resource');
 $write = $coreResource->getConnection('core_write');
+$io->streamReadCsv();
 while($csvData = $io->streamReadCsv()){
     try{
         $incrementId        = trim($csvData[$invoiceIncrementIdIdx]);
