@@ -37,7 +37,7 @@ while($csvData = $io->streamReadCsv()){
         if($product2Id){
             $product = Mage::getModel('allure_salesforce/deletedproduct')
             ->load($productSalesforceId,"salesforce_product_id");
-            if(!$product){
+            if(!$product->getId()){
                 continue;
             }
             $product->setSalesforceStandardPricebk($salesforceId)->save();

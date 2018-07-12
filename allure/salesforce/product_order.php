@@ -85,7 +85,7 @@ $header1 = array(
     "ExternalId"                => "IsActive",
     "Metal_Color__c"            => "Metal_Color__c",
     "Family"                    => "Family",
-    "Name"                      => "Name",
+    "Name"                      => "Name"
 );
 
 //get array of metal color of product
@@ -196,7 +196,7 @@ try{
                         "ExternalId"                => $item->getProductId(),
                         "Metal_Color__c"            => $metal,
                         "Family"                    => ($item->getProductType()=="configurable")?"simple":$item->getProductType(),
-                        "Name"                      => $item->getName(),
+                        "Name"                      => $item->getName()
                     );
                 }
             }

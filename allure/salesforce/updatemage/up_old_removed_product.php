@@ -37,7 +37,7 @@ while($csvData = $io->streamReadCsv()){
         if($product2Id){
             $product = Mage::getModel('allure_salesforce/deletedproduct')
             ->load($sku,"sku");
-            if(!$product){
+            if(!$product->getId()){
                 continue;
             }
             $product->setSalesforceProductId($salesforceId)->save();
