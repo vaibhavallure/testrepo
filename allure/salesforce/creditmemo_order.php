@@ -63,6 +63,11 @@ try{
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'desc');
     
+    $store = $_GET['store'];
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    }
+    
     //echo "<pre>";
     $ordArr = array();
     foreach ($collection1 as $ord){
@@ -81,7 +86,7 @@ try{
     //open or create .csv file
     $io           = new Varien_Io_File();
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "creditmemo";
-    $filename     = "CREDITMEMO_".$PAGE_NUMBER.".csv";
+    $filename     = "CREDITMEMO_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     $io->setAllowCreateFolders(true);
     $io->open(array("path" => $folderPath));

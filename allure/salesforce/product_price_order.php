@@ -54,6 +54,13 @@ try{
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'desc');
     
+    
+    $store = $_GET['store'];
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    }
+    
+    
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$productHistory,true);
     
     //open or create .csv file
@@ -71,11 +78,11 @@ try{
     
     
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "product_price_gen";
-    $filename     = "PRODUCT_".$PAGE_NUMBER.".csv";
+    $filename     = "PRODUCT_GEN_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     
     $folderPath1   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "product_price_whl";
-    $filename1     = "PRODUCT_".$PAGE_NUMBER.".csv";
+    $filename1     = "PRODUCT_WHL_".$store."_".$PAGE_NUMBER.".csv";
     $filepath1     = $folderPath1 . DS . $filename1;
     
     $io = new Varien_Io_File();

@@ -54,12 +54,17 @@ try{
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'desc');
     
+    $store = $_GET['store'];
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    }
+    
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$orderHistory,true);
     
     //open or create .csv file
     $io           = new Varien_Io_File();
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "order_item";
-    $filename     = "ORDER_ITEM_".$PAGE_NUMBER.".csv";
+    $filename     = "ORDER_ITEM_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     $io->setAllowCreateFolders(true);
     $io->open(array("path" => $folderPath));

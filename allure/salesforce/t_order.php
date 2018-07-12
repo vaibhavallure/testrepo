@@ -37,6 +37,8 @@ if(empty(!$size)){
     $PAGE_SIZE = $size;
 }
 
+$store = $_GET['store'];
+
 //.csv file header data
 $header = array(
     "Order_Id__c"               => "Order_Id__c",
@@ -45,6 +47,7 @@ $header = array(
     "Customer_Group__c"         => "Customer_Group__c",
     "Customer_Email__c"         => "Customer_Email__c",
     "Store__c"                  => "Store__c",
+    "Old_Store__c"              => "Old_Store__c",
     "EffectiveDate"             => "EffectiveDate",
     "Status"                    => "Status",
     "Quantity__c"               => "Quantity__c",
@@ -77,6 +80,13 @@ $header = array(
 );
 
 try{
+    
+    $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+    $oldStoreArr = array();
+    foreach ($ostores as $storeO){
+        $oldStoreArr[$storeO->getId()] = $storeO->getName();
+    }
+    
     //get collection of order according to page number, page size & asending order
     $collection = Mage::getResourceModel("sales/order_collection")
     ->addAttributeToSelect("*")
@@ -84,12 +94,16 @@ try{
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'desc');
     
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    }
+    
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$orderHistory,true);
     
     //open or create .csv file
     $io           = new Varien_Io_File();
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "order";
-    $filename     = "ORDER_".$PAGE_NUMBER.".csv";
+    $filename     = "ORDER_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     $io->setAllowCreateFolders(true);
     $io->open(array("path" => $folderPath));
@@ -193,6 +207,7 @@ try{
                 "Customer_Group__c"         => $customerGroup,
                 "Customer_Email__c"         => $customerEmail,
                 "Store__c"                  => $order->getStoreId(),
+                "Old_Store__c"              => $oldStoreArr[$order->getOldStoreId()],
                 "EffectiveDate"             => date("Y-m-d",strtotime($createdAt)),
                 "Status"                    => $status,
                 "Quantity__c"               => $totalQty,

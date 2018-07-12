@@ -50,6 +50,11 @@ try{
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'desc');
     
+    $store = $_GET['store'];
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    }
+    
     //get collection of order according to page number, page size & asending order
     $collection = Mage::getResourceModel("sales/order_creditmemo_collection")
     ->addAttributeToSelect("*")
@@ -63,7 +68,7 @@ try{
     //open or create .csv file
     $io           = new Varien_Io_File();
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "creditmemo_item";
-    $filename     = "CREDITMEMO_ITEM_".$PAGE_NUMBER.".csv";
+    $filename     = "CREDITMEMO_ITEM_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     $io->setAllowCreateFolders(true);
     $io->open(array("path" => $folderPath));

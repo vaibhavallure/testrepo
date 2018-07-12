@@ -54,6 +54,11 @@ try{
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'desc');
     
+    $store = $_GET['store'];
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    }
+    
     //echo "<pre>";
     $ordArr = array();
     foreach ($collection1 as $ord){
@@ -81,7 +86,7 @@ try{
     $io->streamLock(true); */
     
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "shipment_track";
-    $filename     = "SHIPMENT_TRACK_".$PAGE_NUMBER.".csv";
+    $filename     = "SHIPMENT_TRACK_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     
     //add header data into .csv file

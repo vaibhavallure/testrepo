@@ -97,6 +97,7 @@ $sLengthArr     = getOptionArray("s_length");    //s_length - select
 $placementArr   = getOptionArray("placement"); //placement - select
 $materialArr    = getOptionArray("material"); //material - multiselect
 
+$store = $_GET['store'];
 
 try{
     
@@ -111,6 +112,10 @@ try{
     ->setPageSize($PAGE_SIZE)
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'desc');
+    
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    }
     
     
     
@@ -133,7 +138,7 @@ try{
     $io->streamLock(true); */
     
     $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "product";
-    $filename     = "PRODUCT_".$PAGE_NUMBER.".csv";
+    $filename     = "PRODUCT_".$store."_".$PAGE_NUMBER.".csv";
     $filepath     = $folderPath . DS . $filename;
     
     //add header data into .csv file
@@ -163,9 +168,9 @@ try{
             //prepare .csv row data using array
             $_product = Mage::getModel("catalog/product")->load($prodId);
             $salesforceId = $_product->getSalesforceProductId();
-            /* if($salesforceId){
+            if($salesforceId){
                 continue;
-            } */
+            } 
             
             $material = $_product->getMaterial();
             if($material){

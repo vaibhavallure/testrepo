@@ -92,6 +92,11 @@ try{
     ->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'desc');
     
+    $store = $_GET['store'];
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    }
+    
     //echo $collection->getSelect()->__toString();die;
     
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$accountHistory,true);
