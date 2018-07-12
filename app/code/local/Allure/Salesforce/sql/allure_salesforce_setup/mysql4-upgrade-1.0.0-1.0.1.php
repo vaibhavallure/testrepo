@@ -17,7 +17,7 @@ $installer->run("CREATE TABLE IF NOT EXISTS {$this->getTable('product_deleted_lo
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
-$installer->run("INSERT INTO product_deleted_log(product_id,sku,name,price,product_type) SELECT product_id,sku,name,base_price FROM `sales_flat_order_item` a where a.sku not in(SELECT sku from catalog_product_entity) GROUP by a.sku");
+$installer->run("INSERT INTO product_deleted_log(product_id,sku,name,price,product_type) SELECT product_id,sku,name,base_price,product_type FROM `sales_flat_order_item` a where a.sku not in(SELECT sku from catalog_product_entity) GROUP by a.sku");
 
 $this->endSetup();
 
