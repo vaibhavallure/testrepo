@@ -12,7 +12,10 @@ $counter=0;
 $collection=Mage::getModel("catalog/product")->getCollection();
 $collection->addAttributeToFilter('status', array('eq' => 1));
 $collection->addAttributeToFilter('type_id', array('eq' => 'configurable'));
-$collection->setOrder('sku', 'asc');
+$collection->addFieldToFilter('entity_id',array('gteq'=>1));
+$collection->addFieldToFilter('entity_id',array('lteq'=>15000));
+
+
 
 $some_attr_code = "metal";
 $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
@@ -21,18 +24,29 @@ foreach ($collection as $_product){
 
     $_product=Mage::getModel("catalog/product")->load($_product->getId());
     $plu=$_product->getTeamworkPlu();
-    if (count(str_split($plu))>=5){
-        $gstn="";
+    $countValue=0;
+    $countValue=count(str_split(trim($plu)));
+    if($countValue==2){
+        $plu='000'.$plu;
+    }elseif ($countValue==3){
+        $plu='00'.$plu;
+    }elseif ($countValue==4){
+        $plu='0'.$plu;
+    }
+    $countValue=count(str_split(trim($plu)));
+    
+    if ($countValue==5){
+        $gtin="";
         $counter++;
         $checkNumber=calculateChecknumber($basePrefix,$plu);
-        $gstn=$basePrefix.$plu.$checkNumber;
-        $_product->setGstnNumber($gstn);
+        $gtin=$basePrefix.$plu.$checkNumber;
+        $_product->setGtinNumber($gtin);
         $_product->save();
-        Mage::log("Count::".$counter."  ".$_product->getSku()."::".$gstn,Zend_log::DEBUG,'gstn.log',true);
+        Mage::log("Count::".$counter."  ".$_product->getSku()."::".$gtin,Zend_log::DEBUG,'gstn.log',true);
         
     }else {
-        echo "FOR::".$_product->getSku()." PLU lenth::".$plu;
-        echo "<br>";
+        
+        Mage::log("FOR::".$_product->getSku()." PLU lenth::".$plu,Zend_log::DEBUG,'gstn_error.log',true);
     }
     
     $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
@@ -40,18 +54,29 @@ foreach ($collection as $_product){
     foreach ($simple_collection as $simpleProd){
         $_product=Mage::getModel("catalog/product")->load($simpleProd->getId());
         $plu=$_product->getTeamworkPlu();
-        if (count(str_split($plu))>=5){
-            $gstn="";
+        $countValue=0;
+        
+        $countValue=count(str_split(trim($plu)));
+        if($countValue==2){
+            $plu='000'.$plu;
+        }elseif ($countValue==3){
+            $plu='00'.$plu;
+        }elseif ($countValue==4){
+            $plu='0'.$plu;
+        }
+        $countValue=count(str_split(trim($plu)));
+        
+        if ($countValue==5){
+            $gtin="";
             $counter++;
             $checkNumber=calculateChecknumber($basePrefix,$plu);
-            $gstn=$basePrefix.$plu.$checkNumber;
-            $_product->setGstnNumber($gstn);
+            $gtin=$basePrefix.$plu.$checkNumber;
+            $_product->setGtinNumber($gtin);
             $_product->save();
-            Mage::log("Count::".$counter."  ".$_product->getSku()."::".$gstn,Zend_log::DEBUG,'gstn.log',true);
+            Mage::log("Count::".$counter."  ".$_product->getSku()."::".$gtin,Zend_log::DEBUG,'gstn.log',true);
             
         }else {
-            echo "FOR::".$_product->getSku()." PLU lenth::".$plu;
-            echo "<br>";
+            Mage::log("FOR::".$_product->getSku()." PLU lenth::".$plu,Zend_log::DEBUG,'gstn_error.log',true);
         }
     }
 }
@@ -86,6 +111,11 @@ function calculateChecknumber($basePrefix,$plu){
     $digit=0;
     for ($x = 1; $x <= 100; $x++) {
         $digit=$x*10;
+        
+        if($digit == $setp4){
+            break;
+        }
+        
         if($digit > $setp4){
             break;
         }
