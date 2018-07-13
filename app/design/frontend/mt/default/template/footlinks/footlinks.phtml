@@ -55,10 +55,10 @@
 
                         <div class='popbox' data-tooltip-id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
                             <?php if ($link->getLink() != ""): ?>
-                                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $link->getLink() ?>"><?php echo $link->getTitle() ?></a>
+                                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $link->getLink() ?>"><?php echo $this->__($link->getTitle()) ?></a>
                                 <?php
                             else:
-                                echo $link->getTitle();
+                                echo $this->__($link->getTitle());
                             endif;
                             ?>
                         </div>
@@ -181,10 +181,10 @@
                                 <div>
                                 <?php endif; ?>
                                 <?php if ($link->getLink() != ""): ?>
-                                    <a href="<?php echo $link->getLink() ?>"><?php echo $link->getTitle() ?></a>
+                                    <a href="<?php echo $link->getLink() ?>"><?php echo $this->__($link->getTitle()) ?></a>
                                     <?php
                                 else:
-                                    echo $link->getTitle();
+                                echo $this->__($link->getTitle());
                                 endif;
                                 ?>
                             </div>
