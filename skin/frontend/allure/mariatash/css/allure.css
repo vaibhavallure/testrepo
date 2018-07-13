@@ -2618,3 +2618,6 @@ cursor: pointer;
 	margin-bottom: 0px;
 }
 
+.table-product-info .product-name a:hover {
+    color: #906E39;
+}

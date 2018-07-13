@@ -14,10 +14,35 @@
                         
      $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($_item->getProduct()->getId());
      $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-     $url = $product->getProductUrl();
+     $configSku=explode('|', $product->getSku());
+     $configSku=$configSku[0];
+     $configId = Mage::getModel('catalog/product')->getIdBySku($configSku);
+     $config = Mage::getModel('catalog/product')->load($configId);
+     $url = $config->getProductUrl();
+     
      if(!is_null($parentId)){
         $parentProduct = Mage::getModel("catalog/product")->load($parentId);
         $url = $parentProduct->getProductUrl();
+     }
+     $firstLetter = substr($product->getSku(),0,1);
+     if($firstLetter=='C' ||$firstLetter=='c'){
+         $sku=explode('|', $product->getSku());
+         $sku=$sku[0];
+         $NEW_START_CHAR = "X";
+         $newSku = $NEW_START_CHAR . substr($sku, 1);
+         $productParentId = Mage::getModel('catalog/product')->getIdBySku($newSku);
+         
+         if ($productParentId){
+             $productParent = Mage::getModel('catalog/product')->load($productParentId);
+         }
+         else {
+             $productParentId = Mage::getModel('catalog/product')->getIdBySku($product->getParentItemNumber());
+             $productParent = Mage::getModel('catalog/product')->load($productParentId);
+             
+         }
+        if (! empty($productParent))
+            $url = $productParent->getProductUrl();
+            
      }
                         
      $productName = $product->getName();
