@@ -867,7 +867,6 @@ class Allure_Teamwork_Model_Observer{
       Mage::log("Finish...",Zend_log::DEBUG,$logFile,$logStatus);
   }
   function changeOrderStatus($observer){
-      Mage::log("Order coming",Zend_log::DEBUG,'change_status.log',true);
       $order = $observer->getEvent()->getOrder();
       Mage::log("Order::".$order->getId(),Zend_log::DEBUG,'change_status.log',true);
       $order->setState('in_chq', true)->save();
