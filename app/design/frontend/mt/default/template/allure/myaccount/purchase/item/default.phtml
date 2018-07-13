@@ -89,9 +89,12 @@
 								<?php if(0 /* && !empty($productDescr) */):?>
 									<h2 class="product-descr"><?php //echo $productDescr?></h2>
 								<?php endif;?>
-				
+								<?php if($_item->getPurchasedFrom()):?>
+								<span class="mt-purchase-added-at">Purchased From: <?php echo $_item->getPurchasedFrom();?></span>
+								<?php endif;?>
 								<span class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime($_item->getCreatedAt()))?></span>
-								<label <?php echo $storeColor?>  class="purchase-store-name"><?php echo $storeName?></label>
+								
+								<label <?php echo $storeColor?>  class="purchase-store-name"><?php echo "Purchase Location:  ".$storeName?></label>
 							</td>
 			
 							<td class="cart_col4">

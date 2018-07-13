@@ -66,7 +66,7 @@ function addToShoppingCart(button, formId) {
                 datos = '' + ',"purchased_from_cat":"'+jQuery.trim(purchased_from)+'"';
                 
               //allure code start
-                var flagP = false;
+                var flagP = true;
                 if(jQuery('#parent-child-product').length){ 
                 	var checkParentChild = jQuery('#parent-child-product').val();
                 	if(checkParentChild == 1){

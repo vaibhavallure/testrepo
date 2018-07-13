@@ -191,6 +191,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
            
             if (is_array($prices)) {
                 if ($productAttribute->getAttributeCode() == 'metal') {
+                    $temparray=array();
                     foreach ($this->getAllowProducts() as $product) {
                         foreach ($prices as $value) {
                             if ($product->getMetal() != $value['value_index']) {
@@ -235,14 +236,20 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                                 $productsIndex = array();
                             }
                             
-                            $info['options'][] = array(
-                                'id' => $value['value_index'],
-                                'label' => $value['label'],
-                                'price' => $configurablePrice,
-                                'oldPrice' => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
-                                'products' => $productsIndex,
-                               
-                            );
+                            if(!in_array($value['value_index'], $temparray)){
+                                
+                                $info['options'][] = array(
+                                    'id' => $value['value_index'],
+                                    'label' => $value['label'],
+                                    'price' => $configurablePrice,
+                                    'oldPrice' => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
+                                    'products' => $productsIndex,
+                                    
+                                );
+                                
+                                $temparray[]=$value['value_index'];
+                            }
+                         
                             
                             $optionPrices[] = $configurablePrice;
                         }

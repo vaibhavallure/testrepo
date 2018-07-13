@@ -18,6 +18,10 @@
 		                    <sort_order>0</sort_order>
 		                    <action>adminhtml/report_sales/catalogreport</action>
               			 </catalogreport>
+              			 <sales translate="title" module="reports">
+                            <title>Orders</title>
+                            <action>adminhtml/report_sales/salesreport</action>
+                         </sales>
               			 
                     </children>
                 </salesroot>

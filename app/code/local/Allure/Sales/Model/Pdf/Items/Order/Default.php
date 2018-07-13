@@ -86,6 +86,8 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
         // custom options
         $options = $this->getItemOptions();
         if ($options) {
+            
+            $mainPptionStr='';
             foreach ($options as $option) {
                 // draw options label
                 
@@ -97,13 +99,12 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                         $_printValue = strip_tags($option['value']);
                     }
                 }
-                $optionStr = $optionStr ." : ".$_printValue;
+                $optionStr = $optionStr .":  ".strtolower($_printValue);
                 
-                $lines[][] = array(
-                    'text' => Mage::helper('core/string')->str_split(strip_tags($optionStr), 40, true, true),
-                    'font' => 'italic',
-                    'feed' => 35
-                );
+                if (empty($mainPptionStr))
+                    $mainPptionStr = $optionStr;
+                else
+                    $mainPptionStr = $mainPptionStr . "         " . $optionStr;
                 
                 //allure comment
                 /* if ($option['value']) {
@@ -121,11 +122,15 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
                     }
                 } */
             }
+            $lines[][] = array(
+                'text' => $mainPptionStr,
+                'feed' => 50
+            );
         }
         
         $lineBlock = array(
             'lines'  => $lines,
-            'height' => 20
+            'height' => 15
         );
                
         $page = $pdf->drawLineBlocks($page, array($lineBlock), array('table_header' => true));
@@ -146,15 +151,15 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
             
             $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed,true);
             if($salesInstr['is_show']){
-                $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
-                $this->setPage($page);
+              //  $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
+              //  $this->setPage($page);
                 $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
                 $this->setPage($page);
             }
             $purchasedFrom = $helper->getSalesOrderItemPurchasedFrom($item,$feed,true);
             if($purchasedFrom['is_show']){
-                $page = $pdf->drawLineBlocks($page, array($purchasedFrom['label_block']), array('table_header' => true));
-                $this->setPage($page);
+               // $page = $pdf->drawLineBlocks($page, array($purchasedFrom['label_block']), array('table_header' => true));
+               // $this->setPage($page);
                 $page = $pdf->drawLineBlocks($page, array($purchasedFrom['value_block']), array('table_header' => true));
                 $this->setPage($page);
             }
