@@ -868,8 +868,18 @@ class Allure_Teamwork_Model_Observer{
   }
   function changeOrderStatus($observer){
       $order = $observer->getEvent()->getOrder();
-      Mage::log("Order::".$order->getId(),Zend_log::DEBUG,'change_status.log',true);
-      $order->setState('in_chq', true)->save();
+      
+       Mage::log("Order::".$order->getId(),Zend_log::DEBUG,'change_status.log',true);
+      if($order->getStatus()=='processing'){
+         try{
+              $order=Mage::getModel('sales/order')->load($order->getId());
+              $order->setState('in_chq', true)->save();
+         }catch(Exception $e){
+             Mage::log("Order::".$order->getId()." Exception::".$e->getMessage(),Zend_log::DEBUG,'change_status.log',true);
+         }
+      }
+     
+      
   }
   
 }
