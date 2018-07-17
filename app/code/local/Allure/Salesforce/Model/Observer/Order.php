@@ -158,7 +158,10 @@ class Allure_Salesforce_Model_Observer_Order{
                 "PricebookEntryId"  => $salesforcePricebkEntryId,//"01u290000037WAR",
                 "quantity"          => $item->getQtyOrdered(),
                 "UnitPrice"         => $item->getBasePrice(),
-                "Post_Length__c"        => $postLength
+                "Post_Length__c"    => $postLength,
+                "Magento_Order_Item_Id__c" => $item->getItemId(),
+                "SKU__c"                => $item->getSku(),
+                
             );
             array_push($orderItem["records"],$itemArray);
         }

@@ -13,6 +13,12 @@
 				<class>Allure_Salesforce_Helper</class>
 			</allure_salesforce>
 		</helpers>
+		
+		<blocks>
+			<allure_salesforce>
+				<class>Allure_Salesforce_Block</class>
+			</allure_salesforce>
+		</blocks>
 
 		<models>
 			<allure_salesforce>
@@ -198,6 +204,35 @@
                 </observers>
             </customer_delete_after>
 		</events>
+		<layout>
+			<updates>
+				<allure_salesforce>
+					<file>allure/salesforce.xml</file>
+				</allure_salesforce>
+			</updates>
+		</layout>
 	</adminhtml>
+	
+	<!-- <adminhtml>
+		<layout>
+			<updates>
+				<crmleads>
+					<file>allurecrm/leads.xml</file>
+				</crmleads>
+			</updates>
+		</layout>
+	</adminhtml> -->
+	
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Allure_Salesforce before="Mage_Adminhtml">Allure_Salesforce_Adminhtml</Allure_Salesforce>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
 	
 </config>
