@@ -771,7 +771,6 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             $message = $e->getMessage();
             $response["success"] = false;
             $response["message"] = $message;
-            Mage::log($e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
         }
         return $response;
     }
@@ -793,7 +792,6 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
         }catch (Exception $e){
             $response["success"]    = false;
             $response["message"]    = $e->getMessage();
-            Mage::log("Exception:".$e->getMessage(),Zend_Log::DEBUG,'abc.log',true);
         }
         return $response;
     }
@@ -807,7 +805,6 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
         $response = array();
         $isError = false;
         $message = "";
-        Mage::log($_filePath,Zend_Log::DEBUG,'abc.log',true);
         if(($handle = fopen($_filePath, "r")) != false){
             $max_line_length = defined("MAX_LINE_LENGTH") ? MAX_LINE_LENGTH : 10000;
             $header = fgetcsv($handle, $max_line_length);
@@ -848,12 +845,10 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             fclose($handle);
             if(!$isError){
                 $message = "File parse completed.";
-                Mage::log($message,Zend_Log::DEBUG,'abc.log',true);
             }
         }else{
             $isError = true;
             $message = "csvreader: could not read csv file: \"$_filePath\"";
-            Mage::log("Unable to read csv file: ".$_filePath,Zend_Log::DEBUG,'abc.log',true);
             error_log($message);
         }
         
