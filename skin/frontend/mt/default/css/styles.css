@@ -14355,7 +14355,7 @@ span.customStyleSelectBox.changed {
 }
 
 .quickview-index-index .product-view select {
-	height: auto !important;
+	height: auto;
 	width: 160px;
 }
 
