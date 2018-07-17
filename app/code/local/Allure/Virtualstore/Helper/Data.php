@@ -13,6 +13,8 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
     */
     public function getVirtualStores(){
         $stores = Mage::getSingleton("allure_virtualstore/store")->getCollection();
+        $stores->setOrder('sort_order', 'asc');
+        $stores->setOrder('store_id', 'asc');
         foreach ($stores as $store) {
             if ($store->getId() == 0) {
                 continue;
@@ -28,6 +30,7 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
     public function getVirtualGroups(){
         $groups = Mage::getSingleton("allure_virtualstore/group")
             ->getCollection();
+          
         foreach ($groups as $group) {
             if ($group->getId() == 0) {
                 continue;
@@ -43,6 +46,8 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
     public function getVirtualWebsites(){
         $websites = Mage::getSingleton("allure_virtualstore/website")
             ->getCollection();
+         $websites->setOrder('sort_order', 'asc');
+         $websites->setOrder('website_id', 'asc');
         foreach ($websites as $website) {
             if ($website->getId() == 0) {
                 continue;

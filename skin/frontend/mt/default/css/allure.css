@@ -1086,6 +1086,47 @@ label.popup-reg-privacy-lbl {
 #myaccount-shopping-cart-table a:hover {
     color: #906E39;
 }
-
-
-
+.post-lengthds-lbl{
+    display: inline-block !important;
+    float: left;
+    width: 90px;
+    text-indent: 3px;
+    font-size: 13px;
+    color: #3f3f47;
+   
+}
+.post-lengthds-lbl label.required{
+	
+    color: rgb(63, 64, 72);
+    font-weight: 200;
+    
+}
+dd.post-lengthds-lbl-options.last{
+	    display: inline-block;
+	    padding-top: 10px;
+}
+.post-lengthds-lbl-options .product-custom-option{
+	padding-left: 1px;
+    padding-right: 36px;
+    background: #f8f8f8;
+    font-size: 12px;
+    font-weight: normal;
+}
+.quickview-index-index .custom-options{
+	margin-bottom: 30px;
+}
+.quickview-index-index dd.post-lengthds-lbl-options.last{
+	padding-top: 7px;
+    height: 24px !important;
+}
+.quickview-index-index .post-lengthds-lbl {
+    display: inline-block;
+    float: left;
+    width: 80px;
+    text-indent: 3px;
+    font-size: 13px;
+    color: #3f3f47;
+}
+.quickview-index-index .product-view .product-options dd option {
+    font-weight: normal !important;
+}
