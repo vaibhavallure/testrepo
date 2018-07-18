@@ -14,6 +14,14 @@
                     <?php foreach ($this->getPurchaseOrderCollection() as $_item): ?>
                         <?php 
                         
+                        $metal=explode('|', $_item->getSku());
+                        if(count($metal)>=2){
+                            $metal='?metal=' . $metal[1];
+                        }else{
+                            $metal='';
+                        }
+                        
+                        
                         $productId = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
                         $product = Mage::getModel('catalog/product')->load($productId);
                         
@@ -71,6 +79,9 @@
                         		$productDescr = substr($productDescr,1,70)."...";
                         } */
                         
+                       if(!empty($url) && !empty($metal)){
+                           $url=$url.$metal;
+                       }
                         
                         $receiptUrl = Mage::getUrl("sales/order/view")."order_id/".$_item->getOrderId()."/";
                         $reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
