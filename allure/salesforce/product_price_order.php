@@ -132,9 +132,9 @@ try{
             
             //prepare .csv row data using array
             
-            if($_product->getData("salesforce_product_id")){
+            /* if($_product->getData("salesforce_product_id")){
                 continue;
-            }
+            } */
             
             $row[] = array(
                 "Product2Id"      => $_product->getData("salesforce_product_id"),

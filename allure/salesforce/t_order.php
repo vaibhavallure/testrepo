@@ -265,16 +265,16 @@ try{
                 "Total_Due__c"              => $baseTotalDue,
                 "Payment_Method__c"         => $paymentMethod,
                 "Total_Refunded_Amount__c"  => $baseTotalRefunded,
-                "BillingCity"               => ($billingAddr) ? $billingAddr["city"] : "",
-                "BillingCountry"            => $countryName,
-                "BillingPostalCode"         => ($billingAddr) ? $billingAddr["postcode"] : "",
-                "BillingState"              => $state,
-                "BillingStreet"             => ($billingAddr) ? $billingAddr["street"] : "",
-                "ShippingCity"              => ($shippingAddr) ? $shippingAddr["city"] : "",
-                "ShippingCountry"           => $countryNameShip,
-                "ShippingPostalCode"        => ($shippingAddr) ? $shippingAddr["postcode"] : "",
-                "ShippingState"             => $stateShip,
-                "ShippingStreet"            => ($shippingAddr) ? $shippingAddr["street"] : "",
+                "BillingCity"               => ($billingAddr) ? encodeValue($billingAddr["city"]) : "",
+                "BillingCountry"            => encodeValue($countryName),
+                "BillingPostalCode"         => ($billingAddr) ? encodeValue($billingAddr["postcode"]) : "",
+                "BillingState"              => encodeValue($state),
+                "BillingStreet"             => ($billingAddr) ? encodeValue($billingAddr["street"]) : "",
+                "ShippingCity"              => ($shippingAddr) ? encodeValue($shippingAddr["city"]) : "",
+                "ShippingCountry"           => encodeValue($countryNameShip),
+                "ShippingPostalCode"        => ($shippingAddr) ? encodeValue($shippingAddr["postcode"]) : "",
+                "ShippingState"             => encodeValue($stateShip),
+                "ShippingStreet"            => ($shippingAddr) ? encodeValue($shippingAddr["street"]) : "",
                 "Counterpoint_Order_ID__c"  => $counterpointOrderId,
                 "Customer_Note__c"          => ($customerNote) ? $customerNote : "",
                 "Signature__c"              => ($order->getNoSignatureDelivery()) ? "Yes" : "No",
@@ -292,6 +292,12 @@ try{
     $io->close();
 }catch (Exception $e){
     Mage::log("Main Exception:".$e->getMessage(),Zend_Log::DEBUG,$orderHistory,true);
+}
+
+
+function encodeValue($str){
+    //iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $str);
+    return @iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $str);
 }
 
 Mage::log("Finish...",Zend_Log::DEBUG,$orderHistory,true);
