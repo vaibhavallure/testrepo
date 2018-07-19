@@ -37,7 +37,7 @@ while($csvData = $io->streamReadCsv()){
         if($trackId){
             $sql_order = "UPDATE sales_flat_shipment_track SET salesforce_shipment_track_id='".$salesforceId."' WHERE entity_id ='".$trackId."'";
             $write->query($sql_order);
-            Mage::log("shipment_id:".$incrementId," salesforce_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_shipment_log,true);
+            Mage::log("shipment_id:".$incrementId." salesforce_id:".$salesforceId." updated.",Zend_Log::DEBUG,$update_shipment_log,true);
         }
     }catch (Exception $e){
         Mage::log("shipment_id:".$incrementId." exception:".$e->getMessage(),Zend_Log::DEBUG,$update_shipment_log,true);
