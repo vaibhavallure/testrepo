@@ -41,13 +41,38 @@ $header = array(
 );
 
 try{
+    
+    
+    $filepath = $_GET["file"];
+    if(empty($filepath)){
+        die("empty file path");
+    }
+    
+    $file = Mage::getBaseDir("var") . DS. $filepath;
+    $ioR = new Varien_Io_File();
+    $ioR->streamOpen($file, 'r');
+    
+    $skuIdx = 0;
+    $skuArr = array();
+    $ioR->streamReadCsv();
+    while($csvData = $ioR->streamReadCsv()){
+        $skuT = "'".$csvData[$skuIdx]."'";
+        $skuArr[$skuT] = $skuT;
+    }
+    
+    /* echo "<pre>";
+    print_r($skuArr);
+    die; */
+    
+    $skuIds = implode(",", $skuArr);
+    
     //get collection of product according to page number, page size & asending order
     $collection = Mage::getModel("allure_salesforce/deletedproduct")->getCollection()
-    ->setPageSize($PAGE_SIZE)
-    ->setCurPage($PAGE_NUMBER)
+    //->setPageSize($PAGE_SIZE)
+    //->setCurPage($PAGE_NUMBER)
     ->setOrder('sku', 'asc');
     
-    $collection->getSelect()->where("salesforce_product_id is not null");
+    $collection->getSelect()->where("sku in(".$skuIds.")");
     
     //echo $collection->getSelect()->__toString();die;
     
@@ -69,6 +94,9 @@ try{
     foreach ($collection as $_product){
         try{
             //prepare .csv row data using array
+            if($_product->getData("salesforce_product_id")){
+                continue;
+            }
             $row = array(
                 "Product2Id"      => $_product->getData("salesforce_product_id"),
                 "Pricebook2Id"    => Mage::helper('allure_salesforce')->getGeneralPricebook(),

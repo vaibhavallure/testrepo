@@ -117,26 +117,33 @@ try{
     ->load()
     ->toOptionHash();
     
-    //get collection of product according to page number, page size & asending order
+    $filepath = $_GET["file"];
+    if(empty($filepath)){
+        die("empty file path");
+    }
+    
+    $file = Mage::getBaseDir("var") . DS. $filepath;
+    
+    $ioR = new Varien_Io_File();
+    $ioR->streamOpen($file, 'r');
+    
+    $customerIdIdx = 0;
+    $customerArr = array();
+    $ioR->streamReadCsv();
+    while($csvData = $ioR->streamReadCsv()){
+        $customerArr[$csvData[$customerIdIdx]] = $csvData[$customerIdIdx];
+    }
+    
+    $custIds = implode(",", $customerArr);
+    
     $collection = Mage::getResourceModel("sales/order_collection")
     ->addAttributeToSelect("*")
-    ->setPageSize($PAGE_SIZE)
-    ->setCurPage($PAGE_NUMBER)
-    ->setOrder('entity_id', 'desc');
+    //->setPageSize($PAGE_SIZE)
+    //->setCurPage($PAGE_NUMBER)
+    ->setOrder('entity_id', 'asc');
     
-    if($store){
-        $collection->addFieldToFilter("old_store_id",$store);
-    }
+    $collection->getSelect()->where("customer_id in(".$custIds.")");
     
-    
-    
-    $lastPage = $collection->getLastPageNumber();
-    if(!($PAGE_NUMBER <= $lastPage)){
-        die("<p class='salesforce-error'>No more records.</p>");
-    }
-    
-    
-    Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$productHistory,true);
     
     //open or create .csv file
     /* $io           = new Varien_Io_File();
@@ -189,7 +196,7 @@ try{
                     
                     
                     //prepare .csv row data using array
-                    $row1[] = array(
+                    $row1[$item->getSku()] = array(
                         "StockKeepingUnit"          => $item->getSku(),
                         "ProductCode"               => $item->getProductId(),
                         "IsActive"                  => "false",

@@ -89,17 +89,48 @@ try{
     }
     
     //get collection of order according to page number, page size & asending order
+    
+    $filepath = $_GET["file"];
+    if(empty($filepath)){
+        die("empty file path");
+    }
+    
+    $file = Mage::getBaseDir("var") . DS. $filepath;
+    
+    $ioR = new Varien_Io_File();
+    $ioR->streamOpen($file, 'r');
+    
+    $customerIdIdx = 0;
+    $customerArr = array();
+    $ioR->streamReadCsv();
+    while($csvData = $ioR->streamReadCsv()){
+        $customerArr[$csvData[$customerIdIdx]] = $csvData[$customerIdIdx];
+    }
+    
+    /* echo "<pre>";
+    print_r($customerArr);
+    die; */
+    
+    
+    
+    $custIds = implode(",", $customerArr);
+    
     $collection = Mage::getResourceModel("sales/order_collection")
     ->addAttributeToSelect("*")
-    ->setPageSize($PAGE_SIZE)
-    ->setCurPage($PAGE_NUMBER)
-    ->setOrder('entity_id', 'desc');
+    //->setPageSize($PAGE_SIZE)
+    //->setCurPage($PAGE_NUMBER)
+    ->setOrder('entity_id', 'asc');
     
-    if($store){
+    $collection->getSelect()->where("customer_id in(".$custIds.")");
+    
+   // echo $collection->getSelect()->__toString();die;
+    /* if($store){
         $collection->addFieldToFilter("old_store_id",$store);
     }
     
     Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$orderHistory,true);
+     */
+    
     
     //open or create .csv file
     $io           = new Varien_Io_File();
@@ -180,9 +211,11 @@ try{
                     $state = $billingAddr['region'];
                 }
                 
-                $country = Mage::getModel('directory/country')
-                ->loadByCode($billingAddr['country_id']);
-                $countryName = $country->getName();
+                if($billingAddr['country_id']){
+                    $country = Mage::getModel('directory/country')
+                    ->loadByCode($billingAddr['country_id']);
+                    $countryName = $country->getName();
+                }
             }
             
             $stateShip       = "";
@@ -196,9 +229,11 @@ try{
                     $stateShip = $shippingAddr['region'];
                 }
                 
-                $country = Mage::getModel('directory/country')
-                ->loadByCode($shippingAddr['country_id']);
-                $countryNameShip = $country->getName();
+                if($shippingAddr['country_id']){
+                    $country = Mage::getModel('directory/country')
+                    ->loadByCode($shippingAddr['country_id']);
+                    $countryNameShip = $country->getName();
+                }
             } 
             
             $pricebookId = Mage::helper('allure_salesforce')->getGeneralPricebook(); //$helper::RETAILER_PRICEBOOK_ID;
@@ -251,7 +286,7 @@ try{
             $row = null;
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$orderHistory,true);
-            Mage::log("Occured for Order Id:".$_product->getId(),Zend_Log::DEBUG,$orderHistory,true);
+            Mage::log("Occured for Order Id:".$order->getId(),Zend_Log::DEBUG,$orderHistory,true);
         }
     }
     $io->close();

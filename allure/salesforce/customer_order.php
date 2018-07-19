@@ -85,21 +85,12 @@ $header[] = array(
     "ShippingCountry"           => "ShippingCountry",
 );
 
+
 try{
-    $collection = Mage::getResourceModel("sales/order_collection")
-    ->addAttributeToSelect("*")
-    ->setPageSize($PAGE_SIZE)
-    ->setCurPage($PAGE_NUMBER)
-    ->setOrder('entity_id', 'desc');
-    
-    $store = $_GET['store'];
-    if($store){
-        $collection->addFieldToFilter("old_store_id",$store);
-    }
     
     //echo $collection->getSelect()->__toString();die;
     
-    Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$accountHistory,true);
+    //Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$accountHistory,true);
     
     //open or create .csv file
     
@@ -119,13 +110,38 @@ try{
     //add header data into .csv file
     $csv->saveData($filepath,$header);
     
+    
+    
+    
+    /* $store = $_GET['store'];
+    if($store){
+        $collection->addFieldToFilter("old_store_id",$store);
+    } */
+    
     $customerArr = array();
-    foreach ($collection as $order){
-        $custId = $order->getCustomerId();
-        if($custId){
-            $customerArr[$custId] = $custId;
+    for ($storeId = 1 ; $storeId < 14; $storeId++){
+        $collection = Mage::getResourceModel("sales/order_collection")
+        ->addAttributeToSelect("*")
+        ->addFieldToFilter("old_store_id",$storeId)
+        ->setPageSize($PAGE_SIZE)
+        ->setCurPage($PAGE_NUMBER)
+        ->setOrder('entity_id', 'asc');
+        
+        $collection->getSelect()->where("customer_id is not null");
+        
+        foreach ($collection as $order){
+            $custId = $order->getCustomerId();
+            if($custId){
+                $customerArr[$custId] = $custId;
+            }
         }
+        
+        $collection = null;
     }
+    
+   /*  echo "<pre>";
+    print_r(count($customerArr));
+    die; */
     
     foreach ($customerArr as $customerId){
         try{
@@ -164,9 +180,11 @@ try{
                 //$state = utf8_encode($state);//htmlspecialchars($state, ENT_NOQUOTES, "UTF-8");
                 //$state = iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $state);
                 
-                $country = Mage::getModel('directory/country')
-                ->loadByCode($defaultBillingAddr['country_id']);
-                $countryName = $country->getName();
+                if($defaultBillingAddr['country_id']){
+                    $country = Mage::getModel('directory/country')
+                    ->loadByCode($defaultBillingAddr['country_id']);
+                    $countryName = $country->getName();
+                }
             }
             
             $stateShip       = "";
@@ -184,9 +202,11 @@ try{
                 //$stateShip = utf8_encode($stateShip);
                 //$stateShip = iconv('UTF-8', 'ISO-8859-1//TRSANSLIT', $stateShip);
                 
-                $country = Mage::getModel('directory/country')
-                ->loadByCode($defaultShippingAddr['country_id']);
-                $countryNameShip = $country->getName();
+                if($defaultShippingAddr['country_id']){
+                    $country = Mage::getModel('directory/country')
+                    ->loadByCode($defaultShippingAddr['country_id']);
+                    $countryNameShip = $country->getName();
+                }
             }
             
             $header[] = array(

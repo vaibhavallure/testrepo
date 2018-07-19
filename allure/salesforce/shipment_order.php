@@ -54,31 +54,46 @@ $header = array(
 
 try{
     
-    $collection1 = Mage::getResourceModel("sales/order_collection")
-    ->addAttributeToSelect("*")
-    ->setPageSize($PAGE_SIZE)
-    ->setCurPage($PAGE_NUMBER)
-    ->setOrder('entity_id', 'desc');
-    
-    $store = $_GET['store'];
-    if($store){
-        $collection1->addFieldToFilter("old_store_id",$store);
+    $filepath = $_GET["file"];
+    if(empty($filepath)){
+        die("empty file path");
     }
+    
+    $file = Mage::getBaseDir("var") . DS. $filepath;
+    
+    $ioR = new Varien_Io_File();
+    $ioR->streamOpen($file, 'r');
+    
+    $customerIdIdx = 0;
+    $customerArr = array();
+    $ioR->streamReadCsv();
+    while($csvData = $ioR->streamReadCsv()){
+        $customerArr[$csvData[$customerIdIdx]] = $csvData[$customerIdIdx];
+    }
+    
+    $custIds = implode(",", $customerArr);
+    
+    $collectionT = Mage::getResourceModel("sales/order_collection")
+    ->addAttributeToSelect("*")
+    //->setPageSize($PAGE_SIZE)
+    //->setCurPage($PAGE_NUMBER)
+    ->setOrder('entity_id', 'asc');
+    
+    $collectionT->getSelect()->where("customer_id in(".$custIds.")");
     
     //echo "<pre>";
     $ordArr = array();
-    foreach ($collection1 as $ord){
+    foreach ($collectionT as $ord){
         $ordArr[] = $ord->getId();
     }
-   // print_r($ordArr);
-    //die;
+    
     
     //get collection of order according to page number, page size & asending order
     $collection = Mage::getResourceModel("sales/order_shipment_collection")
     ->addAttributeToSelect("*")
     ->addFieldToFilter("order_id",array("in"=>$ordArr))
-    ->setPageSize($PAGE_SIZE)
-    ->setCurPage($PAGE_NUMBER)
+    //->setPageSize($PAGE_SIZE)
+    //->setCurPage($PAGE_NUMBER)
     ->setOrder('entity_id', 'asc');
     
     //echo $collection->getSelect()->__toString();

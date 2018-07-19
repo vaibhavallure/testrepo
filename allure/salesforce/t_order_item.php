@@ -49,19 +49,36 @@ $header = array(
 );
 
 try{
-    //get collection of order according to page number, page size & asending order
-    $collection = Mage::getResourceModel("sales/order_collection")
-    ->addAttributeToSelect("*")
-    ->setPageSize($PAGE_SIZE)
-    ->setCurPage($PAGE_NUMBER)
-    ->setOrder('entity_id', 'desc');
     
-    $store = $_GET['store'];
-    if($store){
-        $collection->addFieldToFilter("old_store_id",$store);
+    
+    $filepath = $_GET["file"];
+    if(empty($filepath)){
+        die("empty file path");
     }
     
-    Mage::log("collection size = ".$collection->getSize(),Zend_Log::DEBUG,$orderHistory,true);
+    $file = Mage::getBaseDir("var") . DS. $filepath;
+    
+    $ioR = new Varien_Io_File();
+    $ioR->streamOpen($file, 'r');
+    
+    $customerIdIdx = 0;
+    $customerArr = array();
+    $ioR->streamReadCsv();
+    while($csvData = $ioR->streamReadCsv()){
+        $customerArr[$csvData[$customerIdIdx]] = $csvData[$customerIdIdx];
+    }
+    
+    $custIds = implode(",", $customerArr);
+    
+    $collection = Mage::getResourceModel("sales/order_collection")
+    ->addAttributeToSelect("*")
+    //->setPageSize($PAGE_SIZE)
+    //->setCurPage($PAGE_NUMBER)
+    ->setOrder('entity_id', 'asc');
+    
+    $collection->getSelect()->where("customer_id in(".$custIds.")");
+    
+    
     
     //open or create .csv file
     /* $io           = new Varien_Io_File();
