@@ -123,6 +123,10 @@ try{
                     ->load($item->getSku(),"sku");
                     if($oldProduct){
                         $salesforceProductId = $oldProduct->getSalesforceStandardPricebk();
+                        if($customerGroup == 2){
+                            $salesforceProductId = $product->getSalesforceWholesalePricebk();
+                        }
+                       
                     }
                 }
                 
