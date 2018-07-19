@@ -24,8 +24,10 @@ class Allure_Sales_Model_Pdf_Items_Order_Default extends Allure_Sales_Model_Pdf_
         ));
         
         // draw SKU
+        $sku=$this->getSku($item);
+        $sku=explode("|", $sku);
         $lines[0][] = array(
-            'text'  => Mage::helper('core/string')->str_split($this->getSku($item), 17),
+            'text'  => Mage::helper('core/string')->str_split($sku[0], 25),
             'feed'  => 290,
             'align' => 'right'
         );
