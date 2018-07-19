@@ -106,6 +106,7 @@ try{
     $row = array($header);
     foreach ($collection as $order){
         try{
+            $customerGroup = $order->getCustomerGroupId();
             $items = $order->getAllVisibleItems();
             foreach ($items as $item){
                 $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
