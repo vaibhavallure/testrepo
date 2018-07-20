@@ -103,7 +103,7 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Creditmemo_Default extends Mage_Sal
             }
             $lines[][] = array(
                 'text' => Mage::helper('core/string')->str_split($mainPptionStr, 40, true, true),
-                'feed' => 35
+                'feed' => 50
             );
         }
 

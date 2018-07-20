@@ -9075,7 +9075,7 @@ ul.crosssell-products-list {
 /* Options Tool Tip */
 .item-options dt {
 	font-weight: normal;
-	font-style: italic;
+	font-style: normal;
 }
 
 .truncated {
@@ -18091,6 +18091,7 @@ ul.products-grid2 {
 .page-print #my-orders-table td {
 	padding-left: 10px;
 	padding-right: 10px;
+	padding-bottom: 10px;
 }
 
 .page-print #my-orders-table td.nobr-sku {
@@ -19951,3 +19952,6 @@ font-size: 100% !important;
     height: auto;
 }
 
+.custom-options-univaersal{
+	    margin-left: 25px !important;
+}

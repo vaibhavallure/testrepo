@@ -36,7 +36,7 @@
     <?php if ($this->getOrderOptions()): ?>
         <dl class="item-options">
         <?php foreach ($this->getOrderOptions() as $_option): ?>
-            <dt class="custom_options_iwd"><?php echo $this->escapeHtml($_option['label']).":" ?>
+            <dt class="custom_options_iwd"><?php echo $this->escapeHtml(ucwords($_option['label'])).":" ?>
             <?php if (isset($_option['custom_view']) && $_option['custom_view']): ?>
                 <?php echo strtolower($this->getCustomizedOptionValue($_option)); ?>
             <?php else: ?>

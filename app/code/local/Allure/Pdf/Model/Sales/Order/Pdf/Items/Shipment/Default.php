@@ -70,7 +70,7 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Shipment_Default extends Mage_Sales
             }
             $lines[][] = array(
                 'text' =>$mainPptionStr,
-                'feed' => 50
+                'feed' => 100,
             );
         }
 
