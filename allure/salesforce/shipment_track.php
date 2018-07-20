@@ -91,7 +91,7 @@ try{
             }
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$shipmentHistory,true);
-            Mage::log("Occured for Shipment Id:".$_product->getId(),Zend_Log::DEBUG,$shipmentHistory,true);
+            Mage::log("Occured for Shipment Id:".$shipment->getId(),Zend_Log::DEBUG,$shipmentHistory,true);
         }
     }
     $csv->saveData($filepath,$row);

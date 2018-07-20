@@ -121,7 +121,7 @@ try{
             $row = null;
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$invoiceHistory,true);
-            Mage::log("Occured for Invoice Id:".$_product->getId(),Zend_Log::DEBUG,$invoiceHistory,true);
+            Mage::log("Occured for Invoice Id:".$invoice->getId(),Zend_Log::DEBUG,$invoiceHistory,true);
         }
     }
     $io->close();

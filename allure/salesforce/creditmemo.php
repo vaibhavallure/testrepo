@@ -111,7 +111,7 @@ try{
             $row = null;
         }catch (Exception $ee){
             Mage::log("Sub Exception:".$ee->getMessage(),Zend_Log::DEBUG,$creditmemoHistory,true);
-            Mage::log("Occured for Shipment Id:".$_product->getId(),Zend_Log::DEBUG,$creditmemoHistory,true);
+            Mage::log("Occured for Shipment Id:".$creditMemo->getId(),Zend_Log::DEBUG,$creditmemoHistory,true);
         }
     }
     $io->close();
