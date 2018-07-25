@@ -6,6 +6,54 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+die;
+$order = Mage::getModel("sales/order")->load(297324);
+$payment = $order->getPayment();
+$code = $payment->getData('cc_type');
+$aType = Mage::getSingleton('payment/config')->getCcTypes();
+if (isset($aType[$code])) {
+    $sName = $aType[$code];
+}
+else {
+    $sName = Mage::helper('payment')->__('N/A');
+}
+
+$DeliveryMethod = trim($order->getData("order_type"));
+if($DeliveryMethod == "Multiple - Main"){
+    $DeliveryType = "Main";
+}else if ($DeliveryMethod == "Multiple - Backorder"){
+    $DeliveryType = "Backorder";
+}else{
+    $DeliveryType = "Single";
+}
+
+var_dump($sName);
+echo "<pre>";
+print_r($DeliveryType);
+$last4Digits  = "XXXX-".$order->getPayment()->getCcLast4();
+var_dump($order->getPayment()->getData("last_trans_id"));
+
+die;
+
+$serverName = "10.154.0.8"; //serverName\instanceName
+
+// Since UID and PWD are not specified in the $connectionInfo array,
+// The connection will be attempted using Windows Authentication.
+$connectionInfo = array( "Database"=>"CloudHQ",
+    "UID"=> "MariaTasReportingUser", 
+    "PWD" => '{1EE26209-DB51-4905-AE02-2395D119F500}');
+$conn = sqlsrv_connect( $serverName, $connectionInfo);
+
+if( $conn ) {
+    echo "Connection established.<br />";
+}else{
+    echo "Connection could not be established.<br />";
+    die( print_r( sqlsrv_errors(), true));
+}
+
+
+die;
+
 $product = Mage::getModel('catalog/product')
 ->loadByAttribute("salesforce_product_id","01t29000001eGADAA2");
 
