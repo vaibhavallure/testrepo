@@ -545,4 +545,50 @@ class Allure_InstaCatalog_Adminhtml_Allure_InstaCatalog_FeedController extends A
             $this->_redirect('*/*/index');
             
     }
+    public function reloadimageAction(){
+        $request = $this->getRequest()->getPost();
+        if(!empty($request['media_id']) || !empty($request['username'])){
+            $collection = Mage::getModel('allure_instacatalog/feed')
+            ->getCollection()
+            ->addFieldToFilter('media_id',array('eq'=>$request['media_id']));
+            $collection=$collection->getFirstItem();
+            if(empty($collection->getSize())){
+                $collection = Mage::getModel('allure_instacatalog/feed')
+                ->getCollection()
+                ->addFieldToFilter('username',array('eq'=>$request['username']));
+                $collection=$collection->getFirstItem();
+            }
+            $media_id=$request['media_id'];
+            $access_token=$access_token = Mage::getStoreConfig('allure_instacatalog/feed/access_token');
+            if (!empty($request['media_id'])) {
+                $url = 'https://api.instagram.com/v1/media/' . $media_id . '?access_token=' . $access_token;
+                $data = file_get_contents($url);
+                $response = json_decode($data);
+                $image = $response->data->images->standard_resolution->url;
+                Mage::log($image, Zend_log::DEBUG, 'ajay.log', true);
+                if (! empty($image)) {
+                    $collection->setStandardResolution($image);
+                    $collection->save();
+                }else{
+                    $api = file_get_contents("https://api.instagram.com/oembed/?url=".$request['username']);
+                    $apiObj = json_decode($api,true);
+                    if(!empty($apiObj['thumbnail_url'])) {
+                       $collection->setStandardResolution($apiObj['thumbnail_url']);
+                       $collection->save();
+                    }
+                }
+            }else{
+                $api = file_get_contents("https://api.instagram.com/oembed/?url=".$request['username']);
+                $apiObj = json_decode($api,true);
+                if(!empty($apiObj['thumbnail_url'])) {
+                    $collection->setStandardResolution($apiObj['thumbnail_url']);
+                    $collection->save();
+                }
+            }
+        }
+        
+        $jsonData = json_encode(compact('success', 'message', 'data'));
+        $this->getResponse()->setHeader('Content-type', 'application/json');
+        $this->getResponse()->setBody($jsonData);
+    }
 }
