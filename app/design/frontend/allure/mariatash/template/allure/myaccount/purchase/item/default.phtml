@@ -95,7 +95,7 @@ $metal=explode('|', $_item->getSku());
 					
 	<td class="table-product-info">
 		<h2 class="product-name">
-			<a <?php echo ($product->getId())? "href='".$url."'":""?>><?php echo $productName?></a>
+			<a <?php echo ($product->getId())? "href='".$url."'":""?>><?php echo uc_words(strtolower($productName))?></a>
 		</h2>
 	</td>
 					   
