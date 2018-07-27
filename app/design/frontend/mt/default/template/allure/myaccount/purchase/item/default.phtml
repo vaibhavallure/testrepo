@@ -122,7 +122,7 @@
 			
 							<td class="cart_col2">
 								<h2 class="product-name <?php echo $typeId?>">
-									<a <?php echo ($product->getId())? "href='".$url."'":""?> ><?php echo $productName?></a>
+									<a <?php echo ($product->getId())? "href='".$url."'":""?> ><?php echo ucwords(strtolower($productName))?></a>
 								</h2>
 								<?php if(0 /* && !empty($productDescr) */):?>
 									<h2 class="product-descr"><?php //echo $productDescr?></h2>

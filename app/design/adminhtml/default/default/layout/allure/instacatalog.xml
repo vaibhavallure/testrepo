@@ -42,7 +42,9 @@
         </reference>
         <reference name="content">
            <!--  <block type="allure_instacatalog/adminhtml_feed" name="feed" /> -->
-            <block type="allure_instacatalog/adminhtml_custom" name="custom_feed_grid" template="allure/instacatalog/custom.phtml" />
+            <block type="allure_instacatalog/adminhtml_custom" name="custom_feed_grid" template="allure/instacatalog/custom.phtml" >
+           		<block type="allure_instacatalog/adminhtml_custom" name="pager" template="allure/instacatalog/pager.phtml" ></block>
+            </block>
         </reference>
     </adminhtml_allure_instacatalog_feed_index>
     
