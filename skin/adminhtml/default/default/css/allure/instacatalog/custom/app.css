@@ -7729,3 +7729,39 @@ button.learn-more, button.hide-detail {
     color: #fff;
     font-size: 18px;
 }
+
+
+ .adminhtml-allure-instacatalog-feed-index .pager-instagram .pages{
+	display: inline-block;
+}
+.adminhtml-allure-instacatalog-feed-index .pager-instagram .count-container{
+	display: inline-block;
+	margin-left: 10px;
+}
+.adminhtml-allure-instacatalog-feed-index  .pager-instagram .count-container label{
+	display: inline-block !important;
+}
+.adminhtml-allure-instacatalog-feed-index  .pager-instagram .pages ol{
+	display: inline-block;
+}
+.adminhtml-allure-instacatalog-feed-index  .pager-instagram .pages ol li{
+	display: inline-block;
+	margin: 5px;
+}
+.adminhtml-allure-instacatalog-feed-index .pager-instagram .pages ol li.current {
+    line-height: 21px;
+    font-size: 21px;
+    vertical-align: top;
+}
+
+.adminhtml-allure-instacatalog-feed-index .reload{
+    /* background-color: rgba(0, 0, 0, 0.75); */
+    color: #000;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    margin-left: 30px;
+}
+
+
+
