@@ -32,9 +32,9 @@
         <?php if ($this->getItemOptions()): ?>
         <dl style="margin:0; padding:0;">
             <?php foreach ($this->getItemOptions() as $option): ?>
-            <dt><strong><em><?php echo $option['label'] ?></em></strong></dt>
+            <dt><?php echo $option['label'] ?></dt>
             <dd style="margin:0; padding:0 0 0 9px;">
-                <?php echo (isset($option['print_value']) ? $option['print_value'] : nl2br($this->escapeHtml($option['value']))) ?>
+                <?php echo (isset($option['print_value']) ? strtolower($option['print_value']) : nl2br($this->escapeHtml(strtolower($option['value'])))) ?>
             </dd>
             <?php endforeach; ?>
         </dl>

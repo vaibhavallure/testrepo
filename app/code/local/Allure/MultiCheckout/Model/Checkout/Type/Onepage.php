@@ -444,8 +444,9 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         $this->changeCustomQuoteStatus();
         $isBackorder = $_checkoutHelper->isQuoteContainsBackorderProduct();
         if ($isBackorder) {
-            $quoteItems = $quoteMain->getAllVisibleItems(); // $quoteMain->getAllItems();
+            $quoteItems = $quoteMain->getAllItems(); // $quoteMain->getAllItems();
             
+            //Mage::log(json_encode($quoteItems->getData()),Zend_log::DEBUG,'ajay.log',true);
             $backorder_quote = Mage::getModel('sales/quote')->load($quoteMain->getId()); // unavialable
                                                                                          // qty
                                                                                          // product
@@ -485,10 +486,15 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 if ($stock_qty < $item->getQty()&& $productInvryCount->getManageStock()==1){
                     //if( $productInvryCount <= 0 ){
                     //$backorder_quote->addItem($item->setId(null));
-                    $backorder_quote->addProduct($item->getProduct(), $item->getBuyRequest());
+                    
+                    if($item->getProductType() !='configurable'){
+                        $backorder_quote->addProduct($item->getProduct(), $item->getBuyRequest());
+                    }
                 }else{
                     //$order_quote->addItem($item->setId(null));
-                    $order_quote->addProduct($item->getProduct(), $item->getBuyRequest());
+                    if($item->getProductType() !='configurable'){
+                        $order_quote->addProduct($item->getProduct(), $item->getBuyRequest());
+                    }
                 }
                 
             }
