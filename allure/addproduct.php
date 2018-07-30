@@ -6,6 +6,67 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
+echo round(16.6657,2);
+
+die;
+
+$conn = odbc_connect('TEAMWORKS', 'MariaTasReportingUser','{1EE26209-DB51-4905-AE02-2395D119F500}');
+if($conn){
+    $sql = "SELECT TABLE_NAME FROM CloudHQ.INFORMATION_SCHEMA.TABLES;";
+    $result = odbc_exec($conn,$sql);
+    $cnt = 0;
+    while(odbc_fetch_row($result)){
+        for($i=1;$i<=odbc_num_fields($result);$i++){
+            
+            $tableName = odbc_result($result,$i);
+            $query = "SELECT TOP 100 * FROM $tableName;";
+            $result1 = odbc_exec($conn,$query);
+            $file = fopen('data/'.$tableName.'.csv', 'w');
+            
+            $header = array();
+            
+            $query2 = "SELECT * FROM CloudHQ.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = $tableName";
+            $result2 = odbc_exec($conn,$query2);
+            while(odbc_fetch_row($result2)){
+                for($k=1;$k <= odbc_num_fields($result2);$k++){
+                    $value2 = odbc_result($result2,$k);
+                    $row[$k] = $value2;
+                    $header[$k] = $value2;
+                }
+            }
+            
+            while(odbc_fetch_row($result1)){
+                $row = array();
+                for($j=1;$j <= odbc_num_fields($result1);$j++){
+                    $value = odbc_result($result1,$j);
+                    $row[$j] = $value;
+                }
+                
+                if(count($header) == count($row)){
+                    $entry = array_combine($header, $row);
+                    fputcsv($file, $entry);
+                    $row = null;
+                }
+                
+                
+            }
+            fclose($file);
+        }
+        
+        if($cnt==10){
+            break;
+        }
+        $cnt++;
+    }
+} else {
+    die('Failure');
+}
+
+                    
+
+
+
+
 die;
 $order = Mage::getModel("sales/order")->load(297324);
 $payment = $order->getPayment();

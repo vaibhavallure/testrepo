@@ -1,0 +1,121 @@
+<?php
+require_once('../../app/Mage.php');
+umask(0);
+Mage::app();
+Mage::app()->setCurrentStore(0);
+ini_set('memory_limit', '-1');
+
+$file = $_GET["file"];
+
+if(empty($file)){
+    die("Specify file path.");
+}
+
+
+$teamworkLog = "customer_in_teamwork.log";
+
+$folderPath   = Mage::getBaseDir("var") . DS .$file;
+
+$csvData = array();
+if(($handle = fopen($folderPath, "r")) != false){
+    $max_line_length = defined("MAX_LINE_LENGTH") ? MAX_LINE_LENGTH : 10000;
+    $header = fgetcsv($handle, $max_line_length);
+    foreach ($header as $c => $_cols){
+        $header[$c] = strtolower(str_replace(" ", "_", $_cols));
+    }
+    
+    $header_column_count = count($header);
+    
+    while (($row = fgetcsv($handle,$max_line_length)) != false){
+        $row_column_count = count($row);
+        if($row_column_count == $header_column_count){
+            $entry = array_combine($header, $row);
+            $csvData[] = $entry;
+        }
+    }
+    fclose($handle);
+    
+    if(count($csvData)){
+        $websiteId = 1;
+        $existCnt = 0;
+        $nonExistCnt = 0;
+        
+        foreach ($csvData as $data){
+            
+            $tData = unserialize($data["order"]);
+            
+            foreach ($tData as $receiptId => $oData){
+                try{
+                    
+                    $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
+                    if(!$orderObj->getId()){
+                        Mage::log("Receipt Id:".$receiptId." Order not created.",Zend_log::DEBUG,$teamworkLog,true);
+                        continue;
+                    }
+                    
+                    $orderId = $orderObj->getId();
+                    
+                    
+                    if (!$order->canCreditmemo()) {
+                        Mage::log("Order Id:".$orderId." Cannot create credit memo for the order.",Zend_log::DEBUG,$teamworkLog,true);
+                        continue;
+                    }
+                    
+                    $savedData = array();
+                    $qtys = array();
+                    $backToStock = array();
+                    foreach ($savedData as $orderItemId =>$itemData) {
+                        if (isset($itemData['qty'])) {
+                            $qtys[$orderItemId] = $itemData['qty'];
+                        }
+                        if (isset($itemData['back_to_stock'])) {
+                            $backToStock[$orderItemId] = true;
+                        }
+                    }
+                    $data['qtys'] = $qtys;
+                    
+                    $invoice = null;
+                    $invoiceCollection = $orderObject->getInvoiceCollection();
+                    foreach($invoiceCollection as $invoice1){
+                        $invoice = $invoice1;
+                    }
+                    
+                    $service = Mage::getModel('sales/service_order', $orderObj);
+                    if ($invoice) {
+                        $creditmemo = $service->prepareInvoiceCreditmemo($invoice, $data);
+                    } else {
+                        $creditmemo = $service->prepareCreditmemo($data);
+                    }
+                    
+                    /**
+                     * Process back to stock flags
+                     */
+                    foreach ($creditmemo->getAllItems() as $creditmemoItem) {
+                        $orderItem = $creditmemoItem->getOrderItem();
+                        $parentId = $orderItem->getParentItemId();
+                        if (isset($backToStock[$orderItem->getId()])) {
+                            $creditmemoItem->setBackToStock(true);
+                        } elseif ($orderItem->getParentItem() && isset($backToStock[$parentId]) && $backToStock[$parentId]) {
+                            $creditmemoItem->setBackToStock(true);
+                        } elseif (empty($savedData)) {
+                            $creditmemoItem->setBackToStock(Mage::helper('cataloginventory')->isAutoReturnEnabled());
+                        } else {
+                            $creditmemoItem->setBackToStock(false);
+                        }
+                    }
+                    
+                    Mage::log("Credit memo:".$creditmemo->getId(),Zend_log::DEBUG,$teamworkLog,true);
+                        
+                    
+                 }catch (Exception $e){
+                    Mage::log("Exception".$e->getMessage(),Zend_log::DEBUG,$teamworkLog,true);
+                 }
+            }
+        }
+    }
+}
+
+Mage::log("Finish...",Zend_log::DEBUG,$teamworkLog,true);
+die("Finish...");
+
+

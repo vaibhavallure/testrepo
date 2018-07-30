@@ -41,6 +41,12 @@ class Allure_Salesforce_Model_Observer_Product{
         $helper         = $this->getHelper();
         $helper->salesforceLog("changeProductToSalesforce request");
         
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $product = $observer->getEvent()->getProduct();
         $helper->salesforceLog("product id :".$product->getId());
         if($product){
@@ -326,6 +332,13 @@ class Allure_Salesforce_Model_Observer_Product{
     public function deleteProductToSalesforce(Varien_Event_Observer $observer){
         $helper = $this->getHelper();
         $helper->salesforceLog("deleteProductToSalesforce request.");
+        
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $product = $observer->getEvent()->getProduct();
         if($product){
             $salesforceId = $product->getSalesforceProductId();

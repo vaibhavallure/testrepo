@@ -16,6 +16,13 @@ class Allure_Salesforce_Model_Observer_Order{
     public function addOrderToSalesforce(Varien_Event_Observer $observer){
         $helper = $this->getHelper();
         $helper->salesforceLog("addOrderToSalesforce request.");
+        
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $order = $observer->getEvent()->getOrder();
         $items = $order->getAllVisibleItems();
         $helper->salesforceLog("order id == ".$order->getId());
@@ -271,6 +278,13 @@ class Allure_Salesforce_Model_Observer_Order{
     public function addInvoiceToSalesforce($observer){
         $helper = $this->getHelper();
         $helper->salesforceLog("addInvoiceToSalesforce request.");
+        
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $invoice = $observer->getEvent()->getInvoice();
         
         $order = $invoice->getOrder();
@@ -357,6 +371,13 @@ class Allure_Salesforce_Model_Observer_Order{
     public function addShipmentToSalesforce(Varien_Event_Observer $observer){
         $helper = $this->getHelper();
         $helper->salesforceLog("addShipmentToSalesforce request.");
+        
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $shipment = $observer->getEvent()->getShipment();
         $salesforceShipmentId = $shipment->getSalesforceShipmentId();
         
@@ -482,6 +503,13 @@ class Allure_Salesforce_Model_Observer_Order{
     public function addCreditmemoToSalesforce(Varien_Event_Observer $observer){
         $helper = $this->getHelper();
         $helper->salesforceLog("addCreditmemoToSalesforce request.");
+        
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $creditMemo = $observer->getEvent()->getCreditmemo();
         $items      = $creditMemo->getAllItems();
         
@@ -588,6 +616,13 @@ class Allure_Salesforce_Model_Observer_Order{
     public function updateOrderData($order){
         $helper = $this->getHelper();
         $helper->salesforceLog("In updateOrderData request");
+        
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         if($order){
             $order = Mage::getModel("sales/order")->load($order->getId());
             $salesforceOrderId = $order->getSalesforceOrderId();
@@ -643,6 +678,13 @@ class Allure_Salesforce_Model_Observer_Order{
     public function deleteShipmentToSalesforce(Varien_Event_Observer $observer){
         $helper = $this->getHelper();
         $helper->salesforceLog("deleteShipmentToSalesforce request.");
+        
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $shipment = $observer->getEvent()->getShipment();
         $salesforceShipmentId = $shipment->getSalesforceShipmentId();
         if(!$salesforceShipmentId){
@@ -693,7 +735,15 @@ class Allure_Salesforce_Model_Observer_Order{
      * delete tracking info from salesforce
      */
     public function deleteTrackInfoSalesforce(Varien_Event_Observer $observer){
+        $helper = $this->getHelper();
         $helper->salesforceLog("deleteTrackInfoSalesforce request");
+        
+        $isEnable = Mage::helper("allure_salesforce");
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $event = $observer->getEvent();
         $track = $event->getTrack();
         $shipment = $track->getShipment();

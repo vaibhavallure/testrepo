@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Allure_Teamwork>
-			<version>1.0.6</version>
+			<version>1.0.7</version>
 		</Allure_Teamwork>
 	</modules>
 	<global>
@@ -53,6 +53,21 @@
 				</entities>
 			</allure_teamwork_resource>
 		</models>
+		
+		<fieldsets>
+			<sales_convert_quote>
+				<teamwork_receipt_id>
+					<to_order>*</to_order>
+				</teamwork_receipt_id>
+			</sales_convert_quote>
+			
+			<sales_convert_quote_item>
+                <other_sys_qty>
+                    <to_order_item>*</to_order_item>
+                </other_sys_qty>
+            </sales_convert_quote_item>
+		</fieldsets>
+		
 	</global>
 	
 	<crontab>
@@ -101,5 +116,161 @@
 			</allure_teamwork_cp_cust>-->
 		</jobs>
 	</crontab>
+	
+	
+	<default>
+	
+		<carriers>
+			<tm_storepickupshipping>
+				<active>1</active>
+				<model>allure_teamwork/shipping_carrier_Storepickupshipping</model>
+				<name>Store Pickup</name>
+				<price>0.00</price>
+				<title>Store Pickup</title>
+                <sallowspecific>0</sallowspecific>
+                <showmethod>0</showmethod>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+			</tm_storepickupshipping>
+		</carriers>
+	
+		<payment>
+			<tm_pay_liberty_till>
+                <active>1</active>
+                <model>allure_teamwork/payment_libertytill</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>LIBERTY TILL</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_liberty_till>
+            
+            <tm_pay_wire_transfer>
+                <active>1</active>
+                <model>allure_teamwork/payment_wiretransfer</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>WIRE TRANSFER</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_wire_transfer>
+            
+            <tm_pay_cc_refund>
+                <active>1</active>
+                <model>allure_teamwork/payment_ccrefund</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CC REFUND</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_cc_refund>
+            
+            <tm_pay_store_credit>
+                <active>1</active>
+                <model>allure_teamwork/payment_storecredit</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>STORE CREDIT</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_store_credit>
+            
+            <tm_pay_genius_charge>
+                <active>1</active>
+                <model>allure_teamwork/payment_geniuscharge</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>GENIUS CHARGE</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_genius_charge>
+            
+            <tm_pay_gift_card>
+                <active>1</active>
+                <model>allure_teamwork/payment_giftcard</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>GIFT CARD</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_gift_card>
+            
+            <tm_pay_cash>
+                <active>1</active>
+                <model>allure_teamwork/payment_cash</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CASH</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_cash>
+            
+            <tm_pay_casheuro>
+                <active>1</active>
+                <model>allure_teamwork/payment_casheuro</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CASHEURO</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_casheuro>
+            
+            <tm_pay_authrize>
+                <active>1</active>
+                <model>allure_teamwork/payment_authorizenet</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AUTHORIZE.NET</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_authrize>
+            
+            <tm_pay_genius_refund>
+                <active>1</active>
+                <model>allure_teamwork/payment_geniusrefund</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>GENIUS REFUND</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_genius_refund>
+            
+            <tm_pay_deposit>
+                <active>1</active>
+                <model>allure_teamwork/payment_deposit</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>DEPOSIT</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_deposit>
+            
+            <tm_pay_offline_credit_card>
+                <active>1</active>
+                <model>allure_teamwork/payment_offlinecreditcard</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>OFFLINE CREDIT CARD</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_offline_credit_card>
+            
+            <tm_pay_credit_card>
+                <active>1</active>
+                <model>allure_teamwork/payment_creditcard</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CREDIT CARD</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_credit_card>
+            
+            <tm_pay_paypal>
+                <active>1</active>
+                <model>allure_teamwork/payment_paypal</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>PAYPAL</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_paypal>
+            
+            <tm_pay_cashuk>
+                <active>1</active>
+                <model>allure_teamwork/payment_cashuk</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CASHUK</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_cashuk>
+            
+            
+        </payment>
+	</default>
 	
 </config>
