@@ -56,7 +56,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                     $orderId = $orderObj->getId();
                     
                     
-                    if (!$order->canCreditmemo()) {
+                    if (!$orderObj->canCreditmemo()) {
                         Mage::log("Order Id:".$orderId." Cannot create credit memo for the order.",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
@@ -64,7 +64,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                     $savedData = array();
                     $qtys = array();
                     $backToStock = array();
-                    foreach ($savedData as $orderItemId =>$itemData) {
+                    /* foreach ($savedData as $orderItemId =>$itemData) {
                         if (isset($itemData['qty'])) {
                             $qtys[$orderItemId] = $itemData['qty'];
                         }
@@ -72,19 +72,41 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $backToStock[$orderItemId] = true;
                         }
                     }
-                    $data['qtys'] = $qtys;
+                    $data['qtys'] = $qtys; */
+                    
+                    $data = array(
+                        /* 'qtys' => array(
+                            $orderItem->getId() => 1
+                        ) */
+                    );
+                    
+                    $ordered_items = $orderObj->getAllItems();
+                    
+                    $tempArr = array();
+                    foreach($ordered_items as $item){     //item detail
+                        $savedQtys[$item->getItemId()] = $item->getQtyOrdered();
+                        $otherSysQty = $item->getOtherSysQty();
+                        if($otherSysQty < 0){
+                            $tempArr[$item->getId()] = $item->getQtyOrdered();
+                        }
+                    }
+                    
+                    $data["qtys"] = $tempArr;
+                    
+                    
                     
                     $invoice = null;
-                    $invoiceCollection = $orderObject->getInvoiceCollection();
+                    $invoiceCollection = $orderObj->getInvoiceCollection();
                     foreach($invoiceCollection as $invoice1){
                         $invoice = $invoice1;
                     }
                     
+                    //Mage::log("invoice:".$invoice->getId(),Zend_log::DEBUG,$teamworkLog,true);
                     $service = Mage::getModel('sales/service_order', $orderObj);
                     if ($invoice) {
-                        $creditmemo = $service->prepareInvoiceCreditmemo($invoice, $data);
+                        $creditmemo = $service->prepareInvoiceCreditmemo($invoice, $data)->save();
                     } else {
-                        $creditmemo = $service->prepareCreditmemo($data);
+                        $creditmemo = $service->prepareCreditmemo($data)->save();
                     }
                     
                     /**
@@ -103,6 +125,11 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $creditmemoItem->setBackToStock(false);
                         }
                     }
+                    
+                    Mage::getModel('core/resource_transaction')
+                    ->addObject($creditmemo)
+                    ->addObject($orderObj)
+                    ->save();
                     
                     Mage::log("Credit memo:".$creditmemo->getId(),Zend_log::DEBUG,$teamworkLog,true);
                         

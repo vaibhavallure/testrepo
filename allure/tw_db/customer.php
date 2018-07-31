@@ -8,7 +8,7 @@ ini_set('memory_limit', '-1');
 $startDate = $_GET['start'];
 $endDate   = $_GET['end'];
 
-if(empty($startDate)){
+/* if(empty($startDate)){
     die("Please mention data in 'start' field.");
 }else{
     $startDate1 = DateTime::createFromFormat('Y-m-d', $startDate);
@@ -26,18 +26,20 @@ if(empty($endDate)){
     if ($date_errors['warning_count'] + $date_errors['error_count'] > 0) {
         die("'end' field format wrong. eg:2009-01-30");
     }
-}
+} */
 
 
 
 function getQuery(){
-    $query = "SELECT  C.CustomerId, C.FirstName, C.LastName, C.EMail1, C.EMail2, 
+    $query = "SELECT distinct C.CustomerId, C.FirstName, C.LastName, C.EMail1, C.EMail2, 
             C.RecModified, C.Address1, C.Address2, C.City, C.State, C.PostalCode, 
             C.Phone1, C.Phone2, C.Phone3, C.CustomFlag1, 
             CTR.CODE  
             FROM CUSTOMER_T AS C LEFT JOIN COUNTRY_T AS CTR 
-            ON C.COUNTRYID=CTR.COUNTRYID
-            WHERE C.RecModified >= '2018-02-01' AND C.RecModified <= '2018-02-05'
+            ON C.COUNTRYID = CTR.COUNTRYID
+            join receipt r on r.SellToCustomerId = C.CustomerId
+            where r.WebOrderNo is null
+            -- WHERE C.RecModified >= '2018-02-01' AND C.RecModified <= '2018-02-05'
             ; 
             ";
     return $query;

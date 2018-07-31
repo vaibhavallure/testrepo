@@ -93,8 +93,15 @@ if(($handle = fopen($folderPath, "r")) != false){
                     
                     $ordered_items = $orderObj->getAllItems();
                     $savedQtys = array();
+                    
+                    $isPending = false;
+                    
                     foreach($ordered_items as $item){     //item detail
                         $savedQtys[$item->getItemId()] = $item->getQtyOrdered();
+                        $otherSysQty = $item->getOtherSysQty(); 
+                        if($otherSysQty < 0){
+                            $isPending = true;
+                        }
                     }
                     
                     if(false && $orderObj->hasInvoices()){
@@ -126,7 +133,13 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $invoice->setRequestedCaptureCase("offline");
                             $invoice->register();
                             $invoice->getOrder()->setIsInProcess(true);
-                            $invoice->setState(2);
+                            
+                            $state = 2;
+                            /* if($isPending){
+                                $state = 1;
+                            } */
+                            
+                            $invoice->setState($state);
                             $invoice->setCanVoidFlag(0);
                             
                             $invoice->setBaseGrandTotal($incAmount);
@@ -284,7 +297,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                         $counterpointExtraInfo = serialize($counterpointExtraInfo);
                         $orderObj->setCounterpointExtraInfo($counterpointExtraInfo); */
                         
-                        $orderObj->setTotalPaid($totalPaidAmount);
+                        $orderObj->setTotalPaid($orderObj->getGrandTotal());
                         
                         $orderObj->setData('state',"processing")
                         ->setData('status',"processing");
