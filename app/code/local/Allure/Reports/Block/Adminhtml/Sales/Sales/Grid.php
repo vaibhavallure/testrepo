@@ -88,12 +88,16 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $reportType = $filterData['report_type'];
         $order_date_col= "created_at";
         $requestParams = $this->getRequest()->getParam('store_ids');
+        //var_dump($requestParams);
+        
         $storeId = 1;
+        $defaultStoreId = 1;
         if(!empty($requestParams)){
             $storeId = $requestParams;
+            $defaultStoreId=$requestParams;
         }
-        $defaultStoreId = 1;
-        Mage::app()->getStore()->setId($defaultStoreId);
+       
+        //Mage::app()->getStore()->setId($defaultStoreId);
     
         
        // $from = date('Y-m-d', strtotime($filterData->getData('from')));
@@ -109,7 +113,15 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $local_tz = new DateTimeZone('UTC');
         $local = new DateTime('now', $local_tz);
        
-        $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$defaultStoreId));
+        //$user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$defaultStoreId));
+       
+        $store=Mage::getModel("allure_virtualstore/store")->load($storeId);
+        //var_dump($store->getTimezone());
+        if(empty($store->getTimezone()))
+            $timezone="America/New_York";
+        else 
+            $timezone=$store->getTimezone();
+        $user_tz = new DateTimeZone($timezone);
         $user = new DateTime('now', $user_tz);
         
         $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
@@ -122,12 +134,12 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         else
             $diffZone= '-'.$interval->h .' hours'.' '. $interval->i .' minutes';
             
-                
+        //var_dump($to);
         if(!empty($filterData->getData('from')) && !empty($filterData->getData('to')) ){
             $from = date("Y-m-d H:i:s",strtotime($diffZone,strtotime($from)));
             $to = date("Y-m-d H:i:s",strtotime($diffZone,strtotime($to)));
         }
-      
+       // var_dump($to);  
         
         if($reportType != "created_at_order"){
             $order_date_col = "updated_at";
@@ -151,6 +163,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         }else{
             $whereClause = $order_date_col." >='".$from."' and ".$order_date_col." <='".$to."'";
         }
+        //var_dump($whereClause);
         return $whereClause;
     }
     
@@ -304,7 +317,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->columns('ABS(sum((IFNULL(main_table.base_discount_amount,0))-IFNULL(main_table.base_discount_canceled,0))) total_discount_amount')
                      ->columns('sum(IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0)) total_discount_amount_actual')
                      ->where($condition);
-                //    echo $collection->getSelect();
+                    echo $collection->getSelect();
         $this->setCollection($collection);
         //echo $collection->getSelect();
         return parent::_prepareCollection();
@@ -344,7 +357,8 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         $storeId = 1;
         if(!empty($requestParams)){
             //$storeId = $requestParams; store cleanup 
-            return Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
+            $store=Mage::getModel("allure_virtualstore/store")->load($requestParams);
+            return $store->getCurrency();
         }else {
             return "USD";
         }
