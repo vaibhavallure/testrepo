@@ -54,10 +54,10 @@ if(($handle = fopen($folderPath, "r")) != false){
                 
                 
                 try{
-                
+                    
                     $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
-                   
-                    if($orderObj->getId()){
+                    
+                    if(false && $orderObj->getId()){
                         Mage::log("Receipt Id:".$receiptId." Order Id:".$orderObj->getId()." present",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
@@ -76,28 +76,26 @@ if(($handle = fopen($folderPath, "r")) != false){
                     ->setWebsiteId($websiteId)
                     ->loadByEmail($email);
                     
-                   
-                        
+                    
+                    
                     if($customer->getId()){
-                            
+                        
                         $billingAddress = $customer->getDefaultBillingAddress();
-                            
+                        
                         $quoteObj = Mage::getModel('sales/quote')
                         ->assignCustomer($customer);
                         
                         $quoteObj = $quoteObj->setStoreId(1);
                         
-                        //$quoteObj->setCurrency(trim($orderDetails["CODE"]));
-                            
                         $discountTot    = 0;
                         $isDiscountTot  = false;
-                            
+                        
                         $productDetails = $oData["product_details"];
-                            
+                        
                         $productArr = array();
-                            
+                        
                         foreach ($productDetails as $tmProduct){
-                                
+                            
                             if($tmProduct["LineExtDiscountAmount"] > 0){
                                 $isDiscountTot = true;
                                 $discountTot += $tmProduct["LineExtDiscountAmount"];
@@ -115,17 +113,17 @@ if(($handle = fopen($folderPath, "r")) != false){
                             if($qty < 0){
                                 $qty = $qty * (-1);
                             }
-                                
+                            
                             $origPriceWoutTax = $tmProduct["OriginalPriceWithoutTax"];
                             $origPriceWithTax = $tmProduct["OriginalPriceWithTax"];
-                                
+                            
                             $pTaxAmt = $origPriceWithTax - $origPriceWoutTax;
                             $taxPer = 0;
                             if($pTaxAmt > 0){
                                 $taxPer = (100 * $pTaxAmt) /$origPriceWithTax;
                                 $taxPer = round($taxPer,2);
                             }
-                                
+                            
                             $productArr[$sku] = array(
                                 "orig_price_tax" => $origPriceWithTax,
                                 "tax" => ($pTaxAmt * $qty),
@@ -135,34 +133,31 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 "disc" => $tmProduct["LineExtDiscountAmount"],
                                 "temp_qty" => $tempQty
                             );
-                                
+                            
                             $price = $origPriceWoutTax;
                             
                             $productObj = Mage::getModel('catalog/product');
-                            
-                            
-                            $productObj->setTypeId("configurable");
-                                //$productObj->setTaxClassId(1);
-                            $productObj->setSku($tsku);
+                            $productObj->setTypeId("simple");
+                            //$productObj->setTaxClassId(1);
+                            $productObj->setSku($sku);
                             $productObj->setName($tmProduct['Description4']);
                             $productObj->setShortDescription($tmProduct['Description4']);
                             $productObj->setDescription($tmProduct['Description4']);
                             $productObj->setPrice($price);
-                                //
-                                
-                            $quoteItem = Mage::getModel("allure_counterpoint/item")
-                                ->setProduct($productObj);
-                            $quoteItem->setQty($qty);
-                                //$quoteItem->setOtherSysQty($tempQty);
-                                //$productObj->setPriceInclTax($origPriceWithTax);
-                                //$productObj->setBasePriceInclTax($origPriceWithTax);
-                            $quoteItem->setStoreId(1);
-                                
-                            $quoteObj->addItem($quoteItem);
+                            //
                             
+                            $quoteItem = Mage::getModel("allure_counterpoint/item")
+                            ->setProduct($productObj);
+                            $quoteItem->setQty($qty);
+                            //$quoteItem->setOtherSysQty($tempQty);
+                            //$productObj->setPriceInclTax($origPriceWithTax);
+                            //$productObj->setBasePriceInclTax($origPriceWithTax);
+                            $quoteItem->setStoreId(1);
+                            
+                            $quoteObj->addItem($quoteItem);
                             $productObj = null;
                         }
-                            
+                        
                         $quoteBillingAddress = Mage::getModel('sales/quote_address');
                         $quoteBillingAddress->setData($billingAddress);
                         $quoteObj->setBillingAddress($quoteBillingAddress);
@@ -171,71 +166,65 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $quoteShippingAddress = Mage::getModel('sales/quote_address');
                             $quoteShippingAddress->setData($shippingAddress);
                             $quoteObj->setShippingAddress($quoteShippingAddress);
-                                // fixed shipping method
+                            // fixed shipping method
                             $quoteObj->getShippingAddress()
-                            ->setShippingMethod("tm_storepickupshipping"); 
+                            ->setShippingMethod("tm_storepickupshipping");
                         }
-                            
+                        
                         $quoteObj->collectTotals();
-                            
+                        
                         if($isDiscountTot){
                             $discountTot = $discountTot  ;
-                                /* $quoteObj->setSubtotal($quoteObj->getSubtotal() + $discountTot);
-                                $quoteObj->setBaseSubtotal($quoteObj->getBaseSubtotal() + $discountTot);
-                                $quoteObj->setSubtotalWithDiscount($quoteObj->getSubtotalWithDiscount() + $discountTot);
-                                $quoteObj->setBaseSubtotalWithDiscount($quoteObj->getBaseSubtotalWithDiscount() + $discountTot);
-                                $quoteObj->setGrandTotal($quoteObj->getGrandTotal() + $discountTot);
-                                $quoteObj->setBaseGrandTotal($quoteObj->getBaseGrandTotal() + $discountTot);
+                            /* $quoteObj->setSubtotal($quoteObj->getSubtotal() + $discountTot);
+                             $quoteObj->setBaseSubtotal($quoteObj->getBaseSubtotal() + $discountTot);
+                             $quoteObj->setSubtotalWithDiscount($quoteObj->getSubtotalWithDiscount() + $discountTot);
+                             $quoteObj->setBaseSubtotalWithDiscount($quoteObj->getBaseSubtotalWithDiscount() + $discountTot);
+                             $quoteObj->setGrandTotal($quoteObj->getGrandTotal() + $discountTot);
+                             $quoteObj->setBaseGrandTotal($quoteObj->getBaseGrandTotal() + $discountTot);
                              */
-                         }
-                         
-                         
-                         
-                         $quoteObj->setOtherSysCurrency(trim($orderDetails["CODE"]));
-                         $quoteObj->setOtherSysCurrencySymbol(trim($orderDetails["Symbol"]));
-                         $quoteObj->setOtherSysCurrencyCode(trim($orderDetails["CurrencyCode"]));
-                         
-                         $quoteObj->setTeamworkReceiptId($receiptId);
-                         $quoteObj->setCreateOrderMethod(2);
-                         $quoteObj->save();
-                            
-                            
-                         $quoteObj->setIsActive(0);
-                         $quoteObj->reserveOrderId();
-                            
-                         $incrementIdQ = $quoteObj->getReservedOrderId();
-                         if($incrementIdQ){
-                              $incrementIdQ = "TW-".$incrementIdQ;
-                              $quoteObj->setReservedOrderId($incrementIdQ);
-                         }
-                            
-                         $payment_method  = "tm_pay_cash";
-                         $quotePaymentObj = $quoteObj->getPayment();
-                         $quotePaymentObj->setMethod($payment_method);
-                         $quoteObj->setPayment($quotePaymentObj);
-                            
-                         $convertQuoteObj = Mage::getSingleton('sales/convert_quote');
-                         if($quoteObj->getIsVirtual()) {
+                        }
+                        
+                        $quoteObj->setTeamworkReceiptId($receiptId);
+                        $quoteObj->setCreateOrderMethod(2);
+                        $quoteObj->save();
+                        
+                        
+                        $quoteObj->setIsActive(0);
+                        $quoteObj->reserveOrderId();
+                        
+                        $incrementIdQ = $quoteObj->getReservedOrderId();
+                        if($incrementIdQ){
+                            $incrementIdQ = "TW-".$incrementIdQ;
+                            $quoteObj->setReservedOrderId($incrementIdQ);
+                        }
+                        
+                        $payment_method  = "tm_pay_cash";
+                        $quotePaymentObj = $quoteObj->getPayment();
+                        $quotePaymentObj->setMethod($payment_method);
+                        $quoteObj->setPayment($quotePaymentObj);
+                        
+                        $convertQuoteObj = Mage::getSingleton('sales/convert_quote');
+                        if($quoteObj->getIsVirtual()) {
                             $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getBillingAddress());
-                         }else{
-                             $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getShippingAddress());
-                         }
-                            
-                         $orderObj->setBillingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getBillingAddress()));
-                            //$orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
-                         if(!$quoteObj->getIsVirtual()) {
+                        }else{
+                            $orderObj = $convertQuoteObj->addressToOrder($quoteObj->getShippingAddress());
+                        }
+                        
+                        $orderObj->setBillingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getBillingAddress()));
+                        //$orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
+                        if(!$quoteObj->getIsVirtual()) {
                             $orderObj->setShippingAddress($convertQuoteObj->addressToOrderAddress($quoteObj->getShippingAddress()));
-                         }
-                            
-                         $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
-                            
-                         $tTax = 0;
-                            
-                         $items=$quoteObj->getAllItems();
-                         foreach ($items as $item) {
+                        }
+                        
+                        $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
+                        
+                        $tTax = 0;
+                        
+                        $items=$quoteObj->getAllItems();
+                        foreach ($items as $item) {
                             $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
                             $orderItem = $convertQuoteObj->itemToOrderItem($item);
-                                
+                            
                             if($item->getParentItem()) {
                                 $orderItem->setParentItem($orderObj->getItemByQuoteItemId($item->getParentItem()->getId()));
                             }
@@ -254,26 +243,26 @@ if(($handle = fopen($folderPath, "r")) != false){
                             if($productId){
                                 $orderItem->setData('product_id',$productId);
                             }
-                                
+                            
                             $iSku = $item->getSku();
                             $taxI = $productArr[$iSku]["tax"];
-                                
+                            
                             $singleTax = $productArr[$iSku]["single_tax"];
                             $rowTotal = $productArr[$iSku]["row_total"];
-                                
+                            
                             $taxPer = $productArr[$iSku]["tax_per"];
-                                
+                            
                             $orderItem->setData("price_incl_tax",$singleTax);
                             $orderItem->setData("base_price_incl_tax",$singleTax);
-                                
+                            
                             $orderItem->setData("row_total_incl_tax",$taxI);
                             $orderItem->setData("base_row_total_incl_tax",$taxI);
-                                
+                            
                             $orderItem->setData("tax_amount",$taxI);
                             $orderItem->setData("tax_percent",$taxPer);
-                                
+                            
                             $orderItem->setData("base_tax_amount",$taxI);
-                                
+                            
                             $disc = $productArr[$iSku]["disc"];
                             
                             $temQty = $productArr[$iSku]["temp_qty"];
@@ -283,29 +272,29 @@ if(($handle = fopen($folderPath, "r")) != false){
                             
                             
                             if($disc){
-                                    //$disc *= (-1);
-                                    //$orderItem->setData("discount_amount",$disc);
-                                    //$orderItem->setData("base_discount_amount",$disc);
+                                //$disc *= (-1);
+                                //$orderItem->setData("discount_amount",$disc);
+                                //$orderItem->setData("base_discount_amount",$disc);
                             }
-                                
+                            
                             $tTax += $taxI;
-                                
-                                //$orderItem->setData("row_total",$rowTotal);
-                                //$orderItem->setData("base_row_total",$rowTotal);
-                                
-                                
+                            
+                            //$orderItem->setData("row_total",$rowTotal);
+                            //$orderItem->setData("base_row_total",$rowTotal);
+                            
+                            
                             $orderObj->addItem($orderItem);
                         }
-                            
+                        
                         $orderObj->setCanShipPartiallyItem(false);
-                            
+                        
                         $totalDue = $orderObj->getTotalDue();
-                            
+                        
                         $totalAmmount = $quoteObj->getGrandTotal();
                         $taxAmmount     = $tTax;//$orderDetails['TAX'];
                         $discountAmount = $discountTot;
-                            
-                            
+                        
+                        
                         if(1){
                             $totalAmmount =$totalAmmount + $taxAmmount;
                             $orderObj->setTaxAmount($taxAmmount);
@@ -316,7 +305,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $totalAmmount = $totalAmmount + $discountAmount;
                             $orderObj->setDiscountAmount($discountAmount);
                         }
-                            
+                        
                         if($isDiscountTot){
                             $quoteSubTotal = $quoteObj->getSubtotal();
                             $orderObj->setSubtotal($quoteSubTotal);
@@ -325,35 +314,29 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $orderObj->setBaseSubtotalInclTax($quoteSubTotal);
                         }
                         
-                        $createdDate = trim($orderDetails["RecCreated"]);
-                        
-                        $orderObj->setCreatedAt($createdDate);
-                            
                         $orderObj->setShippingDescription("Store Pickup"); //self::SHIPPING_METHOD_NAME
                         $orderObj->setGrandTotal($totalAmmount);
                         $orderObj->setBaseTaxAmount($taxAmmount);
                         $orderObj->setBaseGrandTotal($totalAmmount);
-                            //$orderObj->setTotalPaid($totalAmmount);
-                            
-                            //complete the order status
+                        //$orderObj->setTotalPaid($totalAmmount);
+                        
+                        //complete the order status
                         $orderObj->setData('state',"pending")
                         ->setData('status',"pending");
-                            
-                    
+                        
+                        
                         $orderObj->save();
                         $quoteObj->save();
                         Mage::log("Order Id:".$orderObj->getId(),Zend_log::DEBUG,$teamworkLog,true);
                     }
-                
-              }catch (Exception $e){
+                    
+                }catch (Exception $e){
                     Mage::log("Exception".$e->getMessage(),Zend_log::DEBUG,$teamworkLog,true);
-              }
-         }
-      }
-   }
+                }
+            }
+        }
+    }
 }
 
 Mage::log("Finish...",Zend_log::DEBUG,$teamworkLog,true);
 die("Finish...");
-
-
