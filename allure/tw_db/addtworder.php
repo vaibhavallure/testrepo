@@ -57,7 +57,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                 
                     $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
                    
-                    if(0 && $orderObj->getId()){
+                    if($orderObj->getId()){
                         Mage::log("Receipt Id:".$receiptId." Order Id:".$orderObj->getId()." present",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
