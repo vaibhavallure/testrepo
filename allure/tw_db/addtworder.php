@@ -57,7 +57,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                 
                     $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
                    
-                    if($orderObj->getId()){
+                    if(0 && $orderObj->getId()){
                         Mage::log("Receipt Id:".$receiptId." Order Id:".$orderObj->getId()." present",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
@@ -102,8 +102,12 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 $isDiscountTot = true;
                                 $discountTot += $tmProduct["LineExtDiscountAmount"];
                             }
-                                
-                            $sku = strtoupper($tmProduct['StyleNo']);
+                            
+                            $styleNo = trim($tmProduct['StyleNo']);
+                            
+                            $tsku = ($tmProduct['SKU'])?$tmProduct['SKU']:$styleNo;
+                            
+                            $sku = strtoupper(trim($tsku));
                             $qty = $tmProduct['Qty'];
                             
                             $tempQty = $qty;
@@ -133,11 +137,13 @@ if(($handle = fopen($folderPath, "r")) != false){
                             );
                                 
                             $price = $origPriceWoutTax;
-                                
+                            
                             $productObj = Mage::getModel('catalog/product');
-                            $productObj->setTypeId("simple");
+                            
+                            
+                            $productObj->setTypeId("configurable");
                                 //$productObj->setTaxClassId(1);
-                            $productObj->setSku($sku);
+                            $productObj->setSku($tsku);
                             $productObj->setName($tmProduct['Description4']);
                             $productObj->setShortDescription($tmProduct['Description4']);
                             $productObj->setDescription($tmProduct['Description4']);
@@ -145,14 +151,15 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 //
                                 
                             $quoteItem = Mage::getModel("allure_counterpoint/item")
-                            ->setProduct($productObj);
+                                ->setProduct($productObj);
                             $quoteItem->setQty($qty);
-                            //$quoteItem->setOtherSysQty($tempQty);
+                                //$quoteItem->setOtherSysQty($tempQty);
                                 //$productObj->setPriceInclTax($origPriceWithTax);
                                 //$productObj->setBasePriceInclTax($origPriceWithTax);
                             $quoteItem->setStoreId(1);
                                 
                             $quoteObj->addItem($quoteItem);
+                            
                             $productObj = null;
                         }
                             
@@ -182,8 +189,6 @@ if(($handle = fopen($folderPath, "r")) != false){
                              */
                          }
                          
-                         
-                         Mage::log("currency:".$orderDetails["CODE"],Zend_log::DEBUG,$teamworkLog,true);
                          
                          
                          $quoteObj->setOtherSysCurrency(trim($orderDetails["CODE"]));

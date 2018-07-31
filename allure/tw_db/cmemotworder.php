@@ -105,9 +105,11 @@ if(($handle = fopen($folderPath, "r")) != false){
                     $service = Mage::getModel('sales/service_order', $orderObj);
                     if ($invoice) {
                         $creditmemo = $service->prepareInvoiceCreditmemo($invoice, $data)->save();
+                        $creditmemo->refund();
                     } else {
                         $creditmemo = $service->prepareCreditmemo($data)->save();
-                        $creditmemo->setState(2)->save();
+                        $creditmemo->refund();
+                        //$creditmemo->setState(2)->save();
                     }
                     
                     /**

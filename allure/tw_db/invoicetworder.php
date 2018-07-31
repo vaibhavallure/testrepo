@@ -104,7 +104,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                         }
                     }
                     
-                    if($orderObj->hasInvoices()){
+                    if(0 && $orderObj->hasInvoices()){
                         Mage::log("Invoice Already present. Order Id:".$orderId,Zend_log::DEBUG,$teamworkLog,true);
                     }else{
                         $paymentDetails = $oData["payment_details"];
@@ -180,8 +180,6 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 if(in_array($paymentCode,$creditPaymentsArr)){
                                     $isCreditTransaction = true;
                                 }
-                                
-                                Mage::log("isCreditTransaction:".$isCreditTransaction,Zend_log::DEBUG,$teamworkLog,true);
                                 
                                 
                                 if($paymentCnt > 0){
