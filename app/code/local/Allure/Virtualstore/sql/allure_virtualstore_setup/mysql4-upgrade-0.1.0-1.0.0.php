@@ -1,5 +1,5 @@
 <?php
-$installer = $this;
+/* $installer = $this;
 $installer->startSetup();
 
 $setup = new Mage_Sales_Model_Mysql4_Setup('core_setup');
@@ -44,6 +44,6 @@ $installer->run("update sales_flat_order set old_store_id = store_id");
 $installer->run("update sales_flat_quote_item set old_store_id = store_id");
 $installer->run("update sales_flat_order_item set old_store_id = store_id");
 
-$installer->endSetup();
+$installer->endSetup(); */
 
 ?>
