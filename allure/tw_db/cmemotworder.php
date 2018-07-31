@@ -107,6 +107,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                         $creditmemo = $service->prepareInvoiceCreditmemo($invoice, $data)->save();
                     } else {
                         $creditmemo = $service->prepareCreditmemo($data)->save();
+                        $creditmemo->setState(2)->save();
                     }
                     
                     /**
@@ -125,6 +126,8 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $creditmemoItem->setBackToStock(false);
                         }
                     }
+                    
+                    
                     
                     Mage::getModel('core/resource_transaction')
                     ->addObject($creditmemo)

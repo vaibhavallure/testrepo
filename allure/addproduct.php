@@ -6,7 +6,15 @@ $products = array() ;
 $lower = $_GET['lower'];
 $upper= $_GET['upper'];
 
-echo round(16.6657,2);
+//echo round(16.6657,2);
+
+/* $customer  = Mage::getModel("customer/customer")->load(3288);
+
+$cDate = "2018-06-09 23:01:19";
+$customer->setCreatedAt($cDate)->save();
+
+echo "<pre>";
+print_r($customer->getData()); */
 
 die;
 

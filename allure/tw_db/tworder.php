@@ -31,13 +31,14 @@ if(empty($endDate)){
 
 
 function getQuery(){
-    $query = "SELECT R.ReceiptId, R.ReceiptNum, R.TotalAmountWithoutTax,
+    $query = "SELECT R.RecCreated, R.ReceiptId, R.ReceiptNum, R.TotalAmountWithoutTax,
               R.TotalAmountWithTax, 
               (R.TotalAmountWithTax -R.TotalAmountWithoutTax) AS TAX,
               R.TotalQty, R.EmailAddress,
               R.SellToLastName, R.SellToFirstName, R.SellToAddress1, R.SellToAddress2,
               R.SellToCity, R.SellToState, R.SellToPostalCode, R.SellToPhone1,
               R.SellToPhone2, R.SellToCountryCode,R.SellToCustomerId,
+              CUR.CODE, CUR.Symbol, CUR.CurrencyCode,
               RITM.ReceiptItemId, RITM.ITEMID,RITM.ListOrder,
               RITM.Qty,  RITM.OriginalPriceWithTax,
               RITM.OriginalPriceWithoutTax, RITM.OriginalExtPrice,
@@ -52,10 +53,11 @@ function getQuery(){
               ITM.StyleNo, ITM.Description4
               FROM RECEIPT AS R 
               JOIN RECEIPTPAYMENT AS RPAY   ON R.ReceiptId = RPAY.ReceiptId
+              JOIN Currency AS CUR ON RPAY.CurrencyID = CUR.CurrencyID
               JOIN RECEIPTITEM AS RITM      ON R.ReceiptId = RITM.ReceiptId 
               JOIN INVENITEMINFO AS ITM     ON RITM.ITEMID = ITM.ITEMID
               -- WHERE R.WebOrderNo IS NULL  
-              WHERE R.ReceiptId = 'D3ED5776-F343-4861-925F-A005DE80E724' -- 'BFC9C625-4A8A-47EF-BBA7-001C92C9C9ED' --'FB021240-3808-4067-8A32-001376834437' 
+              WHERE R.ReceiptId = '3749ABBF-FD5C-4804-ACAA-003CECE0D0C3' -- 'D3ED5776-F343-4861-925F-A005DE80E724' -- 'BFC9C625-4A8A-47EF-BBA7-001C92C9C9ED' --'FB021240-3808-4067-8A32-001376834437' 
               -- '63F588FB-FAD4-4154-AACD-DF7BC5AA4E4F'
             ; 
             ";
@@ -121,12 +123,13 @@ function getConnection(){
             );
             
             $order_header = array(
-                "ReceiptId","ReceiptNum", "TotalAmountWithoutTax",
+                "RecCreated","ReceiptId","ReceiptNum", "TotalAmountWithoutTax",
                 "TotalAmountWithTax","TAX",
                 "TotalQty", "EmailAddress",
                 "SellToLastName", "SellToFirstName", "SellToAddress1", "SellToAddress2",
                 "SellToCity", "SellToState", "SellToPostalCode","SellToPhone1",
-                "SellToPhone2","SellToCountryCode","SellToCustomerId"
+                "SellToPhone2","SellToCountryCode","SellToCustomerId",
+                "CODE","Symbol","CurrencyCode"
             );
             
             $orderArr = array();
@@ -152,6 +155,9 @@ function getConnection(){
                     }elseif (in_array($field_name, $product_header)){
                         $productDetails[$field_name] = $field_value;
                     }else{
+                        if($field_name == "Symbol"){
+                            $field_value = utf8_decode($field_value);
+                        }
                         $orderDetails[$field_name] = $field_value;
                     }
                 }

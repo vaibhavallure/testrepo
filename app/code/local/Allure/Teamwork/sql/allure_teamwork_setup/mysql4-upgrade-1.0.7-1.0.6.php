@@ -40,6 +40,58 @@ $orderSetup->addAttribute('order', 'teamwork_receipt_id', array(
     'default'		=> null
 ));
 
+
+$orderSetup->addAttribute('quote', 'other_sys_currency', array(
+    'type'          => 'varchar',
+    'label'         => 'Other Sys Currency',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+$orderSetup->addAttribute('order', 'other_sys_currency', array(
+    'type'          => 'varchar',
+    'label'         => 'Other Sys Currency Symbol',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+
+$orderSetup->addAttribute('quote', 'other_sys_currency_symbol', array(
+    'type'          => 'varchar',
+    'label'         => 'Other Sys Currency Symbol',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+$orderSetup->addAttribute('order', 'other_sys_currency_symbol', array(
+    'type'          => 'varchar',
+    'label'         => 'Other Sys Currency Symbol',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+
+$orderSetup->addAttribute('quote', 'other_sys_currency_code', array(
+    'type'          => 'varchar',
+    'label'         => 'Other Sys Currency Code',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+$orderSetup->addAttribute('order', 'other_sys_currency_code', array(
+    'type'          => 'varchar',
+    'label'         => 'Other Sys Currency Code',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+
 $orderSetup->addAttribute('quote_item', 'other_sys_qty', array(
     'type'          => 'varchar',
     'label'         => 'Other System Qty',

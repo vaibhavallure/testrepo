@@ -59,6 +59,15 @@
 				<teamwork_receipt_id>
 					<to_order>*</to_order>
 				</teamwork_receipt_id>
+				<other_sys_currency>
+					<to_order>*</to_order>
+				</other_sys_currency>
+				<other_sys_currency_symbol>
+					<to_order>*</to_order>
+				</other_sys_currency_symbol>
+				<other_sys_currency_code>
+					<to_order>*</to_order>
+				</other_sys_currency_code>
 			</sales_convert_quote>
 			
 			<sales_convert_quote_item>

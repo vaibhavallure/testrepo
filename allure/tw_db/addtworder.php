@@ -57,7 +57,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                 
                     $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
                    
-                    if(false && $orderObj->getId()){
+                    if($orderObj->getId()){
                         Mage::log("Receipt Id:".$receiptId." Order Id:".$orderObj->getId()." present",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
@@ -86,6 +86,8 @@ if(($handle = fopen($folderPath, "r")) != false){
                         ->assignCustomer($customer);
                         
                         $quoteObj = $quoteObj->setStoreId(1);
+                        
+                        //$quoteObj->setCurrency(trim($orderDetails["CODE"]));
                             
                         $discountTot    = 0;
                         $isDiscountTot  = false;
@@ -179,7 +181,15 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 $quoteObj->setBaseGrandTotal($quoteObj->getBaseGrandTotal() + $discountTot);
                              */
                          }
-                            
+                         
+                         
+                         Mage::log("currency:".$orderDetails["CODE"],Zend_log::DEBUG,$teamworkLog,true);
+                         
+                         
+                         $quoteObj->setOtherSysCurrency(trim($orderDetails["CODE"]));
+                         $quoteObj->setOtherSysCurrencySymbol(trim($orderDetails["Symbol"]));
+                         $quoteObj->setOtherSysCurrencyCode(trim($orderDetails["CurrencyCode"]));
+                         
                          $quoteObj->setTeamworkReceiptId($receiptId);
                          $quoteObj->setCreateOrderMethod(2);
                          $quoteObj->save();
@@ -309,6 +319,10 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $orderObj->setSubtotalInclTax($quoteSubTotal);
                             $orderObj->setBaseSubtotalInclTax($quoteSubTotal);
                         }
+                        
+                        $createdDate = trim($orderDetails["RecCreated"]);
+                        
+                        $orderObj->setCreatedAt($createdDate);
                             
                         $orderObj->setShippingDescription("Store Pickup"); //self::SHIPPING_METHOD_NAME
                         $orderObj->setGrandTotal($totalAmmount);

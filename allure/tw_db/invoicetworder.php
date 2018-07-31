@@ -104,7 +104,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                         }
                     }
                     
-                    if(false && $orderObj->hasInvoices()){
+                    if($orderObj->hasInvoices()){
                         Mage::log("Invoice Already present. Order Id:".$orderId,Zend_log::DEBUG,$teamworkLog,true);
                     }else{
                         $paymentDetails = $oData["payment_details"];
