@@ -779,7 +779,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             		'type' => 'options',
             		'width' => '70px',
             		'filter_index' => "{$tableName_sales_flat_order}.create_order_method",
-            		'options' => array(1=>'CounterPoint',0=>'Website'),
+            		'options' => array(1=>'CounterPoint',0=>'Website',2=>'Teamwork'),
             ),
             'counterpoint_order_id' => array(
                 'header' => $helper->__('Counterpoint Id'),
