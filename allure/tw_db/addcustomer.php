@@ -54,6 +54,24 @@ if(($handle = fopen($folderPath, "r")) != false){
             ->setWebsiteId($websiteId)
             ->loadByEmail($email);
             
+            
+            if($customer->getId()){
+                try{
+                    $isTmCustomer = $customer->getIsTeamworkCustomer();
+                    if(!$isTmCustomer){
+                        continue;
+                    }
+                    
+                    $createdAt1 = trim($data["created_at"]);
+                    $customer->setCreatedAt($createdAt1)->save();
+                    Mage::log("Email:".$email." Customer Id :".$customer->getId()." date updated:".$createdAt1,Zend_log::DEBUG,$teamworkLog,true);
+                    
+                }catch (Exception $e1){
+                    Mage::log("Email:".$email." Customer Id :".$customer->getId()." Exception".$e1->getMessage(),Zend_log::DEBUG,$teamworkLog,true);
+                }
+            }
+            continue;
+            
             if($customer->getId()){
                 Mage::log("Already exists. TWID:".$teamworkId." Email:".$email." Customer ID:".$customer->getId(),Zend_log::DEBUG,$teamworkLog,true);
                 continue;

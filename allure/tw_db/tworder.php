@@ -56,8 +56,8 @@ function getQuery(){
               JOIN Currency AS CUR ON RPAY.CurrencyID = CUR.CurrencyID
               JOIN RECEIPTITEM AS RITM      ON R.ReceiptId = RITM.ReceiptId 
               JOIN INVENITEMINFO AS ITM     ON RITM.ITEMID = ITM.ITEMID
-              -- WHERE R.WebOrderNo IS NULL  
-              WHERE R.ReceiptId = '3749ABBF-FD5C-4804-ACAA-003CECE0D0C3' -- 'D3ED5776-F343-4861-925F-A005DE80E724' -- 'BFC9C625-4A8A-47EF-BBA7-001C92C9C9ED' --'FB021240-3808-4067-8A32-001376834437' 
+              WHERE R.WebOrderNo IS NULL AND r.TotalQty > 0
+              -- WHERE R.ReceiptId = '3749ABBF-FD5C-4804-ACAA-003CECE0D0C3' -- 'D3ED5776-F343-4861-925F-A005DE80E724' -- 'BFC9C625-4A8A-47EF-BBA7-001C92C9C9ED' --'FB021240-3808-4067-8A32-001376834437' 
               -- '63F588FB-FAD4-4154-AACD-DF7BC5AA4E4F'
             ; 
             ";
@@ -186,8 +186,8 @@ function getConnection(){
             //$rowData[] = array("order" => $orderArr);
             $csv->saveData($filepath,$rowData);
             
-            echo "<pre>";
-            print_r($orderArr);
+           // echo "<pre>";
+           // print_r($orderArr);
             
         }catch (Exception $e){
             echo $e->getMessage();
