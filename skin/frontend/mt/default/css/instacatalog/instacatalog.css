@@ -140,3 +140,10 @@
 .fs-entry-container .post_item_without_link{
 	display: none;
 }
+.share_link_icon img{
+	display: inline-block;
+    height: 13px;
+    width: 12px;
+    padding-top: 3px;
+    padding-left: 5px;
+}]
