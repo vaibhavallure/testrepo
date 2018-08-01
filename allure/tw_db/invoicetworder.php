@@ -144,8 +144,12 @@ if(($handle = fopen($folderPath, "r")) != false){
                             
                             $invoice->setBaseGrandTotal($incAmount);
                             $invoice->setGrandTotal($incAmount);
-                            $invoice->setSubtotalInclTax($incAmount);
-                            $invoice->setSubtotal($incAmount);
+                            
+                            if($changeAmt != 0){
+                                $invoice->setSubtotalInclTax($incAmount);
+                                $invoice->setSubtotal($incAmount);
+                            }
+                            
                             $invoice->setBaseSubtotal($incAmount);
                             
                             $isShowPay = true;
