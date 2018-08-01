@@ -124,7 +124,9 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 $taxPer = round($taxPer,2);
                             }
                             
-                            $productArr[$sku] = array(
+                            $tmItemId = trim($tmProduct["ReceiptItemId"]);
+                            
+                            $productArr[$tmItemId] = array(
                                 "orig_price_tax" => $origPriceWithTax,
                                 "tax" => ($pTaxAmt * $qty),
                                 "single_tax" => $pTaxAmt,
@@ -154,7 +156,13 @@ if(($handle = fopen($folderPath, "r")) != false){
                             //$productObj->setBasePriceInclTax($origPriceWithTax);
                             $quoteItem->setStoreId(1);
                             
+                            $quoteItem->setOtherSysQty($tempQty);
+                            
+                            
+                            $quoteItem->setTwItemId($tmItemId);
+                            
                             $quoteObj->addItem($quoteItem);
+                            
                             $productObj = null;
                         }
                         
@@ -244,7 +252,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 $orderItem->setData('product_id',$productId);
                             }
                             
-                            $iSku = $item->getSku();
+                            $iSku = $item->getTwItemId();//$item->getSku();
                             $taxI = $productArr[$iSku]["tax"];
                             
                             $singleTax = $productArr[$iSku]["single_tax"];
@@ -273,8 +281,8 @@ if(($handle = fopen($folderPath, "r")) != false){
                             
                             if($disc){
                                 //$disc *= (-1);
-                                //$orderItem->setData("discount_amount",$disc);
-                                //$orderItem->setData("base_discount_amount",$disc);
+                                $orderItem->setData("discount_amount",$disc);
+                                $orderItem->setData("base_discount_amount",$disc);
                             }
                             
                             $tTax += $taxI;
