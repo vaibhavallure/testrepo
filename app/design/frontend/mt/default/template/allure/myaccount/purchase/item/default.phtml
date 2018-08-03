@@ -4,8 +4,8 @@
                 $stores = Mage::app()->getStores();
                 
                 $storeColorConfig = Mage::helper('myaccount')->getStoreColorConfig();
-                
-                foreach ($stores as $store) {
+                $vstores=Mage::getModel('allure_virtualstore/store')->getCollection();
+                foreach ($vstores as $store) {
                 	$storeList[$store->getId()] = $store->getName();
                 }
                 
@@ -87,7 +87,7 @@
                         $reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
                         
                         $storeColor = '';
-                        $storeName = $storeList[$_item->getStoreId()];
+                        $storeName = $storeList[$_item->getOldStoreId()];
                         if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
                         	$storeColor .= 'style="';
                         	$frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
