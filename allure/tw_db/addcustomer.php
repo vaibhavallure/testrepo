@@ -62,7 +62,9 @@ if(($handle = fopen($folderPath, "r")) != false){
                         continue;
                     }
                     
-                    $createdAt1 = trim($data["created_at"]);
+                    $createdAtArr = explode(".", trim($data["created_at"]));
+                    
+                    $createdAt1 = trim($createdAtArr[0]);
                     $customer->setCreatedAt($createdAt1)->save();
                     Mage::log("Email:".$email." Customer Id :".$customer->getId()." date updated:".$createdAt1,Zend_log::DEBUG,$teamworkLog,true);
                     
