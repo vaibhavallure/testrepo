@@ -92,6 +92,8 @@ if(($handle = fopen($folderPath, "r")) != false){
                         
                         $productDetails = $oData["product_details"];
                         
+                        $extraOrderDetails = $oData["extra_details"];
+                        
                         $productArr = array();
                         
                         foreach ($productDetails as $tmProduct){
@@ -110,9 +112,13 @@ if(($handle = fopen($folderPath, "r")) != false){
                             
                             $tempQty = $qty;
                             
-                            if($qty < 0){
-                                $qty = $qty * (-1);
-                            }
+                            $totalAmtT = trim($orderDetails["TotalAmountWithTax"]);
+                            
+                            //if($totalAmtT < 0){
+                                if($qty < 0){
+                                    $qty = $qty * (-1);
+                                }
+                            //}
                             
                             $origPriceWoutTax = $tmProduct["OriginalPriceWithoutTax"];
                             $origPriceWithTax = $tmProduct["OriginalPriceWithTax"];
@@ -192,6 +198,14 @@ if(($handle = fopen($folderPath, "r")) != false){
                              */
                         }
                         
+                        $otherSysCur     = trim($orderDetails["CODE"]);
+                        $otherSysCurCode = trim($orderDetails["CurrencyCode"]);
+                        
+                        $quoteObj->setOtherSysCurrency($otherSysCur);
+                        $quoteObj->setOtherSysCurrencyCode($otherSysCurCode);
+                        
+                        $quoteObj->setOtherSysExtraInfo(json_encode($extraOrderDetails,true));
+                        
                         $quoteObj->setTeamworkReceiptId($receiptId);
                         $quoteObj->setCreateOrderMethod(2);
                         $quoteObj->save();
@@ -245,7 +259,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 }
                                 $orderItem->setData('qty_ordered',$qtyItem);
                                 $orderItem->setData('qty_refunded',$qtyItem);
-                                $orderItem->setData('qty_canceled',$qtyItem);
+                                //$orderItem->setData('qty_canceled',$qtyItem);
                             }
                             
                             if($productId){
@@ -294,6 +308,10 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $orderObj->addItem($orderItem);
                         }
                         
+                        $createAt = trim($orderDetails["RecCreated"]);
+                        
+                        $orderObj->setCreatedAt($createAt);
+                        
                         $orderObj->setCanShipPartiallyItem(false);
                         
                         $totalDue = $orderObj->getTotalDue();
@@ -329,8 +347,8 @@ if(($handle = fopen($folderPath, "r")) != false){
                         //$orderObj->setTotalPaid($totalAmmount);
                         
                         //complete the order status
-                        $orderObj->setData('state',"pending")
-                        ->setData('status',"pending");
+                        $orderObj->setData('state',"processing")
+                        ->setData('status',"processing");
                         
                         
                         $orderObj->save();

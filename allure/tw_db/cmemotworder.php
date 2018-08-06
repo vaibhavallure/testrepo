@@ -93,6 +93,10 @@ if(($handle = fopen($folderPath, "r")) != false){
                     
                     $data["qtys"] = $tempArr;
                     
+                    if(count($tempArr) <= 0){
+                        Mage::log("Order Id:".$orderId." Order is not applicable to creditmemo.",Zend_log::DEBUG,$teamworkLog,true);
+                        continue;
+                    }
                     
                     
                     $invoice = null;
@@ -103,11 +107,19 @@ if(($handle = fopen($folderPath, "r")) != false){
                     
                     //Mage::log("invoice:".$invoice->getId(),Zend_log::DEBUG,$teamworkLog,true);
                     $service = Mage::getModel('sales/service_order', $orderObj);
-                    if ($invoice) {
+                    if (0 && $invoice) {
                         $creditmemo = $service->prepareInvoiceCreditmemo($invoice, $data)->save();
                         $creditmemo->refund();
                     } else {
-                        $creditmemo = $service->prepareCreditmemo($data)->save();
+                        $creditmemo = $service->prepareCreditmemo($data);//->save();
+                        
+                        foreach ($creditmemo->getAllItems() as $item) {
+                            //Mage::log($item->getData(),Zend_log::DEBUG,$teamworkLog,true);
+                            $item->register();
+                        }
+                        
+                        $creditmemo->save();
+                        
                         $creditmemo->refund();
                         //$creditmemo->setState(2)->save();
                     }
@@ -140,7 +152,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                         
                     
                  }catch (Exception $e){
-                    Mage::log("Exception".$e->getMessage(),Zend_log::DEBUG,$teamworkLog,true);
+                    Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,$teamworkLog,true);
                  }
             }
         }

@@ -24,5 +24,21 @@ $orderSetup->addAttribute('order_item', 'tw_item_id', array(
     'default'		=> null
 ));
 
+$orderSetup->addAttribute('quote', 'other_sys_extra_info', array(
+    'type'          => 'text',
+    'label'         => 'Other Sys Extra Info',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
+$orderSetup->addAttribute('order', 'other_sys_extra_info', array(
+    'type'          => 'text',
+    'label'         => 'Other Sys Extra Info',
+    'visible'       => true,
+    'required'      => false,
+    'default'		=> null
+));
+
 
 $installer->endSetup();

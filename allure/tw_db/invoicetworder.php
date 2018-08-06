@@ -101,6 +101,8 @@ if(($handle = fopen($folderPath, "r")) != false){
                         $otherSysQty = $item->getOtherSysQty(); 
                         if($otherSysQty < 0){
                             $isPending = true;
+                        }else{
+                            
                         }
                     }
                     
@@ -142,15 +144,56 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $invoice->setState($state);
                             $invoice->setCanVoidFlag(0);
                             
-                            $invoice->setBaseGrandTotal($incAmount);
-                            $invoice->setGrandTotal($incAmount);
+                            
+                            $amount = $incAmount;
                             
                             if($changeAmt != 0){
+                                //continue;
+                                $invoice->setBaseGrandTotal($incAmount);
+                                $invoice->setGrandTotal($incAmount);
+                                
                                 $invoice->setSubtotalInclTax($incAmount);
                                 $invoice->setSubtotal($incAmount);
+                                
+                                $invoice->setBaseSubtotal($incAmount);
+                            }
+                                
+                            elseif($paidAmt > $orderObj->getGrandTotal()){
+                                $amount = $paidAmt;
+                                
+                                $invoice->setBaseGrandTotal($amount);
+                                $invoice->setGrandTotal($amount);
+                                
+                                $invoice->setSubtotalInclTax($amount);
+                                $invoice->setSubtotal($amount);
+                                
+                                $invoice->setSubtotal($amount);
+                                
+                                $invoice->setTaxAmount(0);
+                                $invoice->setBaseTaxAmount(0);
+                                
+                            }else{
+                                if(!$isPending && $paidAmt < $orderObj->getGrandTotal()){
+                                    $amount = $paidAmt;
+                                    $invoice->setBaseGrandTotal($amount);
+                                    $invoice->setGrandTotal($amount);
+                                    
+                                    $invoice->setSubtotalInclTax($amount);
+                                    $invoice->setSubtotal($amount);
+                                    
+                                    $invoice->setSubtotal($amount);
+                                    
+                                    $invoice->setTaxAmount(0);
+                                    $invoice->setBaseTaxAmount(0);
+                                }else{
+                                    $amount = $orderObj->getGrandTotal();
+                                }
                             }
                             
-                            $invoice->setBaseSubtotal($incAmount);
+                            
+                            
+                            
+                            
                             
                             $isShowPay = true;
                             if($incAmount <= 0){
@@ -274,17 +317,19 @@ if(($handle = fopen($folderPath, "r")) != false){
                                     
                                     $transaction = Mage::getModel('sales/order_payment_transaction');
                                     $transaction->setOrderId($orderObj->getId());
-                                    $transaction->setOrderPaymentObject($orderObj->getPayment());
+                                    $transaction->setOrderPaymentObject($orderPay);
                                     $transaction->setTxnType("capture");
-                                    //$transaction->setTxnId($payment['processor_trans_id']);
+                                    $transaction->setTxnId($transactionId);
                                     $transaction->setIsClosed(0);
-                                    $additinalInfo = $orderObj->getPayment()->getAdditionalInformation();
+                                    $additinalInfo = $orderPay->getAdditionalInformation();
                                     if ($additinalInfo) {
                                         foreach ($additinalInfo as $key => $value) {
                                             $transaction->setAdditionalInformation($key, $value);
                                         }
                                     }
                                     $transaction->save();
+                                    
+                                    Mage::log("Transaction:".$transaction->getId(),Zend_log::DEBUG,$teamworkLog,true);
                                     
                                 }
                             }

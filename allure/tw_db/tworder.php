@@ -38,10 +38,13 @@ function getQuery(){
               R.SellToLastName, R.SellToFirstName, R.SellToAddress1, R.SellToAddress2,
               R.SellToCity, R.SellToState, R.SellToPostalCode, R.SellToPhone1,
               R.SellToPhone2, R.SellToCountryCode,R.SellToCustomerId,
+              R.DeviceTransactionNumber,
+              CONCAT(EMP.FirstName,' ',EMP.LastName) AS EMPNAME,
+              LOC.Name, LOC.LocationCode, LOC.LocationCodeNameSearch,
               CUR.CODE, CUR.Symbol, CUR.CurrencyCode,
               PITM.VALUE,CAT.SKU,CAT.METAL_COLOR,
               RITM.ReceiptItemId, RITM.ITEMID,RITM.ListOrder,
-              RITM.Qty,  RITM.OriginalPriceWithTax,
+              RITM.Qty, RITM.OriginalPriceWithTax,
               RITM.OriginalPriceWithoutTax, RITM.OriginalExtPrice,
               RITM.OriginalExtPriceWithoutTax, RITM.OriginalExtPriceWithTax,
               (RITM.LineExtDiscountAmount) AS ITM_DISC, 
@@ -55,12 +58,14 @@ function getQuery(){
               FROM RECEIPT AS R 
               JOIN RECEIPTPAYMENT AS RPAY   ON R.ReceiptId = RPAY.ReceiptId
               JOIN Currency AS CUR ON RPAY.CurrencyID = CUR.CurrencyID
-              JOIN RECEIPTITEM AS RITM      ON R.ReceiptId = RITM.ReceiptId 
-              JOIN INVENITEMINFO AS ITM     ON RITM.ITEMID = ITM.ITEMID
-              JOIN ApiInvenItemIdentifier AS PITM ON PITM.ITEMID = ITM.ITEMID
-              JOIN _MARISP66_Catalog AS CAT ON CAT.teamwork_id = PITM.VALUE
+              LEFT JOIN Employee EMP ON R.CreateEmployeeId = EMP.EmployeeId
+              LEFT JOIN Location LOC ON R.LocationId = LOC.LocationID
+              JOIN RECEIPTITEM AS RITM ON R.ReceiptId = RITM.ReceiptId 
+              JOIN INVENITEMINFO AS ITM ON RITM.ITEMID = ITM.ITEMID
+              LEFT JOIN ApiInvenItemIdentifier AS PITM ON PITM.ITEMID = ITM.ITEMID
+              LEFT JOIN _MARISP66_Catalog AS CAT ON CAT.teamwork_id = PITM.VALUE
               -- WHERE R.WebOrderNo IS NULL AND r.TotalQty > 0
-              WHERE R.ReceiptId = 'D04D9D85-D1DC-4983-A552-4A440F9261E8' -- 'D3ED5776-F343-4861-925F-A005DE80E724' -- 'BFC9C625-4A8A-47EF-BBA7-001C92C9C9ED' --'FB021240-3808-4067-8A32-001376834437' 
+              WHERE R.ReceiptId = 'C5F8D895-E72E-49C0-B460-8AD0686FFCD4' -- 'E8741722-B4E5-4374-9CE2-3418952E354E' -- 'D04D9D85-D1DC-4983-A552-4A440F9261E8' -- 'C5F8D895-E72E-49C0-B460-8AD0686FFCD4'  -- 'E8741722-B4E5-4374-9CE2-3418952E354E'  -- 'D3ED5776-F343-4861-925F-A005DE80E724' -- 'BFC9C625-4A8A-47EF-BBA7-001C92C9C9ED' --'FB021240-3808-4067-8A32-001376834437' 
               -- '63F588FB-FAD4-4154-AACD-DF7BC5AA4E4F'
             ; 
             ";
@@ -126,13 +131,18 @@ function getConnection(){
             );
             
             $order_header = array(
-                "RecCreated","ReceiptId","ReceiptNum", "TotalAmountWithoutTax",
+                "RecCreated","ReceiptId", "TotalAmountWithoutTax",
                 "TotalAmountWithTax","TAX",
                 "TotalQty", "EmailAddress",
                 "SellToLastName", "SellToFirstName", "SellToAddress1", "SellToAddress2",
                 "SellToCity", "SellToState", "SellToPostalCode","SellToPhone1",
                 "SellToPhone2","SellToCountryCode","SellToCustomerId",
                 "CODE","Symbol","CurrencyCode"
+            );
+            
+            $order_extra_header = array(
+                "DeviceTransactionNumber","ReceiptNum","EMPNAME","Name",
+                "LocationCode","LocationCodeNameSearch"
             );
             
             $orderArr = array();
@@ -146,6 +156,7 @@ function getConnection(){
                 $orderDetails   = array();
                 $productDetails = array();
                 $paymentDetails = array();
+                $extraOrderDetails = array();
                 
                 for ($j = 1; $j <= odbc_num_fields($result); $j++){
                     $field_name  = odbc_field_name($result, $j);
@@ -157,11 +168,13 @@ function getConnection(){
                         $paymentDetails[$field_name] = $field_value;
                     }elseif (in_array($field_name, $product_header)){
                         $productDetails[$field_name] = $field_value;
-                    }else{
+                    }elseif (in_array($field_name, $order_header)){
                         if($field_name == "Symbol"){
                             $field_value = utf8_decode($field_value);
                         }
                         $orderDetails[$field_name] = $field_value;
+                    }else{
+                        $extraOrderDetails[$field_name] = $field_value;
                     }
                 }
                 
@@ -173,7 +186,8 @@ function getConnection(){
                         ),
                         "payment_details"  => array(
                             $paymentId => $paymentDetails
-                        )
+                        ),
+                        "extra_details" => $extraOrderDetails
                     );
                 }else{
                     $tempPayment = $orderArr[$receiptId]["payment_details"];
