@@ -64,7 +64,7 @@ foreach ($collection as $_product){
     $data['size_matrix']='SIZE-LADIESWEAR';
     $data['GTIN_number']=$_product->getGtinNumber();   // Need to add later
     $data['cost']='0.00';
-    $data['store_retail']=$_product->getPrice();
+    $data['store_retail']=$_product->getHarrodsPrice();
     $data['airports_retail']='';
     $data['wholes_selling']='';
     $data['ctry_of_origi']='';
@@ -141,7 +141,7 @@ foreach ($collection as $_product){
         $data['size_matrix']='SIZE-LADIESWEAR';
         $data['GTIN_number']=$_product->getGtinNumber();   // Need to add later
         $data['cost']='0.00';
-        $data['store_retail']=$_product->getPrice();
+        $data['store_retail']=$_product->getHarrodsPrice();
         $data['airports_retail']='';
         $data['wholes_selling']='';
         $data['ctry_of_origi']='';
