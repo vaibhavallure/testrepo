@@ -308,7 +308,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $orderObj->addItem($orderItem);
                         }
                         
-                        $createAt = trim($orderDetails["RecCreated"]);
+                        $createAt = trim($orderDetails["StateDate"]);
                         
                         $orderObj->setCreatedAt($createAt);
                         

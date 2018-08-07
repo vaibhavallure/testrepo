@@ -31,7 +31,8 @@ if(empty($endDate)){
 
 
 function getQuery(){
-    $query = "SELECT R.RecCreated, R.ReceiptId, R.ReceiptNum, R.TotalAmountWithoutTax,
+    $query = "SELECT R.RecCreated, R.ReceiptId, R.ReceiptNum, R.StateDate,
+              R.TotalAmountWithoutTax,
               R.TotalAmountWithTax, 
               (R.TotalAmountWithTax -R.TotalAmountWithoutTax) AS TAX,
               R.TotalQty, R.EmailAddress,
@@ -131,7 +132,7 @@ function getConnection(){
             );
             
             $order_header = array(
-                "RecCreated","ReceiptId", "TotalAmountWithoutTax",
+                "RecCreated","StateDate","ReceiptId", "TotalAmountWithoutTax",
                 "TotalAmountWithTax","TAX",
                 "TotalQty", "EmailAddress",
                 "SellToLastName", "SellToFirstName", "SellToAddress1", "SellToAddress2",
