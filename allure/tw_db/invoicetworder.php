@@ -75,8 +75,11 @@ if(($handle = fopen($folderPath, "r")) != false){
             "Amex" => "AMEX"
         );
         
+        $invCnt = 0;
         
         foreach ($csvData as $data){
+            
+            $invCnt++;
             
             $tData = unserialize($data["order"]);
             
@@ -85,7 +88,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                     
                     $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
                     if(!$orderObj->getId()){
-                        Mage::log("Receipt Id:".$receiptId." Order not created.",Zend_log::DEBUG,$teamworkLog,true);
+                        Mage::log($invCnt." - Receipt Id:".$receiptId." Order not created.",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
                     
@@ -107,7 +110,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                     }
                     
                     if($orderObj->hasInvoices()){
-                        Mage::log("Invoice Already present. Order Id:".$orderId,Zend_log::DEBUG,$teamworkLog,true);
+                        Mage::log($invCnt." - Invoice Already present. Order Id:".$orderId,Zend_log::DEBUG,$teamworkLog,true);
                     }else{
                         $paymentDetails = $oData["payment_details"];
                         
@@ -205,7 +208,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                             $invoiceNumber  = $invoice->getIncrementId();
                             $customerId     = $orderObj->getCustomerId();
                             
-                            Mage::log("Receipt Id:".$receiptId." Order Id:".$orderId." Invoice No:".$invoiceNumber,Zend_log::DEBUG,$teamworkLog,true);
+                            Mage::log($invCnt." - Receipt Id:".$receiptId." Order Id:".$orderId." Invoice No:".$invoiceNumber,Zend_log::DEBUG,$teamworkLog,true);
                             
                             $orderPay = $orderObj->getPayment();
                             

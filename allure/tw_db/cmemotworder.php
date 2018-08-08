@@ -40,16 +40,21 @@ if(($handle = fopen($folderPath, "r")) != false){
         $existCnt = 0;
         $nonExistCnt = 0;
         
+        
+        $credmCnt = 0;
+        
         foreach ($csvData as $data){
             
             $tData = unserialize($data["order"]);
+            
+            $credmCnt++;
             
             foreach ($tData as $receiptId => $oData){
                 try{
                     
                     $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
                     if(!$orderObj->getId()){
-                        Mage::log("Receipt Id:".$receiptId." Order not created.",Zend_log::DEBUG,$teamworkLog,true);
+                        Mage::log($credmCnt." - Receipt Id:".$receiptId." Order not created.",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
                     
@@ -57,7 +62,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                     
                     
                     if (!$orderObj->canCreditmemo()) {
-                        Mage::log("Order Id:".$orderId." Cannot create credit memo for the order.",Zend_log::DEBUG,$teamworkLog,true);
+                        Mage::log($credmCnt." - Order Id:".$orderId." Cannot create credit memo for the order.",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
                     
@@ -94,7 +99,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                     $data["qtys"] = $tempArr;
                     
                     if(count($tempArr) <= 0){
-                        Mage::log("Order Id:".$orderId." Order is not applicable to creditmemo.",Zend_log::DEBUG,$teamworkLog,true);
+                        Mage::log($credmCnt." - Order Id:".$orderId." Order is not applicable to creditmemo.",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
                     
@@ -148,7 +153,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                     ->addObject($orderObj)
                     ->save();
                     
-                    Mage::log("Credit memo:".$creditmemo->getId(),Zend_log::DEBUG,$teamworkLog,true);
+                    Mage::log($credmCnt." - Credit memo:".$creditmemo->getId(),Zend_log::DEBUG,$teamworkLog,true);
                         
                     
                  }catch (Exception $e){

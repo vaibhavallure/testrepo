@@ -40,7 +40,11 @@ if(($handle = fopen($folderPath, "r")) != false){
         $existCnt = 0;
         $nonExistCnt = 0;
         
+        $shipCnt = 0;
+        
         foreach ($csvData as $data){
+            
+            $shipCnt++;
             
             $tData = unserialize($data["order"]);
             
@@ -49,32 +53,35 @@ if(($handle = fopen($folderPath, "r")) != false){
                     
                     $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
                     if(!$orderObj->getId()){
-                        Mage::log("Receipt Id:".$receiptId." Order not created.",Zend_log::DEBUG,$teamworkLog,true);
+                        Mage::log($shipCnt." - Receipt Id:".$receiptId." Order not created.",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
                     
                     $orderId = $orderObj->getId();
                     
                     if (!$orderObj->canShip()) {
-                        Mage::log("Order Id:".$orderId." Shipment can't create for this order.",Zend_log::DEBUG,$teamworkLog,true);
+                        Mage::log($shipCnt." - Order Id:".$orderId." Shipment can't create for this order.",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
                     
                     $isRefundItem = false;
                     $qtys = array();
+                    $cntI = 0;
+                    $refCnt = 0;
                     foreach ($orderObj->getAllItems() as $item) {
-                        
+                        $cntI++;
                         $otherSysQty = $item->getOtherSysQty();
                         if($otherSysQty < 0){
                             $isRefundItem = true;
-                            break;
+                            $refCnt++;
+                            //break;
                         }
                         
                         $qtys[$item->getId()] = $item->getQtyOrdered();
                     }
                     
-                    if($isRefundItem){
-                        Mage::log("Order Id:".$orderId." Shipment can't create for this order.Refunded Item present.",Zend_log::DEBUG,$teamworkLog,true);
+                    if($cntI == $refCnt){
+                        Mage::log($shipCnt." - Order Id:".$orderId." Shipment can't create for this order.Refunded Item present.",Zend_log::DEBUG,$teamworkLog,true);
                         continue;
                     }
                     
@@ -97,7 +104,7 @@ if(($handle = fopen($folderPath, "r")) != false){
                     
                     $orderObj->save();
                     
-                    Mage::log("Shipment created. Shipment Id:".$shipment->getId()." Order Id:".$orderId,Zend_log::DEBUG,$teamworkLog,true);
+                    Mage::log($shipCnt." - Shipment created. Shipment Id:".$shipment->getId()." Order Id:".$orderId,Zend_log::DEBUG,$teamworkLog,true);
                     
                  }catch (Exception $e){
                     Mage::log("Exception".$e->getMessage(),Zend_log::DEBUG,$teamworkLog,true);
