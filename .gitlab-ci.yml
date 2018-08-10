@@ -18,7 +18,7 @@ stage:
   environment: staging
   stage: staging
   tags:
-    - staging
+    - cloud-alpha
   only:
     - master
   script:
@@ -46,7 +46,7 @@ stage_apple_pay:
   environment: apple_pay
   stage: staging
   tags:
-    - stage-beta
+    - cloud-beta
   only:
     - apple_pay
   cache:
@@ -66,15 +66,12 @@ beta_apple_pay:
     - beta
   only:
     - apple_pay
-  cache:
-    paths:
-    - var
-    - media
-    - app/etc/local.xml
   script:
-    - env
     - deploy-magento applepay-mariatash
-    - echo 'Deployed on apple_pay Staging'
+    - rm -f media && ln -s /var/www/shared/media/applepay-mariatash media
+    - rm -f var && ln -s /var/www/shared/var/applepay-mariatash var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/etc/applepay-mariatash/local.xml app/etc/local.xml
+    - echo 'Deployed on ApplePay Staging'
 
 deploy-cloud:
   environment: production
@@ -86,14 +83,3 @@ deploy-cloud:
   script:
     - mage-deploy
     - echo 'Deployed on Production'
-    
-deploy-production:
-  environment: production
-  stage: deploy
-  tags:
-    - mariatash
-  only:
-    - cloud
-  script:
-    - mage-deploy
-    - echo 'Deployed on Production Cloud'

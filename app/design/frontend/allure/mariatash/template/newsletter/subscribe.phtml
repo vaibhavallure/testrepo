@@ -30,7 +30,15 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
         <div id="newsletter-input" class="form-subscribe-mt">
             <div class="newsletter-mt">Sign up for Maria Tash's Exclusive Offers and Newsletter</div>
             <div id="newsletter-errors" class="validation-advice" style="display:none"></div>
-            
+            <div class="mt-newletter-subscribe-privacy-policy control">
+					<label for="mt-newsl-terms"  class="mt-custom-checkbox">
+            	<input  type="checkbox" name="mt-newsl-terms"
+        		 id="mt-newsl-terms" value="1" class="checkbox">
+        		 <span class="checkmark"></span>
+            <span>Yes, I want to sign up for Maria Tash emails.  
+            By clicking the submit button I agree to receive Maria Tash emails and I agree to the Maria <a href="/privacy-policy/">privacy policy</a> for this website.</span>
+            </label>
+			</div>
             <div class="input-row">
                 <input type="text" autocomplete="off" name="email" id="email" placeholder="Your Email Address" class="input-text required-entry validate-email" />
 		        <button type="button" onclick="sendNewsletterSubscription(this.form)" title="<?php echo $this->__('Sign up') ?>" class="button">
@@ -50,6 +58,17 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
     function sendNewsletterSubscription(form){
 
         jQuery('#msg-email').text('');
+
+        var newsletterPrivacySelector = jQuery(".mt-newletter-subscribe-privacy-policy #mt-newsl-terms");
+        var ischeck = newsletterPrivacySelector.prop('checked');
+        if(ischeck == false){
+        	newsletterPrivacySelector.addClass("checkbox-error-validate");
+        	newsletterPrivacySelector.parent().addClass("label-error-validate");
+			return;
+		 }else{
+			 newsletterPrivacySelector.removeClass("checkbox-error-validate");
+			 newsletterPrivacySelector.parent().removeClass("label-error-validate");
+		 }
                     
         var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
         jQuery('.loader').css({display:'inline-block'});

@@ -98,6 +98,18 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
         
         $this->_createBillingAgreement();
         
+        $payment_method = $order->getPayment()
+        ->getMethodInstance()
+        ->getCode();
+        
+        if ($payment_method == "banktransfer" ){
+            $pendingPayment = true;
+            $stateObject->setState(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+            $stateObject->setStatus(Mage_Sales_Model_Order::STATE_PENDING_PAYMENT);
+        }
+       
+        
+        
         $orderIsNotified = null;
         
         if ($stateObject->getState() && $stateObject->getStatus()) {

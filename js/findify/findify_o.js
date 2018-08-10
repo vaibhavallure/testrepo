@@ -2,7 +2,7 @@ var Findify = {
     "merchantKey": "f7f978d9-f7a6-40d1-ae94-d719986c4107",
     "searchURL": "/#q=",
     "currency": "USD",
-    "css": ["//d3nhg2i1zayjpd.cloudfront.net/search/prod/venusbymariatash.com.min.css"],
+    "css": ["//d3nhg2i1zayjpd.cloudfront.net/search/prod/mariatash.com.min.css"],
     "marginTop": "5px",
     "htmlResults": ".main-container",
     "searchBox": "input[name=\"q\"]",

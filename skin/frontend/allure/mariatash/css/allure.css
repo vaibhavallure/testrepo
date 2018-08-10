@@ -2236,7 +2236,8 @@ input.special-inst-product {
     position: relative;
     margin: 10% auto;
     /* padding: 5px 20px 13px 20px; */
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 10px 20px 10px 20px; 
     /* border-radius: 10px; */
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
@@ -2304,6 +2305,7 @@ width: 100%;
    border-left: 0px;
    border-right: 0;
    padding: 5px;
+   height: 22px;
 }
 .pop-link a{
    outline: 0;
@@ -2338,10 +2340,10 @@ cursor: pointer;
 	width: 20px;
     height: 20px;
 }
-#popup_is_subscribed{
+/* #popup_is_subscribed{
 	left: 0;
 	margin: 3px 20px;
-}
+} */
 .popupcheckbox_lbl{
 	padding: 3px 0 0 25px  !important;
 }
@@ -2380,9 +2382,9 @@ cursor: pointer;
 }
 #reg_msg_div #register-msg{
 	margin: auto;
-	color: #790000;
+	color: #830000;
     font-size: 12px;
-    font-weight: bold;
+   /*  font-weight: bold; */
     line-height: 1.63636363636;
 }
 #login_msg_div{
@@ -2392,9 +2394,9 @@ cursor: pointer;
 }
 #login_msg_div #login-msg{
 	margin: auto;
-	color: #790000;
+	color: #830000;
     font-size: 12px;
-    font-weight: bold;
+ /*    font-weight: bold; */
     line-height: 1.63636363636;
 }
 .popupResetPasswordModel input{
@@ -2453,4 +2455,169 @@ cursor: pointer;
 }
 .popupResetPasswordModel .submit-login{
   padding-bottom: 10px;
+}
+.gift-confirm .gift-confirm-msg{
+	margin-top: 20px;
+    color: #3F4048;
+    font-family: dinmittelschriftregular;
+    font-size: 32px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.gift-confirm  .redirect{
+	margin: 5 px !important;
+}
+
+.buttons-set #delete-my-account{
+	margin-right: 10px;
+}
+
+.popupDelMyAccModel {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: -20px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+    background: rgba(0,0,0,0.45);
+}
+.popupDelMyAccModel > div {
+    width: 320px;
+    position: relative;
+    margin: 10% auto;
+    /* padding: 5px 20px 13px 20px; */
+    padding: 20px;
+    /* border-radius: 10px; */
+    background: #fff;
+    background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999);
+    background: #dcdcdc;
+    box-shadow: 0px 0px 6px;
+}
+.popupDelMyAccModel .submit-delete{
+	    margin-bottom: 45px;
+}
+.popupDelMyAccModel .submit-delete button {
+	margin-top: 20px;
+    float: right;
+    color: #6f6b5a;
+}
+.popupDelMyAccModel .popupcheckbox_lbl_delacc{
+    text-align: justify;
+}
+.popupDelMyAccModel .del_my_acc_confirm_p{
+	padding-bottom: 5px;
+    text-align: justify;
+}
+#popupcheckbox_delmyacc_confirm {
+    left: 0;
+    margin: 3px 20px;
+    width: 20px;
+    height: 20px;
+}
+
+#register-modal-container .form-group {
+	margin-bottom: 0px;
+}
+
+#newsletter-form .newsletter-mt{
+	width: 100%;
+}
+
+#newsletter-form #newsletter-validate-detail button {
+	text-align: center;
+}
+
+
+.checkout-privacy-policy a.checkout_privacry_link{
+	font-size: 12px ! important;
+    margin: 0px ! important;
+}
+.popupRegisterModel .form-group.news-letter {
+    margin-top: 25px;
+}
+
+.popupRegisterModel label.popup-login-lbl {
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    font-weight: 400;
+}
+.popupLoginModel label.popup-login-lbl {
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    font-weight: 400;
+}
+.popupRegisterModel label.mt-custom-checkbox {
+    font-weight: 400;
+}
+
+.popupRegisterModel label {
+	margin-bottom: 0px;
+}
+
+.popupRegisterModel .news-letter-subscribe{
+	margin-top: 10px;
+}
+
+.mt-amazon-ptag,
+.mt-amazon-brtag{
+	display: none;
+}
+
+.facebook-checkout-login #AmazonPayButtonBefore{
+	margin-bottom: 12px;
+}
+
+.facebook-connect-p-or{
+	margin: 0px;
+}
+
+.checkout-onepage-index #checkout-step-login .col-1 li.buttons-set {
+    margin: 0px ! important;
+}
+
+
+.popupLoginModel .mt-facebookconnect-btn a{
+	float: right;
+	margin-right: 3px;
+}
+
+
+.popupLoginModel .mt-facebookconnect-btn .fb-img {
+    width: 180px;
+}
+
+.popupLoginModel .mt-facebookconnect-btn{
+	margin-top: -7px;
+}
+
+.popupLoginModel .pop-link{
+	margin-top: -10px;
+}
+
+.popupLoginModel .pop-link .benifits p{
+	line-height: 15px;
+	margin: 0px 0 5px;
+}
+
+.popupLoginModel > div {
+	margin: 8% auto;	
+}
+
+.popupLoginModel .form-group{
+	margin-bottom: 0px;
+}
+
+.table-product-info .product-name a:hover {
+    color: #906E39;
 }

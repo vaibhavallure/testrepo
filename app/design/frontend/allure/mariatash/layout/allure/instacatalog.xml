@@ -39,9 +39,7 @@
     </allure_instacatalog_feed_index>
     
     <allure_instacatalog_feed_view>
-    	<reference name="root">
-            <action method="setTemplate"><template>page/instagram.phtml</template></action>
-        </reference>
+    	
         <reference name="content">
         	 <block type="allure_instacatalog/feed_view" name="post_view" template="allure/instacatalog/feed/instagram_view.phtml" />
         </reference>

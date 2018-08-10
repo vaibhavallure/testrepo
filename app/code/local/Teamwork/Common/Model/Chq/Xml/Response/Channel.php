@@ -36,7 +36,7 @@ class Teamwork_Common_Model_Chq_Xml_Response_Channel extends Teamwork_Common_Mod
                 {
                     if( $eCommerceChannelEntity->getId() )
                     {
-                        $eCommerceChannelEntity->delete();
+                        // $eCommerceChannelEntity->delete();
                     }
                     continue;
                 }

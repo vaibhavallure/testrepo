@@ -4671,7 +4671,7 @@ var findify_jQuery = jQuery.noConflict(!0);
 								c.b('<div class="findify-product-optional-info">'), c.b(c.v(c.f("color_variants", a, b, 0))), c.b(" "), c.b(c.v(c.d("TEXT.MORE_COLORS", a, b, 0))), c.b("</div>")
 							}), a.pop()), d.b(" "), d.s(d.f("out_of_stock", a, b, 1), a, b, 0, 1465, 1535, "{{ }}") && (d.rs(a, b, function(a, b, c) {
 								c.b('<div class="findify-product-optional-info">'), c.b(c.v(c.d("TEXT.OUT_OF_STOCK", a, b, 0))), c.b("</div>")
-                            }), a.pop()), d.b(" "), d.b('<div id="quickview_button"><a class="fancybox fancybox.iframe button btn-quickview" id="product-quickview-'),d.b(d.v(d.f("id", a, b, 0))), d.b('" href="http://www.venusbymariatash.com/quickview/index/index/id/'),d.b(d.v(d.f("id", a, b, 0))),d.b('/?optionId=468" title="quick view" rel="gallery"><span>quick view</span></a></div>'),d.s(d.f("add_to_cart", a, b, 1), a, b, 0, 1302, 1366, "{{ }}") && (d.rs(a, b, function(a, b, c) {
+                            }), a.pop()), d.b(" "), d.b('<div id="quickview_button"><a class="fancybox fancybox.iframe button btn-quickview" id="product-quickview-'),d.b(d.v(d.f("id", a, b, 0))), d.b('" href="http://www.mariatash.com/quickview/index/index/id/'),d.b(d.v(d.f("id", a, b, 0))),d.b('/?optionId=468" title="quick view" rel="gallery"><span>quick view</span></a></div>'),d.s(d.f("add_to_cart", a, b, 1), a, b, 0, 1302, 1366, "{{ }}") && (d.rs(a, b, function(a, b, c) {
                                 c.b('<div class="findify-product-add-to-cart">'), c.b(c.t(c.f("add_to_cart", a, b, 0))), c.b("</div>")
                             }), a.pop()), d.b(" </div> </a> </div> "), d.fl()
                         }),
@@ -5506,7 +5506,7 @@ var findify_jQuery = jQuery.noConflict(!0);
 					if(lastChar == ',') {
 						pr[u] = pr[u].slice(0, -1);
 					}
-					st +='<li id="'+b+'_'+y[u]+'" onmouseover="tooltipSearch('+"'"+b+"_"+y[u]+"'"+')"  onclick="changePicByColor(\''+r[u]+'\','+b+','+y[u]+",'"+pr[u]+"'"+')" style="background: url('+"'http://www.venusbymariatash.com/media/amconf/images/"+y[u]+".jpg'"+') !important; " class="colorSelector tipped-create" value="'+y[u]+'" title=""></li>';
+					st +='<li id="'+b+'_'+y[u]+'" onmouseover="tooltipSearch('+"'"+b+"_"+y[u]+"'"+')"  onclick="changePicByColor(\''+r[u]+'\','+b+','+y[u]+",'"+pr[u]+"'"+')" style="background: url('+"'http://www.mariatash.com/media/amconf/images/"+y[u]+".jpg'"+') !important; " class="colorSelector tipped-create" value="'+y[u]+'" title=""></li>';
 				}
 			}
 			st +='</ul></div>';
@@ -5554,7 +5554,7 @@ var findify_jQuery = jQuery.noConflict(!0);
                 });
 	}
 	function checkimg(img_url){
-		if(img_url=='http://www.venusbymariatash.com/media/catalog/product/placeholder/default/Place_holder_MT.jpg') return ' place_class';
+		if(img_url=='http://www.mariatash.com/media/catalog/product/placeholder/default/Place_holder_MT.jpg') return ' place_class';
 		else return '';		
 	}
 	

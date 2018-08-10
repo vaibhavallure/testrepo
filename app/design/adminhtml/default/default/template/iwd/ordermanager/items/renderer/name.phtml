@@ -10,13 +10,12 @@
     <?php if ($this->getOrderOptions()): ?>
         <dl class="item-options">
         <?php foreach ($this->getOrderOptions() as $_option): ?>
-            <dt><?php echo $_option['label'] ?></dt>
-            <dd>
+            <dt class="custom_options_iwd"><?php echo ucwords($_option['label']).":" ?>
             <?php if (isset($_option['custom_view']) && $_option['custom_view']): ?>
-                <?php echo $this->getCustomizedOptionValue($_option); ?>
+                <?php echo strtolower($this->getCustomizedOptionValue($_option)); ?>
             <?php else: ?>
                 <?php $_option = $this->getFormattedOption($_option['value']); ?>
-                <?php echo $_option['value']; ?><?php if (isset($_option['remainder']) && $_option['remainder']): ?><span id="<?php echo $_dots = 'dots' . uniqid()?>"> ...</span><span id="<?php echo $_id = 'id' . uniqid()?>"><?php echo $_option['remainder'] ?></span>
+                <?php echo strtolower($_option['value']); ?><?php if (isset($_option['remainder']) && $_option['remainder']): ?><span id="<?php echo $_dots = 'dots' . uniqid()?>"> ...</span><span id="<?php echo $_id = 'id' . uniqid()?>"><?php echo $_option['remainder'] ?></span>
                     <script type="text/javascript">
                     $('<?php echo $_id ?>').hide();
                     $('<?php echo $_id ?>').hide();
@@ -27,7 +26,7 @@
                     </script>
                 <?php endif; ?>
             <?php endif; ?>
-            </dd>
+            </dt>
         <?php endforeach; ?>
         </dl>
     <?php endif; ?>

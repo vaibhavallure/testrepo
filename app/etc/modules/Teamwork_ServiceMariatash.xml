@@ -10,7 +10,7 @@
 <config>
     <modules>
         <Teamwork_ServiceMariatash>
-            <active>false</active>
+            <active>true</active>
             <codePool>local</codePool>
         </Teamwork_ServiceMariatash>
     </modules>

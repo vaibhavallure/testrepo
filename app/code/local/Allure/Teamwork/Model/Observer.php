@@ -866,5 +866,105 @@ class Allure_Teamwork_Model_Observer{
       }
       Mage::log("Finish...",Zend_log::DEBUG,$logFile,$logStatus);
   }
+  function changeOrderStatus($observer){
+      $order = $observer->getEvent()->getOrder();
+      
+       Mage::log("Order::".$order->getId(),Zend_log::DEBUG,'change_status.log',true);
+      if($order->getStatus()=='processing'){
+         try{
+              $order=Mage::getModel('sales/order')->load($order->getId());
+              $order->setStatus('in_chq', true)->save();
+         }catch(Exception $e){
+             Mage::log("Order::".$order->getId()." Exception::".$e->getMessage(),Zend_log::DEBUG,'change_status.log',true);
+         }
+      }
+     
+      
+  }
+  
+  
+  /**
+   * reupdate teamwork customer field with counterpoint customer
+   */
+ 
+  public function reupdateCustomerToTeamwork(){
+      $logFile = "tewamwor_reupdate_customer.log";
+      $operation = "reupdate_customer";
+      
+      try{
+          $helper = Mage::helper("allure_teamwork");
+          $_url   = $helper->getTeamworkUrl() . $helper::UPADTE_CUSTOMER_URLPATH;
+          $_accessToken = $helper->getTeamworkAccessToken();
+          
+          $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
+          $page = $mLog->getPage();
+          $size = $mLog->getSize();
+          // $total= $mLog->getTotal();
+          $total=0;
+          $collection = Mage::getModel('customer/customer')
+          ->getCollection()
+          ->addAttributeToSelect('*');
+          // $collection->setOrder('entity_id', 'asc');
+          // $collection->setCurPage($page);
+          // $collection->setPageSize($size);
+          $collection->addFieldToFilter('entity_id',array('gteq'=>$page))
+          ->addFieldToFilter('entity_id',array('lteq'=>$size));
+          $collection->setOrder('entity_id', 'asc');
+          
+          //  $lastPage = $collection->getLastPageNumber();
+          if(true){
+              foreach ($collection as $customer){
+                  try{
+                      $page=$customer->getEntityId();
+                      if(empty($customer->getCounterpointCustNo()))
+                          continue;
+                          $request = array();
+                          $request['customerID']  = $customer->getTeamworkCustomerId();
+                          //  $request['primaryEmail']= array($customer->getEmail());
+                          $request['customText4'] = $customer->getCounterpointCustNo();
+                          //  $page=$customer->getEntityId();
+                          $sendRequest = curl_init($_url);
+                          curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+                          curl_setopt($sendRequest, CURLOPT_HEADER, false);
+                          curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
+                          curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
+                          curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
+                          curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
+                          
+                          curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
+                              "Content-Type: application/json",
+                              "Access-Token: {$_accessToken}"
+                          ));
+                          $total=$total++;
+                          $json_arguments = json_encode($request);
+                          curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+                          $response = curl_exec($sendRequest);
+                          curl_close($sendRequest);
+                          $responseObj = json_decode($response);
+                          Mage::log("Email-:".$customer->getEmail(),Zend_Log::DEBUG,$logFile,true);
+                          Mage::log("ID-:".$customer->getId(),Zend_Log::DEBUG,$logFile,true);
+                          // Mage::log("Response -:".$response,Zend_Log::DEBUG,$logFile,true);
+                  }catch (Exception $ee){
+                      Mage::log("Customer Id-:".$customer->getId(),Zend_Log::DEBUG,$logFile,true);
+                      Mage::log("EXC:".$ee->getMessage(),Zend_Log::DEBUG,$logFile,true);
+                  }
+              }
+          }
+          
+          $page=$size;
+          $size=$page+250;
+          $resource = Mage::getSingleton('core/resource');
+          $writeAdapter = $resource->getConnection('core_write');
+          $table = $resource->getTableName('allure_teamwork_log_table');
+          $query="";
+          $query = "update {$table} set  page = '{$page}',size = '{$size}' where id = 4";
+          $writeAdapter->query($query);
+          
+      }catch (Exception $e){
+          Mage::log("Exception:".$e->getMessage(),Zend_Log::DEBUG,$logFile,true);
+      }
+      //  $this->reupdateCustomerToTeamwork();
+  }
+  
   
 }

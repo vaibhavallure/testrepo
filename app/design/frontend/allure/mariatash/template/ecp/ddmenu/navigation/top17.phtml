@@ -97,7 +97,7 @@
             }
         ?>
         <li class="<?php echo $first?><?php echo ($showMenu)?' dropdown':'' ?><?php echo ($i==$count)?' last':'' ?><?php echo ($child->getIsActive())?' current':'' ?>">
-		 <a <?php echo ($showMenu) ? 'style = "cursor:default;" onclick="return false;"' : '';?> href='<?php echo $child->getUrl() ?>' <?php echo ($showMenu) ? 'class="dropdown-toggle" data-toggle="dropdown" role="button"':''?>><?php echo $this->escapeHtml($child->getName()) ?><?php if ($showMenu) :?><span class="caret"></span><?php endif;?></a>
+		 <a <?php echo ($showMenu) ? 'style = "cursor:default;" onclick="return false;"' : '';?> href='<?php echo $child->getUrl() ?>' <?php echo ($showMenu) ? 'class="dropdown-toggle" data-toggle="dropdown" role="button"':''?>><?php echo $this->__($this->escapeHtml($child->getName())) ?><?php if ($showMenu) :?><span class="caret"></span><?php endif;?></a>
 
             <?php if ($showMenu): ?>
                     <?php
