@@ -107,7 +107,8 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 	
 	public function isValidForChq($completedOnly)
     {
-        /**/$createdAtLimitation = '2018-04-04';
+        Mage::log($this->_order->getIncrementId(), null, 'isValidForChq.log');
+		/**/$createdAtLimitation = '2018-04-04';
         if( $this->_order->getCreatedAt() < $createdAtLimitation && !in_array($this->_order->getIncrementId(), $this->ordersForImport))
         {
             return false;
@@ -121,11 +122,6 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
         $paidAmount = floatval( $this->_order->getPayment()->getBaseAmountPaid() );/**/
         
         $completedOnly = ($completedOnly == 'false') ? false : true;
-		
-		Mage::log((float)$this->_order->getBaseGrandTotal(), null, 'isValidForChq.log');
-		Mage::log($paidAmount, null, 'isValidForChq.log');
-		Mage::log($$allowAuthorizeOnly, null, 'isValidForChq.log');
-		Mage::log($authorizedAmount, null, 'isValidForChq.log');
         
 		switch($completedOnly)
         {
