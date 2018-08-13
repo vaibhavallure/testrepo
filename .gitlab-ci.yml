@@ -66,15 +66,12 @@ beta_apple_pay:
     - beta
   only:
     - apple_pay
-  cache:
-    paths:
-    - var
-    - media
-    - app/etc/local.xml
   script:
-    - env
     - deploy-magento applepay-mariatash
-    - echo 'Deployed on apple_pay Staging'
+    - rm -f media && ln -s /var/www/shared/media/applepay-mariatash media
+    - rm -f var && ln -s /var/www/shared/var/applepay-mariatash var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/etc/applepay-mariatash/local.xml app/etc/local.xml
+    - echo 'Deployed on ApplePay Staging'
 
 deploy-cloud:
   environment: production
