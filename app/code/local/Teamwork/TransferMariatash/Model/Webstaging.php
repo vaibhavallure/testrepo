@@ -2,6 +2,10 @@
 class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_Transfer_Model_Webstaging
 {
 	
+	private $ordersForImport = array(
+		'100009453', '201700202-B', '201700271-B', '2017003027-B', '2017003470-B', '201700616-B', '201701734-B'
+	);
+	
 	protected function _createWebOrder()
     {
         $channelId = $this->_getChannelId();
@@ -104,7 +108,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 	public function isValidForChq($completedOnly)
     {
         /**/$createdAtLimitation = '2018-04-04';
-        if( $this->_order->getCreatedAt() < $createdAtLimitation )
+        if( $this->_order->getCreatedAt() < $createdAtLimitation && !in_array($this->_order->getIncrementId(), $this->ordersForImport))
         {
             return false;
         }/**/
@@ -117,7 +121,13 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
         $paidAmount = floatval( $this->_order->getPayment()->getBaseAmountPaid() );/**/
         
         $completedOnly = ($completedOnly == 'false') ? false : true;
-        switch($completedOnly)
+		
+		Mage::log((float)$this->_order->getBaseGrandTotal(), null, 'isValidForChq.log');
+		Mage::log($paidAmount, null, 'isValidForChq.log');
+		Mage::log($$allowAuthorizeOnly, null, 'isValidForChq.log');
+		Mage::log($authorizedAmount, null, 'isValidForChq.log');
+        
+		switch($completedOnly)
         {
             case true:
                 if( $this->_order->getStatus() == Mage_Sales_Model_Order::STATE_COMPLETE )
