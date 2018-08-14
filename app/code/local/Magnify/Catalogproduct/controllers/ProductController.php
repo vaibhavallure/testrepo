@@ -156,12 +156,43 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
             $product = Mage::getModel('catalog/product')->load($productId);
             if($product->isConfigurable()){
                 $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
+                $simpleProducts = $product->getTypeInstance()->getUsedProductCollection()->addAttributeToSelect('sku');
+                $flag=FALSE;
                 foreach ($productAttributeOptions as $productAttribute) {
                     if($productAttribute['attribute_code'] == 'metal'/* 'metal_color' */){
-                        $selectedColor = $productAttribute['values'][0]['value_index'];
-                        break;
+                        
+                        foreach ($productAttribute['values'] as $single){
+                            $selectedColorLabel=$single['label'];
+                            $selectedColor = $single['value_index'];
+                            foreach ($simpleProducts as $simple){
+                                $sku=explode('|', $simple->getSku());
+                                
+                                if(strtolower($selectedColorLabel)==strtolower($sku[1])){
+                                    $stockItem = Mage::getModel('cataloginventory/stock_item')
+                                    ->loadByProduct($simple->getId());
+                                    if($stockItem->getId()){
+                                        if($stockItem->getQty() > 0){
+                                            $selectedColor=$single['value_index'];
+                                            $flag=true;
+                                            //break 2;
+                                            break 2;
+                                        }
+                                    }
+                                }
+                            }
+                            if($flag){
+                                break;
+                            }
+                        }
+                        if(!$flag){
+                            $selectedColor=$productAttribute['values'][0]['value_index'];
+                        }
+                  
+                        
+                      //  break;
                     }
                 }
+               
                 if($selectedColor > 0){
                     $selectedColorText=$optionHelper->getOptionText($selectedColor);
                    // Mage::log(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColor,Zend_log::DEBUG,'ajay.log',true);
