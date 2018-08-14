@@ -43,6 +43,10 @@ $_productId = $_product->getId();
 //parent child check
 $prHelper        = Mage::helper("allure_catalog");
 $isCustomOptions = $prHelper->isCustomOptionsAvailable($_productId);
+
+$isGiftCard= $prHelper->isGiftCard($_productId);
+$isGiftCardValue=($isGiftCard)?1:0;
+
 $parentVal = ($isCustomOptions)?1:0;
 
 $aprod = Mage::getModel("catalog/product")->load($_productId);
