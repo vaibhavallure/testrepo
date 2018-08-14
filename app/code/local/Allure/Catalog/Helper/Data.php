@@ -98,6 +98,7 @@ class Allure_Catalog_Helper_Data extends Mage_Core_Helper_Abstract
         $haystack=array('STORECARD'); //Added becuse Giftcard is working as normal product
         if(in_array($sku[0], $haystack))
             $isGiftCard=true;
+        
         return $isGiftCard;
     }
     public function getOptionNumber($metalName){
