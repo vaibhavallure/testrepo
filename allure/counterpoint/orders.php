@@ -40,9 +40,9 @@ if(empty($endDate)){
 
 ini_set('max_execution_time', -1);
 $helper = Mage::helper('allure_counterpoint');
-$hostName   = $helper->getHostName();
-$dbUsername = $helper->getDBUserName();//"sa";
-$dbPassword = $helper->getDBPassword();//"root";
+$hostName   = "cpoint";//$helper->getHostName();
+$dbUsername = "sa";//$helper->getDBUserName();//"sa";
+$dbPassword = "12qwaszx";//$helper->getDBPassword();//"root";
 $dbName = "CPSQL";
 
 $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
@@ -114,7 +114,7 @@ if($conn){
         $addressHeader = array('email','name','street','city','state','zip_code','country','phone','nam_typ');
         $extHeader = array('doc_id','str_id','sta_id','tkt_typ','drw_id','event_no','stk_loc_id','cust_no');
         while(odbc_fetch_row($result)){
-            $order_id   = odbc_result($result, 'order_id');
+            $order_id   = odbc_result($result, 'TKT_NO');
             $lin_seq_no = odbc_result($result, 'lin_seq_no');
             $arr 		= array();
             $items 		= array();
@@ -125,7 +125,47 @@ if($conn){
             //parse row data as required format
             for ($j = 1; $j <= odbc_num_fields($result); $j++){
                 $field_name  = odbc_field_name($result, $j);
+                //$field_value = odbc_result($result, $field_name);
+                
                 $field_value = odbc_result($result, $field_name);
+                
+                if(strtolower($field_name) == strtolower("TKT_NO")){
+                    $field_name = "order_id";
+                }elseif (strtolower($field_name) == strtolower("TKT_DT")){
+                    $field_name = "order_date";
+                }elseif (strtolower($field_name) == strtolower("TAX_OVRD_REAS")){
+                    $field_name = "place";
+                }elseif (strtolower($field_name) == strtolower("SUB_TOT")){
+                    $field_name = "subtotal";
+                }elseif (strtolower($field_name) == strtolower("TAX_AMT")){
+                    $field_name = "tax";
+                }elseif (strtolower($field_name) == strtolower("TOT")){
+                    $field_name = "total";
+                }elseif (strtolower($field_name) == strtolower("QTY_SOLD")){
+                    $field_name = "qty";
+                }elseif (strtolower($field_name) == strtolower("DESCR")){
+                    $field_name = "pname";
+                }elseif (strtolower($field_name) == strtolower("EMAIL_ADRS_1")){
+                    $field_name = "email";
+                }elseif (strtolower($field_name) == strtolower("NAM")){
+                    $field_name = "name";
+                }elseif (strtolower($field_name) == strtolower("CUST_NAM_TYP")){
+                    $field_name = "nam_typ";
+                }elseif (strtolower($field_name) == strtolower("ADRS_1")){
+                    $field_name = "street";
+                }elseif (strtolower($field_name) == strtolower("ZIP_COD")){
+                    $field_name = "zip_code";
+                }elseif (strtolower($field_name) == strtolower("CNTRY")){
+                    $field_name = "country";
+                }elseif (strtolower($field_name) == strtolower("PHONE_1")){
+                    $field_name = "phone";
+                }elseif (strtolower($field_name) == strtolower("DISC_AMT")){
+                    $field_name = "dis_amount";
+                }elseif (strtolower($field_name) == strtolower("DISC_PCT")){
+                    $field_name = "dis_pct";
+                }
+                
+                
                 if(in_array($field_name, $itemHeader)){
                     if($field_name == 'sku'){
                         $sku = strtoupper($field_value);
@@ -170,10 +210,10 @@ if($conn){
 echo "<pre>";
 print_r(count($mainArr));
 //print_r(($mainArr));
-//die; 
+die; 
 
 //remote site wsdl url
-$_URL       = "http://universal.allurecommerce.com/api/v2_soap/?wsdl=1";
+$_URL       = "https://www.mariatash.com/api/v2_soap/?wsdl=1";
 
 /**
  * @return array of magento credentials.
