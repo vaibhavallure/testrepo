@@ -19955,3 +19955,6 @@ font-size: 100% !important;
 .custom-options-univaersal{
 	    margin-left: 25px !important;
 }
+.product-view .product-options .ajax-error-messages{
+	left: 0px;
+}
