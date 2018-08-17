@@ -114,7 +114,14 @@ function savePicture($image_url,$res){
     }
 
 
+
     $filename = basename($image_url);
+    $filenameArray=explode("?",$filename);
+    $filename=$filenameArray[0];
+
+
+
+
     $destination = $path['dir'] ."/". $filename;
 
     if (!is_dir($path['dir']) or !is_writable($path['dir'])) {
