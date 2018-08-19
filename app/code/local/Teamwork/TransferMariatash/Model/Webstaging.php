@@ -1,11 +1,6 @@
 <?php
 class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_Transfer_Model_Webstaging
 {
-	
-	private $ordersForImport = array(
-		'100009453', '201700202-B', '201700271-B', '2017003027-B', '2017003470-B', '201700616-B', '201701734-B'
-	);
-	
 	protected function _createWebOrder()
     {
         $channelId = $this->_getChannelId();
@@ -107,9 +102,8 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 	
 	public function isValidForChq($completedOnly)
     {
-        Mage::log($this->_order->getIncrementId(), null, 'isValidForChq.log');
 		/**/$createdAtLimitation = '2018-04-04';
-        if( $this->_order->getCreatedAt() < $createdAtLimitation && !in_array($this->_order->getIncrementId(), $this->ordersForImport))
+        if( $this->_order->getCreatedAt() < $createdAtLimitation )
         {
             return false;
         }/**/

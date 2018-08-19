@@ -43,6 +43,10 @@ $_productId = $_product->getId();
 //parent child check
 $prHelper        = Mage::helper("allure_catalog");
 $isCustomOptions = $prHelper->isCustomOptionsAvailable($_productId);
+
+$isGiftCard= $prHelper->isGiftCard($_productId);
+$isGiftCardValue=($isGiftCard)?1:0;
+
 $parentVal = ($isCustomOptions)?1:0;
 
 $aprod = Mage::getModel("catalog/product")->load($_productId);
@@ -307,6 +311,7 @@ if ($_product->getSizeSample() == 1) {
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="related_product" id="related-products-field" value=""/>
         	<input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
+        	<input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
         </div>
 
         <div class="product-view-left">
