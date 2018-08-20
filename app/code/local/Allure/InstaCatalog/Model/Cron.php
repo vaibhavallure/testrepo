@@ -131,9 +131,9 @@ class Allure_InstaCatalog_Model_Cron{
                 $post = Mage::getModel('allure_instacatalog/feed');
                 $post->addData($feedData);
                 $insertId =$post->save()->getId();
-                Mage::log(("Feed inserted successfuly for Id:".$insertId),Zend_Log::DEBUG,$this->_insta_log,true);
+                Mage::log(("syncShopFeeds Feed inserted successfuly for Id:".$insertId),Zend_Log::DEBUG,$this->_insta_log,true);
             }else{
-                Mage::log(("Feed already Present for Media:".$postLoad->getMediaId()),Zend_Log::DEBUG,$this->_insta_log,true);
+                Mage::log(("syncShopFeeds Feed already Present for Media:".$postLoad->getMediaId()),Zend_Log::DEBUG,$this->_insta_log,true);
             }
         }
     }
@@ -195,6 +195,7 @@ class Allure_InstaCatalog_Model_Cron{
 
             return $path['url']."/".$filename;
         }else {
+            Mage::log(("Image Cant Be Download".$image_url),Zend_Log::DEBUG,$this->_insta_log,true);
             return '';
         }
     }
