@@ -72,8 +72,12 @@ $media_id = $feed->getMediaId();
 	             onclick = "openView(this);">
 	      			Tag Products
 	    		</a>
-	    		<a class="reload" onclick="relaodInstaImage('<?php echo $feed->getMediaId()?>','<?php echo $feed->getUsername()?>')"><img alt="" src="<?php echo Mage::getDesign()->getSkinUrl('images/img_306090.png');?>"></a>
-	    	</div>
+
+                <!--<a class="reload" onclick="relaodInstaImage('<?php // echo $feed->getMediaId()?>','<?php // echo $feed->getUsername()?>')">
+                    <img alt="" src="<?php //echo Mage::getDesign()->getSkinUrl('images/img_306090.png');?>">
+                </a>-->
+
+            </div>
 	    	<div class="upper-text">
 			    <p class="text-content" style="margin-top: 0">
 			    <?php echo (json_decode($feed->getCaption())!="")?json_decode($feed->getCaption()):$feed->getCaption()?>
