@@ -29,9 +29,9 @@
 		</resources>
 
 		<helpers>
-			<virtualstore>
+			<allure_virtualstore>
 				<class>Allure_Virtualstore_Helper</class>
-			</virtualstore>
+			</allure_virtualstore>
 		</helpers>
 
 		<blocks>
