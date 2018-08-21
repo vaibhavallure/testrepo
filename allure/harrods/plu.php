@@ -9,8 +9,8 @@ ini_set('memory_limit', '-1');
 
 $ioo = new Varien_Io_File();
 $path = Mage::getBaseDir('var') . DS . 'teamwork' ;
-$name = "harrods_plu";
-$file = $path . DS . $name . '.csv';
+$name = "70000369_20180806_PLU";
+$file = $path . DS . $name . '.txt';
 $ioo->setAllowCreateFolders(true);
 $ioo->open(array('path' => $path));
 $ioo->streamOpen($file, 'w+');
@@ -56,7 +56,7 @@ foreach ($collection as $_product){
     
     $skuConfig=$_product->getSku();
     $data['recid']=$_product->getSku();
-    $data['description']=$_product->getName();
+    $data['description']=strtoupper($_product->getName());
     $data['purch_grp']='907';
     $data['bmc']='LW36900';
     $data['article_type']='ZDMC';
@@ -69,13 +69,13 @@ foreach ($collection as $_product){
     $data['wholes_selling']='';
     $data['ctry_of_origi']='';
     $data['import_code']='';
-    $data['tax_cls']=$_product->getTaxClassId();
+    $data['tax_cls']=$_product->getTaxClassId()?1:0;
     $data['seas_code']='0';
     $data['seas_year']='2018';
-    $data['store']='1';
-    $data['airports']='0';
-    $data['wholesale']='0';
-    $data['consign']='0';
+    $data['store']=TRUE;
+    $data['airports']=FALSE;
+    $data['wholesale']=FALSE;
+    $data['consign']=FALSE;
     $data['vendor']='70000369'; //check with Todd
     $data['vendor_subrange']='CON';
     $data['vendors_art_no']=$skuConfig;   //Config SKU 
@@ -99,7 +99,7 @@ foreach ($collection as $_product){
     $data['total_cost']='';
     $data['var_tax_rate']='';
     $data['POS_description']=$skuConfig;  //Add COnfigurable SKU
-    $data['direct_mail']='1'; 
+    $data['direct_mail']=TRUE; 
     $data['spare3']=''; 
     $data['spare4']=''; 
     $data['spare5']=''; 
@@ -133,7 +133,7 @@ foreach ($collection as $_product){
         $data=array();
        
         $data['recid']=$_product->getSku();
-        $data['description']=$_product->getName();
+        $data['description']=strtoupper($_product->getName());
         $data['purch_grp']='907';
         $data['bmc']='LW36900';
         $data['article_type']='ZDMC';
@@ -146,13 +146,13 @@ foreach ($collection as $_product){
         $data['wholes_selling']='';
         $data['ctry_of_origi']='';
         $data['import_code']='';
-        $data['tax_cls']=$_product->getTaxClassId();
+        $data['tax_cls']=$_product->getTaxClassId()?1:0;
         $data['seas_code']='0';
         $data['seas_year']='2018';
-        $data['store']='1';
-        $data['airports']='0';
-        $data['wholesale']='0';
-        $data['consign']='0';
+        $data['store']=TRUE;
+        $data['airports']=FALSE;
+        $data['wholesale']=FALSE;
+        $data['consign']=FALSE;
         $data['vendor']='70000369'; //check with Todd
         $data['vendor_subrange']='CON';
         $data['vendors_art_no']=$skuConfig;   //Config SKU
@@ -177,7 +177,7 @@ foreach ($collection as $_product){
         $data['total_cost']='';
         $data['var_tax_rate']='';
         $data['POS_description']=$skuConfig;  //Add COnfigurable SKU
-        $data['direct_mail']='1';
+        $data['direct_mail']=TRUE;
         $data['spare3']='';
         $data['spare4']='';
         $data['spare5']='';

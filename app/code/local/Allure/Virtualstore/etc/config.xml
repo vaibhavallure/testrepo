@@ -3,53 +3,45 @@
 <config>
 	<modules>
 		<Allure_Virtualstore>
-			<version>1.0.1</version>
+			<version>1.0.0</version>
 		</Allure_Virtualstore>
 	</modules>
 	<global>
 		<resources>
 			<allure_virtualstore_setup>
 				<setup>
-					<module>Allure_Virtualstore</module>
-				</setup>
-				<connection>
-					<use>core_setup</use>
-				</connection>
-				<virtualstore_write>
-					<connection>
-						<use>core_write</use>
-					</connection>
-				</virtualstore_write>
-				<virtualstore_read>
-					<connection>
-						<use>core_read</use>
-					</connection>
-				</virtualstore_read>
+                    <module>Allure_Virtualstore</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
 			</allure_virtualstore_setup>
 		</resources>
-
+		
 		<helpers>
-			<virtualstore>
+			<allure_virtualstore>
 				<class>Allure_Virtualstore_Helper</class>
-			</virtualstore>
+			</allure_virtualstore>
 		</helpers>
-
+		
 		<blocks>
-			<virtualstore>
+			<allure_virtualstore>
 				<class>Allure_Virtualstore_Block</class>
-			</virtualstore>
+			</allure_virtualstore>
 			<adminhtml>
 				<rewrite>
 					<widget_grid_column>Allure_Virtualstore_Block_Adminhtml_Widget_Grid_Column</widget_grid_column>
 				</rewrite>
 			</adminhtml>
 		</blocks>
+		
 		<models>
 			<allure_virtualstore>
 				<class>Allure_Virtualstore_Model</class>
-				<resourceModel>virtualstore_resource</resourceModel>
+				<resourceModel>allure_virtualstore_resource</resourceModel>
 			</allure_virtualstore>
-			<virtualstore_resource>
+			
+			<allure_virtualstore_resource>
 				<class>Allure_Virtualstore_Model_Resource</class>
 				<entities>
 					<website>
@@ -61,64 +53,41 @@
 					<store>
 						<table>allure_virtual_store</table>
 					</store>
-					<virtualstore>
-						<table>allure_virtual_store</table>
-					</virtualstore>
 				</entities>
-			</virtualstore_resource>
-
+			</allure_virtualstore_resource>
+			
 		</models>
-
+		
 		<events>
-			<sales_order_place_after>
-				<observers>
-					<virtualstore>
-						<type>singleton</type>
-						<class>allure_virtualstore/observer</class>
-						<method>setDataToOrder</method>
-					</virtualstore>
-				</observers>
-			</sales_order_place_after>
-		</events>
-
-		<fieldsets>
-			<sales_convert_quote>
+            <sales_order_place_after>
+                <observers>
+                    <allure_virtualstore>
+                        <type>singleton</type>
+                        <class>allure_virtualstore/observer</class>
+                        <method>setDataToOrder</method>
+                    </allure_virtualstore>
+                </observers>
+            </sales_order_place_after>
+        </events>
+        
+        <fieldsets>
+        	<sales_convert_quote>
 				<old_store_id>
 					<to_order>*</to_order>
 				</old_store_id>
 			</sales_convert_quote>
-			<sales_convert_quote_item>
-				<old_store_id>
-					<to_order_item>*</to_order_item>
-				</old_store_id>
-			</sales_convert_quote_item>
-			<sales_convert_order_item>
-				<old_store_id>
-					<to_quote_item>*</to_quote_item>
-				</old_store_id>
-			</sales_convert_order_item>
+		    <sales_convert_quote_item>
+		        <old_store_id>
+		            <to_order_item>*</to_order_item>
+		        </old_store_id>
+		    </sales_convert_quote_item>
+		    <sales_convert_order_item>
+		        <old_store_id>
+		            <to_quote_item>*</to_quote_item>
+		        </old_store_id>
+		    </sales_convert_order_item>
 		</fieldsets>
-
+		
 	</global>
-	<admin>
-		<routers>
-			<adminhtml>
-				<args>
-					<modules>
-						<allure_virtualstore before="Mage_Adminhtml">Allure_Virtualstore_Adminhtml</allure_virtualstore>
-					</modules>
-				</args>
-			</adminhtml>
-		</routers>
-	</admin>
-	<adminhtml>
-		<layout>
-			<updates>
-				<virtualstore>
-					<file>virtualstore.xml</file>
-				</virtualstore>
-			</updates>
-		</layout>
-	</adminhtml>
-
+	
 </config>
