@@ -388,6 +388,13 @@ margin-right: 5px;
 	float: left;
     margin: 3px 3px 0px 0px !important;
 }
+@-moz-document url-prefix() {
+	.notifyRadio{
+		margin: 0px !important;
+		margin-right: 3px!important;
+	}
+}
+
 .apt-prev{
 	left: -10px; top: 60px;
 }

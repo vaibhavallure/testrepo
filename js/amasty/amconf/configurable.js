@@ -609,7 +609,12 @@ Product.Config.prototype.updateFormProductId = function(productId){
     		flag = false;
     	}
     }
-    
+ 
+   var checkGiftcard = jQuery('#is_gift_card').val();
+    	if(checkGiftcard == 1){
+    		flag = true;
+    	}
+ 
     if(flag){
     	//for non parent child
     	newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');

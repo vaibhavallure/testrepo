@@ -15,6 +15,11 @@
 			<allure_geotax>
 				<class>Allure_GeoTax_Helper</class>
 			</allure_geotax>
+			<catalog>
+				<rewrite>
+					<product_type_composite>Allure_GeoTax_Helper_Catalog_Product_Type_Composite</product_type_composite>
+				</rewrite>
+			</catalog>
 		</helpers>
 		<models>
 			<allure_geotax>
@@ -23,6 +28,7 @@
 			<tax>
 				<rewrite>
 					<calculation>Allure_GeoTax_Model_Tax_Calculation</calculation>
+					<sales_total_quote_tax>Allure_GeoTax_Model_Sales_Total_Quote_Tax</sales_total_quote_tax>
 				</rewrite>
 			</tax>
 		</models>
