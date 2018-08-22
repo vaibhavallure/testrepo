@@ -65,8 +65,9 @@ function getQuery(){
               JOIN INVENITEMINFO AS ITM ON RITM.ITEMID = ITM.ITEMID
               LEFT JOIN ApiInvenItemIdentifier AS PITM ON PITM.ITEMID = ITM.ITEMID
               LEFT JOIN _MARISP66_Catalog AS CAT ON CAT.teamwork_id = PITM.VALUE
-              WHERE R.WebOrderNo IS NULL and R.EmailAddress is not null -- AND r.TotalQty > 0
-             -- WHERE R.ReceiptId = 'C5F8D895-E72E-49C0-B460-8AD0686FFCD4' -- 'E8741722-B4E5-4374-9CE2-3418952E354E' -- 'D04D9D85-D1DC-4983-A552-4A440F9261E8' -- 'C5F8D895-E72E-49C0-B460-8AD0686FFCD4'  -- 'E8741722-B4E5-4374-9CE2-3418952E354E'  -- 'D3ED5776-F343-4861-925F-A005DE80E724' -- 'BFC9C625-4A8A-47EF-BBA7-001C92C9C9ED' --'FB021240-3808-4067-8A32-001376834437' 
+              -- WHERE R.WebOrderNo IS NULL and R.EmailAddress is not null -- AND r.TotalQty > 0
+              WHERE R.ReceiptId = '110EDCCE-D9FE-471B-AEDD-2183A50EDC55
+' -- 'C5F8D895-E72E-49C0-B460-8AD0686FFCD4' -- 'E8741722-B4E5-4374-9CE2-3418952E354E' -- 'D04D9D85-D1DC-4983-A552-4A440F9261E8' -- 'C5F8D895-E72E-49C0-B460-8AD0686FFCD4'  -- 'E8741722-B4E5-4374-9CE2-3418952E354E'  -- 'D3ED5776-F343-4861-925F-A005DE80E724' -- 'BFC9C625-4A8A-47EF-BBA7-001C92C9C9ED' --'FB021240-3808-4067-8A32-001376834437' 
               -- '63F588FB-FAD4-4154-AACD-DF7BC5AA4E4F'
             ; 
             ";
@@ -204,8 +205,8 @@ function getConnection(){
             //$rowData[] = array("order" => $orderArr);
             $csv->saveData($filepath,$rowData);
             
-          // echo "<pre>";
-           //print_r($orderArr);
+           echo "<pre>";
+           print_r($orderArr);
             
         }catch (Exception $e){
             echo $e->getMessage();

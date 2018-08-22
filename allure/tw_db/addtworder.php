@@ -346,6 +346,14 @@ if(($handle = fopen($folderPath, "r")) != false){
                         $orderObj->setBaseGrandTotal($totalAmmount);
                         //$orderObj->setTotalPaid($totalAmmount);
                         
+                        if(strtoupper($otherSysCur) != "MT"){
+                            $orderObj->setData('base_currency_code',$otherSysCurCode)
+                                ->setData('global_currency_code',$otherSysCurCode)
+                                ->setData('order_currency_code',$otherSysCurCode)
+                                ->setData('store_currency_code',$otherSysCurCode);
+                        }
+                        
+                        
                         //complete the order status
                         $orderObj->setData('state',"processing")
                         ->setData('status',"processing");
