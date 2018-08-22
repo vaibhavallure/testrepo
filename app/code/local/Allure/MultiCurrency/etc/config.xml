@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_MultiCurrency>
+      <version>0.1.0</version>
+    </Allure_MultiCurrency>
+  </modules>
+  <global>
+    <models>
+      <multicurrency>
+        <class>Allure_MultiCurrency_Model</class>
+      </multicurrency>
+    </models>
+    <helpers>
+      <multicurrency>
+        <class>Allure_MultiCurrency_Helper</class>
+      </multicurrency>
+    </helpers>
+  </global>
+  <adminhtml>
+    <acl>
+      <resources>
+        <all>
+          <title>Allow Everything</title>
+        </all>
+        <admin>
+          <children>
+            <system>
+              <children>
+                <config>
+                  <children>
+                    <multicurrency>
+                      <title>multi currency</title>
+                    </multicurrency>
+                  </children>
+                </config>
+              </children>
+            </system>
+          </children>
+        </admin>
+      </resources>
+    </acl>
+  </adminhtml>
+</config> 
