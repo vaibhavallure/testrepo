@@ -10,13 +10,13 @@ $orderIds = array(297370,297368,297372);
 
 try{
     
-    $tFile = $_GET["file"];
+    /* $tFile = $_GET["file"];
     if(empty($tFile)){
         die("empty file path");
-    }
+    } */
     
     
-    $file = Mage::getBaseDir("var") . DS. $tFile;
+    /* $file = Mage::getBaseDir("var") . DS. $tFile;
     
     $ioR = new Varien_Io_File();
     $ioR->streamOpen($file, 'r');
@@ -39,7 +39,7 @@ try{
     $ordArr = array();
     foreach ($collectionT as $ord){
         $ordArr[] = $ord->getId();
-    }
+    } */
     
     $header = array(
         "Title"           => "Title",
@@ -63,7 +63,7 @@ try{
     $io->streamWriteCsv($header);
     
     $orderCollection = Mage::getModel("sales/order")->getCollection()
-    ->addFieldToFilter("entity_id",array("in" => $ordArr));
+    ->addFieldToFilter("entity_id",array("in" => $orderIds));
     
     foreach ($orderCollection as $order){
         try{
@@ -77,7 +77,11 @@ try{
             
             $invoices = $order->getInvoiceCollection();
             
-            $pdf = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
+            if(Mage::helper("core")->isModuleEnabled("Allure_Pdf")){
+                $pdf = Mage::getModel('sales/order_pdf_invoice')->getCompressPdf($invoices,true);
+            }else {
+                $pdf = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
+            }
             
             file_put_contents($filepath1,$pdf->render());
             
