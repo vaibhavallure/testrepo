@@ -8,7 +8,6 @@
 class Allure_Virtualstore_Block_Adminhtml_Store extends Mage_Adminhtml_Block_Widget_Grid_Container {
     public function __construct()
     {
-//        die("Hi");
         $this->_blockGroup = 'allure_virtualstore';
         $this->_controller = 'adminhtml_store';
         $this->_headerText = $this->__('Virtual Store');

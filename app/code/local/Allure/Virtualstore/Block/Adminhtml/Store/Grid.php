@@ -46,7 +46,6 @@ class Allure_Virtualstore_Block_Adminhtml_Store_Grid extends Mage_Adminhtml_Bloc
         $this->addColumn("website_id", array(
             "header" => Mage::helper("allure_virtualstore")->__("Website"),
             "index" => "website_id",
-//            "filter_index" => "website_id",
             'type' => 'options',
             'options' => Mage::getModel('allure_virtualstore/website')->getWebsite(),
         ));
@@ -54,11 +53,9 @@ class Allure_Virtualstore_Block_Adminhtml_Store_Grid extends Mage_Adminhtml_Bloc
         $this->addColumn("group_id", array(
             "header" => Mage::helper("allure_virtualstore")->__("Group"),
             "index" => "group_id",
-//            'renderer' => new Allure_Virtualstore_Block_Adminhtml_Renderer_CustomGroup(),
-            'type' > 'options',
+            'type' => 'options',
             'options' => Mage::getModel('allure_virtualstore/group')->getGroup(),
         ));
-
 
         $this->addColumn("sort_order", array(
             "header" => Mage::helper("allure_virtualstore")->__("Sort Order"),
