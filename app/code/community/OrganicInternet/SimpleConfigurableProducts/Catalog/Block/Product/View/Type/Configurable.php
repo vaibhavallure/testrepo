@@ -100,6 +100,8 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Block_Product_View_Type
                 "finalPrice" => $this->_registerJsPrice($this->_convertPrice($product->getFinalPrice()))
             );
 
+            //Mage::log($product->getPrice(), Zend_Log::DEBUG,'allure_log.log',true);
+
             if (Mage::getStoreConfig('SCP_options/product_page/change_name')) {
                 $childProducts[$productId]["productName"] = $product->getName();
             }
