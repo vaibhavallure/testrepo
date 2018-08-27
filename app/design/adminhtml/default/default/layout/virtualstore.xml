@@ -2,12 +2,12 @@
 <layout version="0.1.0">
     <adminhtml_virtualstore_index>
         <reference name="content">
-            <block type="virtualstore/adminhtml_virtualstore" name="virtualstore"/>
+            <block type="allure_virtualstore/adminhtml_store" name="virtualstore"/>
         </reference>
     </adminhtml_virtualstore_index>
     <adminhtml_website_index>
         <reference name="content">
-            <block type="virtualstore/adminhtml_website" name="website"/>
+            <block type="allure_virtualstore/adminhtml_website" name="website"/>
         </reference>
     </adminhtml_website_index>
 </layout>
