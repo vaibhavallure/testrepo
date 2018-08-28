@@ -370,7 +370,8 @@ jQuery(document).ready(function(){
             if( videoCounter  == 0 ){
                 <?php //if ( $count == 0 ): ?>
                     if( urlCounter > 0 ){
-                        jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
+                    	counterJs--;
+                    	jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 75, 96); ?>" /></a>');
                     }
                 <?php //endif; ?>
             }
