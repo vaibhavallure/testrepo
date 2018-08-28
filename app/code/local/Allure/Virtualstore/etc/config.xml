@@ -15,6 +15,16 @@
                 <connection>
                     <use>core_setup</use>
                 </connection>
+				<virtualstore_write>
+					<connection>
+						<use>core_write</use>
+					</connection>
+				</virtualstore_write>
+				<virtualstore_read>
+					<connection>
+						<use>core_read</use>
+					</connection>
+				</virtualstore_read>
 			</allure_virtualstore_setup>
 		</resources>
 		
@@ -89,5 +99,24 @@
 		</fieldsets>
 		
 	</global>
-	
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<allure_virtualstore before="Mage_Adminhtml">Allure_Virtualstore_Adminhtml</allure_virtualstore>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	<adminhtml>
+		<layout>
+			<updates>
+				<allure_virtualstore>
+					<file>virtualstore.xml</file>
+				</allure_virtualstore>
+			</updates>
+		</layout>
+	</adminhtml>
 </config>

@@ -870,8 +870,8 @@ Payment.prototype = {
 
     switchMethod: function(method){
         if (this.currentMethod && $('payment_form_'+this.currentMethod)) {
-            //this.changeVisible(this.currentMethod, true);
-            this.changeVisible(this.currentMethod, false); //wsa02-change
+            this.changeVisible(this.currentMethod, true);  //Active again by allure to hide old method (on true visbile is false)
+            //this.changeVisible(this.currentMethod, false); //wsa02-change
             $('payment_form_'+this.currentMethod).fire('payment-method:switched-off', {method_code : this.currentMethod});
         }
         if ($('payment_form_'+method)){
