@@ -2637,7 +2637,7 @@ cursor: pointer;
     color: #906E39;
 }
 .product-view .product-shop .padder .data-table td, .product-view .product-shop .padder .data-table tbody td {
-    padding: 7px 14px 1px;
+    padding: 7px 14px 2px;
     font-size: 12px;
     line-height: normal;
     width: 150px;
