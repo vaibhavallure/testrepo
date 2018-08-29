@@ -21,21 +21,21 @@ if ($product->getPostLengthRequired()) {
                 // 18-Earlobe
                 $optionValues = array(
                     array(
-                        'title' => '5MM',
+                        'title' => '5mm',
                         'price' => 0,
                         'price_type' => 'fixed',
                         'sku' => '',
                         'sort_order' => 1
                     ),
                     array(
-                        'title' => '6.5MM',
+                        'title' => '6.5mm',
                         'price' => 0,
                         'price_type' => 'fixed',
                         'sku' => '',
                         'sort_order' => 2
                     ),
                     array(
-                        'title' => '8MM',
+                        'title' => '8mm',
                         'price' => 0,
                         'price_type' => 'fixed',
                         'sku' => '',

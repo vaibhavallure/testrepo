@@ -39,11 +39,12 @@
 <meta name="google-site-verification" content="FyCBtJHrnBYJlB3vzz23QnzmKfJCnxd1zzdhCW-QDMI" />
 <?php
 
-$title = 'MT Title';
+$title = $this->getTitle();
 $url = $this->helper('core/url')->getCurrentUrl();
 $image = Mage::getBaseUrl('media') . DS . 'logo' . DS . Mage::getStoreConfig('design/header/logo_src');
-$description = 'Description';
+$description = htmlspecialchars($this->getDescription());
 $type = 'product';
+
 
 $currenturl = Mage::helper('core/url')->getCurrentUrl();
 $urlData=explode("/",$currenturl);
