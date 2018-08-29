@@ -262,7 +262,7 @@
         <jobs>
             <teamwork_common_crontab_job_generate_product_ecm>
                 <schedule>
-                    <cron_expr>*/1 * * * *</cron_expr>
+                    <cron_expr>*/5 * * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>teamwork_common/observer::generateProductEcm</model>
