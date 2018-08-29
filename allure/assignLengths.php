@@ -5,18 +5,24 @@ Mage::app();
 $app = Mage::app('default');
 Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
 
-$product = Mage::getModel('catalog/product')->load(12);
+//$product = Mage::getModel('catalog/product')->load(12);
 
 $collection=Mage::getModel('catalog/product')->getCollection();
 $collection->addAttributeToFilter('type_id','configurable');
+$count=0;
+
 foreach ($collection as $product){
 $product=Mage::getModel('catalog/product')->load($product->getId());
 if ($product->getPostLengthRequired()) {
+       $count++;
         foreach ($product->getOptions() as $value) {
             
             if ($value->getTitle() == 'Post Length') {
                 $value->delete();
+            }
+        }
                 $optionValues = array();
+                
                 
                 // 18-Earlobe
                 $optionValues = array(
@@ -64,9 +70,7 @@ if ($product->getPostLengthRequired()) {
                 $attributeSetModel = Mage::getModel("eav/entity_attribute_set");
                 $attributeSetModel->load($product->getAttributeSetId());
                 $attributeSetName = $attributeSetModel->getAttributeSetName();
-                Mage::log($product->getId() . '-' . $product->getSku() . '------' . $attributeSetName, Zend_log::DEBUG, 'defaultlenths.log', true);
-            }
-        }
+                Mage::log($count.'----'.$product->getId() . '-' . $product->getSku() . '------' . $attributeSetName, Zend_log::DEBUG, 'defaultlenths.log', true);
 }else {
     foreach ($product->getOptions() as $value) {
         if ($value->getTitle() == 'Post Length') {
