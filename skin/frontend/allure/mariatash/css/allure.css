@@ -1644,6 +1644,10 @@ ul#narrow-by-list li.filtru-price {max-width: 100% !important;}
         font-weight: unset !important;
         border-radius: 0%;
     }
+    .product-view .product-shop .padder .data-table td, .product-view .product-shop .padder .data-table tbody td {
+    padding-bottom: 1% !important;
+  }
+
 }
 
 /*iPhone5/SE*/
