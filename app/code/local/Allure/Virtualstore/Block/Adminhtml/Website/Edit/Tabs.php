@@ -13,7 +13,7 @@ class Allure_Virtualstore_Block_Adminhtml_Website_Edit_Tabs extends Mage_Adminht
         parent::__construct();
         $this->setId("website_tabs");
         $this->setDestElementId("edit_form");
-        $this->setTitle(Mage::helper("virtualstore")->__("Website Information"));
+        $this->setTitle(Mage::helper("allure_virtualstore")->__("Website Information"));
     }
 
     protected function _beforeToHtml ()
@@ -21,9 +21,9 @@ class Allure_Virtualstore_Block_Adminhtml_Website_Edit_Tabs extends Mage_Adminht
         $this->addTab("form_section",
             array(
 //                        "label" => Mage::helper("virtualstore")->__("Virtual Store Information"),
-                "title" => Mage::helper("virtualstore")->__("Website Information"),
+                "title" => Mage::helper("allure_virtualstore")->__("Website Information"),
                 "content" => $this->getLayout()
-                    ->createBlock("virtualstore/adminhtml_website_edit_tab_form")
+                    ->createBlock("allure_virtualstore/adminhtml_website_edit_tab_form")
                     ->toHtml()
             ));
         return parent::_beforeToHtml();

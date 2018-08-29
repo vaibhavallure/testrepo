@@ -22,6 +22,24 @@ class Allure_Metadata_Block_Adminhtml_Metadata_Edit_Tab_Form extends Mage_Adminh
 						    "label" => Mage::helper("metadata")->__("Description"),
 						    "name" => "description",
 						));
+						
+						$fieldset->addField("type", "text", array(
+						    "label" => Mage::helper("metadata")->__("Type"),
+						    "name" => "type",
+						));
+						$fieldset->addField("image", "text", array(
+						    "label" => Mage::helper("metadata")->__("Image"),
+						    "name" => "image",
+						));
+						$fieldset->addField("site_name", "text", array(
+						    "label" => Mage::helper("metadata")->__("Site Name"),
+						    "name" => "site_name",
+						));
+						$fieldset->addField("url", "text", array(
+						    "label" => Mage::helper("metadata")->__("URL"),
+						    "name" => "url",
+						));
+						
 						$fieldset->addField("status", "select", array(
 						    "label" => Mage::helper("metadata")->__("Status"),
 						    "name" => "status",
