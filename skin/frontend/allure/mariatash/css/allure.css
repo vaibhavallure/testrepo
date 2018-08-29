@@ -1658,6 +1658,21 @@ ul#narrow-by-list li.filtru-price {max-width: 100% !important;}
         width: 140px!important;
     }
 }
+@media screen and (device-aspect-ratio: 375/667) {
+  .product-view .product-shop .padder .data-table th:nth-child(2) {
+    font-weight:normal !important;
+    padding-top: 11px !important;
+  }
+}
+
+@media screen and (device-aspect-ratio: 16/9) {
+  .product-view .product-shop .padder .data-table th:nth-child(2) {
+    font-weight:normal !important;
+    padding-top: 11px !important;
+  }
+
+}
+
 
 .piercing-service .children-pricing {
   margin-top: 10px;
