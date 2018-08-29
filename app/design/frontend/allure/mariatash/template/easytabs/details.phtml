@@ -81,7 +81,7 @@ foreach($attributes as $attribute){
                         if($visibility){
                             echo '<tr>
                                         <th>' . $attribute->getData('store_label') . '</th>
-                                        <th>' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</th>
+                                        <td>' . $_helper->productAttribute($this->getProduct(), $content, $attrCode) . '</td>
                                       </tr>';
                         }
                     }
