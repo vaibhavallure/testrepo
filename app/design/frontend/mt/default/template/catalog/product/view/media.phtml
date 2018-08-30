@@ -62,18 +62,17 @@ $_cpid =  $this->getRequest()->getParam("cpid") ? $this->getRequest()->getParam(
 $configProduct = Mage::getModel('catalog/product')->load($_cpid);
 $childId = null;
 if($configProduct->isConfigurable()){
-    $check_option_color = false;
+    $check_option_color = true;
     $allowAttrs   = array();
     $allAtributes = $configProduct->getTypeInstance(true)->getConfigurableAttributes($configProduct);
     foreach ($allAtributes as $attribute) {
         $productAttribute = $attribute->getProductAttribute();
-        if(!is_null($productAttribute)){
-            $attrid = $productAttribute->getId();
-            $allowAttrs[] = $productAttribute->getAttributeCode();  
-        }
         if(is_null($productAttribute)){
             Mage::log("Issue with Product::".$_cpid,Zend_log::DEBUG,'product_errors.log',true);
         }
+        $attrid = $productAttribute->getId();
+        $allowAttrs[] = $productAttribute->getAttributeCode();     
+       
     }
     $colors = Mage::getStoreconfig('ecp_color/color_attr');
     $colors = explode(",", $colors);
@@ -84,17 +83,7 @@ if($configProduct->isConfigurable()){
         }
     }
     
-   // $colorOptionId = $this->getRequest()->getParam("optionId");  
-    
-    $optionHelper=Mage::helper('allure_catalog');
-    $metal=$this->getRequest()->getParam("metal");
-    if($metal){
-        $colorOptionId=$optionHelper->getOptionNumber($metal);
-    }elseif($this->getRequest()->getParam("optionId")){
-        $colorOptionId=$this->getRequest()->getParam("optionId");
-    }
-    
-    
+    $colorOptionId = $this->getRequest()->getParam("optionId");  
     
     $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $configProduct);
     $config_attr = null;   
@@ -262,7 +251,6 @@ function closeVid(){
 
 function createZoomview(){
     jQuery.facybox.loading();
-   
     <?php $url = $this->getUrl('productview/index/sendproduct'); ?>
     var widthWindow = (jQuery(window).width());
     var heightWindow = jQuery(window).height();
@@ -273,8 +261,7 @@ function createZoomview(){
     var heightThumbimage = heightWindow * 0.24;
     var productId = jQuery('input[name="product"]').val();
     var productName = jQuery.trim(jQuery('.product-view .product-name').text());
-   // alert("HIIIIIIIIIIIIII");
-	  
+   jQuery(function(){
         jQuery.ajax({
             url: "<?php echo $url ?>",
             data: {
@@ -294,7 +281,7 @@ function createZoomview(){
                 jQuery('a.close').hide();
             }
         });
-   
+    })
 }
 
 function windOpn(url){
@@ -322,19 +309,18 @@ function shareLikeTwitter(){
     });
 }
 
-
-jQuery(document).ready(function(){
-    /*********************************************************/
+	jQuery(document).ready(function(){
+	    /*********************************************************/
     /*Gallery View*/
     jQuery('.containerImage,.btnFullscreen').mouseover(function() {
-       //jQuery('.btnFullscreen').show();  //Commented Tempray as functionality is not working
+       jQuery('.btnFullscreen').show();
     }).mouseout(function() {
        jQuery('.btnFullscreen').hide();
     });
     jQuery('#loader').hide();
 	<?php $hasVideo = ($_product->getVideo()) ? $_product->getVideo() : (($_product->getSecondVideo()) ? $_product->getSecondVideo() : '');?>
     var videoCounter = <?php echo strlen($hasVideo)?>;
-    var urlCounter = <?php echo strlen($_product->getProductUrl())?>;
+    var urlCounter = <?php echo strlen($_product->getUrl())?>;
     <?php if ( $count > 1 ): ?>
             var counterJs = 0;
             var numImages = jQuery('#thumbRepo img').length;
@@ -370,8 +356,7 @@ jQuery(document).ready(function(){
             if( videoCounter  == 0 ){
                 <?php //if ( $count == 0 ): ?>
                     if( urlCounter > 0 ){
-                    	counterJs--;
-                    	jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 75, 96); ?>" /></a>');
+                        jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
                     }
                 <?php //endif; ?>
             }
@@ -388,9 +373,8 @@ jQuery(document).ready(function(){
                     jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 74, 96); ?>" /></a>');
                 <?php } ?>
                 if( urlCounter > 0 ){
-                	counterJs--;
                     <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
-                    jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 75, 96); ?>" /></a>');
+                    jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="<?php echo $_product->getUrl();?>"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 75, 96); ?>" /></a>');
                     <?php //} ?>
                 }
             }
@@ -402,7 +386,10 @@ jQuery(document).ready(function(){
         if (videoCounter == 0) {
             if (urlCounter > 0) {
                 jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
-            }
+            }else{
+            	        <?php $_img = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>
+            	        jQuery('.thumb').eq(0).html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'thumbnail');?>"  data="0"/>');
+                }
         } else {
             <?php if($_product->getVideoThumb() == 'thumbnail/video/')
                     $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
@@ -449,6 +436,8 @@ jQuery(document).ready(function(){
         }
     <?php endif; ?>
 });
+	
+
 
 </script>
 <input type="hidden" name="reloadmedia" id="reloadmedia" value="v"/>
@@ -590,137 +579,4 @@ if ($isAjaxCall) {
             jQuery('.delayed-product').addClass('display_none');
         }
     });
-
-
-
-    function loadCatalogImages(){
-
-        /*********************************************************/
-        /*Gallery View*/
-        jQuery('.containerImage,.btnFullscreen').mouseover(function() {
-          // jQuery('.btnFullscreen').show(); //Commented Tempray as functionality is not working
-        }).mouseout(function() {
-           jQuery('.btnFullscreen').hide();
-        });
-        jQuery('#loader').hide();
-    	<?php $hasVideo = ($_product->getVideo()) ? $_product->getVideo() : (($_product->getSecondVideo()) ? $_product->getSecondVideo() : '');?>
-        var videoCounter = <?php echo strlen($hasVideo)?>;
-        var urlCounter = <?php echo strlen($_product->getUrl())?>;
-        <?php if ( $count > 1 ): ?>
-                var counterJs = 0;
-                var numImages = jQuery('#thumbRepo img').length;
-                var urlVideo = '';
-
-                loadBaseImage();
-
-                jQuery('#thumbRepo img').each(function(number){
-                     if(jQuery(this).attr('viewon') == 1) {
-                        if(numImages < 5)
-                            jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><div class="url-caption">VIEW ON MODEL</div><img src="'+jQuery(this).attr('src')+'" /></a>');
-                        else {
-                            jQuery('.thumb').eq(3).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="'+jQuery(this).attr('src')+'" /></a>');                        
-                        }
-                        counterJs++;
-                    } else {
-                         if( videoCounter  == 0 ){
-                            if(number <= 3){
-                                jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="'+jQuery(this).attr('src')+'" /></a>');
-                                counterJs++;
-                            }
-
-                         }
-                         else{
-                             if(number <= 3){
-                                jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="'+jQuery(this).attr('src')+'" /></a>');
-                                counterJs++;
-                             }
-                        }
-                   }
-                    
-                });
-                if( videoCounter  == 0 ){
-                    <?php //if ( $count == 0 ): ?>
-                        if( urlCounter > 0 ){
-                        	counterJs--;
-                        	 jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 75, 96); ?>" /></a>');
-                        }
-                    <?php //endif; ?>
-                }
-                else{
-                    <?php
-                    if($_product->getVideoThumb() == 'thumbnail/video/')
-                        $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
-                    if($videoUrl){ ?>
-                        var id_video = (counterJs > 3) ? 4 : counterJs;
-                        jQuery('.thumb').eq(id_video).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
-                    <?php }
-                    if($secondVideoUrl){ ?>
-                        var id_video = (counterJs > 3) ? 4 : counterJs;
-                        jQuery('.thumb').eq(id_video+1).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($secondThumb , 74, 96); ?>" /></a>');
-                    <?php } ?>
-                    if( urlCounter > 0 ){
-                    	counterJs--;
-                        <?php //if( $_product->getUrlThumb() != 'thumbnail/url/' && $_product->getUrl() != '' ){ ?>
-                        jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 75, 96); ?>" /></a>');
-                        <?php //} ?>
-                    }
-                }
-
-        <?php endif; ?>
-
-        <?php if ( $count == 1 ): ?>      
-            loadBaseImage();       
-            if (videoCounter == 0) {
-                if (urlCounter > 0) {
-                    jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
-                }
-            } else {
-                <?php if($_product->getVideoThumb() == 'thumbnail/video/')
-                        $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
-                if($videoUrl){ ?>
-                    jQuery('#thumbRepo img').each(function(number){
-                             jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
-                             return;
-                    });
-                    jQuery('.thumb').eq(1).html('<div class="video-caption" onclick="loadVideo(\'first\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'first\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
-                <?php }
-                if($secondVideoUrl){ ?>
-                    jQuery('#thumbRepo img').each(function(number){
-                        jQuery('.thumb').eq(0).html('<a href="javascript:;" onclick="closeVideo();loadImage(0);"><img src="'+jQuery(this).attr('src')+'" /></a>');
-                        return;
-                    });
-                    jQuery('.thumb').eq(2).html('<div class="video-caption" onclick="loadVideo(\'second\');">VIDEO</div><a href="javascript:;" onclick="closeVideo();loadVideo(\'second\');"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
-                    <?php } ?>
-                if (urlCounter > 0) {
-                    <?php  { ?>
-                    jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 75, 96); ?>" /></a>');
-                    <?php } ?>
-                }
-            }
-
-        <?php endif; ?>
-
-        <?php if ( $count == 0 ): ?>
-            jQuery('.containerImage').html('<img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/imageProduct.jpg');?>" />');
-
-            if( videoCounter  == 0 ){
-            <?php //if ( $count == 0 ): ?>
-                if( urlCounter > 0 ){
-                    jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
-                }
-            } else{
-                <?php if( $_product->getVideoThumb() != 'thumbnail/video/' && $videoUrl){ ?>
-                    jQuery('.thumb').eq(0).html('<div class="video-caption" onclick="loadVideo();">VIDEO</div><a href="javascript:;" onclick="loadVideo();"><img width="74" src="<?php echo Mage::helper('ecp_productview')->resizeImg($thumb , 74, 96); ?>" /></a>');
-                    <?php } ?>
-                    if( urlCounter > 0 ){
-                        <?php { ?>
-                        jQuery('.thumb').eq(counterJs).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="<?php echo Mage::helper('ecp_productview')->resizeImg($_product->getUrlThumb() , 75, 96); ?>" /></a>');
-                        <?php } ?>
-                    }
-            }
-        <?php endif; ?>
-    }
-    
 </script>
-
-
