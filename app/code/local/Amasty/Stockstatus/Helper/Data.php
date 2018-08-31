@@ -270,6 +270,55 @@ INLINECSS;
         return $status;
     }
 
+    /*
+    this function (getCustomOutOfStockStatus) to hide add to cart button if status is out of stock
+    Added by aws12.
+    */
+    public function getCustomOutOfStockStatus(Mage_Catalog_Model_Product $product, $qty=0)
+    {
+        if('true' == (string)Mage::getConfig()->getNode('modules/Amasty_Preorder/active') && Mage::helper('ampreorder')->getIsProductPreorder($product)) return Mage::helper('ampreorder')->getProductPreorderNote($product);
+            $status      = 0;
+            $rangeStatus = Mage::getModel('amstockstatus/range');
+            $stockItem   = null;
+        if(!$product)
+            return false;
+            $storeId=Mage::app()->getStore()->getStoreId();
+            $stockId=$storeId;
+
+            $product = Mage::getModel('catalog/product')->setStoreId($storeId)->load($product->getId());
+
+            $stockItem= Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($product,$stockId);
+
+            if($stockItem->getIsInStock()==0 && $stockItem->getUuseConfigBackorders()==0)
+            {
+                $status=1;
+            }
+            if($stockItem->getIsInStock()==0 && $stockItem->getUuseConfigBackorders()==0)
+            {
+                $status=1;
+            }
+            /*if($stockItem->getIsInStock()==1 && $stockItem->getQty()>=1)
+            {
+                $status="(In Stock: Ships Within 24 hours (Mon-Fri).)";
+            }*/
+            /*if($stockItem->getIsInStock()==1 && $stockItem->getQty()<=0)
+            {
+                if($product->getBackorderTime())
+                    $status="The metal color or length combination you selected is backordered. Order now and It will ship ".$product->getBackorderTime();
+                else
+                    $status="The metal color or length combination you selected is backordered.";
+            }
+            if($product->getStockItem()->getManageStock()==0)
+            {
+                $status="(In Stock: Ships Within 24 hours (Mon-Fri).)";
+            }*/
+
+        return $status;
+    }
+    /*
+    * end aws12
+    */
+
     public function getCustomStockStatusId(Mage_Catalog_Model_Product $product)
     {
         $statusId    = null;
