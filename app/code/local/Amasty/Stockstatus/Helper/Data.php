@@ -297,22 +297,7 @@ INLINECSS;
             {
                 $status=1;
             }
-            /*if($stockItem->getIsInStock()==1 && $stockItem->getQty()>=1)
-            {
-                $status="(In Stock: Ships Within 24 hours (Mon-Fri).)";
-            }*/
-            /*if($stockItem->getIsInStock()==1 && $stockItem->getQty()<=0)
-            {
-                if($product->getBackorderTime())
-                    $status="The metal color or length combination you selected is backordered. Order now and It will ship ".$product->getBackorderTime();
-                else
-                    $status="The metal color or length combination you selected is backordered.";
-            }
-            if($product->getStockItem()->getManageStock()==0)
-            {
-                $status="(In Stock: Ships Within 24 hours (Mon-Fri).)";
-            }*/
-
+            
         return $status;
     }
     /*

@@ -107,9 +107,6 @@
 <?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
 
 <?php $_product = $this->getProduct() ?>
-<?php $hideAddtoCart = Mage::helper('amstockstatus')->getCustomOutOfStockStatus($_product);
-var_dump($hideAddtoCart);
-?>
 <?php if ( $_product->getTypeId() != 'giftcards'):?>
 <?php if ($_product->isAvailable()): ?>
     <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability for this model:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
@@ -119,8 +116,4 @@ var_dump($hideAddtoCart);
 <?php endif; ?>
 <?php echo $this->getChildHtml('product_type_data_extra') ?>
 <?php //echo $this->getPriceHtml($_product) ?>
-<script type="text/javascript">
-    jQuery('.availability.in-stock').on('DOMSubtreeModified',function(){
-  
-})
-</script>
+
