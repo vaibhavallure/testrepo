@@ -24,6 +24,7 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+
 <?php $_product = $this->getProduct(); ?>
 <?php $buttonTitle = $this->__('Add to Cart'); ?>
 <?php if ($_product->isSaleable()): ?>
@@ -115,3 +116,4 @@
 <?php endif; ?>
 <?php echo $this->getChildHtml('product_type_data_extra') ?>
 <?php //echo $this->getPriceHtml($_product) ?>
+
