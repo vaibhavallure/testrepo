@@ -40,7 +40,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
         $validationPayload = json_encode($payload);
 
-        try{	
+        try{
             //setting the curl parameters.
             $ch = curl_init();
             if (FALSE === $ch) {
@@ -79,7 +79,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
     public function addProductAction() {
         Mage::log("BEGIN: addProductAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
 
         $cart   = $this->_getCart();
@@ -87,13 +87,13 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         $this->truncateCart();
 
         //$this->cleanQuotes();
-        
+
         //$this->getOnepage()->initCheckout();
-        
+
         //$cart->init()->save();
 
         $params = $this->getRequest()->getParams();
-        
+
         $specialInstruction = (isset($params['gift-special-instruction']) && !empty($params['gift-special-instruction'])) ? trim($params['gift-special-instruction']) : false;
 
         try {
@@ -105,7 +105,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             }
 
             $product = $this->_initProduct();
-            
+
             $related = $this->getRequest()->getParam('related_product');
 
             /**
@@ -121,24 +121,24 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             if (!empty($related)) {
                 $cart->addProductsByIds(explode(',', $related));
             }
-            
+
             $this->_getSession()->setCartWasUpdated(true);
-            
+
             $cart->save();
-            
+
             if ($specialInstruction) {
                 $this->storeGiftMessage($specialInstruction);
             }
-            
+
             Mage::dispatchEvent('checkout_cart_add_product_complete',
                 array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
             );
-            
+
             $couponCode = '4uWruyuc';
             $this->_getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')->collectTotals()->save();
-            
+
             $quote = $cart->getQuote();
-            
+
             $result = array(
                 //'request' => $this->getRequest(),
                 //'params'        => $this->getRequest()->getParams(),
@@ -173,88 +173,88 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * save checkout billing address
      */
     public function saveBillingAction() {
-        
+
         Mage::log("BEGIN: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
         Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('billing', array());
-            
+
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
 
             if (isset($data['email'])) {
                 $data['email'] = trim($data['email']);
             }
-            
+
             $calculateRegion = true;
-            
+
             if ($calculateRegion) {
-            
+
                 if (!isset($data['region_id']) || empty($data['region_id'])) {
                     $regionName = $data['region'];
-                    
+
                     $region  = Mage::getModel('directory/region')->loadByCode($regionName, $data['country_id']);
-                    
+
                     if (!$region->getId()) {
                         $region = Mage::getModel('directory/region')->loadByName($regionName, $data['country_id']);
                     }
-                    
+
                     if ($region->getId()) {
                         $data['region_id'] = $region->getId();
                     }
                 }
             }
-            
+
             Mage::log("NEW DATA: ".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
-            
+
             $calculateTotals = true;
-         
+
             if (!$calculateTotals) {
                 $this->_getQuote()->getShippingAddress()->setCollectShippingRates(false);
             }
-            
+
             $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
 
             if (!isset($result['error'])) {
                 /* check quote for virtual */
                 if (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
                     $address = $this->getOnepage()->getQuote()->getShippingAddress();
-                    
+
                     $shippingMethods = array();
-                    
+
                     $hasDefaultMethod = false;
-                    
+
                     $calculateShippingMethods = true;
-                    
+
                     if ($calculateShippingMethods) {
-                    
+
                         foreach($address->getGroupedAllShippingRates() as $rates){
                             foreach ($rates as $rate) {
                                 if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
                                     continue;
                                 }
-                                
+
                                 if (!$hasDefaultMethod) {
                                     $this->_getSession()->setDefaultShippingMethod($rate->getCode());
-                                    
+
                                     if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
                                         $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($rate->getCode());
-                                        
+
                                         $this->getOnepage()->getQuote()->collectTotals()->save();
                                     }
 
                                     $hasDefaultMethod = true;
                                 }
-                                
+
                                 $shippingMethods[$rate->getCode()] = $rate->getData();
                             }
                         }
                     }
-                    
+
                     $result['shipping_methods'] = $shippingMethods;
-                    
+
                     $result['goto_section'] = 'shipping_method';
-                    
+
                     $result['update_section'] = array(
                             'name' => 'shipping-method',
                             //'html' => $this->_getShippingMethodsHtml()
@@ -265,17 +265,17 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 } else {
                     $result['goto_section'] = 'shipping';
                 }
-                
+
                 //$this->getOnepage()->getQuote()->setTotalsCollectedFlag(false);
                 //$this->getOnepage()->getQuote()->collectTotals()->save();
-                
+
                 $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
                 $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
-                
+
                 if ($calculateTotals) {
-                    
+
                     $result['totals'] = array();
-                
+
                     foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
                         $result['totals'][$code] = array(
                                 'title' => $total->getTitle(),
@@ -284,62 +284,62 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     }
                 }
             }
-            
+
             $this->_setDeliveryOption();
-            
+
             //$this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
-            
+
             Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
             Mage::log("END: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
-            
+
             $this->getResponse()->setHeader('Content-type', 'application/json');
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
-    
+
     private function _setDeliveryOption()
-    {   
+    {
         $_checkoutHelper = Mage::helper('allure_multicheckout');
         $this->_getQuote()->setDeliveryMethod('one_ship');
         $this->_getQuote()->setOrderType($_checkoutHelper::SINGLE_ORDER);
     }
-    
-    
+
+
     /**
      * save checkout billing address
      */
     public function saveBillingAddressAction() {
-        
+
         Mage::log("BEGIN: saveBillingAddressAction",Zend_Log::DEBUG, 'applepay.log', true);
         Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('billing', array());
-            
+
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
-            
+
             if (isset($data['email'])) {
                 $data['email'] = trim($data['email']);
             }
-            
+
             if (!isset($data['region_id']) || empty($data['region_id'])) {
                 $regionName = $data['region'];
-                
+
                 $region  = Mage::getModel('directory/region')->loadByCode($regionName, $data['country_id']);
-                
+
                 if (!$region->getId()) {
                     $region = Mage::getModel('directory/region')->loadByName($regionName, $data['country_id']);
                 }
-                
+
                 if ($region->getId()) {
                     $data['region_id'] = $region->getId();
                 }
             }
-            
+
             Mage::log("NEW DATA: ".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
-            
+
             $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
-            
+
             if (!isset($result['error'])) {
                 /* check quote for virtual */
                 if ($this->getOnepage()->getQuote()->isVirtual()) {
@@ -349,24 +349,24 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                             //'html' => $this->_getPaymentMethodsHtml()
                     );
                 } elseif (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
-                    
+
                     $result['goto_section'] = 'shipping_method';
                     $result['update_section'] = array(
                             'name' => 'shipping-method',
                             'html' => $this->_getShippingMethodsHtml()
                     );
-                    
+
                     $result['allow_sections'] = array('shipping');
                     $result['duplicateBillingInfo'] = 'true';
                 } else {
                     $result['goto_section'] = 'shipping';
                 }
-                
+
                 $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
                 $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
-                
+
                 $result['totals'] = array();
-                
+
                 foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
                     $result['totals'][$code] = array(
                             'title' => $total->getTitle(),
@@ -374,83 +374,83 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     );
                 }
             }
-            
-            
+
+
             Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
             Mage::log("END: saveBillingAddressAction",Zend_Log::DEBUG, 'applepay.log', true);
-            
+
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
-    
-    
+
+
     /**
      * save checkout billing address
      */
     public function loadShippingMethodsAction() {
-        
+
         Mage::log("BEGIN: loadShippingMethodsAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         $this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
-        
+
         $result = array();
-        
+
         $address = $this->getOnepage()->getQuote()->getShippingAddress();
-        
+
         Mage::log("DATA: ".json_encode($address->getData()),Zend_Log::DEBUG, 'applepay.log', true);
-                    
+
         $shippingMethods = array();
-        
+
         $hasDefaultMethod = false;
-        
+
         if ($address->getShippingMethod() && $address->getShippingMethod() != '') {
             $shippingMethods[$address->getShippingMethod()] = array();
             $this->_getSession()->setDefaultShippingMethod($address->getShippingMethod());
             $hasDefaultMethod = true;
         }
-        
-        
+
+
         foreach($address->getGroupedAllShippingRates() as $rates) {
             foreach ($rates as $rate) {
                 if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
                     continue;
                 }
-                
+
                 if (!$hasDefaultMethod) {
                     $this->_getSession()->setDefaultShippingMethod($rate->getCode());
                     $hasDefaultMethod = true;
                 }
-                
+
                 $shippingMethods[$rate->getCode()] = $rate->getData();
             }
         }
-        
+
         if (count($shippingMethods)) {
             $defaultShippingMethodRow = each($shippingMethods);
             $defaultShippingMethod = $defaultShippingMethodRow['key'];
-            
+
             Mage::log("defaultShippingMethod: ".($defaultShippingMethod),Zend_Log::DEBUG, 'applepay.log', true);
             $this->getOnepage()->saveShippingMethod($defaultShippingMethod);
             $this->_getSession()->setDefaultShippingMethod($defaultShippingMethod);
         }
-        
+
         $result['goto_section'] = 'shipping_method';
         $result['shipping_methods'] = $shippingMethods;
         $result['update_section'] = array(
                 'name' => 'shipping-method',
                 //'html' => $this->_getShippingMethodsHtml()
         );
-        
+
         $result['allow_sections'] = array('shipping');
         $result['duplicateBillingInfo'] = 'true';
-                
+
         $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
         $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
-            
-            
+
+
         Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
         Mage::log("END: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
@@ -458,20 +458,20 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * Shipping address save action
      */
     public function saveShippingAction() {
-        
+
         Mage::log("BEGIN: saveShippingAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping', array());
             $customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
             $result = $this->getOnepage()->saveShipping($data, $customerAddressId);
-            
+
             $this->getOnepage()->getQuote()->collectTotals()->save();
 
             if (!isset($result['error'])) {
                 $result['totals'] = $this->getOnepage()->getQuote()->getTotals();
-                
+
                 $result['goto_section'] = 'shipping_method';
                 $result['update_section'] = array(
                         'name' => 'shipping-method',
@@ -495,7 +495,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost('shipping_method', '');
             $result = $this->getOnepage()->saveShippingMethod($data);
-            
+
             /*
              $result will have erro data if shipping method is empty
              */
@@ -511,23 +511,23 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                         //'html' => $this->_getPaymentMethodsHtml()
                 );
             }
-            
+
             $this->getOnepage()->getQuote()->collectTotals()->save();
-            
+
             $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
             $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
-            
+
             $result['totals'] = array();
-            
+
             foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
                 $result['totals'][$code] = array(
                         'title' => $total->getTitle(),
                         'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)
                 );
             }
-            
+
             Mage::log("END: saveShippingMethodAction",Zend_Log::DEBUG, 'applepay.log', true);
-            
+
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
@@ -581,29 +581,29 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
      * Create order action
      */
     public function saveOrderAction ($paymentData = false)
-    {   
+    {
         $result = array();
         $_checkoutHelper = Mage::helper('allure_multicheckout');
-        
+
         try {
             if ($paymentData) {
                 $data = $paymentData;
             } else {
                 $data = $this->getRequest()->getPost('payment', array());
             }
-            
+
             Mage::log("PAYMENT_DATA::".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
-            
+
             if ($data) {
                 $data['checks'] =   Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL |
                                     Mage_Payment_Model_Method_Abstract::CHECK_USE_FOR_COUNTRY ;
-                
+
                 $this->getOnepage()
                     ->getQuote()
                     ->getPayment()
                     ->importData($data);
             }
-            
+
             $this->getOnepage()->saveCustomOrder($data);
 
             $redirectUrl = $this->getOnepage()
@@ -721,23 +721,23 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         }
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
-    
+
     public function saveTransactionAction() {
-        
+
         $data = $_POST;
-        
+
         Mage::log("BEGIN: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
 
         if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
             $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
         }
-        
+
         $paymentData = array('method' => 'applepay');
-        
+
         $this->getRequest()->setPost('payment', $paymentData);
-        
+
         Mage::log("END: saveTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
         return $this->saveOrderAction($paymentData);
     }
@@ -745,73 +745,73 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     public function saveOrderTransactionAction() {
 
         $data = $_POST;
-        
+
         Mage::log("BEGIN: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         Mage::log(json_encode($_POST),Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         if (isset($data['billing'])) {
             $billingData = $data['billing'];
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
-            
+
             if (isset($billingData['email'])) {
                 $billingData['email'] = trim($billingData['email']);
             }
-            
+
             if (!isset($billingData['region_id']) || empty($billingData['region_id'])) {
                 $regionName = $billingData['region'];
-                
+
                 $region  = Mage::getModel('directory/region')->loadByCode($regionName, $billingData['country_id']);
-                
+
                 if (!$region->getId()) {
                     $region = Mage::getModel('directory/region')->loadByName($regionName, $billingData['country_id']);
                 }
-                
+
                 if ($region->getId()) {
                     $billingData['region_id'] = $region->getId();
                 }
             }
-            
+
             Mage::log("NEW DATA: ".json_encode($billingData),Zend_Log::DEBUG, 'applepay.log', true);
-            
+
             $this->getOnepage()->saveBilling($billingData, $customerAddressId);
             $this->getOnepage()->saveShipping($billingData, $customerAddressId);
         }
-        
+
         if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
             $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
         }
-        
+
         $paymentData = array('method' => 'applepay');
-        
+
         $this->getRequest()->setPost('payment', $paymentData);
-        
+
         Mage::log("START: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
         try {
             $result = $this->saveOrderAction($paymentData);
-            
+
             if ($responseData = $this->_chargeCard()) {
-                
+
                 $responseDataObject = json_decode($responseData, true);
-                
+
                 if ($responseDataObject['messages']['resultCode'] == 'Ok') {
-                    
+
                     if ($responseDataObject['transactionResponse']) {
-                        
+
                         $paymentData = $responseDataObject['transactionResponse'];
-                        
+
                         $authResponse = new Varien_Object($paymentData);
-                        
+
                         $payment = $this->getOnepage()->getQuote()->getPayment();
-                        
+
                         $payment->setTransactionId( $authResponse->getTransId());
                         $payment->setTransactionAdditionalInfo( Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $authResponse->getData() );
-                        
+
                         $payment->save();
                     }
                 }
             }
-            
+
             return $result;
         } catch (Exception $e) {
             Mage::log("EXCEPTION: ".$e->getMessage(),Zend_Log::DEBUG, 'applepay.log', true);
@@ -820,7 +820,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         Mage::log("END: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
         Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
     }
-    
+
     private function _chargeCard()
     {
         $transRequestXmlStr=<<<XML
@@ -840,35 +840,35 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
       </transactionRequest>
 </createTransactionRequest>
 XML;
-        
+
         $transRequestXml = new SimpleXMLElement($transRequestXmlStr);
-        
+
         $loginId = 'venus12';
         $transactionKey = '5s8UVJ42HUhj6u9k';
-        
+
         $transRequestXml->merchantAuthentication->addChild('name',$loginId);
         $transRequestXml->merchantAuthentication->addChild('transactionKey',$transactionKey);
-        
+
         $transRequestXml->transactionRequest->amount = $_POST['amount'];
         $transRequestXml->transactionRequest->payment->opaqueData->dataDescriptor=$_POST['dataDesc'];
         $transRequestXml->transactionRequest->payment->opaqueData->dataValue=$_POST['dataBinary'];
-        
+
         if ($_POST['dataDesc'] === 'COMMON.VCO.ONLINE.PAYMENT') {
             $transRequestXml->transactionRequest->addChild('callId',$_POST['callId']);
         }
-        
+
         if (isset($_POST['paIndicator'])){
             $transRequestXml->transactionRequest->addChild('cardholderAuthentication');
             $transRequestXml->transactionRequest->addChild('authenticationIndicator',$_POST['paIndicator']);
             $transRequestXml->transactionRequest->addChild('cardholderAuthenticationValue',$_POST['paValue']);
         }
-        
+
         $url="https://api.authorize.net/xml/v1/request.api";
-        
+
         Mage::log("REQUEST: ".$transRequestXml->asXML(),Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         //print_r($transRequestXml->asXML());
-        
+
         try{	//setting the curl parameters.
             $ch = curl_init();
             if (FALSE === $ch) {
@@ -886,26 +886,26 @@ XML;
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);	//for production, set value to 2
             curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false );
             $content = curl_exec($ch);
-            
+
             if (FALSE === $content) {
                 throw new Exception(curl_error($ch), curl_errno($ch));
             }
-            
+
             curl_close($ch);
-                
+
             $xmlResult=simplexml_load_string($content);
-            
+
             $jsonResult=json_encode($xmlResult);
-            
+
             Mage::log("RESPONSE: ".$jsonResult,Zend_Log::DEBUG, 'applepay.log', true);
-            
+
             return $jsonResult;
-                    
+
         } catch (Exception $e) {
             Mage::log("ERROR: ".sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()),Zend_Log::DEBUG, 'applepay.log', true);
             trigger_error(sprintf('Curl failed with error #%d: %s', $e->getCode(), $e->getMessage()), E_USER_ERROR);
         }
-        
+
         return false;
     }
 
@@ -920,7 +920,7 @@ XML;
             $this->_getSession()->addException($exception, $this->__('Cannot update shopping cart.'));
         }
     }
-    
+
     /**
      * Initialize coupon
      */
@@ -930,10 +930,10 @@ XML;
             'error' => true,
             'message' => ''
         );
-        
+
         Mage::log("BEGIN: applyCouponAction",Zend_Log::DEBUG, 'applepay.log', true);
         Mage::log("DATA: ".json_encode($_REQUEST),Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         /**
          * No reason continue with empty shopping cart
          */
@@ -942,27 +942,27 @@ XML;
             die(json_encode($response));
             return;
         }
-        
+
         $couponCode = (string)$this->getRequest()->getParam('coupon_code');
         $couponCode = trim($couponCode);
-        
+
         if ($this->getRequest()->getParam('action') == 'remove') {
             $couponCode = '';
         }
         $oldCouponCode = $this->_getQuote()->getCouponCode();
-        
+
         if (!strlen($couponCode) && !strlen($oldCouponCode)) {
             if (!$isAjax) $this->_goBack();
             else die(json_encode($response));
             return;
         }
-        
+
         try {
             $this->_getQuote()->getShippingAddress()->setCollectShippingRates(true);
             $this->_getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')
             ->collectTotals()
             ->save();
-            
+
             if (strlen($couponCode)) {
                 if ($couponCode == $this->_getQuote()->getCouponCode()) {
                     $response['error'] = false;
@@ -976,7 +976,7 @@ XML;
                 $response['error'] = false;
                 $response['message'] = $this->__('Coupon code was canceled.');
             }
-            
+
         } catch (Mage_Core_Exception $e) {
             $response['error'] = true;
             $response['message'] = $e->getMessage();
@@ -985,19 +985,19 @@ XML;
             $response['message'] = $this->__('Cannot apply the coupon code.');
             Mage::logException($e);
         }
-        
+
         Mage::log("END: applyCouponAction",Zend_Log::DEBUG, 'applepay.log', true);
-        
+
         die(json_encode($response));
     }
-    
+
     public function activateGiftCardAction()
     {
         $giftCardCode = trim((string)$this->getRequest()->getParam('giftcard_code'));
         $card = Mage::getModel('giftcards/giftcards')->load($giftCardCode, 'card_code');
-        
+
         if ($card->getId() && ($card->getCardStatus() == 1)) {
-            
+
             Mage::getSingleton('giftcards/session')->setActive('1');
             $this->_setSessionVars($card);
             $this->_getQuote()->collectTotals();
@@ -1011,15 +1011,15 @@ XML;
                 $result['message'] = $this->__('Gift Card "%s" is not valid.', Mage::helper('core')->escapeHtml($giftCardCode));
             }
         }
-        
+
         $this->loadLayout('myaccount_checkout_cart_layout');
         $html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
         $result['html']  = $html;
-        
+
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
-    
+
     public function deactivateGiftCardAction()
     {
         $oSession = Mage::getSingleton('giftcards/session');
@@ -1034,20 +1034,20 @@ XML;
         }
         $oSession->setGiftCardBalance($newSessionBalance);
         $oSession->setGiftCardsIds($cardIds);
-        
+
         $this->_getQuote()->collectTotals()->save();
-        
+
         $result['success'] = 1;
         $result['message'] = $this->__('Gift card Removed');
-        
+
         $this->loadLayout('myaccount_checkout_cart_layout');
         $html = $this->getLayout()->getBlock('checkout.cart_myaccount')->toHtml();
         $result['html']  = $html;
-        
+
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
-    
+
     public function refreshTotalsAction()
     {
         $params = $this->getRequest()->getParams();
@@ -1055,17 +1055,17 @@ XML;
             $data = $params['shipping_method'];
             $this->getOnepage()->saveShippingMethod($data);
         }
-        
+
         $this->_getQuote()->getShippingAddress()->setCollectShippingRates(true);
-        
+
         $this->_getQuote()->collectTotals()->save();
-        
+
         $result = array();
-        
+
         $calculateTotals = true;
-        
+
         if ($calculateTotals) {
-            
+
             foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
                 $result[$code] = array(
                         'title' => $total->getTitle(),
@@ -1073,10 +1073,95 @@ XML;
                 );
             }
         }
-        
+
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
+
+	public function testAction()
+	{
+		include_once 'AuthorzeNet/autoload.php';
+
+		use net\authorize\api\contract\v1 as AnetAPI;
+	    use net\authorize\api\controller as AnetController;
+
+	    define("AUTHORIZENET_LOG_FILE", "authnet.log");
+
+		$this->voidTransaction('40920712533');
+
+		die('HI');
+	}
+
+	private function voidTransaction($transactionid)
+	{
+	    /* Create a merchantAuthenticationType object with authentication details
+	       retrieved from the constants file */
+	    $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
+	    $merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
+	    $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);
+
+	    // Set the transaction's refId
+	    $refId = 'ref' . time();
+
+	    //create a transaction
+	    $transactionRequestType = new AnetAPI\TransactionRequestType();
+	    $transactionRequestType->setTransactionType( "voidTransaction");
+	    $transactionRequestType->setRefTransId($transactionid);
+
+	    $request = new AnetAPI\CreateTransactionRequest();
+	    $request->setMerchantAuthentication($merchantAuthentication);
+		//$request->setRefId($refId);
+	    $request->setTransactionRequest( $transactionRequestType);
+	    $controller = new AnetController\CreateTransactionController($request);
+	    $response = $controller->executeWithApiResponse(\SampleCode\Constants::ENVIRONMENT);
+
+	    if ($response != null)
+	    {
+	      if($response->getMessages()->getResultCode() == \SampleCode\Constants::RESPONSE_OK)
+	      {
+	        $tresponse = $response->getTransactionResponse();
+
+		      if ($tresponse != null && $tresponse->getMessages() != null)
+	        {
+	          echo " Transaction Response code : " . $tresponse->getResponseCode() . "\n";
+	          echo " Void transaction SUCCESS AUTH CODE: " . $tresponse->getAuthCode() . "\n";
+	          echo " Void transaction SUCCESS TRANS ID  : " . $tresponse->getTransId() . "\n";
+	          echo " Code : " . $tresponse->getMessages()[0]->getCode() . "\n";
+		        echo " Description : " . $tresponse->getMessages()[0]->getDescription() . "\n";
+	        }
+	        else
+	        {
+	          echo "Transaction Failed \n";
+	          if($tresponse->getErrors() != null)
+	          {
+	            echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
+	            echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";
+	          }
+	        }
+	      }
+	      else
+	      {
+	        echo "Transaction Failed \n";
+	        $tresponse = $response->getTransactionResponse();
+	        if($tresponse != null && $tresponse->getErrors() != null)
+	        {
+	          echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
+	          echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";
+	        }
+	        else
+	        {
+	          echo " Error code  : " . $response->getMessages()->getMessage()[0]->getCode() . "\n";
+	          echo " Error message : " . $response->getMessages()->getMessage()[0]->getText() . "\n";
+	        }
+	      }
+	    }
+	    else
+	    {
+	      echo  "No response returned \n";
+	    }
+
+	    return $response;
+	}
 
     private function cleanQuotes()
     {
@@ -1167,7 +1252,7 @@ XML;
         }
         return false;
     }
-    
+
     /**
      * Validate ajax request and redirect on failure
      *
@@ -1185,10 +1270,10 @@ XML;
                 $this->_ajaxRedirectResponse();
                 return true;
             }
-            
+
             return false;
     }
-    
+
     protected function _ajaxRedirectResponse() {
         $this->getResponse()
         ->setHeader('HTTP/1.1', '403 Session Expired')
@@ -1196,7 +1281,7 @@ XML;
         ->sendResponse();
         return $this;
     }
-    
+
     /**
      * Get shipping method step html
      *
@@ -1211,7 +1296,7 @@ XML;
         $output = $layout->getOutput();
         return $output;
     }
-    
+
     /**
      * Get payment method step html
      *
