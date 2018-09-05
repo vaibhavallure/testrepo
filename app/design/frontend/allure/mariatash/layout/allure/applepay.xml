@@ -42,7 +42,7 @@
             <action method="append" ifconfig="payment/applepay/visible_on_product">
                 <block>allure_applepay.script</block>
             </action>
-            <action method="addItem" ifconfig="payment/applepay/show_in_minicart">
+            <action method="addItem" ifconfig="payment/applepay/visible_on_product">
                 <type>skin_css</type><name>allure/applepay.css</name><params/>
                 <type>skin_js</type><name>allure/applepay.js</name><params/>
             </action>
@@ -119,7 +119,7 @@
             <action method="append" ifconfig="payment/applepay/use_in_checkout">
                 <block>allure_applepay.script</block>
             </action>
-            <action method="addItem" ifconfig="payment/applepay/show_in_minicart">
+            <action method="addItem" ifconfig="payment/applepay/use_in_checkout">
                 <type>skin_css</type><name>allure/applepay.css</name><params/>
                 <type>skin_js</type><name>allure/applepay.js</name><params/>
             </action>
