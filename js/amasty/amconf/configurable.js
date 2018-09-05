@@ -598,7 +598,7 @@ Product.Config.prototype.updateFormProductId = function(productId){
     //allure commented
     //newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
     //$('product_addtocart_form').action = newcurrentAction;
-    //$('product_addtocart_form').product.value = productId;
+    $('product_addtocart_form').product.value = productId;
     
     var flag = false;
     if(jQuery('#parent-child-product').length){ 
