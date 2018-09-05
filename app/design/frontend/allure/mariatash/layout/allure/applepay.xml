@@ -44,6 +44,8 @@
             </action>
             <action method="addItem" ifconfig="payment/applepay/visible_on_product">
                 <type>skin_css</type><name>allure/applepay.css</name><params/>
+			</action>
+            <action method="addItem" ifconfig="payment/applepay/visible_on_product">
                 <type>skin_js</type><name>allure/applepay.js</name><params/>
             </action>
         </reference>
