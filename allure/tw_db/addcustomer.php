@@ -94,8 +94,11 @@ if(($handle = fopen($folderPath, "r")) != false){
             $phone = $data["phone"];
             $group = ($data["is_wholesale"])?2:1;
             
+            $acceptMarketing = $data["accept_marketing"];
+            $acceptTransactional = $data["accept_transactional"];
+            
             $password = '';
-            $length = 6;  //password length
+            $length = 8;  //password length
             while($length--) {
                 $keyV = array_rand($final_array);
                 $password .= $final_array[$keyV];
@@ -111,9 +114,14 @@ if(($handle = fopen($folderPath, "r")) != false){
                 ->setEmail($email)
                 ->setCreatedAt($createdAt)
                 ->setPassword($password)
+                ->setPasswordConfirmation($password)
+                ->setPasswordCreatedAt(time())
+                
                 ->setCustomerType(20)  //teamwork db - 20 
                 ->setTeamworkCustomerId($teamworkId)
                 ->setIsTeamworkCustomer(1)
+                ->setTwAcceptMarketing($acceptMarketing)
+                ->setTwAcceptTransactional($acceptTransactional)
                 ->save();
                 
                 Mage::log("TWID:".$teamworkId." New customer create. Email:".$customer->getEmail()." Customer ID:".$customer->getId(),Zend_log::DEBUG,$teamworkLog,true);

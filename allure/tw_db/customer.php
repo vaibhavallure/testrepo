@@ -34,6 +34,7 @@ function getQuery(){
     $query = "SELECT distinct C.CustomerId, C.FirstName, C.LastName, C.EMail1, C.EMail2, 
             C.RecModified, C.Address1, C.Address2, C.City, C.State, C.PostalCode, 
             C.Phone1, C.Phone2, C.Phone3, C.CustomFlag1, 
+            C.AcceptMarketing, C.AcceptTransactional1,
             CTR.CODE  
             FROM CUSTOMER_T AS C LEFT JOIN COUNTRY_T AS CTR 
             ON C.COUNTRYID = CTR.COUNTRYID
@@ -98,7 +99,9 @@ function getConnection(){
             "state"=>"state",
             "country"=>"country",
             "postal_code"=>"postal_code",
-            "phone"=>"phone"
+            "phone"=>"phone",
+            "accept_marketing"=>"accept_marketing",
+            "accept_transactional"=>"accept_transactional"
         );
         
         try{
@@ -141,6 +144,9 @@ function getConnection(){
                 $phone3 = odbc_result($result, "Phone3");
                 $isWholesale = odbc_result($result, "CustomFlag1");
                 
+                $acceptMarketing = odbc_result($result, "AcceptMarketing");
+                
+                $acceptTransactional = odbc_result($result, "AcceptTransactional1");
                 
                 $row = array();
                 $row["teamwork_customer_id"] = $teamworkId;
@@ -155,6 +161,9 @@ function getConnection(){
                 $row["country"] = $country;
                 $row["postal_code"] = $postalCode;
                 $row["phone"] = ($phone1)?$phone1:$phone2;
+                
+                $row["accept_marketing"] = $acceptMarketing;
+                $row["accept_transactional"] = $acceptTransactional;
                 
                 
                 $rowData[] = $row;
