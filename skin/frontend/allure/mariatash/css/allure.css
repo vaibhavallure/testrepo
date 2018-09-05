@@ -1637,7 +1637,43 @@ ul#narrow-by-list li.filtru-price {max-width: 100% !important;}
 
 	.cart-table .table-product-image {min-height:200px}
 	.cart-table .table-product-info {}
+
+    .catalog-product-view .product-collateral dd.last.metal{
+        display:  inline-block;
+    }
+    .catalog-product-view .product-collateral dd.last.metal select {
+        font-weight: unset !important;
+        border-radius: 0%;
+    }
+    .product-view .product-shop .padder .data-table th:nth-child(2) {
+      font-weight:normal !important;
+      padding-top: 11px !important;
+  }
+
+
 }
+
+/*iPhone5/SE*/
+@media screen and (device-aspect-ratio: 40/71) {
+    .catalog-product-view .product-collateral dd.last.metal select{
+        width: 140px!important;
+    }
+}
+@media screen and (device-aspect-ratio: 375/667) {
+  .product-view .product-shop .padder .data-table th:nth-child(2) {
+    font-weight:normal !important;
+    padding-top: 11px !important;
+  }
+}
+
+@media screen and (device-aspect-ratio: 16/9) {
+  .product-view .product-shop .padder .data-table th:nth-child(2) {
+    font-weight:normal !important;
+    padding-top: 11px !important;
+  }
+
+}
+
 
 .piercing-service .children-pricing {
   margin-top: 10px;
@@ -2615,7 +2651,7 @@ cursor: pointer;
 }
 
 .popupLoginModel > div {
-	margin: 8% auto;	
+	margin: 8% auto;
 }
 
 .popupLoginModel .form-group{
@@ -2624,4 +2660,18 @@ cursor: pointer;
 
 .table-product-info .product-name a:hover {
     color: #906E39;
+}
+.product-view .product-shop .padder .data-table td, .product-view .product-shop .padder .data-table tbody td {
+    padding: 7px 14px 4px;
+    font-size: 12px;
+    line-height: normal;
+    width: 150px;
+}
+@supports (-webkit-overflow-scrolling: touch) {
+ .product-view .product-shop .padder .data-table td, .product-view .product-shop .padder .data-table tbody td {
+    padding: 7px 14px 6px;
+    font-size: 12px;
+    line-height: normal;
+    width: 150px;
+}
 }
