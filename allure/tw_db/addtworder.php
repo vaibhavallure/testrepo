@@ -353,6 +353,21 @@ if(($handle = fopen($folderPath, "r")) != false){
                                 ->setData('store_currency_code',$otherSysCurCode);
                         }
                         
+                        $extStoreName = $extraOrderDetails["Name"];
+                        $oldStoreId;
+                        if($extStoreName == "Liberty London"){
+                            $oldStoreId = 2;
+                        }elseif ($extStoreName == "Rinascente Roma"){
+                            $oldStoreId = 10;
+                        }elseif ($extStoreName == "653 Broadway"){
+                            $oldStoreId = 15;
+                        }elseif ($extStoreName == "Wholesale"){
+                            $oldStoreId = 16;
+                        }else{
+                            $oldStoreId = null;
+                        }
+                        
+                        $orderObj->setData('old_store_id',$oldStoreId);
                         
                         //complete the order status
                         $orderObj->setData('state',"processing")
