@@ -49,7 +49,7 @@ function getQuery(){
 function getConnection(){
     $host_name  = "cpsql";
     $db_user    = "root";
-    $db_pass    = "allure123";
+    $db_pass    = "12qwaszx";
     
     $conn = odbc_connect($host_name, $db_user,$db_pass);
     if($conn){

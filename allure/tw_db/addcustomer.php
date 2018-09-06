@@ -57,16 +57,22 @@ if(($handle = fopen($folderPath, "r")) != false){
             
             if($customer->getId()){
                 try{
-                    $isTmCustomer = $customer->getIsTeamworkCustomer();
+                    /* $isTmCustomer = $customer->getIsTeamworkCustomer();
                     if(!$isTmCustomer){
                         continue;
-                    }
+                    } */
+                    
+                    $acceptMarketing = trim($data["accept_marketing"]);
+                    $acceptTransactional = trim($data["accept_transactional"]);
+                    
+                    $customer->setTwAcceptMarketing($acceptMarketing)
+                    ->setTwAcceptTransactional($acceptTransactional)->save();
                     
                     $createdAtArr = explode(".", trim($data["created_at"]));
                     
-                    $createdAt1 = trim($createdAtArr[0]);
-                    $customer->setCreatedAt($createdAt1)->save();
-                    Mage::log("Email:".$email." Customer Id :".$customer->getId()." date updated:".$createdAt1,Zend_log::DEBUG,$teamworkLog,true);
+                   // $createdAt1 = trim($createdAtArr[0]);
+                    //$customer->setCreatedAt($createdAt1)->save();
+                    Mage::log("Email:".$email." Customer Id :".$customer->getId()." accept Trans : Marketing = ".$acceptTransactional." : ".$acceptMarketing,Zend_log::DEBUG,$teamworkLog,true);
                     
                 }catch (Exception $e1){
                     Mage::log("Email:".$email." Customer Id :".$customer->getId()." Exception".$e1->getMessage(),Zend_log::DEBUG,$teamworkLog,true);
