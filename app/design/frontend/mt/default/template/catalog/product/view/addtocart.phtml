@@ -107,7 +107,15 @@
 <?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
 
 <?php $_product = $this->getProduct() ?>
-<?php if ( $_product->getTypeId() != 'giftcards'):?>
+<?php 
+    //if ( $_product->getTypeId() != 'giftcards'):  old code(teamwork changes the attribute set)
+
+    //new code - ALR -- aws12
+    $skuStr = $_product->getSku();
+    $skuArr = explode("|", $skuStr);
+    $sku = $skuArr[0];
+?>
+<?php  if($sku != "STORECARD"):?>
 <?php if ($_product->isAvailable()): ?>
     <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability for this model:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
 <?php else: ?>
