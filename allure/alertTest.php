@@ -6,36 +6,12 @@ umask(0);
 $password = $_GET['pass'];*/
 Mage::app('admin');
 
-/*Mage::getModel('alertservices/allureAlerts')->alertSalesOfSix();
-echo "done";*/
-require 'gapi.class.php';
-define('ga_email','farooqbellard@allureinc.co');
-define('ga_password','farooq123');
-define('ga_profile_id','118301941875');
+Mage::getModel('alertservices/alerts')->alertProductPrice();
 
+Mage::getModel('alertservices/alerts')->alertSalesOfFour();
 
- 
-$ga = new gapi(ga_email,ga_password);
- 
-/* We are using the 'source' dimension and the 'visits' metrics */
-$dimensions = array('source');
-$metrics    = array('visits');
- 
-/* We will sort the result be desending order of visits, 
-    and hence the '-' sign before the 'visits' string */
-$ga->requestReportData(ga_profile_id, $dimensions, $metrics,'-visits');
- 
-$gaResults = $ga->getResults();
- 
-$i=1;
- 
-foreach($gaResults as $result)
-{
-    printf("%-4d %-40s %5d\n",
-           $i++,
-           $result->getSource(),
-           $result->getVisits());
-}
- 
-echo "\n-----------------------------------------\n";
-echo "Total Results : {$ga->getTotalResults()}";    
+Mage::getModel('alertservices/alerts')->alertSalesOfSix();
+
+Mage::getModel('alertservices/alerts')->alertCheckoutIssue();
+
+echo "done";

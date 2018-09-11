@@ -3615,7 +3615,7 @@ div.styled {
 }
 
 .product-view .product-shop .short-description { margin:9px 0; }
-.product-view .product-shop .price-box span span.price { font-weight:normal;  margin: 3px 0 0 0;
+.product-view .product-shop .price-box span span.price { font-weight:normal;  margin: 1px 0 0 0;
   display: inline-block; }
 /*.product-view .product-shop .price-box span span.price:before { content:"Price: "; }*/
 .product-view .product-shop .add-to-links {
