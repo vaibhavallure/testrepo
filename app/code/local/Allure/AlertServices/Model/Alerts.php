@@ -31,8 +31,8 @@ class Allure_AlertServices_Model_Alerts
 
 			$currdate = Mage::getModel('core/date')->timestamp();
 			$toDate	= date('Y-m-d H:i:s', $currdate);
-			$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 4);
-
+			//$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 4);
+			$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);
 			$orders = Mage::getModel('sales/order')->getCollection()
 				    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
 				    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
@@ -54,7 +54,8 @@ class Allure_AlertServices_Model_Alerts
 
 			$currdate = Mage::getModel('core/date')->timestamp();
 			$toDate	= date('Y-m-d H:i:s', $currdate);
-			$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 6);
+			//$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 6);
+			$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);
 
 			$orders = Mage::getModel('sales/order')->getCollection()
 				    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
@@ -77,7 +78,8 @@ class Allure_AlertServices_Model_Alerts
 
 			$currdate = Mage::getModel('core/date')->timestamp();
 			$toDate	= date('Y-m-d H:i:s', $currdate);
-			$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 1);
+			//$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 1);
+			$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 10);
 
 			$collection = Mage::getModel('alertservices/issues')->getCollection()
 				->addFieldToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))

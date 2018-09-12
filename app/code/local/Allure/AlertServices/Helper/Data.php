@@ -49,7 +49,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
              	$row = array();
              	$row["product_name"] = $product->getName();
                     $row["sku"] = $product->getSku();
-                    $row["price"] = $product->getPrice();
+                    $row["price"] = 0;//$product->getPrice();
                     $rowData[] = $row;
              }            
 
