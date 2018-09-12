@@ -85,7 +85,8 @@ class Allure_AlertServices_Model_Alerts
 				->addFieldToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
 				->addFieldToFilter('type',array('eq'=>'checkout'));
 				//echo $collection->getSelect()->__toString();
-				if (count($collection) >= 10 && $status) {
+				//change count to 10 on live
+				if (count($collection) >= 2 && $status) { 
 					$helper->sendCheckoutIssueAlert($collection);
 				}
 		}catch(Exception $e){
