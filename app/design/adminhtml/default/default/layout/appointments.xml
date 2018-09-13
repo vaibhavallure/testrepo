@@ -6,6 +6,13 @@
 	</reference>
   </appointments_adminhtml_appointmentservice_index> -->
   
+  <default>
+        <reference name="head">
+        	<!-- allure custom appointment css -->
+			<action method="addCss"><name>custom_appointment.css</name></action>
+        </reference>
+  </default>
+  
   <appointments_adminhtml_appointmentpiercers_edit>
 	<reference name="head">
 	 	<!-- <action method="addItem"><type>skin_js</type><name>js/appointmentjs/jquery-ui.multidatespicker.js</name></action> -->

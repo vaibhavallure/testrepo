@@ -98,7 +98,9 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 		$this->addColumn('piercer_id', array(
 				'header' => $helper->__('Piercer'),
 				'index'  => 'piercer_id',
-				'renderer' => 'appointments/adminhtml_appointments_edit_renderer_piercername'
+		        'type' => 'options',// aws02- add line
+		        'options' => Mage::helper("appointments")->getPiercersAsOptions(), // aws02- add line
+				//'renderer' => 'appointments/adminhtml_appointments_edit_renderer_piercername' //aws02 - comment the line
 		));
 		$this->addColumn('action',array(
 				'header'    => $helper->__('Modify'),

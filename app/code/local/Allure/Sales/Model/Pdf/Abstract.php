@@ -324,6 +324,15 @@ abstract class Allure_Sales_Model_Pdf_Abstract extends Varien_Object
         if (isset($shippingAddress)) {
             $addressesHeight = max($addressesHeight, $this->_calcAddressHeight($shippingAddress));
         }
+        
+        //aws02 - address height calculate function with extra data start
+        $customerGroupId = $order->getCustomerGroupId();
+        $groupname = Mage::getModel('customer/group')->load($customerGroupId)->getCustomerGroupCode();
+        $groupname = "Customer Group : ".$groupname;
+        $customerEmail = "Email : ".$order->getCustomerEmail();
+        $extraData = array($customerEmail,$groupname);
+        $addressesHeight =  max($addressesHeight,$this->calHeightExtraData($addressesHeight,$extraData));
+        //end
 
         $page->setFillColor(new Zend_Pdf_Color_GrayScale(1));
         $page->drawRectangle(25, ($top - 25), 570, $top - 33 - $addressesHeight);
@@ -344,6 +353,13 @@ abstract class Allure_Sales_Model_Pdf_Abstract extends Varien_Object
                 }
             }
         }
+        
+        //aws02 - email & customer group Start
+        $page->drawText(strip_tags(ltrim("{$customerEmail}")), 35, $this->y, 'UTF-8');
+        $this->y -= 15;
+        $page->drawText(strip_tags(ltrim("{$groupname}")), 35, $this->y, 'UTF-8');
+        $this->y -= 15;
+        //End
 
         $addressesEndY = $this->y;
 
@@ -361,7 +377,14 @@ abstract class Allure_Sales_Model_Pdf_Abstract extends Varien_Object
                     }
                 }
             }
-
+            
+            //aws02 - email & customer group Start
+            $page->drawText(strip_tags(ltrim("{$customerEmail}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            $page->drawText(strip_tags(ltrim("{$groupname}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            //End
+           
             $addressesEndY = min($addressesEndY, $this->y);
             $this->y = $addressesEndY;
 
@@ -978,5 +1001,24 @@ abstract class Allure_Sales_Model_Pdf_Abstract extends Varien_Object
         }
 
         return $page;
+    }
+    
+    /**
+     * aws02
+     * calculate height of address with new added extra field
+     */
+    private function calHeightExtraData($y,$data){
+        foreach ($data as $value){
+            if ($value !== '') {
+                $text = array();
+                foreach (Mage::helper('core/string')->str_split($value, 55, true, true) as $_value) {
+                    $text[] = $_value;
+                }
+                foreach ($text as $part) {
+                    $y += 15;
+                }
+            }
+        }
+        return $y;
     }
 }

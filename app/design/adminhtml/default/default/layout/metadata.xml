@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <metadata_adminhtml_metadata_index>
+	<reference name="content">
+	  <block type="metadata/adminhtml_metadata" name="metadata" />
+	</reference>
+  </metadata_adminhtml_metadata_index>
+</layout>

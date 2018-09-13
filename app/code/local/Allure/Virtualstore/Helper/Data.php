@@ -7,12 +7,14 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
     protected $_websiteCollection   = array();
     protected $_groupCollection     = array();
     protected $_storeCollection     = array();
-    
+
     /**
     * return virtual store array
     */
     public function getVirtualStores(){
         $stores = Mage::getSingleton("allure_virtualstore/store")->getCollection();
+        $stores->setOrder('sort_order', 'asc');
+        $stores->setOrder('store_id', 'asc');
         foreach ($stores as $store) {
             if ($store->getId() == 0) {
                 continue;
@@ -21,13 +23,14 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
         }
         return $this->_storeCollection;
     }
-    
+
     /**
      * return virtual group array
      */
     public function getVirtualGroups(){
         $groups = Mage::getSingleton("allure_virtualstore/group")
             ->getCollection();
+
         foreach ($groups as $group) {
             if ($group->getId() == 0) {
                 continue;
@@ -36,13 +39,15 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
         }
         return $this->_groupCollection;
     }
-    
+
     /**
      * return virtual website array
      */
     public function getVirtualWebsites(){
         $websites = Mage::getSingleton("allure_virtualstore/website")
             ->getCollection();
+         $websites->setOrder('sort_order', 'asc');
+         $websites->setOrder('website_id', 'asc');
         foreach ($websites as $website) {
             if ($website->getId() == 0) {
                 continue;
@@ -51,7 +56,7 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
         }
         return $this->_websiteCollection;
     }
-    
+
     /**
      * get name of virtual store for order view in admin
      */
@@ -86,7 +91,7 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
         }
         return null;
     }
-    
+
     /**
      * get store name by using store id
      */
@@ -96,5 +101,23 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
             $store = Mage::getSingleton("allure_virtualstore/store")->load($storeId);
         }
         return $store->getName();
+    }
+
+    /**
+     * get store name by using store id
+     */
+    public function getStoreCode($storeId){
+        $store = Mage::getSingleton("allure_virtualstore/store")->load($storeId);
+
+        return $store->getCode();
+    }
+
+    /**
+     * get store name by using store id
+     */
+    public function getStoreId($storeCode){
+        $store = Mage::getSingleton("allure_virtualstore/store")->load($storeCode, 'code');
+
+        return $store->getId();
     }
 }

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Auctane_Api>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
         </Auctane_Api>
     </modules>

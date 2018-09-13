@@ -76,8 +76,15 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 
 					// Selected date
 					var selected = new Date(cyear, cmonth - 1, sdate);
-					if ((that.minDate && selected < min) || (that.maxDate && selected > max)) return;
-
+					var nextDate1 = cyear+""+that.today.getMonth()+""+sdate;
+					var currDate1 = that.today.getFullYear()+""+that.today.getMonth()+""+that.today.getDate();
+					
+					if(nextDate1 == currDate1){
+						
+					}else{
+						if ((that.minDate && selected <= min) || (that.maxDate && selected >= max)) return;
+					}
+					
 					that.selected = cmonth + '/' + sdate + '/' + cyear;
 
 					if(that.options.mode === 'datepicker') {
@@ -489,6 +496,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				    that.trigger($.Event('dateselected', {date: e.date, elem: that}));
 					selectedDate = true;	
 			
+					$('#currDay').css({"color":"#000"});
 					
 					//ajax start to pass the selected date to get the time
 					var qty = document.getElementById("count").value;

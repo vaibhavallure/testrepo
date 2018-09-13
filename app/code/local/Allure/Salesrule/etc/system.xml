@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<allure_salesrule translate="label" module="allure_salesrule">
+			<label>Custom SalesRule Settings</label>
+			<tab>allure</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>40</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<free_shipping>
+					<label>Avoid International Free Shipping Method for Product</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>3</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<product_sku>
+							<label>Product Sku</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</product_sku>
+						<sales_rule_id>
+							<label>Sales Rule Ids</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</sales_rule_id>
+					</fields>
+				</free_shipping>
+				
+				<coupon_section>
+					<label>Process on Coupan Code</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>4</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<coupon_code>
+							<label>Coupan Code</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</coupon_code>
+					</fields>
+				</coupon_section>
+
+			</groups>
+		</allure_salesrule>
+
+	</sections>
+</config>

@@ -117,6 +117,16 @@ switch ($payment->getMethod()) {
     <?php echo $this->getChildHtml('agreements') ?>
     <div class="buttons-set" id="review-buttons-container">
         <p class="f-left"><?php echo $this->__('Please review the information above, then click "Place Order" below.') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('') ?></a></p>
+         
+         <div class="checkout-privacy-policy">
+        	<p class="control f-left">
+                <label for="checkout_privacy_confirm" class="mt-custom-checkbox"><?php echo $this->__('I understand the terms and conditions of the Maria Tash <a class="checkout_privacry_link" href="/privacy-policy" target="_black">privacy policy</a>.') ?>
+                <input type="checkbox" name="checkout_privacy_confirm" id="checkout_privacy_confirm" class="checkbox" />
+                <span class="checkmark"></span>
+                </label>
+       		</p>
+    	</div>
+         
          <a id="review-back" class="button" href="#" onclick="checkout.back(); return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a>
         <?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">

@@ -123,8 +123,40 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </confirm_template>
+                         <read_template>
+                            <label>Template for Read</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </read_template>
                     </fields>
                 </email>
+                
+                <!-- aws02 -start -->
+                <from_email module="giftcards">
+                    <label>From Email Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                    	<email_template>
+                            <label>Template for from e-mail</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_template>
+                    </fields>
+               </from_email>
+               <!-- aws02 -end -->
+                
             </groups>
         </giftcards>
     </sections>

@@ -323,7 +323,7 @@ class Mage_CatalogInventory_Model_Observer
             $parentStockItem = $quoteItem->getParentItem()->getProduct()->getStockItem();
         }
         if ($stockItem) {
-            if (!$stockItem->getIsInStock() || ($parentStockItem && !$parentStockItem->getIsInStock())) {
+            if ((!$stockItem->getIsInStock() && ($stockItem->getBackorders()==0)) || ($parentStockItem && ($parentStockItem->getBackorders()==0) && !$parentStockItem->getIsInStock())) {
                 $quoteItem->addErrorInfo(
                     'cataloginventory',
                     Mage_CatalogInventory_Helper_Data::ERROR_QTY,

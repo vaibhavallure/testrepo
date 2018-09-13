@@ -155,14 +155,14 @@ if ($session->isLoggedIn()) {
 		  			</div>
 			  	  	<div class="fieldDiv splnotesDiv">
 				  	   	<label>Special Notes:</label>			    		
-				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced or desired piercer for appointment" ?>" rows="4" ><?php if($f_special_notes):
+				    	<textarea class="splnotesTxtarea appointment-pricing-textarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced" ?>" rows="4" ><?php if($f_special_notes):
 				    	echo $f_special_notes;
 				    	endif;?></textarea>		    	
 				    </div>
 					<div class="fieldDiv">
 				    	<label>Notify Me:</label><br/>
 				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
-				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message</p></div>
+				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message - Message and Data Rates May Apply</p></div>
 				    </div>
 				    <div class="fieldDiv " id="app_create_account">
 				    	<?php if(!$session->isLoggedIn()):?>
@@ -181,6 +181,14 @@ if ($session->isLoggedIn()) {
 					</div>
 					<div class="fieldDiv">
 					     <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit')?>
+					</div>
+					
+					<div class="">
+						<input type="submit" Value="CONFIRM" class="submitbtn" >
+					</div><!-- field end -->
+					
+					<div id="appointment-pricing">
+					<?php echo $this->getChildHtml('appointments_piercing_pricing')?>
 					</div>
 			</div>
 		</div>
