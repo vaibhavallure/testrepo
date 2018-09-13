@@ -262,6 +262,8 @@ class Allure_ApplePay_Model_Method extends ParadoxLabs_TokenBase_Model_Method//M
 	        return $this;
 	    }
 
+		var_dump($payment->getData());die;
+
 	    /**
 	     * Check for existing auth code.
 	     */

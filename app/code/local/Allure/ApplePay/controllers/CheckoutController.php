@@ -742,6 +742,86 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         return $this->saveOrderAction($paymentData);
     }
 
+    public function saveApplePayTransactionAction() {
+
+        $data = $_POST;
+
+        Mage::log("BEGIN: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+
+        Mage::log(json_encode($_POST),Zend_Log::DEBUG, 'applepay.log', true);
+
+        if (isset($data['billing'])) {
+            $billingData = $data['billing'];
+            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
+
+            if (isset($billingData['email'])) {
+                $billingData['email'] = trim($billingData['email']);
+            }
+
+            if (!isset($billingData['region_id']) || empty($billingData['region_id'])) {
+                $regionName = $billingData['region'];
+
+                $region  = Mage::getModel('directory/region')->loadByCode($regionName, $billingData['country_id']);
+
+                if (!$region->getId()) {
+                    $region = Mage::getModel('directory/region')->loadByName($regionName, $billingData['country_id']);
+                }
+
+                if ($region->getId()) {
+                    $billingData['region_id'] = $region->getId();
+                }
+            }
+
+            Mage::log("NEW DATA: ".json_encode($billingData),Zend_Log::DEBUG, 'applepay.log', true);
+
+            $this->getOnepage()->saveBilling($billingData, $customerAddressId);
+            $this->getOnepage()->saveShipping($billingData, $customerAddressId);
+        }
+
+        if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
+            $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
+        }
+
+        $paymentData = array('method' => 'applepay');
+
+        $this->getRequest()->setPost('payment', $paymentData);
+
+        Mage::log("START: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
+
+        try {
+            $result = $this->saveOrderAction($paymentData);
+
+            if ($responseData = $this->_chargeCard()) {
+
+                $responseDataObject = json_decode($responseData, true);
+
+                if ($responseDataObject['messages']['resultCode'] == 'Ok') {
+
+                    if ($responseDataObject['transactionResponse']) {
+
+                        $paymentData = $responseDataObject['transactionResponse'];
+
+                        $authResponse = new Varien_Object($paymentData);
+
+                        $payment = $this->getOnepage()->getQuote()->getPayment();
+
+                        $payment->setTransactionId( $authResponse->getTransId());
+                        $payment->setTransactionAdditionalInfo( Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $authResponse->getData() );
+
+                        $payment->save();
+                    }
+                }
+            }
+
+            return $result;
+        } catch (Exception $e) {
+            Mage::log("EXCEPTION: ".$e->getMessage(),Zend_Log::DEBUG, 'applepay.log', true);
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+        Mage::log("END: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
+        Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+    }
+
     public function saveOrderTransactionAction() {
 
         $data = $_POST;
@@ -787,6 +867,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         $this->getRequest()->setPost('payment', $paymentData);
 
         Mage::log("START: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
+
         try {
             $result = $this->saveOrderAction($paymentData);
 
@@ -1080,87 +1161,12 @@ XML;
 
 	public function testAction()
 	{
-		include_once 'AuthorzeNet/autoload.php';
-
-		use net\authorize\api\contract\v1 as AnetAPI;
-	    use net\authorize\api\controller as AnetController;
 
 	    define("AUTHORIZENET_LOG_FILE", "authnet.log");
 
 		$this->voidTransaction('40920712533');
 
 		die('HI');
-	}
-
-	private function voidTransaction($transactionid)
-	{
-	    /* Create a merchantAuthenticationType object with authentication details
-	       retrieved from the constants file */
-	    $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-	    $merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
-	    $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);
-
-	    // Set the transaction's refId
-	    $refId = 'ref' . time();
-
-	    //create a transaction
-	    $transactionRequestType = new AnetAPI\TransactionRequestType();
-	    $transactionRequestType->setTransactionType( "voidTransaction");
-	    $transactionRequestType->setRefTransId($transactionid);
-
-	    $request = new AnetAPI\CreateTransactionRequest();
-	    $request->setMerchantAuthentication($merchantAuthentication);
-		//$request->setRefId($refId);
-	    $request->setTransactionRequest( $transactionRequestType);
-	    $controller = new AnetController\CreateTransactionController($request);
-	    $response = $controller->executeWithApiResponse(\SampleCode\Constants::ENVIRONMENT);
-
-	    if ($response != null)
-	    {
-	      if($response->getMessages()->getResultCode() == \SampleCode\Constants::RESPONSE_OK)
-	      {
-	        $tresponse = $response->getTransactionResponse();
-
-		      if ($tresponse != null && $tresponse->getMessages() != null)
-	        {
-	          echo " Transaction Response code : " . $tresponse->getResponseCode() . "\n";
-	          echo " Void transaction SUCCESS AUTH CODE: " . $tresponse->getAuthCode() . "\n";
-	          echo " Void transaction SUCCESS TRANS ID  : " . $tresponse->getTransId() . "\n";
-	          echo " Code : " . $tresponse->getMessages()[0]->getCode() . "\n";
-		        echo " Description : " . $tresponse->getMessages()[0]->getDescription() . "\n";
-	        }
-	        else
-	        {
-	          echo "Transaction Failed \n";
-	          if($tresponse->getErrors() != null)
-	          {
-	            echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
-	            echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";
-	          }
-	        }
-	      }
-	      else
-	      {
-	        echo "Transaction Failed \n";
-	        $tresponse = $response->getTransactionResponse();
-	        if($tresponse != null && $tresponse->getErrors() != null)
-	        {
-	          echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
-	          echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";
-	        }
-	        else
-	        {
-	          echo " Error code  : " . $response->getMessages()->getMessage()[0]->getCode() . "\n";
-	          echo " Error message : " . $response->getMessages()->getMessage()[0]->getText() . "\n";
-	        }
-	      }
-	    }
-	    else
-	    {
-	      echo  "No response returned \n";
-	    }
-
-	    return $response;
 	}
 
     private function cleanQuotes()
