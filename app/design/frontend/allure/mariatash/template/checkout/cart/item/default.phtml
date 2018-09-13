@@ -231,6 +231,15 @@
 <?php if (count($messages)): $html = "";?>
     <tr class="table-messages">
         <td colspan="6">
+        	
+        	<?php //new code - ALR -- aws12
+                    $product = $_item->getProduct();
+                    $skuStr = $product->getSku();
+                    $skuArr = explode("|", $skuStr);
+                    $sku = $skuArr[0];
+               ?>
+            <?php if($sku != "STORECARD"):?>
+        
             <div class="item-msg <?php echo $message['type'] ?>">
             
             <?php if(0): //commented to add Parent child code?>
@@ -260,6 +269,7 @@
             <?php endif;   //End of Parent-child code ?>  
                 
             </div>
+            <?php endif;?>
         </td>
     </tr>
 <?php endif; ?>
