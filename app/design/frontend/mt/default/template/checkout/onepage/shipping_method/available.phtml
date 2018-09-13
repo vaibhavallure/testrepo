@@ -60,7 +60,7 @@
                     <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
                    <?php else: ?>
                         <?php if ($_sole) : ?>
-                        <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
+                        <!-- <span class="no-display"> --><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /><!-- </span> -->
                         <?php else: ?>
                         <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
 
@@ -118,6 +118,19 @@
             }
        });
     });
+
+    <?php //aws02 -start?>
+    	   	if($$('input[type="radio"][name="shipping_method"]').size() == 1){
+    	   	 $$('input[type="radio"][name="shipping_method"]').each(function(el){
+    	   	   	 var shippingMethodA = jQuery(el).val();
+    	   	   	 if($('totalsDivRightNav')){
+    	       	  	 $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+    	          	 new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>?shipping_method=' + shippingMethodA, { method: 'get' });  
+    	   	   	 }
+    	       });
+    	   	}
+   <?php //aws02 -end?>
+    
 //]]>
 jQuery('#totalsDivRightNav').html('<div class="loading-div">Loading</div>');
 new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });

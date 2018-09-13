@@ -124,13 +124,14 @@ class Allure_MultiCheckout_Model_Sales_Service_Quote extends Mage_Sales_Model_Se
             if ($mainOrderId != 0 && $isSingleCharge) {
                 $payment_method = $order->getPayment()
                     ->getMethodInstance()
-                    ->getTitle();
+                    ->getCode();
+                
                 // Keep order status as pending for banktransfer and
                 // purchaseorder for singlecharge
-                if ($payment_method != "banktransfer" || $payment_method != "purchaseorder") {
-                    $transId = $this->createBackorderTransaction($mainOrderId, $order->getId());
-                    $this->createBackorderInvoice($order->getId(), true);
-                    $this->updateInvoice($order->getId(), $transId, $mainOrderId);
+                if ($payment_method != "banktransfer" && $payment_method != "purchaseorder" ) {
+                   $transId = $this->createBackorderTransaction($mainOrderId, $order->getId());
+                   $this->createBackorderInvoice($order->getId(), true);
+                   $this->updateInvoice($order->getId(), $transId, $mainOrderId);
                 }
             }            // check customer is wholesaller or not and payment is pay later
             else {
@@ -138,7 +139,12 @@ class Allure_MultiCheckout_Model_Sales_Service_Quote extends Mage_Sales_Model_Se
                 $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
                 $role = strtolower($role);
                 if ('wholesale' == strtolower($role) && $order->getIsReadyToShip()) {
-                    $this->createBackorderInvoice($order->getId());
+                    $payment_method = $order->getPayment()
+                    ->getMethodInstance()
+                    ->getCode();
+                    if ($payment_method != "banktransfer" ){
+                         $this->createBackorderInvoice($order->getId());
+                    }
                 }
             }
             

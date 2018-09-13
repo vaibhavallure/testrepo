@@ -33,6 +33,7 @@ class Allure_InstaCatalog_FeedController extends Mage_Core_Controller_Front_Acti
       */
     public function indexAction()
     {
+        
         $this->loadLayout();
         $this->_initLayoutMessages('catalog/session');
         $this->_initLayoutMessages('customer/session');
@@ -233,5 +234,36 @@ class Allure_InstaCatalog_FeedController extends Mage_Core_Controller_Front_Acti
     public function shareviewAction(){
     	$this->loadLayout();
     	$this->renderLayout();
+    }
+    public function postAction(){
+        
+        $this->loadLayout();
+        $this->_initLayoutMessages('catalog/session');
+        $this->_initLayoutMessages('customer/session');
+        $this->_initLayoutMessages('checkout/session');
+        if (Mage::helper('allure_instacatalog/feed')->getUseBreadcrumbs()) {
+            if ($breadcrumbBlock = $this->getLayout()->getBlock('breadcrumbs')) {
+                $breadcrumbBlock->addCrumb(
+                    'home',
+                    array(
+                        'label' => Mage::helper('allure_instacatalog')->__('Home'),
+                        'link'  => Mage::getUrl(),
+                    )
+                    );
+                $breadcrumbBlock->addCrumb(
+                    'feeds',
+                    array(
+                        'label' => Mage::helper('allure_instacatalog')->__('Shop Our Instagram'),
+                        'link'  => '',
+                    )
+                    );
+            }
+        }
+        $headBlock = $this->getLayout()->getBlock('head');
+        if ($headBlock) {
+            $headBlock->setTitle(Mage::helper('allure_instacatalog')->__('Shop Our Instagram').' | '.$headBlock->getTitle());
+            $headBlock->addLinkRel('canonical', Mage::helper('allure_instacatalog/feed')->getFeedsUrl());
+        }
+        $this->renderLayout();
     }
 }

@@ -14,7 +14,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         
         $lineBlock = array(
             'lines'  => $lines,
-            'height' => 20
+            'height' => 12
         );
         return $lineBlock;
     }
@@ -53,13 +53,12 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         }
         $lines[][] = array(
             'text'  => $message,
-            'font' => 'italic',
-            'feed' => $feed
+            'feed' => 50
         );
         
         $lineBlock = array(
             'lines'  => $lines,
-            'height' => 20
+            'height' => 15
         );
         
         return array("is_show"=>$flag , "line_block" => $lineBlock);
@@ -73,7 +72,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             if (!empty($backTimeMsg)) {
                 $message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$backTimeMsg.".";
             } else {
-                $message = " (In Stock: Ships Within 24 hours (Mon-Fri).)";
+                $message = "(In Stock:  Ships Within 24 hours (Mon-Fri).)";
             }
         }
         return $message;
@@ -156,36 +155,60 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             $giftHelper = Mage::helper('giftmessage/message');
             if($giftHelper->getIsMessagesAvailable('order_item', $orderItem) && $orderItem->getGiftMessageId() && $giftHelper->getEscapedGiftMessage($orderItem)!=''){
                 $message = $giftHelper->getEscapedGiftMessage($orderItem);
+                $flag=true;
             }else{
                 $message="";
             }
                 $lines[][] = array(
-                    'text'  => Mage::helper('core/string')->str_split($message, 80, true, true),
-                    'font' => 'italic',
-                    'feed' => $feed,
-                    'height' => 12
+                    'text'  => Mage::helper('core/string')->str_split("Special Message: ".$message, 80, true, true),
+                    'feed' => 50,
+                    'height' => 20
+                    
                 );
                 $lineBlock = array(
                     'lines'  => $lines,
                     'height' => 20
                 );
                 
-                $linesHdr[][] = array(
-                    'text'  => "Special Message ",
-                    'font'  => 'bold',
-                    'feed' => $feed
-                );
-                $lineBlockHdr = array(
-                    'lines'  => $linesHdr,
-                    'height' => 12
-                );
+        
                 
-                return array("is_show"=>true,'label_block'=>$lineBlockHdr,'value_block'=>$lineBlock);
+                return array("is_show"=>$flag,'value_block'=>$lineBlock);
            
-            return array("is_show"=>$flag);
         }catch (Exception $e){}
     }
     
+    
+    public function getSalesOrderItemPurchasedFrom($item,$feed = 35,$flag1=false){
+        try{
+            $flag = false;
+            $orderItemId = $item->getOrderItemId();
+            $actionName = Mage::app()->getRequest()->getActionName();
+            $orderItem = $item->getOrderItem();//Mage::getModel("sales/order_item")->load($orderItemId);
+            if($flag1){
+                $orderItem = $item;
+            }
+            $message="";
+            if($orderItem->getPurchasedFrom()){
+                $message=$orderItem->getPurchasedFrom();
+                $flag=TRUE;
+            }
+           
+            $lines[][] = array(
+                'text'  => Mage::helper('core/string')->str_split("Purchased From:  ".$message, 80, true, true),
+                'feed' => 50,
+                'height' => 12
+            );
+            $lineBlock = array(
+                'lines'  => $lines,
+                'height' => 12
+            );
+           
+            
+            return array("is_show"=>$flag,'value_block'=>$lineBlock);
+            
+            
+        }catch (Exception $e){}
+    }
     /**
      * get order gift message
      */
@@ -201,7 +224,7 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
             }else {
                 $from = "From : ";
                 $to   = "To : ";
-                $message = " ";;
+                $message = " ";
             }
                 $lines[][] = array(
                     'text'  => "Gift Message for this order",

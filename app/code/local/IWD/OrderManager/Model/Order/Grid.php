@@ -242,6 +242,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             /*** sales_flat_order_item ***/
             'ordered_products' => $helper->__('Item(s) Ordered'),
             'product_sku' => $helper->__('Product Sku(s)'),
+            'puchased_from' => $helper->__('Purchased From(Category)'),
             'product_images' => $helper->__('Product Images'),
             'backorder_time' => $helper->__('Product Backorder Time'),
 
@@ -489,6 +490,14 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'type' => 'text',
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Sku(),
             ),
+            
+            'puchased_from' => array(
+                'header' => $helper->__('Purchased From(Category)'),
+                'index' => 'puchased_from',
+                'filter_index' => 'puchased_from',
+                'type' => 'text',
+                'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Category(),
+            ),
 
             'product_images' => array(
                 'header' => $helper->__('Product Images'),
@@ -509,6 +518,9 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'width' => '150px',
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Quantity()
             ),
+            
+           
+            
             'tax_amount' => array(
                 'header' => $helper->__('Tax Amount'),
                 'index' => 'tax_amount',

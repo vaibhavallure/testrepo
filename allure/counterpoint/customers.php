@@ -39,9 +39,9 @@ if(empty($endDate)){
 
 ini_set('max_execution_time', -1);
 $helper = Mage::helper('allure_counterpoint');
-$hostName   = $helper->getHostName();
-$dbUsername = $helper->getDBUserName();//"sa";
-$dbPassword = $helper->getDBPassword();//"root";
+$hostName   = "cpoint";$helper->getHostName();
+$dbUsername = "sa";//$helper->getDBUserName();//"sa";
+$dbPassword = "12qwaszx";//$helper->getDBPassword();//"root";
 $dbName = "CPSQL";
 
 $conn = odbc_connect($hostName, $dbUsername,$dbPassword);
@@ -73,7 +73,7 @@ if($conn){
         $mainArr = array();
         $addressHeader = array('email','name','street','city','state','zip_code','country','phone','fst_nam','lst_nam');
         while(odbc_fetch_row($result)){
-            $order_id   = odbc_result($result, 'order_id');
+            $order_id   = odbc_result($result, 'TKT_NO');
             $contact_id = odbc_result($result, 'contact_id');
             $arr 		= array();
             $address 	= array();
@@ -82,7 +82,28 @@ if($conn){
             //parse row data as required format
             for ($j = 1; $j <= odbc_num_fields($result); $j++){
                 $field_name  = odbc_field_name($result, $j);
+                //var_dump($field_name);
                 $field_value = odbc_result($result, $field_name);
+                
+                if(strtolower($field_name) == strtolower("TKT_NO")){
+                    $field_name = "order_id";
+                }elseif (strtolower($field_name) == strtolower("EMAIL_ADRS_1")){
+                    $field_name = "email";
+                }elseif (strtolower($field_name) == strtolower("NAM")){
+                    $field_name = "name";
+                }elseif (strtolower($field_name) == strtolower("CUST_NAM_TYP")){
+                    $field_name = "nam_typ";
+                }elseif (strtolower($field_name) == strtolower("ADRS_1")){
+                    $field_name = "street";
+                }elseif (strtolower($field_name) == strtolower("ZIP_COD")){
+                    $field_name = "zip_code";
+                }elseif (strtolower($field_name) == strtolower("CNTRY")){
+                    $field_name = "country";
+                }elseif (strtolower($field_name) == strtolower("PHONE_1")){
+                    $field_name = "phone";
+                }
+                
+                
                 if(in_array($field_name, $addressHeader)){
                     if($field_name == 'email')
                         $field_value = strtolower($field_value);
@@ -91,7 +112,7 @@ if($conn){
                     $extra[$field_name] = $field_value;
                 }
             }
-            
+
             if(!array_key_exists($order_id, $mainArr)){
                 $mainArr[$order_id] = array(
                     'customer_detail'=> array($contact_id => $address),
@@ -115,12 +136,12 @@ if($conn){
 
 echo "<pre>";
 print_r(count($mainArr));
-print_r(($mainArr));
+//print_r(($mainArr));
 die; 
 
 
 //remote site wsdl url
-$_URL       = "https://mt.allurecommerce.com/api/v2_soap/?wsdl=1";
+$_URL       = "https://www.mariatash.com/api/v2_soap/?wsdl=1";
 
 /**
  * @return array of magento credentials.
@@ -140,10 +161,10 @@ function getSoapWSDLOptions(){
 }
 
 try{
-    /* $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
+    $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
     $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    $session = $client->login($_AUTH_DETAILS_ARR); */
+    $session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -154,11 +175,11 @@ try{
         'customer_data' => $reqU
     );
     
-    //$result  = $client->counterpointOrderAddCustomer($_RequestData);
-    $result = Mage::getModel('allure_counterpoint/order_api')->addCustomer($reqU);
+    $result  = $client->counterpointOrderAddCustomer($_RequestData);
+    //$result = Mage::getModel('allure_counterpoint/order_api')->addCustomer($reqU);
     echo "<pre>";
     print_r($result);
-    //$client->endSession(array('sessionId' => $session->result));
+    $client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);

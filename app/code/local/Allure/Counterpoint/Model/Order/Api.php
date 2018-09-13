@@ -370,13 +370,13 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         $shippingMethodArr          = Mage::getModel("allure_counterpoint/entity_shippingMethods")->toOptionArray();
         $this->_shippingMethodName  = $shippingMethodArr[$this->_shippingMethodCode]['label'];
         
-        $storeVBA = Mage::getModel('core/store')->load(self::COUNTERPOINT_STORE_VBA,'code');
+        $storeVBA = Mage::getModel('allure_virtualstore/store')->load(self::COUNTERPOINT_STORE_VBA,'code');
         if(!$storeVBA){
             $this->AddLog("Invalid store VBA.");
             die;
         }
         
-        $storeVMT = Mage::getModel('core/store')->load(self::COUNTERPOINT_STORE_VMT,'code');
+        $storeVMT = Mage::getModel('allure_virtualstore/store')->load(self::COUNTERPOINT_STORE_VMT,'code');
         if(!$storeVMT){
             $this->AddLog("Invalid store VMT.");
             die;
@@ -456,7 +456,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 
                                 $quoteObj = Mage::getModel('sales/quote')
                                 ->assignCustomer($customer);
-                                $quoteObj = $quoteObj->setStoreId($this->_storeId);
+                                $quoteObj = $quoteObj->setStoreId(1);
                                 
                                 foreach ($productsArr as $value){
                                     $sku = strtoupper($value['sku']);
@@ -483,7 +483,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                     $quoteItem = Mage::getModel("allure_counterpoint/item")
                                     ->setProduct($productObj);
                                     $quoteItem->setQty($qty);
-                                    $quoteItem->setStoreId($this->_storeId);
+                                    $quoteItem->setStoreId(1);
                                     $quoteObj->addItem($quoteItem);
                                     $productObj = null;
                                 }
@@ -546,6 +546,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                                 
                                 $quoteObj->setIsActive(0);
                                 $quoteObj->reserveOrderId();
+                                
+                                $quoteObj->setOldStoreId($this->_storeId);
+                                
                                 //order status as counterpoint 1
                                 $quoteObj->setCreateOrderMethod(self::COUNTERPOINT_ORDER);
                                 $quoteObj->setCounterpointOrderId($ctpnt_order_id);
@@ -749,7 +752,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         
                         $quoteObj = Mage::getModel('sales/quote')
                                         ->assignCustomer($customer);
-                        $quoteObj = $quoteObj->setStoreId($this->_storeId);
+                        $quoteObj = $quoteObj->setStoreId(1);
                         
                         foreach ($productsArr as $value){
                             $sku = strtoupper($value['sku']);
@@ -776,7 +779,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                             $quoteItem = Mage::getModel("allure_counterpoint/item")
                                             ->setProduct($productObj);
                             $quoteItem->setQty($qty);
-                            $quoteItem->setStoreId($this->_storeId);
+                            $quoteItem->setStoreId(1);
                             $quoteObj->addItem($quoteItem);
                             $productObj = null;
                         }
@@ -839,6 +842,9 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         
                         $quoteObj->setIsActive(0);
                         $quoteObj->reserveOrderId();
+                        
+                        $quoteObj->setOldStoreId($this->_storeId);
+                        
                         //order status as counterpoint 1
                         $quoteObj->setCreateOrderMethod(self::COUNTERPOINT_ORDER); 
                         $quoteObj->setCounterpointOrderId($ctpnt_order_id);
@@ -1222,7 +1228,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
         }
         $email = strtolower($email);
         $customer = Mage::getModel('customer/customer')
-                          ->setWebsiteId($websiteId)
+                          ->setWebsiteId(1)
                           ->loadByEmail($email);
              
         if(!$customer->getId()){
@@ -1233,8 +1239,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
             
             $password = $this->generateRandomPassword();
             $customer = Mage::getModel("customer/customer");
-            $customer->setWebsiteId($this->_websiteId)
-                ->setStoreId($this->_storeId)
+            $customer->setWebsiteId(1)
+                ->setStoreId(1)
                 ->setGroupId($groupId)
                 ->setFirstname($firstName)
                 ->setLastname($lastName)
@@ -1334,7 +1340,7 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                     $this->addLogCustomer("customer email -:".$email);
                     
                     $customer = Mage::getModel('customer/customer')
-                        ->setWebsiteId($websiteId)
+                        ->setWebsiteId(1)
                         ->loadByEmail($email);
                     
                     if(!$customer->getId()){
@@ -1345,8 +1351,8 @@ class Allure_Counterpoint_Model_Order_Api extends Mage_Api_Model_Resource_Abstra
                         
                         $password = $this->generateRandomPassword();
                         $customer = Mage::getModel("customer/customer");
-                        $customer->setWebsiteId($websiteId)
-                            ->setStoreId($storeId)
+                        $customer->setWebsiteId(1)
+                            ->setStoreId(1)
                             ->setGroupId($groupId)
                             ->setFirstname($firstName)
                             ->setLastname($lastName)

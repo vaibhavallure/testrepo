@@ -1,7 +1,6 @@
 <?php
 class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_Transfer_Model_Webstaging
 {
-	
 	protected function _createWebOrder()
     {
         $channelId = $this->_getChannelId();
@@ -103,7 +102,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 	
 	public function isValidForChq($completedOnly)
     {
-        /**/$createdAtLimitation = '2018-04-04';
+		/**/$createdAtLimitation = '2018-04-04';
         if( $this->_order->getCreatedAt() < $createdAtLimitation )
         {
             return false;
@@ -117,7 +116,8 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
         $paidAmount = floatval( $this->_order->getPayment()->getBaseAmountPaid() );/**/
         
         $completedOnly = ($completedOnly == 'false') ? false : true;
-        switch($completedOnly)
+        
+		switch($completedOnly)
         {
             case true:
                 if( $this->_order->getStatus() == Mage_Sales_Model_Order::STATE_COMPLETE )
@@ -197,6 +197,9 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                             "WebOrderId = '{$this->_webOrderId}'"
                         );
                     }
+                    Mage::log("Order::".$this->_order->getIncrementId()." STATUS::".$this->_order->getStatus(),Zend_log::DEBUG,'change_status.log',true);
+					Mage::dispatchEvent('sent_in_chq', array('order' => $this->_order));
+					
                 }
             }
             catch(Exception $e)

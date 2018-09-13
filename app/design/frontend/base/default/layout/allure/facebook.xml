@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<layout>
+
+	<default>
+		<reference name="head">
+            <action method="addItem"
+                    ifconfig="customer/facebook/enabled">
+                <type>skin_css</type>
+                <name>allure/facebook/css/fstyle.css</name>
+            </action>
+        </reference>
+		<reference name="after_body_start">
+            <block type="facebook/template" template="allure/facebook/init.phtml" name="facebook_init" />
+        </reference>
+		<reference name="top.links">
+			<action method="addLink" translate="label title" module="facebook" ifconfig="customer/facebook/enabled"><label>Connect with Facebook</label><url helper="facebook/getConnectUrl"/><title>Facebook Connect</title><prepare/><urlParams/><position>110</position><liParams/><aParams><rel>facebook-connect</rel></aParams></action>
+        </reference> 
+	</default>
+	
+	<customer_account_login>
+		<reference name="content">
+    		<block type="facebook/template" template="allure/facebook/login.phtml" name="facebook_login">
+    			<block type="facebook/button" name="facebook_login_button" />
+    		</block>
+    	</reference>
+	</customer_account_login>
+	
+	
+	<checkout_onepage_index>
+        <reference name="checkout.onepage.login">
+            <action method="setTemplate" ifconfig="customer/facebook/enabled">
+                <template>allure/facebook/checkout/onepage/login.phtml</template>
+            </action>
+            <block type="facebook/template" template="allure/facebook/button.phtml" name="facebook_login_checkout">
+            </block>
+        </reference>
+    </checkout_onepage_index>
+
+</layout>

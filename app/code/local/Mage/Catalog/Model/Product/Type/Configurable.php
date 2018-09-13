@@ -381,14 +381,17 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
      */
     public function getUsedProductCollection($product = null)
     {
+      
+        
         $collection = Mage::getResourceModel('catalog/product_type_configurable_product_collection')
-            ->setFlag('require_stock_items', true)
+            ->setFlag('require_stock_items', FALSE)
             ->setFlag('product_children', true)
-            ->setProductFilter($this->getProduct($product));
+            ->setProductFilter($this->getProduct($product))->addAttributeToSort('order');
+        
         if (!is_null($this->getStoreFilter($product))) {
             $collection->addStoreFilter($this->getStoreFilter($product));
         }
-
+      
         return $collection;
     }
     public function getUsedCategoryProductCollection($categoryId)

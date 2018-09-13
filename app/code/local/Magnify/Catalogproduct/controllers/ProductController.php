@@ -136,26 +136,68 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
         $params = new Varien_Object();
         $params->setCategoryId($categoryId);
         $params->setSpecifyOptions($specifyOptions);
-
+       // Mage::log(,Zend_log::DEBUG,'ajay.log',true);
         // Check if color was selected, if not redirect to first color option
         $selectedColor = $this->getRequest()->getParam("colorOptionId");
+        $optionHelper=Mage::helper('allure_catalog');
+        
+        if(!$selectedColor){
+            $metal=$this->getRequest()->getParam("metal");
+            if($metal){
+                $selectedColor=$optionHelper->getOptionNumber($metal);
+            }
+          
+        }
         if(!$selectedColor){
             $selectedColor=$this->getRequest()->getParam("optionId");
         }
-
+        
         if(!$selectedColor){
             $product = Mage::getModel('catalog/product')->load($productId);
             if($product->isConfigurable()){
                 $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
+                $simpleProducts = $product->getTypeInstance()->getUsedProductCollection()->addAttributeToSelect('sku');
+                $flag=FALSE;
                 foreach ($productAttributeOptions as $productAttribute) {
-                    if($productAttribute['attribute_code'] == 'metal_color'){
-                        $selectedColor = $productAttribute['values'][0]['value_index'];
-                        break;
+                    if($productAttribute['attribute_code'] == 'metal'/* 'metal_color' */){
+                        
+                        foreach ($productAttribute['values'] as $single){
+                            $selectedColorLabel=$single['label'];
+                            $selectedColor = $single['value_index'];
+                            foreach ($simpleProducts as $simple){
+                                $sku=explode('|', $simple->getSku());
+                                
+                                if(strtolower($selectedColorLabel)==strtolower($sku[1])){
+                                    $stockItem = Mage::getModel('cataloginventory/stock_item')
+                                    ->loadByProduct($simple->getId());
+                                    if($stockItem->getId()){
+                                        if($stockItem->getQty() > 0){
+                                            $selectedColor=$single['value_index'];
+                                            $flag=true;
+                                            //break 2;
+                                            break 2;
+                                        }
+                                    }
+                                }
+                            }
+                            if($flag){
+                                break;
+                            }
+                        }
+                        if(!$flag){
+                            $selectedColor=$productAttribute['values'][0]['value_index'];
+                        }
+                  
+                        
+                      //  break;
                     }
                 }
+               
                 if($selectedColor > 0){
-                    $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?optionId=' . $selectedColor);
-                    return;
+                    $selectedColorText=$optionHelper->getOptionText($selectedColor);
+                   // Mage::log(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColor,Zend_log::DEBUG,'ajay.log',true);
+                    $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText);
+                   return;
                 }
             }
         }

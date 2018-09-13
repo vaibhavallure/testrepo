@@ -1278,6 +1278,7 @@ class Mage_Tax_Helper_Data extends Mage_Core_Helper_Abstract
     public function getPrice($product, $price, $includingTax = null, $shippingAddress = null, $billingAddress = null,
                              $ctc = null, $store = null, $priceIncludesTax = null, $roundPrice = true)
     {
+        //Mage::log($price,Zend_Log::DEBUG,'abc.log',true);
         if (!$price) {
             return $price;
         }
@@ -1310,6 +1311,10 @@ class Mage_Tax_Helper_Data extends Mage_Core_Helper_Abstract
                     ->getRate($request->setProductClassId($taxClassId));
             }
         }
+        
+        $request = Mage::getSingleton('tax/calculation')
+        ->getRateRequest($shippingAddress, $billingAddress, $ctc, $store);
+        $percent = Mage::getSingleton('tax/calculation')->getTaxPercentOfProduct($request,$percent,$price);
 
         if ($percent === false || is_null($percent)) {
             if ($priceIncludesTax && !$includingPercent) {

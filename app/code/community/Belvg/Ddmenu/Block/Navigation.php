@@ -115,7 +115,7 @@ class Belvg_Ddmenu_Block_Navigation extends Mage_Catalog_Block_Navigation
                     $html       .= '<li class="' . $first . (($this->isCategoryActive($child))?' current':'') . '">
                                         ' . (($boo)?'<h4>':'') . '
                                             <a href="' . $this->getCategoryUrl($child) . '">
-                                                ' . $this->escapeHtml($child->getName()) . '
+                                                ' . $this->__($this->escapeHtml($child->getName())) . '
                                             </a>
                                         ' . (($boo)?'</h4>':'') . '
                                     </li>';

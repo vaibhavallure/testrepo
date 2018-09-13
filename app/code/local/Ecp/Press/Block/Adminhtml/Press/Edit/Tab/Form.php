@@ -45,7 +45,18 @@ class Ecp_Press_Block_Adminhtml_Press_Edit_Tab_Form extends Mage_Adminhtml_Block
           'required'  => true,
           'name'      => 'title',
       ));
-
+      
+      $fieldset->addField('original_name', 'text', array(
+          'label'     => Mage::helper('ecp_press')->__('Original Article Name '),
+          'required'  => FALSE,
+          'name'      => 'original_name',
+      ));
+      
+      $fieldset->addField('original_link', 'text', array(
+          'label'     => Mage::helper('ecp_press')->__('Original Article Link '),
+          'required'  => FALSE,
+          'name'      => 'original_link',
+      ));
       
       
       $fieldset->addField('publish_date', 'date', array(
@@ -74,6 +85,16 @@ class Ecp_Press_Block_Adminhtml_Press_Edit_Tab_Form extends Mage_Adminhtml_Block
           ),
       ));
       
+      $fieldset->addField('description', 'editor', array(
+          'name'      => 'description',
+          'label'     => Mage::helper('ecp_press')->__('Description'),
+          'title'     => Mage::helper('ecp_press')->__('Description'),
+          'style'     => 'width:250px; height:150px;',
+          'wysiwyg'   => false,
+          'required'  => true,
+      ));
+      
+      
       $fieldset->addField('image_one', 'image', array(
           'label'     => Mage::helper('ecp_press')->__('Image one'),
           'required'  => true,
@@ -99,16 +120,40 @@ class Ecp_Press_Block_Adminhtml_Press_Edit_Tab_Form extends Mage_Adminhtml_Block
           'required'  => false,
           'name'      => 'image_four',
 	  ));
-     
-      $fieldset->addField('description', 'editor', array(
-          'name'      => 'description',
-          'label'     => Mage::helper('ecp_press')->__('Description'),
-          'title'     => Mage::helper('ecp_press')->__('Description'),
-          'style'     => 'width:250px; height:150px;',
-          'wysiwyg'   => false,
-          'required'  => true,
+      
+      $fieldset->addField('image_five', 'image', array(
+          'label'     => Mage::helper('ecp_press')->__('Image Five'),
+          'required'  => false,
+          'name'      => 'image_five',
+      ));
+      
+      $fieldset->addField('image_six', 'image', array(
+          'label'     => Mage::helper('ecp_press')->__('Image Six'),
+          'required'  => false,
+          'name'      => 'image_six',
+      ));
+      $fieldset->addField('image_seven', 'image', array(
+          'label'     => Mage::helper('ecp_press')->__('Image Seven'),
+          'required'  => false,
+          'name'      => 'image_seven',
+      ));
+      $fieldset->addField('image_eight', 'image', array(
+          'label'     => Mage::helper('ecp_press')->__('Image Eight'),
+          'required'  => false,
+          'name'      => 'image_eight',
+      ));
+      $fieldset->addField('image_nine', 'image', array(
+          'label'     => Mage::helper('ecp_press')->__('Image Nine'),
+          'required'  => false,
+          'name'      => 'image_nine',
+      ));
+      $fieldset->addField('image_ten', 'image', array(
+          'label'     => Mage::helper('ecp_press')->__('Image Ten'),
+          'required'  => false,
+          'name'      => 'image_ten',
       ));
      
+   
       if ( Mage::getSingleton('adminhtml/session')->getPressData() )
       {
           $form->setValues(Mage::getSingleton('adminhtml/session')->getPressData());
@@ -133,6 +178,33 @@ class Ecp_Press_Block_Adminhtml_Press_Edit_Tab_Form extends Mage_Adminhtml_Block
 		  $tmp = $press->getImageFour();
           if(is_array($tmp)) $press->setImageFour($path.basename($tmp['value']));
           elseif(!empty($tmp)) $press->setImageFour($path.basename($press->getImageFour()));
+          
+          $tmp = $press->getImageFive();
+          if(is_array($tmp)) $press->setImageFive($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageFive($path.basename($press->getImageFive()));
+          
+          $tmp = $press->getImageSix();
+          if(is_array($tmp)) $press->setImageSix($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageSix($path.basename($press->getImageSix()));
+          
+          $tmp = $press->getImageSeven();
+          if(is_array($tmp)) $press->setImageSeven($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageSeven($path.basename($press->getImageSeven()));
+          
+          
+          $tmp = $press->getImageEight();
+          if(is_array($tmp)) $press->setImageEight($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageEight($path.basename($press->getImageEight()));
+          
+          $tmp = $press->getImageNine();
+          if(is_array($tmp)) $press->setImageNine($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageNine($path.basename($press->getImageNine()));
+          
+          $tmp = $press->getImageTen();
+          if(is_array($tmp)) $press->setImageTen($path.basename($tmp['value']));
+          elseif(!empty($tmp)) $press->setImageTen($path.basename($press->getImageTen()));
+          
+          
           
           $form->setValues($press->getData());
       }

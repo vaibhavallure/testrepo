@@ -55,7 +55,18 @@
 			</core_block_abstract_prepare_layout_after>
 		</events>
 	</adminhtml>
-
+  <crontab>
+		<jobs>
+			<gtin_schedule>
+				<schedule>
+					<cron_expr>0 8 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_catalog/cron::autoProcessGTINNumber</model>
+				</run>
+			</gtin_schedule>
+		</jobs>
+	</crontab>
 	<admin>
 		<routers>
 			<adminhtml>

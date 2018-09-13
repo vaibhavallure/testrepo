@@ -133,6 +133,9 @@ payment.singleMethod = true;
                      		payment.switchMethod(payment.singleMethod);
                      	 }
                       }
+                    <?php //aws02-start?>
+                            showPaymentForm();
+                            <?php //aws02-end?>
                 }
               });
               new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
@@ -216,6 +219,9 @@ payment.singleMethod = true;
                                 });
                             });
                         }
+                        <?php //aws02-start?>
+                                showPaymentForm();
+                                <?php //aws02-end?>
                     }
                 });
                 new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
@@ -255,6 +261,9 @@ payment.singleMethod = true;
                             uncheckPayment();
                             jQuery(this).attr('class','payment-checked');
                         });
+                        <?php //aws02-start?>
+                                showPaymentForm();
+                                <?php //aws02-end?>
                       }
                       
                 }); 
@@ -276,6 +285,10 @@ payment.singleMethod = true;
                             uncheckPayment();
                             jQuery(this).attr('class','payment-checked');
                         });
+
+                        <?php //aws02-start?>
+                                showPaymentForm();
+                                <?php //aws02-end?>
                     }
 
                 });
@@ -361,4 +374,18 @@ function removeCardClass(method){
 	if(jQuery('#'+method+'_saved_cc_cid').length)
 		jQuery('#'+method+'_saved_cc_cid').removeClass('required-entry');
 }
+
+<?php //aws02 -start?>
+function showPaymentForm(){
+	jQuery('input[name="payment[method]"]').each(function () {
+		var paymentM = jQuery(this).val();
+		if(paymentM){
+		   if(jQuery(this).is(':checked')){
+		       jQuery('#payment_form_'+paymentM).show();
+		       payment.switchMethod(paymentM);
+		   }
+		}
+	});
+}
+<?php //aws02 -end?>
 </script>
