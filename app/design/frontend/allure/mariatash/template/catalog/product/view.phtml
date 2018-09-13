@@ -321,7 +321,15 @@ if ($_product->getSizeSample() == 1) {
             <?php //echo $this->getPriceHtml($_product) ?>
             <div id="ajax-price">Loading price...</div>
             
-			<?php if ( $_product->getTypeId() != 'giftcards'):?>
+			<?php 
+                    //if ( $_product->getTypeId() != 'giftcards'):  old code(teamwork changes the attribute set)
+
+                    //new code - ALR -- aws12
+                    $skuStr = $_product->getSku();
+                    $skuArr = explode("|", $skuStr);
+                    $sku = $skuArr[0];
+            ?>
+            <?php  if($sku != "STORECARD"):?>
 			<?php if ($_product->isAvailable()): ?>
 			    <p class="availability in-stock" style="width: 300px;"><span><?php echo $this->__('In stock') ?></span></p>
 			<?php else: ?>
