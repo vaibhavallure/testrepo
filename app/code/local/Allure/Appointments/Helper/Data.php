@@ -382,4 +382,23 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    }
 	    return false;
 	}
+
+	public function getStoreId() {
+
+		$storeId = Mage::app()->getRequest()->getParam('store');
+
+		$storeCode = Mage::app()->getRequest()->getParam('code');
+
+		if (!$storeId && $storeCode) {
+			$storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
+		}
+
+		return $storeId;
+	}
+
+	public function getStoreCode() {
+		$storeId = $this->getStoreId();
+
+		return Mage::helper('allure_virtualstore')->getStoreCode($storeId);
+	}
 }
