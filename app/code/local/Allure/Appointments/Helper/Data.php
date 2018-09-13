@@ -8,7 +8,6 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
 	public function getServicesSelect()
 	{
-		 
 		$model = Mage::getModel('appointments/services');
 		$collection = $model->getCollection();
 		$options = array();
@@ -18,23 +17,20 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		return $options;
 	}
-	
+
 	public function getTimingSelect()
 	{
 	    $configData     = $this->getAppointmentStoreMapping();
 	    $currentStoreId = Mage::app()->getStore()->getId();
 	    $storeKey = array_search ($currentStoreId, $configData['stores']);
-	    
-		//$startTime = Mage::getStoreConfig('appointments/general/working_start_time');
+
 	    $startTime = $configData['start_work_time'][$storeKey];
-		//var_dump($startTime);
-		//$endTime = Mage::getStoreConfig('appointments/general/working_end_time');
+
 	    $endTime = $configData['end_work_time'][$storeKey];
-		//var_dump($endTime);
+
 		$timing =array();
 		$timings=Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
-		/* echo "<pre>";
-		print_r($timings); */
+
 		foreach ($timings as $time){
 			if ($startTime<=$time['value'] && $endTime>=$time['value']){
 				$key = (string)$time['value'];
@@ -42,35 +38,42 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 				$timing[$key]= $value;
 			}
 		}
-	/* 	echo "<pre>";
-		
-		print_r($timing);
-		die; */
-		//$timing[$i]= sprintf("%02d", $i).":00";
+
 		return $timing;
 	}
-	
-	
+
+
 	public function getTimingSelectNew($storeId = 1)
 	{
 	    $configData     = $this->getAppointmentStoreMapping();
 	    $storeKey       = array_search ($storeId, $configData['stores']);
-	    
-	    $startTime = $configData['start_work_time'][$storeKey];
-	    $endTime = $configData['end_work_time'][$storeKey];
-	    $timing =array();
-	    $timings=Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
+
+		$startTime = $endTime = NULL;
+
+		if (isset($configData['start_work_time']) && $configData['start_work_time'][$storeKey]) {
+		    $startTime = $configData['start_work_time'][$storeKey];
+		    $endTime = $configData['end_work_time'][$storeKey];
+		}
+
+	    $timing  = array();
+	    $timings = Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
+
 	    foreach ($timings as $time){
-	        if ($startTime<=$time['value'] && $endTime>=$time['value']){
+
+	        if ($startTime !== NULL && $endTime !== NULL && $startTime<=$time['value'] && $endTime>=$time['value']){
 	            $key = (string)$time['value'];
 	            $value = $time['label'];
-	            $timing[$key]= $value;
-	        }
+	            $timing[$key] = $value;
+	        } else if ($startTime == NULL && $endTime == NULL) {
+				$key = (string)$time['value'];
+				$value = $time['label'];
+				$timing[$key] = $value;
+			}
 	    }
 	    return $timing;
 	}
-	
-	
+
+
 	public function  getDaysSelect(){
 		$daysArray=array();
 		$daysArray['Sunday']='Sunday';
@@ -105,24 +108,26 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		$output.="";
 		return $output;
 	}
-	
+
 	/**
 	 * used for virtual stores
 	 * @return string
 	 */
-	public function getTimeSelectHtmlNew($val=null,$storeId = 1)
+	public function getTimeSelectHtmlNew($storeId = 1, $val = null)
 	{
 	    $output = "";
+
 	    $timing = $this->getTimingSelectNew($storeId);
-	    foreach ($timing as $key => $time)
-	    {
+
+	    foreach ($timing as $key => $time) {
 	        $selected = ($val==$key) ? 'selected' : '';
 	        $output .= "<option value=".$key." $selected>".$time."</option>";
 	    }
+
 	    $output.="";
 	    return $output;
 	}
-	
+
 	public function getPiercerName($id)
 	{
 		$model = Mage::getModel('appointments/piercers')->load($id);
@@ -134,8 +139,8 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 			return "NOT ASSIGNED";
 		}
 	}
-	
-	
+
+
 	//Send SMS through SOAP API
 	public function sendsms($phone,$text,$storeId)
 	{
@@ -148,68 +153,47 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		$smsfrom = Mage::getStoreConfig(self::SMS_FROM);
 
 		try {
-			
+
 			$api = new SoapClient($url,array( 'cache_wsdl' => WSDL_CACHE_NONE,'soap_version' => SOAP_1_1));
 			$session = $api->apiValidateLogin($username,$password);
 			preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
 			$status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $text, 'text', '0', '0');
 			preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
-			
+
 			Mage::log("**************************************",Zend_Log::DEBUG,'appointments_sms_log',true);
 			Mage::log("From Event",Zend_Log::DEBUG,'appointments_sms_log',true);
 			Mage::log(" Mobile Number:".$phone,Zend_Log::DEBUG,'appointments_sms_log',true);
 			Mage::log(" Text Message: ".$text,Zend_Log::DEBUG,'appointments_sms_log',true);
 			Mage::log("**************************************",Zend_Log::DEBUG,'appointments_sms_log',true);
-			
-			
+
+
 			return json_encode($statusData);
 		} catch (Exception $e) {
 			Mage::log(" Exception Occured :".$e->getMessage(),Zend_Log::DEBUG,'appointments_sms_log',true);
-		} 
+		}
 	}
 	public function getTimezoneForeStore($storeId){
 		$timezone="";
-		
-		/* $config=Mage::getStoreConfig('appointments/general/storemapping');
-		$config=unserialize($config);
-		foreach ($config as $conf)
-		{
-			if($conf['store']==$storeId)
-			{
-				$timezone=$conf['timezoneabbr'];
-				break;
-			}
-		} */
-		
+
 		$configData     = $this->getAppointmentStoreMapping();
 		$currentStoreId = Mage::app()->getStore()->getId();
 		$storeKey = array_search ($currentStoreId, $configData['stores']);
 		$timezone = $configData['timezone_abbr'][$storeKey];
-		
+
 		return $timezone;
 	}
 	public function getTimezoneShortCodeForeStore($storeId){
 		$timezone="EST";
-		/* $config=Mage::getStoreConfig('appointments/general/storemapping');
-		$config=unserialize($config);
-		foreach ($config as $conf)
-		{
-			if($conf['store']==$storeId)
-			{
-				$timezone=$conf['timezoneabbr'];
-				break;
-			}
-		} */
-		
+
 		$configData     = $this->getAppointmentStoreMapping();
 		$currentStoreId = Mage::app()->getStore()->getId();
 		$storeKey = array_search ($currentStoreId, $configData['stores']);
 		$timezone = $configData['timezone_abbr'][$storeKey];
-		
+
 		return $timezone;
 	}
 	public function getTimeByValue($value){
-	
+
 		$timings=Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
 		$label="";
 		foreach ($timings as $time){
@@ -232,7 +216,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	       $hr=(int)$val/1;
 	       $min = fmod($val, 1)*60;
 	       return $hr.":".$min.':00';
-	    
+
 	}
 	public function getShortUrl($url){
 	    $apiKey = '';
@@ -255,7 +239,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    return $json->id;
 	}
 	public function getAvailablePiercers($id){
-	    
+
 	    $appointments= Mage::getModel('appointments/appointments')->load($id);
 	    $storeId=$appointments->getStoreId();
 	    $appDate=date("m/d/Y",strtotime($appointments->getAppointmentStart()));
@@ -270,12 +254,12 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	        $collection->addFieldToFilter('working_days', array('like' => '%'.$appDate.'%'));
 	        foreach ($collection as $piercer)
 	        {
-	            
+
 	            $appCollection = Mage::getModel('appointments/appointments')->getCollection();
 	            $appCollection->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$fromTime, 'to'=>$toTime), array('from'=>$fromTime, 'to'=>$toTime)))
 	            ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
 	            ->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
-	            
+
 	            if(isset($appointmentId))
 	                $appCollection->addFieldToFilter('id', array('neq' => $appointmentId));
 	                $appCollection2=null;
@@ -288,48 +272,48 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	                    if(isset($appointmentId))
 	                        $appCollection2->addFieldToFilter('id', array('neq' => $appointmentId));
 	                }
-	                
+
 	                //echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
 	                if(count($appCollection2))
 	                    continue;
 	                    if(count($appCollection))
 	                        continue;
-	                        
+
 	                        /* End of check */
-	                        
+
 	                        $workingHours = $piercer->getWorkingHours();
 	                        $workingHours = unserialize($workingHours);
-	                        
+
 	                        //Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
-	                        
+
 	                        foreach ($workingHours as $workSlot)
 	                        {
 	                            //$workStart = $workSlot['start'].":00";
-	                            
+
 	                            if($workSlot['day']!=$appDay){
 	                                continue;
-	                                
+
 	                            }
 	                            $workStart = $this->getTimeByValue($workSlot['start']);
 	                            //$workEnd = $workSlot['end'].":00";
 	                            $workEnd = $this->getTimeByValue($workSlot['end']);
-	                            
+
 	                            //Break
 	                            $breakStart = $this->getTimeByValue($workSlot['break_start']);
 	                            $breakEnd = $this->getTimeByValue($workSlot['break_end']);
-	                            
+
 	                            $fromDateTime=date("H:i",strtotime($fromTime));
-	                            
+
 	                            $toDateTime=date("H:i",strtotime($toTime));
-	                            
+
 	                            if((strtotime($workStart)<=strtotime($fromDateTime) && strtotime($toDateTime)<=strtotime($breakStart)) ||
 	                                (strtotime($breakEnd)<=strtotime($fromDateTime) && strtotime($toDateTime)<=strtotime($workEnd)))
 	                            {
 	                                $piercersArray[]=$piercer->getId();
 	                            }
-	                            
+
 	                        }
-	                        
+
 	        }
 	    } catch (Exception $e) {
 	    }
@@ -346,13 +330,13 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	        $stores=Mage::getModel('core/store')->getCollection();
 	        $stores->setOrder('store_id', 'ASC');
 	    }
-        foreach ($stores as $store): 
+        foreach ($stores as $store):
         $storeArray[$store->getId()]=$store->getName();
 		endforeach;
 		return $storeArray;
-	    
+
 	}
-	
+
 	public function piercerOptionArray(){
 	    $piercers=Mage::getModel('appointments/piercers')->getCollection();
 	    $piercers->addFieldToFilter('is_active',1);
@@ -362,16 +346,16 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    $piercerArray[$piercer->getId()]=$piercer->getFirstname().' '.$piercer->getLastname();
 	    endforeach;
 	    return $piercerArray;
-	    
+
 	}
-	
+
 	/**
 	 * return array of store mapping
 	 */
 	private function getAppointmentStoreMapping(){
 	    return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
 	}
-	
+
 	/**
 	 * aws02
 	 * get list of piercers as an option array
@@ -384,7 +368,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    }
 	    return $piercerArray;
 	}
-	
+
 	/**
 	 * aws02
 	 * check piercer is available at particular date or not
@@ -399,4 +383,3 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    return false;
 	}
 }
-	 
