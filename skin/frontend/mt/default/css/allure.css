@@ -1134,3 +1134,6 @@ dd.post-lengthds-lbl-options.last{
 	    margin-left: 25px !important;
 }
 
+.hideaddToCart{
+    display: none !important;
+}

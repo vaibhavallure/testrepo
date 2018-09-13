@@ -2,6 +2,8 @@
 $_optionId = $this->getRequest()->getParam('optionId','');
 $_product    = $this->getProduct();
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
+//echo "<pre>";
+//print_r($_attributes->getData());
 ?>
 <?php
 $showSampleForm = false;
@@ -60,7 +62,7 @@ if ($_product->getSizeSample() == 1) {
             var id = 'amconf-image-<?php echo $selectedColor; ?>';
                 if($(id)){
                     $(id).simulate('click');
-                    document.getElementsByClassName("t_Tooltip t_Tooltip_customTiny")[0].hide();
+                   // document.getElementsByClassName("t_Tooltip t_Tooltip_customTiny")[0].hide();
                 }
             if(response.jsonconfigselect) {
                 if(response.jsonconfigselect.sa_count==1){
@@ -121,13 +123,15 @@ if ($_product->getSizeSample() == 1) {
         if((count_attribute != '')&& (count_attribute == '1')){
             var default_id = 'attribute'+ jQuery('.attribute_select_default').attr('id');
             var option_id  = '<?php echo $_optionId;?>';
+           // default_id=333;
+                
             if(option_id){
                 jQuery('#'+ default_id).val(option_id);
             }else{
                 jQuery("#"+ default_id).val(jQuery("#"+ default_id + " option:eq(1)").val());
 
               //Allure code for change first time attribute when page is reload
-                $(default_id).simulate('change');
+              //  $(default_id).simulate('change');
             }
         }
     });
