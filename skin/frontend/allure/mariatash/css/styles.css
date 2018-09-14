@@ -787,6 +787,9 @@ ul#foo2 > li {
     float: none;
 }
 .timeslot span {
+	padding: 0px !important;
+}
+.timeslot > span {
 	padding: 10px !important;
 }
 .jcarosel_main_ul {
