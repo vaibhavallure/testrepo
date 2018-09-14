@@ -726,6 +726,9 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 .pickur_time_main_container .image_carousel {
 	width: 100%;
 }
+.mbdialog {
+	position: fixed !important;
+}
 .wrapper {
 	width:100%;
 	padding:0;
