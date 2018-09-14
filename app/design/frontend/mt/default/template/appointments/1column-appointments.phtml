@@ -36,6 +36,11 @@
 <!--[if gt IE 8]><!--> <html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>"> <!--<![endif]-->
 <head>
 <?php echo $this->getChildHtml('head') ?>
+<style type="text/css">
+	.wrapper {
+		min-height: 100%;
+	}
+</style>
 </head>
 <?php $embedded = $this->getRequest()->getParam('embedded');?>
 <body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
