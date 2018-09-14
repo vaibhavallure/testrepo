@@ -726,7 +726,8 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 .wrapper {
 	width:100%;
 	padding:0;
-	min-height: 100%;
+	min-height: auto;
+	height: auto;
 }
 .container-fluid {
 	min-height: 100%;
