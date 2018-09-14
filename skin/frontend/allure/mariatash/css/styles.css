@@ -723,6 +723,9 @@ px      40    100    160    220    280    340    400    460    520    580   640 
   height: 100%;
   /*height: auto !important;*/
 }
+.pickur_time_main_container .image_carousel {
+	width: 100%;
+}
 .wrapper {
 	width:100%;
 	padding:0;
