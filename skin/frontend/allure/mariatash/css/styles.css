@@ -723,13 +723,109 @@ px      40    100    160    220    280    340    400    460    520    580   640 
   height: 100%;
   /*height: auto !important;*/
 }
+.pickurdayDIV > div {
+    float: left;
+    max-width: 500px;
+    margin: 0 auto;
+    float: none;
+    width: 100%;
+    display: block !important;
+}
+.pickur_time_main_container .image_carousel {
+	width: 100%;
+	padding: 15px 30px !important;
+	max-width: 500px;
+	margin: 0 auto;
+}
+#pick_ur_time_div .prev, #pick_ur_time_div .next {
+    width: 28px;
+}
+#pick_ur_time_div .prev {
+	left: 0px !important;
+	margin: 0;
+}
+#pick_ur_time_div .next {
+    right: 0px !important;
+    position: absolute;
+    margin: 0;
+}
+#fetchpickurday .calendar {
+	margin-bottom: 15px;
+	max-width: 500px;
+	width: 100%;
+}
+.calendar th, .calendar td {
+    text-align: center;
+    width: 14.2857%;
+}
+#fetchpickurday .calendar span {
+	font-size: 16px;
+	padding: 7px 10px !important;
+	font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif;
+}
+.timeslot.selectedTime,
+.calendar td.date.selectedDate,
+.calendar .date:not(.disabled):hover,
+.calendar .pMDate:not(.disabled):hover,
+.calendar .nMDate:not(.disabled):hover,
+.calendar .month:hover {
+	background-color: #bda268;
+	background-image: none;
+}
+ul#foo2 > li {
+    padding: 5px;
+    width: 25%;
+    margin: 0 auto !important;
+    min-width: 75px;
+    float: none !important;
+    vertical-align: top !important;
+    display: inline-block !important;
+}
+.timeslot {
+    margin: 10px auto;
+    padding: 10px 0;
+    border-radius: 0;
+    display: block;
+    text-align: center;
+    width: 100%;
+    float: none;
+}
+.timeslot span {
+	padding: 0px !important;
+}
+.timeslot > span {
+	padding: 10px !important;
+}
+.jcarosel_main_ul {
+	min-width: auto;
+	max-width: 100%;
+	margin: 0 auto !important;
+	text-align: center;
+}
+
+.calendar tr:first-child th {
+	font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif;
+	text-transform: uppercase;
+	padding: 5px 5px 10px;
+	font-weight: bold;
+}
+.mbdialog {
+	position: fixed !important;
+}
+
+.mbdialog.popupid21 .dialogBody h1 span,
+.mbdialog.popupid21 .dialogBody h1 span span {
+	font-size: 20px !important;
+	font-weight: normal;
+}
 .wrapper {
 	width:100%;
 	padding:0;
-	height: 100%;
+	min-height: auto;
+	height: auto;
 }
 .container-fluid {
-	height:100%;
+	min-height: 100%;
 }
 .cms-home .wrapper {
   /*min-height: 700px;*/
