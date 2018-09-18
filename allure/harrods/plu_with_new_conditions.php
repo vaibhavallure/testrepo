@@ -119,6 +119,7 @@ foreach ($collection as $_product){
     $stockParent = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
 
     /*Condition to Avoid Products that has less than or Equal to Zero Harrods QTY */
+
     /*if((float)$_product->getData("harrods_inventory")>0)
     {*/
         $ioo->streamWriteCsv($data);
@@ -127,7 +128,6 @@ foreach ($collection as $_product){
     else{
         $NoOfProductQTYLessThanZero++;
     }*/
-
 
 
 
@@ -202,6 +202,7 @@ foreach ($collection as $_product){
         $data['site_listings']='D369';
         $data['siteDelimited']='SiteDelim';
         $data['string_for_generic_lines']='';
+
 
 
 

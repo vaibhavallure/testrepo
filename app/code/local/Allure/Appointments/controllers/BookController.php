@@ -1,7 +1,12 @@
 <?php
-class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Action{
-    public function indexAction ()
+class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Action{
+
+    public function storeAction ()
     {
+		$storeCode = $this->getRequest()->getParam('code');
+
+		$storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
+
         // MODIFY ACTION start by bhagya
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
