@@ -105,3 +105,14 @@ jQuery( window ).resize(function() {
 <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/login.phtml')->toHtml(); ?>
 <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/register.phtml')->toHtml(); ?>
 <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/reset_password.phtml')->toHtml(); ?>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125115574-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125115574-1');
+</script>
+
