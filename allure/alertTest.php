@@ -8,7 +8,7 @@ Mage::app('admin');
 
 Mage::getModel('alertservices/alerts')->alertProductPrice();
 
-Mage::getModel('alertservices/alerts')->alertSalesOfFour();
+Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
 
 Mage::getModel('alertservices/alerts')->alertSalesOfSix();
 
