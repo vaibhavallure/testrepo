@@ -3,7 +3,7 @@
 @media only screen and (min-width: 320px) {
 	.piercing_input {
 		width: 100%;
-	}	
+	}
 }
 
 @media only screen and (min-width: 480px) {
@@ -29,7 +29,7 @@
 
 @media only screen and (max-width: 768px) {
 	/* iphone 6+ and nexus V view....*/
-	
+
 	.image_carousel {
     width: 90%;
     height:auto;
@@ -37,13 +37,13 @@
     margin-bottom: 0px;
     padding:8px 32px 15px 22px !important;
 	}
-	
+
 	.jcarosel_main_ul{
 		min-width: 470px;
 	}
-	
+
 	.pickur_time_main_container{
-		width:100% 
+		width:100%
 	}
 	.firsttitle {
 		margin: 0 auto;
@@ -78,8 +78,8 @@
 		width: 100%;
 	}
 	.pickurdayDIV {
-		width: 100%;	
-		min-height: 300px;	
+		width: 100%;
+		min-height: 300px;
 	}
 	.piercingDiv {
 		margin: 2% 0;
@@ -102,7 +102,7 @@
 		width: 100%;
 	}
 	.field {
-		float: none;		
+		float: none;
 	}
 	.picktime {
 		float: left;
@@ -139,12 +139,12 @@
 	.apt-buttons-set{
 		clear:both;
 		width:100%;
-		float:right;		
+		float:right;
     	text-align: center;
 	}
 	.success-field{
 		clear:both;
-		/* margin: 0 10px; */		
+		/* margin: 0 10px; */
 	}
 	.appointments-index-index .wrapper{
 		height: auto !important;
@@ -158,7 +158,7 @@
 		top: 60px !important;
 	}
 	.calendar span {
-    	padding: 6px 15px !important; 
+    	padding: 6px 14px !important; 
     }
     .notifyRadio{
 	    margin: 3px 3px 0 0px;
@@ -177,7 +177,7 @@
     .notfreepeiercer{
     	font-size: 11px;
     	width: 100%;
-    	margin: 10px 0px;  
+    	margin: 10px 0px;
     }
     .checkout-success{
     	width: 100%;
@@ -199,7 +199,7 @@
     	margin-left:10px;
     	margin-bottom:20px;
     }
-    #advice-required-entry-time-starttime_hidden,#advice-required-entry-firstname, 
+    #advice-required-entry-time-starttime_hidden,#advice-required-entry-firstname,
     #advice-required-entry-lastname, #advice-required-entry-email, #advice-required-entry-phone,
     #advice-required-entry-starttime_hidden, #advice-validate-number-phone,
     #advice-validate-alpha-firstname, #advice-validate-email-email, #advice-validate-alpha-lastname{
@@ -222,7 +222,7 @@
 
 
 @media only screen and (max-width: 480px) {
-	
+
 }
 
 @media only screen and (max-width: 420px) {
@@ -248,7 +248,7 @@
 
 @media screen and (orientation: portrait) and (min-device-width: 768px)
 	and (max-device-width: 1024px) {
-	
+
 }
 
 @media screen and (orientation: landscape) and (min-device-width: 769px)
@@ -257,12 +257,12 @@
 		/* width:auto; */
 		width:95%;
 		float:left;
-		
+
 	}
 	.image_carousel {
-    	width: 76% ;    
+    	width: 76% ;
 	}
-	.ele_width{	
+	.ele_width{
 		width:98%;
     	padding: 6px 9px;
     }
@@ -294,7 +294,7 @@
 		width:50%;
 	}
 	.signin-field{
-		width:100%;		
+		width:100%;
 	}
 	.intl-tel-input.allow-dropdown input, .intl-tel-input.allow-dropdown input[type=text], .intl-tel-input.allow-dropdown input[type=tel], .intl-tel-input.separate-dial-code input, .intl-tel-input.separate-dial-code input[type=text], .intl-tel-input.separate-dial-code input[type=tel]{
 		width:100% !important;
