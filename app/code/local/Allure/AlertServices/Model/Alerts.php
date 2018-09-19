@@ -23,23 +23,33 @@ class Allure_AlertServices_Model_Alerts
 				
 		}
 
-	public function alertSalesOfFour(){
+	public function alertSalesOfFour($debug = false){
 		/* Get the collection */
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
 
-			$currdate = Mage::getModel('core/date')->timestamp();
-			$toDate	= date('Y-m-d H:i:s', $currdate);
-			$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 4);
-			/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
-			$orders = Mage::getModel('sales/order')->getCollection()
-				    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
-				    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
-				    /*echo $orders->getSelect()->__toString();*/
-				if (count($orders)<=0 && $status) {
-					$helper->sendSalesOfFourEmailAlert();
+			if ($status) {
+				$currdate = Mage::getModel('core/date')->timestamp();
+				$toDate	= date('Y-m-d H:i:s', $currdate);
+				$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 4);
+
+				if ($debug) {
+					echo "to date";
+					var_dump($toDate);
+					echo "from date";
+					var_dump($fromDate); 
 				}
+				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
+				$orders = Mage::getModel('sales/order')->getCollection()
+					    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
+					    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
+					    /*echo $orders->getSelect()->__toString();*/
+					if (count($orders) <= 0 ) {
+						$helper->sendSalesOfFourEmailAlert();
+					}
+			}
+			
 		}catch(Exception $e){
     		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
     	}
