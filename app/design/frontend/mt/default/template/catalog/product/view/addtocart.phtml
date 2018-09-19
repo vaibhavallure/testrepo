@@ -114,8 +114,15 @@
     $skuStr = $_product->getSku();
     $skuArr = explode("|", $skuStr);
     $sku = $skuArr[0];
+    $giftcard = 1;
+    if ($sku == "STORECARD") {
+        $giftcard = 0;
+    }
+    if ($sku == "gift") {
+        $giftcard = 0;
+    }
 ?>
-<?php  if($sku != "STORECARD"):?>
+<?php if($giftcard): ?>
 <?php if ($_product->isAvailable()): ?>
     <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability for this model:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
 <?php else: ?>
