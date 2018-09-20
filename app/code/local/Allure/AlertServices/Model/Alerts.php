@@ -26,7 +26,6 @@ class Allure_AlertServices_Model_Alerts
 							$collect[]=$p;
 						}
 					}
-					var_dump(count($collect));
 						if (count($collect) > 0) {
 							$helper->sendEmailAlertForProductPrice($collect);
 						}

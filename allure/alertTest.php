@@ -8,10 +8,10 @@ Mage::app('admin');
 
 Mage::getModel('alertservices/alerts')->alertProductPrice();
 
-/*Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
+Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
 
 Mage::getModel('alertservices/alerts')->alertSalesOfSix(true);
 
 Mage::getModel('alertservices/alerts')->alertCheckoutIssue();
-*/
+
 echo "done";
