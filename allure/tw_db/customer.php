@@ -40,6 +40,8 @@ function getQuery(){
             ON C.COUNTRYID = CTR.COUNTRYID
             join receipt r on r.SellToCustomerId = C.CustomerId
             where r.WebOrderNo is null
+            and r.EmailAddress is not null 
+            and r.StateDate >= '2018-02-02' and r.StateDate < '2018-02-03'
             -- WHERE C.RecModified >= '2018-02-01' AND C.RecModified <= '2018-02-05'
             ; 
             ";
