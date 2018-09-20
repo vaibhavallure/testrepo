@@ -25,12 +25,12 @@ if ($_product->getSizeSample() == 1) {
             <div class="input-box">
                 <label class="required"><?php echo ($label)? $label: $_attribute->getLabel() ?>: </label>
                 <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
-                    <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 150px !important">
+                    <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 170px !important">
                         <option><?php echo $this->__('Select an Option') ?></option>
                     </select>
                 <?php else:?>
-                    <div class="styled attribute_select_default" id="<?php echo $_attribute->getAttributeId() ?>" style="width: 132px !important">
-                        <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 150px !important">
+                    <div class="styled attribute_select_default" id="<?php echo $_attribute->getAttributeId() ?>" style="width: 150px !important">
+                        <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 170px !important">
                             <option><?php echo $this->__('Select an Option') ?></option>
                         </select>
                     </div>
