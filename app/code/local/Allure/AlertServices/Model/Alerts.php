@@ -12,11 +12,23 @@ class Allure_AlertServices_Model_Alerts
 				if ($status) {
 					$collection = Mage::getModel('catalog/product')->getCollection()
 					->addAttributeToSelect('*')
-					->addAttributeToFilter(array(array("attribute"=>"price","eq"=>0)))
+					->addAttributeToFilter(array(
+										array("attribute"=>"special_price","eq"=>0),
+										array("attribute"=>"special_price","null"=>true)
+									))
 					->addAttributeToFilter(array(array("attribute"=>"sku","neq"=>'gift')))
 					->addAttributeToFilter(array(array("attribute"=>"status","eq"=>1)));
-						if (count($collection) > 0) {
-							$helper->sendEmailAlertForProductPrice($collection);
+					$collect = array();
+					foreach ($collection as $p) {
+						if ($p->getSpecialPrice()==0 && $p->getSpecialPrice()!=null) {
+							$collect[]=$p;
+						}elseif ($p->getPrice()==0 && $p->getSpecialPrice()==null) {
+							$collect[]=$p;
+						}
+					}
+					var_dump(count($collect));
+						if (count($collect) > 0) {
+							$helper->sendEmailAlertForProductPrice($collect);
 						}
 				}
 			}catch(Exception $e){
@@ -37,6 +49,7 @@ class Allure_AlertServices_Model_Alerts
 				$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 4);
 
 				if ($debug) {
+					echo "for 4 hours";
 					echo "to date";
 					var_dump($toDate);
 					echo "from date";
@@ -47,7 +60,8 @@ class Allure_AlertServices_Model_Alerts
 					    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
 					    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
 					    /*echo $orders->getSelect()->__toString();*/
-					if (count($orders) <= 0 ) {
+						Mage::log('order count 4 hours'.count($orders),Zend_log::DEBUG,'allureAlerts.log',true);
+					if (count($orders) <=0 ) {
 						$helper->sendSalesOfFourEmailAlert();
 					}
 			}
@@ -58,7 +72,7 @@ class Allure_AlertServices_Model_Alerts
 		
 	}
 
-	public function alertSalesOfSix(){
+	public function alertSalesOfSix($debug = false){
 		/* Get the collection */
 		try{
 			$helper = Mage::helper('alertservices');
@@ -68,12 +82,18 @@ class Allure_AlertServices_Model_Alerts
 				$toDate	= date('Y-m-d H:i:s', $currdate);
 				$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 6);
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
-
+				if ($debug) {
+					echo "for 4 hours";
+					echo "to date";
+					var_dump($toDate);
+					echo "from date";
+					var_dump($fromDate); 
+				}
 				$orders = Mage::getModel('sales/order')->getCollection()
 					    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
 					    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
-					    /*echo $orders->getSelect()->__toString();
-					    var_dump(count($orders));*/
+					    /*echo $orders->getSelect()->__toString();*/
+					    Mage::log('order count 6 hours'.count($orders),Zend_log::DEBUG,'allureAlerts.log',true);
 					if (count($orders)<=0) {
 						$helper->sendSalesOfSixEmailAlert();
 					}
