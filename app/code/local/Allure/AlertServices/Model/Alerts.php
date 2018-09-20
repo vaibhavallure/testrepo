@@ -6,35 +6,25 @@ class Allure_AlertServices_Model_Alerts
     }
 
 	public function alertProductPrice(){
-		try{
-			$helper = Mage::helper('alertservices');
-			$status =	$this->getConfigHelper()->getEmailStatus();
-				if ($status) {
-					$collection = Mage::getModel('catalog/product')->getCollection()
-					->addAttributeToSelect('*')
-					->addAttributeToFilter(array(
-										array("attribute"=>"special_price","eq"=>0),
-										array("attribute"=>"special_price","null"=>true)
-									))
-					->addAttributeToFilter(array(array("attribute"=>"sku","neq"=>'gift')))
-					->addAttributeToFilter(array(array("attribute"=>"status","eq"=>1)));
-					$collect = array();
-					foreach ($collection as $p) {
-						if ($p->getSpecialPrice()==0 && $p->getSpecialPrice()!=null) {
-							$collect[]=$p;
-						}elseif ($p->getPrice()==0 && $p->getSpecialPrice()==null) {
-							$collect[]=$p;
+			try{
+				$helper = Mage::helper('alertservices');
+
+				$status =	$this->getConfigHelper()->getEmailStatus();
+					if ($status) {
+						$collection = Mage::getModel('catalog/product')->getCollection()
+						->addAttributeToSelect('*')
+						->addAttributeToFilter(array(array("attribute"=>"price","eq"=>0)))
+						->addAttributeToFilter(array(array("attribute"=>"sku","neq"=>'gift')))
+						->addAttributeToFilter(array(array("attribute"=>"status","eq"=>1)));
+						if (count($collection) > 0) {
+							$helper->sendEmailAlertForProductPrice($collection);
 						}
 					}
-						if (count($collect) > 0) {
-							$helper->sendEmailAlertForProductPrice($collect);
-						}
-				}
-			}catch(Exception $e){
-			Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
-		}
+				}catch(Exception $e){
+	    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+	    	}
 				
-	}
+		}
 
 	public function alertSalesOfFour($debug = false){
 		/* Get the collection */
@@ -48,18 +38,20 @@ class Allure_AlertServices_Model_Alerts
 				$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 4);
 
 				if ($debug) {
-					echo "for 4 hours";
-					echo "to date";
-					var_dump($toDate);
-					echo "from date";
-					var_dump($fromDate); 
+					echo "for 4 hours <br>";
+					echo "to date <br>";
+					var_dump($toDate).'<br>';
+					echo "from date <br>";
+					var_dump($fromDate).'<br>'; 
 				}
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
 				$orders = Mage::getModel('sales/order')->getCollection()
 					    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
 					    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
 					    /*echo $orders->getSelect()->__toString();*/
-						Mage::log('order count 4 hours'.count($orders),Zend_log::DEBUG,'allureAlerts.log',true);
+					if ($debug) {
+						var_dump(count($orders));
+					}
 					if (count($orders) <=0 ) {
 						$helper->sendSalesOfFourEmailAlert();
 					}
@@ -82,17 +74,19 @@ class Allure_AlertServices_Model_Alerts
 				$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 6);
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
 				if ($debug) {
-					echo "for 4 hours";
-					echo "to date";
-					var_dump($toDate);
-					echo "from date";
-					var_dump($fromDate); 
+					echo "for 6 hours <br>";
+					echo "to date <br>";
+					var_dump($toDate).'<br>';
+					echo "from date <br>";
+					var_dump($fromDate).'<br>'; 
 				}
 				$orders = Mage::getModel('sales/order')->getCollection()
 					    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
 					    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
 					    /*echo $orders->getSelect()->__toString();*/
-					    Mage::log('order count 6 hours'.count($orders),Zend_log::DEBUG,'allureAlerts.log',true);
+					if ($debug) {
+						var_dump(count($orders));
+					}
 					if (count($orders)<=0) {
 						$helper->sendSalesOfSixEmailAlert();
 					}
