@@ -46,12 +46,10 @@ class Allure_AlertServices_Model_Alerts
 				}
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
 				$orders = Mage::getModel('sales/order')->getCollection()
-					    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
-					    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
+					    ->addFieldToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
+					    /*->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))*/
+					    ->setOrder('created_at', 'ASC');
 					    /*echo $orders->getSelect()->__toString();*/
-					if ($debug) {
-						var_dump(count($orders));
-					}
 					if (count($orders) <=0 ) {
 						$helper->sendSalesOfFourEmailAlert();
 					}
@@ -63,7 +61,7 @@ class Allure_AlertServices_Model_Alerts
 		
 	}
 
-	public function alertSalesOfSix($debug = false){
+	public function alertSalesOfSix(){
 		/* Get the collection */
 		try{
 			$helper = Mage::helper('alertservices');
@@ -73,20 +71,11 @@ class Allure_AlertServices_Model_Alerts
 				$toDate	= date('Y-m-d H:i:s', $currdate);
 				$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 6);
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
-				if ($debug) {
-					echo "for 6 hours <br>";
-					echo "to date <br>";
-					var_dump($toDate).'<br>';
-					echo "from date <br>";
-					var_dump($fromDate).'<br>'; 
-				}
 				$orders = Mage::getModel('sales/order')->getCollection()
-					    ->addFieldToFilter('updated_at', array('from'=>$fromDate, 'to'=>$toDate))
-					    ->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))->setOrder('updated_at', 'ASC');
+					    ->addFieldToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
+					    /*->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE))*/
+					    ->setOrder('created_at', 'ASC');
 					    /*echo $orders->getSelect()->__toString();*/
-					if ($debug) {
-						var_dump(count($orders));
-					}
 					if (count($orders)<=0) {
 						$helper->sendSalesOfSixEmailAlert();
 					}
