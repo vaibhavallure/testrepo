@@ -25,7 +25,7 @@ class Allure_Virtualstore_Block_Adminhtml_Website_Grid extends Mage_Adminhtml_Bl
     protected function _prepareColumns()
     {
         $this->addColumn("website_id", array(
-            "header" => Mage::helper("virtualstore")->__("Website ID"),
+            "header" => Mage::helper("allure_virtualstore")->__("Website ID"),
             "align" =>"right",
             "width" => "50px",
             "type" => "number",
@@ -33,17 +33,42 @@ class Allure_Virtualstore_Block_Adminhtml_Website_Grid extends Mage_Adminhtml_Bl
         ));
 
         $this->addColumn("code", array(
-            "header" => Mage::helper("virtualstore")->__("Code"),
+            "header" => Mage::helper("allure_virtualstore")->__("Code"),
             "index" => "code",
         ));
 
         $this->addColumn("name", array(
-            "header" => Mage::helper("virtualstore")->__("Name"),
+            "header" => Mage::helper("allure_virtualstore")->__("Name"),
             "index" => "name",
         ));
 
-        $this->addExportType('*/*/exportCsv', Mage::helper('virtualstore')->__('CSV'));
-        $this->addExportType('*/*/exportExcel', Mage::helper('virtualstore')->__('Excel'));
+        $this->addColumn("sort_order", array(
+            "header" => Mage::helper("allure_virtualstore")->__("Sort Order"),
+            "index" => "sort_order",
+        ));
+
+        $this->addColumn("default_group_id", array(
+            "header" => Mage::helper("allure_virtualstore")->__("Default Group Id"),
+            "index" => "default_group_id",
+        ));
+
+        $this->addColumn("is_default", array(
+            "header" => Mage::helper("allure_virtualstore")->__("Is Default"),
+            "index" => "is_default",
+        ));
+
+        $this->addColumn("stock_id", array(
+            "header" => Mage::helper("allure_virtualstore")->__("Stock Id"),
+            "index" => "stock_id",
+        ));
+
+        $this->addColumn("website_price_rule", array(
+            "header" => Mage::helper("allure_virtualstore")->__("Website Price Rule"),
+            "index" => "website_price_rule",
+        ));
+
+        $this->addExportType('*/*/exportCsv', Mage::helper('allure_virtualstore')->__('CSV'));
+        $this->addExportType('*/*/exportExcel', Mage::helper('allure_virtualstore')->__('Excel'));
 
         return parent::_prepareColumns();
     }
@@ -61,9 +86,9 @@ class Allure_Virtualstore_Block_Adminhtml_Website_Grid extends Mage_Adminhtml_Bl
         $this->getMassactionBlock()->setFormFieldName('website_ids');
         $this->getMassactionBlock()->setUseSelectAll(true);
         $this->getMassactionBlock()->addItem('remove_website', array(
-            'label'=> Mage::helper('virtualstore')->__('Remove Websites'),
+            'label'=> Mage::helper('allure_virtualstore')->__('Remove Websites'),
             'url'  => $this->getUrl('*/website/massRemove'),
-            'confirm' => Mage::helper('virtualstore')->__('Are you sure?')
+            'confirm' => Mage::helper('allure_virtualstore')->__('Are you sure?')
         ));
         return $this;
     }

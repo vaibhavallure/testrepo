@@ -5,7 +5,7 @@
  * Date: 8/14/18
  * Time: 6:18 PM
  */
-class Allure_Virtualstore_Block_Adminhtml_Virtualstore_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
+class Allure_Virtualstore_Block_Adminhtml_Store_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
     protected function _prepareForm()
     {

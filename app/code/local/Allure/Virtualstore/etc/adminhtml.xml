@@ -3,16 +3,16 @@
     <menu>
         <allure>
             <children>
-                <store module="virtualstore">
+                <store module="allure_virtualstore">
                     <title>Store</title>
                     <sort_order>3</sort_order>
                     <children>
-                        <virtualstore module="virtualstore">
+                        <virtualstore module="allure_virtualstore">
                             <title>Virtual Store</title>
                             <sort_order>30</sort_order>
                             <action>adminhtml/virtualstore</action>
                         </virtualstore>
-                        <website module="virtualstore">
+                        <website module="allure_virtualstore">
                             <title>Virtual Website</title>
                             <sort_order>40</sort_order>
                             <action>adminhtml/website</action>
@@ -32,7 +32,7 @@
                     <allure  module="allure" translate="title">
                         <title>Allure</title>
                         <children>
-                            <store module="virtualstore" translate="title">
+                            <store module="allure_virtualstore" translate="title">
                                 <title>Store</title>
                                 <sort_order>300</sort_order>
                                 <children>
