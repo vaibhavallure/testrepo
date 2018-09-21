@@ -39,6 +39,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
      *
      * @var array
      */
+    
     protected $_prices      = array();
     
     /**
@@ -141,6 +142,11 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
      */
     public function getJsonConfig()
     {
+        $_currency = Mage::app()->getStore()->getCurrentCurrency();
+        $_currency_usd = Mage::app()->getStore()->getBaseCurrency();
+        $baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
+        $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+
         $attributes = array();
         $options    = array();
         $store      = $this->getCurrentStore();
@@ -228,10 +234,10 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                     } else {
                         $productsIndex = array();
                     }
-                    
+                
                     $info['options'][] = array(
                         'id'        => $value['value_index'],
-                        'label'     => $value['label'],
+                        'label'     => $_currency_usd->formatTxt($value['label'])." (".$_currency->formatTxt(Mage::helper('directory')->currencyConvert($value['label'],$baseCurrencyCode, $currentCurrencyCode)).")",
                         'price'     => $configurablePrice,
                         'oldPrice'  => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
                         'products'  => $productsIndex,

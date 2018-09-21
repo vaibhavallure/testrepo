@@ -5,7 +5,7 @@
  * Date: 8/14/18
  * Time: 6:22 PM
  */
-class Allure_Virtualstore_Block_Adminhtml_Virtualstore_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
+class Allure_Virtualstore_Block_Adminhtml_Store_Edit_Tab_Form extends Mage_Adminhtml_Block_Widget_Form
 {
     protected function _prepareForm()
     {
@@ -15,18 +15,18 @@ class Allure_Virtualstore_Block_Adminhtml_Virtualstore_Edit_Tab_Form extends Mag
 
 
         $fieldset = $form->addFieldset('virtualstore_form', array(
-            'legend'=>Mage::helper('virtualstore')->__('Virtualstore information')
+            'legend'=>Mage::helper('allure_virtualstore')->__('Virtualstore information')
         ));
 
         $fieldset->addField("name", "text", array(
-            "label"     => Mage::helper("virtualstore")->__("Name"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Name"),
             'class'     => 'required-entry',
             'required'  => true,
             'name'      => 'name',
         ));
 
         $fieldset->addField("code", "text", array(
-            "label"     => Mage::helper("virtualstore")->__("Code"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Code"),
             'name'      => 'code',
         ));
 
@@ -49,13 +49,13 @@ class Allure_Virtualstore_Block_Adminhtml_Virtualstore_Edit_Tab_Form extends Mag
             'name'      => 'group_id',
         ));
         $fieldset->addField("sort_order", "text", array(
-            "label"     => Mage::helper("virtualstore")->__("Sort Order"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Sort Order"),
             'class'     => 'required-entry validate-digits',
             'required'  => true,
             'name'      => 'sort_order',
         ));
         $fieldset->addField("is_active", "select", array(
-            "label"     => Mage::helper("virtualstore")->__("Is Active"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Is Active"),
             'class'     => 'required-entry',
             'required'  => true,
             'options'     => array(
@@ -67,7 +67,7 @@ class Allure_Virtualstore_Block_Adminhtml_Virtualstore_Edit_Tab_Form extends Mag
         ));
 
         $fieldset->addField("is_copy_old_product", "select", array(
-            "label"     => Mage::helper("virtualstore")->__("Is Copy Old Product"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Is Copy Old Product"),
             'class'     => 'required-entry',
             'required'  => true,
             'options'     => array(
@@ -79,12 +79,12 @@ class Allure_Virtualstore_Block_Adminhtml_Virtualstore_Edit_Tab_Form extends Mag
         ));
 
 //        $fieldset->addField("currency", "text", array(
-//            "label"     => Mage::helper("virtualstore")->__("Currency"),
+//            "label"     => Mage::helper("allure_virtualstore")->__("Currency"),
 //            'name'      => 'currency',
 //        ));
 //
 //        $fieldset->addField("timezone", "text", array(
-//            "label"     => Mage::helper("virtualstore")->__("Timezone"),
+//            "label"     => Mage::helper("allure_virtualstore")->__("Timezone"),
 //            'name'      => 'timezone',
 //        ));
 

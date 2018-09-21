@@ -161,92 +161,110 @@ if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
         <?php if (count($messages)): $html = "";?>
         <tr class="messages">
             <td colspan="6">
+            	
+            	<?php //new code - ALR -- aws12
+                    $product = $_item->getProduct();
+                    $skuStr = $product->getSku();
+                    $skuArr = explode("|", $skuStr);
+                    $sku = $skuArr[0];
+                    $giftcard = 1;
+                    if ($sku == "STORECARD") {
+                        $giftcard = 0;
+                    }
+                    if ($sku == "gift") {
+                        $giftcard = 0;
+                    }
+               ?>
+            <?php if($giftcard):?>
+            
                 <div class="item-msg <?php echo $message['type'] ?>">
                 
-                <?php if(0): //prevois code commented because of parent child?>
-                    <?php 
-                    $stockQty = intval($_item->getProduct()->getStockItem()->getQty());
-                    $manageStock = $_item->getProduct()->getStockItem()->getManageStock();
-                     
-                    $isInStock = $_item->getProduct()->getStockItem()->getIsInStock();
-                     
-                    $isBackordered = false;
-                     
-                    $backorderedQty = $_item->getQty();
-                     
-                    if ($stockQty < $backorderedQty) {
-                    	$isBackordered = true;
-                    
-                    	if ($stockQty >= 0) {
-                    		$backorderedQty = $_item->getQty() - $stockQty;
-                    	}
-                    }
-                    
-                    if (0):  //existing code allure add code flag
-	                    if ($isBackordered) : ?>
-	                        <p>This product is not available in the requested quantity. <?php echo $backorderedQty; ?> of the items will be backordered.</p>
-	                    <?php else : ?>
-	                        <?php foreach ($messages as $message): ?>
-	                            <?php $html .= $message['text']; ?>
-	                        <?php endforeach;?>
-	                            <p>* <?php echo $html; ?></p>
-	                    <?php endif; ?>  
-                    <?php endif; ?> 
-                    
-                    <?php //allure add code start?>
-					<?php if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) :?> 
-					<?php
-	                	$message = "";
-	                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());
-	                	if(!empty($stockMsg))
-	                		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-	                	else 
-	                		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
-	                ?>
-	                <p><?php echo $message ?></p>
-					<?php else : ?> 
-						<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
-					<?php endif; ?>
-				 <?php endif; //End of commented code becuse of parent child?>
-				 
-				 <?php //Parent child code starts?>
-				    <?php 
-				    $storeId=Mage::app()->getStore()->getStoreId();
-				    $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$_item->getProduct()->getSku());
-				    $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($_product,$storeId);
-				    
-				    $stockQty = intval($stock->getQty());
-				    $manageStock = $stock->getManageStock();
-                     
-				    $isInStock = $stock->getIsInStock();
-                     
-                    $isBackordered = false;
-                     
-                    $backorderedQty = $_item->getQty();
-                     
-                    if ($stockQty < $backorderedQty) {
-                    	$isBackordered = true;
-                    
-                    	if ($stockQty >= 0) {
-                    		$backorderedQty = $_item->getQty() - $stockQty;
-                    	}
-                    }
-                  
-                    if ($isBackordered && $stock->getManageStock()==1) :?> 
-					<?php
-	                	$message = "";
-	                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_product);
-	                	if(!empty($stockMsg))
-	                		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-	                	else 
-	                		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
-	                ?>
-	                <p><?php echo $message ?></p>
-					<?php else : ?> 
-						<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
-					<?php endif; ?>
-				  <?php //Parent child code end?>
-                </div>
+                    <?php if(0): //prevois code commented because of parent child?>
+                        <?php 
+                        $stockQty = intval($_item->getProduct()->getStockItem()->getQty());
+                        $manageStock = $_item->getProduct()->getStockItem()->getManageStock();
+                         
+                        $isInStock = $_item->getProduct()->getStockItem()->getIsInStock();
+                         
+                        $isBackordered = false;
+                         
+                        $backorderedQty = $_item->getQty();
+                         
+                        if ($stockQty < $backorderedQty) {
+                        	$isBackordered = true;
+                        
+                        	if ($stockQty >= 0) {
+                        		$backorderedQty = $_item->getQty() - $stockQty;
+                        	}
+                        }
+                        
+                        if (0):  //existing code allure add code flag
+    	                    if ($isBackordered) : ?>
+    	                        <p>This product is not available in the requested quantity. <?php echo $backorderedQty; ?> of the items will be backordered.</p>
+    	                    <?php else : ?>
+    	                        <?php foreach ($messages as $message): ?>
+    	                            <?php $html .= $message['text']; ?>
+    	                        <?php endforeach;?>
+    	                            <p>* <?php echo $html; ?></p>
+    	                    <?php endif; ?>  
+                        <?php endif; ?> 
+                        
+                        <?php //allure add code start?>
+    					<?php if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) :?> 
+    					<?php
+    	                	$message = "";
+    	                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());
+    	                	if(!empty($stockMsg))
+    	                		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
+    	                	else 
+    	                		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
+    	                ?>
+    	                <p><?php echo $message ?></p>
+    					<?php else : ?> 
+    						<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
+    					<?php endif; ?>
+    				 <?php endif; //End of commented code becuse of parent child?>
+    				 
+    				 <?php //Parent child code starts?>
+    				    <?php 
+    				    $storeId=Mage::app()->getStore()->getStoreId();
+    				    $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$_item->getProduct()->getSku());
+    				    $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($_product,$storeId);
+    				    
+    				    $stockQty = intval($stock->getQty());
+    				    $manageStock = $stock->getManageStock();
+                         
+    				    $isInStock = $stock->getIsInStock();
+                         
+                        $isBackordered = false;
+                         
+                        $backorderedQty = $_item->getQty();
+                         
+                        if ($stockQty < $backorderedQty) {
+                        	$isBackordered = true;
+                        
+                        	if ($stockQty >= 0) {
+                        		$backorderedQty = $_item->getQty() - $stockQty;
+                        	}
+                        }
+                      
+                        if ($isBackordered && $stock->getManageStock()==1) :?> 
+    					<?php
+    	                	$message = "";
+    	                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_product);
+    	                	if(!empty($stockMsg))
+    	                		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
+    	                	else 
+    	                		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
+    	                ?>
+    	                <p><?php echo $message ?></p>
+    					<?php else : ?> 
+    						<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
+    					<?php endif; ?>
+    				  <?php //Parent child code end?>
+                    </div>
+                <?php endif;?>
+                
             </td>
         </tr>
         <?php endif; ?>

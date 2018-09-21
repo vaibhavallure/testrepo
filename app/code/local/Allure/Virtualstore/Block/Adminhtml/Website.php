@@ -9,10 +9,10 @@ class Allure_Virtualstore_Block_Adminhtml_Website extends Mage_Adminhtml_Block_W
     public function __construct()
     {
 //        die("hi");
-        $this->_blockGroup = 'virtualstore';
+        $this->_blockGroup = 'allure_virtualstore';
         $this->_controller = 'adminhtml_website';
         $this->_headerText = $this->__('Website');
-        $this->_addButtonLabel = Mage::helper("virtualstore")->__("Add New Website");
+        $this->_addButtonLabel = Mage::helper("allure_virtualstore")->__("Add New Website");
         parent::__construct();
     }
 }

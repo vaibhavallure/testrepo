@@ -30,10 +30,10 @@ class Allure_Virtualstore_Adminhtml_WebsiteController extends Mage_Adminhtml_Con
             $this->loadLayout ();
             $this->_setActiveMenu ( "allure_virtualstore/website" );
             $this->getLayout ()->getBlock ( "head" )->setCanLoadExtJs ( true );
-            $this->_addContent ( $this->getLayout ()->createBlock ( "virtualstore/adminhtml_website_edit" ) )->_addLeft ( $this->getLayout ()->createBlock ( "virtualstore/adminhtml_website_edit_tabs" ) );
+            $this->_addContent ( $this->getLayout ()->createBlock ( "allure_virtualstore/adminhtml_website_edit" ) )->_addLeft ( $this->getLayout ()->createBlock ( "allure_virtualstore/adminhtml_website_edit_tabs" ) );
             $this->renderLayout ();
         } else {
-            Mage::getSingleton ( "adminhtml/session" )->addError ( Mage::helper ( "virtualstore" )->__ ( "Website does not exist." ) );
+            Mage::getSingleton ( "adminhtml/session" )->addError ( Mage::helper ( "allure_virtualstore" )->__ ( "Website does not exist." ) );
             $this->_redirect ( "*/*/" );
         }
     }
@@ -55,7 +55,7 @@ class Allure_Virtualstore_Adminhtml_WebsiteController extends Mage_Adminhtml_Con
 
         $this->getLayout ()->getBlock ( "head" )->setCanLoadExtJs ( true );
 
-        $this->_addContent ( $this->getLayout ()->createBlock ( "virtualstore/adminhtml_website_edit" ) )->_addLeft ( $this->getLayout ()->createBlock ( "virtualstore/adminhtml_website_edit_tabs" ) );
+        $this->_addContent ( $this->getLayout ()->createBlock ( "allure_virtualstore/adminhtml_website_edit" ) )->_addLeft ( $this->getLayout ()->createBlock ( "allure_virtualstore/adminhtml_website_edit_tabs" ) );
 
         $this->renderLayout ();
     }
@@ -128,7 +128,7 @@ class Allure_Virtualstore_Adminhtml_WebsiteController extends Mage_Adminhtml_Con
      */
     public function exportCsvAction() {
         $fileName = 'website.csv';
-        $grid = $this->getLayout ()->createBlock ( 'virtualstore/adminhtml_website_grid' );
+        $grid = $this->getLayout ()->createBlock ( 'allure_virtualstore/adminhtml_website_grid' );
         $this->_prepareDownloadResponse ( $fileName, $grid->getCsvFile () );
     }
     /**
@@ -136,7 +136,7 @@ class Allure_Virtualstore_Adminhtml_WebsiteController extends Mage_Adminhtml_Con
      */
     public function exportExcelAction() {
         $fileName = 'website.xml';
-        $grid = $this->getLayout ()->createBlock ( 'virtualstore/adminhtml_website_grid' );
+        $grid = $this->getLayout ()->createBlock ( 'allure_virtualstore/adminhtml_website_grid' );
         $this->_prepareDownloadResponse ( $fileName, $grid->getExcelFile ( $fileName ) );
     }
 

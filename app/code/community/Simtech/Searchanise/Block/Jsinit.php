@@ -89,6 +89,11 @@ class Simtech_Searchanise_Block_Jsinit extends Mage_Core_Block_Text
                 Searchanise.options = {};
                 Searchanise.AdditionalSearchInputs = '#name,#description,#sku';
 
+/*                Searchanise.options.ResultsShowPrice= 'N';
+                Searchanise.options.ResultsShowListPrice= 'N';
+                Searchanise.options.AutocompleteShowPrice= 'N';
+                Searchanise.options.AutocompleteShowListPrice= 'N';*/
+
                 Searchanise.options.ResultsDiv = '#snize_results';
                 Searchanise.options.ResultsFormPath = '" . Mage::helper('searchanise')->getResultsFormPath() . "';
                 Searchanise.options.ResultsFallbackUrl = '" . $this->getUrl('catalogsearch/result') . "?q=';
@@ -116,11 +121,13 @@ class Simtech_Searchanise_Block_Jsinit extends Mage_Core_Block_Text
                     after:     {$priceFormat['after']}
                 };
                 
+                
                 (function() {
                     var __se = document.createElement('script');
                     __se.src = '{$searchWidgetsLink}';
                     __se.setAttribute('async', 'true');
                     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(__se, s);
+                    console.log('after insert');
                 })();
             //]]>
         </script>

@@ -245,6 +245,13 @@ $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice($_item->getProdu
 <?php if (count($messages)): $html = "";?>
     <tr class="messages">
         <td colspan="6">
+        <?php //new code - ALR -- aws12
+                    $product = $_item->getProduct();
+                    $skuStr = $product->getSku();
+                    $skuArr = explode("|", $skuStr);
+                    $sku = $skuArr[0];
+               ?>
+            <?php if($sku != "STORECARD"):?>
             <div class="item-msg <?php echo $message['type'] ?>">
             <?php 
                 if(0): //commenting to add parent child
@@ -344,6 +351,7 @@ $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice($_item->getProdu
 				 
 				
             </div>
+            <?php endif;?>
         </td>
     </tr>
 <?php endif; ?>

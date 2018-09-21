@@ -53,9 +53,11 @@ class Webtex_Giftcards_Block_Adminhtml_Card_Edit_Tab_Form extends Mage_Adminhtml
             ));
         }
 
-        $cardFieldset->addField('card_currency', 'text', array(
+      
+        $cardFieldset->addField('card_currency', 'select', array(
             'name' => 'card_currency',
-            'label' => 'Card Currency',
+            'label' => Mage::helper('giftcards')->__('Card Currency'),
+            'options' => Mage::helper("giftcards")->getCardCurrencyOptionHash(),
         ));
 
         if ($card->getCardId()) {

@@ -1,8 +1,7 @@
 <?php
 class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Action{
-    public function IndexAction ()
+    public function indexAction ()
     {
-
         // MODIFY ACTION start by bhagya
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
@@ -11,7 +10,6 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             $models = Mage::getModel('appointments/appointments')->getCollection();
             $models->addFieldToFilter('id', $apt_id)->addFieldToFilter('email',
                 $apt_email);
-            // $models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email)->addFieldToFilter('app_status',array('in'=>array(Allure_Appointments_Model_Appointments::STATUS_REQUEST,Allure_Appointments_Model_Appointments::STATUS_ASSIGNED)));
             if (count($models)) {
                 foreach ($models as $model) {
                     $model = $model;
@@ -31,19 +29,6 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         $this->getLayout()
         ->getBlock("head")
         ->setTitle($this->__("Appointments"));
-        /*
-         * $breadcrumbs = $this->getLayout()->getBlock("breadcrumbs");
-         * $breadcrumbs->addCrumb("home", array(
-         * "label" => $this->__("Home Page"),
-         * "title" => $this->__("Home Page"),
-         * "link" => Mage::getBaseUrl()
-         * ));
-         *
-         * $breadcrumbs->addCrumb("appointments", array(
-         * "label" => $this->__("Appointments"),
-         * "title" => $this->__("Appointments")
-         * ));
-         */
         $this->renderLayout();
     }
 
@@ -127,7 +112,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         // convert dateformat
         return $d->format($df2);
     }
-    
+
     // To get the time depend on received qty by bhagya
     public function ajaxGetTimeAction ()
     {
@@ -154,7 +139,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
          * $value = $connection->fetchRow($sql,
          * array($item->getProductId(),$countryCode->getWarehouseId()));
          */
-        
+
         $storeCurrentTime = "";
         $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
         $storeKey = array_search ($request['store'], $configData['stores']);
@@ -180,17 +165,17 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             $result['success'] = true;
             $result['msg'] = $time;
             $result['output'] = $output;
-            
+
             $collection = Mage::getModel("appointments/pricing")->getCollection()
             ->addFieldToFilter('store_id',$request['store']);
-            
+
             $helper = Mage::helper("appointments/storemapping");
             $configData = $helper->getStoreMappingConfiguration();
             $storeKey = array_search ($request['store'], $configData['stores']);
             $storeMap = $configData['store_map'][$storeKey];
-            
+
             $blockIdentifier = $configData['piercing_pricing_block'][$storeKey];
-            
+
             $pricingBlock = $this->getLayout()->createBlock('appointments/pricing','appointments_piercing_pricing',
                 array('template' => 'appointments/pricing.phtml'))
                 ->setPricingCollection($collection)
@@ -198,7 +183,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 ->setCmsBlockId($blockIdentifier);
                 $pricingHtml = $pricingBlock->toHtml();
                 $result['pricing_html'] = $pricingHtml;
-            
+
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
             // $block =

@@ -8,8 +8,22 @@ Mage::setIsDeveloperMode(true);
 ini_set('display_errors', 1);
 ob_implicit_flush (1);
 $prodcount=0;
+
+$lower = $_GET['lower'];
+$upper = $_GET['upper'];
+
+if(empty($lower) || empty($upper)){
+    die('Please add Upper and Lower limit');
+}
+
+
 $mediaApi = Mage::getModel("catalog/product_attribute_media_api");
 $_products = Mage::getModel('catalog/product')->getCollection();
+
+$_products->addAttributeToFilter('entity_id',
+    array('gteq' => $lower))
+    ->addAttributeToFilter('entity_id', array('lteq' => $upper));
+
 $i =0;
 $total = count($_products);
 $count = 0;
@@ -47,7 +61,7 @@ foreach($_products as $_prod)
             if(in_array($md5, $_md5_values))
             {
                 $mediaApi->remove($_product->getId(),  $_image->getFile());
-                echo $prodcount.' '.$_product->getSku().'--------'.$_image->getFile();
+                echo $prodcount.' '.$_product->getSku().'--------'.$_image->getFile()."<br>";
                // echo "<br>";
                 $count++;
                 $prodcount++;
@@ -59,4 +73,4 @@ foreach($_products as $_prod)
     }
 
 }
-echo "rnrn finished removed $count duplicated images";
+echo "<br>rnrn finished removed $count duplicated images";

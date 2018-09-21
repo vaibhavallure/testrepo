@@ -12,14 +12,14 @@ class Allure_Virtualstore_Block_Adminhtml_Website_Edit extends Mage_Adminhtml_Bl
 
         parent::__construct();
         $this->_objectId = "website_id";
-        $this->_blockGroup = "virtualstore";
+        $this->_blockGroup = "allure_virtualstore";
         $this->_controller = "adminhtml_website";
 
-        $this->_updateButton('save', 'label', Mage::helper('virtualstore')->__('Save Item'));
-        $this->_updateButton('delete', 'label', Mage::helper('virtualstore')->__('Delete Item'));
+        $this->_updateButton('save', 'label', Mage::helper('allure_virtualstore')->__('Save Item'));
+        $this->_updateButton('delete', 'label', Mage::helper('allure_virtualstore')->__('Delete Item'));
 
         $this->_addButton("saveandcontinue", array(
-            "label"     => Mage::helper("virtualstore")->__("Save And Continue Edit"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Save And Continue Edit"),
             "onclick"   => "saveAndContinueEdit()",
             "class"     => "save",
         ), -100);
@@ -38,12 +38,12 @@ class Allure_Virtualstore_Block_Adminhtml_Website_Edit extends Mage_Adminhtml_Bl
     {
         if( Mage::registry("website_data") && Mage::registry("website_data")->getWebsiteId() ){
 
-            return Mage::helper("virtualstore")->__("Edit website '%s'", $this->htmlEscape(Mage::registry("website_data")->getWebsiteId()));
+            return Mage::helper("allure_virtualstore")->__("Edit website '%s'", $this->htmlEscape(Mage::registry("website_data")->getWebsiteId()));
 
         }
         else{
 
-            return Mage::helper("virtualstore")->__("Add Website");
+            return Mage::helper("allure_virtualstore")->__("Add Website");
 
         }
     }

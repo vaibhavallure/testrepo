@@ -15,48 +15,48 @@ class Allure_Virtualstore_Block_Adminhtml_Website_Edit_Tab_Form extends Mage_Adm
 
 
         $fieldset = $form->addFieldset('website_form', array(
-            'legend'=>Mage::helper('virtualstore')->__('Website information')
+            'legend'=>Mage::helper('allure_virtualstore')->__('Website information')
         ));
 
         $fieldset->addField("name", "text", array(
-            "label"     => Mage::helper("virtualstore")->__("Name"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Name"),
             'class'     => 'required-entry',
             'required'  => true,
             'name'      => 'name',
         ));
 
         $fieldset->addField("code", "text", array(
-            "label"     => Mage::helper("virtualstore")->__("Code"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Code"),
             'name'      => 'code',
         ));
 
 
 
         $fieldset->addField("default_group_id", 'text', array(
-            "label"     => Mage::helper("virtualstore")->__("Default Group Id"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Default Group Id"),
             'class'     => 'required-entry validate-digits',
             'name'      => 'default_group_id',
         ));
 
         $fieldset->addField("sort_order", "text", array(
-            "label"     => Mage::helper("virtualstore")->__("Sort Order"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Sort Order"),
             'class'     => 'required-entry validate-digits',
             'required'  => true,
             'name'      => 'sort_order',
         ));
 
         $fieldset->addField("stock_id", "text", array(
-            "label"     => Mage::helper("virtualstore")->__("Stock Id"),
-            'class'     => 'validate-digits',
+            "label"     => Mage::helper("allure_virtualstore")->__("Stock Id"),
+            'class'     => 'required-entry validate-digits',
             'name'      => 'stock_id',
         ));
         $fieldset->addField("website_price_rule", "text", array(
-            "label"     => Mage::helper("virtualstore")->__("Website Price Rule"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Website Price Rule"),
             'name'      => 'website_price_rule',
         ));
 
         $fieldset->addField("is_default", "Select", array(
-            "label"     => Mage::helper("virtualstore")->__("Is default"),
+            "label"     => Mage::helper("allure_virtualstore")->__("Is default"),
             'class'     => 'required-entry validate-decimal',
             'name'      => 'is_default',
             'options'     => array(
