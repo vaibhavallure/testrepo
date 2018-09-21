@@ -208,9 +208,20 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function getPrice()
     {
+
+        if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
+
+            if(Mage::Helper('multicurrency')->getCustomAttrPrice($this))
+            {
+                return  Mage::Helper('multicurrency')->getCustomAttrPrice($this);
+            }
+        } 
+
+
         if ($this->_calculatePrice || !$this->getData('price')) {
             return $this->getPriceModel()->getPrice($this);
-        } else {
+         } else {
+
             return $this->getData('price');
         }
     }
@@ -705,11 +716,14 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function getFinalPrice($qty=null)
     {
+
         $price = $this->_getData('final_price');
+
         if ($price !== null) {
             return $price;
         }
         return $this->getPriceModel()->getFinalPrice($qty, $this);
+
     }
 
     /**
@@ -763,9 +777,9 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     }
 
 
-/*******************************************************************************
- ** Linked products API
- */
+    /*******************************************************************************
+     ** Linked products API
+     */
     /**
      * Retrieve array of related roducts
      *
@@ -975,9 +989,9 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
         return $collection;
     }
 
-/*******************************************************************************
- ** Media API
- */
+    /*******************************************************************************
+     ** Media API
+     */
     /**
      * Retrive attributes for media gallery
      *
@@ -1005,7 +1019,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     public function getMediaGalleryImages()
     {
         if(!$this->hasData('media_gallery_images') && is_array($this->getMediaGallery('images'))) {
-            $_images = array();            
+            $_images = array();
             $images = new Varien_Data_Collection();
             foreach ($this->getMediaGallery('images') as $image) {
                 if ($image['disabled']) {
@@ -1016,8 +1030,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
                 $image['path'] = $this->getMediaConfig()->getMediaPath($image['file']);
                 $image['viewon'] = 0;
                 if(count(explode ('#model',$image['label'])) > 1)  {
-                       $image['viewon'] = 1;
-                       $_images[] = $image;
+                    $image['viewon'] = 1;
+                    $_images[] = $image;
                 } else {
                     $images->addItem(new Varien_Object($image));
                 }
@@ -1025,7 +1039,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
             if(count($_images)) {
                 foreach ($_images as $_image) {
                     $images->addItem(new Varien_Object($_image));
-                }                
+                }
             }
             $this->setData('media_gallery_images', $images);
         }
@@ -1334,8 +1348,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
         //Mage::log(__METHOD__,null,'mylog.log');
         $productType = $this->getTypeInstance(true);
         if (is_callable(array($productType, 'getIsSalable2'))) {
-                return $productType->getIsSalable2($this);
-            }  
+            return $productType->getIsSalable2($this);
+        }
         if ($this->hasData('is_salable')) {
             return $this->getData('is_salable');
         }
@@ -1402,12 +1416,12 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function getAttributeText($attributeCode)
     {
-    	if ($attributeCode == '' || empty($attributeCode)) return null;
-    	
+        if ($attributeCode == '' || empty($attributeCode)) return null;
+
         return $this->getResource()
             ->getAttribute($attributeCode)
-                ->getSource()
-                    ->getOptionText($this->getData($attributeCode));
+            ->getSource()
+            ->getOptionText($this->getData($attributeCode));
     }
 
     /**
@@ -2114,11 +2128,11 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     }
     public function getUsedCategoryProductCollection($categoryId)
     {
-    	 $collection = Mage::getResourceModel('catalog/product_type_configurable_category_collection')
-    	->setFlag('require_stock_items', true)
-    	->setFlag('product_children', true)
-    	->setCategoryFilter($categoryId);
-    	
-    	return $collection;
+        $collection = Mage::getResourceModel('catalog/product_type_configurable_category_collection')
+            ->setFlag('require_stock_items', true)
+            ->setFlag('product_children', true)
+            ->setCategoryFilter($categoryId);
+
+        return $collection;
     }
 }
