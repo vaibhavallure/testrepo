@@ -146,7 +146,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
         $_currency_usd = Mage::app()->getStore()->getBaseCurrency();
         $baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
         $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
-
+        
         $attributes = array();
         $options    = array();
         $store      = $this->getCurrentStore();
@@ -159,6 +159,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
             $preconfiguredValues = $currentProduct->getPreconfiguredValues();
             $defaultValues       = array();
         }
+        
         $productStock = array();
         foreach ($this->getAllowProducts() as $product) {
             $productId  = $product->getId();
@@ -234,10 +235,15 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                     } else {
                         $productsIndex = array();
                     }
-                
+                    
+                    if ($_currency->getCurrencyCode() == $_currency_usd->getCurrencyCode()) {
+                        $pricedisp = $_currency_usd->formatTxt($value['label']);
+                    }else{
+                        $pricedisp = $_currency_usd->formatTxt($value['label'])." (".$_currency->formatTxt(Mage::helper('directory')->currencyConvert($value['label'],$baseCurrencyCode, $currentCurrencyCode)).")";
+                    }
                     $info['options'][] = array(
                         'id'        => $value['value_index'],
-                        'label'     => $_currency_usd->formatTxt($value['label'])." (".$_currency->formatTxt(Mage::helper('directory')->currencyConvert($value['label'],$baseCurrencyCode, $currentCurrencyCode)).")",
+                        'label'     => $pricedisp,
                         'price'     => $configurablePrice,
                         'oldPrice'  => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
                         'products'  => $productsIndex,
