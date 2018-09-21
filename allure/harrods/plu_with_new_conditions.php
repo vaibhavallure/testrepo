@@ -38,7 +38,7 @@ $data = array();
 $collection=Mage::getModel("catalog/product")->getCollection();
 $collection->addAttributeToFilter('status', array('eq' => 1));
 $collection->addAttributeToFilter('harrods_inventory', array('gt' => 0));
-$collection->addAttributeToFilter('type_id', array('eq' => 'configurable'));
+$collection->addAttributeToFilter('type_id', array('eq' => 'simple'));
 $collection->setOrder('sku', 'asc');
 
 $some_attr_code = "metal";
@@ -132,7 +132,7 @@ foreach ($collection as $_product){
 
 
 
-    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+    /*$conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
     $simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
     foreach ($simple_collection as $simpleProd){
         $_product=Mage::getModel("catalog/product")->load($simpleProd->getId());
@@ -201,22 +201,22 @@ foreach ($collection as $_product){
         $data['article_number']='';
         $data['site_listings']='D369';
         $data['siteDelimited']='SiteDelim';
-        $data['string_for_generic_lines']='';
+        $data['string_for_generic_lines']='';*/
 
 
 
 
        /* if((float)$_product->getData("harrods_inventory")>0)
         {*/
-            $ioo->streamWriteCsv($data);
-            $NoOfProductQTYGreaterThanZero++;
+            /*$ioo->streamWriteCsv($data);
+            $NoOfProductQTYGreaterThanZero++;*/
        /* }
         else{
             $NoOfProductQTYLessThanZero++;
         }*/
 
 
-    }
+    //}
 
 
 }

@@ -156,8 +156,15 @@
                     $skuStr = $product->getSku();
                     $skuArr = explode("|", $skuStr);
                     $sku = $skuArr[0];
+                    $giftcard = 1;
+                    if ($sku == "STORECARD") {
+                        $giftcard = 0;
+                    }
+                    if ($sku == "gift") {
+                        $giftcard = 0;
+                    }
                ?>
-            <?php if($sku != "STORECARD"):?>
+            <?php if($giftcard):?>
             
                 <div class="item-msg <?php echo $message['type'] ?>">
                 

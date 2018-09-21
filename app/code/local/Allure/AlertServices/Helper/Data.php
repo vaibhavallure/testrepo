@@ -98,6 +98,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
            
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
         	$emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+            $emailTemplateVariables['hour_alert'] = 4; 
         	
     		if ($templateId) {    			
                 $emailTemplate->sendTransactional(
@@ -135,6 +136,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
            
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
         	$emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+            $emailTemplateVariables['hour_alert'] = 6;
         	
     		if ($templateId) {
                 $emailTemplate->sendTransactional(
