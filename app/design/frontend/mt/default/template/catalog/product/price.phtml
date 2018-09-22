@@ -35,7 +35,7 @@
 <?php
     $_coreHelper = $this->helper('core');
     $_weeeHelper = $this->helper('weee');
-    $_taxHelper  = $this->helper('tax');
+    $_taxHelper  = $this->helper('allure_taxconfig');
     /* @var $_coreHelper Mage_Core_Helper_Data */
     /* @var $_weeeHelper Mage_Weee_Helper_Data */
     /* @var $_taxHelper Mage_Tax_Helper_Data */
@@ -46,9 +46,9 @@
     $_weeeSeparator = '';
     $_simplePricesTax = ($_taxHelper->displayPriceIncludingTax() || $_taxHelper->displayBothPrices());
     $_minimalPriceValue = $_product->getMinimalPrice();
-    
+
     $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simplePricesTax);
-    
+
 ?>
 
 <?php if (!$_product->isGrouped()): ?>
@@ -66,8 +66,8 @@
     <div class="price-box" style="display: none;">
     <?php $_price = $_taxHelper->getPrice($_product, $_product->getPrice()) ?>
     <?php $_regularPrice = $_taxHelper->getPrice($_product, $_product->getPrice(), $_simplePricesTax) ?>
-    <?php $_finalPrice = $_taxHelper->getPrice($_product, $_product->getFinalPrice()) ?>
-    <?php $_finalPriceInclTax = $_taxHelper->getPrice($_product, $_product->getFinalPrice(), true) ?>
+    <?php $_finalPrice = $_taxHelper->getPrice($_product, $_product->getFinalPrice(), $_simplePricesTax) ?>
+    <?php $_finalPriceInclTax = $_taxHelper->getPrice($_product, $_product->getFinalPrice()) ?>
     <?php $_weeeDisplayType = $_weeeHelper->getPriceDisplayType(); ?>
     <?php if ($_finalPrice >= $_price): ?>
         <?php if ($_taxHelper->displayBothPrices()): ?>
@@ -164,7 +164,7 @@
             <div class="s-single old-price">
                 <span class="price-label"><?php echo $this->__('Price:') ?></span>
                 <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="display: none"></span>
-            </div>          
+            </div>
             <?php if ($_weeeTaxAmount && $_weeeHelper->typeOfDisplay($_product, 0)): // including ?>
                 <span class="s-single regular-price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->currency($_price + $_weeeTaxAmount, true, true) ?>
@@ -340,13 +340,6 @@
             </p>
         <?php else: // excl. ?>
 
-            <div class="s-both_discounted old-price">
-                <span class="price-label"><?php echo $this->__('Price:') ?></span>
-                <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
-                    <?php echo $_coreHelper->currency($_regularPrice, true, false) ?>
-                </span>
-            </div>
-
             <?php if ($_taxHelper->displayBothPrices()): ?>
                 <p class="s-both_discounted special-price">
                     <span class="price-label"><?php echo $this->__(' ') ?></span>
@@ -365,7 +358,7 @@
                 </p>
             <?php else: ?>
             <div class="s-both_discounted special-price">
-                <span class="price-label"><?php echo $this->__(' ') ?></span>
+                <span class="price-label"><?php echo $this->__('Price:') ?></span>
                 <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->currency($_finalPrice, true, false) ?>
                 </span>
@@ -436,4 +429,3 @@
         </div>
     <?php endif; /* if ($this->getDisplayMinimalPrice() && $_minimalPrice): */ ?>
 <?php endif; /* if (!$_product->isGrouped()): */ ?>
-
