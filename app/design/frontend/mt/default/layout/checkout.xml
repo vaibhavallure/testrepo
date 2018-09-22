@@ -66,8 +66,6 @@ Default layout, loads most of the pages
             <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
         </reference>
         <reference name="content">
-		
-            <!--block type="catalog/product_compare_sidebar" before="cart_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/-->
             <block type="checkout/cart" name="checkout.cart">
                 <action method="setCartTemplate"><value>checkout/cart.phtml</value></action>
                 <action method="setEmptyTemplate"><value>checkout/cart/noItems.phtml</value></action>
@@ -487,8 +485,6 @@ One page checkout order review block
             <block type="checkout/onepage_success" name="checkout.success" template="checkout/success.phtml"/>
         </reference>
     </checkout_onepage_success>
-    
-    
     <checkout_onepage_failure translate="label">
         <label>One Page Checkout Failure</label>
         <reference name="root">
