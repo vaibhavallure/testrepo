@@ -39,14 +39,4 @@ class Allure_CatalogSearch_ResultController extends Mage_CatalogSearch_ResultCon
     {
         return Mage::getSingleton('catalog/session');
     }
-    /**
-     * Display search result
-     */
-    public function indexAction()
-    {
-        //Added by allure to avoid spam search
-        $this->_redirectReferer();
-      
-
-    }
 }
