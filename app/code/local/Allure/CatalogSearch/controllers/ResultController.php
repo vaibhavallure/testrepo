@@ -30,13 +30,4 @@
 require_once ('Mage/CatalogSearch/controllers/ResultController.php');
 class Allure_CatalogSearch_ResultController extends Mage_CatalogSearch_ResultController
 {
-    /**
-     * Retrieve catalog session
-     *
-     * @return Mage_Catalog_Model_Session
-     */
-    protected function _getSession()
-    {
-        return Mage::getSingleton('catalog/session');
-    }
 }
