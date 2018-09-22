@@ -114,8 +114,8 @@
 			
 			
 			<!-- new delivery method after shipping information allureinc -->
-                <block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="checkoutstep/checkout/onepage/delivery_option.phtml">
-                	<block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="checkoutstep/checkout/onepage/delivery_option_details.phtml"></block>
+                <block type="allure_multicheckout/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="allure/multicheckout/checkout/onepage/delivery_option.phtml">
+                	<block type="allure_multicheckout/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="allure/multicheckout/checkout/onepage/delivery_option_details.phtml"></block>
                   </block>
 			
 
