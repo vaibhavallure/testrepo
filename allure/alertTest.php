@@ -6,12 +6,14 @@ umask(0);
 $password = $_GET['pass'];*/
 Mage::app('admin');
 
-Mage::getModel('alertservices/alerts')->alertProductPrice();
+//Mage::getModel('alertservices/alerts')->alertPageNotFound();
+Mage::getModel('alertservices/alerts')->alertNullUsers();
+/*Mage::getModel('alertservices/alerts')->alertProductPrice();*/
 
 Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
 
-Mage::getModel('alertservices/alerts')->alertSalesOfSix();
+/*Mage::getModel('alertservices/alerts')->alertSalesOfSix();
 
-Mage::getModel('alertservices/alerts')->alertCheckoutIssue();
+Mage::getModel('alertservices/alerts')->alertCheckoutIssue();*/
 
 echo "done";
