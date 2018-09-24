@@ -146,9 +146,11 @@ new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/r
     <?php $shippingCodePrice = array(); ?>
     <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
         <?php 
+        
+        //Allure code to hide usps method for order over $400
         	$shipcode_class = "class='allure_ship_".$code."' ";
         	if(preg_match('/usps/', $code)){
-        		if($orderTotal1>400){
+        		if($orderTotal1 > 400){
         			$shipcode_class .="  style='display:none;'";
         		}
         	}
