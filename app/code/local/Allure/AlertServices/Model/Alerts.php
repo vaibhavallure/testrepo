@@ -35,7 +35,7 @@ class Allure_AlertServices_Model_Alerts
 			$status =	$this->getConfigHelper()->getEmailStatus();
 
 			if ($status) {
-				$currdate = Mage::getModel('core/date')->date();
+				$currdate = Mage::getModel('core/date')->gmtDate();
 				$toDate	= $currdate;
 				$fromDate = date('Y-m-d H:i:s', strtotime($currdate) - 60 * 60 * 4);
 
@@ -70,7 +70,7 @@ class Allure_AlertServices_Model_Alerts
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			if ($status) {
-				$currdate = Mage::getModel('core/date')->date();
+				$currdate = Mage::getModel('core/date')->gmtDate();
 				$toDate	= $currdate;
 				$fromDate = date('Y-m-d H:i:s', strtotime($currdate) - 60 * 60 * 6);
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
@@ -93,8 +93,8 @@ class Allure_AlertServices_Model_Alerts
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
 			if ($status) {
-				$currdate = Mage::getModel('core/date')->timestamp();
-				$toDate	= date('Y-m-d H:i:s', $currdate);
+				$currdate = Mage::getModel('core/date')->gmtDate();
+				$toDate	= $currdate;
 				$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 60 * 1);
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 10);*/
 
@@ -119,9 +119,8 @@ class Allure_AlertServices_Model_Alerts
 
 			$status =	$this->getConfigHelper()->getEmailStatus();
 				if ($status) {
-					$currdate = Mage::getModel('core/date')->timestamp();
-					$lastHour = date('H', $currdate)-1;
-
+					$currdate = Mage::getModel('core/date')->gmtDate();
+					$lastHour = date('H', strtotime($currdate) - 60 * 60 * 1);
 					$analytics = initializeAnalytics();
 					$response = getUsersReport($analytics);
 					$users = getResults($response,$lastHour,'users');
