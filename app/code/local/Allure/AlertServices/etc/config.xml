@@ -47,7 +47,7 @@
 			</allure_alertservice_setup>
 		</resources>
 	</global>	
-	<!-- <crontab>
+	<crontab>
 		<jobs>
 			<alert_product_price>
 				<schedule>
@@ -98,5 +98,5 @@
 				</run>
 			</alert_page_not_found>
 		</jobs>
-	</crontab> -->
+	</crontab>
 </config> 

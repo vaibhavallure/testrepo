@@ -235,15 +235,19 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                     } else {
                         $productsIndex = array();
                     }
-                    
-                    if ($_currency->getCurrencyCode() == $_currency_usd->getCurrencyCode()) {
-                        $pricedisp = $_currency_usd->formatTxt($value['label']);
+                    if ($currentProduct->getSku() == 'STORECARD') {
+                         if ($_currency->getCurrencyCode() == $_currency_usd->getCurrencyCode()) {
+                            $labeldisp = $_currency_usd->formatTxt($value['label']);
+                        }else{
+                            $labeldisp = $_currency_usd->formatTxt($value['label'])." (".$_currency->formatTxt(Mage::helper('directory')->currencyConvert($value['label'],$baseCurrencyCode, $currentCurrencyCode)).")";
+                        }
                     }else{
-                        $pricedisp = $_currency_usd->formatTxt($value['label'])." (".$_currency->formatTxt(Mage::helper('directory')->currencyConvert($value['label'],$baseCurrencyCode, $currentCurrencyCode)).")";
+                        $labeldisp =  $value['label'];
                     }
+                   
                     $info['options'][] = array(
                         'id'        => $value['value_index'],
-                        'label'     => $pricedisp,
+                        'label'     => $labeldisp,
                         'price'     => $configurablePrice,
                         'oldPrice'  => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
                         'products'  => $productsIndex,

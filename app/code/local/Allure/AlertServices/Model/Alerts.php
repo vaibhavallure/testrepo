@@ -50,6 +50,7 @@ class Allure_AlertServices_Model_Alerts
 						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
 						  ->addAttributeToSelect('*');
 					if ($debug) {
+						echo $orders->getSelect()->__toString();
 						var_dump(count($orders)); //die();
 					}
 					if (count($orders) <=0 ) {
