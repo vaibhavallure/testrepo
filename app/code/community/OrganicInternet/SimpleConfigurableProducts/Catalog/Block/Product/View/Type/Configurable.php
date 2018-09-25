@@ -91,6 +91,10 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Block_Product_View_Type
         $custAttr=false;
         $config = Zend_Json::decode(parent::getJsonConfig());
 
+        ///Mage::log($config,Zend_Log::DEBUG,'allure_log.log',true);
+
+
+
         $childProducts = array();
 
         //Mage::log("country==".Mage::getSingleton('core/session')->getGeoCountry(), Zend_Log::DEBUG,'allure_log.log',true);
@@ -207,6 +211,7 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Block_Product_View_Type
             $config['showPriceRangesInOptions'] = true;
             $config['rangeToLabel'] = $this->__('to');
         }
+
         return Zend_Json::encode($config);
         //parent getJsonConfig uses the following instead, but it seems to just break inline translate of this json?
         //return Mage::helper('core')->jsonEncode($config);

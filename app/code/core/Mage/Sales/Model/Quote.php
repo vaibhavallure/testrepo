@@ -319,6 +319,7 @@ class Mage_Sales_Model_Quote extends Mage_Core_Model_Abstract
         if ($this->_customer) {
             $this->setCustomerId($this->_customer->getId());
         }
+        Mage::log("core",Zend_Log::DEBUG,'allure_log.log',true);
 
         parent::_beforeSave();
     }

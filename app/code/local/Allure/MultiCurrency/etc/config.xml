@@ -11,7 +11,17 @@
         <class>Allure_MultiCurrency_Model</class>
         <resourceModel>multicurrency_mysql4</resourceModel>
       </multicurrency>
+      <!--<sales>
+        <rewrite>
+          <quote>Allure_MultiCurrency_Model_Quote</quote>
+        </rewrite>
+      </sales>-->
     </models>
+    <blocks>
+      <multicurrency>
+        <class>Allure_MultiCurrency_Block</class>
+      </multicurrency>
+    </blocks>
     <resources>
       <multicurrency_setup>
         <setup>
@@ -33,7 +43,7 @@
           </multicurrency>
         </observers>
       </sales_quote_item_set_product>
-      <controller_action_postdispatch>
+      <sales_quote_collect_totals_after>
         <observers>
           <multicurrency>
             <type>model</type>
@@ -41,7 +51,7 @@
             <method>changeQuoteCurrency</method>
           </multicurrency>
         </observers>
-      </controller_action_postdispatch>
+      </sales_quote_collect_totals_after>
     </events>
     <helpers>
       <multicurrency>

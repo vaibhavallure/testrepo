@@ -98,7 +98,6 @@ class Allure_MultiCurrency_Helper_Data extends Mage_Core_Helper_Abstract
     public function getCustomAttrPrice($product)
     {
 
-
         if($this->currencyAttrAvailable()) {
             $product=Mage::getModel("catalog/product")->load($product->getId());
             $price = $product->getData($this->currencyAttrAvailable());

@@ -65,8 +65,14 @@ class Allure_MultiCurrency_Model_Observer
 
       //  Mage::app()->getStore()->setBaseCurrency();
 
-        Mage::app()->getStore()->setBaseCurrency(Mage::getModel("directory/currency")->load("GBP"));
-     //   Mage::log(Mage::app()->getStore()->getBaseCurrency(),Zend_Log::DEBUG,'allure_log.log',true);
+       // Mage::app()->getStore()->setBaseCurrency(Mage::getModel("directory/currency")->load("GBP"));
+        $quote=$observer->getEvent()->getQuote();
+
+        //$customer_id = $quote->getCustomerId();
+      //  Mage::log($quote->getBaseCurrency(),Zend_Log::DEBUG,'allure_log.log',true);
+
+
+    //  Mage::log(Mage::getSingleton('core/session')->getGeoCountry(),Zend_Log::DEBUG,'allure_log.log',true);
 
     }
 }

@@ -59,9 +59,9 @@ class Mage_Catalog_Block_Product_Price extends Mage_Catalog_Block_Product_Abstra
             $product = Mage::registry('product');
 
         }
-        //Mage::log(Mage::getModel("catalog/product")->load($product->getId())->getFinalPrice(),Zend_Log::DEBUG,'allure_log.log',true);
 
         //return $product;
+        /** load product model to get custom price attribute*/
         return Mage::getModel("catalog/product")->load($product->getId());
     }
 
