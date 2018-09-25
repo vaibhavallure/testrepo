@@ -51,10 +51,12 @@ class Allure_AlertServices_Model_Alerts
 						  ->addAttributeToSelect('*');
 					if ($debug) {
 						echo $orders->getSelect()->__toString();
-						var_dump(count($orders)); //die();
 					}
+					
 					if (count($orders) <=0 ) {
-						$helper->sendSalesOfFourEmailAlert();
+						$lastorder = Mage::getModel('sales/order')->getCollection()
+					       ->getLastItem();
+						$helper->sendSalesOfFourEmailAlert($lastorder->getCreatedAt());
 					}
 			}
 			
@@ -79,7 +81,9 @@ class Allure_AlertServices_Model_Alerts
 						  ->addAttributeToSelect('*');
 					    /*echo $orders->getSelect()->__toString();*/
 					if (count($orders)<=0) {
-						$helper->sendSalesOfSixEmailAlert();
+						$lastorder = Mage::getModel('sales/order')->getCollection()
+					       ->getLastItem();
+						$helper->sendSalesOfSixEmailAlert($lastorder->getCreatedAt());
 					}
 			}
 		}catch(Exception $e){
@@ -159,9 +163,12 @@ class Allure_AlertServices_Model_Alerts
 
 			$status =	$this->getConfigHelper()->getEmailStatus();
 				if ($status) {
-					$collection =1;
+					$analytics = initializeAnalytics();
+					$response = getPageReportAvg($analytics);
+					$pageReport = getResults($response,null,'avgpage');
+					/*var_dump($pageReport); die();*/
 					if (count($collection) > 0) {
-						$helper->sendEmailAlertForAvgPageLoad($collection);
+						/*$helper->sendEmailAlertForAvgPageLoad($collection);*/
 					}
 				}
 			}catch(Exception $e){

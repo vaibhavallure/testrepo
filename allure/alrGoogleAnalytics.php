@@ -74,6 +74,39 @@ function getPageReport($analytics) {
     $dateRange->setStartDate("7daysAgo");
     $dateRange->setEndDate("today");
     //new added by aws02
+    $dimension = new Google_Service_AnalyticsReporting_Dimension();
+    $dimension->setName("ga:pageTitle");
+    
+    $dimension1 = new Google_Service_AnalyticsReporting_Dimension();
+    $dimension1->setName("ga:pagePath");
+    
+    // Create the ReportRequest object.
+    $request = new Google_Service_AnalyticsReporting_ReportRequest();
+    $request->setViewId($VIEW_ID);
+    $request->setDateRanges($dateRange);
+    $request->setMetrics(array($sessions));
+    
+    //new added by aws02
+    $request->setDimensions(array($dimension,$dimension1));
+    
+    $body = new Google_Service_AnalyticsReporting_GetReportsRequest();
+    $body->setReportRequests( array( $request) );
+    return $analytics->reports->batchGet( $body );
+}
+
+function getPageReportAvg($analytics) {
+    // Replace with your view ID, for example XXXX.
+    $VIEW_ID = "181106821";
+    // Create the DateRange object.
+    $dateRange = new Google_Service_AnalyticsReporting_DateRange();
+    $dateRange->setStartDate("7daysAgo");
+    $dateRange->setEndDate("today");
+    //new added by aws02
+
+    $sessions = new Google_Service_AnalyticsReporting_Metric();
+    $sessions->setExpression("ga:pageLoadTime");
+    $sessions->setAlias("time");
+
    $dimension = new Google_Service_AnalyticsReporting_Dimension();
     $dimension->setName("ga:pageTitle");
     
@@ -127,6 +160,13 @@ function getResults($reports,$lastHour,$form) {
                 if ($form == 'page') {
                     if ($dimensionHeaders[$i] == 'ga:pageTitle' && $dimensions[$i] == '404 Not Found') {
                         $final_report[] = $dimensions[$i+1];
+                    }
+                }
+
+                if ($form == 'avgpage') {
+                    if ($dimensionHeaders[$i] == 'ga:pageTitle' && $dimensions[$i] == '404 Not Found') {
+                        $values = $metrics[$i]->getValues();
+                        $final_report[$dimensions[$i+1]] = array($dimensions[$i+1],$values[$i]);
                     }
                 }
                 
