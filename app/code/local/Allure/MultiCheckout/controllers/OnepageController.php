@@ -461,6 +461,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         }
         $result = array();
         $_checkoutHelper = Mage::helper('allure_multicheckout');
+        $checkoutalert = 0;
+        $isuuemessage ='';
         try {
             $requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds();
             if ($requiredAgreements) {
@@ -518,6 +520,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             $result['error'] = false;
         } catch (Mage_Payment_Model_Info_Exception $e) {
             $message = $e->getMessage();
+            $checkoutalert = 1;
+            $isuuemessage = $e->getMessage();
             if (! empty($message)) {
                 $result['error_messages'] = $message;
             }
@@ -536,7 +540,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             $result['success'] = false;
             $result['error'] = true;
             $result['error_messages'] = $e->getMessage();
-            
+            $checkoutalert = 1;
+            $isuuemessage = $e->getMessage();
             $gotoSection = $this->getOnepage()
                 ->getCheckout()
                 ->getGotoSection();
@@ -572,6 +577,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             $result['error'] = true;
             $result['error_messages'] = $this->__(
                     'There was an error processing your order. Please contact us or try again later.');
+            $checkoutalert = 1;
+            $isuuemessage = $e->getMessage();
         }
         
         if (strtolower($this->getOnepage()
@@ -614,6 +621,20 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                     ->setIsActive(false)
                     ->save();
             }
+        }
+
+        if ($checkoutalert) {
+            Mage::log('call to save alert isuue',Zend_log::DEBUG,'allureAlerts.log',true);
+            $alerthelper = Mage::helper('alertservices');
+            $customer_email = $this->getOnepage()->getQuoteOrdered()->getCustomerEmail();
+            $dataissue = array(
+                    'customer_email' => $customer_email,
+                    'created_at' => Mage::getModel('core/date')->gmtDate(),
+                    'type' => 'checkout',
+                    'error_message' => $isuuemessage
+                );
+            $alerthelper->saveAlertIssues($dataissue);
+            
         }
         
         /**

@@ -207,7 +207,7 @@ $typeId = $_item->getProduct()->getTypeId();
                      
                 $backorderedQty = $_item->getQty();
                      
-                if ($stockQty < $backorderedQty) {
+                if ($stockQty < $backorderedQty && $isInStock) {
                 	$isBackordered = true;
                     
                     if ($stockQty >= 0) {
