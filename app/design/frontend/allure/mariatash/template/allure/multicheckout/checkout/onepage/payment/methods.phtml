@@ -42,7 +42,6 @@
 </div>
 <?php endif;?>
 
-
 <div id="reload_payment">
 <dl class="sp-methods" id="checkout-payment-method-load">
 <?php
@@ -344,6 +343,13 @@ payment.singleMethod = true;
                 if (payment && payment.singleMethod) {
             		payment.switchMethod(payment.singleMethod);
             	}
+                //display checked payment method mt-allure-code
+                jQuery('#checkout-payment-method-load dt').each(function(){
+        			if(jQuery(this).find('input').is(':checked')){
+        				var payMethod = jQuery(this).find('input').attr('value');
+        				jQuery('#payment_form_'+payMethod).show();
+        			}
+        		});
             }
         }); },1000);
 

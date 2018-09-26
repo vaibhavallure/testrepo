@@ -116,3 +116,27 @@ jQuery( window ).resize(function() {
   gtag('config', 'UA-125115574-1');
 </script>
 
+<!-- added by AWS12 -->
+<?php
+    $collection = Mage::getModel('catalog/product')->getCollection()
+                  ->addAttributeToSelect('id')
+                  ->addAttributeToFilter(array(array("attribute"=>"sku","in"=>array('gift','STORECARD'))))
+                  ->addAttributeToFilter(array(array("attribute"=>"status","eq"=>1)));
+        $prodIds = array();
+         foreach ($collection as $key => $product) {
+           $prodIds[]=$product->getId();
+         }
+    if(count($prodIds)):
+      echo "<style type='text/css'>";
+    foreach ($prodIds as $key => $prodId) {
+        echo '#snize-product-'.$prodId.' .snize-price-list {
+                display: none;
+            }';
+        echo '#snize-ac-product-'.$prodId.' .snize-price-list {
+                display: none;
+            }';
+    }
+    echo "</style>";
+endif;
+?>
+

@@ -265,7 +265,8 @@ payment.singleMethod = true;
         }); 
     }
     jQuery(document).ready(function(){
-        $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+    	if($('totalsDivRightNav')!=null)
+        	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
         $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
         new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' ,
             onComplete: function(transport) {
