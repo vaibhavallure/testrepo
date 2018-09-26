@@ -81,6 +81,22 @@
 					<model>alertservices/alerts::alertCheckoutIssue</model>
 				</run>
 			</alert_checkout_issue>
+			<alert_null_users>
+				<schedule>
+					<cron_expr>0 */1 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertNullUsers</model>
+				</run>
+			</alert_null_users>
+			<alert_page_not_found>
+				<schedule>
+					<cron_expr>0 8 * * 1</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertNullUsers</model>
+				</run>
+			</alert_page_not_found>
 		</jobs>
 	</crontab>
 </config> 

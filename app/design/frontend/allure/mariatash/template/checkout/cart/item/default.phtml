@@ -38,8 +38,17 @@
               if(!is_null($parentId)){
               	$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
               }
-              
-              ?>
+
+
+
+/*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
+$custAttr=false;
+/*check if product has custom attr then make $custAttr=true*/
+if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
+    $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice($_item->getProduct());
+}
+
+?>
 <tr <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
     <td class="table-product-image"> 
         <?php if ($this->hasProductUrl()):?>
@@ -95,7 +104,7 @@
 
     </td>
     <td  class="table-tax a-right">
-        <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
+        <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice($custAttr)) ?>
     </td>
     <td  class="table-qty a-center">
         <div class="minus_icon" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>

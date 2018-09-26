@@ -6,15 +6,19 @@
             <version>0.0.1</version>
         </Allure_Sales>
     </modules>
-    
     <global>
 		<models>
 			<allure_sales>
 				<class>Allure_Sales_Model</class>
 			</allure_sales>
-		</models>
+            <sales>
+                <rewrite>
+                    <quote>Allure_Sales_Model_Quote</quote>
+                </rewrite>
+            </sales>
+        </models>
 	</global>
-    
+
     <admin>
         <routers>
             <adminhtml>
