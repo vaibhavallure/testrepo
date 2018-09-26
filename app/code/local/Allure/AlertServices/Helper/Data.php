@@ -79,7 +79,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
         	}
 	}
 
-	public function sendSalesOfFourEmailAlert(){
+	public function sendSalesOfFourEmailAlert($lastOrderdate){
     	try{		
     		$templateId = $this->getConfigHelper()
             ->getSaleEmailTemplate();
@@ -98,7 +98,8 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
            
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
         	$emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
-            $emailTemplateVariables['hour_alert'] = 4; 
+            $emailTemplateVariables['hour_alert'] = 4;
+            $emailTemplateVariables['last_order_date'] = $lastOrderdate;
         	
     		if ($templateId) {    			
                 $emailTemplate->sendTransactional(
@@ -117,7 +118,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 
 
-	public function sendSalesOfSixEmailAlert(){
+	public function sendSalesOfSixEmailAlert($lastOrderdate){
     	try{		
     		$templateId = $this->getConfigHelper()
             ->getSaleEmailTemplate();
@@ -137,6 +138,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
         	$emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
             $emailTemplateVariables['hour_alert'] = 6;
+            $emailTemplateVariables['last_order_date'] = $lastOrderdate;
         	
     		if ($templateId) {
                 $emailTemplate->sendTransactional(
