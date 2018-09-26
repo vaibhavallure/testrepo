@@ -99,7 +99,7 @@ function getPageReportAvg($analytics) {
     $VIEW_ID = "181106821";
     // Create the DateRange object.
     $dateRange = new Google_Service_AnalyticsReporting_DateRange();
-    $dateRange->setStartDate("7daysAgo");
+    $dateRange->setStartDate("1daysAgo");
     $dateRange->setEndDate("today");
     //new added by aws02
 
@@ -112,6 +112,9 @@ function getPageReportAvg($analytics) {
     
     $dimension1 = new Google_Service_AnalyticsReporting_Dimension();
     $dimension1->setName("ga:pagePath");
+
+    $dimension2 = new Google_Service_AnalyticsReporting_Dimension();
+    $dimension2->setName("ga:hour");
     
     // Create the ReportRequest object.
     $request = new Google_Service_AnalyticsReporting_ReportRequest();
@@ -120,7 +123,7 @@ function getPageReportAvg($analytics) {
     $request->setMetrics(array($sessions));
     
     //new added by aws02
-    $request->setDimensions(array($dimension,$dimension1));
+    $request->setDimensions(array($dimension,$dimension1,$dimension2));
     
     $body = new Google_Service_AnalyticsReporting_GetReportsRequest();
     $body->setReportRequests( array( $request) );
@@ -164,9 +167,12 @@ function getResults($reports,$lastHour,$form) {
                 }
 
                 if ($form == 'avgpage') {
-                    if ($dimensionHeaders[$i] == 'ga:pageTitle' && $dimensions[$i] == '404 Not Found') {
+                    if ($dimensionHeaders[$i] == 'ga:pageTitle') {
+                        print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "<br/>");
                         $values = $metrics[$i]->getValues();
-                        $final_report[$dimensions[$i+1]] = array($dimensions[$i+1],$values[$i]);
+                        $entry = $metricHeaders[$i];
+                        print($entry->getName() . ": " . $values[$i] . "<br/>");
+                        $final_report = array($dimensions[$i+1],$values[$i]);
                     }
                 }
                 

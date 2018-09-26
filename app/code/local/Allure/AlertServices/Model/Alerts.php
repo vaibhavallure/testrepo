@@ -107,9 +107,9 @@ class Allure_AlertServices_Model_Alerts
 					->addFieldToFilter('type',array('eq'=>'checkout'));
 					//echo $collection->getSelect()->__toString();
 					//change count to 10 on live
-					if (count($collection) >= 10 && $status) { 
+					if (count($collection) >= 10 && $status) {
 						$helper->sendCheckoutIssueAlert($collection);
-					}				# code...
+					}
 			}
 		}catch(Exception $e){
     		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
@@ -163,13 +163,22 @@ class Allure_AlertServices_Model_Alerts
 
 			$status =	$this->getConfigHelper()->getEmailStatus();
 				if ($status) {
-					$analytics = initializeAnalytics();
+					$ch = curl_init("https://www.mariatash.com/");
+					curl_setopt($ch, CURLOPT_HEADER, 0);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					$res = curl_exec($ch);
+					$info = curl_getinfo($ch);
+					echo '<pre>';
+					print_r($info['total_time']);
+					curl_close($ch);
+					die;
+					/*$analytics = initializeAnalytics();
 					$response = getPageReportAvg($analytics);
 					$pageReport = getResults($response,null,'avgpage');
-					/*var_dump($pageReport); die();*/
+					var_dump($pageReport); die();
 					if (count($collection) > 0) {
-						/*$helper->sendEmailAlertForAvgPageLoad($collection);*/
-					}
+						$helper->sendEmailAlertForAvgPageLoad($collection);
+					}*/
 				}
 			}catch(Exception $e){
     		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
