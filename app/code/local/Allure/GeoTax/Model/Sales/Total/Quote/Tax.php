@@ -29,8 +29,8 @@ class Allure_GeoTax_Model_Sales_Total_Quote_Tax extends Mage_Tax_Model_Sales_Tot
                 $isMinTax   = true;
             }
         }
-        
-        
+
+
         foreach ($items as $item) {
             if ($item->getParentItem()) {
                 continue;
