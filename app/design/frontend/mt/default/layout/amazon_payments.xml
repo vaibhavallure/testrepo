@@ -187,6 +187,11 @@
 
             <block type="amazon_payments/checkout" name="amazon_payments.checkout" template="amazon_payments/checkout.phtml">
 
+<!-- new delivery method after shipping information allureinc -->
+                <block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="checkoutstep/checkout/onepage/delivery_option.phtml">
+                	<block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="checkoutstep/checkout/onepage/delivery_option_details.phtml"></block>
+                  </block>
+
                 <block type="checkout/onepage_shipping_method" name="checkout.onepage.shipping_method" as="shipping_method" template="amazon_payments/shipping_method.phtml">
                     <block type="checkout/onepage_shipping_method_available" name="checkout.onepage.shipping_method.available" as="available" template="checkout/onepage/shipping_method/available.phtml"/>
                     <block type="checkout/onepage_shipping_method_additional" name="checkout.onepage.shipping_method.additional" as="additional" template="checkout/onepage/shipping_method/additional.phtml"/>

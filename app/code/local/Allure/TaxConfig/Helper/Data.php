@@ -39,38 +39,38 @@ class Allure_TaxConfig_Helper_Data extends Mage_Tax_Helper_Data
         $this->_config = Mage::getSingleton('tax/config');
         $this->_app = !empty($args['app']) ? $args['app'] : Mage::app();
     }
-    
+
     public function getSkippedTaxCountries()
     {
         $countriesRestricted = Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/countries');
-        
+
         if (!empty($countriesRestricted)) {
             $countriesRestricted = strtoupper($countriesRestricted);
             return  explode(',', $countriesRestricted);
         }
-        
+
         return  array();
     }
-    
-    private function allowedTaxOnCatalog()
+
+    public function allowedTaxOnCatalog()
     {
         if (Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/status')) {
-            
+
             $countries = $this->getSkippedTaxCountries();
-        
+
             if (count($countries)) {
-            
+
                 $request = Mage::getSingleton('tax/calculation')->getRateRequest();
-                
+
                 if (in_array($request->getCountryId(), $countries)) {
                     return false;
                 }
             }
         }
-        
+
         return true;
     }
-    
+
     public function getTaxDisplaySummary()
     {
         return ($this->allowedTaxOnCatalog() ? Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/summary') : NULL);
@@ -97,7 +97,11 @@ class Allure_TaxConfig_Helper_Data extends Mage_Tax_Helper_Data
      */
     public function displayPriceIncludingTax()
     {
-        return ($this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX && $this->allowedTaxOnCatalog());
+		if (!$this->allowedTaxOnCatalog()) {
+			return false;
+		} else {
+			return ($this->getPriceDisplayType() == Mage_Tax_Model_Config::DISPLAY_TYPE_INCLUDING_TAX);
+		}
     }
 
     /**
