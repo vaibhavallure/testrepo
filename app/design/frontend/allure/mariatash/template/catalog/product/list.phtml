@@ -337,7 +337,8 @@ $mode  = $this->getMode();
                                                 
                                                <?php //allure code start?>
                                                <?php 
-                                                    $customOptions = $this->getCustomOptions($productId);
+                                                    //$customOptions = $this->getCustomOptions($productId);
+                                                    $customOptions = 0; //aws12
                                                ?>
                                                <?php if(count($customOptions)):?> 
                                                <?php foreach ($customOptions as $_option):?>

@@ -13,8 +13,9 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
     		$emailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
-            $senderName = Mage::getStoreConfig('trans_email/ident_support/name');
-            $senderEmail = Mage::getStoreConfig('trans_email/ident_support/email');        
+            $senderName = $this->getConfigHelper()->getAlertSenderName();
+            $senderEmail = $this->getConfigHelper()->getAlertSenderEmail();
+
             $sender = array('name' => $senderName,
                             'email' => $senderEmail);
             $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
@@ -86,8 +87,9 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
     		$emailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
-            $senderName = Mage::getStoreConfig('trans_email/ident_support/name');
-            $senderEmail = Mage::getStoreConfig('trans_email/ident_support/email');        
+            $senderName = $this->getConfigHelper()->getAlertSenderName();
+            $senderEmail = $this->getConfigHelper()->getAlertSenderEmail();
+
             $sender = array('name' => $senderName,
                             'email' => $senderEmail);
             $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
@@ -125,8 +127,9 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
     		$emailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
-            $senderName = Mage::getStoreConfig('trans_email/ident_support/name');
-            $senderEmail = Mage::getStoreConfig('trans_email/ident_support/email');        
+            $senderName = $this->getConfigHelper()->getAlertSenderName();
+            $senderEmail = $this->getConfigHelper()->getAlertSenderEmail();
+
             $sender = array('name' => $senderName,
                             'email' => $senderEmail);
             $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
@@ -164,8 +167,9 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
             $emailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
-            $senderName = Mage::getStoreConfig('trans_email/ident_support/name');
-            $senderEmail = Mage::getStoreConfig('trans_email/ident_support/email');        
+            $senderName = $this->getConfigHelper()->getAlertSenderName();
+            $senderEmail = $this->getConfigHelper()->getAlertSenderEmail();
+
             $sender = array('name' => $senderName,
                             'email' => $senderEmail);
             $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
@@ -244,8 +248,9 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
             $emailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
-            $senderName = Mage::getStoreConfig('trans_email/ident_support/name');
-            $senderEmail = Mage::getStoreConfig('trans_email/ident_support/email');        
+            $senderName = $this->getConfigHelper()->getAlertSenderName();
+            $senderEmail = $this->getConfigHelper()->getAlertSenderEmail();
+
             $sender = array('name' => $senderName,
                             'email' => $senderEmail);
             $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
@@ -279,8 +284,9 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
             $emailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
-            $senderName = Mage::getStoreConfig('trans_email/ident_support/name');
-            $senderEmail = Mage::getStoreConfig('trans_email/ident_support/email');        
+            $senderName = $this->getConfigHelper()->getAlertSenderName();
+            $senderEmail = $this->getConfigHelper()->getAlertSenderEmail();
+
             $sender = array('name' => $senderName,
                             'email' => $senderEmail);
             $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
@@ -334,6 +340,45 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
                     $recipientNames, // here comes recipient names
                     $emailTemplateVariables,
                     $storeId
+                );
+              }
+             
+            }catch(Exception $e){
+                echo $e->getMessage();
+            }
+    }
+
+    public function sendEmailAlertForAvgPageLoad($totAvgTime){
+        try{        
+            $templateId = $this->getConfigHelper()->getPageLoadEmailTemplate();
+
+            $emailTemplate = Mage::getModel('core/email_template');
+            $storeId = Mage::app()->getStore()->getId();
+            $senderName = $this->getConfigHelper()->getAlertSenderName();
+            $senderEmail = $this->getConfigHelper()->getAlertSenderEmail();
+
+            $sender = array('name' => $senderName,
+                            'email' => $senderEmail);
+
+            $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
+            $recieverNames = $this->getConfigHelper()->getEmailGroupNames();
+
+            $recipientEmails = explode(',',$recieverEmails);
+            $recipientNames = explode(',',$recieverNames);
+           
+            //$emailTemplateVariables['collection'] = $collection;
+            $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
+            $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+            $emailTemplateVariables['avg_load_time'] = $totAvgTime;
+
+            if ($templateId) {
+                $emailTemplate->sendTransactional(
+                $templateId,
+                $sender,
+                $recipientEmails, //here comes recipient emails
+                $recipientNames, // here comes recipient names
+                $emailTemplateVariables,
+                $storeId
                 );
               }
              
