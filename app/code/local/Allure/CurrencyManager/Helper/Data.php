@@ -185,7 +185,7 @@ class Allure_CurrencyManager_Helper_Data extends Mage_Core_Helper_Abstract
 
         $orderModules = array('sales', 'checkout', 'paypal');
         $modifiedOrderModules = array(
-            'order_modules' => new Varien_Object(array('module_names' => $orderModules)),
+            'order_modules' => new Varien_Object(array('module_names'=>$orderModules)),
         );
 
         Mage::dispatchEvent('et_currencymanager_checking_is_in_order_before', $modifiedOrderModules);
@@ -268,19 +268,16 @@ class Allure_CurrencyManager_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * get base currency with grandtotal
      */
-    public function getGrandTotalWithBaseCurrency()
-    {
+    public function getGrandTotalWithBaseCurrency(){
+        $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
         $val = "";
-
-        $quote = Mage::getModel('checkout/session')->getQuote();
-
-        if ($quote->getBaseCurrencyCode() != $quote->getQuoteCurrencyCode()) {
-            $symbol = Mage::app()->getLocale()->currency($quote->getBaseCurrencyCode())->getSymbol();
-            $baseGrandTotal = $quote->getBaseGrandTotal();
-            $baseGrandTotal = round($baseGrandTotal, 2);
-            $val = $symbol . $baseGrandTotal;
-
+        if(strtoupper($currentCurrencyCode) != "USD"){
+            $symbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getBaseCurrencyCode())->getSymbol();
+            $baseGrandTotal = Mage::getModel('checkout/session')->getQuote()->getBaseGrandTotal();
+            $baseGrandTotal = round($baseGrandTotal,2);
+            $val = $symbol.$baseGrandTotal;
         }
         return $val;
     }
+
 }
