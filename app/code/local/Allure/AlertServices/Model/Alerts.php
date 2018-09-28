@@ -55,11 +55,8 @@ class Allure_AlertServices_Model_Alerts
 					}
 					
 					if (count($orders) <=0 ) {
-						if ($debug) {
-							var_dump('zero order');
-						}
-						//$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem(); 
-						$helper->sendSalesOfFourEmailAlert('$lastorder->getCreatedAt()');
+						$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem(); 
+						$helper->sendSalesOfFourEmailAlert($lastorder->getCreatedAt());
 					}
 			}
 			
