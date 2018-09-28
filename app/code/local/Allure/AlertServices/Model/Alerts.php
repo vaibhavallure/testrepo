@@ -51,12 +51,15 @@ class Allure_AlertServices_Model_Alerts
 						  ->addAttributeToSelect('*');
 					if ($debug) {
 						echo $orders->getSelect()->__toString();
+						echo "<br>order count : ".count($orders);
 					}
 					
 					if (count($orders) <=0 ) {
-						$lastorder = Mage::getModel('sales/order')->getCollection()
-					       ->getLastItem();
-						$helper->sendSalesOfFourEmailAlert($lastorder->getCreatedAt());
+						if ($debug) {
+							var_dump('zero order')
+						}
+						//$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem(); 
+						$helper->sendSalesOfFourEmailAlert('$lastorder->getCreatedAt()');
 					}
 			}
 			
@@ -81,8 +84,7 @@ class Allure_AlertServices_Model_Alerts
 						  ->addAttributeToSelect('*');
 					    /*echo $orders->getSelect()->__toString();*/
 					if (count($orders)<=0) {
-						$lastorder = Mage::getModel('sales/order')->getCollection()
-					       ->getLastItem();
+						$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem();
 						$helper->sendSalesOfSixEmailAlert($lastorder->getCreatedAt());
 					}
 			}
