@@ -339,6 +339,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      */
     public function calcRowTotal()
     {
+
         $qty        = $this->getTotalQty();
         // Round unit price before multiplying to prevent losing 1 cent on subtotal
         $total      = $this->getStore()->roundPrice($this->getCalculationPriceOriginal()) * $qty;
@@ -355,14 +356,38 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      *
      * @return float
      */
-    public function getCalculationPrice()
+    public function getCalculationPrice($custAttr=false)
     {
-        $price = $this->_getData('calculation_price');
+
+
+        /*
+        * check if this product has appropriate custom price then stop conversion
+        * */
+
+        /*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
+        $custAttr=false;
+        /*check if product has custom attr then make $custAttr=true*/
+        if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
+            $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice(Mage::getModel("catalog/product")->load($this->getProductId()));
+        }
+
+
+
+        /*
+         *  compulsory getConverted Price If Custom attribute Present
+         * */
+
+        if($custAttr)
+            $price = null;
+        else
+            $price= $this->_getData('calculation_price');
+
+
         if (is_null($price)) {
             if ($this->hasCustomPrice()) {
                 $price = $this->getCustomPrice();
             } else {
-                $price = $this->getConvertedPrice();
+                $price = $this->getConvertedPrice($custAttr);
             }
             $this->setData('calculation_price', $price);
         }
@@ -377,12 +402,23 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      */
     public function getCalculationPriceOriginal()
     {
+       /*
+        * check if this product has appropriate custom price then stop conversion
+        * */
+
+        /*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
+        $custAttr=false;
+        /*check if product has custom attr then make $custAttr=true*/
+        if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
+            $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice(Mage::getModel("catalog/product")->load($this->getProductId()));
+        }
+
         $price = $this->_getData('calculation_price');
         if (is_null($price)) {
             if ($this->hasOriginalCustomPrice()) {
                 $price = $this->getOriginalCustomPrice();
             } else {
-                $price = $this->getConvertedPrice();
+                $price = $this->getConvertedPrice($custAttr);
             }
             $this->setData('calculation_price', $price);
         }
@@ -466,9 +502,21 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      */
     public function getOriginalPrice()
     {
+        /*
+        * check if this product has appropriate custom price then stop conversion
+        * */
+
+        /*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
+        $custAttr=false;
+        /*check if product has custom attr then make $custAttr=true*/
+        if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
+            $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice(Mage::getModel("catalog/product")->load($this->getProductId()));
+        }
+
+
         $price = $this->_getData('original_price');
         if (is_null($price)) {
-            $price = $this->getStore()->convertPrice($this->getBaseOriginalPrice());
+            $price = $this->getStore()->convertPrice($this->getBaseOriginalPrice(),false,false,$custAttr);
             $this->setData('original_price', $price);
         }
         return $price;
@@ -535,11 +583,19 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      * Get item price converted to quote currency
      * @return float
      */
-    public function getConvertedPrice()
+    public function getConvertedPrice($custAttr=false)
     {
-        $price = $this->_getData('converted_price');
+        /*
+         *  compulsory convertPrice If Custom attribute Present
+         * */
+
+        if($custAttr)
+            $price =null;
+        else
+            $price = $this->_getData('converted_price');
+
         if (is_null($price)) {
-            $price = $this->getStore()->convertPrice($this->getPrice());
+            $price = $this->getStore()->convertPrice($this->getPrice(),false,true,$custAttr);
             $this->setData('converted_price', $price);
         }
         return $price;

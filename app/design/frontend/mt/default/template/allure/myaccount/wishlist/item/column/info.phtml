@@ -33,6 +33,16 @@ $cpid = ($product->getId() == $_data['cpid']) ? 0 : $_data['cpid'];
 $defaultProduct  = $product;
 $arrayOptions = array();
 $productUrl = $defaultProduct->getProductUrl();
+
+
+/*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
+$custAttr=false;
+/*check if product has custom attr then make $custAttr=true*/
+if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
+    $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice($product);
+}
+
+
 if($product->getTypeId() =='configurable'){ 
     $superAttribute = $item->getBuyRequest()->getSuperAttribute();
     foreach($superAttribute as $code => $option_id){
@@ -133,7 +143,7 @@ if($product->getTypeId() =='configurable'){
 </td>
 
 <td class="mt-wishlist-price">
-	<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
+	<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice(),true,true,$custAttr);?>
 </td>
 
 <!--**QTY**-->
@@ -157,7 +167,7 @@ if($product->getTypeId() =='configurable'){
 </td>
 
 <td class="mt-myaccount-subtotal">
-	<?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()))?>
+	<?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()),true,true,$custAttr)?>
 </td>
 
 <!--****-->

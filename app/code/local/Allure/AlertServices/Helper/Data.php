@@ -79,7 +79,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
         	}
 	}
 
-	public function sendSalesOfFourEmailAlert(){
+	public function sendSalesOfFourEmailAlert($lastOrderdate){
     	try{		
     		$templateId = $this->getConfigHelper()
             ->getSaleEmailTemplate();
@@ -98,7 +98,8 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
            
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
         	$emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
-            $emailTemplateVariables['hour_alert'] = 4; 
+            $emailTemplateVariables['hour_alert'] = 4;
+            $emailTemplateVariables['last_order_date'] = $lastOrderdate;
         	
     		if ($templateId) {    			
                 $emailTemplate->sendTransactional(
@@ -117,7 +118,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 
 
-	public function sendSalesOfSixEmailAlert(){
+	public function sendSalesOfSixEmailAlert($lastOrderdate){
     	try{		
     		$templateId = $this->getConfigHelper()
             ->getSaleEmailTemplate();
@@ -137,6 +138,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
         	$emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
             $emailTemplateVariables['hour_alert'] = 6;
+            $emailTemplateVariables['last_order_date'] = $lastOrderdate;
         	
     		if ($templateId) {
                 $emailTemplate->sendTransactional(
@@ -235,6 +237,111 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
             Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
         }
     }
+    
+    public function sendEmailAlertForNullUsers(){
+        try{        
+            $templateId = $this->getConfigHelper()->getNullUsersEmailTemplate();
+
+            $emailTemplate = Mage::getModel('core/email_template');
+            $storeId = Mage::app()->getStore()->getId();
+            $senderName = Mage::getStoreConfig('trans_email/ident_support/name');
+            $senderEmail = Mage::getStoreConfig('trans_email/ident_support/email');        
+            $sender = array('name' => $senderName,
+                            'email' => $senderEmail);
+            $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
+            $recieverNames = $this->getConfigHelper()->getEmailGroupNames();
+
+            $recipientEmails = explode(',',$recieverEmails);
+            $recipientNames = explode(',',$recieverNames);
+           
+            $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
+            $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+            
+            if ($templateId) {
+                $emailTemplate->sendTransactional(
+                    $templateId,
+                    $sender,
+                    $recipientEmails, //here comes recipient emails
+                    $recipientNames, // here comes recipient names
+                    $emailTemplateVariables,
+                    $storeId
+                );
+              }
+             
+        }catch(Exception $e){
+                echo $e->getMessage();
+        }
+    }
+
+    public function sendEmailAlertForPageNotFound($collection){
+        try{        
+            $templateId = $this->getConfigHelper()->getPageNotFoundEmailTemplate();
+
+            $emailTemplate = Mage::getModel('core/email_template');
+            $storeId = Mage::app()->getStore()->getId();
+            $senderName = Mage::getStoreConfig('trans_email/ident_support/name');
+            $senderEmail = Mage::getStoreConfig('trans_email/ident_support/email');        
+            $sender = array('name' => $senderName,
+                            'email' => $senderEmail);
+            $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
+            $recieverNames = $this->getConfigHelper()->getEmailGroupNames();
+
+            $recipientEmails = explode(',',$recieverEmails);
+            $recipientNames = explode(',',$recieverNames);
+           
+            //$emailTemplateVariables['collection'] = $collection;
+            $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
+            $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+
+            $header = array("page_path"=>"Page_Path",
+                            "result"=>"Result"
+                            );
+
+             $folderPath   = Mage::getBaseDir("var") . DS . "alerts" . DS . "page_not_found";
+             $date = date('Y-m-d');
+             $filename     = "PAGE_NOT_FOUND_".$date.".csv";            
+             $filepath     = $folderPath . DS . $filename;
+
+             $io = new Varien_Io_File();
+             $io->setAllowCreateFolders(true);
+             $io->open(array("path" => $folderPath));
+             $csv = new Varien_File_Csv();
+
+             $rowData = array();
+             $rowData[] = $header;
+             foreach ($collection as $page) {
+                $row = array();
+                $row["page_path"] = $page;
+                $row["result"] = '404 Page Not Found';
+                $rowData[] = $row;
+             }            
+
+            $csv->saveData($filepath,$rowData);
+
+            if ($templateId) {
+                $emailTemplate->getMail()->createAttachment(
+                    file_get_contents($filepath),
+                    Zend_Mime::TYPE_OCTETSTREAM,
+                    Zend_Mime::DISPOSITION_ATTACHMENT,
+                    Zend_Mime::ENCODING_BASE64,
+                    $filename
+                );
+
+                $emailTemplate->sendTransactional(
+                    $templateId,
+                    $sender,
+                    $recipientEmails, //here comes recipient emails
+                    $recipientNames, // here comes recipient names
+                    $emailTemplateVariables,
+                    $storeId
+                );
+              }
+             
+            }catch(Exception $e){
+                echo $e->getMessage();
+            }
+    }
+    
                  
 
 }

@@ -629,7 +629,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             $customer_email = $this->getOnepage()->getQuoteOrdered()->getCustomerEmail();
             $dataissue = array(
                     'customer_email' => $customer_email,
-                    'created_at' => Mage::getModel('core/date')->timestamp(),
+                    'created_at' => Mage::getModel('core/date')->gmtDate(),
                     'type' => 'checkout',
                     'error_message' => $isuuemessage
                 );
