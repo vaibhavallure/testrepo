@@ -82,8 +82,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
 	public function sendSalesOfFourEmailAlert($lastOrderdate){
     	try{		
-    		$templateId = $this->getConfigHelper()
-            ->getSaleEmailTemplate();
+    		$templateId = $this->getConfigHelper()->getSaleEmailTemplate();
 
     		$emailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
@@ -122,8 +121,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
 	public function sendSalesOfSixEmailAlert($lastOrderdate){
     	try{		
-    		$templateId = $this->getConfigHelper()
-            ->getSaleEmailTemplate();
+    		$templateId = $this->getConfigHelper()->getSaleEmailTemplate();
 
     		$emailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
@@ -132,6 +130,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
             $sender = array('name' => $senderName,
                             'email' => $senderEmail);
+            
             $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
             $recieverNames = $this->getConfigHelper()->getEmailGroupNames();
 
