@@ -1,6 +1,8 @@
 <?php
 class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
 {
+    const XML_PATH_ALERT_SENDER_EMAIL   = 'allure_alert/alr_alert/sender_email';
+    const XML_PATH_ALERT_SENDER_NAME    = 'allure_alert/alr_alert/sender_name';
 	const XML_PATH_EMAIL_STATUS   		= 'allure_alert/email_group/enabled';
 	const XML_PATH_GROUP_EMAILS  		= 'allure_alert/email_group/group_emails';
 	const XML_PATH_GROUP_EMAILS_NAMES  	= 'allure_alert/email_group/group_names';
@@ -11,6 +13,15 @@ class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
     const XML_PATH_PAGE_NOT_FOUND_TEMPLATE = 'allure_alert/email_group/pnfalert';
     const XML_PATH_PAGE_LOAD_TEMPLATE = 'allure_alert/email_group/pageloadalert';
     const XML_PATH_GOOGLE_ANALYTICS_JSON = 'allure_alert/alr_analytics/alr_client_json';
+    const XML_PATH_AVG_PAGE_LOAD = 'allure_alert/alr_analytics/avg_page_load';
+
+    public function getAlertSenderEmail(){
+        return Mage::getStoreConfig(self::XML_PATH_ALERT_SENDER_EMAIL);
+    }
+
+    public function getAlertSenderName(){
+        return Mage::getStoreConfig(self::XML_PATH_ALERT_SENDER_NAME);
+    }
 
     public function getEmailStatus(){
     	return Mage::getStoreConfig(self::XML_PATH_EMAIL_STATUS);
@@ -50,6 +61,14 @@ class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
     
     public function getGoogleAnayticsJson(){
         return Mage::getStoreConfig(self::XML_PATH_GOOGLE_ANALYTICS_JSON);
+    }
+
+    public function getAvgLoadTimeArray(){
+        return Mage::getStoreConfig(self::XML_PATH_AVG_PAGE_LOAD);
+    }
+
+    public function getAvgLoadTimePath(){
+        return self::XML_PATH_AVG_PAGE_LOAD;
     }
 
 }

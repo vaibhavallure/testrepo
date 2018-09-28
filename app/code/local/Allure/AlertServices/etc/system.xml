@@ -12,11 +12,37 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
                 <groups>
+                    <alr_alert translate="label">
+                        <label>Sender Details</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>1</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>                
+                        <fields>
+                            <sender_email>
+                                <label>Sender Email : </label>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>1</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </sender_email>
+                            <sender_name>
+                                <label>Sender Name : </label>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>2</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </sender_name> 
+                        </fields>
+                   </alr_alert>
 
                    <email_group translate="label">
                         <label>Email Settings</label>
                         <frontend_type>text</frontend_type>
-                        <sort_order>1</sort_order>
+                        <sort_order>2</sort_order>
                         <show_in_default>1</show_in_default>
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>                
@@ -115,7 +141,7 @@
                    <alr_analytics translate="label">
                         <label>ALR Analytics Settings</label>
                         <frontend_type>text</frontend_type>
-                        <sort_order>2</sort_order>
+                        <sort_order>3</sort_order>
                         <show_in_default>1</show_in_default>
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>                
@@ -127,7 +153,15 @@
                                 <show_in_default>1</show_in_default>
                                 <show_in_website>1</show_in_website>
                                 <show_in_store>1</show_in_store>
-                            </alr_client_json>    
+                            </alr_client_json>
+                            <avg_page_load>
+                                <label>Page load time : </label>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>2</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </avg_page_load> 
                         </fields>
                    </alr_analytics>               
             </groups>                   
