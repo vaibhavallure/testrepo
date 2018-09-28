@@ -39,7 +39,7 @@ class Allure_MyAccount_Block_Filter extends Mage_Core_Block_Template{
      */
     public function getAllStores(){
         if (Mage::helper('myaccount')->isVirtualStoreActive()){
-            return Mage::helper("allure_virtualstore")->getVirtualStores();
+            return Mage::helper("virtualstore")->getVirtualStores();
         }
         return Mage::app()->getStores();
         

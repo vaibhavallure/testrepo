@@ -26,8 +26,11 @@
 ?>
 
 <?php
+
+
     $_item = $this->getItem();
-	$messages = $this->getMessages();
+
+    $messages = $this->getMessages();
     $_product = $_item->getProduct();
     $isVisibleProduct = $_product->isVisibleInSiteVisibility();
     $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_product, Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
@@ -40,7 +43,15 @@
               if(!is_null($parentId)){
               	$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
               }
-              
+
+
+/*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
+$custAttr=false;
+/*check if product has custom attr then make $custAttr=true*/
+if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
+    $custAttr = Mage::Helper('multicurrency')->isValidCustomAttrPrice(Mage::getModel('catalog/product')->load($_product->getId()));
+}
+
               ?>  
 <li class="item<?php echo ' '.$_product->getTypeId()?>">
     <?php if ($this->hasProductUrl()): ?>
@@ -79,9 +90,9 @@
             <?php echo $this->__('Excl. Tax'); ?>:
         <?php endif; ?>
         <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(0, 1, 4), 'sales')): ?>
-            <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()+$_item->getWeeeTaxAppliedAmount()+$_item->getWeeeTaxDisposition()); ?>
+            <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice($custAttr)+$_item->getWeeeTaxAppliedAmount()+$_item->getWeeeTaxDisposition()); ?>
         <?php else: ?>
-            <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()) ?>
+            <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice($custAttr)) ?>
         <?php endif; ?>
         <?php if (Mage::helper('weee')->getApplied($_item)): ?>
             <br />
@@ -103,7 +114,7 @@
                 </small>
             <?php endif; ?>
             <?php if (Mage::helper('weee')->typeOfDisplay($_item, 2, 'sales')): ?>
-                <span class="nobr"><?php echo Mage::helper('weee')->__('Total'); ?>:<br /> <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice()+$_item->getWeeeTaxAppliedAmount()+$_item->getWeeeTaxDisposition()); ?></span>
+                <span class="nobr"><?php echo Mage::helper('weee')->__('Total'); ?>:<br /> <?php echo $this->helper('checkout')->formatPrice($_item->getCalculationPrice($custAttr)+$_item->getWeeeTaxAppliedAmount()+$_item->getWeeeTaxDisposition()); ?></span>
             <?php endif; ?>
         <?php endif; ?>
     <?php endif; ?>
@@ -156,8 +167,15 @@
                     $skuStr = $product->getSku();
                     $skuArr = explode("|", $skuStr);
                     $sku = $skuArr[0];
+                    $giftcard = 1;
+                    if ($sku == "STORECARD") {
+                        $giftcard = 0;
+                    }
+                    if ($sku == "gift") {
+                        $giftcard = 0;
+                    }
                ?>
-            <?php if($sku != "STORECARD"):?>
+            <?php if($giftcard):?>
             
                 <div class="item-msg <?php echo $message['type'] ?>">
                 

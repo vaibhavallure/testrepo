@@ -37,19 +37,19 @@ $data = array();
 
 $collection=Mage::getModel("catalog/product")->getCollection();
 $collection->addAttributeToFilter('status', array('eq' => 1));
-$collection->addAttributeToFilter('type_id', array('eq' => 'configurable'));
+$collection->addAttributeToFilter('harrods_inventory', array('gt' => 0));
+$collection->addAttributeToFilter('type_id', array('eq' => 'simple'));
 $collection->setOrder('sku', 'asc');
 
 $some_attr_code = "metal";
 $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
 
+$NoOfProductQTYGreaterThanZero=0;
+$NoOfProductQTYLessThanZero=0;
 foreach ($collection as $_product){
     
     $_product=Mage::getModel("catalog/product")->load($_product->getId());
 
-    $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
-    if($stock->getQty()<=0)
-        continue;
 
     $data=array();
     $optionId='';
@@ -115,22 +115,27 @@ foreach ($collection as $_product){
     $data['site_listings']='D369';
     $data['siteDelimited']='SiteDelim';
     $data['string_for_generic_lines']='';
-    
-    $ioo->streamWriteCsv($data);
-    
-    
-    
-    
-    
-    
-    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+
+    $stockParent = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+
+    /*Condition to Avoid Products that has less than or Equal to Zero Harrods QTY */
+
+    /*if((float)$_product->getData("harrods_inventory")>0)
+    {*/
+        $ioo->streamWriteCsv($data);
+        $NoOfProductQTYGreaterThanZero++;
+    /*}
+    else{
+        $NoOfProductQTYLessThanZero++;
+    }*/
+
+
+
+
+    /*$conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
     $simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
     foreach ($simple_collection as $simpleProd){
         $_product=Mage::getModel("catalog/product")->load($simpleProd->getId());
-
-        $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
-        if($stock->getQty()<=0)
-            continue;
 
        
         $optionId='';
@@ -140,7 +145,7 @@ foreach ($collection as $_product){
         if(!empty($optionId))
             $optionLabel = $attribute->getFrontend()->getOption($optionId);
         $data=array();
-       var_dump($_product->getQty());
+
         $data['recid']=$_product->getSku();
         $data['description']=strtoupper(substr($_product->getName(),0,40));
         $data['purch_grp']='907';
@@ -196,15 +201,27 @@ foreach ($collection as $_product){
         $data['article_number']='';
         $data['site_listings']='D369';
         $data['siteDelimited']='SiteDelim';
-        $data['string_for_generic_lines']='';
-        
-        $ioo->streamWriteCsv($data);
-        
-    }
-    
+        $data['string_for_generic_lines']='';*/
+
+
+
+
+       /* if((float)$_product->getData("harrods_inventory")>0)
+        {*/
+            /*$ioo->streamWriteCsv($data);
+            $NoOfProductQTYGreaterThanZero++;*/
+       /* }
+        else{
+            $NoOfProductQTYLessThanZero++;
+        }*/
+
+
+    //}
+
 
 }
 
+echo "NO OF PRODUCTS QTY GREATER THAN ZERO = {$NoOfProductQTYGreaterThanZero} <BR> NO OF PRODUCTS QTY ZERO AND BLANK = {$NoOfProductQTYLessThanZero} <hr>";
 die("Finished");
 
 //die("Finish");

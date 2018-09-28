@@ -88,17 +88,33 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Block_Product_View_Type
     }
 	public function getJsonConfig()
     {
+        $custAttr=false;
         $config = Zend_Json::decode(parent::getJsonConfig());
+
+        ///Mage::log($config,Zend_Log::DEBUG,'allure_log.log',true);
+
+
 
         $childProducts = array();
 
+        //Mage::log("country==".Mage::getSingleton('core/session')->getGeoCountry(), Zend_Log::DEBUG,'allure_log.log',true);
+
+
         //Create the extra price and tier price data/html we need.
         foreach ($this->getAllowProducts() as $product) {
+
+            if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
+               $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice($product);
+
+            }
+
             $productId  = $product->getId();
             $childProducts[$productId] = array(
-                "price" => $this->_registerJsPrice($this->_convertPrice($product->getPrice())),
-                "finalPrice" => $this->_registerJsPrice($this->_convertPrice($product->getFinalPrice()))
+                "price" => $this->_registerJsPrice($this->_convertPrice($product->getPrice(),false,$custAttr)),
+                "finalPrice" => $this->_registerJsPrice($this->_convertPrice($product->getFinalPrice(),false,$custAttr))
             );
+
+           // Mage::log($product->getPrice(), Zend_Log::DEBUG,'allure_log.log',true);
 
             if (Mage::getStoreConfig('SCP_options/product_page/change_name')) {
                 $childProducts[$productId]["productName"] = $product->getName();
@@ -195,6 +211,7 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Block_Product_View_Type
             $config['showPriceRangesInOptions'] = true;
             $config['rangeToLabel'] = $this->__('to');
         }
+
         return Zend_Json::encode($config);
         //parent getJsonConfig uses the following instead, but it seems to just break inline translate of this json?
         //return Mage::helper('core')->jsonEncode($config);
