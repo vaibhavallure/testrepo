@@ -189,7 +189,7 @@ class Allure_AlertServices_Model_Alerts
 
 								$newAvgValure = implode(',', $timearray);
 								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValure);
-								$totAvgTime = 30;
+								/*$totAvgTime = 30;*/
 								if ($totAvgTime >= 30) {
 									$helper->sendEmailAlertForAvgPageLoad($totAvgTime);
 								}else{
