@@ -165,17 +165,6 @@ function getResults($reports,$lastHour,$form) {
                         $final_report[] = $dimensions[$i+1];
                     }
                 }
-
-                if ($form == 'avgpage') {
-                    if ($dimensionHeaders[$i] == 'ga:pageTitle') {
-                        print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "<br/>");
-                        $values = $metrics[$i]->getValues();
-                        $entry = $metricHeaders[$i];
-                        print($entry->getName() . ": " . $values[$i] . "<br/>");
-                        $final_report = array($dimensions[$i+1],$values[$i]);
-                    }
-                }
-                
                 //print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "<br/>");
             }            
             /*for ($j = 0; $j < count($metrics); $j++) {

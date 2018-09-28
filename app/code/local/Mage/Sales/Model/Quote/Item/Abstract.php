@@ -39,7 +39,7 @@
  * @author      Magento Core Team <core@magentocommerce.com>
  */
 abstract class Mage_Sales_Model_Quote_Item_Abstract extends Mage_Core_Model_Abstract
-implements Mage_Catalog_Model_Product_Configuration_Item_Interface
+    implements Mage_Catalog_Model_Product_Configuration_Item_Interface
 {
     /**
      * Parent item for sub items for bundle product, configurable product, etc.
@@ -47,27 +47,27 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      * @var Mage_Sales_Model_Quote_Item_Abstract
      */
     protected $_parentItem  = null;
-    
+
     /**
      * Children items in bundle product, configurable product, etc.
      *
      * @var array
      */
     protected $_children    = array();
-    
+
     /**
      *
      * @var array
      */
     protected $_messages    = array();
-    
+
     /**
      * Retrieve Quote instance
      *
      * @return Mage_Sales_Model_Quote
      */
     abstract function getQuote();
-    
+
     /**
      * Retrieve product model object associated with item
      *
@@ -78,11 +78,11 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         $product = $this->_getData('product');
         if ($product === null && $this->getProductId()) {
             $product = Mage::getModel('catalog/product')
-            ->setStoreId($this->getQuote()->getStoreId())
-            ->load($this->getProductId());
+                ->setStoreId($this->getQuote()->getStoreId())
+                ->load($this->getProductId());
             $this->setProduct($product);
         }
-        
+
         /**
          * Reset product final price because it related to custom options
          */
@@ -92,7 +92,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $product;
     }
-    
+
     /**
      * Returns special download params (if needed) for custom option with type = 'file'
      * Needed to implement Mage_Catalog_Model_Product_Configuration_Item_Interface.
@@ -104,7 +104,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return null;
     }
-    
+
     /**
      * Specify parent item id before saving data
      *
@@ -118,8 +118,8 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this;
     }
-    
-    
+
+
     /**
      * Set parent item
      *
@@ -137,7 +137,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this;
     }
-    
+
     /**
      * Get parent item
      *
@@ -147,7 +147,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->_parentItem;
     }
-    
+
     /**
      * Get chil items
      *
@@ -157,7 +157,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->_children;
     }
-    
+
     /**
      * Add child item
      *
@@ -170,7 +170,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         $this->_children[] = $child;
         return $this;
     }
-    
+
     /**
      * Adds message(s) for quote item. Duplicated messages are not added.
      *
@@ -190,7 +190,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this;
     }
-    
+
     /**
      * Add message of quote item to array of messages
      *
@@ -202,7 +202,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         $this->_messages[] = $message;
         return $this;
     }
-    
+
     /**
      * Get messages array of quote item
      *
@@ -216,7 +216,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this->_messages;
     }
-    
+
     /**
      * Removes message by text
      *
@@ -232,7 +232,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this;
     }
-    
+
     /**
      * Clears all messages
      *
@@ -244,7 +244,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         $this->_messages = array();
         return $this;
     }
-    
+
     /**
      * Retrieve store model object
      *
@@ -254,7 +254,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->getQuote()->getStore();
     }
-    
+
     /**
      * Checking item data
      *
@@ -264,9 +264,9 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         $this->setHasError(false);
         $this->clearMessage();
-        
+
         $qty = $this->_getData('qty');
-        
+
         try {
             $this->setQty($qty);
         } catch (Mage_Core_Exception $e) {
@@ -276,39 +276,39 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
             $this->setHasError(true);
             $this->setMessage(Mage::helper('sales')->__('Item qty declaration error.'));
         }
-        
+
         try {
             $this->getProduct()->getTypeInstance(true)->checkProductBuyState($this->getProduct());
         } catch (Mage_Core_Exception $e) {
             $this->setHasError(true)
-            ->setMessage($e->getMessage());
+                ->setMessage($e->getMessage());
             $this->getQuote()->setHasError(true)
-            ->addMessage(Mage::helper('sales')->__('Some of the products below do not have all the required options. Please remove '.$this->_getData('name')." from cart and try again."));
+                ->addMessage(Mage::helper('sales')->__('Some of the products below do not have all the required options. Please remove '.$this->_getData('name')." from cart and try again."));
         } catch (Exception $e) {
             $this->setHasError(true)
-            ->setMessage(Mage::helper('sales')->__('Item options declaration error.'));
+                ->setMessage(Mage::helper('sales')->__('Item options declaration error.'));
             $this->getQuote()->setHasError(true)
-            ->addMessage(Mage::helper('sales')->__('Items options declaration error.'));
+                ->addMessage(Mage::helper('sales')->__('Items options declaration error.'));
         }
-        
+
         if ($this->getProduct()->getHasError()) {
             $this->setHasError(true)
-            ->setMessage(Mage::helper('sales')->__('Some of the selected options are not currently available.'.$this->_getData('name')));
+                ->setMessage(Mage::helper('sales')->__('Some of the selected options are not currently available.'.$this->_getData('name')));
             $this->getQuote()->setHasError(true)
-            ->addMessage($this->getProduct()->getMessage(), 'options');
+                ->addMessage($this->getProduct()->getMessage(), 'options');
         }
-        
+
         if ($this->getHasConfigurationUnavailableError()) {
             $this->setHasError(true)
-            ->setMessage(Mage::helper('sales')->__('Selected option(s) or their combination is not currently available for '.$this->_getData('name')));
+                ->setMessage(Mage::helper('sales')->__('Selected option(s) or their combination is not currently available for '.$this->_getData('name')));
             $this->getQuote()->setHasError(true)
-            ->addMessage(Mage::helper('sales')->__('Some item options or their combination are not currently available for.'.$this->_getData('name')), 'unavailable-configuration');
+                ->addMessage(Mage::helper('sales')->__('Some item options or their combination are not currently available for.'.$this->_getData('name')), 'unavailable-configuration');
             $this->unsHasConfigurationUnavailableError();
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Get original (not related with parent item) item quantity
      *
@@ -318,7 +318,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->_getData('qty');
     }
-    
+
     /**
      * Get total item quantity (include parent item relation)
      *
@@ -331,7 +331,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this->getQty();
     }
-    
+
     /**
      * Calculate item row total price
      *
@@ -339,61 +339,36 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      */
     public function calcRowTotal()
     {
-
         $qty        = $this->getTotalQty();
         // Round unit price before multiplying to prevent losing 1 cent on subtotal
         $total      = $this->getStore()->roundPrice($this->getCalculationPriceOriginal()) * $qty;
         $baseTotal  = $this->getStore()->roundPrice($this->getBaseCalculationPriceOriginal()) * $qty;
-        
+
         $this->setRowTotal($this->getStore()->roundPrice($total));
         $this->setBaseRowTotal($this->getStore()->roundPrice($baseTotal));
         return $this;
     }
-    
+
     /**
      * Get item price used for quote calculation process.
      * This method get custom price (if it is defined) or original product final price
      *
      * @return float
      */
-    public function getCalculationPrice($custAttr=false)
+    public function getCalculationPrice()
     {
-
-
-        /*
-        * check if this product has appropriate custom price then stop conversion
-        * */
-
-        /*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
-        $custAttr=false;
-        /*check if product has custom attr then make $custAttr=true*/
-        if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
-            $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice(Mage::getModel("catalog/product")->load($this->getProductId()));
-        }
-
-
-
-        /*
-         *  compulsory getConverted Price If Custom attribute Present
-         * */
-
-        if($custAttr)
-            $price = null;
-        else
-            $price= $this->_getData('calculation_price');
-
-
+        $price = $this->_getData('calculation_price');
         if (is_null($price)) {
             if ($this->hasCustomPrice()) {
                 $price = $this->getCustomPrice();
             } else {
-                $price = $this->getConvertedPrice($custAttr);
+                $price = $this->getConvertedPrice();
             }
             $this->setData('calculation_price', $price);
         }
         return $price;
     }
-    
+
     /**
      * Get item price used for quote calculation process.
      * This method get original custom price applied before tax calculation
@@ -402,29 +377,18 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      */
     public function getCalculationPriceOriginal()
     {
-       /*
-        * check if this product has appropriate custom price then stop conversion
-        * */
-
-        /*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
-        $custAttr=false;
-        /*check if product has custom attr then make $custAttr=true*/
-        if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
-            $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice(Mage::getModel("catalog/product")->load($this->getProductId()));
-        }
-
         $price = $this->_getData('calculation_price');
         if (is_null($price)) {
             if ($this->hasOriginalCustomPrice()) {
                 $price = $this->getOriginalCustomPrice();
             } else {
-                $price = $this->getConvertedPrice($custAttr);
+                $price = $this->getConvertedPrice();
             }
             $this->setData('calculation_price', $price);
         }
         return $price;
     }
-    
+
     /**
      * Get calculation price used for quote calculation in base currency.
      *
@@ -446,7 +410,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this->_getData('base_calculation_price');
     }
-    
+
     /**
      * Get original calculation price used for quote calculation in base currency.
      *
@@ -468,7 +432,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this->_getData('base_calculation_price');
     }
-    
+
     /**
      * Get whether the item is nominal
      * TODO: fix for multishipping checkout
@@ -482,7 +446,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         }
         return $this->_getData('is_nominal');
     }
-    
+
     /**
      * Data getter for 'is_nominal'
      * Used for converting item to order item
@@ -493,7 +457,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return (int)$this->isNominal();
     }
-    
+
     /**
      * Get original price (retrieved from product) for item.
      * Original price value is in quote selected currency
@@ -502,26 +466,14 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
      */
     public function getOriginalPrice()
     {
-        /*
-        * check if this product has appropriate custom price then stop conversion
-        * */
-
-        /*@var $custAttr attribute contain boolean value to check product has or has'nt custom attribute,default value is false  */
-        $custAttr=false;
-        /*check if product has custom attr then make $custAttr=true*/
-        if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
-            $custAttr=Mage::Helper('multicurrency')->isValidCustomAttrPrice(Mage::getModel("catalog/product")->load($this->getProductId()));
-        }
-
-
         $price = $this->_getData('original_price');
         if (is_null($price)) {
-            $price = $this->getStore()->convertPrice($this->getBaseOriginalPrice(),false,false,$custAttr);
+            $price = $this->getStore()->convertPrice($this->getBaseOriginalPrice());
             $this->setData('original_price', $price);
         }
         return $price;
     }
-    
+
     /**
      * Set original price to item (calculation price will be refreshed too)
      *
@@ -532,7 +484,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->setData('original_price', $price);
     }
-    
+
     /**
      * Get Original item price (got from product) in base website currency
      *
@@ -542,7 +494,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->_getData('base_original_price');
     }
-    
+
     /**
      * Specify custom item price (used in case whe we have apply not product price to item)
      *
@@ -555,7 +507,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         $this->setBaseCalculationPrice(null);
         return $this->setData('custom_price', $value);
     }
-    
+
     /**
      * Get item price. Item price currency is website base currency.
      *
@@ -565,7 +517,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->_getData('price');
     }
-    
+
     /**
      * Specify item price (base calculation price and converted price will be refreshed too)
      *
@@ -578,29 +530,21 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         $this->setConvertedPrice(null);
         return $this->setData('price', $value);
     }
-    
+
     /**
      * Get item price converted to quote currency
      * @return float
      */
-    public function getConvertedPrice($custAttr=false)
+    public function getConvertedPrice()
     {
-        /*
-         *  compulsory convertPrice If Custom attribute Present
-         * */
-
-        if($custAttr)
-            $price =null;
-        else
-            $price = $this->_getData('converted_price');
-
+        $price = $this->_getData('converted_price');
         if (is_null($price)) {
-            $price = $this->getStore()->convertPrice($this->getPrice(),false,true,$custAttr);
+            $price = $this->getStore()->convertPrice($this->getPrice());
             $this->setData('converted_price', $price);
         }
         return $price;
     }
-    
+
     /**
      * Set new value for converted price
      * @param float $value
@@ -612,7 +556,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         $this->setData('converted_price', $value);
         return $this;
     }
-    
+
     /**
      * Clone quote item
      *
@@ -626,7 +570,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         $this->_messages    = array();
         return $this;
     }
-    
+
     /**
      * Checking if there children calculated or parent item
      * when we have parent quote item and its children
@@ -640,13 +584,13 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         } else {
             $calculate = $this->getProduct()->getPriceType();
         }
-        
+
         if ((null !== $calculate) && (int)$calculate === Mage_Catalog_Model_Product_Type_Abstract::CALCULATE_CHILD) {
             return true;
         }
         return false;
     }
-    
+
     /**
      * Checking can we ship product separatelly (each child separately)
      * or each parent product item can be shipped only like one item
@@ -660,34 +604,34 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
         } else {
             $shipmentType = $this->getProduct()->getShipmentType();
         }
-        
+
         if ((null !== $shipmentType) &&
             (int)$shipmentType === Mage_Catalog_Model_Product_Type_Abstract::SHIPMENT_SEPARATELY) {
-                return true;
-            }
-            return false;
+            return true;
+        }
+        return false;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Calculate item tax amount
      *
@@ -697,7 +641,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     public function calcTaxAmount()
     {
         $store = $this->getStore();
-        
+
         if (!Mage::helper('tax')->priceIncludesTax($store)) {
             if (Mage::helper('tax')->applyTaxAfterDiscount($store)) {
                 $rowTotal       = $this->getRowTotalWithDiscount();
@@ -706,12 +650,12 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
                 $rowTotal       = $this->getRowTotal();
                 $rowBaseTotal   = $this->getBaseRowTotal();
             }
-            
+
             $taxPercent = $this->getTaxPercent()/100;
-            
+
             $this->setTaxAmount($store->roundPrice($rowTotal * $taxPercent));
             $this->setBaseTaxAmount($store->roundPrice($rowBaseTotal * $taxPercent));
-            
+
             $rowTotal       = $this->getRowTotal();
             $rowBaseTotal   = $this->getBaseRowTotal();
             $this->setTaxBeforeDiscount($store->roundPrice($rowTotal * $taxPercent));
@@ -720,33 +664,33 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
             if (Mage::helper('tax')->applyTaxAfterDiscount($store)) {
                 $totalBaseTax = $this->getBaseTaxAmount();
                 $totalTax = $this->getTaxAmount();
-                
+
                 if ($totalTax && $totalBaseTax) {
                     $totalTax -= $this->getDiscountAmount() * ($this->getTaxPercent() / 100);
                     $totalBaseTax -= $this->getBaseDiscountAmount() * ($this->getTaxPercent() / 100);
-                    
+
                     $this->setBaseTaxAmount($store->roundPrice($totalBaseTax));
                     $this->setTaxAmount($store->roundPrice($totalTax));
                 }
             }
         }
-        
+
         if (Mage::helper('tax')->discountTax($store) && !Mage::helper('tax')->applyTaxAfterDiscount($store)) {
             if ($this->getDiscountPercent()) {
                 $baseTaxAmount =  $this->getBaseTaxBeforeDiscount();
                 $taxAmount = $this->getTaxBeforeDiscount();
-                
+
                 $baseDiscountDisposition = $baseTaxAmount/100*$this->getDiscountPercent();
                 $discountDisposition = $taxAmount/100*$this->getDiscountPercent();
-                
+
                 $this->setDiscountAmount($this->getDiscountAmount()+$discountDisposition);
                 $this->setBaseDiscountAmount($this->getBaseDiscountAmount()+$baseDiscountDisposition);
             }
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Get item tax amount
      *
@@ -757,8 +701,8 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->_getData('tax_amount');
     }
-    
-    
+
+
     /**
      * Get item base tax amount
      *
@@ -769,7 +713,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     {
         return $this->_getData('base_tax_amount');
     }
-    
+
     /**
      * Get item price (item price always exclude price)
      *
@@ -779,13 +723,13 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
     protected function _calculatePrice($value, $saveTaxes = true)
     {
         $store = $this->getQuote()->getStore();
-        
+
         if (Mage::helper('tax')->priceIncludesTax($store)) {
             $bAddress = $this->getQuote()->getBillingAddress();
             $sAddress = $this->getQuote()->getShippingAddress();
-            
+
             $address = $this->getAddress();
-            
+
             if ($address) {
                 switch ($address->getAddressType()) {
                     case Mage_Sales_Model_Quote_Address::TYPE_BILLING:
@@ -796,11 +740,11 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
                         break;
                 }
             }
-            
+
             if ($this->getProduct()->getIsVirtual()) {
                 $sAddress = $bAddress;
             }
-            
+
             $priceExcludingTax = Mage::helper('tax')->getPrice(
                 $this->getProduct()->setTaxPercent(null),
                 $value,
@@ -809,8 +753,8 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
                 $bAddress,
                 $this->getQuote()->getCustomerTaxClassId(),
                 $store
-                );
-            
+            );
+
             $priceIncludingTax = Mage::helper('tax')->getPrice(
                 $this->getProduct()->setTaxPercent(null),
                 $value,
@@ -819,14 +763,14 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
                 $bAddress,
                 $this->getQuote()->getCustomerTaxClassId(),
                 $store
-                );
-            
+            );
+
             if ($saveTaxes) {
                 $qty = $this->getQty();
                 if ($this->getParentItem()) {
                     $qty = $qty*$this->getParentItem()->getQty();
                 }
-                
+
                 if (Mage::helper('tax')->displayCartPriceInclTax($store)) {
                     $rowTotal = $value*$qty;
                     $rowTotalExcTax = Mage::helper('tax')->getPrice(
@@ -837,7 +781,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
                         $bAddress,
                         $this->getQuote()->getCustomerTaxClassId(),
                         $store
-                        );
+                    );
                     $rowTotalIncTax = Mage::helper('tax')->getPrice(
                         $this->getProduct()->setTaxPercent(null),
                         $rowTotal,
@@ -846,7 +790,7 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
                         $bAddress,
                         $this->getQuote()->getCustomerTaxClassId(),
                         $store
-                        );
+                    );
                     $totalBaseTax = $rowTotalIncTax-$rowTotalExcTax;
                     $this->setRowTotalExcTax($rowTotalExcTax);
                 }
@@ -855,18 +799,18 @@ implements Mage_Catalog_Model_Product_Configuration_Item_Interface
                     $this->setTaxPercent($this->getProduct()->getTaxPercent());
                     $totalBaseTax = $taxAmount*$qty;
                 }
-                
+
                 $totalTax = $this->getStore()->convertPrice($totalBaseTax);
                 $this->setTaxBeforeDiscount($totalTax);
                 $this->setBaseTaxBeforeDiscount($totalBaseTax);
-                
+
                 $this->setTaxAmount($totalTax);
                 $this->setBaseTaxAmount($totalBaseTax);
             }
-            
+
             $value = $priceExcludingTax;
         }
-        
+
         return $value;
     }
 }

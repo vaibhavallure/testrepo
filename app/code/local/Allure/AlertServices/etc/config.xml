@@ -97,6 +97,14 @@
 					<model>alertservices/alerts::alertNullUsers</model>
 				</run>
 			</alert_page_not_found>
+			<alert_avg_page_load>
+				<schedule>
+					<cron_expr>*/1 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertAvgPageLoad</model>
+				</run>
+			</alert_avg_page_load>
 		</jobs>
 	</crontab>
 </config> 
