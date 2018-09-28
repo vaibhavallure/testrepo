@@ -89,7 +89,6 @@ class Mage_Checkout_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Minicart
     public function getSubtotal($skipTax = true)
     {
 
-       //Mage::log(print_r($this->getTotals(),true), Zend_Log::DEBUG,'allure_log.log',true);
 
         $subtotal = 0;
         $totals = $this->getTotals();
