@@ -122,7 +122,6 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                 }
             }
         }
-		var_dump($config);die;
         Mage::register('amconf_images_attrids', $attributeIdsWithImages, true);
         return Zend_Json::encode($config);
     }
