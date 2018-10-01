@@ -379,6 +379,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
             Mage::log("END: saveBillingAddressAction",Zend_Log::DEBUG, 'applepay.log', true);
 
+			$this->getResponse()->setHeader('Content-type', 'application/json');
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
@@ -451,6 +452,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         Mage::log("RESULT: ".json_encode($result),Zend_Log::DEBUG, 'applepay.log', true);
         Mage::log("END: saveBillingAction",Zend_Log::DEBUG, 'applepay.log', true);
 
+        $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
@@ -479,6 +481,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 );
             }
             Mage::log("END: saveShippingAction",Zend_Log::DEBUG, 'applepay.log', true);
+
+        	$this->getResponse()->setHeader('Content-type', 'application/json');
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
@@ -528,6 +532,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
             Mage::log("END: saveShippingMethodAction",Zend_Log::DEBUG, 'applepay.log', true);
 
+			$this->getResponse()->setHeader('Content-type', 'application/json');
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
@@ -574,6 +579,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             Mage::logException($e);
             $result['error'] = $this->__('Unable to set Payment Method.');
         }
+
+		$this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
@@ -726,6 +733,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     public function saveOrderAction ($paymentData = false)
     {
 		$result = $this->saveOrder();
+		
+		$this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
@@ -872,6 +881,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
 		Mage::log(Mage::helper('core')->jsonEncode($result), Zend_Log::DEBUG, 'applepay.log', true);
 
+		$this->getResponse()->setHeader('Content-type', 'application/json');
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
@@ -902,12 +912,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 		<billTo>
 			<firstName>Maria</firstName>
 			<lastName>Tash</lastName>
-			<company></company>
-			<address>653 Broadway</address>
-			<city>New York</city>
-			<state>NY</state>
-			<zip>10012</zip>
-			<country>USA</country>
 		</billTo>
 		<shipTo>
 			<firstName>Maria</firstName>
@@ -923,85 +927,84 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 </createTransactionRequest>
 XML;
 
+		$lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
 
-	$lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+		$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
 
-	$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
+		$order = Mage::getModel('sales/order')->load($orderId);
 
-	$order = Mage::getModel('sales/order')->load($orderId);
-
-	$requestData = array(
-		"createTransactionRequest" => array(
-			"merchantAuthentication" =>  array(
-				"name" =>  "API_LOGIN_ID",
-				"transactionKey" =>  "API_TRANSACTION_KEY"
-			),
-			//"refId" =>  "123456",
-			"transactionRequest" =>  array(
-				"transactionType" =>  "authCaptureTransaction",
-				"amount" =>  $_POST['amount'],
-				"payment" =>  array(
-					// "creditCard" =>  array(
-					// 	"cardNumber" =>  "5424000000000015",
-					// 	"expirationDate" =>  "2020-12",
-					// 	"cardCode" =>  "999"
-					// )
-					"opaqueData" =>  array(
-						"dataDescriptor" =>  $_POST['dataDesc'],
-						"dataValue" =>  $_POST['dataBinary']
+		$requestData = array(
+			"createTransactionRequest" => array(
+				"merchantAuthentication" =>  array(
+					"name" =>  "API_LOGIN_ID",
+					"transactionKey" =>  "API_TRANSACTION_KEY"
+				),
+				//"refId" =>  "123456",
+				"transactionRequest" =>  array(
+					"transactionType" =>  "authCaptureTransaction",
+					"amount" =>  $_POST['amount'],
+					"payment" =>  array(
+						// "creditCard" =>  array(
+						// 	"cardNumber" =>  "5424000000000015",
+						// 	"expirationDate" =>  "2020-12",
+						// 	"cardCode" =>  "999"
+						// )
+						"opaqueData" =>  array(
+							"dataDescriptor" =>  $_POST['dataDesc'],
+							"dataValue" =>  $_POST['dataBinary']
+						)
+					),
+					// "lineItems" =>  array(
+					// 	"lineItem" =>  array(
+					// 		"itemId" =>  "1",
+					// 		"name" =>  "vase",
+					// 		"description" =>  "Cannes logo",
+					// 		"quantity" =>  "18",
+					// 		"unitPrice" =>  "45.00"
+					// 	)
+					// ),
+					// "tax" =>  array(
+					// 	"amount" =>  "4.26",
+					// 	"name" =>  "level2 tax name",
+					// 	"description" =>  "level2 tax"
+					// ),
+					// "duty" =>  array(
+					// 	"amount" =>  "8.55",
+					// 	"name" =>  "duty name",
+					// 	"description" =>  "duty description"
+					// ),
+					// "shipping" =>  array(
+					// 	"amount" =>  "4.26",
+					// 	"name" =>  "level2 tax name",
+					// 	"description" =>  "level2 tax"
+					// ),
+					// "poNumber" =>  "456654",
+					"customer" =>  array(
+						"id" =>  "99999456654"
+					),
+					"billTo" =>  array(
+						"firstName" =>  "Ellen",
+						"lastName" =>  "Johnson",
+						"company" =>  "Souveniropolis",
+						"address" =>  "14 Main Street",
+						"city" =>  "Pecan Springs",
+						"state" =>  "TX",
+						"zip" =>  "44628",
+						"country" =>  "USA"
+					),
+					"shipTo" =>  array(
+						"firstName" =>  "China",
+						"lastName" =>  "Bayles",
+						"company" =>  "Thyme for Tea",
+						"address" =>  "12 Main Street",
+						"city" =>  "Pecan Springs",
+						"state" =>  "TX",
+						"zip" =>  "44628",
+						"country" =>  "USA"
 					)
-				),
-				// "lineItems" =>  array(
-				// 	"lineItem" =>  array(
-				// 		"itemId" =>  "1",
-				// 		"name" =>  "vase",
-				// 		"description" =>  "Cannes logo",
-				// 		"quantity" =>  "18",
-				// 		"unitPrice" =>  "45.00"
-				// 	)
-				// ),
-				// "tax" =>  array(
-				// 	"amount" =>  "4.26",
-				// 	"name" =>  "level2 tax name",
-				// 	"description" =>  "level2 tax"
-				// ),
-				// "duty" =>  array(
-				// 	"amount" =>  "8.55",
-				// 	"name" =>  "duty name",
-				// 	"description" =>  "duty description"
-				// ),
-				// "shipping" =>  array(
-				// 	"amount" =>  "4.26",
-				// 	"name" =>  "level2 tax name",
-				// 	"description" =>  "level2 tax"
-				// ),
-				// "poNumber" =>  "456654",
-				"customer" =>  array(
-					"id" =>  "99999456654"
-				),
-				"billTo" =>  array(
-					"firstName" =>  "Ellen",
-					"lastName" =>  "Johnson",
-					"company" =>  "Souveniropolis",
-					"address" =>  "14 Main Street",
-					"city" =>  "Pecan Springs",
-					"state" =>  "TX",
-					"zip" =>  "44628",
-					"country" =>  "USA"
-				),
-				"shipTo" =>  array(
-					"firstName" =>  "China",
-					"lastName" =>  "Bayles",
-					"company" =>  "Thyme for Tea",
-					"address" =>  "12 Main Street",
-					"city" =>  "Pecan Springs",
-					"state" =>  "TX",
-					"zip" =>  "44628",
-					"country" =>  "USA"
 				)
 			)
-		)
-	);
+		);
 
         $transRequestXml = new SimpleXMLElement($transRequestXmlStr);
 
@@ -1015,19 +1018,19 @@ XML;
         $transRequestXml->transactionRequest->payment->opaqueData->dataDescriptor=$_POST['dataDesc'];
         $transRequestXml->transactionRequest->payment->opaqueData->dataValue=$_POST['dataBinary'];
 
-		$transRequestXml->transactionRequest->order->invoiceNumber = 'A'.$lastOrderId;
+		$transRequestXml->transactionRequest->order->invoiceNumber = $lastOrderId;
 
 		$transRequestXml->transactionRequest->customer->id = (int) $order->getCustomerId();
 
 		if ($billingAddress = $order->getBillingAddress()) {
 			$transRequestXml->transactionRequest->billTo->firstName = $billingAddress->getFirstname();
 			$transRequestXml->transactionRequest->billTo->lastName = $billingAddress->getLastname();
-			$transRequestXml->transactionRequest->billTo->company = $billingAddress->getCompany();
-			$transRequestXml->transactionRequest->billTo->address = $billingAddress->getStreetFull();
-			$transRequestXml->transactionRequest->billTo->city = $billingAddress->getCity();
-			$transRequestXml->transactionRequest->billTo->state = $billingAddress->getRegion();
-			$transRequestXml->transactionRequest->billTo->zip = $billingAddress->getPostcode();
-			$transRequestXml->transactionRequest->billTo->country = $billingAddress->getCountry();
+			//$transRequestXml->transactionRequest->billTo->company = $billingAddress->getCompany();
+			//$transRequestXml->transactionRequest->billTo->address = $billingAddress->getStreetFull();
+			//$transRequestXml->transactionRequest->billTo->city = $billingAddress->getCity();
+			//$transRequestXml->transactionRequest->billTo->state = $billingAddress->getRegion();
+			//$transRequestXml->transactionRequest->billTo->zip = $billingAddress->getPostcode();
+			//$transRequestXml->transactionRequest->billTo->country = $billingAddress->getCountry();
 		}
 
 		if ($shippingAddress = $order->getShippingAddress()) {

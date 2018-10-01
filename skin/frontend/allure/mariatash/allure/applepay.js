@@ -57,8 +57,8 @@ if (window.ApplePaySession) {
 		}],
 		shippingType: 'delivery',
 		requiredBillingContactFields: [
-			"givenName",
-			"familyName",
+			//"givenName",
+			//"familyName",
 			"postalAddress"
 		],
 		requiredShippingContactFields: [
@@ -469,13 +469,13 @@ if (window.ApplePaySession) {
 			url: 	Allure.ApplePay.data.baseUrl+requestType,
 			async: 	false,
 			cache: 	false,
-			method: 	'POST',
+			method: 'POST',
 			dataType: 'json',
 			data: 	requestData,
 			xhrFields: {
 				withCredentials: true
 			},
-			timeout: 0 // 20 seconds
+			timeout: 6000 // 20 seconds
 
 		}).done(function(data){
 			responseData = data;
