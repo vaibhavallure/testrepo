@@ -13,6 +13,15 @@ class Allure_ApplePay_Block_Info extends Mage_Payment_Block_Info
 	protected function _prepareSpecificInformation($transport = null)
 	{
 	    $transport	= parent::_prepareSpecificInformation($transport);
-	    return $transport;
+
+		$data = array(
+				'Paid Using'		=> 'Apple Pay (Secure)'
+				//'Transaction ID' 		=> $this->getInfo()->getData('last_trans_id'),
+				//'Credit Card Type' 		=> $this->getInfo()->getData('cc_type'),
+				//'Credit Card Number' 	=> $this->getInfo()->getData('cc_last4'),
+				//'AVS Response' 			=> $this->getInfo()->getAdditionalInformation('avs_result_code')//cc_avs_status
+		);
+
+		return $transport->setData($data);
 	}
 }
