@@ -57,7 +57,9 @@ if (window.ApplePaySession) {
 		}],
 		shippingType: 'delivery',
 		requiredBillingContactFields: [
-		    "postalAddress"
+			"givenName",
+			"familyName",
+			"postalAddress"
 		],
 		requiredShippingContactFields: [
 		    "postalAddress",
@@ -554,7 +556,7 @@ if (window.ApplePaySession) {
 			'billing[email]': shippingContact.emailAddress,
 			'billing[country_id]': shippingContact.countryCode,
 			'billing[street][0]': shippingContact.addressLines[0],
-			'billing[street][1]': '',
+			'billing[street][1]': (shippingContact.addressLines.length > 1 ? shippingContact.addressLines[1] : ''),
 			'billing[city]': shippingContact.locality,
 			'billing[region_id]': '',
 			'billing[region]': shippingContact.administrativeArea,

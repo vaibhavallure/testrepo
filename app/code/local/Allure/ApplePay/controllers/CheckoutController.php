@@ -577,11 +577,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
-    /**
-     * Create order action
-     */
-    public function saveOrderAction ($paymentData = false)
-    {
+	public function saveOrder($paymentData = false) {
+
         $result = array();
         $_checkoutHelper = Mage::helper('allure_multicheckout');
 
@@ -719,6 +716,16 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         if (isset($redirectUrl)) {
             $result['redirect'] = $redirectUrl;
         }
+
+		return $result;
+	}
+
+    /**
+     * Create order action
+     */
+    public function saveOrderAction ($paymentData = false)
+    {
+		$result = $this->saveOrder();
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
@@ -746,85 +753,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
         $data = $_POST;
 
-        Mage::log("BEGIN: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
-
-        Mage::log(json_encode($_POST),Zend_Log::DEBUG, 'applepay.log', true);
-
-        if (isset($data['billing'])) {
-            $billingData = $data['billing'];
-            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
-
-            if (isset($billingData['email'])) {
-                $billingData['email'] = trim($billingData['email']);
-            }
-
-            if (!isset($billingData['region_id']) || empty($billingData['region_id'])) {
-                $regionName = $billingData['region'];
-
-                $region  = Mage::getModel('directory/region')->loadByCode($regionName, $billingData['country_id']);
-
-                if (!$region->getId()) {
-                    $region = Mage::getModel('directory/region')->loadByName($regionName, $billingData['country_id']);
-                }
-
-                if ($region->getId()) {
-                    $billingData['region_id'] = $region->getId();
-                }
-            }
-
-            Mage::log("NEW DATA: ".json_encode($billingData),Zend_Log::DEBUG, 'applepay.log', true);
-
-            $this->getOnepage()->saveBilling($billingData, $customerAddressId);
-            $this->getOnepage()->saveShipping($billingData, $customerAddressId);
-        }
-
-        if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
-            $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($this->_getSession()->getDefaultShippingMethod());
-        }
-
-        $paymentData = array('method' => 'applepay');
-
-        $this->getRequest()->setPost('payment', $paymentData);
-
-        Mage::log("START: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
-
-        try {
-            $result = $this->saveOrderAction($paymentData);
-
-            if ($responseData = $this->_chargeCard()) {
-
-                $responseDataObject = json_decode($responseData, true);
-
-                if ($responseDataObject['messages']['resultCode'] == 'Ok') {
-
-                    if ($responseDataObject['transactionResponse']) {
-
-                        $paymentData = $responseDataObject['transactionResponse'];
-
-                        $authResponse = new Varien_Object($paymentData);
-
-                        $payment = $this->getOnepage()->getQuote()->getPayment();
-
-                        $payment->setTransactionId( $authResponse->getTransId());
-                        $payment->setTransactionAdditionalInfo( Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $authResponse->getData() );
-
-                        $payment->save();
-                    }
-                }
-            }
-
-            return $result;
-        } catch (Exception $e) {
-            Mage::log("EXCEPTION: ".$e->getMessage(),Zend_Log::DEBUG, 'applepay.log', true);
-            throw new Exception($e->getMessage(), $e->getCode());
-        }
-        Mage::log("END: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
-        Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
-    }
-
-    public function saveOrderTransactionAction() {
-
-        $data = $_POST;
+		$result = array();
+		$result['success'] = false;
+		$result['error'] = true;
 
         Mage::log("BEGIN: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
 
@@ -869,37 +800,79 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         Mage::log("START: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
 
         try {
-            $result = $this->saveOrderAction($paymentData);
+
+	        Mage::log("START: saveOrder",Zend_Log::DEBUG, 'applepay.log', true);
+            $result = $this->saveOrder($paymentData);
+			Mage::log("END: saveOrder",Zend_Log::DEBUG, 'applepay.log', true);
+
+			Mage::log("START: _chargeCard",Zend_Log::DEBUG, 'applepay.log', true);
 
             if ($responseData = $this->_chargeCard()) {
+
+				Mage::log("END: _chargeCard",Zend_Log::DEBUG, 'applepay.log', true);
 
                 $responseDataObject = json_decode($responseData, true);
 
                 if ($responseDataObject['messages']['resultCode'] == 'Ok') {
 
-                    if ($responseDataObject['transactionResponse']) {
+					if ($responseDataObject['transactionResponse']) {
 
-                        $paymentData = $responseDataObject['transactionResponse'];
+						$paymentData = $responseDataObject['transactionResponse'];
 
-                        $authResponse = new Varien_Object($paymentData);
+						$transactionId = $paymentData['transId'];
 
-                        $payment = $this->getOnepage()->getQuote()->getPayment();
+						$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
 
-                        $payment->setTransactionId( $authResponse->getTransId());
-                        $payment->setTransactionAdditionalInfo( Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $authResponse->getData() );
+						$order = Mage::getModel('sales/order')->load($orderId);
 
-                        $payment->save();
-                    }
+						$invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
+
+						# The rest is only required when handling a partial invoice as in this example
+						$amount = $invoice->getGrandTotal();
+						$invoice->register()->pay();
+						$invoice->getOrder()->setIsInProcess(true);
+
+						$formatedPrice = $order->getBaseCurrency()->formatTxt($order->getGrandTotal());
+
+						$history = $invoice->getOrder()->addStatusHistoryComment(
+						    'Amount of ' . $formatedPrice . ' captured through Apple Pay.', false
+						);
+						$history->setIsCustomerNotified(true);
+
+						Mage::log("START: createInvoice",Zend_Log::DEBUG, 'applepay.log', true);
+
+						Mage::getModel('core/resource_transaction')
+						    ->addObject($invoice)
+						    ->addObject($invoice->getOrder())
+						    ->save();
+
+						Mage::log("END: createInvoice",Zend_Log::DEBUG, 'applepay.log', true);
+
+						//$order->save();
+
+						// Prepare payment object
+						$payment = $order->getPayment();
+						$payment->setMethod('applepay')
+						->setTransactionId($transactionId)
+						->setParentTransactionId(null)
+						->save();
+
+						// $order->save();
+					}
                 }
             }
 
-            return $result;
+			//return $result;
         } catch (Exception $e) {
             Mage::log("EXCEPTION: ".$e->getMessage(),Zend_Log::DEBUG, 'applepay.log', true);
             throw new Exception($e->getMessage(), $e->getCode());
         }
         Mage::log("END: saveOrderAction",Zend_Log::DEBUG, 'applepay.log', true);
         Mage::log("END: saveOrderTransactionAction",Zend_Log::DEBUG, 'applepay.log', true);
+
+		Mage::log(Mage::helper('core')->jsonEncode($result), Zend_Log::DEBUG, 'applepay.log', true);
+
+		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
     private function _chargeCard()
@@ -907,20 +880,128 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
         $transRequestXmlStr=<<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
-      <merchantAuthentication></merchantAuthentication>
-      <transactionRequest>
-         <transactionType>authCaptureTransaction</transactionType>
-         <amount>assignAMOUNT</amount>
-         <currencyCode>USD</currencyCode>
-         <payment>
-            <opaqueData>
-               <dataDescriptor>assignDD</dataDescriptor>
-               <dataValue>assignDV</dataValue>
-            </opaqueData>
-         </payment>
-      </transactionRequest>
+	<merchantAuthentication></merchantAuthentication>
+	<transactionRequest>
+		<transactionType>authCaptureTransaction</transactionType>
+		<amount>assignAMOUNT</amount>
+		<currencyCode>USD</currencyCode>
+		<payment>
+			<opaqueData>
+				<dataDescriptor>assignDD</dataDescriptor>
+				<dataValue>assignDV</dataValue>
+			</opaqueData>
+		</payment>
+		<order>
+			<invoiceNumber>INV-12345</invoiceNumber>
+			<description>Apple Pay Order</description>
+		</order>
+
+		<customer>
+			<id>0</id>
+		</customer>
+		<billTo>
+			<firstName>Maria</firstName>
+			<lastName>Tash</lastName>
+			<company></company>
+			<address>653 Broadway</address>
+			<city>New York</city>
+			<state>NY</state>
+			<zip>10012</zip>
+			<country>USA</country>
+		</billTo>
+		<shipTo>
+			<firstName>Maria</firstName>
+			<lastName>Tash</lastName>
+			<company></company>
+			<address>653 Broadway</address>
+			<city>New York</city>
+			<state>NY</state>
+			<zip>10012</zip>
+			<country>USA</country>
+		</shipTo>
+	</transactionRequest>
 </createTransactionRequest>
 XML;
+
+
+	$lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+
+	$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
+
+	$order = Mage::getModel('sales/order')->load($orderId);
+
+	$requestData = array(
+		"createTransactionRequest" => array(
+			"merchantAuthentication" =>  array(
+				"name" =>  "API_LOGIN_ID",
+				"transactionKey" =>  "API_TRANSACTION_KEY"
+			),
+			//"refId" =>  "123456",
+			"transactionRequest" =>  array(
+				"transactionType" =>  "authCaptureTransaction",
+				"amount" =>  $_POST['amount'],
+				"payment" =>  array(
+					// "creditCard" =>  array(
+					// 	"cardNumber" =>  "5424000000000015",
+					// 	"expirationDate" =>  "2020-12",
+					// 	"cardCode" =>  "999"
+					// )
+					"opaqueData" =>  array(
+						"dataDescriptor" =>  $_POST['dataDesc'],
+						"dataValue" =>  $_POST['dataBinary']
+					)
+				),
+				// "lineItems" =>  array(
+				// 	"lineItem" =>  array(
+				// 		"itemId" =>  "1",
+				// 		"name" =>  "vase",
+				// 		"description" =>  "Cannes logo",
+				// 		"quantity" =>  "18",
+				// 		"unitPrice" =>  "45.00"
+				// 	)
+				// ),
+				// "tax" =>  array(
+				// 	"amount" =>  "4.26",
+				// 	"name" =>  "level2 tax name",
+				// 	"description" =>  "level2 tax"
+				// ),
+				// "duty" =>  array(
+				// 	"amount" =>  "8.55",
+				// 	"name" =>  "duty name",
+				// 	"description" =>  "duty description"
+				// ),
+				// "shipping" =>  array(
+				// 	"amount" =>  "4.26",
+				// 	"name" =>  "level2 tax name",
+				// 	"description" =>  "level2 tax"
+				// ),
+				// "poNumber" =>  "456654",
+				"customer" =>  array(
+					"id" =>  "99999456654"
+				),
+				"billTo" =>  array(
+					"firstName" =>  "Ellen",
+					"lastName" =>  "Johnson",
+					"company" =>  "Souveniropolis",
+					"address" =>  "14 Main Street",
+					"city" =>  "Pecan Springs",
+					"state" =>  "TX",
+					"zip" =>  "44628",
+					"country" =>  "USA"
+				),
+				"shipTo" =>  array(
+					"firstName" =>  "China",
+					"lastName" =>  "Bayles",
+					"company" =>  "Thyme for Tea",
+					"address" =>  "12 Main Street",
+					"city" =>  "Pecan Springs",
+					"state" =>  "TX",
+					"zip" =>  "44628",
+					"country" =>  "USA"
+				)
+			)
+		)
+	);
 
         $transRequestXml = new SimpleXMLElement($transRequestXmlStr);
 
@@ -933,6 +1014,32 @@ XML;
         $transRequestXml->transactionRequest->amount = $_POST['amount'];
         $transRequestXml->transactionRequest->payment->opaqueData->dataDescriptor=$_POST['dataDesc'];
         $transRequestXml->transactionRequest->payment->opaqueData->dataValue=$_POST['dataBinary'];
+
+		$transRequestXml->transactionRequest->order->invoiceNumber = 'A'.$lastOrderId;
+
+		$transRequestXml->transactionRequest->customer->id = (int) $order->getCustomerId();
+
+		if ($billingAddress = $order->getBillingAddress()) {
+			$transRequestXml->transactionRequest->billTo->firstName = $billingAddress->getFirstname();
+			$transRequestXml->transactionRequest->billTo->lastName = $billingAddress->getLastname();
+			$transRequestXml->transactionRequest->billTo->company = $billingAddress->getCompany();
+			$transRequestXml->transactionRequest->billTo->address = $billingAddress->getStreetFull();
+			$transRequestXml->transactionRequest->billTo->city = $billingAddress->getCity();
+			$transRequestXml->transactionRequest->billTo->state = $billingAddress->getRegion();
+			$transRequestXml->transactionRequest->billTo->zip = $billingAddress->getPostcode();
+			$transRequestXml->transactionRequest->billTo->country = $billingAddress->getCountry();
+		}
+
+		if ($shippingAddress = $order->getShippingAddress()) {
+			$transRequestXml->transactionRequest->shipTo->firstName = $shippingAddress->getFirstname();
+			$transRequestXml->transactionRequest->shipTo->lastName = $shippingAddress->getLastname();
+			$transRequestXml->transactionRequest->shipTo->company = $shippingAddress->getCompany();
+			$transRequestXml->transactionRequest->shipTo->address = $shippingAddress->getStreetFull();
+			$transRequestXml->transactionRequest->shipTo->city = $shippingAddress->getCity();
+			$transRequestXml->transactionRequest->shipTo->state = $shippingAddress->getRegionCode();
+			$transRequestXml->transactionRequest->shipTo->zip = $shippingAddress->getPostcode();
+			$transRequestXml->transactionRequest->shipTo->country = $shippingAddress->getCountry();
+		}
 
         if ($_POST['dataDesc'] === 'COMMON.VCO.ONLINE.PAYMENT') {
             $transRequestXml->transactionRequest->addChild('callId',$_POST['callId']);
@@ -959,7 +1066,7 @@ XML;
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
             curl_setopt($ch, CURLOPT_POSTFIELDS, $transRequestXml->asXML());
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 300);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 500);
             // The following two curl SSL options are set to "false" for ease of development/debug purposes only.
             // Any code used in production should either remove these lines or set them to the appropriate
             // values to properly use secure connections for PCI-DSS compliance.

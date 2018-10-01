@@ -22,7 +22,7 @@ $giftCardCodes = (array) Mage::getSingleton('giftcards/session')->getCardIds();
 ?>
 <?php if ($this->isEnabled() && !$this->isLoaded()) : ?>
 <!-- Apple Pay Async Script -->
-<script async='async' type='text/javascript' src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'allure/applepay.js?ts='.now(); ?>'></script>
+<!--<script async='async' type='text/javascript' src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true) . 'allure/applepay.js?ts='.now(); ?>'></script>-->
 <div class="applepay-popup modal fade" id="applepay-popup">
     <div class="applepay-popup-container modal-content">
     		<div class="modal-header">
@@ -40,7 +40,7 @@ $giftCardCodes = (array) Mage::getSingleton('giftcards/session')->getCardIds();
                                 <div class="coupons">
                                     <div class="discount" style="display: none">
                                         <h2>Gift Cards</h2>
-                                    
+
                                         <div class="discount-form" >
                                             <form method="post" action="/giftcards/cart/activateGiftCard/" id="applePayActivateGiftCard">
                                             	<?php foreach ($giftCardCodes as $giftCardCode):?>
@@ -64,9 +64,9 @@ $giftCardCodes = (array) Mage::getSingleton('giftcards/session')->getCardIds();
                                             var ApplePayGiftCardForm = new VarienForm('applePayActivateGiftCard');
                                             //]]&gt;
                                         </script>
-                                    
+
                                     </div>
-                                    <div class="discount">        
+                                    <div class="discount">
                                         <h2>Promo Code</h2>
                                         <div class="discount-form">
                                     		<form id="applepay-discount-coupon-form" action="/checkout/cart/couponPost/" method="post">
@@ -74,8 +74,8 @@ $giftCardCodes = (array) Mage::getSingleton('giftcards/session')->getCardIds();
                                                 <div class="input-box">
                                                     	<input class="input-text required-entry" id="coupon_code2" name="coupon_code" value="<?php echo ($couponCode ? $couponCode : '');?>" <?php echo ($couponCode ? 'readonly="readonly"' : '');?> />
                                                 </div>
-                                                <div class="buttons-set">                
-                                                		<button type="button" id="applepay-btn-coupon" title="Coupon Code" class="button" onclick="return Allure.ApplePay.action.toggleCouponCode()" data-action="<?php echo ($couponCode ? 'remove' : 'apply');?>" value="Save"><span><span><?php echo ($couponCode ? 'Remove' : 'Apply');?></span></span></button>                
+                                                <div class="buttons-set">
+                                                		<button type="button" id="applepay-btn-coupon" title="Coupon Code" class="button" onclick="return Allure.ApplePay.action.toggleCouponCode()" data-action="<?php echo ($couponCode ? 'remove' : 'apply');?>" value="Save"><span><span><?php echo ($couponCode ? 'Remove' : 'Apply');?></span></span></button>
                                                 </div>
                                     		</form>
                                         </div>
@@ -83,7 +83,7 @@ $giftCardCodes = (array) Mage::getSingleton('giftcards/session')->getCardIds();
                                         	//<![CDATA[
                                             	var ApplePayDiscountForm = new VarienForm('applepay-discount-coupon-form');
                                         	//]]>
-                                        	</script>               
+                                        	</script>
                                     </div>
                 					</div>
                             </div>

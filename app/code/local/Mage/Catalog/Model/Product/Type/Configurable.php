@@ -634,8 +634,8 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
      */
     protected function _prepareProduct(Varien_Object $buyRequest, $product, $processMode)
     {
-		var_dump(func_get_args());
         $attributes = $buyRequest->getSuperAttribute();
+		
         if ($attributes || !$this->_isStrictProcessMode($processMode)) {
             if (!$this->_isStrictProcessMode($processMode)) {
                 if (is_array($attributes)) {
