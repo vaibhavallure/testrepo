@@ -173,22 +173,22 @@ class Allure_AlertServices_Model_Alerts
 					Mage::log('Average load time: '.$avg_time,Zend_log::DEBUG,'allureAlerts.log',true);
 					if ($avg_time) {
 						if (is_null($timeArray) || !$timeArray) {
-							Mage::getModel('core/config')->saveConfig($configPath,$avg_time);
+							Mage::getModel('core/config')->saveConfig($configPath,$avg_time)->cleanCache();
 						}else{
 							$timearray = explode(',', $timeArray);
 							if(count($timearray) < 7){
 								array_push($timearray,$avg_time);
 
-								$newAvgValure = implode(',', $timearray);
-								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValure);
+								$newAvgValue = implode(',', $timearray);
+								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValue)->cleanCache();
 							}
 							if(count($timearray) == 7){
 								$totAvgTime = (array_sum($timearray))/7;
 								array_shift($timearray);
 								array_push($timearray,$avg_time);
 
-								$newAvgValure = implode(',', $timearray);
-								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValure);
+								$newAvgValue = implode(',', $timearray);
+								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValue)->cleanCache();
 								/*$totAvgTime = 30;*/
 								if ($totAvgTime >= 30) {
 									$helper->sendEmailAlertForAvgPageLoad($totAvgTime);
