@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <!--
+    Sidecart/Minicart Shortcut
+    -->
+    <default>
+        <block type="allure_applepay/script" name="allure_applepay.script" template="allure/applepay/script.phtml" />
+        <block type="allure_applepay/script" name="allure_applepay.script.async" template="allure/applepay/script_async.phtml" />
+        <block type="allure_applepay/button" name="ApplePayButtonSideCart" template="allure/applepay/button.phtml"/>
+
+        <reference name="head">
+            <action method="append" ifconfig="payment/applepay/show_in_minicart">
+                <block>allure_applepay.script</block>
+            </action>
+            <action method="addItem" ifconfig="payment/applepay/show_in_minicart">
+                <type>skin_css</type><name>allure/applepay.css</name><params/>
+            </action>
+            <action method="addItem" ifconfig="payment/applepay/show_in_minicart">
+                <type>skin_js</type><name>allure/applepay.js</name><params/>
+            </action>
+        </reference>
+        <reference name="before_body_end">
+            <action method="append" ifconfig="payment/applepay/show_in_minicart">
+                <block>allure_applepay.script.async</block>
+            </action>
+        </reference>
+        <reference name="cart_sidebar.extra_actions">
+            <action method="append" ifconfig="payment/applepay/show_in_minicart">
+                <block>ApplePayButtonSideCart</block>
+            </action>
+        </reference>
+    </default>
+
+    <!--
+    Product View Shortcut
+    -->
+    <catalog_product_view>
+
+        <block type="allure_applepay/script" name="allure_applepay.script" template="allure/applepay/script.phtml" />
+        <block type="allure_applepay/script" name="allure_applepay.script.async" template="allure/applepay/script_async.phtml" />
+        <block type="allure_applepay/button" name="ApplePayButtonProduct" template="allure/applepay/button_product.phtml" />
+
+        <reference name="head">
+            <action method="append" ifconfig="payment/applepay/visible_on_product">
+                <block>allure_applepay.script</block>
+            </action>
+
+            <action method="addItem" ifconfig="payment/applepay/visible_on_product">
+                <type>skin_css</type><name>allure/applepay.css</name><params/>
+			</action>
+            <action method="addItem" ifconfig="payment/applepay/visible_on_product">
+                <type>skin_js</type><name>allure/applepay.js</name><params/>
+            </action>
+        </reference>
+
+        <reference name="before_body_end">
+            <action method="append" ifconfig="payment/applepay/visible_on_product">
+                <block>allure_applepay.script.async</block>
+            </action>
+        </reference>
+
+        <reference name="product.info.addtocart">
+            <action method="append" ifconfig="payment/applepay/visible_on_product">
+                <block>ApplePayButtonProduct</block>
+            </action>
+        </reference>
+
+    </catalog_product_view>
+
+    <!--
+    Cart
+    -->
+    <checkout_cart_index>
+
+        <block type="allure_applepay/script" name="allure_applepay.script" template="allure/applepay/script.phtml" />
+        <block type="allure_applepay/script" name="allure_applepay.script.async" template="allure/applepay/script_async.phtml" />
+        <block type="allure_applepay/button" name="ApplePayButtonCart" template="allure/applepay/button_cart.phtml" />
+        <block type="allure_applepay/button" after="-" name="ApplePayButtonTop" template="allure/applepay/button.phtml"/>
+
+        <reference name="head">
+            <action method="append" ifconfig="payment/applepay/show_pay_cart">
+                <block>allure_applepay.script</block>
+            </action>
+
+            <action method="addItem" ifconfig="payment/applepay/show_pay_cart">
+                <type>skin_css</type><name>allure/applepay.css</name><params/>
+            </action>
+
+            <action method="addItem" ifconfig="payment/applepay/show_pay_cart">
+                <type>skin_js</type><name>allure/applepay.js</name><params/>
+            </action>
+        </reference>
+
+        <reference name="before_body_end">
+            <action method="append" ifconfig="payment/applepay/show_pay_cart">
+                <block>allure_applepay.script.async</block>
+            </action>
+        </reference>
+
+        <!-- To Move Apple Pay button around on the cart page, change the after="" attribute to before="" in the below block tags -->
+
+        <reference name="checkout.cart.top_methods">
+                <action method="append" ifconfig="payment/applepay/show_pay_cart">
+                    <block>ApplePayButtonTop</block>
+                </action>
+        </reference>
+
+        <reference name="checkout.cart.methods">
+                <action method="append" ifconfig="payment/applepay/show_pay_cart">
+                    <block>ApplePayButtonCart</block>
+                </action>
+        </reference>
+
+    </checkout_cart_index>
+
+
+    <!--
+    OnePage checkout
+    -->
+    <checkout_onepage_index>
+
+        <block type="allure_applepay/script" name="allure_applepay.script" template="allure/applepay/script.phtml" />
+        <block type="allure_applepay/script" name="allure_applepay.script.async" template="allure/applepay/script_async.phtml" />
+        <block type="allure_applepay/button" name="ApplePayButtonCheckout" template="allure/applepay/button.phtml" />
+
+        <reference name="head">
+            <action method="append" ifconfig="payment/applepay/use_in_checkout">
+                <block>allure_applepay.script</block>
+            </action>
+			
+            <action method="addItem" ifconfig="payment/applepay/use_in_checkout">
+                <type>skin_css</type><name>allure/applepay.css</name><params/>
+            </action>
+            <action method="addItem" ifconfig="payment/applepay/use_in_checkout">
+                <type>skin_js</type><name>allure/applepay.js</name><params/>
+            </action>
+        </reference>
+
+        <reference name="before_body_end">
+            <action method="append" ifconfig="payment/applepay/use_in_checkout">
+                <block>allure_applepay.script.async</block>
+            </action>
+        </reference>
+
+        <reference name="checkout.onepage">
+            <action method="append" ifconfig="payment/applepay/use_in_checkout">
+                <block>ApplePayButtonCheckout</block>
+            </action>
+        </reference>
+
+    </checkout_onepage_index>
+
+</layout>

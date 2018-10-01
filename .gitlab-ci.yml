@@ -83,3 +83,4 @@ deploy-cloud:
   script:
     - mage-deploy
     - echo 'Deployed on Production'
+
