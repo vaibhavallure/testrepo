@@ -22,6 +22,7 @@
 					<element name="cc_type" type="xsd:string" minOccurs="0" />
 					<element name="cc_last4" type="xsd:string" minOccurs="0" />
 					<element name="hash" type="xsd:string" minOccurs="0" />
+					<element name="active" type="xsd:string" minOccurs="0" />
 				</all>
 			</complexType>
 			<complexType name="tokenbaseCardAddressEntity">

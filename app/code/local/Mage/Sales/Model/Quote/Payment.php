@@ -117,7 +117,7 @@ class Mage_Sales_Model_Quote_Payment extends Mage_Payment_Model_Info
     {
         return $this->_quote;
     }
-
+    
     /**
      * Import data array to payment method object,
      * Method calls quote totals collect because payment method availability
@@ -131,39 +131,34 @@ class Mage_Sales_Model_Quote_Payment extends Mage_Payment_Model_Info
     {
         $data = new Varien_Object($data);
         Mage::dispatchEvent(
-            $this->_eventPrefix . '_import_data_before',
-            array(
-                $this->_eventObject=>$this,
-                'input'=>$data,
-            )
-        );
-
+                $this->_eventPrefix . '_import_data_before',
+                array(
+                        $this->_eventObject=>$this,
+                        'input'=>$data,
+                )
+                );
+        
         $this->setMethod($data->getMethod());
         $method = $this->getMethodInstance();
-
+        
         /**
          * Payment availability related with quote totals.
          * We have to recollect quote totals before checking
          */
         $this->getQuote()->collectTotals();
-
         
-        if(!preg_match("/bakerloo/", $data->getMethod()))
-        {
-            if (!$method->isAvailable($this->getQuote())
+        if (!$method->isAvailable($this->getQuote())
                 || !$method->isApplicableToQuote($this->getQuote(), $data->getChecks())
                 ) {
                     Mage::throwException(Mage::helper('sales')->__('The requested Payment Method is not available.'));
                 }
-                Mage::log("Payment Method exception:".get_class($this),Zend_log::DEBUG,'ebiz_payment.log',true);
-        }
-       
-        $method->assignData($data);
-        /*
-        * validating the payment data
-        */
-        $method->validate();
-        return $this;
+                
+                $method->assignData($data);
+                /*
+                 * validating the payment data
+                 */
+                $method->validate();
+                return $this;
     }
 
     /**

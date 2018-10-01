@@ -1,0 +1,126 @@
+<?php
+/**
+ * Apple Pay
+ *
+ * @category    Allure
+ * @package     Allure_ApplePay
+ * @copyright   Copyright (c) 2017 Allure Inc
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+?>
+<?php if ($this->isApplePayButtonEnabled()): ?>
+
+<button id="<?php echo $this->getApplePayButtonId(); ?>" class='apple-pay-button-with-text apple-pay-button-black-with-text'  onclick="return Allure.ApplePay.Callbacks.<?php echo $this->getApplePayButtonId(); ?>()"><span class="text">Pay with </span> <span class="logo"></span></button>
+<style>
+<!--
+button#ApplePayButtonCart {
+
+    min-width: 145px;
+    min-height: 32px;
+    
+    max-height: 64px;
+    max-height: 40px;
+}
+-->
+/*<!--
+
+    .apple-pay-button-with-text {
+        -apple-pay-scale: 1;
+        display: inline-block;
+        font-size: 12px;
+        
+        border-radius: 5px;
+        padding: 0px;
+        box-sizing: border-box;
+        
+        min-width: 145px;
+        min-height: 32px;
+        
+        max-height: 64px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 0;
+        border: 0;
+        min-height: 35px;
+    }
+    
+    .apple-pay-button-black-with-text {
+        background-color: black;
+        color: white;
+    }
+    
+    .apple-pay-button-white-with-text {
+        background-color: white;
+        color: black;
+    }
+    
+    .apple-pay-button-white-with-line-with-text {
+        background-color: white;
+        color: black;
+        border: .5px solid black;
+    }
+     
+    .apple-pay-button-with-text > .text {
+	    font-family: -apple-system;
+	    font-size: 12px;
+	    font-weight: 300;
+	    align-self: center;
+	    margin-right: calc(2px * var(--apple-pay-scale));
+	    vertical-align: middle;
+	}
+	
+	.apple-pay-button-with-text > .logo {
+        background-size: 100% 60%;
+        background-repeat: no-repeat;
+        background-position: 0 50%;
+        margin-left: calc(4px * var(--apple-pay-scale));
+        border: none;
+        width: 42px;
+        height: 34px;
+        vertical-align: middle;
+        display:inline-block;
+    }
+    
+    .apple-pay-button-with-text.apple-pay-button-black-with-text > .logo {
+        background-image: -webkit-named-image(apple-pay-logo-white);
+        background-color: black;
+    }
+    
+    .apple-pay-button-with-text.apple-pay-button-white-with-text > .logo {
+        background-image: -webkit-named-image(apple-pay-logo-black);
+        background-color: white;
+    }
+        
+    .apple-pay-button-with-text.apple-pay-button-white-with-line-with-text > .logo {
+        background-image: -webkit-named-image(apple-pay-logo-black);
+        background-color: white;
+    }
+    
+    .apple-pay-button-with-text.apple-pay-button-black-with-line-with-text > .logo {
+        background-image: -webkit-named-image(apple-pay-logo-white);
+        background-color: black;
+    }
+        
+	
+-->*/
+</style>
+<script type="text/javascript">
+    if ( typeof Allure == 'undefined' ) var Allure = {};
+    if ( typeof Allure.ApplePay == 'undefined' ) Allure.ApplePay = {};
+    if ( typeof Allure.ApplePay.Callbacks == 'undefined' ) Allure.ApplePay.Callbacks = {};
+    if ( typeof Allure.ApplePay.data == 'undefined' ) Allure.ApplePay.data = {};
+
+    Allure.ApplePay.Callbacks["<?php echo $this->getApplePayButtonId(); ?>"] = function() {
+
+        console.log("<?php echo $this->getApplePayButtonId(); ?>");
+
+        Allure.ApplePay.data.checkoutType = "<?php echo $this->getApplePayButtonId(); ?>";
+        
+        //ApplePayButtonCart
+        Allure.ApplePay.action.init();
+
+        return false;
+	};
+</script>
+
+<?php endif; ?>
