@@ -134,8 +134,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 array('product' => $product, 'request' => $this->getRequest(), 'response' => $this->getResponse())
             );
 
-            $couponCode = '4uWruyuc';
-            $this->_getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')->collectTotals()->save();
+            //$couponCode = '4uWruyuc';
+            //$this->_getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')->collectTotals()->save();
 
             $quote = $cart->getQuote();
 
@@ -145,12 +145,12 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 'quote_id'      => $quote->getId(),
                 'global_currency'  => $quote->getGlobalCurrencyCode(),
                 'currency'      => Mage::app()->getStore()->getCurrentCurrencyCode(),
-                'coupon_code'   => $quote->getCouponCode(),
+                //'coupon_code'   => $quote->getCouponCode(),
                 'subtotal'      => $quote->getBaseSubtotal(),
                 'grand_total'   => $quote->getBaseGrandTotal(),
                 'items'         => $quote->getItemsCount(),
                 'total'         => $product->getFinalPrice(),
-                'quote'         => $quote->getData()
+                //'quote'         => $quote->getData()
             );
 
             $this->getResponse()->setBody(json_encode($result));
@@ -733,7 +733,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
     public function saveOrderAction ($paymentData = false)
     {
 		$result = $this->saveOrder();
-		
+
 		$this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
