@@ -170,6 +170,7 @@ class Allure_AlertServices_Model_Alerts
 					$res = curl_exec($ch);
 					$info = curl_getinfo($ch);
 					$avg_time = number_format((float)$info['total_time'], 2);
+					Mage::log('Average load time: '.$avg_time,Zend_log::DEBUG,'allureAlerts.log',true);
 					if ($avg_time) {
 						if (is_null($timeArray) || !$timeArray) {
 							Mage::getModel('core/config')->saveConfig($configPath,$avg_time);
