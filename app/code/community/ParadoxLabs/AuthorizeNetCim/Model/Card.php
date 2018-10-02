@@ -36,7 +36,13 @@ class ParadoxLabs_AuthorizeNetCim_Model_Card extends ParadoxLabs_TokenBase_Model
 		}
 		
 		// Payment ID -- pull from order if possible.
-		$this->setPaymentId( $payment->getOrder()->getExtCustomerId() );
+		$paymentId = $payment->getOrder()->getExtCustomerId();
+		if( $paymentId !== null && strpos($paymentId, ':') !== false) {
+			$paymentId = explode( ':', $paymentId );
+			$paymentId = $paymentId[1];
+		}
+		
+		$this->setPaymentId( $paymentId );
 		
 		if( $this->getProfileId() == '' || $this->getPaymentId() == '' ) {
 			Mage::helper('tokenbase')->log( $this->getMethod(), 'Authorize.Net CIM: Unable to covert legacy data for processing. Please seek support.' );
@@ -71,6 +77,22 @@ class ParadoxLabs_AuthorizeNetCim_Model_Card extends ParadoxLabs_TokenBase_Model
 		}
 		
 		return parent::_beforeSave();
+	}
+	
+	/**
+	 * On card save, store the token/ID in the registry (if any) to avoid token reuse.
+	 */
+	protected function _afterSave()
+	{
+		if( $this->hasInfoInstance() ) {
+			$acceptJsValue = $this->getMethodInstance()->gateway()->getParameter('dataValue');
+			
+			if( !empty( $acceptJsValue ) ) {
+				Mage::register( 'authnetcim-acceptjs-' . $acceptJsValue, $this->getId(), true );
+			}
+		}
+		
+		return parent::_afterSave();
 	}
 	
 	/**
@@ -208,6 +230,9 @@ class ParadoxLabs_AuthorizeNetCim_Model_Card extends ParadoxLabs_TokenBase_Model
 			
 			if( Mage::helper('tokenbase')->getIsCheckout() !== true ) {
 				$gateway->setParameter( 'validationMode', $this->getMethodInstance()->getConfigData('validation_mode') );
+			}
+			else {
+				$gateway->setParameter( 'validationMode', null );
 			}
 			
 			$this->_setPaymentInfoOnUpdate( $gateway );
