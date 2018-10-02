@@ -1,5 +1,5 @@
 <?php
-define('ENCRYPTION_KEY', 'd0a7e7997b6d5fcd55f4b5c32611b87cd923e88837b63bf2941ef819dc8ca283');
+if (!defined('ENCRYPTION_KEY')) define('ENCRYPTION_KEY', 'd0a7e7997b6d5fcd55f4b5c32611b87cd923e88837b63bf2941ef819dc8ca283');
 class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
 
     const ORDER_STATUS_NEW="new";

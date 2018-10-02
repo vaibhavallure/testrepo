@@ -26,8 +26,8 @@ class ParadoxLabs_AuthorizeNetCim_Model_Observer_CheckoutFailure
 	public function clearAcceptJs( $observer )
 	{
 		try {
-			$this->_clearAcceptJsTokens( $observer->getEvent()->getOrder()->getPayment() );
-			$this->_clearAcceptJsTokens( $observer->getEvent()->getQuote()->getPayment() );
+			$this->_clearAcceptJsTokens( $observer->getEvent()->getOrder() );
+			$this->_clearAcceptJsTokens( $observer->getEvent()->getQuote() );
 		}
 		catch( Exception $e ) {
 			// Ignore any errors; we don't want to throw them in this context.
@@ -37,18 +37,22 @@ class ParadoxLabs_AuthorizeNetCim_Model_Observer_CheckoutFailure
 	/**
 	 * Unset payment object values, to ensure they will not be reused.
 	 */
-	protected function _clearAcceptJsTokens( $payment )
+	protected function _clearAcceptJsTokens( $object )
 	{
-		if( $payment instanceof Varien_Object ) {
-			$acceptJsKey	= $payment->getAdditionalInformation('acceptjs_key');
-			$acceptJsValue	= $payment->getAdditionalInformation('acceptjs_value');
+		if( $object instanceof Varien_Object ) {
+			$payment = $object->getPayment();
 			
-			if( !empty( $acceptJsKey ) || !empty( $acceptJsValue ) ) {
-				$payment->setAdditionalInformation( 'acceptjs_key', null );
-				$payment->setAdditionalInformation( 'acceptjs_value', null );
+			if( $payment instanceof Varien_Object ) {
+				$acceptJsKey	= $payment->getAdditionalInformation('acceptjs_key');
+				$acceptJsValue	= $payment->getAdditionalInformation('acceptjs_value');
 				
-				if( $payment->getId() > 0 ) {
-					$payment->save();
+				if( !empty( $acceptJsKey ) || !empty( $acceptJsValue ) ) {
+					$payment->setAdditionalInformation( 'acceptjs_key', null );
+					$payment->setAdditionalInformation( 'acceptjs_value', null );
+					
+					if( $payment->getId() > 0 ) {
+						$payment->save();
+					}
 				}
 			}
 		}

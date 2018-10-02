@@ -26,13 +26,4 @@ class ParadoxLabs_TokenBase_Block_Customer_Cards extends Mage_Core_Block_Templat
 	{
 		return Mage::helper('tokenbase')->getActiveCustomerCardsByMethod();
 	}
-	
-	public function getCardName($type){
-		$code   = Mage::registry('tokenbase_method');
-		foreach( Mage::helper('tokenbase')->getCcAvailableTypes( $code ) as $k => $v ):
-			if( $k ==$type)
-				return $v;	
-		endforeach;
-		return "";
-	}
 }

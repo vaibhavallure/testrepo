@@ -244,9 +244,6 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function saveShippingMethodAction ()
     {
-        if ($this->_expireAjax()) {
-            return;
-        }
         if ($this->getRequest()->isPost()) {
             // Mage::log($this->getRequest()->getPost(),Zend_log::DEBUG,'abc',true);die;
             $data = $this->getRequest()->getPost('shipping_method', '');
@@ -350,7 +347,6 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 
     public function saveDeliveryOptionAction ()
     {
-        $this->_expireAjax();
         if ($this->getRequest()->isPost()) {
             // $data = $this->getRequest()->getPost("delivery", "");
             // $shipinmethod = $this->getRequest()->getPost('shipping_method',
