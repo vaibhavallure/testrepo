@@ -94,7 +94,7 @@
 					<cron_expr>0 8 * * 1</cron_expr>
 				</schedule>
 				<run>
-					<model>alertservices/alerts::alertNullUsers</model>
+					<model>alertservices/alerts::alertPageNotFound</model>
 				</run>
 			</alert_page_not_found>
 			<alert_avg_page_load>
