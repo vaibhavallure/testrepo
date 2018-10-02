@@ -68,7 +68,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		'customerShippingAddressId'	=> array(  ),
 		'customerType'				=> array( 'enum' => array( 'individual', 'business' ) ),
 		'dataDescriptor'			=> array( 'noSymbols' => true ),
-		'dataValue'					=> array( 'noSymbols' => true ),
+		'dataValue'					=> array( 'charMask' => 'a-zA-Z0-9+\/\\=' ),
 		'description'				=> array( 'maxLength' => 255 ),
 		'duplicateWindow'           => array( 'charMask' => '\d' ),
 		'dutyAmount'				=> array(  ),
@@ -78,6 +78,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		'email'						=> array( 'maxLength' => 255 ),
 		'emailCustomer'             => array( 'enum' => array( 'true', 'false' ) ),
 		'expirationDate'			=> array( 'maxLength' => 7 ),
+		'includeIssuerInfo'         => array( 'enum' => array( 'true', 'false' ) ),
 		'invoiceNumber'				=> array( 'maxLength' => 20, 'noSymbols' => true ),
 		'itemName'					=> array( 'maxLength' => 31, 'noSymbols' => true ),
 		'loginId'					=> array( 'maxLength' => 20 ),
@@ -125,6 +126,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			),
 		),
 		'transId'					=> array( 'charMask' => '\d' ),
+		'unmaskExpirationDate'      => array( 'enum' => array( 'true', 'false' ) ),
 		'validationMode'			=> array( 'enum' => array( 'liveMode', 'testMode', 'none' ) ),
 	);
 
@@ -335,8 +337,8 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		if( !in_array( $response->getResponseReasonCode() , array( 16, 54 ) ) ) { // Response 54 is 'can't refund; txn has not settled.' 16 is 'cannot find txn' (expired). We deal with them.
 			if( $transactionResult['messages']['resultCode'] != 'Ok' 							// Error result
 				|| in_array( $response->getResponseCode(), array( 2, 3 ) )						// OR error/decline response code
-				|| ( !in_array( $response->getTransactionType(), array( 'credit', 'void' ) )	// OR no transID or auth code on a charge txn
-					&& ( $response->getTransactionId() == '' || ( $response->getAuthCode() == '' && $response->getMethod() != 'ECHECK' ) ) ) ) {
+				|| ( !in_array( $response->getTransactionType(), array( 'credit', 'void' ) )	// OR no transID or auth code on a non-held charge txn
+					&& ( $response->getTransactionId() == '' || ( $response->getAuthCode() == '' && $response->getMethod() != 'ECHECK' && $response->getResponseCode() != 4 ) ) ) ) {
 				$response->setIsError( true );
 
 				Mage::helper('tokenbase')->log( $this->_code, sprintf( "Transaction error: %s\n%s\n%s", $response->getResponseReasonText(), json_encode( $response->getData() ), $this->_log ) );
@@ -1439,6 +1441,8 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 	{
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
+			'unmaskExpirationDate'		=> $this->getParameter('unmaskExpirationDate', 'false'),
+			'includeIssuerInfo'			=> $this->getParameter('includeIssuerInfo', 'false'),
 		);
 
 		return $this->_runTransaction( 'getCustomerProfileRequest', $params );
@@ -1449,6 +1453,8 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
 			'customerPaymentProfileId'	=> $this->getParameter('customerPaymentProfileId'),
+			'unmaskExpirationDate'		=> $this->getParameter('unmaskExpirationDate', 'false'),
+			'includeIssuerInfo'			=> $this->getParameter('includeIssuerInfo', 'false'),
 		);
 
 		return $this->_runTransaction( 'getCustomerPaymentProfileRequest', $params );

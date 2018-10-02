@@ -7,7 +7,7 @@
 class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Catalog_Block_Product_View_Type_Configurable
 {
     protected $_optionProducts;
-    
+
     protected function _afterToHtml($html)
     {
         $attributeIdsWithImages = Mage::registry('amconf_images_attrids');
@@ -28,16 +28,16 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                     }
                 }
             }
-            
+
             if (Mage::getStoreConfig('amconf/general/show_clear'))
             {
                 $html = '<a href="#" onclick="javascript: spConfig.clearConfig(); return false;">' . $this->__('Reset Configuration') . '</a>' . $html;
             }
-            
+
             $html = '<script type="text/javascript" src="' . Mage::getBaseUrl('js') . 'amasty/amconf/configurable.js"></script>'
                         . $html;
             $simpleProducts = $this->getProduct()->getTypeInstance(true)->getUsedProducts(null, $this->getProduct());
-            
+
             if ($this->_optionProducts)
             {
                 $noimgUrl = Mage::helper('amconf')->getNoimgImgUrl();
@@ -63,16 +63,16 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                             'short_description' => $simple->getShortDescription(),
                             'description'       => $simple->getDescription(),
                         );
-                        
+
                         if (Mage::getStoreConfig('amconf/general/reload_name'))
                         {
                             $confData[implode(',', $key)]['name'] = $simple->getName();
                         }
-                        
+
                         if ($simple->getImage() && Mage::getStoreConfig('amconf/general/reload_images'))
                         {
                             $confData[implode(',', $key)]['media_url'] = $this->getUrl('amconf/media', array('id' => $simple->getId())); // media_url should only exist if we need to re-load images
-                        } elseif ($noimgUrl) 
+                        } elseif ($noimgUrl)
                         {
                             $confData[implode(',', $key)]['noimg_url'] = $noimgUrl;
                         }
@@ -93,10 +93,10 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                 }
             }
         }
-        
+
         return $html;
     }
-    
+
     public function getJsonConfig()
     {
         $attributeIdsWithImages = array();
