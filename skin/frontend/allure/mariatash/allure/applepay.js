@@ -273,7 +273,7 @@ if (window.ApplePaySession) {
 	};
 
 
-	Allure.ApplePay.action.initProduct = function(){
+	Allure.ApplePay.action.initProduct = function() {
 		Allure.ApplePay.modal.data('type','product')
 		Allure.ApplePay.modal.attr('data-type','product')
 
@@ -286,12 +286,17 @@ if (window.ApplePaySession) {
 		return false;
 	};
 
-	Allure.ApplePay.action.init = function(){
+	Allure.ApplePay.action.init = function() {
 
 		if (Allure.ApplePay.flag.active) {
 			return false;
 		} else {
 			Allure.ApplePay.flag.active = true;
+		}
+
+		if (typeof ga == "function") {
+			var gAction = 'INIT';
+			ga('send', 'event', 'ApplePay', gAction, location.hostname + ' / ' + Allure.ApplePay.data.checkoutType + ' / ' + gAction);
 		}
 
 		console.log('Apple Pay Initiated');
@@ -342,6 +347,7 @@ if (window.ApplePaySession) {
 	};
 
 	Allure.ApplePay.action.performValidation = function (valURL) {
+
 		return new Promise(function(resolve, reject) {
 			var xhr = new XMLHttpRequest();
 			xhr.onload = function() {
@@ -420,6 +426,12 @@ if (window.ApplePaySession) {
 	}
 
 	Allure.ApplePay.action.addProduct = function () {
+
+		if (typeof ga == "function") {
+			var gAction = 'addProduct';
+			ga('send', 'event', 'ApplePay', gAction, location.hostname + ' / ' + Allure.ApplePay.data.checkoutType + ' / ' + gAction);
+		}
+
 		Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#qty').parents('form').serialize());
 
 		if (Allure.ApplePay.data.response.addProduct) {
@@ -498,6 +510,11 @@ if (window.ApplePaySession) {
 
 	Allure.ApplePay.action.createTransaction = function(dataObj) {
 
+		if (typeof ga == "function") {
+			var gAction = 'createTransaction';
+			ga('send', 'event', 'ApplePay', gAction, location.hostname + ' / ' + Allure.ApplePay.data.checkoutType + ' / ' + gAction);
+		}
+
 		console.log('starting createTransaction');
 		console.log(dataObj);
 
@@ -546,6 +563,11 @@ if (window.ApplePaySession) {
 	};
 
 	Allure.ApplePay.action.sendPaymentToken = function (paymentToken, shippingContact) {
+
+		if (typeof ga == "function") {
+			var gAction = 'sendPaymentToken';
+			ga('send', 'event', 'ApplePay', gAction, location.hostname + ' / ' + Allure.ApplePay.data.checkoutType + ' / ' + gAction);
+		}
 
 		Allure.ApplePay.data.shippingContact = shippingContact;
 
