@@ -362,22 +362,11 @@
             <div id="fs-instagram-view-container" class="fs-detail-outer-container ">
                 <div class="instagram-loader"></div>
                 
+                
                 <div id="fs-detail-response" class="fs-detail-container "
                 data-resource-url="<?php //echo $feedModel->getUsername()?>">
-                <div class="fs-detail-content">
-                    <div class="fs-detail-left">
-                        <div class="fs-image-container" style="position: relative;">
-                            <img class="fs-detail-image" id="fs_main_image"
-                                src="<?php //echo $feedModel->getStandardResolution()
-//$feedModel->getImage()?>">
-                            <?php //echo $points?>
-                            <div id="point-mark"></div>
-                            <p><?php //echo json_encode($instagramObj) ?></p>
-                        </div>
-                    </div>
-                    <div class="fs-detail-right">
-                        
-                        <div class="fs-detail-nav-bar-arrows">
+                
+                <div class="fs-detail-nav-bar-arrows">
                         <?php if(1):?>
                             <a class="fs-detail-nav-button" id="fs-prev-post">                 
                                 <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
@@ -403,6 +392,21 @@
                             </div>
                             <div style="clear: both;"></div>
                         </div>
+                
+                <div class="fs-detail-content">
+                    <div class="fs-detail-left">
+                        <div class="fs-image-container" style="position: relative;">
+                            <img class="fs-detail-image" id="fs_main_image"
+                                src="<?php //echo $feedModel->getStandardResolution()
+//$feedModel->getImage()?>">
+                            <?php //echo $points?>
+                            <div id="point-mark"></div>
+                            <p><?php //echo json_encode($instagramObj) ?></p>
+                        </div>
+                    </div>
+                    <div class="fs-detail-right">
+                        
+                        
                         <div class="fs-products-title fs-plural-products"></div>
                         
                         <?php //echo $productsLinks?>
@@ -419,8 +423,6 @@
                                 <span class="fs-slashes">//</span> INSTAGRAM <span
                                 class="fs-slashes">//</span> 
                                 <span class="fs-detail-date"><?php //echo $createDate?></span>
-                                
-                                <span class="share_link_icon"><img alt="" src="<?php echo Mage::getDesign()->getSkinUrl('images/icons8-link-26.png');?>"><?php //echo $createDate?></span>
                             </a>
                         </div>
                         
@@ -452,6 +454,7 @@
             </div>
             <div class="fs-buy-container fs-unslid"></div>
                 
+                
             </div>
         </div>
     </div>
@@ -477,7 +480,7 @@ var totalPages = <?php echo $totalPageSize?>;
 jQuery(window).scroll(function(){
     if(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height()){
         if(page<=totalPages){
-            jQuery('.loader').css({"display":"none"});
+            jQuery('.loader').css({"display":"block"});
              if( xhr == null ) {
                 //xhr.abort();
                 //xhr = null;
