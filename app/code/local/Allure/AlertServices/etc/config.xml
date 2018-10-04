@@ -21,6 +21,9 @@
 			<alertservices>
 				<class>Allure_AlertServices_Helper</class>
 			</alertservices>
+			<Allure_AlertServices>
+				<class>Allure_AlertServices_Helper</class>
+			</Allure_AlertServices>
 		</helpers>		
 		<models>
 	        <alertservices>
