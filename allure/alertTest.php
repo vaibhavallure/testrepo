@@ -7,6 +7,7 @@ umask(0);
 $password = $_GET['pass'];*/
 Mage::app('admin');
 
+
 Mage::getModel('alertservices/alerts')->alertAvgPageLoad();
 Mage::getModel('alertservices/alerts')->alertPageNotFound();
 Mage::getModel('alertservices/alerts')->alertNullUsers();
