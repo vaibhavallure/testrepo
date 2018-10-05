@@ -934,6 +934,8 @@ XML;
 
 		$lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
 
+		if (!$lastOrderId) return false;
+
 		$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
 
 		$order = Mage::getModel('sales/order')->load($orderId);
