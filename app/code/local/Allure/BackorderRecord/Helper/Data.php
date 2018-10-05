@@ -133,7 +133,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         $html = "<table>
     <tr>
     <th>ORDER ID</th>
-    <th>ORDER INCREMENT ID</th>
+    <th>ORDER NUMBER</th>
     <th>BACKORDER/CUSTOMIZATION</th>
     <th>STORE</th>
      <th>QTY</th>
@@ -168,7 +168,8 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                 else if ($order->getGiftMessageId())
                     $ordertype = "CUSTOMIZATION";
 
-
+                $customization="";
+                
                 if ($order->getGiftMessageId()) {
                     $gift = Mage::getSingleton("giftmessage/message")->load($order->getGiftMessageId());
                     $customization = $gift->getMessage();
