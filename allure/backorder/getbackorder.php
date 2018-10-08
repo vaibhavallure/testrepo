@@ -24,7 +24,7 @@ if($backorderCollection->getSize()):
 header ( "Content-type: application/vnd.ms-excel" );
 header ( "Content-Disposition: attachment; filename=magento_order.xls" );
 
-;
+
 
 
 
@@ -70,14 +70,19 @@ if($order->getGiftMessageId())
 
     $productName=$order->getName();
     $sku=$order->getSku();
-    $price="$".$order->getBasePrice();
+
+
+    $symbol=Mage::app()->getLocale()->currency($order->getBaseCurrencyCode())->getSymbol();
+    $price=$symbol."".round($order->getBasePrice(),2);
     $qty=$order->getQtyOrdered();
 
 
-if($order->getQtyBackordered())
+if($order->getQtyBackordered() && $order->getParentItemId())
 {
     $parentProductData=Mage::getSingleton("sales/order_item")->load($order->getParentItemId());
-    $price="$".$parentProductData->getBasePrice();
+
+    $symbol=Mage::app()->getLocale()->currency($parentProductData->getBaseCurrencyCode())->getSymbol();
+    $price=$symbol."".round($parentProductData->getBasePrice(),2);
     $qty=$parentProductData->getQtyOrdered();
 }
 
