@@ -17,7 +17,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper = $this->getHelper();
         $helper->salesforceLog("addOrderToSalesforce request.");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
@@ -25,6 +25,10 @@ class Allure_Salesforce_Model_Observer_Order{
         
         $order = $observer->getEvent()->getOrder();
         $items = $order->getAllVisibleItems();
+        
+        //check product is in salesforce or not.if not add into salesforce.
+        Mage::getModel("allure_salesforce/observer_product")->addOrderProduct($items);
+        
         $helper->salesforceLog("order id == ".$order->getId());
         
         $orderId = $order->getId();
@@ -36,8 +40,12 @@ class Allure_Salesforce_Model_Observer_Order{
             $customer = Mage::getModel("customer/customer")->load($customerId);
             $salesforceAccountId = $customer->getSalesforceCustomerId();
             if(!$salesforceAccountId){
-                $guestAccount = Mage::helper('allure_salesforce')->getGuestAccount();
-                $salesforceAccountId = $guestAccount; //$helper::GUEST_CUSTOMER_ACCOUNT;
+                //$guestAccount = Mage::helper('allure_salesforce')->getGuestAccount();
+                //$salesforceAccountId = $guestAccount; //$helper::GUEST_CUSTOMER_ACCOUNT;
+                
+                //create new account for the customer
+                $helper->salesforceLog("from order customer account creating.");
+                $customer->save();
             }
             /* if(!$salesforceAccountId){
                 $customer->save();
@@ -279,7 +287,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper = $this->getHelper();
         $helper->salesforceLog("addInvoiceToSalesforce request.");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
@@ -372,7 +380,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper = $this->getHelper();
         $helper->salesforceLog("addShipmentToSalesforce request.");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
@@ -504,7 +512,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper = $this->getHelper();
         $helper->salesforceLog("addCreditmemoToSalesforce request.");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
@@ -617,7 +625,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper = $this->getHelper();
         $helper->salesforceLog("In updateOrderData request");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
@@ -679,7 +687,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper = $this->getHelper();
         $helper->salesforceLog("deleteShipmentToSalesforce request.");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
@@ -700,11 +708,18 @@ class Allure_Salesforce_Model_Observer_Order{
      * add tracking info into salesforce
      */
     public function addTrackingInfoToSalesforce(Varien_Event_Observer $observer){
+        $helper = $this->getHelper();
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
         $event = $observer->getEvent();
         $track = $event->getTrack();
         $trackingId = $track->getNumber();
         $shipment = $track->getShipment();
-        $helper = $this->getHelper();
+        
         $helper->salesforceLog("Tracking Id:".$trackingId);
         $salesforceShipmentId = $shipment->getSalesforceShipmentId();
         if(!$salesforceShipmentId){
@@ -738,7 +753,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper = $this->getHelper();
         $helper->salesforceLog("deleteTrackInfoSalesforce request");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;

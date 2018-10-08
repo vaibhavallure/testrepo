@@ -47,7 +47,7 @@ class Allure_Salesforce_Model_Observer_Customer{
         $helper         = $this->getHelper();
         $helper->salesforceLog("changeCustomerToSalesforce request");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
@@ -170,7 +170,7 @@ class Allure_Salesforce_Model_Observer_Customer{
         $helper         = $this->getHelper();
         $helper->salesforceLog("deleteCustomerToSalesforce request");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
@@ -200,7 +200,7 @@ class Allure_Salesforce_Model_Observer_Customer{
         $helper         = $this->getHelper();
         $helper->salesforceLog("changeCustomerAddressToSalesforce request.");
         
-        $isEnable = Mage::helper("allure_salesforce");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
         if(!$isEnable){
             $helper->salesforceLog("Salesforce Plugin Disabled.");
             return;
