@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_BackorderRecord>
+      <version>0.1.0</version>
+    </Allure_BackorderRecord>
+  </modules>
+  <global>
+    <helpers>
+      <backorderrecord>
+        <class>Allure_BackorderRecord_Helper</class>
+      </backorderrecord>
+    </helpers>
+    <models>
+    <backorderrecord>
+      <class>Allure_BackorderRecord_Model</class>
+    </backorderrecord>
+    </models>
+  </global>
+  <crontab>
+  <jobs>
+  <backorder_report_cron>
+    <schedule>
+      <cron_expr>0 10 * * *</cron_expr>
+    </schedule>
+    <run>
+      <model>cron/cron::getBackorderRecord</model>
+    </run>
+  </backorder_report_cron>
+  </jobs>
+  </crontab>
+
+  <adminhtml>
+    <acl>
+      <resources>
+        <all>
+          <title>Allow Everything</title>
+        </all>
+        <admin>
+          <children>
+            <system>
+              <children>
+                <config>
+                  <children>
+                    <backorderrecord>
+                      <title>back order record</title>
+                    </backorderrecord>
+                  </children>
+                </config>
+              </children>
+            </system>
+          </children>
+        </admin>
+      </resources>
+    </acl>
+  </adminhtml>
+</config> 
