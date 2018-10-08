@@ -6,6 +6,11 @@
     </Allure_BackorderRecord>
   </modules>
   <global>
+    <blocks>
+      <backorderrecord>
+        <class>Allure_BackorderRecord_Block</class>
+      </backorderrecord>
+    </blocks>
     <helpers>
       <backorderrecord>
         <class>Allure_BackorderRecord_Helper</class>
@@ -52,5 +57,25 @@
         </admin>
       </resources>
     </acl>
+  </adminhtml>
+  <admin>
+    <routers>
+      <adminhtml>
+        <args>
+          <modules>
+            <backorderrecord before="Mage_Adminhtml">Allure_BackorderRecord_Adminhtml</backorderrecord>
+          </modules>
+        </args>
+      </adminhtml>
+    </routers>
+  </admin>
+  <adminhtml>
+    <layout>
+      <updates>
+        <backorderrecord>
+          <file>backorderrecord.xml</file>
+        </backorderrecord>
+      </updates>
+    </layout>
   </adminhtml>
 </config> 

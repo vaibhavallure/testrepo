@@ -13,7 +13,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
-    public function getReportXls()
+    public function getReportXls($dates=array())
     {
 
         $folderPath   = Mage::getBaseDir('var') . DS . 'export';
@@ -30,8 +30,8 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
         try{
-            
-        $csv->saveData($filepath,$this->getTableData());
+
+        $csv->saveData($filepath,$this->getTableData($dates));
 
                 $flag = 1;
 
@@ -153,9 +153,9 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
 
-    public function getTableData()
+    public function getTableData($dates=array())
     {
-        $backorderCollection=Mage::getModel('backorderrecord/cron')->getBackorederCollection();
+        $backorderCollection=Mage::getModel('backorderrecord/cron')->getBackorederCollection($dates);
 
         $rowData = array();
         $rowData[] = $this->getTableHeaders();
