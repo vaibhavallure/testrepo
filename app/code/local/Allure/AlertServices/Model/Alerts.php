@@ -56,7 +56,7 @@ class Allure_AlertServices_Model_Alerts
 					}
 					
 					if (count($orders) <=0 ) {
-						$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem(); 
+						$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem();
 						$helper->sendSalesOfFourEmailAlert($lastorder->getCreatedAt());
 					}
 			}
@@ -270,6 +270,9 @@ class Allure_AlertServices_Model_Alerts
 		    
 		    $dimension1 = new Google_Service_AnalyticsReporting_Dimension();
 		    $dimension1->setName("ga:pagePath");
+
+		     $dimension2 = new Google_Service_AnalyticsReporting_Dimension();
+		    $dimension2->setName("ga:sourceMedium");
 		    
 		    // Create the ReportRequest object.
 		    $request = new Google_Service_AnalyticsReporting_ReportRequest();
@@ -278,7 +281,7 @@ class Allure_AlertServices_Model_Alerts
 		    $request->setMetrics(array($sessions));
 		    
 		    //new added by aws02
-		    $request->setDimensions(array($dimension,$dimension1));
+		    $request->setDimensions(array($dimension,$dimension1,$dimension2));
 		    
 		    $body = new Google_Service_AnalyticsReporting_GetReportsRequest();
 		    $body->setReportRequests( array( $request) );
@@ -317,7 +320,8 @@ class Allure_AlertServices_Model_Alerts
 
 		                if ($form == 'page') {
 		                    if ($dimensionHeaders[$i] == 'ga:pageTitle' && $dimensions[$i] == '404 Not Found') {
-		                        $final_report[] = $dimensions[$i+1];
+		                        //$final_report[] = $dimensions[$i+1];
+		              print($dimensionHeaders[$i] . ": " . $dimensions[$i+1] . ": " .$dimensions[$i+2]."<br/>");
 		                    }
 		                }
 		                //print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "<br/>");
