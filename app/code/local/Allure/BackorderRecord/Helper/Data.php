@@ -13,25 +13,27 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
-    public function getReportXls()
+    public function getReportXls($dates=array())
     {
-        $html=$this->getTableHeaders();
 
-        $html = $html.$this->getTableData();
+        $folderPath   = Mage::getBaseDir('var') . DS . 'export';
+        $date = date('Y-m-d');
+        $filename     = "Daily_Backorder_Report_".$date.".csv";
+        $filepath     = $folderPath . DS . $filename;
+
+        $io = new Varien_Io_File();
+        $io->setAllowCreateFolders(true);
+        $io->open(array("path" => $folderPath));
+        $csv = new Varien_File_Csv();
 
 
-        $path = Mage::getBaseDir('var') . DS . 'export' ;
-        $name = "Daily_Backorder_Report_".round(microtime(true) * 1000);
-        $file = $path . DS . $name . '.xls';
 
-
-
-        $flag = 0;
 
         try{
 
-            if(file_put_contents($file, $html))
-            $flag = 1;
+        $csv->saveData($filepath,$this->getTableData($dates));
+
+                $flag = 1;
 
         }catch (Exception $e){
             $flag = 0;
@@ -40,9 +42,10 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
         return array(
             'type' => 'filename',
-            'value' => $file,
+            'value' => $filepath,
             'is_create' => $flag
         );
+
 
     }
 
@@ -130,33 +133,32 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getTableHeaders()
     {
-        $html = "<table>
-    <tr>
-    <th>ORDER ID</th>
-    <th>ORDER NUMBER</th>
-    <th>BACKORDER/CUSTOMIZATION</th>
-    <th>STORE</th>
-     <th>QTY</th>
-    <th>BACKORDER QTY</th>
-    <th>CUSTOMIZATION</th>
-    <!--product details-->
-    <th>SKU</th>
-    <th>PRODUCT NAME</th>
-    <th>PRICE</th>
-   
-    <!--customer information -------------------------------->
-    <th>CUSTOMER NAME</th>
-    <th>CUSTOMER EMAIL</th>
-     <th>CREATED AT</th>
-    </tr>";
+        $header = array(
+            "order_id"=>"ORDER ID",
+            "order_number"=>"ORDER NUMBER",
+            "order_type"=>"BACKORDER/CUSTOMIZATION",
+            "store"=>"STORE",
+            "qty"=>"QTY",
+            "back_qty"=>"BACKORDER QTY",
+            "customization"=>"CUSTOMIZATION",
+            "sku"=>"SKU",
+            "product_name"=>"PRODUCT NAME",
+            "price"=>"PRICE",
+            "customer_name"=>"CUSTOMER NAME",
+            "customer_email"=>"CUSTOMER EMAIL",
+            "created_at"=>"CREATED AT"
+        );
 
-        return $html;
+        return $header;
     }
 
 
-    public function getTableData()
+    public function getTableData($dates=array())
     {
-        $backorderCollection=Mage::getModel('backorderrecord/cron')->getBackorederCollection();
+        $backorderCollection=Mage::getModel('backorderrecord/cron')->getBackorederCollection($dates);
+
+        $rowData = array();
+        $rowData[] = $this->getTableHeaders();
 
 
         if ($backorderCollection->getSize()):
@@ -169,22 +171,26 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $ordertype = "CUSTOMIZATION";
 
                 $customization="";
-                
+
                 if ($order->getGiftMessageId()) {
                     $gift = Mage::getSingleton("giftmessage/message")->load($order->getGiftMessageId());
                     $customization = $gift->getMessage();
                 }
 
 
+
+
                 $productName = $order->getName();
                 $sku = $order->getSku();
-                $price = "$" . $order->getBasePrice();
+                $symbol=Mage::app()->getLocale()->currency($order->getBaseCurrencyCode())->getSymbol();
+                $price=$symbol."".round($order->getBasePrice(),2);
                 $qty = $order->getQtyOrdered();
 
 
-                if ($order->getQtyBackordered()) {
+                if ($order->getQtyBackordered() && $order->getParentItemId()) {
                     $parentProductData = Mage::getSingleton("sales/order_item")->load($order->getParentItemId());
-                    $price = "$" . $parentProductData->getBasePrice();
+                    $symbol=Mage::app()->getLocale()->currency($parentProductData->getBaseCurrencyCode())->getSymbol();
+                    $price=$symbol."".round($parentProductData->getBasePrice(),2);
                     $qty = $parentProductData->getQtyOrdered();
                 }
 
@@ -201,37 +207,43 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                 $store = current($gridData->getData())['store_name'];
 
 
-                $html = $html."<tr>
-    <td>{$order->getOrderId()}</td>
-    <td>{$orderDetails->getIncrementId()}</td>
-    <td>{$ordertype}</td>
-     <td>{$store}</td>
-    <td>{$qty}</td>
-    <td>{$order->getQtyBackordered()}</td>
-    <td>{$customization}</td>
-    <!--product details-------------------------------->
-      <td>{$sku}</td>
-    <td>{$productName}</td>
-    <td>{$price}</td>
-        <!--customer information -------------------------------->
-    <td>{$customername}</td>
-    <td>{$customeremail}</td>
-     <td>{$order->getCreatedAt()}</td>
-   </tr>";
+
+
+
+
+                $row = array();
+                    $row["order_id"] = $order->getOrderId();
+                    $row["order_number"] = $orderDetails->getIncrementId();
+                    $row["order_type"] = $ordertype;
+                    $row["store"]=$store;
+                    $row["qty"]=$qty;
+                    $row["back_qty"]=$order->getQtyBackordered();
+                    $row["customization"]=$customization;
+                    $row["sku"]=$sku;
+                    $row["product_name"]=$productName;
+                    $row["price"]=$price;
+                    $row["customer_name"]=$customername;
+                    $row["customer_email"]=$customeremail;
+                    $row["created_at"]=$order->getCreatedAt();
+
+
+                    $rowData[] = $row;
 
 
             }
-            $html = $html."</table>";
 
 
 
 
-        return $html;
+
+        return $rowData;
         endif;
 
-        $html="<tr><td>Back/Customize Order Not Found</td><tr>";
+        $row = array();
+        $row["order_id"] = "Backorder or Custmization Order Record Not Found ";
+        $rowData[] = $row;
 
-        return $html;
+        return $rowData;
 
 
     }

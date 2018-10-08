@@ -6,6 +6,11 @@
     </Allure_BackorderRecord>
   </modules>
   <global>
+    <blocks>
+      <backorderrecord>
+        <class>Allure_BackorderRecord_Block</class>
+      </backorderrecord>
+    </blocks>
     <helpers>
       <backorderrecord>
         <class>Allure_BackorderRecord_Helper</class>
@@ -21,15 +26,14 @@
   <jobs>
   <backorder_report_cron>
     <schedule>
-      <cron_expr>0 10 * * *</cron_expr>
+      <cron_expr>0 08 * * *</cron_expr>
     </schedule>
     <run>
-      <model>cron/cron::getBackorderRecord</model>
+      <model>backorderrecord/cron::getBackorderRecords</model>
     </run>
   </backorder_report_cron>
   </jobs>
   </crontab>
-
   <adminhtml>
     <acl>
       <resources>
@@ -53,5 +57,25 @@
         </admin>
       </resources>
     </acl>
+  </adminhtml>
+  <admin>
+    <routers>
+      <adminhtml>
+        <args>
+          <modules>
+            <backorderrecord before="Mage_Adminhtml">Allure_BackorderRecord_Adminhtml</backorderrecord>
+          </modules>
+        </args>
+      </adminhtml>
+    </routers>
+  </admin>
+  <adminhtml>
+    <layout>
+      <updates>
+        <backorderrecord>
+          <file>backorderrecord.xml</file>
+        </backorderrecord>
+      </updates>
+    </layout>
   </adminhtml>
 </config> 
