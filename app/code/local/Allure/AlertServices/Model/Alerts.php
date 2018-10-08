@@ -320,8 +320,8 @@ class Allure_AlertServices_Model_Alerts
 
 		                if ($form == 'page') {
 		                    if ($dimensionHeaders[$i] == 'ga:pageTitle' && $dimensions[$i] == '404 Not Found') {
-		                        //$final_report[] = $dimensions[$i+1];
-		              print($dimensionHeaders[$i] . ": " . $dimensions[$i+1] . ": " .$dimensions[$i+2]."<br/>");
+		                        $final_report[] = $dimensions[$i+1];
+		              /*print($dimensionHeaders[$i] . ": " . $dimensions[$i+1] . ": " .$dimensions[$i+2]."<br/>");*/
 		                    }
 		                }
 		                //print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "<br/>");
