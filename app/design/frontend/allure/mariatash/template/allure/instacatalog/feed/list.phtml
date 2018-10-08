@@ -478,14 +478,16 @@ var xhr = null;
 var page = 2;
 var totalPages = <?php echo $totalPageSize?>;
 jQuery(window).scroll(function(){
-    if(jQuery(this).scrollTop() == jQuery(document).height() - jQuery(window).height()){
+    if(jQuery(this).scrollTop()){
         if(page<=totalPages){
+          console.log(page);
+          console.log(totalPages);
+          console.log(xhr);
             jQuery('.loader').css({"display":"block"});
              if( xhr == null ) {
                 //xhr.abort();
-                //xhr = null;
+                xhr = null;
                 xhr =   jQuery.ajax({
-                    async: false,
                     url: '<?php echo Mage::getBaseUrl('web').'instacatalog/feed/loadMoreAjax';?>',
                     dataType : 'json',
                     type : 'POST',
