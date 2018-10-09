@@ -6,11 +6,10 @@ $installer = $this;
 $installer->startSetup();
 
 
-$setup = Mage::getModel ( 'customer/entity_setup' , 'core_setup' );
+$catalogSetup = new Mage_Eav_Model_Entity_Setup('core_setup');
 
-
-if (!$setup->getAttribute('catalog_product', 'order', 'attribute_id')) {
-    $setup->addAttribute('catalog_product', 'order', array(
+if (!$catalogSetup->getAttribute('catalog_product', 'order', 'attribute_id')) {
+    $catalogSetup->addAttribute('catalog_product', 'order', array(
         'group'           => 'General',
         'label'           => 'Position',
         'input'           => 'text',
@@ -28,8 +27,8 @@ if (!$setup->getAttribute('catalog_product', 'order', 'attribute_id')) {
     ));
 }
 
-if(!$setup->getAttribute('catalog_product', 'gtin_number', 'attribute_id')){
-    $setup->addAttribute('catalog_product', 'gtin_number', array(
+if(!$catalogSetup->getAttribute('catalog_product', 'gtin_number', 'attribute_id')){
+    $catalogSetup->addAttribute('catalog_product', 'gtin_number', array(
         'group'           => 'MT',
         'label'           => 'GTIN Number',
         'input'           => 'text',
@@ -47,6 +46,7 @@ if(!$setup->getAttribute('catalog_product', 'gtin_number', 'attribute_id')){
     ));
 }
 
+$setup = Mage::getModel ( 'customer/entity_setup' , 'core_setup' );
 
 if (!$setup->getAttribute('customer', 'is_teamwork_customer', 'attribute_id')) {
     $setup->addAttribute('customer', 'is_teamwork_customer', array(
