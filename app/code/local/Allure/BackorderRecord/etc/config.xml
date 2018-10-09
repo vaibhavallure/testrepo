@@ -29,7 +29,7 @@
       <cron_expr>0 7 * * *</cron_expr>
     </schedule>
     <run>
-      <model>backorderrecord/cron::getBackorderRecords</model>
+      <model>backorderrecord/cron::getBackorderRecord</model>
     </run>
   </backorder_report_cron>
   </jobs>

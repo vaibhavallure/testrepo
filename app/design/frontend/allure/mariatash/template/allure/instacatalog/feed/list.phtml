@@ -488,7 +488,8 @@ jQuery(window).scroll(function(){
                 //xhr.abort();
                 xhr = null;
                 xhr =   jQuery.ajax({
-                    url: '<?php echo Mage::getBaseUrl('web').'instacatalog/feed/loadMoreAjax';?>',
+                  async: true,
+                    url: '<?php echo Mage::getBaseUrl('web').'instacatalog/feed/loadMoreMobileAjax';?>',
                     dataType : 'json',
                     type : 'POST',
                     data: {'page':page},
