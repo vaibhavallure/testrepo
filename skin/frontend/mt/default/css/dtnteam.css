@@ -19,11 +19,12 @@
 
 .size_chart{
     float: left;
-    margin: 0 26px 0 0;
+    /*margin: 0 26px 0 0;*/
+    margin: 10px 10px 0 0;
 }
 .size_chart a{ text-decoration: underline;}
 .get_size_sample{
-    margin: 0 10px 0 0;
+    margin: 10px 10px 0 0;
     float: left;
 }
 .get_size_sample a{ text-decoration: underline;cursor: pointer; }

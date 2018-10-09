@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+	<merchantAuthentication>
+		<name>venus12</name>
+		<transactionKey>5s8UVJ42HUhj6u9k</transactionKey>
+		<!--  <clientKey>6V4a63Vha3BJPE6emWY7YqCPdnLbS8T6sTR7hhwHktr2G455F2cFt2njgSJ4n6Td</clientKey>-->
+	</merchantAuthentication>
+	<refId>ref23123</refId>
+	<transactionRequest>
+		<transactionType>authCaptureTransaction</transactionType>
+		<amount>360.00</amount>
+		<currencyCode>USD</currencyCode>
+		<payment>
+			<opaqueData>
+				<dataDescriptor>COMMON.APPLE.INAPP.PAYMENT</dataDescriptor>
+				<dataValue>assignDV</dataValue>
+			</opaqueData>
+		</payment>
+	</transactionRequest>
+</createTransactionRequest>

@@ -381,10 +381,13 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
      */
     public function getUsedProductCollection($product = null)
     {
+
+
         $collection = Mage::getResourceModel('catalog/product_type_configurable_product_collection')
-            ->setFlag('require_stock_items', true)
+            ->setFlag('require_stock_items', FALSE)
             ->setFlag('product_children', true)
-            ->setProductFilter($this->getProduct($product));
+            ->setProductFilter($this->getProduct($product))->addAttributeToSort('order');
+
         if (!is_null($this->getStoreFilter($product))) {
             $collection->addStoreFilter($this->getStoreFilter($product));
         }
@@ -397,7 +400,7 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     	->setFlag('require_stock_items', true)
     	->setFlag('product_children', true)
     	->setCategoryFilter($categoryId);
-    	
+
     	return $collection;
     }
 
@@ -508,9 +511,9 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     {
         return $this->isSalable($product);
     }
-    
+
     public function getIsSalable2($product = null) {
-        
+
         //Mage::log(__METHOD__,null,'mylog.log');
         $salable = parent::isSalable($product);
         if ($salable !== false) {
@@ -527,7 +530,7 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
             }
             Varien_Profiler::stop('DTN::getUsedProducts2');
         }
-        
+
         return $salable;
     }
     public function getUsedProducts2($product = null)
@@ -632,6 +635,7 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     protected function _prepareProduct(Varien_Object $buyRequest, $product, $processMode)
     {
         $attributes = $buyRequest->getSuperAttribute();
+		
         if ($attributes || !$this->_isStrictProcessMode($processMode)) {
             if (!$this->_isStrictProcessMode($processMode)) {
                 if (is_array($attributes)) {

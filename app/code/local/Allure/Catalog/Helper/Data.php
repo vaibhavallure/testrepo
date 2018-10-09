@@ -89,4 +89,38 @@ class Allure_Catalog_Helper_Data extends Mage_Core_Helper_Abstract
         }
         return $isOptions;
     }
+    public function isGiftCard ($productId)
+    {
+        $product = Mage::getSingleton("catalog/product")->load($productId);
+        $isGiftCard = false;
+       
+        $sku=explode('|', $product->getSku());
+        $haystack=array('STORECARD'); //Added becuse Giftcard is working as normal product
+        if(in_array($sku[0], $haystack))
+            $isGiftCard=true;
+        
+        return $isGiftCard;
+    }
+    public function getOptionNumber($metalName){
+        
+        $productModel = Mage::getModel('catalog/product');
+        $str_attr_label='metal';
+     
+        $attr = $productModel->getResource()->getAttribute($str_attr_label);
+        $optionsValue = $attr->getSource()->getOptionId($metalName);
+        return $optionsValue;
+        
+    }
+    
+    public function getOptionText($optiomId){
+        
+        $productModel = Mage::getModel('catalog/product');
+        $str_attr_label='metal';
+        
+        $attr = $productModel->getResource()->getAttribute($str_attr_label);
+        $optionsText = $attr->getSource()->getOptionText($optiomId);
+        
+        return $optionsText;
+        
+    }
 }

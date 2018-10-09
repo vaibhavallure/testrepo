@@ -387,7 +387,6 @@ Product.Config.prototype.updateData = function(key)
                             var tm = setTimeout("applyProductZoom()",2500);
                             confData.currentIsMain = false;
                             $('optionid').value = img_id;
-                            loadCatalogImages();
                         }
                       });
                     }
@@ -424,7 +423,6 @@ Product.Config.prototype.updateData = function(key)
                             if (typeof resizeVideo != "undefined") {
                                 resizeVideo();
                             }
-                            loadCatalogImages();
                         }
                       });
                     }
@@ -600,16 +598,21 @@ Product.Config.prototype.updateFormProductId = function(productId){
     //allure commented
     //newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
     //$('product_addtocart_form').action = newcurrentAction;
-    //$('product_addtocart_form').product.value = productId;
+    $('product_addtocart_form').product.value = productId;
     
-    var flag = true;
+    var flag = false;
     if(jQuery('#parent-child-product').length){ 
     	var checkParentChild = jQuery('#parent-child-product').val();
     	if(checkParentChild == 1){
     		flag = false;
     	}
     }
-    
+ 
+   var checkGiftcard = jQuery('#is_gift_card').val();
+    	if(checkGiftcard == 1){
+    		flag = true;
+    	}
+ 
     if(flag){
     	//for non parent child
     	newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');

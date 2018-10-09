@@ -4,7 +4,7 @@
 		<div class="pop-title">
 			<a href="#close" title="Close" class="close">X</a>
 			<h2><?php echo $this->__("create a new account")?></h2>
-			
+
 		</div>
 		<div>
 			<div id="reg_msg_div">
@@ -30,12 +30,12 @@
 	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Confirm Password")?></label>
 	  		    <input id='confirmation' type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
 			</div>
-			
+
 			<div class="row">
 	 		    <label for="required fields"><em>*</em><?php echo $this->__(" Required Fields")?></label>
 			</div>
 			<div class="row news-letter ">
-	  		    <label for="popup_is_privacy_agree" class="mt-custom-checkbox mt-privacy-label-register"><?php echo $this->__("* I understand the terms and conditions of the Maria Tash <a href='https://www.venusbymariatash.com/privacy-policy'  target='_blank' >privacy policy</a>.")?>
+	  		    <label for="popup_is_privacy_agree" class="mt-custom-checkbox mt-privacy-label-register"><?php echo $this->__("* I understand the terms and conditions of the Maria Tash <a href='/privacy-policy'  target='_blank' >privacy policy</a>.")?>
 	  		    <input type="checkbox" name="popup_is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox checkout-privacy-policy">
   				<span class="checkmark"></span>
 	  		    </label>
@@ -46,27 +46,27 @@
 	  		    <span class="checkmark mt-checkmark-reg"></span>
 	  		    </label>
 			</div>
-		
+
 		</div>
 		<div class="pop-link">
-			
+
             <button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
 			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
 			<button type="button"  onclick="gotoLoginPage();" id="signup-btn-popup"  class="button"><?php echo $this->__("Back to Login")?></button>
 			<?php if(0):?>
 			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
             <?php endif;?>
-            
-            <?php 
-            
+
+            <?php
+
                 echo $this->getLayout()->createBlock('amazon_payments/script')
                     ->setTemplate('amazon_payments/script.phtml')->toHtml();
-            
+
                 echo $this->getLayout()->createBlock('amazon_payments/button')
-                    ->setTemplate('amazon_payments/button.phtml')->toHtml(); 
+                    ->setTemplate('amazon_payments/button.phtml')->toHtml();
             ?>
-            
-            
+
+
             <span id="popup_loader_register" class="please-wait-popup-register" style="display: none;">
                 <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
 
@@ -76,9 +76,9 @@
 </div>
 
 
-<?php 
+<?php
    //echo $this->getLayout()->createBlock('amazon_payments/script')
-     //    ->setTemplate('amazon_payments/script.phtml')->toHtml(); 
+     //    ->setTemplate('amazon_payments/script.phtml')->toHtml();
 ?>
 
 <script type="text/javascript">
@@ -87,4 +87,4 @@ if (typeof Allure == "undefined") {
 }
 Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
-</script> 
+</script>

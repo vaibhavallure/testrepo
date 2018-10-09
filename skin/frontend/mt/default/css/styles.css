@@ -3239,7 +3239,7 @@ p.required {
 .messages#timeout-message {
 	background: #CFCFD1;
 	width: 955px;
-	border: 2px solid #790000;
+	border: 2px solid #830000;
 }
 
 .checkout-cart-index ul.messages {
@@ -3293,7 +3293,7 @@ p.required {
 }
 
 .error-msg {
-	color: #790000;
+	color: #830000;
 }
 
 .error-msg a, .error-msg a:hover, .error-msg a:visited {
@@ -4019,11 +4019,11 @@ tr.summary-details-excluded {
 
 /*shopping mt wjzr */
 .priceUpdate { /*background:#d1d1d1;*/
-	color: #790000;
+	color: #830000;
 	padding: 10px;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
-	font-weight: bold;
+	/* font-weight: bold; */
 }
 
 .cart-mt .data-table th {
@@ -7023,7 +7023,7 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 
 .availability span {
 	font-weight: bold;
-	color: #790000;
+	color: #830000;
 }
 
 .availability.in-stock span {
@@ -8304,7 +8304,7 @@ div.styled {
 	clear: both;
 	width: 200px;
 	margin-top: 0;
-	color: #790000;
+	color: #830000;
 	font-size: 11px;
 	line-height: 13px;
 }
@@ -8836,16 +8836,16 @@ ul.product-tabs {
 .cart-table .item-msg {
 	margin: 2px 9px 15px;
 	font-size: 11px;
-	font-weight: bold;
-	color: #790000;
+	/* font-weight: bold; */
+	color: #830000;
 	line-height: 1.6363636363
 }
 
 .item-msg {
 	margin: 2px 9px 15px;
 	font-size: 11px;
-	font-weight: bold;
-	color: #790000;
+/* 	font-weight: bold; */
+	color: #830000;
 	line-height: 1.6363636363
 }
 
@@ -9075,7 +9075,7 @@ ul.crosssell-products-list {
 /* Options Tool Tip */
 .item-options dt {
 	font-weight: normal;
-	font-style: italic;
+	font-style: normal;
 }
 
 .truncated {
@@ -14355,7 +14355,7 @@ span.customStyleSelectBox.changed {
 }
 
 .quickview-index-index .product-view select {
-	height: auto !important;
+	height: auto;
 	width: 160px;
 }
 
@@ -14985,7 +14985,7 @@ body.quickview-index-index {
 .giftcard-info div.cart-amount {
 	width: 241px !important;
 	float: right;
-	height: 19px;
+	height: 23px;
 	margin: 1px 0 0 0 !important;
 	border: none;
 	border-top: 1px solid #b2b2b2;
@@ -14996,7 +14996,7 @@ body.quickview-index-index {
 .giftcard-info select.cart-amount {
 	width: 253px !important;
 	float: left;
-	height: 19px;
+	height: 23px;
 	margin: 0 !important;
 }
 
@@ -18091,6 +18091,7 @@ ul.products-grid2 {
 .page-print #my-orders-table td {
 	padding-left: 10px;
 	padding-right: 10px;
+	padding-bottom: 10px;
 }
 
 .page-print #my-orders-table td.nobr-sku {
@@ -19951,3 +19952,9 @@ font-size: 100% !important;
     height: auto;
 }
 
+.custom-options-univaersal{
+	    margin-left: 25px !important;
+}
+.product-view .product-options .ajax-error-messages{
+	left: 0px;
+}

@@ -337,14 +337,15 @@ $mode  = $this->getMode();
                                                 
                                                <?php //allure code start?>
                                                <?php 
-                                                    $customOptions = $this->getCustomOptions($productId);
+                                                    //$customOptions = $this->getCustomOptions($productId);
+                                                    $customOptions = 0; //aws12
                                                ?>
                                                <?php if(count($customOptions)):?> 
                                                <?php foreach ($customOptions as $_option):?>
                                                <?php if(strtolower($_option->getTitle()) == "post length"):?>
                                                <dl id="mt-post-length-<?php echo $productId;?>" class="last">
 													<dt style="font-size: 13px;font-weight: normal;width: 48%;float: left;padding-left: 67px;">
-														<label style="font-weight: normal;" class="required"><em>*</em><?php echo $_option->getTitle()?></label>
+														<label style="font-weight: normal;" class="required"><?php echo $_option->getTitle()?>:</label>
 													</dt>
                                                     <dd class="last" style="margin-bottom: 10px;width: 48%;float: left;padding-right: 60px;">
                                                         <div class="input-box">
@@ -372,8 +373,8 @@ $mode  = $this->getMode();
                                                 <?php endif; ?>
                                                 
                                                 <?php //hiding becuase of paret child?>
-                                               
-                                                <a class="button btn-directcart glyphicon glyphicon-shopping-cart"
+                                                <!-- AWS12 [btn-directcart] this class removed from add to cart-->
+                                                <a class="button glyphicon glyphicon-shopping-cart"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $_product->getProductUrl(); ?>"
                                                    data-id='<?php echo $_product->getId() ?>'

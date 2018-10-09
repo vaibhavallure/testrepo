@@ -19,7 +19,12 @@
         this.deleteUrl = opts.deleteUrl;
         this.editable = opts.editable;
         this.useAjax = opts.useAjax;
-        this.notes = opts.notes;
+        if(opts.notes==null){
+        	this.notes=[];
+        }else{
+        	this.notes = opts.notes;
+        }
+        
         // Add the canvas
         this.canvas = $('<div class="image-annotate-canvas"><div class="image-annotate-view"></div><div class="image-annotate-edit"><div class="image-annotate-edit-area"></div></div></div>');
         this.canvas.children('.image-annotate-edit').hide();
@@ -115,9 +120,10 @@
         ///		Loads the annotations from the notes property passed in on the
         ///     options object.
         ///	</summary>
-        for (var i = 0; i < image.notes.length; i++) {
-            image.notes[image.notes[i]] = new $.fn.annotateView(image, image.notes[i]);
-        }
+  
+    		for (var i = 0; i < image.notes.length; i++) {
+	            image.notes[image.notes[i]] = new $.fn.annotateView(image, image.notes[i]);
+	        }
     };
 
     $.fn.annotateImage.getTicks = function() {

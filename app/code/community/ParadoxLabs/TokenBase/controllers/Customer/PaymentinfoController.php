@@ -111,10 +111,10 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 			 ->_title( $methodTitle );
 		
 		$breadcrumbs = $this->getLayout()->getBlock('breadcrumbs');
-		//if( $breadcrumbs && $breadcrumbs instanceof Mage_Core_Block_Template ) {
-		//	$breadcrumbs->addCrumb( 'tokenbase', array( 'label' => Mage::helper('tokenbase')->__('My Payment Data'), 'title' => Mage::helper('tokenbase')->__('My Payment Data'), 'link' => Mage::getUrl('*/*') ) );
-		//	$breadcrumbs->addCrumb( 'tokenbase_method', array( 'label' => $methodTitle, 'title' => $methodTitle, 'link' => Mage::getUrl( '*/*/*', array( 'method' => Mage::registry('tokenbase_method') ) ) ) );
-		//}
+		if( $breadcrumbs && $breadcrumbs instanceof Mage_Core_Block_Template ) {
+			$breadcrumbs->addCrumb( 'tokenbase', array( 'label' => Mage::helper('tokenbase')->__('My Payment Data'), 'title' => Mage::helper('tokenbase')->__('My Payment Data'), 'link' => Mage::getUrl('*/*') ) );
+			$breadcrumbs->addCrumb( 'tokenbase_method', array( 'label' => $methodTitle, 'title' => $methodTitle, 'link' => Mage::getUrl( '*/*/*', array( 'method' => Mage::registry('tokenbase_method'), '_secure' => true ) ) ) );
+		}
 		
 		$this->renderLayout();
 	}
@@ -249,6 +249,8 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 				Mage::helper('tokenbase')->log( $method, (string)$e );
 				Mage::getSingleton('core/session')->addError( $e->getMessage() );
 				
+				$this->_recordSessionFailure($e);
+				
 				return $this->_redirectReferer();
 			}
 		}
@@ -259,7 +261,7 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 		
 		Mage::getSingleton('core/session')->addSuccess( $this->__('Payment data saved successfully.') );
 		
-		$this->_redirect( '*/*', array( 'method' => $method ) );
+		$this->_redirect( '*/*', array( 'method' => $method, '_secure' => true ) );
 	}
 	
 	/**
@@ -299,7 +301,7 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 			return $this->_redirectReferer();
 		}
 		
-		$this->_redirect( '*/*', array( 'method' => $method ) );
+		$this->_redirect( '*/*', array( 'method' => $method, '_secure' => true ) );
 	}
 	
 	/**
@@ -330,5 +332,24 @@ class ParadoxLabs_TokenBase_Customer_PaymentinfoController extends Mage_Core_Con
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Record each save failure on their session. If they fail too many times in a given period, block access. This is
+	 * to help prevent credit card validation abuse, trying to store CCs until one works.
+	 *
+	 * @param Exception $e
+	 * @return void
+	 */
+	protected function _recordSessionFailure( Exception $e )
+	{
+		$failures = Mage::getSingleton('customer/session')->getData('tokenbase_failures');
+		if( is_array( $failures ) === false ) {
+			$failures = array();
+		}
+		
+		$failures[ time() ] = $e->getMessage();
+		
+		Mage::getSingleton('customer/session')->setData( 'tokenbase_failures', $failures );
 	}
 }

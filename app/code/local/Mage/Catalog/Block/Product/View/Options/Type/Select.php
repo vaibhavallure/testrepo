@@ -43,9 +43,41 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
     public function getValuesHtml()
     {
         $_option = $this->getOption();
+      
+        $category = Mage::registry('current_category');
+        
+        $temparray = array();
+        if ($category) {
+            $lengths = $category->getAssignedLengths();
+            $lengths = explode(',', $lengths);
+            
+            $titles = mage::helper('allure_category')->getTitles($lengths);
+            $defaultLength = $category->getDefaultLength();
+            $defaultTitleTxt = mage::helper('allure_category')->getOptionText($defaultLength);
+            
+            $enableLength = $category->getEnablePostlengths();
+           
+            
+            $count = 2;
+            if ($enableLength) {
+                
+                foreach ($_option->getValues() as $value) {
+                    if (in_array($value->getTitle(), $titles)) {
+                        if (strtolower(trim($value->getTitle())) == strtolower(trim($defaultTitleTxt))) {
+                            $temparray[1] = $value;
+                        } else {
+                            $temparray[$count] = $value;
+                            $count ++;
+                        }
+                    }
+                }
+                ksort($temparray);
+                $temparray = array_values($temparray);
+                $_option->setValues($temparray);
+            }
+        }
         $configValue = $this->getProduct()->getPreconfiguredValues()->getData('options/' . $_option->getId());
         $store = $this->getProduct()->getStore();
-
         if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_DROP_DOWN
             || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_MULTIPLE) {
             $require = ($_option->getIsRequire()) ? ' required-entry' : '';
@@ -62,22 +94,36 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                 $select->setName('options['.$_option->getid().'][]');
                 $select->setClass('multiselect'.$require.' product-custom-option');
             }
-            foreach ($_option->getValues() as $_value) {
-                $priceStr = $this->_formatPrice(array(
-                    'is_percent'    => ($_value->getPriceType() == 'percent'),
-                    'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
-                ), false);
-                $select->addOption(
-                    $_value->getOptionTypeId(),
-                    $_value->getTitle() . ' ' . $priceStr . '',
-                    array('price' => $this->helper('core')->currencyByStore($_value->getPrice(true), $store, false))
-                );
+            
+            if (! empty($temparray) && $enableLength) {
+                foreach ($temparray as $_value) {
+                    $priceStr = $this->_formatPrice(array(
+                        'is_percent' => ($_value->getPriceType() == 'percent'),
+                        'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
+                    ), false);
+                    $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
+                        'price' => $this->helper('core')
+                            ->currencyByStore($_value->getPrice(true), $store, false)
+                    ));
+                }
+            } else {
+                
+                foreach ($_option->getValues() as $_value) {
+                    $priceStr = $this->_formatPrice(array(
+                        'is_percent' => ($_value->getPriceType() == 'percent'),
+                        'pricing_value' => $_value->getPrice(($_value->getPriceType() == 'percent'))
+                    ), false);
+                    $select->addOption($_value->getOptionTypeId(), $_value->getTitle() . ' ' . $priceStr . '', array(
+                        'price' => $this->helper('core')
+                            ->currencyByStore($_value->getPrice(true), $store, false)
+                    ));
+                }
             }
             if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_MULTIPLE) {
                 $extraParams = ' multiple="multiple"';
             }
             if (!$this->getSkipJsReloadPrice()) {
-                $extraParams .= ' onchange="opConfig.reloadPrice()"';
+                $extraParams .= 'style="width: 150px;" onchange="opConfig.reloadPrice()"';
             }
             $select->setExtraParams($extraParams);
 

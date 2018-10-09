@@ -32,6 +32,8 @@ InstagramView.prototype = {
 		var points = jQuery('#insta-product-mark-'+id).html();
 		var products = jQuery('#insta-product-details-'+id).html();
 		
+		jQuery(".fs-post-info a").attr('href',url);
+		
 		jQuery("#fs-detail-response").attr("data-resource-url",username);
 		jQuery("#fs_main_image").attr("src",img);
 		jQuery("#point-mark").html(points);

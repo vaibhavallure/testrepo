@@ -82,7 +82,16 @@
                 </tw_item_id>
             </sales_convert_quote_item>
 		</fieldsets>
-		
+		<events>
+			<sent_in_chq>
+				<observers>
+					<allure_teamwork_changeorderstatus>
+						<class>allure_teamwork/observer</class>
+						<method>changeOrderStatus</method>
+					</allure_teamwork_changeorderstatus>
+				</observers>
+			</sent_in_chq>
+		</events>
 	</global>
 	
 	<crontab>

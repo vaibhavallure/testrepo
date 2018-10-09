@@ -63,17 +63,6 @@
 
     <?php echo $this->getChildHtml('order_items') ?>
 
-    <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order', $_order) && $_order->getGiftMessageId()): ?>
-    <div class="order-additional order-gift-message">
-        <h2 class="sub-title"><?php echo $this->__('Gift Message for This Order') ?></h2>
-        <?php $_giftMessage=$this->helper('giftmessage/message')->getGiftMessageForEntity($_order); ?>
-        <dl class="gift-message">
-            <dt><strong><?php echo $this->__('From:') ?></strong> <?php echo $this->escapeHtml($_giftMessage->getSender()) ?></dt>
-            <dt><strong><?php echo $this->__('To:') ?></strong> <?php echo $this->escapeHtml($_giftMessage->getRecipient()) ?></dt>
-            <dd><?php echo $this->helper('giftmessage/message')->getEscapedGiftMessage($_order) ?></dd>
-        </dl>
-    </div>
-    <?php endif; ?>
     <?php $_history = $this->getOrder()->getVisibleStatusHistory() ?>
     <?php if (count($_history)): ?>
     <div class="order-additional order-comments">
