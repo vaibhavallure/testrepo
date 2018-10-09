@@ -315,7 +315,7 @@ class Allure_AlertServices_Model_Alerts
 		    $VIEW_ID = "181106821";
 		    // Create the DateRange object.
 		    $dateRange = new Google_Service_AnalyticsReporting_DateRange();
-		    $dateRange->setStartDate("7daysAgo");
+		    $dateRange->setStartDate("6daysAgo");
 		    $dateRange->setEndDate("today");
 		    //new added by aws02
 		    $dimension = new Google_Service_AnalyticsReporting_Dimension();
