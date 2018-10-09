@@ -47,7 +47,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         }catch (Exception $e){
             $flag = 0;
             if($this->config()->getDebugStatus())
-                    Mage::log('file generation failed '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data', true);
+                    Mage::log('file generation failed '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data.log', true);
 
             }
 
@@ -134,7 +134,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
     }
     catch (Exception $e){
         if($this->config()->getDebugStatus())
-            Mage::log('mail sending exception = > '.$e->getMessage(), Zend_Log::DEBUG, 'backorder_data', true);
+            Mage::log('mail sending exception = > '.$e->getMessage(), Zend_Log::DEBUG, 'backorder_data.log', true);
     }
 
     endif;
@@ -177,6 +177,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         $rowData[] = $this->getTableHeaders();
 
 
+        if($backorderCollection!=null):
         if ($backorderCollection->getSize()):
 
             foreach ($backorderCollection as $order) {
@@ -254,13 +255,14 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $rowData;
         endif;
+        endif;
 
         $row = array();
         $row["order_id"] = "Backorder or Custmization Order Record Not Found ";
         $rowData[] = $row;
 
         if($this->config()->getDebugStatus())
-            Mage::log('Backorder or Custmization Order Record Not Found', Zend_Log::DEBUG,'backorder_data', true);
+            Mage::log('Backorder or Custmization Order Record Not Found', Zend_Log::DEBUG,'backorder_data.log', true);
 
 
         return $rowData;

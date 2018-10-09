@@ -13,26 +13,40 @@ class Allure_BackorderRecord_Model_Cron
     public function getBackorederCollection($dates=array())
     {
 
-
+        $data=$dates;
         $days=Mage::helper("backorderrecord/config")->getDays();
         $toDate = date('Y-m-d 23:59:59', strtotime( 'yesterday'));
         $fromDate = date('Y-m-d 00:00:00', strtotime('-'.($days+1).' days'));
 
 
 
-        if(count($dates))
+        if(count($data))
         {
-            $fromDate = new DateTime( $dates['from_date']);
-            $fromDate = $fromDate->format('Y-m-d H:i:s');
 
-            $toDate = new DateTime( $dates['to_date']);
-            $toDate = $toDate->format('Y-m-d H:i:s');
+
+
+            try {
+                $fromDate = new DateTime($data['from_date']);
+                $fromDate = $fromDate->format('Y-m-d H:i:s');
+                $toDate = new DateTime( $data['to_date']);
+                $toDate = $toDate->format('Y-m-d H:i:s');
+
+            }catch (Exception $e)
+            {
+
+                if(Mage::helper("backorderrecord/config")->getDebugStatus())
+                    Mage::log('Incorrect Date Entered '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data.log', true);
+
+                return null;
+
+            }
 
         }
 
 
-//        echo "formdate={$fromDate}<br>";
-//        echo "todate={$toDate}<br>";
+
+        echo "formdate={$fromDate}<br>";
+        echo "todate={$toDate}<br>";
 
 
         try {
@@ -44,8 +58,8 @@ class Allure_BackorderRecord_Model_Cron
         }
         catch (Exception $e){
 
-            if($this->config()->getDebugStatus())
-                Mage::log('collection cant be generated '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data', true);
+            if(Mage::helper("backorderrecord/config")->getDebugStatus())
+                Mage::log('collection cant be generated '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data.log', true);
 
 
         }
