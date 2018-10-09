@@ -9,7 +9,7 @@ class Allure_BackorderRecord_Adminhtml_BackorderReportController extends Mage_Ad
     {
 
         $this->loadLayout();
-        $this->_title($this->__("Backoreder Record"));
+        $this->_title($this->__("Back order Record"));
 
         $this->getLayout ()->getBlock ( "head" )->setCanLoadExtJs ( true );
         $this->_addContent ( $this->getLayout ()->createBlock ( "backorderrecord/adminhtml_backorder_edit" ) )

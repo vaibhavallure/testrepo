@@ -8,6 +8,7 @@ class Allure_BackorderRecord_Helper_Config extends Mage_Core_Helper_Abstract
 	const XML_PATH_GROUP_EMAILS_NAMES  	= 'backorderrecord/email_group/group_names';
 	const XML_PATH_EMAIL_TEMPLATE   = 'backorderrecord/email_group/email_temp';
     const XML_PATH_NUMBER_DAYS   = 'backorderrecord/email_group/days';
+    const XML_PATH_DEBUG_STATUS   		= 'backorderrecord/email_group/debug_enabled';
 
 
     public function getSenderEmail(){
@@ -21,6 +22,11 @@ class Allure_BackorderRecord_Helper_Config extends Mage_Core_Helper_Abstract
     public function getEmailStatus(){
     	return Mage::getStoreConfig(self::XML_PATH_EMAIL_STATUS);
     }
+
+    public function getDebugStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_DEBUG_STATUS);
+    }
+
 
     public function getEmailsGroup(){
     	return Mage::getStoreConfig(self::XML_PATH_GROUP_EMAILS);
