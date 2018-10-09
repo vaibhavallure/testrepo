@@ -361,13 +361,13 @@ class Allure_Salesforce_Model_Observer_Product{
                 $objectType     = $helper::PRODUCT_OBJECT;
                 $requestMethod  = "DELETE";
                 $urlPath = $helper::PRODUCT_URL . "/" . $salesforceId;
-                $response = $helper->sendRequest($urlPath , $requestMethod , null);
+                /* $response = $helper->sendRequest($urlPath , $requestMethod , null);
                 if($response == ""){
                     $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $product->getId());
                     $helper->salesforceLog("delete the product from salesforce.");
                 }else{
                     $helper->addSalesforcelogRecord($objectType,$requestMethod,$product->getId(),$response);
-                }
+                } */
             }
         }
     }
