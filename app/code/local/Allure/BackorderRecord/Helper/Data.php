@@ -98,7 +98,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             $file = $inventory_xls['value'];
             if($file){
                 $date = Mage::getModel('core/date')->date('Y_m_d');
-                $name = "Daily_Backorder_Report_".$date.".xls";
+                $name = "Daily_Backorder_Report_".$date.".csv";
                 $mailTemplate->getMail()->createAttachment(
                     file_get_contents($file),
                     Zend_Mime::TYPE_OCTETSTREAM,
@@ -226,6 +226,10 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
+                $diffZone="-".Mage::getModel('backorderrecord/cron')->getDiffTimezone();
+
+                $createdAt = date('Y-m-d H:i:s', strtotime($diffZone,strtotime($orderDetails->getCreatedAt())));
+
 
 
                 $row = array();
@@ -241,7 +245,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["price"]=$price;
                     $row["customer_name"]=$customername;
                     $row["customer_email"]=$customeremail;
-                    $row["created_at"]=$order->getCreatedAt();
+                    $row["created_at"]=$createdAt;
 
 
                     $rowData[] = $row;
