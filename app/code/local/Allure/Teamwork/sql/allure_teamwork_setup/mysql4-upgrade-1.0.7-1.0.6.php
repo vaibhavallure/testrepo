@@ -7,6 +7,47 @@ $installer->startSetup();
 
 
 $setup = Mage::getModel ( 'customer/entity_setup' , 'core_setup' );
+
+
+if (!$setup->getAttribute('catalog_product', 'order', 'attribute_id')) {
+    $setup->addAttribute('catalog_product', 'order', array(
+        'group'           => 'General',
+        'label'           => 'Position',
+        'input'           => 'text',
+        'type'            => 'int',
+        'required'        => 0,
+        'visible_on_front'=> 1,
+        'filterable'      => 0,
+        'searchable'      => 0,
+        'default'         => 0,
+        'comparable'      => 0,
+        'user_defined'    => 1,
+        'is_configurable' => 0,
+        'global'          => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
+        'note'            => '',
+    ));
+}
+
+if(!$setup->getAttribute('catalog_product', 'gtin_number', 'attribute_id')){
+    $setup->addAttribute('catalog_product', 'gtin_number', array(
+        'group'           => 'MT',
+        'label'           => 'GTIN Number',
+        'input'           => 'text',
+        'type'            => 'varchar',
+        'required'        => 0,
+        'visible_on_front'=> 1,
+        'filterable'      => 0,
+        'searchable'      => 0,
+        'default'         => '',
+        'comparable'      => 0,
+        'user_defined'    => 1,
+        'is_configurable' => 0,
+        'global'          => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
+        'note'            => '',
+    ));
+}
+
+
 if (!$setup->getAttribute('customer', 'is_teamwork_customer', 'attribute_id')) {
     $setup->addAttribute('customer', 'is_teamwork_customer', array(
         'type' => 'int',
