@@ -45,8 +45,8 @@ class Allure_BackorderRecord_Model_Cron
 
 
 
-        echo "formdate={$fromDate}<br>";
-        echo "todate={$toDate}<br>";
+//        echo "formdate={$fromDate}<br>";
+//        echo "todate={$toDate}<br>";
 
 
         try {

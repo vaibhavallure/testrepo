@@ -5,7 +5,7 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder extends Mage_Adminhtml_Bl
     {
         $this->_blockGroup = 'backorderrecord';
         $this->_controller = 'adminhtml_backorder';
-        $this->_headerText = $this->__('Backoreder  Record');
+        $this->_headerText = $this->__('Back order Record');
 
 
         parent::__construct();
