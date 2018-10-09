@@ -150,7 +150,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
     public function getTableHeaders()
     {
         $header = array(
-            "order_id"=>"ORDER ID",
+            "created_at"=>"ORDER DATE",
             "order_number"=>"ORDER NUMBER",
             "order_type"=>"BACKORDER/CUSTOMIZATION",
             "store"=>"STORE",
@@ -162,7 +162,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             "price"=>"PRICE",
             "customer_name"=>"CUSTOMER NAME",
             "customer_email"=>"CUSTOMER EMAIL",
-            "created_at"=>"CREATED AT"
+
         );
 
         return $header;
@@ -233,7 +233,8 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
                 $row = array();
-                    $row["order_id"] = $order->getOrderId();
+
+                    $row["created_at"]=$createdAt;
                     $row["order_number"] = $orderDetails->getIncrementId();
                     $row["order_type"] = $ordertype;
                     $row["store"]=$store;
@@ -245,7 +246,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["price"]=$price;
                     $row["customer_name"]=$customername;
                     $row["customer_email"]=$customeremail;
-                    $row["created_at"]=$createdAt;
+
 
 
                     $rowData[] = $row;
