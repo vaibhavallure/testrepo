@@ -35,10 +35,21 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $flag = 1;
 
+                if($this->config()->getDebugStatus()):
+                    if(count($dates)) {
+                        Mage::log('new file generated from admin panel', Zend_Log::DEBUG,'backorder_data.log', true);
+                    }
+                    else {
+                        Mage::log('new file generated from cron/manual function call ', Zend_Log::DEBUG,'backorder_data.log', true);
+                    }
+                        endif;
+
         }catch (Exception $e){
             $flag = 0;
+            if($this->config()->getDebugStatus())
+                    Mage::log('file generation failed '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data', true);
 
-        }
+            }
 
         return array(
             'type' => 'filename',
@@ -111,14 +122,19 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         );
 
     if (!$mailTemplate->getSentSuccess()) {
+
+        if($this->config()->getDebugStatus())
         Mage::log('mail sending failed', Zend_Log::DEBUG, 'backorder_data.log', true);
+
     }
     else {
+        if($this->config()->getDebugStatus())
         Mage::log('mail sending done', Zend_Log::DEBUG, 'backorder_data.log', true);
     }
     }
     catch (Exception $e){
-    Mage::log('mail sending exception = > '.$e->getMessage(), Zend_Log::DEBUG, 'backorder_data', true);
+        if($this->config()->getDebugStatus())
+            Mage::log('mail sending exception = > '.$e->getMessage(), Zend_Log::DEBUG, 'backorder_data', true);
     }
 
     endif;
@@ -242,6 +258,10 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         $row = array();
         $row["order_id"] = "Backorder or Custmization Order Record Not Found ";
         $rowData[] = $row;
+
+        if($this->config()->getDebugStatus())
+            Mage::log('Backorder or Custmization Order Record Not Found', Zend_Log::DEBUG,'backorder_data', true);
+
 
         return $rowData;
 
