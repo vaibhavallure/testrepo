@@ -228,7 +228,7 @@ try{
                 "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 4,
                 "Group__c"            => $customer->getGroupId(),
                 "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : null,
-                "Store__c"            => $customer->getStoreId(),
+                "Store__c"            => $oldStoreArr[$customer->getStoreId()],//$customer->getStoreId(),
                 "Teamwork_Customer_ID__c"   => $customer->getTeamworkCustomerId(),
                 "TW_UC_GUID__c"             => $customer->getTwUcGuid(),
                 "Old_Store__c"          => encodeValue($oldStoreArr[$customer->getOldStoreId()]),

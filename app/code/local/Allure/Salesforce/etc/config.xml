@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_Salesforce>
 			<name>Allure - Salesforce</name>
-			<version>1.0.1</version>
+			<version>1.0.2</version>
 		</Allure_Salesforce>
 	</modules>
 

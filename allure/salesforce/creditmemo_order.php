@@ -127,6 +127,13 @@ try{
     
     $row = array($header);
     
+    $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+    $oldStoreArr = array();
+    foreach ($ostores as $storeO){
+        $oldStoreArr[$storeO->getId()] = $storeO->getName();
+    }
+    $oldStoreArr[0] = "Admin";
+    
     foreach ($collection as $creditMemo){
         try{
             $order                  = $creditMemo->getOrder();
@@ -149,7 +156,7 @@ try{
                 "Order_Id__c"           => $orderIncrementId,
                 "Name"                  => "Credit Memo for Order #".$orderIncrementId,
                 "Stauts__c"             => $status,
-                "Store__c"              => $storeId,
+                "Store__c"              => $oldStoreArr[$storeId],
                 "Adjustment__c"         => $baseAdjustment,
                 "Created_At__c"         => date("Y-m-d",strtotime($createdAt)),
                 "Discount_Amount__c"    => $discountAmount,

@@ -39,6 +39,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     //shipment track url for delete
     const SHIPMENT_TRACK_URL_1              = "/services/data/v42.0/sobjects/Tracking_Information__c";
     
+    const INVOICE_PDF_URL_UPLOAD            = "/services/data/v37.0/sobjects/Attachment";   
+    
     //Salesforce object's type
     const PRODUCT_OBJECT            = "PRODUCT";
     const PRODUCT_PRICEBOOK_OBJECT  = "PRODUCT_PRICE_BOOK";
@@ -48,6 +50,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     const INVOICE_OBJECT            = "INVOICE";
     const CREDITMEMO_OBJECT         = "CREDITMEMO";
     const SHIPMENT_OBJECT           = "SHIPMENT";
+    const UPLOAD_DOC_OBJECT         = "UPLOAD_INVOICE_PDF";
     
     //salesforce magento mapping field
     const S_PRODUCTID           = "salesforce_product_id";

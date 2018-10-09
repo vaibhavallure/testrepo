@@ -87,6 +87,7 @@ try{
     foreach ($ostores as $storeO){
         $oldStoreArr[$storeO->getId()] = $storeO->getName();
     }
+    $oldStoreArr[0] = "Admin";
     
     //get collection of order according to page number, page size & asending order
     
@@ -247,7 +248,7 @@ try{
                 "accountId"                 => $saleforceCustomerId,
                 "Customer_Group__c"         => $customerGroup,
                 "Customer_Email__c"         => $customerEmail,
-                "Store__c"                  => $order->getStoreId(),
+                "Store__c"                  => $oldStoreArr[$order->getStoreId()],
                 "Old_Store__c"              => $oldStoreArr[$order->getOldStoreId()],
                 "EffectiveDate"             => date("Y-m-d",strtotime($createdAt)),
                 "Status"                    => $status,

@@ -53,6 +53,13 @@ class Allure_Salesforce_Model_Observer_Customer{
             return;
         }
         
+        $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+        $oldStoreArr = array();
+        foreach ($ostores as $storeO){
+            $oldStoreArr[$storeO->getId()] = $storeO->getName();
+        }
+        $oldStoreArr[0] = "Admin";
+        
         $customer = $observer->getEvent()->getCustomer();
         if($customer){
             
@@ -126,7 +133,7 @@ class Allure_Salesforce_Model_Observer_Customer{
                 //"Birth_Date_c"        => ($customer->getDob()) ? date("Y-m-d",strtotime($customer->getDob())) : null,//"YYYY-MM-DD",
                 "Company__c"          => $customer->getCompany(),
                 "Counterpoint_No__c"  => $customer->getCounterpointCustNo(),
-                "Created_In__c"       => "",
+                "Created_In__c"       => $customer->getCreatedIn(),
                 "Customer_ID__c"      => $customer->getId(),
                 "Customer_Note__c"    => $customer->getCustomerNote(),
                 "Default_Billing__c"  => $customer->getDefaultBilling(),
@@ -136,7 +143,10 @@ class Allure_Salesforce_Model_Observer_Customer{
                 //"Fax"                 => "",
                 "Gender__c"           => ($customer->getGender()) ? $customer->getGender() : 4,
                 "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
-                "Store__c"            => $customer->getStoreId(),
+                "Store__c"            => $oldStoreArr[$customer->getStoreId()],
+                "Old_Store__c"          => $oldStoreArr[$customer->getOldStoreId()],
+                "Teamwork_Customer_ID__c"   => $customer->getTeamworkCustomerId(),
+                "TW_UC_GUID__c"             => $customer->getTwUcGuid(),
                 "Group__c"            => $customer->getGroupId(),
                 "BillingStreet"       => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : "",
                 "BillingCity"         => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : "",

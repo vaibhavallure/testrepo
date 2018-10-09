@@ -46,6 +46,7 @@ class Allure_Salesforce_Model_Observer_Order{
                 //create new account for the customer
                 $helper->salesforceLog("from order customer account creating.");
                 $customer->save();
+                $salesforceAccountId = $customer->getSalesforceCustomerId();
             }
             /* if(!$salesforceAccountId){
                 $customer->save();
@@ -186,6 +187,14 @@ class Allure_Salesforce_Model_Observer_Order{
         if($salesforceOrderId){
             $requestMethod = "PATCH";
         }else{
+            
+            $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+            $oldStoreArr = array();
+            foreach ($ostores as $storeO){
+                $oldStoreArr[$storeO->getId()] = $storeO->getName();
+            }
+            $oldStoreArr[0] = "Admin";
+            
             $requestMethod = "POST";
             $request = array();
             $request["order"] = array(
@@ -227,7 +236,8 @@ class Allure_Salesforce_Model_Observer_Order{
                     //"Name" => "Magento Order #".$incrementId,
                     
                     "Payment_Method__c"         => $paymentMethod,
-                    "Store__c"                  => $order->getStoreId(),
+                    "Store__c"                  => $oldStoreArr[$order->getStoreId()],
+                    "Old_Store__c"              => $oldStoreArr[$order->getOldStoreId()],
                     "Order_Id__c"               => $order->getId(),
                     "Increment_Id__c"           => $incrementId,
                     "Customer_Group__c"         => $customerGroup,
@@ -331,6 +341,13 @@ class Allure_Salesforce_Model_Observer_Order{
             }else{
                 $requestMethod = "POST";
             }
+            
+            $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+            $oldStoreArr = array();
+            foreach ($ostores as $storeO){
+                $oldStoreArr[$storeO->getId()] = $storeO->getName();
+            }
+            $oldStoreArr[0] = "Admin";
                     
             $request = array(
                 "Discount_Amount__c"        => $baseDiscountAmount,
@@ -345,7 +362,7 @@ class Allure_Salesforce_Model_Observer_Order{
                 "Subtotal__c"               => $baseSubtotal,
                 "Tax_Amount__c"             => $basTaxAmount,
                 "Total_Quantity__c"         => $totalQty,
-                "Store__c"                  => $storeId,
+                "Store__c"                  => $oldStoreArr[$storeId],
                 "Order__c"                  => $salesforceOrderId,
                 "Name"                      => "Invoice for Order #".$orderIncrementId
             );
@@ -361,6 +378,10 @@ class Allure_Salesforce_Model_Observer_Order{
                 $write->query($sql_order);
                 $helper->salesforceLog("salesforce id updated into invoice.");
                 $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $invoice->getId());
+            
+                //upload invoice pdf 
+                $this->uploadInvoicePdf($order);
+            
             }else{
                 if($responseArr == ""){
                     $helper->salesforceLog("salesforce id not updated into invoice.");
@@ -372,6 +393,61 @@ class Allure_Salesforce_Model_Observer_Order{
             
         }
     }
+    
+    
+    public function uploadInvoicePdf($order){
+        $helper = $this->getHelper();
+        $helper->salesforceLog("uploadInvoicePdf request.");
+        try{
+            $orderIncrementId = $order->getIncrementId();
+            $fileName = "Order_Invoice.pdf";
+            
+            if($order->getSalesforceUploadedDocId()){
+                $helper->salesforceLog("salesforce uploaded doc id updated into order table already.");
+                return;
+            }
+            
+            $objectType = $helper::UPLOAD_DOC_OBJECT;
+            
+            $invoices = $order->getInvoiceCollection();
+            if(Mage::helper("core")->isModuleEnabled("Allure_Pdf")){
+                $pdf = Mage::getModel('sales/order_pdf_invoice')->getCompressPdf($invoices,true);
+            }else {
+                $pdf = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
+            }
+            
+            $filedata =  base64_encode($pdf->render());
+            
+            $request = array(
+                "ParentId" => $order->getSalesforceOrderId(),
+                "Name" => $fileName,
+                "body" => "$filedata",
+                "IsPrivate" => "false"
+            );
+            
+            //$helper->salesforceLog(json_encode($request));
+            
+            $url = $helper::INVOICE_PDF_URL_UPLOAD;
+            $requestMethod = "POST";
+            $response = $helper->sendRequest($url , $requestMethod , $request);
+            
+            $responseArr    = json_decode($response,true);
+            if($responseArr["success"]){
+                $coreResource = Mage::getSingleton('core/resource');
+                $write = $coreResource->getConnection('core_write');
+                $sql_order = "UPDATE sales_flat_order SET salesforce_uploaded_doc_id='".$responseArr["id"]."' WHERE entity_id ='".$order->getId()."'";
+                $write->query($sql_order);
+                $helper->salesforceLog("salesforce uploaded doc id updated into order table.");
+                $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $order->getId());
+            }else{
+                $helper->addSalesforcelogRecord($objectType,$requestMethod,$order->getId(),$response);
+            }
+            
+        }catch (Exception $e){
+            $helper->salesforceLog("Exception in uploadInvoicePdf - ".$e->getMessage());
+        }
+    }
+    
     
     /**
      * add shipment information into salesforce
@@ -553,6 +629,13 @@ class Allure_Salesforce_Model_Observer_Order{
             $requestMethod = "POST";
         }
         
+        $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+        $oldStoreArr = array();
+        foreach ($ostores as $storeO){
+            $oldStoreArr[$storeO->getId()] = $storeO->getName();
+        }
+        $oldStoreArr[0] = "Admin";
+        
         $request = array(
             "Adjustment__c"         => $baseAdjustment,
             "Created_At__c"         => date("Y-m-d",strtotime($createdAt)),
@@ -563,7 +646,7 @@ class Allure_Salesforce_Model_Observer_Order{
             "Order_Date__c"         => date("Y-m-d",strtotime($orderDate)),
             "Order_Id__c"           => $orderIncrementId,
             "Shipping_Amount__c"    => $shippingAmount,
-            "Store__c"              => $storeId,
+            "Store__c"              => $oldStoreArr[$storeId],
             "Subtotal__c"           => $subtotal,
             "Tax_Amount__c"         => $taxAmount,
             "Order__c"              => $salesforceOrderId,

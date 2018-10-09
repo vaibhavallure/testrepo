@@ -114,6 +114,13 @@ try{
     //add header data into .csv file
     $io->streamWriteCsv($header);
     
+    $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+    $oldStoreArr = array();
+    foreach ($ostores as $storeO){
+        $oldStoreArr[$storeO->getId()] = $storeO->getName();
+    }
+    $oldStoreArr[0] = "Admin";
+    
     foreach ($collection as $invoice){
         try{
             $order = $invoice->getOrder();
@@ -142,7 +149,7 @@ try{
                 "Invoice_Id__c"             => $invoiceIncrementId,
                 "Order_Id__c"               => $orderIncrementId,
                 "Name"                      => "Invoice for Order #".$orderIncrementId,
-                "Store__c"                  => $storeId,
+                "Store__c"                  => $oldStoreArr[$storeId],
                 "Invoice_Date__c"           => date("Y-m-d",strtotime($createdAt)),
                 "Order_Date__c"             => date("Y-m-d",strtotime($orderDate)),
                 "Shipping_Amount__c"        => $baseShippingAmount,
