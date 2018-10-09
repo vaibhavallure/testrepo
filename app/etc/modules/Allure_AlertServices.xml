@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Allure_AlertServices>
-      <active>false</active>
+      <active>true</active>
       <codePool>local</codePool>
     </Allure_AlertServices>
   </modules>
