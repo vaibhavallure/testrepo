@@ -13,6 +13,10 @@ class Allure_AlertServices_Model_Alerts
 				$helper = Mage::helper('alertservices');
 
 				$status =	$this->getConfigHelper()->getEmailStatus();
+				$productPrice_status =$this->getConfigHelper()->getProductPriceStatus();
+				if (!$productPrice_status) {
+					return;
+				}
 					if ($status) {
 						$collection = Mage::getModel('catalog/product')->getCollection()
 						->addAttributeToSelect('*')
@@ -24,7 +28,7 @@ class Allure_AlertServices_Model_Alerts
 						}
 					}
 				}catch(Exception $e){
-	    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+					$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
 	    	}
 				
 		}
@@ -34,7 +38,10 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
-
+			$sales_status =	$this->getConfigHelper()->getSalesStatus();
+			if (!$sales_status) {
+					return;
+				}
 			if ($status) {
 				$currdate = Mage::getModel('core/date')->gmtDate();
 				$toDate	= $currdate;
@@ -49,20 +56,27 @@ class Allure_AlertServices_Model_Alerts
 				}
 				$orders = Mage::getModel('sales/order')->getCollection()
 						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
-						  ->addAttributeToSelect('*');
+						  ->addAttributeToSelect('*')
+						  ->setCurPage(1)
+						  ->setPageSize(1)
+						  ->setOrder('created_at', 'desc');
 					if ($debug) {
 						echo $orders->getSelect()->__toString();
 						echo "<br>order count : ".count($orders);
 					}
-					
+
 					if (count($orders) <=0 ) {
-						$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem();
-						$helper->sendSalesOfFourEmailAlert($lastorder->getCreatedAt());
+						$lastOrderDate = Mage::getModel("sales/order")
+										->getCollection()
+										->setCurPage(1)
+										->setPageSize(1)
+										->setOrder('main_table.entity_id', 'desc');
+						$helper->sendSalesOfFourEmailAlert($lastOrderDate->getLastItem()->getCreatedAt());
 					}
 			}
 			
 		}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+			$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}
 		
 	}
@@ -72,6 +86,10 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
+			$sales_status =	$this->getConfigHelper()->getSalesStatus();
+			if (!$sales_status) {
+					return;
+				}
 			if ($status) {
 				$currdate = Mage::getModel('core/date')->gmtDate();
 				$toDate	= $currdate;
@@ -79,15 +97,22 @@ class Allure_AlertServices_Model_Alerts
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
 				$orders = Mage::getModel('sales/order')->getCollection()
 						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
-						  ->addAttributeToSelect('*');
+						  ->addAttributeToSelect('*')
+						  ->setCurPage(1)
+						  ->setPageSize(1)
+						  ->setOrder('created_at', 'desc');
 					    /*echo $orders->getSelect()->__toString();*/
 					if (count($orders)<=0) {
-						$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem();
-						$helper->sendSalesOfSixEmailAlert($lastorder->getCreatedAt());
+						$lastOrderDate = Mage::getModel("sales/order")
+										->getCollection()
+										->setCurPage(1)
+										->setPageSize(1)
+										->setOrder('main_table.entity_id', 'desc');
+						$helper->sendSalesOfSixEmailAlert($lastOrderDate->getLastItem()->getCreatedAt());
 					}
 			}
 		}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+			$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}
 		
 	}
@@ -96,6 +121,10 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
+			$checkout_status =	$this->getConfigHelper()->getCheckoutIssuesStatus();
+			if (!$checkout_status) {
+					return;
+				}
 			if ($status) {
 				$currdate = Mage::getModel('core/date')->gmtDate();
 				$toDate	= $currdate;
@@ -112,7 +141,7 @@ class Allure_AlertServices_Model_Alerts
 					}
 			}
 		}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+			$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}
 			
 	}
@@ -120,20 +149,22 @@ class Allure_AlertServices_Model_Alerts
 	public function alertNullUsers(){
 		try{
 			$helper = Mage::helper('alertservices');
-
 			$status =	$this->getConfigHelper()->getEmailStatus();
-				if ($status) {
-					$currdate = Mage::getModel('core/date')->gmtDate();
-					$lastHour = date('H', strtotime($currdate) - 60 * 60 * 1);
-					$analytics = $this->initializeAnalytics();
-					$response = $this->getUsersReport($analytics);
-					$users = $this->getResults($response,$lastHour,'users');
-					if (!empty($users) && $users['users'] <= 0) {
-						$helper->sendEmailAlertForNullUsers();
-					}
+			$alr_status =	$this->getConfigHelper()->getAlrStatus();
+
+			if (!$status || !$alr_status) {
+				return;
+			}
+				$currdate = Mage::getModel('core/date')->gmtDate();
+				$lastHour = date('H', strtotime($currdate) - 60 * 60 * 1);
+				$analytics = $this->initializeAnalytics();
+				$response = $this->getUsersReport($analytics);
+				$users = $this->getResults($response,$lastHour,'users');
+				if (!empty($users) && $users['users'] <= 0) {
+					$helper->sendEmailAlertForNullUsers();
 				}
 			}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+				$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}
 				
 	}
@@ -143,16 +174,19 @@ class Allure_AlertServices_Model_Alerts
 			$helper = Mage::helper('alertservices');
 
 			$status =	$this->getConfigHelper()->getEmailStatus();
-				if ($status) {
-					$analytics = $this->initializeAnalytics();
+			$alr_status =	$this->getConfigHelper()->getAlrStatus();
+
+			if (!$status || !$alr_status) {
+				return;
+			}
+				$analytics = $this->initializeAnalytics();
 					$response = $this->getPageReport($analytics);
 					$pageReport = $this->getResults($response,null,'page');
 					if (count($pageReport) > 0) {
 						$helper->sendEmailAlertForPageNotFound($pageReport);
 					}
-				}
 			}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+				$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}				
 	}
 
@@ -160,9 +194,12 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
+			$avg_load_status =	$this->getConfigHelper()->getPageLoadStatus();
+			if (!$avg_load_status) {
+					return;
+				}
 			$configPath = $this->getConfigHelper()->getAvgLoadTimePath();
 			$timeArray = $this->getConfigHelper()->getAvgLoadTimeArray();
-
 				if ($status) {
 					$ch = curl_init("https://www.mariatash.com/");
 					curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -170,7 +207,6 @@ class Allure_AlertServices_Model_Alerts
 					$res = curl_exec($ch);
 					$info = curl_getinfo($ch);
 					$avg_time = number_format((float)$info['total_time'], 2);
-					Mage::log('Average load time: '.$avg_time,Zend_log::DEBUG,'allureAlerts.log',true);
 					if ($avg_time) {
 						if (is_null($timeArray) || !$timeArray) {
 							Mage::getModel('core/config')->saveConfig($configPath,$avg_time)->cleanCache();
@@ -183,28 +219,45 @@ class Allure_AlertServices_Model_Alerts
 								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValue)->cleanCache();
 							}
 							if(count($timearray) == 7){
-								$totAvgTime = (array_sum($timearray))/7;
 								array_shift($timearray);
 								array_push($timearray,$avg_time);
 
 								$newAvgValue = implode(',', $timearray);
 								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValue)->cleanCache();
-								/*$totAvgTime = 30;*/
-								if ($totAvgTime >= 30) {
-									$helper->sendEmailAlertForAvgPageLoad($totAvgTime);
-								}else{
-									Mage::log($totAvgTime.' is not > 30',Zend_log::DEBUG,'allureAlerts.log',true);
-								}
 							}
 						}
 					}
 				}
 			}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+				$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}				
 	}
 
-
+		public function alertAvgPageLoadEmail(){
+		try{
+			$helper = Mage::helper('alertservices');
+			$status =	$this->getConfigHelper()->getEmailStatus();
+			$avg_load_status =	$this->getConfigHelper()->getPageLoadStatus();
+			if (!$avg_load_status) {
+					return;
+				}
+			$timeArray = $this->getConfigHelper()->getAvgLoadTimeArray();
+				if ($status) {
+					$timearray = explode(',', $timeArray);
+					if(count($timearray) == 7){
+						$totAvgTime = (array_sum($timearray))/7;
+						if ($totAvgTime >= 30) {
+							$helper->sendEmailAlertForAvgPageLoad($totAvgTime);
+						}else{
+							$helper->alr_alert_log($totAvgTime.' is not > 30','allureAlerts.log');
+						}
+					}
+				}
+						
+			}catch(Exception $e){
+				$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
+    	}				
+	}
 
 	public function initializeAnalytics()
 		{
@@ -262,7 +315,7 @@ class Allure_AlertServices_Model_Alerts
 		    $VIEW_ID = "181106821";
 		    // Create the DateRange object.
 		    $dateRange = new Google_Service_AnalyticsReporting_DateRange();
-		    $dateRange->setStartDate("7daysAgo");
+		    $dateRange->setStartDate("6daysAgo");
 		    $dateRange->setEndDate("today");
 		    //new added by aws02
 		    $dimension = new Google_Service_AnalyticsReporting_Dimension();
@@ -320,8 +373,7 @@ class Allure_AlertServices_Model_Alerts
 
 		                if ($form == 'page') {
 		                    if ($dimensionHeaders[$i] == 'ga:pageTitle' && $dimensions[$i] == '404 Not Found') {
-		                        $final_report[] = $dimensions[$i+1];
-		              /*print($dimensionHeaders[$i] . ": " . $dimensions[$i+1] . ": " .$dimensions[$i+2]."<br/>");*/
+		                        $final_report[] = array($dimensions[$i+1],$dimensions[$i+2]);
 		                    }
 		                }
 		                //print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "<br/>");

@@ -14,6 +14,31 @@ class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
     const XML_PATH_PAGE_LOAD_TEMPLATE = 'allure_alert/email_group/pageloadalert';
     const XML_PATH_GOOGLE_ANALYTICS_JSON = 'allure_alert/alr_analytics/alr_client_json';
     const XML_PATH_AVG_PAGE_LOAD = 'allure_alert/alr_analytics/avg_page_load';
+    const XML_PATH_ALR_ENABLED = 'allure_alert/alr_analytics/alr_enabled';
+    const XML_PATH_PRODUCT_PRICE_ENABLED='allure_alert/email_group/enabled_product_price';
+    const XML_PATH_SALES_ENABLED    =   'allure_alert/email_group/enabled_sales';
+    const XML_PATH_CHECKOUT_ISSUES_ENABLED = 'allure_alert/email_group/enabled_checkout';
+    const XML_PATH_PAGE_LOAD_ENABLED  = 'allure_alert/email_group/enabled_pageloadalert';
+    const XML_PATH_ALERT_DEBUG_ENABLED = 'allure_alert/email_group/enabled_debug_alert';
+
+    public function getAlertDebugStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_ALERT_DEBUG_ENABLED);
+    }
+
+    public function getProductPriceStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_PRODUCT_PRICE_ENABLED);
+    }
+
+    public function getSalesStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_SALES_ENABLED);
+    }
+    public function getCheckoutIssuesStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_CHECKOUT_ISSUES_ENABLED);
+    }
+    public function getPageLoadStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_PAGE_LOAD_ENABLED);
+    }
+
 
     public function getAlertSenderEmail(){
         return Mage::getStoreConfig(self::XML_PATH_ALERT_SENDER_EMAIL);
@@ -25,6 +50,10 @@ class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
 
     public function getEmailStatus(){
     	return Mage::getStoreConfig(self::XML_PATH_EMAIL_STATUS);
+    }
+
+    public function getAlrStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_ALR_ENABLED);
     }
 
     public function getEmailsGroup(){
