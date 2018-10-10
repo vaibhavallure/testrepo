@@ -91,6 +91,12 @@ class ParadoxLabs_AuthorizeNetCim_Block_Adminhtml_Config_ApiTester extends Parad
 		if( $method->getConfigData('login') == '' || $method->getConfigData('trans_key') == '' ) {
 			return 'Enter API credentials and save to test.';
 		}
+
+        // Verify no invalid characters -- suggests changed encryption key/corrupted data.
+        if ($this->_containsInvalidCharacters($method->getConfigData('login'))
+            || $this->_containsInvalidCharacters($method->getConfigData('trans_key'))) {
+            return 'Please re-enter your API Login ID and Transaction Key. They may be corrupted.';
+        }
 		
 		if( $method->getConfigData('acceptjs') == 1 && $method->getConfigData('client_key') == '' ) {
 			return 'Accept.js is enabled, but you have not entered your Client Key.';

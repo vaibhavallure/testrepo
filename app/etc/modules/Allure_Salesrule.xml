@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Allure_Salesrule>
-			<active>true</active>
+			<active>false</active>
 			<codePool>local</codePool>
 			<depends>
 				<Ebizmarts_BakerlooLoyalty />

@@ -24,6 +24,7 @@
 var pdlAcceptJs = Class.create();
 pdlAcceptJs.prototype = {
     fields: [
+        '_cc_type',
         '_cc_number',
         '_cc_exp_month',
         '_cc_exp_year',
@@ -35,6 +36,8 @@ pdlAcceptJs.prototype = {
     ],
     
     tmpHaveAllFields: null,
+    tmpConcat: null,
+    nonceConcat: null,
     timeout: null,
     
     /**
@@ -59,8 +62,8 @@ pdlAcceptJs.prototype = {
         if ($(this.formSelector)) {
             $(this.formSelector).select('input:not([type=hidden]), select').each(function(field) {
                 if( typeof field != 'undefined' ) {
-                    // This could conceivably cause problems in some custom environments. We're removing any HTML-based observers within the given scope.
-                    field.writeAttribute('onclick', '');
+                    field.observe('input', this.onFieldChange.bind(this));
+                    field.observe('keyup', this.onFieldChange.bind(this));
                     field.observe('change', this.onFieldChange.bind(this));
                 }
             }.bind(this));
@@ -82,11 +85,16 @@ pdlAcceptJs.prototype = {
                     if( field.value.length < 1 || field.value.indexOf('XX') >= 0 ) {
                         this.tmpHaveAllFields = false;
                     }
+                    else if( elemIndex == '_cc_cid' && field.value.length < 3 ) {
+                        this.tmpHaveAllFields = false;
+                    }
                 }
             }.bind(this));
             
-            // If all fields are filled in, request a nonce.
-            if( this.tmpHaveAllFields === true && this.validate() ) {
+            // If all fields are filled in, the form validates, and something has changed, request a nonce.
+            if( this.tmpHaveAllFields === true && this.validate() && this.concatFields() != this.nonceConcat ) {
+                this.nonceConcat = this.tmpConcat;
+                
                 this.sendPaymentInfo();
                 
                 // Refresh periodically to avoid 15-minute token expiration, and try to play nice with checkout errors.
@@ -95,7 +103,10 @@ pdlAcceptJs.prototype = {
                 }
                 
                 this.timeout = setTimeout(
-                    this.onFieldChange.bind(this),
+                    function() {
+                        this.nonceConcat = null;
+                        this.onFieldChange();
+                    }.bind(this),
                     60000
                 );
             }
@@ -120,8 +131,8 @@ pdlAcceptJs.prototype = {
      * Validate payment form fields before submit
      */
     validate : function() {
-        var validator = new Validation($(this.formSelector));
-        if ( validator.validate() && ( typeof payment == 'undefined' || typeof payment.validate == 'undefined' || payment.validate() ) ) {
+        var validator = new Validation($(this.formSelector), {focusOnError: false});
+        if ( validator.validate() && ( typeof payment == 'undefined' || typeof payment.validate == 'undefined' || payment.validate() != false ) ) {
             return true;
         }
         else {
@@ -133,22 +144,15 @@ pdlAcceptJs.prototype = {
      * Send payment info via Accept.js
      */
     sendPaymentInfo : function() {
-        if( typeof checkout != 'undefined' && typeof checkout.setLoadWaiting == 'function' ) {
-            checkout.setLoadWaiting('payment');
-        }
-        else if( this.submitSelector && $$(this.submitSelector).length > 0 ) {
-            $$(this.submitSelector).each(function(el) {
-                el.disabled = true;
-                el.addClassName('disabled');
-            });
-        }
+        this.startLoadWaiting();
         
         var form = $(this.formSelector);
         var paymentData = {
             cardData: {
                 cardNumber: form.down('#' + this.method + '_cc_number').value.replace(/\D/g,''),
                 month: form.down('#' + this.method + '_cc_exp_month').value,
-                year: form.down('#' + this.method + '_cc_exp_year').value
+                year: form.down('#' + this.method + '_cc_exp_year').value,
+                cardCode: ''
             },
             authData: {
                 clientKey: this.clientKey,
@@ -170,16 +174,6 @@ pdlAcceptJs.prototype = {
      * Handle Accept.js response
      */
     handlePaymentResponse : function(response) {
-        if( typeof checkout != 'undefined' && typeof checkout.setLoadWaiting == 'function' ) {
-            checkout.setLoadWaiting(false);
-        }
-        else if( this.submitSelector && $$(this.submitSelector).length > 0 ) {
-            $$(this.submitSelector).each(function(el) {
-                el.disabled = false;
-                el.removeClassName('disabled');
-            });
-        }
-        
         if (response.messages.resultCode === 'Error') {
             this.hasError = true;
             
@@ -189,10 +183,20 @@ pdlAcceptJs.prototype = {
                     messages += "\n";
                 }
                 
-                messages += Translator.translate( response.messages.message[i].text + ' (' + response.messages.message[i].code + ')' );
+                if (typeof Translator != 'undefined') {
+                    messages += Translator.translate( response.messages.message[i].text + ' (' + response.messages.message[i].code + ')' );
+                }
+                else {
+                    messages += response.messages.message[i].text + ' (' + response.messages.message[i].code + ')';
+                }
             }
             
-            alert(messages);
+            // Unset data
+            $(this.formSelector).down('#' + this.method + '_acceptjs_key').value = '';
+            $(this.formSelector).down('#' + this.method + '_acceptjs_value').value = '';
+            $(this.formSelector).down('#' + this.method + '_cc_last4').value = '';
+            
+            this.stopLoadWaiting(messages);
         }
         else {
             var cc_no = $(this.formSelector).down('#' + this.method + '_cc_number').value;
@@ -208,7 +212,106 @@ pdlAcceptJs.prototype = {
                     $(this.formSelector).down('#' + this.method + elemIndex).name = '';
                 }
             }.bind(this));
+            
+            this.stopLoadWaiting(false);
         }
+    },
+    
+    /**
+     * Show the spinner effect on the CC fields while loading.
+     */
+    startLoadWaiting : function() {
+        try {
+            // Field opacity
+            this.fields.each(function(elemIndex) {
+                var field = $(this.formSelector).down('#' + this.method + elemIndex);
+                
+                if( typeof field != 'undefined' ) {
+                    $(field).up('li, tr').setStyle({
+                        opacity: 0.5
+                    });
+                }
+            }.bind(this));
+            
+            // Spinner / messages
+            $(this.formSelector).down('#' + this.method + '_processing').show();
+            $(this.formSelector).down('#' + this.method + '_complete').hide();
+            $(this.formSelector).down('#' + this.method + '_failed').hide();
+            $(this.formSelector).down('#' + this.method + '_failed').down('.error-text').update('');
+            
+            // Button disable
+            if( this.submitSelector && $$(this.submitSelector).length > 0 ) {
+                $$(this.submitSelector).each(function(el) {
+                    el.disabled = true;
+                    el.addClassName('disabled');
+                });
+            }
+        } catch(error) {
+            // do nothing on load-waiting error.
+        }
+    },
+    
+    /**
+     * Remove the spinner effect on the CC fields.
+     */
+    stopLoadWaiting : function(error) {
+        try {
+            // Field opacity
+            this.fields.each(function(elemIndex) {
+                var field = $(this.formSelector).down('#' + this.method + elemIndex);
+                
+                if( typeof field != 'undefined' ) {
+                    $(field).up('li, tr').setStyle({
+                        opacity: 1
+                    });
+                }
+            }.bind(this));
+            
+            // Spinner / messages
+            $(this.formSelector).down('#' + this.method + '_processing').hide();
+            
+            if( error == false ) {
+                $(this.formSelector).down('#' + this.method + '_complete').show().setStyle({opacity: 1});
+            }
+            else {
+                $(this.formSelector).down('#' + this.method + '_failed').down('.error-text').update(error);
+                $(this.formSelector).down('#' + this.method + '_failed').show().setStyle({opacity: 1});
+            }
+            
+            setTimeout(
+                function() {
+                    $(this.formSelector).down('#' + this.method + '_complete').fade({duration: 0.3});
+                }.bind(this),
+                1500
+            );
+            
+            // Button disable
+            if( this.submitSelector && $$(this.submitSelector).length > 0 ) {
+                $$(this.submitSelector).each(function(el) {
+                    el.disabled = false;
+                    el.removeClassName('disabled');
+                });
+            }
+        } catch(error) {
+            // do nothing on load-waiting error.
+        }
+    },
+    
+    /**
+     * Combine all fields into a single string for quick comparison purposes.
+     */
+    concatFields : function() {
+        this.tmpConcat = '';
+        
+        this.fields.each(function(elemIndex) {
+            var field = $(this.formSelector).down('#' + this.method + elemIndex);
+            
+            if( typeof field != 'undefined' && field.value.length > 0 ) {
+                this.tmpConcat += field.value;
+            }
+        }.bind(this));
+        
+        return this.tmpConcat;
     }
 
 };

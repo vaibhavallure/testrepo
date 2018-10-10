@@ -334,7 +334,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
                 $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
                 $enablePiercerEmail = $configData['piercer_email_enable'][$storeKey];
                 $sender = array(
-                    'name' => $configData['appears'][$storeKey],
+                    'name' => Mage::getStoreConfig("trans_email/bookings/name"),
                     'email' => $configData['store_email'][$storeKey]
                 );
                 
@@ -593,7 +593,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
                 $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
                 $enablePiercerEmail = $configData['piercer_email_enable'][$storeKey];
                 $sender = array(
-                    'name' => $configData['appears'][$storeKey],
+                    'name' => Mage::getStoreConfig("trans_email/bookings/name"),
                     'email' => $configData['store_email'][$storeKey]
                 );
 

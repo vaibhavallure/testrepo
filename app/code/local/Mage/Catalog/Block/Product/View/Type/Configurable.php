@@ -394,8 +394,8 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
      * @param boolean $round
      * @return float
      */
-    protected function  _convertPrice($price, $round = false, $customAttr= false)
+    protected function  _convertPrice($price, $round = false)
     {
-        return $this->_getHelper()->convertPrice($price, $round,null,$customAttr);
+        return $this->_getHelper()->convertPrice($price, $round,null);
     }
 }

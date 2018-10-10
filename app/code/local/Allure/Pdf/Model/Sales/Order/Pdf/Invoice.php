@@ -1,6 +1,7 @@
 <?php
 class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Invoice
 {
+    protected $_isCompress = false;
     /**
      * Insert order to pdf page
      *
@@ -278,6 +279,13 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
         }
     }
     
+    //compress pdf size
+    public function getCompressPdf($invoices = array(), $isCompress = false){
+        $this->_isCompress = $isCompress;
+        return $this->getPdf($invoices);
+    }
+    
+    
     /**
      * Return PDF document
      *
@@ -343,6 +351,43 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
         }
         $this->_afterGetPdf();
         return $pdf;
+    }
+    
+    /**
+     * Set font as regular
+     *
+     * @param  Zend_Pdf_Page $object
+     * @param  int $size
+     * @return Zend_Pdf_Resource_Font
+     */
+    protected function _setFontRegular($object, $size = 7)
+    {
+        if($this->_isCompress){
+            $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+        }else{
+            $font = Zend_Pdf_Font::fontWithPath(Mage::getBaseDir() . '/lib/LinLibertineFont/LinLibertine_Re-4.4.1.ttf');
+        }
+        
+        $object->setFont($font, $size);
+        return $font;
+    }
+    
+    /**
+     * Set font as bold
+     *
+     * @param  Zend_Pdf_Page $object
+     * @param  int $size
+     * @return Zend_Pdf_Resource_Font
+     */
+    protected function _setFontBold($object, $size = 7)
+    {
+        if($this->_isCompress){
+            $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+        }else{
+            $font = Zend_Pdf_Font::fontWithPath(Mage::getBaseDir() . '/lib/LinLibertineFont/LinLibertine_Bd-2.8.1.ttf');
+        }
+        $object->setFont($font, $size);
+        return $font;
     }
     
 }

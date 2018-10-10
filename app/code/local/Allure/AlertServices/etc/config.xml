@@ -59,7 +59,7 @@
 			</alert_product_price>
 			<alert_sale_four>
 				<schedule>
-					<cron_expr>0 */4 * * *</cron_expr>
+					<cron_expr>0 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertSalesOfFour</model>
@@ -67,7 +67,7 @@
 			</alert_sale_four>
 			<alert_sale_six>
 				<schedule>
-					<cron_expr>0 */6 * * *</cron_expr>
+					<cron_expr>0 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertSalesOfSix</model>
@@ -94,9 +94,17 @@
 					<cron_expr>0 8 * * 1</cron_expr>
 				</schedule>
 				<run>
-					<model>alertservices/alerts::alertNullUsers</model>
+					<model>alertservices/alerts::alertPageNotFound</model>
 				</run>
 			</alert_page_not_found>
+			<alert_avg_page_load>
+				<schedule>
+					<cron_expr>*/1 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertAvgPageLoad</model>
+				</run>
+			</alert_avg_page_load>
 		</jobs>
 	</crontab>
 </config> 

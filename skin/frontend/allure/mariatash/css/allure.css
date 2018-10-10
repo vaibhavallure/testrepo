@@ -38,10 +38,11 @@ body.modal-popup-body {
 }
 
 button.apple-pay-button-with-text.apple-pay-button-black-with-text {
-  min-height: 30px !important;
-  height: 20px !important;
-  margin-top: -2px !important;
-  border-radius: 0 !important;
+ 	margin-top: 10px !important;
+}
+
+button.apple-pay-button-with-text.apple-pay-button-black-with-text  + a {
+	margin-top: 7px;
 }
 
 .owl-carousel,#zoom-btn {z-index:0 !important}
@@ -1392,7 +1393,7 @@ ul#narrow-by-list li.filtru-price {max-width: 100% !important;}
     width: 20px;
     height: 20px;
     padding: 2px;
-    margin-right: 10px;
+    margin-right: 5px;
     text-align: center;
 }
 
@@ -2492,6 +2493,9 @@ cursor: pointer;
 .popupResetPasswordModel .submit-login{
   padding-bottom: 10px;
 }
+
+#reload_payment .loading-div {margin-bottom: 10px};
+
 .gift-confirm .gift-confirm-msg{
 	margin-top: 20px;
     color: #3F4048;

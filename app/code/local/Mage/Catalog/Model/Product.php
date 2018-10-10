@@ -208,20 +208,9 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function getPrice()
     {
-
-        if (Mage::helper('core')->isModuleEnabled('Allure_MultiCurrency')) {
-
-            if(Mage::Helper('multicurrency')->getCustomAttrPrice($this))
-            {
-                return  Mage::Helper('multicurrency')->getCustomAttrPrice($this);
-            }
-        } 
-
-
         if ($this->_calculatePrice || !$this->getData('price')) {
             return $this->getPriceModel()->getPrice($this);
-         } else {
-
+        } else {
             return $this->getData('price');
         }
     }
@@ -716,14 +705,11 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function getFinalPrice($qty=null)
     {
-
         $price = $this->_getData('final_price');
-
         if ($price !== null) {
             return $price;
         }
         return $this->getPriceModel()->getFinalPrice($qty, $this);
-
     }
 
     /**
