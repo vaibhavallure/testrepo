@@ -151,8 +151,15 @@ $typeId = $_item->getProduct()->getTypeId();
                     $skuStr = $product->getSku();
                     $skuArr = explode("|", $skuStr);
                     $sku = $skuArr[0];
+                    $giftcard = 1;
+                    if ($sku == "STORECARD") {
+                        $giftcard = 0;
+                    }
+                    if ($sku == "gift") {
+                        $giftcard = 0;
+                    }
                ?>
-            <?php if($sku != "STORECARD"):?>
+            <?php if($giftcard):?>
 
     <div class="a-right item-msg div-qty" style="font-size:10px;margin:5px 0">
         <?php if(0):  //commenting existing code for parent child?>

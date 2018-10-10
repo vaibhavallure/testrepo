@@ -52,6 +52,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Observer_Legacy
 			 */
 			$gateway	= Mage::helper('payment')->getMethodInstance('authnetcim')->gateway();
 			$gateway->setParameter( 'customerProfileId', $profileId );
+			$gateway->setParameter( 'unmaskExpirationDate', 'true' );
 			
 			$profile	= $gateway->getCustomerProfile();
 			$cards		= array();
@@ -97,7 +98,8 @@ class ParadoxLabs_AuthorizeNetCim_Model_Observer_Legacy
 				 * Create a card record for each
 				 */
 				foreach( $cards as $k => $card ) {
-					if( !isset( $card['payment']['creditCard'] ) ) {
+					if( !isset( $card['payment']['creditCard'] )
+						|| $this->_cardAlreadyExists( $customer->getId(), $profileId, $card['customerPaymentProfileId'] ) ) {
 						continue;
 					}
 					
@@ -133,14 +135,18 @@ class ParadoxLabs_AuthorizeNetCim_Model_Observer_Legacy
 					$storedCard->setData( 'address', serialize( $addressData ) );
 					
 					if( isset( $card['payment']['creditCard'] ) ) {
+						list( $yr, $mo ) = explode( '-', $card['payment']['creditCard']['expirationDate'], 2 );
+						$day = date( 't', strtotime( $yr . '-' . $mo ) );
+
 						$paymentData = array(
 							'cc_type'			=> '',
 							'cc_last4'			=> substr( $card['payment']['creditCard']['cardNumber'], -4 ),
-							'cc_exp_year'		=> '',
-							'cc_exp_month'		=> '',
+							'cc_exp_year'		=> $yr,
+							'cc_exp_month'		=> $mo,
 						);
-						
+
 						$storedCard->setData( 'additional', serialize( $paymentData ) );
+						$storedCard->setData( 'expires', sprintf( '%s-%s-%s 23:59:59', $yr, $mo, $day ) );
 					}
 					
 					$storedCard->save();
@@ -157,7 +163,13 @@ class ParadoxLabs_AuthorizeNetCim_Model_Observer_Legacy
 								->addFieldToFilter( 'ext_customer_id', array( 'in' => array_keys( $cards ) ) );
 				
 				foreach( $orders as $order ) {
-					$order->getPayment()->setTokenbaseId( $cards[ $order->getExtCustomerId() ]['tokenbase_id'] )
+					$paymentId = $order->getExtCustomerId();
+					if( $paymentId !== null && strpos($paymentId, ':') !== false) {
+						$paymentId = explode( ':', $paymentId );
+						$paymentId = $paymentId[1];
+					}
+					
+					$order->getPayment()->setTokenbaseId( $cards[ $paymentId ]['tokenbase_id'] )
 										->save();
 					
 					$affectedOrders++;
@@ -189,5 +201,29 @@ class ParadoxLabs_AuthorizeNetCim_Model_Observer_Legacy
 			$customer->setAuthnetcimProfileVersion( 200 )
 					 ->save();
 		}
+	}
+	
+	/**
+	 * Check whether the given profile/payment ID pair already exist.
+	 *
+	 * @param string|int $customerId
+	 * @param string|int $profileId
+	 * @param string|int $paymentId
+	 * @return bool
+	 */
+	protected function _cardAlreadyExists($customerId, $profileId, $paymentId)
+	{
+		$cards = Mage::getResourceModel('tokenbase/card_collection');
+		$cards->addFieldToFilter( 'method', 'authnetcim' )
+			  ->addFieldToFilter( 'customer_id', $customerId )
+			  ->addFieldToFilter( 'profile_id', $profileId )
+			  ->addFieldToFilter( 'payment_id', $paymentId )
+			  ->setPageSize(1);
+		
+		if ($cards->getSize() > 0) {
+			return true;
+		}
+
+		return false;
 	}
 }

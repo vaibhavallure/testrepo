@@ -115,7 +115,7 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
     /**
      * get store name by using store id
      */
-    public function getStoreId($storeCode){
+    public function getStoreId($storeCode = NULL){
         $store = Mage::getSingleton("allure_virtualstore/store")->load($storeCode, 'code');
 
         return $store->getId();

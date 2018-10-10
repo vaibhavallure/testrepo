@@ -73,7 +73,11 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
     	               ->getGrandTotalWithBaseCurrency();
 			?>
 			
-			<span class="label"><?php echo $this->__('Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal()) ?>
+			<span class="label"><?php echo $this->__('Subtotal:') ?></span> <?php echo Mage::helper('checkout')->formatPrice($this->getSubtotal());
+
+           // Mage::log("get subtotal ".$this->getSubtotal(), Zend_Log::DEBUG,'allure_log.log',true);
+
+            ?>
 			<?php echo (!empty($baseGrandTotal) ? "(".$baseGrandTotal.")":"")?>
 			
 			<?php if ($_subtotalInclTax = $this->getSubtotalInclTax()): ?>

@@ -1,0 +1,37 @@
+<?php
+/**
+ * Apple Pay
+ *
+ * @category    Allure
+ * @package     Allure_ApplePay
+ * @copyright   Copyright (c) 2017 Allure Inc
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+?>
+<script type='text/javascript'>
+//<![CDATA[
+Element.prototype.triggerEvent = function(eventName) {
+    if (document.createEvent) {
+        var evt = document.createEvent('HTMLEvents');
+        evt.initEvent(eventName, true, true);
+        return this.dispatchEvent(evt);
+    }
+    if (this.fireEvent)
+        return this.fireEvent('on' + eventName);
+}
+
+// Display login on radio select
+$$("input[name='payment[method]']").each(function(el) {
+    el.observe('change', function() {
+        if (el.value == 'applepay') {
+            $$("#payment_form_applepay img")[0].triggerEvent('click');
+        }
+    })
+})
+
+if ($$("input[name='payment[method]']:checked").length) {
+	$$("input[name='payment[method]']:checked")[0].click();
+}
+
+//]]>
+</script>
