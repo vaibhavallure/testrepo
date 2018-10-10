@@ -2,7 +2,8 @@ before_script:
   - echo 'Start Deployment'
 stages:
   - develop
-  - staging
+  - alpha
+  - beta
   - deploy
 develop:
   environment: development
@@ -16,7 +17,7 @@ develop:
     - echo 'Deployed on Allure Local Dev'
 cloud_alpha:
   environment: staging
-  stage: staging
+  stage: alpha
   tags:
     - cloud-alpha
   only:
@@ -25,9 +26,9 @@ cloud_alpha:
     - mage-deploy mt
     - echo 'Deployed on Staging'
 
-alpha_stage:
+beta_stage:
   environment: alpha
-  stage: staging
+  stage: beta
   tags:
     - alpha
   only:
@@ -40,7 +41,7 @@ beta_apple_pay:
   environment: apple_pay
   stage: staging
   tags:
-    - beta
+    - alpha
   only:
     - apple_pay
   script:
