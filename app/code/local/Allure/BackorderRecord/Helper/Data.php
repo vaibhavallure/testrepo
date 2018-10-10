@@ -239,7 +239,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $diffZone="-".Mage::getModel('backorderrecord/cron')->getDiffTimezone();
 
-                $createdAt = date('Y-m-d H:i:s', strtotime($diffZone,strtotime($orderDetails->getCreatedAt())));
+                $createdAt = date('Y-m-d h:i:s a', strtotime($diffZone,strtotime($orderDetails->getCreatedAt())));
 
 
 
