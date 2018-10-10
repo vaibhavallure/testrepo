@@ -152,16 +152,17 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         $header = array(
             "created_at"=>"ORDER DATE",
             "order_number"=>"ORDER NUMBER",
-            "order_type"=>"BACKORDER/CUSTOMIZATION",
-            "store"=>"STORE",
-            "qty"=>"QTY",
-            "back_qty"=>"BACKORDER QTY",
-            "customization"=>"CUSTOMIZATION",
-            "sku"=>"SKU",
-            "product_name"=>"PRODUCT NAME",
-            "price"=>"PRICE",
             "customer_name"=>"CUSTOMER NAME",
             "customer_email"=>"CUSTOMER EMAIL",
+//            "order_type"=>"BACKORDER/CUSTOMIZATION",
+            "store"=>"STORE",
+//            "qty"=>"QTY",
+            "sku"=>"SKU",
+            "metal"=>"METAL",
+            "product_name"=>"PRODUCT NAME",
+            "price"=>"PRICE",
+            "back_qty"=>"QUANTITY",
+            "customization"=>"CUSTOMIZATION"
 
         );
 
@@ -182,17 +183,17 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
             foreach ($backorderCollection as $order) {
 
-                if ($order->getQtyBackordered())
-                    $ordertype = "BACKORDER";
-                else if ($order->getGiftMessageId())
-                    $ordertype = "CUSTOMIZATION";
+//                if ($order->getQtyBackordered())
+//                    $ordertype = "BACKORDER";
+//                else if ($order->getGiftMessageId())
+//                    $ordertype = "CUSTOMIZATION";
 
                 $customization="";
 
-                if ($order->getGiftMessageId()) {
-                    $gift = Mage::getSingleton("giftmessage/message")->load($order->getGiftMessageId());
-                    $customization = $gift->getMessage();
-                }
+//                if ($order->getGiftMessageId()) {
+//                    $gift = Mage::getSingleton("giftmessage/message")->load($order->getGiftMessageId());
+//                    $customization = $gift->getMessage();
+//                }
 
 
 
@@ -209,6 +210,16 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $symbol=Mage::app()->getLocale()->currency($parentProductData->getBaseCurrencyCode())->getSymbol();
                     $price=$symbol."".round($parentProductData->getBasePrice(),2);
                     $qty = $parentProductData->getQtyOrdered();
+
+
+
+
+                    if ($parentProductData->getGiftMessageId()) {
+                        $gift = Mage::getSingleton("giftmessage/message")->load($parentProductData->getGiftMessageId());
+                        $customization = $gift->getMessage();
+                    }
+
+
                 }
 
 
@@ -228,7 +239,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $diffZone="-".Mage::getModel('backorderrecord/cron')->getDiffTimezone();
 
-                $createdAt = date('Y-m-d H:i:s', strtotime($diffZone,strtotime($orderDetails->getCreatedAt())));
+                $createdAt = date('Y-m-d h:i:s a', strtotime($diffZone,strtotime($orderDetails->getCreatedAt())));
 
 
 
@@ -236,16 +247,19 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
                     $row["created_at"]=$createdAt;
                     $row["order_number"] = $orderDetails->getIncrementId();
-                    $row["order_type"] = $ordertype;
-                    $row["store"]=$store;
-                    $row["qty"]=$qty;
-                    $row["back_qty"]=$order->getQtyBackordered();
-                    $row["customization"]=$customization;
-                    $row["sku"]=$sku;
-                    $row["product_name"]=$productName;
-                    $row["price"]=$price;
                     $row["customer_name"]=$customername;
                     $row["customer_email"]=$customeremail;
+//                  $row["order_type"] = $ordertype;
+                    $row["store"]=$store;
+//                  $row["qty"]=$qty;
+                    $row["sku"]=$sku;
+                    $row["metal"]=explode("|",$sku)[1];
+                    $row["product_name"]=$productName;
+                    $row["price"]=$price;
+                    $row["back_qty"]=$order->getQtyBackordered();
+                    $row["customization"]=$customization;
+
+
 
 
 
@@ -263,7 +277,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
         endif;
 
         $row = array();
-        $row["order_id"] = "Backorder or Custmization Order Record Not Found ";
+        $row["order_id"] = "Back Order Record Not Found ";
         $rowData[] = $row;
 
         if($this->config()->getDebugStatus())
