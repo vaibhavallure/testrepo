@@ -1,0 +1,175 @@
+<?php
+$_helper            = Mage::helper("allure_salesforce/csv");
+$_objectList        = $_helper->getObjectList();
+$_objectColumnList  = $_helper->getObjectColumnList();
+?>
+<style>
+#main-div-gen-csv{
+    width: 40%;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.allure-salesforce-div{
+    padding: 5px;
+}
+#column-list .item{
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+}
+.column-list-container{
+    width: 60%;
+}
+.add-column-list,
+.object-column-list,
+#column-list{
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.object-column-list{
+    padding: 0.01em 16px;
+    padding-top: 16px!important;
+    padding-bottom: 16px!important;
+    color: #000!important;
+    background-color: #f1f1f1!important;
+}
+.remove-item{
+    cursor: pointer;
+    float: right!important;
+    color: #000;
+    font-size: 16px;
+}
+.upload-csv-link{
+    float: right;
+    margin-right: 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: gray;
+    padding: 10px;
+    color: #fff;
+}
+</style>
+
+
+<div id="main-div-gen-csv">
+	<h1><?php echo $this->__("CSV Generation")?></h1>
+	
+	<a class="upload-csv-link" href="<?php echo $this->getuploadCsvFormUrl()?>"><?php echo $this->__("Upload csv link")?></a>
+	
+	<form id="form-gen-csv" action="<?php echo $this->getGenerateCsvFormUrl()?>" method="post" enctype="multipart/form-data">
+		<?php echo $this->getBlockHtml('formkey')?>
+		<div class="allure-salesforce-div">
+			<div>
+    			<label><strong><?php echo $this->__("Object Type")?></strong></label>
+    		</div>
+    		<div>
+        		<select class="required-entry" name="object_type" id="object-type">
+        		    <option value=""><?php echo $this->__("-- Please select --")?></option>
+        			<?php foreach ($_objectList as $_objKey => $_objVal):?>
+        			<option value="<?php echo $_objKey?>"><?php echo $_objVal?></option>
+        			<?php endforeach;?>
+        		</select>
+    		</div>
+		</div>
+		
+		<div class="allure-salesforce-div">
+			<div>
+				<label><strong><?php echo $this->__("Page Number")?></strong></label>
+			</div>
+			<div>
+				<input name="page" value="1" />
+			</div>
+		</div>
+		
+		<div class="allure-salesforce-div">
+			<div>
+				<label><strong><?php echo $this->__("Page Size")?></strong></label>
+			</div>
+			<div>
+				<input name="size" value="10" />
+			</div>
+		</div>
+		
+		<div class="allure-salesforce-div" style="display: none;">
+			<textarea id="tarea-object" rows="20" cols="15" name="fields" style="width: 35%;">
+			</textarea>
+		</div>
+		
+		<div class="allure-salesforce-div column-list-container">
+			<header class="object-column-list">
+    			<h3>Column List</h3>
+  			</header>
+			<div id="column-list">
+			</div>
+			<div class="add-column-list object-column-list">
+				<input id="add-column-input" type="text" value="" placeholder="Add New Column"/>
+				<button id="add-col-btn" type="button" class="scalable">Add</button>
+				<p>(Note:Key-Value pair.i.e Saleforce column name = Magento column name)</p>
+			</div>
+		</div>
+		
+		<div class="allure-salesforce-div">
+			<button id="gen-csv-btn" type="button" value="Generate Csv" class="scalable">Generate Csv</button>
+		</div>
+		
+		<?php foreach ($_objectColumnList as $_object => $_columns):?>
+			<div id="ob-<?php echo $_object ?>" style="display: none;">
+				<ul id="ul-<?php echo $_object ?>">
+					<?php foreach ($_columns as $_column):?>
+					<?php 
+					   $_columnArr = explode("=", $_column);
+					   $_col1 = trim($_columnArr[0]);
+					   $_col2 = trim($_columnArr[1]);
+					?>
+					<li class="item" name="<?php echo $_column?>">
+					<?php echo $_col1?>
+					<span class="remove-item" onclick="removeColumn(this);">×</span>
+					</li>
+					<?php endforeach;?>
+				</ul>
+			</div>
+		<?php endforeach;?>
+		
+	</form>
+</div>
+
+<script type="text/javascript">
+	jQuery("#object-type").click(function(){
+		var objectType = jQuery(this).val();
+		/* var data = jQuery("#ob-"+objectType).text();
+		jQuery("#tarea-object").text("");
+		jQuery("#tarea-object").text(data); */
+		var htmlData = jQuery("#ob-"+objectType).html();
+		jQuery("#column-list").html("");
+		jQuery("#column-list").html(htmlData);
+	});
+
+	function removeColumn(evt){
+		console.log("In Remove");
+		jQuery(evt).parent().remove();
+	}
+
+	jQuery("#gen-csv-btn").click(function(){
+		var objectType = jQuery("#object-type").val();
+		var list = "";
+		var size = jQuery("#column-list #ul-"+objectType+" li").length;
+		jQuery("#column-list #ul-"+objectType+" li").each(function(idx){
+			var cl = jQuery(this).attr("name");
+			list += ""+cl;
+			if((idx+1) < size){
+				list += ",";
+			}
+		});
+		jQuery("#tarea-object").text(list);
+		console.log(list);
+		jQuery("#form-gen-csv").submit();
+	});
+
+	jQuery("#add-col-btn").click(function(){
+		var colName = jQuery("#add-column-input").val();
+		var objectType = jQuery("#object-type").val();
+		if(objectType){
+			var cols = colName.split("=");
+			var html = '<li class="item" name="'+colName+'">'+cols[0]+
+			'<span class="remove-item" onclick="removeColumn(this);">×</span></li>';
+			jQuery("#ul-"+objectType).append(html);
+		}
+	});
+</script>
