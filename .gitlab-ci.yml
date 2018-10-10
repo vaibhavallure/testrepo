@@ -42,9 +42,9 @@ beta_stage:
     
 beta_apple_pay:
   environment: apple_pay
-  stage: staging
+  stage: beta
   tags:
-    - alpha
+    - beta
   only:
     - apple_pay
   script:
