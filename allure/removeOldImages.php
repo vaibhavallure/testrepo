@@ -59,10 +59,8 @@ try{
 
             }
         }
-        
-echo "<pre>";
 
-var_dump($files);
+
 
          foreach ($files as $key=>$fl)
          {
@@ -116,11 +114,14 @@ var_dump($files);
                  foreach ($nf as $n) {
                      $backend = $attributes['media_gallery']->getBackend();
                      $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
-                 if($key==1) {
+
+                     echo "<br>{$key}<br>";
+                     if($key==1) {
+                     echo "<br>entered into set image ".$n['file'];
                      $product->setSmallImage($n['file']);
                      $product->setImage($n['file']);
                      $product->setThumbnail($n['file']);
-                 }
+                    }
 
                  }
              }
@@ -132,13 +133,7 @@ var_dump($files);
         if(count($oldFiles)) {
             foreach ($oldFiles as $key => $ol) {
                 foreach ($ol as $o) {
-                    if($media->remove($product->getId(), trim($o['file'])))
-                    {
-                        Mage::log("Image deleted" . $product->getSku()." product_id=".$product->getId()." Image=".$o['file'], Zend_Log::DEBUG, 'remove_old_images_deleted.log', true);
-                    }
-                    else{
-                        Mage::log("Image Can not be deleted" . $product->getSku()." product_id=".$product->getId()." Image=".$o['file'], Zend_Log::DEBUG, 'remove_old_images_deleted.log', true);
-                    }
+                    $media->remove($product->getId(), $o['file']);
                 }
             }
         }
