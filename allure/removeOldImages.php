@@ -8,6 +8,7 @@ require_once('../app/Mage.php');
 umask(0);
 Mage::app();
 Mage::app()->getStore()->setId(Mage_Core_Model_App::ADMIN_STORE_ID);
+Mage::setIsDeveloperMode(true);
 
 $count=0;
 
@@ -33,7 +34,6 @@ $collection->addAttributeToFilter('sku',array('like'=>$SKUlike.'%'));
 try{
 
     $baseDir = Mage::getSingleton('catalog/product_media_config')->getBaseMediaPath();
-    $media = Mage::getModel('catalog/product_attribute_media_api');
 
 
 
@@ -59,7 +59,7 @@ try{
 
             }
         }
-        
+
 echo "<pre>";
 
 var_dump($files);
@@ -132,6 +132,8 @@ var_dump($files);
         if(count($oldFiles)) {
             foreach ($oldFiles as $key => $ol) {
                 foreach ($ol as $o) {
+                    $media = Mage::getModel('catalog/product_attribute_media_api');
+
                     if($media->remove($product->getId(), trim($o['file'])))
                     {
                         Mage::log("Image deleted" . $product->getSku()." product_id=".$product->getId()." Image=".$o['file'], Zend_Log::DEBUG, 'remove_old_images_deleted.log', true);
