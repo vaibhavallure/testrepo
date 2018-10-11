@@ -114,34 +114,25 @@ try{
                  foreach ($nf as $n) {
                      $backend = $attributes['media_gallery']->getBackend();
                      $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
-
-                     echo "<br>{$key}<br>";
-                     if($key==1) {
-                     echo "<br>entered into set <image></image> ".$n['file'];
-                     try {
-
-                         Mage::getSingleton('catalog/product_action')->updateAttributes(array($product->getId()), array('image'=>$n['file'],'smallImage'=>$n['file'],'thumbnail'=>$n['file']), 0);
-
-//                         $product->setSmallImage($n['file']);
-//                         $product->setImage($n['file']);
-//                         $product->setThumbnail($n['file']);
-
-                     }
-                     catch (Exception $e)
-                     {
-                         var_dump($e->getMessage());
-                     }
-
+                 if($key==1) {
+                     $product->setSmallImage($n['file']);
+                     $product->setImage($n['file']);
+                     $product->setThumbnail($n['file']);
                     }
 
                  }
              }
          }
 
+         echo "<pre>";
+        var_dump($product->getData());
+echo "----------------------------------------------------------------";
         $product->save();
 
+            var_dump($product->getData());
 
-        if(count($oldFiles)) {
+
+            if(count($oldFiles)) {
             foreach ($oldFiles as $key => $ol) {
                 foreach ($ol as $o) {
                     $media->remove($product->getId(), $o['file']);
