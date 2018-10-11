@@ -129,6 +129,8 @@ try{
 echo "----------------------------------------------------------------";
         $product->save();
 
+
+            $product = Mage::getModel("catalog/product")->load($_product->getId());
             var_dump($product->getSmallImage());
 
 
