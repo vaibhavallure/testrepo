@@ -59,8 +59,10 @@ try{
 
             }
         }
+        
+echo "<pre>";
 
-
+var_dump($files);
 
          foreach ($files as $key=>$fl)
          {
