@@ -3485,9 +3485,10 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/ text-align: left; }
 .special-price { margin:0; }
 .special-price .price-label { font-size:12px; font-weight:bold; white-space:nowrap; }
 .special-price .price { font-weight:normal; font-size:13px; }
+.catalog-category-view .special-price .price { font-weight:bold !important; font-size:13px; }
 
-
-.category-products .special-price .price-label { text-transform:capitalize; font-size:13px; font-weight:normal; white-space:nowrap; color:#000; font-family:'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; }
+/* special-price changed due to color */
+.category-products .special-price .price-label { text-transform:uppercase; font-size:13px; font-weight:normal; white-space:nowrap; color:#FFF; font-family:'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; }
 .category-products .old-price .price-label { font-weight:normal; font-size:13px; font-family:'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; color:#000; }
 
 

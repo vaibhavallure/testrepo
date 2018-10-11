@@ -1,5 +1,6 @@
 <?php
-require_once Mage::getBaseDir().'/allure/alrGoogleAnalytics.php';
+//require_once Mage::getBaseDir().'/allure/alrGoogleAnalytics.php';
+require_once Mage::getBaseDir().'/lib/ALRGoogleAnalytics/vendor/autoload.php';
 
 class Allure_AlertServices_Model_Alerts
 {	
@@ -12,6 +13,10 @@ class Allure_AlertServices_Model_Alerts
 				$helper = Mage::helper('alertservices');
 
 				$status =	$this->getConfigHelper()->getEmailStatus();
+				$productPrice_status =$this->getConfigHelper()->getProductPriceStatus();
+				if (!$productPrice_status) {
+					return;
+				}
 					if ($status) {
 						$collection = Mage::getModel('catalog/product')->getCollection()
 						->addAttributeToSelect('*')
@@ -23,7 +28,7 @@ class Allure_AlertServices_Model_Alerts
 						}
 					}
 				}catch(Exception $e){
-	    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+					$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
 	    	}
 				
 		}
@@ -33,7 +38,10 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
-
+			$sales_status =	$this->getConfigHelper()->getSalesStatus();
+			if (!$sales_status) {
+					return;
+				}
 			if ($status) {
 				$currdate = Mage::getModel('core/date')->gmtDate();
 				$toDate	= $currdate;
@@ -48,20 +56,27 @@ class Allure_AlertServices_Model_Alerts
 				}
 				$orders = Mage::getModel('sales/order')->getCollection()
 						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
-						  ->addAttributeToSelect('*');
+						  ->addAttributeToSelect('*')
+						  ->setCurPage(1)
+						  ->setPageSize(1)
+						  ->setOrder('created_at', 'desc');
 					if ($debug) {
 						echo $orders->getSelect()->__toString();
 						echo "<br>order count : ".count($orders);
 					}
-					
+
 					if (count($orders) <=0 ) {
-						$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem(); 
-						$helper->sendSalesOfFourEmailAlert($lastorder->getCreatedAt());
+						$lastOrderDate = Mage::getModel("sales/order")
+										->getCollection()
+										->setCurPage(1)
+										->setPageSize(1)
+										->setOrder('main_table.entity_id', 'desc');
+						$helper->sendSalesOfFourEmailAlert($lastOrderDate->getLastItem()->getCreatedAt());
 					}
 			}
 			
 		}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+			$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}
 		
 	}
@@ -71,6 +86,10 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
+			$sales_status =	$this->getConfigHelper()->getSalesStatus();
+			if (!$sales_status) {
+					return;
+				}
 			if ($status) {
 				$currdate = Mage::getModel('core/date')->gmtDate();
 				$toDate	= $currdate;
@@ -78,15 +97,22 @@ class Allure_AlertServices_Model_Alerts
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
 				$orders = Mage::getModel('sales/order')->getCollection()
 						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
-						  ->addAttributeToSelect('*');
+						  ->addAttributeToSelect('*')
+						  ->setCurPage(1)
+						  ->setPageSize(1)
+						  ->setOrder('created_at', 'desc');
 					    /*echo $orders->getSelect()->__toString();*/
 					if (count($orders)<=0) {
-						$lastorder = Mage::getModel('sales/order')->getCollection()->getLastItem();
-						$helper->sendSalesOfSixEmailAlert($lastorder->getCreatedAt());
+						$lastOrderDate = Mage::getModel("sales/order")
+										->getCollection()
+										->setCurPage(1)
+										->setPageSize(1)
+										->setOrder('main_table.entity_id', 'desc');
+						$helper->sendSalesOfSixEmailAlert($lastOrderDate->getLastItem()->getCreatedAt());
 					}
 			}
 		}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+			$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}
 		
 	}
@@ -95,6 +121,10 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
+			$checkout_status =	$this->getConfigHelper()->getCheckoutIssuesStatus();
+			if (!$checkout_status) {
+					return;
+				}
 			if ($status) {
 				$currdate = Mage::getModel('core/date')->gmtDate();
 				$toDate	= $currdate;
@@ -111,7 +141,7 @@ class Allure_AlertServices_Model_Alerts
 					}
 			}
 		}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+			$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}
 			
 	}
@@ -119,21 +149,22 @@ class Allure_AlertServices_Model_Alerts
 	public function alertNullUsers(){
 		try{
 			$helper = Mage::helper('alertservices');
-
 			$status =	$this->getConfigHelper()->getEmailStatus();
-				if ($status) {
-					$currdate = Mage::getModel('core/date')->gmtDate();
-					$lastHour = date('H', strtotime($currdate) - 60 * 60 * 1);
-					$analytics = initializeAnalytics();
-					$response = getUsersReport($analytics);
-					$users = getResults($response,$lastHour,'users');
-					/*var_dump($users);*/
-					if (count($users) <= 0) {
-						$helper->sendEmailAlertForNullUsers();
-					}
+			$alr_status =	$this->getConfigHelper()->getAlrStatus();
+
+			if (!$status || !$alr_status) {
+				return;
+			}
+				$currdate = Mage::getModel('core/date')->gmtDate();
+				$lastHour = date('H', strtotime($currdate) - 60 * 60 * 1);
+				$analytics = $this->initializeAnalytics();
+				$response = $this->getUsersReport($analytics);
+				$users = $this->getResults($response,$lastHour,'users');
+				if (!empty($users) && $users['users'] <= 0) {
+					$helper->sendEmailAlertForNullUsers();
 				}
 			}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+				$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}
 				
 	}
@@ -143,16 +174,19 @@ class Allure_AlertServices_Model_Alerts
 			$helper = Mage::helper('alertservices');
 
 			$status =	$this->getConfigHelper()->getEmailStatus();
-				if ($status) {
-					$analytics = initializeAnalytics();
-					$response = getPageReport($analytics);
-					$pageReport = getResults($response,null,'page');
+			$alr_status =	$this->getConfigHelper()->getAlrStatus();
+
+			if (!$status || !$alr_status) {
+				return;
+			}
+				$analytics = $this->initializeAnalytics();
+					$response = $this->getPageReport($analytics);
+					$pageReport = $this->getResults($response,null,'page');
 					if (count($pageReport) > 0) {
 						$helper->sendEmailAlertForPageNotFound($pageReport);
 					}
-				}
 			}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+				$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}				
 	}
 
@@ -160,9 +194,12 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
+			$avg_load_status =	$this->getConfigHelper()->getPageLoadStatus();
+			if (!$avg_load_status) {
+					return;
+				}
 			$configPath = $this->getConfigHelper()->getAvgLoadTimePath();
 			$timeArray = $this->getConfigHelper()->getAvgLoadTimeArray();
-
 				if ($status) {
 					$ch = curl_init("https://www.mariatash.com/");
 					curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -170,7 +207,6 @@ class Allure_AlertServices_Model_Alerts
 					$res = curl_exec($ch);
 					$info = curl_getinfo($ch);
 					$avg_time = number_format((float)$info['total_time'], 2);
-					Mage::log('Average load time: '.$avg_time,Zend_log::DEBUG,'allureAlerts.log',true);
 					if ($avg_time) {
 						if (is_null($timeArray) || !$timeArray) {
 							Mage::getModel('core/config')->saveConfig($configPath,$avg_time)->cleanCache();
@@ -183,25 +219,178 @@ class Allure_AlertServices_Model_Alerts
 								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValue)->cleanCache();
 							}
 							if(count($timearray) == 7){
-								$totAvgTime = (array_sum($timearray))/7;
 								array_shift($timearray);
 								array_push($timearray,$avg_time);
 
 								$newAvgValue = implode(',', $timearray);
 								Mage::getModel('core/config')->saveConfig($configPath,$newAvgValue)->cleanCache();
-								/*$totAvgTime = 30;*/
-								if ($totAvgTime >= 30) {
-									$helper->sendEmailAlertForAvgPageLoad($totAvgTime);
-								}else{
-									Mage::log($totAvgTime.' is not > 30',Zend_log::DEBUG,'allureAlerts.log',true);
-								}
 							}
 						}
 					}
 				}
 			}catch(Exception $e){
-    		Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+				$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
     	}				
 	}
+
+		public function alertAvgPageLoadEmail(){
+		try{
+			$helper = Mage::helper('alertservices');
+			$status =	$this->getConfigHelper()->getEmailStatus();
+			$avg_load_status =	$this->getConfigHelper()->getPageLoadStatus();
+			if (!$avg_load_status) {
+					return;
+				}
+			$timeArray = $this->getConfigHelper()->getAvgLoadTimeArray();
+				if ($status) {
+					$timearray = explode(',', $timeArray);
+					if(count($timearray) == 7){
+						$totAvgTime = (array_sum($timearray))/7;
+						if ($totAvgTime >= 30) {
+							$helper->sendEmailAlertForAvgPageLoad($totAvgTime);
+						}else{
+							$helper->alr_alert_log($totAvgTime.' is not > 30','allureAlerts.log');
+						}
+					}
+				}
+						
+			}catch(Exception $e){
+				$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
+    	}				
+	}
+
+	public function initializeAnalytics()
+		{
+		    $client = new Google_Client();
+		    $client->setApplicationName("Hello Analytics Reporting");
+
+		    $key = Mage::helper('alertservices/config')->getGoogleAnayticsJson();
+		    $client->setAuthConfig($key);
+		    $client->setScopes(['https://www.googleapis.com/auth/analytics.readonly']);
+		    $analytics = new Google_Service_AnalyticsReporting($client);
+		    
+		    return $analytics;
+		}
+
+
+		/**
+		 * Queries the Analytics Reporting API V4.
+		 *
+		 * @param service An authorized Analytics Reporting API V4 service object.
+		 * @return The Analytics Reporting API V4 response.
+		 */
+		public function getUsersReport($analytics) {
+		    
+		    // Replace with your view ID, for example XXXX.
+		    $VIEW_ID = "181106821";
+		    // Create the DateRange object.
+		    $dateRange = new Google_Service_AnalyticsReporting_DateRange();
+		    $dateRange->setStartDate("today");
+		    $dateRange->setEndDate("today");
+		    // Create the Metrics object.
+		    $sessions = new Google_Service_AnalyticsReporting_Metric();
+		    $sessions->setExpression("ga:users");
+		    $sessions->setAlias("users");
+
+		    $dimension = new Google_Service_AnalyticsReporting_Dimension();
+		    $dimension->setName("ga:hour");
+		    
+		    // Create the ReportRequest object.
+		    $request = new Google_Service_AnalyticsReporting_ReportRequest();
+		    $request->setViewId($VIEW_ID);
+		    $request->setDateRanges($dateRange);
+		    $request->setMetrics(array($sessions));
+		    
+		    //new added by aws02
+		    $request->setDimensions(array($dimension));
+		    
+		    $body = new Google_Service_AnalyticsReporting_GetReportsRequest();
+		    $body->setReportRequests( array( $request) );
+		    return $analytics->reports->batchGet( $body );
+		}
+
+		public function getPageReport($analytics) {
+		    
+		    // Replace with your view ID, for example XXXX.
+		    $VIEW_ID = "181106821";
+		    // Create the DateRange object.
+		    $dateRange = new Google_Service_AnalyticsReporting_DateRange();
+		    $dateRange->setStartDate("6daysAgo");
+		    $dateRange->setEndDate("today");
+		    //new added by aws02
+		    $dimension = new Google_Service_AnalyticsReporting_Dimension();
+		    $dimension->setName("ga:pageTitle");
+		    
+		    $dimension1 = new Google_Service_AnalyticsReporting_Dimension();
+		    $dimension1->setName("ga:pagePath");
+
+		     $dimension2 = new Google_Service_AnalyticsReporting_Dimension();
+		    $dimension2->setName("ga:sourceMedium");
+		    
+		    // Create the ReportRequest object.
+		    $request = new Google_Service_AnalyticsReporting_ReportRequest();
+		    $request->setViewId($VIEW_ID);
+		    $request->setDateRanges($dateRange);
+		    $request->setMetrics(array($sessions));
+		    
+		    //new added by aws02
+		    $request->setDimensions(array($dimension,$dimension1,$dimension2));
+		    
+		    $body = new Google_Service_AnalyticsReporting_GetReportsRequest();
+		    $body->setReportRequests( array( $request) );
+		    return $analytics->reports->batchGet( $body );
+		}
+		/**
+		 * Parses and prints the Analytics Reporting API V4 response.
+		 *
+		 * @param An Analytics Reporting API V4 response.
+		 */
+		public function getResults($reports,$lastHour,$form) {
+		    for ( $reportIndex = 0; $reportIndex < count( $reports ); $reportIndex++ ) {
+		        $report = $reports[ $reportIndex ];
+		        $header = $report->getColumnHeader();
+		        $dimensionHeaders = $header->getDimensions();
+		        $metricHeaders = $header->getMetricHeader()->getMetricHeaderEntries();
+		        $rows = $report->getData()->getRows();
+		        $final_report = array();
+		        for ( $rowIndex = 0; $rowIndex < count($rows); $rowIndex++) {
+		            $row = $rows[ $rowIndex ];
+		            $dimensions = $row->getDimensions();
+		            $metrics = $row->getMetrics();
+		            for ($i = 0; $i < count($dimensionHeaders) && $i < count($dimensions); $i++) {
+		                if ($form == 'users') {
+		                    if ($dimensionHeaders[$i] == 'ga:hour' && $dimensions[$i] == $lastHour) {
+		                        $values = $metrics[$i]->getValues();
+		                        $entry = $metricHeaders[$i];
+		                        $final_report = array(
+		                                        $dimensionHeaders[$i] => $dimensions[$i],
+		                                        $entry->getName()   =>  $values[$i]
+		                                    );
+		                   /*print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "<br/>");
+		                   print($entry->getName() . ": " . $values[$i] . "<br/>");*/
+		                    }
+		                }
+
+		                if ($form == 'page') {
+		                    if ($dimensionHeaders[$i] == 'ga:pageTitle' && $dimensions[$i] == '404 Not Found') {
+		                        $final_report[] = array($dimensions[$i+1],$dimensions[$i+2]);
+		                    }
+		                }
+		                //print($dimensionHeaders[$i] . ": " . $dimensions[$i] . "<br/>");
+		            }            
+		            /*for ($j = 0; $j < count($metrics); $j++) {
+		                $values = $metrics[$j]->getValues();
+		                for ($k = 0; $k < count($values); $k++) {
+		                    $entry = $metricHeaders[$k];
+		                    print($entry->getName() . ": " . $values[$k] . "<br/>");
+		                }
+		            }*/
+		        }
+		        return $final_report;
+		    }
+		}
+
+
+
 	
 }
