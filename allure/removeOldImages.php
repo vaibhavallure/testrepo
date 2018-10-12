@@ -15,8 +15,14 @@ if(!isset($_GET['sku']))
 die("please enter sku ?sku=your_sku and if want to update label of all products use ?sku=your_sku&updatelabel=1");
 
 $updatelabel=0;
+$replace=0;
+
+
 $SKUlike=$_GET['sku'];
 $updatelabel=$_GET['updatelabel'];
+$replace=$_GET['replace'];
+
+
 
 $productModel=Mage::getModel('catalog/product');
 $collection=Mage::getModel('catalog/product')->getCollection();
@@ -83,7 +89,7 @@ try{
 
                      }
                      else{
-                         //Mage::log("(".$product->getSku().") label found for image position ".$key." ",Zend_Log::DEBUG,'remove_old_images.log',true);
+                         Mage::log("(".$product->getSku().") label found for image position ".$key." ",Zend_Log::DEBUG,'remove_old_images_label_not_found.log',true);
                      }
                  }
              }
@@ -94,36 +100,42 @@ try{
             Mage::log("Duplicate images found {$product->getSku()} for position= " .implode(", ",array_keys($newFiles)), Zend_Log::DEBUG, 'remove_old_images.log', true);
         }
         else {
-            //Mage::log("duplicate  images not found for" . $product->getSku(), Zend_Log::DEBUG, 'remove_old_images.log', true);
+            if ($replace) {
+                Mage::log("duplicate images not found for" . $product->getSku(), Zend_Log::DEBUG, 'remove_old_images_not_found.log', true);
+            }
         }
 
 
-//        if(count($newFiles)) {
-//             foreach ($newFiles as $key => $nf) {
-//
-//                 foreach ($nf as $n) {
-//                     $backend = $attributes['media_gallery']->getBackend();
-//                     $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
-//                 if($key==1) {
-//                     $product->setSmallImage($n['file']);
-//                     $product->setImage($n['file']);
-//                     $product->setThumbnail($n['file']);
-//                 }
-//
-//                 }
-//             }
-//         }
-//
-//        $product->save();
-//
-//
-//        if(count($oldFiles)) {
-//            foreach ($oldFiles as $key => $ol) {
-//                foreach ($ol as $o) {
-//                    $media->remove($product->getId(), $o['file']);
-//                }
-//            }
-//        }
+        if($replace):
+
+        if(count($newFiles)) {
+             foreach ($newFiles as $key => $nf) {
+
+                 foreach ($nf as $n) {
+                     $backend = $attributes['media_gallery']->getBackend();
+                     $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
+                 if($key==1) {
+                     $product->setSmallImage($n['file']);
+                     $product->setImage($n['file']);
+                     $product->setThumbnail($n['file']);
+                 }
+
+                 }
+             }
+         }
+
+        $product->save();
+
+
+        if(count($oldFiles)) {
+            foreach ($oldFiles as $key => $ol) {
+                foreach ($ol as $o) {
+                    $media->remove($product->getId(), $o['file']);
+                }
+            }
+        }
+
+        endif;
 
 
 
