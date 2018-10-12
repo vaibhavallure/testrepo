@@ -36,7 +36,6 @@ try{
     $media = Mage::getModel('catalog/product_attribute_media_api');
 
 
-
     foreach ($collection as $_product){
         $files=array();
         $newFiles=array();
@@ -106,51 +105,42 @@ try{
         }
 
 
-        if($replace):
 
+        if($replace) {
 
+            if (count($newFiles)) {
+                foreach ($newFiles as $key => $nf) {
 
-
-            if(count($oldFiles)) {
-            foreach ($oldFiles as $key => $ol) {
-                foreach ($ol as $o) {
-
-                    if($o['position']==$key) {
+                    foreach ($nf as $n) {
                         $backend = $attributes['media_gallery']->getBackend();
-                        $backend->updateImage($product, $o['file'], array('position' => $key + 10));
+                        $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
+
+                    if ($key == 1) {
+                        $value = $n['file'];
+                     Mage::getSingleton('catalog/product_action')->updateAttributes(array($product->getId()),
+                                                            array(
+                                                                'image'=>$value,
+                                                                'small_image'=>$value,
+                                                                'thumbnail'=>$value,
+                                                            ),
+                                                            0);
+                    }
+
                     }
                 }
             }
-        }
+            
 
-        if(count($newFiles)) {
-             foreach ($newFiles as $key => $nf) {
 
-                 foreach ($nf as $n) {
-                     $backend = $attributes['media_gallery']->getBackend();
-                     $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
-                 if($key==1) {
-                     $product->setSmallImage($n['file']);
-                     $product->setImage($n['file']);
-                     $product->setThumbnail($n['file']);
+            if (count($oldFiles)) {
+                foreach ($oldFiles as $key => $ol) {
+                    foreach ($ol as $o) {
+                        $media->remove($product->getId(), $o['file']);
                     }
-
-                 }
-             }
-         }
-
-        $product->save();
-
-
-            if(count($oldFiles)) {
-            foreach ($oldFiles as $key => $ol) {
-                foreach ($ol as $o) {
-                    $media->remove($product->getId(), $o['file']);
                 }
             }
-        }
 
-        endif;
+        }
 
 
 
