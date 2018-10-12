@@ -119,10 +119,13 @@ try{
                      if($key==1) {
                      echo "<br>entered into set <image></image> ".$n['file'];
                      try {
-                         var_dump($product->setSmallImage(trim($n['file'])));
-                         $product->setImage($n['file']);
-                         $product->setThumbnail($n['file']);
-                         $product->save();
+
+                         Mage::getSingleton('catalog/product_action')->updateAttributes(array($product->getId()), array('image'=>$n['file'],'smallImage'=>$n['file'],'thumbnail'=>$n['file']), 0);
+
+//                         $product->setSmallImage($n['file']);
+//                         $product->setImage($n['file']);
+//                         $product->setThumbnail($n['file']);
+
                      }
                      catch (Exception $e)
                      {
