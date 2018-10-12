@@ -108,6 +108,21 @@ try{
 
         if($replace):
 
+
+
+
+            if(count($oldFiles)) {
+            foreach ($oldFiles as $key => $ol) {
+                foreach ($ol as $o) {
+
+                    if($o['position']==$key) {
+                        $backend = $attributes['media_gallery']->getBackend();
+                        $backend->updateImage($product, $o['file'], array('position' => $key + 10));
+                    }
+                }
+            }
+        }
+
         if(count($newFiles)) {
              foreach ($newFiles as $key => $nf) {
 
@@ -124,14 +139,7 @@ try{
              }
          }
 
-         echo "<pre>";
-        var_dump($product->getSmallImage());
-echo "----------------------------------------------------------------";
         $product->save();
-
-
-            $product = Mage::getModel("catalog/product")->load($_product->getId());
-            var_dump($product->getSmallImage());
 
 
             if(count($oldFiles)) {
@@ -147,7 +155,6 @@ echo "----------------------------------------------------------------";
 
 
     }
-
 
 
 }
