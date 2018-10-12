@@ -134,13 +134,13 @@ var_dump($files);
                 foreach ($ol as $o) {
                     $media = Mage::getModel('catalog/product_attribute_media_api');
 
-                    if($media->remove($product->getId(), trim($o['file'])))
-                    {
-                        Mage::log("Image deleted" . $product->getSku()." product_id=".$product->getId()." Image=".$o['file'], Zend_Log::DEBUG, 'remove_old_images_deleted.log', true);
-                    }
-                    else{
-                        Mage::log("Image Can not be deleted" . $product->getSku()." product_id=".$product->getId()." Image=".$o['file'], Zend_Log::DEBUG, 'remove_old_images_deleted.log', true);
-                    }
+                    var_dump($media->remove($product->getId(), trim($o['file'])))
+//                    {
+//                        Mage::log("Image deleted" . $product->getSku()." product_id=".$product->getId()." Image=".$o['file'], Zend_Log::DEBUG, 'remove_old_images_deleted.log', true);
+//                    }
+//                    else{
+//                        Mage::log("Image Can not be deleted" . $product->getSku()." product_id=".$product->getId()." Image=".$o['file'], Zend_Log::DEBUG, 'remove_old_images_deleted.log', true);
+//                    }
                 }
             }
         }
