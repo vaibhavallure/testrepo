@@ -252,11 +252,11 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 //                  $row["order_type"] = $ordertype;
                     $row["store"]=$store;
 //                  $row["qty"]=$qty;
-                    $row["sku"]=$sku;
+                    $row["sku"]=explode("|",$sku)[0];
                     $row["metal"]=explode("|",$sku)[1];
                     $row["product_name"]=$productName;
                     $row["price"]=$price;
-                    $row["back_qty"]=$order->getQtyBackordered();
+                    $row["back_qty"]=floatval($order->getQtyBackordered());
                     $row["customization"]=$customization;
 
 
