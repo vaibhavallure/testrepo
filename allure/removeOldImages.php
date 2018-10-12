@@ -125,11 +125,11 @@ try{
          }
 
          echo "<pre>";
-        var_dump($product->getData());
+        var_dump($product->getSmallImage());
 echo "----------------------------------------------------------------";
         $product->save();
 
-            var_dump($product->getData());
+            var_dump($product->getSmallImage());
 
 
             if(count($oldFiles)) {
