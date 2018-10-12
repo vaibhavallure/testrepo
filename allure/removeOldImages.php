@@ -119,7 +119,7 @@ try{
                      if($key==1) {
                      echo "<br>entered into set <image></image> ".$n['file'];
                      try {
-                         $product->setSmallImage($n['file']);
+                         var_dump($product->setSmallImage(trim($n['file'])));
                          $product->setImage($n['file']);
                          $product->setThumbnail($n['file']);
                          $product->save();
