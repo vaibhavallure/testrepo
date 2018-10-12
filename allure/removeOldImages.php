@@ -94,36 +94,36 @@ try{
             Mage::log("Duplicate images found {$product->getSku()} for position= " .implode(", ",array_keys($newFiles)), Zend_Log::DEBUG, 'remove_old_images.log', true);
         }
         else {
-            Mage::log("duplicate  images not found for" . $product->getSku(), Zend_Log::DEBUG, 'remove_old_images.log', true);
+            //Mage::log("duplicate  images not found for" . $product->getSku(), Zend_Log::DEBUG, 'remove_old_images.log', true);
         }
 
 
-        if(count($newFiles)) {
-             foreach ($newFiles as $key => $nf) {
-
-                 foreach ($nf as $n) {
-                     $backend = $attributes['media_gallery']->getBackend();
-                     $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
-                 if($key==1) {
-                     $product->setSmallImage($n['file']);
-                     $product->setImage($n['file']);
-                     $product->setThumbnail($n['file']);
-                 }
-
-                 }
-             }
-         }
-
-        $product->save();
-
-
-        if(count($oldFiles)) {
-            foreach ($oldFiles as $key => $ol) {
-                foreach ($ol as $o) {
-                    $media->remove($product->getId(), $o['file']);
-                }
-            }
-        }
+//        if(count($newFiles)) {
+//             foreach ($newFiles as $key => $nf) {
+//
+//                 foreach ($nf as $n) {
+//                     $backend = $attributes['media_gallery']->getBackend();
+//                     $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
+//                 if($key==1) {
+//                     $product->setSmallImage($n['file']);
+//                     $product->setImage($n['file']);
+//                     $product->setThumbnail($n['file']);
+//                 }
+//
+//                 }
+//             }
+//         }
+//
+//        $product->save();
+//
+//
+//        if(count($oldFiles)) {
+//            foreach ($oldFiles as $key => $ol) {
+//                foreach ($ol as $o) {
+//                    $media->remove($product->getId(), $o['file']);
+//                }
+//            }
+//        }
 
 
 
