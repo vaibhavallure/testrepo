@@ -76,7 +76,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
               }
              
     		}catch(Exception $e){
-        	  Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+                $this->alr_alert_log($e->getMessage(),'allureAlerts.log');
         	}
 	}
 
@@ -114,7 +114,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
               }
              
     		}catch(Exception $e){
-        	 Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+                $this->alr_alert_log($e->getMessage(),'allureAlerts.log');
         	}
 	}
 
@@ -154,7 +154,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
               }
              
     		}catch(Exception $e){
-        		echo $e->getMessage();
+        		$this->alr_alert_log($e->getMessage(),'allureAlerts.log');
         	}
 	}
 
@@ -228,16 +228,16 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
               }
              
             }catch(Exception $e){
-                echo $e->getMessage();
+                $this->alr_alert_log($e->getMessage(),'allureAlerts.log');
             }
     }
 
     public function saveAlertIssues($dataIssue){
         try{
-            Mage::log('in saveAlertIssues',Zend_log::DEBUG,'allureAlerts.log',true);
+            $this->alr_alert_log('in saveAlertIssues','allureAlerts.log');
             Mage::getModel('alertservices/issues')->setData($dataIssue)->save();
         }catch(Exception $e){
-            Mage::log($e->getMessage(),Zend_log::DEBUG,'allureAlerts.log',true);
+            $this->alr_alert_log($e->getMessage(),'allureAlerts.log');
         }
     }
     
@@ -273,7 +273,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
               }
              
         }catch(Exception $e){
-                echo $e->getMessage();
+            $this->alr_alert_log($e->getMessage(),'allureAlerts.log');
         }
     }
 
@@ -299,6 +299,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
             $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 
             $header = array("page_path"=>"Page_Path",
+                            "source"=>"Source",
                             "result"=>"Result"
                             );
 
@@ -316,11 +317,11 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
              $rowData[] = $header;
              foreach ($collection as $page) {
                 $row = array();
-                $row["page_path"] = $page;
+                $row["page_path"] = $page[0];
+                $row["source"] = $page[1];
                 $row["result"] = '404 Page Not Found';
                 $rowData[] = $row;
-             }            
-
+             } 
             $csv->saveData($filepath,$rowData);
 
             if ($templateId) {
@@ -343,7 +344,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
               }
              
             }catch(Exception $e){
-                echo $e->getMessage();
+                $this->alr_alert_log($e->getMessage(),'allureAlerts.log');
             }
     }
 
@@ -382,10 +383,16 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
               }
              
             }catch(Exception $e){
-                echo $e->getMessage();
+                $this->alr_alert_log($e->getMessage(),'allureAlerts.log');
             }
     }
     
-                 
+    public function alr_alert_log($message,$filename){
+       if (!$this->getConfigHelper()->getAlertDebugStatus()) {
+        return;
+       }
+        Mage::log($message,Zend_log::DEBUG,$filename,true);
+      
+    }   
 
 }

@@ -357,6 +357,8 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                     </span>
                     </p>
                 <?php else: ?>
+                    <!-- AWS12
+                        'special-price' this class has been removed due do color-->
                     <div class="s-both_discounted special-price">
                         <span class="price-label"><?php echo $this->__('Price:') ?></span>
                         <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
