@@ -120,8 +120,10 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
                 } */
                 
                 $backTimeMsg = $item->getBackorderTime();
-                if (!empty($backTimeMsg)) {
+                if (!empty($backTimeMsg) && $backTimeMsg !="backorder") {
                     $stockMsg = "The metal color or length combination you selected is backordered. Order now and It will ship ".$backTimeMsg.".";
+                } else if ($backTimeMsg =="backorder") {
+                    $stockMsg = "The metal color or length combination you selected is backordered.";
                 } else {
                     $stockMsg = " (In Stock: Ships Within 24 hours (Mon-Fri).)";
                 }

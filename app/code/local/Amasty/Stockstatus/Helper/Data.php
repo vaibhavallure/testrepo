@@ -467,7 +467,7 @@ INLINECSS;
         		 */
         		//if ($isBackordered && $product->getStockItem()->getManageStock()==1) {
                 $stockMsg = $item->getBackorderTime();
-                if (!empty($stockMsg)) {
+                if (!empty($stockMsg) && $stockMsg !="backorder") {
         			$message = "";
         			//$stockMsg = $this->getCustomStockMessage($product);
         			if(!empty($stockMsg))
@@ -475,7 +475,10 @@ INLINECSS;
         			else
         				$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
         				return " (".$message.")";
-        		} else {
+        		} else if ($stockMsg =="backorder") {
+                        $message = "The metal color or length combination you selected is backordered.";
+                        return " (".$message.")";
+                }else{
         			return " (In Stock: Ships Within 24 hours (Mon-Fri).)";
         		}
     	   }
