@@ -14,7 +14,12 @@ class OpsWay_CustomOrderManager_Model_Observer {
 	    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
 	    $stockQty = intval($stockItem->getQty());
 	    if ($stockQty <= 0) {
-	    	$item->setBackorderTime($product->getBackorderTime());
+	    	if($product->getBackorderTime()){
+	    		$item->setBackorderTime($product->getBackorderTime());
+	    	}else{
+	    		$item->setBackorderTime("backorder");
+	    	}
+	    	
 	    }
 	    ////END
 	    
