@@ -54,7 +54,7 @@
 		<jobs>
 			<alert_product_price>
 				<schedule>
-					<cron_expr>0 */1 * * *</cron_expr>
+					<cron_expr>17 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertProductPrice</model>
@@ -62,7 +62,7 @@
 			</alert_product_price>
 			<alert_sale_four>
 				<schedule>
-					<cron_expr>0 */4 * * *</cron_expr>
+					<cron_expr>10 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertSalesOfFour</model>
@@ -70,7 +70,7 @@
 			</alert_sale_four>
 			<alert_sale_six>
 				<schedule>
-					<cron_expr>0 */6 * * *</cron_expr>
+					<cron_expr>15 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertSalesOfSix</model>
@@ -78,7 +78,7 @@
 			</alert_sale_six>
 			<alert_checkout_issue>
 				<schedule>
-					<cron_expr>0 */1 * * *</cron_expr>
+					<cron_expr>3 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertCheckoutIssue</model>
@@ -86,7 +86,7 @@
 			</alert_checkout_issue>
 			<alert_null_users>
 				<schedule>
-					<cron_expr>0 */1 * * *</cron_expr>
+					<cron_expr>5 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertNullUsers</model>
