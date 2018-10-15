@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<config>
+
+    <sections>
+        <backorderrecord translate="label" module="backorderrecord">
+
+            <label>Back order Record Email Settings</label>
+            <tab>allure</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1001</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+            <alr_backorderrecord translate="label">
+                <label>Sender Details</label>
+                <frontend_type>text</frontend_type>
+                <sort_order>1</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+                <fields>
+                    <sender_email>
+                        <label>Sender Email : </label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>1</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </sender_email>
+                    <sender_name>
+                        <label>Sender Name : </label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>2</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </sender_name>
+                </fields>
+            </alr_backorderrecord>
+
+            <email_group translate="label">
+            <label>Email Settings</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>2</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <fields>
+                <enabled translate="label">
+                    <label>Send Mail Enabled</label>
+                    <frontend_type>select</frontend_type>
+                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </enabled>
+
+                <group_emails>
+                    <label>Email's (Please enter coma',' Seperated values) : </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </group_emails>
+
+                <group_names>
+                    <label>Name's (Please enter coma',' Seperated values) : </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </group_names>
+
+                <email_temp>
+                    <label>Select Email Template</label>
+                    <frontend_type>select</frontend_type>
+                    <source_model>adminhtml/system_config_source_email_template</source_model>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </email_temp>
+
+                <days>
+                    <label>Enter Days</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </days>
+
+                <debug_enabled translate="label">
+                    <label>Debug Enabled</label>
+                    <frontend_type>select</frontend_type>
+                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </debug_enabled>
+
+            </fields>
+            </email_group>
+            </groups>
+        </backorderrecord>
+    </sections>
+</config>
