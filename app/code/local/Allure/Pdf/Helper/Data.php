@@ -69,9 +69,11 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         $message = "";
         if($storeId == 1){
             $backTimeMsg = $item->getBackorderTime();
-            if (!empty($backTimeMsg)) {
+            if (!empty($backTimeMsg) && $backTimeMsg !="backorder") {
                 $message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$backTimeMsg.".";
-            } else {
+            } else if ($backTimeMsg =="backorder") {
+                $message = "The metal color or length combination you selected is backordered.";
+            } else{
                 $message = "(In Stock:  Ships Within 24 hours (Mon-Fri).)";
             }
         }

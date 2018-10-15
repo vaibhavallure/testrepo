@@ -12,7 +12,7 @@ Mage::app()->getStore()->setId(Mage_Core_Model_App::ADMIN_STORE_ID);
 $count=0;
 
 if(!isset($_GET['sku']))
-die("please enter sku ?sku=your_sku and if want to update label of all products use ?sku=your_sku&updatelabel=1");
+    die("please enter sku ?sku=your_sku and if want to update label of all products use ?sku=your_sku&updatelabel=1");
 
 $updatelabel=0;
 $replace=0;
@@ -41,8 +41,8 @@ try{
         $newFiles=array();
         $oldFiles=array();
 
-    $product = Mage::getModel("catalog/product")->load($_product->getId());
-    $attributes = $product->getTypeInstance(true)->getSetAttributes($product);
+        $product = Mage::getModel("catalog/product")->load($_product->getId());
+        $attributes = $product->getTypeInstance(true)->getSetAttributes($product);
 
         foreach ($product->getMediaGalleryImages() as $image) {
 
@@ -61,38 +61,38 @@ try{
 
 
 
-         foreach ($files as $key=>$fl)
-         {
+        foreach ($files as $key=>$fl)
+        {
 
-             if(count($fl)==2)
-             {
-                 if($fl[0]['id']>$fl[1]['id'])
-                 {
+            if(count($fl)==2)
+            {
+                if($fl[0]['id']>$fl[1]['id'])
+                {
                     $newFiles[$key][]=$fl[0];
                     $oldFiles[$key][]=$fl[1];
-                 }
-                 else
-                 {
-                     $newFiles[$key][]=$fl[1];
-                     $oldFiles[$key][]=$fl[0];
-                 }
+                }
+                else
+                {
+                    $newFiles[$key][]=$fl[1];
+                    $oldFiles[$key][]=$fl[0];
+                }
 
-             }
-             else if(count($fl)==1) {
-                 if($updatelabel==1) {
-                     if (!$fl[0]['label']) {
-                         $backend = $attributes['media_gallery']->getBackend();
-                         $backend->updateImage($product, $fl[0]['file'], array('label' => $product->getName() . ' Image #' . $key));
+            }
+            else if(count($fl)==1) {
+                if($updatelabel==1) {
+                    if (!$fl[0]['label']) {
+                        $backend = $attributes['media_gallery']->getBackend();
+                        $backend->updateImage($product, $fl[0]['file'], array('label' => $product->getName() . ' Image #' . $key));
 
-                         Mage::log("(".$product->getSku().") label updated for image position ".$key." ",Zend_Log::DEBUG,'remove_old_images.log',true);
+                        Mage::log("(".$product->getSku().") label updated for image position ".$key." ",Zend_Log::DEBUG,'remove_old_images.log',true);
 
-                     }
-                     else{
-                         Mage::log("(".$product->getSku().") label found for image position ".$key." ",Zend_Log::DEBUG,'remove_old_images_label_not_found.log',true);
-                     }
-                 }
-             }
-         }
+                    }
+                    else{
+                        Mage::log("(".$product->getSku().") label found for image position ".$key." ",Zend_Log::DEBUG,'remove_old_images_label_not_found.log',true);
+                    }
+                }
+            }
+        }
 
         if(count($newFiles))
         {
@@ -115,21 +115,21 @@ try{
                         $backend = $attributes['media_gallery']->getBackend();
                         $backend->updateImage($product, $n['file'], array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
 
-                    if ($key == 1) {
-                        $value = $n['file'];
-                     Mage::getSingleton('catalog/product_action')->updateAttributes(array($product->getId()),
-                                                            array(
-                                                                'image'=>$value,
-                                                                'small_image'=>$value,
-                                                                'thumbnail'=>$value,
-                                                            ),
-                                                            0);
-                    }
+                        if ($key == 1) {
+                            $value = $n['file'];
+                            Mage::getSingleton('catalog/product_action')->updateAttributes(array($product->getId()),
+                                array(
+                                    'image'=>$value,
+                                    'small_image'=>$value,
+                                    'thumbnail'=>$value,
+                                ),
+                                0);
+                        }
 
                     }
                 }
             }
-            
+
 
 
             if (count($oldFiles)) {
