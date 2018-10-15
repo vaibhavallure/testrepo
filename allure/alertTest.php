@@ -15,7 +15,7 @@ Mage::getModel('alertservices/alerts')->alertCheckoutIssue();
 Mage::getModel('alertservices/alerts')->alertSalesOfSix();
 Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
 
-
+/*9196a2*/
 //66.65.83.126 old ip
 //203.109.124.232 sess
 
