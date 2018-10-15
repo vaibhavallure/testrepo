@@ -1,3 +1,4 @@
+<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()) :?>
 <div id="account-modal-wrapper" class="modal-wrapper">
 	<?php echo $this->getChildHtml();?>
 
@@ -9,7 +10,7 @@
         Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
 
         jQuery(document).ready(function(){
-            var $body = jQuery('body'); 
+            var $body = jQuery('body');
 
             /* bind events */
             jQuery(document).on('focus', '#account-modal-wrapper input', function() {
@@ -20,5 +21,6 @@
                 $body.removeClass('modal-popup-body');
             });
         });
-    </script> 
+    </script>
 </div>
+<?php endif;?>

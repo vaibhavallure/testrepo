@@ -215,6 +215,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
             $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
 
+			//$couponCode = '4uWruyuc';
+            //$this->_getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')->collectTotals()->save();
+
             if (!isset($result['error'])) {
                 /* check quote for virtual */
                 if (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
@@ -286,6 +289,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             }
 
             $this->_setDeliveryOption();
+
+
 
             //$this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
 
@@ -928,6 +933,8 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 XML;
 
 		$lastOrderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+
+		if (!$lastOrderId) return false;
 
 		$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
 
