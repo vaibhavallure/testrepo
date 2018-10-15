@@ -248,6 +248,26 @@ class Allure_Salesforce_Model_Observer_Order{
                     "OrderItems"                => $orderItem
                 )
             );
+            
+            
+            $payment = $order->getPayment();
+            $code = $payment->getData('cc_type');
+            $aType = Mage::getSingleton('payment/config')->getCcTypes();
+            if (isset($aType[$code])) {
+                $sName = $aType[$code];
+                $request["order"][0]["Card_Type__c"] = $sName;
+            }
+            
+            $last4Digits  = $payment->getCcLast4();
+            if($last4Digits){
+                $request["order"][0]["Card_Number__c"] = "XXXX-".$last4Digits;
+            }
+            
+            $transactionId = $payment->getData("last_trans_id");
+            if($transactionId){
+                $request["order"][0]["Transaction_Id__c"] = $transactionId;
+            }
+            
             $urlPath = $helper::ORDER_PLACE_URL;
             $response = $helper->sendRequest($urlPath, $requestMethod, $request);
             $responseArr = json_decode($response,true);
