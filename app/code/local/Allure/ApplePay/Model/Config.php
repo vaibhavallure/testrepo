@@ -64,6 +64,12 @@ class Allure_ApplePay_Model_Config
      */
     public function isEnabled($store = null)
     {
+        $device = Mage::helper('allure_applepay/device');
+
+        if (!$device->isMobile() || $device->isTablet() || !$device->isiOS() || !$device->isSafari()) {
+            return false;
+        }
+
         // Check for IP Restriction
         if ($this->_getStoreConfig(self::CONFIG_XML_PATH_RESTRICTED_IPS, $store)) {
             if ( !Mage::helper('core')->isDevAllowed() ) {
