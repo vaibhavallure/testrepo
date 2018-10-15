@@ -4,7 +4,8 @@ class Allure_Counterpoint_Block_Adminhtml_Sales_Order_Payment extends Mage_Admin
 {
     protected function _toHtml()
     {
-        if($this->getParentBlock()->getOrder()->getCreateOrderMethod() == 1){
+        $orderMethod = $this->getParentBlock()->getOrder()->getCreateOrderMethod();
+        if($orderMethod == 1 || $orderMethod == 2 ){
             $paymentsData = $this->getParentBlock()->getOrder()->getPayment()->getAdditionalData();
             $paymentsData = unserialize($paymentsData);
             if(count($paymentsData) > 1){

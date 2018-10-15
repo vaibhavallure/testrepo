@@ -2,10 +2,8 @@ before_script:
   - echo 'Start Deployment'
 stages:
   - develop
-  - staging
   - alpha
-  - bugfix
-  - upgrade
+  - beta
   - deploy
 develop:
   environment: development
@@ -17,71 +15,45 @@ develop:
   script:
     - mage-deploy mariatash
     - echo 'Deployed on Allure Local Dev'
-staging:
+cloud_alpha:
   environment: staging
-  stage: staging
-  tags:
-    - staging
-  only:
-    - staging
-  script:
-    - mage_deploy_stage mariatash
-    - echo 'Deployed on Staging'
-alpha:
-  environment: alpha
   stage: alpha
   tags:
-    - staging
-  only:
-    - master
-  script:
-    - mage-deploy mt
-    - echo 'Deployed on Staging'
-bugfix:
-  environment: bugfixes
-  stage: bugfix
-  tags:
-    - staging
+    - cloud-alpha
   only:
     - bugfixes
   script:
-    - mage-deploy mt-bugfixes
-    - echo 'Deployed on Bugfixes Staging'
-    
-universal:
-  environment: staging
-  stage: staging
-  tags:
-    - staging
-  only:
-    - universal
-  script:
-    - mage-deploy universal
-    - echo 'Deployed on Universal Staging'
+    - mage-deploy mt
+    - echo 'Deployed on Staging'
 
-apple_pay:
-  environment: apple_pay
-  stage: staging
-  tags:
-    - staging
-  only:
-    - apple_pay
-  script:
-    - mage-deploy applepay-mariatash
-    - echo 'Deployed on apple_pay Staging'
-
-new_apple_pay:
-  environment: apple_pay
-  stage: staging
+beta_stage:
+  environment: alpha
+  stage: beta
   tags:
     - alpha
   only:
+    - master
+  script:
+    - deploy-magento mariatash
+    - rm -f media && ln -s /var/www/shared/mariatash/media media
+    - rm -f var && ln -s /var/www/shared/mariatash/var var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/etc/local.xml app/etc/local.xml
+    - echo 'Deployed on Beta Staging'
+    
+beta_apple_pay:
+  environment: apple_pay
+  stage: beta
+  tags:
+    - beta
+  only:
     - apple_pay
   script:
-    - mage-deploy applepay
-    - echo 'Deployed on apple_pay Staging'
+    - deploy-magento applepay-mariatash
+    - rm -f media && ln -s /var/www/shared/media/applepay-mariatash media
+    - rm -f var && ln -s /var/www/shared/var/applepay-mariatash var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/etc/applepay-mariatash/local.xml app/etc/local.xml
+    - echo 'Deployed on ApplePay Staging'
 
-    
 deploy-cloud:
   environment: production
   stage: deploy
@@ -92,14 +64,4 @@ deploy-cloud:
   script:
     - mage-deploy
     - echo 'Deployed on Production'
-    
-deploy-production:
-  environment: production
-  stage: deploy
-  tags:
-    - mariatash
-  only:
-    - cloud
-  script:
-    - mage-deploy
-    - echo 'Deployed on Production Cloud'
+

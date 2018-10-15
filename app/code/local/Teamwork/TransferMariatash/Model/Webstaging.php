@@ -1,7 +1,6 @@
 <?php
 class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_Transfer_Model_Webstaging
 {
-	
 	protected function _createWebOrder()
     {
         $channelId = $this->_getChannelId();
@@ -103,7 +102,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 	
 	public function isValidForChq($completedOnly)
     {
-        /**/$createdAtLimitation = '2018-04-04';
+		/**/$createdAtLimitation = '2018-04-04';
         if( $this->_order->getCreatedAt() < $createdAtLimitation )
         {
             return false;
@@ -113,11 +112,12 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
             return false;
         }
         $allowAuthorizeOnly = Mage::helper('teamwork_transfer/webstaging')->allowAuthorizeOnlyPayment( $this->_order->getPayment()->getMethod(), $this->_getChannelId() );
-        $authorizedAmount = floatval($this->_order->getPayment()->getAmountAuthorized());
-        $paidAmount = floatval( $this->_order->getPayment()->getAmountPaid() );
+        $authorizedAmount = floatval($this->_order->getPayment()->getBaseAmountAuthorized()); /**/
+        $paidAmount = floatval( $this->_order->getPayment()->getBaseAmountPaid() );/**/
         
         $completedOnly = ($completedOnly == 'false') ? false : true;
-        switch($completedOnly)
+        
+		switch($completedOnly)
         {
             case true:
                 if( $this->_order->getStatus() == Mage_Sales_Model_Order::STATE_COMPLETE )
@@ -126,7 +126,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                 }
             break;
             case false:
-                if( (!(float)$this->_order->getGrandTotal() || ($paidAmount || ($allowAuthorizeOnly && $authorizedAmount))) && $this->_order->getStatus() != Mage_Sales_Model_Order::STATUS_FRAUD )
+                if( (!(float)$this->_order->getBaseGrandTotal() || ($paidAmount || ($allowAuthorizeOnly && $authorizedAmount))) && $this->_order->getStatus() != Mage_Sales_Model_Order::STATUS_FRAUD )/**/
                 {
                     return true;
                 }
@@ -190,7 +190,16 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                         $this->_createWebOrderFee();
                         $this->_createWebOrderItemsDiscount(); /*should be after _createWebOrderItems*/
                         $this->_createWebOrderPayment();
+                        
+                        $this->_db->update( /**/
+                            Mage::getSingleton('core/resource')->getTableName('service_weborder'),
+                            array('IsReady' => 1),
+                            "WebOrderId = '{$this->_webOrderId}'"
+                        );
                     }
+                    Mage::log("Order::".$this->_order->getIncrementId()." STATUS::".$this->_order->getStatus(),Zend_log::DEBUG,'change_status.log',true);
+					Mage::dispatchEvent('sent_in_chq', array('order' => $this->_order));
+					
                 }
             }
             catch(Exception $e)

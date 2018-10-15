@@ -15,7 +15,7 @@ class Teamwork_Service_IndexController extends Mage_Core_Controller_Front_Action
         set_time_limit(0);
         ob_start();
     }
-
+    
     public function ecmAction()
     {
         $request = $this->getRequest();

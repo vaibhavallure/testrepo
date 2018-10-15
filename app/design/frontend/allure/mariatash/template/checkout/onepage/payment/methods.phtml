@@ -36,12 +36,12 @@
 ?>
     <dt>
     <?php if(!$oneMethod): ?>
-        <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
+        <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" data-payment_method="<?php echo $_code ?>" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
     <?php else: ?>
         <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
         <?php $oneMethod = $_code; ?>
     <?php endif; ?>
-        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?><?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="radio payment-checked"<?php endif; ?> data-payment_method="<?php echo $_code ?>" for="p_method_<?php echo $_code ?>"><?php echo ($this->getMethodTitle($_method)) ?><?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
     </dt>
     <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
     <dd>
@@ -103,8 +103,8 @@
                  $('promoCode').value = '';
                  $('promoCodeLinkRemove').hide();
               }              
-              $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-              $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
+              $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading ...</div>';
+              $('reload_payment').innerHTML = '<div class="loading-div">Loading Payment Information ...</div>';
               new Ajax.Updater('reload_payment','<?php echo $this->getUrl('checkout/onepage/reloadpayment') ?>',{method: 'post',
                 onComplete: function() {
                     if(data.error){
@@ -187,8 +187,8 @@
                     $('giftcard_use').checked = 0;
                     $('giftcard_use').value = "0";
                 }
-                $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-                $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
+                $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading ...</div>';
+                $('reload_payment').innerHTML = '<div class="loading-div">Loading Payment Information ...</div>';
                 $('gift_amount').innerHTML = '<?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?>' + data.current_balance;
                 new Ajax.Updater('reload_payment','<?php echo $this->getUrl('checkout/onepage/reloadpayment') ?>',{method: 'post', 
                     onComplete: function () {
@@ -204,6 +204,11 @@
                                     jQuery(this).next().css('background', 'url(' + bgChecked + ') no-repeat left');
                                 jQuery(this).bind('change', function() {
                                     jQuery('#checkout-payment-method-load dt label').attr('style', '');
+                                    if (payment == 'applepay'){
+                                      	jQuery('.payment-continue-button').hide();
+                                      } else {
+                                    	  	jQuery('.payment-continue-button').show();
+                                      }
                                     if (jQuery(this).attr('checked')) {
                                         jQuery(this).next().css('background', 'url(' + bgChecked + ') no-repeat left');
                                     }
@@ -227,10 +232,12 @@
               }
         }); 
     }
+    
     jQuery(document).ready(function(){
+
     	if($('totalsDivRightNav')!=null)
-        	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
-        $('reload_payment').innerHTML = '<div class="loading-div">Loading</div>';
+        	$('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading ...</div>';
+        $('reload_payment').innerHTML = '<div class="loading-div">Loading Payment Information ...</div>';
         new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' ,
             onComplete: function(transport) {
                 jQuery("#country").selectBoxIt({
@@ -238,20 +245,30 @@
                 }).data("selectBoxIt");               
                 // Fix payment check box for ie
                 jQuery('input[name="payment[method]"]').each(function () {                      
-                      var payment = jQuery(this).val(); 
-                      if(payment){
-                        if(jQuery(this).is(':checked')){                        
-                           jQuery(this).attr('class','payment-checked');
-                           if(payment == 'authorizenet'){
-                               jQuery('#payment_form_'+payment).show();
-                           }
-                        }
-                        jQuery('#label-'+payment).click(function(){                         
-                            uncheckPayment();
-                            jQuery(this).attr('class','payment-checked');
-                        });
+                      var payment = jQuery(this).val();
+
+                      if (payment == 'applepay') {
+                      	jQuery('.payment-continue-button').hide();
+                      } else {
+                    	  	jQuery('.payment-continue-button').show();
                       }
                       
+                      if (payment) {
+                        jQuery('#label-'+payment).click(function(){                         
+                            uncheckPayment();
+                            jQuery(this).attr('class','radio payment-checked');
+                            
+                            if (payment == 'applepay'){
+                              	jQuery('.payment-continue-button').hide();
+                              } else {
+                            	  	jQuery('.payment-continue-button').show();
+                              }
+                        });
+                        
+                        if (jQuery(this).is(':checked')) {                                           
+                            jQuery(this).click();
+                        }
+                		}
                 }); 
             }
         });
@@ -260,20 +277,29 @@
                 onComplete: function(transport) { 
                             // Fix payment check box for ie
                             jQuery('input[name="payment[method]"]').each(function () {  
-                                  var payment = jQuery(this).val();      
-                                  if(payment){                                   
-                                    if(jQuery(this).is(':checked')){                                           
-                                           jQuery(this).attr('class','payment-checked');
-                                           if(payment == 'authorizenet'){
-                                               jQuery('#payment_form_'+payment).show();
-                                           }
-                                    }
+                                  var payment = jQuery(this).val();
+
+                                  if (payment == 'applepay'){
+                                  	jQuery('.payment-continue-button').hide();
+                                  } else {
+                                	  	jQuery('.payment-continue-button').show();
+                                  }
+                                  
+                                  if (payment) {
+                                    
                                     jQuery('#label-'+payment).click(function(){                         
                                        uncheckPayment();
-                                       jQuery(this).attr('class','payment-checked');
-                                    });
-                                  }
-
+                                       jQuery(this).attr('class','radio payment-checked');
+                                       if (payment == 'applepay'){
+                                     		jQuery('.payment-continue-button').hide();
+                                         } else {
+                                       	  	jQuery('.payment-continue-button').show();
+                                         }
+                                    });                                   
+                                    if (jQuery(this).is(':checked')) {                                           
+                                        jQuery(this).click();
+                                    }
+                              }
                             }); 
                         }
                 });
@@ -282,8 +308,8 @@
 //]]>
 </script>
 
-
 <script type="text/javascript">
+
 function switchPayOptions(that){
 	jQuery('#wholeseller-payment-methods ul li').each(function(i){jQuery(this).find('input').removeAttr('checked')});
 	jQuery(that).find('input').attr('checked',true);
@@ -343,4 +369,3 @@ function removeCardClass(method){
 		jQuery('#'+method+'_saved_cc_cid').removeClass('required-entry');
 }
 </script>
-

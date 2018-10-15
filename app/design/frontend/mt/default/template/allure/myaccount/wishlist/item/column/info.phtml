@@ -33,24 +33,24 @@ $cpid = ($product->getId() == $_data['cpid']) ? 0 : $_data['cpid'];
 $defaultProduct  = $product;
 $arrayOptions = array();
 $productUrl = $defaultProduct->getProductUrl();
-if($product->getTypeId() =='configurable'){ 
+if($product->getTypeId() =='configurable'){
     $superAttribute = $item->getBuyRequest()->getSuperAttribute();
     foreach($superAttribute as $code => $option_id){
-          $attribute = Mage::getModel('catalog/resource_eav_attribute')->load($code); 
-          $attribute_table = Mage::getModel('eav/entity_attribute_source_table')->setAttribute($attribute)->getAllOptions(false); 
-           foreach($attribute_table as $info){
-                if($info['value'] == $option_id){
-                    $arrayOptions[$attribute->getFrontendLabel()] = $info['label'];
-                    break;
-                }
+        $attribute = Mage::getModel('catalog/resource_eav_attribute')->load($code);
+        $attribute_table = Mage::getModel('eav/entity_attribute_source_table')->setAttribute($attribute)->getAllOptions(false);
+        foreach($attribute_table as $info){
+            if($info['value'] == $option_id){
+                $arrayOptions[$attribute->getFrontendLabel()] = $info['label'];
+                break;
             }
+        }
     }
-    
-    if(!$superAttribute){   
+
+    if(!$superAttribute){
         $data  = $item->getBuyRequest()->getData('data');
         if($data){
             $requestParams = unserialize(base64_decode($data));
-            $superAttribute =  $requestParams['super_attribute'];        
+            $superAttribute =  $requestParams['super_attribute'];
         }
     }
     if($superAttribute){
@@ -58,33 +58,38 @@ if($product->getTypeId() =='configurable'){
         $resource = Mage::getSingleton('core/resource');
         $read = $resource->getConnection('core_read');
         $select = $read->select()
-			->from(array('super' => $resource->getTableName('catalog_product_super_attribute')), array('super.product_id','super.attribute_id'))
-			->join(array('eav' => $resource->getTableName('eav_attribute')),
-			      'eav.attribute_id = super.attribute_id',
-			      array('eav.attribute_code','eav.frontend_label'))
-			    ->where('super.product_id = ?', $product_id);
-     
+            ->from(array('super' => $resource->getTableName('catalog_product_super_attribute')), array('super.product_id','super.attribute_id'))
+            ->join(array('eav' => $resource->getTableName('eav_attribute')),
+                'eav.attribute_id = super.attribute_id',
+                array('eav.attribute_code','eav.frontend_label'))
+            ->where('super.product_id = ?', $product_id);
+
         $result = $read->fetchAll($select);
         $resultAttribute = array();
         if(count($result)){
-                foreach($result as $info){
-                     $resultAttribute[] = $info['attribute_id'];                    
-                }
-        }   
-        $check = @array_diff(@array_keys($superAttribute),$resultAttribute);       
+            foreach($result as $info){
+                $resultAttribute[] = $info['attribute_id'];
+            }
+        }
+        $check = @array_diff(@array_keys($superAttribute),$resultAttribute);
         if(count($check)){
             // Ignore images
-        }else{  
-            $simpleId = Mage::getModel('catalog/product_type_configurable')->getProductByAttributes($superAttribute, $product)->getEnTityId();
-            $product = Mage::getModel('catalog/product')->load($simpleId);
+        }else{
+
+            $prod =  Mage::getModel('catalog/product_type_configurable')->getProductByAttributes($attribute, $product);
+            if($prod){
+                $simpleId = $prod->getEnTityId();
+                $product = Mage::getModel('catalog/product')->load($simpleId);
+            }
+
             $option_id = null;
             foreach($item->getBuyRequest()->getSuperAttribute() as $id) {
                 $option_id = $id; break;
             }
             $productUrl = $defaultProduct->getProductUrl().'?optionId='.$option_id;
         }
-        
-    }   
+
+    }
 }
 ?>
 <td class="product-w-mt wishlist-no-pad">
@@ -92,11 +97,11 @@ if($product->getTypeId() =='configurable'){
         jQuery.noConflict();
         jQuery(document).ready(function () {
             jQuery('.ecp-wishlist-description').each(function(){
-                var max = parseInt(jQuery(this).attr('maxlength')); 
+                var max = parseInt(jQuery(this).attr('maxlength'));
                 jQuery(this).parent().find('.charsRemaining').html('You have ' + (max - jQuery(this).val().length) + ' characters left');
             });
             jQuery('textarea[maxlength]').keyup(function () {
-                var max = parseInt(jQuery(this).attr('maxlength'));                
+                var max = parseInt(jQuery(this).attr('maxlength'));
                 if (jQuery(this).val().length > max) {
                     jQuery(this).val(jQuery(this).val().substr(0, jQuery(this).attr('maxlength')));
                 }
@@ -107,52 +112,52 @@ if($product->getTypeId() =='configurable'){
 
     </script>
 
-    <h3 class="product-name">        
+    <h3 class="product-name">
         <a href="<?php echo $productUrl; ?>" title="<?php echo $this->escapeHtml($defaultProduct->getName()) ?>"><?php echo $this->escapeHtml($defaultProduct->getName()) ?></a>
     </h3>
     <div class="price-wish"><?php //echo $this->getPriceHtml($product); ?></div>
-	<?php 
-	   $helper = Mage::helper('catalog/product_configuration');
-	   if($item->getProduct()->getTypeId() == "configurable"):
-	   $_options = $helper->getConfigurableOptions($item);
-	?>
-	<?php if ($_options):?>
-	<?php foreach ($_options as $_option) : ?>
-		<div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>		
-			<?php echo $_option['value'] ?>
-		</div>
-	<?php endforeach; ?>
-	<?php endif;?>	
-	<?php endif;?>	
-	<span class="mt-wishlist-added-at"><?php echo "Added ".date('M d, Y H:i a',strtotime($item->getAddedAt()))?></span>
+    <?php
+    $helper = Mage::helper('catalog/product_configuration');
+    if($item->getProduct()->getTypeId() == "configurable"):
+        $_options = $helper->getConfigurableOptions($item);
+        ?>
+        <?php if ($_options):?>
+        <?php foreach ($_options as $_option) : ?>
+            <div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                <?php echo $_option['value'] ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif;?>
+    <?php endif;?>
+    <span class="mt-wishlist-added-at"><?php echo "Added ".date('M d, Y H:i a',strtotime($item->getAddedAt()))?></span>
 </td>
 
 <td class="mt-wishlist-price">
-	<?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
+    <?php echo Mage::helper('core')->currency($item->getProduct()->getFinalPrice());?>
 </td>
 
 <!--**QTY**-->
 <td class="add-to-cart-alt">
-	<?php if(0):?>
-    	<input type="text" class="input-text qty validate-not-negative-number" name="qty[<?php echo $item->getId() ?>]" value="<?php echo (int) $item->getData('qty'); ?>"/>
-		<input type="hidden" class="item_id"value="<?php echo $item->getId() ?>"/>
-	<?php endif;?>
-	
-	<div class="minus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
+    <?php if(0):?>
+        <input type="text" class="input-text qty validate-not-negative-number" name="qty[<?php echo $item->getId() ?>]" value="<?php echo (int) $item->getData('qty'); ?>"/>
+        <input type="hidden" class="item_id"value="<?php echo $item->getId() ?>"/>
+    <?php endif;?>
+
+    <div class="minus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
         <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', -1 )" class="minus" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"></button>
     </div>
     <div class="qty-wrap">
-            <input data-item-id="<?php echo $item->getId() ?>" id="qtyid_<?php echo $item->getId() ?>" name="cart[<?php echo $item->getId() ?>][qty]" value="<?php echo (int) $item->getData('qty')?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
-            <input type="hidden" value="<?php echo (int) $item->getData('qty')?>"/>
+        <input data-item-id="<?php echo $item->getId() ?>" id="qtyid_<?php echo $item->getId() ?>" name="cart[<?php echo $item->getId() ?>][qty]" value="<?php echo (int) $item->getData('qty')?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
+        <input type="hidden" value="<?php echo (int) $item->getData('qty')?>"/>
     </div>
     <div class="plus_icon" <?php if($item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
         <button onclick="plusMinusToWishlist( '#qtyid_<?php echo $item->getId() ?>', 1 )" class="plus" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"></button>
-   </div>
-	
+    </div>
+
 </td>
 
 <td class="mt-myaccount-subtotal">
-	<?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()))?>
+    <?php echo Mage::helper('core')->currency((((int) $item->getData('qty')) * $item->getProduct()->getFinalPrice()))?>
 </td>
 
 <!--****-->
@@ -166,9 +171,9 @@ if($product->getTypeId() =='configurable'){
 </td>
 
 <?php if(0):?>
-<td class="date-wish">
-    <span><?php echo date('m/d/y', strtotime($item->getAddedAt())); ?></span>
-</td>
+    <td class="date-wish">
+        <span><?php echo date('m/d/y', strtotime($item->getAddedAt())); ?></span>
+    </td>
 <?php endif;?>
 
 <?php if ($this->getSortedChildren()): ?>

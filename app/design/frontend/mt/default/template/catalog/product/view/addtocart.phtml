@@ -24,6 +24,7 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+
 <?php $_product = $this->getProduct(); ?>
 <?php $buttonTitle = $this->__('Add to Cart'); ?>
 <?php if ($_product->isSaleable()): ?>
@@ -106,7 +107,22 @@
 <?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
 
 <?php $_product = $this->getProduct() ?>
-<?php if ( $_product->getTypeId() != 'giftcards'):?>
+<?php 
+    //if ( $_product->getTypeId() != 'giftcards'):  old code(teamwork changes the attribute set)
+
+    //new code - ALR -- aws12
+    $skuStr = $_product->getSku();
+    $skuArr = explode("|", $skuStr);
+    $sku = $skuArr[0];
+    $giftcard = 1;
+    if ($sku == "STORECARD") {
+        $giftcard = 0;
+    }
+    if ($sku == "gift") {
+        $giftcard = 0;
+    }
+?>
+<?php if($giftcard): ?>
 <?php if ($_product->isAvailable()): ?>
     <p class="availability in-stock" style="width: 300px;"><?php echo $this->__('Availability for this model:') ?> <br/><span><?php echo $this->__('In stock') ?></span></p>
 <?php else: ?>
@@ -115,3 +131,4 @@
 <?php endif; ?>
 <?php echo $this->getChildHtml('product_type_data_extra') ?>
 <?php //echo $this->getPriceHtml($_product) ?>
+

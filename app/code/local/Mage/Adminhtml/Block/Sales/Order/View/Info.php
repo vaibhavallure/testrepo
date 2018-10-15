@@ -175,9 +175,11 @@ class Mage_Adminhtml_Block_Sales_Order_View_Info extends Mage_Adminhtml_Block_Sa
         if ($this->getOrder()) {
             $storeId = $this->getOrder()->getOldStoreId();
             if($storeId!=0 || $storeId!=1){
-                $oldStore=Mage::getModel("allure_oldstores/oldstores")->load($storeId);
-                if($oldStore->getId()){
-                    return $oldStore->getOldStoreName();
+                if (Mage::helper('core')->isModuleEnabled('Allure_Oldstores')){
+                    $oldStore=Mage::getModel("allure_oldstores/oldstores")->load($storeId);
+                    if($oldStore->getId()){
+                        return $oldStore->getOldStoreName();
+                    }
                 }
                 return $storeId;
             }

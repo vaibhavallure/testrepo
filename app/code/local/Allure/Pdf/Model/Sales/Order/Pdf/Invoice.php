@@ -1,6 +1,7 @@
 <?php
 class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Invoice
 {
+    protected $_isCompress = false;
     /**
      * Insert order to pdf page
      *
@@ -100,6 +101,15 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
             $addressesHeight = max($addressesHeight, $this->_calcAddressHeight($shippingAddress));
         }
         
+        //aws02 - address height calculate function with extra data start
+        $customerGroupId = $order->getCustomerGroupId();
+        $groupname = Mage::getModel('customer/group')->load($customerGroupId)->getCustomerGroupCode();
+        $groupname = "Customer Group : ".$groupname;
+        $customerEmail = "Email : ".$order->getCustomerEmail();
+        $extraData = array($customerEmail,$groupname);
+        $addressesHeight =  max($addressesHeight,$helper->calHeightExtraData($addressesHeight,$extraData));
+        //end
+        
         $page->setFillColor(new Zend_Pdf_Color_GrayScale(1));
         $page->drawRectangle(25, ($top - 25), 570, $top - 33 - $addressesHeight);
         $page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
@@ -120,6 +130,13 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
             }
         }
         
+        //aws02 - email & customer group Start
+        $page->drawText(strip_tags(ltrim("{$customerEmail}")), 35, $this->y, 'UTF-8');
+        $this->y -= 15;
+        $page->drawText(strip_tags(ltrim("{$groupname}")), 35, $this->y, 'UTF-8');
+        $this->y -= 15;
+        //End
+        
         $addressesEndY = $this->y;
         
         if (!$order->getIsVirtual()) {
@@ -136,6 +153,13 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
                     }
                 }
             }
+            
+            //aws02 - email & customer group Start
+            $page->drawText(strip_tags(ltrim("{$customerEmail}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            $page->drawText(strip_tags(ltrim("{$groupname}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            //End
             
             $addressesEndY = min($addressesEndY, $this->y);
             $this->y = $addressesEndY;
@@ -255,6 +279,13 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
         }
     }
     
+    //compress pdf size
+    public function getCompressPdf($invoices = array(), $isCompress = false){
+        $this->_isCompress = $isCompress;
+        return $this->getPdf($invoices);
+    }
+    
+    
     /**
      * Return PDF document
      *
@@ -320,6 +351,43 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
         }
         $this->_afterGetPdf();
         return $pdf;
+    }
+    
+    /**
+     * Set font as regular
+     *
+     * @param  Zend_Pdf_Page $object
+     * @param  int $size
+     * @return Zend_Pdf_Resource_Font
+     */
+    protected function _setFontRegular($object, $size = 7)
+    {
+        if($this->_isCompress){
+            $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+        }else{
+            $font = Zend_Pdf_Font::fontWithPath(Mage::getBaseDir() . '/lib/LinLibertineFont/LinLibertine_Re-4.4.1.ttf');
+        }
+        
+        $object->setFont($font, $size);
+        return $font;
+    }
+    
+    /**
+     * Set font as bold
+     *
+     * @param  Zend_Pdf_Page $object
+     * @param  int $size
+     * @return Zend_Pdf_Resource_Font
+     */
+    protected function _setFontBold($object, $size = 7)
+    {
+        if($this->_isCompress){
+            $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+        }else{
+            $font = Zend_Pdf_Font::fontWithPath(Mage::getBaseDir() . '/lib/LinLibertineFont/LinLibertine_Bd-2.8.1.ttf');
+        }
+        $object->setFont($font, $size);
+        return $font;
     }
     
 }

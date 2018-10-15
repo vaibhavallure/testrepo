@@ -62,7 +62,7 @@ $_cpid =  $this->getRequest()->getParam("cpid") ? $this->getRequest()->getParam(
 $configProduct = Mage::getModel('catalog/product')->load($_cpid);
 $childId = null;
 if($configProduct->isConfigurable()){
-    $check_option_color = false;
+    $check_option_color = true;
     $allowAttrs   = array();
     $allAtributes = $configProduct->getTypeInstance(true)->getConfigurableAttributes($configProduct);
     foreach ($allAtributes as $attribute) {
@@ -309,9 +309,8 @@ function shareLikeTwitter(){
     });
 }
 
-
-jQuery(document).ready(function(){
-    /*********************************************************/
+	jQuery(document).ready(function(){
+	    /*********************************************************/
     /*Gallery View*/
     jQuery('.containerImage,.btnFullscreen').mouseover(function() {
        jQuery('.btnFullscreen').show();
@@ -387,7 +386,10 @@ jQuery(document).ready(function(){
         if (videoCounter == 0) {
             if (urlCounter > 0) {
                 jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
-            }
+            }else{
+            	        <?php $_img = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>
+            	        jQuery('.thumb').eq(0).html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'thumbnail');?>"  data="0"/>');
+                }
         } else {
             <?php if($_product->getVideoThumb() == 'thumbnail/video/')
                     $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
@@ -434,6 +436,8 @@ jQuery(document).ready(function(){
         }
     <?php endif; ?>
 });
+	
+
 
 </script>
 <input type="hidden" name="reloadmedia" id="reloadmedia" value="v"/>

@@ -1,0 +1,34 @@
+<?php
+/**
+ * Apple Pay
+ *
+ * @category    Allure
+ * @package     Allure_ApplePay
+ * @copyright   Copyright (c) 2017 Allure Inc
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+?>
+<?php if ($this->isApplePayButtonEnabled()): ?>
+<button id="<?php echo $this->getApplePayButtonId(); ?>" class='apple-pay-button apple-pay-button-buy apple-pay-button-black-with-line'  onclick="return Allure.ApplePay.Callbacks.<?php echo $this->getApplePayButtonId(); ?>()"><span class="text">Buy with</span><span class="logo"></span></button>
+
+<script type="text/javascript">
+    if ( typeof Allure == 'undefined' ) var Allure = {};
+    if ( typeof Allure.ApplePay == 'undefined' ) Allure.ApplePay = {};
+    if ( typeof Allure.ApplePay.Callbacks == 'undefined' ) Allure.ApplePay.Callbacks = {};
+    if ( typeof Allure.ApplePay.data == 'undefined' ) Allure.ApplePay.data = {};
+
+	Allure.ApplePay.Callbacks["<?php echo $this->getApplePayButtonId(); ?>"] = function() {
+
+		console.log("<?php echo $this->getApplePayButtonId(); ?>");
+
+        Allure.ApplePay.data.checkoutType = "<?php echo $this->getApplePayButtonId(); ?>";
+        //ApplePayButtonProduct
+        
+        Allure.ApplePay.action.initProduct();
+        //Allure.ApplePay.action.init();
+    
+        return false;
+    };
+</script>
+
+<?php endif; ?>

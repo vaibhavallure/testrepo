@@ -26,7 +26,7 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_NOW_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_now';
 
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_AS_SHIP_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_as_ship';
-
+    
     public function getWholeCustomerPaymentMethods ()
     {
         $pay1 = $this->getWholesaleCustomersPayNowMethods();

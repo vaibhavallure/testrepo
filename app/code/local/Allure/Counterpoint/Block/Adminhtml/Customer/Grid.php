@@ -8,6 +8,8 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
 		->addNameToSelect()
 		->addAttributeToSelect('email')
 		->addAttributeToSelect('customer_type')  //add status to counterpoint
+		->addAttributeToSelect('fb_login_count') 
+		->addAttributeToSelect('google_login_count') 
 		->addAttributeToSelect('created_at')
 		->addAttributeToSelect('group_id')
 		->joinAttribute('billing_postcode', 'customer_address/postcode', 'default_billing', null, 'left')
@@ -152,14 +154,33 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
             ));
         }
 
-        $this->addColumn('customer_type', array(
-        		'header'    => Mage::helper('customer')->__('Customer Create From'),
+        $this->addColumn('fb_login_count', array(
+        		'header'    => Mage::helper('customer')->__('FB Login Count'),
         		'align'     => 'center',
         		'width'     => '80px',
-        		'type'      => 'options',
-                'options'   => array(0=>'Website',1=>'CounterPoint',2=>'Sugar CRM'),
-        		'index'     => 'customer_type',
+        		'index'     => 'fb_login_count',
         ));
+        
+        $this->addColumn('google_login_count', array(
+            'header'    => Mage::helper('customer')->__('Google Login Count'),
+            'align'     => 'center',
+            'width'     => '80px',
+            'index'     => 'google_login_count',
+        ));
+        
+        
+        
+        $this->addColumn('customer_type', array(
+            'header'    => Mage::helper('customer')->__('Customer Create From'),
+            'align'     => 'center',
+            'width'     => '80px',
+            'type'      => 'options',
+            'options'   => array(0=>'Website',1=>'CounterPoint',2=>'Sugar CRM',15=>'Facebook',16=>'Google',20=>'Teamwork'),
+            'index'     => 'customer_type',
+        ));
+        
+        
+        
         
         $this->addColumn('action',
             array(

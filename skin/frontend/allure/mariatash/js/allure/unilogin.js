@@ -62,6 +62,19 @@ jQuery(document).ready(function(){
 
 	$j("#signup-btn-popup").on('click',function(){
 		 var myForm = new VarienForm('popup-register-form'); 
+		 
+		 var privacyPolicySelector = $j("#popup-register-form #popup_is_privacy_agree");
+		 var isChecked = privacyPolicySelector.prop("checked");
+		 if(isChecked == false){
+			 myForm.validator.validate();
+			 privacyPolicySelector.addClass("checkbox-error-validate");
+			 privacyPolicySelector.parent().addClass("label-error-validate");
+			 return;
+		 }else{
+			 privacyPolicySelector.removeClass("checkbox-error-validate");
+			 privacyPolicySelector.parent().removeClass("label-error-validate");
+		 }
+		 
 		 if(myForm.validator.validate()){ 
 			var firstname 		= $j('#popup-register-form #firstname').val();
 			var lastname 		= $j('#popup-register-form #lastname').val();
@@ -137,6 +150,57 @@ jQuery(document).ready(function(){
 	 *Reset password popup code end 
 	 */
 	
+$j("#popupcheckbox_delmyacc_confirm").on('click',function(){
+    	
+    	if ($j('#popupcheckbox_delmyacc_confirm').is(":checked"))
+    	{
+    		$j('#delmyacc-btn-popup').css('color','#FFF');
+    	}else{
+    		$j('#delmyacc-btn-popup').css('color','#6f6b5a');
+    	}
+   	// alert($('#popupcheckbox_delmyacc_confirm').val());
+    });
+    
+    $j("#delmyacc-btn-popup").on('click',function(){
+    	
+		if ($j('#popupcheckbox_delmyacc_confirm').is(":checked"))
+		{
+			 var email =$j('#del_acc_email').val();
+			 var id =$j('#del_acc_id').val();
+			 
+			 var request = {
+						"email":email,
+						"id":id,
+						"form_key":Allure.DeleteAccountModelFormKey
+			 };
+			  
+	        $j.ajax({
+			   url : Allure.DeleteAccuntURL,
+			   dataType : 'json',
+			   type : 'POST',
+			   data: {request:request},
+	           beforeSend: function() { $j('.please-wait-popup-del').show(); },
+	           complete: function() { $j('.please-wait-popup-del').hide(); },
+	           type: "POST",
+		       dataType : 'json',
+		       data: {request:request},
+		       success : function(data){
+			   if(data.success){
+						 location.reload();
+			   }else{
+						console.log(data.error);
+						$j('#reg_msg_div').css('display','block');
+						$j('#register-msg').html(data.error);
+			   }
+				}
+			});
+		}
+    });
+    $j(".popupDelMyAccModel .close").on('click',function(){
+    	$j(".popupDelMyAccModel").css({"opacity":"0","pointer-events":"none"});
+    });
+
+	
 });
 
 
@@ -149,4 +213,11 @@ function openRestPasswordModal(){
     jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
     jQuery(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
     jQuery(".popupResetPasswordModel").css({"opacity":"1","pointer-events":"auto"});
+};
+function openDelMyAccountModal(){
+	jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
+	jQuery(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
+	jQuery(".popupResetPasswordModel").css({"opacity":"0","pointer-events":"none"});
+	jQuery(".popupDelMyAccModel").css({"opacity":"1","pointer-events":"auto"});
+	
 };

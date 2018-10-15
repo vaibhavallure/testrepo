@@ -86,7 +86,7 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Block_Product_View_Type
 
         return $html;
     }
-	public function getJsonConfig()
+    public function getJsonConfig()
     {
         $config = Zend_Json::decode(parent::getJsonConfig());
 
@@ -144,7 +144,7 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Block_Product_View_Type
             }
             unset($info); //clear foreach var ref
         }
-		foreach ($config['attributes'] as $attributeId => $attribute)
+        foreach ($config['attributes'] as $attributeId => $attribute)
         {
             if (Mage::getModel('amconf/attribute')->load($attributeId, 'attribute_id')->getUseImage())
             {

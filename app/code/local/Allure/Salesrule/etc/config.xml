@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Salesrule>
+			<name>Allure - Salesrule</name>
+			<version>1.0.0</version>
+		</Allure_Salesrule>
+	</modules>
+
+	<global>
+		<models>
+			<allure_salesrule>
+				<class>Allure_Salesrule_Model</class>
+			</allure_salesrule>
+			
+			<salesrule> 
+				<rewrite> 
+					<validator>Allure_Salesrule_Model_Validator</validator>
+				 </rewrite>
+			</salesrule>
+		</models>
+		
+		<helpers>
+			<allure_salesrule>
+				<class>Allure_Salesrule_Helper</class>
+			</allure_salesrule>
+		</helpers>
+		
+	</global>
+	
+</config>

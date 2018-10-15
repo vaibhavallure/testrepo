@@ -183,6 +183,9 @@
             <logger>
                 <developer_ip>80.78.40.163</developer_ip>
             </logger>
+            <notification>
+                <status>1</status>
+            </notification>
         </mstcore>
     </default>
 </config>

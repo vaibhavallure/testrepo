@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<layout>
+	<adminhtml_gen_index>
+		<reference name="head">
+        	<action method="addJs"><file>allure/jquery.js</file></action>
+        </reference>
+        <!-- <reference name="content">
+            <block type="allure_salesforce/adminhtml_gen" name="generate_csv" template="allure/salesforce/gen.phtml" />            
+        </reference>  -->     
+	 </adminhtml_gen_index> 
+	 
+	 <adminhtml_gen_uploadform>
+	 	<reference name="content">
+	 		<block type="adminhtml/template" template="allure/salesforce/form/before.phtml" name="alluresalesfore.form.before" alias="form_before"/>
+            <block type="allure_salesforce/adminhtml_import_edit" name="import.form.container"/>
+            <block type="adminhtml/template" template="allure/salesforce/form/after.phtml" name="alluresalesfore.form.after" alias="form_after"/>
+	 	</reference>
+	 </adminhtml_gen_uploadform>
+	   
+</layout>

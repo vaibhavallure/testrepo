@@ -77,8 +77,6 @@ class ParadoxLabs_TokenBase_Model_Gateway_Xml
 	 */
 	private static function &convertArrayToXml( $node_name, $arr=array() )
 	{
-
-		
 		$xml = self::_getXMLRoot();
 		$node = $xml->createElement($node_name);
 		

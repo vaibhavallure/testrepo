@@ -330,7 +330,7 @@ div.tab button.active {
 
 .myaccount-index-index .main-container {
     margin: 0 auto;
-    width: 960px;
+    width: 980px;
 }
 
 .myaccount-index-index .main-container>.page-title {
@@ -1176,7 +1176,7 @@ width: 63%;
 #myaccount-shopping-cart-table .mt-purchase-added-at {
    display: block;
    font-weight: normal;
-   color: #999;
+   color: #3f4048;
 }
 
 #myaccount-shopping-cart-table tr td .product-image {
@@ -1228,11 +1228,11 @@ width: 63%;
 }
 
 .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
-	background-color: #dedede;
-    padding: 0px 20px;
+	background-color: #d1d1d1;
+   /*  padding: 0px 20px; */
     border-radius: 3px;
     position: absolute;
-    bottom: 38px;
+    bottom: 15px;
 }
 
 .mt-new-purchase .cart-table .cart_col4 .qty-wrap{

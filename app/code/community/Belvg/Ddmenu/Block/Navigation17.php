@@ -131,7 +131,7 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
 	                        $htmlSeparated .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
 	                                        ' . (($boo)?'':'') . '
 	                                            <a href="' . $child->getUrl() . '">
-	                                                ' . $this->escapeHtml($child->getName()) . '
+	                                                ' . $this->__($this->escapeHtml($child->getName())) . '
 	                                            </a>
 	                                        ' . (($boo)?'':'') . '
 	                                    </li>';
@@ -139,7 +139,7 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
 	                        $html .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
 	                                        ' . (($boo)?'':'') . '
 	                                            <a href="' . $child->getUrl() . '">
-	                                                ' . $this->escapeHtml($child->getName()) . '
+	                                                ' . $this->__($this->escapeHtml($child->getName())) . '
 	                                            </a>
 	                                        ' . (($boo)?'':'') . '
 	                                    </li>';
@@ -204,14 +204,14 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
             		if ($this->_itemSeparated($this->getCategoryId($child))) {
                         $htmlSeparated .= '<li class="menu-item menu-item-separated' . $first . $dropdown . (($child->getIsActive())?' current':'') . '">
                                             <a href="' . $child->getUrl() . '">
-                                                ' . $this->escapeHtml($child->getName()) . $curate . '
+                                                ' . $this->__($this->escapeHtml($child->getName())) . $curate . '
                                             </a>
                                         	' . (($subHtml)? $subHtml :'') . '
                                     	</li>';
             		} else {
                         $html .= '<li class="menu-item ' . $first . $dropdown . (($child->getIsActive())?' current':'') . '">
                                             <a href="' . $child->getUrl() . '">
-                                                ' . $this->escapeHtml($child->getName()) . $curate . '
+                                                ' . $this->__($this->escapeHtml($child->getName())). $curate . '
                                             </a>
                                         	' . (($subHtml)? $subHtml :'') . '
                                   </li>';

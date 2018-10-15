@@ -27,7 +27,7 @@
 				<class>Allure_Managestock_Model</class>
 			</managestock>
 
-			<!-- manage stcok by website -->
+			<!-- manage stock by website -->
 			<cataloginventory>
 				<rewrite>
 					<stock>Allure_Managestock_Model_CatalogInventory_Stock</stock>
@@ -39,6 +39,7 @@
 
 			<cataloginventory_resource>
 				<rewrite>
+					<stock>Allure_Managestock_Model_CatalogInventory_Resource_Stock</stock>
 					<stock_item>Allure_Managestock_Model_CatalogInventory_Resource_Stock_Item</stock_item>
 				</rewrite>
 			</cataloginventory_resource>

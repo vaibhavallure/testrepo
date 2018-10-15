@@ -1156,7 +1156,9 @@ if ($benchmark) Mage::log('_importUpdateImageGallery: ' . memory_get_usage(true)
                                         $logger->error(self::ERROR_INVALID_CATEGORY . $v);
                                         $this->_valid[$sku] = false;
                                     }
-                                } elseif ($autoCreateOptions && !empty($attr['attribute_id']) && (empty($attr['source_model']) || $attr['source_model'] === 'eav/entity_attribute_source_table')) {
+                                } elseif ($k === 'category.path'){
+                                    
+                                }elseif ($autoCreateOptions && !empty($attr['attribute_id']) && (empty($attr['source_model']) || $attr['source_model'] === 'eav/entity_attribute_source_table')) {
                                     $newOptionId = $this->_importCreateAttributeOption($attr, $v);
                                     if (is_array($newValue)) {
                                         $this->_newData[$sku][$k][$i] = $newOptionId;
@@ -1165,7 +1167,7 @@ if ($benchmark) Mage::log('_importUpdateImageGallery: ' . memory_get_usage(true)
                                     }
                                     $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
                                     $logger->warning($this->__(self::WARNING_CREATED_NEW_OPTION_FOR_ATTRIBUTE, $v, $k));
-                                } else {
+                                }else {
                                     if ($k !== 'product.websites'
                                         || !Mage::helper('urapidflow')->hasEeGwsFilter()
                                     ) {
@@ -1259,9 +1261,9 @@ $oldValues = array();
                 }
                 // walk the attributes
                 foreach ($p as $k=>$newValue) {
-                    if($k=='max_qty' || $k=='stock.notify_stock_qty')
+                    if($k=='max_qty' || $k=='stock.notify_stock_qty' ||  $k=='category.path')
                         continue;
-                    
+                        //'category.path'
                     $logger->setColumn(isset($this->_fieldsCodes[$k]) ? $this->_fieldsCodes[$k]+1 : 0);
 
                     $oldValue = !$pId ? null : (

@@ -88,6 +88,8 @@ class Mage_Checkout_Block_Cart_Sidebar extends Mage_Checkout_Block_Cart_Minicart
      */
     public function getSubtotal($skipTax = true)
     {
+
+
         $subtotal = 0;
         $totals = $this->getTotals();
         $config = Mage::getSingleton('tax/config');

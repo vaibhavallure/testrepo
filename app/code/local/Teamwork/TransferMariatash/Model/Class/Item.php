@@ -1,6 +1,12 @@
 <?php
 class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_Transfer_Model_Class_Item
 {
+	protected $_productTypes = array(
+        self::CHQ_PRODUCT_TYPE_SINGLEITEM    => Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE,
+        self::CHQ_PRODUCT_TYPE_SERVICEITEM   => Mage_Catalog_Model_Product_Type::TYPE_SIMPLE,
+        self::CHQ_PRODUCT_TYPE_STYLE         => Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE
+    );
+	
 	protected function _beforeAddData(&$productData, &$style, &$typeId, &$item, &$topProduct)
 	{
         $productData['teamwork_plu'] = $item['plu'];
@@ -107,6 +113,7 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
 			{
 				$productData['vendor_item_no'] = $item['c_vlu'];
 			}
+            
 			/*vendor_item_no*/
 			/*thread_type*/
 			if (!empty($item['Attribute3']))
@@ -506,5 +513,117 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
             }
         }
         return $configurableAttributesData;
+    }
+    
+    protected function _addProductImages($product, &$entity)
+    {
+        $this->_recentlyLoadedProductImages = array();
+        $attributes = $product->getTypeInstance(true)->getSetAttributes($product);
+        $mediaGalleryAttribute = $attributes[self::GALLERY_ATTRIBUTE_CODE];
+        $productMediaGalleryData = $product->getData(self::GALLERY_ATTRIBUTE_CODE);
+        $mapDefaultImage = $this->_mapModel->getMapDefaultImage();
+
+        if(!isset($productMediaGalleryData['images']) || !is_array($productMediaGalleryData['images']))
+        {
+            $productMediaGalleryData['images'] = array();
+        }
+
+        // get info about images for style or item
+        $ecmImagesInfo = $this->_getEcmImagesInfo($entity);
+
+        // get ecm images already existing in $product
+        $existingImages = $this->_getExistingImages($productMediaGalleryData, $ecmImagesInfo);
+
+        if(Mage::getStoreConfigFlag(Teamwork_Transfer_Helper_Config::XML_PATH_DELETE_PRODUCT_IMAGES_ABSENT_IN_ECM))
+        {
+            // remove images existing in product but absent in ECM
+            $productImagesToDelete = Mage::helper('teamwork_transfer')->multiArrayDiffByField($productMediaGalleryData['images'], $existingImages['product_images'], 'file', true);
+            foreach ($productImagesToDelete as $key => $image)
+            {
+                // mark image as removed (Magento will delete record about image by itself)
+                $productMediaGalleryData['images'][$key]['removed'] = 1;
+
+                // physically removing product image file
+                $this->_deleteProductImageFile($product, $image['file']);
+            }
+        }
+
+        /*unique image identifier*/
+        $uniqueId = $this->_isStyle($entity) ? $entity['internal_id'] . $entity['no'] : $entity['internal_id'] . $entity['plu'];
+
+        if(!empty($ecmImagesInfo))
+        {
+            // before adding media attributes (like 'image', 'small_image', 'thumbnail') we clear all previous info about them
+            $this->_clearProductMediaAttributes($product, $uniqueId);
+
+            foreach ($ecmImagesInfo as $index => $image)
+            {
+                // get media attributes (like 'image', 'small_image', 'thumbnail') we want to assign to current image
+                /**/ // Item media attributes (like 'image', 'small_image', 'thumbnail')
+                if($this->_isStyle($entity))
+                {
+                    if (array_key_exists('media_attributes', $image)) $mediaAttributes = $image['media_attributes'];
+                    else $mediaAttributes = $this->_getImageMediaAttributes($image, $mapDefaultImage);
+                }
+                else
+                {
+                    if (array_key_exists('item_media_attributes', $image)) $mediaAttributes = $image['item_media_attributes'];
+                    else $mediaAttributes = $this->_getImageMediaAttributes($image, $mapDefaultImage);
+                }
+                /**/
+
+                /*don't display the image in gallery if it is the only image in product*/
+                $disabled = (!empty($mediaAttributes) && count($ecmImagesInfo) == 1);
+                if (!$disabled && array_key_exists('excluded', $image)) $disabled = $image['excluded'];
+
+                $imageParams = array(
+                    'position' => (int) $image['order'],
+                    'label'    => !empty($image['label']) ? $image['label'] : ($product->getName() . ' #' . $image['order']), /**/
+                    'disabled' => (int) $disabled
+                );
+
+                try
+                {
+                    // if image already exists on Magento, its params and mapping
+                    if (in_array($image, $existingImages['ecm_images']))
+                    {
+                        $magentoImage = $this->_getMagentoImageCorrespondingToEcmImage($image, $existingImages);
+                        if($magentoImage['is_file_exists'])
+                        {
+                            // update image mapping in product
+                            $this->_addProductMediaAttributes($product, $uniqueId, $mediaAttributes, $magentoImage['file']);
+                            // update image params
+                            $productImage = &$productMediaGalleryData['images'][$magentoImage['media_gallery_key']];
+                            $productImage = array_replace($productImage, $imageParams);
+                            
+                            continue;
+                        }
+                        else
+                        {
+                            $productMediaGalleryData['images'][$magentoImage['media_gallery_key']]['removed'] = 1;
+                        }
+                    }
+                    
+                    /*download and attach image*/
+                    $loadedImages = $this->_mediaModel->loadMediaImages($entity['style_id'], Teamwork_Service_Model_Mapping::CONST_STYLE, $this->_globalVars['channel_id'], $uniqueId, array($image));
+                    $loadedImage = reset($loadedImages);
+                    $fileName    = $mediaGalleryAttribute->getBackend()->addImage($product, $loadedImage['link'], $mediaAttributes, true, false);
+
+                    $productMediaGalleryData['images'][] = array('file' => $fileName) + $imageParams;
+
+                    $this->_recentlyLoadedProductImages[] = array(
+                        'media_id'           => $image['media_id'],
+                        'magento_image_file' => $fileName,
+                        'media_name'         => $image['media_name']
+                    );
+                }
+                catch (Exception $e)
+                {
+                    $this->_addErrorMsg(sprintf("Error occured while attaching/updating image (img: %s; sku: %s: %s)", $loadedImage['link'], $product->getSku(), $e->getMessage()), true);
+                    $this->_getLogger()->addException($e);
+                }
+            }
+        }
+        $product->setData(self::GALLERY_ATTRIBUTE_CODE, $productMediaGalleryData);
     }
 }
