@@ -258,9 +258,9 @@ class Allure_Salesforce_Model_Observer_Order{
                 $request["order"][0]["Card_Type__c"] = $sName;
             }
             
-            $last4Digits  = "XXXX-".$payment->getCcLast4();
+            $last4Digits  = $payment->getCcLast4();
             if($last4Digits){
-                $request["order"][0]["Card_Number__c"] = $last4Digits;
+                $request["order"][0]["Card_Number__c"] = "XXXX-".$last4Digits;
             }
             
             $transactionId = $payment->getData("last_trans_id");
