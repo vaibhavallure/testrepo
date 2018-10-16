@@ -1,5 +1,5 @@
 <?php
-class Allure_Smartanalytics_Model_System_Config_Source_Addto
+class Allure_SmartaAalytics_Model_System_Config_Source_Addto
 {
     public function toOptionArray()
     {
