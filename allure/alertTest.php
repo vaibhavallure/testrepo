@@ -1,11 +1,12 @@
 <?php
 require_once '../app/Mage.php';
 umask(0);
+Mage::app('admin');
 /*ini_set('memory_limit', '-1');*/
 
 /*$function = $_GET['function'];
 $password = $_GET['pass'];*/
-Mage::app('admin');
+
 Mage::getModel('alertservices/alerts')->alertAvgPageLoad();
 Mage::getModel('alertservices/alerts')->alertAvgPageLoadEmail();
 Mage::getModel('alertservices/alerts')->alertPageNotFound();
