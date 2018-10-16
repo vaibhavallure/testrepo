@@ -347,7 +347,16 @@ class Allure_Salesforce_Model_Observer_Order{
             $status = $invoice->getState();
             $storeId = $invoice->getStoreId();
             
-            $totalQty = $invoice->getTotalQty();
+            //$totalQty = $invoice->getTotalQty();
+            $totalQty = 0;
+            foreach ($invoice->getAllItems() as $item){
+                if ($item->getOrderItem()->getParentItem()) {
+                    continue;
+                }
+                $qty = $item->getQty();
+                $totalQty += $qty;
+            }
+            
             
             $salesforceInvoiceId = $invoice->getSalesforceInvoiceId();
             
