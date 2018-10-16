@@ -8,7 +8,7 @@ class OpsWay_CustomOrderManager_Model_Observer {
 	   	
 	   	//$item->setBackorderTime($product->getBackorderTime()); //Comment by Allure
 	    
-	    //Allure Inc, Modification Date:21/06/2017 
+	    //Allure Inc, Modification Date:21/06/2017 //AWS12 Date : 15/06/2018
 	    ////START
 	    $productId = Mage::getSingleton('catalog/product')->getIdBySku($item->getSku());
 	    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
