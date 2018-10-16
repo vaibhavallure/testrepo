@@ -3,7 +3,7 @@
 class Allure_Translations_Helper_Data extends Mage_Customer_Helper_Data
 {
 	
-    public function getCountryByIp($ip){
+/*    public function getCountryByIp($ip){
         
         $url='http://www.geoplugin.net/json.gp?ip='.$ip;
         $ch = curl_init();
@@ -22,5 +22,10 @@ class Allure_Translations_Helper_Data extends Mage_Customer_Helper_Data
             return $geoInfo['geoplugin_countryCode'];
         }
         return ''; 
+    }*/
+
+    public function getCountryByIp($ip){       
+        $geoInfo = Mage::getModel('allure_geolocation/geoLocation')->getCountryCode();
+        return $geoInfo;        
     }
 }
