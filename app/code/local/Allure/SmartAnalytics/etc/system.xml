@@ -26,14 +26,6 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </enabled>
-						<license_key translate="label">
-                            <label>License Key</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>20</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </license_key>
                         <account_id>
                             <label>Account Id</label>
                             <frontend_type>text</frontend_type>
@@ -168,17 +160,6 @@
 							<comment>You can add your optimize container id here</comment>
 							<depends><enable_optimize>1</enable_optimize></depends>
                         </optimize_container_id>
-						<gdpr_cookie_enabled translate="label comment">
-							<label>Enable GDPR cookie check</label>
-							<comment><![CDATA[If you are using our <a href="https://www.scommerce-mage.com/magento1-gdpr-compliance.html" target='_blank'>GDPR extension</a> or any other GDPR extension and you want to block sending information to Google then set this to "yes" based on customer preference. <strong>Please note this is optional as far as you are not sending any PII to Google this setting needs to be turned off</strong>]]></comment>
-							<frontend_type>select</frontend_type>
-							<source_model>adminhtml/system_config_source_yesno</source_model>
-							<sort_order>150</sort_order>
-							<show_in_default>1</show_in_default>
-							<show_in_website>1</show_in_website>
-							<show_in_store>1</show_in_store>
-							<depends><enabled>1</enabled></depends>
-						</gdpr_cookie_enabled>
 						<force_decline translate="label comment">
 							<label>Force decline</label>
 							<comment><![CDATA[If you set this to yes then this tracking will be turned off unless customer accepts the cookie policy from the cookie notification message from your website]]></comment>
@@ -193,19 +174,28 @@
 								<gdpr_cookie_enabled>1</gdpr_cookie_enabled>
 							</depends>
 						</force_decline>
-						<gdpr_cookie_key translate="label">
+						<!-- <gdpr_cookie_enabled translate="label comment">
+							<label>Enable GDPR cookie check</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>150</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><enabled>1</enabled></depends>
+						</gdpr_cookie_enabled> -->
+						<!-- <gdpr_cookie_key translate="label">
                             <label>GDPR Cookie Key</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>170</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-							<comment><![CDATA[You can add name of your GDPR cookie here for our <a href="https://www.scommerce-mage.com/magento1-gdpr-compliance.html" target='_blank'>GDPR extension</a> the name of cookie key is <strong>cookie_accepted</strong> but if you are using other GDPR extension then please check with extension developer]]></comment>
 							<depends>
 								<enabled>1</enabled>
 								<gdpr_cookie_enabled>1</gdpr_cookie_enabled>
 							</depends>
-                        </gdpr_cookie_key>
+                        </gdpr_cookie_key> -->
                     </fields>
                 </options>
                 <enhanced translate="label">

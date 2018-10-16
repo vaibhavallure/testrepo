@@ -381,18 +381,18 @@
 			</controller_action_predispatch_onestepcheckout_ajax_set_methods_separate>
 			<sales_order_place_after>
 				<observers>
-					<scommerce_order_place_after>
+					<allure_smartanalytics_order_place_after>
 						<class>allure_smartanalytics/observer</class>
 						<method>saveGoogleCookie</method>
-					</scommerce_order_place_after>
+					</allure_smartanalytics_order_place_after>
 				</observers>
 			</sales_order_place_after>
 			<order_cancel_after>
 				<observers>
-					<scommerce_order_cancel_after>
+					<allure_smartanalytics_order_cancel_after>
 						<class>allure_smartanalytics/observer</class>
 						<method>orderCancelAfter</method>
-					</scommerce_order_cancel_after>
+					</allure_smartanalytics_order_cancel_after>
 				</observers>
 			</order_cancel_after>
         </events>
@@ -437,10 +437,10 @@
 
 			<!--checkout_type_onepage_save_order_after>
 	    		<observers>
-	    			<scommerce_order_success>
+	    			<allure_smartanalytics_order_success>
 	    				<class>allure_smartanalytics/observer</class>
 	    				<method>saveGoogleCookie</method>
-	    			</scommerce_order_success>
+	    			</allure_smartanalytics_order_success>
 	    		</observers>
     		</checkout_type_onepage_save_order_after-->
         </events>
