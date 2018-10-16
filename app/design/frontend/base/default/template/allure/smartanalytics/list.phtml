@@ -1,0 +1,64 @@
+<?php
+/**
+ *
+ * @var $this Allure_SmartAnalytics_Block_List
+ */
+?>
+
+<?php
+$helper = Mage::helper('allure_smartanalytics');
+if (!$helper->isEnabled() || !$helper->isEnhancedEcommerceEnabled()) return; ?>
+
+<?php
+$_productCollection = $this->getProductCollection();
+$_category = Mage::getModel('catalog/layer')->getCurrentCategory();
+$_categoryName = '';
+
+if ($_category->getDisplayMode()==Mage_Catalog_Model_Category::DM_PAGE) return;
+
+if ($_category){
+    $_categoryName = $_category->getName();
+}
+
+//Zend_Debug::dump($_categoryName);
+
+$_mode = $this->getMode();
+$_productUrls = array();
+$_products = array();
+
+if ($_mode == 'category'){
+    $_impressionList = 'Category' .' - '. $this->jsQuoteEscape($_categoryName);
+    $_clickLabel   = $_impressionList;//'Category';
+}
+elseif ($_mode == 'search'){
+    $_impressionList = 'Search Results';
+    $_clickLabel   = $_impressionList;//'Results';
+}
+
+$_loop = 1;
+
+foreach ($_productCollection as $_product){
+    $_productUrls[] = $_product->getProductUrl();
+
+    $_products[] = array(
+        'id' => $this->jsQuoteEscape($_product->getSku()),
+        'name'  => $this->jsQuoteEscape($_product->getName()),
+        'category' => ($_mode=="category") ? $this->jsQuoteEscape($helper->getParentsCategory($_category)) : $this->jsQuoteEscape($helper->getProductCategoryName($_product)),
+        'brand' => $this->jsQuoteEscape($helper->getBrand($_product)),
+        'list'  => $_impressionList,
+        'position' => $_loop
+    );
+    $_loop++;
+}
+
+$_JsProducts = json_encode($_products);
+$_JsProductUrls = json_encode($_productUrls);
+
+echo $this->getLayout()
+			->createBlock('allure_smartanalytics/impression')
+			->setJsProducts($_JsProducts)
+			->setJsProductUrls($_JsProductUrls)
+			->setclickLabel($_clickLabel)
+			->setPageView('Listing')
+			->setTemplate('allure/smartanalytics/impression.phtml')
+			->toHtml();?>
