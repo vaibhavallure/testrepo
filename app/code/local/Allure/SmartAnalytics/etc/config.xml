@@ -401,7 +401,7 @@
         <layout>
             <updates>
                 <allure_smartanalytics>
-                    <file>allure_smartanalytics.xml</file>
+                    <file>allure/smartanalytics.xml</file>
                 </allure_smartanalytics>
             </updates>
         </layout>
@@ -479,7 +479,7 @@
         <layout>
             <updates>
                 <allure_smartanalytics>
-                    <file>allure_smartanalytics.xml</file>
+                    <file>allure/smartanalytics.xml</file>
                 </allure_smartanalytics>
             </updates>
         </layout>
