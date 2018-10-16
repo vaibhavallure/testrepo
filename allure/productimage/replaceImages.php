@@ -120,7 +120,7 @@ try{
             foreach ($product->getMediaGalleryImages() as $image) {
 
                 $key = substr(end(explode("/", $image->getFile())), strlen($product->getSku()) + 1, 1);
-                echo $image->getFile() . "<br>";
+              //  echo $image->getFile() . "<br>";
                 $backend = $attributes['media_gallery']->getBackend();
                 $backend->updateImage($product, $image->getFile(), array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
 
