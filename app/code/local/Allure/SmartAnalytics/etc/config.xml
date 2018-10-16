@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_Smartanalytics>
+            <version>1.0.0</version>
+        </Allure_Smartanalytics>
+    </modules>
+    <global>
+        <models>
+            <allure_smartanalytics>
+                <class>Allure_Smartanalytics_Model</class>
+            </allure_smartanalytics>
+        </models>
+        <blocks>
+            <allure_smartanalytics>
+                <class>Allure_Smartanalytics_Block</class>
+            </allure_smartanalytics>
+        </blocks>
+        <helpers>
+            <allure_smartanalytics>
+                <class>Allure_Smartanalytics_Helper</class>
+
+            </allure_smartanalytics>
+        </helpers>
+        <resources>
+            <allure_smartanalytics_setup>
+                <setup>
+                    <module>Allure_Smartanalytics</module>
+                </setup>
+            </allure_smartanalytics_setup>
+        </resources>
+
+	</global>
+    <frontend>
+        <layout>
+            <updates>
+                <allure_smartanalytics>
+                    <file>allure/smartanalytics.xml</file>
+                </allure_smartanalytics>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <allure_smartanalytics>
+                                            <title>Allure SmartAnalytics</title>
+                                        </allure_smartanalytics>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+</config>
