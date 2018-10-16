@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <sections>
-		<allure_smartanalytics module="allure_smartanalytics">
+		<allure_smartanalytics>
 			<label>Google SmartAnalytics</label>
 			<tab>allure</tab>
 			<sort_order>100</sort_order>
@@ -9,7 +9,7 @@
 			<show_in_website>1</show_in_website>
 			<show_in_store>1</show_in_store>
 			<groups>
-                <general translate="label" module="allure_smartanalytics">
+                <general translate="label">
                     <label>General</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>10</sort_order>
