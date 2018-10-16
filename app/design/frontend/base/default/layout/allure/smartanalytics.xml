@@ -4,6 +4,5 @@
         <reference name="head">
             <block type="allure_smartanalytics/smartanalytics" name="allure_smartanalytics" template="allure/smartanalytics/smartanalytics.phtml" />
         </reference>
-
     </default>
 </layout>
