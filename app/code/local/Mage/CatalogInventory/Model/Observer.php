@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_CatalogInventory
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -323,7 +323,7 @@ class Mage_CatalogInventory_Model_Observer
             $parentStockItem = $quoteItem->getParentItem()->getProduct()->getStockItem();
         }
         if ($stockItem) {
-            if ((!$stockItem->getIsInStock() && ($stockItem->getBackorders()==0)) || ($parentStockItem && ($parentStockItem->getBackorders()==0) && !$parentStockItem->getIsInStock())) {
+            if (!$stockItem->getIsInStock() || ($parentStockItem && !$parentStockItem->getIsInStock())) {
                 $quoteItem->addErrorInfo(
                     'cataloginventory',
                     Mage_CatalogInventory_Helper_Data::ERROR_QTY,
@@ -382,17 +382,17 @@ class Mage_CatalogInventory_Model_Observer
                 $increaseOptionQty = ($quoteItem->getQtyToAdd() ? $quoteItem->getQtyToAdd() : $qty) * $optionValue;
 
                 $stockItem = $option->getProduct()->getStockItem();
-                
-                /* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
-                if (!$stockItem instanceof Mage_CatalogInventory_Model_Stock_Item) {
-                	Mage::throwException(
-                		Mage::helper('cataloginventory')->__('The stock item for Product in option is not valid.')
-                		);
-                }
 
                 if ($quoteItem->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) {
                     $stockItem->setParentItem($quoteItem);
                     $stockItem->setProductName($quoteItem->getName());
+                }
+
+                /* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
+                if (!$stockItem instanceof Mage_CatalogInventory_Model_Stock_Item) {
+                    Mage::throwException(
+                        Mage::helper('cataloginventory')->__('The stock item for Product in option is not valid.')
+                    );
                 }
 
                 /**

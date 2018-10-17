@@ -43,7 +43,7 @@ class Mage_GoogleAnalytics_Model_Observer
     {
         $this->setGoogleAnalyticsOnOrderSuccessPageView($observer);
     }
-    
+
     /**
      * Add order information into GA block to render on checkout success pages
      *
