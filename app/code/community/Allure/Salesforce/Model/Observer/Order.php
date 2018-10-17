@@ -249,7 +249,6 @@ class Allure_Salesforce_Model_Observer_Order{
                 )
             );
             
-            
             $payment = $order->getPayment();
             $code = $payment->getData('cc_type');
             $aType = Mage::getSingleton('payment/config')->getCcTypes();
@@ -347,7 +346,16 @@ class Allure_Salesforce_Model_Observer_Order{
             $status = $invoice->getState();
             $storeId = $invoice->getStoreId();
             
-            $totalQty = $invoice->getTotalQty();
+            //$totalQty = $invoice->getTotalQty();
+            $totalQty = 0;
+            foreach ($invoice->getAllItems() as $item){
+                if ($item->getOrderItem()->getParentItem()) {
+                    continue;
+                }
+                $qty = $item->getQty();
+                $totalQty += $qty;
+            }
+            
             
             $salesforceInvoiceId = $invoice->getSalesforceInvoiceId();
             
@@ -401,6 +409,7 @@ class Allure_Salesforce_Model_Observer_Order{
             
                 //upload invoice pdf 
                 $this->uploadInvoicePdf($order);
+                $this->updateOrderData($order);
             
             }else{
                 if($responseArr == ""){
@@ -549,6 +558,8 @@ class Allure_Salesforce_Model_Observer_Order{
             $write->query($sql_order);
             $helper->salesforceLog("salesforce id updated into shipment.");
             $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $shipment->getId());
+            
+            $this->updateOrderData($order);
         }else{
             if($responseArr == ""){
                 $helper->salesforceLog("salesforce id not updated into shipment.");
@@ -763,6 +774,8 @@ class Allure_Salesforce_Model_Observer_Order{
             
             $baseTotalDue           = $order->getBaseTotalDue();
             
+            $status = $order->getStatus();
+            
             $requestMethod  = "PATCH";
             $urlPath        = $helper::ORDER_URL . "/" .$salesforceOrderId;
             
@@ -780,6 +793,7 @@ class Allure_Salesforce_Model_Observer_Order{
                 
                 "Total_Paid__c"                 => $baseTotalPaid,
                 "Total_Due__c"                  => $baseTotalDue,
+                "Status"                        => $status,
             );
             $helper->salesforceLog("made order update api call to salesforce");
             $response = $helper->sendRequest($urlPath,$requestMethod,$request);

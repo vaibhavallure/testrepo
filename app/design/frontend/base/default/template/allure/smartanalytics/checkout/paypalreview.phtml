@@ -1,0 +1,61 @@
+<?php
+/**
+ * @var $this Allure_SmartAnalytics_Block_Checkout_Onepage
+ */
+?>
+<?php
+$helper = Mage::helper('allure_smartanalytics');
+if (!$helper->isEnabled() || !$helper->isEnhancedEcommerceEnabled()) return; ?>
+<?php $cartItems = $this->getCartItems(); ?>
+<script type='text/javascript'>
+//<![CDATA[
+jQuery(document).ready(function($) {
+		<?php if ($helper->stepExists(3)): ?>
+		jQuery('#shipping_method').change(function(){
+				var shipping_method = jQuery('#shipping_method').val();
+
+				ga('ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(3) ?>,
+					'option': shipping_method
+				});
+
+				ga('send', 'event', 'UX', 'click', 'Shipping Method - '+ shipping_method, {'nonInteraction': 1});
+
+				ga('send', 'pageview');
+				<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+				ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(3) ?>,
+					'option': shipping_method
+				});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'event', 'UX', 'click', 'Shipping Method - '+ shipping_method, {'nonInteraction': 1});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'pageview');
+				<?php endif;?>
+			});
+		<?php endif; ?>
+
+		<?php if ($helper->stepExists(5)): ?>
+		jQuery('#review_button').click(function(){
+			ga('ec:setAction', 'checkout', {
+				'step': <?php echo $helper->getStepNumber(5) ?>
+			});
+			console.log('Order Placed');
+			ga('send', 'event', 'UX', 'click', 'Order Placed', {'nonInteraction': 1});
+
+			ga('send', 'pageview');
+
+			<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+			ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'checkout', {
+				'step': <?php echo $helper->getStepNumber(5) ?>
+			});
+
+			ga('<?php echo $helper->getLinkedAccountName()?>.send', 'event', 'UX', 'click', 'Order Placed', {'nonInteraction': 1});
+
+			ga('<?php echo $helper->getLinkedAccountName()?>.send', 'pageview');
+			<?php endif;?>
+		<?php endif; ?>
+	});
+});
+//]]>
+</script>
