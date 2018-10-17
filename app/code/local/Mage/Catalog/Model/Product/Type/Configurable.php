@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -381,13 +381,10 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
      */
     public function getUsedProductCollection($product = null)
     {
-
-
         $collection = Mage::getResourceModel('catalog/product_type_configurable_product_collection')
             ->setFlag('require_stock_items', FALSE)
             ->setFlag('product_children', true)
             ->setProductFilter($this->getProduct($product))->addAttributeToSort('order');
-
         if (!is_null($this->getStoreFilter($product))) {
             $collection->addStoreFilter($this->getStoreFilter($product));
         }
