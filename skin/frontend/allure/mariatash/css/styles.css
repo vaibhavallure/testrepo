@@ -3821,7 +3821,7 @@ div.styled {
 .product-options .toggle { cursor: pointer; }
 .product-options dt { padding:10px 0 0; font-weight:normal; }
 .product-options dt label { font-weight:bold; }
-.product-options dt label.required em { color:#eb340a; margin-right:5px; }
+.product-options dt label.required em {display: none; color:#eb340a; margin-right:5px; }
 .product-options dd .qty-holder { display:block; padding:10px 0 0; }
 .product-options dd .qty-holder label { vertical-align:middle; }
 .product-options dd .qty-disabled { background:none; border:0; padding:3px; color:#444; }
@@ -10232,4 +10232,8 @@ input.giftcard-radio1 {
 
 .checkout-privacy-policy .checkmark{
 	top: 10px;
+}
+
+.catalog-product-view .input-box {
+  clear: none;
 }
