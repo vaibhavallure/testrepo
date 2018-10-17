@@ -46,11 +46,11 @@ try{
 
         foreach ($product->getMediaGalleryImages() as $image) {
 
-            Mage::log("start-----------------------------------------------------",Zend_Log::DEBUG,'replaceImage.log',true);
 
               $imageName = trim(end(explode("/", $image->getFile())))."<br>";
 
             if (!is_numeric(strpos(strtoupper($imageName), strtoupper($parent_sku)))) {
+                Mage::log("start-----------------------------------------------------",Zend_Log::DEBUG,'replaceImage.log',true);
 
                 Mage::log("Wrong Image Found:= ".$image->getFile(),Zend_Log::DEBUG,'replaceImage.log',true);
 
@@ -74,8 +74,8 @@ try{
                     Mage::log(" Image Found For Product SKu := ". $fl,Zend_Log::DEBUG,'replaceImage.log',true);
 
 
-                    $product->addImageToMediaGallery($fl, array('image', 'small_image', 'thumbnail'), false, false);
-                    $product->save();
+                  //  $product->addImageToMediaGallery($fl, array('image', 'small_image', 'thumbnail'), false, false);
+                   // $product->save();
 
                   $newImageAdded=1;
 
@@ -84,15 +84,15 @@ try{
 
                 }
 
-                $media->remove($product->getId(),$image->getFile());
+               // $media->remove($product->getId(),$image->getFile());
 
                 Mage::log(" Image Removed := ". $image->getFile(),Zend_Log::DEBUG,'replaceImage.log',true);
 
+                Mage::log("end-----------------------------------------------------",Zend_Log::DEBUG,'replaceImage.log',true);
 
 
             }
 
-            Mage::log("end-----------------------------------------------------",Zend_Log::DEBUG,'replaceImage.log',true);
 
 
             if($newImageAdded==1)
@@ -103,44 +103,41 @@ try{
         }
 
 
-
-
-
     }
 
 
 
+//    if(count($newImageProductId)) {
+//
+//        foreach ($newImageProductId as $pid) {
+//            $product = Mage::getModel("catalog/product")->load($pid);
+//
+//            foreach ($product->getMediaGalleryImages() as $image) {
+//
+//                $key = substr(end(explode("/", $image->getFile())), strlen($product->getSku()) + 1, 1);
+//              //  echo $image->getFile() . "<br>";
+//                $backend = $attributes['media_gallery']->getBackend();
+//                $backend->updateImage($product, $image->getFile(), array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
+//
+//                if ($key == 1) {
+//                    $value = $image->getFile();
+//                    Mage::getSingleton('catalog/product_action')->updateAttributes(array($product->getId()),
+//                        array(
+//                            'image' => $value,
+//                            'small_image' => $value,
+//                            'thumbnail' => $value,
+//                        ),
+//                        0);
+//                }
+//            }
+//
+//            $product->save();
+//            Mage::log("new image updated",Zend_Log::DEBUG,'replaceImage.log',true);
+//
+//        }
+//    }
 
 
-    if(count($newImageProductId)) {
-
-        foreach ($newImageProductId as $pid) {
-            $product = Mage::getModel("catalog/product")->load($pid);
-
-            foreach ($product->getMediaGalleryImages() as $image) {
-
-                $key = substr(end(explode("/", $image->getFile())), strlen($product->getSku()) + 1, 1);
-              //  echo $image->getFile() . "<br>";
-                $backend = $attributes['media_gallery']->getBackend();
-                $backend->updateImage($product, $image->getFile(), array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
-
-                if ($key == 1) {
-                    $value = $image->getFile();
-                    Mage::getSingleton('catalog/product_action')->updateAttributes(array($product->getId()),
-                        array(
-                            'image' => $value,
-                            'small_image' => $value,
-                            'thumbnail' => $value,
-                        ),
-                        0);
-                }
-            }
-
-            $product->save();
-            Mage::log("new image updated",Zend_Log::DEBUG,'replaceImage.log',true);
-
-        }
-    }
 }
 catch (Exception $e){
     Mage::log("Exception 1-:".$e->getMessage(),Zend_Log::DEBUG,'replaceImage.log',true);
