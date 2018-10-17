@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -105,7 +105,6 @@ class Mage_Adminhtml_Block_Sales_Order_Invoice_View extends Mage_Adminhtml_Block
                 )
             );
         }
-        
 
         if ($this->getInvoice()->getId()) {
             $this->_addButton('print', array(
@@ -115,14 +114,14 @@ class Mage_Adminhtml_Block_Sales_Order_Invoice_View extends Mage_Adminhtml_Block
                 )
             );
         }
-        
-        if (true) {
+
+        if ($this->_isAllowedAction('capture')) {
             $this->_addButton('capture_offline', array(
                 'label'     => Mage::helper('sales')->__('Capture Offline'),
                 'class'     => 'save',
                 'onclick'   => 'setLocation(\''.$this->getCaptureOfflineUrl().'\')'
-            )
-                );
+            	)
+            );
         }
     }
 
@@ -155,6 +154,11 @@ class Mage_Adminhtml_Block_Sales_Order_Invoice_View extends Mage_Adminhtml_Block
                 'order_id'  => $this->getInvoice()->getOrderId(),
                 'active_tab'=> 'order_invoices'
             ));
+    }
+
+    public function getCaptureUrl()
+    {
+        return $this->getUrl('*/*/capture', array('invoice_id'=>$this->getInvoice()->getId()));
     }
 
     public function getCaptureOfflineUrl()
@@ -206,11 +210,7 @@ class Mage_Adminhtml_Block_Sales_Order_Invoice_View extends Mage_Adminhtml_Block
         }
         return $this;
     }
-    public function getCaptureUrl()
-    {
-        return $this->getUrl('*/*/capture', array('invoice_id'=>$this->getInvoice()->getId()));
-    }
-    
+
     /**
      * Check whether is allowed action
      *

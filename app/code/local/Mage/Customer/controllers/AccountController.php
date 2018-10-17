@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Customer
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -83,7 +83,6 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
             'confirm',
             'confirmation'
         );
-        
         $pattern = '/^(' . implode('|', $openActions) . ')/i';
 
         if (!preg_match($pattern, $action)) {
@@ -432,7 +431,6 @@ class Mage_Customer_AccountController extends Mage_Core_Controller_Front_Action
     	
     	$this->_redirectError($errUrl);
     }
-  
 
     /**
      * Success Registration
