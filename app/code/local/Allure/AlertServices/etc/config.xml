@@ -60,6 +60,14 @@
 					<model>alertservices/alerts::alertProductPrice</model>
 				</run>
 			</alert_product_price>
+			<alert_sale_two>
+				<schedule>
+					<cron_expr>5 */1 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertSalesOfTwo</model>
+				</run>
+			</alert_sale_two>
 			<alert_sale_four>
 				<schedule>
 					<cron_expr>10 */1 * * *</cron_expr>
