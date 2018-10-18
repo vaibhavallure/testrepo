@@ -1,6 +1,6 @@
 <?php
 /**
- *this script find out images with different name than its product sku
+ *this script find out images with different name than its product sku (DIFFERENT SIDE)
  * using SKU
  */
 
@@ -15,19 +15,19 @@ Mage::app()->getStore()->setId(Mage_Core_Model_App::ADMIN_STORE_ID);
 
 $count=0;
 
-if(!isset($_GET['sku']))
-die("please enter sku ?sku=your_sku ");
+if((empty($_GET['sku'])) OR (empty($_GET['side'])))
+    die("please enter sku ?sku=your_sku&side=LEFT");
 
 
 
 $SKUlike=$_GET['sku'];
 
-
+$side=strtoupper($_GET['side']);
 
 
 $folderPath   = Mage::getBaseDir('var') . DS . 'export';
 $date = date('Y-m-d');
-$filename     = "image_name_report".$date.".csv";
+$filename     = "image_name_report_".$side."_".$date.".csv";
 $filepath     = $folderPath . DS . $filename;
 
 $io = new Varien_Io_File();
@@ -38,7 +38,7 @@ $csv = new Varien_File_Csv();
 
 
 $collection=Mage::getModel('catalog/product')->getCollection();
-$collection->addAttributeToFilter('sku',array('like'=>$SKUlike.'%'));
+$collection->addAttributeToFilter('sku',array('like'=>$SKUlike.'%'.$side.'%'));
 $rowData = array();
 $header=array(
     "sku"=>"SKU",
@@ -62,49 +62,56 @@ try{
     foreach ($collection as $_product){
 
 
-    $product = Mage::getModel("catalog/product")->load($_product->getId());
-    $attributes = $product->getTypeInstance(true)->getSetAttributes($product);
+        $product = Mage::getModel("catalog/product")->load($_product->getId());
+        $attributes = $product->getTypeInstance(true)->getSetAttributes($product);
 
         $parent_sku=trim(current(explode("|", $product->getSku())));
 
 
+        if($side=="LEFT")
+            $sku=str_replace("LEFT","RIGHT",$product->getSku());
+        else
+            $sku=str_replace("RIGHT","LEFT",$product->getSku());
+
+
+        $sku = str_replace(' ', '_', $sku);
+        $sku = str_replace('|', '-', $sku);
 
         $imagesArray = array();
         $i=1;
 
         foreach ($product->getMediaGalleryImages() as $image) {
 
-           $imageName = trim(end(explode("/", $image->getFile())));
+            $imageName = trim(end(explode("/", $image->getFile())));
 
 
 
-          if(!is_numeric(strpos(strtoupper($imageName),strtoupper($parent_sku))))
-          {
-//             echo "not found<br>{$imageName} {$parent_sku} ";
-//             var_dump(strpos($imageName,$parent_sku));
-
-              if($i==1)
-              {
-                  $imagesArray["sku"]=$product->getSku();
-              }
-
-             $imagesArray["img".$i]=$imageName;
-
-              $i++;
+            if(is_numeric(strpos(strtoupper($imageName),strtoupper($sku))))
+            {
 
 
-          }
+                if($i==1)
+                {
+                    $imagesArray["sku"]=$product->getSku();
+                }
+
+                $imagesArray["img".$i]=$imageName;
+
+                $i++;
+
+
+            }
 
         }
 
         if(count($imagesArray))
-        $rowData[]=$imagesArray;
+            $rowData[]=$imagesArray;
     }
 
 
 
 
-   $csv->saveData($filepath,$rowData);
+    $csv->saveData($filepath,$rowData);
 //
 
 
