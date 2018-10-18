@@ -83,7 +83,7 @@ try{
 
                     if($apply==1) {
                           $product->addImageToMediaGallery($fl, array('image', 'small_image', 'thumbnail'), false, false);
-                         $product->save();
+
                         $newImageAdded=1;
 
                         Mage::log(" Image Added". $fl,Zend_Log::DEBUG,'replaceImage.log',true);
@@ -111,7 +111,7 @@ try{
             }
 
         }
-
+        $product->save();
 
     }
 
