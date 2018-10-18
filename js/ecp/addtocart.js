@@ -157,7 +157,6 @@ function addToShoppingCart(button, formId) {
 };
 
 function addToShoppingCartFromQuickView(button, formId) {
-
     if (parent.jQuery("div.t_Tooltip_customcart").length) {
         parent.jQuery(".close-tooltip").trigger('click');
     }
@@ -178,6 +177,33 @@ function addToShoppingCartFromQuickView(button, formId) {
                     mibandera = false;
                 datos += ',"' + this.name + '":"' + this.value + '"';
             });
+            
+            
+            var super_attribute = {};
+            var options= {};
+            var optionStr = '';
+            var formData = jQuery('#product_addtocart_form').serializeArray();
+            for(var i = 0; i<formData.length; i++){
+            	var record = formData[i];
+                if(record.name.indexOf("super_attribute") >= 0){
+                	var index = record.name.match(/\[(.*?)\]/)[1];
+                    super_attribute[index]=record.value;
+                }
+                if(record.name.indexOf("options") >= 0){
+                	var index = record.name.match(/\[(.*?)\]/)[1];
+                    options[index]=record.value;
+                }
+             }
+             if(Object.keys(super_attribute).length>0){
+            	 optionStr = optionStr + '"super_attribute":'+JSON.stringify(super_attribute);
+            	 if(Object.keys(options).length>0)
+            		 optionStr = optionStr + ',';
+             }
+             if(Object.keys(options).length>0){
+            	 optionStr = optionStr + '"options":'+JSON.stringify(options);
+             }
+            
+            
 
             var specialInstruction = jQuery("#" + formId.id +" .special-inst-product").val();
             datos += '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
@@ -186,7 +212,7 @@ function addToShoppingCartFromQuickView(button, formId) {
             datos = '' + ',"purchased_from_cat":"'+jQuery.trim(purchased_from)+'"';
 
             var qty = parent.document.getElementById(parent.jQuery('iframe.fancybox-iframe').attr('id')).contentWindow.document.getElementById('qty').value;
-            var stringJSON = '{"qty":"' + qty + '"' + datos + ',"related_product":""}';
+            var stringJSON = '{"qty":"' + qty + '"' + datos + ',"related_product":"",'+optionStr+'}';
             var dataSend = JSON.parse(stringJSON);
             var urlAdd2Cart = jQuery("#product_addtocart_form").attr('action');
         } else {
@@ -194,6 +220,7 @@ function addToShoppingCartFromQuickView(button, formId) {
             var urlAdd2Cart = jQuery(clicked).attr('href');
         }
     }
+    
     parent.jQuery("div.top-cart").css("background", "url('" + parent.SKIN_URL + "frontend/mt/default/images/loading.gif') no-repeat scroll 0 0 transparent");
     var jqxhr = jQuery.get(urlAdd2Cart, dataSend, function (data) {
         if('The requested quantity' == data.substr(0, 22)) { //expecting string 'The requested quantity for "%s" is not available' from /app/code/local/Mage/CatalogInventory/Model/Stock/Item.php #590
