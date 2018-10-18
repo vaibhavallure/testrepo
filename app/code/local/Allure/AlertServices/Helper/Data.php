@@ -80,7 +80,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
         	}
 	}
 
-	public function sendSalesOfFourEmailAlert($lastOrderdate){
+	public function sendSalesOfEmailAlert($lastOrderdate,$hourReport){
     	try{		
     		$templateId = $this->getConfigHelper()->getSaleEmailTemplate();
 
@@ -91,15 +91,21 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
 
             $sender = array('name' => $senderName,
                             'email' => $senderEmail);
-            $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
-            $recieverNames = $this->getConfigHelper()->getEmailGroupNames();
+
+            if ($hourReport == 4 || $hourReport == 6) {
+                $recieverEmails = $this->getConfigHelper()->getEmailsGroup();
+                $recieverNames = $this->getConfigHelper()->getEmailGroupNames();
+            }elseif ($hourReport == 2) {
+                $recieverEmails = $this->getConfigHelper()->getTestEmailsGroup();
+                $recieverNames = $this->getConfigHelper()->getTestEmailGroupNames();
+            }
 
             $recipientEmails = explode(',',$recieverEmails);
             $recipientNames = explode(',',$recieverNames);
            
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
         	$emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
-            $emailTemplateVariables['hour_alert'] = 4;
+            $emailTemplateVariables['hour_alert'] = $hourReport;
             $emailTemplateVariables['last_order_date'] = $lastOrderdate;
         	
     		if ($templateId) {    			
@@ -118,7 +124,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
         	}
 	}
 
-
+/*
 	public function sendSalesOfSixEmailAlert($lastOrderdate){
     	try{		
     		$templateId = $this->getConfigHelper()->getSaleEmailTemplate();
@@ -158,7 +164,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
         	}
 	}
 
-
+*/
     public function sendCheckoutIssueAlert($collection){
         try{        
             $templateId = $this->getConfigHelper()
