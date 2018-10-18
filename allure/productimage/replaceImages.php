@@ -53,7 +53,7 @@ try{
 
 
         foreach ($product->getMediaGalleryImages() as $image) {
-
+            $newImageAdded=0;
 
               $imageName = trim(end(explode("/", $image->getFile())))."<br>";
 
