@@ -502,6 +502,19 @@ INLINECSS;
     }
     
     /**
+     * check product is gift card or not using sku
+     */
+    public function isGiftcardProduct($sku){
+        $isGiftcard = false;
+        $skuSlice = explode("|", $sku);
+        $sku = strtoupper(trim($skuSlice[0]));
+        if (in_array($sku, $this->_escape_stock_msg_array)) {
+            $isGiftcard = true;
+        }
+        return $isGiftcard;
+    }
+    
+    /**
      * get order item stock status
      */
     public function getOrderSalesProductStockStatus($item){

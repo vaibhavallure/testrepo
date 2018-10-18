@@ -1383,6 +1383,15 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function isSaleable()
     {
+        // allow gitcard product for purchase when its out of stock - start
+        if(Mage::helper('core')->isModuleEnabled('Amasty_Stockstatus')){
+            $amstockHelper = Mage::helper("amstockstatus");
+            if ($amstockHelper->isGiftcardProduct($this->getSku())) {
+                return 1;
+            }
+        }
+        //end
+        
         return $this->isSalable();
     }
 
