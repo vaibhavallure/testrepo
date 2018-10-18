@@ -53,14 +53,14 @@ try{
 
 
         foreach ($product->getMediaGalleryImages() as $image) {
-
+            $newImageAdded=0;
 
               $imageName = trim(end(explode("/", $image->getFile())))."<br>";
 
             if (!is_numeric(strpos(strtoupper($imageName), strtoupper($parent_sku)))) {
                 //Mage::log("start-----------------------------------------------------",Zend_Log::DEBUG,'replaceImage.log',true);
 
-                Mage::log("start---Wrong Image Found:= ".$image->getFile(),Zend_Log::DEBUG,'replaceImage.log',true);
+                Mage::log("start--- SKU = ".$product->getSku()." Wrong Image Found:= ".$image->getFile(),Zend_Log::DEBUG,'replaceImage.log',true);
 
 
                 $sku = str_replace(' ', '_', $product->getSku());
