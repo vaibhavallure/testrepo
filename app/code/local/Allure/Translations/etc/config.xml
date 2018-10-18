@@ -3,11 +3,6 @@
     <modules>
         <Allure_Translations>
             <version>1.0.0</version>
-            <depends>
-				<Allure_Core />
-				<Allure_GeoLocation />
-			</depends>
-
         </Allure_Translations>
     </modules>
  	<global>
