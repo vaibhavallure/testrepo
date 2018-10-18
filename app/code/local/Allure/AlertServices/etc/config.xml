@@ -21,6 +21,9 @@
 			<alertservices>
 				<class>Allure_AlertServices_Helper</class>
 			</alertservices>
+			<Allure_AlertServices>
+				<class>Allure_AlertServices_Helper</class>
+			</Allure_AlertServices>
 		</helpers>		
 		<models>
 	        <alertservices>
@@ -51,7 +54,7 @@
 		<jobs>
 			<alert_product_price>
 				<schedule>
-					<cron_expr>0 */1 * * *</cron_expr>
+					<cron_expr>17 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertProductPrice</model>
@@ -59,7 +62,7 @@
 			</alert_product_price>
 			<alert_sale_four>
 				<schedule>
-					<cron_expr>0 */1 * * *</cron_expr>
+					<cron_expr>10 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertSalesOfFour</model>
@@ -67,7 +70,7 @@
 			</alert_sale_four>
 			<alert_sale_six>
 				<schedule>
-					<cron_expr>0 */1 * * *</cron_expr>
+					<cron_expr>15 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertSalesOfSix</model>
@@ -75,7 +78,7 @@
 			</alert_sale_six>
 			<alert_checkout_issue>
 				<schedule>
-					<cron_expr>0 */1 * * *</cron_expr>
+					<cron_expr>3 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertCheckoutIssue</model>
@@ -83,7 +86,7 @@
 			</alert_checkout_issue>
 			<alert_null_users>
 				<schedule>
-					<cron_expr>0 */1 * * *</cron_expr>
+					<cron_expr>5 */1 * * *</cron_expr>
 				</schedule>
 				<run>
 					<model>alertservices/alerts::alertNullUsers</model>
@@ -105,6 +108,14 @@
 					<model>alertservices/alerts::alertAvgPageLoad</model>
 				</run>
 			</alert_avg_page_load>
+			<alert_avg_page_load_email>
+				<schedule>
+					<cron_expr>*/7 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertAvgPageLoadEmail</model>
+				</run>
+			</alert_avg_page_load_email>
 		</jobs>
 	</crontab>
 </config> 

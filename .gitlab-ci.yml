@@ -2,7 +2,8 @@ before_script:
   - echo 'Start Deployment'
 stages:
   - develop
-  - staging
+  - alpha
+  - beta
   - deploy
 develop:
   environment: development
@@ -16,7 +17,7 @@ develop:
     - echo 'Deployed on Allure Local Dev'
 cloud_alpha:
   environment: staging
-  stage: staging
+  stage: alpha
   tags:
     - cloud-alpha
   only:
@@ -25,20 +26,23 @@ cloud_alpha:
     - mage-deploy mt
     - echo 'Deployed on Staging'
 
-alpha_stage:
+beta_stage:
   environment: alpha
-  stage: staging
+  stage: beta
   tags:
     - alpha
   only:
     - master
   script:
-    - mage-deploy mariatash
-    - echo 'Deployed on apple_pay Staging'
+    - deploy-magento mariatash
+    - rm -f media && ln -s /var/www/shared/mariatash/media media
+    - rm -f var && ln -s /var/www/shared/mariatash/var var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/etc/local.xml app/etc/local.xml
+    - echo 'Deployed on Beta Staging'
     
 beta_apple_pay:
   environment: apple_pay
-  stage: staging
+  stage: beta
   tags:
     - beta
   only:

@@ -49,7 +49,7 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
             switch ($this->getVar('type', 'file')) {
                 case 'file':
                     if (preg_match('#^' . preg_quote(DS, '#') . '#', $this->getVar('path')) ||
-                            preg_match('#^[a-z]:' . preg_quote(DS, '#') . '#i', $this->getVar('path'))
+                        preg_match('#^[a-z]:' . preg_quote(DS, '#') . '#i', $this->getVar('path'))
                     ) {
 
                         $path = $this->_resource->getCleanPath($this->getVar('path'));
@@ -101,11 +101,11 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
      * @return Mage_Dataflow_Model_Convert_Adapter_Io
      */
     public function load() {
-        
+
         if (!$this->getResource()) {
             return $this;
         }
-        
+
         self::log('START : load');
 
         $batchModel = Mage::getSingleton('dataflow/batch');
@@ -159,17 +159,17 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         }
         return $this;
     }
-    
+
     private static function log($message) {
 
         $logName = 'amazon_s3-' . date('Ymd') . '.log';
-        
+
         Mage::log('Amazon S3 #'.date('Y-m-d H:i:s')." => ".$message, Zend_Log::DEBUG, $logName, true);
     }
 
     private function getDirectoryList($directory, $ext = false) {
         $result = array();
-        
+
         $folderPath = Mage::getBaseDir() . DS . $directory;
 
         $handler = opendir($folderPath);
@@ -196,9 +196,9 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         $ext = $ext[1];
         $sourceFolder = $this->getVar('sourceFolder');
         $destinyFolder = $this->getVar('destinyFolder');
-        
+
         self::log("Moving data from '{$sourceFolder}' to '{$destinyFolder}'...");
-        
+
         $files = $this->getDirectoryList($sourceFolder, $ext);
         foreach ($files as $key => $file) {
             rename(Mage::getBaseDir() . DS . $sourceFolder . DS . $file, Mage::getBaseDir() . DS . $destinyFolder . DS . $file);
@@ -215,14 +215,14 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         $this->removeFiles($this->getVar('destinyFolder'));
 
         self::log('START : generateArrayFile');
-        
+
         // Staring import image from Amazon S3 Bucket
         self::log('Connecting...');
-        
+
         $bucket = Mage::getStoreConfig('allure_imagecdn/amazons3/bucket');
-        
+
         $remove_source = Mage::getStoreConfig('allure_imagecdn/general/remove_source');
-        
+
         $s3 = Mage::getSingleton('uploadimages/connect_amazon_s3')->connect();
 
         self::log('Connected');
@@ -235,17 +235,17 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         if (is_array($list) && !empty($list)) {
             unset($list[0]);
             foreach ($list as $key => $file) {
-                    $object_name = $bucket.'/'.$file;
-                    
-                    self::log('Downloading Object "'.$object_name.'" ...');
-                    
-                    $image = $s3->getObject($object_name);
-                    
-                    file_put_contents(Mage::getBaseDir() . DS . $this->getVar('destinyFolder') . DS . basename($file), $image);
+                $object_name = $bucket.'/'.$file;
 
-                    self::log('Object Downloaded "'.$object_name.'"');
-                    
-                    //$s3->delete_object($bucket, $file);
+                self::log('Downloading Object "'.$object_name.'" ...');
+
+                $image = $s3->getObject($object_name);
+
+                file_put_contents(Mage::getBaseDir() . DS . $this->getVar('destinyFolder') . DS . basename($file), $image);
+
+                self::log('Object Downloaded "'.$object_name.'"');
+
+                //$s3->delete_object($bucket, $file);
             }
         } else {
             $message = 'Objects Downloading Failed !!';
@@ -254,19 +254,19 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         }
 
         self::log('Objects Downloaded!');
-        
+
         ////////////////////////////////////////////////////////////////////////////////
         self::log('Creating Files Data...');
-        
+
         $dir = MAGENTO . DS . $this->getVar('destinyFolder') . DS;
         $fileCount = 0;
         $badFileCount = 0;
         $imagesArray = array();
         if ($gd = opendir($dir)) {
             while ($file = readdir($gd)) {
-                
+
                 if (($file == '.') || ($file == '..')) continue; // ignore directory
-                
+
                 if (substr($file, -4) == ('.jpg' || '.png')) {
                     $tmpFile = explode('#', $file);
                     if (count($tmpFile) == 2) {
@@ -306,11 +306,11 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         self::log('BAD IMAGES: ' . $badFileCount);
         ////////////////////////////////////////////////////////////////////////////////
         $file = MAGENTO . '/' . $this->getVar('destinyFolder') . '/' . $this->getVar('outputFilename');
-        
+
         self::log('Saving Data to File : ' . $file);
-        
+
         $tempFile = fopen($file, "w");
-        
+
         if (!$tempFile) {
             $message = 'Failed Opening Data File : ' . $file;
             self::log($message);
@@ -330,7 +330,7 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         fclose($tempFile);
 
         self::log('Wrote Data to File : ' . $file);
-        
+
 //         if ((int) $this->getVar('removes3'))
 //             foreach ($response as $key => $file)
 //                 $s3->delete_object($bucket, $file);
@@ -342,7 +342,7 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
         $this->move();
         $sourceFolder = $this->getVar('sourceFolder');
         $files = $this->getDirectoryList($sourceFolder);
-        
+
         self::log("Cleaning Source Data...");
         foreach ($files as $key => $file) {
             unlink(Mage::getBaseDir() . DS . $sourceFolder . DS . $file);
@@ -351,59 +351,59 @@ class Ecp_UploadImages_Model_Convert_Adapter_Io extends Mage_Dataflow_Model_Conv
     }
 
     public function removeFiles($rmFolder = null) {
-        
+
         if (!isset($rmFolder))
             return null;
 
         $folder = $rmFolder;
-        
+
         self::log("Removing Files from ".$rmFolder);
 
         self::log('Remove jpg files..');
-        
+
         // remove jpg files
         $jpgFiles = $this->getDirectoryList($folder, 'jpg');
-        
+
         self::log('Found #'.count($jpgFiles));
-        
+
         foreach ($jpgFiles as $key => $file) {
 
             $fileName = Mage::getBaseDir() . DS . $folder . DS . $file;
             self::log('Delete file ' . $fileName);
-            
+
             try {
-                unlink($fileName);    
+                unlink($fileName);
                 $message = "Removed the old file " . $fileName;
                 $this->addException($message);
             }
             catch (Exception $e) {
                 $message = 'Could not delete the old file: ' . $fileName . '. Exception: ' . $e->getMessage();
-                Mage::throwException($message);                
+                Mage::throwException($message);
             }
-            
+
         }
-        
+
         self::log('Done Removing jpg files!!');
 
         self::log('Remove png files..');
-        
+
         // remove png files
         $pngFiles = $this->getDirectoryList($folder, 'png');
 
         self::log('Found #'.count($pngFiles));
-        
+
         foreach ($pngFiles as $key => $file) {
             $fileName = Mage::getBaseDir() . DS . $folder . DS . $file;
             self::log('Delete file ' . $fileName);
-            
+
             try {
-                unlink($fileName);    
+                unlink($fileName);
                 $message = "Removed the old file " . $fileName;
                 $this->addException($message);
             }
             catch (Exception $e) {
                 $message = 'Could not delete the old file: ' . $fileName . '. Exception: ' . $e->getMessage();
-                Mage::throwException($message);                
+                Mage::throwException($message);
             }
         }
 

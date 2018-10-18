@@ -3326,7 +3326,7 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/ text-align: left; }
 .products-grid .product-name a { /*color:#444; text-transform: uppercase; letter-spacing: 0.1em;*/ }
 .products-grid .product-name a:hover { text-decoration:none; }
 .products-grid .price-box { margin:9px 0; }
-.products-grid .availability { line-height:21px; }
+.products-grid .availability { line-height:30px; }
 .products-grid .actions { bottom: 0; }
 .col2-left-layout .products-grid,
 .col2-right-layout .products-grid {  }
@@ -3418,7 +3418,7 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/ text-align: left; }
     color: #830000;
 }
 .availability.in-stock span {}
-.availability.out-of-stock span { color:#d83820; }
+.availability.out-of-stock span { color:#d83820; font-size: 13px !important; }
 
 .availability-only { margin:10px 0 7px; line-height:16px; background:url(../images/i_availability_only.gif) 0 50% no-repeat; padding-left:15px; }
 .availability-only span,
@@ -3485,9 +3485,10 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/ text-align: left; }
 .special-price { margin:0; }
 .special-price .price-label { font-size:12px; font-weight:bold; white-space:nowrap; }
 .special-price .price { font-weight:normal; font-size:13px; }
+.catalog-category-view .special-price .price { font-weight:bold !important; font-size:13px; }
 
-
-.category-products .special-price .price-label { text-transform:capitalize; font-size:13px; font-weight:normal; white-space:nowrap; color:#000; font-family:'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; }
+/* special-price changed due to color */
+.category-products .special-price .price-label { text-transform:uppercase; font-size:13px; font-weight:normal; white-space:nowrap; color:#FFF; font-family:'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; }
 .category-products .old-price .price-label { font-weight:normal; font-size:13px; font-family:'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif; color:#000; }
 
 

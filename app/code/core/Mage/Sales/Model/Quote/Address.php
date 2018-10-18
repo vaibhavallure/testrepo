@@ -193,7 +193,7 @@ class Mage_Sales_Model_Quote_Address extends Mage_Customer_Model_Address_Abstrac
      *
      * @var array
      */
-    public $_totals = array();
+    protected $_totals = array();
 
     /**
      * Total amounts
