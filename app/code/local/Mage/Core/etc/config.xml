@@ -21,7 +21,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
@@ -467,9 +467,15 @@
                     </protected>
                 </public_files_valid_paths>
             </file>
+            <!-- NOTE: If you turn off images reprocessing, then your upload images process may cause security risks. -->
             <reprocess_images>
                 <active>1</active>
             </reprocess_images>
+            <!-- Additional email for notifications -->
+            <additional_notification_emails>
+                <!-- On creating a new admin user. You can specify several emails separated by commas. -->
+                <admin_user_create></admin_user_create>
+            </additional_notification_emails>
         </general>
     </default>
     <stores>
@@ -492,7 +498,7 @@
         <jobs>
             <core_clean_cache>
                 <schedule>
-                    <cron_expr>35 2 * * *</cron_expr>
+                    <cron_expr>30 2 * * *</cron_expr>
                 </schedule>
                 <run>
                     <model>core/observer::cleanCache</model>

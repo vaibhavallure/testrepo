@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Sales
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -117,7 +117,7 @@ class Mage_Sales_Model_Quote_Payment extends Mage_Payment_Model_Info
     {
         return $this->_quote;
     }
-    
+
     /**
      * Import data array to payment method object,
      * Method calls quote totals collect because payment method availability
@@ -131,34 +131,34 @@ class Mage_Sales_Model_Quote_Payment extends Mage_Payment_Model_Info
     {
         $data = new Varien_Object($data);
         Mage::dispatchEvent(
-                $this->_eventPrefix . '_import_data_before',
-                array(
-                        $this->_eventObject=>$this,
-                        'input'=>$data,
-                )
-                );
-        
+            $this->_eventPrefix . '_import_data_before',
+            array(
+                $this->_eventObject=>$this,
+                'input'=>$data,
+            )
+        );
+
         $this->setMethod($data->getMethod());
         $method = $this->getMethodInstance();
-        
+
         /**
          * Payment availability related with quote totals.
          * We have to recollect quote totals before checking
          */
         $this->getQuote()->collectTotals();
-        
+
         if (!$method->isAvailable($this->getQuote())
-                || !$method->isApplicableToQuote($this->getQuote(), $data->getChecks())
-                ) {
-                    Mage::throwException(Mage::helper('sales')->__('The requested Payment Method is not available.'));
-                }
-                
-                $method->assignData($data);
-                /*
-                 * validating the payment data
-                 */
-                $method->validate();
-                return $this;
+            || !$method->isApplicableToQuote($this->getQuote(), $data->getChecks())
+        ) {
+            Mage::throwException(Mage::helper('sales')->__('The requested Payment Method is not available.'));
+        }
+
+        $method->assignData($data);
+        /*
+        * validating the payment data
+        */
+        $method->validate();
+        return $this;
     }
 
     /**

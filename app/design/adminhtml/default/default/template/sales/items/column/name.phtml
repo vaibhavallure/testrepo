@@ -36,12 +36,13 @@
     <?php if ($this->getOrderOptions()): ?>
         <dl class="item-options">
         <?php foreach ($this->getOrderOptions() as $_option): ?>
-            <dt class="custom_options_iwd"><?php echo $this->escapeHtml(ucwords($_option['label'])).":" ?>
+            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+            <dd>
             <?php if (isset($_option['custom_view']) && $_option['custom_view']): ?>
-                <?php echo strtolower($this->getCustomizedOptionValue($_option)); ?>
+                <?php echo $this->getCustomizedOptionValue($_option); ?>
             <?php else: ?>
                 <?php $_option = $this->getFormattedOption($_option['value']); ?>
-                <?php echo strtolower($_option['value']); ?><?php if (isset($_option['remainder']) && $_option['remainder']): ?><span id="<?php echo $_dots = 'dots' . uniqid()?>"> ...</span><span id="<?php echo $_id = 'id' . uniqid()?>"><?php echo $_option['remainder'] ?></span>
+                <?php echo $_option['value']; ?><?php if (isset($_option['remainder']) && $_option['remainder']): ?><span id="<?php echo $_dots = 'dots' . uniqid()?>"> ...</span><span id="<?php echo $_id = 'id' . uniqid()?>"><?php echo $_option['remainder'] ?></span>
                     <script type="text/javascript">
                     $('<?php echo $_id ?>').hide();
                     $('<?php echo $_id ?>').up().observe('mouseover', function(){$('<?php echo $_id ?>').show();});
@@ -51,7 +52,7 @@
                     </script>
                 <?php endif; ?>
             <?php endif; ?>
-            </dt>
+            </dd>
         <?php endforeach; ?>
         </dl>
     <?php endif; ?>

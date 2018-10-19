@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -460,6 +460,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
 
     /**
      * Check product options and type options and save them, too
+     *
+     * @throws Mage_Core_Exception
      */
     protected function _beforeSave()
     {
@@ -763,9 +765,9 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     }
 
 
-    /*******************************************************************************
-     ** Linked products API
-     */
+/*******************************************************************************
+ ** Linked products API
+ */
     /**
      * Retrieve array of related roducts
      *
@@ -975,9 +977,9 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
         return $collection;
     }
 
-    /*******************************************************************************
-     ** Media API
-     */
+/*******************************************************************************
+ ** Media API
+ */
     /**
      * Retrive attributes for media gallery
      *
@@ -1381,6 +1383,15 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function isSaleable()
     {
+        // allow gitcard product for purchase when its out of stock - start
+        if(Mage::helper('core')->isModuleEnabled('Amasty_Stockstatus')){
+            $amstockHelper = Mage::helper("amstockstatus");
+            if ($amstockHelper->isGiftcardProduct($this->getSku())) {
+                return 1;
+            }
+        }
+        //end
+        
         return $this->isSalable();
     }
 
@@ -1406,8 +1417,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
 
         return $this->getResource()
             ->getAttribute($attributeCode)
-            ->getSource()
-            ->getOptionText($this->getData($attributeCode));
+                ->getSource()
+                    ->getOptionText($this->getData($attributeCode));
     }
 
     /**

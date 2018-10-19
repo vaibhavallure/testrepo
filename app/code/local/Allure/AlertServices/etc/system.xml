@@ -39,6 +39,34 @@
                         </fields>
                    </alr_alert>
 
+                    <alr_alert_test translate="label">
+                        <label>Testing Details</label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>4</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>                
+                        <fields>
+                            <group_test_emails>
+                                <label>Testing Emails : </label>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>1</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </group_test_emails>
+                            <group_test_names>
+                                <label>Testing Names : </label>
+                                <frontend_type>text</frontend_type>
+                                <sort_order>2</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </group_test_names> 
+                        </fields>
+                   </alr_alert_test>
+
+
                    <email_group translate="label">
                         <label>Email Settings</label>
                         <frontend_type>text</frontend_type>
@@ -133,7 +161,56 @@
                                 <show_in_default>1</show_in_default>
                                 <show_in_website>1</show_in_website>
                                 <show_in_store>1</show_in_store>
-                            </pageloadalert>   
+                            </pageloadalert>
+
+                            <enabled_product_price translate="label">
+                                <label>Product price Email Enabled</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>9</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </enabled_product_price>
+
+                            <enabled_sales translate="label">
+                                <label>Sales Email Enabled</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>10</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </enabled_sales>
+
+                            <enabled_checkout translate="label">
+                                <label>Checkout Email Enabled</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>11</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </enabled_checkout>
+
+                            <enabled_pageloadalert translate="label">
+                                <label>Page Load Email Enabled</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>12</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </enabled_pageloadalert> 
+                            <enabled_debug_alert translate="label">
+                                <label>Alert Debug Enabled</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>13</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </enabled_debug_alert>  
 
                         </fields>
                    </email_group> 
@@ -146,10 +223,19 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>                
                         <fields>
+                            <alr_enabled translate="label">
+                                <label>ALR Analytics Enabled</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <sort_order>0</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                            </alr_enabled>
                             <alr_client_json>
                                 <label>Client secret file</label>
                                 <frontend_type>textarea</frontend_type>
-                                <sort_order>1</sort_order>
+                                <sort_order>2</sort_order>
                                 <show_in_default>1</show_in_default>
                                 <show_in_website>1</show_in_website>
                                 <show_in_store>1</show_in_store>
@@ -157,7 +243,7 @@
                             <avg_page_load>
                                 <label>Page load time : </label>
                                 <frontend_type>text</frontend_type>
-                                <sort_order>2</sort_order>
+                                <sort_order>3</sort_order>
                                 <show_in_default>1</show_in_default>
                                 <show_in_website>1</show_in_website>
                                 <show_in_store>1</show_in_store>

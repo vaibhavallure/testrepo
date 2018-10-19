@@ -100,6 +100,9 @@ jQuery( window ).resize(function() {
 <?php echo $this->getChildHtml('account.popups'); ?>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
+<?php
+$alr_status = Mage::helper("alertservices/config")->getAlrStatus();
+if ($alr_status) { ?>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125115574-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -108,6 +111,8 @@ jQuery( window ).resize(function() {
 
   gtag('config', 'UA-125115574-1');
 </script>
+<?php } ?>
+
 
 <!-- added by AWS12 -->
 <?php
