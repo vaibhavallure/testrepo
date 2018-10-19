@@ -88,7 +88,9 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         $isShow = false;
         
         if($this->isVirtualStoreActive()){
-            $storeId = $item->getOldStoreId();
+            $storeId = ($item->getOldStoreId())?$item->getOldStoreId():$item->getStoreId();
+        }else{
+            $storeId = $item->getStoreId();
         }
         
         if(empty($storeId)){
@@ -96,38 +98,9 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         }
         
         if($storeId == 1){
-            if($orderType=="open"){
-                /* $store      = Mage::getModel('core/store')->load($storeId);
-                $websiteId  = $store->getWebsiteId();
-                $website    = Mage::getModel('core/website')->load($websiteId);
-                $stockId    = $website->getStockId();
-                $productId  = Mage::getModel('catalog/product')->getIdBySku($sku);
-                $product    = Mage::getModel('catalog/product')
-                                ->setStoreId($storeId)
-                                ->load($productId);
-                $stockItem  = Mage::getModel('cataloginventory/stock_item')
-                                ->loadByProductAndStock($product,$stockId);
-                $stockQty   = intval($stockItem->getQty());
-                if($stockQty > 0){
-                    $stockMsg = "(In Stock: Ships Within 24 hours (Mon-Fri).)";
-                }else{ 
-                    $backTime = $product->getData('backorder_time');
-                    $stockMsg = "";
-                    if(!is_null($backTime) && !empty($backTime))
-                        $stockMsg = "(The metal color or length combination you selected is backordered. Order now and It will ship "." - ".$backTime.")";
-                    else 
-                        $stockMsg = "(The metal color or length combination you selected is backordered.)";
-                } */
-                
-                $backTimeMsg = $item->getBackorderTime();
-                if (!empty($backTimeMsg) && $backTimeMsg !="backorder") {
-                    $stockMsg = "The metal color or length combination you selected is backordered. Order now and It will ship ".$backTimeMsg.".";
-                } else if ($backTimeMsg =="backorder") {
-                    $stockMsg = "The metal color or length combination you selected is backordered.";
-                } else {
-                    $stockMsg = " (In Stock: Ships Within 24 hours (Mon-Fri).)";
-                }
-                
+            if($orderType == "open"){
+                $amstockHelper = Mage::helper('amstockstatus');
+                $stockMsg = $amstockHelper->getOrderSalesProductStockStatus($item);
                 $isShow = true;
             }
         }

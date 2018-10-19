@@ -1,0 +1,5 @@
+<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()) :?>
+<div id="account-modal-wrapper" class="modal-wrapper">
+	<?php echo $this->getChildHtml();?>
+</div>
+<?php endif;?>

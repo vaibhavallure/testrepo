@@ -303,6 +303,16 @@ class Mage_CatalogInventory_Model_Observer
     public function checkQuoteItemQty($observer)
     {
         $quoteItem = $observer->getEvent()->getItem();
+        
+        // allow gitcard product for purchase when its out of stock - start
+        if(Mage::helper('core')->isModuleEnabled('Amasty_Stockstatus')){
+            $amstockHelper = Mage::helper("amstockstatus");
+            if ($amstockHelper->isGiftcardProduct($quoteItem->getSku())) {
+                return $this;
+            }
+        }
+        //end
+        
         /* @var $quoteItem Mage_Sales_Model_Quote_Item */
         if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote()
             || $quoteItem->getQuote()->getIsSuperMode()) {
