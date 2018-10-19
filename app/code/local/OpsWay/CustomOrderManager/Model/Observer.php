@@ -13,7 +13,10 @@ class OpsWay_CustomOrderManager_Model_Observer {
 	    $productId = Mage::getSingleton('catalog/product')->getIdBySku($item->getSku());
 	    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
 	    $stockQty = intval($stockItem->getQty());
-	    if ($stockQty <= 0) {
+	    $isGiftCard= Mage::helper('amstockstatus')->isGiftcardProduct($product->getSku());
+	    Mage::log('is gift card : '.$isGiftCard,Zend_log::DEBUG,'gift-card.log',true);
+	    
+	    if ($stockQty <= 0 && !$isGiftCard) {
 	    	if($product->getBackorderTime()){
 	    		$item->setBackorderTime($product->getBackorderTime());
 	    	}else{
