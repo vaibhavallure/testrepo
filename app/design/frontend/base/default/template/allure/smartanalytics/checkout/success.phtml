@@ -1,0 +1,84 @@
+<?php
+/**
+ * @var $this Allure_SmartAnalytics_Block_Checkout_Success
+ */
+?>
+<?php $helper = Mage::helper('allure_smartanalytics');?>
+<?php if (!$helper->isEnabled() || !$helper->isEnhancedEcommerceEnabled()) return;
+$order = $this->getOrder();
+if (!$helper->sendTransactionDataOnInvoice() && !$helper->sendTransactionDataOffline()):
+	if ($helper->sendBaseData()):
+		$orderCurrency 		= $order->getBaseCurrencyCode();
+		$orderGrandTotal 	= $order->getBaseGrandTotal();
+		$orderShippingTotal	= $order->getBaseShippingAmount();
+		$orderTax			= $order->getBaseTaxAmount();
+	else:
+		$orderCurrency 		= $order->getOrderCurrencyCode();
+		$orderGrandTotal 	= $order->getGrandTotal();
+		$orderShippingTotal	= $order->getShippingAmount();
+		$orderTax			= $order->getTaxAmount();
+	endif;
+
+	$incrementId = $order->getIncrementId();
+
+	if ($helper->getDebugging()) Mage::log('Sending transaction data for order :: '.$incrementId, 7, "GA.log");
+?>
+	<script type="text/javascript">
+//<![CDATA[
+	ga('set', '&cu', '<?php echo $orderCurrency ?>');
+	<?php foreach($order->getAllItems() as $item): ?>
+	<?php if($item->getParentItemId()) continue;?>
+	ga('ec:addProduct', {
+		'id': '<?php echo $this->jsQuoteEscape($item->getSku()) ?>',
+		'name': '<?php echo $this->jsQuoteEscape($item->getName()) ?>',
+		'category': '<?php echo $this->jsQuoteEscape($helper->getQuoteCategoryName($item)) ?>',
+		'brand': '<?php echo $this->jsQuoteEscape($helper->getQuoteBrand($item)) ?>',
+		'price': '<?php echo ($helper->sendBaseData()==true ? $item->getBasePrice() : $item->getPrice()) ?>',
+		'quantity': '<?php echo $item->getQtyOrdered() ?>'
+	});
+	<?php endforeach;?>
+
+	ga('ec:setAction', 'purchase', {
+		'id': '<?php echo $incrementId?>',
+		'affiliation': '<?php echo $order->getAffiliation() ?>',
+		'revenue': '<?php echo $orderGrandTotal?>',
+		'shipping': '<?php echo $orderShippingTotal?>',
+		'tax': '<?php echo $orderTax?>',
+		'coupon': '<?php echo $order->getCouponCode() ?>'
+	});
+
+	<?php if ($helper->getDebugging()) Mage::log('Sent transaction data for order :: '.$incrementId, 7, "GA.log");?>
+
+	<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+		ga('<?php echo $helper->getLinkedAccountName()?>.set', '&cu', '<?php echo $orderCurrency ?>');
+		<?php foreach($order->getAllItems() as $item): ?>
+		<?php if($item->getParentItemId()) continue; ?>
+		ga('<?php echo $helper->getLinkedAccountName()?>.ec:addProduct', {
+			'id': '<?php echo $this->jsQuoteEscape($item->getSku()) ?>',
+			'name': '<?php echo $this->jsQuoteEscape($item->getName()) ?>',
+			'category': '<?php echo $helper->getQuoteCategoryName($item) ?>',
+			'brand': '<?php echo $helper->getQuoteBrand($item) ?>',
+			'price': '<?php echo ($helper->sendBaseData()==true ? $item->getBasePrice() : $item->getPrice()) ?>',
+			'quantity': '<?php echo $item->getQtyOrdered() ?>'
+		});
+		<?php endforeach;?>
+
+		ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'purchase', {
+			'id': '<?php echo $order->getIncrementId()?>',
+			'affiliation': '<?php echo $order->getAffiliation() ?>',
+			'revenue': '<?php echo $orderGrandTotal?>',
+			'shipping': '<?php echo $orderShippingTotal?>',
+			'tax': '<?php echo $orderTax?>',
+			'coupon': '<?php echo $order->getCouponCode() ?>'
+		});
+	<?php endif;?>
+
+	<?php echo $this->getLayout()
+					->createBlock('allure_smartanalytics/sendview')
+					->setEventLabel('')
+					->setTemplate('allure/smartanalytics/sendview.phtml')
+					->toHtml();?>
+
+//]]>
+</script>
+<?php endif;?>
