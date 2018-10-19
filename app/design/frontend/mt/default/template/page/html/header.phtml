@@ -95,11 +95,9 @@ jQuery( window ).resize(function() {
     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
 });
 </script>
-<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()) :?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/login.phtml')->toHtml(); ?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/register.phtml')->toHtml(); ?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/reset_password.phtml')->toHtml(); ?>
-<?php endif;?>
+
+<?php echo $this->getChildHtml('account_popups'); ?>
+<?php echo $this->getChildHtml('account.popups'); ?>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <?php
@@ -126,7 +124,7 @@ if ($alr_status) { ?>
          foreach ($collection as $key => $product) {
            $prodIds[]=$product->getId();
          }
-    if(count($prodIds)):
+if(count($prodIds)):
       echo "<style type='text/css'>";
     foreach ($prodIds as $key => $prodId) {
         echo '#snize-product-'.$prodId.' .snize-price-list {
