@@ -46,14 +46,16 @@ try{
     foreach ($collection as $_product) {
 
 
-        $product = Mage::getModel("catalog/product")->load($_product->getId());
+        $product = Mage::getSingleton("catalog/product")->load($_product->getId());
         $attributes = $product->getTypeInstance(true)->getSetAttributes($product);
 
         $parent_sku = trim(current(explode("|", $product->getSku())));
-
+        $delImageArray=array();
 
         foreach ($product->getMediaGalleryImages() as $image) {
             $newImageAdded=0;
+
+
 
               $imageName = trim(end(explode("/", $image->getFile())))."<br>";
 
@@ -62,6 +64,11 @@ try{
 
                 Mage::log("start--- SKU = ".$product->getSku()." Wrong Image Found:= ".$image->getFile(),Zend_Log::DEBUG,'replaceImage.log',true);
 
+
+
+
+
+                $delImageArray[]=array("pid"=>$product->getId(),"file"=>$image->getFile());
 
                 $sku = str_replace(' ', '_', $product->getSku());
                 $sku = str_replace('|', '-', $sku);
@@ -79,12 +86,12 @@ try{
                 if (count($files)) {
                     $fl = end($files);
 
-                    Mage::log(" Image Found For Product SKu := ". $sku,Zend_Log::DEBUG,'replaceImage.log',true);
+                    Mage::log(" Image Found For Product SKu := ". $sku ." File=".$fl,Zend_Log::DEBUG,'replaceImage.log',true);
 
                     if($apply==1) {
-                          $product->addImageToMediaGallery($fl, array('image', 'small_image', 'thumbnail'), false, false);
+                      $product->addImageToMediaGallery($fl, array('image', 'small_image', 'thumbnail'), false, false);
 
-                        $newImageAdded=1;
+                         $newImageAdded=1;
 
                         Mage::log(" Image Added". $fl,Zend_Log::DEBUG,'replaceImage.log',true);
 
@@ -92,11 +99,7 @@ try{
 
 
                 }
-                if($apply==1) {
-                     $media->remove($product->getId(),$image->getFile());
-                    Mage::log(" Image Removed := ". $image->getFile()."----end",Zend_Log::DEBUG,'replaceImage.log',true);
 
-                }
 
                // Mage::log("end-----------------------------------------------------",Zend_Log::DEBUG,'replaceImage.log',true);
 
@@ -113,40 +116,29 @@ try{
         }
         $product->save();
 
-    }
 
+        if($apply==1) {
 
-    if($apply==1) {
-        if (count($newImageProductId)) {
+             foreach ($delImageArray as $delimg)
+             {
+                 if(count($delimg)) {
 
-            foreach ($newImageProductId as $pid) {
-                $product = Mage::getModel("catalog/product")->load($pid);
+                         $media->remove($delimg['pid'], $delimg['file']);
+                         Mage::log(" Image Removed := " . $dimg['file'] . "----end", Zend_Log::DEBUG, 'replaceImage.log', true);
 
-                foreach ($product->getMediaGalleryImages() as $image) {
+                 }
 
-                    $key = substr(end(explode("/", $image->getFile())), strlen($product->getSku()) + 1, 1);
-                    //  echo $image->getFile() . "<br>";
-                    $backend = $attributes['media_gallery']->getBackend();
-                    $backend->updateImage($product, $image->getFile(), array('position' => $key, 'label' => $product->getName() . ' Image #' . $key));
+             }
 
-                    if ($key == 1) {
-                        $value = $image->getFile();
-                        Mage::getSingleton('catalog/product_action')->updateAttributes(array($product->getId()),
-                            array(
-                                'image' => $value,
-                                'small_image' => $value,
-                                'thumbnail' => $value,
-                            ),
-                            0);
-                    }
-                }
-
-                $product->save();
-                Mage::log("new image updated", Zend_Log::DEBUG, 'replaceImage.log', true);
-
-            }
         }
+
+
+
     }
+
+
+
+    
 
 }
 catch (Exception $e){
