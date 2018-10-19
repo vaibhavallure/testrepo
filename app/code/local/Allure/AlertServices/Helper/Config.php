@@ -21,6 +21,7 @@ class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
     const XML_PATH_PAGE_LOAD_ENABLED  = 'allure_alert/email_group/enabled_pageloadalert';
     const XML_PATH_ALERT_DEBUG_ENABLED = 'allure_alert/email_group/enabled_debug_alert';
 
+    const XML_PATH_TEST_EMAILS_ENABLED ='allure_alert/alr_alert_test/test_emails_enable';
     const XML_PATH_GROUP_TEST_EMAILS   ='allure_alert/alr_alert_test/group_test_emails';
     const XML_PATH_GROUP_TEST_EMAILS_NAMES = 'allure_alert/alr_alert_test/group_test_names';
 
@@ -67,6 +68,10 @@ class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
     	return Mage::getStoreConfig(self::XML_PATH_GROUP_EMAILS_NAMES);
     }
 
+    public function getTestEmailStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_TEST_EMAILS_ENABLED);
+    }
+    
     public function getTestEmailsGroup(){
         return Mage::getStoreConfig(self::XML_PATH_GROUP_TEST_EMAILS);
     }
