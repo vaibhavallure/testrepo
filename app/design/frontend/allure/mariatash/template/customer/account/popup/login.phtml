@@ -1,6 +1,6 @@
 <div id="openModal" class="popupLoginModel">
 	<div id="login-modal-container" class="modal-container">
-		<form class="form-signin" method="post" id="popup-login-form">
+		<form class="form-signin" action="<?php echo $this->getPostActionUrl() ?>" method="post" id="popup-login-form">
     		<div class="pop-title">
     			<a href="#close" title="Close" class="close">X</a>
     			<h2><?php echo $this->__("Log In ")?></h2>
@@ -16,7 +16,7 @@
     			<div class="form-group">
     	 		    <label class="popup-login-lbl" for="password"><em>*</em> <?php echo $this->__("Password")?></label>
     	  		    <input id='passwd-login' type="password" name='passwd-login' class="ele_width form-control required-entry"/>
-    			
+
     				<?php //google connect code?>
                 	<?php if (Mage::helper('core')->isModuleEnabled('Allure_GoogleConnect')):?>
                 	<?php $isEnableGoogleSign = Mage::helper("allure_googleconnect")->_isEnabled();?>
@@ -27,8 +27,8 @@
                 	</div>
                 	<?php endif;?>
                 	<?php endif;?>
-                	
-                	
+
+
                 	<?php //facebook connect code?>
                 	<?php if (Mage::helper('core')->isModuleEnabled('Allure_Facebook')):?>
                 	<?php $isEnableFacebook = Mage::getModel("facebook/config")->isEnabled();?>
@@ -39,7 +39,7 @@
                 	</div>
                 	<?php endif;?>
                 	<?php endif;?>
-    			
+
     			</div>
     		</div>
     	    <div class="pop-link">
@@ -61,7 +61,7 @@
     			<div class="new_account">
     				<a onclick="openRegisterModal()"><?php echo $this->__("Click here to create new account!")?></a>
     			</div>
-    		</div> 
+    		</div>
     	</form>
 	</div>
 
@@ -71,5 +71,5 @@
         }
         Allure.LoginFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
         Allure.LoginUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/ajaxLogin';?>';
-    </script> 
+    </script>
 </div>
