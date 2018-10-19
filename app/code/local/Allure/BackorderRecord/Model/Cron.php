@@ -69,7 +69,8 @@ class Allure_BackorderRecord_Model_Cron
 
             $backorderCollection = Mage::getModel('sales/order_item')->getCollection()
                 ->addAttributeToSort('item_id', 'DESC')
-                ->addAttributeToFilter('created_at', array('from' => $fromDate, 'to' => $toDate));
+                ->addAttributeToFilter('created_at', array('from' => $fromDate, 'to' => $toDate))
+                ->addAttributeToFilter('sku', array('nlike' => 'STORECARD%'));
             $backorderCollection->getSelect()->where(new Zend_Db_Expr("(qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
         }
         catch (Exception $e){
