@@ -60,7 +60,7 @@ try{
     foreach ($collection as $_product){
 
 
-    $product = Mage::getModel("catalog/product")->load($_product->getId());
+    $product = Mage::getSingleton("catalog/product")->load($_product->getId());
     $attributes = $product->getTypeInstance(true)->getSetAttributes($product);
 
         $parent_sku=trim(current(explode("|", $product->getSku())));
