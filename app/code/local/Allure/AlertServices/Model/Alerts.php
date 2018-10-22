@@ -400,8 +400,8 @@ class Allure_AlertServices_Model_Alerts
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
-			$sales_status =	$this->getConfigHelper()->getSalesStatus();
-			if (!$sales_status) {
+			$test_status =	$this->getConfigHelper()->getTestEmailStatus();
+			if (!$test_status) {
 					return;
 				}
 			if ($status) {
