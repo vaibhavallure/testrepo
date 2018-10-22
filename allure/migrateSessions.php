@@ -21,15 +21,15 @@ $resource = Mage::getSingleton('core/resource');
 $readConnection = $resource->getConnection('core_read');
 // 1. query to order by session_expires, limit N, save last expire time, and session_id
 // 2. modify query with where session_expires >= last expire time, and session_id != session_id
-$exptime = 0;
+$expiresAt = 0;
 $lastId = 'NONE';
 
-if (isset($_REQUEST['lastId'];)) {
+if (isset($_REQUEST['lastId'])) {
 	$lastId = $_REQUEST['lastId'];
 }
 
 
-if (isset($_REQUEST['expiresAt'];)) {
+if (isset($_REQUEST['expiresAt'])) {
 	$expiresAt = strtotime($_REQUEST['expiresAt']);
 }
 
