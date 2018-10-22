@@ -24,12 +24,12 @@ $readConnection = $resource->getConnection('core_read');
 $exptime = 0;
 $lastId = 'NONE';
 
-if (isset($_REQUEST['lastId'];)) {
+if (isset($_REQUEST['lastId'])) {
 	$lastId = $_REQUEST['lastId'];
 }
 
 
-if (isset($_REQUEST['expiresAt'];)) {
+if (isset($_REQUEST['expiresAt'])) {
 	$expiresAt = strtotime($_REQUEST['expiresAt']);
 }
 
