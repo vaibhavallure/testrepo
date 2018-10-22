@@ -9,10 +9,15 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
-		$request = $this->getRequest()->getParam('request');
-		$email = $request['email'];
+		if (!$this->getRequest()->getParam('form_key') && $this->getRequest()->getParam('request')) {
+		    $this->getRequest()->setParam('form_key', $this->getRequest()->getParam('request')['form_key']);
+  		}
 
-		if ($email) {
+		if ($this->getRequest()->getParam('request') && $this->_validateFormKey()) {
+
+			$request = $this->getRequest()->getParam('request');
+			$email = $request['email'];
+
             $customer = Mage::getModel('customer/customer')
                 ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
                 ->loadByEmail($email);
@@ -32,7 +37,8 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
                 $result['success'] = flase;
                 $result['msg'] = Mage::helper('core')->__('Invalid Email Address');
 
-            }		} else {
+            }
+		} else {
 
             $result['success'] = flase;
             $result['msg'] = Mage::helper('core')->__('Please enter your email.');
@@ -56,7 +62,11 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			return;
 		}
 
-		if ($this->getRequest()->getParam('request')) {
+		if (!$this->getRequest()->getParam('form_key') && $this->getRequest()->getParam('request')) {
+			$this->getRequest()->setParam('form_key', $this->getRequest()->getParam('request')['form_key']);
+		}
+
+		if ($this->getRequest()->getParam('request') && $this->_validateFormKey()) {
 			$request = $this->getRequest()->getParam('request');
 
 			Mage::log(($request),Zend_log::DEBUG,'notifications',true);
@@ -99,7 +109,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
-		if ($this->getRequest()->getParam('request')) {
+		if (!$this->getRequest()->getParam('form_key') && $this->getRequest()->getParam('request')) {
 		    $this->getRequest()->setParam('form_key', $this->getRequest()->getParam('request')['form_key']);
   		}
 
@@ -135,7 +145,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 				//$customer->setPassword($customer->generatePassword($passwordLength));
 				$customer->setPassword($password);
 
-				if($isSubscribe=='true')
+				if ($isSubscribe=='true')
 					$customer->setIsSubscribed(1);
 
 				try {
@@ -149,9 +159,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 					Mage::getSingleton('customer/session')->loginById($customer->getId());
 					$result['success'] = true;
 					$result['msg'] = Mage::helper('core')->__('Account created Successfully');
-
-
-				} catch(Exception $ex){
+				} catch(Exception $ex) {
 					Mage::log(" Customer create when new customer book appointment :".$ex,Zend_Log::DEBUG,'appointments',true);
 					//Mage::log($e->getMessage());
 					//print_r($e->getMessage());
@@ -175,20 +183,26 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
-	    if ($this->getRequest()->getParam('request'))
-	    {
+		if (!$this->getRequest()->getParam('form_key') && $this->getRequest()->getParam('request')) {
+		    $this->getRequest()->setParam('form_key', $this->getRequest()->getParam('request')['form_key']);
+  		}
+
+		if ($this->getRequest()->getParam('request') && $this->_validateFormKey()) {
+
 	        $request = $this->getRequest()->getParam('request');
-	        if(!empty($request['email']) && !empty($request['id'])){
+
+	        if (!empty($request['email']) && !empty($request['id'])) {
 	            $customer = Mage::getModel('customer/customer');
 	            $customer->loadByEmail($request['email']);
-	            if($customer->getId()){
+
+	            if ($customer->getId()) {
 	                $customer->setEmail('del-'.$request['email']);
 	                $customer->save();
 	                Mage::getSingleton('customer/session')->logout();
 	                $result['success'] = true;
 	                $result['msg'] = Mage::helper('core')->__('Account deleted Sucessfully');
 	                Mage::getSingleton("core/session")->addSuccess("Account deleted Sucessfully");
-	            }else {
+	            } else {
 	                $result['success'] = false;
 	                $result['msg'] = Mage::helper('core')->__('Unable to delete account');
 	                Mage::getSingleton("core/session")->addError("Unable to delete account");
