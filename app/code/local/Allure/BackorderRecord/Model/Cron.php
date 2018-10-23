@@ -27,8 +27,6 @@ class Allure_BackorderRecord_Model_Cron
         if(count($data))
         {
 
-
-
             try {
                 $fromDate = new DateTime($data['from_date']);
                 $fromDate = $fromDate->format('Y-m-d H:i:s');
@@ -63,15 +61,43 @@ class Allure_BackorderRecord_Model_Cron
         if(Mage::helper("backorderrecord/config")->getDebugStatus())
             Mage::log('After date formated by timezone formdate='.$fromDate.' todate='.$toDate,Zend_Log::DEBUG, 'backorder_data.log', true);
 
-
-
         try {
+            $orderModel = Mage::getModel('sales/order');
+            $orderResource = $orderModel->getResource();
+            $orderTable = $orderResource->getTable('sales/order');
+
+            $sku = '';
+            $filterWithStatus = FALSE;
+            if ($data['item_sku'] && $data['metal_color']) {
+                $sku = strtoupper($data['item_sku']).'|'.strtoupper($data['metal_color']).'%';
+            }else if ($data['item_sku']) {
+                $sku = strtoupper($data['item_sku']).'%';
+            }else if ($data['metal_color']) {
+                $sku = '%'.strtoupper($data['metal_color']).'%';
+            }
+            
+           if ($data['show_order_statuses'] && count($data['order_statuses']) >= 1) {
+               $filterWithStatus = TRUE;
+               $filterStatus = "'" . implode ( "', '", $data['order_statuses'] ) . "'";
+           }
 
             $backorderCollection = Mage::getModel('sales/order_item')->getCollection()
                 ->addAttributeToSort('item_id', 'DESC')
-                ->addAttributeToFilter('created_at', array('from' => $fromDate, 'to' => $toDate))
-                ->addAttributeToFilter('sku', array('nlike' => 'STORECARD%'));
-            $backorderCollection->getSelect()->where(new Zend_Db_Expr("(qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
+
+                ->addAttributeToFilter('main_table.created_at', array('from' => $fromDate, 'to' => $toDate));
+
+            if ($sku) {
+               $backorderCollection->addAttributeToFilter('main_table.sku',array('like' =>$sku));
+            }
+          
+            $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
+
+            $addToquery = $backorderCollection->getSelect()->joinLeft(array('sales_flat_order' => $orderTable), 'main_table.order_id = sales_flat_order.entity_id',array('sales_flat_order.status'));
+
+            if ($filterWithStatus) {
+                $addToquery->where("sales_flat_order.status in($filterStatus)");
+            }
+ 
         }
         catch (Exception $e){
 
@@ -80,6 +106,7 @@ class Allure_BackorderRecord_Model_Cron
 
 
         }
+         
         return $backorderCollection;
     }
 
