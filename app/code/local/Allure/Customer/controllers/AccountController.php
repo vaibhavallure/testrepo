@@ -83,7 +83,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 				} catch (Mage_Core_Exception $e) {
 					switch ($e->getCode()) {
 						case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
-							$message = Mage::helper('core')->__('Email is not confirmed. <a href="%s">Resend confirmation email.</a>', Mage::helper('customer')->getEmailConfirmationUrl($request['usrname']));
+							$message = Mage::helper('core')->__('Email is not confirmed. <a href="%s">Resend confirmation email.</a>', Mage::helper('customer')->getEmailConfirmationUrl($username));
 							break;
 						default:
 							$message = $e->getMessage();
