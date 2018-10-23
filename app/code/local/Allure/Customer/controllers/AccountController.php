@@ -9,6 +9,8 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
+		Mage::log('forgotPassword:: '.$this->getRequest()->getParam('email'), Zend_log::DEBUG, 'univeral.log', true);
+
 		if ($this->getRequest()->getParam('email') && $this->_validateFormKey()) {
 
 			$email = $this->getRequest()->getParam('email');
@@ -51,20 +53,17 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
+		Mage::log('ajaxLogin:: '.$this->getRequest()->getParam('usrname'), Zend_log::DEBUG, 'univeral.log', true);
+
 		$session = Mage::getSingleton('customer/session');
 
 		if ($session->isLoggedIn()) {
-			// is already login redirect to account page
-			return;
-		}
-
-		if ($this->getRequest()->getParam('usrname') && $this->_validateFormKey()) {
+			$result['msg'] = 'Already Logged In.';
+		} else if ($this->getRequest()->getParam('usrname') && $this->_validateFormKey()) {
 			$request = $this->getRequest()->getParams();
 
 			$username = $this->getRequest()->getParam('usrname');
 			$password = $this->getRequest()->getParam('passwd');
-
-			Mage::log(($request),Zend_log::DEBUG,'notifications',true);
 
 			if (empty($username) || empty($password)) {
 				$result['error'] = Mage::helper('core')->__('Login and password are required.');
@@ -74,11 +73,9 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 					$session->login($username, $password);
 					$result['success'] = true;
 					$result['msg'] = Mage::helper('core')->__('Login Successfull');
-                    if(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)==$_SERVER['HTTP_REFERER']){
-                        Mage::log(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB),Zend_Log::DEBUG,'demo.log',true);
-                        $result['redirect'] = true;
-                        $result['url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'customer/account';
-                    }
+
+                    $result['redirect'] = true;
+                    $result['url'] = $this->_redirectReferer();
 
 				} catch (Mage_Core_Exception $e) {
 					switch ($e->getCode()) {
@@ -88,8 +85,9 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 						default:
 							$message = $e->getMessage();
 					}
+
 					$result['error'] = $message;
-					$session->setUsername($username);
+					//$session->setUsername($username);
 				}
 			}
 		}
@@ -105,13 +103,12 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
+		Mage::log('createCustomer:: '.$this->getRequest()->getParam('email'), Zend_log::DEBUG, 'univeral.log', true);
+
 		if ($this->getRequest()->getParam('email') && $this->_validateFormKey()) {
 			$websiteId = Mage::app()->getWebsite()->getId();
 			$store = Mage::app()->getStore();
 
-			//$request=json_decode($request);
-			//$request=explode('&', $request);
-			Mage::log($request,Zend_log::DEBUG,'notifications',true);
 			$customer_email = $this->getRequest()->getParam('email');
 			$customer_fname = $this->getRequest()->getParam('firstname');
 			$customer_lname = $this->getRequest()->getParam('lastname');
@@ -174,6 +171,8 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'success' 	=> false,
 			'msg'		=> 'Unknown'
 		];
+
+		Mage::log('deletemyaccount:: '.$this->getRequest()->getParam('email'), Zend_log::DEBUG, 'univeral.log', true);
 
 		if ($this->getRequest()->getParam('email') && $this->_validateFormKey()) {
 
