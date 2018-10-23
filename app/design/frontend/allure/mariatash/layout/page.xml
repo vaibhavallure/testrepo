@@ -49,8 +49,8 @@ Default layout, loads most of the pages
                 <action method="addJs"><script>mage/translate.js</script></action>
                 <action method="addJs"><script>mage/cookies.js</script></action>
 
-                <action method="addJs"><script>jquery/jquery-1.11.3.min.js</script></action>
-                <action method="addJs"><script>jquery/jquery-migrate-1.2.1.min.js</script></action>
+                <action method="addJs"><script>jquery/jquery-1.12.4.min.js</script></action>
+                <action method="addJs"><script>jquery/jquery-migrate-1.4.1.min.js</script></action>
 				<action method="addJs"><script>jquery/jquery.mCustomScrollbar.concat.min.js</script></action>
                 <action method="addJs"><script>jquery/tipped/excanvas/excanvas.js</script></action>
                 <action method="addJs"><script>jquery/tipped/tipped/tipped.js</script></action>
@@ -87,7 +87,7 @@ Default layout, loads most of the pages
                 <action method="addCss"><stylesheet>css/fancybox/jquery.fancybox.css</stylesheet></action>
 				<action method="addCss"><stylesheet>css/quickview/scroll/jquery.mCustomScrollbar.css</stylesheet></action>
                 <!--FancyboxEND-->
-				
+
                 <action method="addCss"><stylesheet>css/font-awesome.min.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/styles.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/dtnteam.css</stylesheet></action>
