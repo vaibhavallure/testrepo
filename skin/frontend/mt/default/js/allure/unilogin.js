@@ -227,9 +227,6 @@ jQuery(document).ready(function(){
 			   data: requestData,
 	           beforeSend: function() { $j('.please-wait-popup-del').show(); },
 	           complete: function() { $j('.please-wait-popup-del').hide(); },
-	           type: "POST",
-		       dataType : 'json',
-		       data: {request:request},
 		       success : function(data){
 				   if (data.success) {
 					   location.reload();
