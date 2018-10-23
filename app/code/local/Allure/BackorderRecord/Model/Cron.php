@@ -83,6 +83,7 @@ class Allure_BackorderRecord_Model_Cron
 
             $backorderCollection = Mage::getModel('sales/order_item')->getCollection()
                 ->addAttributeToSort('item_id', 'DESC')
+
                 ->addAttributeToFilter('main_table.created_at', array('from' => $fromDate, 'to' => $toDate));
 
             if ($sku) {
@@ -96,8 +97,7 @@ class Allure_BackorderRecord_Model_Cron
             if ($filterWithStatus) {
                 $addToquery->where("sales_flat_order.status in($filterStatus)");
             }
-            
-          
+ 
         }
         catch (Exception $e){
 
