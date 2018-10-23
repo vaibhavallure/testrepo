@@ -26,15 +26,11 @@ jQuery(document).ready(function(){
 
 			var key		= Allure.LoginFormKey;
 
-			var request = {
+			var requestData = {
 				"usrname"	: usrname,
 				"passwd"	: passwd,
 				"form_key"	: key
 			};
-
-			var requestData = request;
-
-			requestData.request = request;
 
 			$j.ajax({
 				url : Allure.LoginUrlAjax,
@@ -95,7 +91,7 @@ jQuery(document).ready(function(){
 
 			var key				= Allure.RegisterModelFormKey;
 
-			var request = {
+			var requestData = {
 				"firstname":firstname,
 				"lastname":lastname,
 				"email":email,
@@ -103,10 +99,6 @@ jQuery(document).ready(function(){
 				"is_subscribed":is_subscribed,
 				"form_key":key
 			};
-
-			var requestData = request;
-
-			requestData.request = request;
 
 			$j.ajax({
 				url : Allure.RegisterModelUrlAjax,
@@ -144,14 +136,10 @@ jQuery(document).ready(function(){
 
 			var key		= Allure.ResetPassFormKey;
 
-			var request = {
+			var requestData = {
 			   "email":email,
 			   "form_key":key
 			};
-
- 			var requestData = request;
-
- 			requestData.request = request;
 
 	         $j.ajax({
 				url : Allure.ResetPassUrlAjax,
@@ -195,15 +183,11 @@ jQuery(document).ready(function(){
 			var email =$j('#del_acc_email').val();
 			var id =$j('#del_acc_id').val();
 
-			var request = {
+			var requestData = {
 				"email":email,
 				"id":id,
 				"form_key":Allure.DeleteAccountModelFormKey
 			};
-
- 			var requestData = request;
-
- 			requestData.request = request;
 
 	        $j.ajax({
 			   url : Allure.DeleteAccuntURL,
