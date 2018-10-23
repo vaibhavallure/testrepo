@@ -65,7 +65,7 @@ Default layout, loads most of the pages
                 <action method="addJs"><script>priceslider/jquery.dependClass-0.1.js</script></action>
                 <action method="addJs"><script>priceslider/draggable-0.1.js</script></action>
                 <action method="addJs"><script>priceslider/jquery.slider.js</script></action>
-            	<!-- <action method="addJs"><script>ecp/blockUI.js</script></action> -->
+            	<!-- <action method="addJs"><script>ecp/overlay.js</script></action> -->
                 <action method="addJs"><script>jquery/inputToSelect.v1.1.js</script></action>
 				<action method="addJs"><script>selectivizr.js</script></action>
                 <action method="addJs"><script>jquery.hoverIntent.minified.js</script></action>
