@@ -37,12 +37,11 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 
             }
 		} else {
-
             $result['success'] = flase;
             $result['msg'] = Mage::helper('core')->__('Please enter your email.');
 		}
 
-		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->clearHeaders()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 	}
 
@@ -75,7 +74,13 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 					$result['msg'] = Mage::helper('core')->__('Login Successfull');
 
                     $result['redirect'] = true;
-                    $result['url'] = $this->_redirectReferer();
+					$refererUrl = $this->_getRefererUrl();
+
+			        if (empty($refererUrl)) {
+			            $refererUrl = empty($defaultUrl) ? Mage::getBaseUrl() : 'customer/account';
+			        }
+					
+                    $result['url'] = $refererUrl;
 
 				} catch (Mage_Core_Exception $e) {
 					switch ($e->getCode()) {
@@ -92,7 +97,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			}
 		}
 
-		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->clearHeaders()->setHeader('Content-type', 'application/json');
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 	}
 
@@ -161,7 +166,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			}
 		}
 
-		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->clearHeaders()->setHeader('Content-type', 'application/json');
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 	}
 
@@ -198,7 +203,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 	        }
 	    }
 
-		$this->getResponse()->setHeader('Content-type', 'application/json');
+		$this->getResponse()->clearHeaders()->setHeader('Content-type', 'application/json');
 		$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 	}
 }
