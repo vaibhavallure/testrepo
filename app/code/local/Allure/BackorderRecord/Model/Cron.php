@@ -26,7 +26,7 @@ class Allure_BackorderRecord_Model_Cron
 
         if(count($data))
         {
-
+           
             try {
                 $fromDate = new DateTime($data['from_date']);
                 $fromDate = $fromDate->format('Y-m-d H:i:s');
@@ -66,16 +66,29 @@ class Allure_BackorderRecord_Model_Cron
             $orderResource = $orderModel->getResource();
             $orderTable = $orderResource->getTable('sales/order');
 
-            $sku = '';
+            //$sku = '';
+            $skus = array();
             $filterWithStatus = FALSE;
-            if ($data['item_sku'] && $data['metal_color']) {
-                $sku = strtoupper($data['item_sku']).'|'.strtoupper($data['metal_color']).'%';
+            $filterWithSku = TRUE;
+
+            if ($data['item_sku'] && $data['show_metal_color']) {
+                /*$sku = strtoupper($data['item_sku']).'|'.strtoupper($data['metal_color']).'%';*/
+                foreach ($data['metal_color'] as $color) {
+                    $skus[] = "main_table.sku LIKE '".strtoupper($data['item_sku'])."|".strtoupper($data['metal_color'])."%";
+                }                
             }else if ($data['item_sku']) {
-                $sku = strtoupper($data['item_sku']).'%';
-            }else if ($data['metal_color']) {
-                $sku = '%'.strtoupper($data['metal_color']).'%';
+                //$sku = strtoupper($data['item_sku']).'%';
+                $skus[]= "main_table.sku LIKE '".strtoupper($data['item_sku'])."%'";
+            }else if ($data['show_metal_color']) {
+                //$sku = '%'.strtoupper($data['metal_color']).'%';
+                foreach ($data['metal_color'] as $color) {
+                   $skus[]= "main_table.sku LIKE '%".strtoupper($color)."%'";
+                }                
             }
-            
+            if ($data['show_metal_color'] || $data['item_sku']) {
+                $filterWithSku = TRUE;
+                $filterSku = implode (' OR ', $skus );
+            }
            if ($data['show_order_statuses'] && count($data['order_statuses']) >= 1) {
                $filterWithStatus = TRUE;
                $filterStatus = "'" . implode ( "', '", $data['order_statuses'] ) . "'";
@@ -86,8 +99,9 @@ class Allure_BackorderRecord_Model_Cron
 
                 ->addAttributeToFilter('main_table.created_at', array('from' => $fromDate, 'to' => $toDate));
 
-            if ($sku) {
-               $backorderCollection->addAttributeToFilter('main_table.sku',array('like' =>$sku));
+            if ($filterWithSku) {
+               //$backorderCollection->addAttributeToFilter('main_table.sku',array('like' =>$sku));
+                $backorderCollection->getSelect()->where($filterSku);
             }
           
             $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
@@ -106,7 +120,7 @@ class Allure_BackorderRecord_Model_Cron
 
 
         }
-         
+
         return $backorderCollection;
     }
 
