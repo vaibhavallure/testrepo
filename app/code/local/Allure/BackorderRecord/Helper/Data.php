@@ -162,7 +162,8 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             "product_name"=>"PRODUCT NAME",
             "price"=>"PRICE",
             "back_qty"=>"QUANTITY",
-            "customization"=>"CUSTOMIZATION"
+            "customization"=>"CUSTOMIZATION",
+            "order_status"=>"ORDER STATUS"
 
         );
 
@@ -197,12 +198,12 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
-
                 $productName = $order->getName();
                 $sku = $order->getSku();
                 $symbol=Mage::app()->getLocale()->currency($order->getBaseCurrencyCode())->getSymbol();
                 $price=$symbol."".round($order->getBasePrice(),2);
                 $qty = $order->getQtyOrdered();
+                $orderStatus = $order['status'];
 
 
                 if ($order->getQtyBackordered() && $order->getParentItemId()) {
@@ -258,6 +259,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["price"]=$price;
                     $row["back_qty"]=floatval($order->getQtyBackordered());
                     $row["customization"]=$customization;
+                    $row["order_status"]=$orderStatus;
 
 
 
