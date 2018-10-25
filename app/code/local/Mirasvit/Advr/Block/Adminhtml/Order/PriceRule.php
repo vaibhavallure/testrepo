@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -32,7 +32,15 @@ class Mirasvit_Advr_Block_Adminhtml_Order_PriceRule extends Mirasvit_Advr_Block_
 
         $this->initChart()
             ->setXAxisType('category')
-            ->setXAxisField('salesrule_rule_name');
+            ->setXAxisField($this->getColumn('salesrule_rule_name'));
+
+        return $this;
+    }
+
+    protected function prepareToolbar()
+    {
+        $this->initToolbar()
+            ->setSalesSourceVisibility(true);
 
         return $this;
     }
@@ -40,21 +48,15 @@ class Mirasvit_Advr_Block_Adminhtml_Order_PriceRule extends Mirasvit_Advr_Block_
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort('hour_of_day')
+            ->setDefaultSort($this->getColumn('hour_of_day'))
             ->setDefaultDir('asc');
 
         return $this;
     }
 
-    protected function _prepareCollection()
+    protected function getGroupByColumn()
     {
-        $collection = Mage::getModel('advr/report_sales')
-            ->setBaseTable('sales/order', true)
-            ->setFilterData($this->getFilterData())
-            ->selectColumns($this->getVisibleColumns())
-            ->groupByColumn('salesrule_rule_id');
-
-        return $collection;
+        return $this->getColumn('salesrule_rule_id');
     }
 
     public function getColumns()
@@ -65,10 +67,18 @@ class Mirasvit_Advr_Block_Adminhtml_Order_PriceRule extends Mirasvit_Advr_Block_
                 'type' => 'text',
                 'totals_label' => 'Total',
                 'chart' => true,
+                self::KEEP => true
             ),
         );
 
         $columns += $this->getOrderTableColumns(true);
+
+        $columns = $this->convertColumnsToSalesSource($columns);
+
+        $columns['actions'] = array(
+            'header' => 'Actions',
+            'renderer' => 'Mirasvit_Advr_Block_Adminhtml_Block_Grid_Renderer_PostAction',
+        );
 
         return $columns;
     }

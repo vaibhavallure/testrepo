@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -17,25 +17,9 @@
 
 class Mirasvit_Advr_Helper_Geo extends Mage_Core_Helper_Abstract
 {
-    protected $googleActiveKeyIdx = 0;
+    const LIMIT = 10;
 
-    protected $keys = array(
-        'AIzaSyCoaEg7EY4p7q-c_LPp7E0ae7ELcJkxoj0',
-        'AIzaSyATubS2QrFS6Jv4C1ZdNTdNlIFDP8dZ6U8',
-        'AIzaSyCpF7Uh5hMbUGrhu7V-iRv_s1-ibUQuLG0',
-        'AIzaSyBvSdYpkR2vpv5YYMnPuIn3mkTnkPTofYo',
-        'AIzaSyBy-oTubLJE6AVJdk0AvSV1aAp7c8hadjg',
-        'AIzaSyDKRAMcp70v7xhuUhTJ7aqzXrSPDvct9ik',
-        'AIzaSyDLlCEc34NBO7L03PyKKVhQ4iqyCg9vIkU',
-        'AIzaSyBthibGDkDrcqC0lKLwaIG4WockJeeABl8',
-        'AIzaSyC5hOG_xIH3tduvk2NyIv8nR59tsUyVULk',
-        'AIzaSyDq9dscxS_-qefHcQJPp7DqnR4tvRPMoQc',
-        'AIzaSyAqJWHpgDmRyiLZzuyoP0BtNE9Rckvhw3E',
-        'AIzaSyBjFj-3VupOGIcoRlgx3yNyAfm81udUrMM',
-        'AIzaSyBqOkrS1HvtsfYldK-Sq91qURBGqWEI_vU',
-        'AIzaSyCGpXAPGtiWkBfLtcd0msrcFbkg3hV96tg',
-        'AIzaSyDOcoIgRmy7_yv_30OuqvZkulTwF2KJMiI',
-    );
+    protected $tries = 0;
 
     public function findInMapQuestApi($locations)
     {
@@ -82,20 +66,17 @@ class Mirasvit_Advr_Helper_Geo extends Mage_Core_Helper_Abstract
             $result[$id] = array();
 
             do {
-                $key = '&key='.$this->keys[$this->googleActiveKeyIdx];
+                $locationArray = explode(':', $location);
+                $country = trim($locationArray[0]);
+                $code = trim($locationArray[1]);
 
                 if (!$byAddress) {
-                    $locationArray = explode(':', $location);
-                    $country = trim($locationArray[0]);
-                    $code = trim($locationArray[1]);
-
-                    $url = 'https://maps.googleapis.com/maps/api/geocode/json?language=EN&components=country:'
+                    $url = 'https://maps.googleapis.com/maps/api/geocode/json?language=' . $country . '&components=country:'
                         . $country . '|postal_code:'
-                        . $code . $key;
+                        . $code;
                 } else {
-                    $url = 'https://maps.googleapis.com/maps/api/geocode/json?language=EN&address='
-                        . urlencode($location)
-                        . $key;
+                    $url = 'https://maps.googleapis.com/maps/api/geocode/json?language=' . $country . '&address='
+                        . urlencode($location);
                 }
 
                 $ch = curl_init($url);
@@ -109,18 +90,19 @@ class Mirasvit_Advr_Helper_Geo extends Mage_Core_Helper_Abstract
                             break 2;
                         case "OVER_QUERY_LIMIT":
                         case "REQUEST_DENIED":
-                            $this->googleActiveKeyIdx++;
-                            if ($this->googleActiveKeyIdx > count($this->keys) - 1) {
+                            if ($this->tries++ > self::LIMIT) {
+                                $this->tries = 0;
+                                unset($result[$id]); // do not save postcode if API rejects request
                                 break 2;
                             }
                             break;
                     }
                 }
-            } while (isset($content['status'])  && "OK" !== $content['status']);
+            } while (isset($content['status']) && "OK" !== $content['status']);
 
-//            foreach ($content['results'] as $location) {
-//                $result[$id][] = $location;
-//            }
+            //            foreach ($content['results'] as $location) {
+            //                $result[$id][] = $location;
+            //            }
             if (count($content['results']) > 0)  {
                 $result[$id][] = $content['results'][0];
             }

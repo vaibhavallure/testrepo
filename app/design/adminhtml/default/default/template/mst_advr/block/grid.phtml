@@ -21,6 +21,7 @@ $numColumns = sizeof($this->getColumns());
                 <tr class="headings">
                     <th><span class="nobr">Visible</span></th>
                     <th><span class="nobr">Header</span></th>
+                    <th><span class="nobr">Expression</span></th>
                     <th class="last"><span class="nobr">Position</span></th>
                 </tr>
             </thead>
@@ -32,6 +33,9 @@ $numColumns = sizeof($this->getColumns());
                     </td>
                     <td>
                         <input name="columns[<?php echo $_index ?>][header]" type="text" class="input-text" value="<?php echo $_column->getHeader() ?>" style="width:100%;">
+                    </td>
+                    <td>
+                        <input name="columns[<?php echo $_index ?>][expression]" type="text" class="input-text" value="<?php echo $this->quoteEscape($_column->getExpression()) ?>" style="width:100%;">
                     </td>
                     <td class="last" width="50px">
                         <input name="columns[<?php echo $_index ?>][position]" type="text" class="input-text" value="<?php echo $_column->getPosition() ?>">

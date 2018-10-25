@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -31,8 +31,8 @@ class Mirasvit_Advr_Block_Adminhtml_Order_PaymentType extends Mirasvit_Advr_Bloc
         $this->setChartType('pie');
 
         $this->initChart()
-            ->setNameField('payment_method')
-            ->setValueField('sum_grand_total');
+            ->setNameField($this->getColumn('payment_method'))
+            ->setValueField($this->getColumn('sum_grand_total'));
 
         return $this;
     }
@@ -40,7 +40,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_PaymentType extends Mirasvit_Advr_Bloc
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort('sum_grand_total')
+            ->setDefaultSort($this->getColumn('sum_grand_total'))
             ->setDefaultDir('desc')
             ->setDefaultLimit(100)
             ->setPagerVisibility(false);
@@ -48,32 +48,37 @@ class Mirasvit_Advr_Block_Adminhtml_Order_PaymentType extends Mirasvit_Advr_Bloc
         return $this;
     }
 
-    public function _prepareCollection()
+    protected function prepareToolbar()
     {
-        $collection = Mage::getModel('advr/report_sales')
-            ->setBaseTable('sales/order', true)
-            ->setFilterData($this->getFilterData())
-            ->selectColumns(array_merge($this->getVisibleColumns(), array('orders')))
-            ->groupByColumn('payment_method');
+        $this->initToolbar()
+            ->setSalesSourceVisibility(true);
 
-        return $collection;
+        return $this;
+    }
+
+    protected function getGroupByColumn()
+    {
+        return 'payment_method';
     }
 
     public function getColumns()
     {
         $columns = array(
             'payment_method' => array(
-                'header'              => 'Payment Method',
-                'type'                => 'text',
-                'frame_callback'      => array(Mage::helper('advr/callback'), 'paymentMethod'),
-                'totals_label'        => 'Total',
-                'filter_totals_label' => 'Subtotal',
-                'filter'              => false,
-                'ccsave' => true,
+                'header'                => 'Payment Method',
+                'type'                  => 'text',
+                'frame_callback'        => array(Mage::helper('advr/callback'), 'paymentMethod'),
+                'totals_label'          => 'Total',
+                'filter_totals_label'   => 'Subtotal',
+                'filter'                => false,
+                'ccsave'                => true,
+                self::KEEP              => true // add this flag if column's index shouldn't be modified
             ),
         );
 
         $columns += $this->getOrderTableColumns(true);
+
+        $columns = $this->convertColumnsToSalesSource($columns);
 
         $columns['actions'] = array(
             'header' => 'Actions',

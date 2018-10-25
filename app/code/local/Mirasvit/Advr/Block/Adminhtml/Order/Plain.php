@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -61,9 +61,10 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Plain extends Mirasvit_Advr_Block_Admi
     public function getFilterData()
     {
         $filterData = parent::getFilterData();
+        unset($filterData['invoices']);
 
-        if (null !== $this->getRequest()->getPost('orders')) {
-            $filterData['order_id'] = explode(',', ($this->getRequest()->getPost('orders')));
+        if (isset($filterData['orders'])) {
+            $filterData['order_id'] = explode(',', $filterData['orders']);
         }
 
         return $filterData;
@@ -77,12 +78,12 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Plain extends Mirasvit_Advr_Block_Admi
         $tableDescription = $collection->getConnection()->describeTable($collection->getTable('sales/order'));
 
         // Add every report column to collection
-        foreach (array_merge($this->getVisibleColumns(),array('order_id')) as $column) {
+        foreach (array_merge($this->getVisibleColumns(), array('order_id')) as $column) {
             $data = $columns[$column];
             if (isset($tableDescription[$column])) {
                 $data['expression'] = 'sales_order_table.'.$column;
                 $data['table'] = 'sales/order';
-                if(isset($data['type']) &&
+                if (isset($data['type']) &&
                     $data['type'] == 'currency' &&
                     strpos($column, 'base') !== false) {
                     // please look at Mirasvit_Advr_Model_Report_Abstract::getExpression()
@@ -94,7 +95,9 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Plain extends Mirasvit_Advr_Block_Admi
         }
 
         $collection->setFilterData($filterData->unsOrders(), false, true) // Unset extra data from filters
-            ->selectColumns(array_merge($this->getVisibleColumns(),array('order_id')));
+            ->selectColumns(array_merge($this->getVisibleColumns(), array('order_id')));
+
+        $collection->getSelect()->group('sales_order_table.entity_id');
 
         $this->setCollection($collection);
 
@@ -181,10 +184,47 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Plain extends Mirasvit_Advr_Block_Admi
                 'hidden' => true,
             ),
 
+            'shipping_address' => array(
+                'header'       => Mage::helper('advr')->__('Shipping Address'),
+                'hidden'       => true,
+                'type'         => 'text',
+                'expression'   => 'CONCAT_WS(", ", sales_order_shipping_address_table.street, sales_order_shipping_address_table.city, sales_order_shipping_address_table.region, sales_order_shipping_address_table.postcode, sales_order_shipping_address_table.country_id)',
+                'table_method' => 'joinShippingAddressTable',
+            ),
+
+            'billing_address' => array(
+                'header'      => Mage::helper('advr')->__('Billing Address'),
+                'hidden'      => true,
+                'type'        => 'text',
+                'expression'  => 'CONCAT_WS(", ", sales_order_address_table.street, sales_order_address_table.city, sales_order_address_table.region, sales_order_address_table.postcode, sales_order_address_table.country_id)',
+                'table'       => 'sales/order_address',
+            ),
+
+            'shipping_city' => array(
+                'header'       => Mage::helper('advr')->__('Shipping City'),
+                'hidden'       => true,
+                'type'         => 'text',
+                'expression'   => 'sales_order_shipping_address_table.city',
+                'table_method' => 'joinShippingAddressTable',
+            ),
+
+            'shipping_telephone' => array(
+                'header'       => Mage::helper('advr')->__('Shipping Telephone'),
+                'hidden'       => true,
+                'type'         => 'text',
+                'expression'   => 'sales_order_shipping_address_table.telephone',
+                'table_method' => 'joinShippingAddressTable',
+            ),
+
             'status' => array(
                 'header' => Mage::helper('advr')->__('Status'),
                 'type' => 'options',
                 'options' => Mage::getSingleton('sales/order_config')->getStatuses(),
+            ),
+
+            'coupon_code' => array(
+                'header' => Mage::helper('advr')->__('Coupon'),
+                'type' => 'text',
             ),
 
             'products' => array(

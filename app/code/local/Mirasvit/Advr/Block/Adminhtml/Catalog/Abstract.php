@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -95,6 +95,7 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Abstract extends Mirasvit_Advr_Block
         $columns['sum_item_row_total'] = array(
             'header' => 'Total',
             'type' => 'currency',
+            'hidden' => false,
             'sortable' => true,
             'chart' => true,
         );
@@ -133,6 +134,46 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Abstract extends Mirasvit_Advr_Block
             'hidden' => true,
             'totals_label' => '',
         );
+        $columns['order_increment_ids'] = array(
+            'header' => 'Orders #',
+            'hidden' => true,
+            'filter' => false,
+            'sortable' => false,
+            'totals_label' => '',
+        );
+
+        return $columns;
+    }
+
+    /**
+     * Collect and return product attributes as columns.
+     *
+     * @return array
+     */
+    public function getProductAttributeColumns()
+    {
+        $columns    = [];
+        $attributes = Mage::getSingleton('advr/system_config_source_productAttribute')->toOptionHash();
+
+        foreach ($attributes as $attrCode => $attrLabel) {
+            if ($attrCode === 'sku') {
+                continue;
+            }
+
+            $options = Mage::helper('advr')->getAttributeOptionHash($attrCode);
+
+            $type = 'text';
+            if ($options) {
+                $type = 'options';
+            }
+
+            $columns['product_attribute_'.$attrCode] = array(
+                'header' => Mage::helper('advr')->__($attrLabel),
+                'type' => $type,
+                'options' => $options,
+                'hidden' => true
+            );
+        }
 
         return $columns;
     }
