@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -31,27 +31,38 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Customer extends Mirasvit_Advr_Block_A
         return $this;
     }
 
+    protected function prepareToolbar()
+    {
+        $this->initToolbar()
+            ->setSalesSourceVisibility(true);
+
+        return $this;
+    }
+
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort('sum_grand_total')
+            ->setDefaultSort($this->getColumn('sum_grand_total'))
             ->setDefaultDir('desc')
             ->setRowUrlCallback(array($this, 'rowUrlCallback'));
 
         return $this;
     }
 
+    protected function getGroupByColumn()
+    {
+        return $this->getColumn('customer_email');
+    }
+
     protected function _prepareCollection()
     {
-        $collection = Mage::getModel('advr/report_sales')
-            ->setBaseTable('sales/order', true)
-            ->setFilterData($this->getFilterData())
-            ->selectColumns(array_merge(
+        $collection = parent::_prepareCollection();
+
+        $collection->selectColumns(array_merge(
                 array('customer_firstname', 'customer_lastname', 'customer_id','orders'),
                 $this->getVisibleColumns()
             ))
-            ->addFieldToFilter('customer_group_id', array('gt' => 0))
-            ->groupByColumn('customer_email');
+            ->addFieldToFilter('customer_group_id', array('gt' => 0));
 
         return $collection;
     }
@@ -65,10 +76,12 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Customer extends Mirasvit_Advr_Block_A
                 'filter_totals_label' => 'Subtotal',
                 'frame_callback' => array(Mage::helper('advr/callback'), 'linkToCustomer'),
                 'chart' => true,
+                self::KEEP => true
             ),
 
             'customer_name' => array(
                 'header' => 'Customer Name',
+                self::KEEP => true
             ),
 
             'customer_group_id' => array(
@@ -76,17 +89,21 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Customer extends Mirasvit_Advr_Block_A
                 'chart' => false,
                 'type' => 'options',
                 'options' => Mage::getSingleton('advr/system_config_source_customerGroup')->toOptionHash(),
+                self::KEEP => true
             ),
 
             'customer_company' => array(
                 'header' => 'Customer Company',
                 'filter' => false,
                 'hidden' => true,
+                self::KEEP => true
             ),
 
         );
 
         $columns += $this->getOrderTableColumns(true);
+
+        $columns = $this->convertColumnsToSalesSource($columns);
 
         $columns['actions'] = array(
             'header' => 'Actions',

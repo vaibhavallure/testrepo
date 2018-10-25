@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -65,7 +65,7 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Product_Detail extends Mirasvit_Advr
             ->setBaseTable('catalog/product')
             ->setFilterData($this->getFilterData(), true, false)
             ->selectColumns('product_id')
-            ->selectColumns($this->getVisibleColumns())
+            ->selectColumns(array_merge($this->getVisibleColumns(), $this->getAdditionalColumns()))
             ->groupByColumn('period_of_sale')
             ->addFieldToFilter('product_id', Mage::registry('current_product')->getId());
 
@@ -94,7 +94,17 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Product_Detail extends Mirasvit_Advr
 
         $columns += $this->getBaseProductColumns();
 
+        $columns['actions'] = array(
+            'header' => 'Actions',
+            'renderer' => 'Mirasvit_Advr_Block_Adminhtml_Block_Grid_Renderer_PostAction',
+        );
+
         return $columns;
+    }
+
+    private function getAdditionalColumns()
+    {
+        return array('orders');
     }
 
     public function getFilterData()
