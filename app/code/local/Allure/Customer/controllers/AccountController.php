@@ -79,7 +79,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			        if (empty($refererUrl)) {
 			            $refererUrl = empty($defaultUrl) ? Mage::getBaseUrl() : 'customer/account';
 			        }
-					
+
                     $result['url'] = $refererUrl;
 
 				} catch (Mage_Core_Exception $e) {
@@ -108,7 +108,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
-		Mage::log('createCustomer:: '.$this->getRequest()->getParam('email'), Zend_log::DEBUG, 'univeral.log', true);
+		Mage::log('createCustomer:: '.json_encode($this->getRequest()->getParams()), Zend_log::DEBUG, 'univeral.log', true);
 
 		if ($this->getRequest()->getParam('email') && $this->_validateFormKey()) {
 			$websiteId = Mage::app()->getWebsite()->getId();

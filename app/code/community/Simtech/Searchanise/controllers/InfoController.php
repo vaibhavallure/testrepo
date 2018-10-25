@@ -40,13 +40,13 @@ class Simtech_Searchanise_InfoController extends Mage_Core_Controller_Front_Acti
         // It is need if controller will used the "generateProductsFeed" function
 
         // Do not start standart session
-        $this->setFlag('', self::FLAG_NO_START_SESSION, 1); 
+        $this->setFlag('', self::FLAG_NO_START_SESSION, 1);
         $this->setFlag('', self::FLAG_NO_CHECK_INSTALLATION, 1);
         $this->setFlag('', self::FLAG_NO_COOKIES_REDIRECT, 0);
         $this->setFlag('', self::FLAG_NO_PRE_DISPATCH, 1);
 
         // Need for delete the "PDOExceptionPDOException" error
-        $this->setFlag('', self::FLAG_NO_POST_DISPATCH, 1); 
+        $this->setFlag('', self::FLAG_NO_POST_DISPATCH, 1);
 
         parent::preDispatch();
 
@@ -67,7 +67,7 @@ class Simtech_Searchanise_InfoController extends Mage_Core_Controller_Front_Acti
             if ($visual) {
                 Mage::helper('searchanise/ApiSe')->printR($options);
             } else {
-                echo Mage::helper('core')->jsonEncode($options);
+                $this->getResponse()->appendBody(Mage::helper('core')->jsonEncode($options));
             }
         } else {
             $resync        = $this->getRequest()->getParam(self::RESYNC);
@@ -131,7 +131,7 @@ class Simtech_Searchanise_InfoController extends Mage_Core_Controller_Front_Acti
                     $n++;
                 }
 
-                echo $this->_profiler();
+                $this->getResponse()->appendBody($this->_profiler());
 
                 $feed = array(
                     'header'     => Mage::helper('searchanise/ApiProducts')->getHeader($store),
@@ -139,11 +139,11 @@ class Simtech_Searchanise_InfoController extends Mage_Core_Controller_Front_Acti
                     'schema'     => Mage::helper('searchanise/ApiProducts')->getSchema($store),
                     'categories' => Mage::helper('searchanise/ApiCategories')->generateCategoriesFeed(Simtech_Searchanise_Model_Queue::NOT_DATA, $store, true),
                 );
-                
+
                 if ($visual) {
                     Mage::helper('searchanise/ApiSe')->printR(Mage::helper('core')->jsonEncode($feed), $feed);
                 } else {
-                    echo Mage::helper('core')->jsonEncode($feed);
+                    $this->getResopnse()->appendBody(Mage::helper('core')->jsonEncode($feed));
                 }
 
             } elseif ($resync) {
@@ -164,7 +164,7 @@ class Simtech_Searchanise_InfoController extends Mage_Core_Controller_Front_Acti
                 if ($visual) {
                     Mage::helper('searchanise/ApiSe')->printR($feed);
                 } else {
-                    echo Mage::helper('core')->jsonEncode($feed);
+                    $this->getResponse()->appendBody( Mage::helper('core')->jsonEncode($feed));
                 }
 
             } else {
@@ -174,7 +174,7 @@ class Simtech_Searchanise_InfoController extends Mage_Core_Controller_Front_Acti
                 }
                 $options['next_queue'] = Mage::getModel('searchanise/queue')->getNextQueue();
                 $options['total_items_in_queue'] = Mage::getModel('searchanise/queue')->getTotalItems();
-                
+
                 $options['cron_async_enabled'] = Mage::helper('searchanise/ApiSe')->checkCronAsync();
                 $options['ajax_async_enabled'] = Mage::helper('searchanise/ApiSe')->checkAjaxAsync();
                 $options['object_async_enabled'] = Mage::helper('searchanise/ApiSe')->checkObjectAsync();
@@ -249,12 +249,11 @@ class Simtech_Searchanise_InfoController extends Mage_Core_Controller_Front_Acti
                 if ($visual) {
                     Mage::helper('searchanise/ApiSe')->printR($options);
                 } else {
-                    echo Mage::helper('core')->jsonEncode($options);
+                    $this->getResponse()->appendBody(Mage::helper('core')->jsonEncode($options));
                 }
             }
         }
 
-        die();
         return $this;
     }
 
