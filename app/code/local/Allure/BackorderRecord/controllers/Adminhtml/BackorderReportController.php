@@ -30,7 +30,7 @@ class Allure_BackorderRecord_Adminhtml_BackorderReportController extends Mage_Ad
             $file = $report['value'];
 
             $this->_prepareDownloadResponse(basename($file), array("type"=>"filename","value"=>$file));
-            
+
             /*if (file_exists($file)) {
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
@@ -43,7 +43,6 @@ class Allure_BackorderRecord_Adminhtml_BackorderReportController extends Mage_Ad
                 exit;
             }*/
         }else{
-            echo "not create";
             return;
         }
     }
