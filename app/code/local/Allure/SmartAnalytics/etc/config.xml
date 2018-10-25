@@ -450,7 +450,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <allure_smartanalytics before="Mage_Adminhtml">Allure_SmartAnalytics_Adminhtml</allure_smartanalytics>
+                        <allure_smartanalytics after="Mage_Adminhtml">Allure_SmartAnalytics_Adminhtml</allure_smartanalytics>
                     </modules>
                 </args>
             </adminhtml>

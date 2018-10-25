@@ -1,18 +1,6 @@
 <?php
-/***************************************************************************
-*                                                                          *
-*   (c) 2004 Vladimir V. Kalynyak, Alexey V. Vinokurov, Ilya M. Shalnev    *
-*                                                                          *
-* This  is  commercial  software,  only  users  who have purchased a valid *
-* license  and  accept  to the terms of the  License Agreement can install *
-* and use this program.                                                    *
-*                                                                          *
-****************************************************************************
-* PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
-* "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
-****************************************************************************/
 
-class Simtech_Searchanise_Block_Product_List_Toolbar extends Mage_Catalog_Block_Product_List_Toolbar
+class Simtech_Searchanise_Block_Product_List_AmastyToolbar extends Amasty_Shopby_Block_Catalog_Product_List_Toolbar
 {
     /**
      * Retrieve available Order fields list
@@ -120,8 +108,7 @@ class Simtech_Searchanise_Block_Product_List_Toolbar extends Mage_Catalog_Block_
         }
 
         $collection = $this->getCollection();
-        if ((!method_exists($collection, 'checkSearchaniseResult')) || (!$collection->checkSearchaniseResult()))
-        {
+        if ((!method_exists($collection, 'checkSearchaniseResult')) || (!$collection->checkSearchaniseResult())) {
             return parent::getFirstNum();
         }
 

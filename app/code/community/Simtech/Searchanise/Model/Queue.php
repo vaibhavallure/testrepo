@@ -15,7 +15,7 @@
 class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
 {
     const NOT_DATA                  = 'N';
-    
+
     const ACT_PHRASE                = 'phrase';
 
     const ACT_UPDATE_PAGES          = 'update_pages';
@@ -38,13 +38,13 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
     const ACT_START_FULL_IMPORT     = 'start_full_import';
     const ACT_GET_INFO              = 'update_info';
     const ACT_END_FULL_IMPORT       = 'end_full_import';
-    
+
     public static $mainActionTypes = array(
         self::ACT_PREPARE_FULL_IMPORT,
         self::ACT_START_FULL_IMPORT,
         self::ACT_END_FULL_IMPORT,
     );
-    
+
     public static $actionTypes = array(
         self::ACT_PHRASE,
 
@@ -56,7 +56,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
         self::ACT_DELETE_PAGES,
         self::ACT_DELETE_PAGES_ALL,
         self::ACT_DELETE_PRODUCTS,
-        self::ACT_DELETE_PRODUCTS_ALL,      
+        self::ACT_DELETE_PRODUCTS_ALL,
         self::ACT_DELETE_FACETS,
         self::ACT_DELETE_FACETS_ALL,
         self::ACT_DELETE_ATTRIBUTES,
@@ -68,17 +68,17 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
         self::ACT_START_FULL_IMPORT,
         self::ACT_END_FULL_IMPORT,
     );
-    
+
     const STATUS_PENDING    = 'pending';
-    const STATUS_DISABLED   = 'disabled'; 
+    const STATUS_DISABLED   = 'disabled';
     const STATUS_PROCESSING = 'processing';
-    
+
     public static $statusTypes = array(
         self::STATUS_PENDING,
         self::STATUS_DISABLED,
         self::STATUS_PROCESSING,
     );
-    
+
     protected function _construct()
     {
         $this->_init('searchanise/queue');
@@ -88,7 +88,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
     {
         $isUpdate = false;
 
-        if ($action == Simtech_Searchanise_Model_Queue::ACT_UPDATE_PAGES || 
+        if ($action == Simtech_Searchanise_Model_Queue::ACT_UPDATE_PAGES ||
             $action == Simtech_Searchanise_Model_Queue::ACT_UPDATE_PRODUCTS ||
             $action == Simtech_Searchanise_Model_Queue::ACT_UPDATE_ATTRIBUTES ||
             $action == Simtech_Searchanise_Model_Queue::ACT_UPDATE_CATEGORIES) {
@@ -102,7 +102,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
     {
         $isDelete = false;
 
-        if ($action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PAGES || 
+        if ($action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PAGES ||
             $action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PRODUCTS ||
             $action == Simtech_Searchanise_Model_Queue::ACT_DELETE_ATTRIBUTES ||
             $action == Simtech_Searchanise_Model_Queue::ACT_DELETE_FACETS ||
@@ -116,7 +116,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
     {
         $isDeleteAll = false;
 
-        if ($action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PAGES_ALL || 
+        if ($action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PAGES_ALL ||
             $action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PRODUCTS_ALL ||
             $action == Simtech_Searchanise_Model_Queue::ACT_DELETE_ATTRIBUTES_ALL ||
             $action == Simtech_Searchanise_Model_Queue::ACT_DELETE_FACETS_ALL ||
@@ -137,7 +137,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
         } elseif ($action == Simtech_Searchanise_Model_Queue::ACT_DELETE_CATEGORIES ||
                   $action == Simtech_Searchanise_Model_Queue::ACT_DELETE_CATEGORIES_ALL) {
             $type = 'categories';
-        } elseif ($action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PAGES || 
+        } elseif ($action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PAGES ||
                   $action == Simtech_Searchanise_Model_Queue::ACT_DELETE_PAGES_ALL) {
             $type = 'pages';
         } elseif ($action == Simtech_Searchanise_Model_Queue::ACT_DELETE_FACETS ||
@@ -147,14 +147,14 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
 
         return $type;
     }
-    
+
     public function deleteKeys($curStore = null)
     {
         $stores = Mage::helper('searchanise/ApiSe')->getStores($curStore);
-        
+
         foreach ($stores as $keyStore => $store) {
             $queue = Mage::getModel('searchanise/queue')->getCollection()->addFilter('store_id', $store->getId())->toArray();
-            
+
             if (!empty($queue['items'])) {
                 foreach ($queue['items'] as $item) {
                     try {
@@ -165,7 +165,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                 }
             }
         }
-        
+
         return true;
     }
 
@@ -189,7 +189,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
         $collection = $this->getCollection()
             ->addOrder('queue_id', 'ASC')
             ->setPageSize(1);
-        
+
         if (!empty($queueId)) {
             $collection = $collection->addFieldToFilter('queue_id', array('gt' => $queueId));
         }
@@ -201,30 +201,46 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
 
         return $collection->load()->toArray();
     }
-    
+
     public function getNextQueue($queueId = null)
     {
         $q = array();
         $queueArr = self::getNextQueueArray($queueId);
-        
+
         if (!empty($queueArr['items'])) {
             $q = reset($queueArr['items']);
         }
-        
+
         return $q;
+    }
+
+    public static function prepareFullImport($store)
+    {
+        if (empty($store)) {
+            return false;
+        }
+
+        $resource = Mage::getSingleton('core/resource');
+        $write = $resource->getConnection('core_write');
+        $tableName = $resource->getTableName('searchanise/queue');
+
+        return $write->query("DELETE FROM {$tableName} WHERE action <> '" . self::ACT_PREPARE_FULL_IMPORT ."' AND store_id = '{$store->getId()}'");
     }
 
     public function clearActions($store = null)
     {
-        $collection = Mage::getModel('searchanise/queue')->getCollection();
+        $resource = Mage::getSingleton('core/resource');
+        $write = $resource->getConnection('core_write');
+        $tableName = $resource->getTableName('searchanise/queue');
 
-        if ($store) {
-            $collection = $collection->addFilter('store_id', $store->getId());
+        if (empty($store) || $store->getId() == 0) {
+            return $write->query("TRUNCATE TABLE {$tableName}");
+
+        } else {
+            return $write->query("DELETE FROM {$tableName} WHERE store_id = '{$store->getId()}'");
         }
-
-        return $collection->load()->delete();
     }
-    
+
     public function addAction($action, $data = null, $curStore = null, $curStoreId = null)
     {
         if (in_array($action, self::$actionTypes)) {
@@ -237,7 +253,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
             ) {
                 return false;
             }
-            
+
             $data = serialize((array)$data);
             $data = array($data);
 
@@ -247,7 +263,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                 // Truncate queue for all
                 Mage::getModel('searchanise/queue')->clearActions($curStore);
             }
-            
+
             foreach ($data as $d) {
                 foreach ($stores as $keyStore => $store) {
                     if (Mage::helper('searchanise/ApiSe')->getStatusModule($store) != 'Y') {
@@ -255,7 +271,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                             continue;
                         }
                     }
-                    
+
                     if ($action != self::ACT_PHRASE) {
                         // Remove duplicate actions
                         $exist_actions = Mage::getModel('searchanise/queue')
@@ -267,7 +283,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                             ->load()
                             ->delete();
                     }
-                    
+
                     $queueData = array(
                         'action'    => $action,
                         'data'      => $d,
@@ -277,10 +293,10 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                     $this->setData($queueData)->save();
                 }
             }
-            
+
             return true;
         }
-        
+
         return false;
     }
 
@@ -353,12 +369,12 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
 
         return true;
     }
-    
+
     public function addActionProducts($products)
     {
         if (!empty($products)) {
             $productIds = array();
-            
+
             foreach ($products as $product) {
                 if ($product->getId()) {
                     $productIds[] = $product->getId();
@@ -368,15 +384,15 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                     $productIds = array();
                 }
             }
-            
+
             if ((!empty($productIds)) && (count($productIds) > 0)) {
                 Mage::getModel('searchanise/queue')->addAction(Simtech_Searchanise_Model_Queue::ACT_UPDATE_PRODUCTS, $productIds);
             }
         }
-        
+
         return $this;
     }
-    
+
     public function addActionProductIdsForAllStore($productIds, $action = self::ACT_UPDATE_PRODUCTS)
     {
         if (!empty($productIds)) {
@@ -384,7 +400,7 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                 Mage::getModel('searchanise/queue')->addAction($action, $productIds);
             } else {
                 $actProductIds = array();
-                
+
                 foreach ($productIds as $productId) {
                     if ($productId) {
                         $actProductIds[] = $productId;
@@ -394,43 +410,43 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                         $actProductIds = array();
                     }
                 }
-                
+
                 if (!empty($actProductIds)) {
                     Mage::getModel('searchanise/queue')->addAction($action, $productIds);
                 }
             }
         }
-        
+
         return $this;
     }
-    
+
     public function addActionProductIds($productIds, $action = self::ACT_UPDATE_PRODUCTS)
     {
         if (!empty($productIds)) {
             if (!is_array($productIds)) {
                 $productIds = array(0 => $productIds);
             }
-            
+
             foreach ($productIds as $k => $productId) {
                 $storeIds = null;
                 $product = Mage::getModel('catalog/product')
                     ->load($productId);
-                
+
                 if ($product) {
-                    $storeIds = $product->getStoreIds();                
+                    $storeIds = $product->getStoreIds();
                     Mage::getModel('searchanise/queue')->addAction(Simtech_Searchanise_Model_Queue::ACT_UPDATE_PRODUCTS, $productId, null, $storeIds);
                 }
             }
         }
-        
+
         return $this;
     }
-    
+
     public function addActionOrderItems($items)
     {
         if (!empty($items)) {
             $productIds = array();
-            
+
             foreach ($items as $item) {
                 if ($item->getProductId()) {
                     $productIds[] = $item->getProductId();
@@ -440,26 +456,26 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                     $productIds = array();
                 }
             }
-            
+
             if (!empty($productIds)) {
                 Mage::getModel('searchanise/queue')->addAction(Simtech_Searchanise_Model_Queue::ACT_UPDATE_PRODUCTS, $productIds, null, $item->getStoreId());
             }
         }
-        
+
         return $this;
     }
-    
+
     public function addActionDeleteProductFromOldStore($product = null)
     {
         if ($product && $product->getId()) {
             $storeIds = $product->getStoreIds();
-            
+
             $product_old = Mage::getModel('catalog/product')
                 ->load($product->getId());
-            
+
             if (!empty($product_old)) {
                 $storeIdsOld = $product_old->getStoreIds();
-                
+
                 if (!empty($storeIdsOld)) {
                     foreach ($storeIdsOld as $k => $storeIdOld) {
                         if ((empty($storeIds)) || (!in_array($storeIdOld, $storeIds))) {
@@ -469,25 +485,25 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                 }
             }
         }
-        
+
         return $this;
     }
-    
+
     public function addActionDeleteProduct($product = null)
     {
         if ($product && $product->getId()) {
             $storeIds = $product->getStoreIds();
-            
+
             if (!empty($storeIds)) {
                 foreach ($storeIds as $k => $storeId) {
                     $this->addAction(Simtech_Searchanise_Model_Queue::ACT_DELETE_PRODUCTS, $product->getId(), null, $storeId);
                 }
             }
         }
-        
+
         return $this;
     }
-    
+
     public function addActionUpdateProduct($product = null, $storeIds = null)
     {
         if ($product && $product->getId()) {
@@ -496,18 +512,18 @@ class Simtech_Searchanise_Model_Queue extends Mage_Core_Model_Abstract
                     $storeIds = array(0 => $storeIds);
                 }
             }
-            
+
             if (empty($storeIds)) {
                 $storeIds = $product->getStoreIds();
             }
-            
+
             if (!empty($storeIds)) {
                 foreach ($storeIds as $k => $storeId) {
                     $this->addAction(Simtech_Searchanise_Model_Queue::ACT_UPDATE_PRODUCTS, $product->getId(), null, $storeId);
                 }
             }
         }
-        
+
         return $this;
     }
 }
