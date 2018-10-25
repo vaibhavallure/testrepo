@@ -12,10 +12,14 @@
 * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
 ****************************************************************************/
 
-class Simtech_Searchanise_Model_Mysql4_Queue extends Mage_Core_Model_Mysql4_Abstract
-{
-    protected function _construct()
-    {
-        $this->_init('searchanise/queue', 'queue_id');
-    }
-}
+$installer = $this;
+
+$installer->startSetup();
+
+$resource = Mage::getSingleton('core/resource');
+$writeConnection = $resource->getConnection('core_write');
+$tableName = $resource->getTableName('searchanise/queue');
+
+$writeConnection->query("ALTER TABLE {$tableName} ADD INDEX `StoreAction` (`store_id`, `action`);");
+
+$installer->endSetup();

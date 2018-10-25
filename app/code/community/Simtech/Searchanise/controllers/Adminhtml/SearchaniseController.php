@@ -11,6 +11,7 @@
 * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
 * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
 ****************************************************************************/
+
 class Simtech_Searchanise_Adminhtml_SearchaniseController extends Mage_Adminhtml_Controller_Action
 {
 
@@ -19,33 +20,25 @@ class Simtech_Searchanise_Adminhtml_SearchaniseController extends Mage_Adminhtml
     protected function _initAction()
     {
         $this->_setActiveMenu('catalog/searchanise');
-        
+
         return $this;
     }
-    
+
     /*
      * dashboard
      */
     public function indexAction()
     {
         $this->loadLayout()->_initAction();
-        
+
         $this->_addContent($this->getLayout()->createBlock('core/text', 'inner-wrap-start')->setText('<div id="searchanise-settings-wrapper">'));
         $this->_addContent(
             $this->getLayout()->createBlock('adminhtml/template')
                 ->setTemplate('searchanise/dashboard.phtml'));
-        
+
         $this->_addContent($this->getLayout()->createBlock('core/text', 'inner-wrap-end')->setText('</div>'));
-        
+
         $this->renderLayout();
-    }
-    
-    public function termsAction()
-    {
-        // TODO: add wrapper for non-ajax requests - LOW priority
-        // return terms text pulled from server
-        print $this->getLayout()->createBlock("searchanise/Adminhtml_Index_Terms")->toHtml();
-        exit();
     }
 
     /*
@@ -57,8 +50,6 @@ class Simtech_Searchanise_Adminhtml_SearchaniseController extends Mage_Adminhtml
         if ($useFullFeed != '') {
             Mage::helper('searchanise/ApiSe')->setUseFullFeed($useFullFeed == 'true' ? true : false);
         }
-        
-        exit;
     }
 
     /*
@@ -68,14 +59,14 @@ class Simtech_Searchanise_Adminhtml_SearchaniseController extends Mage_Adminhtml
     {
         if (Mage::helper('searchanise/ApiSe')->getStatusModule() == 'Y') {
             if (Mage::helper('searchanise/ApiSe')->signup() != true) {
-                
+
                 $this->_redirect(Mage::helper('searchanise/ApiSe')->getSearchaniseLink());
             }
             Mage::helper('searchanise/ApiSe')->queueImport();
-            
+
             $this->_redirect(Mage::helper('searchanise/ApiSe')->getSearchaniseLink());
         }
-        
+
         return $this;
     }
 
@@ -88,10 +79,10 @@ class Simtech_Searchanise_Adminhtml_SearchaniseController extends Mage_Adminhtml
             if (Mage::helper('searchanise/ApiSe')->signup() == true) {
                 Mage::helper('searchanise/ApiSe')->queueImport();
             }
-            
+
             $this->_redirect(Mage::helper('searchanise/ApiSe')->getSearchaniseLink());
         }
-        
+
         return $this;
     }
 

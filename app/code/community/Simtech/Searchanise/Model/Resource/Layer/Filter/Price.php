@@ -20,13 +20,13 @@ class Simtech_Searchanise_Model_Resource_Layer_Filter_Price extends Mage_Catalog
         if (!Mage::helper('searchanise/ApiSe')->checkSearchaniseResult(true)) {
             return parent::getCount($filter, $range);
         }
-        
+
         $collection = $filter->getLayer()->getProductCollection();
-        
+
         if ((!method_exists($collection, 'checkSearchaniseResult')) || (!$collection->checkSearchaniseResult())) {
             return parent::getCount($filter, $range);
         }
-        
+
         return $collection
             ->getSearchaniseRequest()
             ->getCountAttributePrice($filter, $range);
@@ -43,14 +43,14 @@ class Simtech_Searchanise_Model_Resource_Layer_Filter_Price extends Mage_Catalog
         if (!Mage::helper('searchanise/ApiSe')->checkSearchaniseResult(true)) {
             return parent::applyPriceRange($filter);
         }
-        
+
         $collection = $filter->getLayer()->getProductCollection();
-        
+
         if ((!method_exists($collection, 'checkSearchaniseResult')) || (!$collection->checkSearchaniseResult())) {
             return parent::applyPriceRange($filter);
         }
         // Disable internal price filter.
-        
+
         return $this;
     }
 }
