@@ -17,6 +17,14 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
 
         $statuses = Mage::getModel('sales/order_config')->getStatuses();
         $values = array();
+
+        $metalColor = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, 'metal');
+
+        if ($metalColor->usesSource()) {
+            $colorOptions = $metalColor->getSource()->getAllOptions(false);
+        }        
+        $colorValues = array();
+        
             foreach ($statuses as $code => $label) {
                     $values[] = array(
                         'label' => Mage::helper("backorderrecord")->__($label),
@@ -24,6 +32,12 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
                     );
             }
 
+            foreach ($colorOptions as $option) {
+                    $colorValues[] = array(
+                        'label' => Mage::helper("backorderrecord")->__($option['label']),
+                        'value' => $option['label']
+                    );
+            }
 
         $fieldset->addField('fromdate', 'datetime', array(
             'label'    => 'From',
@@ -50,20 +64,32 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
                 'label'     => Mage::helper("backorderrecord")->__('SKU')
             ));
 
-          $fieldset->addField('metal_color', 'text', array(
+          $fieldset->addField('show_metal_color', 'select', array(
+                'name'      => 'show_metal_color',
+                'label'     => Mage::helper("backorderrecord")->__('Metal color'),
+                'options'   => array(
+                        '0' => Mage::helper('backorderrecord')->__('Any'),
+                        '1' => Mage::helper('backorderrecord')->__('Specified'),
+                    ),
+                'note'      => Mage::helper('backorderrecord')->__('Applies to Any of the Specified Metal Color'),
+                'onchange'  => 'showColorHideField()',
+            ));
+
+          $selectField = $fieldset->addField('metal_color', 'multiselect', array(
                 'name'      => 'metal_color',
-                'label'     => Mage::helper("backorderrecord")->__('Metal color')
+                'values'    => $colorValues,
+                'display'   => 'none'
             ));
 
 
        $fieldset->addField('show_order_statuses', 'select', array(
                 'name'      => 'show_order_statuses',
-                'label'     => Mage::helper('reports')->__('Order Status'),
+                'label'     => Mage::helper('backorderrecord')->__('Order Status'),
                 'options'   => array(
-                        '0' => Mage::helper('reports')->__('Any'),
-                        '1' => Mage::helper('reports')->__('Specified'),
+                        '0' => Mage::helper('backorderrecord')->__('Any'),
+                        '1' => Mage::helper('backorderrecord')->__('Specified'),
                     ),
-                'note'      => Mage::helper('reports')->__('Applies to Any of the Specified Order Statuses'),
+                'note'      => Mage::helper('backorderrecord')->__('Applies to Any of the Specified Order Statuses'),
                 'onchange'  => 'showHideField()',
             ));
         
@@ -87,7 +113,20 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
                                 $('order_statuses').hide();
                             } 
                         }
-                </script>"); 
+                   
+                    $('metal_color').hide();
+                        function showColorHideField() {
+                            var val1 = document.getElementById('show_metal_color');
+                            var hidevalue1 = val1.options[val1.selectedIndex].value;
+                            
+                           if(hidevalue1 == 1){
+                            $('metal_color').show();
+                            }else{
+                                $('metal_color').hide();
+                            } 
+                        }
+
+                </script>");
        
         $form->setValues(null);
 
