@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -47,6 +47,19 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Invoices extends Mirasvit_Advr_Block_A
         return $this;
     }
 
+    public function getFilterData()
+    {
+        $filterData = parent::getFilterData();
+
+        if (isset($filterData['invoices'])) {
+            $filterData['entity_id'] = explode(',', $filterData['invoices']);
+        }
+
+        unset($filterData['orders']);
+
+        return $filterData;
+    }
+
     protected function prepareGrid()
     {
         $this->initGrid()
@@ -62,7 +75,10 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Invoices extends Mirasvit_Advr_Block_A
     {
         $columns = $this->getColumns();
         $filterData = clone $this->getFilterData();
-        $collection = Mage::getModel('advr/report_sales')->setBaseTable('sales/invoice');
+        $collection = Mage::getModel('advr/report_sales')
+            ->setBaseTable('sales/invoice')
+            ->setRangeFilterTable('sales_invoice_table');
+
         $tableDescription = $collection->getConnection()->describeTable($collection->getTable('sales/invoice'));
 
         // Add every report column to collection
@@ -83,6 +99,8 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Invoices extends Mirasvit_Advr_Block_A
 
         $collection->setFilterData($filterData->unsInvoices(), false, true) // Unset extra data from filters
             ->selectColumns(array_merge($this->getVisibleColumns(),array('entity_id')));
+
+        $collection->getSelect()->group('sales_invoice_table.entity_id');
 
         $this->applyFilter($collection);
 
@@ -116,6 +134,8 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Invoices extends Mirasvit_Advr_Block_A
                 'totals_label' => Mage::helper('advr')->__(''),
                 'hidden' => true,
                 'table' => 'sales/invoice',
+                'type' => 'array',
+                'filter' => false,
                 'expression' => 'sales_invoice_table.entity_id',
             ),
 
@@ -280,9 +300,10 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Invoices extends Mirasvit_Advr_Block_A
 
     private function applyFilter($collection)
     {
-        if (null !== $this->getRequest()->getPost('invoices')) {
+        $filterData = $this->getFilterData();
+        if (isset($filterData['invoices'])) {
             $collection->addFieldToFilter('sales_invoice_table.entity_id', array(
-                'in' => explode(',', ($this->getRequest()->getPost('invoices')))
+                'in' => explode(',', $filterData['invoices'])
             ));
         }
     }

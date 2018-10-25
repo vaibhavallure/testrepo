@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -59,11 +59,6 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                 'sales_order_table.entity_id = sales_order_payment_table.parent_id',
             ),
             array(
-                'sales/invoice',
-                'sales/order_payment',
-                'sales_invoice_table.order_id = sales_order_payment_table.parent_id',
-            ),
-            array(
                 'advr/postcode',
                 'sales/order_address',
                 array(
@@ -107,6 +102,11 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                 'sales/order',
                 'sales/invoice',
                 'sales_order_table.entity_id = sales_invoice_table.order_id',
+            ),
+            array(
+                'sales/order',
+                'sales/creditmemo',
+                'sales_order_table.entity_id = sales_creditmemo_table.order_id',
             ),
             array(
                 'sales/order',
@@ -491,13 +491,150 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                 'type' => 'currency',
                 'expression' => 'AVG(sales_invoice_table.base_grand_total)',
                 'table' => 'sales/invoice',
-        ))->addColumn(
+            )
+        ) ->addColumn(
+            'creditmemo_quantity',
+            array(
+                'label' => 'Number of Credit Memos',
+                'type' => 'number',
+                'expression' => 'COUNT(DISTINCT(sales_creditmemo_table.entity_id))',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_sum_discount_amount',
+            array(
+                'label' => 'Credit Memo Discount Amount',
+                'type' => 'currency',
+                'expression' => 'SUM(sales_creditmemo_table.base_discount_amount)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_sum_shipping_amount',
+            array(
+                'label' => 'Credit Memo Shipping Amount',
+                'type' => 'currency',
+                'expression' => 'SUM(sales_creditmemo_table.base_shipping_amount)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_sum_tax_amount',
+            array(
+                'label' => 'Credit Memo Tax Amount',
+                'type' => 'currency',
+                'expression' => 'SUM(sales_creditmemo_table.base_tax_amount)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_sum_shipping_tax_amount',
+            array(
+                'label' => 'Credit Memo Shipping Tax Amount',
+                'type' => 'currency',
+                'expression' => 'SUM(sales_creditmemo_table.base_shipping_tax_amount)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_sum_subtotal',
+            array(
+                'label' => 'Credit Memo Subtotal',
+                'type' => 'currency',
+                'expression' => 'SUM(sales_creditmemo_table.base_subtotal)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_sum_grand_total',
+            array(
+                'label' => 'Credit Memo Grand Total',
+                'type' => 'currency',
+                'expression' => 'SUM(sales_creditmemo_table.base_grand_total)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_avg_discount_amount',
+            array(
+                'label' => 'Credit Memo Avg Discount Amount',
+                'type' => 'currency',
+                'expression' => 'AVG(sales_creditmemo_table.base_discount_amount)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_avg_shipping_amount',
+            array(
+                'label' => 'Credit Memo Avg Shipping Amount',
+                'type' => 'currency',
+                'expression' => 'AVG(sales_creditmemo_table.base_shipping_amount)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_avg_tax_amount',
+            array(
+                'label' => 'Credit Memo Avg Tax Amount',
+                'type' => 'currency',
+                'expression' => 'AVG(sales_creditmemo_table.base_tax_amount)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_avg_shipping_tax_amount',
+            array(
+                'label' => 'Credit Memo Avg Shipping Tax Amount',
+                'type' => 'currency',
+                'expression' => 'AVG(sales_creditmemo_table.base_shipping_tax_amount)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_avg_total_ordered_cost',
+            array(
+                'label' => 'Avg Total Ordered Cost',
+                'type' => 'currency',
+                'expression' => 'AVG(sales_creditmemo_table.base_grand_total)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_avg_grand_total',
+            array(
+                'label' => 'Credit Memo Avg Grand Total',
+                'type' => 'currency',
+                'expression' => 'AVG(sales_creditmemo_table.base_grand_total)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'sum_orders_qty',
+            array(
+                'label' => 'Number of Orders',
+                'type' => 'quantity',
+                'expression' => 'COUNT(DISTINCT sales_creditmemo_table.order_id)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
+            'creditmemo_increment_id',
+            array(
+                'label' => 'Credit Memo #',
+                'type' => 'text',
+                'expression' => 'GROUP_CONCAT(sales_creditmemo_table.increment_id)',
+                'table' => 'sales/creditmemo',
+            )
+        )->addColumn(
             'invoice_increment_id',
             array(
                 'label' => 'Invoice #',
                 'type' => 'text',
                 'expression' => 'GROUP_CONCAT(sales_invoice_table.increment_id)',
                 'table' => 'sales/invoice',
+            )
+        )->addColumn(
+            'order_increment_ids',
+            array(
+                'label' => 'Orders #',
+                'type' => 'text',
+                'expression' => 'GROUP_CONCAT(DISTINCT sales_order_table.increment_id)',
+                'table' => 'sales/order',
+            )
+        )->addColumn(
+            'order_increment_id',
+            array(
+                'label' => 'Order #',
+                'type' => 'text',
+                'expression' => 'sales_order_table.increment_id',
+                'table' => 'sales/order',
             )
         )->addColumn(
             'country_id',
@@ -509,11 +646,44 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                 'table' => 'sales/order_address',
             )
         )->addColumn(
+            'shipping_address',
+            array(
+                'label'        => 'Shipping Address',
+                'type'         => 'text',
+                'expression'   => 'CONCAT_WS(", ", sales_order_shipping_address_table.street, sales_order_shipping_address_table.city, sales_order_shipping_address_table.region, sales_order_shipping_address_table.postcode, sales_order_shipping_address_table.country_id)',
+                'table_method' => 'joinShippingAddressTable',
+            )
+        )->addColumn(
+            'billing_address',
+            array(
+                'label'        => 'Billing Address',
+                'type'         => 'text',
+                'expression'   => 'CONCAT_WS(", ", sales_order_address_table.street, sales_order_address_table.city, sales_order_address_table.region, sales_order_address_table.postcode, sales_order_address_table.country_id)',
+                'table'        => 'sales/order_address',
+            )
+        )->addColumn(
+            'shipping_city',
+            array(
+                'label'        => 'Shipping City',
+                'type'         => 'text',
+                'expression'   => 'sales_order_shipping_address_table.city',
+                'table_method' => 'joinShippingAddressTable',
+            )
+        )->addColumn(
+            'shipping_telephone',
+            array(
+                'label'        => 'Shipping Telephone',
+                'type'         => 'text',
+                'expression'   => 'sales_order_shipping_address_table.telephone',
+                'table_method' => 'joinShippingAddressTable',
+            )
+        )->addColumn(
             'state',
             array(
                 'label' => 'State',
                 'type' => 'text',
-                'expression' => 'advr_postcode_table.state',
+                // 'expression' => 'advr_postcode_table.state',
+                'expression' => 'IFNULL(advr_postcode_table.state, sales_order_address_table.region)',
                 'table' => 'advr/postcode',
             )
         )->addColumn(
@@ -529,7 +699,8 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
             array(
                 'label' => 'City / Place',
                 'type' => 'text',
-                'expression' => 'advr_postcode_table.place',
+                // 'expression' => 'advr_postcode_table.place',
+                'expression' => 'IFNULL(advr_postcode_table.place, sales_order_address_table.city)',
                 'table' => 'advr/postcode',
             )
         )->addColumn(
@@ -551,7 +722,8 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
             array(
                 'label' => 'Postcode',
                 'type' => 'text',
-                'expression' => 'advr_postcode_table.postcode',
+                // 'expression' => 'advr_postcode_table.postcode',
+                'expression' => 'IFNULL(advr_postcode_table.postcode, sales_order_address_table.postcode)',
                 'table' => 'advr/postcode',
             )
         )->addColumn(
@@ -567,6 +739,13 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                 'label' => false,
                 'expression_method' => 'getInvoicePeriodExpression',
                 'table' => 'sales/invoice',
+            )
+        )->addColumn(
+            'creditmemo_period',
+            array(
+                'label' => false,
+                'expression_method' => 'getCreditmemoPeriodExpression',
+                'table' => 'sales/creditmemo',
             )
         )->addColumn(
             'period_of_sale',
@@ -945,7 +1124,7 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
             'product_sku',
             array(
                 'label' => 'SKU',
-                'type' => 'text',
+                'type' => 'array',
                 'expression' => 'catalog_product_table.sku',
                 'table' => 'catalog/product',
             )
@@ -1073,14 +1252,14 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
             'orders',
             array(
                 'label' => false,
-                'expression' => 'GROUP_CONCAT(sales_order_table.entity_id)',
+                'expression' => 'GROUP_CONCAT(DISTINCT sales_order_table.entity_id)',
                 'table' => 'sales/order',
             )
         )->addColumn(
             'invoices',
             array(
                 'label' => false,
-                'expression' => 'GROUP_CONCAT(sales_invoice_table.entity_id)',
+                'expression' => 'GROUP_CONCAT(DISTINCT sales_invoice_table.entity_id)',
                 'table' => 'sales/invoice',
             )
         );
@@ -1138,6 +1317,14 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
         return $this->_getRangeExpressionForAttribute(
             $this->getFilterData()->getRange(),
             $this->getTZDate('sales_invoice_table.created_at')
+        );
+    }
+
+    public function getCreditmemoPeriodExpression()
+    {
+        return $this->_getRangeExpressionForAttribute(
+            $this->getFilterData()->getRange(),
+            $this->getTZDate('sales_creditmemo_table.created_at')
         );
     }
 
@@ -1247,6 +1434,26 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
         return $this;
     }
 
+    public function joinShippingAddressTable()
+    {
+        $tableName = 'sales_order_shipping_address_table';
+
+        if (isset($this->joinedTables[$tableName])) {
+            return $this;
+        }
+
+        //$this->joinRelatedDependencies('sales/order');
+
+        $this->getSelect()->joinLeft(
+            array($tableName => $this->getTable('sales/order_address')),
+            "{$tableName}.entity_id = sales_order_table.shipping_address_id",
+            array()
+        );
+        $this->joinedTables[$tableName] = true;
+
+        return $this;
+    }
+
     public function joinProductAttribute($args)
     {
         $attrCode  = $args['attribute'];
@@ -1261,6 +1468,8 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
             $conditions = array();
             if ($this->getFilterData()->getIncludeChild()) {
                 $conditions[] = $tableName.'.entity_id = sales_order_item_parent_table.product_id';
+            } elseif (isset($this->joinedTables['sales_order_item_parent_table'])) {
+                $conditions[] = $tableName.'.entity_id = IFNULL(sales_order_item_parent_table.product_id, sales_order_item_table.product_id)';
             } else {
                 $conditions[] = $tableName.'.entity_id = sales_order_item_table.product_id';
             }
@@ -1301,6 +1510,23 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
         }
 
         return $conditions;
+    }
+
+    public function joinChildOrderItem()
+    {
+        $tableName = 'sales_order_item_parent_table';
+        if (!isset($this->joinedTables[$tableName])) {
+            $this->getSelect()
+                ->joinLeft(
+                    array('sales_order_item_parent_table' => $this->getTable('sales/order_item')),
+                    'sales_order_item_parent_table.parent_item_id = sales_order_item_table.item_id',
+                    array()
+                );
+
+            $this->joinedTables[$tableName] = true;
+        }
+
+        return $this;
     }
 
     public function joinView($data)
@@ -1347,6 +1573,60 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
         return $this;
     }
 
+    /**
+     * Add relations associated with used sales source.
+     */
+    protected function addSalesSourceRelations($salesSource)
+    {
+        if ($salesSource === Mirasvit_Advr_Model_System_Config_Source_SalesSource::SALES_SOURCE_INVOICE) {
+            $this->relations += array(
+                array(
+                    'sales/invoice',
+                    'sales/order_item',
+                    'sales_invoice_table.order_id = sales_order_item_table.order_id',
+                ),
+                array(
+                    'sales/invoice',
+                    'sales/order_address',
+                    'sales_invoice_table.billing_address_id = sales_order_address_table.entity_id',
+                ),
+                array(
+                    'sales/invoice',
+                    'sales/order_payment',
+                    'sales_invoice_table.order_id = sales_order_payment_table.parent_id',
+                ),
+                array(
+                    'sales/invoice',
+                    'sales/order_tax',
+                    'sales_invoice_table.order_id = sales_order_tax_table.order_id',
+                ),
+            );
+        } elseif ($salesSource === Mirasvit_Advr_Model_System_Config_Source_SalesSource::SALES_SOURCE_CREDITMEMO) {
+            $this->relations += array(
+                array(
+                    'sales/creditmemo',
+                    'sales/order_item',
+                    'sales_creditmemo_table.order_id = sales_order_item_table.order_id',
+                ),
+                array(
+                    'sales/creditmemo',
+                    'sales/order_address',
+                    'sales_creditmemo_table.billing_address_id = sales_order_address_table.entity_id',
+                ),
+                array(
+                    'sales/creditmemo',
+                    'sales/order_payment',
+                    'sales_creditmemo_table.order_id = sales_order_payment_table.parent_id',
+                ),
+                array(
+                    'sales/creditmemo',
+                    'sales/order_tax',
+                    'sales_creditmemo_table.order_id = sales_order_tax_table.order_id',
+                ),
+            );
+        }
+    }
+
     public function setFilterData($data, $filterByStatus = true, $timeOfGroup = true, $joinSalesOrder = true, $checkDateForTZ = false)
     {
         parent::setFilterData($data);
@@ -1355,11 +1635,13 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
 
         $conditions = array();
 
+        $this->addSalesSourceRelations($data->getSalesSource());
+
         if ($this->filterData->getFrom()) {
             if ($checkDateForTZ) {
                 $conditions[] =
                     $this->getTZDate(
-                        'sales_order_table.created_at',
+                        $this->getRangeFilterTable().'.created_at',
                         $timeOfGroup,
                         $this->filterData->getFrom(),
                         $this->filterData->getTo()
@@ -1367,7 +1649,7 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                     ." >= '"
                     .$this->filterData->getFrom()."'";
             } else {
-                $conditions[] = $this->getTZDate('sales_order_table.created_at', $timeOfGroup)
+                $conditions[] = $this->getTZDate($this->getRangeFilterTable().'.created_at', $timeOfGroup)
                     ." >= '"
                     .$this->filterData->getFrom()."'";
             }
@@ -1377,7 +1659,7 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
             if ($checkDateForTZ) {
                 $conditions[] =
                     $this->getTZDate(
-                        'sales_order_table.created_at',
+                        $this->getRangeFilterTable().'.created_at',
                         $timeOfGroup,
                         $this->filterData->getFrom(),
                         $this->filterData->getTo()
@@ -1385,7 +1667,7 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                     ." < '"
                     .$this->filterData->getTo()."'";
             } else {
-                $conditions[] = $this->getTZDate('sales_order_table.created_at', $timeOfGroup)
+                $conditions[] = $this->getTZDate($this->getRangeFilterTable().'.created_at', $timeOfGroup)
                     ." < '"
                     .$this->filterData->getTo()."'";
             }

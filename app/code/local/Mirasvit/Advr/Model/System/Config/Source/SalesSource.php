@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -17,9 +17,11 @@
 
 class Mirasvit_Advr_Model_System_Config_Source_SalesSource
 {
-    const SALES_SOURCE_ORDER   = 0;
+    const SALES_SOURCE_ORDER      = 'order';
 
-    const SALES_SOURCE_INVOICE = 1;
+    const SALES_SOURCE_INVOICE    = 'invoice';
+
+    const SALES_SOURCE_CREDITMEMO = 'creditmemo';
 
     public function toOptionArray()
     {
@@ -31,6 +33,10 @@ class Mirasvit_Advr_Model_System_Config_Source_SalesSource
             array(
                 'value' => self::SALES_SOURCE_INVOICE,
                 'label' => Mage::helper('advr')->__('Invoices')
+            ),
+            array(
+                'value' => self::SALES_SOURCE_CREDITMEMO,
+                'label' => Mage::helper('advr')->__('Credit Memos')
             ),
         );
 

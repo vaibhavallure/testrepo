@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -207,7 +207,11 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Container extends Mage_Adminhtml_Block
     public function getGridHtml()
     {
         if ($this->grid) {
-            return $this->grid->toHtml();
+            try {
+                return $this->grid->toHtml();
+            } catch (Exception $e) {
+                Mage::helper('advr/column')->handleCollectionFetchError($e);
+            }
         }
 
         return;
@@ -294,7 +298,10 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Container extends Mage_Adminhtml_Block
                 $savedData = Mage::helper('core')->jsonDecode($savedData);
                 if (is_array($savedData)) {
                     foreach ($savedData as $key => $value) {
-                        if (!isset($data[$key]) && in_array($key, array('interval', 'from', 'to', 'range'))) {
+                        // set filters stored in cookies
+                        if (!isset($data[$key])
+                            && in_array($key, array('interval', 'from', 'to', 'range', 'remote_ip', 'sales_source'))
+                        ) {
                             $data[$key] = $value;
                         }
                     }
@@ -344,6 +351,10 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Container extends Mage_Adminhtml_Block
 
             if (!isset($data['group_by'])) {
                 $data['group_by'] = 'status';
+            }
+
+            if (!isset($data['sales_source']) || is_numeric($data['sales_source'])) {
+                $data['sales_source'] = Mirasvit_Advr_Model_System_Config_Source_SalesSource::SALES_SOURCE_ORDER;
             }
 
             $offset = Mage::getModel('core/date')->timestamp() - Mage::getModel('core/date')->gmtTimestamp();
@@ -405,7 +416,7 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Container extends Mage_Adminhtml_Block
 
         $filterInternal = new Zend_Filter_NormalizedToLocalized(array(
             'locale' => Mage::app()->getLocale()->getLocaleCode(),
-            'date_format' => Varien_Date::DATE_INTERNAL_FORMAT,
+            'date_format' => Varien_Date::DATETIME_INTERNAL_FORMAT,
         ));
 
         foreach ($dateFields as $dateField) {
@@ -507,17 +518,21 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Container extends Mage_Adminhtml_Block
 
         $countedIds = array();
         $collectionClone = clone $collection;
-        foreach ($collectionClone as $item) {
-            // do not count the same item if it has been already counted previously
-            if (in_array($item->getData($property), $countedIds)) {
-                continue;
-            }
+        try {
+            foreach ($collectionClone as $item) {
+                // do not count the same item if it has been already counted previously
+                if (in_array($item->getData($property), $countedIds)) {
+                    continue;
+                }
 
-            foreach($fields as $field => $value){
-                $fields[$field] += $item->getData($field);
-            }
+                foreach($fields as $field => $value){
+                    $fields[$field] += $item->getData($field);
+                }
 
-            $countedIds[] = $item->getData($property); // register item
+                $countedIds[] = $item->getData($property); // register item
+            }
+        } catch (Exception $e) {
+            Mage::helper('advr/column')->handleCollectionFetchError($e);
         }
 
         $totals->setData($fields);
@@ -535,11 +550,11 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Container extends Mage_Adminhtml_Block
      */
     protected function getBaseTable($defaultTable)
     {
-        $salesSource = (int) $this->getFilterData()->getData('sales_source');
+        $salesSource = $this->getFilterData()->getData('sales_source');
         if ($defaultTable === 'sales/order'
-            && $salesSource === Mirasvit_Advr_Model_System_Config_Source_SalesSource::SALES_SOURCE_INVOICE
+            && $salesSource !== Mirasvit_Advr_Model_System_Config_Source_SalesSource::SALES_SOURCE_ORDER
         ) {
-            $defaultTable = 'sales/invoice';
+            $defaultTable = 'sales/' . $salesSource;
         }
 
         return $defaultTable;

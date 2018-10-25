@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -176,6 +176,7 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Attribute extends Mirasvit_Advr_Bloc
                 array(
                     'attribute_code'  => $this->_getAttribute()->getAttributeCode(),
                     'attribute_value' => $value,
+                    'as_child' => $this->getIncludeChild(),
                 )
             );
 
@@ -194,3 +195,4 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Attribute extends Mirasvit_Advr_Bloc
         return $this->getFilterData()->getIncludeChild();
     }
 }
+

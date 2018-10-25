@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -32,7 +32,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Orders extends Mirasvit_Advr_Block_Adm
 
         $this->initChart()
             ->setXAxisType('datetime')
-            ->setXAxisField($this->getPeriod());
+            ->setXAxisField($this->getColumn('period'));
 
         return $this;
     }
@@ -40,7 +40,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Orders extends Mirasvit_Advr_Block_Adm
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort($this->getPeriod())
+            ->setDefaultSort($this->getColumn('period'))
             ->setDefaultDir('asc')
             ->setDefaultLimit(100000)
             ->setPagerVisibility(false);
@@ -57,16 +57,9 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Orders extends Mirasvit_Advr_Block_Adm
         return $this;
     }
 
-    protected function _prepareCollection()
+    protected function getGroupByColumn()
     {
-        $collection = Mage::getModel('advr/report_sales')
-            ->increaseGroupConcatMaxLen()
-            ->setBaseTable($this->getBaseTable('sales/order'), true)
-            ->setFilterData($this->getFilterData())
-            ->selectColumns(array_merge($this->getVisibleColumns(), $this->getAdditionalColumns()))
-            ->groupByColumn($this->getPeriod());
-
-        return $collection;
+        return $this->getColumn('period');
     }
 
     public function getColumns()
@@ -84,9 +77,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Orders extends Mirasvit_Advr_Block_Adm
 
         $columns += $this->getOrderTableColumns(true);
 
-        if ($this->isSalesSourceInvoice()) {
-            $columns = $this->convertToInvoiceColumns($columns);
-        }
+        $columns = $this->convertColumnsToSalesSource($columns);
 
         $columns['actions'] = array(
             'header' => 'Actions',
@@ -96,43 +87,17 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Orders extends Mirasvit_Advr_Block_Adm
         return $columns;
     }
 
-    /**
-     * Determine whether the source of sales is invoice or not.
-     *
-     * @return bool
-     */
-    private function isSalesSourceInvoice()
-    {
-        $salesSource = (int) $this->getFilterData()->getSalesSource();
-
-        return $salesSource === Mirasvit_Advr_Model_System_Config_Source_SalesSource::SALES_SOURCE_INVOICE;
-    }
-
     public function rowUrlCallback($row)
     {
+        $period = $this->getColumn('period');
         $row->setRange($this->getFilterData()->getRange());
 
-        if ($this->isSalesSourceInvoice()) {
-            $url = Mage::helper('advr/callback')->rowUrl('*/*/invoices', $row, array('invoices', 'invoice_period'));
+        if ($this->isInvoice()) {
+            $url = Mage::helper('advr/callback')->rowUrl('*/*/invoices', $row, array('invoices', $period));
         } else {
-            $url = Mage::helper('advr/callback')->rowUrl('*/*/plain', $row, array('orders', 'period'));
+            $url = Mage::helper('advr/callback')->rowUrl('*/*/plain', $row, array('orders', $period));
         }
 
         return $url;
-    }
-
-    private function getAdditionalColumns()
-    {
-        $additionalColumns = array('orders');
-        if ($this->isSalesSourceInvoice()) {
-            $additionalColumns[] = 'invoices';
-        }
-
-        return $additionalColumns;
-    }
-
-    private function getPeriod()
-    {
-        return $this->isSalesSourceInvoice() ? 'invoice_period' : 'period';
     }
 }
