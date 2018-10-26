@@ -38,8 +38,12 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     const SHIPMENT_TRACK_URL                = "/services/data/v42.0/composite/tree/Tracking_Information__c";
     //shipment track url for delete
     const SHIPMENT_TRACK_URL_1              = "/services/data/v42.0/sobjects/Tracking_Information__c";
-    
+    //invoice pdf attachement
     const INVOICE_PDF_URL_UPLOAD            = "/services/data/v37.0/sobjects/Attachment";   
+    //invoice pdf upload using contentversion object
+    const CONTENTVERSION_URL                = "/services/data/v43.0/sobjects/ContentVersion";
+    //invoice pdf link using document object
+    const DOCUMENTLINK_URL                  = "/services/data/v43.0/sobjects/ContentDocumentLink";
     
     //Salesforce object's type
     const PRODUCT_OBJECT            = "PRODUCT";
@@ -151,7 +155,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
      * @param - requestMethod - contains GET|POST|DELETE|PUT|PATCH|OPTIONS|HEAD
      * @param - requestArgs - contains input parameters of request
      */
-    public function sendRequest($urlPath, $requestMethod = "GET", $requestArgs){
+    public function sendRequest($urlPath, $requestMethod = "GET", $requestArgs, $multipart = false,$boundary = null){
         $salesfoeceSession = $this->getSalesforceSession();
         $oauthToken = $salesfoeceSession->getSOauthToken();
         $instaceUrl = $salesfoeceSession->getSInstanceUrl();
@@ -173,16 +177,30 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, $requestMethod);
             curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
             
-            curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
-                "Content-Type: application/json",
-                "Authorization: Bearer {$oauthToken}"
-            ));
-            
-            // convert requestArgs to json
-            if ($requestArgs != null) {
-                $json_arguments = json_encode($requestArgs);
-                curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+            if($multipart){
+                $requestArgs = implode("\r\n", $requestArgs);
+                curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
+                    "Content-Type: multipart/form-data; boundary={$boundary}",
+                    "Authorization: Bearer {$oauthToken}",
+                    "Content-Length: " . strlen($requestArgs)
+                ));
+                
+                if ($requestArgs != null) {
+                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $requestArgs);
+                }
+            }else{
+                curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
+                    "Content-Type: application/json",
+                    "Authorization: Bearer {$oauthToken}"
+                ));
+                
+                // convert requestArgs to json
+                if ($requestArgs != null) {
+                    $json_arguments = json_encode($requestArgs);
+                    curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+                }
             }
+            
             // execute sendRequest
             $response       = curl_exec($sendRequest);
             $responseArr    = json_decode($response,true);

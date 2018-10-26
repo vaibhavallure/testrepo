@@ -1,0 +1,302 @@
+<?php
+/**
+ * @var $this Allure_SmartAnalytics_Block_Checkout_Onepage
+ */
+?>
+<?php
+$helper = Mage::helper('allure_smartanalytics');
+if (!$helper->isEnabled() || !$helper->isEnhancedEcommerceEnabled()) return;
+
+$cartItems = $this->getCartItems();
+$checkoutType = $this->getCheckoutType();
+$bSendCheckoutData = true;
+if ($checkoutType=='standard'){
+	$checkout = Mage::getSingleton('checkout/session');
+	if (is_array($checkout->getStepData())) {
+		foreach ($checkout->getStepData() as $step=>$data) {
+			if ($step === 'billing'){
+				if (isset($data['allow'])){
+					if ($data['allow']==1){
+						$bSendCheckoutData = false;
+					}
+				}
+			}
+		}
+	}
+}
+?>
+
+<script type='text/javascript'>
+//<![CDATA[
+/**
+ * Called when the user begins the checkout process.
+ */
+jQuery(document).ready(function($) {
+	<?php if ($bSendCheckoutData):?>
+		<?php foreach($cartItems as $_quoteItem) : ?>
+			<?php if ($_quoteItem->getParentItemId()) continue; ?>
+
+			ga('ec:addProduct', {
+				'id': '<?php echo $this->jsQuoteEscape($_quoteItem->getSku()) ?>',
+				'name': '<?php echo $this->jsQuoteEscape($_quoteItem->getName()) ?>',
+				'category': '<?php echo $this->jsQuoteEscape($helper->getQuoteCategoryName($_quoteItem)) ?>',
+				'brand': '<?php echo $this->jsQuoteEscape($helper->getBrand($_quoteItem->getProduct())) ?>',
+				'variant': '<?php echo $helper->getVariantProperty($_quoteItem->getProduct()) ?>',
+				'price': '<?php echo $_quoteItem->getBasePrice() ?>',
+				'quantity': '<?php echo $_quoteItem->getQty() ?>'
+			});
+		<?php endforeach; ?>
+
+		ga('ec:setAction', 'checkout');
+
+		<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+			<?php foreach($cartItems as $_quoteItem) : ?>
+				<?php if ($_quoteItem->getParentItemId()) continue; ?>
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.ec:addProduct', {
+					'id': '<?php echo $this->jsQuoteEscape($_quoteItem->getSku()) ?>',
+					'name': '<?php echo $this->jsQuoteEscape($_quoteItem->getName()) ?>',
+					'category': '<?php echo $this->jsQuoteEscape($helper->getQuoteCategoryName($_quoteItem)) ?>',
+					'brand': '<?php echo $this->jsQuoteEscape($helper->getBrand($_quoteItem->getProduct())) ?>',
+					'variant': '<?php echo $helper->getVariantProperty($_quoteItem->getProduct()) ?>',
+					'price': '<?php echo $_quoteItem->getBasePrice() ?>',
+					'quantity': '<?php echo $_quoteItem->getQty() ?>'
+				});
+			<?php endforeach; ?>
+
+			ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'checkout');
+		<?php endif;?>
+
+		<?php echo $this->getLayout()
+						->createBlock('allure_smartanalytics/sendview')
+						->setEventLabel('Checkout')
+						->setTemplate('allure/smartanalytics/sendview.phtml')
+						->toHtml();?>
+	<?php endif;?>
+
+	<?php if ($checkoutType=='standard'):?>
+		<?php if ($helper->stepExists(1)): ?>
+		Billing.prototype.save = function(){
+			var checkoutMethod = '';
+			if (checkout.method.length>0){
+				checkoutMethod = checkout.method;
+				ga('send', 'event', 'UX', 'click', 'Check Out Method - ' + checkout.method, {'nonInteraction': 1});
+				<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'event', 'UX', 'click', 'Check Out Method - ' + checkout.method, {'nonInteraction': 1});
+				<?php endif;?>
+			}
+			else{
+				checkoutMethod = 'Registered User';
+				ga('send', 'event', 'UX', 'click', 'Check Out Method - ' + checkoutMethod, {'nonInteraction': 1});
+				<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'event', 'UX', 'click', 'Check Out Method - ' + checkoutMethod, {'nonInteraction': 1});
+				<?php endif;?>
+			}
+			if (checkout.loadWaiting!=false) return;
+
+			var validator = new Validation(this.form);
+			if (validator.validate()) {
+				checkout.setLoadWaiting('billing');
+
+				ga('ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(1) ?>,
+					'option': jQuery('input[name="billing[use_for_shipping]"]:checked').attr('title') + ' - ' + checkoutMethod
+				});
+
+				ga('send', 'event', 'UX', 'click', 'Address - '+ jQuery('input[name="billing[use_for_shipping]"]:checked').attr('title'), {'nonInteraction': 1});
+
+				ga('send', 'pageview');
+				<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+				ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(1) ?>,
+					'option': jQuery('input[name="billing[use_for_shipping]"]:checked').attr('title') + ' - ' + checkoutMethod
+				});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'event', 'UX', 'click', 'Address - '+ jQuery('input[name="billing[use_for_shipping]"]:checked').attr('title'), {'nonInteraction': 1});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'pageview');
+				<?php endif;?>
+
+				var request = new Ajax.Request(
+					this.saveUrl,
+					{
+						method: 'post',
+						onComplete: this.onComplete,
+						onSuccess: this.onSave,
+						onFailure: checkout.ajaxFailure.bind(checkout),
+						parameters: Form.serialize(this.form)
+					}
+				);
+			}
+		};
+		<?php endif; ?>
+		<?php if ($helper->stepExists(2)): ?>
+		Shipping.prototype.save = function(){
+			if (checkout.loadWaiting!=false) return;
+			var validator = new Validation(this.form);
+			if (validator.validate()) {
+				checkout.setLoadWaiting('shipping');
+
+				//console.log((jQuery('input[name="shipping[same_as_billing]"]').is(':checked')) ? 'Use Billing Address' : 'Does not use Billing Address');
+				ga('ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(2) ?>,
+					'option': (jQuery('input[name="shipping[same_as_billing]"]').is(':checked')) ? 'Use Billing Address' : 'Use Different Shipping Address'
+				});
+
+				ga('send', 'event', 'UX', 'click', (jQuery('input[name="shipping[same_as_billing]"]').is(':checked')) ? 'Use Billing Address' : 'Use Different Shipping Address', {'nonInteraction': 1});
+
+				ga('send', 'pageview');
+
+				<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(2) ?>,
+					'option': (jQuery('input[name="shipping[same_as_billing]"]').is(':checked')) ? 'Use Billing Address' : 'Use Different Shipping Address'
+				});
+
+				ga('send', 'event', 'UX', 'click', (jQuery('input[name="shipping[same_as_billing]"]').is(':checked')) ? 'Use Billing Address' : 'Use Different Shipping Address', {'nonInteraction': 1});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'pageview');
+				<?php endif;?>
+
+				var request = new Ajax.Request(
+					this.saveUrl,
+					{
+						method:'post',
+						onComplete: this.onComplete,
+						onSuccess: this.onSave,
+						onFailure: checkout.ajaxFailure.bind(checkout),
+						parameters: Form.serialize(this.form)
+					}
+				);
+			}
+		};
+		<?php endif; ?>
+		<?php if ($helper->stepExists(3)): ?>
+		ShippingMethod.prototype.save = function () {
+			if (checkout.loadWaiting != false) return;
+
+			if (this.validate()) {
+				checkout.setLoadWaiting('shipping-method');
+
+				//console.log(jQuery('input[name=shipping_method]:checked').val());
+				ga('ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(3) ?>,
+					'option': jQuery('input[name=shipping_method]:checked').val()
+				});
+
+				ga('send', 'event', 'UX', 'click', 'Shipping Method - '+ jQuery('input[name=shipping_method]:checked').val(), {'nonInteraction': 1});
+
+				ga('send', 'pageview');
+				<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(3) ?>,
+					'option': jQuery('input[name=shipping_method]:checked').val()
+				});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'event', 'UX', 'click', 'Shipping Method - '+ jQuery('input[name=shipping_method]:checked').val(), {'nonInteraction': 1});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'pageview');
+				<?php endif;?>
+
+				var request = new Ajax.Request(
+					this.saveUrl,
+					{
+						method: 'post',
+						onComplete: this.onComplete,
+						onSuccess: this.onSave,
+						onFailure: checkout.ajaxFailure.bind(checkout),
+						parameters: Form.serialize(this.form)
+					}
+				);
+			}
+		};
+		<?php endif; ?>
+		<?php if ($helper->stepExists(4)): ?>
+		Payment.prototype.save = function () {
+			if (checkout.loadWaiting != false) return;
+
+			var validator = new Validation(this.form);
+			if (this.validate() && validator.validate()) {
+				checkout.setLoadWaiting('payment');
+				//console.log(jQuery('input[name="payment[method]"]:checked').val());
+				ga('ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(4) ?>,
+					'option': jQuery('input[name="payment[method]"]:checked').val()
+				});
+
+				ga('send', 'event', 'UX', 'click', 'Payment Method - ' + jQuery('input[name="payment[method]"]:checked').val(), {'nonInteraction': 1});
+
+				ga('send', 'pageview');
+
+				<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'checkout', {
+					'step': <?php echo $helper->getStepNumber(4) ?>,
+					'option': jQuery('input[name="payment[method]"]:checked').val()
+				});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'event', 'UX', 'click', 'Payment Method - ' + jQuery('input[name="payment[method]"]:checked').val(), {'nonInteraction': 1});
+
+				ga('<?php echo $helper->getLinkedAccountName()?>.send', 'pageview');
+				<?php endif;?>
+
+				var request = new Ajax.Request(
+					this.saveUrl,
+					{
+						method: 'post',
+						onComplete: this.onComplete,
+						onSuccess: this.onSave,
+						onFailure: checkout.ajaxFailure.bind(checkout),
+						parameters: Form.serialize(this.form)
+					}
+				);
+			}
+		};
+		<?php endif; ?>
+		<?php if ($helper->stepExists(5)): ?>
+		Review.prototype.save = function(){
+			if (checkout.loadWaiting!=false) return;
+			checkout.setLoadWaiting('review');
+			var params = Form.serialize(payment.form);
+			if (this.agreementsForm) {
+				params += '&'+Form.serialize(this.agreementsForm);
+			}
+			params.save = true;
+
+			ga('ec:setAction', 'checkout', {
+				'step': <?php echo $helper->getStepNumber(5) ?>
+			});
+			//console.log('Order Placed');
+			ga('send', 'event', 'UX', 'click', 'Order Placed', {'nonInteraction': 1});
+
+			ga('send', 'pageview');
+
+			<?php if (strlen($helper->isLinkAccountsEnabled())>0):?>
+
+			ga('<?php echo $helper->getLinkedAccountName()?>.ec:setAction', 'checkout', {
+				'step': <?php echo $helper->getStepNumber(5) ?>
+			});
+
+			ga('<?php echo $helper->getLinkedAccountName()?>.send', 'event', 'UX', 'click', 'Order Placed', {'nonInteraction': 1});
+
+			ga('<?php echo $helper->getLinkedAccountName()?>.send', 'pageview');
+			<?php endif;?>
+
+			var request = new Ajax.Request(
+				this.saveUrl,
+				{
+					method:'post',
+					parameters:params,
+					onComplete: this.onComplete,
+					onSuccess: this.onSave,
+					onFailure: checkout.ajaxFailure.bind(checkout)
+				}
+			);
+		};
+		<?php endif; ?>
+	<?php endif; ?>
+});
+//]]>
+</script>

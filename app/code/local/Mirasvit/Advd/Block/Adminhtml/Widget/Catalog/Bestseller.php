@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -72,6 +72,19 @@ class Mirasvit_Advd_Block_Adminhtml_Widget_Catalog_Bestseller extends Mirasvit_A
             ),
         );
 
+        $baseColumns = array_column(array_values($columns), 'value');
+        $reportColumns = $this->getLayout()->createBlock('advr/adminhtml_catalog_product')->getColumns();
+        foreach ($reportColumns as $key => $column) {
+            if (in_array($key, $baseColumns)) {
+                continue;
+            }
+
+            // make report columns compatible with widget columns
+            $column['value'] = $key;
+            $column['label'] = $column['header'];
+            $columns[] = $column;
+        }
+
         return $columns;
     }
 
@@ -109,6 +122,8 @@ class Mirasvit_Advd_Block_Adminhtml_Widget_Catalog_Bestseller extends Mirasvit_A
 
     public function prepareOptions()
     {
+        $columns = $this->getColumns();
+
         $this->form->addField(
             'interval',
             'select',
@@ -147,8 +162,19 @@ class Mirasvit_Advd_Block_Adminhtml_Widget_Catalog_Bestseller extends Mirasvit_A
             array(
                 'name' => 'columns',
                 'label' => Mage::helper('advr')->__('Columns'),
-                'values' => $this->getColumns(),
+                'values' => $columns,
                 'value' => $this->getParam('columns', array()),
+            )
+        );
+
+        $this->form->addField(
+            'category_id',
+            'multiselect',
+            array(
+                'name' => 'category_id',
+                'label' => Mage::helper('advd')->__('Categories'),
+                'values' => $this->getCategories(),
+                'value' => $this->getParam('category_id'),
             )
         );
 
@@ -158,7 +184,7 @@ class Mirasvit_Advd_Block_Adminhtml_Widget_Catalog_Bestseller extends Mirasvit_A
             array(
                 'name' => 'sort_by',
                 'label' => Mage::helper('advr')->__('Sort By Field'),
-                'values' => $this->getColumns(),
+                'values' => $columns,
                 'value' => $this->getParam('sort_by', 'sum_item_qty_ordered'),
             )
         );
@@ -177,9 +203,28 @@ class Mirasvit_Advd_Block_Adminhtml_Widget_Catalog_Bestseller extends Mirasvit_A
         return $this;
     }
 
+    private function getCategories()
+    {
+        $options = array();
+        $collection = Mage::getResourceModel('catalog/category_collection')
+            ->addAttributeToSelect('name')
+            ->addFieldToFilter('is_active', 1);
+
+        foreach ($collection as $category) {
+            $options[] = ['value' => $category->getId(), 'label' => $category->getName()];
+        }
+
+        return $options;
+    }
+
     public function activeFilters()
     {
-        return array('customer_groups');
+        return array('customer_groups', 'category_id');
+    }
+
+    public function getActiveColumns()
+    {
+        return array_merge(array('product_id'), $this->getParam('columns', array()));
     }
 
     protected function _prepareCollection($grid)
@@ -198,8 +243,9 @@ class Mirasvit_Advd_Block_Adminhtml_Widget_Catalog_Bestseller extends Mirasvit_A
             ->setFilterData($filterData, true, false, true, true);
 
         $this->addCustomerGroupFilter($collection);
+        $this->addCategoryFilter($collection);
 
-        $collection->selectColumns($this->getColumnValues())
+        $collection->selectColumns($this->getActiveColumns())
             ->groupByColumn('product_id');
         $collection->setOrder($this->getParam('sort_by', 'sum_item_qty_ordered'), $this->getParam('sort_dir', 'desc'));
 
@@ -208,6 +254,15 @@ class Mirasvit_Advd_Block_Adminhtml_Widget_Catalog_Bestseller extends Mirasvit_A
         $grid->setCollection($collection);
 
         return $this;
+    }
+
+    private function addCategoryFilter(Mirasvit_Advr_Model_Report_Sales $collection)
+    {
+        if ($categories = $this->getParam('category_id')) {
+            $collection->addFieldToFilter('category_id', array('in' => $categories));
+        }
+
+        return $collection;
     }
 
     protected function _prepareColumns($grid)

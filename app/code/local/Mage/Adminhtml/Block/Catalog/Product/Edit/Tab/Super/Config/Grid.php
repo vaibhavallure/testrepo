@@ -144,9 +144,7 @@ class Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Super_Config_Grid extends Ma
             $collection->addAttributeToSelect($attribute->getAttributeCode());
             $collection->addAttributeToFilter($attribute->getAttributeCode(), array('notnull'=>1));
         }
-        
-        //echo $collection->getSelect();
-        Mage::log((string)$collection->getSelect(),Zend_log::DEBUG,'ajay.log',true);
+
         $this->setCollection($collection);
 
         if ($this->isReadonly()) {
@@ -245,13 +243,6 @@ class Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Super_Config_Grid extends Ma
 
         foreach ($attributes as $attribute) {
             $productAttribute = $attribute->getProductAttribute();
-            if(is_null($productAttribute)){
-                Mage::log("SKU::".$product->getSku(),Zend_log::DEBUG,'mismatch_attribute.log',TRUE);
-                Mage::log(json_encode($attribute->getData()),Zend_log::DEBUG,'mismatch_attribute.log',TRUE);
-                Mage::log("ATT SET ID::".$product->getAttributeSetId(),Zend_log::DEBUG,'mismatch_attribute.log',TRUE);
-                Mage::log("-------------------------------------------------------",Zend_log::DEBUG,'mismatch_attribute.log',TRUE);
-            }
-            
             $productAttribute->getSource();
             $this->addColumn($productAttribute->getAttributeCode(), array(
                 'header'    => $productAttribute->getFrontend()->getLabel(),

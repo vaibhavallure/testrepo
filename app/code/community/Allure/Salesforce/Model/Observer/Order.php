@@ -248,6 +248,25 @@ class Allure_Salesforce_Model_Observer_Order{
                     "OrderItems"                => $orderItem
                 )
             );
+            
+            $payment = $order->getPayment();
+            $code = $payment->getData('cc_type');
+            $aType = Mage::getSingleton('payment/config')->getCcTypes();
+            if (isset($aType[$code])) {
+                $sName = $aType[$code];
+                $request["order"][0]["Card_Type__c"] = $sName;
+            }
+            
+            $last4Digits  = $payment->getCcLast4();
+            if($last4Digits){
+                $request["order"][0]["Card_Number__c"] = "XXXX-".$last4Digits;
+            }
+            
+            $transactionId = $payment->getData("last_trans_id");
+            if($transactionId){
+                $request["order"][0]["Transaction_Id__c"] = $transactionId;
+            }
+            
             $urlPath = $helper::ORDER_PLACE_URL;
             $response = $helper->sendRequest($urlPath, $requestMethod, $request);
             $responseArr = json_decode($response,true);
@@ -327,7 +346,16 @@ class Allure_Salesforce_Model_Observer_Order{
             $status = $invoice->getState();
             $storeId = $invoice->getStoreId();
             
-            $totalQty = $invoice->getTotalQty();
+            //$totalQty = $invoice->getTotalQty();
+            $totalQty = 0;
+            foreach ($invoice->getAllItems() as $item){
+                if ($item->getOrderItem()->getParentItem()) {
+                    continue;
+                }
+                $qty = $item->getQty();
+                $totalQty += $qty;
+            }
+            
             
             $salesforceInvoiceId = $invoice->getSalesforceInvoiceId();
             
@@ -381,6 +409,7 @@ class Allure_Salesforce_Model_Observer_Order{
             
                 //upload invoice pdf 
                 $this->uploadInvoicePdf($order);
+                $this->updateOrderData($order);
             
             }else{
                 if($responseArr == ""){
@@ -395,7 +424,99 @@ class Allure_Salesforce_Model_Observer_Order{
     }
     
     
-    public function uploadInvoicePdf($order){
+    //using salesforce contentversion & document
+    private function uploadInvoicePdf($order){
+        $helper = $this->getHelper();
+        $helper->salesforceLog("uploadInvoicePdf request.");
+        try{
+            $orderIncrementId = $order->getIncrementId();
+            $fileName = "Order_Invoice.pdf";
+            
+            $salesforceOrderId = $order->getSalesforceOrderId();
+            
+            $objectType = $helper::UPLOAD_DOC_OBJECT;
+            
+            $invoices = $order->getInvoiceCollection();
+            if(Mage::helper("core")->isModuleEnabled("Allure_Pdf")){
+                $pdf = Mage::getModel('sales/order_pdf_invoice')->getCompressPdf($invoices,true);
+            }else {
+                $pdf = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
+            }
+            
+            
+            $body[] = implode("\r\n", array(
+                "Content-Type: application/json; charset=utf-8",
+                "Content-Disposition: form-data; name=\"entity_content\";",
+                "",
+                '{
+                    "PathOnClient" : "Order-#'.$orderIncrementId.'_Invoice.pdf"
+                 }'
+            ));
+            
+            
+            $filedata =  $pdf->render();
+            
+            $body[] = implode("\r\n", array(
+                "Content-Type: application/octet-stream",
+                "Content-Disposition: form-data; name=\"VersionData\"; filename=\"Order-#{$orderIncrementId}_Invoice.pdf\"",
+                "",
+                $filedata,
+            ));
+            
+            // generate safe boundary
+            do {
+                $boundary = "---------------------" . md5(mt_rand() . microtime());
+            } while (preg_grep("/{$boundary}/", $body));
+            
+            // add boundary for each parameters
+            array_walk($body, function (&$part) use ($boundary) {
+                $part = "--{$boundary}\r\n{$part}";
+            });
+                
+                // add final boundary
+                $body[] = "--{$boundary}--";
+                $body[] = "";
+                
+                
+                $url = $helper::CONTENTVERSION_URL;
+                $requestMethod = "POST";
+                $response = $helper->sendRequest($url, $requestMethod, $body, true, $boundary);
+                //$helper->salesforceLog($response);
+                $responseArr = json_decode($response,true);
+                if($responseArr["success"]){
+                    //get documentLink id
+                    $helper->salesforceLog("call document api ");
+                    $salesforceContentVersionId = $responseArr["id"];
+                    $url1 = $helper::CONTENTVERSION_URL."/{$salesforceContentVersionId}";
+                    $response1 = $helper->sendRequest($url1 , "GET" , null);
+                    $responseArr1 = json_decode($response1,true);
+                    $documentId = $responseArr1["ContentDocumentId"];
+                    if($documentId){
+                        $helper->salesforceLog("link invoice pdf document id - ".$documentId);
+                        $url2 = $helper::DOCUMENTLINK_URL;
+                        $request1 = array(
+                            "ContentDocumentId"     =>  $documentId,
+                            "LinkedEntityId"        =>  $salesforceOrderId,
+                            "ShareType"             =>  "V"
+                        );
+                        $response2 = $helper->sendRequest($url2 , "POST" , $request1);
+                        $responseArr2 = json_decode($response2,true);
+                        if($responseArr2["success"]){
+                            $helper->salesforceLog("Invoice pdf uploaded.");
+                        }
+                    }
+                    $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $order->getId());
+                }else{
+                    $helper->addSalesforcelogRecord($objectType,$requestMethod,$order->getId(),$response);
+                }
+                
+        }catch(Exception $e){
+            $helper->salesforceLog("Exception in uploadInvoicePdf - ".$e->getMessage());
+        }
+    }
+    
+    
+    public function uploadInvoicePdf1($order){
         $helper = $this->getHelper();
         $helper->salesforceLog("uploadInvoicePdf request.");
         try{
@@ -529,6 +650,8 @@ class Allure_Salesforce_Model_Observer_Order{
             $write->query($sql_order);
             $helper->salesforceLog("salesforce id updated into shipment.");
             $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $shipment->getId());
+            
+            $this->updateOrderData($order);
         }else{
             if($responseArr == ""){
                 $helper->salesforceLog("salesforce id not updated into shipment.");
@@ -743,6 +866,8 @@ class Allure_Salesforce_Model_Observer_Order{
             
             $baseTotalDue           = $order->getBaseTotalDue();
             
+            $status = $order->getStatus();
+            
             $requestMethod  = "PATCH";
             $urlPath        = $helper::ORDER_URL . "/" .$salesforceOrderId;
             
@@ -760,6 +885,7 @@ class Allure_Salesforce_Model_Observer_Order{
                 
                 "Total_Paid__c"                 => $baseTotalPaid,
                 "Total_Due__c"                  => $baseTotalDue,
+                "Status"                        => $status,
             );
             $helper->salesforceLog("made order update api call to salesforce");
             $response = $helper->sendRequest($urlPath,$requestMethod,$request);

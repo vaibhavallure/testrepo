@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -61,13 +61,18 @@ class Mirasvit_Advr_Block_Adminhtml_Order_ShippingTime extends Mirasvit_Advr_Blo
         return array_keys($this->getColumns());
     }
 
+    protected function getGroupByColumn()
+    {
+        return 'period_of_sale';
+    }
+
     public function _prepareCollection()
     {
         $collection = Mage::getModel('advr/report_sales')
             ->setBaseTable('sales/order')
             ->setFilterData($this->getFilterData(), true, false)
             ->selectColumns($this->getColumnValues())
-            ->groupByColumn('period_of_sale');
+            ->groupByColumn($this->getGroupByColumn());
 
         return $collection;
     }
