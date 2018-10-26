@@ -409,7 +409,7 @@ class Allure_Salesforce_Model_Observer_Order{
             
                 //upload invoice pdf 
                 $this->uploadInvoicePdf($order);
-                $this->updateOrderData($order);
+                //$this->updateOrderData($order);
             
             }else{
                 if($responseArr == ""){
@@ -651,7 +651,7 @@ class Allure_Salesforce_Model_Observer_Order{
             $helper->salesforceLog("salesforce id updated into shipment.");
             $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $shipment->getId());
             
-            $this->updateOrderData($order);
+            //$this->updateOrderData($order);
         }else{
             if($responseArr == ""){
                 $helper->salesforceLog("salesforce id not updated into shipment.");
@@ -814,7 +814,7 @@ class Allure_Salesforce_Model_Observer_Order{
             $responseArr1 = json_decode($response,true);
             if($responseArr1[0]["success"]){
                 $helper->salesforceLog("creditmemo items updated into salesforce.");
-                $this->updateOrderData($order);
+                //$this->updateOrderData($order);
                 $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $creditMemo->getId());
             }else{
                 if($responseArr == ""){
@@ -825,6 +825,14 @@ class Allure_Salesforce_Model_Observer_Order{
                 }
             }
         }
+    }
+    
+    public function updateOrder(Varien_Event_Observer $observer){
+        $order = $observer->getEvent()->getOrder();
+        $helper = $this->getHelper();
+        $helper->salesforceLog("In updateOrder request");
+        $helper->salesforceLog("order status - ".$order->getStatus());
+        $this->updateOrderData($order);
     }
     
     public function updateOrderData($order){
