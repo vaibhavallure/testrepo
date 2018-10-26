@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -141,6 +141,14 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Grid extends Mage_Adminhtml_Block_Widg
         $position = 10;
         $positions = array();
         foreach ($columns as $index => $column) {
+
+            if ($this->getCollection() && !$column->getExpression()) {
+                $columnModel = $this->getCollection()->getColumn($index);
+                if ($columnModel && is_object($columnModel) && $columnModel->getExpression()) {
+                    $column->setExpression($columnModel->getExpression());
+                }
+            }
+
             if (!$columns[$index]->getPosition()) {
                 $columns[$index]->setPosition($position);
             }
@@ -170,6 +178,16 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Grid extends Mage_Adminhtml_Block_Widg
         }
 
         return $columns;
+    }
+
+    public function getColumn($columnId)
+    {
+        $columns = $this->getColumns();
+        if (isset($columns[$columnId])) {
+            return $columns[$columnId];
+        }
+
+        return false;
     }
 
     public function getCurrentCurrencyCode()

@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -79,6 +79,7 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Toolbar extends Mage_Adminhtml_Block_T
         $form->addField('from', 'date', array(
             'name' => 'from',
             'format' => $dateFormat,
+            'time' => true,
             'locale' => Mage::app()->getLocale()->getLocaleCode(),
             'image' => $this->getSkinUrl('images/grid-cal.gif'),
             'label' => Mage::helper('advr')->__('From'),
@@ -87,6 +88,7 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Toolbar extends Mage_Adminhtml_Block_T
         $form->addField('to', 'date', array(
             'name' => 'to',
             'format' => $dateFormat,
+            'time' => true,
             'locale' => Mage::app()->getLocale()->getLocaleCode(),
             'image' => $this->getSkinUrl('images/grid-cal.gif'),
             'label' => Mage::helper('advr')->__('To'),

@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -45,7 +45,7 @@ class Mirasvit_Advr_Model_Observer extends Varien_Object
                 }
 
                 $menu->setNode('advr', null);
-
+                unset($menu->advr);
 
                 $itemAdvr = null;
                 $itemReport = null;

@@ -46,6 +46,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
         }catch (Exception $e){
             $flag = 0;
+            Mage::log($e->getMessage(), Zend_Log::DEBUG,'backorder_data.log', true);
             if($this->config()->getDebugStatus())
                     Mage::log('file generation failed '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data.log', true);
 

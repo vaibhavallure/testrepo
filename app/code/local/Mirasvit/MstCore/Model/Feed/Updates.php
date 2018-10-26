@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_mcore
- * @version   1.0.20
+ * @version   1.0.22
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -32,9 +32,7 @@ class Mirasvit_MstCore_Model_Feed_Updates extends Mirasvit_MstCore_Model_Feed_Ab
         try {
             $params = array();
             $params['domain'] = Mage::getBaseUrl();
-            foreach (Mage::getConfig()->getNode('modules')->children() as $name => $module) {
-                $params['modules'][$name] = (string) $module->version;
-            }
+            
 
             Mage::helper('mstcore')->setVar(self::VAR_MST_FEED_UPDATE, time());
 

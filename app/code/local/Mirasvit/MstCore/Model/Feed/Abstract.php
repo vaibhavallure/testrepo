@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_mcore
- * @version   1.0.20
+ * @version   1.0.22
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -20,7 +20,7 @@ class Mirasvit_MstCore_Model_Feed_Abstract extends Mage_Core_Model_Abstract
     {
         $curl = new Varien_Http_Adapter_Curl();
         $curl->write(Zend_Http_Client::POST, $url, '1.1', array(), http_build_query($params));
-        $curl->addOption('timeout', 10);
+        $curl->setConfig(array('timeout' => 10));
         $data = $curl->read();
 
         if ($data === false) {

@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -31,8 +31,16 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Day extends Mirasvit_Advr_Block_Adminh
         $this->setChartType('column');
 
         $this->initChart()
-            ->setXAxisType('category')
-            ->setXAxisField('day_of_week');
+            ->setXAxisType($this->getColumn('category'))
+            ->setXAxisField($this->getColumn('day_of_week'));
+
+        return $this;
+    }
+
+    protected function prepareToolbar()
+    {
+        $this->initToolbar()
+            ->setSalesSourceVisibility(true);
 
         return $this;
     }
@@ -40,7 +48,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Day extends Mirasvit_Advr_Block_Adminh
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort('day_of_week')
+            ->setDefaultSort($this->getColumn('day_of_week'))
             ->setDefaultDir('asc')
             ->setDefaultLimit(7)
             ->setPagerVisibility(false);
@@ -48,15 +56,9 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Day extends Mirasvit_Advr_Block_Adminh
         return $this;
     }
 
-    protected function _prepareCollection()
+    protected function getGroupByColumn()
     {
-        $collection = Mage::getModel('advr/report_sales')
-            ->setBaseTable('sales/order', true)
-            ->setFilterData($this->getFilterData())
-            ->selectColumns($this->getVisibleColumns())
-            ->groupByColumn('day_of_week');
-
-        return $collection;
+        return $this->getColumn('day_of_week');
     }
 
     public function getColumns()
@@ -69,10 +71,13 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Day extends Mirasvit_Advr_Block_Adminh
                 'totals_label'        => 'Total',
                 'filter_totals_label' => 'Subtotal',
                 'filter'              => false,
+                self::KEEP            => true
             ),
         );
 
         $columns += $this->getOrderTableColumns(true);
+
+        $columns = $this->convertColumnsToSalesSource($columns);
 
         return $columns;
     }
