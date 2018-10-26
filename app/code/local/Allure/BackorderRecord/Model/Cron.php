@@ -37,6 +37,7 @@ class Allure_BackorderRecord_Model_Cron
             }catch (Exception $e)
             {
 
+
                 if(Mage::helper("backorderrecord/config")->getDebugStatus())
                     Mage::log('Incorrect Date Entered '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data.log', true);
 
@@ -71,10 +72,12 @@ class Allure_BackorderRecord_Model_Cron
             $filterWithStatus = FALSE;
             $filterWithSku = TRUE;
 
+            
+
             if ($data['item_sku'] && $data['show_metal_color']) {
                 /*$sku = strtoupper($data['item_sku']).'|'.strtoupper($data['metal_color']).'%';*/
                 foreach ($data['metal_color'] as $color) {
-                    $skus[] = "main_table.sku LIKE '".strtoupper($data['item_sku'])."|".strtoupper($data['metal_color'])."%";
+                     $skus[] = "main_table.sku LIKE '".strtoupper($data['item_sku'])."|".strtoupper($color)."%'";
                 }                
             }else if ($data['item_sku']) {
                 //$sku = strtoupper($data['item_sku']).'%';
@@ -97,10 +100,11 @@ class Allure_BackorderRecord_Model_Cron
             $backorderCollection = Mage::getModel('sales/order_item')->getCollection()
                 ->addAttributeToSort('item_id', 'DESC')
 
-                ->addAttributeToFilter('main_table.created_at', array('from' => $fromDate, 'to' => $toDate));
+               ->addAttributeToFilter('main_table.created_at', array('from' => $fromDate, 'to' => $toDate));
 
             if ($filterWithSku) {
                //$backorderCollection->addAttributeToFilter('main_table.sku',array('like' =>$sku));
+                if(!empty($filterSku))
                 $backorderCollection->getSelect()->where($filterSku);
             }
           
@@ -109,15 +113,17 @@ class Allure_BackorderRecord_Model_Cron
             $addToquery = $backorderCollection->getSelect()->joinLeft(array('sales_flat_order' => $orderTable), 'main_table.order_id = sales_flat_order.entity_id',array('sales_flat_order.status'));
 
             if ($filterWithStatus) {
+                if(!empty($filterStatus))
                 $addToquery->where("sales_flat_order.status in($filterStatus)");
             }
- 
+
+
+
         }
         catch (Exception $e){
 
             if(Mage::helper("backorderrecord/config")->getDebugStatus())
                 Mage::log('collection cant be generated '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data.log', true);
-
 
         }
 
