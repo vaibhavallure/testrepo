@@ -37,6 +37,7 @@ class Allure_BackorderRecord_Model_Cron
             }catch (Exception $e)
             {
 
+
                 if(Mage::helper("backorderrecord/config")->getDebugStatus())
                     Mage::log('Incorrect Date Entered '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data.log', true);
 
@@ -71,10 +72,12 @@ class Allure_BackorderRecord_Model_Cron
             $filterWithStatus = FALSE;
             $filterWithSku = TRUE;
 
+            
+
             if ($data['item_sku'] && $data['show_metal_color']) {
                 /*$sku = strtoupper($data['item_sku']).'|'.strtoupper($data['metal_color']).'%';*/
                 foreach ($data['metal_color'] as $color) {
-                    $skus[] = "main_table.sku LIKE '".strtoupper($data['item_sku'])."|".strtoupper($data['metal_color'])."%";
+                     $skus[] = "main_table.sku LIKE '".strtoupper($data['item_sku'])."|".strtoupper($color)."%'";
                 }                
             }else if ($data['item_sku']) {
                 //$sku = strtoupper($data['item_sku']).'%';
@@ -113,6 +116,7 @@ class Allure_BackorderRecord_Model_Cron
                 if(!empty($filterStatus))
                 $addToquery->where("sales_flat_order.status in($filterStatus)");
             }
+
 
 
         }
