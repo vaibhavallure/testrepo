@@ -76,13 +76,13 @@
 		            <allure_salesforce>
 		                <type>singleton</type>
 		                <class>allure_salesforce/observer_order</class>
-		                <method>updateOrder</method>
+		                <method>addOrderToSalesforce</method>
 		            </allure_salesforce>
 		        </observers>
 		    </sales_order_save_after>
 			
 			
-			<sales_order_place_after>
+			<!-- <sales_order_place_after>
                 <observers>
                     <allure_salesforce>
 	                    <type>singleton</type>
@@ -90,7 +90,7 @@
 	                    <method>addOrderToSalesforce</method>
 	                </allure_salesforce>
                 </observers>
-            </sales_order_place_after>
+            </sales_order_place_after> -->
             
             <sales_order_creditmemo_save_after>
                 <observers>
