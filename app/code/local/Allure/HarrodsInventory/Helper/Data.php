@@ -22,7 +22,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'teamwork';
             $name = "harrods_plu";
-            $file = $path . DS . $name . '.csv';
+            $file = $path . DS . $name . '.txt';
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
             $ioo->streamOpen($file, 'w+');
