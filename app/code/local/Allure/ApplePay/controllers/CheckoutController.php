@@ -249,7 +249,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                                     $hasDefaultMethod = true;
                                 }
 
-                                $shippingMethods[$rate->getCode()] = $rate->getData();
+								if (!in_array($rate->getCode(), array('tm_storepickupshipping_tm_storepickupshipping', 'tm_storepickupshipping','allure_pickinstore_allure_pickinstore','allure_pickinstore'))) {
+									$shippingMethods[$rate->getCode()] = $rate->getData();
+								}
                             }
                         }
                     }
@@ -426,8 +428,10 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $this->_getSession()->setDefaultShippingMethod($rate->getCode());
                     $hasDefaultMethod = true;
                 }
-
-                $shippingMethods[$rate->getCode()] = $rate->getData();
+				
+				if (!in_array($rate->getCode(), array('tm_storepickupshipping_tm_storepickupshipping', 'tm_storepickupshipping','allure_pickinstore_allure_pickinstore','allure_pickinstore'))) {
+					$shippingMethods[$rate->getCode()] = $rate->getData();
+				}
             }
         }
 
