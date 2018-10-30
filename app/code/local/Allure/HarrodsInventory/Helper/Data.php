@@ -13,8 +13,99 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
 
+
+    public function sendEmail()
+    {
+
+        if(!$this->harrodsConfig()->getModuleStatus())
+        {
+            $this->add_log("Module Disabled----");
+            return;
+        }
+
+
+        if($this->harrodsConfig()->getEmailStatus()):
+
+            $templateId = $this->harrodsConfig()
+                ->getEmailTemplate();
+
+            $mailTemplate = Mage::getModel('core/email_template');
+            $storeId = Mage::app()->getStore()->getId();
+            $senderName = $this->harrodsConfig()->getSenderName();
+            $senderEmail = $this->harrodsConfig()->getSenderEmail();
+
+            $sender = array('name' => $senderName,
+                'email' => $senderEmail);
+            $recieverEmails = $this->harrodsConfig()->getEmailsGroup();
+            $recieverNames = $this->harrodsConfig()->getEmailGroupNames();
+
+            $recipientEmails = explode(',',$recieverEmails);
+            $recipientNames = explode(',',$recieverNames);
+
+            //$emailTemplateVariables['collection'] = $collection;
+            $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
+            $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+
+
+
+
+            $file=$this->generateReport();
+
+
+                if($file){
+                    $date = Mage::getModel('core/date')->date('Y_m_d');
+                    $name = "Daily_Harrods_Inventory".$date.".".$this->harrodsConfig()->getFileType();
+                    $mailTemplate->getMail()->createAttachment(
+                        file_get_contents($file),
+                        Zend_Mime::TYPE_OCTETSTREAM,
+                        Zend_Mime::DISPOSITION_ATTACHMENT,
+                        Zend_Mime::ENCODING_BASE64,
+                        $name
+                    );
+                }
+
+
+
+            try {
+                $mailTemplate
+                    ->sendTransactional(
+                        $templateId,
+                        $sender,
+                        $recipientEmails, //here comes recipient emails
+                        $recipientNames, // here comes recipient names
+                        $emailTemplateVariables,
+                        $storeId
+                    );
+
+                if (!$mailTemplate->getSentSuccess()) {
+                      $this->add_log('mail sending failed');
+                }
+                else {
+                        $this->add_log('mail sending done');
+                }
+            }
+            catch(Exception $e){
+                $this->add_log('mail sending exception = > '.$e->getMessage());
+            }
+
+        endif;
+
+
+
+    }
+
+
+
+
     public function generateReport()
     {
+
+
+        if(!$this->harrodsConfig()->getModuleStatus())
+        {
+            $this->add_log("Module Disabled----");
+            return;
+        }
 
 
         try {
@@ -22,7 +113,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'teamwork';
             $name = "harrods_plu";
-            $file = $path . DS . $name . '.txt';
+            $file = $path . DS . $name . '.'.$this->harrodsConfig()->getFileType();
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
             $ioo->streamOpen($file, 'w+');
@@ -234,17 +325,9 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
-            if (file_exists($file)) {
-                header('Content-Description: File Transfer');
-                header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename="' . basename($file) . '"');
-                header('Expires: 0');
-                header('Cache-Control: must-revalidate');
-                header('Pragma: public');
-                header('Content-Length: ' . filesize($file));
-                readfile($file);
-                exit;
-            }
+
+            return $file;
+
 
         }catch (Exception $e)
         {
