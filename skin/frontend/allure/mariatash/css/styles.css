@@ -3456,6 +3456,20 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/ text-align: left; }
 
 .price-box .price { font-size:11px; font-weight:bold; /*line-height: 1.63636363636*/ }
 
+.catalog-product-view .price-box .price{
+    line-height: 1.63636363636
+}
+
+.catalog-product-view  .old-price .price-label
+{
+    text-transform: capitalize;
+    font-size: 12px;
+}
+
+.catalog-product-view  .old-price
+{
+    margin-right: 10px;
+}
 /* Regular price */
 .regular-price {}
 .regular-price .price { font-size:13px; font-weight:normal; text-align:left; }
