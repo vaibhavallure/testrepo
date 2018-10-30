@@ -22,7 +22,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'teamwork';
             $name = "harrods_plu";
-            $file = $path . DS . $name . '.txt';
+            $file = $path . DS . $name . '.csv';
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
             $ioo->streamOpen($file, 'w+');
@@ -40,7 +40,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 'vendor_colour' => 'Vendor Colour', 'order_units' => 'Order Units', 'single_size' => 'Single Size', 'total_cost' => 'Total Cost',
                 'var_tax_rate' => 'Var Tax Rate', 'POS_description' => 'POS Description', 'direct_mail' => 'Direct Mail', 'spare3' => 'Spare3', 'spare4' => 'Spare4', 'spare5' => 'Spare5',
                 'backdate_article' => 'Backdate Article', 'error_message' => 'Error Message', 'Record Status', 'article_number' => 'Article Number',
-                'site listings' => 'Site Listings', 'siteDelimited' => 'SiteDelimited', 'string_for_generic_lines' => 'String for Generic lines');
+                'site listings' => 'Site Listings', 'siteDelimited' => 'SiteDelimited', 'string_for_generic_lines' => 'String for Generic lines','gtin_1'=>'Gtin Number 1','gtin_2'=>'Gtin Number 2','gtin_3'=>'Gtin Number 3','gtin_4'=>'Gtin Number 4');
 
 
             $ioo->streamWriteCsv($header);
@@ -58,7 +58,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $attrbute_id = $attribute['attribute_id'];
 
 
-            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="configurable" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL');
+            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="configurable" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0');
 
 
             $some_attr_code = "metal";
@@ -70,6 +70,9 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $this->add_log("inside config product---------");
 
                 $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
+
+
+
                 $data = array();
                 $optionId = '';
                 if (!is_null($_product->getMetal()))
@@ -136,11 +139,23 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $data['string_for_generic_lines'] = '';
 
 
+
+                    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+                    $simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+                    $indexCount = 1;
+                    foreach ($simple_collection as $k => $simpleProd){
+                        $simple_product=Mage::getSingleton("catalog/product")->load($simpleProd->getId());
+                        $gtin_index = 'gtin_'.$indexCount;
+                        $data[$gtin_index] = $simple_product->getGtinNumber();
+                        $indexCount++;
+                    }
+
+
                 $ioo->streamWriteCsv($data);
 
 
-                $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
-                $simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+//                $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+//                $simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
                 foreach ($simple_collection as $simpleProd) {
                     $_product = Mage::getSingleton("catalog/product")->load($simpleProd->getId());
 
