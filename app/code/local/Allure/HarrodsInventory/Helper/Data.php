@@ -40,7 +40,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 'vendor_colour' => 'Vendor Colour', 'order_units' => 'Order Units', 'single_size' => 'Single Size', 'total_cost' => 'Total Cost',
                 'var_tax_rate' => 'Var Tax Rate', 'POS_description' => 'POS Description', 'direct_mail' => 'Direct Mail', 'spare3' => 'Spare3', 'spare4' => 'Spare4', 'spare5' => 'Spare5',
                 'backdate_article' => 'Backdate Article', 'error_message' => 'Error Message', 'Record Status', 'article_number' => 'Article Number',
-                'site listings' => 'Site Listings', 'siteDelimited' => 'SiteDelimited', 'string_for_generic_lines' => 'String for Generic lines','gtin_1'=>'Gtin Number 1','gtin_2'=>'Gtin Number 2','gtin_3'=>'Gtin Number 3','gtin_4'=>'Gtin Number 4','gtin_5'=>'Gtin Number 5','gtin_6'=>'Gtin Number 6','gtin_7'=>'Gtin Number 7','gtin_8'=>'Gtin Number 8','gtin_9'=>'Gtin Number 9','gtin_10'=>'Gtin Number 10','gtin_11'=>'Gtin Number 11','gtin_12'=>'Gtin Number 12','gtin_13'=>'Gtin Number 13',,'gtin_14'=>'Gtin Number 14',,'gtin_15'=>'Gtin Number 15');
+                'site listings' => 'Site Listings', 'siteDelimited' => 'SiteDelimited', 'string_for_generic_lines' => 'String for Generic lines','gtin_1'=>'Gtin Number 1','gtin_2'=>'Gtin Number 2','gtin_3'=>'Gtin Number 3','gtin_4'=>'Gtin Number 4','gtin_5'=>'Gtin Number 5','gtin_6'=>'Gtin Number 6','gtin_7'=>'Gtin Number 7','gtin_8'=>'Gtin Number 8','gtin_9'=>'Gtin Number 9','gtin_10'=>'Gtin Number 10','gtin_11'=>'Gtin Number 11','gtin_12'=>'Gtin Number 12','gtin_13'=>'Gtin Number 13','gtin_14'=>'Gtin Number 14','gtin_15'=>'Gtin Number 15');
 
 
             $ioo->streamWriteCsv($header);
