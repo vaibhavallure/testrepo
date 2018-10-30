@@ -124,7 +124,7 @@ try{
                  if(count($delimg)) {
 
                          $media->remove($delimg['pid'], $delimg['file']);
-                         Mage::log(" Image Removed := " . $dimg['file'] . "----end", Zend_Log::DEBUG, 'replaceImage.log', true);
+                         Mage::log(" Image Removed := " . $delimg['file'] . "----end", Zend_Log::DEBUG, 'replaceImage.log', true);
 
                  }
 
