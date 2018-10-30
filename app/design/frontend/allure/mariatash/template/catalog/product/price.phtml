@@ -340,6 +340,13 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                 </p>
             <?php else: // excl. ?>
 
+                <div class="old-price">
+                    <span class="price-label"><?php echo $this->__('Price:') ?></span>
+                    <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <?php echo $_coreHelper->currency($_regularPrice, true, false) ?>
+                </span>
+                </div>
+                
                 <?php if ($_taxHelper->displayBothPrices()): ?>
                     <p class="s-both_discounted special-price">
                         <span class="price-label"><?php echo $this->__(' ') ?></span>
