@@ -24,6 +24,24 @@ class Allure_Salesforce_Model_Observer_Order{
         }
         
         $order = $observer->getEvent()->getOrder();
+        
+        $salesforceOrderId = $order->getSalesforceOrderId();
+        if($salesforceOrderId){
+            $this->updateOrderData($order);
+        }
+        $orderId = $order->getId();
+        $orderStatus = $order->getStatus();
+        $helper->salesforceLog("Order Id {$orderId} Status - ".$orderStatus);
+        if(!$orderStatus){
+            return ;
+        }
+        
+        if(Mage::registry('sales_order_save_after_'.$orderId)){
+            return $this;
+        }
+        Mage::register('sales_order_save_after_'.$orderId,true); 
+        
+        
         $items = $order->getAllVisibleItems();
         
         //check product is in salesforce or not.if not add into salesforce.
