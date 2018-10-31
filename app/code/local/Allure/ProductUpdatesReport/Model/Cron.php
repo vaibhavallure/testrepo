@@ -34,7 +34,7 @@ class Allure_ProductUpdatesReport_Model_Cron
             $readConnection = $resource->getConnection('core_read');
             $table = $resource->getTableName('catalog_product_flat_1');
 
-            $query = "SELECT sku,name as product_name,created_at,updated_at,SUBSTRING_INDEX(SUBSTRING(sku , position('|' in sku)+1 ), '|', 1)as metal,price FROM ". $table ." WHERE status = 1 AND (updated_at BETWEEN '".$fromDate."' AND '".$toDate."')";
+            $query = "SELECT sku,name as product_name,SUBSTRING_INDEX(SUBSTRING(sku , position('|' in sku)+1 ), '|', 1)as metal,price,created_at,updated_at FROM ". $table ." WHERE status = 1 AND (updated_at BETWEEN '".$fromDate."' AND '".$toDate."')";
 
             $rowData = $readConnection->fetchAll($query);
             $csvHeaders = Mage::helper("productupdatereport")->getTableHeaders();
