@@ -98,9 +98,9 @@ class Allure_BackorderRecord_Model_Cron
            }
 
             $backorderCollection = Mage::getModel('sales/order_item')->getCollection()
-                ->addAttributeToSort('item_id', 'DESC')
+                ->addAttributeToSort('item_id', 'DESC');
 
-               ->addAttributeToFilter('main_table.created_at', array('from' => $fromDate, 'to' => $toDate));
+          //  $backorderCollection->addAttributeToFilter('main_table.created_at', array('from' => $fromDate, 'to' => $toDate));
 
             if ($filterWithSku) {
                //$backorderCollection->addAttributeToFilter('main_table.sku',array('like' =>$sku));
@@ -117,7 +117,7 @@ class Allure_BackorderRecord_Model_Cron
                 $addToquery->where("sales_flat_order.status in($filterStatus)");
             }
 
-
+            $addToquery->where("sales_flat_order.created_at BETWEEN '".$fromDate."' AND '".$toDate."'");
 
         }
         catch (Exception $e){
