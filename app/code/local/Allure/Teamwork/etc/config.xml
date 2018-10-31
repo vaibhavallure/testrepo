@@ -50,6 +50,12 @@
 					<temp>
 						<table>allure_teamwork_temp_update</table>
 					</temp>
+					<tmproduct>
+						<table>allure_teamwork_product_data</table>
+					</tmproduct>
+					<tmorder>
+						<table>allure_teamwork_sync_data</table>
+					</tmorder>
 				</entities>
 			</allure_teamwork_resource>
 		</models>
@@ -293,6 +299,23 @@
                 <allowspecific>0</allowspecific>
             </tm_pay_cashuk>
             
+            <bakerloo_cash>
+	            <active>1</active>
+	            <model>allure_teamwork/payment_barkcash</model>
+	            <order_status>pending</order_status>
+	            <payment_action>authorize_capture</payment_action>
+	            <title>Cash</title>
+	            <allowspecific>0</allowspecific>
+            </bakerloo_cash>
+            
+            <bakerloo_free>
+	            <active>1</active>
+	            <model>allure_teamwork/payment_barkfree</model>
+	            <order_status>pending</order_status>
+	            <payment_action>authorize_capture</payment_action>
+	            <title>Free</title>
+	            <allowspecific>0</allowspecific>
+            </bakerloo_free>
             
         </payment>
 	</default>

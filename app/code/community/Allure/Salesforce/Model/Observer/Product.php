@@ -392,6 +392,12 @@ class Allure_Salesforce_Model_Observer_Product{
                 $salesforceId = $product->getSalesforceProductId();
                 if(!$salesforceId){
                     $this->saveProductToSalesforce($product);
+                }else {
+                    $standardPriceBkId  = $product->getSalesforceStandardPricebk();
+                    $wholesalePriceBkId = $product->getSalesforceWholesalePricebk();
+                    if(!$standardPriceBkId && !$wholesalePriceBkId){
+                        $this->saveProductToSalesforce($product);
+                    }
                 }
                 $product = null;
             }

@@ -446,10 +446,15 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $bState = $billAddr['region'];
                             }
                             
-                            if($billAddr['country_id']){
-                                $bCountryObj = Mage::getModel('directory/country')
-                                ->loadByCode($billAddr['country_id']);
-                                $bCountry = $bCountryObj->getName();
+                            $bcountryNm = $billAddr['country_id'];
+                            if($bcountryNm){
+                                if(strlen($bcountryNm) > 3){
+                                    $bCountry = $bcountryNm;
+                                }else{
+                                    $bCountryObj = Mage::getModel('directory/country')
+                                    ->loadByCode($billAddr['country_id']);
+                                    $bCountry = $bCountryObj->getName();
+                                }
                             }
                         }
                         if($shipAddr){
@@ -462,10 +467,15 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $sState = $shipAddr['region'];
                             }
                             
-                            if($shipAddr['country_id']){
-                                $sCountryObj = Mage::getModel('directory/country')
-                                ->loadByCode($shipAddr['country_id']);
-                                $sCountry = $sCountryObj->getName();
+                            $scountyNm = $shipAddr['country_id'];
+                            if($scountyNm){
+                                if(strlen($scountyNm) > 3){
+                                    $sCountry = $scountyNm;
+                                }else{
+                                    $sCountryObj = Mage::getModel('directory/country')
+                                    ->loadByCode($scountyNm);
+                                    $sCountry = $sCountryObj->getName();
+                                }
                             }
                         }
                     }
@@ -598,7 +608,13 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $value = ($object->getData($k))?"true":"false";
                             }elseif ($k == "Pricebook2Id"){
                                 $isAdd = true;
-                                $value = Mage::helper('allure_salesforce')->getGeneralPricebook();
+                                $value = "";
+                                if($objectType == "product-retail-price" ){
+                                    $value = Mage::helper('allure_salesforce')->getGeneralPricebook();
+                                }else{
+                                    $value = Mage::helper('allure_salesforce')->getWholesalePricebook();
+                                }
+                                
                             }elseif ($k == "UnitPrice"){
                                 $price = 0;
                                 if($objectType == "product-wholesale-price"){
@@ -822,7 +838,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             $response["filename"] = $filename;
             $response["path"] = $filePath;
         }catch (Exception $e){
-            $message = $e->getMessage();
+            $message = $e->getMessage()." ".$object->getId();
             $response["success"] = false;
             $response["message"] = $message;
         }
