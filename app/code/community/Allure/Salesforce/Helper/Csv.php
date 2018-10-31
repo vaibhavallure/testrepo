@@ -355,7 +355,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             }
             
             //get old stores list
-            if($objectType == "account" || $objectType == "order"){
+            if($objectType == "account" || $objectType == "order" || $objectType == "invoice" || $objectType == "creditmemo"){
                 $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
                 $oldStoreArr = array();
                 foreach ($ostores as $storeO){
@@ -385,7 +385,48 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                         $orderObj = $object->getOrder();
                     }
                     
+                    if($objectType == "product"){
+                        $productSalesforceId = $object->getSalesforceProductId();
+                        if($productSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    if($objectType == "order"){
+                        $orderSalesforceId = $object->getSalesforceOrderId();
+                        if($orderSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    if($objectType == "invoice"){
+                        $invoiceSalesforceId = $object->getSalesforceInvoiceId();
+                        if($invoiceSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    if($objectType == "shipment"){
+                        $shipmentSalesforceId = $object->getSalesforceShipmentId();
+                        if($shipmentSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    if ($objectType == "creditmemo"){
+                        $creditmemoSalesforceId = $object->getSalesforceCreditmemoId();
+                        if($creditmemoSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    
+                    
                     if($objectType == "account"){
+                        $customerSalesforceId = $object->getSalesforceCustomerId();
+                        if($customerSalesforceId){
+                            continue;
+                        }
                         $fullName .= ($object->getPrefix()) ? $object->getPrefix()." " : "";
                         $fullName .= ($object->getFirstname()) ? $object->getFirstname()." " : "";
                         $fullName .= ($object->getMiddlename()) ? $object->getMiddlename()." " : "";
@@ -405,9 +446,11 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $bState = $billAddr['region'];
                             }
                             
-                            $bCountryObj = Mage::getModel('directory/country')
-                            ->loadByCode($billAddr['country_id']);
-                            $bCountry = $bCountryObj->getName();
+                            if($billAddr['country_id']){
+                                $bCountryObj = Mage::getModel('directory/country')
+                                ->loadByCode($billAddr['country_id']);
+                                $bCountry = $bCountryObj->getName();
+                            }
                         }
                         if($shipAddr){
                             $sRegionId = $shipAddr['region_id'];
@@ -419,9 +462,11 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $sState = $shipAddr['region'];
                             }
                             
-                            $sCountryObj = Mage::getModel('directory/country')
-                            ->loadByCode($shipAddr['country_id']);
-                            $sCountry = $sCountryObj->getName();
+                            if($shipAddr['country_id']){
+                                $sCountryObj = Mage::getModel('directory/country')
+                                ->loadByCode($shipAddr['country_id']);
+                                $sCountry = $sCountryObj->getName();
+                            }
                         }
                     }
                     
@@ -459,6 +504,9 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $isAdd = true;
                                 $value = $sCountry;
                             }elseif ($k == "old_store_id"){
+                                $isAdd = true;
+                                $value = $oldStoreArr[$object->getData($k)];
+                            }elseif ($k == "store_id"){
                                 $isAdd = true;
                                 $value = $oldStoreArr[$object->getData($k)];
                             }
@@ -626,6 +674,9 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                             }elseif ($k == "order_created_at"){
                                 $isAdd = true;
                                 $value = date("Y-m-d",strtotime($orderObj->getData("created_at")));
+                            }elseif ($k == "store_id"){
+                                $isAdd = true;
+                                $value = $oldStoreArr[$object->getData($k)];
                             }
                             
                         }elseif ($objectType == "creditmemo"){
@@ -644,6 +695,9 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                             }elseif ($k == "order_created_at"){
                                 $isAdd = true;
                                 $value = date("Y-m-d",strtotime($orderObj->getData("created_at")));
+                            }elseif ($k == "store_id"){
+                                $isAdd = true;
+                                $value = $oldStoreArr[$object->getData($k)];
                             }
                         }
                         
