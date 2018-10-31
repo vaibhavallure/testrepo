@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_HarrodsInventory>
+      <version>0.1.0</version>
+    </Allure_HarrodsInventory>
+  </modules>
+  <frontend>
+    <routers>
+      <harrodsinventory>
+        <use>standard</use>
+        <args>
+          <module>Allure_HarrodsInventory</module>
+          <frontName>productupdatereport</frontName>
+        </args>
+      </harrodsinventory>
+    </routers>    
+  </frontend>
+  <global>
+    <helpers>
+      <harrodsinventory>
+        <class>Allure_HarrodsInventory_Helper</class>
+      </harrodsinventory>
+    </helpers>    
+    <models>
+          <harrodsinventory>
+            <class>Allure_HarrodsInventory_Model</class>
+          </harrodsinventory>
+    </models>   
+  </global> 
+<!--  <crontab>
+    <jobs>
+      <harrods_inventory_update>
+        <schedule>
+          <cron_expr>* 6 * * *</cron_expr>
+        </schedule>
+        <run>
+          <model>harrodsinventory/cron:updateHarrodsInventory</model>
+        </run>
+      </harrods_inventory_update>
+      <harrods_inventory_email>
+        <schedule>
+          <cron_expr>30 6 * * *</cron_expr>
+        </schedule>
+        <run>
+          <model>harrodsinventory/cron:sendEmail</model>
+        </run>
+      </harrods_inventory_email>
+    </jobs>
+  </crontab>-->
+</config> 
