@@ -66,10 +66,10 @@ class Allure_ProductUpdatesReport_Helper_Data extends Mage_Core_Helper_Abstract
         $header = array(
             "sku"=>"SKU",
             "product_name"=>"PRODUCT NAME",
-            "created_at"=>"CREATED DATE",
-            "updates_at" => "UPDATED AT",
             "metal"=>"METAL",
-            "price"=>"PRICE"            
+            "price"=>"PRICE",
+            "created_at"=>"CREATED DATE",
+            "updates_at" => "UPDATED AT"
 
         );
         return $header;
