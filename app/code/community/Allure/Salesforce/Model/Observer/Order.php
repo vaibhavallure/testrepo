@@ -45,7 +45,17 @@ class Allure_Salesforce_Model_Observer_Order{
         $items = $order->getAllVisibleItems();
         
         //check product is in salesforce or not.if not add into salesforce.
-        Mage::getModel("allure_salesforce/observer_product")->addOrderProduct($items);
+        $isTeamwork = false;
+        $createOrderMethod = $order->getCreateOrderMethod();
+        if($createOrderMethod){
+            $isTeamwork = true;
+            $status =  Mage::helper("allure_teamwork")->getTeamworkSalesforceStatus();
+            if(!$status){
+                Mage::log("Teamwork data transfer to salesforce disabled.",Zend_Log::DEBUG,"salesforce.log",true);
+                return ;
+            }
+        }
+        Mage::getModel("allure_salesforce/observer_product")->addOrderProduct($items,$isTeamwork);
         
         $helper->salesforceLog("order id == ".$order->getId());
         
@@ -63,9 +73,11 @@ class Allure_Salesforce_Model_Observer_Order{
                 
                 //create new account for the customer
                 $helper->salesforceLog("from order customer account creating.");
-                $customer->save();
-                $salesforceAccountId = $customer->getSalesforceCustomerId();
+                //$customer->save();
+                $salesforceAccountId = Mage::getModel("allure_salesforce/observer_customer")
+                ->addCustomerToSalesforce($customer);
             }
+            $helper->salesforceLog("account id  - ".$salesforceAccountId);
             /* if(!$salesforceAccountId){
                 $customer->save();
                 $salesforceAccountId = $customer->getSalesforceCustomerId();
@@ -129,9 +141,19 @@ class Allure_Salesforce_Model_Observer_Order{
                 $state = $billingAddr['region'];
             }
             
-            $country = Mage::getModel('directory/country')
-            ->loadByCode($billingAddr['country_id']);
-            $countryName = $country->getName();
+            $bcountryNm = $billingAddr['country_id'];
+            if($bcountryNm){
+                if(strlen($bcountryNm) > 3){
+                    $countryName = $bcountryNm;
+                }else{
+                    $country = Mage::getModel('directory/country')
+                    ->loadByCode($billingAddr['country_id']);
+                    if($country->getId()){
+                        $countryName = $country->getName();
+                    }
+                }
+            }
+            
         }
         
         $stateShip       = "";
@@ -145,9 +167,19 @@ class Allure_Salesforce_Model_Observer_Order{
                 $stateShip = $shippingAddr['region'];
             }
             
-            $country = Mage::getModel('directory/country')
-            ->loadByCode($shippingAddr['country_id']);
-            $countryNameShip = $country->getName();
+            $scountryNm = $shippingAddr['country_id'];
+            if($scountryNm){
+                if(strlen($scountryNm) > 3){
+                    $countryNameShip = $scountryNm;
+                }else{
+                    $country = Mage::getModel('directory/country')
+                    ->loadByCode($shippingAddr['country_id']);
+                    if($country->getId()){
+                        $countryNameShip = $country->getName();
+                    }
+                }
+            }
+            
         } 
         
         $orderItem = array();
@@ -156,13 +188,35 @@ class Allure_Salesforce_Model_Observer_Order{
         $magOrderItemArr = array();
         foreach ($items as $item){
             
-            $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
-            $product = Mage::getModel("catalog/product")->load($productId);
             $salesforcePricebkEntryId = "";
-            if($product){
-                $salesforcePricebkEntryId = $product->getSalesforceStandardPricebk();
-                if($customerGroup == 2){
-                    $salesforcePricebkEntryId = $product->getSalesforceWholesalePricebk();
+            if($isTeamwork){
+                $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
+                if($productId){
+                    $product = Mage::getModel("catalog/product")->load($productId);
+                    if($product){
+                        $salesforcePricebkEntryId = $product->getSalesforceStandardPricebk();
+                        if($customerGroup == 2){
+                            $salesforcePricebkEntryId = $product->getSalesforceWholesalePricebk();
+                        }
+                    }
+                }else{
+                    $tmProduct = Mage::getModel("allure_teamwork/tmproduct")
+                    ->load($item->getSku(),"sku");
+                    if($tmProduct->getId()){
+                        $salesforcePricebkEntryId = $tmProduct->getSalesforceStandardPricebk();
+                        if($customerGroup == 2){
+                            $salesforcePricebkEntryId = $tmProduct->getSalesforceWholesalePricebk();
+                        }
+                    }
+                }
+            }else{
+                $productId = Mage::getModel("catalog/product")->getIdBySku($item->getSku());
+                $product = Mage::getModel("catalog/product")->load($productId);
+                if($product){
+                    $salesforcePricebkEntryId = $product->getSalesforceStandardPricebk();
+                    if($customerGroup == 2){
+                        $salesforcePricebkEntryId = $product->getSalesforceWholesalePricebk();
+                    }
                 }
             }
             
@@ -326,6 +380,122 @@ class Allure_Salesforce_Model_Observer_Order{
         
     }
     
+    public function addInvoiceIntoSalesforce($orderId){
+        $helper = $this->getHelper();
+        $helper->salesforceLog("addInvoiceToSalesforce teamwork request.");
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
+        $isUploadInvoice = false;
+        $order = Mage::getModel("sales/order")->load($orderId);
+        
+        $invoices = $order->getInvoiceCollection();
+        foreach ($invoices as $invoice){
+            //$invoice = Mage::getModel('sales/order_invoice')->load($invoice->getId());
+            $order = $invoice->getOrder();
+            $order = Mage::getModel("sales/order")->load($order->getId());
+            $helper->salesforceLog("order id :".$order->getId());
+            $salesforceOrderId = $order->getSalesforceOrderId();
+            $helper->salesforceLog("salesforce order id :".$salesforceOrderId);
+            if($salesforceOrderId){
+                $baseGrandTotal = $invoice->getBaseGrandTotal();
+                $basTaxAmount = $invoice->getBaseTaxAmount();
+                $baseShippingAmount = $invoice->getBaseShippingAmount();
+                $baseSubtotal = $invoice->getBaseSubtotal();
+                $baseDiscountAmount = $invoice->getBaseDiscountAmount();
+                $discountDescrption = $invoice->getDiscountDescription();
+                $createdAt = $invoice->getCreatedAt();
+                $invoiceIncrementId = $invoice->getIncrementId();
+                
+                $orderDate = $order->getCreatedAt();
+                $orderIncrementId = $order->getIncrementId();
+                
+                $status = $invoice->getState();
+                $storeId = $invoice->getStoreId();
+                
+                //$totalQty = $invoice->getTotalQty();
+                $totalQty = 0;
+                foreach ($invoice->getAllItems() as $item){
+                    if ($item->getOrderItem()->getParentItem()) {
+                        continue;
+                    }
+                    $qty = $item->getQty();
+                    $totalQty += $qty;
+                }
+                
+                $salesforceInvoiceId = $invoice->getSalesforceInvoiceId();
+                
+                $objectType = $helper::INVOICE_OBJECT;
+                
+                $urlPath = $helper::INVOICE_URL;
+                $requestMethod = "GET";
+                if($salesforceInvoiceId){
+                    $requestMethod = "PATCH";
+                    $urlPath .= "/" . $salesforceInvoiceId;
+                }else{
+                    $requestMethod = "POST";
+                }
+                
+                $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+                $oldStoreArr = array();
+                foreach ($ostores as $storeO){
+                    $oldStoreArr[$storeO->getId()] = $storeO->getName();
+                }
+                $oldStoreArr[0] = "Admin";
+                
+                $request = array(
+                    "Discount_Amount__c"        => $baseDiscountAmount,
+                    "Discount_Descrition__c"    => "for advertisment",
+                    "Grand_Total__c"            => $baseGrandTotal,
+                    "Invoice_Date__c"           => date("Y-m-d",strtotime($createdAt)),
+                    "Invoice_Id__c"             => $invoiceIncrementId,
+                    "Order_Date__c"             => date("Y-m-d",strtotime($orderDate)),
+                    "Order_Id__c"               => $orderIncrementId,
+                    "Shipping_Amount__c"        => $baseShippingAmount,
+                    "Status__c"                 => $status,
+                    "Subtotal__c"               => $baseSubtotal,
+                    "Tax_Amount__c"             => $basTaxAmount,
+                    "Total_Quantity__c"         => $totalQty,
+                    "Store__c"                  => $oldStoreArr[$storeId],
+                    "Order__c"                  => $salesforceOrderId,
+                    "Name"                      => "Invoice for Order #".$orderIncrementId
+                );
+                
+                $response       = $helper->sendRequest($urlPath, $requestMethod, $request);
+                $responseArr    = json_decode($response,true);
+                if($responseArr["success"]){
+                    $salesforceId = $responseArr["id"];
+                    $helper->salesforceLog("order_id :".$order->getId()." invoice_id :".$invoice->getId()." $$ salesforce _id :".$salesforceId);
+                    $coreResource = Mage::getSingleton('core/resource');
+                    $write = $coreResource->getConnection('core_write');
+                    $sql_order = "UPDATE sales_flat_invoice SET salesforce_invoice_id='".$salesforceId."' WHERE entity_id ='".$invoice->getId()."'";
+                    $write->query($sql_order);
+                    $helper->salesforceLog("salesforce id updated into invoice.");
+                    $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $invoice->getId());
+                    
+                    //upload invoice pdf
+                    //$this->uploadInvoicePdfTeamwork($order);
+                    //$this->updateOrderData($order);
+                    $isUploadInvoice = true;
+                    
+                }else{
+                    if($responseArr == ""){
+                        $helper->salesforceLog("salesforce id not updated into invoice.");
+                        $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $invoice->getId());
+                    }else{
+                        $helper->addSalesforcelogRecord($objectType,$requestMethod,$invoice->getId(),$response);
+                    }
+                }
+            }
+        }
+        //upload invoice
+        $this->uploadInvoicePdfTeamwork($order);
+        
+    }
+    
     
     /**
      * add invoice data into salesforce 
@@ -343,6 +513,10 @@ class Allure_Salesforce_Model_Observer_Order{
         $invoice = $observer->getEvent()->getInvoice();
         
         $order = $invoice->getOrder();
+        if($order->getCreateOrderMethod() == 2){
+            return ;
+        }
+        
         $order = Mage::getModel("sales/order")->load($order->getId());
         $helper->salesforceLog("order id :".$order->getId());
         $salesforceOrderId = $order->getSalesforceOrderId();
@@ -512,6 +686,104 @@ class Allure_Salesforce_Model_Observer_Order{
                     if($documentId){
                         $helper->salesforceLog("link invoice pdf document id - ".$documentId);
                         $url2 = $helper::DOCUMENTLINK_URL;
+                        
+                        
+                        
+                        $request1 = array(
+                            "ContentDocumentId"     =>  $documentId,
+                            "LinkedEntityId"        =>  $salesforceOrderId,
+                            "ShareType"             =>  "V"
+                        );
+                        $response2 = $helper->sendRequest($url2 , "POST" , $request1);
+                        $responseArr2 = json_decode($response2,true);
+                        if($responseArr2["success"]){
+                            $helper->salesforceLog("Invoice pdf uploaded.");
+                        }
+                    }
+                    $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $order->getId());
+                }else{
+                    $helper->addSalesforcelogRecord($objectType,$requestMethod,$order->getId(),$response);
+                }
+                
+        }catch(Exception $e){
+            $helper->salesforceLog("Exception in uploadInvoicePdf - ".$e->getMessage());
+        }
+    }
+    
+    
+    //using salesforce contentversion & document
+    private function uploadInvoicePdfTeamwork($order){
+        $helper = $this->getHelper();
+        $helper->salesforceLog("uploadInvoicePdf teamwork request.");
+        try{
+            $orderIncrementId = $order->getIncrementId();
+            $fileName = "Order_Invoice.pdf";
+            
+            $salesforceOrderId = $order->getSalesforceOrderId();
+            
+            $objectType = $helper::UPLOAD_DOC_OBJECT;
+            
+            $invoices = $order->getInvoiceCollection();
+            if(Mage::helper("core")->isModuleEnabled("Allure_Pdf")){
+                $pdf = Mage::getModel('sales/order_pdf_invoice')->getCompressPdf($invoices,true);
+            }else {
+                $pdf = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
+            }
+            
+            
+            $body[] = implode("\r\n", array(
+                "Content-Type: application/json; charset=utf-8",
+                "Content-Disposition: form-data; name=\"entity_content\";",
+                "",
+                '{
+                    "PathOnClient" : "Order-#'.$orderIncrementId.'_Invoice.pdf"
+                 }'
+            ));
+            
+            
+            $filedata =  $pdf->render();
+            
+            $body[] = implode("\r\n", array(
+                "Content-Type: application/octet-stream",
+                "Content-Disposition: form-data; name=\"VersionData\"; filename=\"Order-#{$orderIncrementId}_Invoice.pdf\"",
+                "",
+                $filedata,
+            ));
+            
+            // generate safe boundary
+            do {
+                $boundary = "---------------------" . md5(mt_rand() . microtime());
+            } while (preg_grep("/{$boundary}/", $body));
+            
+            // add boundary for each parameters
+            array_walk($body, function (&$part) use ($boundary) {
+                $part = "--{$boundary}\r\n{$part}";
+            });
+                
+                // add final boundary
+                $body[] = "--{$boundary}--";
+                $body[] = "";
+                
+                
+                $url = $helper::CONTENTVERSION_URL;
+                $requestMethod = "POST";
+                $response = $helper->sendRequest($url, $requestMethod, $body, true, $boundary);
+                //$helper->salesforceLog($response);
+                $responseArr = json_decode($response,true);
+                if($responseArr["success"]){
+                    //get documentLink id
+                    $helper->salesforceLog("call document api ");
+                    $salesforceContentVersionId = $responseArr["id"];
+                    $url1 = $helper::CONTENTVERSION_URL."/{$salesforceContentVersionId}";
+                    $response1 = $helper->sendRequest($url1 , "GET" , null);
+                    $responseArr1 = json_decode($response1,true);
+                    $documentId = $responseArr1["ContentDocumentId"];
+                    if($documentId){
+                        $helper->salesforceLog("link invoice pdf document id - ".$documentId);
+                        $url2 = $helper::DOCUMENTLINK_URL;
+                        
+                        
+                        
                         $request1 = array(
                             "ContentDocumentId"     =>  $documentId,
                             "LinkedEntityId"        =>  $salesforceOrderId,
@@ -605,6 +877,10 @@ class Allure_Salesforce_Model_Observer_Order{
         $salesforceShipmentId = $shipment->getSalesforceShipmentId();
         
         $order = $shipment->getOrder();
+        
+        if($order->getCreateOrderMethod() == 2){
+            return;
+        }
         
         $salesforceOrderId  = $order->getSalesforceOrderId();
         $customerId         = $shipment->getCustomerId();
@@ -722,6 +998,135 @@ class Allure_Salesforce_Model_Observer_Order{
         
     }
     
+    
+    
+    /**
+     * add shipment information into salesforce
+     */
+    public function addTeamworkShipmentToSalesforce($shipmentId){
+        $helper = $this->getHelper();
+        $helper->salesforceLog("addShipmentToSalesforce teamwork request.");
+        
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
+        $shipment =  Mage::getModel('sales/order_shipment')->load($shipmentId);;
+        $salesforceShipmentId = $shipment->getSalesforceShipmentId();
+        
+        $order = $shipment->getOrder();
+        
+        $salesforceOrderId  = $order->getSalesforceOrderId();
+        $customerId         = $shipment->getCustomerId();
+        $incrementId        = $shipment->getIncrementId();
+        $orderIncrementId   = $order->getIncrementId();
+        
+        $totalQty = $shipment->getTotalQty();
+        $shippingLabel = $shipment->getShippingLabel();
+        
+        $weight = $order->getWeight();
+        
+        $tracksNumCollection = $shipment->getAllTracks();
+        $trackNumberArr = array();
+        $titlesArr = array();
+        
+        if(!$salesforceOrderId){
+            return;
+        }
+        
+        $objectType = $helper::SHIPMENT_OBJECT;
+        $requestMethod = "GET";
+        $urlPath = $helper::SHIPMENT_URL;
+        if($salesforceShipmentId){
+            $requestMethod = "PATCH";
+            $urlPath .= "/" .$salesforceShipmentId;
+        }else{
+            $requestMethod = "POST";
+        }
+        
+        $request = array(
+            "Customer_Id__c"    => $customerId,
+            "Increment_ID__c"   => $incrementId,
+            "Order__c"          => $salesforceOrderId,
+            "Order_Id__c"       => $orderIncrementId,
+            "Quantity__c"       => $totalQty,
+            "Shipping_Label__c" => "",
+            "Weight__c"         => $weight,
+            //"Carrier__c"        => $carrierTitles,
+            //"Track_Number__c"   => $trackNums,
+            "Name"              => "Shipment for Order #".$orderIncrementId
+        );
+        //$helper->salesforceLog($urlPath);
+        $helper->salesforceLog($request);
+        
+        $response = $helper->sendRequest($urlPath,$requestMethod,$request);
+        $responseArr    = json_decode($response,true);
+        if($responseArr["success"]){
+            $salesforceId = $responseArr["id"];
+            $salesforceShipmentId = $salesforceId;
+            $helper->salesforceLog("order_id :".$order->getId()." shipment_id :".$shipment->getId()." salesforce_Id :".$salesforceId);
+            $coreResource = Mage::getSingleton('core/resource');
+            $write = $coreResource->getConnection('core_write');
+            $sql_order = "UPDATE sales_flat_shipment SET salesforce_shipment_id='".$salesforceId."' WHERE entity_id ='".$shipment->getId()."'";
+            $write->query($sql_order);
+            $helper->salesforceLog("salesforce id updated into shipment.");
+            $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $shipment->getId());
+            
+            //$this->updateOrderData($order);
+        }else{
+            if($responseArr == ""){
+                $helper->salesforceLog("salesforce id not updated into shipment.");
+                $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $shipment->getId());
+            }else{
+                $helper->addSalesforcelogRecord($objectType,$requestMethod,$shipment->getId(),$response);
+            }
+        }
+        
+        if($salesforceShipmentId){
+            $helper->salesforceLog("In Track Info");
+            $isTrack = false;
+            $requestR["records"] = array();
+            foreach ($tracksNumCollection as $track){
+                if(!$track->getData("salesforce_shipment_track_id")){
+                    $isTrack = true;
+                    $tArr = array(
+                        "attributes"            => array("type" => "Tracking_Information__c","referenceId" => $track->getData("entity_id")),
+                        "Magento_Tracker_Id__c" => $track->getData("entity_id"),
+                        "Name"                  => $track->getData("title"),
+                        "Shipment__c"           => $salesforceShipmentId,
+                        "Tracking_Number__c"    => $track->getData("track_number"),
+                        "Carrier__c"            => $track->getData("carrier_code")
+                    );
+                    array_push($requestR["records"],$tArr);
+                }
+            }
+            if($isTrack){
+                $helper->salesforceLog("In Track Info request");
+                $requestMethod = "POST";
+                $urlPath = $helper::SHIPMENT_TRACK_URL;
+                $responseT = $helper->sendRequest($urlPath,$requestMethod,$requestR);
+                $tResponseArr = json_decode($responseT,true);
+                if($tResponseArr["hasErrors"] == false){
+                    $results = $tResponseArr["results"];
+                    $sql_order = "";
+                    foreach ($results as $res){
+                        $sql_order .= "UPDATE sales_flat_shipment_track SET salesforce_shipment_track_id='".$res["id"]."' WHERE entity_id ='".$res["referenceId"]."';";
+                    }
+                    $coreResource = Mage::getSingleton('core/resource');
+                    $write1 = $coreResource->getConnection('core_write');
+                    //$sql_order = "UPDATE sales_flat_shipment SET salesforce_shipment_id='".$salesforceId."' WHERE entity_id ='".$shipment->getId()."'";
+                    $write1->query($sql_order);
+                    //$helper->salesforceLog($sql_order);
+                }
+            }
+            
+        }
+    }
+    
+    
+    
     /**
      * add creditmemo order data into salesforce
      */
@@ -736,6 +1141,135 @@ class Allure_Salesforce_Model_Observer_Order{
         }
         
         $creditMemo = $observer->getEvent()->getCreditmemo();
+        $items      = $creditMemo->getAllItems();
+        
+        $order = $creditMemo->getOrder();
+        
+        if ($order->getCreateOrderMethod() == 2){
+            return;
+        }
+        
+        $salesforceOrderId = $order->getSalesforceOrderId();
+        $helper->salesforceLog("salesforc order id :".$salesforceOrderId);
+        if(!$salesforceOrderId){
+            return ;
+        }
+        $salesforceCreditmemoId = $creditMemo->getSalesforceCreditmemoId();
+        
+        $incrementId            = $creditMemo->getIncrementId();
+        $orderIncrementId       = $order->getIncrementId();
+        $baseAdjustment         = $creditMemo->getBaseAdjustment();
+        $createdAt              = $creditMemo->getCreatedAt();
+        $status                 = $creditMemo->getState();
+        $discountAmount         = $creditMemo->getBaseDiscountAmount();
+        $grandTotal             = $creditMemo->getBaseGrandTotal();
+        $orderDate              = $order->getCreatedAt();
+        $shippingAmount         = $creditMemo->getBaseShippingAmount();
+        $storeId                = $creditMemo->getStoreId();
+        $subtotal               = $creditMemo->getBaseSubtotal();
+        $taxAmount              = $creditMemo->getBaseTaxAmount();
+        
+        $objectType = $helper::CREDITMEMO_OBJECT;
+        
+        $requestMethod  = "GET";
+        $urlPath        = $helper::CREDIT_MEMO_URL;
+        if($salesforceCreditmemoId){
+            $requestMethod  = "PATCH";
+            $urlPath        .= "/" .$salesforceCreditmemoId;
+        }else{
+            $requestMethod = "POST";
+        }
+        
+        $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
+        $oldStoreArr = array();
+        foreach ($ostores as $storeO){
+            $oldStoreArr[$storeO->getId()] = $storeO->getName();
+        }
+        $oldStoreArr[0] = "Admin";
+        
+        $request = array(
+            "Adjustment__c"         => $baseAdjustment,
+            "Created_At__c"         => date("Y-m-d",strtotime($createdAt)),
+            "Credit_Memo_Id__c"     => $incrementId,
+            "Stauts__c"             => $status,
+            "Discount_Amount__c"    => $discountAmount,
+            "Grand_Total__c"        => $grandTotal,
+            "Order_Date__c"         => date("Y-m-d",strtotime($orderDate)),
+            "Order_Id__c"           => $orderIncrementId,
+            "Shipping_Amount__c"    => $shippingAmount,
+            "Store__c"              => $oldStoreArr[$storeId],
+            "Subtotal__c"           => $subtotal,
+            "Tax_Amount__c"         => $taxAmount,
+            "Order__c"              => $salesforceOrderId,
+            "Name"                  => "Credit Memo for Order #".$orderIncrementId
+        );
+        
+        $response = $helper->sendRequest($urlPath,$requestMethod,$request);
+        $responseArr = json_decode($response,true);
+        if($responseArr["success"]){
+            $salesforceId = $responseArr["id"];
+            $helper->salesforceLog("Salesforce Id :".$salesforceId);
+            $coreResource = Mage::getSingleton('core/resource');
+            $write = $coreResource->getConnection('core_write');
+            $sql_order = "UPDATE sales_flat_creditmemo SET salesforce_creditmemo_id='".$salesforceId."' WHERE entity_id ='".$creditMemo->getId()."'";
+            $write->query($sql_order);
+            $helper->salesforceLog("salesforce id updated into creditmemo.");
+            $helper->salesforceLog("order_id :".$order->getId()." creditmemo_id:".$creditMemo->getId()." $$ salesforce_id".$salesforceId);;
+            
+            $cRequest = array("allOrNone"=>false);
+            $cRequest["records"] = array();
+            $requestMethod = "PATCH";
+            $urlPath = $helper::UPDATE_COMPOSITE_OBJECT_URL;
+            foreach ($items as $item){
+                $orderItemId = $item->getOrderItemId();
+                $orderItem = Mage::getModel("sales/order_item")->load($orderItemId);
+                if(!$orderItem){
+                    continue;
+                }
+                $salesforceItemId = $orderItem->getSalesforceItemId();
+                if(!$salesforceItemId){
+                    continue;
+                }
+                $tempArr = array(
+                    "attributes"        => array("type" => "OrderItem"),
+                    "id"                => $salesforceItemId,
+                    "Credit_Memo__c"    => $salesforceId
+                );
+                array_push($cRequest["records"],$tempArr);
+            }
+            
+            $response = $helper->sendRequest($urlPath,$requestMethod,$cRequest);
+            $responseArr1 = json_decode($response,true);
+            if($responseArr1[0]["success"]){
+                $helper->salesforceLog("creditmemo items updated into salesforce.");
+                //$this->updateOrderData($order);
+                $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $creditMemo->getId());
+            }else{
+                if($responseArr == ""){
+                    $helper->salesforceLog("creditmemo items not updated into salesforce.");
+                    $helper->deleteSalesforcelogRecord($objectType, $requestMethod, $creditMemo->getId());
+                }else{
+                    $helper->addSalesforcelogRecord($objectType,$requestMethod,$creditMemo->getId(),$response);
+                }
+            }
+        }
+    }
+    
+    
+    /**
+     * add creditmemo order data into salesforce
+     */
+    public function addTeamworkCreditmemoToSalesforce($creditmemoId){
+        $helper = $this->getHelper();
+        $helper->salesforceLog("addCreditmemoToSalesforce teamwork request.");
+        
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        
+        $creditMemo = Mage::getModel('sales/order_creditmemo')->load($creditmemoId);
         $items      = $creditMemo->getAllItems();
         
         $order = $creditMemo->getOrder();
