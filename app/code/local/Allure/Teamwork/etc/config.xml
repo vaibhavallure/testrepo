@@ -111,16 +111,14 @@
 				</run>
 			</allure_teamwork>
 			
-			<allure_teamwork>
-				<allure_teamwork_live>
+			<allure_teamwork_live>
 					<schedule>
 						<config_path>allure_teamwork/teamwork_salesforce_settings/cron_time</config_path>
 					</schedule>
 					<run>
 						<model>allure_teamwork/tmobserver::synkTeamwokLiveOrders</model>
 					</run>
-				</allure_teamwork_live>
-			</allure_teamwork>
+			</allure_teamwork_live>
 			
 			<!-- <allure_teamwork>
 				<schedule>
