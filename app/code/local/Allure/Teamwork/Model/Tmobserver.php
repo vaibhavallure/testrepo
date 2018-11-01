@@ -7,7 +7,7 @@ class Allure_Teamwork_Model_Tmobserver{
     const TM_URL = "/services/orders";
     const TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
     
-    protected $teamwork_sync_log = "abc.log";//"teamwork_sync.log";
+    protected $teamwork_sync_log = "teamwork_sync_data.log";
     
     private function isTeamworkDataTransferToSalesforce(){
         $status =  Mage::helper("allure_teamwork")->getTeamworkSalesforceStatus();
@@ -341,9 +341,10 @@ class Allure_Teamwork_Model_Tmobserver{
                     $quoteObj->save();
                     
                     $quoteObj->setIsActive(0);
-                    $quoteObj->reserveOrderId();
+                    //$quoteObj->reserveOrderId();
                     
-                    $incrementIdQ = $quoteObj->getReservedOrderId();
+                    //$incrementIdQ = $quoteObj->getReservedOrderId();
+                    $incrementIdQ = $extaDetails["ReceiptNum"];
                     if($incrementIdQ){
                         $incrementIdQ = "TW-".$incrementIdQ;
                         $quoteObj->setReservedOrderId($incrementIdQ);
