@@ -7171,8 +7171,8 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 }
 
 .old-price .price-label {
-	font-size: 13px;
-	font-weight: normal;
+	font-size: 12px; /*13px;*/
+	font-weight: bold; /*normal;*/
 	text-transform: capitalize;
 	white-space: nowrap;
 	color: #3f4048;
