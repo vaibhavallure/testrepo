@@ -40,19 +40,8 @@ class Allure_Salesforce_Model_Observer_Customer{
     }
     
     
-    /**
-     * after new customer add or update customer info send data to salesforce
-     */
-    public function changeCustomerToSalesforce($observer){
+    public function addCustomerToSalesforce($customer){
         $helper         = $this->getHelper();
-        $helper->salesforceLog("changeCustomerToSalesforce request");
-        
-        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
-        if(!$isEnable){
-            $helper->salesforceLog("Salesforce Plugin Disabled.");
-            return;
-        }
-        
         $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
         $oldStoreArr = array();
         foreach ($ostores as $storeO){
@@ -60,7 +49,6 @@ class Allure_Salesforce_Model_Observer_Customer{
         }
         $oldStoreArr[0] = "Admin";
         
-        $customer = $observer->getEvent()->getCustomer();
         if($customer){
             
             $objectType     = $helper::ACCOUNT_OBJECT;
@@ -88,7 +76,7 @@ class Allure_Salesforce_Model_Observer_Customer{
             if($mName){
                 $fullName .= $mName;
             }
-            $fullName .= $lName; 
+            $fullName .= $lName;
             
             
             $defaultBillingAddr     = $customer->getDefaultBillingAddress();
@@ -97,16 +85,26 @@ class Allure_Salesforce_Model_Observer_Customer{
             if($defaultBillingAddr){
                 if($defaultBillingAddr['region_id']){
                     $region = Mage::getModel('directory/region')
-                        ->load($defaultBillingAddr['region_id']);
+                    ->load($defaultBillingAddr['region_id']);
                     $state = $region->getName();
                 }else{
                     $state = $defaultBillingAddr['region'];
                 }
                 
-                $country = Mage::getModel('directory/country')
-                    ->loadByCode($defaultBillingAddr['country_id']);
-                $countryName = $country->getName();
-            } 
+                $bcountryNm = $defaultBillingAddr['country_id'];
+                if($bcountryNm){
+                    if(strlen($bcountryNm) > 3){
+                        $countryName = $bcountryNm;
+                    }else{
+                        $country = Mage::getModel('directory/country')
+                        ->loadByCode($defaultBillingAddr['country_id']);
+                        if($country->getId()){
+                            $countryName = $country->getName();
+                        }
+                    }
+                }
+                
+            }
             
             $stateShip       = "";
             $countryNameShip = "";
@@ -120,10 +118,20 @@ class Allure_Salesforce_Model_Observer_Customer{
                     $stateShip = $defaultShippingAddr['region'];
                 }
                 
-                $country = Mage::getModel('directory/country')
-                    ->loadByCode($defaultShippingAddr['country_id']);
-                $countryNameShip = $country->getName();
-            } 
+                $scountryNm = $defaultShippingAddr['country_id'];
+                if($scountryNm){
+                    if(strlen($scountryNm) > 3){
+                        $countryNameShip = $scountryNm;
+                    }else{
+                        $country = Mage::getModel('directory/country')
+                        ->loadByCode($defaultShippingAddr['country_id']);
+                        if($country->getId()){
+                            $countryNameShip = $country->getName();
+                        }
+                    }
+                }
+                
+            }
             
             $request = array(
                 "Name"                => $fullName,
@@ -178,7 +186,29 @@ class Allure_Salesforce_Model_Observer_Customer{
             
             $response    = $helper->sendRequest($urlPath , $requestMethod , $request);
             $this->processCustomer($customer,$objectType,$sFieldName,$requestMethod,$response);
+            $responseArr = json_decode($response,true);
+            if($responseArr["success"]){
+                return $responseArr["id"];
+            }
+            return "";
         }
+    }
+    
+    
+    /**
+     * after new customer add or update customer info send data to salesforce
+     */
+    public function changeCustomerToSalesforce($observer){
+        $helper         = $this->getHelper();
+        $helper->salesforceLog("changeCustomerToSalesforce request");
+        
+        $isEnable = Mage::helper("allure_salesforce")->isEnabled();
+        if(!$isEnable){
+            $helper->salesforceLog("Salesforce Plugin Disabled.");
+            return;
+        }
+        $customer = $observer->getEvent()->getCustomer();;
+        $this->addCustomerToSalesforce($customer);
     }
     
     /**
