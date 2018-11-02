@@ -8,7 +8,7 @@ class Allure_Teamwork_Block_Adminhtml_Dashboard_Sales extends Mage_Adminhtml_Blo
      *get user role to show teamwork orders
      */
     private function getRolesToShowTeamworkOrder(){
-        return array(92);//"Super Administrator"
+        return array(1);//"Super Administrator"
     }
     
     protected function _prepareLayout()
@@ -36,7 +36,7 @@ class Allure_Teamwork_Block_Adminhtml_Dashboard_Sales extends Mage_Adminhtml_Blo
         if($user != null){
             $userRole = $user->getRole()->getData();
             $roleName = $userRole["role_id"];
-            if(!in_array($roleName, $roles)){
+            if($roleName != 1){
                 $collection->addFieldToFilter('main_table.create_order_method', array('nin' => array(2)));
             }
         }
