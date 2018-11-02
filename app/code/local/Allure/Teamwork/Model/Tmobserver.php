@@ -471,8 +471,12 @@ class Allure_Teamwork_Model_Tmobserver{
                         $storeName = str_replace(' ', '', $extStoreName);
                         $storeName = strtolower(str_replace(' ', '', $storeName));
                         $storeObj = Mage::getModel("allure_virtualstore/store");
-                        $tmWebsiteId = Mage::helper("allure_teamwork")->getTeamworkWebsiteId();
+                        $tmHelper = Mage::helper("allure_teamwork");
+                        $tmWebsiteId = $tmHelper->getTeamworkWebsiteId();
+                        $tmGroupId = $tmHelper->getTeamworkMagentoGroupId();
+                        
                         $storeObj->setWebsiteId($tmWebsiteId)
+                            ->setGroupId($tmGroupId)
                             ->setCode($storeName)
                             ->setName($extStoreName)
                             ->setTmLocationCode($locationCode)
