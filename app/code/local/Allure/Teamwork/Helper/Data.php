@@ -18,6 +18,7 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     
     const XML_SYNC_TEAMWORK_STATUS          = "allure_teamwork/teamwork_salesforce_settings/status";
     const XML_TEAMWORK_MAGENTO_WEBSITE_ID   = "allure_teamwork/teamwork_salesforce_settings/website_id";
+    const XML_TEAMWORK_MAGENTO_GROUP_ID     = "allure_teamwork/teamwork_salesforce_settings/group_id";
     const XML_TEAMWORK_SALESFORCE_TRANSFER_STATUS = "allure_teamwork/teamwork_salesforce_settings/salesforce_status";
     
     const XML_TEAMWORK_DATA_SYNC_URL = "allure_teamwork/teamwork_salesforce_settings/teamwork_sync_url";
@@ -88,5 +89,9 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     
     public function getTeamworkCronExpression(){
         return Mage::getStoreConfig(self::XML_TEAMWORK_CRON_EXPR);
+    }
+    
+    public function getTeamworkMagentoGroupId(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_MAGENTO_GROUP_ID);
     }
 }
