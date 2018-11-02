@@ -55,9 +55,13 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 if($file){
                     $date = Mage::getModel('core/date')->date('Y_m_d');
 <<<<<<< app/code/local/Allure/HarrodsInventory/Helper/Data.php
+                    $name = "70000369_".$date.".".$this->harrodsConfig()->getFileType();
+=======
+<<<<<<< app/code/local/Allure/HarrodsInventory/Helper/Data.php
                     $name = "Daily_Harrods_Inventory".$date.".".$this->harrodsConfig()->getFileType();
 =======
                     $name = "70000369_".$date.".".$this->harrodsConfig()->getFileType();
+>>>>>>> app/code/local/Allure/HarrodsInventory/Helper/Data.php
 >>>>>>> app/code/local/Allure/HarrodsInventory/Helper/Data.php
                     $mailTemplate->getMail()->createAttachment(
                         file_get_contents($file),
@@ -117,13 +121,19 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'teamwork';
 <<<<<<< app/code/local/Allure/HarrodsInventory/Helper/Data.php
+=======
+<<<<<<< app/code/local/Allure/HarrodsInventory/Helper/Data.php
             $name = "harrods_plu";
             $file = $path . DS . $name . '.'.$this->harrodsConfig()->getFileType();
 =======
+>>>>>>> app/code/local/Allure/HarrodsInventory/Helper/Data.php
 
             $date = Mage::getModel('core/date')->date('Y_m_d');
             $filenm="70000369_".$date.".".$this->harrodsConfig()->getFileType();
             $file = $path . DS . $filenm;
+<<<<<<< app/code/local/Allure/HarrodsInventory/Helper/Data.php
+=======
+>>>>>>> app/code/local/Allure/HarrodsInventory/Helper/Data.php
 >>>>>>> app/code/local/Allure/HarrodsInventory/Helper/Data.php
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
