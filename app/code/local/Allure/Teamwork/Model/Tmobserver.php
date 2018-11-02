@@ -245,7 +245,56 @@ class Allure_Teamwork_Model_Tmobserver{
                     ->loadByEmail($email);
                 
                 if($customer->getId()){
-                    $billingAddress = $customer->getDefaultBillingAddress();
+                    //$billingAddress = $customer->getDefaultBillingAddress();
+                    
+                    $billingAddress = Mage::getModel('sales/quote_address')
+                        ->setFirstname($customer->getFirstname())
+                        ->setLastname($customer->getLastname());
+                    $sellCity = trim($orderDetails["SellToCity"]);
+                    if($orderDetails["SellToCity"]){
+                        $billingAddress->setCity($sellCity);
+                    }
+                    
+                    $sellState = trim($orderDetails["SellToState"]);
+                    if($orderDetails["SellToState"]){
+                        if(strlen($sellState) >= 3){
+                            $billingAddress->setRegion($sellState);
+                        }else{
+                            $billingAddress->setRegionId($sellState);
+                        }
+                    }
+                    
+                    $sellPostcode = trim($orderDetails["SellToPostalCode"]);
+                    if($orderDetails["SellToPostalCode"]){
+                        $billingAddress->setPostcode($sellPostcode);
+                    }
+                    
+                    $countryCode = trim($orderDetails["SellToCountryCode"]);
+                    if($orderDetails["SellToCountryCode"]){
+                        $billingAddress->setCountryId($countryCode);
+                    }
+                    
+                    $address1 = trim($orderDetails["SellToAddress1"]);
+                    $address2 = trim($orderDetails["SellToAddress2"]);
+                    $streetArr1 = array();
+                    if($address1){
+                        $streetArr1[] = $address1;
+                    }
+                    if($address2){
+                        $streetArr1[] = $address2;
+                    }
+                    if(count($streetArr1) > 0){
+                        $billingAddress->setStreet($streetArr1);
+                    }
+                    
+                    
+                    $telephone1 = trim($orderDetails["SellToPhone1"]);
+                    $telephone2 = trim($orderDetails["SellToPhone2"]);
+                    $telephone = ($telephone1) ? $telephone1 : $telephone2;
+                    if($telephone){
+                        $billingAddress->setTelephone($telephone);
+                    }
+                    
                     $quoteObj = Mage::getModel('sales/quote')
                         ->assignCustomer($customer);
                     $quoteObj = $quoteObj->setStoreId(1);
@@ -312,14 +361,14 @@ class Allure_Teamwork_Model_Tmobserver{
                         $productObj = null;
                     }
                     
-                    $quoteBillingAddress = Mage::getModel('sales/quote_address');
-                    $quoteBillingAddress->setData($billingAddress);
-                    $quoteObj->setBillingAddress($quoteBillingAddress);
+                    //$quoteBillingAddress = Mage::getModel('sales/quote_address');
+                    //$quoteBillingAddress->setData($billingAddress);
+                    $quoteObj->setBillingAddress($billingAddress);
                     if(!$quoteObj->getIsVirtual()) {
                         $shippingAddress = $billingAddress;
-                        $quoteShippingAddress = Mage::getModel('sales/quote_address');
-                        $quoteShippingAddress->setData($shippingAddress);
-                        $quoteObj->setShippingAddress($quoteShippingAddress);
+                        //$quoteShippingAddress = Mage::getModel('sales/quote_address');
+                        //$quoteShippingAddress->setData($shippingAddress);
+                        $quoteObj->setShippingAddress($shippingAddress);
                         // fixed shipping method
                         $quoteObj->getShippingAddress()
                         ->setShippingMethod("tm_storepickupshipping");
