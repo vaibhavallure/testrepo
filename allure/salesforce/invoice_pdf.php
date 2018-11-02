@@ -10,12 +10,24 @@ $orderIds = array(297370,297368,297372);
 
 try{
     
-    /* $tFile = $_GET["file"];
-    if(empty($tFile)){
-        die("empty file path");
-    } */
+    $CURRENT_PAGE = $_GET["page"];
+    $PAGE_SIZE = $_GET["size"];
+    if(empty($CURRENT_PAGE) || empty($PAGE_SIZE)){
+        die("currentPage OR pageSize missing");
+    } 
     
-    
+    if(is_numeric($CURRENT_PAGE)){
+    $CURRENT_PAGE = (int) $CURRENT_PAGE;
+    }else{
+        die("<p class='salesforce-error'>Please specify Current page in only number format.
+            (eg: 1 or 2 or 3 etc...)</p>");
+    }
+    if(is_numeric($PAGE_SIZE)){
+    $PAGE_SIZE = (int) $PAGE_SIZE;
+    }else{
+        die("<p class='salesforce-error'>Please specify Page size in only number format.
+            (eg: 1 or 2 or 3 etc...)</p>");
+    }
     /* $file = Mage::getBaseDir("var") . DS. $tFile;
     
     $ioR = new Varien_Io_File();
@@ -63,8 +75,11 @@ try{
     $io->streamWriteCsv($header);
     
     $orderCollection = Mage::getModel("sales/order")->getCollection()
-    ->addFieldToFilter("entity_id",array("in" => $orderIds));
-    
+    //->addFieldToFilter("entity_id",array("in" => $orderIds))
+    ->setCurPage($CURRENT_PAGE)
+    ->setPageSize($PAGE_SIZE)
+    ->setOrder('entity_id', 'asc');
+
     foreach ($orderCollection as $order){
         try{
             if(!$order->hasInvoices()){
