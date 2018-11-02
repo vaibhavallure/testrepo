@@ -25,6 +25,7 @@ class Allure_Teamwork_Model_Tmobserver{
         $this->addLog("Teamwork sync request call at - ".gmdate("Y-m-d h:i:s"));
         $helper = Mage::helper("allure_teamwork");
         if(!$helper->getTeamworkSyncStatus()){
+            $this->addLog("Teamwork live data sync disabled.");
             return;
         }
         $urlPath = $helper->getTeamworkSyncDataUrl();

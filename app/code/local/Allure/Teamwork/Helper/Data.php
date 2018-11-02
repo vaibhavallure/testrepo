@@ -68,7 +68,7 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     }
     
     public function getTeamworkSyncStatus(){
-        return Mage::getStoreConfig(self::XML_TEAMWORK_STATUS);
+        return Mage::getStoreConfig(self::XML_SYNC_TEAMWORK_STATUS);
     }
     
     public function getTeamworkWebsiteId(){
