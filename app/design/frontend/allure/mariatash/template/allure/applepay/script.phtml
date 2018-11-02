@@ -16,7 +16,7 @@ $current_product = Mage::registry('current_product');
     if ( typeof Allure.ApplePay == 'undefined' ) Allure.ApplePay = {};
     if ( typeof Allure.ApplePay.data == 'undefined' ) Allure.ApplePay.data = {};
     if ( typeof Allure.ApplePay.flag == 'undefined' ) Allure.ApplePay.flag = {};
-    
+
     if ( typeof Allure.ApplePay.data.total == 'undefined' ) Allure.ApplePay.data.total = {type: 'final', label: '<?php echo Mage::helper('allure_applepay')->getMerchantName() ?>', amount: 0.00};
 
     Allure.ApplePay.data.baseUrl = '<?php echo Mage::getUrl('applepay/checkout', array('_secure' => true)); ?>';
@@ -31,8 +31,8 @@ $current_product = Mage::registry('current_product');
     }
     ?>
 
-    <?php 
-    $quote = Mage::getSingleton('checkout/session')->getQuote(); 
+    <?php
+    $quote = Mage::getSingleton('checkout/session')->getQuote();
     if (!$onCatalog && $quote && $quote->hasItems()):
     ?>
 	Allure.ApplePay.data.lineTotal = <?php echo round($quote->getBaseGrandTotal() / $quote->getBaseToQuoteRate(), 2);?>;
@@ -42,7 +42,7 @@ $current_product = Mage::registry('current_product');
 	} else {
 		Allure.ApplePay.data.total.amount = 1;
 	}
-	
+
 	Allure.ApplePay.data.lineItems = [];
 
 	<?php if ($quote->getBillingAddress() && !empty($quote->getBillingAddress()->getEmail()) && is_null($quote->getBillingAddress()->getEmail())) {?>
@@ -53,11 +53,11 @@ $current_product = Mage::registry('current_product');
 	Allure.ApplePay.data.shippingAddress = <?php echo json_encode($quote->getShippingAddress()->getData());?>;
 	Allure.ApplePay.data.shippingMethods = [];
 	<?php if ($quote->getShippingAddress()->getShippingMethod() && $quote->getShippingAddress()->getShippingMethod() != '') {
-	    
+
 	    $selectedShippingRate = $quote->getShippingAddress()->getShippingRateById($quote->getShippingAddress()->getShippingMethod());
-	    
+
 	    ?>
-	    Allure.ApplePay.data.shippingMethods.push({"identifier": '<?php echo $selectedShippingRate->getCode();?>', "label": '<?php echo $selectedShippingRate->getMethodTitle();?>', "detail": '<?php echo $selectedShippingRate->getCarrierTitle();?> <?php echo $selectedShippingRate->getMethodDescription();?>', "amount": <?php echo $selectedShippingRate->getPrice();?>}); 
+	    Allure.ApplePay.data.shippingMethods.push({"identifier": '<?php echo $selectedShippingRate->getCode();?>', "label": '<?php echo $selectedShippingRate->getMethodTitle();?>', "detail": '<?php echo $selectedShippingRate->getCarrierTitle();?> <?php echo $selectedShippingRate->getMethodDescription();?>', "amount": <?php echo $selectedShippingRate->getPrice();?>});
 	   <?php
 	}
 	?>
@@ -72,5 +72,14 @@ $current_product = Mage::registry('current_product');
 	Allure.ApplePay.data.lineItems.push({type: 'final',label: '<?php echo $_total_name?>', amount: '<?php echo round($_total->getValue() / $quote->getBaseToQuoteRate(), 2)?>' });
 	<?php endforeach;?>
     <?php endif;?>
+	<?php
+		$helper = Mage::helper('allure_smartanalytics');
+
+		if ($helper->isEnhancedEcommerceEnabled()) {
+			?>
+			ga('require', 'ec');
+			<?php
+		}
+	?>
 </script>
 <?php endif;?>
