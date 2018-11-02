@@ -69,5 +69,10 @@ SELECT en.entity_id,4,{$attrbute_id} from catalog_product_entity en where en.typ
 
     }
 
+    public function sendEmail()
+    {
+        Mage::helper('harrodsinventory')->sendEmail();
+    }
+
 
 }
