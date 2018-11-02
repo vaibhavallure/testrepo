@@ -18,6 +18,18 @@
 			</allure_teamwork_setup>
 		</resources>
 		
+		<blocks>
+			<allure_teamwork>
+				<class>Allure_Teamwork_Block</class>
+			</allure_teamwork>
+			<adminhtml>
+				<rewrite>
+					<dashboard_sales>Allure_Teamwork_Block_Adminhtml_Dashboard_Sales</dashboard_sales>
+					<dashboard_totals>Allure_Teamwork_Block_Adminhtml_Dashboard_Totals</dashboard_totals>
+				</rewrite>
+			</adminhtml>	
+		</blocks>
+		
 		<helpers>
 			<allure_teamwork>
 				<class>Allure_Teamwork_Helper</class>
