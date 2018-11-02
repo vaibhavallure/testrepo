@@ -4,7 +4,7 @@ class Allure_HarrodsInventory_Model_Cron
 {
     public function getHarrodsInventory()
     {
-        Mage::helper("HarrodsInventory")->sendHarrodsReportEmail();
+        Mage::helper("harrodsinventory")->sendHarrodsReportEmail();
     }
 
     public function updateHarrodsInventory()
@@ -67,6 +67,11 @@ SELECT en.entity_id,4,{$attrbute_id} from catalog_product_entity en where en.typ
 
 
 
+    }
+
+    public function sendEmail()
+    {
+        Mage::helper('harrodsinventory')->sendEmail();
     }
 
 

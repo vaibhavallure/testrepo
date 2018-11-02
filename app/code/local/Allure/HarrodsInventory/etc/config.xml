@@ -28,16 +28,24 @@
           </harrodsinventory>
     </models>   
   </global> 
-  <!--<crontab>-->
-    <!--<jobs>-->
-      <!--<alert_page_not_found>-->
-        <!--<schedule>-->
-          <!--<cron_expr>* 8 * * *</cron_expr>-->
-        <!--</schedule>-->
-        <!--<run>-->
-          <!--<model>harrodsinventory/cron:UpdateHarrodsInventory</model>-->
-        <!--</run>-->
-      <!--</alert_page_not_found>-->
-    <!--</jobs>-->
-  <!--</crontab>-->
+<!--  <crontab>
+    <jobs>
+      <harrods_inventory_update>
+        <schedule>
+          <cron_expr>* 6 * * *</cron_expr>
+        </schedule>
+        <run>
+          <model>harrodsinventory/cron:updateHarrodsInventory</model>
+        </run>
+      </harrods_inventory_update>
+      <harrods_inventory_email>
+        <schedule>
+          <cron_expr>30 6 * * *</cron_expr>
+        </schedule>
+        <run>
+          <model>harrodsinventory/cron:sendEmail</model>
+        </run>
+      </harrods_inventory_email>
+    </jobs>
+  </crontab>-->
 </config> 
