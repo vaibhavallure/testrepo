@@ -8,7 +8,7 @@
                         <children>
                             <config>
                                 <children>
-                                    <harrodsinventory translate="title" module="Allure_HarrodsInventory">
+                                    <harrodsinventory translate="title" module="harrodsinventory">
                                         <title>Product Updates Report</title>
                                     </harrodsinventory>
                                 </children>
