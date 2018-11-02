@@ -54,7 +54,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 if($file){
                     $date = Mage::getModel('core/date')->date('Y_m_d');
-                    $name = "Daily_Harrods_Inventory".$date.".".$this->harrodsConfig()->getFileType();
+                    $name = "70000369_".$date.".".$this->harrodsConfig()->getFileType();
                     $mailTemplate->getMail()->createAttachment(
                         file_get_contents($file),
                         Zend_Mime::TYPE_OCTETSTREAM,
@@ -112,31 +112,41 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'teamwork';
-            $name = "harrods_plu";
-            $file = $path . DS . $name . '.'.$this->harrodsConfig()->getFileType();
+
+            $date = Mage::getModel('core/date')->date('Y_m_d');
+            $filenm="70000369_".$date.".".$this->harrodsConfig()->getFileType();
+            $file = $path . DS . $filenm;
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
             $ioo->streamOpen($file, 'w+');
             $ioo->streamLock(true);
 
-            $header = array('recid' => 'RecID', 'description' => 'Description ', 'purch_grp' => 'Purch Grp', 'bmc' => 'BMC',
-                'article_type' => 'Article Type', 'art_cat' => 'Art. Cat.', 'size_matrix' => 'Size Matrix', 'GTIN_number' => 'GTIN number',
-                'cost' => 'Cost', 'store_retail' => 'Store Retail', 'airports_retail' => 'Airports Retail', 'wholes_selling' => 'Wholes. Selling',
-                'ctry_of_origi' => 'Ctry ofOrigi', 'import_code' => 'Import Code', 'tax_cls' => 'Tax Cls', 'seas_code' => 'Seas. Code',
-                'seas_year' => 'Seas. Year', 'store' => 'Store', 'airports' => 'Airports', 'wholesale' => 'Wholesale', 'consign' => 'Consign',
-                'vendor' => 'Vendor', 'vendor_subrange' => 'Vendor Subrange', 'vendors_art_no' => 'Vendors Art. No', 'tax_code' => 'Tax Code', 'brand' => 'Brand',
-                'Range' => 'range', 'harrods_mainenance_structure' => 'Harrods Mainenance Structure (Style)', 'shape' => 'Shape',
-                'design' => 'Design', 'comp' => 'Comp', 'sport' => 'Sport', 'gender' => 'Gender', 'harrods_colour' => 'Harrods Colour',
-                'pack_size' => 'Pack Size', 'prod_hierarchy' => 'Prod. Hierarchy', 'contents' => 'Contents', 'content_unit' => 'Content Unit',
-                'vendor_colour' => 'Vendor Colour', 'order_units' => 'Order Units', 'single_size' => 'Single Size', 'total_cost' => 'Total Cost',
-                'var_tax_rate' => 'Var Tax Rate', 'POS_description' => 'POS Description', 'direct_mail' => 'Direct Mail', 'spare3' => 'Spare3', 'spare4' => 'Spare4', 'spare5' => 'Spare5',
-                'backdate_article' => 'Backdate Article', 'error_message' => 'Error Message', 'Record Status', 'article_number' => 'Article Number',
-                'site listings' => 'Site Listings', 'siteDelimited' => 'SiteDelimited', 'string_for_generic_lines' => 'String for Generic lines','gtin_1'=>'Gtin Number 1','gtin_2'=>'Gtin Number 2','gtin_3'=>'Gtin Number 3','gtin_4'=>'Gtin Number 4','gtin_5'=>'Gtin Number 5','gtin_6'=>'Gtin Number 6','gtin_7'=>'Gtin Number 7','gtin_8'=>'Gtin Number 8','gtin_9'=>'Gtin Number 9','gtin_10'=>'Gtin Number 10','gtin_11'=>'Gtin Number 11','gtin_12'=>'Gtin Number 12','gtin_13'=>'Gtin Number 13','gtin_14'=>'Gtin Number 14','gtin_15'=>'Gtin Number 15');
+//            $header = array('recid' => 'RecID', 'description' => 'Description ', 'purch_grp' => 'Purch Grp', 'bmc' => 'BMC',
+//                'article_type' => 'Article Type', 'art_cat' => 'Art. Cat.', 'size_matrix' => 'Size Matrix', 'GTIN_number' => 'GTIN number',
+//                'cost' => 'Cost', 'store_retail' => 'Store Retail', 'airports_retail' => 'Airports Retail', 'wholes_selling' => 'Wholes. Selling',
+//                'ctry_of_origi' => 'Ctry ofOrigi', 'import_code' => 'Import Code', 'tax_cls' => 'Tax Cls', 'seas_code' => 'Seas. Code',
+//                'seas_year' => 'Seas. Year', 'store' => 'Store', 'airports' => 'Airports', 'wholesale' => 'Wholesale', 'consign' => 'Consign',
+//                'vendor' => 'Vendor', 'vendor_subrange' => 'Vendor Subrange', 'vendors_art_no' => 'Vendors Art. No', 'tax_code' => 'Tax Code', 'brand' => 'Brand',
+//                'Range' => 'range', 'harrods_mainenance_structure' => 'Harrods Mainenance Structure (Style)', 'shape' => 'Shape',
+//                'design' => 'Design', 'comp' => 'Comp', 'sport' => 'Sport', 'gender' => 'Gender', 'harrods_colour' => 'Harrods Colour',
+//                'pack_size' => 'Pack Size', 'prod_hierarchy' => 'Prod. Hierarchy', 'contents' => 'Contents', 'content_unit' => 'Content Unit',
+//                'vendor_colour' => 'Vendor Colour', 'order_units' => 'Order Units', 'single_size' => 'Single Size', 'total_cost' => 'Total Cost',
+//                'var_tax_rate' => 'Var Tax Rate', 'POS_description' => 'POS Description', 'direct_mail' => 'Direct Mail', 'spare3' => 'Spare3', 'spare4' => 'Spare4', 'spare5' => 'Spare5',
+//                'backdate_article' => 'Backdate Article', 'error_message' => 'Error Message', 'Record Status', 'article_number' => 'Article Number',
+//                'site listings' => 'Site Listings', 'siteDelimited' => 'SiteDelimited', 'string_for_generic_lines' => 'String for Generic lines','gtin_1'=>'Gtin Number 1','gtin_2'=>'Gtin Number 2','gtin_3'=>'Gtin Number 3','gtin_4'=>'Gtin Number 4','gtin_5'=>'Gtin Number 5','gtin_6'=>'Gtin Number 6','gtin_7'=>'Gtin Number 7','gtin_8'=>'Gtin Number 8','gtin_9'=>'Gtin Number 9','gtin_10'=>'Gtin Number 10','gtin_11'=>'Gtin Number 11','gtin_12'=>'Gtin Number 12','gtin_13'=>'Gtin Number 13','gtin_14'=>'Gtin Number 14','gtin_15'=>'Gtin Number 15');
+//
+//
+//            $ioo->streamWriteCsv($header);
+
+            $header =   array('recid' => 'MSS V2.10', 'description' => 'FALSE', 'purch_grp' => '', 'bmc' => '',
+                'article_type' => '', 'art_cat' => '', 'size_matrix' => '', 'GTIN_number' => '','cost' => 'FALSE');
+            $ioo->streamWriteCsv($header,"\t");
 
 
-            $ioo->streamWriteCsv($header);
             $data = array();
 
+
+            $sr_no=1;
 
             $resource = Mage::getSingleton('core/resource');
 
@@ -173,22 +183,22 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $optionLabel = $attribute->getFrontend()->getOption($optionId);
 
                 $skuConfig = $_product->getSku();
-                $data['recid'] = $_product->getSku();
-                $data['description'] = strtoupper(substr($_product->getName(), 0, 40));
+                $data['recid'] = $sr_no; //$_product->getSku();
+                $data['description'] = strtoupper(substr($_product->getName(), 0, 30));
                 $data['purch_grp'] = '907';
                 $data['bmc'] = 'LW36900';
                 $data['article_type'] = 'ZDMC';
                 $data['art_cat'] = 'Generic'; //Single for simple
                 $data['size_matrix'] = 'SIZE-LADIESWEAR';
-                $data['GTIN_number'] = $_product->getGtinNumber();   // Need to add later
+                $data['GTIN_number'] = ''; //$_product->getGtinNumber();   // Need to add later
                 $data['cost'] = '0.00';
-                $data['store_retail'] = $_product->getHarrodsPrice();
+                $data['store_retail'] = number_format((float)$_product->getHarrodsPrice(), 2, '.', '');
                 $data['airports_retail'] = '';
                 $data['wholes_selling'] = '';
                 $data['ctry_of_origi'] = '';
                 $data['import_code'] = '';
                 $data['tax_cls'] = $_product->getTaxClassId() ? 1 : 0;
-                $data['seas_code'] = '0';
+                $data['seas_code'] = '0000';
                 $data['seas_year'] = '2018';
                 $data['store'] = 'TRUE';
                 $data['airports'] = 'FALSE';
@@ -206,12 +216,12 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $data['comp'] = '';
                 $data['sport'] = '';
                 $data['gender'] = 'UNISEX';
-                $data['harrods_colour'] = str_replace("GOLD", "", $optionLabel);  //COlor
+                $data['harrods_colour'] = strtoupper(str_replace("GOLD", "", $optionLabel));  //COlor
                 $data['pack_size'] = '';
                 $data['prod_hierarchy'] = 'FA';
                 $data['contents'] = '';
                 $data['content_unit'] = '';
-                $data['vendor_colour'] = $_product->getHarrodsColor();  //Color ROSE GOLd
+                $data['vendor_colour'] = strtoupper($_product->getHarrodsColor());  //Color ROSE GOLd
                 $data['order_units'] = '';
                 $data['single_size'] = '';
                 $data['total_cost'] = '';
@@ -227,7 +237,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $data['article_number'] = '';
                 $data['site_listings'] = 'D369';
                 $data['siteDelimited'] = 'SiteDelim';
-                $data['string_for_generic_lines'] = '';
+//                $data['string_for_generic_lines'] = '';
 
 
 
@@ -237,12 +247,14 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     foreach ($simple_collection as $k => $simpleProd){
                         $simple_product=Mage::getSingleton("catalog/product")->load($simpleProd->getId());
                         $gtin_index = 'gtin_'.$indexCount;
-                        $data[$gtin_index] = $simple_product->getGtinNumber();
+                        $data[$gtin_index] = "(;".$simple_product->getGtinNumber().";;;;)";
                         $indexCount++;
                     }
 
+                $data['siteDelimitedend'] = 'SiteDelim';
 
-                $ioo->streamWriteCsv($data);
+                $ioo->streamWriteCsv($data,"\t");
+                $sr_no++;
 
 
 //                $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
@@ -259,8 +271,8 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                         $optionLabel = $attribute->getFrontend()->getOption($optionId);
                     $data = array();
 
-                    $data['recid'] = $_product->getSku();
-                    $data['description'] = strtoupper(substr($_product->getName(), 0, 40));
+                    $data['recid'] = $sr_no; //$_product->getSku();
+                    $data['description'] = strtoupper(substr($_product->getName(), 0, 30));
                     $data['purch_grp'] = '907';
                     $data['bmc'] = 'LW36900';
                     $data['article_type'] = 'ZDMC';
@@ -268,13 +280,13 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['size_matrix'] = 'SIZE-LADIESWEAR';
                     $data['GTIN_number'] = $_product->getGtinNumber();   // Need to add later
                     $data['cost'] = '0.00';
-                    $data['store_retail'] = $_product->getHarrodsPrice();
+                    $data['store_retail'] = number_format((float)$_product->getHarrodsPrice(), 2, '.', '');
                     $data['airports_retail'] = '';
                     $data['wholes_selling'] = '';
                     $data['ctry_of_origi'] = '';
                     $data['import_code'] = '';
                     $data['tax_cls'] = $_product->getTaxClassId() ? 1 : 0;
-                    $data['seas_code'] = '0';
+                    $data['seas_code'] = '0000';
                     $data['seas_year'] = '2018';
                     $data['store'] = 'TRUE';
                     $data['airports'] = 'FALSE';
@@ -292,13 +304,13 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['comp'] = '';
                     $data['sport'] = '';
                     $data['gender'] = 'UNISEX';
-                    $data['harrods_colour'] = str_replace("GOLD", " ", $optionLabel);;  //COlor
+                    $data['harrods_colour'] = strtoupper(str_replace("GOLD", " ", $optionLabel));  //COlor
                     $data['pack_size'] = '';
 
                     $data['prod_hierarchy'] = 'FA';
                     $data['contents'] = '';
                     $data['content_unit'] = '';
-                    $data['vendor_colour'] = $optionLabel;  //Color ROSE GOLd
+                    $data['vendor_colour'] = strtoupper($optionLabel);  //Color ROSE GOLd
                     $data['order_units'] = '';
                     $data['single_size'] = '';
                     $data['total_cost'] = '';
@@ -314,14 +326,18 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['article_number'] = '';
                     $data['site_listings'] = 'D369';
                     $data['siteDelimited'] = 'SiteDelim';
-                    $data['string_for_generic_lines'] = '';
+//                    $data['string_for_generic_lines'] = '';
 
-                    $ioo->streamWriteCsv($data);
+                    $ioo->streamWriteCsv($data,"\t");
 
+                    $sr_no++;
                 }
 
 
+
+
             }
+;
 
 
 

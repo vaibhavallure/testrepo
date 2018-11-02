@@ -42,6 +42,7 @@ if($download)
 
     $file=Mage::helper("harrodsinventory")->generateReport();
 
+    $csv = iconv("UTF-8", "Windows-1252", $csv);
     if (file_exists($file)) {
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
