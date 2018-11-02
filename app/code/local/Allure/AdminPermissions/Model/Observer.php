@@ -224,7 +224,7 @@ class Allure_AdminPermissions_Model_Observer
      *get user role to show teamwork orders 
      */
     private function getRolesToShowTeamworkOrder(){
-        return array("Administrators");
+        return array(1);//"Super Administrator"
     }
     
     /**
@@ -233,8 +233,9 @@ class Allure_AdminPermissions_Model_Observer
     public function showTeamworkOrder($user, $collection, $type = null){
         $roles = $this->getRolesToShowTeamworkOrder();
         $userRole = $user->getRole()->getData();
-        $roleName = $userRole["role_name"];
-        if(!in_array($roleName, $roles)){
+        $roleName = $userRole["role_id"];
+        //if(!in_array($roleName, $roles)){
+        if($roleName != 1){
             if($type == self::SALES_ORDER){
                 $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
             }elseif (($type == self::SALES_INVOICE) || ($type == self::SALES_SHIPMENT) || ($type == self::SALES_CREDITMEMO)){
