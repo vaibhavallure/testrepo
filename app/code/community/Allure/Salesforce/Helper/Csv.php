@@ -21,6 +21,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
     const OBJ_SHIPMENT                  = "shipment";
     const OBJ_SHIPMENT_TRACK            = "shipment-track";
     const OBJ_INVOICE                   = "invoice";
+    const OBJ_INVOICE_PDF               = "invoice-pdf";
     const OBJ_CREDITMEMO                = "creditmemo";
     const OBJ_CREDITMEMO_ITEM           = "creditmemo-item";
     
@@ -64,6 +65,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             self::OBJ_SHIPMENT                  => "Shipment",
             self::OBJ_SHIPMENT_TRACK            => "Shipment Track",
             self::OBJ_INVOICE                   => "Invoice",
+            self::OBJ_INVOICE_PDF               => "Invoice PDF",
             self::OBJ_CREDITMEMO                => "Creditmemo",
             self::OBJ_CREDITMEMO_ITEM           => "Creditmemo Item"
         );
@@ -283,6 +285,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             self::OBJ_ORDER => array("id","order_id__c"),
             self::OBJ_ORDER_ITEM => array("id","orderid","pricebookentryid","magento_order_item_id__c","sku__c"),
             self::OBJ_INVOICE => array("id","invoice_id__c"),
+            self::OBJ_INVOICE_PDF => array("contentdocumentid","title"),
             self::OBJ_SHIPMENT => array("id","increment_id__c"),
             self::OBJ_SHIPMENT_TRACK => array("id","magento_tracker_id__c"),
             self::OBJ_CREDITMEMO => array("id","credit_memo_id__c"),
@@ -844,6 +847,26 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
         }
         return $response;
     }
+
+    /* Invoice Pdf generate CSV */
+    public function generatePdfCsv($data)
+    {
+        try{
+            $folder = $this->getFolder(self::OBJ_INVOICE_PDF);
+            $date = Mage::getModel('core/date')->date('Y_m_d_H-i-s');
+            $filename = self::OBJ_INVOICE_PDF . "_" .$date. ".csv";
+            $filePath = $folder . DS . $filename;
+         $csv = new Varien_File_Csv();
+         $csv->saveData($filePath,$data);
+         $response["success"] = true;
+         $response["filename"] = $filename;
+         $response["path"] = $filePath;
+         return $response;
+     }catch(Exception $e){
+
+     }
+         
+    }
     
     public function uploadCsvFile($fileName){
         $destinationFolder = Mage::getBaseDir("var") . DS . self::_UPLOAD_DIR . DS;
@@ -944,7 +967,9 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                 
                 foreach ($_csvData as $data){
                     try{
-                        $salesforce_id  = $data["id"];
+                        if($objectType != self::OBJ_INVOICE_PDF)
+                            $salesforce_id  = $data["id"];
+
                         if($objectType == self::OBJ_ACCOUNT){
                             $customer_id    = $data["customer_id__c"];
                             $customer = Mage::getModel("customer/customer")->load($customer_id);
@@ -1029,6 +1054,28 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                             }else{
                                 $failureCount ++;
                                 $logData = "invoice_id:".$invoice_increment_id." salesforce_id:".$salesforce_id." not updated.";
+                            }
+                            
+                        }elseif ($objectType == self::OBJ_INVOICE_PDF){
+                            $title = $data["title"];
+                            $contentDocumentId = $data['contentdocumentid'];
+                            //$order_increment_id = preg_replace('/[^0-9]/', '', $title);
+                            $order_increment_id = substr($title, 0, strrpos($title, "."));
+                            $logData = "extracted order increment id:".$order_increment_id;
+
+                            if($order_increment_id){
+                                $order = Mage::getModel('sales/order')->loadByIncrementId($order_increment_id);
+                                
+                                if($order->getId()==null){
+                                    continue;
+                                }
+                                $salesforce_id = $order->getData('salesforce_order_id');
+                                $logData .= "salesforce_id:".$salesforce_id." updated.";
+                                $response['salesforce_mapping'][] = array('contentdocumentid'=>$contentDocumentId, 'salesforce_order_id' => $salesforce_id,
+                                    'share_type' => 'V');
+                            }else{
+                                $failureCount ++;
+                                $logData .= "salesforce_id:".$salesforce_id." not updated.";
                             }
                             
                         }elseif ($objectType == self::OBJ_SHIPMENT){

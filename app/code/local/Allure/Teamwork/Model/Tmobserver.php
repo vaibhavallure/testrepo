@@ -50,6 +50,7 @@ class Allure_Teamwork_Model_Tmobserver{
         }
         $response  = curl_exec($sendRequest);
         //$this->addLog(json_decode($response,true));
+        
         $this->addDataIntoSystem($response);
     }
     
@@ -136,7 +137,7 @@ class Allure_Teamwork_Model_Tmobserver{
                 
                 $tmOrderObj = Mage::getModel("allure_teamwork/tmorder")
                     ->load($receiptId,"tm_receipt_id");    
-                    
+                  
                 if(!$customer->getId()){
                     $password = '';
                     $length = 8;  //password length
@@ -205,8 +206,11 @@ class Allure_Teamwork_Model_Tmobserver{
                             $streetArr[] = $customerDetails["Address2"];
                         }
                         
-                        foreach ($streetArr as $street){
+                        /* foreach ($streetArr as $street){
                             $_custom_address[] = trim($street);
+                        } */
+                        if(count($streetArr) > 0){
+                            $_custom_address["street"] = $streetArr;
                         }
                         
                         $address = Mage::getModel("customer/address");
@@ -520,8 +524,12 @@ class Allure_Teamwork_Model_Tmobserver{
                         $storeName = str_replace(' ', '', $extStoreName);
                         $storeName = strtolower(str_replace(' ', '', $storeName));
                         $storeObj = Mage::getModel("allure_virtualstore/store");
-                        $tmWebsiteId = Mage::helper("allure_teamwork")->getTeamworkWebsiteId();
+                        $tmHelper = Mage::helper("allure_teamwork");
+                        $tmWebsiteId = $tmHelper->getTeamworkWebsiteId();
+                        $tmGroupId = $tmHelper->getTeamworkMagentoGroupId();
+                        
                         $storeObj->setWebsiteId($tmWebsiteId)
+                            ->setGroupId($tmGroupId)
                             ->setCode($storeName)
                             ->setName($extStoreName)
                             ->setTmLocationCode($locationCode)
