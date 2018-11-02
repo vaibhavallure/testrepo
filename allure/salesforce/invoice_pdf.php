@@ -8,26 +8,34 @@ $log_file = "invoice_pdf_salesforce.log";
 
 $orderIds = array(297370,297368,297372);
 
+$curPage = $_GET["page"];
+$pageSize = $_GET["size"];
+
+if(empty($curPage) || empty($pageSize)){
+    die("page or Size is missing");
+}
+
+if(is_numeric($curPage)){
+    $curPage = (int) $curPage;
+}else{
+    die("<p class='salesforce-error'>Please specify Current page in only number format.
+(eg: 1 or 2 or 3 etc...)</p>");
+}
+if(is_numeric($pageSize)){
+    $pageSize = (int) $pageSize;
+}else{
+    die("<p class='salesforce-error'>Please specify Page size in only number format.
+(eg: 1 or 2 or 3 etc...)</p>");
+}
+
 try{
     
-    $CURRENT_PAGE = $_GET["page"];
-    $PAGE_SIZE = $_GET["size"];
-    if(empty($CURRENT_PAGE) || empty($PAGE_SIZE)){
-        die("currentPage OR pageSize missing");
-    } 
+    /* $tFile = $_GET["file"];
+    if(empty($tFile)){
+        die("empty file path");
+    } */
     
-    if(is_numeric($CURRENT_PAGE)){
-    $CURRENT_PAGE = (int) $CURRENT_PAGE;
-    }else{
-        die("<p class='salesforce-error'>Please specify Current page in only number format.
-            (eg: 1 or 2 or 3 etc...)</p>");
-    }
-    if(is_numeric($PAGE_SIZE)){
-    $PAGE_SIZE = (int) $PAGE_SIZE;
-    }else{
-        die("<p class='salesforce-error'>Please specify Page size in only number format.
-            (eg: 1 or 2 or 3 etc...)</p>");
-    }
+    
     /* $file = Mage::getBaseDir("var") . DS. $tFile;
     
     $ioR = new Varien_Io_File();
@@ -61,7 +69,7 @@ try{
     );
     
     $io           = new Varien_Io_File();
-    $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "invoice_pdf" ;
+    $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "invoice_pdf_".$curPage ;
     $filename    = "INVOICE_PDF.csv";
     
     $TfolderPath = $folderPath . DS . "PDF";
@@ -75,11 +83,11 @@ try{
     $io->streamWriteCsv($header);
     
     $orderCollection = Mage::getModel("sales/order")->getCollection()
-    //->addFieldToFilter("entity_id",array("in" => $orderIds))
-    ->setCurPage($CURRENT_PAGE)
-    ->setPageSize($PAGE_SIZE)
+    ->setCurPage($curPage)
+    ->setPageSize($pageSize)
     ->setOrder('entity_id', 'asc');
-
+    //->addFieldToFilter("entity_id",array("in" => $orderIds));
+    
     foreach ($orderCollection as $order){
         try{
             if(!$order->hasInvoices()){

@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Allure_Teamwork>
-			<version>1.0.9</version>
+			<version>2.0.0</version>
 		</Allure_Teamwork>
 	</modules>
 	<global>
@@ -110,6 +110,16 @@
 					<model>allure_teamwork/observer::syncTeamworkCustomer</model>
 				</run>
 			</allure_teamwork>
+			
+			<allure_teamwork_live>
+					<schedule>
+						<config_path>allure_teamwork/teamwork_salesforce_settings/cron_time</config_path>
+					</schedule>
+					<run>
+						<model>allure_teamwork/tmobserver::synkTeamwokLiveOrders</model>
+					</run>
+			</allure_teamwork_live>
+			
 			<!-- <allure_teamwork>
 				<schedule>
 					<cron_expr>*/5 * * * *</cron_expr>

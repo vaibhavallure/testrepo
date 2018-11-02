@@ -4,7 +4,7 @@ class Allure_HarrodsInventory_Model_Cron
 {
     public function getHarrodsInventory()
     {
-        Mage::helper("HarrodsInventory")->sendHarrodsReportEmail();
+        Mage::helper("harrodsinventory")->sendHarrodsReportEmail();
     }
 
     public function updateHarrodsInventory()
