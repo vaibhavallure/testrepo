@@ -52,17 +52,20 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
-		Mage::log('ajaxLogin:: '.$this->getRequest()->getParam('usrname'), Zend_log::DEBUG, 'univeral.log', true);
+		$login = $this->getRequest()->getParam('login');
+
+		if (isset($login)) {
+			extract($login);
+		}
+
+		Mage::log('ajaxLogin:: '. $username, Zend_log::DEBUG, 'univeral.log', true);
 
 		$session = Mage::getSingleton('customer/session');
 
 		if ($session->isLoggedIn()) {
 			$result['msg'] = 'Already Logged In.';
-		} else if ($this->getRequest()->getParam('usrname') && $this->_validateFormKey()) {
+		} else if (isset($username) && $this->_validateFormKey()) {
 			$request = $this->getRequest()->getParams();
-
-			$username = $this->getRequest()->getParam('usrname');
-			$password = $this->getRequest()->getParam('passwd');
 
 			if (empty($username) || empty($password)) {
 				$result['error'] = Mage::helper('core')->__('Login and password are required.');
