@@ -20,17 +20,10 @@ jQuery(document).ready(function(){
 
 	$j("#signin-btn-popup").on('click',function(){
 		 var myForm = new VarienForm('popup-login-form', false);
-		 if(myForm.validator.validate()){
-			var usrname = $j('#popup-login-form #username-login').val();
-			var passwd 	= $j('#popup-login-form #passwd-login').val();
 
-			var key		= Allure.LoginFormKey;
+		 if (myForm.validator.validate()) {
 
-			var requestData = {
-				"usrname"	: usrname,
-				"passwd"	: passwd,
-				"form_key"	: key
-			};
+			var requestData = $j('#popup-login-form').serialize();
 
 			$j.ajax({
 				url : Allure.LoginUrlAjax,
@@ -38,16 +31,13 @@ jQuery(document).ready(function(){
 				type : 'POST',
 				data: requestData,
 				success : function(data){
-					if(data.success){
+					if (data.success) {
 						$j('#login_msg_div').css('display','none');
 						$j(".popupLoginModel .modalDialog").css({"opacity":"0","pointer-events":"none"});
-						if(data.redirect){
-		                    window.location.replace(data.url);
-		                }
-		                else {
-						    location.reload();
-		                }
-					}else{
+
+						location.reload();
+
+					} else {
 						$j('#login_msg_div').css('display','block');
 						$j('#login-msg').html(data.error);
 					}

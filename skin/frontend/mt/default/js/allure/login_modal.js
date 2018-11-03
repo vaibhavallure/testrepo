@@ -26,18 +26,12 @@ jQuery(document).ready(function(){
 
 	$j("#signin-btn-popup").on('click',function(){
 		 var myForm = new VarienForm('popup-login-form', false);
-		 if(myForm.validator.validate()){
-			var usrname = jQuery('#username-login').val();
-			var passwd = jQuery('#passwd-login').val();
-			var wishlist= jQuery('#wishlist_input').val();
+
+		 if (myForm.validator.validate()) {
 
 			var key = Allure.LoginFormKey;
 
-			var requestData = {
-				"usrname"	: usrname,
-				"passwd"	: passwd,
-				"form_key"	: key
-			};
+		   	var requestData = $j('#popup-login-form').serialize();
 
 			$j.ajax({
 				url : Allure.LoginUrlAjax,
@@ -47,16 +41,11 @@ jQuery(document).ready(function(){
 		        beforeSend: function() { $j('#popup_loader').show(); },
 		        complete: function() { $j('#popup_loader').hide(); },
 				success : function(data){
-					if(data.success){
+					if (data.success) {
 						 $j('#login_msg_div').css('display','none');
 						 $j(".modalDialog").css({"opacity":"0","pointer-events":"none"});
-						 if(wishlist){
-							 window.location.href = Allure.Wishlist;
-						 }
-						 else{
-							 location.reload();
-						}
-					}else{
+						 location.reload();
+					} else {
 						$j('#login_msg_div').css('display','block');
 						$j('#login-msg').html(data.error);
 					}
@@ -67,7 +56,6 @@ jQuery(document).ready(function(){
 	/**
 	 * Login Popup code End
 	 */
-
 
 
 	/**
@@ -225,6 +213,7 @@ jQuery(document).ready(function(){
 			});
 		}
     });
+	
     $j(".popupDelMyAccModel .close").on('click',function(){
     	$j(".popupDelMyAccModel").css({"opacity":"0","pointer-events":"none"});
     });
