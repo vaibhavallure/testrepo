@@ -10,13 +10,15 @@
 				<span id="login-msg"></span>
 			</div>
 			<div class="form-group">
-	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo $this->__(" Email Address")?></label>
-	  		    <input id='username-login' type="text" name='username-login' class="ele_width form-control required-entry validate-email"/>
+	 		    <label class="popup-login-lbl" for="email"><em>*</em> <?php echo $this->__("Email Address")?></label>
+	  		    <input id='username-login' type="text" name='login[username]' class="ele_width form-control required-entry validate-email"/>
 			</div>
 			<div class="form-group">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Password")?></label>
-	  		    <input id="passwd-login" type="password" name="passwd-login" class="ele_width form-control required-entry"/>
-	  		    <input type="hidden" name="wishlist" id="wishlist_input" value=""/>
+	 		    <label class="popup-login-lbl" for="password"><em>*</em> <?php echo $this->__("Password")?></label>
+	  		    <input id="passwd-login" type="password" name="login[password]" class="ele_width form-control required-entry"/>
+
+				<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+
 			</div>
 		</div>
 	    <div class="pop-link">
@@ -38,7 +40,6 @@
             	</div>
             	<?php endif;?>
             	<?php endif;?>
-
 
             	<?php //facebook connect code?>
             	<?php if (Mage::helper('core')->isModuleEnabled('Allure_Facebook')):?>
@@ -77,6 +78,7 @@
 if (typeof Allure == "undefined") {
 	 var Allure = {};
 }
+
 Allure.Wishlist='<?php echo Mage::getBaseUrl('web').'myaccount/#wishlist';?>';
 Allure.LoginFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 Allure.LoginUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/ajaxLogin';?>';

@@ -1,41 +1,34 @@
 <?php
 class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    private function harrodsConfig(){
+    private function harrodsConfig() {
         return Mage::helper("harrodsinventory/config");
     }
 
-    public function add_log($message){
-       if (!$this->harrodsConfig()->getDebugStatus()) {
+    public function add_log($message) {
+		if (!$this->harrodsConfig()->getDebugStatus()) {
             return;
-           }
+    	}
         Mage::log($message,Zend_log::DEBUG,"update_harrods_inventory.log",true);
     }
 
-
-
     public function sendEmail()
     {
-
-        if(!$this->harrodsConfig()->getModuleStatus())
-        {
+        if(!$this->harrodsConfig()->getModuleStatus()) {
             $this->add_log("Module Disabled----");
             return;
         }
 
+        if ($this->harrodsConfig()->getEmailStatus()) {
 
-        if($this->harrodsConfig()->getEmailStatus()):
-
-            $templateId = $this->harrodsConfig()
-                ->getEmailTemplate();
+            $templateId = $this->harrodsConfig()->getEmailTemplate();
 
             $mailTemplate = Mage::getModel('core/email_template');
             $storeId = Mage::app()->getStore()->getId();
             $senderName = $this->harrodsConfig()->getSenderName();
             $senderEmail = $this->harrodsConfig()->getSenderEmail();
 
-            $sender = array('name' => $senderName,
-                'email' => $senderEmail);
+            $sender = array('name' => $senderName, 'email' => $senderEmail);
             $recieverEmails = $this->harrodsConfig()->getEmailsGroup();
             $recieverNames = $this->harrodsConfig()->getEmailGroupNames();
 
@@ -45,7 +38,6 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             //$emailTemplateVariables['collection'] = $collection;
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
             $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
-
 
 
 
@@ -65,7 +57,6 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 }
 
 
-
             try {
                 $mailTemplate
                     ->sendTransactional(
@@ -83,17 +74,11 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 else {
                         $this->add_log('mail sending done');
                 }
-            }
-            catch(Exception $e){
+            } catch(Exception $e) {
                 $this->add_log('mail sending exception = > '.$e->getMessage());
             }
-
-        endif;
-
-
-
+        }
     }
-
 
     public function  charEncode($str)
     {
@@ -103,14 +88,10 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function generateReport()
     {
-
-
-        if(!$this->harrodsConfig()->getModuleStatus())
-        {
+        if (!$this->harrodsConfig()->getModuleStatus()) {
             $this->add_log("Module Disabled----");
             return;
         }
-
 
         try {
 
@@ -146,9 +127,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 'article_type' => '', 'art_cat' => '', 'size_matrix' => '', 'GTIN_number' => '','cost' => $this->charEncode('FALSE'));
             $ioo->streamWriteCsv($header,"\t");
 
-
             $data = array();
-
 
             $sr_no=1;
 
@@ -157,32 +136,29 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $readConnection = $resource->getConnection('core_read');
 
             $attribute_code = "harrods_inventory";
-            $attribute_details =
-                Mage::getSingleton("eav/config")->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute_code);
+            $attribute_details = Mage::getSingleton("eav/config")->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute_code);
+
             $attribute = $attribute_details->getData();
             $attrbute_id = $attribute['attribute_id'];
 
-
             $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="configurable" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0');
-
 
             $some_attr_code = "metal";
             $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
 
             foreach ($parentPro as $parentProductId) {
 
-
                 $this->add_log("inside config product---------");
 
                 $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
 
-
-
                 $data = array();
                 $optionId = '';
+
                 if (!is_null($_product->getMetal()))
                     $optionId = $_product->getMetal();
                 $optionLabel = '';
+
                 if (!empty($optionId))
                     $optionLabel = $attribute->getFrontend()->getOption($optionId);
 
@@ -254,25 +230,28 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                         $data[$gtin_index] = $this->charEncode("(;".$simple_product->getGtinNumber().";;;;)");
                         $indexCount++;
                     }
-
                 $data['siteDelimitedend'] = $this->charEncode('SiteDelim');
 
                 $ioo->streamWriteCsv($data,"\t");
                 $sr_no++;
 
+				//$conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+				//$simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
 
-//                $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
-//                $simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
                 foreach ($simple_collection as $simpleProd) {
                     $_product = Mage::getSingleton("catalog/product")->load($simpleProd->getId());
 
                     $this->add_log("inside simple product---------");
                     $optionId = '';
+
                     if (!is_null($_product->getMetal()))
                         $optionId = $_product->getMetal();
+
                     $optionLabel = '';
+
                     if (!empty($optionId))
                         $optionLabel = $attribute->getFrontend()->getOption($optionId);
+
                     $data = array();
 
                     $data['recid'] = $this->charEncode($sr_no); //$_product->getSku();
@@ -365,8 +344,5 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         {
             $this->add_log($e->getMessage());
         }
-
     }
-
 }
-	 

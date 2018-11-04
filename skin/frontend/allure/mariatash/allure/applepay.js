@@ -101,6 +101,13 @@ if (window.ApplePaySession) {
 		promise.then(function (merchantSession) {
 			console.log('START ACTION: completeMerchantValidation');
 			Allure.ApplePay.session.completeMerchantValidation(merchantSession);
+
+
+			ga('ec:setAction', 'checkout', {
+				'step': 1
+			});
+			ga('send', 'pageview');
+
 			console.log('END ACTION: completeMerchantValidation');
 		});
 		console.log('END EVENT: onValidateMerchant');
@@ -113,6 +120,12 @@ if (window.ApplePaySession) {
 		var newLineItems = Allure.ApplePay.data.lineItems;
 
 		console.log({newTotal : newTotal, newLineItems: newLineItems});
+
+		ga('ec:setAction', 'checkout', {
+			'step': 4,
+			'option': 'Apple Pay'
+		});
+		ga('send', 'pageview');
 
 		Allure.ApplePay.session.completePaymentMethodSelection( {newTotal : newTotal, newLineItems: newLineItems});//, Allure.ApplePay.data.lineItems
 
@@ -171,6 +184,11 @@ if (window.ApplePaySession) {
 		if (typeof Allure.ApplePay.data.response.addProduct != 'undefined') {
 			quote_id = Allure.ApplePay.data.response.addProduct.quote_id;
 		}
+
+		ga('ec:setAction', 'checkout', {
+			'step': 2
+		});
+		ga('send', 'pageview');
 
 		Allure.ApplePay.data.response.saveBilling = Allure.ApplePay.action.sendRequest('saveBilling', {
 			'billing[firstname]': 'ApplePay',
@@ -249,6 +267,13 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.event.onShippingMethodSelected = function(event) {
 		console.log('START EVENT: onShippingMethodSelected');
 		console.log(event);
+
+		ga('ec:setAction', 'checkout', {
+			'step': 3,
+			'option': event.shippingMethod.identifier
+		});
+
+		ga('send', 'pageview');
 
 		if (event.shippingMethod) {
 			Allure.ApplePay.action.saveShippingMethod(event.shippingMethod.identifier);
@@ -616,6 +641,11 @@ if (window.ApplePaySession) {
 				Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.saveBilling.currency;
 			}
 		}
+
+		ga('ec:setAction', 'checkout', {
+			'step': 5
+		});
+		ga('send', 'pageview');
 
 		return new Promise(function(resolve, reject) {
 			console.log(paymentToken);
