@@ -12,6 +12,11 @@ class Teamwork_Universalcustomers_Model_Observer extends Mage_Core_Model_Abstrac
     
     public function onCustomerSave($observer)
     {
+        $isTeamworkCustomer = Mage::getSingleton("core/session")->getIsTeamworkCustomer();
+        if($isTeamworkCustomer){
+            return ;
+        }
+        
         if( !Mage::registry(self::OBSERVER_IGNORE_PRODUCT_DISPATCH) && !Mage::helper('teamwork_universalcustomers')->skipCustomer($observer['customer']) )
         {
             $customerData = $this->_uc->prepareCustomerDataForSvs( $observer['customer'], null);
@@ -33,6 +38,11 @@ class Teamwork_Universalcustomers_Model_Observer extends Mage_Core_Model_Abstrac
 
     public function onCustomerAfterSave($observer)
     {
+        $isTeamworkCustomer = Mage::getSingleton("core/session")->getIsTeamworkCustomer();
+        if($isTeamworkCustomer){
+            return ;
+        }
+        
         if( !$observer['customer']->getOrigData() && !Mage::registry(self::OBSERVER_IGNORE_PRODUCT_DISPATCH) && !Mage::helper('teamwork_universalcustomers')->skipCustomer($observer['customer']) )
         {
             $customerData = $this->_uc->prepareCustomerDataForSvs( $observer['customer'] );
@@ -43,6 +53,11 @@ class Teamwork_Universalcustomers_Model_Observer extends Mage_Core_Model_Abstrac
 
     public function onAddressSave($observer)
     {
+        $isTeamworkCustomer = Mage::getSingleton("core/session")->getIsTeamworkCustomer();
+        if($isTeamworkCustomer){
+            return ;
+        }
+        
         if( !empty($observer['customer_address']['customer_id']) && !Mage::registry(self::OBSERVER_IGNORE_PRODUCT_DISPATCH) && !Mage::helper('teamwork_universalcustomers')->skipCustomer($observer['customer']) )
         {
             $customer = Mage::getModel('customer/customer')->load($observer['customer_address']['customer_id']);
