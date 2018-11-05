@@ -49,7 +49,7 @@ class Allure_Teamwork_Model_Tmobserver{
         if ($requestArgs != null) {
             $json_arguments = json_encode($requestArgs);
             curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
-        }
+        } 
         $response  = curl_exec($sendRequest);
         //$this->addLog(json_decode($response,true));
         /* $modelObj = Mage::getModel("allure_teamwork/tmorder")
