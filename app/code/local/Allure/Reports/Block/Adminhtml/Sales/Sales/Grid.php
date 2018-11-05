@@ -206,7 +206,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             );
         
         //apply store condition
-        if($storeId){
+        if(!empty($requestParams)){
             //$collection = $collection->addFieldToFilter("store_id",array("in"=>array($storeId)));
             $collection = $collection->addFieldToFilter("old_store_id",array("in"=>array($storeId)));
         }
@@ -269,6 +269,15 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             
             $collection = $collection->addFieldToFilter("payment.cc_type",array("in"=>$card_types));
         }
+        
+        //apply filter for order collection related to create order method
+        if($filterData['create_order_method'][0]){
+            $createOrderMethods = explode(",", $filterData['create_order_method'][0]);
+            if(count($createOrderMethods) > 0){
+                $collection->addFieldToFilter("create_order_method",array("in" => $createOrderMethods));
+            }
+        }
+        
         
         $reportType = $filterData['report_type'];
         $order_date_col= "created_at";
