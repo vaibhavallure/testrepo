@@ -151,6 +151,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         $password .= $final_array[$keyV];
                     }
                     
+                    //set temp session for create teamwork customer
+                    Mage::getSingleton("core/session")->setIsTeamworkCustomer(1);
+                    
                     $createdAtArr = explode(".", trim($customerDetails["RecModified"]));
                     $createdAt = $createdAtArr[0];
                     $group = ($customerDetails["CustomFlag1"]) ? 2 : 1;
@@ -238,6 +241,7 @@ class Allure_Teamwork_Model_Tmobserver{
             }catch (Exception $e){
                 $this->addLog("03 - Exc - :".$e->getMessage());
             }
+            Mage::getSingleton("core/session")->setIsTeamworkCustomer(0);
             
             $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
             if($orderObj->getId()){
