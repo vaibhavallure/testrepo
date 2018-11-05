@@ -106,7 +106,6 @@ class Ecp_ReportToEmail_Model_Observer
                 $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
                 Mage::app()->getStore()->setId($storeId);
                 //die($symbol);
-                var_dump($collection->getFirstItem()->getOrdersCount()); die();
                 $data=array();
                 if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
                     $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
