@@ -100,12 +100,13 @@ class Ecp_ReportToEmail_Model_Observer
                      ->columns('sum(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_refunded,0)) total_shipping_amount_actual')
                      ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
                      ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
-                     ->where("store_id IN('$storesId') AND (created_at >='$from' AND created_at <='$to')");
+                     ->where("store_id IN('$storesId') AND create_order_method = 0 AND (created_at >='$from' AND created_at <='$to')");
                   
                 $currency=Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
                 $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
                 Mage::app()->getStore()->setId($storeId);
                 //die($symbol);
+                var_dump($collection->getFirstItem()->getOrdersCount()); die();
                 $data=array();
                 if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
                     $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
