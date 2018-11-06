@@ -102,26 +102,35 @@ class Allure_Salesforce_Model_Observer_Order{
         $counterpointOrderId = $order->getCounterpointOrderId();
         $shippingDescription = $order->getShippingDescription();
         
-        $subtotal = $order->getSubtotal();
-        $baseSubtotal = $order->getBaseSubtotal();
-        $grandTotal = $order->getGrandTotal();
-        $baseGrandTotal = $order->getBaseGrandTotal();
-        $discountAmount = $order->getDiscountAmount();
-        $baseDiscountAmount = $order->getBaseDiscountAmount();
-        $shippingAmount = $order->getShippingAmount();
-        $baseShippingAmount = $order->getBaseShippingAmount();
+        //for teamwork currency rate
+        $currencyRate = 1;
+        if($order->getCreateOrderMethod() == 2){
+            $currencyRate = $order->getStoreToBaseRate();
+            if(!$currencyRate){
+                $currencyRate = 1;
+            }
+        }
+                
+        $subtotal = $order->getSubtotal() * $currencyRate;
+        $baseSubtotal = $order->getBaseSubtotal() * $currencyRate;
+        $grandTotal = $order->getGrandTotal() * $currencyRate;
+        $baseGrandTotal = $order->getBaseGrandTotal() * $currencyRate;
+        $discountAmount = $order->getDiscountAmount() * $currencyRate;
+        $baseDiscountAmount = $order->getBaseDiscountAmount() * $currencyRate;
+        $shippingAmount = $order->getShippingAmount() * $currencyRate;
+        $baseShippingAmount = $order->getBaseShippingAmount() * $currencyRate;
         
-        $taxAmount = $order->getTaxAmount();
-        $baseTaxAmount = $order->getBaseTaxAmount();
+        $taxAmount = $order->getTaxAmount() * $currencyRate;
+        $baseTaxAmount = $order->getBaseTaxAmount() * $currencyRate;
         
-        $totalPaid = $order->getTotalPaid();
-        $baseTotalPaid = $order->getBaseTotalPaid();
-        $totalRefunded = $order->getTotalRefunded();
-        $baseTotalRefunded = $order->getBaseTotalRefunded();
-        $totalInvoiced = $order->getTotalInvoiced();
-        $baseTotalInvoiced = $order->getBaseTotalInvoiced();
+        $totalPaid = $order->getTotalPaid() * $currencyRate;
+        $baseTotalPaid = $order->getBaseTotalPaid() * $currencyRate;
+        $totalRefunded = $order->getTotalRefunded() * $currencyRate;
+        $baseTotalRefunded = $order->getBaseTotalRefunded() * $currencyRate;
+        $totalInvoiced = $order->getTotalInvoiced() * $currencyRate;
+        $baseTotalInvoiced = $order->getBaseTotalInvoiced() * $currencyRate;
         
-        $baseTotalDue = $order->getBaseTotalDue();
+        $baseTotalDue = $order->getBaseTotalDue() * $currencyRate;
         
         $billingAddr = $order->getBillingAddress();
         $shippingAddr = $order->getShippingAddress();
@@ -241,11 +250,13 @@ class Allure_Salesforce_Model_Observer_Order{
                 }
             }
             
+            $unitPrice = $item->getBasePrice() * $currencyRate;
+            
             $itemArray = array(
                 "attributes"        => array("type" => "OrderItem"),
                 "PricebookEntryId"  => $salesforcePricebkEntryId,//"01u290000037WAR",
                 "quantity"          => $item->getQtyOrdered(),
-                "UnitPrice"         => $item->getBasePrice(),
+                "UnitPrice"         => $unitPrice,
                 "Post_Length__c"    => $postLength,
                 "Magento_Order_Item_Id__c" => $item->getItemId(),
                 "SKU__c"                => $item->getSku(),
@@ -392,6 +403,11 @@ class Allure_Salesforce_Model_Observer_Order{
         $isUploadInvoice = false;
         $order = Mage::getModel("sales/order")->load($orderId);
         
+        $currencyRate = $order->getStoreToBaseRate();
+        if(!$currencyRate){
+            $currencyRate = 1;
+        }
+        
         $invoices = $order->getInvoiceCollection();
         foreach ($invoices as $invoice){
             //$invoice = Mage::getModel('sales/order_invoice')->load($invoice->getId());
@@ -454,10 +470,10 @@ class Allure_Salesforce_Model_Observer_Order{
                     "Invoice_Id__c"             => $invoiceIncrementId,
                     "Order_Date__c"             => date("Y-m-d",strtotime($orderDate)),
                     "Order_Id__c"               => $orderIncrementId,
-                    "Shipping_Amount__c"        => $baseShippingAmount,
+                    "Shipping_Amount__c"        => ($baseShippingAmount * $currencyRate),
                     "Status__c"                 => $status,
-                    "Subtotal__c"               => $baseSubtotal,
-                    "Tax_Amount__c"             => $basTaxAmount,
+                    "Subtotal__c"               => ($baseSubtotal * $currencyRate),
+                    "Tax_Amount__c"             => ($basTaxAmount *$currencyRate),
                     "Total_Quantity__c"         => $totalQty,
                     "Store__c"                  => $oldStoreArr[$storeId],
                     "Order__c"                  => $salesforceOrderId,
@@ -1293,6 +1309,11 @@ class Allure_Salesforce_Model_Observer_Order{
         $subtotal               = $creditMemo->getBaseSubtotal();
         $taxAmount              = $creditMemo->getBaseTaxAmount();
         
+        $currencyRate = $order->getStoreToBaseRate();
+        if(!$currencyRate){
+            $currencyRate = 1;
+        }
+        
         $objectType = $helper::CREDITMEMO_OBJECT;
         
         $requestMethod  = "GET";
@@ -1316,14 +1337,14 @@ class Allure_Salesforce_Model_Observer_Order{
             "Created_At__c"         => date("Y-m-d",strtotime($createdAt)),
             "Credit_Memo_Id__c"     => $incrementId,
             "Stauts__c"             => $status,
-            "Discount_Amount__c"    => $discountAmount,
-            "Grand_Total__c"        => $grandTotal,
+            "Discount_Amount__c"    => ($discountAmount)?($discountAmount * $currencyRate):0,
+            "Grand_Total__c"        => $grandTotal * $currencyRate,
             "Order_Date__c"         => date("Y-m-d",strtotime($orderDate)),
             "Order_Id__c"           => $orderIncrementId,
-            "Shipping_Amount__c"    => $shippingAmount,
+            "Shipping_Amount__c"    => $shippingAmount * $currencyRate,
             "Store__c"              => $oldStoreArr[$storeId],
-            "Subtotal__c"           => $subtotal,
-            "Tax_Amount__c"         => $taxAmount,
+            "Subtotal__c"           => $subtotal * $currencyRate,
+            "Tax_Amount__c"         => $taxAmount * $currencyRate,
             "Order__c"              => $salesforceOrderId,
             "Name"                  => "Credit Memo for Order #".$orderIncrementId
         );
@@ -1405,6 +1426,15 @@ class Allure_Salesforce_Model_Observer_Order{
                 return ;
             }
             
+            //for teamwork currency rate
+            $currencyRate = 1;
+            if($order->getCreateOrderMethod() == 2){
+                $currencyRate = $order->getStoreToBaseRate();
+                if(!$currencyRate){
+                    $currencyRate = 1;
+                }
+            }
+            
             $subtotal               = $order->getSubtotal();
             $baseSubtotal           = $order->getBaseSubtotal();
             $grandTotal             = $order->getGrandTotal();
@@ -1432,19 +1462,19 @@ class Allure_Salesforce_Model_Observer_Order{
             $urlPath        = $helper::ORDER_URL . "/" .$salesforceOrderId;
             
             $request = array(
-                "Shipping_Amount__c"            => $baseShippingAmount,
+                "Shipping_Amount__c"            => $baseShippingAmount * $currencyRate,
                 
-                "Total_Refunded_Amount__c"      => $baseTotalRefunded,
-                "Tax_Amount__c"                 => $baseTaxAmount,
+                "Total_Refunded_Amount__c"      => $baseTotalRefunded * $currencyRate,
+                "Tax_Amount__c"                 => $baseTaxAmount * $currencyRate,
                 
-                "Sub_Total__c"                  => $baseSubtotal,
-                "Discount__c"                   => $discountAmount,
-                "Discount_Base__c"              => $baseDiscountAmount,
-                "Grant_Total__c"                => $grandTotal,
-                "Grand_Total_Base__c"           => $baseGrandTotal,
+                "Sub_Total__c"                  => $baseSubtotal * $currencyRate,
+                "Discount__c"                   => $discountAmount * $currencyRate,
+                "Discount_Base__c"              => $baseDiscountAmount * $currencyRate,
+                "Grant_Total__c"                => $grandTotal * $currencyRate,
+                "Grand_Total_Base__c"           => $baseGrandTotal * $currencyRate,
                 
-                "Total_Paid__c"                 => $baseTotalPaid,
-                "Total_Due__c"                  => $baseTotalDue,
+                "Total_Paid__c"                 => $baseTotalPaid * $currencyRate,
+                "Total_Due__c"                  => $baseTotalDue * $currencyRate,
                 "Status"                        => $status,
             );
             $helper->salesforceLog("made order update api call to salesforce");

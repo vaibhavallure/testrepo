@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * @author allure
  */
@@ -48,9 +49,12 @@ class Allure_Teamwork_Model_Tmobserver{
         if ($requestArgs != null) {
             $json_arguments = json_encode($requestArgs);
             curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
-        }
+        } 
         $response  = curl_exec($sendRequest);
         //$this->addLog(json_decode($response,true));
+        /* $modelObj = Mage::getModel("allure_teamwork/tmorder")
+        ->load("5401FC1F-D2E2-4617-AD2B-92676D2B844A","tm_receipt_id");
+        $response = json_encode(array(unserialize($modelObj->getTmdata()))); */
         
         $this->addDataIntoSystem($response);
     }
@@ -147,6 +151,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         $password .= $final_array[$keyV];
                     }
                     
+                    //set temp session for create teamwork customer
+                    Mage::getSingleton("core/session")->setIsTeamworkCustomer(1);
+                    
                     $createdAtArr = explode(".", trim($customerDetails["RecModified"]));
                     $createdAt = $createdAtArr[0];
                     $group = ($customerDetails["CustomFlag1"]) ? 2 : 1;
@@ -224,6 +231,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         $this->addLog("customer address create id :".$address->getId());
                     }
                 }else{
+                    $customer->setTwAcceptMarketing($customerDetails["AcceptMarketing"])
+                    ->setTwAcceptTransactional($customerDetails["AcceptTransactional1"])
+                    ->save();
                     if($tmOrderObj->getEntityId())  {
                         $tmOrderObj->setCustomerStatus("already")->save();
                     }
@@ -231,6 +241,7 @@ class Allure_Teamwork_Model_Tmobserver{
             }catch (Exception $e){
                 $this->addLog("03 - Exc - :".$e->getMessage());
             }
+            Mage::getSingleton("core/session")->setIsTeamworkCustomer(0);
             
             $orderObj = Mage::getModel('sales/order')->load($receiptId,'teamwork_receipt_id');
             if($orderObj->getId()){
@@ -392,6 +403,7 @@ class Allure_Teamwork_Model_Tmobserver{
                     $quoteObj->setOtherSysExtraInfo(json_encode($extraOrderDetails,true));
                     $quoteObj->setTeamworkReceiptId($receiptId);
                     $quoteObj->setCreateOrderMethod(2);
+                    
                     $quoteObj->save();
                     
                     $quoteObj->setIsActive(0);
@@ -402,6 +414,22 @@ class Allure_Teamwork_Model_Tmobserver{
                     if($incrementIdQ){
                         $incrementIdQ = "TW-".$incrementIdQ;
                         $quoteObj->setReservedOrderId($incrementIdQ);
+                    }
+                    
+                    if(strtoupper($otherSysCur) != "MT"){
+                        $quoteObj->setData('base_currency_code',$otherSysCurCode)
+                        ->setData('global_currency_code',"USD")
+                        ->setData('quote_currency_code',$otherSysCurCode)
+                        ->setData('store_currency_code',$otherSysCurCode);
+                    }
+                    
+                    $currencyRates = Mage::getModel('directory/currency')->getCurrencyRates($otherSysCurCode, "USD");
+                    if(!empty($currencyRates["USD"])){
+                        $this->addLog("currency rate {$otherSysCurCode} to USD is {$currencyRates["USD"]}");
+                        $quoteObj->setStoreToBaseRate($currencyRates["USD"])
+                        ->setStoreToQuoteRate(1)
+                        ->setBaseToGlobalRate($currencyRates["USD"])
+                        ->setBaseToQuoteRate(1);
                     }
                     
                     $payment_method  = "tm_pay_cash";
@@ -511,12 +539,12 @@ class Allure_Teamwork_Model_Tmobserver{
                     $orderObj->setBaseTaxAmount($taxAmmount);
                     $orderObj->setBaseGrandTotal($totalAmmount);
                     
-                    if(strtoupper($otherSysCur) != "MT"){
+                    /* if(strtoupper($otherSysCur) != "MT"){
                         $orderObj->setData('base_currency_code',$otherSysCurCode)
                             ->setData('global_currency_code',$otherSysCurCode)
                             ->setData('order_currency_code',$otherSysCurCode)
                             ->setData('store_currency_code',$otherSysCurCode);
-                    }
+                    } */
                     
                     $extStoreName = $extraOrderDetails["Name"];
                     $locationCode = $extraOrderDetails["LocationCode"];

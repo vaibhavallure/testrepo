@@ -830,8 +830,16 @@ class Allure_Teamwork_Model_Observer{
                                     ->setCustomerType(7)  
                                     ->setCustNote($customerNote)
                                     ->setTeamworkCustomerId($teamworkId)
-                                    ->setTaxvat($taxVatId)
-                                    ->save();
+                                    ->setTaxvat($taxVatId);
+                                   
+                                    if($email->acceptMarketing){
+                                        $customer->setTwAcceptMarketing($email->acceptMarketing);
+                                    }
+                                    if($email->acceptTransactional){
+                                        $customer->setTwAcceptTransactional($email->acceptTransactional);
+                                    }
+                                    
+                                    $customer->save();
                                     Mage::log("new customer id:".$customerObj->getId()." email:".$email,Zend_log::DEBUG,$logFile,$logStatus);
                               }
                               
