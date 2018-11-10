@@ -19,10 +19,10 @@ if (empty($collection))
                 <?php
                     $feed = Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
                     $instagramObj = unserialize($feed->getInstagramData());
-                    $media_id=$feed->getMediaId();
+                    $mediaId=$feed->getMediaId();
                 ?>
                 <li class="item" style="width: 92px; height: 120px; margin: 0 8px 0 0;">
-                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $feed->getId() ?>' onclick="instagramView.show(this);" media-id="<?php echo $media_id?>">
+                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $feed->getId() ?>' onclick="instagramView.show(this);" media-id="<?php echo $mediaId?>">
                         <img  src="<?php echo $instagramObj->images->low_resolution->url ?>" alt="" width="92" height="120"/>
                     </a>
                 </li>
@@ -47,7 +47,7 @@ if (empty($collection))
 			</div>
 		</div>
 	</div>
-	
+
 <script type="text/javascript">
 //<![CDATA[
 	var instagramView = new InstagramView('fs-instagram-view-container','<?php echo Mage::getBaseUrl('web').'instacatalog/feed/view'?>');
