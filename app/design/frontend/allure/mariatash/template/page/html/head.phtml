@@ -35,7 +35,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Maria Tash">
 <link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon"/>
-<meta name="google-site-verification" content="rIH9RmxNp4bJQ601Cmxe7IVD59ZhokU85NyfGmHWD4Y" /> 
+<meta name="google-site-verification" content="rIH9RmxNp4bJQ601Cmxe7IVD59ZhokU85NyfGmHWD4Y" />
 <meta name="google-site-verification" content="FyCBtJHrnBYJlB3vzz23QnzmKfJCnxd1zzdhCW-QDMI" />
 <?php
 
@@ -55,7 +55,7 @@ foreach ($metaCollection as $meta){
         $description = $meta->getDescription();
         // $description="Test Test";
     }
-    
+
 }
 
 if ($this->getRequest()->getParam('fb', false)) {
@@ -225,26 +225,33 @@ if(Mage::app()->getRequest()->getModuleName() == 'ecppiercinggallery'
 endif;
 ?>
 
-<?php 
+<?php
 $currenturl = Mage::helper('core/url')->getCurrentUrl();
 $urlData=explode("/",$currenturl);
 $metaCollection=Mage::getModel("metadata/metadata")->getCollection();
+
+$site_name = 'Maria Tash';
+
 foreach ($metaCollection as $meta){
-    $site_name='Maria Tash';
+
     if(in_array($meta->getTerm(), $urlData)){
         $title = $meta->getTitle();
+
         if($meta->getUrl())
             $url=$meta->getUrl();
+
         if($meta->getType())
             $type=$meta->getType();
+
         if($meta->getImage())
             $image=$meta->getImage();
+
         if($meta->getDescription())
             $description = $meta->getDescription();
+
         if($meta->getSiteName())
             $site_name=$meta->getSiteName();
     }
-    
 }
 ?>
 
