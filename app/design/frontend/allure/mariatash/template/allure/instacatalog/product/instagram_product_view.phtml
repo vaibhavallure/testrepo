@@ -179,7 +179,7 @@ if($_product->getTypeId()=="configurable"){
 
                 ?>
                 <li class="item product-view-instagram-item" >
-                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $feed->getId() ?>' onclick="instagramView.show(this);" media-id="<?php echo $media_id?>"">
+                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $feed->getId() ?>' onclick="instagramView.show(this);" media-id="<?php echo $mediaId?>"">
                         <?php
                         	$class = '';
                         	$isclass = false;
@@ -190,12 +190,12 @@ if($_product->getTypeId()=="configurable"){
                         ?>
                         <img  src="<?php echo $imageUrl ?>" alt="" <?php echo ($isclass)?$class:""?>" />
                     </a>
-                    <div style="display: none;" id="details-insta-<?php echo $media_id?>"
+                    <div style="display: none;" id="details-insta-<?php echo $mediaId?>"
 								data-user-name="<?php $_post->getUsername()?>" data-img-url="<?php echo $_post->getStandardResolution()?>"
 							 	data-create-date="<?php echo $createDate?>" data-share-url="<?php echo $shareUrl?>">
-							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo json_encode($_post->getCaption()) ?></div>
-								<div id="insta-product-mark-<?php echo $media_id?>" style="display: none;"><?php echo $points ?></div>
-								<div id="insta-product-details-<?php echo $media_id?>" style="display: none;"><?php echo $productsLinks ?></div>
+							 	<div id="insta-caption-<?php echo $mediaId?>" style="display: none;"><?php echo json_encode($_post->getCaption()) ?></div>
+								<div id="insta-product-mark-<?php echo $mediaId?>" style="display: none;"><?php echo $points ?></div>
+								<div id="insta-product-details-<?php echo $mediaId?>" style="display: none;"><?php echo $productsLinks ?></div>
 							</div>
                 </li>
             <?php endforeach; ?>
