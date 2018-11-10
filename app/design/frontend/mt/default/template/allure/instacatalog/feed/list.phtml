@@ -168,7 +168,7 @@
             		if($_post->getProductCount()>0)
             			$class_css = "post_item_with_link";
 
-            		$instagramObj = unserialize($_post->getInstagramData());
+            		$instagramObj = @unserialize($_post->getInstagramData());
 
             		$shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
             		$createDate = $_post->getCreatedTimestamp();
