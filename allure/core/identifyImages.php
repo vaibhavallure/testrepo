@@ -27,7 +27,8 @@
 
 	$exportFile   = $exportFolderPath . DS . $exportFileName.'-'.$date.$exportFileExt;
 
-	$collection = Mage::getModel('catalog/product')->getCollection();
+	$collection = Mage::getResourceModel('catalog/product_collection')
+			->addAttributeToSelect('*');
 
 	if ($single) {
 		$collection->addAttributeToFilter('sku', array('like' => $single.'%'));
@@ -38,7 +39,7 @@
 	$io = new Varien_Io_File();
 	$io->setAllowCreateFolders(true);
 	$io->open(array("path" => $exportFolderPath));
-	
+
 	$csv = new Varien_File_Csv();
 
 	$rowData = array();
@@ -74,7 +75,7 @@
 
 		    $parentSku = trim(current(explode("|", $product->getSku())));
 
-			$imagesArray = array_fill_keys(array_keys($header), 'N/A');
+			$imagesArray = array();
 
 			$mediaGallery = null;
 
@@ -85,6 +86,13 @@
 			$image = null;
 
 			$mediaGallery = $product->getMediaGalleryImages();
+
+			$orgMediaGallery = $product->getData('media_gallery');
+
+			if (count($orgMediaGallery)) {
+				$imagesArray = array_fill_keys(array_keys($header), 'N/A');
+				$imagesArray["sku"] = $product->getSku();
+			}
 
 			//$productInfo = $product->getSku().'//'.$_product->getId();
 
@@ -119,12 +127,6 @@
 				//var_dump($imagePosition);
 
 				if (true || (strpos(strtoupper($imageName), strtoupper($parentSku)) !== FALSE)) {
-
-					if ($index == 1) {
-						//$imagesArray["id"] 	= $product->getId();
-						$imagesArray["sku"] = $product->getSku();
-						$imageIndex += 1;
-					}
 
 					$newImageName = str_replace(array('|',' '),array('-','_'), $product->getSku()).'_'.$imagePosition.'.'.$imageExtension;
 
