@@ -175,7 +175,7 @@
 				    border-collapse: collapse;
 				}
 				td {
-				    padding: 5px;
+				    padding: 3px;
 				    border: 1px solid #ccc;
 				}
 
