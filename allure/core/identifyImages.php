@@ -8,40 +8,54 @@
 
 	$single = false;
 
-	if (!isset($_GET['sku'])) {
+	$lineSeparator = '=>';
+
+	if (isset($_GET['sku'])) {
 		$single = $_GET['sku'];
 	}
 
-	$folderPath = Mage::getBaseDir('var') . DS . 'export';
 	$date 		= date('YmdHi');
-	$filename   = "different_image_names_".$date.".csv";
-	$filepath   = $folderPath . DS . $filename;
 
-	$collection=Mage::getModel('catalog/product')->getCollection();
+	$exportFolderPath = Mage::getBaseDir('var') . DS . 'export';
+	$exportFileName   = "different_image_names";
 
 	if ($single) {
-		$collection->addAttributeToFilter('sku',array('like' => $single.'%'));
+		$exportFileName .= '-'.strtoupper($single);
 	}
+
+	$exportFileExt = '.csv';
+
+	$exportFile   = $exportFolderPath . DS . $exportFileName.'-'.$date.$exportFileExt;
+
+	$collection = Mage::getModel('catalog/product')->getCollection();
+
+	if ($single) {
+		$collection->addAttributeToFilter('sku', array('like' => $single.'%'));
+	}
+
+	$collection->setOrder('sku', 'asc');
 
 	$io = new Varien_Io_File();
 	$io->setAllowCreateFolders(true);
-	$io->open(array("path" => $folderPath));
+	$io->open(array("path" => $exportFile));
 	$csv = new Varien_File_Csv();
 
 	$rowData = array();
 
 	$header = array(
-	    "sku"	=> "SKU",
-	    "image1"	=> "Image #1",
-	    "image2"	=> "Image #2",
-	    "image3"	=> "Image #3",
-	    "image4"	=> "Image #4",
+	    //"id"			=> "ID",
+	    "sku"			=> "SKU",
+
+	    "image1"		=> "Image #1",
+	    "image2"		=> "Image #2",
+	    "image3"		=> "Image #3",
+	    //"image4"		=> "Image #4",
 	    "imagemodel"	=> "Image #model",
 
 	    "newimage1"		=> "New Image #1",
 	    "newimage2"		=> "New Image #2",
 	    "newimage3"		=> "New Image #3",
-	    "newimage4"		=> "New Image #4",
+	    //"newimage4"		=> "New Image #4",
 	    "newimagemodel"	=> "New Image #model"
 	);
 
@@ -49,52 +63,89 @@
 
 	try {
 
+		$productIndex = 0;
+
 	    foreach ($collection as $_product) {
 
-			$product = Mage::getSingleton("catalog/product")->load($_product->getId());
+			$productIndex += 1;
 
-		    $attributes = $product->getTypeInstance(true)->getSetAttributes($product);
+			$product = Mage::getModel("catalog/product")->load($_product->getId());
 
 		    $parentSku = trim(current(explode("|", $product->getSku())));
 
-			$mediaGallery = $product->getMediaGalleryImages();
-
 			$imagesArray = array_fill_keys(array_keys($header), 'N/A');
 
+			$mediaGallery = null;
+
 			$index = 1;
+
+			$imageIndex = 1;
+
+			$image = null;
+
+			$mediaGallery = $product->getMediaGalleryImages();
+
+			//$productInfo = $product->getSku().'//'.$_product->getId();
+
+			//var_dump($productInfo);
+			//var_dump($product->getData('media_gallery'));
 
 			foreach ($mediaGallery as $image) {
 
 				//var_dump($image->getData());
 
 			   	$imageInfo = pathinfo($image->getFile());
+
 				$imageName = $imageInfo['basename'];
 				$imageExtension = $imageInfo['extension'];
 
-				$imagePosition = trim(end(explode("#", $image->getLabel())));
+				$imagePosition = $image->getPosition();
+				$newImagePosition = trim(end(explode("#", $image->getLabel())));
 
+				if (empty($imagePosition)) {
+					$imagePosition = $imageIndex;
+				}
+
+				if ($imagePosition == 4 || strpos($imageName, 'model') !== FALSE) {
+					$imagePosition = 'model';
+				}
+
+				if (empty($newImagePosition) || $imagePosition == 'model') {
+					$newImagePosition = $imagePosition;
+				}
+
+				//var_dump($image->getLabel());
 				//var_dump($imagePosition);
 
 				if (true || (strpos(strtoupper($imageName), strtoupper($parentSku)) !== FALSE)) {
 
 					if ($index == 1) {
+						//$imagesArray["id"] 	= $product->getId();
 						$imagesArray["sku"] = $product->getSku();
+						$imageIndex += 1;
 					}
 
 					$newImageName = str_replace(array('|',' '),array('-','_'), $product->getSku()).'_'.$imagePosition.'.'.$imageExtension;
 
-					$imagesArray["image".$index] = $imageName;
+					$imagesArray["image".$imagePosition] = $imageName;
 
 					if ($imageName != $newImageName) {
-						$imageName .= '=>'.$newImageName;
+						$imageName .= $lineSeparator.$newImageName;
 					}
 
-					$imagesArray["newimage".$imagePosition] = $imageName;
-
+					$imagesArray["newimage".$newImagePosition] = $imageName;
 
 					$index++;
 				}
+
+				if ($imagePosition != 'model') {
+					$imageIndex += 1;
+				}
+
+				//var_dump($imagesArray);
 			}
+
+			$product = null;
 
 	        if (count($imagesArray)) {
 	        	$rowData[] = $imagesArray;
@@ -103,16 +154,16 @@
 
 		//var_dump($rowData);die;
 
-		$csv->saveData($filepath,$rowData);
+		$csv->saveData($exportFile,$rowData);
 
-	    if (false && file_exists($filepath)) {
+	    if (false && file_exists($exportFile)) {
 	        header('Content-Description: File Transfer');
 	        header('Content-Type: application/octet-stream');
-	        header('Content-Disposition: attachment; filename="' . basename($filepath) . '"');
+	        header('Content-Disposition: attachment; filename="' . basename($exportFileName) . '"');
 	        header('Expires: 0');
 	        header('Cache-Control: must-revalidate');
 	        header('Pragma: public');
-	        header('Content-Length: ' . filesize($filepath));
+	        header('Content-Length: ' . filesize($exportFile));
 	        readfile($filepath);
 	        exit;
 	    }
@@ -132,9 +183,20 @@
 					background-color: #222;
 					color: #fff;
 				}
+				tbody tr {
+					font-size: 14px;
+				}
 
 				tbody tr:nth-child(2n+2) {
 				    background-color: #eee;
+				}
+
+				red {
+					background-color: #ffe3e3;
+				}
+
+				green {
+					background-color: #d7ffd7;
 				}
 			";
 			echo "</style>";
@@ -144,7 +206,11 @@
 
 				echo "<tr>";
 				foreach ($columns as $column => $cell) {
-					echo "<td>" . str_replace("=>", "<br/>", $cell) . "</td>";
+					if (strpos($cell, $lineSeparator) !== FALSE) {
+						echo "<td><red>" . str_replace($lineSeparator, "</red><br/><green>", $cell) . "</green></td>";
+					} else {
+						echo "<td>" . $cell . "</td>";
+					}
 				}
 				echo "</tr>";
 
