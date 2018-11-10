@@ -37,7 +37,8 @@
 
 	$io = new Varien_Io_File();
 	$io->setAllowCreateFolders(true);
-	$io->open(array("path" => $exportFile));
+	$io->open(array("path" => $exportFolderPath));
+	
 	$csv = new Varien_File_Csv();
 
 	$rowData = array();
@@ -154,7 +155,7 @@
 
 		//var_dump($rowData);die;
 
-		$csv->saveData($exportFile,$rowData);
+		$csv->saveData($exportFile, $rowData);
 
 	    if (false && file_exists($exportFile)) {
 	        header('Content-Description: File Transfer');
