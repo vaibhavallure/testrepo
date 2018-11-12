@@ -237,7 +237,18 @@ class Allure_AdminPermissions_Model_Observer
         //if(!in_array($roleName, $roles)){
         if($roleName != 1){
             if($type == self::SALES_ORDER){
-                $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
+                $controllerName = Mage::app()->getRequest()->getControllerName();
+                if($controllerName == "customer"){
+                    $collection->getSelect()->join(
+                        array('sales_flat_order' => $collection->getTable('sales/order')),
+                        'main_table.entity_id = sales_flat_order.entity_id',
+                        array('create_order_method' => 'sales_flat_order.create_order_method')
+                        );
+                    $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
+                }else{
+                    $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
+                }
+                
             }elseif (($type == self::SALES_INVOICE) || ($type == self::SALES_SHIPMENT) || ($type == self::SALES_CREDITMEMO)){
                 $collection->getSelect()->join(
                     array('sales_flat_order' => $collection->getTable('sales/order')),
