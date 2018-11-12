@@ -106,7 +106,7 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
             $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
         	$emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
             $emailTemplateVariables['hour_alert'] = $hourReport;
-            $emailTemplateVariables['last_order_date'] = date("F j, Y \a\\t g:i a", strtotime($lastOrderdate));
+            $emailTemplateVariables['last_order_date'] = Mage::getModel('core/date')->date("F j, Y \a\\t g:i a",$lastOrderdate);
     		if ($templateId) {    			
                 $emailTemplate->sendTransactional(
                 	$templateId,
