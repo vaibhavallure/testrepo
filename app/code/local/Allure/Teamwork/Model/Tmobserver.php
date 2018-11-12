@@ -378,7 +378,7 @@ class Allure_Teamwork_Model_Tmobserver{
                         $quoteObj->getShippingAddress()
                         ->setShippingMethod("tm_storepickupshipping");
                     }
-                    
+                    $quoteObj->setCreateOrderMethod(2);
                     $quoteObj->collectTotals();
                     
                     if($isDiscountTot){
@@ -603,7 +603,7 @@ class Allure_Teamwork_Model_Tmobserver{
                 "Discover" => "DISC",
                 "Master" => "MC",
                 "Visa" => "VI",
-                "Amex" => "AMEX"
+                "Amex" => "AE"
             );
             
             $invCnt = 0;
@@ -738,7 +738,7 @@ class Allure_Teamwork_Model_Tmobserver{
                                     $cardType = $paymentData["CardTypeDescription"];
                                     $cardType = ($cardCodeArr[$cardType])?$cardCodeArr[$cardType]:$cardType;
                                     if($cardType){
-                                        $orderPay->setCcType($ccType);
+                                        $orderPay->setCcType($cardType);
                                     }
                                     
                                     if(($cardExpMonth)){
