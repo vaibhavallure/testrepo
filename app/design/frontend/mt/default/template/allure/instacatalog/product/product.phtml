@@ -18,7 +18,7 @@ if (empty($collection))
             <?php foreach ($collection as $feeds): ?>
                 <?php
                     $feed = Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
-                    $instagramObj = unserialize($feed->getInstagramData());
+                    $instagramObj = @unserialize($feed->getInstagramData());
                     $mediaId=$feed->getMediaId();
                 ?>
                 <li class="item" style="width: 92px; height: 120px; margin: 0 8px 0 0;">
