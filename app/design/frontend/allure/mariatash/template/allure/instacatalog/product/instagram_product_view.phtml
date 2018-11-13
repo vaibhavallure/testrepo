@@ -98,7 +98,7 @@ if($_product->getTypeId()=="configurable"){
             <?php foreach ($collection as $feeds): ?>
                 <?php
                     $feed = Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
-                    $instagramObj = unserialize($feed->getInstagramData());
+                    $instagramObj = @unserialize($feed->getInstagramData());
                     $mediaId = $feed->getId();/* getMediaId(); */
 
                     $_post = $feed;
