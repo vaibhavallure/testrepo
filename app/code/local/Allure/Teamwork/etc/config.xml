@@ -110,6 +110,15 @@
 					</allure_teamwork_changeorderstatus>
 				</observers>
 			</sent_in_chq>
+			
+			<salesrule_validator_process>
+				<observers>
+					<allure_teamwork_salesrule>
+						<class>allure_teamwork/observer</class>
+						<method>removeSalesRuleForTeamworkOrder</method>
+					</allure_teamwork_salesrule>
+				</observers>
+			</salesrule_validator_process>
 		</events>
 	</global>
 
