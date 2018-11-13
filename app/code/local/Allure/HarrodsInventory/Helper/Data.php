@@ -259,14 +259,14 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                         $optionLabel = $attribute->getFrontend()->getOption($optionId);
 
                     $data = array();
-
+                    $skuConfig = $this->charEncode(explode("|",$_product->getSku())[0]);
                     $data['recid'] = $this->charEncode($sr_no); //$_product->getSku();
                     $data['description'] = str_replace(array(':', '-', '/', '*','"'), ' ', $this->charEncode(strtoupper(substr($_product->getName(), 0, 30))));
                     $data['purch_grp'] = $this->charEncode('907');
                     $data['bmc'] = $this->charEncode('LW36900');
                     $data['article_type'] = $this->charEncode('ZDMC');
                     $data['art_cat'] = $this->charEncode('Generic'); //Single for simple
-                    $data['size_matrix'] = $this->charEncode('SIZE LADIESWEAR');
+                    $data['size_matrix'] = $this->charEncode('SIZE-LADIESWEAR');
                     $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());   // Need to add later
                     $data['cost'] = $this->charEncode('0.00');
                     $data['store_retail'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
