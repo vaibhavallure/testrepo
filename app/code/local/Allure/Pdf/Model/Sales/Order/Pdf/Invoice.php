@@ -9,7 +9,7 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
      * @param Mage_Sales_Model_Order $obj
      * @param bool $putOrderId
      */
-    protected function insertOrder(&$page, $obj, $putOrderId = true)
+    protected function insertOrder(&$page, $obj, $putOrderId = true,$invoiceId = null)
     {
         if ($obj instanceof Mage_Sales_Model_Order) {
             $shipment = null;
@@ -66,8 +66,24 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
         /* Billing Address */
         $billingAddress = $this->_formatAddress($order->getBillingAddress()->format('pdf'));
         
+        
+        if($order->getCreateOrderMethod() == 2){
+            $paymentObj = $order->getPayment();
+            $paymentData = unserialize($paymentObj->getAdditionalData());
+            $paymentId = $paymentData[$invoiceId]["payment_id"];
+            if(!empty($paymentId)){
+                if($paymentId != $paymentObj->getId()){
+                    $paymentObj = Mage::getModel("sales/order_payment")
+                        ->load($paymentId);
+                }
+            }
+        }else{
+            $paymentObj = $order->getPayment();
+        }
+        
+        
         /* Payment */
-        $paymentInfo = Mage::helper('payment')->getInfoBlock($order->getPayment())
+        $paymentInfo = Mage::helper('payment')->getInfoBlock($paymentObj)
         ->setIsSecureMode(true)
         ->toPdf();
         $paymentInfo = htmlspecialchars_decode($paymentInfo, ENT_QUOTES);
@@ -317,7 +333,8 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pd
             $this->insertOrder(
                 $page,
                 $order,
-                Mage::getStoreConfigFlag(self::XML_PATH_SALES_PDF_INVOICE_PUT_ORDER_ID, $order->getStoreId())
+                Mage::getStoreConfigFlag(self::XML_PATH_SALES_PDF_INVOICE_PUT_ORDER_ID, $order->getStoreId()),
+                $invoice->getId()
                 );
             /* Add document text and number */
             $this->insertDocumentNumber(
