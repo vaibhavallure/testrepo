@@ -974,5 +974,18 @@ class Allure_Teamwork_Model_Observer{
       //  $this->reupdateCustomerToTeamwork();
   }
   
+  //remove salesrule id from quote for teamwork order
+  public function removeSalesRuleForTeamworkOrder($observer){
+      $event = $observer->getEvent();
+      $quote = $event->getQuote();
+      $appliedRule = $event->getRule();
+      $result = $event->getResult();
+      if($quote->getCreateOrderMethod() == 2){
+          $result->setDiscountAmount(0);
+          $result->setBaseDiscountAmount(0);
+          $quote->setAppliedRuleIds(null);
+      }
+      return $this;
+  }
   
 }
