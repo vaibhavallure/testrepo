@@ -95,11 +95,11 @@ class IWD_OrderManager_Model_Customer_Order extends Mage_Sales_Model_Order
             ));
         
         //dont display teamwork order to other admin user
-        $user = Mage::getSingleton('admin/session')->getUser();
-        $userRole = $user->getRole()->getData();
-        $roleName = $userRole["role_id"];
-        if($roleName != 1){
-            $collection ->addFieldToFilter('main_table.create_order_method', array('nin' => array(2)));
+        if (Mage::helper('core')->isModuleEnabled('Allure_AdminPermissions')){
+            $helper = Mage::helper("allure_adminpermissions");
+            if(!$helper->isShowTeamworkOrders()){
+                $collection ->addFieldToFilter('main_table.create_order_method', array('nin' => array(2)));
+            }
         }
         
         $collection->getSelect()->group('main_table.entity_id');
