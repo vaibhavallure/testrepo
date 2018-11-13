@@ -30,7 +30,7 @@ $attribute = $attribute_details->getData();
     $readConnection = $resource->getConnection('core_read');
 
 
-    $query="SELECT * FROM `catalog_product_entity_media_gallery` gal JOIN `catalog_product_entity_media_gallery_value` val ON gal.value_id=val.value_id WHERE label IS null AND val.store_id=1 ORDER BY VALUE DESC ";
+    $query="SELECT * FROM `catalog_product_entity_media_gallery` gal JOIN `catalog_product_entity_media_gallery_value` val ON gal.value_id=val.value_id WHERE label IS null  ORDER BY VALUE DESC";
 
     $results = $readConnection->fetchAll($query);
 
