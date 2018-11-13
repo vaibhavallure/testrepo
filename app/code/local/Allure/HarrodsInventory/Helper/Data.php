@@ -98,8 +98,8 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'teamwork';
 
-            $date = Mage::getModel('core/date')->date('Y_m_d');
-            $filenm="70000369_".$date.".".$this->harrodsConfig()->getFileType();
+            $date = Mage::getModel('core/date')->date('Ymd');
+            $filenm="70000369_".$date."_PLU.".$this->harrodsConfig()->getFileType();
             $file = $path . DS . $filenm;
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
@@ -123,9 +123,14 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 //
 //            $ioo->streamWriteCsv($header);
 
-            $header =   array('recid' => $this->charEncode('MSS V2.10'), 'description' => $this->charEncode('FALSE'), 'purch_grp' => '', 'bmc' => '',
-                'article_type' => '', 'art_cat' => '', 'size_matrix' => '', 'GTIN_number' => '','cost' => $this->charEncode('FALSE'));
-            $ioo->streamWriteCsv($header,"\t");
+//            $header =   array('recid' => $this->charEncode('MSS V2.10'), 'description' => $this->charEncode('FALSE'), 'purch_grp' => '', 'bmc' => '',
+//                'article_type' => '', 'art_cat' => '', 'size_matrix' => '', 'GTIN_number' => '','cost' => $this->charEncode('FALSE'));
+
+
+            $header =   array('recid' => $this->charEncode('MSS V2.10'));
+
+
+            $ioo->streamWriteCsv($header,"\t",' ');
 
             $data = array();
 
@@ -141,105 +146,106 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $attribute = $attribute_details->getData();
             $attrbute_id = $attribute['attribute_id'];
 
-            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="configurable" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0');
+            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0');
 
             $some_attr_code = "metal";
             $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
 
             foreach ($parentPro as $parentProductId) {
 
-                $this->add_log("inside config product---------");
+//                $this->add_log("inside config product---------");
+//
+//                $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
+//
+//                $data = array();
+//                $optionId = '';
+//
+//                if (!is_null($_product->getMetal()))
+//                    $optionId = $_product->getMetal();
+//                $optionLabel = '';
+//
+//                if (!empty($optionId))
+//                    $optionLabel = $attribute->getFrontend()->getOption($optionId);
+//
+//                $skuConfig = $this->charEncode($_product->getSku());
+//                $data['recid'] = $this->charEncode($sr_no); //$_product->getSku();
+//                $data['description'] = $this->charEncode(strtoupper(substr($_product->getName(), 0, 30)));
+//                $data['purch_grp'] = $this->charEncode('907');
+//                $data['bmc'] = $this->charEncode('LW36900');
+//                $data['article_type'] = $this->charEncode('ZDMC');
+//                $data['art_cat'] = $this->charEncode('Generic'); //Single for simple
+//                $data['size_matrix'] = $this->charEncode('SIZE-LADIESWEAR');
+//                $data['GTIN_number'] = ''; //$_product->getGtinNumber();   // Need to add later
+//                $data['cost'] = $this->charEncode('0.00');
+//                $data['store_retail'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
+//                $data['airports_retail'] = '';
+//                $data['wholes_selling'] = '';
+//                $data['ctry_of_origi'] = '';
+//                $data['import_code'] = '';
+//                $data['tax_cls'] = $this->charEncode($_product->getTaxClassId() ? 1 : 0);
+//                $data['seas_code'] = $this->charEncode('0000');
+//                $data['seas_year'] = $this->charEncode('2018');
+//                $data['store'] = $this->charEncode('TRUE');
+//                $data['airports'] = $this->charEncode('FALSE');
+//                $data['wholesale'] = $this->charEncode('FALSE');
+//                $data['consign'] = $this->charEncode('FALSE');
+//                $data['vendor'] = $this->charEncode('70000369'); //check with Todd
+//                $data['vendor_subrange'] = $this->charEncode('CON');
+//                $data['vendors_art_no'] = $skuConfig;   //Config SKU
+//                $data['tax_code'] = $this->charEncode('C0');
+//                $data['brand'] = $this->charEncode('MARIA TASH');
+//                $data['range'] = '';
+//                $data['harrods_mainenance_structure'] = $this->charEncode('AC WOMENS EARRINGS');
+//                $data['shape'] = '';
+//                $data['design'] = '';
+//                $data['comp'] = '';
+//                $data['sport'] = '';
+//                $data['gender'] = $this->charEncode('UNISEX');
+//                $data['harrods_colour'] = $this->charEncode(strtoupper(str_replace("GOLD", "", $optionLabel)));  //COlor
+//                $data['pack_size'] = '';
+//                $data['prod_hierarchy'] = $this->charEncode('FA');
+//                $data['contents'] = '';
+//                $data['content_unit'] = '';
+//                $data['vendor_colour'] = $this->charEncode(strtoupper($_product->getHarrodsColor()));  //Color ROSE GOLd
+//                $data['order_units'] = '';
+//                $data['single_size'] = '';
+//                $data['total_cost'] = '';
+//                $data['var_tax_rate'] = '';
+//                $data['POS_description'] = substr($skuConfig, 0, 15);  //Add COnfigurable SKU
+//                $data['direct_mail'] = $this->charEncode('TRUE');
+//                $data['spare3'] = '';
+//                $data['spare4'] = '';
+//                $data['spare5'] = '';
+//                $data['backdate_article'] = '';
+//                $data['error_message'] = '';
+//                $data['record_status'] = '';
+//                $data['article_number'] = '';
+//                $data['site_listings'] = $this->charEncode('D369');
+//                $data['siteDelimited'] = $this->charEncode('SiteDelim');
+////                $data['string_for_generic_lines'] = '';
+//
+//
+//
+//                    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+//                    $simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+//                    $indexCount = 1;
+//                    foreach ($simple_collection as $k => $simpleProd){
+//                        $simple_product=Mage::getSingleton("catalog/product")->load($simpleProd->getId());
+//                        $gtin_index = 'gtin_'.$indexCount;
+//                        $data[$gtin_index] = $this->charEncode("(ONE_SIZE;".$simple_product->getGtinNumber().";;;;)");
+//                        $indexCount++;
+//                    }
+//                $data['siteDelimitedend'] = $this->charEncode('SiteDelim');
+//
+//                $ioo->streamWriteCsv($data,"\t");
+//                $sr_no++;
+//
+//				//$conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
+//				//$simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
+//
+//                foreach ($simple_collection as $simpleProd) {
 
-                $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
-
-                $data = array();
-                $optionId = '';
-
-                if (!is_null($_product->getMetal()))
-                    $optionId = $_product->getMetal();
-                $optionLabel = '';
-
-                if (!empty($optionId))
-                    $optionLabel = $attribute->getFrontend()->getOption($optionId);
-
-                $skuConfig = $this->charEncode($_product->getSku());
-                $data['recid'] = $this->charEncode($sr_no); //$_product->getSku();
-                $data['description'] = $this->charEncode(strtoupper(substr($_product->getName(), 0, 30)));
-                $data['purch_grp'] = $this->charEncode('907');
-                $data['bmc'] = $this->charEncode('LW36900');
-                $data['article_type'] = $this->charEncode('ZDMC');
-                $data['art_cat'] = $this->charEncode('Generic'); //Single for simple
-                $data['size_matrix'] = $this->charEncode('SIZE-LADIESWEAR');
-                $data['GTIN_number'] = ''; //$_product->getGtinNumber();   // Need to add later
-                $data['cost'] = $this->charEncode('0.00');
-                $data['store_retail'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
-                $data['airports_retail'] = '';
-                $data['wholes_selling'] = '';
-                $data['ctry_of_origi'] = '';
-                $data['import_code'] = '';
-                $data['tax_cls'] = $this->charEncode($_product->getTaxClassId() ? 1 : 0);
-                $data['seas_code'] = $this->charEncode('0000');
-                $data['seas_year'] = $this->charEncode('2018');
-                $data['store'] = $this->charEncode('TRUE');
-                $data['airports'] = $this->charEncode('FALSE');
-                $data['wholesale'] = $this->charEncode('FALSE');
-                $data['consign'] = $this->charEncode('FALSE');
-                $data['vendor'] = $this->charEncode('70000369'); //check with Todd
-                $data['vendor_subrange'] = $this->charEncode('CON');
-                $data['vendors_art_no'] = $skuConfig;   //Config SKU
-                $data['tax_code'] = $this->charEncode('C0');
-                $data['brand'] = $this->charEncode('MARIA TASH');
-                $data['range'] = '';
-                $data['harrods_mainenance_structure'] = $this->charEncode('AC WOMENS EARRINGS');
-                $data['shape'] = '';
-                $data['design'] = '';
-                $data['comp'] = '';
-                $data['sport'] = '';
-                $data['gender'] = $this->charEncode('UNISEX');
-                $data['harrods_colour'] = $this->charEncode(strtoupper(str_replace("GOLD", "", $optionLabel)));  //COlor
-                $data['pack_size'] = '';
-                $data['prod_hierarchy'] = $this->charEncode('FA');
-                $data['contents'] = '';
-                $data['content_unit'] = '';
-                $data['vendor_colour'] = $this->charEncode(strtoupper($_product->getHarrodsColor()));  //Color ROSE GOLd
-                $data['order_units'] = '';
-                $data['single_size'] = '';
-                $data['total_cost'] = '';
-                $data['var_tax_rate'] = '';
-                $data['POS_description'] = substr($skuConfig, 0, 15);  //Add COnfigurable SKU
-                $data['direct_mail'] = $this->charEncode('TRUE');
-                $data['spare3'] = '';
-                $data['spare4'] = '';
-                $data['spare5'] = '';
-                $data['backdate_article'] = '';
-                $data['error_message'] = '';
-                $data['record_status'] = '';
-                $data['article_number'] = '';
-                $data['site_listings'] = $this->charEncode('D369');
-                $data['siteDelimited'] = $this->charEncode('SiteDelim');
-//                $data['string_for_generic_lines'] = '';
-
-
-
-                    $conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
-                    $simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
-                    $indexCount = 1;
-                    foreach ($simple_collection as $k => $simpleProd){
-                        $simple_product=Mage::getSingleton("catalog/product")->load($simpleProd->getId());
-                        $gtin_index = 'gtin_'.$indexCount;
-                        $data[$gtin_index] = $this->charEncode("(;".$simple_product->getGtinNumber().";;;;)");
-                        $indexCount++;
-                    }
-                $data['siteDelimitedend'] = $this->charEncode('SiteDelim');
-
-                $ioo->streamWriteCsv($data,"\t");
-                $sr_no++;
-
-				//$conf = Mage::getModel('catalog/product_type_configurable')->setProduct($_product);
-				//$simple_collection = $conf->getUsedProductCollection()->addAttributeToSelect('*')->addFilterByRequiredOptions();
-
-                foreach ($simple_collection as $simpleProd) {
-                    $_product = Mage::getSingleton("catalog/product")->load($simpleProd->getId());
+                    $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
 
                     $this->add_log("inside simple product---------");
                     $optionId = '';
@@ -255,12 +261,12 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data = array();
 
                     $data['recid'] = $this->charEncode($sr_no); //$_product->getSku();
-                    $data['description'] = $this->charEncode(strtoupper(substr($_product->getName(), 0, 30)));
+                    $data['description'] = str_replace(array(':', '-', '/', '*','"'), ' ', $this->charEncode(strtoupper(substr($_product->getName(), 0, 30))));
                     $data['purch_grp'] = $this->charEncode('907');
                     $data['bmc'] = $this->charEncode('LW36900');
                     $data['article_type'] = $this->charEncode('ZDMC');
-                    $data['art_cat'] = $this->charEncode('Single'); //Single for simple
-                    $data['size_matrix'] = $this->charEncode('SIZE-LADIESWEAR');
+                    $data['art_cat'] = $this->charEncode('Generic'); //Single for simple
+                    $data['size_matrix'] = $this->charEncode('SIZE LADIESWEAR');
                     $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());   // Need to add later
                     $data['cost'] = $this->charEncode('0.00');
                     $data['store_retail'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
@@ -307,11 +313,12 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['error_message'] = '';
                     $data['record_status'] = '';
                     $data['article_number'] = '';
+                    $data['space_added'] = '';
                     $data['site_listings'] = $this->charEncode('D369');
                     $data['siteDelimited'] = $this->charEncode('SiteDelim');
 //                    $data['string_for_generic_lines'] = '';
 
-                    $ioo->streamWriteCsv($data,"\t");
+                    $ioo->streamWriteCsv($data,"\t",' ');
 
                     $sr_no++;
                 }
@@ -319,12 +326,12 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
-            }
+//            }
 
 
 
-            $date = Mage::getModel('core/date')->date('Y_m_d');
-            $filenm="70000369_".$date.".OK";
+            $date = Mage::getModel('core/date')->date('Ymd');
+            $filenm="70000369_".$date."_PLU.OK";
             $file2 = $path . DS . $filenm;
             $ioo->streamOpen($file2, 'w+');
             $ioo->streamLock(true);
@@ -339,6 +346,81 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             return $files;
 
+
+        }catch (Exception $e)
+        {
+            $this->add_log($e->getMessage());
+        }
+    }
+
+
+
+
+    public function generateSTKReport($type="txt")
+    {
+        if (!$this->harrodsConfig()->getModuleStatus()) {
+            $this->add_log("Module Disabled----");
+            return;
+        }
+
+        try {
+
+            $ioo = new Varien_Io_File();
+            $path = Mage::getBaseDir('var') . DS . 'teamwork';
+
+            $date = Mage::getModel('core/date')->date('Ymd');
+            $filenm="70000369_".$date."_STK.".$this->harrodsConfig()->getFileType();
+            $file = $path . DS . $filenm;
+            $ioo->setAllowCreateFolders(true);
+            $ioo->open(array('path' => $path));
+            $ioo->streamOpen($file, 'w+');
+            $ioo->streamLock(true);
+
+
+
+            $data = array();
+
+            $sr_no=1;
+
+            $resource = Mage::getSingleton('core/resource');
+
+            $readConnection = $resource->getConnection('core_read');
+
+            $attribute_code = "harrods_inventory";
+            $attribute_details = Mage::getSingleton("eav/config")->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute_code);
+
+            $attribute = $attribute_details->getData();
+            $attrbute_id = $attribute['attribute_id'];
+
+            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0');
+
+
+            foreach ($parentPro as $parentProductId) {
+
+                $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
+
+                $data = array();
+
+                $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
+                $data['harrods_inventory'] = $this->charEncode($_product->getHarrodsInventory());
+                $data['site_listings'] = $this->charEncode('D123');
+
+                $ioo->streamWriteCsv($data,"\t",' ');
+
+                $sr_no++;
+            }
+
+            $date = Mage::getModel('core/date')->date('Ymd');
+            $filenm="70000369_".$date."_STK.OK";
+            $file2 = $path . DS . $filenm;
+            $ioo->streamOpen($file2, 'w+');
+            $ioo->streamLock(true);
+            $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
+
+if($type=="OK")
+            return $file2;
+else
+            return $file;
 
         }catch (Exception $e)
         {
