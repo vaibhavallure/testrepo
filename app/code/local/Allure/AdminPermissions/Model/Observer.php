@@ -208,7 +208,6 @@ class Allure_AdminPermissions_Model_Observer
      */
     protected function _filterByStoreRestriction($user, $collection)
     {
-    	//Mage::log($user->getRole()->getData(),Zend_log::DEBUG,'abc',true);
     	if($user->getRole()->getRestrictByStore()){
 	        $storeRestrictions = explode(',', $user->getStoreRestrictions());
 	        if(in_array(0, $storeRestrictions)){
@@ -218,24 +217,14 @@ class Allure_AdminPermissions_Model_Observer
     	}
         return $collection;
     }
-    
-    
-    /**
-     *get user role to show teamwork orders 
-     */
-    private function getRolesToShowTeamworkOrder(){
-        return array(1);//"Super Administrator"
-    }
+      
     
     /**
      * escape teamwork order for other user instead Administrators
      */
     public function showTeamworkOrder($user, $collection, $type = null){
-        $roles = $this->getRolesToShowTeamworkOrder();
-        $userRole = $user->getRole()->getData();
-        $roleName = $userRole["role_id"];
-        //if(!in_array($roleName, $roles)){
-        if($roleName != 1){
+        $helper = Mage::helper("allure_adminpermissions");
+        if(!$helper->isShowTeamworkOrders()){
             if($type == self::SALES_ORDER){
                 $controllerName = Mage::app()->getRequest()->getControllerName();
                 if($controllerName == "customer"){
@@ -248,7 +237,6 @@ class Allure_AdminPermissions_Model_Observer
                 }else{
                     $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
                 }
-                
             }elseif (($type == self::SALES_INVOICE) || ($type == self::SALES_SHIPMENT) || ($type == self::SALES_CREDITMEMO)){
                 $collection->getSelect()->join(
                     array('sales_flat_order' => $collection->getTable('sales/order')),
@@ -257,7 +245,6 @@ class Allure_AdminPermissions_Model_Observer
                     );
                 $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
             }
-           // Mage::log($collection->getSelect()->__toString(),Zend_Log::DEBUG,'abc.log',true);
         }
         return $collection;
     }
