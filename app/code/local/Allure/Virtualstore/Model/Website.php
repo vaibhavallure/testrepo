@@ -2,6 +2,9 @@
 
 class Allure_Virtualstore_Model_Website extends Mage_Core_Model_Abstract
 {
+    private $_isReadOnly = false;
+    protected $_isCanDelete;
+    
     public function _construct()
     {
         parent::_construct();
@@ -27,5 +30,43 @@ class Allure_Virtualstore_Model_Website extends Mage_Core_Model_Abstract
             $websiteArray[$c->getData('website_id')] = $c->getData('name');
         }
         return $websiteArray;
+    }
+    
+    public function getGroupCollection()
+    {
+        return Mage::getModel('allure_virtualstore/group')
+        ->getCollection()
+        ->addFieldToFilter("website_id",$this->getId());
+    }
+    
+    /**
+     * Get/Set isReadOnly flag
+     *
+     * @param bool $value
+     * @return bool
+     */
+    public function isReadOnly($value = null)
+    {
+        if (null !== $value) {
+            $this->_isReadOnly = (bool)$value;
+        }
+        return $this->_isReadOnly;
+    }
+    
+    /**
+     * is can delete website
+     *
+     * @return bool
+     */
+    public function isCanDelete()
+    {
+        if ($this->_isReadOnly || !$this->getId()) {
+            return false;
+        }
+        if (is_null($this->_isCanDelete)) {
+            $this->_isCanDelete = (Mage::getModel('allure_virtualstore/website')->getCollection()->getSize() > 2)
+            && !$this->getIsDefault();
+        }
+        return $this->_isCanDelete;
     }
 }
