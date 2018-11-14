@@ -503,16 +503,16 @@ if (window.ApplePaySession) {
 		console.log('sendRequest START::'+requestType);
 		var responseData = null;
 		jQuery.ajax({
-			url: 	Allure.ApplePay.data.baseUrl+requestType,
-			async: 	false,
-			cache: 	false,
-			method: 'POST',
-			dataType: 'json',
-			data: 	requestData,
+			url: 		Allure.ApplePay.data.baseUrl+requestType,
+			async: 		false,
+			cache: 		false,
+			method: 	'POST',
+			dataType: 	'json',
+			data: 		requestData,
 			xhrFields: {
 				withCredentials: true
 			},
-			timeout: 6000 // 20 seconds
+			timeout: 30000 // 20 seconds
 
 		}).done(function(data){
 			responseData = data;
