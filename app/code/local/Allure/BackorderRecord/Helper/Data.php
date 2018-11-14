@@ -164,6 +164,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             "price"=>"PRICE",
             "back_qty"=>"QUANTITY",
             "customization"=>"CUSTOMIZATION",
+            "group"=>"GROUP",
             "order_status"=>"ORDER STATUS"
 
         );
@@ -178,7 +179,6 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
         $rowData = array();
         $rowData[] = $this->getTableHeaders();
-
 
         if($backorderCollection!=null):
         if ($backorderCollection->getSize()):
@@ -197,7 +197,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 //                    $customization = $gift->getMessage();
 //                }
 
-
+                $customer_group = Mage::getModel('customer/group')->load($order->getCustomerGroupId());
 
                 $productName = $order->getName();
                 $sku = $order->getSku();
@@ -205,15 +205,13 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                 $price=$symbol."".round($order->getBasePrice(),2);
                 $qty = $order->getQtyOrdered();
                 $orderStatus = $order['status'];
-
+                $customer_groupCode = $customer_group->getCode();
 
                 if ($order->getQtyBackordered() && $order->getParentItemId()) {
                     $parentProductData = Mage::getSingleton("sales/order_item")->load($order->getParentItemId());
                     $symbol=Mage::app()->getLocale()->currency($parentProductData->getBaseCurrencyCode())->getSymbol();
                     $price=$symbol."".round($parentProductData->getBasePrice(),2);
                     $qty = $parentProductData->getQtyOrdered();
-
-
 
 
                     if ($parentProductData->getGiftMessageId()) {
@@ -260,19 +258,14 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["price"]=$price;
                     $row["back_qty"]=floatval($order->getQtyBackordered());
                     $row["customization"]=$customization;
+                    $row["group"]=$customer_groupCode;
                     $row["order_status"]=$orderStatus;
-
-
-
 
 
                     $rowData[] = $row;
 
 
             }
-
-
-
 
 
         return $rowData;
