@@ -26,7 +26,9 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_NOW_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_now';
 
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_AS_SHIP_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_as_ship';
-    
+
+    const XML_PATH_ONEPAGE_LOG = 'allure_multicheckout/multi_log/multi_log_status';
+
     public function getWholeCustomerPaymentMethods ()
     {
         $pay1 = $this->getWholesaleCustomersPayNowMethods();
@@ -118,5 +120,9 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
            }
         }
         return $isBackOrderProduct;
+    }
+
+    public function getOnePagelogStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_ONEPAGE_LOG);
     }
 }
