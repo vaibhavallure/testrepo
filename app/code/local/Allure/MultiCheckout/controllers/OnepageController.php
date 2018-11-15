@@ -131,6 +131,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             Mage::log('Shipping- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
         }
 
+
         if ($this->_expireAjax()) {
             return;
         }
@@ -169,6 +170,8 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         if ($this->getLogStatus()){
             $quoteLog = $this->getOnepage()->getQuote();
             Mage::log('ShippingMethodsHtml- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+            Mage::log('Shipping- Method:'.$quoteLog->getDeliveryMethod().', QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+
         }
 
         $layout = $this->getLayout();
