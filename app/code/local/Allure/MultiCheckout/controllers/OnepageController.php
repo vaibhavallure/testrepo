@@ -16,10 +16,13 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      * Checkout page
      */
     public function indexAction() {
+        if ($this->getLogStatus()){
+            Mage::log('*****Multicheckout onepage controller****',Zend_log::DEBUG,'onepage.log',true);
+        }
+
         if (!Mage::getModel('core/cookie')->get('frontend_timeout')) {
             Mage::getModel('core/cookie')->set('from_checkout_page', 1);
         }
-        
         //print_r(Mage::getSingleton('allure_multicheckout/ordered_session')->getQuote()->getAllVisibleItems());die;
         //echo "<pre>";print_r(Mage::getSingleton('allure_multicheckout/ordered_session')->getQuote()->getOrderedItems());die;
         
@@ -29,6 +32,9 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             return;
         }
         $quote = $this->getOnepage()->getQuote();
+        if ($this->getLogStatus()){
+            Mage::log('Index- QuoteId:'.$quote->getId().', CustomerEmail:'.$quote->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
         if (!$quote->hasItems() || $quote->getHasError()) {
             $this->_redirect('checkout/cart');
             return;
@@ -56,6 +62,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function saveBillingAction ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('Billing- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         if ($this->_expireAjax()) {
             return;
         }
@@ -115,6 +126,12 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function saveShippingAction ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('Shipping- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
+
         if ($this->_expireAjax()) {
             return;
         }
@@ -150,6 +167,13 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     protected function _getShippingMethodsHtml ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('ShippingMethodsHtml- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+            Mage::log('Shipping- Method:'.$quoteLog->getDeliveryMethod().', QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+
+        }
+
         $layout = $this->getLayout();
         $update = $layout->getUpdate();
         
@@ -173,6 +197,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     protected function _getPaymentMethodsHtml ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('PaymentMethodsHtml- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         $layout = $this->getLayout();
         $update = $layout->getUpdate();
         $roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
@@ -190,6 +219,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 
     protected function _getDeliveryinstuctionsHtml ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('DeliveryinstuctionsHtml- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         $layout = $this->getLayout();
         $update = $layout->getUpdate();
         $update->load('checkout_onepage_deliveryoption');
@@ -204,6 +238,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function saveShippingMethodActionOld ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('ShippingMethodActionOld- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         if ($this->_expireAjax()) {
             return;
         }
@@ -244,6 +283,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function saveShippingMethodAction ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('saveShippingMethod- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         if ($this->getRequest()->isPost()) {
             // Mage::log($this->getRequest()->getPost(),Zend_log::DEBUG,'abc',true);die;
             $data = $this->getRequest()->getPost('shipping_method', '');
@@ -347,6 +391,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 
     public function saveDeliveryOptionAction ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('DeliveryOption- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         if ($this->getRequest()->isPost()) {
             // $data = $this->getRequest()->getPost("delivery", "");
             // $shipinmethod = $this->getRequest()->getPost('shipping_method',
@@ -397,6 +446,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function savePaymentAction ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('Payment- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         if ($this->_expireAjax()) {
             return;
         }
@@ -452,6 +506,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function saveOrderAction ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('saveOrder- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         if ($this->_expireAjax()) {
             return;
         }
@@ -649,6 +708,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function successorderAction ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('successorder- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         $session = $this->getOnepage()->getCheckout();
         
         $sessionOrdered = $this->getOnepage()->getCheckoutOrdered();
@@ -684,5 +748,9 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                         )
                 ));
         $this->renderLayout();
+    }
+
+    private function getLogStatus(){
+        return Mage::helper("allure_multicheckout")->getOnePagelogStatus();
     }
 }
