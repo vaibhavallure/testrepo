@@ -409,7 +409,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                 ->setData('no_signature_delivery', $no_signature_delivery)
                 ->save();
             /*
-             * $result will have erro data if shipping method is empty
+             * $result will have error data if shipping method is empty
              */
             if (! $result) {
                 Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method',
@@ -433,9 +433,6 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                         /*this condition check if normal order and backorder contain same quote id*/
                     if ($this->getOnepage()->getQuoteOrdered()->getId() != $this->getOnepage()->getQuoteBackordered()->getId())
                     {
-
-
-                        Mage::log("Quote is differnt ",Zend_log::DEBUG,'ajay.log',true);
 
                         $giftMessageId = $this->getOnepage()
                             ->getQuote()
