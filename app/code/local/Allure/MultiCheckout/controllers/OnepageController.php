@@ -281,6 +281,111 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
     /**
      * Shipping method save action
      */
+//    public function saveShippingMethodAction ()
+//    {
+//        if ($this->getRequest()->isPost()) {
+//            // Mage::log($this->getRequest()->getPost(),Zend_log::DEBUG,'abc',true);die;
+//            $data = $this->getRequest()->getPost('shipping_method', '');
+//            Mage::getSingleton('checkout/session')->setInStockOrderShippingMethod($data);
+//            $no_signature_delivery = $this->getRequest()->getPost('no_signature_delivery', '');
+//            $result = $this->getOnepage()->saveShippingMethod($this->getRequest()
+//                ->getPost());
+//            $this->getOnepage()
+//                ->getQuote()
+//                ->setData('no_signature_delivery', $no_signature_delivery)
+//                ->save();
+//            /*
+//             * $result will have erro data if shipping method is empty
+//             */
+//            if (! $result) {
+//                Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method',
+//                        array(
+//                                'request' => $this->getRequest(),
+//                                'quote' => $this->getOnepage()->getQuote()
+//                        ));
+//                $this->getOnepage()
+//                    ->getQuote()
+//                    ->collectTotals();
+//                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+//
+//                $_checkoutHelper = Mage::helper('allure_multicheckout');
+//                if (strtolower(
+//                        $this->getOnepage()
+//                            ->getQuote()
+//                            ->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
+//
+//                    $giftMessageId = $this->getOnepage()
+//                        ->getQuote()
+//                        ->getGiftMessageId();
+//                    $quoteItems = $this->getOnepage()
+//                        ->getQuote()
+//                        ->getAllVisibleItems();
+//                    if ($this->getOnepage()->getQuoteOrdered()) {
+//                        if (isset($giftMessageId) && ! empty($giftMessageId)) {
+//                            $this->getOnepage()
+//                                ->getQuoteOrdered()
+//                                ->setGiftMessageId($giftMessageId)
+//                                ->save();
+//                        }
+//                        $this->getOnepage()
+//                            ->getQuoteOrdered()
+//                            ->setData('no_signature_delivery', $no_signature_delivery)
+//                            ->save();
+//                    }
+//                    if ($this->getOnepage()->getQuoteBackordered()) {
+//                        if (isset($giftMessageId) && ! empty($giftMessageId)) {
+//                            $this->getOnepage()
+//                                ->getQuoteBackordered()
+//                                ->setGiftMessageId($giftMessageId)
+//                                ->save();
+//                        }
+//                        $this->getOnepage()
+//                            ->getQuoteBackordered()
+//                            ->setData('no_signature_delivery', $no_signature_delivery)
+//                            ->save();
+//                    }
+//
+//                    foreach ($quoteItems as $item) {
+//                        $sku = $item->getSku();
+//                        if ($this->getOnepage()->getQuoteOrdered()) {
+//                            foreach ($this->getOnepage()
+//                                ->getQuoteOrdered()
+//                                ->getAllVisibleItems() as $item1) {
+//                                $sku1 = $item1->getSku();
+//                                if ($sku == $sku1)
+//                                    $item1->setGiftMessageId($item->getGiftMessageId())
+//                                        ->save();
+//                            }
+//                        }
+//                        if ($this->getOnepage()->getQuoteBackordered()) {
+//                            foreach ($this->getOnepage()
+//                                ->getQuoteBackordered()
+//                                ->getAllVisibleItems() as $item2) {
+//                                $sku2 = $item2->getSku();
+//                                if ($sku == $sku2)
+//                                    $item2->setGiftMessageId($item->getGiftMessageId())
+//                                        ->save();
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                $result["goto_section"] = "payment";
+//                $result["update_section"] = array(
+//                        "name" => "payment-method",
+//                        "html" => $this->_getPaymentMethodsHtml()
+//                );
+//            }
+//            $this->getOnepage()
+//                ->getQuote()
+//                ->collectTotals()
+//                ->save();
+//            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+//        }
+//    }
+
+
+
     public function saveShippingMethodAction ()
     {
         if ($this->getLogStatus()){
@@ -293,6 +398,10 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
             $data = $this->getRequest()->getPost('shipping_method', '');
             Mage::getSingleton('checkout/session')->setInStockOrderShippingMethod($data);
             $no_signature_delivery = $this->getRequest()->getPost('no_signature_delivery', '');
+
+
+
+
             $result = $this->getOnepage()->saveShippingMethod($this->getRequest()
                 ->getPost());
             $this->getOnepage()
@@ -300,14 +409,14 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                 ->setData('no_signature_delivery', $no_signature_delivery)
                 ->save();
             /*
-             * $result will have erro data if shipping method is empty
+             * $result will have error data if shipping method is empty
              */
             if (! $result) {
                 Mage::dispatchEvent('checkout_controller_onepage_save_shipping_method',
-                        array(
-                                'request' => $this->getRequest(),
-                                'quote' => $this->getOnepage()->getQuote()
-                        ));
+                    array(
+                        'request' => $this->getRequest(),
+                        'quote' => $this->getOnepage()->getQuote()
+                    ));
                 $this->getOnepage()
                     ->getQuote()
                     ->collectTotals();
@@ -319,75 +428,105 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
                             ->getQuote()
                             ->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
 
-                    $giftMessageId = $this->getOnepage()
-                        ->getQuote()
-                        ->getGiftMessageId();
-                    $quoteItems = $this->getOnepage()
-                        ->getQuote()
-                        ->getAllVisibleItems();
-                    if ($this->getOnepage()->getQuoteOrdered()) {
-                        if (isset($giftMessageId) && ! empty($giftMessageId)) {
-                            $this->getOnepage()
-                                ->getQuoteOrdered()
-                                ->setGiftMessageId($giftMessageId)
-                                ->save();
-                        }
-                        $this->getOnepage()
-                            ->getQuoteOrdered()
-                            ->setData('no_signature_delivery', $no_signature_delivery)
-                            ->save();
-                    }
-                    if ($this->getOnepage()->getQuoteBackordered()) {
-                        if (isset($giftMessageId) && ! empty($giftMessageId)) {
-                            $this->getOnepage()
-                                ->getQuoteBackordered()
-                                ->setGiftMessageId($giftMessageId)
-                                ->save();
-                        }
-                        $this->getOnepage()
-                            ->getQuoteBackordered()
-                            ->setData('no_signature_delivery', $no_signature_delivery)
-                            ->save();
-                    }
+                    $errorWhileDividingQuote=0;
 
-                    foreach ($quoteItems as $item) {
-                        $sku = $item->getSku();
+                        /*this condition check if normal order and backorder contain same quote id*/
+                    if ($this->getOnepage()->getQuoteOrdered()->getId() != $this->getOnepage()->getQuoteBackordered()->getId())
+                    {
+
+                        $giftMessageId = $this->getOnepage()
+                            ->getQuote()
+                            ->getGiftMessageId();
+                        $quoteItems = $this->getOnepage()
+                            ->getQuote()
+                            ->getAllVisibleItems();
                         if ($this->getOnepage()->getQuoteOrdered()) {
-                            foreach ($this->getOnepage()
-                                ->getQuoteOrdered()
-                                ->getAllVisibleItems() as $item1) {
-                                $sku1 = $item1->getSku();
-                                if ($sku == $sku1)
-                                    $item1->setGiftMessageId($item->getGiftMessageId())
-                                        ->save();
+                            if (isset($giftMessageId) && !empty($giftMessageId)) {
+                                $this->getOnepage()
+                                    ->getQuoteOrdered()
+                                    ->setGiftMessageId($giftMessageId)
+                                    ->save();
                             }
+                            $this->getOnepage()
+                                ->getQuoteOrdered()
+                                ->setData('no_signature_delivery', $no_signature_delivery)
+                                ->save();
                         }
                         if ($this->getOnepage()->getQuoteBackordered()) {
-                            foreach ($this->getOnepage()
+                            if (isset($giftMessageId) && !empty($giftMessageId)) {
+                                $this->getOnepage()
+                                    ->getQuoteBackordered()
+                                    ->setGiftMessageId($giftMessageId)
+                                    ->save();
+                            }
+                            $this->getOnepage()
                                 ->getQuoteBackordered()
-                                ->getAllVisibleItems() as $item2) {
-                                $sku2 = $item2->getSku();
-                                if ($sku == $sku2)
-                                    $item2->setGiftMessageId($item->getGiftMessageId())
-                                        ->save();
+                                ->setData('no_signature_delivery', $no_signature_delivery)
+                                ->save();
+                        }
+
+                        foreach ($quoteItems as $item) {
+                            $sku = $item->getSku();
+                            if ($this->getOnepage()->getQuoteOrdered()) {
+                                foreach ($this->getOnepage()
+                                             ->getQuoteOrdered()
+                                             ->getAllVisibleItems() as $item1) {
+                                    $sku1 = $item1->getSku();
+                                    if ($sku == $sku1)
+                                        $item1->setGiftMessageId($item->getGiftMessageId())
+                                            ->save();
+                                }
+                            }
+                            if ($this->getOnepage()->getQuoteBackordered()) {
+                                foreach ($this->getOnepage()
+                                             ->getQuoteBackordered()
+                                             ->getAllVisibleItems() as $item2) {
+                                    $sku2 = $item2->getSku();
+                                    if ($sku == $sku2)
+                                        $item2->setGiftMessageId($item->getGiftMessageId())
+                                            ->save();
+                                }
                             }
                         }
+                    }
+                    else{
+                        Mage::log("Same Quote Id for Backorder And Normal Order= ".$this->getOnepage()->getQuoteBackordered()->getId(),Zend_log::DEBUG,'quotedividingissue.log',true);
+
+                        $errorWhileDividingQuote=1;
                     }
                 }
 
-                $result["goto_section"] = "payment";
-                $result["update_section"] = array(
+                if($errorWhileDividingQuote)
+                {
+
+                    $result['goto_section'] = 'delivery_option';
+
+                    $result['update_section'] = array(
+                        'name' => 'delivery-option',
+                        'html' => $this->_getDeliveryinstuctionsHtml()
+                    );
+
+                }
+                else {
+                    $result["goto_section"] = "payment";
+                    $result["update_section"] = array(
                         "name" => "payment-method",
                         "html" => $this->_getPaymentMethodsHtml()
-                );
+                    );
+                }
             }
             $this->getOnepage()
                 ->getQuote()
                 ->collectTotals()
                 ->save();
+
+
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
+
+
+
 
     public function saveDeliveryOptionAction ()
     {
@@ -738,6 +877,11 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
      */
     public function successorderAction ()
     {
+        if ($this->getLogStatus()){
+            $quoteLog = $this->getOnepage()->getQuote();
+            Mage::log('successorder- QuoteId:'.$quoteLog->getId().', CustomerEmail:'.$quoteLog->getCustomerEmail(),Zend_log::DEBUG,'onepage.log',true);
+        }
+
         $session = $this->getOnepage()->getCheckout();
 
         $sessionOrdered = $this->getOnepage()->getCheckoutOrdered();
