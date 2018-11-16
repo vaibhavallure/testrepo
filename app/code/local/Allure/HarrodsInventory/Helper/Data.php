@@ -427,7 +427,7 @@ else
             $this->add_log($e->getMessage());
         }
     }
-<<<<<<< app/code/local/Allure/HarrodsInventory/Helper/Data.php
+
 
 
     public function generatePPCReport($type="txt")
@@ -504,6 +504,4 @@ else
         }
     }
 
-=======
->>>>>>> app/code/local/Allure/HarrodsInventory/Helper/Data.php
 }
