@@ -12,11 +12,16 @@ if(!Mage::helper("harrodsinventory/config")->getModuleStatus())
 
 
 $download=(isset($_GET['download']))?$_GET['download']:0;
+$file=(isset($_GET['file']))?$_GET['file']:"STK";
+
 
 if($download)
 {
 
-    $file=Mage::helper("harrodsinventory")->generateSTKReport($download);
+    if($file="PPC")
+        $file=Mage::helper("harrodsinventory")->generatePPCReport($download);
+    else
+        $file=Mage::helper("harrodsinventory")->generateSTKReport($download);
 
 
     if (file_exists($file)) {
