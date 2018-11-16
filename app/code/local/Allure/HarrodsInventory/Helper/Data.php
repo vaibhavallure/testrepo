@@ -272,7 +272,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['store_retail'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
                     $data['airports_retail'] = '';
                     $data['wholes_selling'] = '';
-                    $data['ctry_of_origi'] = '';
+                    $data['ctry_of_origi'] = 'US';
                     $data['import_code'] = '';
                     $data['tax_cls'] = $this->charEncode($_product->getTaxClassId() ? 1 : 0);
                     $data['seas_code'] = $this->charEncode('0000');
@@ -427,4 +427,83 @@ else
             $this->add_log($e->getMessage());
         }
     }
+<<<<<<< app/code/local/Allure/HarrodsInventory/Helper/Data.php
+
+
+    public function generatePPCReport($type="txt")
+    {
+        if (!$this->harrodsConfig()->getModuleStatus()) {
+            $this->add_log("Module Disabled----");
+            return;
+        }
+
+        try {
+
+            $ioo = new Varien_Io_File();
+            $path = Mage::getBaseDir('var') . DS . 'teamwork';
+
+            $date = Mage::getModel('core/date')->date('Ymd');
+            $filenm="70000369_".$date."_PPC.".$this->harrodsConfig()->getFileType();
+            $file = $path . DS . $filenm;
+            $ioo->setAllowCreateFolders(true);
+            $ioo->open(array('path' => $path));
+            $ioo->streamOpen($file, 'w+');
+            $ioo->streamLock(true);
+
+
+
+            $data = array();
+
+            $sr_no=1;
+
+            $resource = Mage::getSingleton('core/resource');
+
+            $readConnection = $resource->getConnection('core_read');
+
+            $curruntDate = Mage::getModel('core/date')->gmtDate('Y-m-d');
+
+            $date = new Zend_Date(Mage::getModel('core/date')->timestamp());
+            $date->addDay('3');
+           $activeDate= $date->toString('YYYYMMdd');
+
+            $products = $readConnection->fetchCol("SELECT `productid` FROM `allure_harrodsinventory_price` WHERE `updated_date` LIKE '".$curruntDate."%'");
+
+
+            foreach ($products as $productId) {
+
+                $_product = Mage::getSingleton("catalog/product")->load($productId);
+
+                $data = array();
+
+                $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
+                $data['harrods_price'] = $this->charEncode(round($_product->getHarrodsPrice(),2));
+                $data['Active Date'] = $this->charEncode($activeDate);
+                $data['End Date'] = $this->charEncode("99991231");
+
+                $ioo->streamWriteCsv($data,"\t",' ');
+
+                $sr_no++;
+            }
+
+            $date = Mage::getModel('core/date')->date('Ymd');
+            $filenm="70000369_".$date."_PPC.OK";
+            $file2 = $path . DS . $filenm;
+            $ioo->streamOpen($file2, 'w+');
+            $ioo->streamLock(true);
+            if($sr_no!=1)
+            $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
+
+            if($type=="OK")
+                return $file2;
+            else
+                return $file;
+
+        }catch (Exception $e)
+        {
+            $this->add_log($e->getMessage());
+        }
+    }
+
+=======
+>>>>>>> app/code/local/Allure/HarrodsInventory/Helper/Data.php
 }
