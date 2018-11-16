@@ -111,8 +111,10 @@ class Allure_Teamwork_Model_Tmobserver{
         
         $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
         $oldStoreArr = array();
+        $utcOffsetArr = array();
         foreach ($ostores as $storeO){
             $oldStoreArr[$storeO->getTmLocationCode()] = $storeO->getId();
+            $utcOffsetArr[$storeO->getTmLocationCode()] = $storeO->getUtcOffset();
         }
         
         $alphabets = range('A','Z');
@@ -548,6 +550,7 @@ class Allure_Teamwork_Model_Tmobserver{
                     
                     $extStoreName = $extraOrderDetails["Name"];
                     $locationCode = $extraOrderDetails["LocationCode"];
+                    $utcOffset    = $extraOrderDetails["UTCOffset"];
                     $oldStoreId = $oldStoreArr[$locationCode];
                     if(!$oldStoreId){
                         $storeName = str_replace(' ', '', $extStoreName);
@@ -562,9 +565,21 @@ class Allure_Teamwork_Model_Tmobserver{
                             ->setCode($storeName)
                             ->setName($extStoreName)
                             ->setTmLocationCode($locationCode)
+                            ->setUtcOffset($utcOffset)
                             ->save();
                         $oldStoreId = $storeObj->getId();
                         $this->addLog("Teamwork new store created. Store Id - ".$oldStoreId);
+                    }
+                    
+                    $oldUtcOffset = $utcOffsetArr[$locationCode];
+                    $tmUtcOffset = (!empty($oldUtcOffset)) ? $oldUtcOffset : $utcOffset;
+                    if(!empty($oldUtcOffset)){
+                        $websiteTimeZone = Mage::getStoreConfig('general/locale/timezone');
+                        $tmTimeZone = $this->offsetToTZ($oldUtcOffset);
+                        if($tmTimeZone){
+                            $tmOrderCreatedate = $this->convertTimeZone($createAt,$tmTimeZone, $websiteTimeZone);
+                            $orderObj->setCreatedAt($tmOrderCreatedate);
+                        }
                     }
                     
                     $orderObj->setData('old_store_id',$oldStoreId);
@@ -593,6 +608,43 @@ class Allure_Teamwork_Model_Tmobserver{
             }
         }
     }
+    
+    
+    private function offsetToTZ($offset) {
+        switch((string) $offset) {
+            case '-04:30' : return 'America/Caracas'; break;
+            case '-03:30' : return 'Canada/Newfoundland'; break;
+            case '+03:30' : return 'Asia/Tehran'; break;
+            case '+04:30' : return 'Asia/Kabul'; break;
+            case '+05:30' : return 'Asia/Kolkata'; break;
+            case '+05:45' : return 'Asia/Kathmandu'; break;
+            case '+09:30' : return 'Australia/Darwin'; break;
+        }
+        $offset = (int) str_replace(array('0',0,':00',00,'30',30,'45',45,':','+'),'', (string) $offset);
+        
+        $offset = $offset*60*60;
+        var_dump($offset);
+        $abbrarray = timezone_abbreviations_list();
+        //var_dump($abbrarray);
+        foreach ($abbrarray as $abbr) {
+            foreach($abbr as $city) {
+                if($city['offset'] == $offset) {
+                    return $city['timezone_id'];
+                }
+            }
+        }
+        return false;
+    }
+    
+    private function convertTimeZone($oTime, $oTimeZone, $nTimeZone)
+    {
+        date_default_timezone_set($oTimeZone);  //Change default timezone to old timezone within this function only.
+        $originalTime = new DateTime($oTime);
+        $originalTime->setTimeZone(new DateTimeZone($nTimeZone)); //Convert to desired TimeZone.
+        date_default_timezone_set($nTimeZone) ; //Reset default TimeZone according to your global settings.
+        return $originalTime->format('Y-m-d h:i:s'); //Return converted TimeZone.
+    } 
+    
     
     private function createInvoice($object){
         $this->addLog("In create invoice method");
