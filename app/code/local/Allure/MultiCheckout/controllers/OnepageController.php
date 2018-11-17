@@ -29,7 +29,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
         $quote = $this->getOnepage()->getQuote();
 
         if ($this->getLogStatus()){
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerFirstname().', ' : '';
+			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 			$customerDetails .= $quote->getCustomerEmail();
 
             Mage::log("Checkout INIT::\t\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails,Zend_log::DEBUG,'onepage.log',true);
@@ -66,7 +66,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
     {
         if ($this->getLogStatus()){
             $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerFirstname().', ' : '';
+			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 			$customerDetails .= $quote->getCustomerEmail();
             Mage::log("Checkout saveBillingAddress::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails,Zend_log::DEBUG,'onepage.log',true);
         }
@@ -134,7 +134,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
     {
         if ($this->getLogStatus()){
             $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerFirstname().', ' : '';
+			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 			$customerDetails .= $quote->getCustomerEmail();
 
             Mage::log("Checkout saveShippingAddress::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails,Zend_log::DEBUG,'onepage.log',true);
@@ -235,7 +235,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
 
 	        if ($this->getLogStatus()){
 	            $quote = $this->getOnepage()->getQuote();
-				$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerFirstname().', ' : '';
+				$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 				$customerDetails .= $quote->getCustomerEmail();
 
 	            Mage::log("Checkout saveShippingMethod::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails.', ShippingMethod: '.$data,Zend_log::DEBUG,'onepage.log',true);
@@ -368,7 +368,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
     {
         if ($this->getLogStatus()){
             $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerFirstname().', ' : '';
+			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 			$customerDetails .= $quote->getCustomerEmail();
 
             Mage::log("Checkout saveDeliveryOption::\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails, Zend_log::DEBUG,'onepage.log',true);
@@ -409,7 +409,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
     {
         if ($this->getLogStatus()){
             $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerFirstname().', ' : '';
+			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 			$customerDetails .= $quote->getCustomerEmail();
             Mage::log("Checkout savePayment::\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails,Zend_log::DEBUG,'onepage.log',true);
         }
@@ -471,7 +471,7 @@ class Allure_MultiCheckout_OnepageController extends MT_Checkout_OnepageControll
     {
         if ($this->getLogStatus()){
             $quote = $this->getOnepage()->getQuote();
-			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerFirstname().', ' : '';
+			$customerDetails = $quote->getCustomerFirstname() ? $quote->getCustomerFirstname().' '.$quote->getCustomerLastname().', ' : '';
 			$customerDetails .= $quote->getCustomerEmail();
 
             Mage::log("Checkout saveOrder::\t\tQuote Id: ".$quote->getId().', Customer: '.$customerDetails, Zend_log::DEBUG,'onepage.log',true);
