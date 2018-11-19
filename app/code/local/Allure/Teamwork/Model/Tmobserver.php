@@ -8,6 +8,8 @@ class Allure_Teamwork_Model_Tmobserver{
     const TM_URL = "/services/orders";
     const TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
     
+    const NEW_YORK_OFFSET = 5;
+    
     protected $teamwork_sync_log = "teamwork_sync_data.log";
     
     private function isTeamworkDataTransferToSalesforce(){
@@ -571,6 +573,21 @@ class Allure_Teamwork_Model_Tmobserver{
                             ->save();
                         $oldStoreId = $storeObj->getId();
                         $this->addLog("Teamwork new store created. Store Id - ".$oldStoreId);
+                    }
+                    
+                    //set date
+                    $calculatedOffset = self::NEW_YORK_OFFSET;
+                    if(trim($locationCode) != 1){
+                        $timeDate = strtotime($createAt);
+                        $oldUtcOffset = $utcOffsetArr[$locationCode];
+                        $tmUtcOffset = (!empty($oldUtcOffset)) ? $oldUtcOffset : $utcOffset;
+                        if(!empty($oldUtcOffset)){
+                            $calculatedOffset += $oldUtcOffset;
+                            $offset = intval($calculatedOffset);
+                            $orderDate = strtotime("{$offset} hour", $timeDate);
+                            $newCreateAt = date('Y-m-d H:i:s', $orderDate);
+                            $orderObj->setCreatedAt($newCreateAt);
+                        }
                     }
                     
                     /* $oldUtcOffset = $utcOffsetArr[$locationCode];
