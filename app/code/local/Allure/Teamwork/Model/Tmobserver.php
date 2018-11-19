@@ -509,7 +509,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         $orderObj->addItem($orderItem);
                     }
                     
-                    $createAt = trim($orderDetails["StateDate"]);
+                    $createAtStr = explode(".", trim($orderDetails["RecCreated"]));
+                    //trim($orderDetails["StateDate"]);
+                    $createAt = $createAtStr[0];
                     $orderObj->setCreatedAt($createAt);
                     $orderObj->setCanShipPartiallyItem(false);
                     $totalDue = $orderObj->getTotalDue();
@@ -571,7 +573,7 @@ class Allure_Teamwork_Model_Tmobserver{
                         $this->addLog("Teamwork new store created. Store Id - ".$oldStoreId);
                     }
                     
-                    $oldUtcOffset = $utcOffsetArr[$locationCode];
+                    /* $oldUtcOffset = $utcOffsetArr[$locationCode];
                     $tmUtcOffset = (!empty($oldUtcOffset)) ? $oldUtcOffset : $utcOffset;
                     if(!empty($oldUtcOffset)){
                         $websiteTimeZone = Mage::getStoreConfig('general/locale/timezone');
@@ -580,7 +582,7 @@ class Allure_Teamwork_Model_Tmobserver{
                             $tmOrderCreatedate = $this->convertTimeZone($createAt,$tmTimeZone, $websiteTimeZone);
                             $orderObj->setCreatedAt($tmOrderCreatedate);
                         }
-                    }
+                    } */
                     
                     $orderObj->setData('old_store_id',$oldStoreId);
                     
