@@ -794,6 +794,8 @@ class Allure_Teamwork_Model_Tmobserver{
                                 $isShowPay = false;
                             }
                             
+                            $createdAt = $orderObj->getCreatedAt();
+                            $invoice->setCreatedAt($createdAt);
                             $invoice->save();
                             $invoiceNumber  = $invoice->getIncrementId();
                             $customerId     = $orderObj->getCustomerId();
@@ -985,6 +987,9 @@ class Allure_Teamwork_Model_Tmobserver{
                 // Register Shipment
                 $shipment->register();
                 
+                $createdAt = $orderObj->getCreatedAt();
+                $shipment->setCreatedAt($createdAt);
+                
                 $shipment->getOrder()->setIsInProcess(true);
                 $transactionSave = Mage::getModel('core/resource_transaction')
                 ->addObject($shipment)
@@ -1087,6 +1092,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         $creditmemoItem->setBackToStock(false);
                     }
                 }
+                
+                $createdAt = $orderObj->getCreatedAt();
+                $creditmemo->setCreatedAt($createdAt);
                 
                 Mage::getModel('core/resource_transaction')
                 ->addObject($creditmemo)
