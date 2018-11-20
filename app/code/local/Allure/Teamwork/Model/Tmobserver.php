@@ -8,6 +8,8 @@ class Allure_Teamwork_Model_Tmobserver{
     const TM_URL = "/services/orders";
     const TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
     
+    const NEW_YORK_OFFSET = 5;
+    
     protected $teamwork_sync_log = "teamwork_sync_data.log";
     
     private function isTeamworkDataTransferToSalesforce(){
@@ -509,7 +511,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         $orderObj->addItem($orderItem);
                     }
                     
-                    $createAt = trim($orderDetails["StateDate"]);
+                    $createAtStr = explode(".", trim($orderDetails["RecCreated"]));
+                    //trim($orderDetails["StateDate"]);
+                    $createAt = $createAtStr[0];
                     $orderObj->setCreatedAt($createAt);
                     $orderObj->setCanShipPartiallyItem(false);
                     $totalDue = $orderObj->getTotalDue();
@@ -571,7 +575,22 @@ class Allure_Teamwork_Model_Tmobserver{
                         $this->addLog("Teamwork new store created. Store Id - ".$oldStoreId);
                     }
                     
-                    $oldUtcOffset = $utcOffsetArr[$locationCode];
+                    //set date
+                    $calculatedOffset = self::NEW_YORK_OFFSET;
+                    if(trim($locationCode) != 1){
+                        $timeDate = strtotime($createAt);
+                        $oldUtcOffset = $utcOffsetArr[$locationCode];
+                        $tmUtcOffset = (!empty($oldUtcOffset)) ? $oldUtcOffset : $utcOffset;
+                        if(!empty($oldUtcOffset)){
+                            $calculatedOffset += $oldUtcOffset;
+                            $offset = intval($calculatedOffset);
+                            $orderDate = strtotime("{$offset} hour", $timeDate);
+                            $newCreateAt = date('Y-m-d H:i:s', $orderDate);
+                            $orderObj->setCreatedAt($newCreateAt);
+                        }
+                    }
+                    
+                    /* $oldUtcOffset = $utcOffsetArr[$locationCode];
                     $tmUtcOffset = (!empty($oldUtcOffset)) ? $oldUtcOffset : $utcOffset;
                     if(!empty($oldUtcOffset)){
                         $websiteTimeZone = Mage::getStoreConfig('general/locale/timezone');
@@ -580,7 +599,7 @@ class Allure_Teamwork_Model_Tmobserver{
                             $tmOrderCreatedate = $this->convertTimeZone($createAt,$tmTimeZone, $websiteTimeZone);
                             $orderObj->setCreatedAt($tmOrderCreatedate);
                         }
-                    }
+                    } */
                     
                     $orderObj->setData('old_store_id',$oldStoreId);
                     
