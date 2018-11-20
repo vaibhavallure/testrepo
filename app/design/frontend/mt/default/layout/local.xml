@@ -32,7 +32,7 @@
 
 			<block type="core/text" name="google.cdn.jquery">
             	<action method="setText">
-                	<text><![CDATA[<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+                	<text><![CDATA[<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" integrity="npxfGiG5C/F5X72RqcKFYSfzr1AXsDiu1YC/ydsOrS+jL554Jh4zFAx9GpQi4lXQ" crossorigin="anonymous"></script>
 					<script type="text/javascript">var $j = jQuery.noConflict();</script>]]>
                 	</text>
             	</action>
