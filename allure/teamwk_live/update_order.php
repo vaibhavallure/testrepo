@@ -33,7 +33,7 @@ foreach ($orderCollection as $order){
             $locationCode = $extraDetails["LocationCode"];
             $storeObj = Mage::getModel("allure_virtualstore/store")->load($oldStoreId);
             if($storeObj->getId()){
-                if($locationCode == 1){
+                if($locationCode != 1){
                     $utcOffset = $storeObj->getUtcOffset();
                     if($utcOffset == null){
                         $utcOffset = 0;
