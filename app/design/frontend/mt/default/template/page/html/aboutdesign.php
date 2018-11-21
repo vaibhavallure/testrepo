@@ -110,4 +110,4 @@ var url = "{{store url=""}}/tattoo/index/send?page={{store url=""}}discover-mari
 <p>&nbsp;</p>
 </div>
 </div>
-<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+<script type="text/javascript" src="https://assets.pinterest.com/js/pinit.js" integrity="bG4YV5J6LGjCFgrdce+FhMfTP1i8aU7iUqjpXqU+MfXEeZs5nUXaEBDibb5jdrTY" crossorigin="anonymous"></script>
