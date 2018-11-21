@@ -259,6 +259,10 @@ AmazonPaymentsMageCheckout.prototype = {
             response = {};
         }
 
+        if (response.amazonLogout) {
+            amazon.Login.logout();
+        }
+
         if (response.redirect) {
             this.isSuccess = true;
             window.top.location.href = response.redirect;
@@ -393,7 +397,7 @@ var opts = {
   save : {
       url: "<?php echo $this->getUrl('checkout/amazon_payments/saveOrder') ?>"
   }
-}
+};
 
 
 var amazonPaymentsMageCheckout = new AmazonPaymentsMageCheckout(opts);
