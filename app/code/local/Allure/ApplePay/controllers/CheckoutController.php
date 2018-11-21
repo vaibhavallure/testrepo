@@ -240,7 +240,17 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                                     continue;
                                 }
 
-								$shippingMethods[$rate->getCode()] = $rate->getData();
+								$shippingMethods[$rate->getCode()] = array(
+									//"rate_id"			=> $rate->getId(),
+						            "address_id"		=> $rate->getAddressId(),
+						            "code"				=> $rate->getCode(),
+						            "carrier"			=> $rate->getCarrier(),
+						            "carrier_title"		=> $rate->getCarrierTitle(),
+						            "method"			=> $rate->getMethod(),
+						            "method_title"		=> $rate->getMethodTitle(),
+						            "method_description"=> $rate->getMethodDescription(),
+						            "price"				=> round($rate->getPrice(), 2)
+								);
 
                                 if (!$hasDefaultMethod) {
                                     $this->_getSession()->setDefaultShippingMethod($rate->getCode());
@@ -262,18 +272,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
 
                     $result['shipping_methods'] = $shippingMethods;
-
-                    $result['goto_section'] = 'shipping_method';
-
-                    $result['update_section'] = array(
-                            'name' => 'shipping-method',
-                            //'html' => $this->_getShippingMethodsHtml()
-                    );
-
-                    $result['allow_sections'] = array('shipping');
-                    $result['duplicateBillingInfo'] = 'true';
-                } else {
-                    $result['goto_section'] = 'shipping';
                 }
 
                 $this->getOnepage()->getQuote()->setTotalsCollectedFlag(false);
