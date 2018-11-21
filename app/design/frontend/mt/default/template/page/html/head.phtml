@@ -237,7 +237,6 @@ foreach ($metaCollection as $meta){
         if($meta->getSiteName())
             $site_name=$meta->getSiteName();
     }
-
 }
 ?>
 
@@ -315,11 +314,11 @@ jQuery(document).ready(function() {
 });
 </script>
 <?php
- $wholesale=false;
-		$login = Mage::getSingleton( 'customer/session' )->isLoggedIn();
-			//Check if User is Logged In
-            if($login){
-				$_myGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-				if($_myGroupId==2) $wholesale=true;
-			}
+$wholesale=false;
+$login = Mage::getSingleton( 'customer/session' )->isLoggedIn();
+	//Check if User is Logged In
+    if($login){
+		$_myGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+		if($_myGroupId==2) $wholesale=true;
+	}
 ?>
