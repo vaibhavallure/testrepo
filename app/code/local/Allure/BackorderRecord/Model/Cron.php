@@ -116,7 +116,10 @@ class Allure_BackorderRecord_Model_Cron
             }
 
             if($ordertype=="back")
-            $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
+                $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
+            else
+                $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.product_type='simple')"));/* OR gift_message_id IS NOT NULL*/
+
 
             $addToquery = $backorderCollection->getSelect()->joinLeft(array('sales_flat_order' => $orderTable), 'main_table.order_id = sales_flat_order.entity_id',array('sales_flat_order.status','sales_flat_order.customer_group_id'));
 
