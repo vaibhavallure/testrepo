@@ -31,7 +31,7 @@ $rows[] = $header;
 foreach ($orderCollection as $object){
     $salesforceId = $object->getSalesforceOrderId();
     $createdAt = $object->getCreatedAt();
-    $createdAt = date("Y-m-d",strtotime($createdAt))."T".date("H:i:s",strtotime($createdAt))."+00:00";
+    $createdAt = date("Y-m-d",strtotime($createdAt))."T".date("H:i:s",strtotime($createdAt));
     $rows[] = array(
         "ID"            => $salesforceId,
         "Created_At__c" => $createdAt
