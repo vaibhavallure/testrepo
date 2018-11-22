@@ -56,6 +56,19 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
             sort($values);
             sort($customerGroups);
 
+
+
+        $fieldset->addField('order_type', 'select', array(
+            'name'      => 'order_type',
+            'label'     => Mage::helper("backorderrecord")->__('Order Type'),
+            'options'   => array(
+                'back' => Mage::helper('backorderrecord')->__('Backordered Items Only'),
+                'all' => Mage::helper('backorderrecord')->__('All Items'),
+            ),
+            'note'      => Mage::helper('backorderrecord')->__('Choose Between Back orders And All Orders'),
+
+        ));
+
         $fieldset->addField('fromdate', 'datetime', array(
             'label'    => 'From',
             'title'    => 'From',
