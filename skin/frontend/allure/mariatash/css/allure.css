@@ -33,6 +33,10 @@ body {
 	  color: #000;
 }
 
+iframe {
+    max-width: 100%;
+}
+
 body.modal-popup-body {
     position: fixed !important;
 }
