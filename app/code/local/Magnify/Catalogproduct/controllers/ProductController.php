@@ -124,49 +124,53 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
      * Product view action
      */
     public function viewAction()
-    {      
+    {
         // Get initial data from request
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
         $specifyOptions = $this->getRequest()->getParam('options');
 
-        // Prepare helper and params
         $viewHelper = Mage::helper('catalog/product_view');
 
         $params = new Varien_Object();
         $params->setCategoryId($categoryId);
         $params->setSpecifyOptions($specifyOptions);
-       // Mage::log(,Zend_log::DEBUG,'ajay.log',true);
-        // Check if color was selected, if not redirect to first color option
-        $selectedColor = $this->getRequest()->getParam("colorOptionId");
-        $optionHelper=Mage::helper('allure_catalog');
-        
-        if(!$selectedColor){
-            $metal=$this->getRequest()->getParam("metal");
-            if($metal){
-                $selectedColor=$optionHelper->getOptionNumber($metal);
-            }
-          
+
+        $selectedColor = $this->getRequest()->getParam("colorOptionId", false);
+        $optionHelper = Mage::helper('allure_catalog');
+
+        if (!$selectedColor) {
+
+			$optionId = $this->getRequest()->getParam("optionId", false);
+
+            if ($optionId) {
+                $selectedColor = $optionId;
+            } else {
+	            $metal = $this->getRequest()->getParam("metal", false);
+
+	            if ($metal) {
+	                $selectedColor = $optionHelper->getOptionNumber($metal);
+	            }
+			}
         }
-        if(!$selectedColor){
-            $selectedColor=$this->getRequest()->getParam("optionId");
-        }
-        
-        if(!$selectedColor){
+
+        if (false && !$selectedColor) {
             $product = Mage::getModel('catalog/product')->load($productId);
-            if($product->isConfigurable()){
+            if ($product->isConfigurable()) {
                 $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
                 $simpleProducts = $product->getTypeInstance()->getUsedProductCollection()->addAttributeToSelect('sku');
                 $flag=FALSE;
                 foreach ($productAttributeOptions as $productAttribute) {
                     if($productAttribute['attribute_code'] == 'metal'/* 'metal_color' */){
-                        
-                        foreach ($productAttribute['values'] as $single){
+
+                        foreach ($productAttribute['values'] as $single) {
+
                             $selectedColorLabel=$single['label'];
                             $selectedColor = $single['value_index'];
+
                             foreach ($simpleProducts as $simple){
                                 $sku=explode('|', $simple->getSku());
-                                
+
                                 if(strtolower($selectedColorLabel)==strtolower($sku[1])){
                                     $stockItem = Mage::getModel('cataloginventory/stock_item')
                                     ->loadByProduct($simple->getId());
@@ -180,22 +184,20 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
                                     }
                                 }
                             }
+
                             if($flag){
                                 break;
                             }
                         }
-                        if(!$flag){
+
+                        if (!$flag) {
                             $selectedColor=$productAttribute['values'][0]['value_index'];
                         }
-                  
-                        
-                      //  break;
                     }
                 }
-               
-                if($selectedColor > 0){
-                    $selectedColorText=$optionHelper->getOptionText($selectedColor);
-                   // Mage::log(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColor,Zend_log::DEBUG,'ajay.log',true);
+
+                if ($selectedColor) {
+                    $selectedColorText = $optionHelper->getOptionText($selectedColor);
                     $this->_redirectUrl(rtrim(Mage::getBaseUrl(), '/') . $this->getRequest()->getRequestString() . '?metal=' . $selectedColorText);
                    return;
                 }
@@ -222,9 +224,9 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
      * Product recent action
      */
     public function recentAction()
-    {   
+    {
         try {
-            $_id  = (int) $this->getRequest()->getParam('id');        
+            $_id  = (int) $this->getRequest()->getParam('id');
             Mage::helper('catalog/product_view')->prepareAndRender($_id, $this);
             $content = $this->getLayout()
                             ->createBlock('reports/product_viewed')
