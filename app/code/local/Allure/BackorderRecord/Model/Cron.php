@@ -13,15 +13,13 @@ class Allure_BackorderRecord_Model_Cron
     public function getBackorederCollection($dates=array())
     {
 
-
-
         $data=$dates;
         $days=Mage::helper("backorderrecord/config")->getDays();
 
         $fromDate = date('Y-m-d 00:00:00', strtotime('-'.($days).' days'));
         $toDate = date('Y-m-d 23:59:59', strtotime( 'yesterday'));
 
-
+        $ordertype="back";
         if(count($data))
         {
            
@@ -30,6 +28,8 @@ class Allure_BackorderRecord_Model_Cron
                 $fromDate = $fromDate->format('Y-m-d H:i:s');
                 $toDate = new DateTime( $data['to_date']);
                 $toDate = $toDate->format('Y-m-d H:i:s');
+
+                $ordertype=$data['order_type'];
 
 
             }catch (Exception $e)
@@ -114,8 +114,12 @@ class Allure_BackorderRecord_Model_Cron
                 if(!empty($filterSku))
                 $backorderCollection->getSelect()->where($filterSku);
             }
-          
-            $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
+
+            if($ordertype=="back")
+                $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
+            else
+                $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.product_type='simple')"));/* OR gift_message_id IS NOT NULL*/
+
 
             $addToquery = $backorderCollection->getSelect()->joinLeft(array('sales_flat_order' => $orderTable), 'main_table.order_id = sales_flat_order.entity_id',array('sales_flat_order.status','sales_flat_order.customer_group_id'));
 

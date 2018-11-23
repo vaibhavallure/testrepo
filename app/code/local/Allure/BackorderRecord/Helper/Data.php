@@ -245,6 +245,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $row = array();
 
+
                     $row["created_at"]=$createdAt;
                     $row["order_number"] = $orderDetails->getIncrementId();
                     $row["customer_name"]=$customername;
@@ -256,10 +257,16 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["metal"]=explode("|",$sku)[1];
                     $row["product_name"]=$productName;
                     $row["price"]=$price;
-                    $row["back_qty"]=floatval($order->getQtyBackordered());
+
+                    if($dates['order_type']=="all")
+                        $row["back_qty"]=floatval($order->getQtyBackordered());
+                    else
+                        $row["back_qty"]=floatval($order->getQtyOrdered());
+
                     $row["customization"]=$customization;
                     $row["group"]=$customer_groupCode;
                     $row["order_status"]=$orderStatus;
+//                    $row["product_type"]=$order->getProductType();
 
 
                     $rowData[] = $row;
