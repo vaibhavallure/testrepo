@@ -578,7 +578,7 @@ class Allure_Teamwork_Model_Tmobserver{
                     //set date
                     $calculatedOffset = self::NEW_YORK_OFFSET;
                     if(trim($locationCode) != 1){
-                        $timeDate = strtotime($createAt);
+                        /* $timeDate = strtotime($createAt);
                         $oldUtcOffset = $utcOffsetArr[$locationCode];
                         $tmUtcOffset = (!empty($oldUtcOffset)) ? $oldUtcOffset : $utcOffset;
                         if(!empty($oldUtcOffset)){
@@ -587,7 +587,12 @@ class Allure_Teamwork_Model_Tmobserver{
                             $orderDate = strtotime("{$offset} hour", $timeDate);
                             $newCreateAt = date('Y-m-d H:i:s', $orderDate);
                             $orderObj->setCreatedAt($newCreateAt);
-                        }
+                        } */
+                        $createAtOtherStr = explode(".", trim($orderDetails["StateDate"]));
+                        $timeDate = strtotime($createAtOtherStr[0]);
+                        $orderDate = strtotime("{$calculatedOffset} hour", $timeDate);
+                        $newCreateAt = date('Y-m-d H:i:s', $orderDate);
+                        $orderObj->setCreatedAt($newCreateAt);
                     }
                     
                     /* $oldUtcOffset = $utcOffsetArr[$locationCode];
