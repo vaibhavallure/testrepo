@@ -71,14 +71,6 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
 
 
         $collection->getSelect()->joinLeft(
-			array('prod' => 'catalog_product_entity'),
-			'prod.entity_id = main_table.product_id',
-			array('sku')
-		)->joinLeft(
-			array('cpev' => 'catalog_product_entity_varchar'),
-			'cpev.entity_id = prod.entity_id AND cpev.attribute_id='.$prodNameAttrId.'',
-			array('name' => 'value')
-		)->joinLeft(
             array('store' => 'allure_virtual_store'),
             'store.store_id = main_table.stock_id',
             array('store_name' => 'name')
