@@ -207,12 +207,11 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                 $orderStatus = $order['status'];
                 $customer_groupCode = $customer_group->getCode();
 
-                if ($order->getQtyBackordered() && $order->getParentItemId()) {
+                if ($order->getParentItemId()) {  //$order->getQtyBackordered() &&
                     $parentProductData = Mage::getSingleton("sales/order_item")->load($order->getParentItemId());
                     $symbol=Mage::app()->getLocale()->currency($parentProductData->getBaseCurrencyCode())->getSymbol();
                     $price=$symbol."".round($parentProductData->getBasePrice(),2);
                     $qty = $parentProductData->getQtyOrdered();
-
 
                     if ($parentProductData->getGiftMessageId()) {
                         $gift = Mage::getSingleton("giftmessage/message")->load($parentProductData->getGiftMessageId());
@@ -258,10 +257,10 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["product_name"]=$productName;
                     $row["price"]=$price;
 
-                    if($dates['order_type']=="all")
+                    if($dates['order_type']=="back")
                         $row["back_qty"]=floatval($order->getQtyBackordered());
                     else
-                        $row["back_qty"]=floatval($order->getQtyOrdered());
+                        $row["back_qty"]=floatval($qty);
 
                     $row["customization"]=$customization;
                     $row["group"]=$customer_groupCode;
@@ -273,6 +272,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
 
             }
+
 
 
         return $rowData;
