@@ -34,14 +34,9 @@ foreach ($orderCollection as $order){
             $storeObj = Mage::getModel("allure_virtualstore/store")->load($oldStoreId);
             if($storeObj->getId()){
                 if($locationCode != 1){
-                    $utcOffset = $storeObj->getUtcOffset();
-                    if($utcOffset == null){
-                        $utcOffset = 0;
-                    }
-                    $calculatedOffset = 5 + $utcOffset;
-                    $offset = intval($calculatedOffset);
-                    $timeDate = strtotime($createdAt);
-                    $orderDate = strtotime("{$offset} hour", $timeDate);
+                    $createAtOtherStr = explode(".", trim($orderDetails["StateDate"]));
+                    $timeDate = strtotime($createAtOtherStr[0]);
+                    $orderDate = strtotime("+5 hour", $timeDate);
                     $createdAt = date('Y-m-d H:i:s', $orderDate);
                 }
                 $sql_order = "UPDATE sales_flat_order SET created_at = '".$createdAt."' WHERE entity_id ='".$orderId."'";
