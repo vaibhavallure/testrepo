@@ -42,8 +42,8 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
         $this->setId('gridLowstock');
         $this->setUseAjax(false);
     }
-   
-    protected function _prepareCollection()
+
+	protected function _prepareCollection()
     {
         if ($this->getRequest()->getParam('website')) {
             $storeIds = Mage::app()->getWebsite($this->getRequest()->getParam('website'))->getStoreIds();
@@ -63,65 +63,65 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
         $prodNameAttrId = Mage::getModel('eav/entity_attribute')
         ->loadByCode($entityTypeId, 'name')
         ->getAttributeId();
-        
+
         $collection = Mage::getModel('inventory/inventory')->getCollection();
         $collection->getSelect()->join('admin_user', 'main_table.user_id = admin_user.user_id',array('username'));
-       // $collection->getSelect()->joinLeft('catalog_product_entity', 'catalog_product_entity.entity_id = main_table.product_id', array('sku'));
+       	//$collection->getSelect()->joinLeft('catalog_product_entity', 'catalog_product_entity.entity_id = main_table.product_id', array('sku'));
         //$collection->getSelect()->join('catalog_product_entity_varchar', 'main_table.product_id = admin_user.user_id',array('username'));
-       
-        
+
+
         $collection->getSelect()->joinLeft(
-        				array('prod' => 'catalog_product_entity'),
-        				'prod.entity_id = main_table.product_id',
-        				array('sku')
-        				)
-        				->joinLeft(
-        						array('cpev' => 'catalog_product_entity_varchar'),
-        						'cpev.entity_id = prod.entity_id AND cpev.attribute_id='.$prodNameAttrId.'',
-        						array('name' => 'value')
-        						);
-        $collection->getSelect()->group('main_table.id');
+			array('prod' => 'catalog_product_entity'),
+			'prod.entity_id = main_table.product_id',
+			array('sku')
+		)->joinLeft(
+			array('cpev' => 'catalog_product_entity_varchar'),
+			'cpev.entity_id = prod.entity_id AND cpev.attribute_id='.$prodNameAttrId.'',
+			array('name' => 'value')
+		)->joinLeft(
+            array('store' => 'allure_virtual_store'),
+            'store.store_id = main_table.stock_id',
+            array('store_name' => 'name')
+		);
+
+		$collection->getSelect()->group('main_table.id');
         $collection->getSelect()->order('main_table.id DESC');
-      
-       
-      /*   echo  $collection->getSelect();
-        die; */
-        
-        
+
+		// echo  $collection->getSelect();die;
+
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
 
     protected function _prepareColumns()
     {
-    	
     	$this->addColumn('id', array(
     			'header'    =>Mage::helper('reports')->__('Id'),
     			'sortable'  =>false,
     			'index'     =>'id',
     			'filter'    =>'adminhtml/widget_grid_column_filter_range',
     	));
-    
-    	
-    	/* 
+
+    	/*
     	$this->addColumn('image', array(
     			'header'    => Mage::helper('reports')->__('Image'),
     			'align'     =>'left',
     			'index'     => 'image',
     			'renderer'  => 'inventory/adminhtml_inventory_renderer_image'
     	)); */
-    	
-       /*  $this->addColumn('name', array(
+
+		/*$this->addColumn('name', array(
             'header'    =>Mage::helper('reports')->__('Product Name'),
             'sortable'  =>false,
             'index'     =>'name'
-        )); */
+        ));*/
+
         $this->addColumn('sku', array(
         		'header'    =>Mage::helper('reports')->__('Sku'),
         		'sortable'  =>false,
         		'index'     =>'sku'
         ));
-	
+
         $this->addColumn('previous_qty', array(
             'header'    =>Mage::helper('reports')->__('Previous Qty'),
             'sortable'  =>false,
@@ -148,23 +148,38 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
             'sortable'  =>false,
             'renderer'  => 'inventory/adminhtml_reports_stockreceive_renderer_totalcost'
         ));
-        
-        
+
+
         $this->addColumn('username', array(
         		'header'    =>Mage::helper('reports')->__('Added By'),
         		'sortable'  =>false,
         		'index'     =>'username'
-        ));
-       
+		));
+
+		$core_store = array(
+			'1' => 'Maria Tash',
+			'2' => 'Liberty of London',
+			'3' => 'IFC Mall',
+			'4' => 'Canton Road',
+			'5' => 'Saks Pop-up',
+			'6' => 'HBC Montreal',
+			'7' => 'HBC Toronto',
+			'8' => 'HBC Vancouver',
+			'9' => 'Saks NYC',
+			'10' => 'Rinascente',
+			'11' => 'Dublin Popup',
+			'12' => 'Venus Body Arts'
+		);
+
         $this->addColumn('stock_id', array(
         		'header'    =>Mage::helper('reports')->__('Store'),
         		'sortable'  =>True,
         		'index'     =>'stock_id',
         		'type'      => 'options',
-        		'options'   => Mage::getModel('core/website')->getCollection()->toOptionHash()
-        
+        		'options'   => $core_store //Mage::getModel('core/website')->getCollection()->toOptionHash()
+
         ));
-        
+
         $this->addColumn('updated_at', array(
         		'header'    =>Mage::helper('reports')->__('Updated At'),
         		'sortable'  =>false,
@@ -172,7 +187,7 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
         		'filter_index'=>'main_table.updated_at',
         		"type" =>   "datetime",
         ));
-        
+
         $this->addColumn('po_id', array(
             'header'    =>Mage::helper('reports')->__('Reference PO'),
             'sortable'  =>false,
