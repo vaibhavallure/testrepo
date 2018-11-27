@@ -2654,3 +2654,31 @@ width: 100%;
     width: 150px;
 }
 }
+
+
+/*paypal review*/
+.paypal-express-review #shopping-cart-totals-table{
+	margin-top: 10px;
+	width: 100%;
+}
+
+.paypal-express-review #shopping-cart-totals-table{
+	background: #ccc;
+}
+
+.paypal-express-review #shopping-cart-totals-table tr td{
+	padding: 5px;
+	border-top: 1px solid #cbc8c8;
+}
+
+.paypal-express-review #shipping_method_2,
+.paypal-express-review #shipping_method_1{
+	width: 100%;
+}
+
+.paypal-express-review .two-shipment-billing-payment-mt,
+.paypal-express-review .checkout-two-shipment-shipping-method-mt,
+.paypal-express-review .checkout-two-shipment-payment-method-mt{
+	margin-top: 10px;
+}
+

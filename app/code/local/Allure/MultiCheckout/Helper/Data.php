@@ -125,4 +125,12 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
     public function getOnePagelogStatus(){
         return Mage::getStoreConfig(self::XML_PATH_ONEPAGE_LOG);
     }
+    
+    public function isTwoShipment(){
+        $quote = $this->getQuote();
+        $status = false;
+        if(strtolower($quote->getDeliveryMethod()) == self::TWO_SHIP)
+            $status = true;
+            return $status;
+    }
 }
