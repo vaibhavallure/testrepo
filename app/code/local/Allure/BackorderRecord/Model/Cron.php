@@ -133,7 +133,7 @@ class Allure_BackorderRecord_Model_Cron
                     $addToquery->where("sales_flat_order.customer_group_id in($filterGroup)");
             }
 
-            $addToquery->where("sales_flat_order.created_at BETWEEN '".$fromDate."' AND '".$toDate."'");
+            $addToquery->where("sales_flat_order.created_at BETWEEN '".$fromDate."' AND '".$toDate."' AND sales_flat_order.old_store_id=1");
 
         }
         catch (Exception $e){
