@@ -18,7 +18,17 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
         $folderPath   = Mage::getBaseDir('var') . DS . 'export';
         $date = date('Y-m-d');
-        $filename     = "Daily_Backorder_Report_".$date.".csv";
+
+
+
+        if($dates['order_type']=="all")
+            $filename     = "All_Order_Report_".$date.".csv";
+        else if($dates['order_type']=="back")
+            $filename     = "Backorder_Report_".$date.".csv";
+        else
+            $filename     = "Daily_Backorder_Report_".$date.".csv";
+
+
         $filepath     = $folderPath . DS . $filename;
 
         $io = new Varien_Io_File();
@@ -265,7 +275,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["customization"]=$customization;
                     $row["group"]=$customer_groupCode;
                     $row["order_status"]=$orderStatus;
-//                    $row["product_type"]=$order->getProductType();
+//                  $row["product_type"]=$order->getProductType();
 
 
                     $rowData[] = $row;
