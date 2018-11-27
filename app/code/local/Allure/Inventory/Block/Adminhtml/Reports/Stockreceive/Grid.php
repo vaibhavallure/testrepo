@@ -149,18 +149,14 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
 		));
 
 		$core_store = array(
-			'1' => 'Maria Tash',
+			'1' => 'Main Website',
 			'2' => 'Liberty of London',
-			'3' => 'IFC Mall',
-			'4' => 'Canton Road',
-			'5' => 'Saks Pop-up',
-			'6' => 'HBC Montreal',
-			'7' => 'HBC Toronto',
-			'8' => 'HBC Vancouver',
-			'9' => 'Saks NYC',
-			'10' => 'Rinascente',
-			'11' => 'Dublin Popup',
-			'12' => 'Venus Body Arts'
+			'3' => 'Lane Crawford IFC',
+			'4' => 'HBC Saks Pop-up',
+			'5' => 'Saks NYC',
+			'6' => 'Rinascente Rome',
+			'7' => 'Dublin Ireland',
+			'9' => 'Lane Crawford Canton'
 		);
 
         $this->addColumn('stock_id', array(
