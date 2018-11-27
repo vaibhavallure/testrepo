@@ -42,9 +42,11 @@ if ($requestArgs != null) {
     curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
 }
 $response  = curl_exec($sendRequest);
-$response1 = json_decode($response,true);
+//$response1 = json_decode($response,true);
 echo "<pre>";
+$response1 = unserialize($response);
 var_dump(count($response1));
-//print_r($response);
+//print_r($response1);
+$response = json_encode($response1);
 Mage::getModel("allure_teamwork/tmobserver")->addDataIntoSystem($response);
 die("Finish");
