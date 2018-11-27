@@ -286,3 +286,4 @@ RewriteRule ^(.git) - [R=404,L]
         Deny from all
 
     </Files>
+	
