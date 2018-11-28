@@ -140,12 +140,12 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
 
         //shipping_description, customer_email, coupon_code, weight, customer_note
         $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','counterpoint_order_id');
-        
+
         //store cleanup
         if ($this->isVirtualStoreActive()){
             $sales_flat_order = array('shipping_description', 'customer_email', 'customer_group_id','coupon_code', 'weight', 'customer_note', 'base_tax_amount', 'tax_amount', 'base_shipping_amount', 'shipping_amount', 'base_discount_amount', 'discount_amount', 'no_signature_delivery','create_order_method','old_store_id');
-        } 
-        
+        }
+
         $selected_col = array_intersect($selected_columns, $sales_flat_order);
         if (!empty($selected_col)) {
             $collection->getSelect()->joinLeft($tableName_sales_flat_order,
@@ -249,7 +249,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'qty' => $helper->__('Product Quantity'),
 
             'payment_method' => $helper->__('Payment Method'),
-            
+
             'card_type' => $helper->__('Card Type'),
 
             'weight' => $helper->__('Product Weight'),
@@ -293,20 +293,20 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             'shipping_telephone' => $helper->__('Ship - Phone'),
         	'no_signature_delivery' => $helper->__('Signature Required ?'),
         	'create_order_method' => $helper->__('Order Method ?'),
-            'counterpoint_order_id'=>$helper->__('Counterpoint Id'),
+            //'counterpoint_order_id'=>$helper->__('Counterpoint Id'),
 
         		//Allure Attribute
         	'customer_group_id' => $helper->__('Customer Group'),
-        		
+
             /*** actions ***/
             'action' => $helper->__('Action'),
             'reorder' => $helper->__('Reorder'),
         );
-        
+
         if($this->isVirtualStoreActive()){
             $gridColumn['old_store_id'] = $helper->__('Old Purchase Store');
-        } 
-        
+        }
+
         return $gridColumn;
     }
 
@@ -364,9 +364,9 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
         $tableName_sales_flat_order_item = Mage::getSingleton('core/resource')->getTableName('sales_flat_order_item');
         $tableName_sales_flat_invoice = Mage::getSingleton('core/resource')->getTableName('sales_flat_invoice');
         $tableName_sales_order_payment = Mage::getSingleton('core/resource')->getTableName('sales_order_payment');
-	$tableName_sales_flat_creditmemo = Mage::getSingleton('core/resource')->getTableName('sales_flat_creditmemo');
+		$tableName_sales_flat_creditmemo = Mage::getSingleton('core/resource')->getTableName('sales_flat_creditmemo');
         $tableName_sales_flat_shipment = Mage::getSingleton('core/resource')->getTableName('sales_flat_shipment');
-       
+
         $columns = array(
             /*** main table ***/
             'increment_id' => array(
@@ -384,8 +384,8 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'display_deleted' => true,
                 'filter_index' => 'main_table.store_id',
             ),
-        	
-        
+
+
             'status' => array(
                 'header' => $helper->__('Status'),
                 'index' => 'status',
@@ -491,7 +491,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'type' => 'text',
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Sku(),
             ),
-            
+
             'puchased_from' => array(
                 'header' => $helper->__('Purchased From(Category)'),
                 'index' => 'puchased_from',
@@ -509,7 +509,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'width' => '170px',
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Images(),
             ),
-        		
+
             'qty' => array(
                 'header' => $helper->__('Quantity'),
                 'index' => 'qty',
@@ -519,9 +519,9 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'width' => '150px',
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Quantity()
             ),
-            
-           
-            
+
+
+
             'tax_amount' => array(
                 'header' => $helper->__('Tax Amount'),
                 'index' => 'tax_amount',
@@ -595,7 +595,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'column_css_class' => 'nowrap',
                 'filter_index' => "{$tableName_sales_order_payment}.card_type",
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Card(),
-                
+
             ),
 
             'shipping_description' => array(
@@ -613,8 +613,8 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'index' => 'customer_email'
             ),
 
-           
-            
+
+
             'coupon_code' => array(
                 'type' => 'text',
                 'header' => $helper->__('Coupon Code'),
@@ -772,7 +772,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             		'options' => array(1=>'Yes',0=>'No'),
             ),
             //Allure Code
-            
+
             'customer_group_id' => array(
             		'header' => $helper->__('Customer Group'),
             		'index' => 'customer_group_id',
@@ -784,7 +784,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
             		->load()
             		->toOptionHash(),
             ),
-            
+
             //End of allure code
             'create_order_method' => array(
             		'header' => $helper->__('Order Method'),
@@ -800,7 +800,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'type' => 'text',
                 'width' => '70px',
                 'filter_index' => "{$tableName_sales_flat_order}.counterpoint_order_id",
-            ),
+            )
         );
 
         if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/view')) {
@@ -816,7 +816,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'renderer' => new IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Actions(),
             );
         }
-        
+
         //store cleanup
         if($this->isVirtualStoreActive()){
             $columns['store_id'] =array(
@@ -827,7 +827,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
                 'display_deleted' => true,
                 'filter_index' => "{$tableName_sales_flat_order}.old_store_id",
             );
-        } 
+        }
 
         return $columns;
     }
@@ -867,7 +867,7 @@ class IWD_OrderManager_Model_Order_Grid extends Mage_Adminhtml_Block_Widget_Grid
 
         return $this;
     }
-    
+
     /**
      * return true | false
      */

@@ -143,9 +143,9 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
 
 
         $this->addColumn('username', array(
-        		'header'    =>Mage::helper('reports')->__('Added By'),
-        		'sortable'  =>false,
-        		'index'     =>'username'
+    		'header'    =>Mage::helper('reports')->__('Added By'),
+    		'sortable'  =>false,
+    		'index'     =>'username'
 		));
 
 		$core_store = array(
@@ -160,12 +160,11 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Grid extends Mage_Ad
 		);
 
         $this->addColumn('stock_id', array(
-        		'header'    =>Mage::helper('reports')->__('Store'),
-        		'sortable'  =>True,
-        		'index'     =>'stock_id',
-        		'type'      => 'options',
-        		'options'   => $core_store //Mage::getModel('core/website')->getCollection()->toOptionHash()
-
+    		'header'    =>Mage::helper('reports')->__('Store'),
+    		'sortable'  =>True,
+    		'index'     =>'stock_id',
+    		'type'      => 'options',
+    		'options'   => $core_store //Mage::getModel('core/website')->getCollection()->toOptionHash()
         ));
 
         $this->addColumn('updated_at', array(
