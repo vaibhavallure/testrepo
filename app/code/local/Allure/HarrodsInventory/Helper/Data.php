@@ -127,7 +127,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 //                'article_type' => '', 'art_cat' => '', 'size_matrix' => '', 'GTIN_number' => '','cost' => $this->charEncode('FALSE'));
 
 
-            $header =   array('recid' => $this->charEncode('MSS V2.10'));
+            $header =   array('recid' => $this->charEncode('MSS V2.10'),''=>'','1'=>' ','2'=>' ','3'=>' ','4'=>' ','5'=>' ','GTIN_number'=>$this->charEncode('FALSE'));
 
 
             $ioo->streamWriteCsv($header,"\t",' ');
@@ -150,6 +150,11 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             $some_attr_code = "metal";
             $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
+
+            $harr_color = "harrods_color";
+            $attributeHarrodsColor = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $harr_color);
+
+
 
             foreach ($parentPro as $parentProductId) {
 
@@ -267,7 +272,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['article_type'] = $this->charEncode('ZDMC');
                     $data['art_cat'] = $this->charEncode('Generic'); //Single for simple
                     $data['size_matrix'] = $this->charEncode('SIZE-LADIESWEAR');
-                    $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());   // Need to add later
+                    $data['GTIN_number'] = ''; //$this->charEncode($_product->getGtinNumber());   // Need to add later
                     $data['cost'] = $this->charEncode('0.00');
                     $data['store_retail'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
                     $data['airports_retail'] = '';
@@ -283,7 +288,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['consign'] = $this->charEncode('FALSE');
                     $data['vendor'] = $this->charEncode('70000369'); //check with Todd
                     $data['vendor_subrange'] = $this->charEncode('CON');
-                    $data['vendors_art_no'] = $skuConfig;   //Config SKU
+                    $data['vendors_art_no'] = $_product->getSku();   //Config SKU
                     $data['tax_code'] = $this->charEncode('C0');
                     $data['brand'] = $this->charEncode('MARIA TASH');
                     $data['range'] = '';
@@ -293,10 +298,10 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['comp'] = '';
                     $data['sport'] = '';
                     $data['gender'] = $this->charEncode('UNISEX');
-                    $data['harrods_colour'] = $this->charEncode(strtoupper(str_replace("GOLD", " ", $optionLabel)));  //COlor
+                    $data['harrods_colour'] = $this->charEncode(strtoupper($attributeHarrodsColor->getFrontend()->getOption($_product->getHarrodsColor())));  //COlor
                     $data['pack_size'] = '';
 
-                    $data['prod_hierarchy'] = $this->charEncode('FA');
+                    $data['prod_hierarchy'] = $this->charEncode('BA');
                     $data['contents'] = '';
                     $data['content_unit'] = '';
                     $data['vendor_colour'] = $this->charEncode(strtoupper($optionLabel));  //Color ROSE GOLd
@@ -318,7 +323,11 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['siteDelimited'] = $this->charEncode('SiteDelim');
 //                    $data['string_for_generic_lines'] = '';
 
-                    $ioo->streamWriteCsv($data,"\t",' ');
+                $data['gtin'] = $this->charEncode("(ONE_SIZE;".$_product->getGtinNumber().";;;;)");
+
+                $data['sizeDelimited'] = $this->charEncode('SizeDelim');
+
+                $ioo->streamWriteCsv($data,"\t",' ');
 
                     $sr_no++;
                 }
@@ -403,7 +412,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
                 $data['harrods_inventory'] = $this->charEncode($_product->getHarrodsInventory());
-                $data['site_listings'] = $this->charEncode('D123');
+                $data['site_listings'] = $this->charEncode('D369');
 
                 $ioo->streamWriteCsv($data,"\t",' ');
 
@@ -490,7 +499,7 @@ else
             $file2 = $path . DS . $filenm;
             $ioo->streamOpen($file2, 'w+');
             $ioo->streamLock(true);
-            if($sr_no!=1)
+//            if($sr_no!=1)
             $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
 
             if($type=="OK")
