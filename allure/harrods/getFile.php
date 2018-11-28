@@ -18,7 +18,7 @@ $file=(isset($_GET['file']))?$_GET['file']:"STK";
 if($download)
 {
 
-    if($file="PPC")
+    if($file=="PPC")
         $file=Mage::helper("harrodsinventory")->generatePPCReport($download);
     else
         $file=Mage::helper("harrodsinventory")->generateSTKReport($download);
