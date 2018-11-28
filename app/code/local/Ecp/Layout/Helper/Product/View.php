@@ -58,7 +58,7 @@ class Ecp_Layout_Helper_Product_View extends Mage_Catalog_Helper_Product_View
 
         $update->addHandle('PRODUCT_TYPE_' . $product->getTypeId());
         $update->addHandle('PRODUCT_' . $product->getId());
-        
+
         //VALIDATE ATTRIBUTE SET TO DEFINE LAYOUT//////////////////////////////////////////////////////////////////////////////////////////////////
         $attributeSet = Mage::getModel("eav/entity_attribute_set")->Load($product->getAttributeSetId());
         $attributeSetName = $attributeSet->getAttributeSetName();
@@ -66,7 +66,7 @@ class Ecp_Layout_Helper_Product_View extends Mage_Catalog_Helper_Product_View
             $update->addHandle('PRODUCT_APPAREL');
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         $controller->loadLayoutUpdates();
 
         // Apply custom layout update once layout is loaded
@@ -118,7 +118,7 @@ class Ecp_Layout_Helper_Product_View extends Mage_Catalog_Helper_Product_View
      *
      * @return Mage_Catalog_Helper_Product_View
      */
-    public function prepareAndRender($productId, $controller, $params = null)
+    public function prepareAndRenders($productId, $controller, $params = null)
     {
         // Prepare data
         $productHelper = Mage::helper('catalog/product');
@@ -152,8 +152,7 @@ class Ecp_Layout_Helper_Product_View extends Mage_Catalog_Helper_Product_View
 
         $this->initProductLayout($product, $controller);
 
-        $controller->initLayoutMessages(array('catalog/session', 'tag/session', 'checkout/session'))
-            ->renderLayout();
+        $controller->initLayoutMessages(array('catalog/session', 'checkout/session'))->renderLayout();
 
         return $this;
     }
