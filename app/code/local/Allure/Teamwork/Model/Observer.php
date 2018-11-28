@@ -758,13 +758,19 @@ class Allure_Teamwork_Model_Observer{
       $numbers = range('0','9');
       $additional_characters = array('#','@','$');
       
+      $status = $helper->getTeamworkStatus();
+      $logStatus = $helper->getLogStatus();
+      $logStatus = ($logStatus)?true:false;
+      if(!$status){
+          Mage::log("teamwork customer sync status - ".$status,Zend_Log::DEBUG,$logFile,$logStatus);
+          return;
+      }
+      
       try{
           $operation = "last_query_time";
           $mLog = Mage::getModel("allure_teamwork/log")
             ->load($operation,'operation');
           
-          $logStatus = $helper->getLogStatus();
-          $logStatus = ($logStatus)?true:false;
           
           $lastQueryTime = (int) $mLog->getPage();//$helper->getLastSyncQueryTime();
           $syncURL   = $helper::SYNC_TEAMWORK_CUSTOMER_URLPATH;
