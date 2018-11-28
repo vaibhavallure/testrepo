@@ -32,9 +32,9 @@ class Allure_Salesforce_Model_Observer_Order{
         $orderId = $order->getId();
         $orderStatus = $order->getStatus();
         $helper->salesforceLog("Order Id {$orderId} Status - ".$orderStatus);
-        if(!$orderStatus){
+        /* if(!$orderStatus){
             return ;
-        }
+        } */
         
         if(Mage::registry('sales_order_save_after_'.$orderId)){
             return $this;
@@ -60,7 +60,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper->salesforceLog("order id == ".$order->getId());
         
         $orderId = $order->getId();
-        $status = $order->getStatus();
+        $status = ($order->getStatus()) ? $order->getStatus() : "pending";
         $customerId = $order->getCustomerId();
         
         $salesforceAccountId = $helper::GUEST_CUSTOMER_ACCOUNT;

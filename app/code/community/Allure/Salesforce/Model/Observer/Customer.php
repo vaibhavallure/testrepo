@@ -265,6 +265,13 @@ class Allure_Salesforce_Model_Observer_Customer{
         }
 
         $customerAddress = $observer->getCustomerAddress();
+        $helper->salesforceLog("customer id - ".$customerAddress->getCustomerId()." , address id - ".$customerAddress->getId());
+        
+        if(Mage::registry('customer_address_'.$customerAddress->getCustomerId())){
+            return $this;
+        }
+        Mage::register('customer_address_'.$customerAddress->getCustomerId(),true); 
+        
         if($customerAddress){
             $customerAddressObj = $customerAddress;
             $customerAddress = $customerAddress->getData();
