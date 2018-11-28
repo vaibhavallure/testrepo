@@ -198,12 +198,17 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
 
         /* $collection = Mage::getModel($this->_getCollectionClass())
             ->getCollection(); */
-        $collection = Mage::getModel('sales/order')->getCollection()
-        ->join(
+        $collection = Mage::getModel('sales/order')->getCollection();
+        
+        $subquery = new Zend_Db_Expr("(SELECT parent_id FROM sales_flat_order_payment GROUP BY parent_id )");
+        $collection->getSelect()->join(array("payment" => $subquery),
+            "main_table.entity_id = payment.parent_id");
+        
+        /* ->join(
             array('payment' => 'sales/order_payment'),
             'main_table.entity_id=payment.parent_id',
             array('payment_method' => 'payment.method','cc_type' => 'payment.cc_type')
-            );
+            ); */
 
         //apply store condition
         if(!empty($requestParams)){
