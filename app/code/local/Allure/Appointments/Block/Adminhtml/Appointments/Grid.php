@@ -136,7 +136,7 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
             'confirm' => Mage::helper('appointments')->__('Are you sure to change status for the selected Appointment'),
             'additional' => array(
                 'visibility' => array(
-                    'name' => 'status ',
+                    'name' => 'status',
                     'type' => 'select',
                     'class' => 'required-entry',
                     'label' => Mage::helper('appointments')->__('Status '),
