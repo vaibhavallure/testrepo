@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -31,8 +31,16 @@ class Mirasvit_Advr_Block_Adminhtml_Order_TaxRate extends Mirasvit_Advr_Block_Ad
         $this->setChartType('column');
 
         $this->initChart()
-            ->setXAxisType('category')
-            ->setXAxisField('taxrate_tax_code');
+            ->setXAxisType($this->getColumn('category'))
+            ->setXAxisField($this->getColumn('taxrate_tax_code'));
+
+        return $this;
+    }
+
+    protected function prepareToolbar()
+    {
+        $this->initToolbar()
+            ->setSalesSourceVisibility(true);
 
         return $this;
     }
@@ -40,22 +48,14 @@ class Mirasvit_Advr_Block_Adminhtml_Order_TaxRate extends Mirasvit_Advr_Block_Ad
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort('taxrate_tax_code');
+            ->setDefaultSort($this->getColumn('taxrate_tax_code'));
 
         return $this;
     }
 
-    protected function _prepareCollection()
+    protected function getGroupByColumn()
     {
-        $collection = Mage::getModel('advr/report_sales')
-            ->setBaseTable('sales/order', true)
-            ->setFilterData($this->getFilterData())
-            ->selectColumns(array_merge($this->getVisibleColumns(), array('orders')))
-            ->groupByColumn('taxrate_tax_code');
-
-        //$collection->getSelect()->where('sales_order_item_table.parent_item_id IS NOT NULL OR sales_order_item_table.product_type="simple"');
-
-        return $collection;
+        return $this->getColumn('taxrate_tax_code');
     }
 
     public function getColumns()
@@ -64,17 +64,20 @@ class Mirasvit_Advr_Block_Adminhtml_Order_TaxRate extends Mirasvit_Advr_Block_Ad
             'taxrate_tax_code' => array(
                 'header' => 'Tax Identifier',
                 'type' => 'text',
+                self::KEEP => true
             ),
             'taxrate_tax_title' => array(
                 'header' => 'Tax Title',
                 'type' => 'text',
                 'hidden' => true,
+                self::KEEP => true
             ),
             'taxrate_tax_percent' => array(
                 'header' => 'Tax Rate',
                 'type' => 'number',
                 'chart' => true,
                 'totals_label' => '',
+                self::KEEP => true
             ),/*
             'quantity' => array(
                 'header' => 'Number Of Orders',
@@ -112,6 +115,8 @@ class Mirasvit_Advr_Block_Adminhtml_Order_TaxRate extends Mirasvit_Advr_Block_Ad
 
         $columns += $this->getOrderTableColumns(false);
 
+        $columns = $this->convertColumnsToSalesSource($columns);
+
         $columns['actions'] = array(
             'header' => 'Actions',
             'renderer' => 'Mirasvit_Advr_Block_Adminhtml_Block_Grid_Renderer_PostAction',
@@ -124,6 +129,6 @@ class Mirasvit_Advr_Block_Adminhtml_Order_TaxRate extends Mirasvit_Advr_Block_Ad
     {
         $row->setRange($this->getFilterData()->getRange());
 
-        return Mage::helper('advr/callback')->rowUrl('*/*/plain', $row, array('orders', 'period'));
+        return Mage::helper('advr/callback')->rowUrl('*/*/plain', $row, array('orders', $this->getColumn('period')));
     }
 }

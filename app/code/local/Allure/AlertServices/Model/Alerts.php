@@ -54,6 +54,7 @@ class Allure_AlertServices_Model_Alerts
 					echo "from date <br>";
 					var_dump($fromDate).'<br>'; 
 				}
+				
 				$orders = Mage::getModel('sales/order')->getCollection()
 						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
 						  ->addAttributeToSelect('*')
@@ -71,7 +72,9 @@ class Allure_AlertServices_Model_Alerts
 										->setCurPage(1)
 										->setPageSize(1)
 										->setOrder('main_table.entity_id', 'desc');
-						$helper->sendSalesOfFourEmailAlert($lastOrderDate->getLastItem()->getCreatedAt());
+						$lastDate = $lastOrderDate->getLastItem()->getCreatedAt();
+						$hourReport = 4;
+						$helper->sendSalesOfEmailAlert($lastDate,$hourReport);
 					}
 			}
 			
@@ -108,7 +111,9 @@ class Allure_AlertServices_Model_Alerts
 										->setCurPage(1)
 										->setPageSize(1)
 										->setOrder('main_table.entity_id', 'desc');
-						$helper->sendSalesOfSixEmailAlert($lastOrderDate->getLastItem()->getCreatedAt());
+						$lastDate = $lastOrderDate->getLastItem()->getCreatedAt();
+						$hourReport = 6;
+						$helper->sendSalesOfEmailAlert($lastDate,$hourReport);
 					}
 			}
 		}catch(Exception $e){
@@ -389,6 +394,81 @@ class Allure_AlertServices_Model_Alerts
 		        return $final_report;
 		    }
 		}
+
+		public function alertSalesOfTwo($debug = false){
+		/* Get the collection */
+		try{
+			$helper = Mage::helper('alertservices');
+			$status =	$this->getConfigHelper()->getEmailStatus();
+			$test_status =	$this->getConfigHelper()->getTestEmailStatus();
+			if (!$test_status) {
+					return;
+				}
+			if ($status) {
+				$currdate = Mage::getModel('core/date')->gmtDate();
+				$toDate	= $currdate;
+				$fromDate = date('Y-m-d H:i:s', strtotime($currdate) - 60 * 60 * 2);
+				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
+				$orders = Mage::getModel('sales/order')->getCollection()
+						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
+						  ->addAttributeToSelect('*')
+						  ->setCurPage(1)
+						  ->setPageSize(1)
+						  ->setOrder('created_at', 'desc');
+				if ($debug) {
+					echo $orders->getSelect()->__toString();
+					echo "<br>order count : ".count($orders);
+					echo "<br>2 hour for testing for sale<br>";
+
+					/*$lastOrderDate = Mage::getModel("sales/order")
+										->getCollection()
+										->setCurPage(1)
+										->setPageSize(1)
+										->setOrder('main_table.entity_id', 'desc');
+					$lastDate = $lastOrderDate->getLastItem()->getCreatedAt();
+					var_dump($currdate);
+					var_dump($lastDate);
+					$lDate = new DateTime($lastDate);
+					$cDate = new DateTime($currdate);
+					$interval = $lDate->diff($cDate);
+					$diffhours = $interval->h;
+					$diffhours = $diffhours + ($interval->days*24);
+					echo $diffhours."<br>";*/
+				}
+					if (count($orders)<=0) {
+						$lastOrderDate = Mage::getModel("sales/order")
+										->getCollection()
+										->setCurPage(1)
+										->setPageSize(1)
+										->setOrder('main_table.entity_id', 'desc');
+						$lastDate = $lastOrderDate->getLastItem()->getCreatedAt();
+						$hourReport = 2;
+						$helper->sendSalesOfEmailAlert($lastDate,$hourReport);
+					}
+			}
+		}catch(Exception $e){
+			$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
+    	}
+		
+	}
+		/*$lastOrderDate = Mage::getModel("sales/order")
+										->getCollection()
+										->setCurPage(1)
+										->setPageSize(1)
+										->setOrder('main_table.entity_id', 'desc');
+				$cdate = date_create($currdate);
+				$ldate = date_create($lastOrderDate->getLastItem()->getCreatedAt());
+
+				$diff=date_diff($cdate,$ldate);
+				if (condition) {
+					# code...
+				}
+				var_dump('last order date : ');
+				var_dump($ldate);
+				var_dump('hours date diff: ');
+				var_dump($diff);
+				die();*/
+
 
 
 

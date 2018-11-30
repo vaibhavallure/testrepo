@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -31,8 +31,16 @@ class Mirasvit_Advr_Block_Adminhtml_Order_ShippingMethod extends Mirasvit_Advr_B
         $this->setChartType('pie');
 
         $this->initChart()
-            ->setNameField('shipping_method')
-            ->setValueField('sum_grand_total');
+            ->setNameField($this->getColumn('shipping_method'))
+            ->setValueField($this->getColumn('sum_grand_total'));
+
+        return $this;
+    }
+
+    protected function prepareToolbar()
+    {
+        $this->initToolbar()
+            ->setSalesSourceVisibility(true);
 
         return $this;
     }
@@ -40,7 +48,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_ShippingMethod extends Mirasvit_Advr_B
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort('sum_grand_total')
+            ->setDefaultSort($this->getColumn('sum_grand_total'))
             ->setDefaultDir('desc')
             ->setDefaultLimit(100)
             ->setPagerVisibility(false);
@@ -48,13 +56,18 @@ class Mirasvit_Advr_Block_Adminhtml_Order_ShippingMethod extends Mirasvit_Advr_B
         return $this;
     }
 
+    protected function getGroupByColumn()
+    {
+        return $this->getColumn('shipping_method');
+    }
+
     public function _prepareCollection()
     {
         $collection = Mage::getModel('advr/report_sales')
-            ->setBaseTable('sales/order')
+            ->setBaseTable($this->getBaseTable('sales/order'))
             ->setFilterData($this->getFilterData(), true, false)
             ->selectColumns($this->getVisibleColumns())
-            ->groupByColumn('shipping_method');
+            ->groupByColumn($this->getGroupByColumn());
 
         return $collection;
     }
@@ -69,10 +82,13 @@ class Mirasvit_Advr_Block_Adminhtml_Order_ShippingMethod extends Mirasvit_Advr_B
                 'totals_label'        => 'Total',
                 'filter_totals_label' => 'Subtotal',
                 'filter'              => false,
+                self::KEEP => true
             ),
         );
 
         $columns += $this->getOrderTableColumns(true);
+
+        $columns = $this->convertColumnsToSalesSource($columns);
 
         return $columns;
     }

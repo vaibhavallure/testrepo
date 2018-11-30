@@ -55,7 +55,7 @@ class Simtech_Searchanise_Helper_ApiPages extends Mage_Core_Helper_Data
     public static function getPages($pageIds = Simtech_Searchanise_Model_Queue::NOT_DATA, $store = null)
     {
         static $arrPages = array();
-        
+
         $keyPages = '';
         if ($pageIds) {
             if (is_array($pageIds)) {
@@ -74,7 +74,7 @@ class Simtech_Searchanise_Helper_ApiPages extends Mage_Core_Helper_Data
 
             /* @var $collection Mage_Catalog_Model_Resource_Eav_Mysql4_Page_Collection */
             $collection->addStoreFilter($storeId);
-            
+
             if ($pageIds !== Simtech_Searchanise_Model_Queue::NOT_DATA) {
                 // Already exist automatic definition 'one value' or 'array'.
                 self::_addIdFilter($collection, $pageIds);
@@ -156,11 +156,11 @@ class Simtech_Searchanise_Helper_ApiPages extends Mage_Core_Helper_Data
             ->getCollection()
             ->addFieldToFilter('page_id', array("from" => $start, "to" => $end))
             ->setPageSize($step);
-        
+
         if ($store) {
             $pages = $pages->addStoreFilter($store->getId());
         }
-        
+
         $pages = $pages->load();
         if ($pages) {
             // Not used because 'arrPages' comprising 'stock_item' field and is 'array(array())'
@@ -199,7 +199,7 @@ class Simtech_Searchanise_Helper_ApiPages extends Mage_Core_Helper_Data
                 $condition = array('in' => $ids);
             }
         }
-        
+
         return $collection->addFieldToFilter('page_id', $condition);
     }
 
@@ -215,7 +215,7 @@ class Simtech_Searchanise_Helper_ApiPages extends Mage_Core_Helper_Data
         if (!is_string($attribute)) {
             return $collection;
         }
-        
+
         return $collection->setOrder($attribute, $dir);;
     }
 }

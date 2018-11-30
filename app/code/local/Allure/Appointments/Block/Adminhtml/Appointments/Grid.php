@@ -121,6 +121,34 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 		return parent::_prepareColumns();
 	}
 
+
+    protected function _prepareMassaction()
+    {
+        $this->setMassactionIdField('entity_id');
+        $this->getMassactionBlock()->setFormFieldName('allure_appointments_ids');
+        $this->getMassactionBlock()->setUseSelectAll(false);
+
+
+
+        $this->getMassactionBlock()->addItem('app_update_status', array(
+            'label' => Mage::helper('appointments')->__('Change status '),
+            'url' => Mage::helper('adminhtml')->getUrl('*/adminhtml_appointments/changeStatus', array('redirect' => 'allure_appointments')),
+            'confirm' => Mage::helper('appointments')->__('Are you sure to change status for the selected Appointment'),
+            'additional' => array(
+                'visibility' => array(
+                    'name' => 'status',
+                    'type' => 'select',
+                    'class' => 'required-entry',
+                    'label' => Mage::helper('appointments')->__('Status '),
+                    'values' => Mage::getModel('appointments/appointments')->getStatus()
+                )
+            )
+        ));
+
+        return $this;
+    }
+
+
 	public function filterCallback($collection, $column)
 	{
 		$value = $column->getFilter()->getValue();

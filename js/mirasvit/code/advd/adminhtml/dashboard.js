@@ -65,11 +65,8 @@ jQuery(function ($) {
                 }
             }).data('gridster');
 
-            var isLocked = localStorage.getItem('dashboard_lock');
-
-            if (isLocked) {
-                $('.UI-DASHBOARD-LOCK').attr('checked', true);
-            }
+            // dashboard locked by default - fixes issue of widgets getting mixed up after load from mobile device
+            $('.UI-DASHBOARD-LOCK').attr('checked', true);
 
             self.toogleLock();
 

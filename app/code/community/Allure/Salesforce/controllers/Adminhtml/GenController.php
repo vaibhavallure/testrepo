@@ -123,6 +123,19 @@ class Allure_Salesforce_Adminhtml_GenController extends Mage_Adminhtml_Controlle
                         $_filePath = $response["file_path"];
                         $result  = $csvHelper->parseCsvFile($_filePath, $objectType);
                         if($result["success"]){
+                         // For Invoice Pdf
+                            if(isset($result['salesforce_mapping']) && count($result['salesforce_mapping'])>0){
+                                $csvHeaders = array("ContentDocumentId","LinkedEntityId","ShareType");
+                                array_unshift($result['salesforce_mapping'], $csvHeaders);
+
+                                $pdfResponse = $csvHelper->generatePdfCsv($result['salesforce_mapping']);
+
+                                $filename = $pdfResponse['filename'];
+                                $filePath = $pdfResponse['path'];
+                                 $content = array("type" => "filename", "value" => $filePath);
+                                 $this->_prepareDownloadResponse($filename, $content);
+                                 $this->_redirect("*/*/uploadform");
+                            }
                             $message = $result["message"];
                             $failure = $result["failure"];
                             $failMessage = $result["fail_message"];

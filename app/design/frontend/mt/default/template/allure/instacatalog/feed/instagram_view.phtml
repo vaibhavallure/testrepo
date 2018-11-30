@@ -1,14 +1,14 @@
 <?php $feedModel = $this->getFeed();?>
 <?php if(!is_null($feedModel->getId())):?>
-<?php 
+<?php
 	$mediaId = $feedModel->getMediaId();
 	$shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
-	$instagramObj = unserialize($feedModel->getInstagramData());
+	$instagramObj = @unserialize($feedModel->getInstagramData());
 	$createDate = $feedModel->getCreatedTimestamp();
 	if($createDate!=null){
 		$createDate = date('d M Y', $createDate);
 	}
-	
+
 	$_options = json_decode($feedModel->getHotspots());
 	$points = "";
 	$productsLinks = "";
@@ -16,17 +16,20 @@
 	foreach ($_options as $option){
 		$sku = $option->text;
 		$numberOfProducts += 1;
-		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+		$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+
+		if (!$product || !$product->getId()) continue;
+
 		$productName = $product->getName();
 		$productId = $product->getId();
-		
+
 		$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
 		$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
 		$productUrl = $product->getProductUrl();
 		if(!is_null($parentId)){
 			$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
 		}
-		
+
 		$points .= '<a data-original-url="'.$productUrl.'"';
 		$points .= ' href="'.$productUrl.'" target="_blank">';
 		$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
@@ -36,7 +39,7 @@
 		$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
 		$points .= '<div class="fs-arrow-up"></div>';
 		$points .= 'Shop it // " '.$productName.'</div></div></a>';
-		
+
 		$productsLinks .= '<div class="fs-text-link-container ">';
 		$productsLinks .= '<a class="fs-text-product fs-link-list" ';
 		$productsLinks .= 'data-original-url="'.$productUrl.'"';
@@ -61,31 +64,31 @@
 						</div>
 					</div>
 					<div class="fs-detail-right">
-						
-					
+
+
 						<div class="fs-products-title fs-plural-products"></div>
-						
+
 						<?php echo $productsLinks?>
-						
+
 						<div class="fs-divider"></div>
 						<div style="clear: both;"></div>
 						<div class="fs-detail-title"><?php echo json_decode(($feedModel->getText()))?></div>
-						
+
 						<div class="fs-post-info">
 							<a href="<?php echo $feedModel->getUsername()?>"
-								target="_blank"> 
+								target="_blank">
 								<span class="fs-service-username"> maria_tash</span>
 								<span class="fs-slashes">//</span> INSTAGRAM <span
-								class="fs-slashes">//</span> 
+								class="fs-slashes">//</span>
 								<span class="fs-detail-date"><?php echo $createDate?></span>
 							</a>
 						</div>
-						
+
 						<div class="fs-detail-shares">
 							<a class="fs-share fs-facebook-share"
 								href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=<?php echo $shareUrl ?>/&amp;p[image]=<?php echo $feedModel->getStandardResolution()?>"
 								target="_blank"><i class="fa fa-facebook"></i>
-							</a> 
+							</a>
 							<a class="fs-share fs-link-share"
 								href="mailto:?subject=Thought you might be into this @maria_tash Instagram!&amp;body=<?php echo $shareUrl ?>/"
 								target="_blank"><i class="fa fa-envelope"></i>
@@ -98,7 +101,7 @@
 								href="http://www.pinterest.com/pin/create/button/?url=<?php echo $shareUrl ?>/&amp;media=<?php echo $feedModel->getStandardResolution()?>&amp;description=Shop this Instagram from @maria_tash"
 								target="_blank" data-pin-do="buttonPin" data-pin-config="above">
 								<i class="fa fa-pinterest"></i>
-							</a> 
+							</a>
 							<a class="fs-share fs-link-share"
 								href="<?php echo $shareUrl ?>/"
 								target="_blank"><i class="fa fa-link"></i>
@@ -150,7 +153,7 @@
 	    	selector.css(
 					{"background-color":"","color":""});
 		});
-		
+
 	});
 	function showView(e){
 		jQuery('#showcase').show();

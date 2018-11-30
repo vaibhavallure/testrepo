@@ -1245,6 +1245,9 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	float: right;
 	width: 80%;
 }
+.mt-myaccount-new .col2-left-layout .col-main {
+	width: 81% !important;
+}
 
 .col2-right-layout .col-right {
 	float: right;
@@ -7168,8 +7171,8 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 }
 
 .old-price .price-label {
-	font-size: 13px;
-	font-weight: normal;
+	font-size: 12px; /*13px;*/
+	font-weight: bold; /*normal;*/
 	text-transform: capitalize;
 	white-space: nowrap;
 	color: #3f4048;

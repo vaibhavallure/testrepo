@@ -542,5 +542,36 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     private function getAppointmentStoreMapping(){
         return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     }
+
+    public function changeStatusAction()
+    {
+        $data=$post_data = $this->getRequest()->getPost();
+
+
+        if (count($data['allure_appointments_ids']) > 0) {
+            try {
+
+                foreach ($data['allure_appointments_ids'] as $id) {
+                    $model = Mage::getModel('appointments/appointments')->load($id);
+                    $model->setAppStatus($data['status']);
+                    $model->save();
+                }
+                    //add logs
+                    $helperLogs = $this->getLogsHelper();
+                    $helperLogs->saveLogs("admin");
+
+                    Mage::getSingleton("adminhtml/session")->addSuccess(
+                        Mage::helper("adminhtml")->__("Appointment Status Changed"));
+
+                $this->_redirect("*/*/");
+            } catch (Exception $e) {
+                Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+                       $this->_redirect("*/*/");
+
+            }
+        }
+
+
+    }
     
 }

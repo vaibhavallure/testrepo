@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -19,10 +19,13 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
 {
     protected $filterData = null;
     protected $columns = array();
+    protected $expressions = array();
     protected $relations = array();
 
     protected $joinedTables = array();
     protected $selectedColumns = array();
+
+    private $rangeFilterTable = 'sales_order_table';
 
     public function getFilterData()
     {
@@ -46,6 +49,24 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
         return $this->columns;
     }
 
+    public function getColumn($columnId)
+    {
+        if (isset($this->columns[$columnId])) {
+            return $this->columns[$columnId];
+        }
+
+        return false;
+    }
+
+    public function getOrigColumnExpr($columnId)
+    {
+        if (isset($this->expressions[$columnId])) {
+            return $this->expressions[$columnId];
+        }
+
+        return false;
+    }
+
     public function addColumn($key, $data)
     {
         $column = Mage::getModel('advr/report_select_column')
@@ -53,8 +74,34 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
             ->setId($key);
 
         $this->columns[$key] = $column;
+        $this->expressions[$key] = $column->getExpression();
 
         return $this;
+    }
+
+    /**
+     * Set table used for the date range filter.
+     *
+     * @param string $table - table alias
+     *
+     * @return $this
+     */
+    public function setRangeFilterTable($table)
+    {
+        $this->rangeFilterTable = $table;
+
+        return $this;
+    }
+
+    /**
+     * Get table used for the date range filter.
+     *
+     *
+     * @return string $table - table alias
+     */
+    public function getRangeFilterTable()
+    {
+        return $this->rangeFilterTable;
     }
 
     public function setBaseTable($table, $isSelectTimeTable = false)
@@ -65,6 +112,9 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
 
         $this->joinedTables[$table] = true;
 
+        $tableAlias = str_replace('/', '_', $table).'_table';
+
+        $this->mainTableAlias = $tableAlias;
         $this->getSelect()->from(
             array(str_replace('/', '_', $table).'_table' => $this->getTable($table)),
             array()
@@ -156,6 +206,13 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
             if (isset($this->columns[$column])) {
                 $definition = $this->columns[$column];
                 if (isset($definition['expression'])) {
+
+                    // replace column expression definition from column configuration
+                    $columnConfig = Mage::helper('advr/column')->getGridColumn($column);
+                    if ($columnConfig && $columnConfig->getExpression() && $columnConfig->getExpression() !== $definition['expression']) {
+                        $definition['expression'] = $columnConfig->getExpression();
+                    }
+
                     $expr = $this->getExpression($definition);
                 } elseif (isset($definition['expression_method'])) {
                     $expr = call_user_func(array($this, $definition['expression_method']));
@@ -172,7 +229,7 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
                     $this->joinRelatedDependencies($definition['table']);
                 }
 
-                if (!isset($this->selectedColumns[$column])) {
+                if (isset($expr) && !isset($this->selectedColumns[$column])) {
                     $this->getSelect()->columns(array($column => new Zend_Db_Expr($expr)));
                     $this->selectedColumns[$column] = true;
                 }
@@ -209,14 +266,17 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
             strpos($expression, 'base') !== false &&
             $this->getCurrencyScope() == 'global_currency_code'
         ) {
-            $salesSource = $this->getFilterData()->getSalesSource();
-            $tableAlias = $salesSource === Mirasvit_Advr_Model_System_Config_Source_SalesSource::SALES_SOURCE_INVOICE
-                ? 'sales_invoice_table' // use invoice table if source set to invoice
+            $tableAlias = in_array($this->mainTableAlias, array('sales_order_table', 'sales_invoice_table', 'sales_creditmemo_table'))
+                ? $this->mainTableAlias
                 : 'sales_order_table';
 
             $expression = $this->strReplaceBrackets('(','((',$expression);
             $expression = $this->strReplaceBrackets(')','))',$expression);
-            $expression = $this->strReplaceBrackets(')', ' * IF('.$tableAlias.'.base_to_global_rate != 0, '.$tableAlias.'.base_to_global_rate, 1))', $expression);
+            $expression = $this->strReplaceBrackets(
+                ')',
+                ' * IF('.$tableAlias.'.base_to_global_rate != 0, '.$tableAlias.'.base_to_global_rate, 1))',
+                $expression
+            );
         }
 
         return $expression;
@@ -267,12 +327,21 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
         $select->reset(Zend_Db_Select::GROUP);
         $select->reset(Zend_Db_Select::LIMIT_COUNT);
         $select->reset(Zend_Db_Select::LIMIT_OFFSET);
-        $rows = $this->getConnection()->fetchAll($select);
+
+        try {
+            $rows = $this->getConnection()->fetchAll($select);
+        } catch (Exception $e) {
+            Mage::helper('advr/column')->handleCollectionFetchError($e);
+        }
 
         foreach ($rows as $row) {
             foreach ($row as $k => $v) {
                 if (!isset($totals[$k])) {
                     $totals[$k] = null;
+                }
+
+                if (!is_numeric($v)) {
+                    continue;
                 }
 
                 $totals[$k] += $v;
@@ -400,11 +469,11 @@ class Mirasvit_Advr_Model_Report_Abstract extends Mirasvit_Advr_Model_Report_Db_
     public function selectTimeColumnTable($ct = false)
     {
         $table = 'sales/order';
-        $column = 'sales_order_table.created_at';
+        $column = $this->getRangeFilterTable().'.created_at';
         $type = Mage::getSingleton('advr/config')->getTimeOfCreatingBy();
 
         if ($type == 'last_update') {
-            $column = 'sales_order_table.updated_at';
+            $column = $this->getRangeFilterTable().'.updated_at';
             $table = 'sales/order';
         }
 

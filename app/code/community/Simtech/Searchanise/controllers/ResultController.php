@@ -11,6 +11,7 @@
 * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
 * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
 ****************************************************************************/
+
 class Simtech_Searchanise_ResultController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()

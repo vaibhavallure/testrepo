@@ -21,6 +21,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
     const OBJ_SHIPMENT                  = "shipment";
     const OBJ_SHIPMENT_TRACK            = "shipment-track";
     const OBJ_INVOICE                   = "invoice";
+    const OBJ_INVOICE_PDF               = "invoice-pdf";
     const OBJ_CREDITMEMO                = "creditmemo";
     const OBJ_CREDITMEMO_ITEM           = "creditmemo-item";
     
@@ -64,6 +65,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             self::OBJ_SHIPMENT                  => "Shipment",
             self::OBJ_SHIPMENT_TRACK            => "Shipment Track",
             self::OBJ_INVOICE                   => "Invoice",
+            self::OBJ_INVOICE_PDF               => "Invoice PDF",
             self::OBJ_CREDITMEMO                => "Creditmemo",
             self::OBJ_CREDITMEMO_ITEM           => "Creditmemo Item"
         );
@@ -283,6 +285,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             self::OBJ_ORDER => array("id","order_id__c"),
             self::OBJ_ORDER_ITEM => array("id","orderid","pricebookentryid","magento_order_item_id__c","sku__c"),
             self::OBJ_INVOICE => array("id","invoice_id__c"),
+            self::OBJ_INVOICE_PDF => array("contentdocumentid","title"),
             self::OBJ_SHIPMENT => array("id","increment_id__c"),
             self::OBJ_SHIPMENT_TRACK => array("id","magento_tracker_id__c"),
             self::OBJ_CREDITMEMO => array("id","credit_memo_id__c"),
@@ -355,7 +358,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             }
             
             //get old stores list
-            if($objectType == "account" || $objectType == "order"){
+            if($objectType == "account" || $objectType == "order" || $objectType == "invoice" || $objectType == "creditmemo"){
                 $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
                 $oldStoreArr = array();
                 foreach ($ostores as $storeO){
@@ -385,7 +388,48 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                         $orderObj = $object->getOrder();
                     }
                     
+                    if($objectType == "product"){
+                        $productSalesforceId = $object->getSalesforceProductId();
+                        if($productSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    if($objectType == "order"){
+                        $orderSalesforceId = $object->getSalesforceOrderId();
+                        if($orderSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    if($objectType == "invoice"){
+                        $invoiceSalesforceId = $object->getSalesforceInvoiceId();
+                        if($invoiceSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    if($objectType == "shipment"){
+                        $shipmentSalesforceId = $object->getSalesforceShipmentId();
+                        if($shipmentSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    if ($objectType == "creditmemo"){
+                        $creditmemoSalesforceId = $object->getSalesforceCreditmemoId();
+                        if($creditmemoSalesforceId){
+                            continue;
+                        }
+                    }
+                    
+                    
+                    
                     if($objectType == "account"){
+                        $customerSalesforceId = $object->getSalesforceCustomerId();
+                        if($customerSalesforceId){
+                            continue;
+                        }
                         $fullName .= ($object->getPrefix()) ? $object->getPrefix()." " : "";
                         $fullName .= ($object->getFirstname()) ? $object->getFirstname()." " : "";
                         $fullName .= ($object->getMiddlename()) ? $object->getMiddlename()." " : "";
@@ -405,9 +449,16 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $bState = $billAddr['region'];
                             }
                             
-                            $bCountryObj = Mage::getModel('directory/country')
-                            ->loadByCode($billAddr['country_id']);
-                            $bCountry = $bCountryObj->getName();
+                            $bcountryNm = $billAddr['country_id'];
+                            if($bcountryNm){
+                                if(strlen($bcountryNm) > 3){
+                                    $bCountry = $bcountryNm;
+                                }else{
+                                    $bCountryObj = Mage::getModel('directory/country')
+                                    ->loadByCode($billAddr['country_id']);
+                                    $bCountry = $bCountryObj->getName();
+                                }
+                            }
                         }
                         if($shipAddr){
                             $sRegionId = $shipAddr['region_id'];
@@ -419,9 +470,16 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $sState = $shipAddr['region'];
                             }
                             
-                            $sCountryObj = Mage::getModel('directory/country')
-                            ->loadByCode($shipAddr['country_id']);
-                            $sCountry = $sCountryObj->getName();
+                            $scountyNm = $shipAddr['country_id'];
+                            if($scountyNm){
+                                if(strlen($scountyNm) > 3){
+                                    $sCountry = $scountyNm;
+                                }else{
+                                    $sCountryObj = Mage::getModel('directory/country')
+                                    ->loadByCode($scountyNm);
+                                    $sCountry = $sCountryObj->getName();
+                                }
+                            }
                         }
                     }
                     
@@ -459,6 +517,9 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $isAdd = true;
                                 $value = $sCountry;
                             }elseif ($k == "old_store_id"){
+                                $isAdd = true;
+                                $value = $oldStoreArr[$object->getData($k)];
+                            }elseif ($k == "store_id"){
                                 $isAdd = true;
                                 $value = $oldStoreArr[$object->getData($k)];
                             }
@@ -550,7 +611,13 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                                 $value = ($object->getData($k))?"true":"false";
                             }elseif ($k == "Pricebook2Id"){
                                 $isAdd = true;
-                                $value = Mage::helper('allure_salesforce')->getGeneralPricebook();
+                                $value = "";
+                                if($objectType == "product-retail-price" ){
+                                    $value = Mage::helper('allure_salesforce')->getGeneralPricebook();
+                                }else{
+                                    $value = Mage::helper('allure_salesforce')->getWholesalePricebook();
+                                }
+                                
                             }elseif ($k == "UnitPrice"){
                                 $price = 0;
                                 if($objectType == "product-wholesale-price"){
@@ -626,6 +693,9 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                             }elseif ($k == "order_created_at"){
                                 $isAdd = true;
                                 $value = date("Y-m-d",strtotime($orderObj->getData("created_at")));
+                            }elseif ($k == "store_id"){
+                                $isAdd = true;
+                                $value = $oldStoreArr[$object->getData($k)];
                             }
                             
                         }elseif ($objectType == "creditmemo"){
@@ -644,6 +714,9 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                             }elseif ($k == "order_created_at"){
                                 $isAdd = true;
                                 $value = date("Y-m-d",strtotime($orderObj->getData("created_at")));
+                            }elseif ($k == "store_id"){
+                                $isAdd = true;
+                                $value = $oldStoreArr[$object->getData($k)];
                             }
                         }
                         
@@ -768,11 +841,31 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
             $response["filename"] = $filename;
             $response["path"] = $filePath;
         }catch (Exception $e){
-            $message = $e->getMessage();
+            $message = $e->getMessage()." ".$object->getId();
             $response["success"] = false;
             $response["message"] = $message;
         }
         return $response;
+    }
+
+    /* Invoice Pdf generate CSV */
+    public function generatePdfCsv($data)
+    {
+        try{
+            $folder = $this->getFolder(self::OBJ_INVOICE_PDF);
+            $date = Mage::getModel('core/date')->date('Y_m_d_H-i-s');
+            $filename = self::OBJ_INVOICE_PDF . "_" .$date. ".csv";
+            $filePath = $folder . DS . $filename;
+         $csv = new Varien_File_Csv();
+         $csv->saveData($filePath,$data);
+         $response["success"] = true;
+         $response["filename"] = $filename;
+         $response["path"] = $filePath;
+         return $response;
+     }catch(Exception $e){
+
+     }
+         
     }
     
     public function uploadCsvFile($fileName){
@@ -874,7 +967,9 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                 
                 foreach ($_csvData as $data){
                     try{
-                        $salesforce_id  = $data["id"];
+                        if($objectType != self::OBJ_INVOICE_PDF)
+                            $salesforce_id  = $data["id"];
+
                         if($objectType == self::OBJ_ACCOUNT){
                             $customer_id    = $data["customer_id__c"];
                             $customer = Mage::getModel("customer/customer")->load($customer_id);
@@ -959,6 +1054,28 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract{
                             }else{
                                 $failureCount ++;
                                 $logData = "invoice_id:".$invoice_increment_id." salesforce_id:".$salesforce_id." not updated.";
+                            }
+                            
+                        }elseif ($objectType == self::OBJ_INVOICE_PDF){
+                            $title = $data["title"];
+                            $contentDocumentId = $data['contentdocumentid'];
+                            //$order_increment_id = preg_replace('/[^0-9]/', '', $title);
+                            $order_increment_id = substr($title, 0, strrpos($title, "."));
+                            $logData = "extracted order increment id:".$order_increment_id;
+
+                            if($order_increment_id){
+                                $order = Mage::getModel('sales/order')->loadByIncrementId($order_increment_id);
+                                
+                                if($order->getId()==null){
+                                    continue;
+                                }
+                                $salesforce_id = $order->getData('salesforce_order_id');
+                                $logData .= "salesforce_id:".$salesforce_id." updated.";
+                                $response['salesforce_mapping'][] = array('contentdocumentid'=>$contentDocumentId, 'salesforce_order_id' => $salesforce_id,
+                                    'share_type' => 'V');
+                            }else{
+                                $failureCount ++;
+                                $logData .= "salesforce_id:".$salesforce_id." not updated.";
                             }
                             
                         }elseif ($objectType == self::OBJ_SHIPMENT){

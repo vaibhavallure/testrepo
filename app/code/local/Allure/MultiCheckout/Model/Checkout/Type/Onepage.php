@@ -444,7 +444,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         $this->changeCustomQuoteStatus();
         $isBackorder = $_checkoutHelper->isQuoteContainsBackorderProduct();
         if ($isBackorder) {
-            $quoteItems = $quoteMain->getAllItems(); // $quoteMain->getAllItems();
+            $quoteItems = $quoteMain->getAllVisibleItems(); // $quoteMain->getAllItems();
 
             //Mage::log(json_encode($quoteItems->getData()),Zend_log::DEBUG,'ajay.log',true);
             $backorder_quote = Mage::getModel('sales/quote')->load($quoteMain->getId()); // unavialable
@@ -482,19 +482,22 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                 $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
                 $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
 
+                $product = Mage::getModel("catalog/product")
+                    ->load($item->getProduct()->getId());
+                
                 $stock_qty = intval($productInvryCount->getQty());
                 if ($stock_qty < $item->getQty()&& $productInvryCount->getManageStock()==1){
                     //if( $productInvryCount <= 0 ){
                     //$backorder_quote->addItem($item->setId(null));
 
-                    if($item->getProductType() !='configurable'){
-                        $backorder_quote->addProduct($item->getProduct(), $item->getBuyRequest());
-                    }
+                    //if($item->getProductType() !='configurable'){
+                    $backorder_quote->addProduct($product, $item->getBuyRequest());
+                    //}
                 }else{
                     //$order_quote->addItem($item->setId(null));
-                    if($item->getProductType() !='configurable'){
-                        $order_quote->addProduct($item->getProduct(), $item->getBuyRequest());
-                    }
+                    //if($item->getProductType() !='configurable'){
+                    $order_quote->addProduct($product, $item->getBuyRequest());
+                    //}
                 }
 
             }

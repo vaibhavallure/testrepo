@@ -182,11 +182,13 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
 
+            $calculateRegion = true;
+
+            $calculateTotals = true;
+
             if (isset($data['email'])) {
                 $data['email'] = trim($data['email']);
             }
-
-            $calculateRegion = true;
 
             if ($calculateRegion) {
 
@@ -206,8 +208,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             }
 
             Mage::log("NEW DATA: ".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
-
-            $calculateTotals = true;
 
             if (!$calculateTotals) {
                 $this->_getQuote()->getShippingAddress()->setCollectShippingRates(false);
@@ -233,44 +233,49 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
                         foreach($address->getGroupedAllShippingRates() as $rates){
                             foreach ($rates as $rate) {
-                                if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
+
+					            Mage::log("RATE: ".$rate->getCarrier().'//'.$rate->getCode(),Zend_Log::DEBUG, 'applepay.log', true);
+
+                                if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || in_array($rate->getCarrier(), array('counterpoint_storepickupshipping', 'tm_storepickupshipping', 'allure_pickinstore'))) {
                                     continue;
                                 }
+
+								$shippingMethods[$rate->getCode()] = array(
+									//"rate_id"			=> $rate->getId(),
+						            "address_id"		=> $rate->getAddressId(),
+						            "code"				=> $rate->getCode(),
+						            "carrier"			=> $rate->getCarrier(),
+						            "carrier_title"		=> $rate->getCarrierTitle(),
+						            "method"			=> $rate->getMethod(),
+						            "method_title"		=> $rate->getMethodTitle(),
+						            "method_description"=> $rate->getMethodDescription(),
+						            "price"				=> round($rate->getPrice(), 2)
+								);
 
                                 if (!$hasDefaultMethod) {
                                     $this->_getSession()->setDefaultShippingMethod($rate->getCode());
 
-                                    if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
-                                        $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($rate->getCode());
+									if (!$address->getShippingMethod() || $address->getShippingMethod() != '') {
+	                                    $address->setShippingMethod($rate->getCode());
+									}
 
-                                        $this->getOnepage()->getQuote()->collectTotals()->save();
-                                    }
+                                    //$this->getOnepage()->getQuote()->collectTotals()->save();
 
                                     $hasDefaultMethod = true;
                                 }
-
-                                $shippingMethods[$rate->getCode()] = $rate->getData();
                             }
                         }
                     }
 
+
+					Mage::log("DEFAULT CARRIER: ".$address->getShippingMethod(),Zend_Log::DEBUG, 'applepay.log', true);
+
+
                     $result['shipping_methods'] = $shippingMethods;
-
-                    $result['goto_section'] = 'shipping_method';
-
-                    $result['update_section'] = array(
-                            'name' => 'shipping-method',
-                            //'html' => $this->_getShippingMethodsHtml()
-                    );
-
-                    $result['allow_sections'] = array('shipping');
-                    $result['duplicateBillingInfo'] = 'true';
-                } else {
-                    $result['goto_section'] = 'shipping';
                 }
 
-                //$this->getOnepage()->getQuote()->setTotalsCollectedFlag(false);
-                //$this->getOnepage()->getQuote()->collectTotals()->save();
+                $this->getOnepage()->getQuote()->setTotalsCollectedFlag(false);
+                $this->getOnepage()->getQuote()->collectTotals()->save();
 
                 $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
                 $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
@@ -289,8 +294,6 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             }
 
             $this->_setDeliveryOption();
-
-
 
             //$this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
 
@@ -427,7 +430,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $hasDefaultMethod = true;
                 }
 
-                $shippingMethods[$rate->getCode()] = $rate->getData();
+				if (!in_array($rate->getCode(), array('tm_storepickupshipping_tm_storepickupshipping', 'tm_storepickupshipping','allure_pickinstore_allure_pickinstore','allure_pickinstore'))) {
+					$shippingMethods[$rate->getCode()] = $rate->getData();
+				}
             }
         }
 

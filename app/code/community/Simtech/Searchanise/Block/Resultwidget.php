@@ -11,6 +11,7 @@
 * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
 * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
 ****************************************************************************/
+
 class Simtech_Searchanise_Block_Resultwidget extends Mage_Core_Block_Template
 {
 
@@ -36,19 +37,6 @@ class Simtech_Searchanise_Block_Resultwidget extends Mage_Core_Block_Template
         }
 
         return parent::_prepareLayout();
-    }
-
-    public function getGiftCardProductsId(){
-         $collection = Mage::getModel('catalog/product')->getCollection()
-                    ->addAttributeToSelect('id')
-                    ->addAttributeToFilter(array(array("attribute"=>"sku","in"=>array('gift','STORECARD'))))
-                    ->addAttributeToFilter(array(array("attribute"=>"status","eq"=>1)));
-        
-        $prodIds = array();
-         foreach ($collection as $key => $product) {
-           $prodIds[]=$product->getId();
-         }
-         return $prodIds;
     }
 
 }

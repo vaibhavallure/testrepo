@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -62,7 +62,7 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Product extends Mirasvit_Advr_Block_
 
     protected function _prepareCollection()
     {
-        Mage::register('ignore_tz', true);
+        Mage::register('ignore_tz', true, true);
         $collection = Mage::getModel('advr/report_sales')
             ->setBaseTable('catalog/product')
             ->setFilterData($this->getFilterData(), true, false, true, true)
@@ -81,7 +81,8 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Product extends Mirasvit_Advr_Block_
         $columns = array(
             'product_sku' => array(
                 'header' => 'SKU',
-                'type' => 'text',
+                'type' => 'array',
+                'filter' => false,
                 'totals_label' => 'Total',
                 'filter_totals_label' => 'Subtotal',
                 'link_callback' => array($this, 'rowUrlCallback'),
@@ -110,6 +111,7 @@ class Mirasvit_Advr_Block_Adminhtml_Catalog_Product extends Mirasvit_Advr_Block_
         );
 
         $columns += $this->getBaseProductColumns(true);
+        $columns += $this->getProductAttributeColumns();
 
         $columns['actions'] = array(
             'header' => 'Actions',

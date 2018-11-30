@@ -6,7 +6,6 @@ class Allure_SmartAnalytics_Helper_Data extends Mage_Core_Helper_Data
      *
      */
     const XML_PATH_ENABLED 					= 'allure_smartanalytics/options/enabled';
-    const XML_PATH_LICENSE_KEY 				= 'allure_smartanalytics/options/license_key';
     const XML_PATH_ACCOUNT_ID 				= 'allure_smartanalytics/options/account_id';
     const XML_PATH_ANONYMIZE_IP 			= 'allure_smartanalytics/options/anonymize_ip';
     const XML_PATH_DISPLAY_FEATURE 			= 'allure_smartanalytics/options/display_feature';
@@ -46,17 +45,7 @@ class Allure_SmartAnalytics_Helper_Data extends Mage_Core_Helper_Data
      */
     public function isEnabled($storeId = null)
     {
-        return Mage::getStoreConfig(self::XML_PATH_ENABLED, $storeId) && $this->isLicenseValid($storeId) && strlen($this->getAccountId($storeId)) && $this->hasCookie();
-    }
-
-    /**
-     * returns license key administration configuration option
-     *
-     * @return string
-     */
-    public function getLicenseKey($storeId = null)
-    {
-        return Mage::getStoreConfig(self::XML_PATH_LICENSE_KEY, $storeId);
+        return Mage::getStoreConfig(self::XML_PATH_ENABLED, $storeId) && strlen($this->getAccountId($storeId)) && $this->hasCookie();
     }
 
     /**
