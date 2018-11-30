@@ -62,6 +62,7 @@ deploy-cloud:
   only:
     - production
   script:
+    - ln -s /usr/share/owncloud cloud
     - mage-deploy
     - echo 'Deployed on Production'
 
