@@ -234,16 +234,12 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-        $virtualstores=Mage::helper("allure_virtualstore")->getVirtualStores();
-//        echo "<pre>";
+        $virtualstores=Mage::getSingleton("allure_virtualstore/store")->getCollection();
+
 
         foreach ($virtualstores as $virtualstore) {
             $stores[]=$virtualstore->getStoreId();
         }
-
-//
-//        var_dump($stores);
-//        die;
 
 
         $allmailbody="";
