@@ -67,7 +67,7 @@ class Allure_Teamwork_Model_Tmobserver{
                 return ;
             }
             
-            $responseArr = json_decode($response,true);
+            $responseArr = unserialize($response);
             $this->addLog("count - ".count($responseArr));
             $ordCnt = 0;
             foreach ($responseArr as $object){
