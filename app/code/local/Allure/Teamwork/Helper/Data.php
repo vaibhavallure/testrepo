@@ -25,6 +25,7 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     const XML_TEAMWORK_SYNC_DATA_ACCESS_TOKEN = "allure_teamwork/teamwork_salesforce_settings/access_token";
     const XML_TEAMWORK_CRON_EXPR = "allure_teamwork/teamwork_salesforce_settings/cron_time";
     
+    const XML_TEAMWORK_QUERY_TIME = "allure_teamwork/teamwork_salesforce_settings/query_time";
     /**
      * @return teamwork module status
      */
@@ -93,5 +94,9 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     
     public function getTeamworkMagentoGroupId(){
         return Mage::getStoreConfig(self::XML_TEAMWORK_MAGENTO_GROUP_ID);
+    }
+    
+    public function getTeamworkQueryTime(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_QUERY_TIME);
     }
 }

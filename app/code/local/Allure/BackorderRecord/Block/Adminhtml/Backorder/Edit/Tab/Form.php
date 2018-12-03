@@ -31,12 +31,12 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
 
         foreach($c_groups as $c_type) {
 
-            if ($c_type->getCustomerGroupId() != 0){
+//            if ($c_type->getCustomerGroupId() != 0){
                 $customerGroups[] = array (
                     'label' => Mage::helper("backorderrecord")->__($c_type->getCustomerGroupCode()),
                     'value' => $c_type->getCustomerGroupId()
                 );
-            }
+//            }
         }
 
         foreach ($statuses as $code => $label) {
