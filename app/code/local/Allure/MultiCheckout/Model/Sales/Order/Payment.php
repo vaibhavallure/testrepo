@@ -269,4 +269,76 @@ class Allure_MultiCheckout_Model_Sales_Order_Payment extends Mage_Sales_Model_Or
         Mage::throwException(
                 Mage::helper('sales')->__('The transaction "%s" cannot be captured yet.', $invoice->getTransactionId()));
     }
+    
+    private function addDebugLog($logData){
+        Mage::log($logData,Zend_Log::DEBUG,'al_inv_track.log',true);
+    }
+    
+    
+    /**
+     * Create new invoice with maximum qty for invoice for each item
+     * register this invoice and capture
+     *
+     * @return Mage_Sales_Model_Order_Invoice
+     */
+    protected function _invoice()
+    {
+        $invoice = $this->getOrder()->prepareInvoice();
+        
+        $invoice->register();
+        if ($this->getMethodInstance()->canCapture()) {
+            $invoice->capture();
+        }
+        
+        $storeId = $this->getOrder()->getStoreId();
+        $incrementId = $this->getInvoiceIncrementId($storeId);
+        //$this->addDebugLog("Increment Id - ".$incrementId);
+        if($incrementId){
+            $invoice->setIncrementId($incrementId);
+        }
+        
+        $this->getOrder()->addRelatedObject($invoice);
+        return $invoice;
+    }
+    
+    /**
+     * get increment id for invoice
+     */
+    public function getInvoiceIncrementId($storeId = 1){
+        $incrementId = null;
+        $maxTry = 2;
+        for ($tryCnt = 0; $tryCnt < $maxTry; $tryCnt++){
+            $incrementId = Mage::getSingleton('eav/config')->getEntityType("invoice")
+            ->fetchNewIncrementId($storeId);
+            //$this->addDebugLog("Invoice id try count - ".$tryCnt);
+            if(!$this->isInvoiceIncrementIdUsed($incrementId)){
+                break;
+            }
+        }
+        return $incrementId;
+    }
+    
+    
+    /**
+     * Check is invoice increment id use in sales/invoice table
+     *
+     * @param string $invoiceIncrementId
+     * @return boolean
+     */
+    public function isInvoiceIncrementIdUsed($invoiceIncrementId)
+    {
+        $coreResource = Mage::getSingleton('core/resource');
+        $adapter = $coreResource->getConnection('core_read');
+        $bind      = array(':increment_id' => $invoiceIncrementId);
+        $select    = $adapter->select();
+        $select->from($coreResource->getTableName('sales/invoice'), 'entity_id')
+        ->where('increment_id = :increment_id');
+        $entity_id = $adapter->fetchOne($select, $bind);
+        if ($entity_id > 0) {
+            $this->addDebugLog("Duplicate invoice id found - ".$invoiceIncrementId);
+            return true;
+        }
+        
+        return false;
+    }
 }

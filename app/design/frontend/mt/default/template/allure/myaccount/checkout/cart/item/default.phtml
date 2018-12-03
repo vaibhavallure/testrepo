@@ -248,60 +248,18 @@ $typeId = $_item->getProduct()->getTypeId();
         <?php endif; ?>
     </td>
 </tr>
-<?php if (count($messages)): $html = "";?>
-    <tr class="messages">
+
+<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+<?php if(!empty($message)): ?>  
+<tr class="messages">
         <td colspan="6">
-            <div class="item-msg <?php echo $message['type'] ?>">
-            <?php 
-            	$stockQty = intval($_item->getProduct()->getStockItem()->getQty());
-                
-            	$manageStock = $_item->getProduct()->getStockItem()->getManageStock();
-                     
-                $isInStock = $_item->getProduct()->getStockItem()->getIsInStock();
-                     
-                $isBackordered = false;
-                     
-                $backorderedQty = $_item->getQty();
-                     
-                if ($stockQty < $backorderedQty) {
-                	$isBackordered = true;
-                    
-                    if ($stockQty >= 0) {
-                    	$backorderedQty = $_item->getQty() - $stockQty;
-                    }
-                }
-                 
-                if (0):  //existing code allure add code flag
-	                if ($isBackordered) : ?>
-	                	<p>This product is not available in the requested quantity. <?php echo $backorderedQty; ?> of the items will be backordered.</p>
-	               	<?php else : ?>
-		                <?php foreach ($messages as $message): ?>
-		                    <?php $html .= $message['text'];break; ?>
-		                <?php endforeach;?>
-	                    <p>* <?php echo $html; ?></p>
-	            	<?php endif; ?>  
-				<?php endif; ?> 
-				
-				<?php //allure add code start?>
-				<?php if ($isBackordered) :?> 
-				<?php
-                	$message = "";
-                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());
-                	if(!empty($stockMsg))
-                		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-                	else 
-                		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
-                ?>
-                <p><?php echo $message ?></p>
-				<?php else : ?> 
-					<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
-				<?php endif; ?>
-				<?php //allure add code end?>    
-				
+            <div class="item-msg">
+             	<p><?php echo $message ?></p>
             </div>
         </td>
     </tr>
 <?php endif; ?>
+
 <script>
 jQuery(document).ready(function(){
 	if (jQuery('.messages').length > 0) {

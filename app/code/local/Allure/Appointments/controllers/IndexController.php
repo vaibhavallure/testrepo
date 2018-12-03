@@ -332,7 +332,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     'name' => Mage::getStoreConfig("trans_email/bookings/name"),
                     'email' => $configData['store_email'][$storeKey]
                 );
-                
+
                 try {
                     if ($old_appointment) {
                         if($enableCustomerEmail){
@@ -455,10 +455,10 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             $customer->save();
             $customer->sendNewAccountEmail();
         }
-        catch (Exception $ex) {
+        catch (Exception $e) {
             Mage::log(
                 " Customer create when new customer book appointment :" .
-                $e->getMessage(), Zend_Log::DEBUG, 'appointments',
+                $e->getMessage(), Zend_Log::DEBUG, 'appointments.log',
                 true);
             // Mage::log($e->getMessage());
             // print_r($e->getMessage());

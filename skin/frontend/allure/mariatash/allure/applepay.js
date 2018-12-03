@@ -101,6 +101,14 @@ if (window.ApplePaySession) {
 		promise.then(function (merchantSession) {
 			console.log('START ACTION: completeMerchantValidation');
 			Allure.ApplePay.session.completeMerchantValidation(merchantSession);
+
+			if (typeof ga == "function") {
+				ga('ec:setAction', 'checkout', {
+					'step': 1
+				});
+				ga('send', 'pageview');
+			}
+
 			console.log('END ACTION: completeMerchantValidation');
 		});
 		console.log('END EVENT: onValidateMerchant');
@@ -113,6 +121,14 @@ if (window.ApplePaySession) {
 		var newLineItems = Allure.ApplePay.data.lineItems;
 
 		console.log({newTotal : newTotal, newLineItems: newLineItems});
+
+		if (typeof ga == "function") {
+			ga('ec:setAction', 'checkout', {
+				'step': 4,
+				'option': 'Apple Pay'
+			});
+			ga('send', 'pageview');
+		}
 
 		Allure.ApplePay.session.completePaymentMethodSelection( {newTotal : newTotal, newLineItems: newLineItems});//, Allure.ApplePay.data.lineItems
 
@@ -170,6 +186,13 @@ if (window.ApplePaySession) {
 
 		if (typeof Allure.ApplePay.data.response.addProduct != 'undefined') {
 			quote_id = Allure.ApplePay.data.response.addProduct.quote_id;
+		}
+
+		if (typeof ga == "function") {
+			ga('ec:setAction', 'checkout', {
+				'step': 2
+			});
+			ga('send', 'pageview');
 		}
 
 		Allure.ApplePay.data.response.saveBilling = Allure.ApplePay.action.sendRequest('saveBilling', {
@@ -249,6 +272,15 @@ if (window.ApplePaySession) {
 	Allure.ApplePay.event.onShippingMethodSelected = function(event) {
 		console.log('START EVENT: onShippingMethodSelected');
 		console.log(event);
+
+		if (typeof ga == "function") {
+			ga('ec:setAction', 'checkout', {
+				'step': 3,
+				'option': event.shippingMethod.identifier
+			});
+
+			ga('send', 'pageview');
+		}
 
 		if (event.shippingMethod) {
 			Allure.ApplePay.action.saveShippingMethod(event.shippingMethod.identifier);
@@ -478,16 +510,16 @@ if (window.ApplePaySession) {
 		console.log('sendRequest START::'+requestType);
 		var responseData = null;
 		jQuery.ajax({
-			url: 	Allure.ApplePay.data.baseUrl+requestType,
-			async: 	false,
-			cache: 	false,
-			method: 'POST',
-			dataType: 'json',
-			data: 	requestData,
+			url: 		Allure.ApplePay.data.baseUrl+requestType,
+			async: 		false,
+			cache: 		false,
+			method: 	'POST',
+			dataType: 	'json',
+			data: 		requestData,
 			xhrFields: {
 				withCredentials: true
 			},
-			timeout: 6000 // 20 seconds
+			timeout: 30000 // 20 seconds
 
 		}).done(function(data){
 			responseData = data;
@@ -615,6 +647,13 @@ if (window.ApplePaySession) {
 			if (typeof Allure.ApplePay.data.response.saveBilling.currency != 'undefined') {
 				Allure.ApplePay.data.currencyCode = Allure.ApplePay.data.response.saveBilling.currency;
 			}
+		}
+
+		if (typeof ga == "function") {
+			ga('ec:setAction', 'checkout', {
+				'step': 5
+			});
+			ga('send', 'pageview');
 		}
 
 		return new Promise(function(resolve, reject) {

@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -146,7 +146,7 @@ class Mirasvit_Advr_Helper_Date extends Mage_Core_Helper_Abstract
         $firstDay = (int)Mage::getStoreConfig('general/locale/firstday');
 
         if ($timezone) {
-            $timestamp = Mage::app()->getLocale()->date($timestamp);
+            $timestamp = strtotime(Mage::app()->getLocale()->date($timestamp, null, 'en_US')->__toString());
         }
 
         $from = new Zend_Date(

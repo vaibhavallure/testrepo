@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -58,13 +58,18 @@ class Mirasvit_Advr_Block_Adminhtml_Order_NewVsReturning extends Mirasvit_Advr_B
         return $this;
     }
 
+    protected function getGroupByColumn()
+    {
+        return 'period_of_sale';
+    }
+
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('advr/report_sales')
             ->setBaseTable('sales/order')
             ->setFilterData($this->getFilterData(), true, false)
             ->selectColumns($this->getVisibleColumns())
-            ->groupByColumn('period_of_sale');
+            ->groupByColumn($this->getGroupByColumn());
 
         return $collection;
     }
@@ -97,6 +102,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_NewVsReturning extends Mirasvit_Advr_B
                 'type'           => 'percent',
                 'index'          => 'quantity_by_new_customers',
                 'frame_callback' => array($this, 'percent'),
+                'export_callback' => array($this, 'percent'),
             ),
 
             'quantity_by_returning_customers'        => array(
@@ -115,6 +121,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_NewVsReturning extends Mirasvit_Advr_B
                 'type'           => 'percent',
                 'index'          => 'quantity_by_returning_customers',
                 'frame_callback' => array($this, 'percent'),
+                'export_callback' => array($this, 'percent'),
             ),
         );
 

@@ -16,6 +16,15 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     
     const SYNC_TM_MAG_LOG_FILE              = "sync_teamwork_customer.log";
     
+    const XML_SYNC_TEAMWORK_STATUS          = "allure_teamwork/teamwork_salesforce_settings/status";
+    const XML_TEAMWORK_MAGENTO_WEBSITE_ID   = "allure_teamwork/teamwork_salesforce_settings/website_id";
+    const XML_TEAMWORK_MAGENTO_GROUP_ID     = "allure_teamwork/teamwork_salesforce_settings/group_id";
+    const XML_TEAMWORK_SALESFORCE_TRANSFER_STATUS = "allure_teamwork/teamwork_salesforce_settings/salesforce_status";
+    
+    const XML_TEAMWORK_DATA_SYNC_URL = "allure_teamwork/teamwork_salesforce_settings/teamwork_sync_url";
+    const XML_TEAMWORK_SYNC_DATA_ACCESS_TOKEN = "allure_teamwork/teamwork_salesforce_settings/access_token";
+    const XML_TEAMWORK_CRON_EXPR = "allure_teamwork/teamwork_salesforce_settings/cron_time";
+    
     /**
      * @return teamwork module status
      */
@@ -56,5 +65,33 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
      */
     public function getLogStatus(){
         return Mage::getStoreConfig(self::XML_TEAMWORK_LOG_STATUS);
+    }
+    
+    public function getTeamworkSyncStatus(){
+        return Mage::getStoreConfig(self::XML_SYNC_TEAMWORK_STATUS);
+    }
+    
+    public function getTeamworkWebsiteId(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_MAGENTO_WEBSITE_ID);
+    }
+    
+    public function getTeamworkSalesforceStatus(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_SALESFORCE_TRANSFER_STATUS);
+    }
+    
+    public function getTeamworkSyncDataUrl(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_DATA_SYNC_URL);
+    }
+    
+    public function getTeamworkSyncDataToken(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_SYNC_DATA_ACCESS_TOKEN);
+    }
+    
+    public function getTeamworkCronExpression(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_CRON_EXPR);
+    }
+    
+    public function getTeamworkMagentoGroupId(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_MAGENTO_GROUP_ID);
     }
 }

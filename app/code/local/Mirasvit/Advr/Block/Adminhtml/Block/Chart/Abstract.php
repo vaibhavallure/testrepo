@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -20,6 +20,7 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Chart_Abstract extends Mage_Adminhtml_
     protected $collection;
     protected $options = array();
     protected $columns = array();
+    protected $resetLimit = true;
 
     public function _prepareLayout()
     {
@@ -114,11 +115,27 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Chart_Abstract extends Mage_Adminhtml_
     {
         if ($this->collection == null) {
             $this->collection = $this->getData('collection');
-            $this->collection->setPageSize(10000)
-                ->clear();
+            if ($this->resetLimit) {
+                $this->collection->setPageSize(10000)
+                    ->clear();
+            }
         }
 
         return $this->collection;
+    }
+
+    /**
+     * Whether the collection's limit should be reset or not (show chart only for page size)
+     *
+     * @param bool $flag
+     *
+     * @return $this
+     */
+    public function setResetLimit($flag)
+    {
+        $this->resetLimit = $flag;
+
+        return $this;
     }
 
     protected function _isColumnAllowed($column)

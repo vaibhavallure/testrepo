@@ -8,6 +8,26 @@ $log_file = "invoice_pdf_salesforce.log";
 
 $orderIds = array(297370,297368,297372);
 
+$curPage = $_GET["page"];
+$pageSize = $_GET["size"];
+
+if(empty($curPage) || empty($pageSize)){
+    die("page or Size is missing");
+}
+
+if(is_numeric($curPage)){
+    $curPage = (int) $curPage;
+}else{
+    die("<p class='salesforce-error'>Please specify Current page in only number format.
+(eg: 1 or 2 or 3 etc...)</p>");
+}
+if(is_numeric($pageSize)){
+    $pageSize = (int) $pageSize;
+}else{
+    die("<p class='salesforce-error'>Please specify Page size in only number format.
+(eg: 1 or 2 or 3 etc...)</p>");
+}
+
 try{
     
     /* $tFile = $_GET["file"];
@@ -49,7 +69,7 @@ try{
     );
     
     $io           = new Varien_Io_File();
-    $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "invoice_pdf" ;
+    $folderPath   = Mage::getBaseDir("var") . DS . "salesforce" . DS . "invoice_pdf_".$curPage ;
     $filename    = "INVOICE_PDF.csv";
     
     $TfolderPath = $folderPath . DS . "PDF";
@@ -63,7 +83,10 @@ try{
     $io->streamWriteCsv($header);
     
     $orderCollection = Mage::getModel("sales/order")->getCollection()
-    ->addFieldToFilter("entity_id",array("in" => $orderIds));
+    ->setCurPage($curPage)
+    ->setPageSize($pageSize)
+    ->setOrder('entity_id', 'asc');
+    //->addFieldToFilter("entity_id",array("in" => $orderIds));
     
     foreach ($orderCollection as $order){
         try{

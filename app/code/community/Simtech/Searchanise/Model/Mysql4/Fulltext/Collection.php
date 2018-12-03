@@ -16,7 +16,7 @@
 class Simtech_Searchanise_Model_Mysql4_Fulltext_Collection extends Mage_CatalogSearch_Model_Mysql4_Fulltext_Collection
 {
     /**
-     * Searchanise Collection Product 
+     * Searchanise Collection Product
      *
      * @var Simtech_Searchanise_Model_Searchanise
      */
@@ -37,27 +37,27 @@ class Simtech_Searchanise_Model_Mysql4_Fulltext_Collection extends Mage_CatalogS
     {
         return $this->_searchaniseCollection->initSearchaniseRequest();
     }
-    
+
     public function checkSearchaniseResult()
     {
         return $this->_searchaniseCollection->checkSearchaniseResult();
     }
-    
+
     public function setSearchaniseRequest($request)
     {
         return $this->_searchaniseCollection->setSearchaniseRequest($request);
     }
-    
+
     public function getSearchaniseRequest()
     {
         return $this->_searchaniseCollection->getSearchaniseRequest();
     }
-    
+
     public function addSearchaniseFilter()
     {
         return $this->_searchaniseCollection->addSearchaniseFilter();
     }
-    
+
     /**
      * Set Order field
      *
@@ -103,3 +103,4 @@ class Simtech_Searchanise_Model_Mysql4_Fulltext_Collection extends Mage_CatalogS
         return parent::getLastPageNumber();
     }
 }
+

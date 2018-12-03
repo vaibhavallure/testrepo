@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -33,7 +33,15 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Country extends Mirasvit_Advr_Block_Ad
         $this->initChart()
             ->resetColumns()
             ->addColumn('Country', 'country_id')
-            ->addColumn('Grand Total', 'sum_grand_total', 'number');
+            ->addColumn('Grand Total', $this->getColumn('sum_grand_total'), 'number');
+
+        return $this;
+    }
+
+    protected function prepareToolbar()
+    {
+        $this->initToolbar()
+            ->setSalesSourceVisibility(true);
 
         return $this;
     }
@@ -41,7 +49,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Country extends Mirasvit_Advr_Block_Ad
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort('sum_grand_total')
+            ->setDefaultSort($this->getColumn('sum_grand_total'))
             ->setDefaultDir('desc')
             ->setDefaultLimit(200)
             ->setPagerVisibility(false);
@@ -49,15 +57,9 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Country extends Mirasvit_Advr_Block_Ad
         return $this;
     }
 
-    public function _prepareCollection()
+    protected function getGroupByColumn()
     {
-        $collection = Mage::getModel('advr/report_sales')
-            ->setBaseTable('sales/order', true)
-            ->setFilterData($this->getFilterData())
-            ->selectColumns(array_merge($this->getVisibleColumns(), array('orders')))
-            ->groupByColumn('country_id');
-
-        return $collection;
+        return 'country_id';
     }
 
     public function getColumns()
@@ -69,10 +71,13 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Country extends Mirasvit_Advr_Block_Ad
                 'frame_callback' => array(Mage::helper('advr/callback'), 'country'),
                 'totals_label'   => 'Total',
                 'filter'         => false,
+                self::KEEP       => true
             ),
         );
 
         $columns += $this->getOrderTableColumns(true);
+
+        $columns = $this->convertColumnsToSalesSource($columns);
 
         $columns['actions'] = array(
             'header' => 'Actions',

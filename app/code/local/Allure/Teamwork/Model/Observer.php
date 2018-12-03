@@ -758,13 +758,19 @@ class Allure_Teamwork_Model_Observer{
       $numbers = range('0','9');
       $additional_characters = array('#','@','$');
       
+      $status = $helper->getTeamworkStatus();
+      $logStatus = $helper->getLogStatus();
+      $logStatus = ($logStatus)?true:false;
+      if(!$status){
+          Mage::log("teamwork customer sync status - ".$status,Zend_Log::DEBUG,$logFile,$logStatus);
+          return;
+      }
+      
       try{
           $operation = "last_query_time";
           $mLog = Mage::getModel("allure_teamwork/log")
             ->load($operation,'operation');
           
-          $logStatus = $helper->getLogStatus();
-          $logStatus = ($logStatus)?true:false;
           
           $lastQueryTime = (int) $mLog->getPage();//$helper->getLastSyncQueryTime();
           $syncURL   = $helper::SYNC_TEAMWORK_CUSTOMER_URLPATH;
@@ -830,8 +836,16 @@ class Allure_Teamwork_Model_Observer{
                                     ->setCustomerType(7)  
                                     ->setCustNote($customerNote)
                                     ->setTeamworkCustomerId($teamworkId)
-                                    ->setTaxvat($taxVatId)
-                                    ->save();
+                                    ->setTaxvat($taxVatId);
+                                   
+                                    if($email->acceptMarketing){
+                                        $customer->setTwAcceptMarketing($email->acceptMarketing);
+                                    }
+                                    if($email->acceptTransactional){
+                                        $customer->setTwAcceptTransactional($email->acceptTransactional);
+                                    }
+                                    
+                                    $customer->save();
                                     Mage::log("new customer id:".$customerObj->getId()." email:".$email,Zend_log::DEBUG,$logFile,$logStatus);
                               }
                               
@@ -966,5 +980,18 @@ class Allure_Teamwork_Model_Observer{
       //  $this->reupdateCustomerToTeamwork();
   }
   
+  //remove salesrule id from quote for teamwork order
+  public function removeSalesRuleForTeamworkOrder($observer){
+      $event = $observer->getEvent();
+      $quote = $event->getQuote();
+      $appliedRule = $event->getRule();
+      $result = $event->getResult();
+      if($quote->getCreateOrderMethod() == 2){
+          $result->setDiscountAmount(0);
+          $result->setBaseDiscountAmount(0);
+          $quote->setAppliedRuleIds(null);
+      }
+      return $this;
+  }
   
 }

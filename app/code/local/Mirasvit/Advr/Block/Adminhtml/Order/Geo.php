@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -50,8 +50,8 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
                 $this->getChart()
                     ->addOption('displayMode', 'regions')
                     ->addColumn('State', 'state')
-                    ->addColumn('Grand Total', 'sum_grand_total', 'number')
-                    ->addColumn('Number Of Orders', 'quantity', 'number');
+                    ->addColumn('Grand Total', $this->getColumn('sum_grand_total'), 'number')
+                    ->addColumn('Number Of Orders', $this->getColumn('quantity'), 'number');
                 break;
             case 'place':
                 $this->getChart()
@@ -59,8 +59,8 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
                     ->addColumn('Latitude', 'lat', 'number')
                     ->addColumn('Longitude', 'lng', 'number')
                     ->addColumn('Label', 'place', 'string')
-                    ->addColumn('Grand Total', 'sum_grand_total', 'number')
-                    ->addColumn('Number Of Orders', 'quantity', 'number');
+                    ->addColumn('Grand Total', $this->getColumn('sum_grand_total'), 'number')
+                    ->addColumn('Number Of Orders', $this->getColumn('quantity'), 'number');
                 break;
 
             case 'postcode':
@@ -72,14 +72,14 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
                     ->addColumn('Longitude', 'lng', 'number')
                     ->addColumn('Place', 'place', 'label')
                     ->addColumn('Postal Code', 'postcode', 'label')
-                    ->addColumn('Grand Total', 'sum_grand_total', 'label')
-                    ->addColumn('Number Of Orders', 'quantity', 'label');
+                    ->addColumn('Grand Total', $this->getColumn('sum_grand_total'), 'label')
+                    ->addColumn('Number Of Orders', $this->getColumn('quantity'), 'label');
                 break;
 
             default:
                 $this->getChart()
                     ->addColumn('Country', 'country_id')
-                    ->addColumn('Grand Total', 'sum_grand_total', 'number');
+                    ->addColumn('Grand Total', $this->getColumn('sum_grand_total'), 'number');
                 break;
 
         }
@@ -92,7 +92,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
         $this->initGrid();
 
         $this->getGrid()
-            ->setDefaultSort('sum_grand_total')
+            ->setDefaultSort($this->getColumn('sum_grand_total'))
             ->setDefaultDir('desc')
             ->setDefaultLimit(200)
             ->setPagerVisibility(true);
@@ -106,7 +106,8 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
 
         $this->getToolbar()
             ->setRangesVisibility(false)
-            ->setCompareVisibility(false);
+            ->setCompareVisibility(false)
+            ->setSalesSourceVisibility(true);
 
         $form = $this->getToolbar()->getForm();
 
@@ -148,6 +149,15 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
         return $this;
     }
 
+    protected function getGroupByColumn()
+    {
+        if ($this->getGeoDimension()) {
+            return $this->getColumn($this->getGeoDimension());
+        } else {
+            return $this->getColumn('country_id');
+        }
+    }
+
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('advr/report_sales');
@@ -160,15 +170,15 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
             );
         }
 
-        $collection->setBaseTable('sales/order', true)
+        $collection->setBaseTable($this->getBaseTable('sales/order'), true)
             ->setFilterData($this->getFilterData())
             ->selectColumns(array('lat', 'lng'))
             ->selectColumns($this->getVisibleColumns());
 
         if ($this->getGeoDimension()) {
-            $collection->groupByColumn($this->getGeoDimension());
+            $collection->groupByColumn($this->getGroupByColumn());
         } else {
-            $collection->groupByColumn('country_id');
+            $collection->groupByColumn($this->getGroupByColumn());
         }
 
         return $collection;
@@ -186,6 +196,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
             'options'        => Mage::getSingleton('advr/system_config_source_country')->toOptionHash(),
             'position'       => 1,
             'link_callback'  => array($this, 'countryLinkCallBack'),
+            self::KEEP       => true
         );
 
         if (in_array($this->getGeoDimension(), array('postcode', 'state', 'province', 'place'))) {
@@ -195,6 +206,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
                 'hidden'        => false,
                 'position'      => 2,
                 'link_callback' => array($this, 'stateLinkCallBack'),
+                self::KEEP      => true
             );
         }
 
@@ -204,6 +216,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
                 'totals_label' => '',
                 'hidden'       => false,
                 'position'     => 3,
+                self::KEEP     => true
             );
         }
 
@@ -214,6 +227,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
                 'hidden'        => false,
                 'position'      => 4,
                 'link_callback' => array($this, 'placeLinkCallBack'),
+                self::KEEP      => true
             );
         }
 
@@ -223,6 +237,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
                 'totals_label' => '',
                 'hidden'       => false,
                 'position'     => 5,
+                self::KEEP     => true
             );
         }
 
@@ -235,6 +250,8 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Geo extends Mirasvit_Advr_Block_Adminh
         );
 
         $columns += $this->getOrderTableColumns();
+
+        $columns = $this->convertColumnsToSalesSource($columns);
 
         return $columns;
     }

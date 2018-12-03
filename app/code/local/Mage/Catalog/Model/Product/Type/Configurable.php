@@ -704,7 +704,16 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
                         ->addCustomOption('parent_product_id', $product->getId());
                     if ($this->_isStrictProcessMode($processMode)) {
                         $_result[0]->setCartQty(1);
+
                     }
+                    else if($_result[0]->getTypeId()=="simple")
+                    {
+                        /*when process mode is not equal to full -- to avoid quantity issue for simple items in quote*/
+                        $_result[0]->setCartQty(1);
+                        $quoteid= Mage::helper('checkout/cart')->getCart()->getQuote()->getId();
+                        Mage::log("process mode not full--- quote id ".$quoteid,Zend_Log::DEBUG,'quantitycheck.log',true);
+                    }
+
                     $result[] = $_result[0];
                     return $result;
                 } else if (!$this->_isStrictProcessMode($processMode)) {
