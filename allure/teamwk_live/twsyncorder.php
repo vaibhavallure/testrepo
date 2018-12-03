@@ -5,7 +5,7 @@ umask(0);
 Mage::app();
 Mage::app()->setCurrentStore(0);
 
-$TM_URL = "/services/oldOrders";
+$TM_URL = "/services/orders";
 $TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
 
 $start = $_GET["start"];
@@ -15,14 +15,14 @@ if(!isset($start) && !isset($end)){
     die("provide date....");
 }
 
-$start = str_replace(" ","%20",$start);
-$end = str_replace(" ","%20",$end);
+//$start = str_replace(" ","%20",$start);
+//$end = str_replace(" ","%20",$end);
 
 $helper = Mage::helper("allure_teamwork");
-$urlPath = "http://35.237.115.49:9000";////$helper->getTeamworkSyncDataUrl();
-$requestURL = $urlPath . $TM_URL."?start=".$start."&end=".$end;
+$urlPath = $helper->getTeamworkSyncDataUrl();
+$requestURL = $urlPath . $TM_URL;//."?start=".$start."&end=".$end;
 var_dump($requestURL);
-$token = $TOKEN;//trim($helper->getTeamworkSyncDataToken());
+$token = trim($helper->getTeamworkSyncDataToken());
 $sendRequest = curl_init($requestURL);
 curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 curl_setopt($sendRequest, CURLOPT_HEADER, false);
@@ -35,7 +35,10 @@ curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
     "Authorization: Bearer ".$token
 ));
 
-$requestArgs = null;
+$requestArgs = array(
+    "start_time" => $start,
+    "end_time"   => $end
+);
 // convert requestArgs to json
 if ($requestArgs != null) {
     $json_arguments = json_encode($requestArgs);
@@ -47,6 +50,10 @@ echo "<pre>";
 $response1 = unserialize($response);
 var_dump(count($response1));
 //print_r($response1);
-$response = json_encode($response1);
-Mage::getModel("allure_teamwork/tmobserver")->addDataIntoSystem($response);
+//$response = json_encode($response1);
+if(!$response1["status"]){
+    Mage::log($response1,Zend_Log::DEBUG,"teamwork_sync_data.log",true);
+}else{
+    Mage::getModel("allure_teamwork/tmobserver")->addDataIntoSystem($response);
+}
 die("Finish");
