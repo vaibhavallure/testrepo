@@ -186,6 +186,9 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
         foreach ($this->getAllowAttributes() as $attribute) {
             $productAttribute = $attribute->getProductAttribute();
+
+			if (!$productAttribute) continue;
+
             $attributeId = $productAttribute->getId();
             $info = array(
                'id'        => $productAttribute->getId(),
