@@ -747,7 +747,7 @@ a#foo2_next {
 @media only screen and (max-width: 768px) {
 	/*FOR CALENDRA INDRAJIT IPAD*/
 	#fetchpickurday{
-		width: 35% !important; ;
+		width: 36% !important; ;
 		float: left;
 	}
 	#pick_ur_time_div

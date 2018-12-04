@@ -609,18 +609,19 @@ preg_match('#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=embed\/)[^"&\n]+|(?<=v\/)[^&\n]+|(?<=
 
         var id = 'amconf-image-<?php echo $colorOptionId ;?>';
 
+        //commented and copied to view.phtml after ajax price load
         /* Add tooltip for color icon*/
-        jQuery('.amconf-images-container').each(function(){
-                jQuery(this).find('img').each(function(){
-                    var imgid  = jQuery(this).attr('id'),
-                        imgalt = jQuery(this).attr('alt');
-                    Tipped.create(jQuery("#"+imgid), imgalt, {
-                            skin: 'customTiny',
-                            showOn: ['click', 'mouseover'],
-                            background: { color: '#fff', opacity: .7 }
-                    });
-                });
-            });
+        // jQuery('.amconf-images-container').each(function(){
+        //         jQuery(this).find('img').each(function(){
+        //             var imgid  = jQuery(this).attr('id'),
+        //                 imgalt = jQuery(this).attr('alt');
+        //             Tipped.create(jQuery("#"+imgid), imgalt, {
+        //                     skin: 'customTiny',
+        //                     showOn: ['click', 'mouseover'],
+        //                     background: { color: '#fff', opacity: .7 }
+        //             });
+        //         });
+        //     });
 
         /* Attribute Post Length */
         if(jQuery('#attribute189').html()){
