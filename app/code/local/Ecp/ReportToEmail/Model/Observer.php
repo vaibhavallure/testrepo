@@ -226,7 +226,7 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-    public function sendReportNew()
+    public function sendReportNew($date=null)
     {
         // Mage::log('ppp');
 //        $stores = Mage::getStoreConfig('report/general/enable_stores');
@@ -234,16 +234,12 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-        $virtualstores=Mage::helper("allure_virtualstore")->getVirtualStores();
-//        echo "<pre>";
+        $virtualstores=Mage::getSingleton("allure_virtualstore/store")->getCollection();
+
 
         foreach ($virtualstores as $virtualstore) {
             $stores[]=$virtualstore->getStoreId();
         }
-
-//
-//        var_dump($stores);
-//        die;
 
 
         $allmailbody="";
@@ -257,7 +253,12 @@ class Ecp_ReportToEmail_Model_Observer
                 $emails = explode(',', $emails);
                 // Mage::log($emails);
                 $storeId=$storesId;
-                $yesterday=date('Y-m-d');
+
+                if($date!=null)
+                    $yesterday=$date;
+                else
+                    $yesterday=date('Y-m-d');
+
                 $from = $yesterday."00:00:00";
                 $to = $yesterday."23:59:59";
 
@@ -312,6 +313,9 @@ class Ecp_ReportToEmail_Model_Observer
                 //                 $whr="old_store_id IN('$storesId') AND create_order_method = 0 AND (created_at >='$from' AND created_at <='$to')";
 
                 $whr="old_store_id IN('$storesId')  AND (created_at >='$from' AND created_at <='$to')";
+
+
+
 
 
 //                if($storeId==1)
@@ -526,6 +530,8 @@ class Ecp_ReportToEmail_Model_Observer
 //            }
 
         }
+
+        echo "<br> from =".$from." to=".$to." <br>";
     }
 
 
