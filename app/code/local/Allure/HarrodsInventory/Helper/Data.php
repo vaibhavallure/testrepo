@@ -130,7 +130,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $header =   array('recid' => $this->charEncode('MSS V2.10'),''=>'','1'=>' ','2'=>' ','3'=>' ','4'=>' ','5'=>' ','GTIN_number'=>$this->charEncode('FALSE'));
 
 
-            $ioo->streamWriteCsv($header,"\t",' ');
+            $ioo->streamWriteCsv($header,"\t");
 
             $data = array();
 
@@ -288,7 +288,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['consign'] = $this->charEncode('FALSE');
                     $data['vendor'] = $this->charEncode('70000369'); //check with Todd
                     $data['vendor_subrange'] = $this->charEncode('CON');
-                    $data['vendors_art_no'] = $_product->getSku();   //Config SKU
+                    $data['vendors_art_no'] = substr($_product->getSku(), 0, 35);   //Config SKU
                     $data['tax_code'] = $this->charEncode('C0');
                     $data['brand'] = $this->charEncode('MARIA TASH');
                     $data['range'] = '';
@@ -327,7 +327,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $data['sizeDelimited'] = $this->charEncode('SizeDelim');
 
-                $ioo->streamWriteCsv($data,"\t",' ');
+                $ioo->streamWriteCsv($data,"\t");
 
                     $sr_no++;
                 }
@@ -414,7 +414,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $data['harrods_inventory'] = $this->charEncode($_product->getHarrodsInventory());
                 $data['site_listings'] = $this->charEncode('D369');
 
-                $ioo->streamWriteCsv($data,"\t",' ');
+                $ioo->streamWriteCsv($data,"\t");
 
                 $sr_no++;
             }
@@ -489,7 +489,7 @@ else
                 $data['Active Date'] = $this->charEncode($activeDate);
                 $data['End Date'] = $this->charEncode("99991231");
 
-                $ioo->streamWriteCsv($data,"\t",' ');
+                $ioo->streamWriteCsv($data,"\t");
 
                 $sr_no++;
             }

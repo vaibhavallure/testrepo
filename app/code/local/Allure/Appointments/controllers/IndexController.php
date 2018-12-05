@@ -283,7 +283,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     }
                     $url=Mage::helper('appointments')->getShortUrl($apt_modify_link);
                     $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
-                    $time = date('h:i A', strtotime($model->getAppointmentStart()));
+                    $time = date('H:i', strtotime($model->getAppointmentStart()));
                     $smsText = str_replace("(time)", $time, $smsText);
                     $smsText = str_replace("(date)", $date, $smsText);
                     $smsText = str_replace("(modify_link)", $url, $smsText);
@@ -546,7 +546,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     $smsText = $configData['cancel_sms_message'][$storeKey];
                     $appointmentStart = date("F j, Y H:i",strtotime($model->getAppointmentStart()));
                     $date = date("F j, Y ",strtotime($model->getAppointmentStart()));
-                    $time = date('h:i A', strtotime($model->getAppointmentStart()));
+                    $time = date('H:i', strtotime($model->getAppointmentStart()));
 
                     $booking_link = Mage::getBaseUrl('web') . 'appointments/';
                     $booking_link = Mage::helper('appointments')->getShortUrl($booking_link);
