@@ -102,6 +102,13 @@ class Allure_BackorderRecord_Model_Cron
             if ($data['show_group'] && count($data['customer_group']) >= 1) {
                 $filterWithGroup = TRUE;
                 $filterGroup = implode ( ',', $data['customer_group'] );
+
+                Mage::log("filter_group".$filterGroup ,Zend_Log::DEBUG, 'ajay.log', true);
+
+                if($filterGroup=="0") {
+                    $filterGroup = "0,111";
+                }
+
             }
 
             $backorderCollection = Mage::getModel('sales/order_item')->getCollection()
@@ -131,6 +138,7 @@ class Allure_BackorderRecord_Model_Cron
             if ($filterWithGroup) {
                 if(!empty($filterGroup))
                     $addToquery->where("sales_flat_order.customer_group_id in($filterGroup)");
+                
             }
 
             $addToquery->where("sales_flat_order.created_at BETWEEN '".$fromDate."' AND '".$toDate."' AND sales_flat_order.old_store_id=1");

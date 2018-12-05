@@ -226,11 +226,21 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-    public function sendReportNew()
+    public function sendReportNew($date=null)
     {
         // Mage::log('ppp');
-        $stores = Mage::getStoreConfig('report/general/enable_stores');
-        $stores = explode(",", $stores);
+//        $stores = Mage::getStoreConfig('report/general/enable_stores');
+//        $stores = explode(",", $stores);
+
+
+
+        $virtualstores=Mage::getSingleton("allure_virtualstore/store")->getCollection();
+
+
+        foreach ($virtualstores as $virtualstore) {
+            $stores[]=$virtualstore->getStoreId();
+        }
+
 
         $allmailbody="";
 
@@ -243,17 +253,22 @@ class Ecp_ReportToEmail_Model_Observer
                 $emails = explode(',', $emails);
                 // Mage::log($emails);
                 $storeId=$storesId;
-                $yesterday=date('Y-m-d');
+
+                if($date!=null)
+                    $yesterday=$date;
+                else
+                    $yesterday=date('Y-m-d');
+
                 $from = $yesterday."00:00:00";
                 $to = $yesterday."23:59:59";
 
-                 if($storeId!=1) {
-                     $from = date("Y-m-d H:i:s", strtotime("-1 day -5 hours", strtotime($from)));
-                     $to = date("Y-m-d H:i:s", strtotime("-1 day -5 hours", strtotime($to)));
-                 }else {
-                    $from = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($from)));
-                    $to = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($to)));
-                }
+//                 if($storeId!=1) {
+//                     $from = date("Y-m-d H:i:s", strtotime("-1 day -5 hours", strtotime($from)));
+//                     $to = date("Y-m-d H:i:s", strtotime("-1 day -5 hours", strtotime($to)));
+//                 }else {
+//                    $from = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($from)));
+//                    $to = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($to)));
+//                }
 
 /*
                 echo  "store_id". $storeId; echo "<br>";
@@ -269,10 +284,10 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-                /* $local_tz = new DateTimeZone('UTC');
+                 $local_tz = new DateTimeZone('UTC');
                  $local = new DateTime('now', $local_tz);
 
-                 $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$storeId));
+                 $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',1));
                  $user = new DateTime('now', $user_tz);
 
                  $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
@@ -293,11 +308,14 @@ class Ecp_ReportToEmail_Model_Observer
 
                  $curTime = new DateTime();
                  if ($time != (int) $curTime->format("H"))
-                     return;*/
+                     //return;
 
                 //                 $whr="old_store_id IN('$storesId') AND create_order_method = 0 AND (created_at >='$from' AND created_at <='$to')";
 
                 $whr="old_store_id IN('$storesId')  AND (created_at >='$from' AND created_at <='$to')";
+
+
+
 
 
 //                if($storeId==1)
@@ -512,6 +530,8 @@ class Ecp_ReportToEmail_Model_Observer
 //            }
 
         }
+
+        echo "<br> from =".$from." to=".$to." <br>";
     }
 
 
