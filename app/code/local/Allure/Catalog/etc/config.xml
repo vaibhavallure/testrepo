@@ -53,6 +53,15 @@
 					</allure_catalog_add_adminhtml_grid_column>
 				</observers>
 			</core_block_abstract_prepare_layout_after>
+			<catalog_product_flat_prepare_indexes>
+			    <observers>
+			        <allure_catalog_product_flat_prepare_indexes>
+			            <type>singleton</type>
+			            <class>allure_catalog/observer</class>
+			            <method>catalogProductFlatPrepareIndexes</method>
+			        </allure_catalog_product_flat_prepare_indexes>
+			    </observers>
+			</catalog_product_flat_prepare_indexes>
 		</events>
 	</adminhtml>
   <crontab>
