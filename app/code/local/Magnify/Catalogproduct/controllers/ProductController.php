@@ -154,7 +154,7 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
 			}
         }
 
-        if (false && !$selectedColor) {
+        if (!$selectedColor) {
             $product = Mage::getModel('catalog/product')->load($productId);
             if ($product->isConfigurable()) {
                 $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
