@@ -144,6 +144,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
         $storeKey = array_search ($request['store'], $configData['stores']);
         $timeZone = $configData['timezones'][$storeKey];
+        $timePref = $configData['time_pref'][$storeKey];
         if(!empty($timeZone) && $request['date']==date("m/d/Y")){
             $storeCurrentTime = $this->date_convert(date('H:i'), 'UTC', 'H:i', $timeZone, 'H:i');
             $storeCurrentTime = explode(":", $storeCurrentTime);
@@ -281,9 +282,17 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     }else {
                         $smsText = $configData['book_sms_message'][$storeKey];
                     }
+
+                    $timePref = $configData['time_pref'][$storeKey];
+                    if($timePref == 24)
+                        $time = date('H:i', strtotime($model->getAppointmentStart()));
+                    else if($timePref == 12)
+                        $time = date('h:i A', strtotime($model->getAppointmentStart()));
+                    else
+                        $time = date('H:i', strtotime($model->getAppointmentStart()));
                     $url=Mage::helper('appointments')->getShortUrl($apt_modify_link);
                     $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
-                    $time = date('H:i', strtotime($model->getAppointmentStart()));
+
                     $smsText = str_replace("(time)", $time, $smsText);
                     $smsText = str_replace("(date)", $date, $smsText);
                     $smsText = str_replace("(modify_link)", $url, $smsText);
@@ -546,7 +555,13 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     $smsText = $configData['cancel_sms_message'][$storeKey];
                     $appointmentStart = date("F j, Y H:i",strtotime($model->getAppointmentStart()));
                     $date = date("F j, Y ",strtotime($model->getAppointmentStart()));
-                    $time = date('H:i', strtotime($model->getAppointmentStart()));
+                    $timePref = $configData['time_pref'][$storeKey];
+                    if($timePref == 24)
+                        $time = date('H:i', strtotime($model->getAppointmentStart()));
+                    else if($timePref == 12)
+                        $time = date('h:i A', strtotime($model->getAppointmentStart()));
+                    else
+                        $time = date('H:i', strtotime($model->getAppointmentStart()));
 
                     $booking_link = Mage::getBaseUrl('web') . 'appointments/';
                     $booking_link = Mage::helper('appointments')->getShortUrl($booking_link);
