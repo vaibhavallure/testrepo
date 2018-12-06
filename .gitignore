@@ -12,6 +12,7 @@ readme.md
 /nbproject
 errors/local.xml
 .hg
+.htaccess
 .hgignore
 sftp-config.json
 *.komodoproject

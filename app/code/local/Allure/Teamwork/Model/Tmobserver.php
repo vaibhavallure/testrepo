@@ -9,6 +9,7 @@ class Allure_Teamwork_Model_Tmobserver{
     const TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
     
     const NEW_YORK_OFFSET = 5;
+    const TEAMWORK_LIVE_ORDER_OPTR = "tm_live_order";
     
     protected $teamwork_sync_log = "teamwork_sync_data.log";
     
@@ -26,39 +27,69 @@ class Allure_Teamwork_Model_Tmobserver{
     
     public function synkTeamwokLiveOrders(){
         $this->addLog("Teamwork sync request call at - ".gmdate("Y-m-d h:i:s"));
-        $helper = Mage::helper("allure_teamwork");
-        if(!$helper->getTeamworkSyncStatus()){
-            $this->addLog("Teamwork live data sync disabled.");
-            return;
+        try{
+            $helper = Mage::helper("allure_teamwork");
+            if(!$helper->getTeamworkSyncStatus()){
+                $this->addLog("Teamwork live data sync disabled.");
+                return;
+            }
+            $urlPath = $helper->getTeamworkSyncDataUrl();
+            $requestURL = $urlPath . self::TM_URL;
+            $token = trim($helper->getTeamworkSyncDataToken());
+            $sendRequest = curl_init($requestURL);
+            curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+            curl_setopt($sendRequest, CURLOPT_HEADER, false);
+            curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
+            curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
+                "Content-Type: application/json",
+                "Authorization: Bearer ".$token
+            ));
+            
+            $operation = self::TEAMWORK_LIVE_ORDER_OPTR;
+            $logModel = Mage::getModel("allure_teamwork/log")
+                ->load($operation,'operation');
+            
+            if(!$logModel->getId()){
+                $this->addLog("live order teamwork operation not set.");
+                return;
+            }
+            
+            $queryTime = $helper->getTeamworkQueryTime();
+            if(!isset($queryTime)){
+                $queryTime = 5;
+            }
+            
+            $startTime = $logModel->getPage();
+            $endTime = date('Y-m-d H:i:s', strtotime("{$queryTime} minutes", strtotime($startTime)));
+            $this->addLog("query start time - ".$startTime);
+            $this->addLog("query end time - ".$endTime);
+            
+            $logModel->setPage($endTime)->save();
+            
+            $requestArgs = array(
+                "start_time" => $startTime,
+                "end_time"   => $endTime
+            );
+            // convert requestArgs to json
+            if ($requestArgs != null) {
+                $json_arguments = json_encode($requestArgs);
+                curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+            }
+            $response  = curl_exec($sendRequest);
+            
+            //$this->addLog(json_decode($response,true));
+            /* $modelObj = Mage::getModel("allure_teamwork/tmorder")
+             ->load("5401FC1F-D2E2-4617-AD2B-92676D2B844A","tm_receipt_id");
+             $response = json_encode(array(unserialize($modelObj->getTmdata()))); */
+            
+            $this->addDataIntoSystem($response);
+        }catch(Exception $e){
+            $this->addLog("Exception: ".$e->getMessage());
         }
-        $urlPath = $helper->getTeamworkSyncDataUrl();
-        $requestURL = $urlPath . self::TM_URL;
-        $token = trim($helper->getTeamworkSyncDataToken());
-        $sendRequest = curl_init($requestURL);
-        curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        curl_setopt($sendRequest, CURLOPT_HEADER, false);
-        curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
-        curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
-            "Content-Type: application/json",
-            "Authorization: Bearer ".$token
-        ));
         
-        $requestArgs = null;
-        // convert requestArgs to json
-        if ($requestArgs != null) {
-            $json_arguments = json_encode($requestArgs);
-            curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
-        } 
-        $response  = curl_exec($sendRequest);
-        //$this->addLog(json_decode($response,true));
-        /* $modelObj = Mage::getModel("allure_teamwork/tmorder")
-        ->load("5401FC1F-D2E2-4617-AD2B-92676D2B844A","tm_receipt_id");
-        $response = json_encode(array(unserialize($modelObj->getTmdata()))); */
-        
-        $this->addDataIntoSystem($response);
     }
     
     public function addDataIntoSystem($response){
@@ -67,7 +98,13 @@ class Allure_Teamwork_Model_Tmobserver{
                 return ;
             }
             
-            $responseArr = unserialize($response);
+            $responseArrObj = unserialize($response);
+            if(!$responseArrObj["status"]){
+                $this->addLog($responseArrObj);
+                return ;
+            }
+            $responseArr = $responseArrObj["data"];
+            
             $this->addLog("count - ".count($responseArr));
             $ordCnt = 0;
             foreach ($responseArr as $object){

@@ -446,7 +446,6 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
         if ($isBackorder) {
             $quoteItems = $quoteMain->getAllVisibleItems(); // $quoteMain->getAllItems();
 
-            //Mage::log(json_encode($quoteItems->getData()),Zend_log::DEBUG,'ajay.log',true);
             $backorder_quote = Mage::getModel('sales/quote')->load($quoteMain->getId()); // unavialable
                                                                                          // qty
                                                                                          // product
@@ -460,6 +459,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             $backorder_quote->setId(null);
             $order_quote->setId(null);
             foreach ($quoteItems as $item) {
+
 
                 //Commenting to add to backorder
                /*  $productInvryCount = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
@@ -486,12 +486,43 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     ->load($item->getProduct()->getId());
                 
                 $stock_qty = intval($productInvryCount->getQty());
-                if ($stock_qty < $item->getQty()&& $productInvryCount->getManageStock()==1){
+                if ($stock_qty < $item->getQty() && $productInvryCount->getManageStock()==1){
                     //if( $productInvryCount <= 0 ){
                     //$backorder_quote->addItem($item->setId(null));
 
                     //if($item->getProductType() !='configurable'){
-                    $backorder_quote->addProduct($product, $item->getBuyRequest());
+
+
+
+                    /*split item  if minimum 1 qty available of Back ordered item
+                     * jira number MT-906
+                     * start-------------------------------------MT-906
+                     * */
+                    if($stock_qty>0)
+                    {
+
+                        $instockqty=$stock_qty;
+                        $outstockqty=$item->getQty()-$stock_qty;
+
+                        $inStockBuyReqArray=$item->getBuyRequest();
+                        $inStockBuyReqArray->setQty($instockqty);
+                        $order_quote->addProduct($product, $inStockBuyReqArray);
+
+
+                        $outStockBuyReqArray=$item->getBuyRequest();
+                        $outStockBuyReqArray->setQty($outstockqty);
+                        $backorder_quote->addProduct($product, $outStockBuyReqArray);
+
+
+                    }
+                    /*end------------------------MT-906*/
+
+                    else {
+                        $backorder_quote->addProduct($product, $item->getBuyRequest());
+                    }
+
+
+
                     //}
                 }else{
                     //$order_quote->addItem($item->setId(null));

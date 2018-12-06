@@ -46,6 +46,23 @@
         if (response.price != '') {     
             jQuery("#ajax-price").html(response.price);
             jQuery("#ajax-price .price-box").show();
+
+            //copied from media.phtml
+            //there was misplace of tooltip div because of ajax price rendering
+            console.log(jQuery('.amconf-images-container'))
+            jQuery('.amconf-images-container').each(function(){
+                jQuery(this).find('img').each(function(){
+                    var imgid  = jQuery(this).attr('id'),
+                        imgalt = jQuery(this).attr('alt');
+                    Tipped.create(jQuery("#"+imgid)
+                        , imgalt, {
+                            skin: 'white',
+                            zIndex: 1,
+                            showOn: ['click','mouseover'],
+                            background: { color: '#fff', opacity: .7 }
+                        });
+                });
+            });
         }      
         
     });

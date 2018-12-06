@@ -636,6 +636,16 @@
                             <show_in_store>0</show_in_store>
                             <depends><status>1</status></depends>
                         </cron_time>
+                        <query_time>
+                            <label>Query Time</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Query time in minutes</comment>
+                            <depends><status>1</status></depends>
+                        </query_time>
                     </fields>
                  </teamwork_salesforce_settings>
             </groups>
