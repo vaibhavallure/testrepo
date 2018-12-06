@@ -448,6 +448,8 @@ INLINECSS;
      * @return string
      */
     public function getStockMessage($_item){
+
+
         $storeId = Mage::app()->getStore()->getStoreId();
         $_product = Mage::getModel('catalog/product')
             ->setStoreId($storeId)
@@ -461,6 +463,22 @@ INLINECSS;
         $isInStock = $stock->getIsInStock();
         $isBackordered = false;
         $backorderedQty = $_item->getQty();
+
+
+
+        /*
+         * set default out of stock message for back order quote item
+         * for jira number MT-906
+         * start-----------------
+         * */
+        if(Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote()->getId())
+        {
+            if($_item->getQuoteId()==Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote()->getId())
+             $isBackordered=true;
+        }
+        /*end---------------- */
+
+
         if ($stockQty < $backorderedQty) {
             $isBackordered = true;
             if ($stockQty >= 0) {

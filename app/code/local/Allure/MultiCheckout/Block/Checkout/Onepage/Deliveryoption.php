@@ -43,6 +43,37 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
         return $isBackorderAvailable;
     }
 
+    /* this function check if back order product contain any qty greater than one
+     * jira number MT-906
+     * start-----------------------
+     * */
+    private function isQuoteContainsBackorderWithInStockQty ()
+    {
+        $isBackorderWithInStockQtyAvailable = false;
+        $quote = $this->getQuote();
+        $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
+        $storeId = Mage::app()->getStore()->getStoreId();
+        foreach ($qouteItems as $item) :
+            $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$item->getSku());
+            $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+            $stock_qty=$stock->getQty();
+
+            if ($stock_qty < $item->getQty()&& $stock->getManageStock()==1) :
+                // if($productInventoryQty<=0):
+                if($stock_qty>0) {
+                    $isBackorderWithInStockQtyAvailable = true;
+                    break;
+                }
+            endif;
+
+        endforeach
+        ;
+        return $isBackorderWithInStockQtyAvailable;
+    }
+    /*
+     * end--------------------
+     * */
+
     private function isQuoteContainsAvailableProducts ()
     {
         $isAvailable = false;
@@ -123,7 +154,22 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
     {
         $is_inorder = $this->isQuoteContainsAvailableProducts();
         $is_backorder = $this->isQuoteContainsBackorder();
+
+
+
         $is_two_ship = $is_inorder && $is_backorder;
+
+        /* this function check if back order product contain any qty greater than one
+    * jira number MT-906
+    * start-----------------------
+    * */
+        $is_backorder_with_some_available_qty=$this->isQuoteContainsBackorderWithInStockQty();
+        if(!$is_two_ship && $is_backorder)
+            $is_two_ship = $is_backorder_with_some_available_qty && $is_backorder;
+        /*end----------------------------------------------*/
+
+
+
         $is_us = $this->isUSCountry();
         $is_us_two_Ship = $is_us && $is_two_ship;
         $status = array(
