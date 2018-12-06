@@ -210,4 +210,37 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 
         return $this;
     }
+    
+    public function getShippingFeeId()
+    {
+        /**/
+		$select = $this->_db->select()
+            ->from(array('setship' => Mage::getSingleton('core/resource')->getTableName('service_setting_shipping')), array('feemap.fee_id'))
+            ->join(array('feemap' => Mage::getSingleton('core/resource')->getTableName('service_fee_mapping')), 'setship.entity_id = feemap.shipping_id')
+        ->where('setship.name = ?', trim($this->_getShippingMethod()));
+		$feeId = $this->_db->fetchOne($select);
+        
+		if(!empty($feeId))
+		{
+			return $feeId;
+		}
+		/**/
+        
+        $select = $this->_db->select()
+            ->from(array('fee' => Mage::getSingleton('core/resource')->getTableName('service_fee')))
+            ->join(array('feest' => Mage::getSingleton('core/resource')->getTableName('service_fee_status')), 'fee.fee_id = feest.fee_id')
+            ->where('fee.global_level = ?', 1)
+            ->where('feest.channel_id = ?', $this->_getChannelId())
+        ->where('feest.enabled = ?', 1);
+
+        foreach($this->_db->fetchAll($select) as $rec)
+        {
+            if(strpos(strtolower($rec['code']), 'ship') !== false)
+            {
+                return $shipFeeId = $rec['fee_id'];
+            }
+        }
+
+        return $this->_emptyGlobalFee;
+    }
 }
