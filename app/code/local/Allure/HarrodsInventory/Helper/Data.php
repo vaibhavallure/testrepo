@@ -127,10 +127,11 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 //                'article_type' => '', 'art_cat' => '', 'size_matrix' => '', 'GTIN_number' => '','cost' => $this->charEncode('FALSE'));
 
 
-            $header =   array('recid' => $this->charEncode('MSS V2.10'),''=>'','1'=>' ','2'=>' ','3'=>' ','4'=>' ','5'=>' ','GTIN_number'=>$this->charEncode('FALSE'));
+            $header =   array('recid' => $this->charEncode('MSS V2.10'),''=>'','1'=>'','2'=>'','3'=>'','4'=>'','5'=>'','GTIN_number'=>$this->charEncode('FALSE'));
 
+            $headerStr="";$count=1;foreach ($header as $hd){$headerStr.=$hd;if($count<count($header)){$count++; $headerStr.="\t";}else{$headerStr.="\n";}}
 
-            $ioo->streamWriteCsv($header,"\t");
+            $ioo->streamWrite($headerStr);
 
             $data = array();
 
@@ -263,6 +264,15 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     if (!empty($optionId))
                         $optionLabel = $attribute->getFrontend()->getOption($optionId);
 
+                    $harrodsColorOptionsArray=array("White Gold"=>"White","Yellow Gold"=>"Gold","Black Gold"=>"Black","Rose Gold"=>"Rose Gold");
+
+
+                    if($_product->getHarrodsColor())
+                        $harrodsColor= $attributeHarrodsColor->getFrontend()->getOption($_product->getHarrodsColor());
+                    else
+                        $harrodsColor=$harrodsColorOptionsArray[$optionLabel];
+                    
+
                     $data = array();
                     $skuConfig = $this->charEncode(explode("|",$_product->getSku())[0]);
                     $data['recid'] = $this->charEncode($sr_no); //$_product->getSku();
@@ -298,7 +308,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['comp'] = '';
                     $data['sport'] = '';
                     $data['gender'] = $this->charEncode('UNISEX');
-                    $data['harrods_colour'] = $this->charEncode(strtoupper($attributeHarrodsColor->getFrontend()->getOption($_product->getHarrodsColor())));  //COlor
+                    $data['harrods_colour'] = $this->charEncode(strtoupper($harrodsColor));  //COlor
                     $data['pack_size'] = '';
 
                     $data['prod_hierarchy'] = $this->charEncode('BA');
@@ -327,9 +337,12 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $data['sizeDelimited'] = $this->charEncode('SizeDelim');
 
-                $ioo->streamWriteCsv($data,"\t");
 
-                    $sr_no++;
+                $dataStr="";$count=1;foreach ($data as $dt){$dataStr.=$dt;if($count<count($data)){$count++; $dataStr.="\t";}else{$dataStr.="\n";}}
+
+                $ioo->streamWrite($dataStr);
+
+                $sr_no++;
                 }
 
 
