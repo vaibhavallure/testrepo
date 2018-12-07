@@ -62,16 +62,19 @@ class Allure_Teamwork_Model_Tmobserver{
                 $queryTime = 5;
             }
             
+            $prevQueryTime = $queryTime * (-1);
+            
             $startTime = $logModel->getPage();
+            $prevTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($startTime)));
             $endTime = date('Y-m-d H:i:s', strtotime("{$queryTime} minutes", strtotime($startTime)));
-            $this->addLog("query start time - ".$startTime);
-            $this->addLog("query end time - ".$endTime);
+            $this->addLog("query start time - ".$prevTime);
+            $this->addLog("query end time - ".$startTime);
             
             $logModel->setPage($endTime)->save();
             
             $requestArgs = array(
-                "start_time" => $startTime,
-                "end_time"   => $endTime
+                "start_time" => $prevTime,
+                "end_time"   => $startTime
             );
             // convert requestArgs to json
             if ($requestArgs != null) {
