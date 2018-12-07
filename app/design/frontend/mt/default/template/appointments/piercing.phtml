@@ -16,7 +16,7 @@
             <?php if($fetch_piercing_qty):?>
             	<input type="text" size="5" name="piercing_qty" value="<?php echo $fetch_piercing_qty;?>" id="count" class="pierqtyTxt">
             <?php else:?>
-           		<input type="text" size="5" name="piercing_qty" value="1" id="count" class="pierqtyTxt">
+           		<input type="text" size="5" name="piercing_qty" value="1" id="count" class="pierqtyTxt" onkeypress="return isNumber(event)">
             <?php endif;?>			    
             <input type="button" value="+" id="plus" class="plusBtn" onclick="increase();">
      </div>
@@ -27,7 +27,7 @@
 		<?php if($fetch_piercing_loc):?>
 				<input type="text" class="piercing_locTxt"name="piercing_loc" value="<?php echo $fetch_piercing_loc;?>" placeholder=" (Optional)">
 		<?php else:?>
-				<input type="text" class="piercing_locTxt"name="piercing_loc" value="" placeholder=" (Optional)">
+				<input type="text" class="piercing_locTxt"name="piercing_loc" value="" placeholder=" (Optional)" onkeypress="return isLocationText(event)">
 		<?php endif;?>
   	</div>		
 </div>	
