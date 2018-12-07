@@ -47,6 +47,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Payment_Methods extends Mage_C
                     if ($this->getPaymentMethodsByCustomerRoles($method->getCode())) {
 
                         /*-----temporary paypal payement method disabled for two ship method  */
+
                         if($this->isDeleiveryMethodTwoShipment() && $method->getCode()=="paypal_express")
                             continue;
 
