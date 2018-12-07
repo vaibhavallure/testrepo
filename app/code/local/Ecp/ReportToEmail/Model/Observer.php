@@ -18,19 +18,44 @@
  */
 class Ecp_ReportToEmail_Model_Observer
 {
-    public function sendReport()
+
+    public function add_log($message) {
+        if (!Mage::getStoreConfig('report/scheduled_reports/debug_enabled')) {
+            return;
+        }
+        Mage::log($message,Zend_log::DEBUG,"report_to_email.log",true);
+    }
+
+    public  function sendReport()
     {
+
+        if(Mage::getStoreConfig('report/scheduled_reports/run_script')=="new")
+        {
+            $this->sendReportNew();
+        }
+        else
+        {
+            $this->sendReportOld();
+        }
+
+    }
+    public function sendReportOld()
+    {
+        $this->add_log("old script executed");
+
         // Mage::log('ppp');
         $stores = Mage::getStoreConfig('report/general/enable_stores');
         $stores = explode(",", $stores);
 
-        if (! empty($stores)) {
-            foreach ($stores as $storesId) {
+        /*if (! empty($stores)) {
+            foreach ($stores as $storesId) {*/
                 $emails = trim(Mage::getStoreConfig('report/scheduled_reports/emails'));
                 if (! $emails)
                     return;
                 $emails = explode(',', $emails);
                 // Mage::log($emails);
+
+                $storesId=1;
                 $storeId=$storesId;
                 $yesterday=date('Y-m-d');
                 $from = $yesterday."00:00:00";
@@ -216,8 +241,8 @@ class Ecp_ReportToEmail_Model_Observer
                 } catch (Exception $e) {
                     Mage::logException($e);
                 }
-            }
-        }
+         /*   }
+        }*/
     }
 
 
@@ -226,23 +251,25 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-    public function sendReportNew()
+    public function sendReportNew($date=null,$ismail=null,$runFrom=null)
     {
-        // Mage::log('ppp');
-//        $stores = Mage::getStoreConfig('report/general/enable_stores');
-//        $stores = explode(",", $stores);
+
+        $this->add_log("new script executed");
+        if($runFrom=="manual")
+            $this->add_log("Manual Run");
+        else
+            $this->add_log("Cron Run");
 
 
 
-        $virtualstores=Mage::getSingleton("allure_virtualstore/store")->getCollection();
-
-
-        foreach ($virtualstores as $virtualstore) {
-            $stores[]=$virtualstore->getStoreId();
-        }
+        $stores = Mage::getStoreConfig('report/general/enable_stores');
+        $stores = explode(",", $stores);
 
 
         $allmailbody="";
+
+
+
 
         if (! empty($stores)) {
             foreach ($stores as $storesId) {
@@ -253,30 +280,14 @@ class Ecp_ReportToEmail_Model_Observer
                 $emails = explode(',', $emails);
                 // Mage::log($emails);
                 $storeId=$storesId;
-                $yesterday=date('Y-m-d');
+
+                if($date!=null)
+                    $yesterday=$date;
+                else
+                    $yesterday=date('Y-m-d');
+
                 $from = $yesterday."00:00:00";
                 $to = $yesterday."23:59:59";
-
-//                 if($storeId!=1) {
-//                     $from = date("Y-m-d H:i:s", strtotime("-1 day -5 hours", strtotime($from)));
-//                     $to = date("Y-m-d H:i:s", strtotime("-1 day -5 hours", strtotime($to)));
-//                 }else {
-//                    $from = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($from)));
-//                    $to = date("Y-m-d H:i:s",strtotime("-1 day",strtotime($to)));
-//                }
-
-/*
-                echo  "store_id". $storeId; echo "<br>";
-                echo "from ".$from; echo "<br>";
-                echo "to". $to; echo "<br>";
-
-                echo "----------------------------------";
-                echo "<br>";*/
-
-
-
-//                die();
-
 
 
                  $local_tz = new DateTimeZone('UTC');
@@ -302,18 +313,11 @@ class Ecp_ReportToEmail_Model_Observer
                  $time = (int) trim(Mage::getStoreConfig('report/scheduled_reports/time'));
 
                  $curTime = new DateTime();
-                 if ($time != (int) $curTime->format("H"))
-                     //return;
+                 if ($time != (int) $curTime->format("H") && $runFrom!="manual")
+                     return;
 
-                //                 $whr="old_store_id IN('$storesId') AND create_order_method = 0 AND (created_at >='$from' AND created_at <='$to')";
 
                 $whr="old_store_id IN('$storesId')  AND (created_at >='$from' AND created_at <='$to')";
-
-
-//                if($storeId==1)
-//                    $whr="old_store_id IN('$storesId')";
-//                else
-//                    $whr="store_name LIKE '%".$storeObj->getName()."%'";
 
 
 
@@ -371,12 +375,12 @@ class Ecp_ReportToEmail_Model_Observer
                 $total_profit =($base_total_paid-$base_total_refunded)-($base_tax_invoiced-$base_tax_refunded)-($base_shipping_invoiced-$base_shipping_invoiced)-($base_total_invoiced_cost);
 
 
-                //$currency=Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
-                $symbol="$";//Mage::app()->getLocale()->currency($currency)->getSymbol();
+
+                $symbol="$";
 
                 Mage::app()->getStore()->setId($storeId);
 
-                //die($symbol);
+
                 $data=array();
                 if (!empty($collection->getFirstItem() && $collection->getFirstItem()->getOrdersCount() >=1)) {
                     $data['orders_count'] = $collection->getFirstItem()->getOrdersCount();
@@ -425,19 +429,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Gross Revunue</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'. '<label>'.utf8_decode($symbol).'</label>'.$data['gross_revenue'] . '</span></span></td>';
                 $mailbody .= '</tr>';
-                /*   $mailbody .= '<tr>';
-                   $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Invoiced Amount</strong></span></span></span></td>';
-                   $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_invoiced_amount']. '</span></span></td>';
-                   $mailbody .= '</tr>';
 
-                   $mailbody .= '<tr>';
-                   $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Canceled Amount</strong></span></span></span></td>';
-                   $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_canceled_amount']. '</span></span></td>';
-                   $mailbody .= '</tr>';
-                   $mailbody .= '<tr>';
-                   $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Tax Amount</strong></span></span></span></td>';
-                   $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_tax_amount']. '</span></span></td>';
-                   $mailbody .= '</tr>';*/
 
 
                 $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Refunds</strong></u></span></span></td></tr>';
@@ -446,10 +438,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Refunded Amount</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
                 $mailbody .= '</tr>';
-                /* $mailbody .= '<tr>';
-                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Shipping Amount</strong></span></span></span></td>';
-                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_shipping_amount']. '</span></span></td>';
-                 $mailbody .= '</tr>';*/
+
 
 
                 $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Discounts</strong></u></span></span></td></tr>';
@@ -473,55 +462,57 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '</div>';
                 $mailbody .= '</div>';
 
-                // $mailbody = '<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="5"><img src="images/back_01.jpg" alt=""></td></tr><tr><td bgcolor="#374254"></td><td width="227" height="107" bgcolor="#374254"><span>';
-                // $mailbody .= '<center><p style="text-decoration:underline; font-size: 21px;color:white;font-family:arial;">Yesterday</p><span style="float:left;" width="20"></span>';
-                // $mailbody .= '<span style="float:left;text-align:right;color:white;font-family:arial;" >Total Orders<Br>Total Revenue<br>Revenue per Order</span><span style="float:right; text-align:left;color:white;font-weight:bold;font-family:arial;">';
-                // $mailbody .= $data['orders_count'].'<br/>'.Mage::helper('core')->currency($data['total_income_amount'], true, false).'<br/>'.Mage::helper('core')->currency($data['average_sale'], true, false).'</span>';
-                // $mailbody .= '</center></span></td><td bgcolor="#374254"></td>';
-                // $mailbody .= '<td width="253" height="107" bgcolor="#374254"><span><center><p style="text-decoration:underline; font-size: 21px;color:white;font-family:arial;">Previous 30 Days</p><span style="float:left;" width="20"></span>';
-                // $mailbody .= '<span style="float:left;text-align:right;color:white;font-family:arial;" >Total Orders<Br>Total Revenue<br>Revenue per Order</span><span style="float:right; text-align:left;color:white;font-weight:bold;font-family:arial;">';
-                // $mailbody .= $orders_count.'<br/>'.$total_amount.'<br/>'.$average.'</span>';
-                // $mailbody .= '<span style="float:right;" width="20"></span></center></span></td><td bgcolor="#374254"></td></tr><tr><td colspan="5"></td></tr></table>';
-//                foreach ($rows as $row) {
-//                    $mailbody .= '<tr>';
-//                    foreach ($row as $value) {
-//                        $mailbody .= '<td>' . $value . '</td>';
-//                    }
-//                    $mailbody .= '</tr>';
-//                }
-//                $mailbody .= '</table>';
 
                 $allmailbody .= $mailbody;
 
 
             }
 
-            echo $allmailbody;
+
+            if($runFrom=="manual") {
+                $allmailbody .= "
+                      
+                     <div style='box-shadow: 2px -1px 8px black;background-color: grey;color: white;display: block;clear: both;position: fixed;width: 100%;bottom: 0;padding: 10px;text-align: center;text-transform: capitalize;
+                     '>from =".$from." to=".$to."</div>                   
+                    
+              ";
+            }
 
 
-            // Mage::log($mailbody);
+
+            if($runFrom=="manual")
+                echo $allmailbody;
+
+
+
+            if(($runFrom=="manual" && $ismail==1) || ($runFrom==null && $ismail==null)):
+
             /* Sender Email */
-//            $sender = Mage::getStoreConfig('trans_email/ident_general/email');
-//            $storeDate = date('Y-m-d');
-//            $website = Mage::getModel('core/store')->load($storesId);
-//            $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
-//
-//            $mail->setBodyHtml($mailbody)
-//                ->setSubject($website->getName() . ': Daily Order Summary Report for ' . $yesterday)
-//                ->addTo($emails)
-//                ->setFrom($sender, "Sales Report");
-//
-//            try {
-//
-//                $mail->send();
-//
-//            } catch (Mage_Core_Exception $e) {
-//                Mage::log('Sending report ' . $e->getMessage(), Zend_log::DEBUG, 'accounting_report.log',true);
-//            } catch (Exception $e) {
-//                Mage::logException($e);
-//            }
+            $sender = Mage::getStoreConfig('trans_email/ident_general/email');
+            $storeDate = date('Y-m-d');
+            $website = Mage::getModel('core/store')->load($storesId);
+            $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
+
+            $mail->setBodyHtml($allmailbody)
+                ->setSubject($website->getName() . ': Daily Order Summary Report for ' . $yesterday)
+                ->addTo($emails)
+                ->setFrom($sender, "Sales Report");
+
+            try {
+
+                $mail->send();
+
+            } catch (Mage_Core_Exception $e) {
+                    $this->add_log("Error: ".$e->getMessage());
+            } catch (Exception $e) {
+                    $this->add_log("Error: ".$e->getMessage());
+            }
+
+            endif;
 
         }
+
+
     }
 
 
