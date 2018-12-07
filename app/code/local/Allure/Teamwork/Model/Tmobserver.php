@@ -22,7 +22,8 @@ class Allure_Teamwork_Model_Tmobserver{
     }
     
     private function addLog($data){
-        Mage::log($data,Zend_Log::DEBUG,$this->teamwork_sync_log,true);
+        $logFile = "teamwork_sync_data_".date("Y_m_d").".log";
+        Mage::log($data,Zend_Log::DEBUG,$logFile,true);
     }
     
     public function synkTeamwokLiveOrders(){
