@@ -47,7 +47,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
      * jira number MT-906
      * start-----------------------
      * */
-    /*private function isQuoteContainsBackorderWithInStockQty ()
+    private function isQuoteContainsBackorderWithInStockQty ()
     {
         $isBackorderWithInStockQtyAvailable = false;
         $quote = $this->getQuote();
@@ -69,7 +69,7 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
         endforeach
         ;
         return $isBackorderWithInStockQtyAvailable;
-    }*/
+    }
     /*
      * end--------------------
      * */
@@ -163,9 +163,9 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Deliveryoption extends Mage_Ch
     * jira number MT-906
     * start-----------------------
     * */
-        /*$is_backorder_with_some_available_qty=$this->isQuoteContainsBackorderWithInStockQty();
+        $is_backorder_with_some_available_qty=$this->isQuoteContainsBackorderWithInStockQty();
         if(!$is_two_ship && $is_backorder)
-            $is_two_ship = $is_backorder_with_some_available_qty && $is_backorder;*/
+            $is_two_ship = $is_backorder_with_some_available_qty && $is_backorder;
         /*end----------------------------------------------*/
 
 

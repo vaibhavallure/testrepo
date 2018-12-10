@@ -471,11 +471,11 @@ INLINECSS;
          * for jira number MT-906
          * start-----------------
          * */
-        /*if(Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote()->getId())
+        if(Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote()->getId())
         {
             if($_item->getQuoteId()==Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote()->getId())
              $isBackordered=true;
-        }*/
+        }
         /*end---------------- */
 
 
