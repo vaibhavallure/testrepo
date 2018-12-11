@@ -883,7 +883,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 						->setParentTransactionId(null)
 						->save();
 
-						$transaction = $payment->addTransaction('auth_capture', null, false, $comment);
+						$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_CAPTURE, null, false, $comment);
 					    $transaction->setParentTxnId($transactionID);
 					    $transaction->setIsClosed(true);
 					    $transaction->setAdditionalInformation("PaymentResponse", serialize($paymentData));
