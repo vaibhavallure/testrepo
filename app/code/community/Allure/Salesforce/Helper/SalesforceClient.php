@@ -76,7 +76,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
      * keep track of salesforce log data
      */
     public function salesforceLog($logData){
-        Mage::log($logData,Zend_Log::DEBUG,$this->_salesforce_log_file,true);
+        $logFile = "salesforce_".date("Y_m_d").".log";
+        Mage::log($logData,Zend_Log::DEBUG,$logFile,true);
     }
     
     /**
