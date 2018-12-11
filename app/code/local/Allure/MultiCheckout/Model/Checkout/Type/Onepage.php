@@ -498,7 +498,7 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                      * jira number MT-906
                      * start-------------------------------------MT-906
                      * */
-                    /*if($stock_qty>0)
+                    if($stock_qty>0)
                     {
 
                         $instockqty=$stock_qty;
@@ -517,9 +517,9 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
                     }
                     /*end------------------------MT-906*/
 
-                    // else {
+                     else {
                     $backorder_quote->addProduct($product, $item->getBuyRequest());
-                    //}
+                    }
 
 
 

@@ -39,9 +39,9 @@ class Ecp_ReportToEmail_Model_Observer
         }
 
     }
-    public function sendReportOld()
+    public function sendReportOld($runFrom=null)
     {
-        $this->add_log("old script executed");
+        $this->add_log("old script executed ".$runFrom);
 
         // Mage::log('ppp');
         $stores = Mage::getStoreConfig('report/general/enable_stores');
@@ -94,7 +94,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $time = (int) trim(Mage::getStoreConfig('report/scheduled_reports/time'));
 
                 $curTime = new DateTime();
-                if ($time != (int) $curTime->format("H"))
+                if ($time != (int) $curTime->format("H") && $runFrom!="manual")
                     return;
 
                 $collection = Mage::getModel('sales/order')->getCollection();
@@ -233,8 +233,8 @@ class Ecp_ReportToEmail_Model_Observer
                     ->setFrom($sender, "Sales Report");
 
                 try {
-
                     $mail->send();
+                    $this->add_log("mail sent");
 
                 } catch (Mage_Core_Exception $e) {
                     Mage::log('Sending report ' . $e->getMessage(), Zend_log::DEBUG, 'accounting_report.log',true);
