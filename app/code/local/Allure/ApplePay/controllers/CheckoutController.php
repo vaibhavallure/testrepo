@@ -840,7 +840,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
 					$paymentData = $responseDataObject['transactionResponse'];
 
-					if (!empty($paymentData['errors'])) {
+					if (!isset($paymentData['errors']) || empty($paymentData['errors'])) {
 
 						$transactionId = $paymentData['transId'];
 
