@@ -190,6 +190,10 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                 $data['email'] = trim($data['email']);
             }
 
+            if (isset($data['country_id'])) {
+                $data['country_id'] = strtoupper(trim($data['country_id']));
+            }
+
             if ($calculateRegion) {
 
                 if (!isset($data['region_id']) || empty($data['region_id'])) {
