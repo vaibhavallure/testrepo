@@ -256,12 +256,15 @@ if ($session->isLoggedIn()) {
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
         var phone = jQuery("#phone").val();
+        console.log('[signing_register.phtml] length',phone.length)
         if(phone.length <=0){
             var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+            console.log('[signing_register.phtml] country_code',country_code)
 
             if(country_code == undefined || country_code == null || country_code == "")
                 country_code = "us"
 
+            console.log('[signing_register.phtml] setCountry',country_code)
             iti.setCountry(country_code);
         }
 
