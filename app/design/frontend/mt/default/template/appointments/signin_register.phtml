@@ -54,9 +54,23 @@ if ($session->isLoggedIn()) {
 }
 ?>
 <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
-<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
+<!--<script src="--><?php //echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?><!--"></script>-->
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
-
+<script src="<?= Mage::getDesign()->getSkinUrl();?>js/phone_validation/utils.js"></script>
+<style>
+    .hide {
+        display: none;
+    }
+    #error-msg {
+        color: red;
+    }
+    #valid-msg {
+        color: #00C900;
+    }
+    input.error {
+        border: 1px solid #FF7C7C;
+    }
+</style>
 
 <?php if (!$session->isLoggedIn()) :?>
 	<div class="field signin-field" >
@@ -86,7 +100,7 @@ if ($session->isLoggedIn()) {
 					    </div>
 						<div class="fieldDiv appt_ph">
 					    	<label>Phone Number*:</label><br/>
-					    	<input class="ele_width required-entry validate-phone-len" type="text" id="phone" name="phone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>" />
+                            <input id="phone" name="phone" type="text" class="input-text ele_width validate-intl-telephone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
 					    </div>
 					
 						<div class="fieldDiv">
@@ -228,7 +242,34 @@ if ($session->isLoggedIn()) {
 	
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
-		jQuery('#phone').intlTelInput();
+        Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+        //initialize itel tel input
+        var input = document.querySelector("#phone")
+        var iti = window.intlTelInput(input, {
+            utilsScript: Allure.UtilPath
+        });
+
+        // take phone number and check if it exist
+        // if it does not exist then
+        // first check if we can get Geo Location based Country Code if its there then set it
+        // otherwise set default as country as 'us'
+        // Magento module - Allure/GeoLocation
+        var phone = jQuery("#phone").val();
+        if(phone.length <=0){
+            var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+            if(country_code == undefined || country_code == null || country_code == "")
+                country_code = "us"
+
+            iti.setCountry(country_code);
+        }
+
+        //custom validator for itel tel input
+        //FileName - intel-tel-validation.js
+        allureIntlTelValidate(jQuery("#phone"),iti);
+        jQuery(".flag-container").css("height","26px !important");
+
 		jQuery.noConflict();
 		/* jQuery("#createaccCheck").live('click',function(event){
 			jQuery(".pwdBlock").toggle("show");
@@ -245,10 +286,7 @@ if ($session->isLoggedIn()) {
 
 			 }
 			
-		});	
-
-		
-
+		});
 	});
 	
 function getstate(countryValue) {
