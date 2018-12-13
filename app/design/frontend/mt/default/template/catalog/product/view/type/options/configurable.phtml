@@ -41,6 +41,7 @@ if ($_product->getSizeSample() == 1) {
     </dl>
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
+
         //call priceHtml via ajax, to avoid varnish caching
         jQuery.ajax({
             type: "POST",
@@ -59,45 +60,66 @@ if ($_product->getSizeSample() == 1) {
                     $selectedColor=$this->getRequest()->getParam("optionId");
                 }
 
-                $selVal1=$this->getRequest()->getParam("selAtr1");
+                $core_ses=Mage::getSingleton('core/session');
+                    
+                $selVal1=$core_ses->getData("selAtr1");
                 $selectValue1="";
                 if($selVal1)
                 {
-                    $selectValue1=$this->getRequest()->getParam("selectValue1");
+                    $selectValue1=$core_ses->getData("selectValue1");
                 }
-                $selVal2=$this->getRequest()->getParam("selAtr2");
+                $selVal2=$core_ses->getData("selAtr2");
                 $selectValue2="";
                 if($selVal2)
                 {
-                    $selectValue2=$this->getRequest()->getParam("selectValue2");
+                    $selectValue2=$core_ses->getData("selectValue2");
                 }
                 ?>
-
-
-                var ele1 = <?php echo ($selectValue1)?$selectValue1:'' ?>;
-                if(ele1){
-                    console.log("hhhh");
-                    //$('attribute271').value = ele1;
-                    //$('attribute271').trigger('onchange');
-                    jQuery("#attribute<?php echo $selVal1?>").val(ele1).trigger('click');
-                }
-
-
-                var ele2 = <?php echo ($selectValue2)?$selectValue2:''?>;
-                if(ele2){
-                    console.log("vvvvvv");
-                    jQuery("#attribute<?php echo $selVal2?>").val(ele2).trigger('click');
-                    //$('attribute342').value = ele2;
-                    //$('attribute342').trigger('onchange');
-                    //Product.Config.prototype.configureElement($('attribute342'));
-                }
-
-
                 var id = 'amconf-image-<?php echo $selectedColor; ?>';
+
+
+
                 if($(id)){
                     $(id).simulate('click');
                     // document.getElementsByClassName("t_Tooltip t_Tooltip_customTiny")[0].hide();
                 }
+
+                var ele1 = parseInt(<?php echo ($selectValue1)?$selectValue1:'' ?>);
+                if(ele1){
+                    jQuery("#attribute<?php echo $selVal1?>").val(ele1).trigger('change');
+
+                }
+
+
+                var ele2 = parseInt(<?php echo ($selectValue2)?$selectValue2:''?>);
+                if(ele2){
+
+                    jQuery("#attribute<?php echo $selVal2?>").val(ele2).trigger('change');
+                }
+
+                <?php
+                if($core_ses->getData("child")):
+                $childproduct=Mage::getSingleton('catalog/product')->load($core_ses->getData("child"));
+                $status=Mage::helper('amstockstatus')->getCustomStockStatusText($childproduct);
+
+                ?>
+
+                jQuery('.availability.in-stock span').html("<?= $status ?>");
+
+
+                <?php
+
+                /*$productdetail=json_decode($this->getJsonConfig());
+                $child=(array)$productdetail->childProducts;
+                $finalPrice=round($child[$this->getRequest()->getParam("child")]->finalPrice);
+                $cur=substr($productdetail->template,0,1);
+             */   ?>
+//                jQuery('#product-price-<?//= $_product->getId() ?>//').html("<?//= $productdetail->template."".$finalPrice?>//");
+                <?php
+
+                endif;
+                ?>
+
 
             });
     </script>
