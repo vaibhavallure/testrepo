@@ -838,9 +838,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
                 if ($responseDataObject['messages']['resultCode'] == 'Ok') {
 
-					if ($responseDataObject['transactionResponse']) {
+					$paymentData = $responseDataObject['transactionResponse'];
 
-						$paymentData = $responseDataObject['transactionResponse'];
+					if (!isset($paymentData['errors']) || empty($paymentData['errors'])) {
 
 						$transactionId = $paymentData['transId'];
 
@@ -855,11 +855,14 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 						$invoice->register()->pay();
 						$invoice->getOrder()->setIsInProcess(true);
 
-						$formatedPrice = $order->getBaseCurrency()->formatTxt($order->getGrandTotal());
+						$formatedPrice = $order->getBaseCurrency()->formatTxt($order->getBaseGrandTotal());
+
+						$comment = 'Amount of ' . $formatedPrice . ' captured through Apple Pay.';
 
 						$history = $invoice->getOrder()->addStatusHistoryComment(
-						    'Amount of ' . $formatedPrice . ' captured through Apple Pay.', false
+						    $comment, false
 						);
+
 						$history->setIsCustomerNotified(true);
 
 						Mage::log("START: createInvoice",Zend_Log::DEBUG, 'applepay.log', true);
@@ -879,6 +882,12 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 						->setTransactionId($transactionId)
 						->setParentTransactionId(null)
 						->save();
+
+						$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_CAPTURE, null, false, $comment);
+					    $transaction->setParentTxnId($transactionID);
+					    $transaction->setIsClosed(true);
+					    $transaction->setAdditionalInformation("PaymentResponse", serialize($paymentData));
+					    $transaction->save();
 
 						// $order->save();
 					}
