@@ -319,6 +319,7 @@ Billing.prototype = {
         } else {
             Element.hide('billing-new-address-form');
         }
+        initializeItelTelInput()
     },
 
     resetSelectedAddress: function(){
@@ -483,13 +484,15 @@ Shipping.prototype = {
             Element.hide('shipping-new-address-form');
             Element.hide('li_save_in_address_book');
         }
-        if($('shipping-address-select') != undefined && $('billing-address-select').value != $('shipping-address-select').value) {
+        if($('shipping-address-select') != undefined && $('billing-address-select').va  lue != $('shipping-address-select').value) {
             shipping.setSameAsBilling(false);
             //$('shipping:same_as_billing').disabled = false;
             $('shipping:same_as_billing').checked = false;
             //console.log('set same as billing = false in js file');
             Mage.Cookies.set('click_same_as_billing',0);
         }
+
+        initializeItelTelInput()
     },
 
     resetSelectedAddress: function(){
