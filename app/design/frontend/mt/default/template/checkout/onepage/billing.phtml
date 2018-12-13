@@ -264,7 +264,7 @@
         var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
         //initialize itel tel input
-        var input = document.querySelector(".validate-intl-telephone")
+        var input = document.querySelector(".billing-itel-tel-cstm")
         var iti = window.intlTelInput(input, {
             utilsScript: utilPath
         });
@@ -274,7 +274,7 @@
         // first check if we can get Geo Location based Country Code if its there then set it
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
-        var phone = jQuery(".validate-intl-telephone").val();
+        var phone = jQuery(".billing-itel-tel-cstm").val();
 
         if(phone.length <=0){
             var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
@@ -287,7 +287,7 @@
 
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js
-        allureIntlTelValidate(jQuery(".validate-intl-telephone"),iti);
+        allureIntlTelValidate(jQuery(".billing-itel-tel-cstm"),iti);
     }
 
     jQuery("#billing-address-select").uniform();
