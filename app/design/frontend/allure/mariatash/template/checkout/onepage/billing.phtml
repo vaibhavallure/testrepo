@@ -27,6 +27,13 @@
 <?php Varien_Profiler::start('DTN: temp');?>
 <?php $_hasAddresses = $this->customerHasAddresses();?>
 <?php Varien_Profiler::stop('DTN: temp');?>
+<style>
+    .billing-itel-tel-cstm{
+        width: 218px;
+        border: 1px solid #ccc;
+        height: 21px;
+    }
+</style>
 <form id="co-billing-form" action="">
 <fieldset>
     <ul class="form-list">
@@ -136,7 +143,8 @@
                     <div class="field">
                         <label for="billing:telephone" class="required"><em>*</em><?php echo $this->__('Phone') ?></label>
                         <div class="input-box">
-                            <input type="text" name="billing[telephone]" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="billing:telephone" />
+<!--                            <input type="text" name="billing[telephone]" value="--><?php //echo $this->escapeHtml($this->getAddress()->getTelephone()) ?><!--" title="--><?php //echo $this->__('Telephone') ?><!--" class="input-text --><?php //echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?><!--" id="billing:telephone" />-->
+                            <input type="text" name="billing[telephone]" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="validate-intl-telephone billing-itel-tel-cstm<?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="billing:telephone" />
                         </div>
                     </div>
                     <div class="field">
@@ -235,6 +243,39 @@
 
     var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'billing:postcode');
 
+function initializeItelTelInput(){
+    var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+    //initialize itel tel input
+    var input = document.querySelector(".billing-itel-tel-cstm")
+    var iti = window.intlTelInput(input, {
+        autoFormat: false,
+        autoHideDialCode: false,
+        autoPlaceholder: false,
+        nationalMode: false,
+        utilsScript: utilPath
+    });
+
+    // take phone number and check if it exist
+    // if it does not exist then
+    // first check if we can get Geo Location based Country Code if its there then set it
+    // otherwise set default as country as 'us'
+    // Magento module - Allure/GeoLocation
+    var phone = jQuery(".billing-itel-tel-cstm").val();
+
+    if(phone.length <=0){
+        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+        if(country_code == undefined || country_code == null || country_code == "")
+            country_code = "us"
+
+        iti.setCountry(country_code);
+    }
+
+    //custom validator for itel tel input
+    //FileName - intel-tel-validation.js
+    allureIntlTelValidate(jQuery(".billing-itel-tel-cstm"),iti);
+}
     function updatePoscodeBilling(obj) {
         jQuery('#advice-validate-zip-international-billing\\:postcode').addClass('display_none');
         if(jQuery(obj).val() !='US') {
@@ -251,6 +292,7 @@
     }
 
     jQuery(document).ready(function() {
+        initializeItelTelInput();
         if(jQuery('#billing\\:country_id').val()=='US' || jQuery('#billing\\:country_id').val()=='') {
             jQuery('#country_notice').hide();
         } else {

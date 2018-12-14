@@ -35,20 +35,6 @@
 <div class="page-title">
     <h1><?php echo $this->getTitle() ?></h1>
 </div>
-    <style>
-        .hide {
-            display: none;
-        }
-        #error-msg {
-            color: red;
-        }
-        #valid-msg {
-            color: #00C900;
-        }
-        input.error {
-            border: 1px solid #FF7C7C;
-        }
-    </style>
     <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
@@ -185,6 +171,10 @@
         //initialize itel tel input
         var input = document.querySelector("#phone")
         var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
             utilsScript: utilPath
         });
 
