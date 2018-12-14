@@ -481,7 +481,7 @@ Shipping.prototype = {
                 }
             }
         } else {
-            Element.hide('shipping-new-address-form');validation-advice
+            Element.hide('shipping-new-address-form');
             Element.hide('li_save_in_address_book');
         }
         if($('shipping-address-select') != undefined && $('billing-address-select').value != $('shipping-address-select').value) {

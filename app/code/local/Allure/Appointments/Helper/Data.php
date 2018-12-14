@@ -160,16 +160,16 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 			$status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $text, 'text', '0', '0');
 			preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
 
-			Mage::log("**************************************",Zend_Log::DEBUG,'appointments_sms_log',true);
+			Mage::log("**************************************",Zend_Log::DEBUG,'appointments_sms_log.log',true);
 			Mage::log("From Event",Zend_Log::DEBUG,'appointments_sms_log',true);
-			Mage::log(" Mobile Number:".$phone,Zend_Log::DEBUG,'appointments_sms_log',true);
-			Mage::log(" Text Message: ".$text,Zend_Log::DEBUG,'appointments_sms_log',true);
-			Mage::log("**************************************",Zend_Log::DEBUG,'appointments_sms_log',true);
+			Mage::log(" Mobile Number:".$phone,Zend_Log::DEBUG,'appointments_sms_log.log',true);
+			Mage::log(" Text Message: ".$text,Zend_Log::DEBUG,'appointments_sms_log.log',true);
+			Mage::log("**************************************",Zend_Log::DEBUG,'appointments_sms_log.log',true);
 
 
 			return json_encode($statusData);
 		} catch (Exception $e) {
-			Mage::log(" Exception Occured :".$e->getMessage(),Zend_Log::DEBUG,'appointments_sms_log',true);
+			Mage::log(" Exception Occured :".$e->getMessage(),Zend_Log::DEBUG,'appointments_sms_log.log',true);
 		}
 	}
 	public function getTimezoneForeStore($storeId){

@@ -247,6 +247,10 @@ if ($session->isLoggedIn()) {
         //initialize itel tel input
         var input = document.querySelector("#phone")
         var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
             utilsScript: Allure.UtilPath
         });
 
@@ -255,7 +259,7 @@ if ($session->isLoggedIn()) {
         // first check if we can get Geo Location based Country Code if its there then set it
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
-        var phone ="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
+        var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
         //console.log('[signing_register.phtml] length',phone.length)
         if(phone.length <=0){
             var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
