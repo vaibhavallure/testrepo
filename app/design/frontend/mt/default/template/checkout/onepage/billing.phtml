@@ -278,7 +278,7 @@
         // first check if we can get Geo Location based Country Code if its there then set it
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
-        var phone = jQuery(".billing-itel-tel-cstm").val();
+        var phone = "<?php echo $this->escapeHtml($this->getAddress()->getTelephone());?>";
 
         if(phone.length <=0){
             var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
@@ -288,8 +288,6 @@
 
             iti.setCountry(country_code.toLowerCase());
         }
-        jQuery('.flag-container').css('height','29px');
-
 
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js
