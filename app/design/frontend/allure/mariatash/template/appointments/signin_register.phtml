@@ -214,7 +214,7 @@ if ($session->isLoggedIn()) {
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
         var phone = jQuery("#phone").val();
-        console.log('[signing_register.phtml] length',phone.length)
+        //console.log('[signing_register.phtml] length',phone.length)
         if(phone.length <=0){
             var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
 //            console.log('[signing_register.phtml] country_code',country_code)
@@ -223,8 +223,10 @@ if ($session->isLoggedIn()) {
                 country_code = "us"
 
 //            console.log('[signing_register.phtml] setCountry',country_code)
-            iti.setCountry(country_code);
+            iti.setCountry(country_code.toLowerCase());
         }
+        jQuery('.flag-container').css('height','29px');
+
 
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js

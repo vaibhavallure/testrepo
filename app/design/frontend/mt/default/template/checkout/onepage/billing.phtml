@@ -286,8 +286,10 @@
             if(country_code == undefined || country_code == null || country_code == "")
                 country_code = "us"
 
-            iti.setCountry(country_code);
+            iti.setCountry(country_code.toLowerCase());
         }
+        jQuery('.flag-container').css('height','29px');
+
 
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js
