@@ -26,7 +26,13 @@
 ?>
 
 <?php $this->setShowAddressFields(true);?>
-
+<style>
+    .shipping-itel-tel-cstm{
+        width: 218px;
+        border: 1px solid #ccc;
+        height: 21px;
+    }
+</style>
 <form action="" id="co-shipping-form">
 <fieldset>
     <ul class="form-list">
@@ -130,7 +136,14 @@
                         <div class="field">
                             <label for="shipping:telephone" class="required"><em>*</em><?php echo $this->__('Phone') ?></label>
                             <div class="input-box">
-                                <input type="text" name="shipping[telephone]" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text required-entry shipping-address-select" id="shipping:telephone" onchange="shipping.setSameAsBilling(false);" />
+<!--                                <input type="text" name="shipping[telephone]" value="--><?php //echo $this->escapeHtml($this->getAddress()->getTelephone()) ?><!--" title="--><?php //echo $this->__('Telephone') ?><!--" class="input-text required-entry shipping-address-select" id="shipping:telephone" onchange="shipping.setSameAsBilling(false);" />-->
+                                <input
+                                        type="text"
+                                        name="shipping[telephone]"
+                                        value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>"
+                                        title="<?php echo $this->__('Telephone') ?>"
+                                        class="validate-intl-telephone shipping-itel-tel-cstm required-entry shipping-address-select"
+                                        id="shipping:telephone" onchange="shipping.setSameAsBilling(false);" />
                             </div>
                         </div>
                         <div class="field">
@@ -183,6 +196,40 @@
 <script type="text/javascript">
 //<![CDATA[
 
+function initializeItelTelInput() {
+    var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+    //initialize itel tel input
+    var input = document.querySelector(".shipping-itel-tel-cstm")
+    var iti = window.intlTelInput(input, {
+        autoFormat: false,
+        autoHideDialCode: false,
+        autoPlaceholder: false,
+        nationalMode: false,
+        utilsScript: utilPath
+    });
+
+    // take phone number and check if it exist
+    // if it does not exist then
+    // first check if we can get Geo Location based Country Code if its there then set it
+    // otherwise set default as country as 'us'
+    // Magento module - Allure/GeoLocation
+    var phone = jQuery(".shipping-itel-tel-cstm").val();
+
+    if (phone.length <= 0) {
+        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+        if (country_code == undefined || country_code == null || country_code == "")
+            country_code = "us"
+
+        iti.setCountry(country_code);
+    }
+
+    //custom validator for itel tel input
+    //FileName - intel-tel-validation.js
+    allureIntlTelValidate(jQuery(".shipping-itel-tel-cstm"), iti);
+}
+
     var shipping = new Shipping('co-shipping-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveShipping') ?>',
         '<?php echo $this->getUrl('checkout/onepage/shippingMethod') ?>');
     var shippingForm = new VarienForm('co-shipping-form');
@@ -201,6 +248,7 @@
     var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'shipping:postcode');
 
     jQuery(document).ready(function(){
+        initializeItelTelInput();
         jQuery('.checkout-multishipping-address-newshipping').addClass('checkout-multishipping-address-newbilling');
     });
     function updatePoscodeShipping(obj) {

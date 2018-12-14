@@ -266,6 +266,10 @@
         //initialize itel tel input
         var input = document.querySelector(".billing-itel-tel-cstm")
         var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
             utilsScript: utilPath
         });
 

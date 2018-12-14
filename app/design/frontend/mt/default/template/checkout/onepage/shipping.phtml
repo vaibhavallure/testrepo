@@ -279,6 +279,10 @@
         //initialize itel tel input
         var input = document.querySelector(".shipping-itel-tel-cstm")
         var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
             utilsScript: utilPath
         });
 
