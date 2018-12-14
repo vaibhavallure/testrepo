@@ -31,24 +31,22 @@
  * @see Mage_Customer_Block_Address_Edit
  */
 ?>
+<style>
+    .address-edit-itel-cstm {
+        border: none;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ddd;
+        height:20px;
+        width:50%;
+        background: #F7F7F7;
+        line-height: 20px;
+    }
+</style>
 <?php if($this->getTitle()): ?>
 <div class="page-title">
     <h1><?php echo $this->getTitle() ?></h1>
 </div>
-    <style>
-        .hide {
-            display: none;
-        }
-        #error-msg {
-            color: red;
-        }
-        #valid-msg {
-            color: #00C900;
-        }
-        input.error {
-            border: 1px solid #FF7C7C;
-        }
-    </style>
+
     <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
     <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
@@ -74,7 +72,7 @@
                 <div class="field">
                     <label for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
                     <div class="input-box">
-                        <input id="phone" name="telephone" style="width: 50% !important" type="text" class="ele_width validate-intl-telephone" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>">
+                        <input id="phone" name="telephone" type="text" class="address-edit-itel-cstm ele_width validate-intl-telephone" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>">
                     </div>
                 </div>
                 <div class="field">
@@ -193,14 +191,14 @@
         // first check if we can get Geo Location based Country Code if its there then set it
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
-        var phone = jQuery("#phone").val();
+        var phone = value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>";
         if(phone.length <=0){
             var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
 
             if(country_code == undefined || country_code == null || country_code == "")
                 country_code = "us"
 
-            iti.setCountry(country_code);
+            iti.setCountry(country_code.toLowerCase());
         }
 
         //custom validator for itel tel input
