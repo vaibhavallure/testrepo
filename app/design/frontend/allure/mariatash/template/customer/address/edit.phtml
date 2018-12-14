@@ -183,10 +183,10 @@
         // first check if we can get Geo Location based Country Code if its there then set it
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
-        var phone = jQuery("#phone").val();
+        //var phone = jQuery("#phone").val();
+        var phone = "<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>";
+        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
         if(phone.length <=0){
-            var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
-
             if(country_code == undefined || country_code == null || country_code == "")
                 country_code = "us"
 
