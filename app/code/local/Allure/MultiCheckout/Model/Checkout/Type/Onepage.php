@@ -767,8 +767,8 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
 
     public function saveCustomOrder ($data)
     {
-
         $_checkoutHelper = Mage::helper('allure_multicheckout');
+		
         if (strtolower($this->getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::ONE_SHIP) ||
             $this->getQuote()->getDeliveryMethod() == "") {
             Mage::getSingleton('checkout/session')->setIsSingleCharge(false);
@@ -792,7 +792,6 @@ class Allure_MultiCheckout_Model_Checkout_Type_Onepage extends Amasty_Customerat
             /* 1st : In stock product order Start */
             $backOrderedQuote = $this->getQuoteBackordered();
             $quote = $this->getQuoteOrdered();
-
 
             if (! $quote->getIsCheckoutCart()) {
                 $quote->collectTotals()->save();
