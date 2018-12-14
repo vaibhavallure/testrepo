@@ -269,7 +269,7 @@ if ($session->isLoggedIn()) {
                 country_code = "us"
 
 //            console.log('[signing_register.phtml] setCountry',country_code)
-            iti.setCountry(country_code);
+            iti.setCountry(country_code.toLowerCase());
         }
 
         //custom validator for itel tel input
