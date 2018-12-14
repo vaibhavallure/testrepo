@@ -2610,18 +2610,28 @@ width: 100%;
 }
 
 
-.popupLoginModel .mt-facebookconnect-btn a{
-	float: right;
-	margin-right: 3px;
+ .mt-googleconnect-btn a{
+	margin: 7px 0;
 }
 
+.mt-facebookconnect-btn{
+  float: left;
+  width:69%;
+}
+.mt-googleconnect-btn{
+  float: left;
+  width:26%;
+}
+.popupLoginModel .mt-facebookconnect-btn a{
+  float: right;
+}
 
 .popupLoginModel .mt-facebookconnect-btn .fb-img {
-    width: 180px;
+    width: 100%;
 }
 
 .popupLoginModel .mt-facebookconnect-btn{
-	margin: -10px -10px 0;
+	margin: -2px 0px 0 12px;
 }
 
 .popupLoginModel .pop-link{
