@@ -877,17 +877,21 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 						//$order->save();
 
 						// Prepare payment object
+						Mage::log("START: savePayment",Zend_Log::DEBUG, 'applepay.log', true);
 						$payment = $order->getPayment();
 						$payment->setMethod('applepay')
 						->setTransactionId($transactionId)
 						->setParentTransactionId(null)
 						->save();
+						Mage::log("END: savePayment",Zend_Log::DEBUG, 'applepay.log', true);
 
+						Mage::log("START: addTransaction",Zend_Log::DEBUG, 'applepay.log', true);
 						$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_CAPTURE, null, false, $comment);
 					    $transaction->setParentTxnId($transactionID);
 					    $transaction->setIsClosed(true);
 					    $transaction->setAdditionalInformation("PaymentResponse", serialize($paymentData));
 					    $transaction->save();
+						Mage::log("END: addTransaction",Zend_Log::DEBUG, 'applepay.log', true);
 
 						// $order->save();
 					}
