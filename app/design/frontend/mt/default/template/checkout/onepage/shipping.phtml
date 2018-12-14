@@ -28,7 +28,7 @@
 <?php $this->setShowAddressFields(true); ?>
 
 <style>
-    .shipping-itel-tel-cstm{
+    .shipping-itel-tel-cstm {
         width: 218px;
         border: 1px solid #ccc;
         height: 21px;
@@ -186,12 +186,14 @@
                                             value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>"
                                             title="<?php echo $this->__('Telephone') ?>"
                                             class="validate-intl-telephone shipping-itel-tel-cstm required-entry shipping-address-select"
-                                            id="shipping:telephone" onchange="shipping.setSameAsBilling(false);" />
-<!--                                    <input type="text" name="shipping[telephone]"-->
-<!--                                           value="--><?php //echo $this->escapeHtml($this->getAddress()->getTelephone()) ?><!--"-->
-<!--                                           title="--><?php //echo $this->__('Telephone') ?><!--"-->
-<!--                                           class="input-text required-entry shipping-address-select"-->
-<!--                                           id="shipping:telephone" onchange="shipping.setSameAsBilling(false);"/>-->
+                                            id="shipping:telephone" onchange="shipping.setSameAsBilling(false);"/>
+                                    <!--                                    <input type="text" name="shipping[telephone]"-->
+                                    <!--                                           value="-->
+                                    <?php //echo $this->escapeHtml($this->getAddress()->getTelephone()) ?><!--"-->
+                                    <!--                                           title="-->
+                                    <?php //echo $this->__('Telephone') ?><!--"-->
+                                    <!--                                           class="input-text required-entry shipping-address-select"-->
+                                    <!--                                           id="shipping:telephone" onchange="shipping.setSameAsBilling(false);"/>-->
                                 </div>
                             </div>
                             <div class="field">
@@ -255,24 +257,6 @@
 </form>
 <script type="text/javascript">
     //<![CDATA[
-
-    var shipping = new Shipping('co-shipping-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveShipping') ?>',
-        '<?php echo $this->getUrl('checkout/onepage/shippingMethod') ?>');
-    var shippingForm = new VarienForm('co-shipping-form');
-    shippingForm.extraChildParams = ' onchange="shipping.setSameAsBilling(false);"';
-    shippingForm.setElementsRelation('shipping:country_id', 'shipping:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select State/Province...') ?>');
-    Validation.add('validate-per-page-value', '<?php echo $this->__('Please enter a valid value from list')?>', function (v, elm) {
-        if (Validation.get('IsEmpty').test(v)) {
-            return false;
-        }
-        var values = $(elm.id + '_values').value.split(',');
-        return values.indexOf(v) != -1;
-    });
-
-    $('shipping-address-select') && shipping.newAddress(!$('shipping-address-select').value);
-
-    var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'shipping:postcode');
-
     function initializeItelTelInput() {
         var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
@@ -291,17 +275,14 @@
         // first check if we can get Geo Location based Country Code if its there then set it
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
-        var phone = "<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>"
 
-        if (phone.length <= 0) {
-            var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
 
-            if (country_code == undefined || country_code == null || country_code == "")
-                country_code = "us"
+        if (country_code == undefined || country_code == null || country_code == "")
+            country_code = "us"
 
-            iti.setCountry(country_code.toLowerCase());
-        }
-        jQuery('.flag-container').css('height','29px');
+        iti.setCountry(country_code.toLowerCase());
+
 
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js
@@ -321,6 +302,24 @@
             jQuery('#shipping\\:postcode').addClass("validate-zip-international");
         }
     }
+
+
+    var shipping = new Shipping('co-shipping-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveShipping') ?>',
+        '<?php echo $this->getUrl('checkout/onepage/shippingMethod') ?>');
+    var shippingForm = new VarienForm('co-shipping-form');
+    shippingForm.extraChildParams = ' onchange="shipping.setSameAsBilling(false);"';
+    shippingForm.setElementsRelation('shipping:country_id', 'shipping:region', '<?php echo $this->getUrl('directory/json/childRegion') ?>', '<?php echo $this->__('Select State/Province...') ?>');
+    Validation.add('validate-per-page-value', '<?php echo $this->__('Please enter a valid value from list')?>', function (v, elm) {
+        if (Validation.get('IsEmpty').test(v)) {
+            return false;
+        }
+        var values = $(elm.id + '_values').value.split(',');
+        return values.indexOf(v) != -1;
+    });
+
+    $('shipping-address-select') && shipping.newAddress(!$('shipping-address-select').value);
+
+    var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'shipping:postcode');
 
     //]]>
 </script>
