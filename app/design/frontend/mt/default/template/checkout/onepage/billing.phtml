@@ -316,14 +316,17 @@
 </form>
 <script type="text/javascript">
     jQuery(document).ready(function () {
-        jQuery('.billing-itel-tel-cstm').attr('value','')
-        initializeItelTelInput();
-
+      //  jQuery('.billing-itel-tel-cstm').attr('value','')
         if (jQuery('#billing\\:country_id').val() == 'US' || jQuery('#billing\\:country_id').val() == '') {
             jQuery('#country_notice').hide();
         } else {
             jQuery('#country_notice').show();
         }
+
+        jQuery('#uniform-billing-address-select').on('change',function(){
+            initializeItelTelInputBilling();
+
+        })
     });
     function updatePoscodeBilling(obj) {
         jQuery('#advice-validate-zip-international-billing\\:postcode').addClass('display_none');
@@ -340,7 +343,7 @@
         }
     }
 
-    function initializeItelTelInput() {
+    function initializeItelTelInputBilling() {
         var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
         //initialize itel tel input
