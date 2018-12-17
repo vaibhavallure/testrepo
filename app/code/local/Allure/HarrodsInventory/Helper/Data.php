@@ -131,9 +131,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             $headerStr="";$count=1;foreach ($header as $hd){$headerStr.=$hd;if($count<count($header)){$count++; $headerStr.="\t";}else{$headerStr.="\n";}}
 
-
             $ioo->streamWrite($headerStr);
-
 
             $data = array();
 
@@ -441,18 +439,15 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo->streamLock(true);
             $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
 
-if($type=="OK")
-            return $file2;
-else
-            return $file;
+            if($type=="OK")
+                return $file2;
+            else
+                return $file;
 
-        }catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->add_log($e->getMessage());
         }
     }
-
-
 
     public function generatePPCReport($type="txt")
     {
