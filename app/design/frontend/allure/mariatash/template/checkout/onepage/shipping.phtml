@@ -28,9 +28,9 @@
 <?php $this->setShowAddressFields(true); ?>
 <style>
     .shipping-itel-tel-cstm {
-        width: 218px;
+        width: 100%;
         border: 1px solid #ccc;
-        height: 21px;
+        height: 30px;
     }
 </style>
 <form action="" id="co-shipping-form">
@@ -252,7 +252,7 @@
 <script type="text/javascript">
     //<![CDATA[
 
-    function initializeItelTelInput() {
+    function initializeItelTelInputShipping() {
         var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
         //initialize itel tel input
@@ -278,10 +278,12 @@
             country_code = "us"
 
         iti.setCountry(country_code.toLowerCase());
+        jQuery(".flag-container").css("height","30px");
 
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js
         allureIntlTelValidate(jQuery(".shipping-itel-tel-cstm"), iti);
+
     }
 
     var shipping = new Shipping('co-shipping-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveShipping') ?>',
@@ -302,8 +304,13 @@
     var shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'shipping:postcode');
 
     jQuery(document).ready(function () {
-        initializeItelTelInput();
+        initializeItelTelInputShipping()
+
         jQuery('.checkout-multishipping-address-newshipping').addClass('checkout-multishipping-address-newbilling');
+        jQuery('#shipping-address-select').on('change',function(){
+            initializeItelTelInputShipping();
+
+        })
     });
 
     function updatePoscodeShipping(obj) {
