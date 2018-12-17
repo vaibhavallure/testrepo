@@ -48,7 +48,7 @@ class Simtech_Searchanise_Block_Jsinit extends Mage_Core_Block_Text
         }
 
         $apiKey = Mage::helper('searchanise/ApiSe')->getApiKey();
-        
+
         if (empty($apiKey)) {
             return $html;
         }
@@ -67,15 +67,15 @@ class Simtech_Searchanise_Block_Jsinit extends Mage_Core_Block_Text
 
         $priceFormat = Mage::helper('searchanise/ApiSe')->getPriceFormat($store);
         $priceFormat['after'] = $priceFormat['after'] ? 'true' : 'false';
-        
-        $html .= 
+
+        $html .=
             "<script type=\"text/javascript\">
             //<![CDATA[
                 Searchanise = {};
                 Searchanise.host        = '{$seServiceUrl}';
                 Searchanise.api_key     = '{$apiKey}';
                 Searchanise.SearchInput = '{$searchInputSelector}';
-                
+
                 Searchanise.AutoCmpParams = {};
                 Searchanise.AutoCmpParams.union = {};
                 Searchanise.AutoCmpParams.union.price = {};
@@ -85,7 +85,7 @@ class Simtech_Searchanise_Block_Jsinit extends Mage_Core_Block_Text
                 Searchanise.AutoCmpParams.restrictBy.status = '1';
                 Searchanise.AutoCmpParams.restrictBy.visibility = '3|4';
                 {$restrictBy}
-                
+
                 Searchanise.options = {};
                 Searchanise.AdditionalSearchInputs = '#name,#description,#sku';
 
@@ -115,7 +115,7 @@ class Simtech_Searchanise_Block_Jsinit extends Mage_Core_Block_Text
                     rate:     '{$priceFormat['rate']}',
                     after:     {$priceFormat['after']}
                 };
-                
+
                 (function() {
                     var __se = document.createElement('script');
                     __se.src = '{$searchWidgetsLink}';
@@ -125,7 +125,7 @@ class Simtech_Searchanise_Block_Jsinit extends Mage_Core_Block_Text
             //]]>
         </script>
         ";
-        
+
         // Uncomment the lines below if it is necessary to hide price in search widget
         // $html .= '
         //     <style type="text/css">

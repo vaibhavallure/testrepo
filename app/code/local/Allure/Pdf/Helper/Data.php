@@ -68,12 +68,8 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         $storeId = $order->getStoreId();
         $message = "";
         if($storeId == 1){
-            $backTimeMsg = $item->getBackorderTime();
-            if (!empty($backTimeMsg)) {
-                $message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$backTimeMsg.".";
-            } else {
-                $message = "(In Stock:  Ships Within 24 hours (Mon-Fri).)";
-            }
+            $amstockHelper = Mage::helper('amstockstatus');
+            $message = $amstockHelper->getOrderSalesProductStockStatus($item);
         }
         return $message;
     }
@@ -89,33 +85,6 @@ class Allure_Pdf_Helper_Data extends Mage_Core_Helper_Abstract
         $product->setStoreId($storeId)
                 ->load($product->getIdBySku($sku));
         $message = "";
-        /*if($storeId == 1){
-            if(!empty($product)){
-                $store      = Mage::getModel('core/store')->load($storeId);
-                $websiteId  = $store->getWebsiteId();
-                $website    = Mage::getModel('core/website')->load($websiteId);
-                $stockId    = $website->getStockId();
-                $stock = Mage::getModel('cataloginventory/stock_item')
-                    ->loadByProductAndStock($product,$stockId);
-                if(($stock->getQty() >= 1 && $stock->getIsInStock())
-                            ||($product->getStockItem()->getManageStock() == 0)){
-                        $message = "";
-                }else{
-                    if(!is_null($product->getBackorderTime()) &&
-                                            $product->getBackorderTime() != ""){
-                        $message = "( ".$product->getBackorderTime()." )";
-                    }else{
-                        $message ='( Backordered )';
-                    }
-                }
-            }else{
-                $orderItemId = $item->getOrderItemId();
-                $orderItem = Mage::getModel("sales/order_item")->load($orderItemId);
-                if($orderItem->getBackorderTime() != null) {
-                    $message = "( ".$orderItem->getBackorderTime()." )";
-                }
-            }
-        }*/
         
         if($storeId == 1){
             $backTimeMsg = $item->getBackorderTime();

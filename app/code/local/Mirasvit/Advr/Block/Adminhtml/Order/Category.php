@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -48,6 +48,11 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Category extends Mirasvit_Advr_Block_A
         return $this;
     }
 
+    protected function getGroupByColumn()
+    {
+        return 'category_id';
+    }
+
     public function _prepareCollection()
     {
         $collection = Mage::getModel('advr/report_sales')
@@ -56,7 +61,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Category extends Mirasvit_Advr_Block_A
             ->setFilterData($this->getFilterData(), true, false)
             ->selectColumns(array_merge($this->getVisibleColumns(), array('orders')))
             ->selectColumns('category_path')
-            ->groupByColumn('category_id');
+            ->groupByColumn($this->getGroupByColumn());
 
         return $collection;
     }

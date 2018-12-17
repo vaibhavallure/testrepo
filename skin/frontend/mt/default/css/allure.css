@@ -1,3 +1,7 @@
+iframe {
+    max-width: 100%;
+}
+
 #two-shipping-method-layout{
 	margin-bottom:20px;
 	margin-left:15px;
@@ -510,9 +514,11 @@ img.snize-item-image[src^=data]::after {
 .customer-account-login .account-create, .account-login{
 	margin: 17px 17px 10px 0 !important;
 }
-.customer-account-login #amazon-buttons-wrapper{
-	    padding-bottom: 60px !important;
+
+.customer-account-login #amazon-buttons-wrapper {
+    padding: 60px 0 !important;
 }
+
 
 /*Loader Css start*/
 .loader {
@@ -762,51 +768,28 @@ img.snize-item-image[src^=data]::after {
     line-height: 1.63636363636;
 }
 
-.close {
-	background: #606061;
-	color: #FFFFFF;
-	line-height: 25px;
-	position: absolute;
-	right: -12px;
-	text-align: center;
-	top: -10px;
-	width: 24px;
-	text-decoration: none;
-	font-weight: bold;
-	-webkit-border-radius: 12px;
-	-moz-border-radius: 12px;
-	border-radius: 12px;
-	-moz-box-shadow: 1px 1px 3px #000;
-	-webkit-box-shadow: 1px 1px 3px #000;
-	box-shadow: 1px 1px 3px #000;
-}
-
-.close:hover { background: #ecc388;
-    color: #fff;
-}
-
-
-
 .pop-title{
-border-bottom: 1px solid #999;
-margin-bottom: 10px;
+	border-bottom: 1px solid #999;
+	margin-bottom: 10px;
 }
 .pop-title h2{
-   margin: 0 0 10px
+   	margin: 0 0 10px
 }
 label.popup-login-lbl{
    width: 100%;
    float: left;
    font-size: 12px;
+	margin: 10px 0 5px;
 }
 .popupLoginModel input{
-   width: 96%;
-   margin: 2px 0 10px;
-   border-top: 1px solid #b2b2b2;
-   border-bottom: 0px;
-   border-left: 0px;
-   border-right: 0;
-   padding: 5px;
+	width: calc(100% - 10px);
+	height: 25px !important;
+	margin: 2px 0 10px;
+	border-top: 1px solid #b2b2b2;
+	border-bottom: 0px;
+	border-left: 0px;
+	border-right: 0;
+	padding: 5px;
 }
 
 .popupResetPasswordModel input{
@@ -836,12 +819,13 @@ label.popup-login-lbl{
 	display: inline-block;
 }
 .pop-link a{
-   outline: 0;
-   text-decoration: underline;
-   color: #000;
-   cursor: pointer;
-   font-size: 12px;
-
+	outline: 0;
+	text-decoration: underline;
+	color: #000;
+	cursor: pointer;
+	font-size: 12px;
+	display: inline-block;
+	margin: 10px 0;
 }
 .pop-link p{
 	clear: both;
@@ -1093,13 +1077,13 @@ label.popup-reg-privacy-lbl {
     text-indent: 3px;
     font-size: 13px;
     color: #3f3f47;
-   
+
 }
 .post-lengthds-lbl label.required{
-	
+
     color: rgb(63, 64, 72);
     font-weight: 200;
-    
+
 }
 dd.post-lengthds-lbl-options.last{
 	    display: inline-block;
@@ -1136,4 +1120,29 @@ dd.post-lengthds-lbl-options.last{
 
 .hideaddToCart{
     display: none !important;
+}
+
+/* for paypal review */
+.paypal-express-review .checkout-two-shipment-shipping-method-mt, 
+.paypal-express-review .checkout-two-shipment-payment-method-mt,
+.paypal-express-review .checkout-two-shipment-shipping-address-mt,
+.paypal-express-review .checkout-two-shipment-billing-address-mt{
+	padding: 17px;
+}
+
+.paypal-express-review .mt-paypal-total{
+	margin-top: 10px;
+}
+
+.paypal-express-review #shopping-cart-totals-table{
+	width: 100%;
+	background: #ccc;
+}
+.paypal-express-review #shopping-cart-totals-table tr td{
+	padding: 5px;
+}
+
+.paypal-express-review #shipping_method_2,
+.paypal-express-review #shipping_method_1{
+	background: white url(../images/formelements-select.png);
 }

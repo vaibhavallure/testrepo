@@ -7,16 +7,11 @@
                     <title>Store</title>
                     <sort_order>3</sort_order>
                     <children>
-                        <virtualstore module="allure_virtualstore">
-                            <title>Virtual Store</title>
+                        <virtualstores module="allure_virtualstore">
+                            <title>Manage Virtual Store</title>
                             <sort_order>30</sort_order>
-                            <action>adminhtml/virtualstore</action>
-                        </virtualstore>
-                        <website module="allure_virtualstore">
-                            <title>Virtual Website</title>
-                            <sort_order>40</sort_order>
-                            <action>adminhtml/website</action>
-                        </website>
+                            <action>adminhtml/virtualstores</action>
+                        </virtualstores>
                     </children>
                 </store>
             </children>
@@ -36,14 +31,10 @@
                                 <title>Store</title>
                                 <sort_order>300</sort_order>
                                 <children>
-                                    <virtualstore translate="title">
-                                        <title>Virtual Store</title>
-                                        <sort_order>3000</sort_order>
-                                    </virtualstore>
-                                    <website translate="title">
-                                        <title>Website</title>
-                                        <sort_order>4000</sort_order>
-                                    </website>
+                                    <virtualstores translate="title">
+			                            <title>Manage Virtual Store</title>
+			                            <sort_order>3000</sort_order>
+			                        </virtualstores>
                                 </children>
                             </store>
                         </children>

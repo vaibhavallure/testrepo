@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -31,8 +31,16 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Coupon extends Mirasvit_Advr_Block_Adm
         $this->setChartType('column');
 
         $this->initChart()
-            ->setXAxisType('category')
-            ->setXAxisField('coupon_code');
+            ->setXAxisType($this->getColumn('category'))
+            ->setXAxisField($this->getColumn('coupon_code'));
+
+        return $this;
+    }
+
+    protected function prepareToolbar()
+    {
+        $this->initToolbar()
+            ->setSalesSourceVisibility(true);
 
         return $this;
     }
@@ -40,21 +48,15 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Coupon extends Mirasvit_Advr_Block_Adm
     protected function prepareGrid()
     {
         $this->initGrid()
-            ->setDefaultSort('hour_of_day')
+            ->setDefaultSort($this->getColumn('hour_of_day'))
             ->setDefaultDir('asc');
 
         return $this;
     }
 
-    protected function _prepareCollection()
+    protected function getGroupByColumn()
     {
-        $collection = Mage::getModel('advr/report_sales')
-            ->setBaseTable('sales/order', true)
-            ->setFilterData($this->getFilterData())
-            ->selectColumns(array_merge($this->getVisibleColumns(), array('orders')))
-            ->groupByColumn('coupon_code');
-
-        return $collection;
+        return $this->getColumn('coupon_code');
     }
 
     public function getColumns()
@@ -65,10 +67,13 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Coupon extends Mirasvit_Advr_Block_Adm
                 'type'         => 'text',
                 'totals_label' => 'Total',
                 'chart'        => true,
+                self::KEEP     => true
             ),
         );
 
         $columns += $this->getOrderTableColumns(true);
+
+        $columns = $this->convertColumnsToSalesSource($columns);
 
         $columns['actions'] = array(
             'header' => 'Actions',

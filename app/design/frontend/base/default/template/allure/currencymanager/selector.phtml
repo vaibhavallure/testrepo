@@ -1,10 +1,15 @@
-<?php 
+<?php
 $text = Mage::getStoreConfig('currency/options/currency_symbol');
 $configArr = explode( ';',$text);
-foreach ($configArr as $_arr) {  
+foreach ($configArr as $_arr) {
     $_arrTmp = explode(' ',trim($_arr));
     $tmpCurrencies[] = $_arrTmp[0];
-    $tmpSymbol[] = $_arrTmp[1];
+
+	if (count($_arrTmp) > 1) {
+    	$tmpSymbol[] = $_arrTmp[1];
+	} else {
+		$tmpSymbol[] = '';
+	}
 }
 ?>
 <?php $arrayCurrencies = array();
@@ -15,7 +20,7 @@ if($this->getCurrencyCount()>0): ?>
         <?php foreach ($this->getCurrencies() as $_code => $_name): ?>
             <?php if($_code==$this->getCurrentCurrencyCode()) { ?>
                 <div class="select-currency">
-                    <?php 
+                    <?php
                     $file = Mage::getBaseUrl('media').'wysiwyg/flags/'.$_code.'.png';
                     if($this->helper('ecp_category')->checkRemoteFile($file)) { ?><img src="<?php echo $file ?>"/>
                     <?php } ?>
@@ -29,7 +34,7 @@ if($this->getCurrencyCount()>0): ?>
 
         if(!empty($arrayCurrencies)):?>
         <?php
-            foreach($tmpCurrencies as $key => $value) 
+            foreach($tmpCurrencies as $key => $value)
                 if(!empty($value) && isset($arrayCurrencies[$value])) {
                     $_arrayCurrencies[$value] = $arrayCurrencies[$value];
                     $_symbolCurrencies[$value] = $tmpSymbol[$key];

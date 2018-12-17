@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -460,6 +460,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
 
     /**
      * Check product options and type options and save them, too
+     *
+     * @throws Mage_Core_Exception
      */
     protected function _beforeSave()
     {
@@ -1005,7 +1007,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     public function getMediaGalleryImages()
     {
         if(!$this->hasData('media_gallery_images') && is_array($this->getMediaGallery('images'))) {
-            $_images = array();            
+            $_images = array();
             $images = new Varien_Data_Collection();
             foreach ($this->getMediaGallery('images') as $image) {
                 if ($image['disabled']) {
@@ -1016,8 +1018,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
                 $image['path'] = $this->getMediaConfig()->getMediaPath($image['file']);
                 $image['viewon'] = 0;
                 if(count(explode ('#model',$image['label'])) > 1)  {
-                       $image['viewon'] = 1;
-                       $_images[] = $image;
+                    $image['viewon'] = 1;
+                    $_images[] = $image;
                 } else {
                     $images->addItem(new Varien_Object($image));
                 }
@@ -1025,7 +1027,7 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
             if(count($_images)) {
                 foreach ($_images as $_image) {
                     $images->addItem(new Varien_Object($_image));
-                }                
+                }
             }
             $this->setData('media_gallery_images', $images);
         }
@@ -1334,8 +1336,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
         //Mage::log(__METHOD__,null,'mylog.log');
         $productType = $this->getTypeInstance(true);
         if (is_callable(array($productType, 'getIsSalable2'))) {
-                return $productType->getIsSalable2($this);
-            }  
+            return $productType->getIsSalable2($this);
+        }
         if ($this->hasData('is_salable')) {
             return $this->getData('is_salable');
         }
@@ -1381,6 +1383,15 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function isSaleable()
     {
+        // allow gitcard product for purchase when its out of stock - start
+        if(Mage::helper('core')->isModuleEnabled('Amasty_Stockstatus')){
+            $amstockHelper = Mage::helper("amstockstatus");
+            if ($amstockHelper->isGiftcardProduct($this->getSku())) {
+                return 1;
+            }
+        }
+        //end
+
         return $this->isSalable();
     }
 
@@ -1402,8 +1413,8 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
      */
     public function getAttributeText($attributeCode)
     {
-    	if ($attributeCode == '' || empty($attributeCode)) return null;
-    	
+        if ($attributeCode == '' || empty($attributeCode)) return null;
+
         return $this->getResource()
             ->getAttribute($attributeCode)
                 ->getSource()
@@ -2114,11 +2125,11 @@ class Mage_Catalog_Model_Product extends Mage_Catalog_Model_Abstract
     }
     public function getUsedCategoryProductCollection($categoryId)
     {
-    	 $collection = Mage::getResourceModel('catalog/product_type_configurable_category_collection')
-    	->setFlag('require_stock_items', true)
-    	->setFlag('product_children', true)
-    	->setCategoryFilter($categoryId);
-    	
-    	return $collection;
+        $collection = Mage::getResourceModel('catalog/product_type_configurable_category_collection')
+            ->setFlag('require_stock_items', true)
+            ->setFlag('product_children', true)
+            ->setCategoryFilter($categoryId);
+
+        return $collection;
     }
 }

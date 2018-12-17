@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -28,7 +28,13 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Grid_Column_Filter_Array extends Mage_
             $value = explode(',', $value);
         }
 
-        return array('in' => $value);
+        if (count($value) > 1 || is_array($this->getValue())) {
+            $condition = array('in' => $value);
+        } else {
+            $condition = array('like' => Mage::getResourceHelper('core')->addLikeEscape($this->getValue(), array('position' => 'any')));
+        }
+
+        return $condition;
     }
 
     /**

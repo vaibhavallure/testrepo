@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_advr
- * @version   1.0.40
+ * @version   1.2.5
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
@@ -58,13 +58,18 @@ class Mirasvit_Advr_Block_Adminhtml_Order_RegisteredVsUnregistered extends Miras
         return $this;
     }
 
+    protected function getGroupByColumn()
+    {
+        return 'period_of_sale';
+    }
+
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('advr/report_sales')
             ->setBaseTable('sales/order')
             ->setFilterData($this->getFilterData(), true, false)
             ->selectColumns($this->getVisibleColumns())
-            ->groupByColumn('period_of_sale');
+            ->groupByColumn($this->getGroupByColumn());
 
         return $collection;
     }
@@ -105,7 +110,6 @@ class Mirasvit_Advr_Block_Adminhtml_Order_RegisteredVsUnregistered extends Miras
 
             'order_emails' => array(
                 'header' => 'Unique Unregistered Customers',
-                'type'   => 'number',
                 'frame_callback' => array($this, 'orderEmails'),
                 'filter' => false,
             ),
@@ -162,7 +166,7 @@ class Mirasvit_Advr_Block_Adminhtml_Order_RegisteredVsUnregistered extends Miras
         $rows = explode(':', $emails);
 
         if (count($rows) != 2) {
-            return '';
+            return 0;
         }
 
         $isGuests = explode('^', $rows[0]);

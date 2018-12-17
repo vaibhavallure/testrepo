@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/extension_mcore
- * @version   1.0.20
+ * @version   1.0.22
  * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 

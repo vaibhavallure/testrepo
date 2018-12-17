@@ -91,6 +91,24 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
             ), 'show_customer_group');
             
             
+            //create order method
+            $fieldset->addField('show_create_order', 'select', array(
+                'name'      => 'show_create_order',
+                'label'     => Mage::helper('reports')->__('Create order from'),
+                'options'   => array(
+                    '0' => Mage::helper('reports')->__('Any'),
+                    '1' => Mage::helper('reports')->__('Specified'),
+                ),
+                'note'      => Mage::helper('reports')->__('Create order'),
+            ), 'create_order_method');
+            
+            
+            $fieldset->addField('create_order_method', 'multiselect', array(
+                'name'      => 'create_order_method',
+                'values'    => $this->getCreateOrderMethods(),
+                'display'   => 'none'
+            ), 'show_create_order');
+            
             $data = $this->getFilterData()->getData();
             $store_ids = $data['store_ids'];
             $isCounterpointStore = false;
@@ -148,6 +166,10 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                         ->addFieldMap("{$htmlIdPrefix}customer_group", 'customer_group')
                         ->addFieldDependence('customer_group', 'show_customer_group', '1')
                         
+                        ->addFieldMap("{$htmlIdPrefix}show_create_order", 'show_create_order')
+                        ->addFieldMap("{$htmlIdPrefix}create_order_method", 'create_order_method')
+                        ->addFieldDependence('create_order_method', 'show_create_order', '1')
+                        
                         );
                 }else{
                     $this->setChild('form_after', $this->getLayout()->createBlock('adminhtml/widget_form_element_dependence')
@@ -166,6 +188,10 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
                         ->addFieldMap("{$htmlIdPrefix}show_customer_group", 'show_customer_group')
                         ->addFieldMap("{$htmlIdPrefix}customer_group", 'customer_group')
                         ->addFieldDependence('customer_group', 'show_customer_group', '1')
+                        
+                        ->addFieldMap("{$htmlIdPrefix}show_create_order", 'show_create_order')
+                        ->addFieldMap("{$htmlIdPrefix}create_order_method", 'create_order_method')
+                        ->addFieldDependence('create_order_method', 'show_create_order', '1')
                         );
                 }
             }
@@ -224,5 +250,23 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
     {
         $customer = Mage::getModel('customer/group')->getCollection();
         return $customer->toOptionArray();
+    }
+    
+    //get create order when placed from
+    private function getCreateOrderMethods(){
+        $locations = array(
+            array('label'=>'Website' ,'value' => 0),
+            array('label'=>'Counterpoint' ,'value' => 1)
+        );
+        
+        $user = Mage::getSingleton('admin/session')->getUser();
+        if ($user != null){
+            $userRole = $user->getRole()->getData();
+            $roleID = $userRole["role_id"];
+            if($roleID == 1){
+                $locations[] = array('label'=>'Teamwork' ,'value' => 2);
+            }
+        }
+        return $locations;
     }
 }

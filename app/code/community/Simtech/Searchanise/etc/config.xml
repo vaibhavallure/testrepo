@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
 /***************************************************************************
 *                                                                          *
 *   (c) 2004 Vladimir V. Kalynyak, Alexey V. Vinokurov, Ilya M. Shalnev    *
@@ -15,7 +15,7 @@
 <config>
     <modules>
         <Simtech_Searchanise>
-            <version>3.1.5</version>
+            <version>3.1.8</version>
         </Simtech_Searchanise>
     </modules>
     <frontend>
@@ -69,6 +69,14 @@
                     </rating>
                 </observers>
             </core_block_abstract_to_html_before>
+            <controller_action_predispatch>
+                <observers>
+                    <controller_action_before>
+                        <class>searchanise/observer</class>
+                        <method>controllerActionFrontendPredispatch</method>
+                    </controller_action_before>
+                </observers>
+            </controller_action_predispatch>
         </events>
     </frontend>
     <admin>
@@ -589,7 +597,7 @@
                 <cron_async_enabled>1</cron_async_enabled>
                 <ajax_async_enabled>0</ajax_async_enabled>
                 <!-- default sync init method -->
-                <object_async_enabled>1</object_async_enabled> 
+                <object_async_enabled>1</object_async_enabled>
                 <search_input_selector>#search,form input[name="q"]</search_input_selector>
                 <enabled_searchanise_search>1</enabled_searchanise_search>
                 <redirect_to_admin_after_install>1</redirect_to_admin_after_install>
@@ -601,9 +609,7 @@
         <jobs>
             <searchanise_indexer>
                 <!-- runs every 1 minutes as below. Change to (0 1 * * *) to run every night at 1am -->
-             <!--   <schedule><cron_expr>*/1 * * * *</cron_expr></schedule>-->
-              <!-- run every night at 1am -->
-                <schedule><cron_expr>0 1 * * *</cron_expr></schedule>
+                <schedule><cron_expr>10 1 * * *</cron_expr></schedule>
                 <run><model>searchanise/observer::autoSync</model></run>
             </searchanise_indexer>
             <searchanise_reimporter>

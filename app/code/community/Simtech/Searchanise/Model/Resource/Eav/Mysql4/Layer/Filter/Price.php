@@ -20,18 +20,18 @@ class Simtech_Searchanise_Model_Resource_Eav_Mysql4_Layer_Filter_Price extends M
         if (!Mage::helper('searchanise/ApiSe')->checkSearchaniseResult(true)) {
             return parent::getCount($filter, $range);
         }
-        
+
         $collection = $filter->getLayer()->getProductCollection();
-        
+
         if ((!method_exists($collection, 'checkSearchaniseResult')) || (!$collection->checkSearchaniseResult())) {
             return parent::getCount($filter, $range);
         }
-        
+
         return $collection
             ->getSearchaniseRequest()
             ->getCountAttributePrice($filter, $range);
     }
-    
+
     /**
      * Apply attribute filter to product collection
      *
@@ -45,14 +45,14 @@ class Simtech_Searchanise_Model_Resource_Eav_Mysql4_Layer_Filter_Price extends M
         if (!Mage::helper('searchanise/ApiSe')->checkSearchaniseResult(true)) {
             return parent::applyFilterToCollection($filter, $range, $index);
         }
-        
+
         $collection = $filter->getLayer()->getProductCollection();
-        
+
         if ((!method_exists($collection, 'checkSearchaniseResult')) || (!$collection->checkSearchaniseResult())) {
             return parent::applyFilterToCollection($filter, $range, $index);
         }
         // Disable internal price filter.
-        
+
         return $this;
     }
 }

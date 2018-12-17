@@ -127,6 +127,7 @@ class Mage_Checkout_CartController extends Mage_Core_Controller_Front_Action
     public function preDispatch()
     {
         parent::preDispatch();
+        Mage::helper('catalog/product_flat')->disableFlatCollection(true);
 
         $cart = $this->_getCart();
         if ($cart->getQuote()->getIsMultiShipping()) {
@@ -357,6 +358,11 @@ class Mage_Checkout_CartController extends Mage_Core_Controller_Front_Action
      */
     public function updateItemOptionsAction()
     {
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+
         $cart   = $this->_getCart();
         $id = (int) $this->getRequest()->getParam('id');
         $params = $this->getRequest()->getParams();

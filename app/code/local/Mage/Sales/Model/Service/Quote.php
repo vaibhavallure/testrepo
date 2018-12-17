@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Sales
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -35,42 +35,42 @@ class Mage_Sales_Model_Service_Quote
      * @var Mage_Sales_Model_Quote
      */
     protected $_quote;
-    
+
     /**
      * Quote convert object
      *
      * @var Mage_Sales_Model_Convert_Quote
      */
     protected $_convertor;
-    
+
     /**
      * List of additional order attributes which will be added to order before save
      *
      * @var array
      */
     protected $_orderData = array();
-    
+
     /**
      * List of recurring payment profiles that may have been generated before placing the order
      *
      * @var array
      */
     protected $_recurringPaymentProfiles = array();
-    
+
     /**
      * Order that may be created during submission
      *
      * @var Mage_Sales_Model_Order
      */
     protected $_order = null;
-    
+
     /**
      * If it is true, quote will be inactivate after submitting order or nominal items
      *
      * @var bool
      */
     protected $_shouldInactivateQuote = true;
-    
+
     /**
      * Class constructor
      *
@@ -81,7 +81,7 @@ class Mage_Sales_Model_Service_Quote
         $this->_quote       = $quote;
         $this->_convertor   = Mage::getModel('sales/convert_quote');
     }
-    
+
     /**
      * Quote convertor declaration
      *
@@ -93,7 +93,7 @@ class Mage_Sales_Model_Service_Quote
         $this->_convertor = $convertor;
         return $this;
     }
-    
+
     /**
      * Get assigned quote object
      *
@@ -103,7 +103,7 @@ class Mage_Sales_Model_Service_Quote
     {
         return $this->_quote;
     }
-    
+
     /**
      * Specify additional order data
      *
@@ -115,7 +115,7 @@ class Mage_Sales_Model_Service_Quote
         $this->_orderData = $data;
         return $this;
     }
-    
+
     /**
      * @deprecated after 1.4.0.1
      * @see submitOrder()
@@ -125,7 +125,7 @@ class Mage_Sales_Model_Service_Quote
     {
         return $this->submitOrder();
     }
-    
+
     /**
      * Submit the quote. Quote submit process will create the order based on quote data
      *
@@ -137,13 +137,13 @@ class Mage_Sales_Model_Service_Quote
         $this->_validate();
         $quote = $this->_quote;
         $isVirtual = $quote->isVirtual();
-        
+
         $transaction = Mage::getModel('core/resource_transaction');
         if ($quote->getCustomerId()) {
             $transaction->addObject($quote->getCustomer());
         }
         $transaction->addObject($quote);
-        
+
         $quote->reserveOrderId();
         if ($isVirtual) {
             $order = $this->_convertor->addressToOrder($quote->getBillingAddress());
@@ -161,11 +161,11 @@ class Mage_Sales_Model_Service_Quote
             }
         }
         $order->setPayment($this->_convertor->paymentToOrderPayment($quote->getPayment()));
-        
+
         foreach ($this->_orderData as $key => $value) {
             $order->setData($key, $value);
         }
-        
+
         foreach ($quote->getAllItems() as $item) {
             $orderItem = $this->_convertor->itemToOrderItem($item);
             if ($item->getParentItem()) {
@@ -173,13 +173,13 @@ class Mage_Sales_Model_Service_Quote
             }
             $order->addItem($orderItem);
         }
-        
+
         $order->setQuote($quote);
-        
+
         $transaction->addObject($order);
         $transaction->addCommitCallback(array($order, 'place'));
         $transaction->addCommitCallback(array($order, 'save'));
-        
+
         /**
          * We can use configuration data for declare new order status
          */
@@ -190,12 +190,12 @@ class Mage_Sales_Model_Service_Quote
             $this->_inactivateQuote();
             Mage::dispatchEvent('sales_model_service_quote_submit_success', array('order'=>$order, 'quote'=>$quote));
         } catch (Exception $e) {
-            
+
             if (!Mage::getSingleton('customer/session')->isLoggedIn()) {
                 // reset customer ID's on exception, because customer not saved
                 $quote->getCustomer()->setId(null);
             }
-            
+
             //reset order ID's on exception, because order not saved
             $order->setId(null);
             /** @var $item Mage_Sales_Model_Order_Item */
@@ -203,7 +203,7 @@ class Mage_Sales_Model_Service_Quote
                 $item->setOrderId(null);
                 $item->setItemId(null);
             }
-            
+
             Mage::dispatchEvent('sales_model_service_quote_submit_failure', array('order'=>$order, 'quote'=>$quote));
             throw $e;
         }
@@ -211,7 +211,7 @@ class Mage_Sales_Model_Service_Quote
         $this->_order = $order;
         return $order;
     }
-    
+
     /**
      * Submit nominal items
      *
@@ -224,7 +224,7 @@ class Mage_Sales_Model_Service_Quote
         $this->_inactivateQuote();
         $this->_deleteNominalItems();
     }
-    
+
     /**
      * Submit all available items
      * All created items will be set to the object
@@ -248,7 +248,7 @@ class Mage_Sales_Model_Service_Quote
         }
         $this->submitOrder();
     }
-    
+
     /**
      * Return recurring payment profiles
      *
@@ -258,7 +258,7 @@ class Mage_Sales_Model_Service_Quote
     {
         return $this->_recurringPaymentProfiles;
     }
-    
+
     /**
      * Get an order that may had been created during submission
      *
@@ -268,7 +268,7 @@ class Mage_Sales_Model_Service_Quote
     {
         return $this->_order;
     }
-    
+
     /**
      * Inactivate quote
      *
@@ -281,7 +281,7 @@ class Mage_Sales_Model_Service_Quote
         }
         return $this;
     }
-    
+
     /**
      * Validate quote data before converting to order
      *
@@ -295,33 +295,29 @@ class Mage_Sales_Model_Service_Quote
             if ($addressValidation !== true) {
                 Mage::throwException(
                     Mage::helper('sales')->__('Please check shipping address information. %s', implode(' ', $addressValidation))
-                    );
+                );
             }
-            //$method="bakerloo_freeshipping_bakerloo_freeshipping";
             $method= $address->getShippingMethod();
             $rate  = $address->getShippingRateByCode($method);
-            if($method=='bakerloo_freeshipping_bakerloo_freeshipping'|| $method=='bakerloo_freeshipping'||$method=='bakerloo_multi_shipping'||$method=='bakerloo_ship_to_store'||$method=='bakerloo_store_pickup'){
-                $rate=1;
-            }
             if (!$this->getQuote()->isVirtual() && (!$method || !$rate)) {
                 Mage::throwException(Mage::helper('sales')->__('Please specify a shipping method.'));
             }
         }
-        
+
         $addressValidation = $this->getQuote()->getBillingAddress()->validate();
         if ($addressValidation !== true) {
             Mage::throwException(
                 Mage::helper('sales')->__('Please check billing address information. %s', implode(' ', $addressValidation))
-                );
+            );
         }
-        
+
         if (!($this->getQuote()->getPayment()->getMethod())) {
             Mage::throwException(Mage::helper('sales')->__('Please select a valid payment method.'));
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Submit recurring payment profiles
      */
@@ -336,7 +332,7 @@ class Mage_Sales_Model_Service_Quote
         }
         $this->_recurringPaymentProfiles = $profiles;
     }
-    
+
     /**
      * Get rid of all nominal items
      */

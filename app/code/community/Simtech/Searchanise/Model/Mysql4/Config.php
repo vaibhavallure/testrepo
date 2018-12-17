@@ -22,7 +22,7 @@ class Simtech_Searchanise_Model_Mysql4_Config extends Mage_Core_Model_Mysql4_Abs
     {
         $this->_init('searchanise/config', 'config_id');
     }
-    
+
     /**
      * Save config value
      *

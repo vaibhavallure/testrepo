@@ -32,5 +32,20 @@ class Allure_AdminPermissions_Helper_Data extends Mage_Core_Helper_Abstract
     	}
     	return $flag;
     }
+    
+    //show teamwork order data only super admin
+    public function isShowTeamworkOrders(){
+        $isShow = false;
+        $user = Mage::getSingleton('admin/session')->getUser();
+        if($user == null){
+            return $isShow;
+        }
+        $userRole = $user->getRole()->getData();
+        $roleId = $userRole["role_id"];
+        if($roleId == 1){
+            $isShow =  true;
+        }
+        return $isShow;
+    }
 
 }

@@ -152,6 +152,9 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 				Mage::throwException( Mage::helper('tokenbase')->__( sprintf( "Payment Gateway: Unknown parameter '%s'", $key ) ) );
 			}
 		}
+		elseif( $val === null ) {
+			unset( $this->_params[ $key ] );
+		}
 		
 		return $this;
 	}
@@ -250,6 +253,7 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 	protected function _arrayToXml( $rootName, $array )
 	{
 		$xml = Mage::getModel('tokenbase/gateway_xml')->createXML( $rootName, $array );
+
 		return $xml->saveXML();
 	}
 	
@@ -267,10 +271,7 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 	protected function _xmlToArray( $xml )
 	{
 		try {
-			
-			//return Mage::getModel('tokenbase/gateway_xml')->createArray( $xml );
-			$arr = Mage::getModel('tokenbase/gateway_xml')->createArray( $xml );
-			return $arr;
+			return Mage::getModel('tokenbase/gateway_xml')->createArray( $xml );
 		}
 		catch( Exception $e ) {
 			Mage::helper('tokenbase')->log( $this->_code, $e->getMessage() . "\n" . $this->_sanitizeLog( $xml ) );

@@ -70,24 +70,25 @@ if ($session->isLoggedIn()) {
 					  	<div class="fieldDiv">
 					  	   	<label>First Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php //echo $firstName?>" />-->
-					    	<input class="ele_width required-entry" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
+					    	<input class="ele_width required-entry" onkeypress="return isText(event)" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
 					    </div>
 						
 						<div class="fieldDiv">
 					    	<label>Last Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php //echo $lastName?>" />-->
-					    	<input class="ele_width required-entry" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
+					    	<input class="ele_width required-entry" onkeypress="return isText(event)" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
 					    </div>
 					
 					  	<div class="fieldDiv">
 					  	   	<label>Email*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-email" type="text" name="email" value="<?php //echo $email?>" />-->
-					    	<input class="ele_width required-entry validate-email" type="text" name="email" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" />
+					    	<input class="ele_width required-entry validate-email" onkeypress="return isSymbol(event)" type="text" name="email" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" />
 					    </div>
 						<div class="">
 					    	<label>Phone Number*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-number" type="text" name="phone" value="<?php //echo $telephone?>" />-->
-					    	<input class="ele_width required-entry validate-phone-len" type="text" id="phone" name="phone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>" />
+<!--					    	<input class="ele_width required-entry validate-phone-len" onkeypress="return isNumber(event)"  type="text" id="phone" name="phone" value="--><?php //if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?><!--" />-->
+                            <input id="phone" name="phone" type="text" class="input-text ele_width validate-intl-telephone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
 					    </div>
 					
 						<div class="fieldDiv">
@@ -140,12 +141,12 @@ if ($session->isLoggedIn()) {
 					    <div class="fieldDiv">
 					  	   	<label>City:</label><br/>
 					    	<!--<input class="ele_width" type="text" name="city" value="<?php //echo $city?>"/>  -->
-					    	<input class="ele_width" type="text" name="city" value="<?php if($f_city):echo $f_city;else: echo $city;endif;?>"/>
+					    	<input class="ele_width" onkeypress="return isText(event)" type="text" name="city" value="<?php if($f_city):echo $f_city;else: echo $city;endif;?>"/>
 					    </div>						    
 					    <div class="fieldDiv">
 					    	<label>Postal Code:</label><br/>
 					    	<!-- <input class="ele_width" type="text" name="postal_code" value="<?php //echo $postcode?>" /> -->
-					    	<input class="ele_width" type="text" name="postal_code" value="<?php if($f_postcode):echo $f_postcode;else: echo $postcode;endif;?>" />
+					    	<input class="ele_width" onkeypress="return isNumber(event)" type="text" name="postal_code" value="<?php if($f_postcode):echo $f_postcode;else: echo $postcode;endif;?>" />
 					    </div>
 					     
 		  	</div>
@@ -159,7 +160,7 @@ if ($session->isLoggedIn()) {
 				    	echo $f_special_notes;
 				    	endif;?></textarea>		    	
 				    </div>
-					<div class="fieldDiv">
+					<div class="fieldDiv">onclick="return Validate()"
 				    	<label>Notify Me:</label><br/>
 				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
 				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message - Message and Data Rates May Apply</p></div>
@@ -170,7 +171,7 @@ if ($session->isLoggedIn()) {
 						 <div class="pwdBlock">
 							 <div class="fieldDiv">
 							 	<label>Password:</label><br/>					    	
-								<input class="pwdele_width input-text validate-password" type="password" name="password" id="password" value="" />
+								<input class="pwdele_width input-text validate-password pass" type="password" name="password" id="password" value="" />
 							 </div><!-- validate-password validate-both-passwords -->
 							 <div class="fieldDiv">
 							 	<label>Confirm Password:</label><br/>					    	
@@ -195,7 +196,42 @@ if ($session->isLoggedIn()) {
 	
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
-		jQuery('#phone').intlTelInput();
+        Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+        //initialize itel tel input
+        var input = document.querySelector("#phone")
+        var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
+            utilsScript: Allure.UtilPath
+        });
+
+        // take phone number and check if it exist
+        // if it does not exist then
+        // first check if we can get Geo Location based Country Code if its there then set it
+        // otherwise set default as country as 'us'
+        // Magento module - Allure/GeoLocation
+        var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
+        //console.log('[signing_register.phtml] length',phone.length)
+        if(phone.length <=0){
+            var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+//            console.log('[signing_register.phtml] country_code',country_code)
+
+            if(country_code == undefined || country_code == null || country_code == "")
+                country_code = "us"
+
+//            console.log('[signing_register.phtml] setCountry',country_code)
+            iti.setCountry(country_code.toLowerCase());
+        }
+        jQuery('.flag-container').css('height','29px');
+
+
+        //custom validator for itel tel input
+        //FileName - intel-tel-validation.js
+        allureIntlTelValidate(jQuery("#phone"),iti);
+
 		jQuery.noConflict();
 		/* jQuery("#createaccCheck").live('click',function(event){
 			jQuery(".pwdBlock").toggle("show");
@@ -212,9 +248,8 @@ if ($session->isLoggedIn()) {
 
 			 }
 			
-		});	
+		});
 
-		
 
 	});
 	
@@ -228,4 +263,35 @@ function getstate(countryValue) {
         }
     });
 }
+</script>
+
+<script type="text/javascript">
+    function isNumber(event){
+        var keycode=event.keyCode;
+        if((keycode>=48 && keycode<=57) ||(keycode==43))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    function isText(event){
+        var keycode=event.keyCode;
+        if(((keycode>=65 && keycode<=90) ||(keycode>=97 && keycode<=122))||(keycode==32))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    function isSymbol(event){
+        var keycode=event.keyCode;
+        if(((keycode>=65 && keycode<=90) ||(keycode>=97 && keycode<=122)) || (keycode>=48 && keycode<=57) ||((keycode==64) ||(keycode==46)))
+        {
+            return true;
+        }
+        return false;
+    }
+
+
 </script>

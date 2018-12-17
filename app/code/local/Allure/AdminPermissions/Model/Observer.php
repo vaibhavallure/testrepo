@@ -2,6 +2,11 @@
 
 class Allure_AdminPermissions_Model_Observer
 {
+    const SALES_ORDER       = "order";
+    const SALES_INVOICE     = "invoice";
+    const SALES_SHIPMENT    = "shipment";
+    const SALES_CREDITMEMO  = "creditmemo";
+    const TEAMWORK          = 2;
 
     /**
      * Before we save the role, let's include our restrict value
@@ -41,11 +46,11 @@ class Allure_AdminPermissions_Model_Observer
     {
         $user = Mage::getSingleton('admin/session')->getUser();
         $orderGridCollection = $observer->getEvent()->getOrderGridCollection();
-       // Mage::log($user->getData(),Zend_log::DEBUG,'abc',true);
-        if($user!=null){
-	        if ($user->getStoreRestrictions()!=null) {
+        if($user != null){
+	        /* if ($user->getStoreRestrictions()!=null) {
 	            $this->_filterByStoreRestriction($user, $orderGridCollection);
-	        }
+	        } */
+	        return $this->showTeamworkOrder($user, $orderGridCollection, self::SALES_ORDER);
         }
     }
 
@@ -58,10 +63,11 @@ class Allure_AdminPermissions_Model_Observer
     {
         $user = Mage::getSingleton('admin/session')->getUser();
         $invoiceGridCollection = $observer->getEvent()->getOrderInvoiceGridCollection();
-        if($user!=null){
-	        if ($user->getStoreRestrictions()!=null) {
+        if($user != null){
+	        /* if ($user->getStoreRestrictions()!=null) {
 	            $this->_filterByStoreRestriction($user, $invoiceGridCollection);
-	        }
+	        } */
+            return $this->showTeamworkOrder($user, $invoiceGridCollection, self::SALES_INVOICE);
         }
     }
 
@@ -74,10 +80,11 @@ class Allure_AdminPermissions_Model_Observer
     {
         $user = Mage::getSingleton('admin/session')->getUser();
         $shipmentGridCollection = $observer->getEvent()->getOrderShipmentGridCollection();
-        if($user!=null){
-	        if ($user->getStoreRestrictions()) {
+        if($user != null){
+	        /* if ($user->getStoreRestrictions()) {
 	            $this->_filterByStoreRestriction($user, $shipmentGridCollection);
-	        }
+	        } */
+            return $this->showTeamworkOrder($user, $shipmentGridCollection, self::SALES_SHIPMENT);
         }
     }
 
@@ -91,9 +98,10 @@ class Allure_AdminPermissions_Model_Observer
         $user = Mage::getSingleton('admin/session')->getUser();
         $creditmemoGridCollection = $observer->getEvent()->getOrderCreditmemoGridCollection();
         if($user!=null){
-	        if ($user->getStoreRestrictions()!=null) {
+	        /* if ($user->getStoreRestrictions()!=null) {
 	            $this->_filterByStoreRestriction($user, $creditmemoGridCollection);
-	        }
+	        } */
+            return $this->showTeamworkOrder($user, $creditmemoGridCollection, self::SALES_CREDITMEMO);
         }
     }
 
@@ -187,6 +195,8 @@ class Allure_AdminPermissions_Model_Observer
 	    		$this->setStore($contollerName);
 	    	}
     	}
+    	
+    	
     }
     
 
@@ -198,7 +208,6 @@ class Allure_AdminPermissions_Model_Observer
      */
     protected function _filterByStoreRestriction($user, $collection)
     {
-    	//Mage::log($user->getRole()->getData(),Zend_log::DEBUG,'abc',true);
     	if($user->getRole()->getRestrictByStore()){
 	        $storeRestrictions = explode(',', $user->getStoreRestrictions());
 	        if(in_array(0, $storeRestrictions)){
@@ -206,6 +215,37 @@ class Allure_AdminPermissions_Model_Observer
 	        }
 	        $collection ->addFieldToFilter('main_table.store_id',array('in'=>$storeRestrictions));
     	}
+        return $collection;
+    }
+      
+    
+    /**
+     * escape teamwork order for other user instead Administrators
+     */
+    public function showTeamworkOrder($user, $collection, $type = null){
+        $helper = Mage::helper("allure_adminpermissions");
+        if(!$helper->isShowTeamworkOrders()){
+            if($type == self::SALES_ORDER){
+                $controllerName = Mage::app()->getRequest()->getControllerName();
+                if($controllerName == "customer"){
+                    $collection->getSelect()->join(
+                        array('sales_flat_order' => $collection->getTable('sales/order')),
+                        'main_table.entity_id = sales_flat_order.entity_id',
+                        array('create_order_method' => 'sales_flat_order.create_order_method')
+                        );
+                    $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
+                }else{
+                    $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
+                }
+            }elseif (($type == self::SALES_INVOICE) || ($type == self::SALES_SHIPMENT) || ($type == self::SALES_CREDITMEMO)){
+                $collection->getSelect()->join(
+                    array('sales_flat_order' => $collection->getTable('sales/order')),
+                    'main_table.order_id = sales_flat_order.entity_id',
+                    array('create_order_method' => 'sales_flat_order.create_order_method')
+                    );
+                $collection ->addFieldToFilter('sales_flat_order.create_order_method', array('nin' => array(self::TEAMWORK)));
+            }
+        }
         return $collection;
     }
 

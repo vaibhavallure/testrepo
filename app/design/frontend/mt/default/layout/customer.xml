@@ -49,11 +49,29 @@ Default layout, loads most of the pages
     <default>
         <!-- Mage_Customer -->
         <reference name="head">
-			<action method="addCss"><stylesheet>css/selectboxit.css</stylesheet></action>
+            <action method="addItem"><type>skin_js</type><name>js/allure/input_validate.js</name></action>
+            <action method="addCss"><stylesheet>css/selectboxit.css</stylesheet></action>
         </reference>
         <reference name="top.links">
             <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
         </reference>
+
+
+        <!--<reference name="root">-->
+			<!--<block type="core/template" name="account.popups" as="account_popups" template="customer/account/popup/container.phtml">-->
+				<!--<block type="customer/form_login" name="account.popup.login" as="account_popup_login" template="customer/account/popup/login.phtml"/>-->
+				<!--<block type="core/template" name="account.popup.register" as="account_popup_register" template="customer/account/popup/register.phtml"/>-->
+				<!--<block type="core/template" name="account.popup.resetpassword" as="account_popup_resetpassword" template="customer/account/popup/reset_password.phtml"/>-->
+			<!--</block>-->
+		<!--</reference>-->
+
+        <reference name="header">
+			<block type="core/template" name="account.popups" as="account_popups" template="customer/account/popup/container.phtml">
+				<block type="customer/form_login" name="account.popup.login" as="account_popup_login" template="customer/account/popup/login.phtml"/>
+				<block type="core/template" name="account.popup.register" as="account_popup_register" template="customer/account/popup/register.phtml"/>
+				<block type="core/template" name="account.popup.resetpassword" as="account_popup_resetpassword" template="customer/account/popup/reset_password.phtml"/>
+			</block>
+		</reference>
     </default>
 
 <!--
@@ -94,7 +112,7 @@ Layout for customer login page
             <action method="setTemplate"><template>page/1column.phtml</template></action>
         </reference>
         <reference name="content">
-            
+
             <block type="customer/form_register" name="customer_form_register" template="customer/form/register.phtml">
 				<block type="cms/block" name="cms_timeout_message">
                 <action method="setBlockId"><block_id>timeout_message</block_id></action>
@@ -103,7 +121,7 @@ Layout for customer login page
                     <label>Form Fields Before</label>
                 </block>
             </block>
-			
+
 			<block type="customer/form_login" name="customer_form_login" template="customer/form/login.phtml" />
         </reference>
     </customer_account_login>
@@ -279,9 +297,9 @@ Customer account pages, rendered for all tabs in dashboard
         <reference name="left">
             <block type="customer/account_navigation" name="customer_account_navigation_dashboard" before="-" template="customer/account/navigation.phtml">
                 <action method="addLink" translate="label" module="customer"><name>account</name><path>customer/account/</path><label>My Dashboard</label></action>
-                
+
                 <action method="addLink" translate="label" module="customer"><name>tokenbase_customer_link</name><path>customer/paymentinfo/</path><label>My Saved Cards</label></action>
-                
+
                 <action method="addLink" translate="label" module="customer"><name>orders_history</name><path>sales/order/history/</path><label>My Orders</label></action>
                 <action method="addLink" translate="label" module="customer"><name>wishlist</name><path>wishlist/</path><label>My Wishlist</label></action>
                 <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Account Information</label></action>
@@ -289,7 +307,7 @@ Customer account pages, rendered for all tabs in dashboard
                 <action method="addLink" translate="label" module="customer"><name>newsletter</name><path>newsletter/manage/</path><label>Newsletter</label></action>
             </block>
             <remove name="tags_popular"/>
-            <remove name="catalog.compare.sidebar"/>  
+            <remove name="catalog.compare.sidebar"/>
             <remove name="sale.reorder.sidebar"/>
             <remove name="wishlist_sidebar"/>
         </reference>
@@ -306,14 +324,14 @@ Customer account home dashboard layout
         <reference name="root">
             <action method="setTemplate"><template>page/2columns-left-dashboard.phtml</template></action>
         </reference>
-        <reference name="my.account.wrapper">             
-            <block type="customer/account_dashboard" name="customer_account_dashboard" template="customer/account/dashboard.phtml">                
+        <reference name="my.account.wrapper">
+            <block type="customer/account_dashboard" name="customer_account_dashboard" template="customer/account/dashboard.phtml">
                 <block type="sales/order_history" name="sales.order.history">
 					<!--block type="page/html_pager" name="product_list_toolbar_pager">
 						<action method="addPagerLimit"><mode>list</mode><limit>5</limit></action>
 					</block-->
 				</block>
-                <block type="customer/address_book" name="address_book" template="customer/address/book.phtml"/>               
+                <block type="customer/address_book" name="address_book" template="customer/address/book.phtml"/>
                 <block type="customer/account_dashboard_info" name="customer_account_dashboard_info" as="info" template="customer/account/dashboard/info.phtml"/>
                 <block type="customer/account_dashboard_newsletter" name="customer_account_dashboard_newsletter" as="newsletter" template="customer/account/dashboard/newsletter.phtml"/>
                 <block type="customer/account_dashboard_address" name="customer_account_dashboard_address" as="address" template="customer/account/dashboard/address.phtml"/>
@@ -321,7 +339,7 @@ Customer account home dashboard layout
         </reference>
         <!--<reference name="left">
             <remove name="tags_popular"/>
-            <remove name="catalog.compare.sidebar"/>            
+            <remove name="catalog.compare.sidebar"/>
             <remove name="cart_sidebar"/>
             <remove name="sale.reorder.sidebar"/>
             <block type="customer/account_navigation" name="customer_account_navigation" before="-" template="customer/account/navigation.phtml">
