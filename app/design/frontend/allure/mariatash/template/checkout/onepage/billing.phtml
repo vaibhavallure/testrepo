@@ -27,11 +27,14 @@
 <?php Varien_Profiler::start('DTN: temp'); ?>
 <?php $_hasAddresses = $this->customerHasAddresses(); ?>
 <?php Varien_Profiler::stop('DTN: temp'); ?>
+<link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css'); ?>" rel="stylesheet"/>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
 <style>
     .billing-itel-tel-cstm {
-        width: 218px;
+        width: 100%;
         border: 1px solid #ccc;
-        height: 21px;
+        height: 30px;
     }
 </style>
 <form id="co-billing-form" action="">
@@ -312,37 +315,19 @@
     </fieldset>
 </form>
 <script type="text/javascript">
-    function initializeItelTelInput() {
-        var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+    jQuery(document).ready(function () {
+        //  jQuery('.billing-itel-tel-cstm').attr('value','')
+        if (jQuery('#billing\\:country_id').val() == 'US' || jQuery('#billing\\:country_id').val() == '') {
+            jQuery('#country_notice').hide();
+        } else {
+            jQuery('#country_notice').show();
+        }
 
-        //initialize itel tel input
-        var input = document.querySelector(".billing-itel-tel-cstm")
-        var iti = window.intlTelInput(input, {
-            autoFormat: false,
-            autoHideDialCode: false,
-            autoPlaceholder: false,
-            nationalMode: false,
-            utilsScript: utilPath
-        });
+        jQuery('#uniform-billing-address-select').on('change',function(){
+            initializeItelTelInputBilling();
 
-        // take phone number and check if it existVarienForm
-        // if it does not exist then
-        // first check if we can get Geo Location based Country Code if its there then set it
-        // otherwise set default as country as 'us'
-        // Magento module - Allure/GeoLocation
-
-        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
-
-        if (country_code == undefined || country_code == null || country_code == "")
-            country_code = "us"
-
-        iti.setCountry(country_code.toLowerCase());
-
-
-        //custom validator for itel tel input
-        //FileName - intel-tel-validation.js
-        allureIntlTelValidate(jQuery(".billing-itel-tel-cstm"), iti);
-    }
+        })
+    });
 
     function updatePoscodeBilling(obj) {
         jQuery('#advice-validate-zip-international-billing\\:postcode').addClass('display_none');
@@ -359,15 +344,42 @@
         }
     }
 
-    jQuery(document).ready(function () {
-        jQuery('.billing-itel-tel-cstm').attr('value','')
-        initializeItelTelInput();
-        if (jQuery('#billing\\:country_id').val() == 'US' || jQuery('#billing\\:country_id').val() == '') {
-            jQuery('#country_notice').hide();
-        } else {
-            jQuery('#country_notice').show();
-        }
-    });
+    function initializeItelTelInputBilling() {
+        var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+        //initialize itel tel input
+        var input = document.querySelector(".billing-itel-tel-cstm")
+        var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
+            utilsScript: utilPath
+        });
+
+        // take phone number and check if it exist
+        // if it does not exist then
+        // first check if we can get Geo Location based Country Code if its there then set it
+        // otherwise set default as country as 'us'
+        // Magento module - Allure/GeoLocation
+
+        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+        if (country_code == undefined || country_code == null || country_code == "")
+            country_code = "us"
+
+        iti.setCountry(country_code.toLowerCase());
+
+        jQuery(".flag-container").css("height","30px");
+
+
+        //custom validator for itel tel input
+        //FileName - intel-tel-validation.js
+        allureIntlTelValidate(jQuery(".billing-itel-tel-cstm"), iti);
+    }
+
+    jQuery("#billing-address-select").uniform();
+
     //<![CDATA[
     var billing = new Billing('co-billing-form', '<?php echo $this->getUrl('checkout/onepage/getAddress') ?>address/', '<?php echo $this->getUrl('checkout/onepage/saveBilling') ?>');
     var billingForm = new VarienForm('co-billing-form');

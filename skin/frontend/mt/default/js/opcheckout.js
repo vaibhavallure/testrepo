@@ -319,7 +319,6 @@ Billing.prototype = {
         } else {
             Element.hide('billing-new-address-form');
         }
-        initializeItelTelInput()
     },
 
     resetSelectedAddress: function(){
