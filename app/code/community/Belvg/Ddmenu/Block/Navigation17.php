@@ -118,43 +118,50 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
         		$htmlSeparated = '';
 
                 foreach ($children as $child) {
+					$categoryId = $this->getCategoryId($child);
 
-                    $this->categoryIds[] = $this->getCategoryId($child);
+                    $this->categoryIds[] = $categoryId;
                     $subHtml             = $this->getSubCategoryHtml($child, TRUE);
+
                     $i += 1 + (int)$this->rows;
-                    $category=Mage::getModel('catalog/category')->load($this->getCategoryId($child));
-                    if($category->getIsWholesale()){
-                        if($this->checkUserRole()==0)
-                            continue;
+
+                    $category = Mage::getModel('catalog/category')->load($categoryId);
+
+                    if ($category->getIsWholesale()){
+                        if ($this->checkUserRole() == 0) {
+							continue;
+						}
                     }
-	            	if($this->_itemSeparated($this->getCategoryId($child))){
-	                        $htmlSeparated .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
-	                                        ' . (($boo)?'':'') . '
-	                                            <a href="' . $child->getUrl() . '">
-	                                                ' . $this->__($this->escapeHtml($child->getName())) . '
-	                                            </a>
-	                                        ' . (($boo)?'':'') . '
-	                                    </li>';
-	            	}else{
-	                        $html .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
-	                                        ' . (($boo)?'':'') . '
-	                                            <a href="' . $child->getUrl() . '">
-	                                                ' . $this->__($this->escapeHtml($child->getName())) . '
-	                                            </a>
-	                                        ' . (($boo)?'':'') . '
-	                                    </li>';
-	                        $html .= $subHtml;
+
+	            	if ($this->_itemSeparated($this->getCategoryId($child))) {
+                        $htmlSeparated .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
+                            ' . (($boo)?'':'') . '
+                                <a href="' . $child->getUrl() . '">
+                                    ' . $this->__($this->escapeHtml($child->getName())) . '
+                                </a>
+                            ' . (($boo)?'':'') . '
+                        </li>';
+	            	} else {
+                        $html .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
+                                        ' . (($boo)?'':'') . '
+                                            <a href="' . $child->getUrl() . '">
+                                                ' . $this->__($this->escapeHtml($child->getName())) . '
+                                            </a>
+                                        ' . (($boo)?'':'') . '
+                                    </li>';
+                        $html .= $subHtml;
 	            	}
 
                     $first       = '';
                 }
 
                 if ($boo) {
-            		if(!empty($htmlSeparated)){
+            		if (!empty($htmlSeparated)) {
 						//$html .= $this->__getWholesaleCategories($child);
                         $html .= '<hr />';
                         $html .= $htmlSeparated;
                     }
+					
                     $html       .= '</ul>';
                 }
             }
@@ -191,22 +198,28 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
         		$htmlSeparated = '';
 
                 foreach ($children as $child) {
-                    $this->categoryIds[] = $this->getCategoryId($child);
+					$categoryId = $this->getCategoryId($child);
+
+                    $this->categoryIds[] = $categoryId;
                     $subHtml             = $this->getMobileCategoryHtml($child, true);
                     $dropdown = $subHtml ? ' dropdown dropdown-submenu' : '';
                     $curate = $subHtml ? '<span class="caret"></span>' : '';
                     $i += 1 + (int)$this->rows;
-                    $category=Mage::getModel('catalog/category')->load($this->getCategoryId($child));
-                    if($category->getIsWholesale()){
-                        if($this->checkUserRole()==0)
-                            continue;
+
+                    $category = Mage::getModel('catalog/category')->load($categoryId);
+
+                    if ($category->getIsWholesale()) {
+                        if ($this->checkUserRole() == 0) {
+							continue;
+						}
                     }
+
             		if ($this->_itemSeparated($this->getCategoryId($child))) {
                         $htmlSeparated .= '<li class="menu-item menu-item-separated' . $first . $dropdown . (($child->getIsActive())?' current':'') . '">
                                             <a href="' . $child->getUrl() . '">
                                                 ' . $this->__($this->escapeHtml($child->getName())) . $curate . '
                                             </a>
-                                        	' . (($subHtml)? $subHtml :'') . '
+                                        	' . (($subHtml) ? $subHtml :'') . '
                                     	</li>';
             		} else {
                         $html .= '<li class="menu-item ' . $first . $dropdown . (($child->getIsActive())?' current':'') . '">
@@ -222,7 +235,7 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
 
                 if ($begin) {
             		if(!empty($htmlSeparated)){
-		        		$htmlSeparated .= $this->__getWholesaleCategories($child,TRUE);
+		        		//$htmlSeparated .= $this->__getWholesaleCategories($child,TRUE);
                         $html .= $htmlSeparated;
                     }
                     $html       .= '</ul>';
