@@ -157,9 +157,6 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 					$result['success'] = true;
 					$result['msg'] = Mage::helper('core')->__('Account created Successfully');
 				} catch(Exception $e) {
-					Mage::log("Customer create when new customer book appointment :".$e->getMessage(),Zend_Log::DEBUG,'universal.log',true);
-					//Mage::log($e->getMessage());
-					//print_r($e->getMessage());
 					$result['msg'] = $e->getMessage();
 				}
 			} else {
