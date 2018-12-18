@@ -191,7 +191,7 @@
                                     <input type="text" name="billing[telephone]"
                                            value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>"
                                            title="<?php echo $this->__('Telephone') ?>"
-                                           class="validate-intl-telephone billing-itel-tel-cstm<?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>"
+                                           class="billing-itel-tel-cstm <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>"
                                            id="billing:telephone"/>
                                 </div>
                             </div>
