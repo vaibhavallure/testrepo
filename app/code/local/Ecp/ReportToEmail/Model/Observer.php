@@ -118,7 +118,6 @@ class Ecp_ReportToEmail_Model_Observer
                      ->columns('sum(IFNULL(base_total_invoiced,0)) total_invoiced_amount')
                      ->columns('sum(IFNULL(base_total_canceled,0)) total_canceled_amount')
                      ->columns('sum(IFNULL(base_total_paid,0)) total_paid_amount')
-                     ->columns('count(base_total_refunded,0) total_refunded_count')
                      ->columns('sum(IFNULL(base_total_refunded,0)) total_refunded_amount')
                      ->columns('sum(IFNULL(base_tax_amount,0)-IFNULL(base_tax_canceled,0)) total_tax_amount')
                      ->columns('sum(IFNULL(base_tax_invoiced,0)-IFNULL(base_tax_refunded,0)) total_tax_amount_actual')
@@ -127,6 +126,9 @@ class Ecp_ReportToEmail_Model_Observer
                      ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
                      ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
                      ->where("store_id IN('$storesId') AND create_order_method = 0 AND (created_at >='$from' AND created_at <='$to')");
+
+
+
 
                 $currency=Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
                 $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
