@@ -861,7 +861,9 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
 					Mage::log("responseCode: $responseCode",Zend_Log::DEBUG, 'applepay.log', true);
 
-					if ($responseCode != "1") {
+					$responseCode = (int) $responseCode;
+
+					if ($responseCode == 1) {
 
 						$transactionId = $paymentData["transId"];
 
