@@ -247,6 +247,10 @@ if ($session->isLoggedIn()) {
         //initialize itel tel input
         var input = document.querySelector("#phone")
         var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
             utilsScript: Allure.UtilPath
         });
 
@@ -255,8 +259,8 @@ if ($session->isLoggedIn()) {
         // first check if we can get Geo Location based Country Code if its there then set it
         // otherwise set default as country as 'us'
         // Magento module - Allure/GeoLocation
-        var phone = jQuery("#phone").val();
-        console.log('[signing_register.phtml] length',phone.length)
+        var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
+        //console.log('[signing_register.phtml] length',phone.length)
         if(phone.length <=0){
             var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
 //            console.log('[signing_register.phtml] country_code',country_code)
@@ -265,13 +269,13 @@ if ($session->isLoggedIn()) {
                 country_code = "us"
 
 //            console.log('[signing_register.phtml] setCountry',country_code)
-            iti.setCountry(country_code);
+            iti.setCountry(country_code.toLowerCase());
         }
 
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js
         allureIntlTelValidate(jQuery("#phone"),iti);
-        jQuery(".flag-container").css("height","26px !important");
+        jQuery(".flag-container").css("height","29px");
 
 		jQuery.noConflict();
 		/* jQuery("#createaccCheck").live('click',function(event){

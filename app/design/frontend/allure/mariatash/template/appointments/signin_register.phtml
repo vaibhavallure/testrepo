@@ -87,7 +87,8 @@ if ($session->isLoggedIn()) {
 						<div class="">
 					    	<label>Phone Number*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-number" type="text" name="phone" value="<?php //echo $telephone?>" />-->
-					    	<input class="ele_width required-entry validate-phone-len" onkeypress="return isNumber(event)"  type="text" id="phone" name="phone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>" />
+<!--					    	<input class="ele_width required-entry validate-phone-len" onkeypress="return isNumber(event)"  type="text" id="phone" name="phone" value="--><?php //if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?><!--" />-->
+                            <input id="phone" name="phone" type="text" class="input-text ele_width validate-intl-telephone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
 					    </div>
 					
 						<div class="fieldDiv">
@@ -159,7 +160,7 @@ if ($session->isLoggedIn()) {
 				    	echo $f_special_notes;
 				    	endif;?></textarea>		    	
 				    </div>
-					<div class="fieldDiv">onclick="return Validate()"
+					<div class="fieldDiv">
 				    	<label>Notify Me:</label><br/>
 				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
 				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message - Message and Data Rates May Apply</p></div>
@@ -195,7 +196,42 @@ if ($session->isLoggedIn()) {
 	
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
-		jQuery('#phone').intlTelInput();
+        Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+        //initialize itel tel input
+        var input = document.querySelector("#phone")
+        var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
+            utilsScript: Allure.UtilPath
+        });
+
+        // take phone number and check if it exist
+        // if it does not exist then
+        // first check if we can get Geo Location based Country Code if its there then set it
+        // otherwise set default as country as 'us'
+        // Magento module - Allure/GeoLocation
+        var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
+        //console.log('[signing_register.phtml] length',phone.length)
+        if(phone.length <=0){
+            var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+//            console.log('[signing_register.phtml] country_code',country_code)
+
+            if(country_code == undefined || country_code == null || country_code == "")
+                country_code = "us"
+
+//            console.log('[signing_register.phtml] setCountry',country_code)
+            iti.setCountry(country_code.toLowerCase());
+        }
+        jQuery('.flag-container').css('height','29px');
+
+
+        //custom validator for itel tel input
+        //FileName - intel-tel-validation.js
+        allureIntlTelValidate(jQuery("#phone"),iti);
+
 		jQuery.noConflict();
 		/* jQuery("#createaccCheck").live('click',function(event){
 			jQuery(".pwdBlock").toggle("show");
