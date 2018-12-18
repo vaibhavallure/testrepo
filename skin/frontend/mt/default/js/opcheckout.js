@@ -490,6 +490,8 @@ Shipping.prototype = {
             //console.log('set same as billing = false in js file');
             Mage.Cookies.set('click_same_as_billing',0);
         }
+
+        initializeItelTelInput()
     },
 
     resetSelectedAddress: function(){

@@ -6,6 +6,7 @@
             <action method="addItem"><type>skin_js</type><name>js/timeslider/jQAllRangeSliders-min.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/timeslider/appointments.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/timeslider/dcalendar_picker.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/input_validate.js</name></action>
             <action method="addCss"><stylesheet>css/timeslider/appointments.css</stylesheet></action>
             <!-- <action method="addCss"><stylesheet>css/style.css</stylesheet></action> -->
             <action method="addCss"><stylesheet>css/responsive.css</stylesheet></action>
