@@ -39,7 +39,10 @@
 .paypal-express-review .data-table td {
 	padding:7px 20px;
 }
-.paypal-express-review tr.first  {
+
+.paypal-express-review tr.first,
+.paypal-express-review .data-table tr.odd,
+.paypal-express-review .data-table tr.even   {
 	background-color: #dedede !important;
 
 }

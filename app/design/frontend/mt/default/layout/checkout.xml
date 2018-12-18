@@ -51,6 +51,7 @@ Default layout, loads most of the pages
             </block>
         </reference>
         <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/allure/input_validate.js</name></action>
             <block type="core/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml" />
         </reference>
     </default>
