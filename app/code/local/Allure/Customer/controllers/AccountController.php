@@ -111,7 +111,7 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			'msg'		=> 'Unknown'
 		];
 
-		Mage::log('createCustomer:: '.json_encode($this->getRequest()->getParams()), Zend_log::DEBUG, 'univeral.log', true);
+		Mage::log('createCustomer:: '.json_encode($this->getRequest()->getParams()), Zend_log::DEBUG, 'universal.log', true);
 
 		if ($this->getRequest()->getParam('email') && $this->_validateFormKey()) {
 			$websiteId = Mage::app()->getWebsite()->getId();
@@ -156,16 +156,15 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 					Mage::getSingleton('customer/session')->loginById($customer->getId());
 					$result['success'] = true;
 					$result['msg'] = Mage::helper('core')->__('Account created Successfully');
-				} catch(Exception $ex) {
-					Mage::log(" Customer create when new customer book appointment :".$ex,Zend_Log::DEBUG,'appointments',true);
+				} catch(Exception $e) {
+					Mage::log("Customer create when new customer book appointment :".$e->getMessage(),Zend_Log::DEBUG,'universal.log',true);
 					//Mage::log($e->getMessage());
 					//print_r($e->getMessage());
-					$result['error'] = $ex;
+					$result['msg'] = $e->getMessage();
 				}
 			} else {
 				$result['success'] = false;
-				$result['error'] = Mage::helper('core')->__('Cutomer with this email already exits.');
-
+				$result['msg'] = Mage::helper('core')->__('Cutomer with this email already exits.');
 			}
 		}
 
