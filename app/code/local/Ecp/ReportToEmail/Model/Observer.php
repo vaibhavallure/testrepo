@@ -118,6 +118,7 @@ class Ecp_ReportToEmail_Model_Observer
                      ->columns('sum(IFNULL(base_total_invoiced,0)) total_invoiced_amount')
                      ->columns('sum(IFNULL(base_total_canceled,0)) total_canceled_amount')
                      ->columns('sum(IFNULL(base_total_paid,0)) total_paid_amount')
+                     ->columns('count(base_total_refunded,0) total_refunded_count')
                      ->columns('sum(IFNULL(base_total_refunded,0)) total_refunded_amount')
                      ->columns('sum(IFNULL(base_tax_amount,0)-IFNULL(base_tax_canceled,0)) total_tax_amount')
                      ->columns('sum(IFNULL(base_tax_invoiced,0)-IFNULL(base_tax_refunded,0)) total_tax_amount_actual')
@@ -360,7 +361,10 @@ class Ecp_ReportToEmail_Model_Observer
                     ->columns('sum(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_refunded,0)) total_shipping_amount_actual')
                     ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
                     ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
+                    ->columns('sum(IF((base_discount_amount!=0) AND (base_discount_canceled is null),1,0)) total_discount_count')
+                    ->columns('count(base_total_refunded) total_refunded_count')
                     ->where($whr);
+
 
 
                  $base_total_paid=$collection->getFirstItem()->getTotalPaidAmount();
@@ -395,6 +399,9 @@ class Ecp_ReportToEmail_Model_Observer
                     $data['gross_revenue'] = $collection->getFirstItem()->getGrossRevenue();
                     $data['total_profit_amount'] = $collection->getFirstItem()->getTotalProfitAmount();
 
+                    $data['total_discount_count'] = $collection->getFirstItem()->getTotalDiscountCount();
+                    $data['total_refunded_count'] = $collection->getFirstItem()->getTotalRefundedCount();
+
 
 
 
@@ -407,6 +414,8 @@ class Ecp_ReportToEmail_Model_Observer
                     $data['total_tax_amount'] = 0;
                     $data['total_shipping_amount'] = 0;
                     $data['total_discount_amount'] = 0;
+                    $data['total_discount_count']=0;
+                    $data['total_refunded_count']=0;
 
                     $data['gross_revenue'] = 0;
                 }
@@ -426,8 +435,8 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['orders_count'] . '</span></span></td>';
                 $mailbody .= '</tr>';
                 $mailbody .= '<tr>';
-                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Gross Revunue</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'. '<label>'.utf8_decode($symbol).'</label>'.$data['gross_revenue'] . '</span></span></td>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Gross Revenue</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'. '<label>'.utf8_decode($symbol).'</label>'.round($data['gross_revenue'],2) . '</span></span></td>';
                 $mailbody .= '</tr>';
 
 
@@ -435,8 +444,14 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Refunds</strong></u></span></span></td></tr>';
 
                 $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Number Of Refunds</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.$data['total_refunded_count'].'</span></span></td>';
+                $mailbody .= '</tr>';
+
+
+                $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Refunded Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_refunded_amount']. '</span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.round($data['total_refunded_amount'],2).'</span></span></td>';
                 $mailbody .= '</tr>';
 
 
@@ -444,13 +459,18 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Discounts</strong></u></span></span></td></tr>';
 
                 $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Number Of Discounts</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.$data['total_discount_count'].'</span></span></td>';
+                $mailbody .= '</tr>';
+
+                $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Discount Amount</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.round($data['total_discount_amount'],2). '</span></span></td>';
                 $mailbody .= '</tr>';
 
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$total_profit.'</span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.round($total_profit,2).'</span></span></td>';
                 $mailbody .= '</tr>';
 
 
@@ -469,7 +489,7 @@ class Ecp_ReportToEmail_Model_Observer
             }
 
 
-            if($runFrom=="manual") {
+            if($runFrom=="manual" && $ismail==null) {
                 $allmailbody .= "
                       
                      <div style='box-shadow: 2px -1px 8px black;background-color: grey;color: white;display: block;clear: both;position: fixed;width: 100%;bottom: 0;padding: 10px;text-align: center;text-transform: capitalize;
@@ -480,7 +500,7 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-            if($runFrom=="manual")
+            if($runFrom=="manual" && $ismail==null)
                 echo $allmailbody;
 
 
