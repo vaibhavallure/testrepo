@@ -254,10 +254,19 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
     
     //get create order when placed from
     private function getCreateOrderMethods(){
-        return array(
+        $locations = array(
             array('label'=>'Website' ,'value' => 0),
-            array('label'=>'Counterpoint' ,'value' => 1),
-            array('label'=>'Teamwork' ,'value' => 2)
+            array('label'=>'Counterpoint' ,'value' => 1)
         );
+        
+        $user = Mage::getSingleton('admin/session')->getUser();
+        if ($user != null){
+            $userRole = $user->getRole()->getData();
+            $roleID = $userRole["role_id"];
+            if($roleID == 1){
+                $locations[] = array('label'=>'Teamwork' ,'value' => 2);
+            }
+        }
+        return $locations;
     }
 }

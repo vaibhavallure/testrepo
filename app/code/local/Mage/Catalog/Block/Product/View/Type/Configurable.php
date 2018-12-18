@@ -145,14 +145,14 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
         $_currency_usd = Mage::app()->getStore()->getBaseCurrency();
         $baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
         $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
-        
+
         $attributes = array();
         $options    = array();
         $store      = $this->getCurrentStore();
         $taxHelper  = Mage::helper('tax');
         $currentProduct = $this->getProduct();
         $showOutOfStockProducts=Mage::getStoreConfig("cataloginventory/options/show_out_of_stock");
-        
+
         $preconfiguredFlag = $currentProduct->hasPreconfiguredValues();
         if ($preconfiguredFlag) {
             $preconfiguredValues = $currentProduct->getPreconfiguredValues();
@@ -164,6 +164,9 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
             $productStock[$productId] = $product->getStockItem()->getIsInStock();
             foreach ($this->getAllowAttributes() as $attribute) {
                 $productAttribute   = $attribute->getProductAttribute();
+
+				if (!$productAttribute) continue;
+
                 $productAttributeId = $productAttribute->getId();
                 $attributeValue     = $product->getData($productAttribute->getAttributeCode());
                 if (!isset($options[$productAttributeId])) {
@@ -183,6 +186,9 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
         foreach ($this->getAllowAttributes() as $attribute) {
             $productAttribute = $attribute->getProductAttribute();
+
+			if (!$productAttribute) continue;
+
             $attributeId = $productAttribute->getId();
             $info = array(
                'id'        => $productAttribute->getId(),
@@ -212,15 +218,15 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                         $productsIndexOptions = $options[$attributeId][$value['value_index']];
                         $productsIndex = array();
                         foreach ($productsIndexOptions as $productIndex) {
-                            
+
                             //Existing code
-                            
+
                             /* if ($productStock[$productIndex]) {
                              $productsIndex[] = $productIndex;
                              } */
-                            
+
                             //Allure code
-                            
+
                             if(!$showOutOfStockProducts){
                                 if ($productStock[$productIndex]) {
                                     $productsIndex[] = $productIndex;
@@ -241,7 +247,7 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                     }else{
                         $labeldisp =  $value['label'];
                     }
-                   
+
                     $info['options'][] = array(
                         'id'        => $value['value_index'],
                         'label'     => $labeldisp,

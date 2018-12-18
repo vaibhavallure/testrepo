@@ -31,6 +31,7 @@
  * @see Mage_Catalog_Block_Product_View
  * @see Mage_Review_Block_Product_View
  */
+
 $imgArr = array();
 $backOrderArray = array();
 $matches1 = array();
@@ -114,7 +115,7 @@ if ($_product->isConfigurable()) {
         $backOrderArray[$sprod->getId()] = Mage::getModel('cataloginventory/stock_item')->loadByProduct($sprod)->getBackorders();
         if ($sprod->getVideo()) {
             preg_match('#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=embed\/)[^"&\n]+|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $sprod->getVideo(), $matches1);
-            
+
             if (count($matches1)) {
 	            $videoArr[$sprod->getId()]['video'] = $matches1[0];
 	            if ($_product->getVideoThumb() == 'thumbnail/video/') {
@@ -298,14 +299,14 @@ if ($_product->getSizeSample() == 1) {
             </form>
         </div>
     <?php endif; ?>
-    
+
     <?php if(!$isCustomOptions):?>
     <form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <?php else:?>
     <?php //for parent child?>
     <form action="<?php echo $this->getSubmitUrl($_product)//.'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <?php endif;?>
-    
+
         <div class="no-display">
             <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
@@ -443,9 +444,9 @@ if ($_product->getSizeSample() == 1) {
                     </button>
                     <?php echo $this->getChildHtml('alert_urls') ?>
                 <?php endif;?>
-				
+
 				<?php //echo $this->getChildHtml('special_instruction')?>
-				
+
 		       <?php if ($_product->getShowSpecialInstruction()):?>
 				<div class="product-special-instructions">
 					<div class="special-instruction-label">
@@ -459,7 +460,7 @@ if ($_product->getSizeSample() == 1) {
 					</div>
 				</div>
 				<?php endif;?>
-				
+
                 <?php echo $this->getChildHtml('product_additional_data') ?>
             </div>
 
@@ -510,7 +511,7 @@ if ($_product->getSizeSample() == 1) {
         productAddToCartForm.submit = function (button, form) {
         var instru = jQuery('.special-inst-product').val();
         console.log(instru);
-	    <?php 
+	    <?php
 	     //$_POST['"product-"'.'$_product->getId()']= document.write(instru);
 	    //Mage::getSingleton('core/session')->setData("product-".$_product->getId(),instru);
 	    //Mage::getSingleton('core/session')->setInstruction(instru); ?>
@@ -529,7 +530,7 @@ if ($_product->getSizeSample() == 1) {
 
 			//old code
             //jQuery('.required-entry:not(.selectboxit)').each(function () {
-            
+
             //new code -allure
             jQuery('.main-container .required-entry:not(.selectboxit)').each(function () {
                 console.log("Add to Cart")

@@ -13,17 +13,13 @@ class Allure_BackorderRecord_Model_Cron
     public function getBackorederCollection($dates=array())
     {
 
-
-
         $data=$dates;
         $days=Mage::helper("backorderrecord/config")->getDays();
 
         $fromDate = date('Y-m-d 00:00:00', strtotime('-'.($days).' days'));
         $toDate = date('Y-m-d 23:59:59', strtotime( 'yesterday'));
 
-
-
-
+        $ordertype="back";
         if(count($data))
         {
            
@@ -32,6 +28,8 @@ class Allure_BackorderRecord_Model_Cron
                 $fromDate = $fromDate->format('Y-m-d H:i:s');
                 $toDate = new DateTime( $data['to_date']);
                 $toDate = $toDate->format('Y-m-d H:i:s');
+
+                $ordertype=$data['order_type'];
 
 
             }catch (Exception $e)
@@ -70,10 +68,11 @@ class Allure_BackorderRecord_Model_Cron
             //$sku = '';
             $skus = array();
             $filterWithStatus = FALSE;
-            $filterWithSku = TRUE;
+            $filterWithSku = FALSE;
+            $filterWithGroup = FALSE;
 
-            
 
+            //filter with SKU
             if ($data['item_sku'] && $data['show_metal_color']) {
                 /*$sku = strtoupper($data['item_sku']).'|'.strtoupper($data['metal_color']).'%';*/
                 foreach ($data['metal_color'] as $color) {
@@ -92,10 +91,25 @@ class Allure_BackorderRecord_Model_Cron
                 $filterWithSku = TRUE;
                 $filterSku = implode (' OR ', $skus );
             }
+
+            //filter with ORDER STATUS
            if ($data['show_order_statuses'] && count($data['order_statuses']) >= 1) {
                $filterWithStatus = TRUE;
                $filterStatus = "'" . implode ( "', '", $data['order_statuses'] ) . "'";
            }
+
+            //filter with GROUP
+            if ($data['show_group'] && count($data['customer_group']) >= 1) {
+                $filterWithGroup = TRUE;
+                $filterGroup = implode ( ',', $data['customer_group'] );
+
+                Mage::log("filter_group".$filterGroup ,Zend_Log::DEBUG, 'ajay.log', true);
+
+                if($filterGroup=="0") {
+                    $filterGroup = "0,111";
+                }
+
+            }
 
             $backorderCollection = Mage::getModel('sales/order_item')->getCollection()
                 ->addAttributeToSort('item_id', 'DESC');
@@ -107,17 +121,27 @@ class Allure_BackorderRecord_Model_Cron
                 if(!empty($filterSku))
                 $backorderCollection->getSelect()->where($filterSku);
             }
-          
-            $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
 
-            $addToquery = $backorderCollection->getSelect()->joinLeft(array('sales_flat_order' => $orderTable), 'main_table.order_id = sales_flat_order.entity_id',array('sales_flat_order.status'));
+            if($ordertype=="back")
+                $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.qty_backordered IS NOT NULL)"));/* OR gift_message_id IS NOT NULL*/
+            else
+                $backorderCollection->getSelect()->where(new Zend_Db_Expr("(main_table.product_type='simple')"));/* OR gift_message_id IS NOT NULL*/
+
+
+            $addToquery = $backorderCollection->getSelect()->joinLeft(array('sales_flat_order' => $orderTable), 'main_table.order_id = sales_flat_order.entity_id',array('sales_flat_order.status','sales_flat_order.customer_group_id'));
 
             if ($filterWithStatus) {
                 if(!empty($filterStatus))
                 $addToquery->where("sales_flat_order.status in($filterStatus)");
             }
 
-            $addToquery->where("sales_flat_order.created_at BETWEEN '".$fromDate."' AND '".$toDate."'");
+            if ($filterWithGroup) {
+                if(!empty($filterGroup))
+                    $addToquery->where("sales_flat_order.customer_group_id in($filterGroup)");
+                
+            }
+
+            $addToquery->where("sales_flat_order.created_at BETWEEN '".$fromDate."' AND '".$toDate."' AND sales_flat_order.old_store_id=1");
 
         }
         catch (Exception $e){
@@ -126,7 +150,6 @@ class Allure_BackorderRecord_Model_Cron
                 Mage::log('collection cant be generated '.$e->getMessage(),Zend_Log::DEBUG, 'backorder_data.log', true);
 
         }
-
         return $backorderCollection;
     }
 

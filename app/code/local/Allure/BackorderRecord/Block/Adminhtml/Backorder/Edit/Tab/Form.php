@@ -22,10 +22,24 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
 
         if ($metalColor->usesSource()) {
             $colorOptions = $metalColor->getSource()->getAllOptions(false);
-        }        
+        }
+
+        $c_groups = Mage::getModel('customer/group')->getCollection();
+
         $colorValues = array();
-        
-            foreach ($statuses as $code => $label) {
+        $customerGroups = array();
+
+        foreach($c_groups as $c_type) {
+
+//            if ($c_type->getCustomerGroupId() != 0){
+                $customerGroups[] = array (
+                    'label' => Mage::helper("backorderrecord")->__($c_type->getCustomerGroupCode()),
+                    'value' => $c_type->getCustomerGroupId()
+                );
+//            }
+        }
+
+        foreach ($statuses as $code => $label) {
                     $values[] = array(
                         'label' => Mage::helper("backorderrecord")->__($label),
                         'value' => $code
@@ -38,6 +52,22 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
                         'value' => $option['label']
                     );
             }
+            sort($colorValues);
+            sort($values);
+            sort($customerGroups);
+
+
+
+        $fieldset->addField('order_type', 'select', array(
+            'name'      => 'order_type',
+            'label'     => Mage::helper("backorderrecord")->__('Order Type'),
+            'options'   => array(
+                'back' => Mage::helper('backorderrecord')->__('Backordered Items Only'),
+                'all' => Mage::helper('backorderrecord')->__('All Items'),
+            ),
+            'note'      => Mage::helper('backorderrecord')->__('Choose Between Back orders And All Orders'),
+
+        ));
 
         $fieldset->addField('fromdate', 'datetime', array(
             'label'    => 'From',
@@ -100,6 +130,23 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
                 'display'   => 'none'
             ));
 
+        $fieldset->addField('show_group', 'select', array(
+            'name'      => 'show_group',
+            'label'     => Mage::helper("backorderrecord")->__('Group'),
+            'options'   => array(
+                '0' => Mage::helper('backorderrecord')->__('Any'),
+                '1' => Mage::helper('backorderrecord')->__('Specified'),
+            ),
+            'note'      => Mage::helper('backorderrecord')->__('Applies to Any of the Specified Group'),
+            'onchange'  => 'showCustomerGroup()',
+        ));
+
+        $selectField = $fieldset->addField('customer_group', 'multiselect', array(
+            'name'      => 'customer_group',
+            'values'    => $customerGroups,
+            'display'   => 'none'
+        ));
+
         $selectField->setAfterElementHtml("
                 <script type=\"text/javascript\">
                     $('order_statuses').hide();
@@ -108,7 +155,7 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
                             var hidevalue = val.options[val.selectedIndex].value;
                             
                            if(hidevalue == 1){
-                            $('order_statuses').show();
+                                $('order_statuses').show();
                             }else{
                                 $('order_statuses').hide();
                             } 
@@ -120,9 +167,21 @@ class Allure_BackorderRecord_Block_Adminhtml_Backorder_Edit_Tab_Form extends Mag
                             var hidevalue1 = val1.options[val1.selectedIndex].value;
                             
                            if(hidevalue1 == 1){
-                            $('metal_color').show();
+                                $('metal_color').show();
                             }else{
                                 $('metal_color').hide();
+                            } 
+                        }
+                        
+                     $('customer_group').hide();
+                        function showCustomerGroup() {
+                            var val2 = document.getElementById('show_group');
+                            var hidevalue2 = val2.options[val2.selectedIndex].value;
+                            
+                           if(hidevalue2 == 1){
+                                $('customer_group').show();
+                            }else{
+                                $('customer_group').hide();
                             } 
                         }
 

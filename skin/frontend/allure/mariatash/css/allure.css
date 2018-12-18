@@ -33,6 +33,10 @@ body {
 	  color: #000;
 }
 
+iframe {
+    max-width: 100%;
+}
+
 body.modal-popup-body {
     position: fixed !important;
 }
@@ -2606,18 +2610,28 @@ width: 100%;
 }
 
 
-.popupLoginModel .mt-facebookconnect-btn a{
-	float: right;
-	margin-right: 3px;
+ .mt-googleconnect-btn a{
+	margin: 7px 0;
 }
 
+.mt-facebookconnect-btn{
+  float: left;
+  width:69%;
+}
+.mt-googleconnect-btn{
+  float: left;
+  width:26%;
+}
+.popupLoginModel .mt-facebookconnect-btn a{
+  float: right;
+}
 
 .popupLoginModel .mt-facebookconnect-btn .fb-img {
-    width: 180px;
+    width: 100%;
 }
 
 .popupLoginModel .mt-facebookconnect-btn{
-	margin: -10px -10px 0;
+	margin: -2px 0px 0 12px;
 }
 
 .popupLoginModel .pop-link{
@@ -2654,3 +2668,31 @@ width: 100%;
     width: 150px;
 }
 }
+
+
+/*paypal review*/
+.paypal-express-review #shopping-cart-totals-table{
+	margin-top: 10px;
+	width: 100%;
+}
+
+.paypal-express-review #shopping-cart-totals-table{
+	background: #ccc;
+}
+
+.paypal-express-review #shopping-cart-totals-table tr td{
+	padding: 5px;
+	border-top: 1px solid #cbc8c8;
+}
+
+.paypal-express-review #shipping_method_2,
+.paypal-express-review #shipping_method_1{
+	width: 100%;
+}
+
+.paypal-express-review .two-shipment-billing-payment-mt,
+.paypal-express-review .checkout-two-shipment-shipping-method-mt,
+.paypal-express-review .checkout-two-shipment-payment-method-mt{
+	margin-top: 10px;
+}
+

@@ -32,9 +32,9 @@ class Allure_Salesforce_Model_Observer_Order{
         $orderId = $order->getId();
         $orderStatus = $order->getStatus();
         $helper->salesforceLog("Order Id {$orderId} Status - ".$orderStatus);
-        if(!$orderStatus){
+        /* if(!$orderStatus){
             return ;
-        }
+        } */
         
         if(Mage::registry('sales_order_save_after_'.$orderId)){
             return $this;
@@ -60,7 +60,7 @@ class Allure_Salesforce_Model_Observer_Order{
         $helper->salesforceLog("order id == ".$order->getId());
         
         $orderId = $order->getId();
-        $status = $order->getStatus();
+        $status = ($order->getStatus()) ? $order->getStatus() : "pending";
         $customerId = $order->getCustomerId();
         
         $salesforceAccountId = $helper::GUEST_CUSTOMER_ACCOUNT;
@@ -284,6 +284,7 @@ class Allure_Salesforce_Model_Observer_Order{
                 array(
                     "attributes"            => array("type" => "order"),
                     "EffectiveDate"         => date("Y-m-d",strtotime($createdAt)),
+                    "Created_At__c"         => date("Y-m-d",strtotime($createdAt))."T".date("H:i:s",strtotime($createdAt))."+00:00",//date("Y-m-d H:i:s",strtotime($createdAt)),
                     "Status"                => $status,
                     "accountId"             => $salesforceAccountId,    //"0012900000Ls44hAAB",
                     "Pricebook2Id"          => $pricebookId,    //"01s290000001ivyAAA",//$pricebookId,
@@ -462,13 +463,15 @@ class Allure_Salesforce_Model_Observer_Order{
                 }
                 $oldStoreArr[0] = "Admin";
                 
+                $orderDate = date("Y-m-d",strtotime($orderDate))."T".date("H:i:s",strtotime($orderDate))."+00:00";
+                
                 $request = array(
                     "Discount_Amount__c"        => $baseDiscountAmount,
                     "Discount_Descrition__c"    => "for advertisment",
                     "Grand_Total__c"            => $baseGrandTotal,
-                    "Invoice_Date__c"           => date("Y-m-d",strtotime($createdAt)),
+                    "Invoice_Date__c"           => $orderDate,//date("Y-m-d",strtotime($createdAt)),
                     "Invoice_Id__c"             => $invoiceIncrementId,
-                    "Order_Date__c"             => date("Y-m-d",strtotime($orderDate)),
+                    "Order_Date__c"             => $orderDate,//date("Y-m-d",strtotime($orderDate)),
                     "Order_Id__c"               => $orderIncrementId,
                     "Shipping_Amount__c"        => ($baseShippingAmount * $currencyRate),
                     "Status__c"                 => $status,
@@ -584,14 +587,17 @@ class Allure_Salesforce_Model_Observer_Order{
                 $oldStoreArr[$storeO->getId()] = $storeO->getName();
             }
             $oldStoreArr[0] = "Admin";
+            
+            $orderDate = date("Y-m-d",strtotime($orderDate))."T".date("H:i:s",strtotime($orderDate))."+00:00";
+            $createdAt = date("Y-m-d",strtotime($createdAt))."T".date("H:i:s",strtotime($createdAt))."+00:00";
                     
             $request = array(
                 "Discount_Amount__c"        => $baseDiscountAmount,
                 "Discount_Descrition__c"    => "for advertisment",
                 "Grand_Total__c"            => $baseGrandTotal,
-                "Invoice_Date__c"           => date("Y-m-d",strtotime($createdAt)),
+                "Invoice_Date__c"           => $createdAt,//date("Y-m-d",strtotime($createdAt)),
                 "Invoice_Id__c"             => $invoiceIncrementId,
-                "Order_Date__c"             => date("Y-m-d",strtotime($orderDate)),
+                "Order_Date__c"             => $orderDate,//date("Y-m-d",strtotime($orderDate)),
                 "Order_Id__c"               => $orderIncrementId,
                 "Shipping_Amount__c"        => $baseShippingAmount,
                 "Status__c"                 => $status,
@@ -1203,14 +1209,17 @@ class Allure_Salesforce_Model_Observer_Order{
         }
         $oldStoreArr[0] = "Admin";
         
+        $createdAt = date("Y-m-d",strtotime($createdAt))."T".date("H:i:s",strtotime($createdAt))."+00:00";
+        $orderDate = date("Y-m-d",strtotime($orderDate))."T".date("H:i:s",strtotime($orderDate))."+00:00";
+        
         $request = array(
             "Adjustment__c"         => $baseAdjustment,
-            "Created_At__c"         => date("Y-m-d",strtotime($createdAt)),
+            "Created_At__c"         => $createdAt,//date("Y-m-d",strtotime($createdAt)),
             "Credit_Memo_Id__c"     => $incrementId,
             "Stauts__c"             => $status,
             "Discount_Amount__c"    => $discountAmount,
             "Grand_Total__c"        => $grandTotal,
-            "Order_Date__c"         => date("Y-m-d",strtotime($orderDate)),
+            "Order_Date__c"         => $orderDate,//date("Y-m-d",strtotime($orderDate)),
             "Order_Id__c"           => $orderIncrementId,
             "Shipping_Amount__c"    => $shippingAmount,
             "Store__c"              => $oldStoreArr[$storeId],
@@ -1332,14 +1341,16 @@ class Allure_Salesforce_Model_Observer_Order{
         }
         $oldStoreArr[0] = "Admin";
         
+        $orderDate = date("Y-m-d",strtotime($orderDate))."T".date("H:i:s",strtotime($orderDate))."+00:00";
+        
         $request = array(
             "Adjustment__c"         => $baseAdjustment,
-            "Created_At__c"         => date("Y-m-d",strtotime($createdAt)),
+            "Created_At__c"         => $orderDate,//date("Y-m-d",strtotime($createdAt)),
             "Credit_Memo_Id__c"     => $incrementId,
             "Stauts__c"             => $status,
             "Discount_Amount__c"    => ($discountAmount)?($discountAmount * $currencyRate):0,
             "Grand_Total__c"        => $grandTotal * $currencyRate,
-            "Order_Date__c"         => date("Y-m-d",strtotime($orderDate)),
+            "Order_Date__c"         => $orderDate,//date("Y-m-d",strtotime($orderDate)),
             "Order_Id__c"           => $orderIncrementId,
             "Shipping_Amount__c"    => $shippingAmount * $currencyRate,
             "Store__c"              => $oldStoreArr[$storeId],

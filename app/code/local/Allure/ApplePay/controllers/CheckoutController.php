@@ -182,11 +182,17 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
             $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
 
+            $calculateRegion = true;
+
+            $calculateTotals = true;
+
             if (isset($data['email'])) {
                 $data['email'] = trim($data['email']);
             }
 
-            $calculateRegion = true;
+            if (isset($data['country_id'])) {
+                $data['country_id'] = strtoupper(trim($data['country_id']));
+            }
 
             if ($calculateRegion) {
 
@@ -207,13 +213,15 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
             Mage::log("NEW DATA: ".json_encode($data),Zend_Log::DEBUG, 'applepay.log', true);
 
-            $calculateTotals = true;
-
             if (!$calculateTotals) {
                 $this->_getQuote()->getShippingAddress()->setCollectShippingRates(false);
             }
 
+			Mage::log("START: saveBillingAddress",Zend_Log::DEBUG, 'applepay.log', true);
+
             $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
+
+			Mage::log("END: saveBillingAddress",Zend_Log::DEBUG, 'applepay.log', true);
 
 			//$couponCode = '4uWruyuc';
             //$this->_getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '')->collectTotals()->save();
@@ -231,48 +239,56 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
                     if ($calculateShippingMethods) {
 
-                        foreach($address->getGroupedAllShippingRates() as $rates){
+						Mage::log("START: getGroupedAllShippingRates",Zend_Log::DEBUG, 'applepay.log', true);
+
+						foreach($address->getGroupedAllShippingRates() as $rates){
                             foreach ($rates as $rate) {
-                                if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || $rate->getCarrier() == 'counterpoint_storepickupshipping') {
+
+					            Mage::log("RATE: ".$rate->getCarrier().'//'.$rate->getCode(),Zend_Log::DEBUG, 'applepay.log', true);
+
+                                if ($rate->getErrorMessage() || $rate->getErrorMessage() != '' || in_array($rate->getCarrier(), array('counterpoint_storepickupshipping', 'tm_storepickupshipping', 'allure_pickinstore'))) {
                                     continue;
                                 }
+
+								$shippingMethods[$rate->getCode()] = array(
+									//"rate_id"			=> $rate->getId(),
+						            "address_id"		=> $rate->getAddressId(),
+						            "code"				=> $rate->getCode(),
+						            "carrier"			=> $rate->getCarrier(),
+						            "carrier_title"		=> $rate->getCarrierTitle(),
+						            "method"			=> $rate->getMethod(),
+						            "method_title"		=> $rate->getMethodTitle(),
+						            "method_description"=> $rate->getMethodDescription(),
+						            "price"				=> round($rate->getPrice(), 2)
+								);
 
                                 if (!$hasDefaultMethod) {
                                     $this->_getSession()->setDefaultShippingMethod($rate->getCode());
 
-                                    if (!$this->getOnepage()->getQuote()->getShippingAddress()->getShippingMethod()) {
-                                        $this->getOnepage()->getQuote()->getShippingAddress()->setShippingMethod($rate->getCode());
+									if (!$address->getShippingMethod() || $address->getShippingMethod() != '') {
+	                                    $address->setShippingMethod($rate->getCode());
+									}
 
-                                        $this->getOnepage()->getQuote()->collectTotals()->save();
-                                    }
+                                    //$this->getOnepage()->getQuote()->collectTotals()->save();
 
                                     $hasDefaultMethod = true;
                                 }
-
-								if (!in_array($rate->getCode(), array('tm_storepickupshipping_tm_storepickupshipping', 'tm_storepickupshipping','allure_pickinstore_allure_pickinstore','allure_pickinstore'))) {
-									$shippingMethods[$rate->getCode()] = $rate->getData();
-								}
                             }
                         }
+
+						Mage::log("END: getGroupedAllShippingRates",Zend_Log::DEBUG, 'applepay.log', true);
                     }
 
+
+					Mage::log("DEFAULT CARRIER: ".$address->getShippingMethod(),Zend_Log::DEBUG, 'applepay.log', true);
+
                     $result['shipping_methods'] = $shippingMethods;
-
-                    $result['goto_section'] = 'shipping_method';
-
-                    $result['update_section'] = array(
-                            'name' => 'shipping-method',
-                            //'html' => $this->_getShippingMethodsHtml()
-                    );
-
-                    $result['allow_sections'] = array('shipping');
-                    $result['duplicateBillingInfo'] = 'true';
-                } else {
-                    $result['goto_section'] = 'shipping';
                 }
 
-                //$this->getOnepage()->getQuote()->setTotalsCollectedFlag(false);
-                //$this->getOnepage()->getQuote()->collectTotals()->save();
+				Mage::log("START: collectTotals",Zend_Log::DEBUG, 'applepay.log', true);
+                $this->getOnepage()->getQuote()->setTotalsCollectedFlag(false);
+                $this->getOnepage()->getQuote()->collectTotals()->save();
+				Mage::log("END: collectTotals",Zend_Log::DEBUG, 'applepay.log', true);
 
                 $result['global_currency']  = $this->getOnepage()->getQuote()->getGlobalCurrencyCode();
                 $result['currency']      = Mage::app()->getStore()->getCurrentCurrencyCode();
@@ -281,18 +297,20 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
                     $result['totals'] = array();
 
+					Mage::log("START: getTotals",Zend_Log::DEBUG, 'applepay.log', true);
                     foreach ($this->getOnepage()->getQuote()->getTotals() as $code => $total) {
                         $result['totals'][$code] = array(
                                 'title' => $total->getTitle(),
                                 'value'=> round($total->getValue() / $this->getOnepage()->getQuote()->getBaseToQuoteRate(), 2)//$total->getValue()
                         );
                     }
+					Mage::log("END: getTotals",Zend_Log::DEBUG, 'applepay.log', true);
                 }
             }
 
+			Mage::log("START: _setDeliveryOption",Zend_Log::DEBUG, 'applepay.log', true);
             $this->_setDeliveryOption();
-
-
+			Mage::log("END: _setDeliveryOption",Zend_Log::DEBUG, 'applepay.log', true);
 
             //$this->getOnepage()->saveDeliveryOptions(array('delivery' => array( 'method' => 'one_ship')));
 
@@ -428,7 +446,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
                     $this->_getSession()->setDefaultShippingMethod($rate->getCode());
                     $hasDefaultMethod = true;
                 }
-				
+
 				if (!in_array($rate->getCode(), array('tm_storepickupshipping_tm_storepickupshipping', 'tm_storepickupshipping','allure_pickinstore_allure_pickinstore','allure_pickinstore'))) {
 					$shippingMethods[$rate->getCode()] = $rate->getData();
 				}
@@ -831,13 +849,21 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 
                 $responseDataObject = json_decode($responseData, true);
 
-                if ($responseDataObject['messages']['resultCode'] == 'Ok') {
+				Mage::log("responseDataObject: ".json_encode($responseDataObject),Zend_Log::DEBUG, 'applepay.log', true);
 
-					if ($responseDataObject['transactionResponse']) {
+                if ($responseDataObject["messages"]["resultCode"] == "Ok") {
 
-						$paymentData = $responseDataObject['transactionResponse'];
+					$paymentData = $responseDataObject["transactionResponse"];
 
-						$transactionId = $paymentData['transId'];
+					Mage::log("paymentData: ".json_encode($paymentData),Zend_Log::DEBUG, 'applepay.log', true);
+
+					$responseCode = (string) $paymentData["responseCode"];
+
+					Mage::log("responseCode: $responseCode",Zend_Log::DEBUG, 'applepay.log', true);
+
+					if ($responseCode != "1") {
+
+						$transactionId = $paymentData["transId"];
 
 						$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
 
@@ -850,11 +876,14 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 						$invoice->register()->pay();
 						$invoice->getOrder()->setIsInProcess(true);
 
-						$formatedPrice = $order->getBaseCurrency()->formatTxt($order->getGrandTotal());
+						$formatedPrice = $order->getBaseCurrency()->formatTxt($order->getBaseGrandTotal());
+
+						$comment = 'Amount of ' . $formatedPrice . ' captured through Apple Pay.';
 
 						$history = $invoice->getOrder()->addStatusHistoryComment(
-						    'Amount of ' . $formatedPrice . ' captured through Apple Pay.', false
+						    $comment, false
 						);
+
 						$history->setIsCustomerNotified(true);
 
 						Mage::log("START: createInvoice",Zend_Log::DEBUG, 'applepay.log', true);
@@ -869,15 +898,57 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
 						//$order->save();
 
 						// Prepare payment object
+						Mage::log("START: savePayment",Zend_Log::DEBUG, 'applepay.log', true);
 						$payment = $order->getPayment();
 						$payment->setMethod('applepay')
 						->setTransactionId($transactionId)
 						->setParentTransactionId(null)
 						->save();
+						Mage::log("END: savePayment",Zend_Log::DEBUG, 'applepay.log', true);
+
+						Mage::log("START: addTransaction",Zend_Log::DEBUG, 'applepay.log', true);
+						$transaction = $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_CAPTURE, null, false, $comment);
+					    $transaction->setParentTxnId($transactionID);
+					    $transaction->setIsClosed(true);
+					    $transaction->setAdditionalInformation("PaymentResponse", serialize($paymentData));
+					    $transaction->save();
+						Mage::log("END: addTransaction",Zend_Log::DEBUG, 'applepay.log', true);
 
 						// $order->save();
+					} else {
+
+						$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
+
+						$order = Mage::getModel('sales/order')->load($orderId);
+
+						$quote = Mage::getModel('sales/quote')->load($order->getQuoteId());
+
+						$order->cancel();
+			            $order->setStatus('canceled');
+			            $order->save();
+
+			            $quote->setIsActive(1)->save();
+
+						$result['success'] = false;
+						$result['error'] = true;
 					}
-                }
+                } else {
+
+					$orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
+
+					$order = Mage::getModel('sales/order')->load($orderId);
+
+					$quote = Mage::getModel('sales/quote')->load($order->getQuoteId());
+
+					$order->cancel();
+					$order->setStatus('canceled');
+					$order->save();
+
+					$quote->setIsActive(1)->save();
+
+					$result['success'] = false;
+					$result['error'] = true;
+				}
             }
 
 			//return $result;

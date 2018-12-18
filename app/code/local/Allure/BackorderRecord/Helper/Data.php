@@ -18,7 +18,17 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
         $folderPath   = Mage::getBaseDir('var') . DS . 'export';
         $date = date('Y-m-d');
-        $filename     = "Daily_Backorder_Report_".$date.".csv";
+
+
+
+        if($dates['order_type']=="all")
+            $filename     = "All_Order_Report_".$date.".csv";
+        else if($dates['order_type']=="back")
+            $filename     = "Backorder_Report_".$date.".csv";
+        else
+            $filename     = "Daily_Backorder_Report_".$date.".csv";
+
+
         $filepath     = $folderPath . DS . $filename;
 
         $io = new Varien_Io_File();
@@ -164,6 +174,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             "price"=>"PRICE",
             "back_qty"=>"QUANTITY",
             "customization"=>"CUSTOMIZATION",
+            "group"=>"GROUP",
             "order_status"=>"ORDER STATUS"
 
         );
@@ -178,7 +189,6 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
         $rowData = array();
         $rowData[] = $this->getTableHeaders();
-
 
         if($backorderCollection!=null):
         if ($backorderCollection->getSize()):
@@ -197,7 +207,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 //                    $customization = $gift->getMessage();
 //                }
 
-
+                $customer_group = Mage::getModel('customer/group')->load($order->getCustomerGroupId());
 
                 $productName = $order->getName();
                 $sku = $order->getSku();
@@ -205,16 +215,13 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                 $price=$symbol."".round($order->getBasePrice(),2);
                 $qty = $order->getQtyOrdered();
                 $orderStatus = $order['status'];
+                $customer_groupCode = $customer_group->getCode();
 
-
-                if ($order->getQtyBackordered() && $order->getParentItemId()) {
+                if ($order->getParentItemId()) {  //$order->getQtyBackordered() &&
                     $parentProductData = Mage::getSingleton("sales/order_item")->load($order->getParentItemId());
                     $symbol=Mage::app()->getLocale()->currency($parentProductData->getBaseCurrencyCode())->getSymbol();
                     $price=$symbol."".round($parentProductData->getBasePrice(),2);
                     $qty = $parentProductData->getQtyOrdered();
-
-
-
 
                     if ($parentProductData->getGiftMessageId()) {
                         $gift = Mage::getSingleton("giftmessage/message")->load($parentProductData->getGiftMessageId());
@@ -247,6 +254,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $row = array();
 
+
                     $row["created_at"]=$createdAt;
                     $row["order_number"] = $orderDetails->getIncrementId();
                     $row["customer_name"]=$customername;
@@ -258,20 +266,22 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["metal"]=explode("|",$sku)[1];
                     $row["product_name"]=$productName;
                     $row["price"]=$price;
-                    $row["back_qty"]=floatval($order->getQtyBackordered());
+
+                    if($dates['order_type']=="back")
+                        $row["back_qty"]=floatval($order->getQtyBackordered());
+                    else
+                        $row["back_qty"]=floatval($qty);
+
                     $row["customization"]=$customization;
+                    $row["group"]=$customer_groupCode;
                     $row["order_status"]=$orderStatus;
-
-
-
+//                  $row["product_type"]=$order->getProductType();
 
 
                     $rowData[] = $row;
 
 
             }
-
-
 
 
 

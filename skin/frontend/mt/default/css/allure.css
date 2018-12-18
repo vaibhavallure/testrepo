@@ -1,3 +1,7 @@
+iframe {
+    max-width: 100%;
+}
+
 #two-shipping-method-layout{
 	margin-bottom:20px;
 	margin-left:15px;
@@ -1116,4 +1120,29 @@ dd.post-lengthds-lbl-options.last{
 
 .hideaddToCart{
     display: none !important;
+}
+
+/* for paypal review */
+.paypal-express-review .checkout-two-shipment-shipping-method-mt, 
+.paypal-express-review .checkout-two-shipment-payment-method-mt,
+.paypal-express-review .checkout-two-shipment-shipping-address-mt,
+.paypal-express-review .checkout-two-shipment-billing-address-mt{
+	padding: 17px;
+}
+
+.paypal-express-review .mt-paypal-total{
+	margin-top: 10px;
+}
+
+.paypal-express-review #shopping-cart-totals-table{
+	width: 100%;
+	background: #ccc;
+}
+.paypal-express-review #shopping-cart-totals-table tr td{
+	padding: 5px;
+}
+
+.paypal-express-review #shipping_method_2,
+.paypal-express-review #shipping_method_1{
+	background: white url(../images/formelements-select.png);
 }

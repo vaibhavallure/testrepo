@@ -8,6 +8,9 @@ class Allure_Teamwork_Model_Tmobserver{
     const TM_URL = "/services/orders";
     const TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
     
+    const NEW_YORK_OFFSET = 5;
+    const TEAMWORK_LIVE_ORDER_OPTR = "tm_live_order";
+    
     protected $teamwork_sync_log = "teamwork_sync_data.log";
     
     private function isTeamworkDataTransferToSalesforce(){
@@ -19,44 +22,78 @@ class Allure_Teamwork_Model_Tmobserver{
     }
     
     private function addLog($data){
-        Mage::log($data,Zend_Log::DEBUG,$this->teamwork_sync_log,true);
+        $logFile = "teamwork_sync_data_".date("Y_m_d").".log";
+        Mage::log($data,Zend_Log::DEBUG,$logFile,true);
     }
     
     public function synkTeamwokLiveOrders(){
         $this->addLog("Teamwork sync request call at - ".gmdate("Y-m-d h:i:s"));
-        $helper = Mage::helper("allure_teamwork");
-        if(!$helper->getTeamworkSyncStatus()){
-            $this->addLog("Teamwork live data sync disabled.");
-            return;
+        try{
+            $helper = Mage::helper("allure_teamwork");
+            if(!$helper->getTeamworkSyncStatus()){
+                $this->addLog("Teamwork live data sync disabled.");
+                return;
+            }
+            $urlPath = $helper->getTeamworkSyncDataUrl();
+            $requestURL = $urlPath . self::TM_URL;
+            $token = trim($helper->getTeamworkSyncDataToken());
+            $sendRequest = curl_init($requestURL);
+            curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+            curl_setopt($sendRequest, CURLOPT_HEADER, false);
+            curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
+            curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
+                "Content-Type: application/json",
+                "Authorization: Bearer ".$token
+            ));
+            
+            $operation = self::TEAMWORK_LIVE_ORDER_OPTR;
+            $logModel = Mage::getModel("allure_teamwork/log")
+                ->load($operation,'operation');
+            
+            if(!$logModel->getId()){
+                $this->addLog("live order teamwork operation not set.");
+                return;
+            }
+            
+            $queryTime = $helper->getTeamworkQueryTime();
+            if(!isset($queryTime)){
+                $queryTime = 5;
+            }
+            
+            $prevQueryTime = $queryTime * (-1);
+            
+            $startTime = $logModel->getPage();
+            $prevTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($startTime)));
+            $endTime = date('Y-m-d H:i:s', strtotime("{$queryTime} minutes", strtotime($startTime)));
+            $this->addLog("query start time - ".$prevTime);
+            $this->addLog("query end time - ".$startTime);
+            
+            $logModel->setPage($endTime)->save();
+            
+            $requestArgs = array(
+                "start_time" => $prevTime,
+                "end_time"   => $startTime
+            );
+            // convert requestArgs to json
+            if ($requestArgs != null) {
+                $json_arguments = json_encode($requestArgs);
+                curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+            }
+            $response  = curl_exec($sendRequest);
+            
+            //$this->addLog(json_decode($response,true));
+            /* $modelObj = Mage::getModel("allure_teamwork/tmorder")
+             ->load("5401FC1F-D2E2-4617-AD2B-92676D2B844A","tm_receipt_id");
+             $response = json_encode(array(unserialize($modelObj->getTmdata()))); */
+            
+            $this->addDataIntoSystem($response);
+        }catch(Exception $e){
+            $this->addLog("Exception: ".$e->getMessage());
         }
-        $urlPath = $helper->getTeamworkSyncDataUrl();
-        $requestURL = $urlPath . self::TM_URL;
-        $token = trim($helper->getTeamworkSyncDataToken());
-        $sendRequest = curl_init($requestURL);
-        curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        curl_setopt($sendRequest, CURLOPT_HEADER, false);
-        curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
-        curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
-            "Content-Type: application/json",
-            "Authorization: Bearer ".$token
-        ));
         
-        $requestArgs = null;
-        // convert requestArgs to json
-        if ($requestArgs != null) {
-            $json_arguments = json_encode($requestArgs);
-            curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
-        } 
-        $response  = curl_exec($sendRequest);
-        //$this->addLog(json_decode($response,true));
-        /* $modelObj = Mage::getModel("allure_teamwork/tmorder")
-        ->load("5401FC1F-D2E2-4617-AD2B-92676D2B844A","tm_receipt_id");
-        $response = json_encode(array(unserialize($modelObj->getTmdata()))); */
-        
-        $this->addDataIntoSystem($response);
     }
     
     public function addDataIntoSystem($response){
@@ -65,7 +102,13 @@ class Allure_Teamwork_Model_Tmobserver{
                 return ;
             }
             
-            $responseArr = json_decode($response,true);
+            $responseArrObj = unserialize($response);
+            if(!$responseArrObj["status"]){
+                $this->addLog($responseArrObj);
+                return ;
+            }
+            $responseArr = $responseArrObj["data"];
+            
             $this->addLog("count - ".count($responseArr));
             $ordCnt = 0;
             foreach ($responseArr as $object){
@@ -111,8 +154,10 @@ class Allure_Teamwork_Model_Tmobserver{
         
         $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
         $oldStoreArr = array();
+        $utcOffsetArr = array();
         foreach ($ostores as $storeO){
             $oldStoreArr[$storeO->getTmLocationCode()] = $storeO->getId();
+            $utcOffsetArr[$storeO->getTmLocationCode()] = $storeO->getUtcOffset();
         }
         
         $alphabets = range('A','Z');
@@ -507,7 +552,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         $orderObj->addItem($orderItem);
                     }
                     
-                    $createAt = trim($orderDetails["StateDate"]);
+                    $createAtStr = explode(".", trim($orderDetails["RecCreated"]));
+                    //trim($orderDetails["StateDate"]);
+                    $createAt = $createAtStr[0];
                     $orderObj->setCreatedAt($createAt);
                     $orderObj->setCanShipPartiallyItem(false);
                     $totalDue = $orderObj->getTotalDue();
@@ -548,6 +595,7 @@ class Allure_Teamwork_Model_Tmobserver{
                     
                     $extStoreName = $extraOrderDetails["Name"];
                     $locationCode = $extraOrderDetails["LocationCode"];
+                    $utcOffset    = $extraOrderDetails["UTCOffset"];
                     $oldStoreId = $oldStoreArr[$locationCode];
                     if(!$oldStoreId){
                         $storeName = str_replace(' ', '', $extStoreName);
@@ -562,10 +610,42 @@ class Allure_Teamwork_Model_Tmobserver{
                             ->setCode($storeName)
                             ->setName($extStoreName)
                             ->setTmLocationCode($locationCode)
+                            ->setUtcOffset($utcOffset)
                             ->save();
                         $oldStoreId = $storeObj->getId();
                         $this->addLog("Teamwork new store created. Store Id - ".$oldStoreId);
                     }
+                    
+                    //set date
+                    $calculatedOffset = self::NEW_YORK_OFFSET;
+                    if(trim($locationCode) != 1){
+                        /* $timeDate = strtotime($createAt);
+                        $oldUtcOffset = $utcOffsetArr[$locationCode];
+                        $tmUtcOffset = (!empty($oldUtcOffset)) ? $oldUtcOffset : $utcOffset;
+                        if(!empty($oldUtcOffset)){
+                            $calculatedOffset += $oldUtcOffset;
+                            $offset = intval($calculatedOffset);
+                            $orderDate = strtotime("{$offset} hour", $timeDate);
+                            $newCreateAt = date('Y-m-d H:i:s', $orderDate);
+                            $orderObj->setCreatedAt($newCreateAt);
+                        } */
+                        $createAtOtherStr = explode(".", trim($orderDetails["StateDate"]));
+                        $timeDate = strtotime($createAtOtherStr[0]);
+                        $orderDate = strtotime("{$calculatedOffset} hour", $timeDate);
+                        $newCreateAt = date('Y-m-d H:i:s', $orderDate);
+                        $orderObj->setCreatedAt($newCreateAt);
+                    }
+                    
+                    /* $oldUtcOffset = $utcOffsetArr[$locationCode];
+                    $tmUtcOffset = (!empty($oldUtcOffset)) ? $oldUtcOffset : $utcOffset;
+                    if(!empty($oldUtcOffset)){
+                        $websiteTimeZone = Mage::getStoreConfig('general/locale/timezone');
+                        $tmTimeZone = $this->offsetToTZ($oldUtcOffset);
+                        if($tmTimeZone){
+                            $tmOrderCreatedate = $this->convertTimeZone($createAt,$tmTimeZone, $websiteTimeZone);
+                            $orderObj->setCreatedAt($tmOrderCreatedate);
+                        }
+                    } */
                     
                     $orderObj->setData('old_store_id',$oldStoreId);
                     
@@ -593,6 +673,43 @@ class Allure_Teamwork_Model_Tmobserver{
             }
         }
     }
+    
+    
+    private function offsetToTZ($offset) {
+        switch((string) $offset) {
+            case '-04:30' : return 'America/Caracas'; break;
+            case '-03:30' : return 'Canada/Newfoundland'; break;
+            case '+03:30' : return 'Asia/Tehran'; break;
+            case '+04:30' : return 'Asia/Kabul'; break;
+            case '+05:30' : return 'Asia/Kolkata'; break;
+            case '+05:45' : return 'Asia/Kathmandu'; break;
+            case '+09:30' : return 'Australia/Darwin'; break;
+        }
+        $offset = (int) str_replace(array('0',0,':00',00,'30',30,'45',45,':','+'),'', (string) $offset);
+        
+        $offset = $offset*60*60;
+        var_dump($offset);
+        $abbrarray = timezone_abbreviations_list();
+        //var_dump($abbrarray);
+        foreach ($abbrarray as $abbr) {
+            foreach($abbr as $city) {
+                if($city['offset'] == $offset) {
+                    return $city['timezone_id'];
+                }
+            }
+        }
+        return false;
+    }
+    
+    private function convertTimeZone($oTime, $oTimeZone, $nTimeZone)
+    {
+        date_default_timezone_set($oTimeZone);  //Change default timezone to old timezone within this function only.
+        $originalTime = new DateTime($oTime);
+        $originalTime->setTimeZone(new DateTimeZone($nTimeZone)); //Convert to desired TimeZone.
+        date_default_timezone_set($nTimeZone) ; //Reset default TimeZone according to your global settings.
+        return $originalTime->format('Y-m-d h:i:s'); //Return converted TimeZone.
+    } 
+    
     
     private function createInvoice($object){
         $this->addLog("In create invoice method");
@@ -723,6 +840,8 @@ class Allure_Teamwork_Model_Tmobserver{
                                 $isShowPay = false;
                             }
                             
+                            $createdAt = $orderObj->getCreatedAt();
+                            $invoice->setCreatedAt($createdAt);
                             $invoice->save();
                             $invoiceNumber  = $invoice->getIncrementId();
                             $customerId     = $orderObj->getCustomerId();
@@ -914,6 +1033,9 @@ class Allure_Teamwork_Model_Tmobserver{
                 // Register Shipment
                 $shipment->register();
                 
+                $createdAt = $orderObj->getCreatedAt();
+                $shipment->setCreatedAt($createdAt);
+                
                 $shipment->getOrder()->setIsInProcess(true);
                 $transactionSave = Mage::getModel('core/resource_transaction')
                 ->addObject($shipment)
@@ -1016,6 +1138,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         $creditmemoItem->setBackToStock(false);
                     }
                 }
+                
+                $createdAt = $orderObj->getCreatedAt();
+                $creditmemo->setCreatedAt($createdAt);
                 
                 Mage::getModel('core/resource_transaction')
                 ->addObject($creditmemo)

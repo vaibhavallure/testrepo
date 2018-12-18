@@ -9,7 +9,7 @@ class Teamwork_Transfer_Block_Rewrite_Adminhtml_Sales_Order_Grid extends IWD_Ord
         $this->getMassactionBlock()->addItem('resend_to_chq', array(
             'label' => Mage::helper('teamwork_transfer')->__('Resend to CloudHQ'),
             'url'   => $this->getUrl('adminhtml/teamworktransfer_adminhtml_sales_order/resendToChq')
-            ));
+        ));
 
         return $this;
     }

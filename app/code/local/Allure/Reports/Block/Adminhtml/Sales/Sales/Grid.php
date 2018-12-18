@@ -198,12 +198,17 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
 
         /* $collection = Mage::getModel($this->_getCollectionClass())
             ->getCollection(); */
-        $collection = Mage::getModel('sales/order')->getCollection()
-        ->join(
+        $collection = Mage::getModel('sales/order')->getCollection();
+        
+        $subquery = new Zend_Db_Expr("(SELECT parent_id FROM sales_flat_order_payment GROUP BY parent_id )");
+        $collection->getSelect()->join(array("payment" => $subquery),
+            "main_table.entity_id = payment.parent_id");
+        
+        /* ->join(
             array('payment' => 'sales/order_payment'),
             'main_table.entity_id=payment.parent_id',
             array('payment_method' => 'payment.method','cc_type' => 'payment.cc_type')
-            );
+            ); */
 
         //apply store condition
         if(!empty($requestParams)){
@@ -270,24 +275,16 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             $collection = $collection->addFieldToFilter("payment.cc_type",array("in"=>$card_types));
         }
 
-        $user = Mage::getSingleton('admin/session')->getUser();
-
-        if ($user != null){
-            $userRole = $user->getRole()->getData();
-            $roleName = $userRole["role_id"];
-
-            if ($roleName != 1){
-                $collection->addFieldToFilter('main_table.create_order_method', array('nin' => array(2)));
-            } else {
-				//apply filter for order collection related to create order method
-				if($filterData['create_order_method'][0]){
-					$createOrderMethods = explode(",", $filterData['create_order_method'][0]);
-					if(count($createOrderMethods) > 0){
-						$collection->addFieldToFilter("create_order_method",array("in" => $createOrderMethods));
-					}
-				}
-			}
-        }
+        
+		//apply filter for order collection related to create order method
+        $createOrderMethodsStr = $filterData['create_order_method'][0];
+        if($createOrderMethodsStr != null && $createOrderMethodsStr != ""){
+            $createOrderMethods = explode(",", $createOrderMethodsStr);
+    		if(count($createOrderMethods) > 0){
+    		  $collection->addFieldToFilter("create_order_method",array("in" => $createOrderMethods));
+    		}
+		}
+			
 
         $reportType = $filterData['report_type'];
         $order_date_col= "created_at";
