@@ -115,10 +115,10 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                     $first       = ' first';
                 }
 
-        		$htmlSeparated = ''; 
-        	
+        		$htmlSeparated = '';
+
                 foreach ($children as $child) {
-                   
+
                     $this->categoryIds[] = $this->getCategoryId($child);
                     $subHtml             = $this->getSubCategoryHtml($child, TRUE);
                     $i += 1 + (int)$this->rows;
@@ -151,7 +151,7 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
 
                 if ($boo) {
             		if(!empty($htmlSeparated)){
-						$html .= $this->__getWholesaleCategories($child);
+						//$html .= $this->__getWholesaleCategories($child);
                         $html .= '<hr />';
                         $html .= $htmlSeparated;
                     }
@@ -176,11 +176,11 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
     {
         $html       = false;
         $first      = '';
-        
+
         if ($this->maxRows) {
             $children   = $child->getChildren();
             $i          = 0;
-            
+
             if ($children->count()) {
                 if ($begin) {
                     $html       .= '<ul class="dropdown-menu">';
@@ -188,7 +188,7 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                     $first       = ' first';
                 }
 
-        		$htmlSeparated = ''; 
+        		$htmlSeparated = '';
 
                 foreach ($children as $child) {
                     $this->categoryIds[] = $this->getCategoryId($child);
@@ -234,9 +234,9 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
 
         return $html;
     }
-    
+
     private function __getWholesaleCategories($child, $mobile = FALSE) {
-    	
+
     	if ($child) {
     		$roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
 	        $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
@@ -257,7 +257,7 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                         </a></li>';
     		endif;
     	}
-    	
+
     	return NULL;
     }
     private function checkUserRole(){
@@ -266,9 +266,9 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
         $role = strtolower($role);
         if ($role == 'wholesale')
             return 1;
-        else 
+        else
             return 0;
-        
+
     }
 
     /**
@@ -308,6 +308,6 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                 ->addAttributeToFilter('separated_jewelry',1)
                 ->addFieldToFilter('entity_id',$cat)
                 ->getSize();
-    }   
+    }
 
 }
