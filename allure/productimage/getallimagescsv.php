@@ -33,7 +33,7 @@ $resource = Mage::getSingleton('core/resource');
 $readConnection = $resource->getConnection('core_read');
 
 try {
-    $query = "SELECT gal.value_id,gal.entity_id product_id,prod.sku sku ,gal.value path,val.label label,val.position position FROM `catalog_product_entity_media_gallery` gal JOIN `catalog_product_entity_media_gallery_value` val ON gal.value_id=val.value_id JOIN `catalog_product_entity` prod ON prod.entity_id=gal.entity_id WHERE prod.sku LIKE 'X%'";
+    $query = "SELECT gal.value_id,gal.entity_id product_id,prod.sku sku ,gal.value path,val.label label,val.position position FROM `catalog_product_entity_media_gallery` gal JOIN `catalog_product_entity_media_gallery_value` val ON gal.value_id=val.value_id JOIN `catalog_product_entity` prod ON prod.entity_id=gal.entity_id";
 
     $results = $readConnection->fetchAll($query);
     $data = array();
