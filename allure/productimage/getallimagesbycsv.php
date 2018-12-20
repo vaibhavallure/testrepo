@@ -15,14 +15,18 @@ Mage::app()->setCurrentStore(0);
 ini_set('memory_limit', '-1');
 
 
+
+
+$source  = Mage::getBaseDir('media'). DS . 'catalog' . DS . 'product';
+$dest  = Mage::getBaseDir('var') . DS . 'export' . DS . 'renamedImages';
+
+
+
 $io = new Varien_Io_File();
 if (!$io->fileExists($dest, false)) {
     $io->mkdir($dest);
 }
 
-
-$source  = Mage::getBaseDir('media'). DS . 'catalog' . DS . 'product';
-$dest  = Mage::getBaseDir('var') . DS . 'export' . DS . 'renamedImages';
 
 $csvFile=Mage::getBaseDir('var') . DS . 'export'."/rename_images.csv";
 
@@ -30,7 +34,7 @@ $lowerlimit=(isset($_GET['lower']))?$_GET['lower']:0;
 $upperlimit=(isset($_GET['upper']))?$_GET['upper']:0;
 
 if(!file_exists($csvFile))
-      die();
+      die("csv file not found");
 
 
 try{

@@ -18,7 +18,6 @@ ini_set('memory_limit', '-1');
 
 
 $folderPath   = Mage::getBaseDir('var') . DS . 'export';
-$date = date('Y-m-d');
 $filename     = "rename_images.csv";
 $filepath     = $folderPath . DS . $filename;
 
@@ -55,7 +54,6 @@ try {
 catch (Exception $e)
 {
     Mage::log("Exception-:".$e->getMessage(),Zend_Log::DEBUG,'rename_images.log',true);
-
 }
 die("Done");
 
