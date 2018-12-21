@@ -464,7 +464,11 @@ if (window.ApplePaySession) {
 			ga('send', 'event', 'ApplePay', gAction, location.hostname + ' / ' + Allure.ApplePay.data.checkoutType + ' / ' + gAction);
 		}
 
-		Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#qty').parents('form').serialize());
+		if (jQuery('#product_addtocart_giftcard_form').length) {
+			Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#product_addtocart_giftcard_form').serialize())
+		} else {
+			Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#qty').parents('form').serialize());
+		}
 
 		if (Allure.ApplePay.data.response.addProduct) {
 			if (typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
