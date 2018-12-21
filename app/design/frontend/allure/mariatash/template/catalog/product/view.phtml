@@ -238,6 +238,7 @@ if ($_product->getSizeSample() == 1) {
                 } else {
                     jQuery('div#advice-required-entry-date').hide();
                     addToShoppingCart(button, form);
+                    location.reload();
                 }
             }
         }.bind(productAddToCartForm);
