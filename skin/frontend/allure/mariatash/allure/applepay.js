@@ -320,10 +320,12 @@ if (window.ApplePaySession) {
 		if (!Allure.ApplePay.flag.addingProduct) {
 			Allure.ApplePay.flag.addingProduct = true;
 			Allure.ApplePay.action.addProduct();
+			Allure.ApplePay.flag.addingProduct = false;
 		}
 
-		Allure.ApplePay.action.init();
-		Allure.ApplePay.flag.addingProduct = false;
+		if (!Allure.ApplePay.flag.addingProduct) {
+			Allure.ApplePay.action.init();
+		}
 		//Allure.ApplePay.modal.modal('show');
 		return false;
 	};
