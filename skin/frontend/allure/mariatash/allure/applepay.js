@@ -313,7 +313,19 @@ if (window.ApplePaySession) {
 			Allure.ApplePay.action.addProduct();
 		}
 
-		Allure.ApplePay.action.init();
+		if (typeof Allure.ApplePay.flag.addingProduct == 'undefined') {
+			Allure.ApplePay.flag.addingProduct = false;
+		}
+
+		if (!Allure.ApplePay.flag.addingProduct) {
+			Allure.ApplePay.flag.addingProduct = true;
+			Allure.ApplePay.action.addProduct();
+			Allure.ApplePay.flag.addingProduct = false;
+		}
+
+		if (!Allure.ApplePay.flag.addingProduct) {
+			Allure.ApplePay.action.init();
+		}
 		//Allure.ApplePay.modal.modal('show');
 		return false;
 	};
@@ -464,7 +476,13 @@ if (window.ApplePaySession) {
 			ga('send', 'event', 'ApplePay', gAction, location.hostname + ' / ' + Allure.ApplePay.data.checkoutType + ' / ' + gAction);
 		}
 
-		Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#qty').parents('form').serialize());
+		if (jQuery('#product_addtocart_giftcard_form').length) {
+			Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#product_addtocart_giftcard_form').serialize())
+		} else {
+			Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#qty').parents('form').serialize());
+		}
+
+		console.log(Allure.ApplePay.data.response.addProduct);
 
 		if (Allure.ApplePay.data.response.addProduct) {
 			if (typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
