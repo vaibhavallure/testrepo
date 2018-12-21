@@ -470,6 +470,8 @@ if (window.ApplePaySession) {
 			Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#qty').parents('form').serialize());
 		}
 
+		console.log(Allure.ApplePay.data.response.addProduct);
+
 		if (Allure.ApplePay.data.response.addProduct) {
 			if (typeof Allure.ApplePay.data.response.addProduct.total != 'undefined') {
 				Allure.ApplePay.data.lineTotal = Allure.ApplePay.data.response.addProduct.total;
