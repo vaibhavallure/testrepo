@@ -144,6 +144,7 @@ function addToShoppingCart(button, formId) {
             //jQuery('#just_added').slideDown(500).delay( 5000 ).slideUp( 600 );
             jQuery('#just_added').slideDown(1000);
             jQuery('#topcart-popup').addClass('just_added');
+            location.reload();
             setTimeout(function() {
                 jQuery('#just_added').slideUp(1000);
                 jQuery('#topcart-popup').removeClass('just_added');
