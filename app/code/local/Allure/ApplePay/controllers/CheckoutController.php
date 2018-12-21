@@ -127,7 +127,7 @@ class Allure_ApplePay_CheckoutController extends Mage_Core_Controller_Front_Acti
             $cart->save();
 
             if ($specialInstruction) {
-                $this->storeGiftMessage($specialInstruction);
+                //$this->storeGiftMessage($specialInstruction);
             }
 
             Mage::dispatchEvent('checkout_cart_add_product_complete',
