@@ -313,7 +313,17 @@ if (window.ApplePaySession) {
 			Allure.ApplePay.action.addProduct();
 		}
 
+		if (typeof Allure.ApplePay.flag.addingProduct == 'undefined') {
+			Allure.ApplePay.flag.addingProduct = false;
+		}
+
+		if (!Allure.ApplePay.flag.addingProduct) {
+			Allure.ApplePay.flag.addingProduct = true;
+			Allure.ApplePay.action.addProduct();
+		}
+
 		Allure.ApplePay.action.init();
+		Allure.ApplePay.flag.addingProduct = false;
 		//Allure.ApplePay.modal.modal('show');
 		return false;
 	};
