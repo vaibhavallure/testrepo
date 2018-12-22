@@ -477,6 +477,9 @@ if (window.ApplePaySession) {
 		}
 
 		if (jQuery('#product_addtocart_giftcard_form').length) {
+			if (!productAddToCartForm.validator.validate()) {
+				return;
+			}
 			Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#product_addtocart_giftcard_form').serialize())
 		} else {
 			Allure.ApplePay.data.response.addProduct = Allure.ApplePay.action.sendRequest('addProduct', jQuery('#qty').parents('form').serialize());
