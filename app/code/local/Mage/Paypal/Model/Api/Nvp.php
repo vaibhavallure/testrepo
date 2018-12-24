@@ -1008,8 +1008,9 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
             Mage::logException(new Exception(
                 Mage::helper('paypal')->__("PayPal response hasn't required fields.")
             ));
+
            // Mage::throwException(Mage::helper('paypal')->__('There was an error processing your order. Please contact us or try again later.'));
-            Mage::throwException(Mage::helper('paypal')->__('Error: '.$response['L_SHORTMESSAGE0']).' <a href="'.$redirect_url.'">Click Here To Go To Paypal For More Details.</a>');
+            Mage::throwException(Mage::helper('paypal')->__('Error: '.$response['L_SHORTMESSAGE0']).' <a href="'.$redirect_url.'">Click Here To Try Again Or To Get More Details.</a>');
 
 
         }
