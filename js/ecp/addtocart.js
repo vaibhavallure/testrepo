@@ -6,7 +6,7 @@ jQuery(document).ready(function () {
     });
 });
 
-function addToShoppingCart(button, formId) {
+function addToShoppingCart(button, formId, relode=false) {
 
     if (jQuery("div.t_Tooltip_customcart").length) {
         jQuery(".close-tooltip").trigger('click');
@@ -144,7 +144,11 @@ function addToShoppingCart(button, formId) {
             //jQuery('#just_added').slideDown(500).delay( 5000 ).slideUp( 600 );
             jQuery('#just_added').slideDown(1000);
             jQuery('#topcart-popup').addClass('just_added');
+
+
+            if(relode)
             location.reload();
+
             setTimeout(function() {
                 jQuery('#just_added').slideUp(1000);
                 jQuery('#topcart-popup').removeClass('just_added');
