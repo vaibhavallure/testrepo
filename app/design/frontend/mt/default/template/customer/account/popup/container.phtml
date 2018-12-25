@@ -1,5 +1,27 @@
 <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()) :?>
 <div id="account-modal-wrapper" class="modal-wrapper">
 	<?php echo $this->getChildHtml();?>
+
+    <script type="text/javascript">
+        if (typeof Allure == "undefined") {
+             var Allure = {};
+        }
+        Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+        Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
+
+        jQuery(document).ready(function() {
+			var $ = jQuery;
+            var $body = $('body');
+
+            /* bind events */
+			if ($("#username-login").length) {
+				$(document).on('blur', "#passwd-login", function() {
+			    	if (jQuery("#username-login").val() != "" && jQuery("#passwd-login").val() != "") {
+						jQuery(this).parents('form').submit();
+					}
+			    });
+			}
+        });
+    </script>
 </div>
 <?php endif;?>
