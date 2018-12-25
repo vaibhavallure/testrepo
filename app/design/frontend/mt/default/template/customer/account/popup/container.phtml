@@ -16,7 +16,9 @@
             /* bind events */
 			if ($("#username-login").length) {
 				$(document).on('blur', "#passwd-login", function() {
-			    	if (jQuery("#username-login").val() != "" && jQuery("#passwd-login").val() != "") {
+					var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+					
+			    	if (jQuery("#username-login").val() != "" && jQuery("#passwd-login").val() != "" && jQuery("#username-login").val().match(mailformat)) {
 						jQuery(this).parents('form').submit();
 					}
 			    });
