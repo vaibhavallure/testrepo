@@ -15,10 +15,18 @@ Mage::app()->setCurrentStore(0);
 ini_set('memory_limit', '-1');
 
 
+if (defined('STDIN')) {
+    $sku = $argv[1];
+} else {
 
-if(isset($_GET['sku']) && !empty($_GET['sku']))
-    $sku=$_GET['sku'];
-else
+    if(isset($_GET['sku']) && !empty($_GET['sku']))
+        $sku=$_GET['sku'];
+    else
+        die("plz mention first letter of sku");
+
+}
+
+if($sku==null)
     die("plz mention first letter of sku");
 
 
@@ -82,13 +90,25 @@ $csv = new Varien_File_Csv();
 $data = $csv->getData($csvFile);
 
 
-if(isset($_GET['all'])) {
-    $lowerlimit = 1;
-    $upperlimit = count($data);
-}
-else{
-    $lowerlimit = (isset($_GET['lower'])) ? $_GET['lower'] : 0;
-    $upperlimit = (isset($_GET['upper'])) ? $_GET['upper'] : 0;
+if (defined('STDIN')) {
+    if(trim($argv[2])=="all")
+    {
+        $lowerlimit = 1;
+        $upperlimit = count($data);
+    }
+    else if($argv[2] && $argv[3])
+    {
+        $lowerlimit = $argv[2];
+        $upperlimit = $argv[3];
+    }
+} else {
+    if (isset($_GET['all'])) {
+        $lowerlimit = 1;
+        $upperlimit = count($data);
+    } else {
+        $lowerlimit = (isset($_GET['lower'])) ? $_GET['lower'] : 0;
+        $upperlimit = (isset($_GET['upper'])) ? $_GET['upper'] : 0;
+    }
 }
 
 try {
