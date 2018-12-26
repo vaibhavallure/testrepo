@@ -14,10 +14,20 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 ini_set('memory_limit', '-1');
 
+$sku=null;
+
+if (defined('STDIN')) {
+        $sku = $argv[1];
+} else {
 
 if(isset($_GET['sku']) && !empty($_GET['sku']))
     $sku=$_GET['sku'];
 else
+    die("plz mention first letter of sku");
+
+}
+
+if($sku==null)
     die("plz mention first letter of sku");
 
 
