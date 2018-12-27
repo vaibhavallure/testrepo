@@ -17,7 +17,7 @@ $update="no";
 
 if (defined('STDIN')) {
     $sku = $argv[1];
-    $update = $argv[1];
+    $update = trim($argv[2]);
 } else {
 
     if(isset($_GET['sku']) && !empty($_GET['sku']))
