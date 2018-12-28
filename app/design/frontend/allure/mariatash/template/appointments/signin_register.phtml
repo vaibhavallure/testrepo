@@ -146,7 +146,7 @@ if ($session->isLoggedIn()) {
 					    <div class="fieldDiv">
 					    	<label>Postal Code:</label><br/>
 					    	<!-- <input class="ele_width" type="text" name="postal_code" value="<?php //echo $postcode?>" /> -->
-					    	<input class="ele_width" onkeypress="return isNumber(event)" type="text" name="postal_code" value="<?php if($f_postcode):echo $f_postcode;else: echo $postcode;endif;?>" />
+					    	<input class="ele_width" type="text" name="postal_code" value="<?php if($f_postcode):echo $f_postcode;else: echo $postcode;endif;?>" />
 					    </div>
 					     
 		  	</div>
