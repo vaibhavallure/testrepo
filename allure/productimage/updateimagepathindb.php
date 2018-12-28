@@ -155,11 +155,12 @@ for ($i=$lowerlimit;$i<=$upperlimit;$i++)
             }
 
     Mage::log('COUNT :: '.$recordIndex, Zend_Log::DEBUG, 'updateimg.log', true);
+    $writeAdapter->commit();
 
     }
 
     Mage::log('DONE COUNT :: '.$recordIndex, Zend_Log::DEBUG, 'updateimg.log', true);
-    $writeAdapter->commit();
+
 
 }catch (Exception $e)
 {
