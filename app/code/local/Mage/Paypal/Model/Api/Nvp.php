@@ -995,22 +995,14 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
         if (!$this->_validateResponse($methodName, $response)) {
 
 
-            $params=array(
-            'cmd'   => '_express-checkout',
-                'token' => $response['TOKEN']);
-
-            $redirect_url=    sprintf('https://www.%spaypal.com/cgi-bin/webscr%s',
-                $this->_config->sandboxFlag ? 'sandbox.' : '',
-                $params ? '?' . http_build_query($params) : ''
-            );
-
-
             Mage::logException(new Exception(
                 Mage::helper('paypal')->__("PayPal response hasn't required fields.")
             ));
 
+
+
            // Mage::throwException(Mage::helper('paypal')->__('There was an error processing your order. Please contact us or try again later.'));
-            Mage::throwException(Mage::helper('paypal')->__('Error: '.$response['L_SHORTMESSAGE0']).' <a href="'.$redirect_url.'">Click Here To Try Again Or To Get More Details.</a>');
+            Mage::throwException(Mage::helper('paypal')->__('Error: '.$this->getErrorCodeInfo($response)));
 
 
         }
@@ -1582,4 +1574,36 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
 
         return $response;
     }
+
+
+
+    /*-----------------allure code------------------*/
+
+    public function getPaypalRedirectionUrl($token=null)
+    {
+        $params=array(
+            'cmd'   => '_express-checkout',
+            'token' => $token);//$response['TOKEN']
+
+        return $redirect_url=    sprintf('https://www.%spaypal.com/cgi-bin/webscr%s',
+            $this->_config->sandboxFlag ? 'sandbox.' : '',
+            $params ? '?' . http_build_query($params) : ''
+        );
+    }
+    public function getErrorCodeInfo($response)
+    {
+        switch ($response['L_ERRORCODE0'])
+        {
+            case "10486":
+            case "10485":
+                return 'Your payment has been declined. Please <a href="'.$this->getPaypalRedirectionUrl($response['TOKEN']).'">click here</a> to select another card from your PayPal account.';
+                 break;
+            default:
+                return $response['L_SHORTMESSAGE0'].' <a href="'.$this->getPaypalRedirectionUrl($response['TOKEN']).'">Click Here To Try Again Or To Get More Details.</a>';
+                break;
+
+        }
+
+    }
+
 }
