@@ -1596,10 +1596,11 @@ class Mage_Paypal_Model_Api_Nvp extends Mage_Paypal_Model_Api_Abstract
         {
             case "10486":
             case "10485":
+            case "10422":
                 return 'Your payment has been declined. Please <a href="'.$this->getPaypalRedirectionUrl($response['TOKEN']).'">click here</a> to select another card from your PayPal account.';
                  break;
             default:
-                return $response['L_SHORTMESSAGE0'].' <a href="'.$this->getPaypalRedirectionUrl($response['TOKEN']).'">Click Here To Try Again Or To Get More Details.</a>';
+                return $response['L_LONGMESSAGE0'];
                 break;
 
         }
