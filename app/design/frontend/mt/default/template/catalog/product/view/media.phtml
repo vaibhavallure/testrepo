@@ -78,8 +78,9 @@ if($configProduct->isConfigurable()){
     }
     $colors = Mage::getStoreconfig('ecp_color/color_attr');
     $colors = explode(",", $colors);
-    foreach($allowAttrs as $cd){
-        if( in_array($cd,$colors)){
+
+    foreach ($allowAttrs as $cd){
+        if ( in_array($cd,$colors)){
             $check_option_color = true;
             break;
         }
@@ -89,19 +90,23 @@ if($configProduct->isConfigurable()){
 
     $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $configProduct);
     $config_attr = null;
-    if(count($allowAttrs) == 1){
-        $config_attr = $allowAttrs[0];
-    }
-    else{
 
-        foreach($colors as $code){
-            if(in_array($code, $allowAttrs)){
+    if (count($allowAttrs) == 1){
+        $config_attr = $allowAttrs[0];
+    } else {
+
+        foreach ($colors as $code) {
+            if (in_array($code, $allowAttrs)) {
                 $config_attr = $code;
                 break;
             }
         }
+
         $realAttribute = @array_diff($config_attr,$colors);
-        if(count($realAttribute)) $config_attr   = $realAttribute[0];
+
+        if ($realAttribute && count($realAttribute)) {
+			$config_attr   = $realAttribute[0];
+		}
     }
 
     if($colorOptionId){
