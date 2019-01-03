@@ -43,9 +43,11 @@ $childProductArr = $this->getChildProductArray();
             $sku = $option->text;
             $temp_sku = $sku;
             $temp_product = $productArr[$temp_sku];
-            if (! count($temp_product) > 0) {
+
+            if ($temp_product && count($temp_product) <= 0) {
                 continue;
             }
+
             $temp_product_parent = $temp_product["parentItemNumber"];
             $numberOfProducts += 1;
 
