@@ -179,10 +179,10 @@ if($fetch_model){
 				}
 
 				//echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
-				if (isset($appCollection2) && !empty($appCollection2))
+				if ($appCollection2 && count($appCollection2))
 					continue;
 
-				if (isset($appCollection) && !empty($appCollection))
+				if ($appCollection && count($appCollection))
 					continue;
 
 				/* End of check */
