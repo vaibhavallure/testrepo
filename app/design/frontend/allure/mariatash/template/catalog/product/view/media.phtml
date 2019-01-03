@@ -44,7 +44,7 @@ if($configProduct->isConfigurable()){
     $allAtributes = $configProduct->getTypeInstance(true)->getConfigurableAttributes($configProduct);
     foreach ($allAtributes as $attribute) {
         $productAttribute = $attribute->getProductAttribute();
-		
+
 		if (!$productAttribute) continue;
 
         $attrid = $productAttribute->getId();
@@ -81,8 +81,12 @@ if($configProduct->isConfigurable()){
                 break;
             }
         }
-        $realAttribute = @array_diff($config_attr,$colors);
-        if(count($realAttribute)) $config_attr   = $realAttribute[0];
+		
+		$realAttribute = @array_diff($config_attr,$colors);
+
+        if ($realAttribute && count($realAttribute)) {
+			$config_attr   = $realAttribute[0];
+		}
     }
 
     if($colorOptionId){
