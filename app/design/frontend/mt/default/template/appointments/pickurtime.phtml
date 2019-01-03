@@ -128,7 +128,7 @@ if($fetch_model){
 			//$storeId= $this->getData("store_id");
 			//$collection = Mage::getModel('appointments/piercers')->getCollection();
 			$collection->addFieldToFilter('working_days', array('like' => '%'.$date.'%'));
-			Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments', true );
+			Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments.log', true );
 			/* If piercer is not free logic start*/
 			if(empty($collection->getData())){
 
@@ -175,26 +175,29 @@ if($fetch_model){
 				$appCollection->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$fromTime, 'to'=>$toTime), array('from'=>$fromTime, 'to'=>$toTime)))
 					->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
 					->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+
 				if(isset($appointmentId))
 				    $appCollection->addFieldToFilter('id', array('neq' => $appointmentId));
+
 				$appCollection2=null;
 
-				if(!count($appCollection)){
+				if ($appCollection && !count($appCollection)){
 				    $appCollection2 = Mage::getModel('appointments/appointments')->getCollection();
 				    $appCollection2->addFieldToFilter('appointment_start', array('lteq'=>$fromTime))
 				    ->addFieldToFilter("appointment_end",array('gteq'=>$toTime))
 				    ->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
 				    ->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
-				    if(isset($appointmentId))
+
+				    if (isset($appointmentId))
 				        $appCollection2->addFieldToFilter('id', array('neq' => $appointmentId));
 				}
 
 				//echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
 
-			    if (isset($appCollection2) && !empty($appCollection2))
+			    if ($appCollection2 && count($appCollection2))
 					continue;
 
-				if (isset($appCollection) && !empty($appCollection))
+				if ($appCollection && count($appCollection))
 					continue;
 
 				/* End of check */
@@ -202,7 +205,7 @@ if($fetch_model){
 				$workingHours = $piercer->getWorkingHours();
 				$workingHours = unserialize($workingHours);
 
-				Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
+				Mage::log($workingHours,Zend_Log::DEBUG, 'appointments.log', true );
 				foreach ($workingHours as $workSlot)
 				{
 					//$workStart = $workSlot['start'].":00";
@@ -225,7 +228,7 @@ if($fetch_model){
 					$breakStart = $helper->getTimeByValue($workSlot['break_start']);
 					$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
 
-					Mage::log($day,Zend_Log::DEBUG, 'appointments', true );
+					Mage::log($day,Zend_Log::DEBUG, 'appointments.log', true );
 					if((strtotime($workStart)<=strtotime($selectedTime) && strtotime($breakStart)>=strtotime($endTime)) ||
 							(strtotime($breakEnd)<=strtotime($selectedTime) && strtotime($workEnd)>=strtotime($endTime)))
 					{

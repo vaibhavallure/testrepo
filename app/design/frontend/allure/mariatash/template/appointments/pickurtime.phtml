@@ -162,13 +162,17 @@ if($fetch_model){
 				$toTime = date("Y-m-d", strtotime($date))." " .$endTo;
 
 				$appCollection = Mage::getModel('appointments/appointments')->getCollection();
+				
 				$appCollection->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$fromTime, 'to'=>$toTime), array('from'=>$fromTime, 'to'=>$toTime)))
 					->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
 					->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+
 				if(isset($appointmentId))
 				    $appCollection->addFieldToFilter('id', array('neq' => $appointmentId));
+
 				$appCollection2=null;
-				if(!count($appCollection)){
+
+				if ($appCollection !count($appCollection)){
 				    $appCollection2 = Mage::getModel('appointments/appointments')->getCollection();
 				    $appCollection2->addFieldToFilter('appointment_start', array('lteq'=>$fromTime))
 				    ->addFieldToFilter("appointment_end",array('gteq'=>$toTime))
@@ -179,10 +183,10 @@ if($fetch_model){
 				}
 
 				//echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
-				if (isset($appCollection2) && !empty($appCollection2))
+				if ($appCollection2 && count($appCollection2))
 					continue;
 
-				if (isset($appCollection) && !empty($appCollection))
+				if ($appCollection && count($appCollection))
 					continue;
 
 				/* End of check */
