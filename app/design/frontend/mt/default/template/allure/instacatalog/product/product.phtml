@@ -56,7 +56,8 @@ $childProductArr = $this->getChildProductArray();
             }
 
             // $product = Mage::getSingleton('catalog/product')->loadByAttribute('sku',$sku);
-            if (! count($product) > 0) {
+
+            if ($product && count($product) <= 0) {
                 $product = $temp_product;
             }
 
@@ -177,7 +178,7 @@ $childProductArr = $this->getChildProductArray();
 								<div style="clear: both;"></div>
 							</div>
 							<div class="fs-products-title fs-plural-products"></div>
-						
+
 						<?php //echo $productsLinks?>
 						<div id="product-info"></div>
 
@@ -245,7 +246,7 @@ $childProductArr = $this->getChildProductArray();
 			});
 		});
 
-		
+
 		function showView(e){
 			jQuery('#showcase').show();
 		}
@@ -262,7 +263,7 @@ $childProductArr = $this->getChildProductArray();
 			var mediaId = jQuery(this).attr('media-id');
 			jQuery('#product-quickview-'+mediaId).trigger('click');
 		});
-		
+
 	</script>
 
 
