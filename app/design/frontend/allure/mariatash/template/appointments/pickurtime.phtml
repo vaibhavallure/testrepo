@@ -172,7 +172,7 @@ if($fetch_model){
 
 				$appCollection2=null;
 
-				if ($appCollection !count($appCollection)){
+				if ($appCollection && !count($appCollection)){
 				    $appCollection2 = Mage::getModel('appointments/appointments')->getCollection();
 				    $appCollection2->addFieldToFilter('appointment_start', array('lteq'=>$fromTime))
 				    ->addFieldToFilter("appointment_end",array('gteq'=>$toTime))
