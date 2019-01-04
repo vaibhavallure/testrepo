@@ -48,6 +48,14 @@
                     <model>ecp_reporttoemail/observer::sendReport</model>
                 </run>
             </ecp_reporttoemail_cron>
-        </jobs> 
+            <ecp_refundreporttoemail_cron>
+                <schedule>
+                    <cron_expr>0 7 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>ecp_reporttoemail/refund::sendReport</model>
+                </run>
+            </ecp_refundreporttoemail_cron>
+        </jobs>
     </crontab>
 </config>
