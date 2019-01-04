@@ -8,7 +8,7 @@
 }
 
 .pickur_time_main_container{
-	/* float: left; 
+	/* float: left;
 	width:48% ; */
 }
 
@@ -76,7 +76,9 @@
 }
 .appointmentContainer{
 	width: 960px;
-	margin:auto;
+	margin: auto;
+	max-width: 100%;
+	overflow: hidden;
 	/* margin: 0 auto;
     background: #cfcfd1; */
 }
@@ -263,8 +265,8 @@ margin:10px 0px;
 /* .calendar{
 	display:block !important;
 	height:250px !important;
-	
-	
+
+
 } */
 .apt-summary{
 	font-size: 14px;
@@ -505,7 +507,7 @@ a#foo2_next {
 	margin-top: 25px;
 }
 .splnotesTxtarea{
-	height: 15px !important; /*68px !important;*/
+	min-height: 15px !important;
 	width: 308px;
 }
 .appt_ph .intl-tel-input{
@@ -517,7 +519,8 @@ a#foo2_next {
 @-moz-document url-prefix() {
 	.appt_ph input{
 		width: 332px;
-	}}
+	}
+}
 
 @-moz-document url-prefix() {
 	.appt_country select{
@@ -742,6 +745,37 @@ a#foo2_next {
 #appointment-pricing .piercing_block h3{
 	padding: 5px;
 	text-align: center;
+}
+
+body.embedded {
+	min-width: 100%;
+	max-width: 100%;
+}
+
+body.embedded .main {
+    padding: 12px;
+}
+
+body.embedded .col1-layout .col-main {
+    margin-bottom: 0px;
+}
+
+body.embedded .appointmentContainer {
+    max-width: 100%;
+}
+
+body.embedded .appt_ph input,
+body.embedded .countrySelect,
+body.embedded .stateSelect {
+    width: 268px;
+}
+
+body.embedded .splnotesTxtarea {
+    width: 255px;
+}
+
+body.embedded .zopim {
+    display: none !important;
 }
 
 @media only screen and (max-width: 768px) {

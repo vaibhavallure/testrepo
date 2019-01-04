@@ -81,11 +81,19 @@ class Mage_Core_Model_Domainpolicy
             $policy = $this->getFrontendPolicy();
         }
 
+		$forceOpen = false;
+
+		if ($action->getLayout()->getArea() == 'frontend' && $action->getRequest()->getRouteName() == 'appointments' && $action->getRequest()->getActionName() == 'facebook') {
+			$forceOpen = true;
+		}
+
         if ($policy) {
             /** @var Mage_Core_Controller_Response_Http $response */
             $response = $action->getResponse();
-            $response->setHeader('X-Frame-Options', $policy, true);
-            $response->setHeader('X-Frame-Options', 'https://www.facebook.com/', true);
+
+			if (!$forceOpen) {
+				$response->setHeader('X-Frame-Options', $policy, true);
+			}
         }
 
         return $this;
