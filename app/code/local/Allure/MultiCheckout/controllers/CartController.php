@@ -88,9 +88,13 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 ->setCollectShippingRates(true);
             $this->_getQuote()
                 ->setTotalsCollectedFlag(false)
-                ->setCouponCode(strlen($couponCode) ? $couponCode : '')
-                ->collectTotals()
+                ->setCouponCode(strlen($couponCode) ? $couponCode : '')->save();
+            $this->_getQuote()->collectTotals()
                 ->save();
+            
+           
+           Mage::log(Mage::getModel("checkout/session")->getQuote()->getCouponCode(),Zend_Log::DEBUG,'abc.log',true);
+
             
             // coupon code apply to two shipment quote's.
             $_checkoutHelper = Mage::helper('allure_multicheckout');
@@ -117,6 +121,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
             }
             
             if (strlen($couponCode)) {
+                Mage::log($couponCode." = ".$this->_getQuote()->getCouponCode(),Zend_Log::DEBUG,'abc.log',true);
                 if ($couponCode == $this->_getQuote()->getCouponCode()) {
                     if (! $isAjax) {
                         $this->_getSession()->addSuccess(
