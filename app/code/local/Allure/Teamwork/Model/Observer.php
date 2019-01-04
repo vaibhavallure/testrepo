@@ -986,7 +986,8 @@ class Allure_Teamwork_Model_Observer{
       $quote = $event->getQuote();
       $appliedRule = $event->getRule();
       $result = $event->getResult();
-      if($quote->getCreateOrderMethod() == 2){
+      $method = $quote->getCreateOrderMethod();
+      if( $method == 2 || $method == 4){
           $result->setDiscountAmount(0);
           $result->setBaseDiscountAmount(0);
           $quote->setAppliedRuleIds(null);
