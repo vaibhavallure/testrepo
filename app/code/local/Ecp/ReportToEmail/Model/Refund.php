@@ -14,7 +14,7 @@ class Ecp_ReportToEmail_Model_Refund
     }
 
 
-    public function sendReport($getdate=null,$mail=false)
+    public function sendReport($getdate=null,$show=false)
     {
 
 
@@ -99,6 +99,9 @@ class Ecp_ReportToEmail_Model_Refund
         $mailbody .= $this->tr($this->th("Period")."".$this->th("Orders Count")."".$this->th("Refunded")."".$this->th("Online Refunded")."".$this->th("Offline Refunded"));
 
 
+        if(count($resourceCollection))
+        {
+
         foreach ($resourceCollection as $rs) {
         $data=$rs->getData();
         $refundOnline=($data["online_refunded"])? $data["online_refunded"] : "0";
@@ -109,6 +112,11 @@ class Ecp_ReportToEmail_Model_Refund
             $mailbody .= $this->tr($this->td($data["period"])."".$this->td($data["orders_count"])."".$this->td($symbol.round($data["refunded"],2))."".$this->td($symbol.round($refundOnline,2))."".$this->td($symbol.round($refundOffline,2)));
 
         }
+    }
+else
+{
+$mailbody .=$this->tr($this->td("NO RECORD FOUND",5));
+}
 
 $mailbody.='</table><br><br>';
 
@@ -123,21 +131,29 @@ $mailbody.='</table><br><br>';
         $mailbody .= '<caption>REFUND REPORT BY ORDER DATE</caption>';
         $mailbody .= $this->tr($this->th("Period")."".$this->th("Orders Count")."".$this->th("Refunded")."".$this->th("Online Refunded")."".$this->th("Offline Refunded"));
 
-        foreach ($resourceCollection1 as $rs) {
-            $data=$rs->getData();
-            $refundOnline=($data["online_refunded"])? $data["online_refunded"] : "0";
-            $refundOffline=($data["offline_refunded"])? $data["offline_refunded"] : "0";
+         if(count($resourceCollection1))
+         {
+            foreach ($resourceCollection1 as $rs) {
+                $data = $rs->getData();
+                $refundOnline = ($data["online_refunded"]) ? $data["online_refunded"] : "0";
+                $refundOffline = ($data["offline_refunded"]) ? $data["offline_refunded"] : "0";
 
-            /* period,orders_count,refunded,online_refunded,offline_refunded       */
-       $mailbody .= $this->tr($this->td($data["period"])."".$this->td($data["orders_count"])."".$this->td($symbol.round($data["refunded"],2))."".$this->td($symbol.round($refundOnline,2))."".$this->td($symbol.round($refundOffline,2)));
+                /* period,orders_count,refunded,online_refunded,offline_refunded       */
+                $mailbody .= $this->tr($this->td($data["period"]) . "" . $this->td($data["orders_count"]) . "" . $this->td($symbol . round($data["refunded"], 2)) . "" . $this->td($symbol . round($refundOnline, 2)) . "" . $this->td($symbol . round($refundOffline, 2)));
 
+            }
+        }
+        else
+        {
+            $mailbody .=$this->tr($this->td("NO RECORD FOUND",5));
         }
 
 
         $mailbody.='</table>';
 
-        echo $mailbody;
-
+         if($show) {
+             echo $mailbody;
+         }
         $mail = new Zend_Mail();
 
 
@@ -171,9 +187,9 @@ $mailbody.='</table><br><br>';
          return '<tr style="box-shadow: 2px 2px 8px gray">'.$text.'</tr>';
     }
 
-    public function td($text)
+    public function td($text,$colspan=0)
     {
-        return '<td style="border:1px solid black;text-align: center;padding: 10px;">'.$text.'</td>';
+        return '<td style="border:1px solid black;text-align: center;padding: 10px;" colspan="'.$colspan.'">'.$text.'</td>';
     }
 
     public function th($text)

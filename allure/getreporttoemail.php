@@ -9,7 +9,15 @@ if(isset($_GET['refund'])) {
     else
         $date=null;
 
-    Mage::getModel('ecp_reporttoemail/refund')->sendReport($date);
+
+    if(isset($_GET['show']))
+        $show=true;
+    else
+        $show=false;
+
+
+
+    Mage::getModel('ecp_reporttoemail/refund')->sendReport($date,$show);
 }
 else {
     $date = (isset($_GET['date'])) ? $_GET['date'] : NULL;
