@@ -166,6 +166,7 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
 
 
         $quoteObj->setOldStoreId(2);
+        $quoteObj->setCreateOrderMethod(4);
 
         $discount=0;
         foreach ($order as $item) {
