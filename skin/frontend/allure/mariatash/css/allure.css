@@ -2696,3 +2696,7 @@ width: 100%;
 	margin-top: 10px;
 }
 
+.giftcards .add-to-cart button {
+	margin: 10px 0 !important;
+	width: 100% !important;
+}

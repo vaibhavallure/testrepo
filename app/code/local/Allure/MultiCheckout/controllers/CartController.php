@@ -12,7 +12,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
         $city = (string) $info['city'];
         $region = (string) $info['region'];
         $regionId = (string) Mage::getModel('directory/region')->load($region, 'default_name')->getRegionId();
-        
+
         $this->_getQuote()
             ->getShippingAddress()
             ->setCountryId($country)
@@ -22,9 +22,9 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
             ->setRegion($region)
             ->setCollectShippingRates(true);
         $this->_getQuote()->save();
-        
+
         $this->_getSession()->setCartWasUpdated(true);
-        
+
         $code = (string) 'flatrate_flatrate';
         if (! empty($code)) {
             $shippingAddress = $this->_getQuote()->getShippingAddress();
@@ -32,14 +32,15 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 ->collectShippingRates()
                 ->save();
             $taxes = Mage::getSingleton('sales/quote_address_total_tax',
-                    array(
-                            'store' => $this->_getQuote()->getStore()
-                    ));
+                array(
+                        'store' => $this->_getQuote()->getStore()
+                )
+			);
             $taxes->collect($shippingAddress);
         }
-        
+
         $this->_getCart()->saveQuote();
-        
+
         $this->_getSession()->setCartWasUpdated(true);
     }
 

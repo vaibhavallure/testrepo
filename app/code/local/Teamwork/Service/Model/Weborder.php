@@ -32,6 +32,7 @@ class Teamwork_Service_Model_Weborder extends Mage_Core_Model_Abstract
         $this->_webOrders = new SimpleXMLElement($webOrders);
 
         $order = empty($this->_from) ? 'DESC' : 'ASC';
+		
         $results = $this->getTable('service_weborder', array('EComChannelId = ?', 'ProcessingDate >= ?'), array($this->_channel_id, $this->_from), "ProcessingDate {$order}", array('*'), false, $this->_orderLimit);
 
         if(is_array($results))
@@ -226,7 +227,7 @@ class Teamwork_Service_Model_Weborder extends Mage_Core_Model_Abstract
                         'LineTaxAmount'     => $item['LineTaxAmount'],
                         'TrackingNo'        => $item['TrackingNo'],
                         'LineNo'            => $item['LineNo'],
-                        
+
                         /*'DeliveryMethod' => (string) $webOrder->DefaultShippingMethod['EComShippingMethod'] == 'freeshipping_freeshipping'
                             ? 'StorePickUp'
                         : 'Ship',*/
