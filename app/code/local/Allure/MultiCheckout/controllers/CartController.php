@@ -54,7 +54,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 'message' => '',
                 'disable' => false
         );
-        
+
         /**
          * No reason continue with empty shopping cart
          */
@@ -67,13 +67,13 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 die(json_encode($response));
             return;
         }
-        
+
         $couponCode = (string) $this->getRequest()->getParam('coupon_code');
         if ($this->getRequest()->getParam('remove') == 1) {
             $couponCode = '';
         }
         $oldCouponCode = $this->_getQuote()->getCouponCode();
-        
+
         if (! strlen($couponCode) && ! strlen($oldCouponCode)) {
             if (! $isAjax)
                 $this->_goBack();
@@ -81,25 +81,21 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 die(json_encode($response));
             return;
         }
-        
+
         try {
             $this->_getQuote()
                 ->getShippingAddress()
                 ->setCollectShippingRates(true);
             $this->_getQuote()
                 ->setTotalsCollectedFlag(false)
-                ->setCouponCode(strlen($couponCode) ? $couponCode : '')->save();
-            $this->_getQuote()->collectTotals()
+                ->setCouponCode(strlen($couponCode) ? $couponCode : '')
+                ->collectTotals()
                 ->save();
-            
-           
-           Mage::log(Mage::getModel("checkout/session")->getQuote()->getCouponCode(),Zend_Log::DEBUG,'abc.log',true);
 
-            
             // coupon code apply to two shipment quote's.
             $_checkoutHelper = Mage::helper('allure_multicheckout');
             if (strtolower($this->_getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
-                
+
                 $model = Mage::getModel('checkout/type_onepage');
                 $model->getQuoteOrdered()
                     ->getShippingAddress()
@@ -109,7 +105,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                     ->setCouponCode(strlen($couponCode) ? $couponCode : '')
                     ->collectTotals()
                     ->save();
-                
+
                 $model->getQuoteBackordered()
                     ->getShippingAddress()
                     ->setCollectShippingRates(true);
@@ -119,9 +115,8 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                     ->collectTotals()
                     ->save();
             }
-            
+
             if (strlen($couponCode)) {
-                Mage::log($couponCode." = ".$this->_getQuote()->getCouponCode(),Zend_Log::DEBUG,'abc.log',true);
                 if ($couponCode == $this->_getQuote()->getCouponCode()) {
                     if (! $isAjax) {
                         $this->_getSession()->addSuccess(
@@ -168,10 +163,11 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
             }
             Mage::logException($e);
         }
-        
+
         if (! $isAjax)
             $this->_goBack();
         else
             die(json_encode($response));
     }
 }
+

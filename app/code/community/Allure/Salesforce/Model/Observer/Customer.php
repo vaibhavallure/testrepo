@@ -183,11 +183,11 @@ class Allure_Salesforce_Model_Observer_Customer{
 
             //tmwork fields accept marketing
             if ($customer->getTwAcceptMarketing()) {
-                //$request["Accept_Marketing__c"] = $customer->getTwAcceptMarketing();
+                $request["Accept_Marketing__c"] = $customer->getTwAcceptMarketing();
             }
             //tmwork fields accept transactional
             if ($customer->getTwAcceptTransactional()) {
-                //$request["Accept_Transactional__c"] = $customer->getTwAcceptTransactional();
+                $request["Accept_Transactional__c"] = $customer->getTwAcceptTransactional();
             }
 
             $helper->salesforceLog("----- customer data -----");
