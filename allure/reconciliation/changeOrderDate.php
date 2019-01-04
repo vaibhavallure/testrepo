@@ -11,6 +11,7 @@ $order_count = 0; //user for total order count
 $order = array();
 if(!file_exists($fileName))
 die("File Not Found...!");
+Mage::log("In Change Order Date", Zend_Log::DEBUG, "reconciliation.log", true);
 
 if($file ) {
 
@@ -44,6 +45,8 @@ $writeConnection = $resource->getConnection('core_write');
 
         $writeConnection->query($query);
         echo trim($lines[$lineNumber])." updated.</br>";
+        Mage::log("Order Id:" . $lines[$lineNumber] . " New Date:" . $newDate." With Comment:".$newComment, Zend_Log::DEBUG, "reconciliation.log", true);
+
     }
     catch(Exception $ex)
     {

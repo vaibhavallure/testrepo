@@ -86,10 +86,15 @@ class Allure_Teamwork_Model_Tmobserver{
             
             //$this->addLog(json_decode($response,true));
             /* $modelObj = Mage::getModel("allure_teamwork/tmorder")
-             ->load("5401FC1F-D2E2-4617-AD2B-92676D2B844A","tm_receipt_id");
-             $response = json_encode(array(unserialize($modelObj->getTmdata()))); */
+             ->load(110);
+             $response1 = array(unserialize($modelObj->getTmdata()));//json_encode(array(unserialize($modelObj->getTmdata())));
+             $response = array(
+                 "status" => true,
+                 "data"   => $response1
+             );
+             $response = serialize($response); */
             
-            $this->addDataIntoSystem($response);
+             $this->addDataIntoSystem($response);
         }catch(Exception $e){
             $this->addLog("Exception: ".$e->getMessage());
         }
@@ -155,9 +160,11 @@ class Allure_Teamwork_Model_Tmobserver{
         $ostores = Mage::helper("allure_virtualstore")->getVirtualStores();
         $oldStoreArr = array();
         $utcOffsetArr = array();
+        $oldStoreNameArr = array();
         foreach ($ostores as $storeO){
             $oldStoreArr[$storeO->getTmLocationCode()] = $storeO->getId();
             $utcOffsetArr[$storeO->getTmLocationCode()] = $storeO->getUtcOffset();
+            $oldStoreNameArr[$storeO->getTmLocationCode()] = $storeO->getCode();
         }
         
         $alphabets = range('A','Z');
@@ -180,6 +187,28 @@ class Allure_Teamwork_Model_Tmobserver{
             try{
                 $email = $customerDetails["EMail1"] ? $customerDetails["EMail1"] :$customerDetails["EMail2"];
                 $email = trim($email);
+                
+                /* $newEmail = "";
+                if(empty($email)){
+                    $email = $orderDetails["EmailAddress"];
+                    if(empty($email)){
+                        $fname = $customerDetails["FirstName"];
+                        $lname = $customerDetails["LastName"];
+                        if(!empty($fname) && !empty($lname)){
+                            $newEmail = $fname . $lname;
+                        }elseif (!empty($fname)){
+                            $newEmail = $fname;
+                        }elseif (!empty($lname)){
+                            $newEmail = $lname;
+                        }else{
+                            $newEmail = $oldStoreNameArr[$extaDetails["LocationCode"]];
+                        }
+                        $email = $newEmail . $receiptId . "@customers.mariatash.com";
+                    }
+                    $email = strtolower(trim($email));
+                } */
+                
+                
                 $customer = Mage::getModel('customer/customer')
                     ->setWebsiteId($websiteId)
                     ->loadByEmail($email);
@@ -203,12 +232,15 @@ class Allure_Teamwork_Model_Tmobserver{
                     $createdAt = $createdAtArr[0];
                     $group = ($customerDetails["CustomFlag1"]) ? 2 : 1;
                     
+                    $firstName = ($customerDetails["FirstName"]) ? $customerDetails["FirstName"] : "Pos";
+                    $lastName = ($customerDetails["LastName"]) ? $customerDetails["LastName"] : "Guest";
+                    
                     $customer = Mage::getModel("customer/customer");
                     $customer->setWebsiteId($websiteId)
                         ->setStoreId($storeId)
                         ->setGroupId($group)
-                        ->setFirstname($customerDetails["FirstName"])
-                        ->setLastname($customerDetails["LastName"])
+                        ->setFirstname($firstName)
+                        ->setLastname($lastName)
                         ->setEmail($email)
                         ->setCreatedAt($createdAt)
                         ->setPassword($password)
@@ -232,7 +264,7 @@ class Allure_Teamwork_Model_Tmobserver{
                         $_custom_address = array (
                             'firstname'  => $customer->getFirstname(),
                             'lastname'   => $customer->getLastname(),
-                            'region' 	=> 	$state,
+                            'region' 	=> 	"",
                         );
                         $phone = ($customerDetails["Phone1"]) ? $customerDetails["Phone1"] : $customerDetails["Phone2"];
                         if($customerDetails["City"]){
@@ -364,6 +396,8 @@ class Allure_Teamwork_Model_Tmobserver{
                     $productDetails = $object["product_details"];
                     $extraOrderDetails = $object["extra_details"];
                     
+                    $tmOrigReceiptId = null;
+                    
                     $productArr = array();
                     foreach ($productDetails as $tmProduct){
                         if($tmProduct["LineExtDiscountAmount"] > 0){
@@ -377,9 +411,9 @@ class Allure_Teamwork_Model_Tmobserver{
                         
                         $tempQty = $qty;
                         $totalAmtT = trim($orderDetails["TotalAmountWithTax"]);
-                        if($qty < 0){
+                        /* if($qty < 0){
                             $qty = $qty * (-1);
-                        }
+                        } */
                         
                         $origPriceWoutTax = $tmProduct["OriginalPriceWithoutTax"];
                         $origPriceWithTax = $tmProduct["OriginalPriceWithTax"];
@@ -415,9 +449,33 @@ class Allure_Teamwork_Model_Tmobserver{
                         ->setProduct($productObj);
                         $quoteItem->setQty($qty);
                         
+                        if($qty < 0){
+                            $quoteItem->setDiscountAmount(0);
+                            $quoteItem->setBaseDiscountAmount(0);
+                        }
+                        
                         $quoteItem->setStoreId(1);
                         $quoteItem->setOtherSysQty($tempQty);
                         $quoteItem->setTwItemId($tmItemId);
+                        
+                        $origReceiptNum = $tmProduct["OrigReceiptNum"];
+                        if($origReceiptNum){
+                            $tmOrigReceiptId = $origReceiptNum;
+                            $quoteItem->setTeamworkOrigReceiptId($origReceiptNum);
+                        }
+                        
+                        $reasonCode = $tmProduct["REASON_CODE"];
+                        if($reasonCode){
+                            $quoteItem->setExchangeQty($tempQty * (-1));
+                            $quoteItem->setTeamworkReasonCode($reasonCode);
+                        }
+                        
+                        $reasonDesc = $tmProduct["Description"];
+                        if($reasonDesc){
+                            $quoteItem->setTeamworkReason($reasonDesc);
+                        }
+                        
+                        
                         $quoteObj->addItem($quoteItem);
                         $productObj = null;
                     }
@@ -435,7 +493,11 @@ class Allure_Teamwork_Model_Tmobserver{
                         ->setShippingMethod("tm_storepickupshipping");
                     }
                     $quoteObj->setCreateOrderMethod(2);
+                    $quoteObj->setTeamworkOrigReceiptId($tmOrigReceiptId);
                     $quoteObj->collectTotals();
+                    
+                   
+                    
                     
                     if($isDiscountTot){
                         $discountTot = $discountTot  ;
@@ -461,7 +523,10 @@ class Allure_Teamwork_Model_Tmobserver{
                         $quoteObj->setReservedOrderId($incrementIdQ);
                     }
                     
+                    $this->addLog("otherSysCur - ".$otherSysCur);
+                    
                     if(strtoupper($otherSysCur) != "MT"){
+                        $this->addLog("otherSysCurCode - ".$otherSysCurCode);
                         $quoteObj->setData('base_currency_code',$otherSysCurCode)
                         ->setData('global_currency_code',"USD")
                         ->setData('quote_currency_code',$otherSysCurCode)
@@ -469,12 +534,31 @@ class Allure_Teamwork_Model_Tmobserver{
                     }
                     
                     $currencyRates = Mage::getModel('directory/currency')->getCurrencyRates($otherSysCurCode, "USD");
+                    $this->addLog("currency rate 1 {$otherSysCurCode} to USD is {$currencyRates["USD"]}");
+                    $this->addLog($currencyRates);
+                    
                     if(!empty($currencyRates["USD"])){
                         $this->addLog("currency rate {$otherSysCurCode} to USD is {$currencyRates["USD"]}");
                         $quoteObj->setStoreToBaseRate($currencyRates["USD"])
                         ->setStoreToQuoteRate(1)
                         ->setBaseToGlobalRate($currencyRates["USD"])
                         ->setBaseToQuoteRate(1);
+                    }
+                    
+                    $items = $quoteObj->getAllItems();
+                    $wrongDiscount = 0;
+                    foreach ($items as $item){
+                        if($item->getQty() < 0){
+                            $wrongDiscount +=  $item->getBaseDiscountAmount();
+                        }
+                    }
+                    
+                    if($wrongDiscount < 0){
+                        $quoteObj->setSubtotalWithDiscount(0);
+                        $quoteObj->setBaseSubtotalWithDiscount(0);
+                        $quoteObj->setGrandTotal($quoteObj->getGrandTotal() + $wrongDiscount);
+                        $quoteObj->setBaseGrandTotal($quoteObj->getBaseGrandTotal() + $wrongDiscount);
+                        $quoteObj->save();
                     }
                     
                     $payment_method  = "tm_pay_cash";
@@ -567,11 +651,18 @@ class Allure_Teamwork_Model_Tmobserver{
                         $orderObj->setTaxAmount($taxAmmount);
                     }
                     
+                    if($wrongDiscount < 0){
+                        $orderObj->setDiscountAmount(0);
+                        $orderObj->setBaseDiscountAmount(0);
+                    }
+                    
                     if($discountAmount){
                         $discountAmount = 0 - $discountAmount;
                         $totalAmmount = $totalAmmount + $discountAmount;
                         $orderObj->setDiscountAmount($discountAmount);
                     }
+                    
+                    
                     
                     if($isDiscountTot){
                         $quoteSubTotal = $quoteObj->getSubtotal();
@@ -586,12 +677,20 @@ class Allure_Teamwork_Model_Tmobserver{
                     $orderObj->setBaseTaxAmount($taxAmmount);
                     $orderObj->setBaseGrandTotal($totalAmmount);
                     
-                    /* if(strtoupper($otherSysCur) != "MT"){
+                    if(strtoupper($otherSysCur) != "MT"){
                         $orderObj->setData('base_currency_code',$otherSysCurCode)
                             ->setData('global_currency_code',$otherSysCurCode)
                             ->setData('order_currency_code',$otherSysCurCode)
                             ->setData('store_currency_code',$otherSysCurCode);
-                    } */
+                    }
+                    
+                    if(!empty($currencyRates["USD"])){
+                        $this->addLog("currency rate {$otherSysCurCode} to USD is {$currencyRates["USD"]}");
+                        $quoteObj->setStoreToBaseRate($currencyRates["USD"])
+                        ->setStoreToQuoteRate(1)
+                        ->setBaseToGlobalRate($currencyRates["USD"])
+                        ->setBaseToQuoteRate(1);
+                    }
                     
                     $extStoreName = $extraOrderDetails["Name"];
                     $locationCode = $extraOrderDetails["LocationCode"];
@@ -791,7 +890,7 @@ class Allure_Teamwork_Model_Tmobserver{
                             $paymentCode = $paymentMethodsArr[$payment_method];
                             $paidAmt    = $paymentData["PaymentAmount"];
                             $changeAmt  = $paymentData["ChangeAmount"];
-                            $paidAmt = ($paidAmt < 0 )? $paidAmt * (-1): $paidAmt;
+                            $paidAmt = $paidAmt;//d($paidAmt < 0 )? $paidAmt * (-1): $paidAmt;
                             $incAmount = ($paidAmt != 0)? $paidAmt : $changeAmt * (-1);
                             $invoice = Mage::getModel('sales/service_order', $orderObj)
                             ->prepareInvoice($savedQtys);
@@ -831,7 +930,7 @@ class Allure_Teamwork_Model_Tmobserver{
                                     $invoice->setTaxAmount(0);
                                     $invoice->setBaseTaxAmount(0);
                                 }else{
-                                    $amount = $orderObj->getGrandTotal();
+                                    //$amount = $orderObj->getGrandTotal();
                                 }
                             }
                             
