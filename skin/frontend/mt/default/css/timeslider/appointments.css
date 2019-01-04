@@ -770,6 +770,10 @@ body.embedded .splnotesTxtarea {
     width: 255px;
 }
 
+body.embedded .zopim {
+    display: none !important;
+}
+
 @media only screen and (max-width: 768px) {
 	/*FOR CALENDRA INDRAJIT IPAD*/
 	#fetchpickurday{
