@@ -756,6 +756,10 @@ body.embedded .main {
     padding: 15px;
 }
 
+body.embedded .col1-layout .col-main {
+    margin-bottom: 5px;
+}
+
 body.embedded .appointmentContainer {
     max-width: 100%;
 }
