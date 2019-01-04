@@ -753,11 +753,11 @@ body.embedded {
 }
 
 body.embedded .main {
-    padding: 15px;
+    padding: 12px;
 }
 
 body.embedded .col1-layout .col-main {
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 body.embedded .appointmentContainer {
