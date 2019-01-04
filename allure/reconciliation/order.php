@@ -36,7 +36,10 @@ if($file && $currentRate && $otherSysCurCode) {
                 $item['retail_value'] = abs(trim($row[9])) ? abs(trim($row[9])) : 0;
                 $item['sales'] = trim($row[10]) ? abs(trim($row[10])) : 0;
                 $item['qty'] = trim($row[14]) ? trim($row[14]) : 0;
-
+               if($item['retail_value']==0 && $item['sales']!=0)
+               {
+                   $item['retail_value']=$item['sales'];
+               }
                 // for replace color code into long descritiption
                 if ($item['sku'] != null) {
                     $color = substr($sku, -2);
@@ -77,7 +80,7 @@ if($file && $currentRate && $otherSysCurCode) {
 
 //                        var_dump($order);
                     $order_date = trim($row[0]); //order date specified in first row of total
-                    echo "ORDER DATE :".$order_date." TIME:".$time."<br>";
+                    echo "<br>ORDER DATE :".$order_date." TIME:".$time."<br>";
                     $increment_number=createOrder($order,$order_date,$time,$transaction_id,$otherSysCurCode,$currentRate);//function for creating manual order
                     $order = null;
                     $order = array();
@@ -85,8 +88,15 @@ if($file && $currentRate && $otherSysCurCode) {
                     if ($increment_number)
                     {
                         $order_count++;
-                        $lines[$lineNumber] = trim($lines[$lineNumber]) . "," . $increment_number .","."ORDER:".$order_count. PHP_EOL;
+                        $invoice_number=createInvoice($increment_number);
+                        if($invoice_number) {
+                            $lines[$lineNumber] = trim($lines[$lineNumber]) . "," . $increment_number .","."ORDER:".$order_count. ",".$invoice_number.PHP_EOL;
+                        }
+                        else {
+                            $lines[$lineNumber] = trim($lines[$lineNumber]) . "," . $increment_number . "," . "ORDER:" . $order_count . PHP_EOL;
+                        }
                         file_put_contents($fileName, $lines);
+
 
                     }
                     else
@@ -156,6 +166,7 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
 
 
         $quoteObj->setOldStoreId(2);
+        $quoteObj->setCreateOrderMethod(4);
 
         $discount=0;
         foreach ($order as $item) {
@@ -252,16 +263,18 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
         $orderObj->setPayment($convertQuoteObj->paymentToOrderPayment($quoteObj->getPayment()));
 //        echo "Discount :".$discount;
         if($discount>0) {
-            $orderObj->setGrandTotal($orderObj->getGrandTotal() - $discount);
-            $orderObj->setBaseGrandTotal($orderObj->getBaseGrandTotal() - $discount);
+            $amount=$orderObj->getGrandTotal() - $discount;
+            $orderObj->setGrandTotal($amount);
+            $orderObj->setBaseGrandTotal($amount);
             $orderObj->setBaseDiscountAmount($discount);
             $orderObj->setDiscountAmount($discount);
         }
         $orderObj->save();
+        echo "<br>Base Grand Total:".$orderObj->getBaseGrandTotal();
 
 
 
-        echo "Order Created : ".$orderObj->getIncrementId()."<br>";
+        echo "<br>Order Created : ".$orderObj->getIncrementId();
         $orderId=$orderObj->getIncrementId();
         $orderEntityId=$orderObj->getId();
         $order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
@@ -271,9 +284,118 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
         Mage::log("Entity ID : ".$orderEntityId,Zend_Log::DEBUG,'reconciliation.log',true);
         return $orderId;
     } catch (Exception $e) {
-//echo $e->getMessage();
         Mage::log($e->getMessage(),Zend_Log::DEBUG,'reconciliation.log',true);
     }
 
 }
 
+//CREATE INVOICE FUNCTION
+/**
+ * @param $increment_number
+ * @return mixed
+ */
+function createInvoice($increment_number)
+{
+
+    try {
+        $websiteId = 1;
+        $orderObj = Mage::getModel('sales/order')->loadByIncrementId($increment_number);
+        if (!$orderObj->getId()) {
+            Mage::log("Order Not Created/Present", Zend_Log::DEBUG, "reconciliation.log", true);
+        }
+
+
+        $orderId = $orderObj->getId();
+        $ordered_items = $orderObj->getAllItems();
+        $savedQtys = array();
+        $isPending = false;
+        foreach ($ordered_items as $item) {     //item detail
+            $savedQtys[$item->getItemId()] = $item->getQtyOrdered();
+            $otherSysQty = $item->getOtherSysQty();
+
+        }
+
+        if ($orderObj->hasInvoices()) {
+            Mage::log("Invoice Already Present for this Order" . $orderId, Zend_Log::DEBUG, "reconciliation.log", true);
+
+        } else {
+//    START CREATING INVOICE
+            $payment = $orderObj->getPayment();
+
+            $payment_method = $payment->getMethodInstance()->getTitle();
+            $paymentCode =$payment_method;
+            $paidAmt = $orderObj->getBaseGrandTotal();
+            $isNegative=false;
+            if($paidAmt<0)
+            {
+                $isNegative=true;
+            }
+            $paidAmt = ($paidAmt < 0) ? $paidAmt * (-1) : $paidAmt;
+            $invoice = Mage::getModel('sales/service_order', $orderObj)
+                ->prepareInvoice($savedQtys);
+            $invoice->setRequestedCaptureCase("offline");
+            $invoice->register();
+            $invoice->getOrder()->setIsInProcess(true);
+            $state = 2;
+            $invoice->setState($state);
+            $invoice->setCanVoidFlag(0);
+            $amount=$paidAmt;
+
+            if ($paidAmt) {
+
+                    $invoice->setBaseGrandTotal($amount);
+                    $invoice->setGrandTotal($amount);
+                    $invoice->setBaseSubtotal($amount);
+                    $invoice->setSubtotal($amount);
+                    $invoice->setSubtotalInclTax($amount);
+
+
+
+            }
+
+
+            $createdAt = $orderObj->getCreatedAt();
+            $invoice->setCreatedAt($createdAt);
+            $invoice->save();
+            $invoiceNumber = $invoice->getIncrementId();
+            $customerId = $orderObj->getCustomerId();
+            echo "<br>Invoice Number".$invoiceNumber;
+            Mage::log("Order Id:" . $orderId . " Invoice No.:" . $invoiceNumber, Zend_Log::DEBUG, "reconciliation.log", true);
+            $orderPay = $orderObj->getPayment();
+            if ($paymentCode ) {
+//not need to change payment method
+
+                    $orderPay = Mage::getModel("sales/order_payment");
+                $orderPay->setParentId($orderObj->getId());
+                echo "<br>AMOUNT ".$amount;
+                $orderPay->setAmountPaid($amount);
+                $orderPay->setBaseAmountPaid($amount);
+                $orderPay->setMethod($paymentCode);
+                $orderPay->save();
+
+            }
+
+//invoice flag
+
+            $orderObj->setTotalPaid($orderObj->getBaseGrandTotal());
+            if($isNegative) {
+                $newAmount=$amount-($amount*2);
+                $orderObj->setBaseTotalInvoiced($newAmount);
+            }
+            else
+            {
+                $orderObj->setBaseTotalInvoiced($amount);
+            }
+            $orderObj->setData('state', "processing")
+                ->setData('status', "processing");
+            $orderObj->save();
+      return $invoiceNumber;
+        }
+    }
+    catch (Exception $ex)
+    {
+        echo "ERROR:".$ex->getMessage();
+        Mage::log("Error While Creating Invoice :".$ex->getMessage(), Zend_Log::DEBUG, "reconciliation.log", true);
+    }
+
+}
