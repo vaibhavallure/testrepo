@@ -752,6 +752,14 @@ body.embedded {
 	max-width: 100%;
 }
 
+body.embedded .main {
+    padding: 15px;
+}
+
+body.embedded .appointmentContainer {
+    max-width: 100%;
+}
+
 body.embedded .appt_ph input,
 body.embedded .countrySelect,
 body.embedded .stateSelect {
@@ -760,10 +768,6 @@ body.embedded .stateSelect {
 
 body.embedded .splnotesTxtarea {
     width: 255px;
-}
-
-body.embedded .main {
-    padding: 15px;
 }
 
 @media only screen and (max-width: 768px) {
