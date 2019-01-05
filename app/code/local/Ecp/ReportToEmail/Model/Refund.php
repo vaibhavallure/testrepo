@@ -34,7 +34,6 @@ class Ecp_ReportToEmail_Model_Refund
 
         $storesId=1;
         $storeId=$storesId;
-        $yesterday=date('Y-m-d');
 
         if($getdate)
             $yesterday=$getdate;
@@ -65,79 +64,101 @@ class Ecp_ReportToEmail_Model_Refund
         $from = date("Y-m-d",strtotime("-1 day".$diffZone,strtotime($from)));
         $to = date("Y-m-d",strtotime("-1 day".$diffZone,strtotime($to)));
 
-
-
-
-
-       // $collection = Mage::getResourceModel('sales/report_refunded_collection_refunded')->getCollection();
-
-
-
-        $currency=Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
-        $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
         Mage::app()->getStore()->setId($storeId);
 
 
         $mailbody = '<style type="text/css">';
         $mailbody .= '.ExternalClass *{line-height:0;}';
         $mailbody .= 'div,p,a,li,td {-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none;-ms-text-size-adjust:none;}';
-        /*$mailbody .= 'table,tr,td,th{
-        border:1px solid black;
-        border-collapse:collapse;
-        padding: 5px 10px;
-        }';*/
+        $mailbody .= '</style><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+        $mailbody.=$this->getCollectionHtmlTable('sales/report_refunded_collection_refunded',$from,$to,$storesId);
+        $mailbody.=$this->getCollectionHtmlTable('sales/report_refunded_collection_order',$from,$to,$storesId);
 
-        $resourceCollection = Mage::getResourceModel('sales/report_refunded_collection_refunded')
+
+         if($show) {
+             echo $mailbody;
+         }
+
+
+         $mail = new Zend_Mail();
+
+
+        /* Sender Email */
+        $sender = Mage::getStoreConfig('trans_email/ident_general/email');
+        $storeDate = date('Y-m-d');
+        $website = Mage::getModel('core/store')->load($storesId);
+        $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
+
+
+        $date = Mage::getModel('core/date')->date('Ymd');
+
+        $name1 = "Order_Refund_Report_By_Order_date_".$date.".csv";
+         $mail->createAttachment(
+        file_get_contents($this->getReportCSV($from,$to,"orderdate")),
+        Zend_Mime::TYPE_OCTETSTREAM,
+        Zend_Mime::DISPOSITION_ATTACHMENT,
+        Zend_Mime::ENCODING_BASE64,
+        $name1
+         );
+
+
+        $name2 = "Order_Refund_Report_By_Refund_date_".$date.".csv";
+        $mail->createAttachment(
+            file_get_contents($this->getReportCSV($from,$to,"refunddate")),
+            Zend_Mime::TYPE_OCTETSTREAM,
+            Zend_Mime::DISPOSITION_ATTACHMENT,
+            Zend_Mime::ENCODING_BASE64,
+            $name2
+        );
+        $mail->setBodyHtml($mailbody)
+            ->setSubject($website->getName() . ': Daily Sales Refund Report for ' . $yesterday)
+            ->addTo($emails)
+            ->setFrom($sender, "Refund Report");
+
+        try {
+
+                $mail->send();
+                $this->add_log("mail sent");
+            
+
+
+        } catch (Mage_Core_Exception $e) {
+            Mage::log('Sending report ' . $e->getMessage(), Zend_log::DEBUG, 'accounting_report.log',true);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+
+    }
+
+
+    public function getCollectionHtmlTable($collection,$from,$to,$storesId)
+    {
+
+        $currency=Mage::app()->getStore($storesId)->getCurrentCurrencyCode();
+        $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
+
+        if($collection=="sales/report_refunded_collection_refunded")
+            $caption='<caption>REFUND REPORT BY ORDER REFUND DATE</caption>';
+        elseif ($collection=="sales/report_refunded_collection_order")
+            $caption='<caption>REFUND REPORT BY ORDER DATE</caption>';
+
+        $mailbody="";
+
+        $resourceCollection = Mage::getResourceModel($collection)
             ->setPeriod('day')
             ->setDateRange($from, $to)
             ->addStoreFilter($storesId);
 
-
-        $mailbody .= '</style><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-        $mailbody .= '<table style="border:1px solid black;border-collapse: collapse;">';
-        $mailbody .= '<caption>REFUND REPORT BY REFUND DATE</caption>';
+        $mailbody .= '<table style="border:1px solid black;border-collapse: collapse;margin-bottom: 30px;">';
+        $mailbody .= $caption;
         $mailbody .= $this->tr($this->th("Period")."".$this->th("Orders Count")."".$this->th("Refunded")."".$this->th("Online Refunded")."".$this->th("Offline Refunded"));
-
 
         if(count($resourceCollection))
         {
-
-        foreach ($resourceCollection as $rs) {
-        $data=$rs->getData();
-        $refundOnline=($data["online_refunded"])? $data["online_refunded"] : "0";
-        $refundOffline=($data["offline_refunded"])? $data["offline_refunded"] : "0";
-
-    /* period,orders_count,refunded,online_refunded,offline_refunded       */
-          //  $mailbody .= '<tr><th>'.$data["period"].'</th><th>'.$data["orders_count"].'</th><th>'.$symbol.round($data["refunded"],2).'</th><th>'.$symbol.round($refundOnline,2).'</th><th>'.$symbol.round($refundOffline,2).'</th></tr>';
-            $mailbody .= $this->tr($this->td($data["period"])."".$this->td($data["orders_count"])."".$this->td($symbol.round($data["refunded"],2))."".$this->td($symbol.round($refundOnline,2))."".$this->td($symbol.round($refundOffline,2)));
-
-        }
-    }
-else
-{
-$mailbody .=$this->tr($this->td("NO RECORD FOUND",5));
-}
-
-$mailbody.='</table><br><br>';
-
-
-
-        $resourceCollection1 = Mage::getResourceModel('sales/report_refunded_collection_order')
-            ->setPeriod('day')
-            ->setDateRange($from, $to)
-            ->addStoreFilter($storesId);
-
-        $mailbody .= '<table style="border:1px solid black;border-collapse: collapse;">';
-        $mailbody .= '<caption>REFUND REPORT BY ORDER DATE</caption>';
-        $mailbody .= $this->tr($this->th("Period")."".$this->th("Orders Count")."".$this->th("Refunded")."".$this->th("Online Refunded")."".$this->th("Offline Refunded"));
-
-         if(count($resourceCollection1))
-         {
-            foreach ($resourceCollection1 as $rs) {
+            foreach ($resourceCollection as $rs) {
                 $data = $rs->getData();
                 $refundOnline = ($data["online_refunded"]) ? $data["online_refunded"] : "0";
                 $refundOffline = ($data["offline_refunded"]) ? $data["offline_refunded"] : "0";
-
                 /* period,orders_count,refunded,online_refunded,offline_refunded       */
                 $mailbody .= $this->tr($this->td($data["period"]) . "" . $this->td($data["orders_count"]) . "" . $this->td($symbol . round($data["refunded"], 2)) . "" . $this->td($symbol . round($refundOnline, 2)) . "" . $this->td($symbol . round($refundOffline, 2)));
 
@@ -151,34 +172,8 @@ $mailbody.='</table><br><br>';
 
         $mailbody.='</table>';
 
-         if($show) {
-             echo $mailbody;
-         }
-        $mail = new Zend_Mail();
 
-
-        /* Sender Email */
-        $sender = Mage::getStoreConfig('trans_email/ident_general/email');
-        $storeDate = date('Y-m-d');
-        $website = Mage::getModel('core/store')->load($storesId);
-        $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
-
-        $mail->setBodyHtml($mailbody)
-            ->setSubject($website->getName() . ': Daily Sales Refund Report for ' . $yesterday)
-            ->addTo($emails)
-            ->setFrom($sender, "Refund Report");
-
-        try {
-
-                $mail->send();
-                $this->add_log("mail sent");
-
-
-        } catch (Mage_Core_Exception $e) {
-            Mage::log('Sending report ' . $e->getMessage(), Zend_log::DEBUG, 'accounting_report.log',true);
-        } catch (Exception $e) {
-            Mage::logException($e);
-        }
+        return $mailbody;
 
     }
 
@@ -196,5 +191,60 @@ $mailbody.='</table><br><br>';
     {
         return '<th style="border:1px solid black;padding: 5px 20px;background-color: #0A263C;color: white;font-family:Arial;font-size: 14px;text-transform: uppercase;">'.$text.'</th>';
     }
+
+    public function getReportCSV($from,$to,$by)
+    {
+
+        $date=date('Ymd');
+        $folderPath   = Mage::getBaseDir('var') . DS . 'export';
+        $filename     = "refund_report_By_".$by."_".$date.".csv";
+        $filepath     = $folderPath . DS . $filename;
+
+        $io = new Varien_Io_File();
+        $io->setAllowCreateFolders(true);
+        $io->open(array("path" => $folderPath));
+        $csv = new Varien_File_Csv();
+
+        $data=array_merge($this->getHeader(),$this->getData($from,$to,$by));
+
+        $csv->saveData($filepath, $data);
+
+
+        return $filepath;
+
+    }
+
+    public function getData($from,$to,$by)
+    {
+        try {
+
+        if($by=="orderdate")
+            $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL";
+        else
+          $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL";
+
+
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+
+        $results = $readConnection->fetchAll($query);
+
+        return $results;
+
+        }
+        catch (Exception $e)
+        {
+            $this->add_log("Exception-:".$e->getMessage());
+        }
+    }
+
+    public function getHeader()
+    {
+         return array(array(1=>"Order Date",2=>"Credit Memo Date",3=>"Order No",4=>"Order Total",5=>"Refund Amount",6=>"Online Refund",7=>"Offline Refund",8=>"Customer Id",9=>"Customer Email"));
+    }
+
+
+
+
 }
 
