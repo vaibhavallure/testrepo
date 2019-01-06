@@ -35,34 +35,26 @@ class Ecp_ReportToEmail_Model_Refund
         $storesId=1;
         $storeId=$storesId;
 
-        if($getdate)
-            $yesterday=$getdate;
-        else
-            $yesterday=date('Y-m-d');
+        if($getdate) {
+            $yesterday = $getdate;
+            $from = $yesterday . "00:00:00";
+            $to = $yesterday . "23:59:59";
 
-        $from = $yesterday."00:00:00";
-        $to = $yesterday."23:59:59";
+        } else {
+
+            $days = 1;
+            $from = date('Y-m-d 00:00:00', strtotime('-' . ($days) . ' days'));
+            $to = date('Y-m-d 23:59:59', strtotime('yesterday'));
+
+            $yesterday=date('Y-m-d', strtotime('yesterday'));
 
 
-        $local_tz = new DateTimeZone('UTC');
-        $local = new DateTime('now', $local_tz);
+        }
 
-        $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',$storeId));
-        $user = new DateTime('now', $user_tz);
 
-        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
-        $localsTime = new DateTime($local->format('Y-m-d H:i:s'));
-
-        $offset = $local_tz->getOffset($local) - $user_tz->getOffset($user);
-
-        $interval = $usersTime->diff($localsTime);
-        if ($offset > 0)
-            $diffZone = $interval->h . ' hours' . ' ' . $interval->i . ' minutes';
-        else
-            $diffZone = '-' . $interval->h . ' hours' . ' ' . $interval->i . ' minutes';
-
-        $from = date("Y-m-d",strtotime("-1 day".$diffZone,strtotime($from)));
-        $to = date("Y-m-d",strtotime("-1 day".$diffZone,strtotime($to)));
+            $diffZone = $this->getDiffTimezone();
+            $to = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($to)));
+            $from = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($from)));
 
         Mage::app()->getStore()->setId($storeId);
 
@@ -71,8 +63,8 @@ class Ecp_ReportToEmail_Model_Refund
         $mailbody .= '.ExternalClass *{line-height:0;}';
         $mailbody .= 'div,p,a,li,td {-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none;-ms-text-size-adjust:none;}';
         $mailbody .= '</style><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-        $mailbody.=$this->getCollectionHtmlTable('sales/report_refunded_collection_refunded',$from,$to,$storesId);
-        $mailbody.=$this->getCollectionHtmlTable('sales/report_refunded_collection_order',$from,$to,$storesId);
+        $mailbody.=$this->getCollectionHtmlTable('sales/report_refunded_collection_refunded',$yesterday,$yesterday,$storesId);
+        $mailbody.=$this->getCollectionHtmlTable('sales/report_refunded_collection_order',$yesterday,$yesterday,$storesId);
 
 
          if($show) {
@@ -92,24 +84,27 @@ class Ecp_ReportToEmail_Model_Refund
 
         $date = Mage::getModel('core/date')->date('Ymd');
 
-        $name1 = "Order_Refund_Report_By_Order_date_".$date.".csv";
-         $mail->createAttachment(
-        file_get_contents($this->getReportCSV($from,$to,"orderdate")),
-        Zend_Mime::TYPE_OCTETSTREAM,
-        Zend_Mime::DISPOSITION_ATTACHMENT,
-        Zend_Mime::ENCODING_BASE64,
-        $name1
-         );
+        if($this->getReportCSV($from,$to,"orderdate")) {
+            $name1 = "Order_Refund_Report_By_Order_date_" . $date . ".csv";
+            $mail->createAttachment(
+                file_get_contents($this->getReportCSV($from, $to, "orderdate")),
+                Zend_Mime::TYPE_OCTETSTREAM,
+                Zend_Mime::DISPOSITION_ATTACHMENT,
+                Zend_Mime::ENCODING_BASE64,
+                $name1
+            );
+        }
 
-
-        $name2 = "Order_Refund_Report_By_Refund_date_".$date.".csv";
-        $mail->createAttachment(
-            file_get_contents($this->getReportCSV($from,$to,"refunddate")),
-            Zend_Mime::TYPE_OCTETSTREAM,
-            Zend_Mime::DISPOSITION_ATTACHMENT,
-            Zend_Mime::ENCODING_BASE64,
-            $name2
-        );
+        if($this->getReportCSV($from,$to,"refunddate")) {
+            $name2 = "Order_Refund_Report_By_Refund_date_" . $date . ".csv";
+            $mail->createAttachment(
+                file_get_contents($this->getReportCSV($from, $to, "refunddate")),
+                Zend_Mime::TYPE_OCTETSTREAM,
+                Zend_Mime::DISPOSITION_ATTACHMENT,
+                Zend_Mime::ENCODING_BASE64,
+                $name2
+            );
+        }
         $mail->setBodyHtml($mailbody)
             ->setSubject($website->getName() . ': Daily Sales Refund Report for ' . $yesterday)
             ->addTo($emails)
@@ -119,7 +114,7 @@ class Ecp_ReportToEmail_Model_Refund
 
                 $mail->send();
                 $this->add_log("mail sent");
-            
+
 
 
         } catch (Mage_Core_Exception $e) {
@@ -205,12 +200,20 @@ class Ecp_ReportToEmail_Model_Refund
         $io->open(array("path" => $folderPath));
         $csv = new Varien_File_Csv();
 
-        $data=array_merge($this->getHeader(),$this->getData($from,$to,$by));
-
-        $csv->saveData($filepath, $data);
 
 
-        return $filepath;
+        $data=$this->getData($from,$to,$by);
+        if(count($data)) {
+            $data = array_merge($this->getHeader(), $data);
+
+            $csv->saveData($filepath, $data);
+            return $filepath;
+        }
+        else
+        {
+            return false;
+        }
+
 
     }
 
@@ -219,9 +222,9 @@ class Ecp_ReportToEmail_Model_Refund
         try {
 
         if($by=="orderdate")
-            $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL";
+            $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1";
         else
-          $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL";
+          $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1";
 
 
         $resource = Mage::getSingleton('core/resource');
@@ -229,7 +232,15 @@ class Ecp_ReportToEmail_Model_Refund
 
         $results = $readConnection->fetchAll($query);
 
-        return $results;
+            foreach ($results as $rs)
+            {
+                $rs['order_date']=$this->formatDate($rs['order_date']);
+                $rs['memo_date']=$this->formatDate($rs['memo_date']);
+
+                $data[]=$rs;
+            }
+
+        return $data;
 
         }
         catch (Exception $e)
@@ -243,6 +254,36 @@ class Ecp_ReportToEmail_Model_Refund
          return array(array(1=>"Order Date",2=>"Credit Memo Date",3=>"Order No",4=>"Order Total",5=>"Refund Amount",6=>"Online Refund",7=>"Offline Refund",8=>"Customer Id",9=>"Customer Email"));
     }
 
+
+
+    public function getDiffTimezone()
+    {
+
+        $local_tz = new DateTimeZone('UTC');
+        $local = new DateTime('now', $local_tz);
+
+
+        $user_tz = new DateTimeZone(Mage::getStoreConfig('general/locale/timezone',1));
+        $user = new DateTime('now', $user_tz);
+
+        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
+        $localsTime = new DateTime($local->format('Y-m-d H:i:s'));
+        $offset = $local_tz->getOffset($local) - $user_tz->getOffset($user);
+        $interval = $usersTime->diff($localsTime);
+
+        if($offset > 0)
+            return  $diffZone=$interval->h .' hours'.' '. $interval->i .' minutes';
+        else
+            return  $diffZone= '-'.$interval->h .' hours'.' '. $interval->i .' minutes';
+
+    }
+
+    public function  formatDate($date)
+    {
+        $diffZone="-".$this->getDiffTimezone();
+        return date('Y-m-d h:i:s a', strtotime($diffZone,strtotime($date)));
+
+    }
 
 
 
