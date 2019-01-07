@@ -1516,6 +1516,7 @@ ul#narrow-by-list li.filtru-price {max-width: 100% !important;}
   text-transform: uppercase;
     border-top: 1px solid #ccc;
   padding-top: 10px;
+      background: #505152;
 	}
 
 	.navbar-brand>img {
