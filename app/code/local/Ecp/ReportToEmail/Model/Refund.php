@@ -181,7 +181,7 @@ class Ecp_ReportToEmail_Model_Refund
         return '<th style="border:1px solid black;padding: 5px 20px;background-color: #0A263C;color: white;font-family:Arial;font-size: 14px;text-transform: uppercase;">'.$text.'</th>';
     }
 
-    public function getReportCSV($from,$to,$by)
+    public function getReportCSV($from,$to,$by,$status=null)
     {
 
         $date=date('Ymd');
@@ -196,7 +196,7 @@ class Ecp_ReportToEmail_Model_Refund
 
 
 
-        $data=$this->getData($from,$to,$by);
+        $data=$this->getData($from,$to,$by,$status);
         if(count($data)) {
             $data = array_merge($this->getHeader(), $data);
 
@@ -211,15 +211,33 @@ class Ecp_ReportToEmail_Model_Refund
 
     }
 
-    public function getData($from,$to,$by)
+    public function getData($from,$to,$by,$status=null)
     {
         try {
 
         if($by=="orderdate")
-            $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1";
+            $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1";
         else
-          $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1";
+          $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1";
 
+
+        if(count($status))
+        {
+            $query.=" AND (";
+
+            $i=1;
+            foreach ($status as $st)
+            {
+                if($i>1)
+                    $query.=" OR ord.state = '{$st}' ";
+                else
+                    $query.=" ord.state = '{$st}' ";
+
+                $i++;
+            }
+
+            $query.=")";
+        }
 
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
@@ -245,7 +263,7 @@ class Ecp_ReportToEmail_Model_Refund
 
     public function getHeader()
     {
-         return array(array(1=>"Order Date",2=>"Credit Memo Date",3=>"Order No",4=>"Order Total",5=>"Refund Amount",6=>"Online Refund",7=>"Offline Refund",8=>"Customer Id",9=>"Customer Email"));
+         return array(array(1=>"Order Date",2=>"Credit Memo Date",3=>"Order No",4=>"Order Total",5=>"Refund Amount",6=>"Online Refund",7=>"Offline Refund",8=>"Customer Id",9=>"Customer Email",10=>"Customer Group",11=>"Order Status"));
     }
 
 
@@ -277,6 +295,31 @@ class Ecp_ReportToEmail_Model_Refund
         $diffZone="-".$this->getDiffTimezone();
         return date('Y-m-d h:i:s a', strtotime($diffZone,strtotime($date)));
 
+    }
+
+    public function getReport($post)
+    {
+
+        $to=$post['to_date'];
+        $from=$post['from_date'];
+        $by=$post['order_type'];
+        $order_statuses=$post['order_statuses'];
+
+
+        $diffZone = $this->getDiffTimezone();
+        $to = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($to)));
+        $from = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($from)));
+
+
+
+        if($this->getReportCSV($from,$to,$by,$order_statuses))
+        {
+           return array("is_create"=>true,"value"=>$this->getReportCSV($from,$to,$by,$order_statuses));
+        }
+        else
+        {
+            return array("is_create"=>false);
+        }
     }
 
 
