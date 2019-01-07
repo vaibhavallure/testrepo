@@ -33,6 +33,10 @@ body {
 	  color: #000;
 }
 
+body > .container-fluid {
+  background-color: #000;
+}
+
 iframe {
     max-width: 100%;
 }
