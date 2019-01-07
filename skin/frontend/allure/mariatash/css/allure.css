@@ -885,7 +885,12 @@ ul.homepage-banner li div {
   overflow: hidden;
 }
 .navbar-inverse {
-	background: #505152;
+  background: #505152;
+  background-image: url('../images/bg-header.png');
+  background-repeat: repeat-x;
+  background-color: transparent;
+
+
 }
 .navbar-inverse .navbar-toggle {
   border-color: #505152;
