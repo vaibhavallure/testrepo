@@ -902,8 +902,13 @@ ul.homepage-banner li div {
     background: #505152;
   box-shadow: none;
 }
+
 .navbar .navbar-toggle {
   border: none;
+}
+.header-container .navbar-inverse .navbar-toggle:focus,.header-container .navbar-inverse .navbar-toggle:hover
+{
+  background: transparent;
 }
 
 .nav ul.dropdown-menu li.first {
