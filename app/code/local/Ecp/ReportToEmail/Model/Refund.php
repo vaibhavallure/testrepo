@@ -132,7 +132,7 @@ $mailbody.='</table><br><br>';
 
         $mailbody.='</table>';
 
-      // echo $mailbody;
+        echo $mailbody;
 
         $mail = new Zend_Mail();
 
