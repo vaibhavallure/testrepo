@@ -222,9 +222,9 @@ class Ecp_ReportToEmail_Model_Refund
         try {
 
         if($by=="orderdate")
-            $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1";
+            $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,IFNULL(ord.base_total_online_refunded,0) as base_total_online_refunded,IFNULL(ord.base_total_offline_refunded,0) as base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1 GROUP BY memo.order_id";
         else
-          $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,ord.base_total_online_refunded,ord.base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1";
+          $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total,ord.base_total_refunded,IFNULL(ord.base_total_online_refunded,0) as base_total_online_refunded,IFNULL(ord.base_total_offline_refunded,0) as base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1 GROUP BY memo.order_id";
 
 
         if(count($status))
@@ -245,18 +245,26 @@ class Ecp_ReportToEmail_Model_Refund
             $query.=")";
         }
 
+
+
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
 
         $results = $readConnection->fetchAll($query);
 
+
+
             foreach ($results as $rs)
             {
                 $rs['order_date']=$this->formatDate($rs['order_date']);
                 $rs['memo_date']=$this->formatDate($rs['memo_date']);
-
+                $rs['base_grand_total']="$".round($rs['base_grand_total'],2);
+                $rs['base_total_refunded']="$".round($rs['base_total_refunded'],2);
+                $rs['base_total_online_refunded']="$".round($rs['base_total_online_refunded'],2);
+                $rs['base_total_offline_refunded']="$".round($rs['base_total_offline_refunded'],2);
                 $data[]=$rs;
             }
+           
 
         return $data;
 
