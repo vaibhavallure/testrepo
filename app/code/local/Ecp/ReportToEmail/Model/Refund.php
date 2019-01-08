@@ -17,6 +17,7 @@ class Ecp_ReportToEmail_Model_Refund
     public function sendReport($getdate=null,$mail=false)
     {
 
+
         $this->add_log("script run");
 
         $currentDate22 = Mage::app()->getLocale()->date();
@@ -80,11 +81,11 @@ class Ecp_ReportToEmail_Model_Refund
         $mailbody = '<style type="text/css">';
         $mailbody .= '.ExternalClass *{line-height:0;}';
         $mailbody .= 'div,p,a,li,td {-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none;-ms-text-size-adjust:none;}';
-        $mailbody .= 'table,tr,td,th{
+        /*$mailbody .= 'table,tr,td,th{
         border:1px solid black;
         border-collapse:collapse;
         padding: 5px 10px;
-        }';
+        }';*/
 
         $resourceCollection = Mage::getResourceModel('sales/report_refunded_collection_refunded')
             ->setPeriod('day')
@@ -93,9 +94,9 @@ class Ecp_ReportToEmail_Model_Refund
 
 
         $mailbody .= '</style><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-        $mailbody .= '<table>';
+        $mailbody .= '<table style="border:1px solid black;border-collapse: collapse;">';
         $mailbody .= '<caption>REFUND REPORT BY REFUND DATE</caption>';
-        $mailbody .= '<tr><th>Period</th><th>Orders Count</th><th>Refunded</th><th>Online Refunded</th><th>Offline Refunded</th></tr>';
+        $mailbody .= $this->tr($this->th("Period")."".$this->th("Orders Count")."".$this->th("Refunded")."".$this->th("Online Refunded")."".$this->th("Offline Refunded"));
 
 
         foreach ($resourceCollection as $rs) {
@@ -104,7 +105,9 @@ class Ecp_ReportToEmail_Model_Refund
         $refundOffline=($data["offline_refunded"])? $data["offline_refunded"] : "0";
 
     /* period,orders_count,refunded,online_refunded,offline_refunded       */
-            $mailbody .= '<tr><th>'.$data["period"].'</th><th>'.$data["orders_count"].'</th><th>'.$symbol.round($data["refunded"],2).'</th><th>'.$symbol.round($refundOnline,2).'</th><th>'.$symbol.round($refundOffline,2).'</th></tr>';
+          //  $mailbody .= '<tr><th>'.$data["period"].'</th><th>'.$data["orders_count"].'</th><th>'.$symbol.round($data["refunded"],2).'</th><th>'.$symbol.round($refundOnline,2).'</th><th>'.$symbol.round($refundOffline,2).'</th></tr>';
+            $mailbody .= $this->tr($this->td($data["period"])."".$this->td($data["orders_count"])."".$this->td($symbol.round($data["refunded"],2))."".$this->td($symbol.round($refundOnline,2))."".$this->td($symbol.round($refundOffline,2)));
+
         }
 
 $mailbody.='</table><br><br>';
@@ -116,9 +119,9 @@ $mailbody.='</table><br><br>';
             ->setDateRange($from, $to)
             ->addStoreFilter($storesId);
 
-        $mailbody .= '<table>';
+        $mailbody .= '<table style="border:1px solid black;border-collapse: collapse;">';
         $mailbody .= '<caption>REFUND REPORT BY ORDER DATE</caption>';
-        $mailbody .= '<tr><th>Period</th><th>Orders Count</th><th>Refunded</th><th>Online Refunded</th><th>Offline Refunded</th></tr>';
+        $mailbody .= $this->tr($this->th("Period")."".$this->th("Orders Count")."".$this->th("Refunded")."".$this->th("Online Refunded")."".$this->th("Offline Refunded"));
 
         foreach ($resourceCollection1 as $rs) {
             $data=$rs->getData();
@@ -126,7 +129,8 @@ $mailbody.='</table><br><br>';
             $refundOffline=($data["offline_refunded"])? $data["offline_refunded"] : "0";
 
             /* period,orders_count,refunded,online_refunded,offline_refunded       */
-            $mailbody .= '<tr><th>'.$data["period"].'</th><th>'.$data["orders_count"].'</th><th>'.$symbol.round($data["refunded"],2).'</th><th>'.$symbol.round($refundOnline,2).'</th><th>'.$symbol.round($refundOffline,2).'</th></tr>';
+       $mailbody .= $this->tr($this->td($data["period"])."".$this->td($data["orders_count"])."".$this->td($symbol.round($data["refunded"],2))."".$this->td($symbol.round($refundOnline,2))."".$this->td($symbol.round($refundOffline,2)));
+
         }
 
 
@@ -162,5 +166,19 @@ $mailbody.='</table><br><br>';
 
     }
 
+    public function tr($text)
+    {
+         return '<tr style="box-shadow: 2px 2px 8px gray">'.$text.'</tr>';
+    }
 
+    public function td($text)
+    {
+        return '<td style="border:1px solid black;text-align: center;padding: 10px;">'.$text.'</td>';
+    }
+
+    public function th($text)
+    {
+        return '<th style="border:1px solid black;padding: 5px 20px;background-color: #0A263C;color: white;font-family:Arial;font-size: 14px;text-transform: uppercase;">'.$text.'</th>';
+    }
 }
+
