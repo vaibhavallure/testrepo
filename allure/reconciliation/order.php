@@ -187,7 +187,7 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
 
 
             $quoteItem->setStoreId(1);
-
+            $quoteItem->setOtherSysQty($item['qty']);
             $quoteObj->addItem($quoteItem);
             $productObj = null;
 
@@ -386,8 +386,8 @@ function createInvoice($increment_number)
             {
                 $orderObj->setBaseTotalInvoiced($amount);
             }
-            $orderObj->setData('state', "processing")
-                ->setData('status', "processing");
+            $orderObj->setData('state', Mage_Sales_Model_Order::STATE_COMPLETE)
+                ->setData('status',Mage_Sales_Model_Order::STATE_COMPLETE);
             $orderObj->save();
       return $invoiceNumber;
         }
