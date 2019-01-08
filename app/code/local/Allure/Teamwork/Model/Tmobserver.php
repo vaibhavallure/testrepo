@@ -931,6 +931,13 @@ class Allure_Teamwork_Model_Tmobserver{
                                     $invoice->setBaseTaxAmount(0);
                                 }else{
                                     //$amount = $orderObj->getGrandTotal();
+                                    $invoice->setBaseGrandTotal($amount);
+                                    $invoice->setGrandTotal($amount);
+                                    $invoice->setSubtotalInclTax($amount);
+                                    $invoice->setSubtotal($amount);
+                                    $invoice->setSubtotal($amount);
+                                    $invoice->setTaxAmount(0);
+                                    $invoice->setBaseTaxAmount(0);
                                 }
                             }
                             
