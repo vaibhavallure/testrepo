@@ -20,11 +20,7 @@ class Ecp_ReportToEmail_Model_Refund
 
         $this->add_log("script run");
 
-        $currentDate22 = Mage::app()->getLocale()->date();
-        $date22 = $currentDate22->subHour(25);
-        Mage::getResourceModel('sales/report_refunded')->aggregate($date22);
-
-
+    
 
         $emails = trim(Mage::getStoreConfig('report/refund_report/emails'));
         if (! $emails)
