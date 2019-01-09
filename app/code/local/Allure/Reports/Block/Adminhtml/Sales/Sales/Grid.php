@@ -200,7 +200,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             ->getCollection(); */
         $collection = Mage::getModel('sales/order')->getCollection();
         
-        $subquery = new Zend_Db_Expr("(SELECT parent_id FROM sales_flat_order_payment GROUP BY parent_id )");
+        $subquery = new Zend_Db_Expr("(SELECT * FROM sales_flat_order_payment GROUP BY parent_id )");
         $collection->getSelect()->join(array("payment" => $subquery),
             "main_table.entity_id = payment.parent_id");
         
@@ -261,18 +261,31 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         }
 
         if(!empty($card_types)){
+
+
+          /*  var_dump($card_types);
+
+            die;
             $card_types = explode(",", $card_types);
-           /*  $str='';
+             $str='';
             $te = array();
             foreach ($card_types as $card){
                 // $str = "'like " . '%"cc_type";s:2:"VI"%';
-               // $te[] ="'". '%"cc_type";s:2:'.'"'.$card.'"%'."'";
+                $te[] ="'". '%"cc_type";s:2:'.'"'.$card.'"%'."'";
                 $te[] ="'$card'";
             }
-            $str = implode(",", $te);
-            $collection->getSelect()->where("cc_type IN ".array($str)); */
+            $str = implode(",", $te);*/
 
-            $collection = $collection->addFieldToFilter("payment.cc_type",array("in"=>$card_types));
+
+            $temp = explode(",",$card_types);
+            $card_types = "'" . implode ( "', '", $temp ) . "'";
+
+
+            $collection->getSelect()->where("payment.cc_type IN (".$card_types.")");
+
+
+
+            //$collection = $collection->addFieldToFilter("payment.cc_type",array("in"=>$card_types));
         }
 
         
@@ -334,6 +347,11 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->columns('sum(IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0)) total_discount_amount_actual')
                      ->where($condition);
                    // echo $collection->getSelect();
+
+       
+
+
+
         $this->setCollection($collection);
         //echo $collection->getSelect();
         return parent::_prepareCollection();
