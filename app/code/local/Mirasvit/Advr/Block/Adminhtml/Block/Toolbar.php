@@ -135,6 +135,30 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Toolbar extends Mage_Adminhtml_Block_T
             ),
             'label' => Mage::helper('advr')->__('Frontend/Backend Order'),
         ));
+//
+        $form->addField('create_order_method', 'select', array(
+            'name' => 'create_order_method',
+            'values' => array(
+                array(
+                    'value' => 0,
+                    'label' => ''
+                ),
+                array(
+                    'value' => 1,
+                    'label' => 'Website'
+                ),
+                array(
+                    'value' => 2,
+                    'label' => 'Counterpoint'
+                ),
+                array(
+                    'value' => 3,
+                    'label' => 'Teamwork'
+                )
+            ),
+            'label' => Mage::helper('advr')->__('Order Created In '),
+        ));
+
 
         if ($this->getSalesSourceVisibility()) {
             $note = Mage::helper('advr')->__('Report columns may differ for different options.');
