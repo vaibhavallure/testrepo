@@ -300,7 +300,7 @@ class Mirasvit_Advr_Block_Adminhtml_Block_Container extends Mage_Adminhtml_Block
                     foreach ($savedData as $key => $value) {
                         // set filters stored in cookies
                         if (!isset($data[$key])
-                            && in_array($key, array('interval', 'from', 'to', 'range', 'remote_ip', 'sales_source'))
+                            && in_array($key, array('interval', 'from', 'to', 'range', 'remote_ip','create_order_method', 'sales_source'))
                         ) {
                             $data[$key] = $value;
                         }
