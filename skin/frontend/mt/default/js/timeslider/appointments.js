@@ -6,7 +6,7 @@ var count = 1;
      count++;
      document.getElementById("count").value = count;
      //jQuery("#pick_ur_time_div").empty();
- 
+
      	
 	//ajax start to pass the selected date to get the time     
    /* var todaysDate = document.getElementById("datepicker-13_hidden").value;
