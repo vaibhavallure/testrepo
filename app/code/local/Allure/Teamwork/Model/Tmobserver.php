@@ -116,6 +116,24 @@ class Allure_Teamwork_Model_Tmobserver{
             
             $this->addLog("count - ".count($responseArr));
             $ordCnt = 0;
+            
+            $local_tz = new DateTimeZone('UTC');
+            $local = new DateTime('now', $local_tz);
+            $timezone = "America/New_York";
+            $user_tz = new DateTimeZone($timezone);
+            $user = new DateTime('now', $user_tz);
+            $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
+            $localsTime = new DateTime($local->format('Y-m-d H:i:s'));
+            $offset = $local_tz->getOffset($local) - $user_tz->getOffset($user);
+            $interval = $usersTime->diff($localsTime);
+            if($offset > 0){
+                $diffZone = $interval->h .' hour'.' '. $interval->i .' minute';
+            }else{
+                $diffZone = '-'.$interval->h .' hour'.' '. $interval->i .' minute';
+            }
+            
+            $this->addLog("Timezone Offset - ".$diffZone);
+            
             foreach ($responseArr as $object){
                 $ordCnt++;
                 $receiptId = $object["order_detail"]["ReceiptId"];
@@ -131,7 +149,7 @@ class Allure_Teamwork_Model_Tmobserver{
                         $this->addLog("TMID :".$receiptId." data added");
                     }
                     $responseArr = array($object);
-                    $this->createOrder($responseArr);
+                    $this->createOrder($responseArr , $diffZone);
                 }catch (Exception $ee){
                     $this->addLog("01 - Exc - ".$ee->getMessage());
                 }
@@ -143,7 +161,7 @@ class Allure_Teamwork_Model_Tmobserver{
         
     }
     
-    public function createOrder($responseArr){
+    public function createOrder($responseArr , $diffZone){
         /* if(!$responseArr){
             return ;
         } */
@@ -181,6 +199,8 @@ class Allure_Teamwork_Model_Tmobserver{
             
             $receiptId = $orderDetails["ReceiptId"];
             
+            $receiptNum = $extaDetails["ReceiptNum"];
+            
             $websiteId = 1;
             $storeId   = 1;
             
@@ -188,7 +208,7 @@ class Allure_Teamwork_Model_Tmobserver{
                 $email = $customerDetails["EMail1"] ? $customerDetails["EMail1"] :$customerDetails["EMail2"];
                 $email = trim($email);
                 
-                /* $newEmail = "";
+                $newEmail = "";
                 if(empty($email)){
                     $email = $orderDetails["EmailAddress"];
                     if(empty($email)){
@@ -203,10 +223,11 @@ class Allure_Teamwork_Model_Tmobserver{
                         }else{
                             $newEmail = $oldStoreNameArr[$extaDetails["LocationCode"]];
                         }
-                        $email = $newEmail . $receiptId . "@customers.mariatash.com";
+                        $email = $newEmail . $receiptNum . "@customers.mariatash.com";
                     }
                     $email = strtolower(trim($email));
-                } */
+                    $this->addLog("New Email -: ".$email);
+                }
                 
                 
                 $customer = Mage::getModel('customer/customer')
@@ -228,8 +249,17 @@ class Allure_Teamwork_Model_Tmobserver{
                     //set temp session for create teamwork customer
                     Mage::getSingleton("core/session")->setIsTeamworkCustomer(1);
                     
-                    $createdAtArr = explode(".", trim($customerDetails["RecModified"]));
-                    $createdAt = $createdAtArr[0];
+                    $recordDate = trim($customerDetails["RecModified"]);
+                    if(!$recordDate){
+                        $recordDate = trim($orderDetails["StateDate"]);
+                    }
+                    
+                    $createdAtArr = explode(".", $recordDate);
+                    $customerTimeDate = strtotime($createdAtArr[0]);
+                    $customerDate = strtotime($diffZone, $customerTimeDate);
+                    $createdAt = date('Y-m-d H:i:s', $customerDate);
+                    
+                    //$createdAt = $createdAtArr[0];
                     $group = ($customerDetails["CustomFlag1"]) ? 2 : 1;
                     
                     $firstName = ($customerDetails["FirstName"]) ? $customerDetails["FirstName"] : "Pos";
@@ -326,7 +356,7 @@ class Allure_Teamwork_Model_Tmobserver{
                 continue;
             }
             
-            $email = trim($orderDetails["EmailAddress"]);
+            //$email = trim($orderDetails["EmailAddress"]);
             if(empty($email)){
                 $this->addLog("Email Id is Empty.ReceiptId - ".$receiptId);
                 continue;
@@ -730,7 +760,7 @@ class Allure_Teamwork_Model_Tmobserver{
                         } */
                         $createAtOtherStr = explode(".", trim($orderDetails["StateDate"]));
                         $timeDate = strtotime($createAtOtherStr[0]);
-                        $orderDate = strtotime("{$calculatedOffset} hour", $timeDate);
+                        $orderDate = strtotime($diffZone, $timeDate);
                         $newCreateAt = date('Y-m-d H:i:s', $orderDate);
                         $orderObj->setCreatedAt($newCreateAt);
                     }
