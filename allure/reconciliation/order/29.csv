@@ -1,0 +1,10 @@
+,Time,Till,Transaction,Operator No,Employee,Customer No,Item,Comment,Retail Value,Sales,Promotion Amount,Discount %,Discretionary Discount,Quantity,M. Order No.
+1,17:55:52,68,97980,903003,Beard Rosa,,505486538822,,15,15,,,,1,
+,17:55:52,68,97980,903003,Beard Rosa,,505486538823,x3dtrd wg,400,400,,,,2,
+,17:55:52,68,97980,903003,Beard Rosa,,505486538823,xet5d wg,328,328,,,,1,
+,17:55:52,68,97980,903003,Beard Rosa,,505486583757,,40,40,,,,2,
+1/29/2018,Transaction 97980 Total,,,,,,,,783,783,,,,6,,EB-97980,ORDER:1,AL201818887
+2,11:25:57,92,105991,903306,Dineen Zach,,505486538823,titanium nipple bar,50,50,,,,1,
+1/29/2018,Transaction 105991 Total,,,,,,,,50,50,,,,1,,EB-105991,ORDER:2,AL201818888
+3,16:33:20,92,106025,903434,Maulini Mattia,859991,505486538823,xr65 yg,200,160,,-0.2,,2,
+1/29/2018,Transaction 106025 Total,,,,,,,,200,160,,,,2,,EB-106025,ORDER:3,AL201818889
