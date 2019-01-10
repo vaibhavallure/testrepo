@@ -14,12 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $fileName = $_GET['filename'];
 //var_dump($fileName);die;
 
+//$dir = Mage::getBaseDir("var") . DS ."tw-mag-report/";
+$dir = "";
+
 const BASE_URL = "https://login.salesforce.com";
 const OAUTH_URL = "/services/oauth2/token?";
 const QUERY_URL = "/services/data/v43.0/query?q=SELECT+Increment_Id__c,Created_At__c,Grant_Total__c+FROM+Order+WHERE+";
 
 
-$filterIncrementIds = rtrim(buildIncrentIdForQuery($fileName), ',');
+$filterIncrementIds = rtrim(buildIncrentIdForQuery($dir.$fileName), ',');
 //var_dump($filterIncrementIds);
 //echo var_dump(refreshToken());die;
 $responseArr = refreshToken();
@@ -31,12 +34,12 @@ $queryUrl = QUERY_URL . $filterIncrementIds;
 $res = sendRequest($queryUrl, "GET", null, $responseArr);
 //var_dump($res);die;
 $sfFilename = $date . '-sf' . '.csv';
-$fp = fopen($sfFilename, 'w');
+$fp = fopen($dir.$sfFilename, 'w');
 
 foreach ($res['records'] as $r) {
     //echo '<pre>';
     //print_r($r);
-    $date = new DateTime(substr($r['Created_At__c'], 0, sizeof($str) - 9));
+    $date = new DateTime(substr($r['Created_At__c'], 0, sizeof($r['Created_At__c']) - 9));
     $date->setTimezone(new DateTimeZone('America/New_York')); // +04
     $convertedDate = $date->format('Y-m-d H:i:s');
     fwrite($fp, $convertedDate . "," . $r['Increment_Id__c'] . "," . $r['Grant_Total__c'] . PHP_EOL);
@@ -46,7 +49,7 @@ fclose($fp);
 header('Content-Type: application/octet-stream');
 header("Content-Transfer-Encoding: Binary");
 header("Content-disposition: attachment; filename=\"" . basename($sfFilename) . "\"");
-readfile($sfFilename);
+readfile($dir.$sfFilename);
 
 /**
  * make api request call to salesforce through curl

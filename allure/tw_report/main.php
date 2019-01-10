@@ -1,4 +1,7 @@
 <?php
+require_once('../../app/Mage.php');
+umask(0);
+Mage::app();
 
 /**
  * Enabling CORS
@@ -28,7 +31,9 @@ if(empty($_POST['date'])){
   $selected_date = $_POST['date'];
 }
 
-$fp = fopen($selected_date.'.csv', 'a');
+$dir = "";
+//print_r($dir);die;
+$fp = fopen($dir.$selected_date.'.csv', 'a');
 
 
 /**
@@ -39,6 +44,7 @@ writeCSV($selected_date."%2015:00:00",$selected_date."%2017:00:00",$fp);
 writeCSV($selected_date."%2017:00:00",$selected_date."%2023:59:59",$fp);
 fclose($fp);
 
+print $dir.$selected_date.'.csv';
 die;
 
 /**
