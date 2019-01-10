@@ -86,8 +86,21 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                     if(formAlreadySubmitted){ 
                         e.preventDefault(); 
                         return false; 
-                     } 
-                   
+                     }
+
+
+                var app_date=jQuery("#datepicker-13_hidden").val();
+                var app_starttime=jQuery("#starttime_hidden").val();
+                var app_endtime=jQuery("#endtime_hidden").val();
+                var no_pepole=jQuery(".pierqtyTxt").val();
+                var store=jQuery(".storeLocDiv p b").html();
+
+
+                var response = confirm("Confirm Your Booking Date:"+app_date+" From "+app_starttime+" To "+app_endtime+" For "+no_pepole+" People In "+store+" store");
+                if (response == false) {
+                    return false;
+                }
+
                 var submitChildren = jQuery(this).find('input[type=submit]'); 
                 submitChildren.attr('disabled', 'disabled'); 
                 submitChildren.addClass('disabled'); 
@@ -98,5 +111,4 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
      
     //]]>
 </script>
-
 
