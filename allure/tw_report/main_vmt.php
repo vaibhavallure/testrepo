@@ -1,4 +1,7 @@
 <?php
+require_once('../../app/Mage.php');
+umask(0);
+Mage::app();
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
@@ -14,8 +17,10 @@ header('Content-Type: *');
 $fileName = $_GET['filename'];
 //var_dump($fileName);die;
 
+//$dir = Mage::getBaseDir("var") . DS ."tw-mag-report/";
+$dir = "";
 /* get all increment id's from file for filtering*/
-$filterIncrementIds = rtrim(buildIncrentId($fileName), ',');
+$filterIncrementIds = rtrim(buildIncrentId($dir.$fileName), ',');
 
 // Create the SoapClient instance
 $url = "https://www.mariatash.com/api/v2_soap?wsdl=1";
@@ -61,8 +66,8 @@ foreach ($salesOrderResult as $orderArray) {
  */
 header('Content-Type: application/octet-stream');
 header("Content-Transfer-Encoding: Binary");
-header("Content-disposition: attachment; filename=\"" . basename($fileName) . "\"");
-readfile($fileName);
+header("Content-disposition: attachment; filename=\"" . basename($dir.$fileName) . "\"");
+readfile($dir.$fileName);
 
 
 /**
