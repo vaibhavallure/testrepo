@@ -1697,6 +1697,19 @@ class Mirasvit_Advr_Model_Report_Sales extends Mirasvit_Advr_Model_Report_Abstra
                     break;
             }
         }
+        if($this->filterData->getCreateOrderMethod()){
+            switch ($this->filterData->getCreateOrderMethod()) {
+                case 1:
+                    $conditions[] = ' (sales_order_table.create_order_method = 0) ';
+                    break;
+                case 2;
+                    $conditions[] = ' (sales_order_table.create_order_method = 1) ';
+                    break;
+                case 3;
+                    $conditions[] = ' (sales_order_table.create_order_method = 2) ';
+                    break;
+            }
+        }
 
         if ($joinSalesOrder) {
             $this->joinRelatedDependencies('sales/order');
