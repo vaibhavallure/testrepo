@@ -839,8 +839,6 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 
     public function validateSlotBeforeBookAppointment($data)
     {
-        return true;
-
         $collection = Mage::getModel('appointments/appointments')->getCollection();
         $collection->addFieldToFilter('piercer_id', array('eq' => $data['piercer_id']));
         $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
