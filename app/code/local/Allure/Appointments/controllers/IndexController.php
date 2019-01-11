@@ -260,8 +260,9 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
 
                 if($this->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
-                    Mage::getSingleton("core/session")->addError("Sorry This Slot Has Already Taken. Please Select Another Slot.");
-                    $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Already Taken. Please Select Another Slot ",$post_data),"save");
+                   // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
+                    $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Been Already Taken. Please Select Another Slot ",$post_data),"save");
+                    Mage::getSingleton('core/session')->setSlotInvalid("true");
                     $this->_redirectReferer().$appendUrl;
                     return;
                 }
@@ -838,6 +839,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 
     public function validateSlotBeforeBookAppointment($data)
     {
+        return true;
+
         $collection = Mage::getModel('appointments/appointments')->getCollection();
         $collection->addFieldToFilter('piercer_id', array('eq' => $data['piercer_id']));
         $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
