@@ -349,7 +349,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<div   style="border-top: 3px solid white; text-align: center;float:left;background-color:#374254">';
                 $mailbody .= '<table width="300"  data-store_id="'.$storeId.'" style="border:1px solid white;" cellpadding="7" >';
                 $mailbody .= '<tbody>';
-                $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>'.$storeObj->getName().'</strong></u></span></span></td></tr>';
+             //   $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>'.$storeObj->getName().'</strong></u></span></span></td></tr>';
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Orders</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['orders_count'] . ''.$this->getArrow($data2['orders_count'],$data['orders_count'],false,'orders_count').'</span></span></td>';
@@ -361,7 +361,7 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-                $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Refunds</strong></u></span></span></td></tr>';
+             //   $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Refunds</strong></u></span></span></td></tr>';
 
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Number Of Refunds</strong></span></span></span></td>';
@@ -376,7 +376,7 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-                $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Discounts</strong></u></span></span></td></tr>';
+               // $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Discounts</strong></u></span></span></td></tr>';
 
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Number Of Discounts</strong></span></span></span></td>';
