@@ -338,6 +338,8 @@ function getstate(countryValue) {
     }
 
     function isSymbol(event){
+
+        return true;
         var keycode=event.keyCode;
         if(((keycode>=65 && keycode<=90) ||(keycode>=97 && keycode<=122)) || (keycode>=48 && keycode<=57) ||((keycode==64) ||(keycode==46)))
         {
