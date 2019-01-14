@@ -51,6 +51,24 @@ class Allure_Appointments_Helper_Logs extends Mage_Core_Helper_Abstract
 	    $fullPath              = $moduleName."_".$controllerName."_".$actionName;
 	    return $fullPath;
 	}
+
+	/*--------------------------------------------------------------*/
+
+
+	/*Log for customer---------------------------*/
+
+
+   public function addCustomerLog($string,$action)
+   {
+         if(Mage::getStoreConfig('appointments/debug/debug_enabled')):
+
+             if($action=="save")
+                Mage::log($string,Zend_Log::DEBUG,'save_appointment_customer.log',true);
+             else if($action=="modify")
+                Mage::log($string,Zend_Log::DEBUG,'modify_appointment_customer.log',true);
+
+         endif;
+   }
 	
 }
 	 
