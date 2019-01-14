@@ -702,10 +702,13 @@ class Allure_Teamwork_Model_Tmobserver{
                         $orderObj->setBaseSubtotalInclTax($quoteSubTotal);
                     }
                     
+                    $totalAmtTw = trim($orderDetails["TotalAmountWithTax"]);
+                    $totalAmtTax = trim($orderDetails["TAX"]);
+                    
                     $orderObj->setShippingDescription("Store Pickup"); //self::SHIPPING_METHOD_NAME
-                    $orderObj->setGrandTotal($totalAmtT);
-                    $orderObj->setBaseTaxAmount($taxAmmount);
-                    $orderObj->setBaseGrandTotal($totalAmtT);
+                    $orderObj->setGrandTotal($totalAmtTw);
+                    $orderObj->setBaseTaxAmount($totalAmtTax);
+                    $orderObj->setBaseGrandTotal($totalAmtTw);
                     
                     if(strtoupper($otherSysCur) != "MT"){
                         $orderObj->setData('base_currency_code',$otherSysCurCode)
