@@ -454,6 +454,11 @@ class Allure_Teamwork_Model_Tmobserver{
                             $taxPer = round($taxPer,2);
                         }
                         
+                        $discPer = 0;
+                        if($tmProduct["LineExtDiscountAmount"] > 0){
+                            $discPer = ($tmProduct["LineExtDiscountAmount"] * 100) / $origPriceWoutTax;
+                        }
+                        
                         $tmItemId = trim($tmProduct["ReceiptItemId"]);
                         $productArr[$tmItemId] = array(
                             "orig_price_tax" => $origPriceWithTax,
@@ -462,7 +467,8 @@ class Allure_Teamwork_Model_Tmobserver{
                             "tax_per" => $taxPer,
                             "row_total" => $tmProduct["OriginalPriceWithoutTax"],
                             "disc" => $tmProduct["LineExtDiscountAmount"],
-                            "temp_qty" => $tempQty
+                            "temp_qty" => $tempQty,
+                            "disc_per" => $discPer
                         );
                         
                         $price = $origPriceWoutTax;
@@ -638,6 +644,19 @@ class Allure_Teamwork_Model_Tmobserver{
                         $iSku = $item->getTwItemId();//$item->getSku();
                         $taxI = $productArr[$iSku]["tax"];
                         
+                        $disc = $productArr[$iSku]["disc"];
+                        if($disc){
+                            //$disc *= (-1);
+                            $taxDisc = 0;
+                            $productDiscPer = $productArr[$iSku]["disc_per"];
+                            if($productDiscPer){
+                                if(!empty($taxI)){
+                                    $taxDisc = ($productDiscPer * $taxI) / 100;
+                                    $taxI = $taxI - $taxDisc;
+                                }
+                            }
+                        }
+                        
                         $singleTax = $productArr[$iSku]["single_tax"];
                         $rowTotal = $productArr[$iSku]["row_total"];
                         
@@ -676,9 +695,12 @@ class Allure_Teamwork_Model_Tmobserver{
                     $taxAmmount     = $tTax;//$orderDetails['TAX'];
                     $discountAmount = $discountTot;
                     
+                    $totalAmtTw = trim($orderDetails["TotalAmountWithTax"]);
+                    $totalAmtTax = trim($orderDetails["TAX"]);
+                    
                     if(1){
                         $totalAmmount =$totalAmmount + $taxAmmount;
-                        $orderObj->setTaxAmount($taxAmmount);
+                        $orderObj->setTaxAmount($totalAmtTax);
                     }
                     
                     if($wrongDiscount < 0){
@@ -702,10 +724,12 @@ class Allure_Teamwork_Model_Tmobserver{
                         $orderObj->setBaseSubtotalInclTax($quoteSubTotal);
                     }
                     
+                    $this->addLog("Tax amount - ".$totalAmtTax);
+                    
                     $orderObj->setShippingDescription("Store Pickup"); //self::SHIPPING_METHOD_NAME
-                    $orderObj->setGrandTotal($totalAmtT);
-                    $orderObj->setBaseTaxAmount($taxAmmount);
-                    $orderObj->setBaseGrandTotal($totalAmtT);
+                    $orderObj->setGrandTotal($totalAmtTw);
+                    $orderObj->setBaseTaxAmount($totalAmtTax);
+                    $orderObj->setBaseGrandTotal($totalAmtTw);
                     
                     if(strtoupper($otherSysCur) != "MT"){
                         $orderObj->setData('base_currency_code',$otherSysCurCode)
