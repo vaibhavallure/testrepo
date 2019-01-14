@@ -100,6 +100,7 @@ class Allure_AlertServices_Model_Alerts
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
 				$orders = Mage::getModel('sales/order')->getCollection()
 						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
+                          ->addAttributeToFilter('create_order_method',0)
 						  ->addAttributeToSelect('*')
 						  ->setCurPage(1)
 						  ->setPageSize(1)
@@ -108,9 +109,11 @@ class Allure_AlertServices_Model_Alerts
 					if (count($orders)<=0) {
 						$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
+                                        ->addAttributeToFilter('create_order_method',0)
 										->setCurPage(1)
-										->setPageSize(1)
-										->setOrder('main_table.entity_id', 'desc');
+										->setPageSize(1);
+                        $lastOrderDate->getSelect()->order("entity_id desc");
+//										->setOrder('main_table.entity_id', 'desc');
 						$lastDate = $lastOrderDate->getFirstItem()->getCreatedAt();
 						$hourReport = 6;
 						$helper->sendSalesOfEmailAlert($lastDate,$hourReport);
@@ -411,18 +414,22 @@ class Allure_AlertServices_Model_Alerts
 				/*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
 				$orders = Mage::getModel('sales/order')->getCollection()
 						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
+                          ->addAttributeToFilter('create_order_method',0)
 						  ->addAttributeToSelect('*')
 						  ->setCurPage(1)
-						  ->setPageSize(1)
-						  ->setOrder('created_at', 'desc');
+						  ->setPageSize(1);
+                $orders->getSelect()->order("entity_id desc");
+//						  ->setOrder('created_at', 'desc');
 				if ($debug) {
+				    $orderDate = $orders->getFirstItem()->getCreatedAt();
 					echo $orders->getSelect()->__toString();
 					echo "<br>order count : ".count($orders);
 					echo "<br>2 hour for testing for sale<br>";
-					echo "<br>From Date :".$fromDate;
-                    echo "<br>Converted Date :".Mage::getModel('core/date')->date("F j, Y \a\\t g:i a",$fromDate);
+					echo "<br>Order Date :".$orderDate;
+					if($orderDate != null)
+                    echo "<br>Last Order Date :".Mage::getModel('core/date')->date("F j, Y \a\\t g:i a",$orderDate);
 					if(count($orders)>0) {
-                        $helper->sendSalesOfEmailAlert($fromDate, 2);
+                        $helper->sendSalesOfEmailAlert($orderDate, 2);
                     }
 					/*$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
@@ -442,10 +449,13 @@ class Allure_AlertServices_Model_Alerts
 					if (count($orders)<=0) {
 						$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
+                                        ->addAttributeToFilter('create_order_method',0)
 										->setCurPage(1)
-										->setPageSize(1)
-										->setOrder('main_table.entity_id', 'desc');
-						$lastDate = $lastOrderDate->getFirstItem()->getCreatedAt();
+										->setPageSize(1);
+						$lastOrderDate->getSelect()->order("entity_id desc");
+//										->setOrder('entity_id', 'desc');
+
+                        $lastDate = $lastOrderDate->getFirstItem()->getCreatedAt();
 						$hourReport = 2;
 						$helper->sendSalesOfEmailAlert($lastDate,$hourReport);
 					}
