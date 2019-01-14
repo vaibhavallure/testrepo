@@ -44,7 +44,15 @@
     <?php endif; ?>
     <?php if ((float) $_item->getQtyRefunded()): ?>
     <tr>
-        <td><?php echo Mage::helper('sales')->__('Refunded') ?></td>
+        <td>
+        <?php if($_item->getTeamworkReason()):?>
+    		<?php echo Mage::helper('sales')->__($_item->getTeamworkReason()) ?>
+    	<?php elseif($_item->getOtherSysQty() < 0):?>
+        <?php echo Mage::helper('sales')->__('Return') ?>
+        <?php else:?>
+        <?php echo Mage::helper('sales')->__('Refunded') ?>
+        <?php endif;?>
+        </td>
         <td><strong><?php echo $_item->getQtyRefunded()*1 ?></strong></td>
     </tr>
     <?php endif; ?>

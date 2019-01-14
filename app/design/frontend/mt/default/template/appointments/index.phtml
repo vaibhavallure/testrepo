@@ -71,6 +71,14 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 <script type="text/javascript">
     //< ![CDATA[
 
+    <?php
+    if(Mage::getSingleton('core/session')->getSlotInvalid()=="true")
+    {
+        echo "alert('Sorry This Slot Has Been Already Taken. Please Select Another Slot.');";
+        Mage::getSingleton('core/session')->setSlotInvalid("false");
+    }
+
+    ?>
        var myForm = new VarienForm('appointemnet_form', false);
         Validation.add('required-entry-time', "Please Select Time.", function(v) {
             return !Validation.get('IsEmpty').test(v);
@@ -91,6 +99,34 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                         e.preventDefault();
                         return false;
                      }
+
+
+
+                     var app_date=jQuery("#datepicker-13_hidden").val();
+                    var app_starttime=jQuery("#starttime_hidden").val();
+                    var app_endtime=jQuery("#endtime_hidden").val();
+                    var no_pepole=jQuery(".pierqtyTxt").val();
+                    var store=jQuery(".storeLocDiv p b").html();
+
+                if(no_pepole<1) {
+                    alert("Please select number of people first");
+                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+                    jQuery("#count").focus();
+                return false;
+                }
+
+                if(no_pepole==1)
+                    var p="person";
+                else
+                    var p="people";
+
+
+
+                var response = confirm("Confirm your booking date:"+app_date+" from "+app_starttime+" to "+app_endtime+" for "+no_pepole+" "+p+" in "+store+" store");
+                if (response == false) {
+                    return false;
+                }
+
 
                 var submitChildren = jQuery(this).find('input[type=submit]');
                 submitChildren.attr('disabled', 'disabled');
