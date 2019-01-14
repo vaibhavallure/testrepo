@@ -75,13 +75,10 @@ class Ecp_ReportToEmail_Model_Refund
         $sender = Mage::getStoreConfig('trans_email/ident_general/email');
         $storeDate = date('Y-m-d');
         $website = Mage::getModel('core/store')->load($storesId);
-        $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
 
-
-        $date = Mage::getModel('core/date')->date('Ymd');
 
         if($this->getReportCSV($from,$to,"orderdate")) {
-            $name1 = "Order_Refund_Report_By_Order_date_" . $date . ".csv";
+            $name1 = "Order_Refund_Report_By_Order_date_" . $yesterday . ".csv";
             $mail->createAttachment(
                 file_get_contents($this->getReportCSV($from, $to, "orderdate")),
                 Zend_Mime::TYPE_OCTETSTREAM,
@@ -92,7 +89,7 @@ class Ecp_ReportToEmail_Model_Refund
         }
 
         if($this->getReportCSV($from,$to,"refunddate")) {
-            $name2 = "Order_Refund_Report_By_Refund_date_" . $date . ".csv";
+            $name2 = "Order_Refund_Report_By_Refund_date_" . $yesterday . ".csv";
             $mail->createAttachment(
                 file_get_contents($this->getReportCSV($from, $to, "refunddate")),
                 Zend_Mime::TYPE_OCTETSTREAM,
@@ -107,11 +104,8 @@ class Ecp_ReportToEmail_Model_Refund
             ->setFrom($sender, "Refund Report");
 
         try {
-
                 $mail->send();
                 $this->add_log("mail sent");
-
-
 
         } catch (Mage_Core_Exception $e) {
             Mage::log('Sending report ' . $e->getMessage(), Zend_log::DEBUG, 'accounting_report.log',true);
