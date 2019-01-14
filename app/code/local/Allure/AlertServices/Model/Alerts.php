@@ -419,6 +419,8 @@ class Allure_AlertServices_Model_Alerts
 					echo $orders->getSelect()->__toString();
 					echo "<br>order count : ".count($orders);
 					echo "<br>2 hour for testing for sale<br>";
+					echo "<br>From Date :".$fromDate;
+                    echo "<br>Converted Date :".Mage::getModel('core/date')->date("F j, Y \a\\t g:i a",$fromDate);
 					if(count($orders)>0) {
                         $helper->sendSalesOfEmailAlert($fromDate, 2);
                     }
