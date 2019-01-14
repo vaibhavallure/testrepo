@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Test</title>
+<script type="text/javascript">
+    function afftr()
+    {
+        if(document.getElementById('enfants_charge_oui').checked == true)
+        {     
+            document.getElementById('tr_lieu_residence').style.display = "";
+        }
+        else
+        {
+            document.getElementById('tr_lieu_residence').style.display = "none";
+        }
+ 
+    }
+     
+</script>
+</head>
+ 
+<body>
+ 
+<table>
+<tr >
+            <td>ma question 1 ?</td>
+            <td><input type="radio" onclick="afftr()" name="enfants_charge" id="enfants_charge_oui" value="oui" class="validate[required] radio"><label for="oui">Oui</label><input type="radio" name="enfants_charge"  id="enfants_charge"  value="non" onclick="afftr()" class="validate[required] radio"><label for="non">Non</label></td>
+        </tr>
+            <tr id="tr_lieu_residence">
+            <td>ma question 2 ?</td>
+            <td><input type="text" name="lieu_residence" class="validate[required,custom[onlyLetter],length[0,100]] text-input" id="lieu_residence" /></td>
+        </tr>
+        </table>
+ 
+ 
+ 
+ 
+</body>
+</html>
+
+    Partager sur Facebook
+    Partager sur Twitter
+    Partager via Google +1
+

@@ -1,0 +1,1 @@
+<p style="text-align:center;font-size:11px;margin: 0px;">Mill&eacute;sima SA - 87, quai de Paludate - CS 11691 - F33050 Bordeaux Cedex. T&eacute;l.&nbsp;800&nbsp;781&nbsp;725 oppure 00&nbsp;800&nbsp;267&nbsp;33&nbsp;289  - {$dateenvoi} {$codemessage} - <strong style="text-transform:uppercase;color:{$codecouleur};">{$validitedate}</strong></p>

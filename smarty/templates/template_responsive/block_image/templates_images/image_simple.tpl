@@ -1,0 +1,1 @@
+<!-- pour amelioration future, un seul code image appellé par tous les templates images... --><a href="{$bdbas_url}"><img src="http://cdn.millesima.com.s3.amazonaws.com/{$type_message}/{$codemessagegeneral}/bandeaubas{$lettrelangue}.jpg" border="0" width="650" height="{$bdbas_height}" alt="{$objet_alt_title}" title="{$objet_alt_title}" style="display:block;" class="banner"/></a>

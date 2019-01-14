@@ -1,0 +1,1 @@
+<p style="text-align:center;font-size:11px;margin: 0px;">Millesima USA 1355 2nd Ave. New York, NY 10021 Tel: (212) 639-9463 - {$dateenvoi} {$codemessage} - <strong style="text-transform:uppercase;color:{$codecouleur};">{$validitedate}</strong></p>

@@ -1,0 +1,42 @@
+New templates V 1.0
+
+
+******* Normal.tpl *******
+Affichage normalisé de l'emailing, tel que défini par la charte graphique.
+
+Contient une ligne <meta name="viewport" content="width=670"> pour un affichage en largeur optimal dans les navigateurs mobile (pour une vue d'ensemble si même un peu petite et nécessitant un zoom)
+Prends les versions pays à la racine de chaque module
+A base de tableaux
+
+Ne contient pas de @media
+Ne contient pas de class
+Les colonnes sont fixes et bloquées
+
+
+
+
+******* Responsive.tpl *******
+Affichage responsive de la version normalisée.
+
+Contient une ligne <meta name="viewport" content="width=device-width"> pour un affichage en largeur réelle (taille de l'écran et non résolution qui force parfois à zoomer)
+Prends les versions pays dans le dossier responsive de chaque module, à la racine le cas échéant (si le module ne nécéssite pas de spécificités dans son code [class, float...])
+A base de tableaux
+
+Contient @media fixé à max-width=480
+Contient de class
+Les colonnes sont matérialisés par une tableau à colonnes. Elles peuvent passer à la ligne au dessous de 480px de large.
+Ne fonctionne pas sous Android
+
+
+
+******* Mobile.tpl *******
+Affichage responsive à l'aide des float.
+
+Contient une ligne <meta name="viewport" content="width=device-width"> pour un affichage en largeur réelle (taille de l'écran et non résolution qui force parfois à zoomer)
+Prends les versions pays dans le dossier mobile de chaque module, à la racine le cas échéant (si le module ne nécéssite pas de spécificités dans son code [class, float...])
+A base de tableaux
+
+Contient @media fixé à max-width=480
+Contient de class
+Les colonnes sont des tableaux de taille fixe (largeur et hauteur si besoin) mis en colonnage à l'aide de float:left;. 
+Ne fonctionne pas sous outlook (logiciel), outlook.com et lotus notes 6/7

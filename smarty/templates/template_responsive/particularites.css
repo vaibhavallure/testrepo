@@ -1,0 +1,5 @@
+﻿/* CSS PARTICULIERS */
+
+/* -- Forcer les mailto sur laposte.net -- */
+.contextEntry {color:#000000;}
+.mill_contact .contextEntry {color:#FFFFFF;} /* penser a rajouter la class sur la table contact)

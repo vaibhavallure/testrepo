@@ -1,0 +1,65 @@
+label, .radio label{margin-right: 10px;}
+.radio h3{margin-right: 30px !important;}
+.box-header h3.box-title label {font-weight: normal;font-size: 16px;}
+textarea {width: 99%;height: 200px;display: block;}.pays_check{margin: 0px 5px;}
+.no_margelr{margin-right: 0px !important;margin-left: 0px !important;}
+.check-all, .check-none{cursor: pointer;}
+.external-event{cursor: initial;}
+.action_brief .button-brief {
+    width: 100%;
+    margin: 10px 0;
+}
+.action_brief .form-group {
+    margin-bottom: 0px;
+}
+select#brief,
+select#lang,
+select#messagedata{
+    width: 300px;
+    display: inline-block;
+    margin-right: 20px;
+}
+.selectbrief, .selectmessagedata {
+    display: inline-block;
+}
+.h1brief{
+    display: inline-block;
+    margin-right: 30px !important;
+}
+button, input, optgroup, select, textarea {
+    margin-bottom: 10px;
+}
+.action_brief{
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+    margin-bottom: 10px;
+}
+
+#statCampaign, #search_campaign_result tr:nth-child(even){
+    background-color:#c1c1c1;
+}
+.brown{
+    background-color: #8B4513;
+    color: #FFF;
+}
+.btn-inv{
+    display: inline-block;
+    padding: 0px 10px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    background-image: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}

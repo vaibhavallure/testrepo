@@ -1,0 +1,2 @@
+<p style="text-align:center;font-size:11px;margin: 0px;">Mill&eacute;sima SA - 87, quai de Paludate - CS 11691 - 33050 Bordeaux Cedex.<br/>
+  <strong>CONTACT</strong> : T&eacute;l. +33(0) 557 808 847 - Fax. +33(0) 557 808 819 - <a href="mailto:event@millesima.com" style="color:#000000 !important;"><span style="color:#000000"><strong>event@millesima.com</strong></span></a><br /> {$dateenvoi} {$codemessage} - <strong style="text-transform:uppercase;color:{$codecouleur};">cl&ocirc;ture des inscriptions le {$datevalide} dans la limite des places disponibles.</strong></p>

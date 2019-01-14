@@ -1,0 +1,1 @@
+<a href="http://event.millesima.fr/"><img src='http://cdn.millesima.com.s3.amazonaws.com/templates/bandeauhtEvent.png' width="650" height="90" border='0' alt="Mill&eacute;sima Event" title="Mill&eacute;sima Event" style="display:block;" /></a>
