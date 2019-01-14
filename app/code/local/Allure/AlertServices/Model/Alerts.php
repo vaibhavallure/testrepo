@@ -72,7 +72,7 @@ class Allure_AlertServices_Model_Alerts
 										->setCurPage(1)
 										->setPageSize(1)
 										->setOrder('main_table.entity_id', 'desc');
-						$lastDate = $lastOrderDate->getLastItem()->getCreatedAt();
+						$lastDate = $lastOrderDate->getFirstItem()->getCreatedAt();
 						$hourReport = 4;
 						$helper->sendSalesOfEmailAlert($lastDate,$hourReport);
 					}
