@@ -703,9 +703,9 @@ class Allure_Teamwork_Model_Tmobserver{
                     }
                     
                     $orderObj->setShippingDescription("Store Pickup"); //self::SHIPPING_METHOD_NAME
-                    $orderObj->setGrandTotal($totalAmmount);
+                    $orderObj->setGrandTotal($totalAmtT);
                     $orderObj->setBaseTaxAmount($taxAmmount);
-                    $orderObj->setBaseGrandTotal($totalAmmount);
+                    $orderObj->setBaseGrandTotal($totalAmtT);
                     
                     if(strtoupper($otherSysCur) != "MT"){
                         $orderObj->setData('base_currency_code',$otherSysCurCode)
