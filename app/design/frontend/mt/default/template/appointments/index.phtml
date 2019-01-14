@@ -110,7 +110,9 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
                 if(no_pepole<1) {
                     alert("Please select number of people first");
-                return;
+                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+                    jQuery("#count").focus();
+                return false;
                 }
 
                 if(no_pepole==1)
