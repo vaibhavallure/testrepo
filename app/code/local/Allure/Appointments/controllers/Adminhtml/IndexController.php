@@ -194,13 +194,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     
                     $post_data['phone'] = $phno;
                     $storeId = $post_data['store_id'];
-
-                    if($this->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
-                        Mage::getSingleton("core/session")->addError("Sorry This Slot Has Already Taken. Please Select Another Slot.");
-                        $this->_redirect("admin_appointments/adminhtml_appointments/new");
-                        return;
-                    }
-
+                    
                     $storeKey = array_search($storeId, $configData['stores']);
                     $model = Mage::getModel('appointments/appointments')->addData($post_data)->save();
                     
@@ -813,21 +807,5 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         }
         return $ip;
     }
-
-
-    public function validateSlotBeforeBookAppointment($data)
-    {
-        $collection = Mage::getModel('appointments/appointments')->getCollection();
-        $collection->addFieldToFilter('piercer_id', array('eq' => $data['piercer_id']));
-        $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
-        $collection->addFieldToFilter('app_status', array('eq' => 2));
-        $collection->addFieldToFilter('appointment_start', array('eq' => $data['appointment_start']));
-        $collection->addFieldToFilter('appointment_end', array('eq' => $data['appointment_end']));
-
-        if($collection->getSize())
-            return true;
-        else
-            return false;
-
-    }
+   
 }

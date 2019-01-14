@@ -1,12 +1,12 @@
 if (typeof Allure == "undefined") {
     var Allure = {};
 } 
-var count = 0;
+var count = 1;
  function increase(){			  
      count++;
      document.getElementById("count").value = count;
      //jQuery("#pick_ur_time_div").empty();
-
+ 
      	
 	//ajax start to pass the selected date to get the time     
    /* var todaysDate = document.getElementById("datepicker-13_hidden").value;

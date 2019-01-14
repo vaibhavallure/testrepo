@@ -1,7 +1,7 @@
 if (typeof Allure == "undefined") {
     var Allure = {};
 } 
-var count = 0;
+var count = 1;
  function increase(){			  
      count++;
      document.getElementById("count").value = count;

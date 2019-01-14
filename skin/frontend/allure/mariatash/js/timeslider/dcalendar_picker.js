@@ -495,12 +495,6 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 					
 					//ajax start to pass the selected date to get the time
 					var qty = document.getElementById("count").value;
-                    if(qty==0)
-                    {
-                        alert("Please select number of people in group");
-                        return;
-                    }
-
 					var storeid = document.getElementById("store-id").value;
 					var request = {
 				 				"qty":qty,

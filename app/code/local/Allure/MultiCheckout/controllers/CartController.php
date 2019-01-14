@@ -171,4 +171,3 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
             die(json_encode($response));
     }
 }
-
