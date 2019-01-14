@@ -502,7 +502,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 
                     if(qty==0)
 					{
-						alert("please select number of people in group");
+						alert("Please select number of people in group");
                         return;
                     }
 
