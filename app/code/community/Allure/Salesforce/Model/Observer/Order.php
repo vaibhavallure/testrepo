@@ -191,12 +191,6 @@ class Allure_Salesforce_Model_Observer_Order{
             
         } 
         
-        $createOrderMethod = $order->getCreateOrderMethod();
-        $isTeamworkOrder = false;
-        if($createOrderMethod == 2){
-            $isTeamworkOrder = true;
-        }
-        
         $orderItem = array();
         $orderItem["records"] = array();
         
@@ -235,8 +229,6 @@ class Allure_Salesforce_Model_Observer_Order{
                 }
             }
             
-            $helper->salesforceLog("product id - ".$item->getSku()." salesforce pricebook id - ".$salesforcePricebkEntryId);
-            
             if(!$salesforcePricebkEntryId){
                 $helper->salesforceLog("place this order when product has assigned the salesforce id.");
                 return ;
@@ -260,22 +252,14 @@ class Allure_Salesforce_Model_Observer_Order{
             
             $unitPrice = $item->getBasePrice() * $currencyRate;
             
-            $reasonText = "";
-            if($item->getTeamworkReason()){
-                $reasonText = $item->getTeamworkReason();
-            }elseif($item->getOtherSysQty() < 0 ){
-                $reasonText = "Return";
-            }
-            
             $itemArray = array(
                 "attributes"        => array("type" => "OrderItem"),
                 "PricebookEntryId"  => $salesforcePricebkEntryId,//"01u290000037WAR",
-                "quantity"          => ($isTeamworkOrder) ? $item->getOtherSysQty() : $item->getQtyOrdered(),
+                "quantity"          => $item->getQtyOrdered(),
                 "UnitPrice"         => $unitPrice,
                 "Post_Length__c"    => $postLength,
                 "Magento_Order_Item_Id__c" => $item->getItemId(),
                 "SKU__c"                => $item->getSku(),
-                "reason__c" => $reasonText
                 
             );
             array_push($orderItem["records"],$itemArray);
@@ -366,25 +350,6 @@ class Allure_Salesforce_Model_Observer_Order{
             if($transactionId){
                 $request["order"][0]["Transaction_Id__c"] = $transactionId;
             }
-            
-            if($order->getCreateOrderMethod() == 2){
-                $tmOrginalOrderId = $order->getTeamworkOrigReceiptId();
-                if($tmOrginalOrderId){
-                    $tmOrginalOrderId = "TW-".$tmOrginalOrderId;
-                    $orderObj = Mage::getModel('sales/order')->loadByIncrementId($tmOrginalOrderId);
-                    if($orderObj){
-                        if($orderObj->getSalesforceOrderId()){
-                            $request["order"][0]["Reference_Order__c"] = $orderObj->getSalesforceOrderId();
-                        }
-                        $request["order"][0]["Magento_Reference_Order__c"] = $orderObj->getIncrementId();
-                    }
-                }
-                $tmData = json_decode($order->getOtherSysExtraInfo(),true);
-                $request["order"][0]["Teamwork_Receipt_Id__c"] = $tmData["ReceiptNum"];
-                $request["order"][0]["Teamwork_Universal_Id__c"] = $tmData["DeviceTransactionNumber"];
-                $request["order"][0]["Teamwork_Cashier__c"] = $tmData["EMPNAME"];
-            }
-            
             
             $urlPath = $helper::ORDER_PLACE_URL;
             $response = $helper->sendRequest($urlPath, $requestMethod, $request);
@@ -683,11 +648,6 @@ class Allure_Salesforce_Model_Observer_Order{
             
             $salesforceOrderId = $order->getSalesforceOrderId();
             
-            if(!$salesforceOrderId){
-                $helper->salesforceLog("saleforce order id empty.");
-                return;
-            }
-            
             $objectType = $helper::UPLOAD_DOC_OBJECT;
             
             $invoices = $order->getInvoiceCollection();
@@ -782,11 +742,6 @@ class Allure_Salesforce_Model_Observer_Order{
             $fileName = "Order_Invoice.pdf";
             
             $salesforceOrderId = $order->getSalesforceOrderId();
-            
-            if(!$salesforceOrderId){
-                $helper->salesforceLog("saleforce order id empty.");
-                return;  
-            }
             
             $objectType = $helper::UPLOAD_DOC_OBJECT;
             

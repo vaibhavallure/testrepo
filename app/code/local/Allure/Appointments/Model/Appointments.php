@@ -22,12 +22,5 @@ class Allure_Appointments_Model_Appointments extends Mage_Core_Model_Abstract
     	return $status;
     }
 
-
-    protected function _beforeSave() {
-        parent::_beforeSave();
-        $now = Mage::getSingleton('core/date')->gmtDate();
-        $this->setUpdatedAt($now);
-        return $this;
-    }
     
 }

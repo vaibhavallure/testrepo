@@ -34,15 +34,7 @@
     </div>
 <?php endif ?>
 </td>
-<td class="a-center">
-<?php if($_item->getTeamworkReason()):?>
-<?php echo $_item->getTeamworkReason(); ?>
-<?php elseif($_item->getOtherSysQty() < 0):?>
-<?php echo Mage::helper('sales')->__('Return') ?>
-<?php else :?>
-<?php echo $_item->getStatus()?>
-<?php endif;?>
-</td>
+<td class="a-center"><?php echo $_item->getStatus()?></td>
 <td class="a-right"><?php echo $this->displayPriceAttribute('original_price') ?></td>
 <td class="a-right">
     <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
