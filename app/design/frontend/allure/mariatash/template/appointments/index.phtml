@@ -76,10 +76,11 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
     ?>
 
-       var myForm = new VarienForm('appointemnet_form', false); 
-        Validation.add('required-entry-time', "Please Select Time.", function(v) {
+       var myForm = new VarienForm('appointemnet_form', false);
+
+       /* Validation.add('required-entry-time', "Please Select Time.", function(v) {
             return !Validation.get('IsEmpty').test(v);
-		});
+		});*/
         
         Validation.add('validate-phone-len', "Enter Valid Mobile No with country code.", function(v) {
         	var telInput = jQuery("#phone").val();
@@ -111,6 +112,14 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                     return false;
                 }
 
+
+                if(jQuery(".required-entry-time").val().length == 0)
+                {
+                    alert("Please select time slot");
+                    var position=jQuery(".pickur_time_main_container").position();
+                    jQuery('body').scrollTo(position.top-70);
+                    return false;
+                }
 
                 if(no_pepole==1)
                    var p="person";
