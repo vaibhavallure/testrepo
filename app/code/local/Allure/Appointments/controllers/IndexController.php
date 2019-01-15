@@ -195,8 +195,6 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 
     public function saveAction ()
     {
-
-
         if (! $this->_validateFormKey()) {
             $this->_redirect('*/*/');
             return;
@@ -259,17 +257,17 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 if($action=="save")
                 $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
 
+
+
                 if($this->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
                    // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
                     $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Been Already Taken. Please Select Another Slot ",$post_data),"save");
 
                     $piercer = $this->checkIfAnotherPiercerAvailable($post_data);
 
-                    Mage::log("piercer ".$piercer,Zend_Log::DEBUG,"adi.log",true);
-
                     if($piercer['success'])
                     {
-                        $post_data['piercer_id']=$piercer['id'];
+                        $post_data['piercer_id']=$piercer['p_id'];
                         $this->addLog($this->createSaveLogString("new piercer assigned ",$post_data),"save");
                     }
                     else {
@@ -280,7 +278,6 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     }
                 }
 
-                Mage::log($post_data,Zend_Log::DEBUG,"adi.log",true);
 
 
                 $storeKey = array_search($storeId, $configData['stores']);
@@ -863,19 +860,15 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
 
 
-
-       if($collection->getSize()) {
-
-           Mage::log("failed to appoint",Zend_Log::DEBUG,"adi.log",true);
+       if($collection->getSize())
            return true;
-       }else {
+       else
            return false;
-       }
+
     }
 
     public function checkIfAnotherPiercerAvailable($data)
     {
-        Mage::log("inside checkIfAnotherPiercerAvailable",Zend_Log::DEBUG,"adi.log",true);
 
         $result=array();
         $result['success']=false;
@@ -883,32 +876,62 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         $collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' =>$data['store_id']))
             ->addFieldToFilter('is_active', array('eq' => '1'))
             ->addFieldToFilter('id', array('neq' => $data['piercer_id']));
+        $collection->addFieldToFilter('working_days', array('like' => '%'.$data['app_date'].'%'));
 
 
-        Mage::log("collection size ".$collection->getSize(),Zend_Log::DEBUG,"adi.log",true);
+         $day = date('l', strtotime($data['app_date']));
 
+         $slotAVL=false;
 
         if($collection->getSize())
         {
             foreach ($collection as $p)
             {
-                $collection = Mage::getModel('appointments/appointments')->getCollection();
-                $collection->addFieldToFilter('piercer_id', array('eq' => $p->getId()));
-                $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
-                $collection->addFieldToFilter('app_status', array('eq' => 2));
-                $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
-                $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
 
-                if(!$collection->getSize()) {
-                    $result['success']=true;
-                    $result['p_id']=$p->getId();
-                    break;
+
+                $workingHours = $p->getWorkingHours();
+                $workingHours = unserialize($workingHours);
+
+                foreach ($workingHours as $workSlot) {
+
+                    if ($workSlot['day'] != $day) {
+                        continue;
+
+                    }
+
+                     $workStart = $workSlot['start'];
+                     $workend=$workSlot['end'];
+                     $breakstart=$workSlot['break_start'];
+                     $breakend=$workSlot['break_end'];
+                     $app_start=explode(":",explode(" ",$data['appointment_start'])[1])[0];
+                     $app_end= explode(":",explode(" ",$data['appointment_end'])[1])[0];
+
+
+
+                   if(($workStart<=$app_start && $workend>=$app_end) && (($breakstart>=$app_end && $breakstart>$app_start) || ($breakend<=$app_start)))
+                   {
+                       $slotAVL=true;
+                   }
                 }
 
+                if($slotAVL) {
+                    $collection = Mage::getModel('appointments/appointments')->getCollection();
+                    $collection->addFieldToFilter('piercer_id', array('eq' => $p->getId()));
+                    $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
+                    $collection->addFieldToFilter('app_status', array('eq' => 2));
+                    $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
+                    $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+                    if (!$collection->getSize()) {
+                        $result['success'] = true;
+                        $result['p_id'] = $p->getId();
+                        break;
+                    }
+                }
             }
         }
 
-        Mage::log("result ".$result,Zend_Log::DEBUG,"adi.log",true);
+
 
         return $result;
     }
