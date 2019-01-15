@@ -14,11 +14,11 @@ class Ecp_ReportToEmail_Model_Refund
     }
 
 
-    public function sendReport($getdate=null,$show=false)
+    public function sendReport($getdate=null,$show=false,$call="cron")
     {
 
 
-        $this->add_log("script run");
+        $this->add_log("script run form ".$call."-------------------------------------------------------");
 
     
 
@@ -36,6 +36,8 @@ class Ecp_ReportToEmail_Model_Refund
             $from = $yesterday . "00:00:00";
             $to = $yesterday . "23:59:59";
 
+            $this->add_log("getdate => from=>".$from." to=>".$to);
+
         } else {
 
             $days = 1;
@@ -44,6 +46,8 @@ class Ecp_ReportToEmail_Model_Refund
 
             $yesterday=date('Y-m-d', strtotime('yesterday'));
 
+            $this->add_log("default date => from=>".$from." to=>".$to." yesterday=>".$yesterday);
+
 
         }
 
@@ -51,6 +55,8 @@ class Ecp_ReportToEmail_Model_Refund
             $diffZone = $this->getDiffTimezone();
             $to = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($to)));
             $from = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($from)));
+
+        $this->add_log("timezone date => from=>".$from." to=>".$to." diffZone=>".$diffZone);
 
         Mage::app()->getStore()->setId($storeId);
 
@@ -73,6 +79,8 @@ class Ecp_ReportToEmail_Model_Refund
 
         /* Sender Email */
         $sender = Mage::getStoreConfig('trans_email/ident_general/email');
+
+
         $storeDate = date('Y-m-d');
         $website = Mage::getModel('core/store')->load($storesId);
 
@@ -201,12 +209,16 @@ class Ecp_ReportToEmail_Model_Refund
 
     public function getData($from,$to,$by,$status=null,$total=false)
     {
+
+        $this->add_log("getData => from=>".$from." to=>".$to." status=>".$status." total=>".$total);
+
         try {
 
         if($by=="orderdate")
             $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total*ord.store_to_base_rate as base_grand_total,ord.base_total_refunded*ord.store_to_base_rate as base_total_refunded,IFNULL(ord.base_total_online_refunded*ord.store_to_base_rate,0) as base_total_online_refunded,IFNULL(IF(ord.increment_id LIKE '%TW%',ord.base_total_refunded*ord.store_to_base_rate,ord.base_total_offline_refunded*ord.store_to_base_rate),0) as base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1 GROUP BY memo.order_id";
         else
           $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total*ord.store_to_base_rate as base_grand_total,ord.base_total_refunded*ord.store_to_base_rate as base_total_refunded,IFNULL(ord.base_total_online_refunded*ord.store_to_base_rate,0) as base_total_online_refunded,IFNULL(IF(ord.increment_id LIKE '%TW%',ord.base_total_refunded*ord.store_to_base_rate,ord.base_total_offline_refunded*ord.store_to_base_rate),0) as base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1 GROUP BY memo.order_id";
+
 
             if(count($status))
         {
@@ -227,6 +239,7 @@ class Ecp_ReportToEmail_Model_Refund
         }
 
 
+            $this->add_log("getData => query=>".$query);
 
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
@@ -258,6 +271,13 @@ class Ecp_ReportToEmail_Model_Refund
                 $data[]=$rs;
             }
 
+            $this->add_log("getData => data=>");
+
+            Mage::log($data,Zend_log::DEBUG,"report_to_email.log",true);
+
+            $this->add_log("totdal data");
+
+            Mage::log($total_data,Zend_log::DEBUG,"report_to_email.log",true);
 
 
             if($total)

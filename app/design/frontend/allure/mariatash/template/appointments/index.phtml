@@ -70,7 +70,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
     <?php
     if(Mage::getSingleton('core/session')->getSlotInvalid()=="true")
     {
-        echo "alert('Sorry This Slot Has Been Already Taken. Please Select Another Slot.');";
+        echo "alert('This appointment time is no longer available. Please select another time.');";
         Mage::getSingleton('core/session')->setSlotInvalid("false");
     }
 
@@ -99,14 +99,14 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                      }
 
 
-                var app_date=jQuery("#datepicker-13_hidden").val();
+                var app_date=formatDate(new Date(jQuery("#datepicker-13_hidden").val()));
                 var app_starttime=jQuery("#starttime_hidden").val();
                 var app_endtime=jQuery("#endtime_hidden").val();
                 var no_pepole=jQuery(".pierqtyTxt").val();
                 var store=jQuery(".storeLocDiv p b").html();
 
                 if(no_pepole<1) {
-                    alert("Please select number of people first");
+                    alert("Please select the number of people in your party");
                     jQuery("html, body").animate({ scrollTop: 0 }, "slow");
                     jQuery("#count").focus();
                     return false;
@@ -127,8 +127,9 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                     var p="people";
 
 
+                var response = confirm("Please confirm your appointment at "+store+" on "+app_date+" from "+app_starttime+" - "+app_endtime+" for "+no_pepole+" "+p);
 
-                var response = confirm("Confirm your booking date:"+app_date+" from "+app_starttime+" to "+app_endtime+" for "+no_pepole+" "+p+" in "+store+" store");
+               // var response = confirm("Confirm your booking date:"+app_date+" from "+app_starttime+" to "+app_endtime+" for "+no_pepole+" "+p+" in "+store+" store");
                 if (response == false) {
                     return false;
                 }
@@ -140,6 +141,21 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
               } 
 
             });
+
+    function formatDate(date) {
+        var monthNames = [
+            "Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "Jul",
+            "Aug", "Sep", "Oct",
+            "Nov", "Dec"
+        ];
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return monthNames[monthIndex] + ' ' +  day + ', ' + year;
+    }
      
     //]]>
 </script>
