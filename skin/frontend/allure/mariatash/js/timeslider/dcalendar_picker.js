@@ -497,7 +497,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 					var qty = document.getElementById("count").value;
                     if(qty==0)
                     {
-                        alert("Please select number of people in group");
+                        alert("Please select the number of people in your party");
                         return;
                     }
 
