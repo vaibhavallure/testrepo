@@ -70,8 +70,9 @@ class Allure_AlertServices_Model_Alerts
 						$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
 										->setCurPage(1)
-										->setPageSize(1)
-										->setOrder('main_table.entity_id', 'desc');
+										->setPageSize(1);
+                        $lastOrderDate->getSelect()->order("entity_id desc");
+//										->setOrder('main_table.entity_id', 'desc');
 						$lastDate = $lastOrderDate->getFirstItem()->getCreatedAt();
 						$hourReport = 4;
 						$helper->sendSalesOfEmailAlert($lastDate,$hourReport);
@@ -241,7 +242,7 @@ class Allure_AlertServices_Model_Alerts
     	}				
 	}
 
-		public function alertAvgPageLoadEmail(){
+	public function alertAvgPageLoadEmail(){
 		try{
 			$helper = Mage::helper('alertservices');
 			$status =	$this->getConfigHelper()->getEmailStatus();
