@@ -71,10 +71,18 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 <script type="text/javascript">
     //< ![CDATA[
 
+    <?php
+    if(Mage::getSingleton('core/session')->getSlotInvalid()=="true")
+    {
+        echo "alert('This appointment time is no longer available. Please select another time.');";
+        Mage::getSingleton('core/session')->setSlotInvalid("false");
+    }
+
+    ?>
        var myForm = new VarienForm('appointemnet_form', false);
-        Validation.add('required-entry-time', "Please Select Time.", function(v) {
+       /* Validation.add('required-entry-time', "Please Select Time.", function(v) {
             return !Validation.get('IsEmpty').test(v);
-		});
+		});*/
 
         Validation.add('validate-phone-len', "Enter Valid Mobile No with country code.", function(v) {
         	var telInput = jQuery("#phone").val();
@@ -92,6 +100,46 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                         return false;
                      }
 
+
+
+                     var app_date=formatDate(new Date(jQuery("#datepicker-13_hidden").val()));
+                    var app_starttime=jQuery("#starttime_hidden").val();
+                    var app_endtime=jQuery("#endtime_hidden").val();
+                    var no_pepole=jQuery(".pierqtyTxt").val();
+                    var store=jQuery(".storeLocDiv p b").html();
+
+                if(no_pepole<1) {
+                    alert("Please select the number of people in your party");
+                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+                    jQuery("#count").focus();
+                return false;
+                }
+
+                if(no_pepole==1)
+                    var p="person";
+                else
+                    var p="people";
+
+
+
+                if(jQuery(".required-entry-time").val().length == 0)
+                {
+                    alert("Please select time slot");
+                    var position=jQuery(".pickur_time_main_container").position();
+                    jQuery('body').scrollTo(position.top-20);
+                    return false;
+                }
+
+                var response = confirm("Please confirm your appointment at "+store+" on "+app_date+" from "+app_starttime+" - "+app_endtime+" for "+no_pepole+" "+p);
+
+               // var response = confirm("Confirm your booking date:"+app_date+" from "+app_starttime+" to "+app_endtime+" for "+no_pepole+" "+p+" in "+store+" store");
+
+                if (response == false) {
+                    return false;
+                }
+
+
+
                 var submitChildren = jQuery(this).find('input[type=submit]');
                 submitChildren.attr('disabled', 'disabled');
                 submitChildren.addClass('disabled');
@@ -99,6 +147,22 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
               }
 
             });
+
+    function formatDate(date) {
+        var monthNames = [
+            "Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "Jul",
+            "Aug", "Sep", "Oct",
+            "Nov", "Dec"
+        ];
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return monthNames[monthIndex] + ' ' +  day + ', ' + year;
+    }
+
 
     //]]>
 </script>
