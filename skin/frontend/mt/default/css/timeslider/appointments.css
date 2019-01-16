@@ -895,13 +895,13 @@ body.embedded .zopim {
 {
 	position:absolute;
 	bottom: 10px;
-	left: 75px;
+	left: 60px;
 }
 #allureAlertBox #okConfirm
 {
 	position:absolute;
 	bottom: 10px;
-	left: 180px;
+	left: 185px;
 }
 
 #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
