@@ -9,6 +9,7 @@ $storeId = Mage::helper('appointments')->getStoreId();
 		}
 
 ?>
+
 <div class="appointmentContainer" >
 <div class="<?php if($embedded=='1'): echo 'appointment-header'; endif;?>">
 	<div class="app-col-6-left">
@@ -74,12 +75,15 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
     <?php
     if(Mage::getSingleton('core/session')->getSlotInvalid()=="true")
     {
-        echo "alert('This appointment time is no longer available. Please select another time.');";
+        echo "alert('This appointment time is no longer available.<br> Please select another time.');";
         Mage::getSingleton('core/session')->setSlotInvalid("false");
     }
 
     ?>
        var myForm = new VarienForm('appointemnet_form', false);
+
+       var conf=false;
+
        /* Validation.add('required-entry-time', "Please Select Time.", function(v) {
             return !Validation.get('IsEmpty').test(v);
 		});*/
@@ -94,44 +98,44 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
         var formAlreadySubmitted = false;
         jQuery('#appointemnet_form').submit(function(e){
-            if(myForm.validator.validate()){
-                    if(formAlreadySubmitted){
-                        e.preventDefault();
-                        return false;
-                     }
-
-
-
-                     var app_date=formatDate(new Date(jQuery("#datepicker-13_hidden").val()));
-                    var app_starttime=jQuery("#starttime_hidden").val();
-                    var app_endtime=jQuery("#endtime_hidden").val();
-                    var no_pepole=jQuery(".pierqtyTxt").val();
-                    var store=jQuery(".storeLocDiv p b").html();
-
-                if(no_pepole<1) {
-                    alert("Please select the number of people in your party");
-                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
-                    jQuery("#count").focus();
-                return false;
-                }
-
-                if(no_pepole==1)
-                    var p="person";
-                else
-                    var p="people";
-
-
-
-                if(jQuery(".required-entry-time").val().length == 0)
-                {
-                    alert("Please select time slot");
-                    var position=jQuery(".pickur_time_main_container").position();
-                    jQuery('body').scrollTo(position.top-20);
+            if(myForm.validator.validate()) {
+                if (formAlreadySubmitted) {
+                    e.preventDefault();
                     return false;
                 }
 
-                var response = confirm("Please confirm your appointment at "+store+" on "+app_date+" from "+app_starttime+" - "+app_endtime+" for "+no_pepole+" "+p);
 
+                var app_date = formatDate(new Date(jQuery("#datepicker-13_hidden").val()));
+                var app_starttime = jQuery("#starttime_hidden").val();
+                var app_endtime = jQuery("#endtime_hidden").val();
+                var no_pepole = jQuery(".pierqtyTxt").val();
+                var store = jQuery(".storeLocDiv p b").html();
+
+                if (no_pepole < 1) {
+                    alert("Please select the number of people in your party.");
+                    jQuery("html, body").animate({scrollTop: 0}, "slow");
+                    jQuery("#count").focus();
+                    return false;
+                }
+
+                if (no_pepole == 1)
+                    var p = "person";
+                else
+                    var p = "people";
+
+
+                if (jQuery(".required-entry-time").val().length == 0) {
+                    alert("Please select Time slot.");
+                    var position = jQuery(".pickur_time_main_container").position();
+                    jQuery('body').scrollTo(position.top - 20);
+                    return false;
+                }
+
+                if (!conf)
+                {
+                    var response = confirm("Please confirm your appointment at " + store + " on " + app_date + " from " + app_starttime + " - " + app_endtime + " for " + no_pepole + " " + p+".");
+                return false;
+            }
                // var response = confirm("Confirm your booking date:"+app_date+" from "+app_starttime+" to "+app_endtime+" for "+no_pepole+" "+p+" in "+store+" store");
 
                 if (response == false) {
@@ -162,6 +166,70 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
         return monthNames[monthIndex] + ' ' +  day + ', ' + year;
     }
+
+
+
+
+
+
+    if(document.getElementById) {
+        window.confirm = function(txt) {
+           return createCustomConfirm(txt);
+        }
+    }
+
+
+
+
+    function createCustomConfirm(txt) {
+        d = document;
+
+        if(d.getElementById("allureModalContainer")) return;
+
+        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+        mObj.id = "allureModalContainer";
+        mObj.style.height = d.documentElement.scrollHeight + "px";
+
+        alertObj = mObj.appendChild(d.createElement("div"));
+        alertObj.id = "allureAlertBox";
+        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+        alertObj.style.visiblity="visible";
+
+        msg = alertObj.appendChild(d.createElement("p"));
+        //msg.appendChild(d.createTextNode(txt));
+        msg.innerHTML = txt;
+
+        btnc = alertObj.appendChild(d.createElement("a"));
+        btnc.id = "cancelConfirm";
+        btnc.appendChild(d.createTextNode("CANCEL"));
+        btnc.href = "#";
+
+
+        btnc.onclick = function() {
+            removeCustomAlert();
+            return false;
+        }
+
+
+        btn = alertObj.appendChild(d.createElement("a"));
+        btn.id = "okConfirm";
+        btn.appendChild(d.createTextNode("OK"));
+        btn.href = "#";
+        btn.focus();
+        btn.onclick = function() {
+            removeCustomAlert();
+            conf=true;
+            jQuery('#appointemnet_form').trigger('submit');
+        return false;
+        }
+
+        alertObj.style.display = "block";
+
+    }
+
+
+
 
 
     //]]>
