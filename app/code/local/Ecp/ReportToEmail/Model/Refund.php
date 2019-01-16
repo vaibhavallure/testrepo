@@ -20,7 +20,7 @@ class Ecp_ReportToEmail_Model_Refund
 
         $this->add_log("script run form ".$call."-------------------------------------------------------");
 
-    
+
 
         $emails = trim(Mage::getStoreConfig('report/refund_report/emails'));
         if (! $emails)
@@ -356,4 +356,3 @@ class Ecp_ReportToEmail_Model_Refund
 
 
 }
-
