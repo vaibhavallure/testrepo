@@ -81,25 +81,88 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
 
 <script>
-	function confirmCancelApt(){
-		var result = confirm("Are you sure you want to Cancel an Scheduled Appointment?");
-		
-		if (result) {
+
+
+    var conf=false;
+
+	function confirmCancelApt() {
+
+        if (!conf)
+        {
+            createCustomConfirm("Are you sure you want to cancel an scheduled appointment?");
+            return false;
+        }
+
 		    //Logic to cancel the apt
 			var reloadurl = '<?php echo $this->getUrl('*/index/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
 		    jQuery.ajax({
 		        url: reloadurl, //Relative or absolute path to response.php file
 		        method: 'get',
 		        success: function (data) {
-					jQuery('.detailofapt').html(data);
-					//jQuery('.checkout-success .success-field').empty();	
-					jQuery('.checkout-success .apt-cancel-buttons-set').empty();
-					jQuery('.checkout-success .apt-modify-buttons-set').empty();
-									
-		        }
+                    jQuery('.detailofapt').html(data);
+                    //jQuery('.checkout-success .success-field').empty();
+                    jQuery('.checkout-success .apt-cancel-buttons-set').empty();
+                    jQuery('.checkout-success .apt-modify-buttons-set').empty();
+
+                }
 		    });
-		}		
+
 	}
+
+
+    
+
+
+
+
+    function createCustomConfirm(txt) {
+        d = document;
+
+        if(d.getElementById("allureModalContainer")) return;
+
+        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+        mObj.id = "allureModalContainer";
+        mObj.style.height = d.documentElement.scrollHeight + "px";
+
+        alertObj = mObj.appendChild(d.createElement("div"));
+        alertObj.id = "allureAlertBox";
+        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+        alertObj.style.visiblity="visible";
+
+        msg = alertObj.appendChild(d.createElement("p"));
+        //msg.appendChild(d.createTextNode(txt));
+        msg.innerHTML = txt;
+
+        btnc = alertObj.appendChild(d.createElement("a"));
+        btnc.id = "cancelConfirm";
+        btnc.appendChild(d.createTextNode("CANCEL"));
+        btnc.href = "#";
+
+
+        btnc.onclick = function() {
+            removeCustomAlert();
+            return false;
+        }
+
+
+        btn = alertObj.appendChild(d.createElement("a"));
+        btn.id = "okConfirm";
+        btn.appendChild(d.createTextNode("OK"));
+        btn.href = "#";
+        btn.focus();
+        btn.onclick = function() {
+            removeCustomAlert();
+            conf=true;
+            confirmCancelApt();
+            return false;
+        }
+
+        alertObj.style.display = "block";
+
+    }
+
+
 </script>
 
 
