@@ -70,19 +70,19 @@ if ($session->isLoggedIn()) {
 					  	<div class="fieldDiv">
 					  	   	<label>First Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php //echo $firstName?>" />-->
-					    	<input class="ele_width required-entry" onkeypress="return isText(event)" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
+					    	<input class="ele_width required-entry"  type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
 					    </div>
 
 						<div class="fieldDiv">
 					    	<label>Last Name*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php //echo $lastName?>" />-->
-					    	<input class="ele_width required-entry" onkeypress="return isText(event)" type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
+					    	<input class="ele_width required-entry"  type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
 					    </div>
 
 					  	<div class="fieldDiv">
 					  	   	<label>Email*:</label><br/>
 					    	<!-- <input class="ele_width required-entry validate-email" type="text" name="email" value="<?php //echo $email?>" />-->
-					    	<input class="ele_width required-entry validate-email" onkeypress="return isSymbol(event)" type="text" name="email" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" />
+					    	<input class="ele_width required-entry validate-email"  type="text" name="email" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" />
 					    </div>
 						<div class="">
 					    	<label>Phone Number*:</label><br/>
@@ -141,7 +141,7 @@ if ($session->isLoggedIn()) {
 					    <div class="fieldDiv">
 					  	   	<label>City:</label><br/>
 					    	<!--<input class="ele_width" type="text" name="city" value="<?php //echo $city?>"/>  -->
-					    	<input class="ele_width" onkeypress="return isText(event)" type="text" name="city" value="<?php if($f_city):echo $f_city;else: echo $city;endif;?>"/>
+					    	<input class="ele_width"  type="text" name="city" value="<?php if($f_city):echo $f_city;else: echo $city;endif;?>"/>
 					    </div>
 					    <div class="fieldDiv">
 					    	<label>Postal Code:</label><br/>
@@ -285,6 +285,9 @@ function getstate(countryValue) {
     }
 
     function isSymbol(event){
+
+        return true;
+        
         var keycode=event.keyCode;
         if(((keycode>=65 && keycode<=90) ||(keycode>=97 && keycode<=122)) || (keycode>=48 && keycode<=57) ||((keycode==64) ||(keycode==46)))
         {

@@ -235,7 +235,8 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             $customerGroup = $customerGroup[0];
         }
 
-        if(!empty($customerGroup)){
+        if(!empty($customerGroup) || $customerGroup=="0"){
+
             $customerGroup = explode(",", $customerGroup);
             $collection = $collection->
             addFieldToFilter("customer_group_id",array("in"=>$customerGroup));
@@ -348,7 +349,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->where($condition);
                    // echo $collection->getSelect();
 
-       
+
 
 
 
@@ -417,13 +418,15 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
         )); */
 
         $customerGroup = $this->getFilterData()->getCustomerGroup();
+
+
         if(!empty($customerGroup)){
             $customerGroup = $customerGroup[0];
         }
         if(!empty($customerGroup)){
             $customerGroup = explode(",", $customerGroup);
         }
-        if(!empty($customerGroup)){
+        if(!empty($customerGroup) || $customerGroup=="0"){
         $this->addColumn('customer_group_id', array(
             'header'    => Mage::helper('sales')->__('Customer Group'),
             'index'     => 'customer_group_id',
