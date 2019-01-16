@@ -631,13 +631,13 @@ a#foo2_next {
 {
 	position:absolute;
 	bottom: 10px;
-	left: 65px;
+	left: 55px;
 }
 #allureAlertBox #okConfirm
 {
 	position:absolute;
 	bottom: 10px;
-	left: 170px;
+	left: 175px;
 }
 
 #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
