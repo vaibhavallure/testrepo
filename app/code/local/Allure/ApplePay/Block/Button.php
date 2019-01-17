@@ -40,7 +40,7 @@ class Allure_ApplePay_Block_Button extends Mage_Core_Block_Template
     {
         return $this->helper('allure_applepay')->getMerchantId();
     }
-    
+
     /**
      * Return Merchant Name
      */
@@ -100,12 +100,13 @@ class Allure_ApplePay_Block_Button extends Mage_Core_Block_Template
     {
         if (!Mage::getSingleton('allure_applepay/config')->isEnabled()) {
             return false;
-        }
-        // Viewing single product
-        else if (Mage::registry('current_product')) {
-             return $this->helper('allure_applepay')->isEnableProductPayments();
-        }
-        else {
+        } else if (Mage::registry('current_product')) { // Viewing single product
+			// Skip Gift Card
+			if (Mage::registry('current_product')->getId() == 43357) return false;
+
+            return $this->helper('allure_applepay')->isEnableProductPayments();
+
+        } else {
             return ($this->helper('allure_applepay')->isEnableProductPayments() && (!Mage::getSingleton('allure_applepay/config')->isCheckoutOnepage() || Mage::getSingleton('allure_applepay/config')->showPayOnCart()));
         }
     }

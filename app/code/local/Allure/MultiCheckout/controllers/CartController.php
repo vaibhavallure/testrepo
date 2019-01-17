@@ -12,7 +12,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
         $city = (string) $info['city'];
         $region = (string) $info['region'];
         $regionId = (string) Mage::getModel('directory/region')->load($region, 'default_name')->getRegionId();
-        
+
         $this->_getQuote()
             ->getShippingAddress()
             ->setCountryId($country)
@@ -22,9 +22,9 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
             ->setRegion($region)
             ->setCollectShippingRates(true);
         $this->_getQuote()->save();
-        
+
         $this->_getSession()->setCartWasUpdated(true);
-        
+
         $code = (string) 'flatrate_flatrate';
         if (! empty($code)) {
             $shippingAddress = $this->_getQuote()->getShippingAddress();
@@ -32,14 +32,15 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 ->collectShippingRates()
                 ->save();
             $taxes = Mage::getSingleton('sales/quote_address_total_tax',
-                    array(
-                            'store' => $this->_getQuote()->getStore()
-                    ));
+                array(
+                        'store' => $this->_getQuote()->getStore()
+                )
+			);
             $taxes->collect($shippingAddress);
         }
-        
+
         $this->_getCart()->saveQuote();
-        
+
         $this->_getSession()->setCartWasUpdated(true);
     }
 
@@ -54,7 +55,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 'message' => '',
                 'disable' => false
         );
-        
+
         /**
          * No reason continue with empty shopping cart
          */
@@ -67,13 +68,13 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 die(json_encode($response));
             return;
         }
-        
+
         $couponCode = (string) $this->getRequest()->getParam('coupon_code');
         if ($this->getRequest()->getParam('remove') == 1) {
             $couponCode = '';
         }
         $oldCouponCode = $this->_getQuote()->getCouponCode();
-        
+
         if (! strlen($couponCode) && ! strlen($oldCouponCode)) {
             if (! $isAjax)
                 $this->_goBack();
@@ -81,7 +82,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 die(json_encode($response));
             return;
         }
-        
+
         try {
             $this->_getQuote()
                 ->getShippingAddress()
@@ -91,11 +92,11 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                 ->setCouponCode(strlen($couponCode) ? $couponCode : '')
                 ->collectTotals()
                 ->save();
-            
+
             // coupon code apply to two shipment quote's.
             $_checkoutHelper = Mage::helper('allure_multicheckout');
             if (strtolower($this->_getQuote()->getDeliveryMethod()) == strtolower($_checkoutHelper::TWO_SHIP)) {
-                
+
                 $model = Mage::getModel('checkout/type_onepage');
                 $model->getQuoteOrdered()
                     ->getShippingAddress()
@@ -105,7 +106,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                     ->setCouponCode(strlen($couponCode) ? $couponCode : '')
                     ->collectTotals()
                     ->save();
-                
+
                 $model->getQuoteBackordered()
                     ->getShippingAddress()
                     ->setCollectShippingRates(true);
@@ -115,7 +116,7 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
                     ->collectTotals()
                     ->save();
             }
-            
+
             if (strlen($couponCode)) {
                 if ($couponCode == $this->_getQuote()->getCouponCode()) {
                     if (! $isAjax) {
@@ -163,10 +164,11 @@ class Allure_MultiCheckout_CartController extends Ecp_Shoppingcart_CartControlle
             }
             Mage::logException($e);
         }
-        
+
         if (! $isAjax)
             $this->_goBack();
         else
             die(json_encode($response));
     }
 }
+

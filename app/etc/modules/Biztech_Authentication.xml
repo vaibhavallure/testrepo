@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
 /**
  * @category   Biztech
  * @package    Biztech_Inventorysystementerprise
@@ -10,8 +10,8 @@
 <config>
     <modules>
         <Biztech_Authentication>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Biztech_Authentication>
     </modules>
-</config> 
+</config>

@@ -898,7 +898,14 @@ class Amasty_Customerattr_Model_Observer
         $customerGridClass = Mage::getConfig()->getBlockClassName(
             'adminhtml/customer_grid'
         );
-        $parentClass = get_class($block->getParentBlock());
+		$parentBlock = $block->getParentBlock();
+
+		$parentClass = NULL;
+
+		if ($parentBlock) {
+        	$parentClass = get_class($parentBlock);
+		}
+		
         if ($massactionClass == get_class($block)
             && $parentClass == $customerGridClass
         ) {

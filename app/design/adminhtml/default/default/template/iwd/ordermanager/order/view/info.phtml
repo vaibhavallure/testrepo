@@ -171,6 +171,24 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                      	<td class="label"><label><?php echo Mage::helper('sales')->__('Cashier') ?></label></td>
                         <td class="value"><strong><?php echo $empName;?></strong></td>
                      </tr>
+                     <?php $origTeamworkId = $_order->getTeamworkOrigReceiptId();?>
+                     <?php if($origTeamworkId):?>
+                     <tr style="color: #eb5e00;">
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Original Receipt Id') ?></label></td>
+                        <td class="value"><strong><?php echo $origTeamworkId;?></strong></td>
+                     </tr>
+                     <tr style="color: #eb5e00;">
+                     	<?php $incrementId = "TW-".$origTeamworkId;?>
+                     	<?php $orderObj = Mage::getModel('sales/order')->loadByIncrementId($incrementId);?>
+                     	<?php $urlKey = $incrementId;?>
+                     	<?php if($orderObj):?>
+                     	<?php $orderUrl = Mage::helper("adminhtml")->getUrl("adminhtml/sales_order/view/order_id/{$orderObj->getId()}");?>
+                     	<?php $urlKey = "<a href='".$orderUrl."' target='_blank'>".$incrementId."</a>"?>
+                     	<?php endif;?>
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Referenced Order Id') ?></label></td>
+                        <td class="value"><strong><?php echo $urlKey?></strong></td>
+                     </tr>
+                     <?php endif;?>
                      <?php endif;?>
                  <?php endif;?>
                  

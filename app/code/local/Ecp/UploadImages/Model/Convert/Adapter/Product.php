@@ -280,6 +280,9 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
         if (count($delOldFiles)>0) {
             foreach ($delOldFiles as $delfile) {
                 $media->remove($productId, $delfile);
+                /*@allure code added to remove image */
+                $source  = Mage::getBaseDir('media'). DS . 'catalog' . DS . 'product';
+                @unlink($source.$delfile);
             }
         }    
 

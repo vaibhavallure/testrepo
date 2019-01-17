@@ -191,7 +191,7 @@
                                     <input type="text" name="billing[telephone]"
                                            value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>"
                                            title="<?php echo $this->__('Telephone') ?>"
-                                           class="validate-intl-telephone billing-itel-tel-cstm<?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>"
+                                           class="billing-itel-tel-cstm <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>"
                                            id="billing:telephone"/>
                                 </div>
                             </div>
@@ -317,6 +317,7 @@
 <script type="text/javascript">
     jQuery(document).ready(function () {
         //  jQuery('.billing-itel-tel-cstm').attr('value','')
+        initializeItelTelInputBilling();
         if (jQuery('#billing\\:country_id').val() == 'US' || jQuery('#billing\\:country_id').val() == '') {
             jQuery('#country_notice').hide();
         } else {

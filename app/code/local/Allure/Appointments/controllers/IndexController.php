@@ -2,6 +2,8 @@
 class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Action{
     public function indexAction ()
     {
+
+
         // MODIFY ACTION start by bhagya
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
@@ -202,6 +204,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 
         $post_data = $this->getRequest()->getPost();
 
+
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $this->getRequest()->getParam('store');
 
@@ -219,9 +222,16 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 $configData = $this->getAppointmentStoreMapping();
             try {
                 if (isset($post_data['id'])) {
+                    $step="modification";
+                    $action="modify";
                     $old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
                     if (empty($post_data['app_date']))
                         $post_data['app_date'] = date('m/d/Y', strtotime($old_appointment->getAppointmentStart()));
+                }
+                else
+                {
+                    $step="save";
+                    $action="save";
                 }
 
                 // http://www.geoplugin.net/php.gp?ip=219.91.251.70
@@ -243,8 +253,40 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 $post_data['phone'] = $phno;
                 $storeId = $post_data['store_id'];
 
+
+                if($action=="save")
+                $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
+
+
+
+                if($this->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
+                   // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
+                    $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Been Already Taken. Please Select Another Slot ",$post_data),"save");
+
+                    $piercer = $this->checkIfAnotherPiercerAvailable($post_data);
+
+                    if($piercer['success'])
+                    {
+                        $post_data['piercer_id']=$piercer['p_id'];
+                        $this->addLog($this->createSaveLogString("new piercer assigned ",$post_data),"save");
+                    }
+                    else {
+                        $this->addLog($this->createSaveLogString("not found any other piercer ",$post_data),"save");
+                        Mage::getSingleton('core/session')->setSlotInvalid("true");
+                        $this->_redirectReferer() . $appendUrl;
+                        return;
+                    }
+                }
+
+
+
                 $storeKey = array_search($storeId, $configData['stores']);
                 $model = Mage::getModel('appointments/appointments')->addData($post_data)->save();
+
+                $bookingdata=$post_data;
+                $bookingdata['booking_id']=$model->getId();
+
+                $this->addLog($this->createSaveLogString("After ".$step,$bookingdata),$action);
 
                 // Create customer if flag set
                 if ($post_data['password'] != null || $post_data['password'] != '') {
@@ -333,6 +375,9 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     'apt_modify_link' => $apt_modify_link
                 );
 
+
+
+
                 //send Customer email
                 $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
                 $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
@@ -397,6 +442,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 return;
             } catch(Exception $e) {
                 Mage::getSingleton("core/session")->addError($e->getMessage());
+
                 $this->_redirectReferer() . $appendUrl;
                 return;
             }
@@ -492,6 +538,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     /* Modify or Cancel URL Action by bhagya */
     public function modifyAction ()
     {
+
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
 
@@ -515,6 +562,13 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     $model = $model;
                     break;
                 }
+
+
+                $logdata=$model->getData();
+                $logdata['ip']=$this->get_client_ip();
+                $this->addLog($this->createSaveLogString("Modify INIT ",$logdata),"modify");
+
+
                 Mage::register('appointment_modified', $model);
                 Mage::getSingleton("core/session")->setData(
                     'appointment_availablity', true);
@@ -547,6 +601,13 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 
             try {
                 $model->setId($apt_id)->save();
+
+
+                $logdata=$model->getData();
+                $logdata['ip']=$this->get_client_ip();
+                $this->addLog($this->createSaveLogString("Canceled",$logdata),"modify");
+
+
                 echo "Your scheduled Appointment is Cancelled successfully.";
                 $configData = $this->getAppointmentStoreMapping();
                 $storeKey = array_search ($storeId, $configData['stores']);
@@ -788,4 +849,114 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     private function getAppointmentStoreMapping(){
         return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     }
+
+    public function validateSlotBeforeBookAppointment($data)
+    {
+        $collection = Mage::getModel('appointments/appointments')->getCollection();
+        $collection->addFieldToFilter('piercer_id', array('eq' => $data['piercer_id']));
+        $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
+        $collection->addFieldToFilter('app_status', array('eq' => 2));
+        $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
+        $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+
+       if($collection->getSize())
+           return true;
+       else
+           return false;
+
+    }
+
+    public function checkIfAnotherPiercerAvailable($data)
+    {
+
+        $result=array();
+        $result['success']=false;
+
+        $collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' =>$data['store_id']))
+            ->addFieldToFilter('is_active', array('eq' => '1'))
+            ->addFieldToFilter('id', array('neq' => $data['piercer_id']));
+        $collection->addFieldToFilter('working_days', array('like' => '%'.$data['app_date'].'%'));
+
+
+         $day = date('l', strtotime($data['app_date']));
+
+         $slotAVL=false;
+
+        if($collection->getSize())
+        {
+            foreach ($collection as $p)
+            {
+
+
+                $workingHours = $p->getWorkingHours();
+                $workingHours = unserialize($workingHours);
+
+                foreach ($workingHours as $workSlot) {
+
+                    if ($workSlot['day'] != $day) {
+                        continue;
+
+                    }
+
+                     $workStart = $workSlot['start'];
+                     $workend=$workSlot['end'];
+                     $breakstart=$workSlot['break_start'];
+                     $breakend=$workSlot['break_end'];
+                     $app_start=explode(":",explode(" ",$data['appointment_start'])[1])[0];
+                     $app_end= explode(":",explode(" ",$data['appointment_end'])[1])[0];
+
+
+
+                   if(($workStart<=$app_start && $workend>=$app_end) && (($breakstart>=$app_end && $breakstart>$app_start) || ($breakend<=$app_start)))
+                   {
+                       $slotAVL=true;
+                   }
+                }
+
+                if($slotAVL) {
+                    $collection = Mage::getModel('appointments/appointments')->getCollection();
+                    $collection->addFieldToFilter('piercer_id', array('eq' => $p->getId()));
+                    $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
+                    $collection->addFieldToFilter('app_status', array('eq' => 2));
+                    $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
+                    $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+                    if (!$collection->getSize()) {
+                        $result['success'] = true;
+                        $result['p_id'] = $p->getId();
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+        return $result;
+    }
+
+    /**
+     * add customer log
+     */
+    private function addLog($data,$action){
+       Mage::helper("appointments/logs")->addCustomerLog($data,$action);
+    }
+
+    private function createSaveLogString($step,$customerInfo)
+    {
+        $str=$step."=> ";
+        if(array_key_exists("booking_id",$customerInfo))
+              $str.="Booking_id=>".$customerInfo['booking_id']." ";
+
+        if(array_key_exists("id",$customerInfo))
+            $str.="Booking_id=>".$customerInfo['id']." ";
+
+
+        $str.="Email=>".$customerInfo['email']." Cutomer_id=>".$customerInfo['customer_id']." store_id=>".$customerInfo['store_id']." piercer_id=>".$customerInfo['piercer_id']." piercing_qty=>".$customerInfo['piercing_qty']. " appointment_start=>".$customerInfo['appointment_start']." =>".$customerInfo['appointment_end']." ip=>".$customerInfo['ip'];
+
+      return $str;
+    }
+
+
 }

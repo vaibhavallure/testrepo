@@ -118,7 +118,6 @@ class Ecp_ReportToEmail_Model_Observer
                      ->columns('sum(IFNULL(base_total_invoiced,0)) total_invoiced_amount')
                      ->columns('sum(IFNULL(base_total_canceled,0)) total_canceled_amount')
                      ->columns('sum(IFNULL(base_total_paid,0)) total_paid_amount')
-                     ->columns('count(base_total_refunded,0) total_refunded_count')
                      ->columns('sum(IFNULL(base_total_refunded,0)) total_refunded_amount')
                      ->columns('sum(IFNULL(base_tax_amount,0)-IFNULL(base_tax_canceled,0)) total_tax_amount')
                      ->columns('sum(IFNULL(base_tax_invoiced,0)-IFNULL(base_tax_refunded,0)) total_tax_amount_actual')
@@ -127,6 +126,9 @@ class Ecp_ReportToEmail_Model_Observer
                      ->columns('sum(ABS(IFNULL(base_discount_amount,0))-IFNULL(base_discount_canceled,0)) total_discount_amount')
                      ->columns('sum(IFNULL(base_discount_invoiced,0)-IFNULL(base_discount_refunded,0)) total_discount_amount_actual')
                      ->where("store_id IN('$storesId') AND create_order_method = 0 AND (created_at >='$from' AND created_at <='$to')");
+
+
+
 
                 $currency=Mage::app()->getStore($storeId)->getCurrentCurrencyCode();
                 $symbol=Mage::app()->getLocale()->currency($currency)->getSymbol();
@@ -347,7 +349,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<div   style="border-top: 3px solid white; text-align: center;float:left;background-color:#374254">';
                 $mailbody .= '<table width="300"  data-store_id="'.$storeId.'" style="border:1px solid white;" cellpadding="7" >';
                 $mailbody .= '<tbody>';
-                $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>'.$storeObj->getName().'</strong></u></span></span></td></tr>';
+             //   $mailbody .= '<tr><td colspan="2" style="text-align: center;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong>'.$storeObj->getName().'</strong></u></span></span></td></tr>';
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Orders</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">' . $data['orders_count'] . ''.$this->getArrow($data2['orders_count'],$data['orders_count'],false,'orders_count').'</span></span></td>';
@@ -359,7 +361,7 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-                $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Refunds</strong></u></span></span></td></tr>';
+             //   $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Refunds</strong></u></span></span></td></tr>';
 
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Number Of Refunds</strong></span></span></span></td>';
@@ -374,7 +376,7 @@ class Ecp_ReportToEmail_Model_Observer
 
 
 
-                $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Discounts</strong></u></span></span></td></tr>';
+               // $mailbody .= '<tr><td  style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px;"><u><strong># Discounts</strong></u></span></span></td></tr>';
 
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Number Of Discounts</strong></span></span></span></td>';

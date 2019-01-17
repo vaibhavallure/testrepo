@@ -4,7 +4,7 @@
 		<payment>
 			<groups>
 				<applepay translate="label" module="allure_applepay">
-					<label>Apple Pay (Authorize.Net)</label>
+					<label>Apple Pay</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>780</sort_order>
 					<show_in_default>1</show_in_default>
