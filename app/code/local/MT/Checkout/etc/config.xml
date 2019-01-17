@@ -6,6 +6,23 @@
         </MT_Checkout>
     </modules>
     <global>
+    	<blocks>
+			<allure_mtcheckout>
+				<class>MT_Checkout_Block</class>
+			</allure_mtcheckout>
+		</blocks>
+		<models>
+            <adminhtml>
+                <rewrite>
+					<sales_order_create>MT_Checkout_Model_Sales_Order_Create</sales_order_create>
+                </rewrite>
+            </adminhtml>
+        </models>
+		<helpers>
+			<allure_mtcheckout>
+				<class>MT_Checkout_Helper</class>
+			</allure_mtcheckout>
+		</helpers>
         <fieldsets>
             <sales_convert_quote>
                 <no_signature_delivery>
@@ -25,4 +42,24 @@
             </checkout>
         </routers>
     </frontend>
+    <admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<MT_Checkout before="Mage_Adminhtml">MT_Checkout_Adminhtml</MT_Checkout>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	<adminhtml>
+	 	<layout>
+            <updates>
+                <allure_mtcheckout>
+                    <file>allure/mtcheckout.xml</file>
+                </allure_mtcheckout>
+            </updates>
+        </layout>
+    </adminhtml>
 </config>

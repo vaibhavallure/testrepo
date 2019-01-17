@@ -273,6 +273,11 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                         $harrodsColor=$harrodsColorOptionsArray[$optionLabel];
                     
 
+
+                    $splitsku=$this->splitSku($_product->getSku());
+
+
+
                     $data = array();
                     $skuConfig = $this->charEncode(explode("|",$_product->getSku())[0]);
                     $data['recid'] = $this->charEncode($sr_no); //$_product->getSku();
@@ -298,7 +303,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['consign'] = $this->charEncode('FALSE');
                     $data['vendor'] = $this->charEncode('70000369'); //check with Todd
                     $data['vendor_subrange'] = $this->charEncode('CON');
-                    $data['vendors_art_no'] = substr($_product->getSku(), 0, 35);   //Config SKU
+                    $data['vendors_art_no'] = $splitsku['p_sku'];//substr($_product->getSku(), 0, 35);   //Config SKU
                     $data['tax_code'] = $this->charEncode('C0');
                     $data['brand'] = $this->charEncode('MARIA TASH');
                     $data['range'] = '';
@@ -333,6 +338,9 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['siteDelimited'] = $this->charEncode('SiteDelim');
 //                    $data['string_for_generic_lines'] = '';
 
+                if($splitsku['p_size'])
+                $data['gtin'] = $this->charEncode("(".$splitsku['p_size'].";".$_product->getGtinNumber().";;;;)");
+                else
                 $data['gtin'] = $this->charEncode("(ONE_SIZE;".$_product->getGtinNumber().";;;;)");
 
                 $data['sizeDelimited'] = $this->charEncode('SizeDelim');
@@ -521,6 +529,32 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         {
             $this->add_log($e->getMessage());
         }
+    }
+
+    public function splitSku($sku)
+    {
+        $skuAr=explode("|",$sku);
+        $data['p_sku']=$skuAr[0];
+
+        if(count($skuAr)>2)
+        {
+            $last=end($skuAr);
+            if(1 === preg_match('~[0-9]~', $last)){
+                #has numbers
+                $data['p_size']=trim(str_replace("MM","",$last));
+            }
+            else
+            {
+                $data['p_size']=trim(str_replace("EAR","",$last));
+            }
+
+        }
+        else
+        {
+            $data['p_size']=false;
+        }
+
+        return $data;
     }
 
 }

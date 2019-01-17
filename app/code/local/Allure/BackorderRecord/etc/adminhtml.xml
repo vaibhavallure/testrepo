@@ -4,14 +4,21 @@
         <allure>
             <children>
                 <backorderrecord module="backorderrecord">
-                    <title>Backorder</title>
+                    <title>Download Report</title>
                     <sort_order>3</sort_order>
                     <children>
                         <backorderrecord module="backorderrecord">
-                            <title>Download Report</title>
+                            <title>Back Order Report</title>
                             <sort_order>30</sort_order>
                             <action>adminhtml/backorderReport</action>
                         </backorderrecord>
+                    </children>
+                    <children>
+                        <refundreport module="backorderrecord">
+                            <title>Detail Refund Report</title>
+                            <sort_order>40</sort_order>
+                            <action>adminhtml/refundReport</action>
+                        </refundreport>
                     </children>
                 </backorderrecord>
             </children>

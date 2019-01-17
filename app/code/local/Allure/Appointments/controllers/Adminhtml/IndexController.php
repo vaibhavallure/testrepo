@@ -194,7 +194,26 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     
                     $post_data['phone'] = $phno;
                     $storeId = $post_data['store_id'];
-                    
+
+                    if($this->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
+
+
+                        $piercer = $this->checkIfAnotherPiercerAvailable($post_data);
+
+                        if($piercer['success'])
+                        {
+                            $post_data['piercer_id']=$piercer['p_id'];
+                        }
+                        else {
+                            Mage::getSingleton("core/session")->addError("Sorry This Slot Has Already Taken. Please Select Another Slot.");
+                            $this->_redirect("admin_appointments/adminhtml_appointments/new");
+                            return;
+                        }
+
+
+
+                    }
+
                     $storeKey = array_search($storeId, $configData['stores']);
                     $model = Mage::getModel('appointments/appointments')->addData($post_data)->save();
                     
@@ -807,5 +826,92 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         }
         return $ip;
     }
-   
+
+
+    public function validateSlotBeforeBookAppointment($data)
+    {
+        $collection = Mage::getModel('appointments/appointments')->getCollection();
+        $collection->addFieldToFilter('piercer_id', array('eq' => $data['piercer_id']));
+        $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
+        $collection->addFieldToFilter('app_status', array('eq' => 2));
+        $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
+        $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+
+        if($collection->getSize())
+            return true;
+        else
+            return false;
+
+    }
+
+    public function checkIfAnotherPiercerAvailable($data)
+    {
+
+        $result=array();
+        $result['success']=false;
+
+        $collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' =>$data['store_id']))
+            ->addFieldToFilter('is_active', array('eq' => '1'))
+            ->addFieldToFilter('id', array('neq' => $data['piercer_id']));
+        $collection->addFieldToFilter('working_days', array('like' => '%'.$data['app_date'].'%'));
+
+
+        $day = date('l', strtotime($data['app_date']));
+
+        $slotAVL=false;
+
+        if($collection->getSize())
+        {
+            foreach ($collection as $p)
+            {
+
+
+                $workingHours = $p->getWorkingHours();
+                $workingHours = unserialize($workingHours);
+
+                foreach ($workingHours as $workSlot) {
+
+                    if ($workSlot['day'] != $day) {
+                        continue;
+
+                    }
+
+                    $workStart = $workSlot['start'];
+                    $workend=$workSlot['end'];
+                    $breakstart=$workSlot['break_start'];
+                    $breakend=$workSlot['break_end'];
+                    $app_start=explode(":",explode(" ",$data['appointment_start'])[1])[0];
+                    $app_end= explode(":",explode(" ",$data['appointment_end'])[1])[0];
+
+
+
+                    if(($workStart<=$app_start && $workend>=$app_end) && (($breakstart>=$app_end && $breakstart>$app_start) || ($breakend<=$app_start)))
+                    {
+                        $slotAVL=true;
+                    }
+                }
+
+                if($slotAVL) {
+                    $collection = Mage::getModel('appointments/appointments')->getCollection();
+                    $collection->addFieldToFilter('piercer_id', array('eq' => $p->getId()));
+                    $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
+                    $collection->addFieldToFilter('app_status', array('eq' => 2));
+                    $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
+                    $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+                    if (!$collection->getSize()) {
+                        $result['success'] = true;
+                        $result['p_id'] = $p->getId();
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+        return $result;
+    }
+
 }

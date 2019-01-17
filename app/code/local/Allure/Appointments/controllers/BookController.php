@@ -337,7 +337,7 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
                     'name' => Mage::getStoreConfig("trans_email/bookings/name"),
                     'email' => $configData['store_email'][$storeKey]
                 );
-                
+
                 try {
                     if ($old_appointment) {
                         if($enableCustomerEmail){
@@ -745,27 +745,32 @@ class Allure_Appointments_BookController extends Mage_Core_Controller_Front_Acti
         return $ip;
     }
 
-    public function facebookAction(){
-      //  header('Access-Control-Allow-Origin: *');
+    public function facebookAction()
+	{
+		$storeCode = $this->getRequest()->getParam('code');
 
+		$storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
+
+        // MODIFY ACTION start by bhagya
         $apt_id = $this->getRequest()->getParam('id');
         $apt_email = $this->getRequest()->getParam('email');
 
-        if($apt_id && $apt_email)
-        {
+        if ($apt_id && $apt_email) {
+
             $models = Mage::getModel('appointments/appointments')->getCollection();
             $models->addFieldToFilter('id',$apt_id)->addFieldToFilter('email',$apt_email);
-            if(count($models)){
+
+            if (count($models)){
                 foreach ($models as $model){
                     $model=$model;break;
                 }
                 Mage::register('apt_modify_data',$model);
                 Mage::getSingleton("core/session")->setData('appointmentData_availablity',true);
-            }
-            else{
+            } else {
                 Mage::getSingleton("core/session")->setData('appointmentData_availablity',false);
             }
         }
+		
         $this->loadLayout();
         $this->getLayout()->getBlock("head")->setTitle($this->__("Appointments"));
 

@@ -2,26 +2,26 @@
 /**
  * @author allure
  */
-class Allure_Teamwork_Model_Observer{	
-    
+class Allure_Teamwork_Model_Observer{
+
     public function addCustomers(){
         $helper = Mage::helper("allure_teamwork");
         $status = $helper->getTeamworkStatus();
         $teamwoek_log_file = "teamwork_mag_customer_3.log";
         Mage::log("Teamwork Cron start",Zend_log::DEBUG,$teamwoek_log_file,true);
         if($status){
-            
+
             $collection = Mage::getModel("allure_teamwork/teamwork")
                 ->getCollection()
                 ->setOrder('customer_id', 'asc');
-            
+
             $latestItemId = $collection->getLastItem()->getCustomerId();
-            
+
             if($latestItemId){
-                
+
                 $start = $latestItemId + 1;
                 $end   = $start + 100;
-            
+
                 $customers  = Mage::getModel('customer/customer')
                     ->getCollection()
                     ->addAttributeToSelect('*')
@@ -36,8 +36,8 @@ class Allure_Teamwork_Model_Observer{
                             )
                         )
                     ->load();
-                
-                    
+
+
                     $model  = Mage::getModel("allure_teamwork/teamwork");
                     $_accessToken = $helper->getTeamworkAccessToken();
                     $_url         = "https://api.teamworksvs.com/externalapi3/customers/register";
@@ -56,12 +56,12 @@ class Allure_Teamwork_Model_Observer{
                             }
                             $request['customText1'] = $data['website_id'];
                             $request['customFlag1'] = ($data['group_id'] == 2 )?true:false;
-                            
+
                             $billingAddr  = $customer->getDefaultBillingAddress();
                             $shippingAddr = $customer->getDefaultShippingAddress();
-                            
+
                             $addressArr =  array();
-                            
+
                             if($billingAddr){
                                 $billingAddrData = $billingAddr->getData();
                                 $guid1 = $this->getGuid4();
@@ -78,12 +78,12 @@ class Allure_Teamwork_Model_Observer{
                                 );
                                 $request['defaultBillingAddressID'] = $guid1;
                             }
-                            
+
                             if(!empty($billingAddrData['telephone'])){
                                 if($billingAddrData['telephone'] !="000-000-0000")
                                 $request['phone1'] = (object) array("number"=>$billingAddrData['telephone']);
                             }
-                            
+
                             if($shippingAddr){
                                 $shippingAddrData = $shippingAddr->getData();
                                 $guid2 = $this->getGuid4();
@@ -100,9 +100,9 @@ class Allure_Teamwork_Model_Observer{
                                 );
                                 $request['defaultShippingAddressID'] = $guid2;
                             }
-                            
+
                             $request['addresses'] = $addressArr;
-                            
+
                             $sendRequest = curl_init($_url);
                             curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
                             curl_setopt($sendRequest, CURLOPT_HEADER, false);
@@ -110,37 +110,37 @@ class Allure_Teamwork_Model_Observer{
                             curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
                             curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
                             curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
-                            
+
                             curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
                                 "Content-Type: application/json",
                                 "Access-Token: {$_accessToken}"
                             ));
-                            
+
                             $json_arguments = json_encode($request);
                             curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
                             $response = curl_exec($sendRequest);
                             curl_close($sendRequest);
                             $responseObj = json_decode($response);
-                            
+
                             $model = Mage::getModel("allure_teamwork/teamwork")->load($customer_id,'customer_id');
                             if(!$model->getId()){
                                 $model = Mage::getModel("allure_teamwork/teamwork");
                             }
-                            
+
                             $model->setCustomerId($customer_id)
                                 ->setEmail($email)
                                 ->setAutoGenBillId($guid1)
                                 ->setAutoGenShipId($guid2);
-                            
+
                             if(!$responseObj->errorCode){
                                 $teamworkCustomerId = $responseObj->customer->customerID;
                                 $customerObj = Mage::getModel("customer/customer")->load($customer_id);
                                 $customerObj->setTeamworkCustomerId($teamworkCustomerId);
                                 $customerObj->save();
-                                
+
                                 $model->setResponse($response)
                                     ->setTeamworkCustomerId($teamworkCustomerId);
-                                
+
                                     Mage::log("id-:".$customer->getId()." email-:".$email." == teamwork_id-:".$teamworkCustomerId,Zend_log::DEBUG,$teamwoek_log_file,true);
                             }
                             else {
@@ -148,7 +148,7 @@ class Allure_Teamwork_Model_Observer{
                                 ->setResponse($response);
                                 Mage::log("id-:".$customer->getId()." email-:".$email." == error-:".$response,Zend_log::DEBUG,$teamwoek_log_file,true);
                             }
-                            
+
                             $model->save();
                             $model = null;
                         }catch (Exception $e){
@@ -158,7 +158,7 @@ class Allure_Teamwork_Model_Observer{
               }
           }
      }
-    
+
      function getGuid4(){
         $charid = strtolower(md5(uniqid(rand(), true)));
         $hyphen = chr(45);                  // "-"
@@ -173,22 +173,22 @@ class Allure_Teamwork_Model_Observer{
         $rbrace;
         return strtoupper($guidv4);
     }
-    
+
     public function updateCustomers(){
         $_url         = "https://api.teamworksvs.com/externalapi3/customers/update";
         $_accessToken = "bWFyaWF0dGVzdDIgNTYyOTQ5OTUzNDIxMzEyMCB1ZnlQM3VIM05nN1g1WTJYODdaWk5PSk91SjF1dXEzUw==";
-        
+
         $teamwoek_log_file = "teamwork_mag_customer_3_update.log";
-        
+
         $_collection = Mage::getModel('allure_teamwork/teamwork')->getCollection();
         $_collection->getSelect()
         ->where("last_id = (select max(last_id) from allure_teamwork_customer)");
-        
+
         $latestItemId = $_collection->getLastItem()->getLastId();
         $count=$latestItemId;
         $start = $_collection->getLastItem()->getId();
         $end = $start + 400;
-        
+
         $collection = Mage::getModel("allure_teamwork/teamwork")->getCollection()
             ->addFieldToFilter('id', array(
             'gteq' => $start
@@ -209,7 +209,7 @@ class Allure_Teamwork_Model_Observer{
                 if (! empty($email)) {
                     $request = array();
                     $request['customerID'] = $teamwork->getTeamworkCustomerId();
-                    
+
                     $magentoCustomerId = $teamwork->getCustomerId();
                     if ($magentoCustomerId != 0) {
                         $request['magentoID'] = $magentoCustomerId;
@@ -220,22 +220,22 @@ class Allure_Teamwork_Model_Observer{
                             }
                         }
                     }
-                    
+
                     if (! empty($email)) {
                         $request['email1'] = (object) array(
                             "email" => $email,
                             'acceptMarketing' => true
                         );
                     }
-                    
+
                     $customerNote = $teamwork->getCustomerNote();
                     if (! empty($customerNote)) {
                         $request['largeMemo'] = $customerNote;
                     }
-                    
+
                     $counterpntCustNo = $teamwork->getCounterpointCustNo();
                     $isCounterpointCust = $teamwork->getIsCounterpointCust();
-                    
+
                     $request['customText4'] = $counterpntCustNo;
                     $sendRequest = curl_init($_url);
                     curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
@@ -244,12 +244,12 @@ class Allure_Teamwork_Model_Observer{
                     curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
                     curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
                     curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
-                    
+
                     curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
                         "Content-Type: application/json",
                         "Access-Token: {$_accessToken}"
                     ));
-                    
+
                     $json_arguments = json_encode($request);
                     curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
                     $response = curl_exec($sendRequest);
@@ -260,7 +260,7 @@ class Allure_Teamwork_Model_Observer{
                     Mage::log("id-:" . $teamwork->getId() . " email-:" . $email . " updated", Zend_log::DEBUG, 'teamwork_mag_customer_3_update_response.log', true);
                     Mage::log("id-:" . $teamwork->getId() . " Response-:" . $response, Zend_log::DEBUG, 'teamwork_mag_customer_3_update_response.log', true);
                     Mage::log("id-:" . $teamwork->getId() . " email-:" . $email . " updated", Zend_log::DEBUG, $teamwoek_log_file, true);
-                    
+
                     $model = Mage::getModel('allure_teamwork/teamwork')->load($teamwork->getId());
                     if ($model->getId()) {
                         $model->setLastId($count)->save();
@@ -271,8 +271,8 @@ class Allure_Teamwork_Model_Observer{
             }
         }
     }
-    
-    
+
+
     /**
      * add cp customer related info into mage customer
      * table allure_customer_counterpoint
@@ -292,10 +292,10 @@ class Allure_Teamwork_Model_Observer{
             $collection->setPageSize($size);
             $collection->setOrder('entity_id', 'asc');
             $collection->getSelect()->group('customer_id');
-            
+
             $lastPage = $collection->getLastPageNumber();
             if($page < $lastPage){
-            
+
                 Mage::log("count = ".$collection->getSize(),Zend_log::DEBUG,$logFile,true);
                 $cnt = 0;
                 $resource       = Mage::getSingleton('core/resource');
@@ -312,7 +312,7 @@ class Allure_Teamwork_Model_Observer{
                             if($customer->getCustomerType() == 0){
                                 $customer->setCustomerType(4);   //magento cust
                             }
-                            
+
                             $model = Mage::getModel("allure_teamwork/cpcustomer")->load($custNo,"cust_no");
                             if($model->getId()){
                                 $cust_note = $model->getCustNote();
@@ -322,14 +322,14 @@ class Allure_Teamwork_Model_Observer{
                             $customer->setTempEmail($email);
                             $customer->save();
                             Mage::log($cnt ." customer_id:".$customerId,Zend_log::DEBUG,$logFile,true);
-                            
+
                             if (($cnt % 100) == 0) {
                                 $writeAdapter->commit();
                                 $writeAdapter->beginTransaction();
                             }
                         }
                         $customer = null;
-                        
+
                     }catch (Exception $exc){
                         Mage::log("customer_id:".$customerId." Exc:".$exc->getMessage(),Zend_log::DEBUG,$logFile,true);
                     }
@@ -346,16 +346,16 @@ class Allure_Teamwork_Model_Observer{
         }
         Mage::log("Finish...",Zend_log::DEBUG,$logFile,true);
     }
-    
-    
+
+
     /**
      * add arr_cust csv of cptr into magento customer
      * table allure_teamwork_ar_cust_cp
      */
     public function addCpCustomerIntoMagento(){
         $logFile = "cntr_create_cust_in_mag.log";
-        
-        
+
+
         try{
             $cnt    = 0;
             $size = 100;
@@ -363,29 +363,29 @@ class Allure_Teamwork_Model_Observer{
             $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
             $page = $mLog->getPage();
             $size = $mLog->getSize();
-            
+
             $resource       = Mage::getSingleton('core/resource');
             $writeAdapter   = $resource->getConnection('core_write');
             $writeAdapter->beginTransaction();
-            
+
             $collection = Mage::getModel("allure_teamwork/cpcustomer")->getCollection();
             $collection->setCurPage($page);
             $collection->setPageSize($size);
             $collection->setOrder('id', 'asc');
-            
+
             $lastPage = $collection->getLastPageNumber();
             if($page < $lastPage){
-                
+
                 $store = 'counterpoint_vmt';
-                
+
                 $storeVMT   = Mage::getModel('core/store')->load($store,'code');
                 $storeId    = $storeVMT->getId();
                 $websiteId  = $storeVMT->getWebsiteId();
-                
+
                 $alphabets = range('A','Z');
                 $numbers = range('0','9');
                 $additional_characters = array('#','@','$');
-                
+
                 foreach ($collection as $cpcust){
                     try{
                         $custNo = $cpcust->getCustNo();
@@ -428,10 +428,10 @@ class Allure_Teamwork_Model_Observer{
                         }else{
                             $email = $email1;
                         }
-                        
+
                         $firstName = $fstName;
                         $lastName  = $lstName;
-                        
+
                         if(empty($firstName) && empty($lastName)){
                             $name        = explode(" ", $name);
                             $firstName  = $name[0];
@@ -440,20 +440,20 @@ class Allure_Teamwork_Model_Observer{
                                 $lastName = $name[1];
                             }
                         }
-                        
+
                         $email = strtolower($email);
-                        
+
                         $collectionCust  = Mage::getModel('customer/customer')
                         ->getCollection()
                         ->addAttributeToSelect('*')
                         ->addAttributeToFilter('counterpoint_cust_no', array('eq' => $custNo));
-                        
+
                         if(!($collectionCust->getSize()>0)){
                             $groupId = 1; //general;
                             if($group == "B"){
                                 $groupId = 2; //wholesale;
                             }
-                            
+
                             $final_array = array_merge($alphabets,$numbers,$additional_characters);
                             $password = '';
                             $length = 6;  //password length
@@ -461,13 +461,13 @@ class Allure_Teamwork_Model_Observer{
                                 $keyV = array_rand($final_array);
                                 $password .= $final_array[$keyV];
                             }
-                            
+
                             //$password = $this->generateRandomPassword();
-                            
+
                             $customerObj = Mage::getModel('customer/customer')
                             ->setWebsiteId(0)
                             ->loadByEmail($email);
-                            
+
                             if($customerObj->getId()){
                                 $customerId = $customerObj->getId();
                                 $tempModel = Mage::getModel("allure_teamwork/temp")->load($customerId,"customer_id");
@@ -483,7 +483,7 @@ class Allure_Teamwork_Model_Observer{
                                 }
                             }else{
                                 Mage::log("come in add",Zend_log::DEBUG,$logFile,true);
-                                
+
                                 $customer = Mage::getModel("customer/customer");
                                 $customer->setWebsiteId($websiteId)
                                 ->setStoreId($storeId)
@@ -496,7 +496,7 @@ class Allure_Teamwork_Model_Observer{
                                 ->setCounterpointCustNo($custNo)
                                 ->setCustNote($custNote)
                                 ->save();
-                                
+
                                 $_billing_address = array (
                                     'firstname'  => $customer->getFirstname(),
                                     'lastname'   => $customer->getLastname(),
@@ -511,7 +511,7 @@ class Allure_Teamwork_Model_Observer{
                                     'telephone'  => $phone,
                                     'fax'        => '',
                                 );
-                                
+
                                 $address = Mage::getModel("customer/address");
                                 $address->setData($_billing_address)
                                 ->setCustomerId($customer->getId())
@@ -527,12 +527,12 @@ class Allure_Teamwork_Model_Observer{
                         $collectionCust = null;
                         $address  = null;
                         $customer = null;
-                        
+
                         if (($cnt % 100) == 0) {
                             $writeAdapter->commit();
                             $writeAdapter->beginTransaction();
                         }
-                        
+
                     }catch (Exception $e){
                         Mage::log("exc:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
                     }
@@ -543,7 +543,7 @@ class Allure_Teamwork_Model_Observer{
                     $mLog->setPage($page)->save();
                 }
                 $writeAdapter->commit();
-                
+
             }
         }catch (Exception $e){
             Mage::log("Exception:".$e->getMessage(),Zend_log::DEBUG,$logFile,true);
@@ -566,28 +566,28 @@ class Allure_Teamwork_Model_Observer{
             ->getCollection()
             ->setOrder('customer_id', 'asc'); */
             try{
-                
+
                 $operation = "import_customer_to_teamwork";
                 $mLog = Mage::getModel("allure_teamwork/log")
                     ->load($operation,'operation');
                 $latestItemId = $mLog->getPage();
                 $limit = $mLog->getSize();
-                
+
                 //$latestItemId = $collection->getLastItem()->getCustomerId();
-                
+
                 if($latestItemId){
-                    
+
                     $start = $latestItemId + 1;
                     $end   = $start + $limit;
-                    
+
                     $customers  = Mage::getModel('customer/customer')
                     ->getCollection()
                     ->addAttributeToSelect('*')
                     ->addAttributeToFilter('entity_id',array('gteq' => $start))
                     ->addAttributeToFilter('entity_id',array('lteq' => $end))
                     ->load();
-                            
-                            
+
+
                      $model  = Mage::getModel("allure_teamwork/teamwork");
                      $_accessToken = $helper->getTeamworkAccessToken();
                      $_url         = "https://api.teamworksvs.com/externalapi3/customers/register";
@@ -597,45 +597,45 @@ class Allure_Teamwork_Model_Observer{
                         try{
                             $data           = $customer->getData();
                             if(!$customer->getIsDuplicate()){
-                                
+
                                 $customer_id    = $customer->getId();
                                 $request        = array();
                                 $request['firstName'] = $data['firstname'];
                                 $request['lastName']  = $data['lastname'];
                                 $email = strtolower($data['email']);
-                                
+
                                 $request['magentoID'] = $customer_id;
-                                
+
                                 $cpCustNo = $customer->getCounterpointCustNo();
                                 if(!empty($cpCustNo)){
                                     $request['customText4'] = $cpCustNo;
                                 }
-                                
+
                                 $customerNote = $customer->getCustNote();
                                 if(!empty($customerNote)){
                                     $request['largeMemo'] = $customerNote;
                                 }
-                                
+
                                 if(!empty($data['email'])){
                                     $request['email1']    = (object) array(
                                         "email"=> $email,
                                         "acceptMarketing"=>true
                                     );
                                 }
-                                
+
                                 $taxVat = $customer->getTaxvat();
                                 if(!empty($taxVat)){
                                     $request['VATRegistrationNumber'] = $taxVat;
                                 }
-                                
+
                                 $request['customText1'] = $data['website_id'];
                                 $request['customFlag1'] = ($data['group_id'] == 2 )?true:false;
-                                        
+
                                 $billingAddr  = $customer->getDefaultBillingAddress();
                                 $shippingAddr = $customer->getDefaultShippingAddress();
-                                        
+
                                 $addressArr =  array();
-                                        
+
                                 if($billingAddr){
                                     $billingAddrData = $billingAddr->getData();
                                     $guid1 = $this->getGuid4();
@@ -652,13 +652,13 @@ class Allure_Teamwork_Model_Observer{
                                      );
                                     $request['defaultBillingAddressID'] = $guid1;
                                  }
-                                        
+
                                  if(!empty($billingAddrData['telephone'])){
                                     if($billingAddrData['telephone'] !="000-000-0000"){
                                         $request['phone2'] = (object) array("number"=>$billingAddrData['telephone']);
                                     }
                                  }
-                                        
+
                                  if($shippingAddr){
                                     $shippingAddrData = $shippingAddr->getData();
                                     $guid2 = $this->getGuid4();
@@ -675,9 +675,9 @@ class Allure_Teamwork_Model_Observer{
                                       );
                                       $request['defaultShippingAddressID'] = $guid2;
                                   }
-                                        
+
                                   $request['addresses'] = $addressArr;
-                                        
+
                                   $sendRequest = curl_init($_url);
                                   curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
                                   curl_setopt($sendRequest, CURLOPT_HEADER, false);
@@ -685,23 +685,23 @@ class Allure_Teamwork_Model_Observer{
                                   curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
                                   curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
                                   curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
-                                        
+
                                   curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
                                         "Content-Type: application/json",
                                         "Access-Token: {$_accessToken}"
                                   ));
-                                        
+
                                   $json_arguments = json_encode($request);
                                   curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
                                   $response = curl_exec($sendRequest);
                                   curl_close($sendRequest);
                                   $responseObj = json_decode($response);
-                                        
+
                                   $model = Mage::getModel("allure_teamwork/teamwork")->load($customer_id,'customer_id');
                                   if(!$model->getId()){
                                      $model = Mage::getModel("allure_teamwork/teamwork");
                                   }
-                                    
+
                                   $custType = $customer->getCustomerType();
                                   $model->setCustomerId($customer_id)
                                         ->setEmail($email)
@@ -710,16 +710,16 @@ class Allure_Teamwork_Model_Observer{
                                         ->setCounterpointCustNo($cpCustNo)
                                         ->setCustomerNote($customerNote)
                                         ->setIsCounterpointCust($custType);
-                                        
+
                                   if(!$responseObj->errorCode){
                                         $teamworkCustomerId = $responseObj->customer->customerID;
                                         $customerObj = Mage::getModel("customer/customer")->load($customer_id);
                                         $customerObj->setTeamworkCustomerId($teamworkCustomerId);
                                         $customerObj->save();
-                                            
+
                                         $model->setResponse($response)
                                             ->setTeamworkCustomerId($teamworkCustomerId);
-                                            
+
                                         Mage::log("id-:".$customer->getId()." email-:".$email." == teamwork_id-:".$teamworkCustomerId,Zend_log::DEBUG,$teamwoek_log_file,true);
                                   }
                                   else {
@@ -727,7 +727,7 @@ class Allure_Teamwork_Model_Observer{
                                             ->setResponse($response);
                                         Mage::log("id-:".$customer->getId()." email-:".$email." == error-:".$response,Zend_log::DEBUG,$teamwoek_log_file,true);
                                   }
-                                        
+
                                   $model->save();
                                   $model = null;
                             }
@@ -744,20 +744,20 @@ class Allure_Teamwork_Model_Observer{
        }
        Mage::log("Finish...",Zend_log::DEBUG,$teamwoek_log_file,true);
   }
-  
-  
+
+
   /**
-   * sync customer from teamwork to magento 
+   * sync customer from teamwork to magento
    * and vice versa
    */
   public function syncTeamworkCustomer(){
       $helper  = Mage::helper("allure_teamwork");
       $logFile = $helper::SYNC_TM_MAG_LOG_FILE;
-      
+
       $alphabets = range('A','Z');
       $numbers = range('0','9');
       $additional_characters = array('#','@','$');
-      
+
       $status = $helper->getTeamworkStatus();
       $logStatus = $helper->getLogStatus();
       $logStatus = ($logStatus)?true:false;
@@ -765,13 +765,13 @@ class Allure_Teamwork_Model_Observer{
           Mage::log("teamwork customer sync status - ".$status,Zend_Log::DEBUG,$logFile,$logStatus);
           return;
       }
-      
+
       try{
           $operation = "last_query_time";
           $mLog = Mage::getModel("allure_teamwork/log")
             ->load($operation,'operation');
-          
-          
+
+
           $lastQueryTime = (int) $mLog->getPage();//$helper->getLastSyncQueryTime();
           $syncURL   = $helper::SYNC_TEAMWORK_CUSTOMER_URLPATH;
           $pageLimit = (int) $helper->getTeamworkPageLimit();
@@ -783,13 +783,13 @@ class Allure_Teamwork_Model_Observer{
           $request['modifiedAfter'] = $lastQueryTime;
           $response     = $teamworkClient->send($syncURL,$request);
           $responseObj  = json_decode($response);
-          
+
           $nextSyncTime = $responseObj->queryTimestamp;
           $mLog->setPage($nextSyncTime)->save();
           //Mage::getConfig()->saveConfig($helper::XML_NEXT_QUERY_SYNC_TIME, $nextSyncTime);
-          
+
           Mage::log("Total-:".count($responseObj->entities),Zend_log::DEBUG,$logFile,$logStatus);
-          
+
           if(count($responseObj->entities) > 0){
               foreach ($responseObj->entities as $customer){
                   try{
@@ -807,9 +807,9 @@ class Allure_Teamwork_Model_Observer{
                               $isWolesale   = $customer->customFlag1;
                               $magentoId    = $customer->magentoID;
                               $taxVatId     = $customer->VATRegistrationNumber;
-                              
+
                               $groupId      = (!empty($isWolesale))?($isWolesale)?2:1:1;
-                              
+
                               if($customerObj->getId()){
                                   $customerObj->setCustNote($customerNote)
                                     ->setTeamworkCustomerId($teamworkId)
@@ -818,12 +818,12 @@ class Allure_Teamwork_Model_Observer{
                               }else{
                                   $final_array = array_merge($alphabets,$numbers,$additional_characters);
                                   $password = '';
-                                  $length = 6;  
+                                  $length = 6;
                                   while($length--) {
                                       $keyV = array_rand($final_array);
                                       $password .= $final_array[$keyV];
                                   }
-                                  
+
                                   $customerObj = Mage::getModel("customer/customer");
                                   $customerObj->setWebsiteId(1)
                                     ->setStoreId(1)
@@ -833,22 +833,22 @@ class Allure_Teamwork_Model_Observer{
                                     ->setEmail($email)
                                     ->setPassword($password)
                                     //synced teamwork new customer
-                                    ->setCustomerType(7)  
+                                    ->setCustomerType(7)
                                     ->setCustNote($customerNote)
                                     ->setTeamworkCustomerId($teamworkId)
                                     ->setTaxvat($taxVatId);
-                                   
+
                                     if($email->acceptMarketing){
-                                        $customer->setTwAcceptMarketing($email->acceptMarketing);
+                                        $customerObj->setTwAcceptMarketing($email->acceptMarketing);
                                     }
                                     if($email->acceptTransactional){
-                                        $customer->setTwAcceptTransactional($email->acceptTransactional);
+                                        $customerObj->setTwAcceptTransactional($email->acceptTransactional);
                                     }
-                                    
-                                    $customer->save();
+
+                                    $customerObj->save();
                                     Mage::log("new customer id:".$customerObj->getId()." email:".$email,Zend_log::DEBUG,$logFile,$logStatus);
                               }
-                              
+
                               //send magento id to teamwork
                               if(empty($magentoId)){
                                 $magentoId  = $customerObj->getId();
@@ -861,7 +861,7 @@ class Allure_Teamwork_Model_Observer{
                               }else{
                                 Mage::log("magento id:".$magentoId." already present in teamwork",Zend_log::DEBUG,$logFile,$logStatus);
                               }
-                              
+
                           }else{
                               Mage::log("Customer email is empty",Zend_log::DEBUG,$logFile,$logStatus);
                           }
@@ -882,7 +882,7 @@ class Allure_Teamwork_Model_Observer{
   }
   function changeOrderStatus($observer){
       $order = $observer->getEvent()->getOrder();
-      
+
        Mage::log("Order::".$order->getId(),Zend_log::DEBUG,'change_status.log',true);
       if($order->getStatus()=='processing'){
          try{
@@ -892,24 +892,24 @@ class Allure_Teamwork_Model_Observer{
              Mage::log("Order::".$order->getId()." Exception::".$e->getMessage(),Zend_log::DEBUG,'change_status.log',true);
          }
       }
-     
-      
+
+
   }
-  
-  
+
+
   /**
    * reupdate teamwork customer field with counterpoint customer
    */
- 
+
   public function reupdateCustomerToTeamwork(){
       $logFile = "tewamwor_reupdate_customer.log";
       $operation = "reupdate_customer";
-      
+
       try{
           $helper = Mage::helper("allure_teamwork");
           $_url   = $helper->getTeamworkUrl() . $helper::UPADTE_CUSTOMER_URLPATH;
           $_accessToken = $helper->getTeamworkAccessToken();
-          
+
           $mLog = Mage::getModel("allure_teamwork/log")->load($operation,'operation');;
           $page = $mLog->getPage();
           $size = $mLog->getSize();
@@ -924,7 +924,7 @@ class Allure_Teamwork_Model_Observer{
           $collection->addFieldToFilter('entity_id',array('gteq'=>$page))
           ->addFieldToFilter('entity_id',array('lteq'=>$size));
           $collection->setOrder('entity_id', 'asc');
-          
+
           //  $lastPage = $collection->getLastPageNumber();
           if(true){
               foreach ($collection as $customer){
@@ -944,7 +944,7 @@ class Allure_Teamwork_Model_Observer{
                           curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
                           curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
                           curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
-                          
+
                           curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
                               "Content-Type: application/json",
                               "Access-Token: {$_accessToken}"
@@ -964,7 +964,7 @@ class Allure_Teamwork_Model_Observer{
                   }
               }
           }
-          
+
           $page=$size;
           $size=$page+250;
           $resource = Mage::getSingleton('core/resource');
@@ -973,25 +973,26 @@ class Allure_Teamwork_Model_Observer{
           $query="";
           $query = "update {$table} set  page = '{$page}',size = '{$size}' where id = 4";
           $writeAdapter->query($query);
-          
+
       }catch (Exception $e){
           Mage::log("Exception:".$e->getMessage(),Zend_Log::DEBUG,$logFile,true);
       }
       //  $this->reupdateCustomerToTeamwork();
   }
-  
+
   //remove salesrule id from quote for teamwork order
   public function removeSalesRuleForTeamworkOrder($observer){
       $event = $observer->getEvent();
       $quote = $event->getQuote();
       $appliedRule = $event->getRule();
       $result = $event->getResult();
-      if($quote->getCreateOrderMethod() == 2){
+      $method = $quote->getCreateOrderMethod();
+      if( $method == 2 || $method == 4){
           $result->setDiscountAmount(0);
           $result->setBaseDiscountAmount(0);
           $quote->setAppliedRuleIds(null);
       }
       return $this;
   }
-  
+
 }
