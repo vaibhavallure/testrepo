@@ -201,6 +201,7 @@ if ($session->isLoggedIn()) {
         //initialize itel tel input
         var input = document.querySelector("#phone")
         var iti = window.intlTelInput(input, {
+			initialCountry: <?php echo ((isset($f_cntry) && !empty($f_cntry)) ? "'$f_cntry'" : "'auto'")?>,
             autoFormat: false,
             autoHideDialCode: false,
             autoPlaceholder: false,
@@ -215,15 +216,25 @@ if ($session->isLoggedIn()) {
         // Magento module - Allure/GeoLocation
         var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
         //console.log('[signing_register.phtml] length',phone.length)
-        if(phone.length <=0){
+        if(phone.length <= 0){
             var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
-//            console.log('[signing_register.phtml] country_code',country_code)
 
-            if(country_code == undefined || country_code == null || country_code == "")
+            if (country_code == undefined || country_code == null || country_code == "") {
                 country_code = "us"
+			}
 
-//            console.log('[signing_register.phtml] setCountry',country_code)
             iti.setCountry(country_code.toLowerCase());
+        } else if (phone.charAt(0) != '+') {
+
+			<?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
+				var country_code = '<?php echo $f_cntry;?>';
+				iti.setCountry(country_code.toLowerCase());
+			<?php } ?>
+
+			<?php if ((isset($cntry) && !empty($cntry))) { ?>
+				var country_code = '<?php echo $cntry;?>';
+				iti.setCountry(country_code.toLowerCase());
+			<?php } ?>
         }
         jQuery('.flag-container').css('height','29px');
 
@@ -287,7 +298,7 @@ function getstate(countryValue) {
     function isSymbol(event){
 
         return true;
-        
+
         var keycode=event.keyCode;
         if(((keycode>=65 && keycode<=90) ||(keycode>=97 && keycode<=122)) || (keycode>=48 && keycode<=57) ||((keycode==64) ||(keycode==46)))
         {
