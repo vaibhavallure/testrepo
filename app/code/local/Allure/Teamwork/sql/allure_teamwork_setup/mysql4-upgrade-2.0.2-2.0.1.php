@@ -8,35 +8,35 @@ $installer->startSetup();
 $orderSetup = new Mage_Sales_Model_Resource_Setup('core_setup');
 
 $orderSetup->addAttribute('quote', 'teamwork_gift_amount', array(
-    'type'          => 'varchar',
+    'type'          => 'decimal',
     'label'         => 'Teamwork Gift Amount',
     'visible'       => true,
     'required'      => false,
-    'default'		=> '0'
+    'default'		=> 0
 ));
 
 $orderSetup->addAttribute('order', 'teamwork_gift_amount', array(
-    'type'          => 'varchar',
+    'type'          => 'decimal',
     'label'         => 'Teamwork Gift Amount',
     'visible'       => true,
     'required'      => false,
-    'default'		=> '0'
+    'default'		=> 0
 ));
 
 $orderSetup->addAttribute('quote', 'teamwork_deposit_amount', array(
-    'type'          => 'varchar',
+    'type'          => 'decimal',
     'label'         => 'Teamwork Deposit Amount',
     'visible'       => true,
     'required'      => false,
-    'default'		=> '0'
+    'default'		=> 0
 ));
 
 $orderSetup->addAttribute('order', 'teamwork_deposit_amount', array(
-    'type'          => 'varchar',
+    'type'          => 'decimal',
     'label'         => 'Teamwork Deposit Amount',
     'visible'       => true,
     'required'      => false,
-    'default'		=> '0'
+    'default'		=> 0
 ));
 
 $orderSetup->addAttribute('quote_item', 'teamwork_gift_deposit_data', array(
