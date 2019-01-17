@@ -796,8 +796,9 @@ body.embedded .zopim {
 
 }
 
+/*
 
-/*-------------------new alert box--------------------------*/
+!*-------------------new alert box--------------------------*!
 
 #allureModalContainer {
 	background-color: rgba(0, 0, 0, 0.47);
@@ -807,7 +808,7 @@ body.embedded .zopim {
 	top:0px;
 	left:0px;
 	z-index:10000;
-	/*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
+	!*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*!
 }
 
 #allureAlertBox {
@@ -868,7 +869,7 @@ body.embedded .zopim {
 
 
 
-/*-------------confirm popup----------------*/
+!*-------------confirm popup----------------*!
 
 
 
@@ -913,4 +914,4 @@ body.embedded .zopim {
 
 
 
-/*-------------------------alert end----------------------------------*/
+!*-------------------------alert end----------------------------------*!*/
