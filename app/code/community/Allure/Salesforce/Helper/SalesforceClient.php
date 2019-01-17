@@ -62,7 +62,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     //salesforce magento mapping field
     const S_PRODUCTID           = "salesforce_product_id";
     const S_CUSTOMERID          = "salesforce_customer_id";
-    const S_CONTACTID          = "salesforce_customer_id";
+    const S_CONTACTID          = "salesforce_contact_id";
     const S_ADDRESSID           = "salesforce_address_id";
     const S_ORDERID             = "salesforce_order_id";
     const S_INVOICEID           = "salseforce_invoice_id";
@@ -219,7 +219,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 }
                 $this->_retry_count ++;
             }
-            $this->salesforceLog($response);
+            $this->salesforceLog($requestURL);
             return $response;
         }
         return json_encode(array("success" =>false,"message"=>"Unkwon error."));
