@@ -11,6 +11,14 @@ class Allure_Teamwork_Model_Tmobserver{
     const NEW_YORK_OFFSET = 5;
     const TEAMWORK_LIVE_ORDER_OPTR = "tm_live_order";
     
+    const TEAMWORK_GIFT_NAME    = "POS Gift";
+    const TEAMWORK_GIFT_SKU     = "TEAMWORK-POS-GIFT";
+    const TEAMWORK_GIFT_ID      = "TEAMWORK-POS-GIFT";
+    
+    const TEAMWORK_DEPOSIT_NAME = "POS Deposit";
+    const TEAMWORK_DEPOSIT_ID   = "TEAMWORK-POS-DEPOSIT";
+    const TEAMWORK_DEPOSIT_SKU  = "TEAMWORK-POS-DEPOSIT";
+    
     protected $teamwork_sync_log = "teamwork_sync_data.log";
     
     private function isTeamworkDataTransferToSalesforce(){
@@ -196,6 +204,11 @@ class Allure_Teamwork_Model_Tmobserver{
             $productDetails = $object["product_details"];
             $paymentDetails = $object["payment_details"];
             $extaDetails = $object["extra_details"];
+            
+            $giftDepositDetails = null;
+            if(array_key_exists("deposit_gift_details",$object)){
+                $giftDepositDetails = $object["deposit_gift_details"];
+            }
             
             $receiptId = $orderDetails["ReceiptId"];
             
@@ -516,6 +529,52 @@ class Allure_Teamwork_Model_Tmobserver{
                         $productObj = null;
                     }
                     
+                    
+                    //gift or deposit details
+                    $teamworkGiftAmt = 0;
+                    $teamworkDepositAmt = 0;
+                    foreach ($giftDepositDetails as $giftDeposit){
+                        $chargeType = $giftDeposit["ChargeType"];
+                        $giftDepoAmt = $giftDeposit["GIFTDEP_AMOUNT"];
+                        
+                        // chargetype 0 = gift & 4 = deposit
+                        $teamworkItemId = self::TEAMWORK_DEPOSIT_ID;
+                        $skuGiftDept    = self::TEAMWORK_DEPOSIT_SKU;
+                        $nameDescGiftDept = self::TEAMWORK_DEPOSIT_NAME;
+                        $qtyGiftDept = 1;
+                        
+                        if($chargeType == 0){
+                            $teamworkGiftAmt += $giftDepoAmt;
+                            $teamworkItemId = self::TEAMWORK_GIFT_ID;
+                            $skuGiftDept    = self::TEAMWORK_GIFT_SKU;
+                            $nameDescGiftDept = self::TEAMWORK_GIFT_NAME;
+                        }else{
+                            $teamworkDepositAmt += $giftDepoAmt;
+                        }
+                        
+                        $productObj = Mage::getModel('catalog/product');
+                        $productObj->setTypeId("simple");
+                        $productObj->setSku($skuGiftDept);
+                        $productObj->setName($nameDescGiftDept);
+                        $productObj->setShortDescription($nameDescGiftDept);
+                        $productObj->setDescription($nameDescGiftDept);
+                        $productObj->setPrice($giftDepoAmt);
+                        
+                        $quoteItem = Mage::getModel("allure_counterpoint/item")
+                        ->setProduct($productObj);
+                        $quoteItem->setQty($qtyGiftDept);
+                        
+                        $quoteItem->setStoreId(1);
+                        $quoteItem->setOtherSysQty(1);
+                        $quoteItem->setTwItemId($teamworkItemId);
+                        $quoteItem->setTeamworkGiftDepositData(json_encode($giftDeposit));
+                        
+                        $quoteObj->addItem($quoteItem);
+                        $productObj = null;
+                        
+                    }
+                    
+                    
                     //$quoteBillingAddress = Mage::getModel('sales/quote_address');
                     //$quoteBillingAddress->setData($billingAddress);
                     $quoteObj->setBillingAddress($billingAddress);
@@ -530,6 +589,11 @@ class Allure_Teamwork_Model_Tmobserver{
                     }
                     $quoteObj->setCreateOrderMethod(2);
                     $quoteObj->setTeamworkOrigReceiptId($tmOrigReceiptId);
+                    
+                    //set teamwork gift and deposit amount
+                    $quoteObj->setTeamworkGiftAmount($teamworkGiftAmt);
+                    $quoteObj->setTeamworkDepositAmount($teamworkDepositAmt);
+                    
                     $quoteObj->collectTotals();
                     
                    
@@ -1356,6 +1420,42 @@ class Allure_Teamwork_Model_Tmobserver{
                 }
             }
         }
+        
+        $giftDepositDetails = null;
+        if(array_key_exists("deposit_gift_details",$object)){
+            $this->addLog("Gift and Deposit .....");
+            $giftDepositDetails = $object["deposit_gift_details"];
+        }
+        
+        foreach ($giftDepositDetails as $giftDeposit){
+            $chargeType = $giftDeposit["ChargeType"];
+            $giftDepoAmt = $giftDeposit["GIFTDEP_AMOUNT"];
+            
+            // chargetype 0 = gift & 4 = deposit
+            $teamworkItemId = self::TEAMWORK_DEPOSIT_ID;
+            $skuGiftDept    = self::TEAMWORK_DEPOSIT_SKU;
+            $nameDescGiftDept = self::TEAMWORK_DEPOSIT_NAME;
+            
+            if($chargeType == 0){
+                $teamworkItemId = self::TEAMWORK_GIFT_ID;
+                $skuGiftDept    = self::TEAMWORK_GIFT_SKU;
+                $nameDescGiftDept = self::TEAMWORK_GIFT_NAME;
+            }
+            
+            $productObj = Mage::getModel("allure_teamwork/tmproduct")
+            ->load($teamworkItemId,"tm_item_id");
+            if(!$productObj->getEntityId()){
+                $productObj = Mage::getModel("allure_teamwork/tmproduct")
+                ->setTmItemId($teamworkItemId)
+                ->setName($nameDescGiftDept)
+                ->setSku($skuGiftDept)
+                ->setPrice($giftDepoAmt)
+                ->save();
+                $this->addLog("Product add into teamwork product table. Sku - ".$skuGiftDept);
+            }
+            $productObj = null;
+        }
+        
     }
     
 }
