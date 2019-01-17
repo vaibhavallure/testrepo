@@ -3,7 +3,7 @@
 <config>
 	<modules>
 		<Allure_Teamwork>
-			<version>2.0.1</version>
+			<version>2.0.2</version>
 		</Allure_Teamwork>
 	</modules>
 	<global>
@@ -93,6 +93,12 @@
 				<teamwork_orig_receipt_id>
 					<to_order>*</to_order>
 				</teamwork_orig_receipt_id>
+				<teamwork_gift_amount>
+					<to_order>*</to_order>
+				</teamwork_gift_amount>
+				<teamwork_deposit_amount>
+					<to_order>*</to_order>
+				</teamwork_deposit_amount>
 			</sales_convert_quote>
 
 			<sales_convert_quote_item>
@@ -114,6 +120,9 @@
                 <teamwork_reason_code>
                 	<to_order_item>*</to_order_item>
                 </teamwork_reason_code>
+                <teamwork_gift_deposit_data>
+                	<to_order_item>*</to_order_item>
+                </teamwork_gift_deposit_data>
             </sales_convert_quote_item>
 		</fieldsets>
 		<events>
