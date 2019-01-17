@@ -51,6 +51,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     const PRODUCT_OBJECT            = "PRODUCT";
     const PRODUCT_PRICEBOOK_OBJECT  = "PRODUCT_PRICE_BOOK";
     const ACCOUNT_OBJECT            = "CUSTOMER";
+    const CONTACT_OBJECT            = "CONTACT";
     const ADDRESS_OBJECT            = "ADDRESS";
     const ORDER_OBJECT              = "ORDER";
     const INVOICE_OBJECT            = "INVOICE";
