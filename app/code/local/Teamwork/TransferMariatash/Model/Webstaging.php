@@ -126,7 +126,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                 }
             break;
             case false:
-                if( (!(float)$this->_order->getBaseGrandTotal() || $this->_order->getStatus() == Mage_Sales_Model_Order::STATE_PENDING_PAYMENT ||($paidAmount || ($allowAuthorizeOnly && $authorizedAmount))) && $this->_order->getStatus() != Mage_Sales_Model_Order::STATUS_FRAUD )/**/
+                if( (!(float)$this->_order->getBaseGrandTotal() ||($paidAmount || ($allowAuthorizeOnly && $authorizedAmount))) && $this->_order->getStatus() != Mage_Sales_Model_Order::STATUS_FRAUD )/**/
                 {
                     return true;
                 }
