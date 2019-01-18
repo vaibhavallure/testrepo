@@ -235,10 +235,7 @@ class Ecp_ReportToEmail_Model_Refund
 
            $query.=" GROUP BY memo.order_id";
 
-           var_dump($query);
-
-           die();
-
+         
 
             $this->add_log("getData => query=>".$query);
 
