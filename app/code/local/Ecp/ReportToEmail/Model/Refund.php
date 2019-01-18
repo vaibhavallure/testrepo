@@ -235,7 +235,10 @@ class Ecp_ReportToEmail_Model_Refund
 
            $query.=" GROUP BY memo.order_id";
 
-         
+//           var_dump($query);
+//
+//           die();
+
 
             $this->add_log("getData => query=>".$query);
 
@@ -269,13 +272,13 @@ class Ecp_ReportToEmail_Model_Refund
                 $data[]=$rs;
             }
 
-            $this->add_log("getData => data=>");
+          //  $this->add_log("getData => data=>");
 
-            Mage::log($data,Zend_log::DEBUG,"report_to_email.log",true);
+          //  Mage::log($data,Zend_log::DEBUG,"report_to_email.log",true);
 
-            $this->add_log("totdal data");
+        //    $this->add_log("totdal data");
 
-            Mage::log($total_data,Zend_log::DEBUG,"report_to_email.log",true);
+          //  Mage::log($total_data,Zend_log::DEBUG,"report_to_email.log",true);
 
 
             if($total)
@@ -346,7 +349,7 @@ class Ecp_ReportToEmail_Model_Refund
 
         if($this->getReportCSV($from,$to,$by,$order_statuses,$customerGroup,$orderfrom))
         {
-            return array("is_create"=>true,"value"=>$this->getReportCSV($from,$to,$by,$order_statuses));
+            return array("is_create"=>true,"value"=>$this->getReportCSV($from,$to,$by,$order_statuses,$customerGroup,$orderfrom));
         }
         else
         {
