@@ -429,9 +429,9 @@ class Allure_AlertServices_Model_Alerts
 					echo "<br>Order Date :".$orderDate;
 					if($orderDate != null)
                     echo "<br>Last Order Date :".Mage::getModel('core/date')->date("F j, Y \a\\t g:i a",$orderDate);
-					if(count($orders)>0) {
-                        $helper->sendSalesOfEmailAlert($orderDate, 2);
-                    }
+//					if(count($orders)>0) {
+//                        $helper->sendSalesOfEmailAlert($orderDate, 2);
+//                    }
 					/*$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
 										->setCurPage(1)
@@ -488,4 +488,4 @@ class Allure_AlertServices_Model_Alerts
 
 
 	
-}
+}i
