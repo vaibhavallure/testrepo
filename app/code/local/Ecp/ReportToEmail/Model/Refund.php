@@ -353,4 +353,3 @@ class Ecp_ReportToEmail_Model_Refund
 
 
 }
-
