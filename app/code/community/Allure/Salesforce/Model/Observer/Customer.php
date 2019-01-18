@@ -20,6 +20,7 @@ class Allure_Salesforce_Model_Observer_Customer{
         $isFailure = false;
         if($responseArr["success"]){
             try{
+                $helper->salesforceLog('Set data on '.$fieldName. '  for objectType'.$objectType.' resMethod'.$requestMethod);
                 $object->setData($fieldName, $responseArr["id"]);
                 $object->getResource()->saveAttribute($object, $fieldName);
             }catch (Exception $e){
@@ -54,17 +55,29 @@ class Allure_Salesforce_Model_Observer_Customer{
         if ($customer) {
 
             $objectType     = $helper::ACCOUNT_OBJECT;
+            $objectTypeC    = $helper::CONTACT_OBJECT;   //created for Contact
             $sFieldName     = $helper::S_CUSTOMERID;
+            $sCFieldName    = $helper::S_CONTACTID;      //created for Contact
 
             $salesforceId   = $customer->getSalesforceCustomerId();
+            $salesforceContactId   = $customer->getSalesforceContactId();
             $requestMethod  = "GET";
+            $requestMethodContact  = "GET";
             $urlPath        = $helper::ACCOUNT_URL;
+            $contactUrlPath = $helper::CONTACT_URL;     //created for Contact
 
             if ($salesforceId) {
                 $urlPath       .=  "/" .$salesforceId;
                 $requestMethod  = "PATCH";
             } else{
                 $requestMethod  = "POST";
+            }
+
+            if ($salesforceContactId) {
+                $contactUrlPath.=  "/" .$salesforceContactId;
+                $requestMethodContact = "PATCH";
+            } else{
+                $requestMethodContact = "POST";
             }
 
             $prefix = $customer->getPrefix();
@@ -181,6 +194,20 @@ class Allure_Salesforce_Model_Observer_Customer{
                 $request["Birth_Date__c"] =  date("Y-m-d",strtotime($customer->getDob()));
             }
 
+            $contactRequest = array(
+                "FirstName"           => $fName,
+                "MiddleName"          => $mName,
+                "LastName"            => $lName,
+                "Email"               => $customer->getEmail(),
+                "Phone"               => ($defaultBillingAddr) ? $defaultBillingAddr->getTelephone() : "",
+                "MailingStreet"       => ($defaultBillingAddr) ? implode(", ", $defaultBillingAddr->getStreet()) : "",
+                "MailingCity"         => ($defaultBillingAddr) ? $defaultBillingAddr->getCity() : "",
+                "MailingState"        => ($defaultBillingAddr) ? $state : "",
+                "MailingPostalCode"   => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : "",
+                "MailingCountry"      => ($defaultBillingAddr) ? $countryName : "",
+                "AccountID"           => ""
+            );
+
             //tmwork fields accept marketing
             if ($customer->getTwAcceptMarketing()) {
                 $request["Accept_Marketing__c"] = $customer->getTwAcceptMarketing();
@@ -198,7 +225,24 @@ class Allure_Salesforce_Model_Observer_Customer{
             $responseArr = json_decode($response,true);
 
             if ($responseArr["success"]) {
+                $helper->salesforceLog("----- contact data -----");
+                $helper->salesforceLog($contactRequest);
+
+                $contactRequest['AccountID'] = $responseArr["id"];
+
+                $contactResponse    = $helper->sendRequest($contactUrlPath , $requestMethodContact , $contactRequest);
+                $this->processCustomer($customer,$objectTypeC,$sCFieldName,$requestMethodContact,$contactResponse);
                 return $responseArr["id"];
+            }
+
+            if(!empty($salesforceContactId)){
+                $helper->salesforceLog("----- contact data update -----");
+                $helper->salesforceLog($contactRequest);
+
+                $contactRequest['AccountID'] = $salesforceId;
+
+                $contactResponse    = $helper->sendRequest($contactUrlPath , $requestMethodContact , $contactRequest);
+                $this->processCustomer($customer,$objectTypeC,$sCFieldName,$requestMethodContact,$contactResponse);
             }
             return "";
         }

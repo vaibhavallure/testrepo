@@ -20,6 +20,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     const PRODUCT_UPDATE_PRICEBK_URL        = "/services/data/v42.0/composite/sobjects";
     //used for customer
     const ACCOUNT_URL                       = "/services/data/v42.0/sobjects/account";
+    //used for contact
+    const CONTACT_URL                       = "/services/data/v42.0/sobjects/contact";
     //used for customer address
     const ADDRESS_URL                       = "/services/data/v42.0/sobjects/Address__c";
     //used for order
@@ -49,6 +51,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     const PRODUCT_OBJECT            = "PRODUCT";
     const PRODUCT_PRICEBOOK_OBJECT  = "PRODUCT_PRICE_BOOK";
     const ACCOUNT_OBJECT            = "CUSTOMER";
+    const CONTACT_OBJECT            = "CONTACT";
     const ADDRESS_OBJECT            = "ADDRESS";
     const ORDER_OBJECT              = "ORDER";
     const INVOICE_OBJECT            = "INVOICE";
@@ -59,6 +62,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     //salesforce magento mapping field
     const S_PRODUCTID           = "salesforce_product_id";
     const S_CUSTOMERID          = "salesforce_customer_id";
+    const S_CONTACTID          = "salesforce_contact_id";
     const S_ADDRESSID           = "salesforce_address_id";
     const S_ORDERID             = "salesforce_order_id";
     const S_INVOICEID           = "salseforce_invoice_id";
@@ -215,7 +219,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 }
                 $this->_retry_count ++;
             }
-            $this->salesforceLog($response);
+            $this->salesforceLog($requestURL);
             return $response;
         }
         return json_encode(array("success" =>false,"message"=>"Unkwon error."));
