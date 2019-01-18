@@ -57,8 +57,8 @@ function getCode($typebrief){
                 <?php
 
                 $name = getCode($brief['typebrief']);
-                //$url = 'http://srv-zend:8000/emailing/view/brief/check/'.$brief['id']; //prod
-                $url = 'http://192.168.11.100:8000/emailing/view/brief/check/'.$brief['id']; //local
+                $url = 'http://srv-zend:8000/emailing/view/brief/check/'.$brief['id']; //prod
+                //$url = 'http://192.168.11.100:8000/emailing/view/brief/check/'.$brief['id']; //local
 
 
                 $title = $name.$brief['code'];

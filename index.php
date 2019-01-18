@@ -615,12 +615,12 @@ function createSegment(){
     //ETAPE 3 CREER UN FICHIER AU FORMAT DML CONTENANT EMAIL + PAYSCOM pour chaque pays
     foreach($countries as $country) {
         $nomFile = $segmentClass->createPickFile($country,$nomdusegment);
-        //$segmentClass->sendFileSegmentFtp($nomdusegment,$nomFile);
+        $segmentClass->sendFileSegmentFtp($nomdusegment,$nomFile);
         $segmentClass->createInBdd($nomFile);
         $html .= "<b>La demande de création d'import a été prise en compte.</b><br/>";
         $html .= "<b>".$nomFile."</b><br/>";
     }
-
+    //die('gdfgdfgd');
     getSegmentView($html,'../../');
 }
 
@@ -815,6 +815,7 @@ function statCampaign(){
     $messageClass = new Millesima_Message();
 
     $campaignList = $campaignClass->getCampaignOrderByDate();
+
     $listCampaign = array();
     foreach ($campaignList as $key => $campaign){
         $listCampaign[$key]['idCampagne'] = $campaign['selligente_id'];

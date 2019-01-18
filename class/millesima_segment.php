@@ -76,14 +76,14 @@ class Millesima_Segment extends Millesima_Abstract
         //truncate bdd dolistsegment
         $bddClass->truncate("TRUNCATE TABLE dolistsegment");
 
-        $cellRef = 15;
-        $cellPC = 11;
-        $cellLangue = 26;
+        $cellRef = 0;
+        $cellPC = 12;
+        $cellLangue = 27;
 
         if($tinyclues){
             $cellRef = 0;
-            $cellPC = 1;
-            $cellLangue = 2;
+            $cellPC = 3;
+            $cellLangue = 5;
         }
 
         //parse file csv and get row, insert data in dolistsegment
@@ -97,7 +97,6 @@ class Millesima_Segment extends Millesima_Abstract
             $refpick = $objWorksheet->getCellByColumnAndRow($cellRef, $row)->getValue();
             $paysCom = $objWorksheet->getCellByColumnAndRow($cellPC, $row)->getValue();
             $lalangue = $objWorksheet->getCellByColumnAndRow($cellLangue, $row)->getValue();
-
             $bddClass->insert("INSERT INTO dolistsegment(email,payscom,langue) VALUES (?,?,?)",array($refpick,$paysCom,$lalangue));
         }
 
@@ -178,20 +177,20 @@ class Millesima_Segment extends Millesima_Abstract
         }
 
         if ($country == "F") {
-            $line.="lanton@millesima.com"."\r\n";
-            $line.="mdutoya@millesima.com"."\r\n";
-            $line.="smonneau@millesima.com"."\r\n";
+            $line.="1116188"."\r\n";//"lanton@millesima.com"."\r\n";
+            $line.="1009006"."\r\n";//"mdutoya@millesima.com"."\r\n";
+            $line.="1409739"."\r\n";//"smonneau@millesima.com"."\r\n";
             //Si fichier DML USA
         }elseif ($country == "U") {
-            $line.="hobernard@millesima.com"."\r\n";
-            $line.="imiossec@millesima.com"."\r\n";
-            $line.="lanton@millesima.com"."\r\n";
-            $line.="mdutoya@millesima.com"."\r\n";
-            $line.="braphanel@millesima.com"."\r\n";
+            $line.="U14044"."\r\n";//"hobernard@millesima.com"."\r\n";
+            $line.="U44291"."\r\n";//"imiossec@millesima.com"."\r\n";
+            $line.="1116188"."\r\n";//"lanton@millesima.com"."\r\n";
+            $line.="1009006"."\r\n";//"mdutoya@millesima.com"."\r\n";
+            $line.="1455164"."\r\n";//"braphanel@millesima.com"."\r\n";
         }
 
         $fileName = $country.$nameSegment.'.csv'; //nom du fichier de commande .csv
-        $file = fopen ($dossier.'/'.$fileName, "a+" ); //on l'ouvre en ecriture
+        $file = fopen ($dossier.'/'.$fileName, "w+" ); //on l'ouvre en ecriture
         fputs ( $file, $entete.$line); //on ecrit la ligne dedans
         fclose ( $file );
 
@@ -204,22 +203,18 @@ class Millesima_Segment extends Millesima_Abstract
     }
 
     public function sendFileSegmentFtp($nameSegment,$nomFile){
-        $ftp_server = "ftp.dolist.net"; /* IP ne fonctionne plus : 195.114.115.9 */
-        $connect = ftp_connect($ftp_server);
+        $ftp_server = "sftp.avanci.fr"; /* IP ne fonctionne plus : 195.114.115.9 */
+        $connect = ssh2_connect($ftp_server,'2222');
         $login="millesima";
-        $password="Npass25-05Dolist";
-        $dossier_destination="/upload/contact/";
+        $password="HmnhixkCJikKYI32tucp";
+        $dossier_destination="/Tmp/Selligent/";
 
-        if (@ftp_login($connect, $login, $password)) {
-            $chdir=ftp_chdir($connect,$dossier_destination);
-
-            $myFile = self::REPOSITORY_SEGMENT."/".$nameSegment.'/'.$nomFile;
-            tp_put($connect,$fileSeg,$myFile,FTP_BINARY);
-
+        if (ssh2_auth_password($connect, $login, $password)) {
+            $myFile = self::REPOSITORY_SEGMENT."/".$nameSegment.'/'.$nomFile.'.csv';
+            ssh2_scp_send($connect, $myFile, $dossier_destination.$nomFile.'.csv', 0777);
         } else {
             $retour_ftp="Connexion impossible en tant que ".$login."<br>";
         }
-        ftp_close($connect);
     }
 
 
@@ -252,10 +247,6 @@ class Millesima_Segment extends Millesima_Abstract
         }
         return $html;
     }
-
-
-
-
 
     /**
      * Function to get count id segment
