@@ -177,7 +177,7 @@ class Ecp_ReportToEmail_Model_Refund
         return '<th style="border:1px solid black;padding: 5px 20px;background-color: #0A263C;color: white;font-family:Arial;font-size: 14px;text-transform: uppercase;">'.$text.'</th>';
     }
 
-    public function getReportCSV($from,$to,$by,$status=null,$customerGroup=null,$orderfrom)
+    public function getReportCSV($from,$to,$by,$status=null,$customerGroup=null,$orderfrom=null)
     {
 
         $date=date('Ymd');
