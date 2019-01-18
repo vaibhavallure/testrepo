@@ -32,29 +32,29 @@ class Allure_BackorderRecord_Block_Adminhtml_Refund_Edit_Tab_Form extends Mage_A
         foreach($c_groups as $c_type) {
 
 //            if ($c_type->getCustomerGroupId() != 0){
-                $customerGroups[] = array (
-                    'label' => Mage::helper("backorderrecord")->__($c_type->getCustomerGroupCode()),
-                    'value' => $c_type->getCustomerGroupId()
-                );
+            $customerGroups[] = array (
+                'label' => Mage::helper("backorderrecord")->__($c_type->getCustomerGroupCode()),
+                'value' => $c_type->getCustomerGroupId()
+            );
 //            }
         }
 
         foreach ($statuses as $code => $label) {
-                    $values[] = array(
-                        'label' => Mage::helper("backorderrecord")->__($label),
-                        'value' => $code
-                    );
-            }
+            $values[] = array(
+                'label' => Mage::helper("backorderrecord")->__($label),
+                'value' => $code
+            );
+        }
 
-            foreach ($colorOptions as $option) {
-                    $colorValues[] = array(
-                        'label' => Mage::helper("backorderrecord")->__($option['label']),
-                        'value' => $option['label']
-                    );
-            }
-            sort($colorValues);
-            sort($values);
-            sort($customerGroups);
+        foreach ($colorOptions as $option) {
+            $colorValues[] = array(
+                'label' => Mage::helper("backorderrecord")->__($option['label']),
+                'value' => $option['label']
+            );
+        }
+        sort($colorValues);
+        sort($values);
+        sort($customerGroups);
 
 
 
@@ -91,23 +91,62 @@ class Allure_BackorderRecord_Block_Adminhtml_Refund_Edit_Tab_Form extends Mage_A
 
 
 
-       $fieldset->addField('show_order_statuses', 'select', array(
-                'name'      => 'show_order_statuses',
-                'label'     => Mage::helper('backorderrecord')->__('Order Status'),
-                'options'   => array(
-                        '0' => Mage::helper('backorderrecord')->__('Any'),
-                        '1' => Mage::helper('backorderrecord')->__('Specified'),
-                    ),
-                'note'      => Mage::helper('backorderrecord')->__('Applies to Any of the Specified Order Statuses'),
-                'onchange'  => 'showHideField()',
-            ));
-        
+        $fieldset->addField('show_order_statuses', 'select', array(
+            'name'      => 'show_order_statuses',
+            'label'     => Mage::helper('backorderrecord')->__('Order Status'),
+            'options'   => array(
+                '0' => Mage::helper('backorderrecord')->__('Any'),
+                '1' => Mage::helper('backorderrecord')->__('Specified'),
+            ),
+            'note'      => Mage::helper('backorderrecord')->__('Applies to Any of the Specified Order Statuses'),
+            'onchange'  => 'showHideField()',
+        ));
+
 
         $selectField = $fieldset->addField('order_statuses', 'multiselect', array(
-                'name'      => 'order_statuses',
-                'values'    => $values,
-                'display'   => 'none'
-            ));
+            'name'      => 'order_statuses',
+            'values'    => $values,
+            'display'   => 'none'
+        ));
+
+
+        $fieldset->addField('show_group', 'select', array(
+            'name'      => 'show_group',
+            'label'     => Mage::helper("backorderrecord")->__('Group'),
+            'options'   => array(
+                '0' => Mage::helper('backorderrecord')->__('Any'),
+                '1' => Mage::helper('backorderrecord')->__('Specified'),
+            ),
+            'note'      => Mage::helper('backorderrecord')->__('Applies to Any of the Specified Group'),
+            'onchange'  => 'showCustomerGroup()',
+        ));
+
+        $selectField = $fieldset->addField('customer_group', 'multiselect', array(
+            'name'      => 'customer_group',
+            'values'    => $customerGroups,
+            'display'   => 'none'
+        ));
+
+        //create order method
+        $selectField =   $fieldset->addField('show_create_order', 'select', array(
+            'name'      => 'show_create_order',
+            'label'     => Mage::helper('reports')->__('Create order from'),
+            'options'   => array(
+                '0' => Mage::helper('reports')->__('Any'),
+                '1' => Mage::helper('reports')->__('Specified'),
+            ),
+            'onchange'  => 'showcreateorder()',
+            'note'      => Mage::helper('reports')->__('Create order'),
+        ));
+
+
+        $selectField =  $fieldset->addField('create_order_method', 'multiselect', array(
+            'name'      => 'create_order_method',
+            'values'    => $this->getCreateOrderMethods(),
+            'display'   => 'none'
+        ));
+
+
 
 
 
@@ -125,12 +164,53 @@ class Allure_BackorderRecord_Block_Adminhtml_Refund_Edit_Tab_Form extends Mage_A
                             } 
                         }
                  
-                    
+                     $('customer_group').hide();
+                        function showCustomerGroup() {
+                            var val2 = document.getElementById('show_group');
+                            var hidevalue2 = val2.options[val2.selectedIndex].value;
+                            
+                           if(hidevalue2 == 1){
+                                $('customer_group').show();
+                            }else{
+                                $('customer_group').hide();
+                            } 
+                        }
+                        
+                        $('create_order_method').hide();
+                        function showcreateorder() {
+                            var val2 = document.getElementById('show_create_order');
+                            var hidevalue2 = val2.options[val2.selectedIndex].value;
+                            
+                           if(hidevalue2 == 1){
+                                $('create_order_method').show();
+                            }else{
+                                $('create_order_method').hide();
+                            } 
+                        }
 
                 </script>");
-       
+
         $form->setValues(null);
 
         return parent::_prepareForm();
+    }
+
+
+    //get create order when placed from
+    private function getCreateOrderMethods(){
+        $locations = array(
+            array('label'=>'Website' ,'value' => 0),
+            array('label'=>'Counterpoint' ,'value' => 1)
+        );
+
+        $user = Mage::getSingleton('admin/session')->getUser();
+        if ($user != null){
+            $userRole = $user->getRole()->getData();
+            $roleID = $userRole["role_id"];
+            if($roleID == 1){
+                $locations[] = array('label'=>'Teamwork' ,'value' => 2);
+            }
+        }
+        return $locations;
     }
 }
