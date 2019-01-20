@@ -233,8 +233,15 @@ class Ecp_ReportToEmail_Model_Observer
                 // Mage::log($mailbody);
                 /* Sender Email */
                 $sender = Mage::getStoreConfig('trans_email/ident_general/email');
-                $storeDate = date('Y-m-d');
-                $website = Mage::getModel('core/store')->load($storesId);
+
+                if($getdate!=null)
+                    $storeDate = $getdate;
+                else
+                    $storeDate = date('Y-m-d');
+
+
+        $website = Mage::getModel('core/store')->load($storesId);
+
                 $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
 
                 $mail->setBodyHtml($mailbody)
