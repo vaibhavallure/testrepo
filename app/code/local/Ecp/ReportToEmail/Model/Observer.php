@@ -234,15 +234,17 @@ class Ecp_ReportToEmail_Model_Observer
                 /* Sender Email */
                 $sender = Mage::getStoreConfig('trans_email/ident_general/email');
 
-                if($getdate!=null)
+                if($getdate!=null) {
                     $storeDate = $getdate;
-                else
+                    $yesterday = date("Y/m/d", strtotime($storeDate));
+                }
+                else {
                     $storeDate = date('Y-m-d');
-
+                    $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
+                }
 
         $website = Mage::getModel('core/store')->load($storesId);
 
-                $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
 
                 $mail->setBodyHtml($mailbody)
                     ->setSubject($website->getName() . ': Daily Order Summary Report for ' . $yesterday)
