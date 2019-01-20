@@ -364,7 +364,7 @@ input[name="notification_pref"] {
 #advice-required-entry-starttime_hidden,#advice-validate-number-phone,#advice-validate-alpha-firstname,
 #advice-validate-email-email,#advice-validate-alpha-lastname,#advice-required-entry-country,
 #advice-validate-password-password,#advice-validate-password-confirmpassword,
-.pwdBlock .validation-advice
+.pwdBlock .validation-advice,#advice-validate-intl-telephone-phone
 
 {
 	width: 69%;
