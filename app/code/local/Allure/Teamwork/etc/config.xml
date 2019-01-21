@@ -372,6 +372,87 @@
 	            <title>Free</title>
 	            <allowspecific>0</allowspecific>
             </bakerloo_free>
+            
+            <tm_pay_aedcash>
+                <active>1</active>
+                <model>allure_teamwork/payment_aedcash</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AED Cash</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_aedcash>
+            
+            <tm_pay_aedcredit>
+                <active>1</active>
+                <model>allure_teamwork/payment_aedcredit</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AED Credit</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_aedcredit>
+            
+            <tm_pay_aedcreditcard>
+                <active>1</active>
+                <model>allure_teamwork/payment_aedcreditcard</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AED Credit Card</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_aedcreditcard>
+            
+            <tm_pay_aedrefund>
+                <active>1</active>
+                <model>allure_teamwork/payment_aedrefund</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AED Refund</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_aedrefund>
+            
+            <tm_pay_brownthomastill>
+                <active>1</active>
+                <model>allure_teamwork/payment_brownthomastill</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>BROWN THOMAS TILL</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_brownthomastill>
+            
+            <tm_pay_checkus>
+                <active>1</active>
+                <model>allure_teamwork/payment_checkus</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CHECK US</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_checkus>
+            
+            <tm_pay_harrodstill>
+                <active>1</active>
+                <model>allure_teamwork/payment_harrodstill</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>HARRODS TILL</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_harrodstill>
+            
+            <tm_pay_houseaccount>
+                <active>1</active>
+                <model>allure_teamwork/payment_houseaccount</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>HOUSE ACCOUNT</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_houseaccount>
+            
+            <tm_pay_square>
+                <active>1</active>
+                <model>allure_teamwork/payment_square</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>SQUARE</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_square>
 
         </payment>
 	</default>
