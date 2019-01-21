@@ -14,11 +14,11 @@ class Ecp_ReportToEmail_Model_Refund
     }
 
 
-    public function sendReport($getdate=null,$show=false,$call="cron")
+    public function sendReport($getdate=false,$show=false,$call="cron")
     {
 
 
-        $this->add_log("script run form ".$call."-------------------------------------------------------");
+        $this->add_log("script run from ".$call."-------------------------------------------------------");
 
 
 
@@ -31,14 +31,14 @@ class Ecp_ReportToEmail_Model_Refund
         $storesId=1;
         $storeId=$storesId;
 
-        if($getdate) {
+      /*  if($getdate) {
             $yesterday = $getdate;
             $from = $yesterday . "00:00:00";
             $to = $yesterday . "23:59:59";
 
             $this->add_log("getdate => from=>".$from." to=>".$to);
 
-        } else {
+        } else {*/
 
             $days = 1;
             $from = date('Y-m-d 00:00:00', strtotime('-' . ($days) . ' days'));
@@ -49,12 +49,12 @@ class Ecp_ReportToEmail_Model_Refund
             $this->add_log("default date => from=>".$from." to=>".$to." yesterday=>".$yesterday);
 
 
-        }
+     //   }
 
 
-            $diffZone = $this->getDiffTimezone();
-            $to = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($to)));
-            $from = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($from)));
+        $diffZone = $this->getDiffTimezone();
+        $to = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($to)));
+        $from = date('Y-m-d H:i:s', strtotime($diffZone, strtotime($from)));
 
         $this->add_log("timezone date => from=>".$from." to=>".$to." diffZone=>".$diffZone);
 
@@ -69,12 +69,12 @@ class Ecp_ReportToEmail_Model_Refund
         $mailbody.=$this->getCollectionHtmlTable($this->getData($from,$to,"refunddate",null,true),$yesterday,$storesId);
 
 
-         if($show) {
-             echo $mailbody;
-         }
+        if($show) {
+            echo $mailbody;
+        }
 
 
-         $mail = new Zend_Mail();
+        $mail = new Zend_Mail();
 
 
         /* Sender Email */
@@ -112,8 +112,8 @@ class Ecp_ReportToEmail_Model_Refund
             ->setFrom($sender, "Refund Report");
 
         try {
-                $mail->send();
-                $this->add_log("mail sent");
+            $mail->send();
+            $this->add_log("mail sent");
 
         } catch (Mage_Core_Exception $e) {
             Mage::log('Sending report ' . $e->getMessage(), Zend_log::DEBUG, 'accounting_report.log',true);
@@ -146,7 +146,7 @@ class Ecp_ReportToEmail_Model_Refund
             $refundOnline = ($data["online_refunded"]) ? $data["online_refunded"] : "0";
             $refundOffline = ($data["offline_refunded"]) ? $data["offline_refunded"] : "0";
             //period,orders_count,refunded,online_refunded,offline_refunded
-                $mailbody .= $this->tr($this->td($period) . "" . $this->td($data["orders_count"]) . "" . $this->td($symbol . round($data["refunded"], 2)) . "" . $this->td($symbol . round($refundOnline, 2)) . "" . $this->td($symbol . round($refundOffline, 2)));
+            $mailbody .= $this->tr($this->td($period) . "" . $this->td($data["orders_count"]) . "" . $this->td($symbol . round($data["refunded"], 2)) . "" . $this->td($symbol . round($refundOnline, 2)) . "" . $this->td($symbol . round($refundOffline, 2)));
 
         }
         else
@@ -164,7 +164,7 @@ class Ecp_ReportToEmail_Model_Refund
 
     public function tr($text)
     {
-         return '<tr style="box-shadow: 2px 2px 8px gray">'.$text.'</tr>';
+        return '<tr style="box-shadow: 2px 2px 8px gray">'.$text.'</tr>';
     }
 
     public function td($text,$colspan=0)
@@ -177,7 +177,7 @@ class Ecp_ReportToEmail_Model_Refund
         return '<th style="border:1px solid black;padding: 5px 20px;background-color: #0A263C;color: white;font-family:Arial;font-size: 14px;text-transform: uppercase;">'.$text.'</th>';
     }
 
-    public function getReportCSV($from,$to,$by,$status=null)
+    public function getReportCSV($from,$to,$by,$status=null,$customerGroup=null,$orderfrom=null)
     {
 
         $date=date('Ymd');
@@ -192,7 +192,7 @@ class Ecp_ReportToEmail_Model_Refund
 
 
 
-        $data=$this->getData($from,$to,$by,$status);
+        $data=$this->getData($from,$to,$by,$status,false,$customerGroup,$orderfrom);
         if(count($data)) {
             $data = array_merge($this->getHeader(), $data);
 
@@ -207,44 +207,45 @@ class Ecp_ReportToEmail_Model_Refund
 
     }
 
-    public function getData($from,$to,$by,$status=null,$total=false)
+    public function getData($from,$to,$by,$status=null,$total=false,$customerGroup=null,$orderfrom=null)
     {
 
         $this->add_log("getData => from=>".$from." to=>".$to." status=>".$status." total=>".$total);
 
         try {
 
-        if($by=="orderdate")
-            $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total*ord.store_to_base_rate as base_grand_total,ord.base_total_refunded*ord.store_to_base_rate as base_total_refunded,IFNULL(ord.base_total_online_refunded*ord.store_to_base_rate,0) as base_total_online_refunded,IFNULL(IF(ord.increment_id LIKE '%TW%',ord.base_total_refunded*ord.store_to_base_rate,ord.base_total_offline_refunded*ord.store_to_base_rate),0) as base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1 GROUP BY memo.order_id";
-        else
-          $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total*ord.store_to_base_rate as base_grand_total,ord.base_total_refunded*ord.store_to_base_rate as base_total_refunded,IFNULL(ord.base_total_online_refunded*ord.store_to_base_rate,0) as base_total_online_refunded,IFNULL(IF(ord.increment_id LIKE '%TW%',ord.base_total_refunded*ord.store_to_base_rate,ord.base_total_offline_refunded*ord.store_to_base_rate),0) as base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1 GROUP BY memo.order_id";
+            if($by=="orderdate")
+                $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total*ord.store_to_base_rate as base_grand_total,ord.base_total_refunded*ord.store_to_base_rate as base_total_refunded,IFNULL(ord.base_total_online_refunded*ord.store_to_base_rate,0) as base_total_online_refunded,IFNULL(IF(ord.increment_id LIKE '%TW%',ord.base_total_refunded*ord.store_to_base_rate,ord.base_total_offline_refunded*ord.store_to_base_rate),0) as base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (ord.created_at >= '".$from."' AND ord.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1 ";
+            else
+                $query = "SELECT ord.created_at as order_date,memo.created_at as memo_date,ord.increment_id,ord.base_grand_total*ord.store_to_base_rate as base_grand_total,ord.base_total_refunded*ord.store_to_base_rate as base_total_refunded,IFNULL(ord.base_total_online_refunded*ord.store_to_base_rate,0) as base_total_online_refunded,IFNULL(IF(ord.increment_id LIKE '%TW%',ord.base_total_refunded*ord.store_to_base_rate,ord.base_total_offline_refunded*ord.store_to_base_rate),0) as base_total_offline_refunded,ord.customer_id,ord.customer_email,cg.customer_group_code,ord.state FROM `sales_flat_order` ord JOIN `sales_flat_creditmemo` memo ON ord.entity_id=memo.order_id JOIN `customer_group` as cg ON ord.customer_group_id=cg.customer_group_id WHERE (memo.created_at >= '".$from."' AND memo.created_at <= '".$to."') AND ord.base_total_refunded IS NOT NULL  AND ord.store_id=1 ";
 
 
-            if(count($status))
-        {
-            $query.=" AND (";
+           if(count($status))
+              $query .="  AND ord.state IN(". "'" . implode ( "', '", $status ) . "')";
 
-            $i=1;
-            foreach ($status as $st)
-            {
-                if($i>1)
-                    $query.=" OR ord.state = '{$st}' ";
-                else
-                    $query.=" ord.state = '{$st}' ";
 
-                $i++;
-            }
+           if(count($customerGroup))
+               $query .= " AND ord.customer_group_id IN(".implode(",",$customerGroup).")";
 
-            $query.=")";
-        }
+
+           if(count($orderfrom))
+               $query .=" AND ord.create_order_method IN(".implode(",",$orderfrom).")";
+
+
+
+           $query.=" GROUP BY memo.order_id";
+
+//           var_dump($query);
+//
+//           die();
 
 
             $this->add_log("getData => query=>".$query);
 
-        $resource = Mage::getSingleton('core/resource');
-        $readConnection = $resource->getConnection('core_read');
+            $resource = Mage::getSingleton('core/resource');
+            $readConnection = $resource->getConnection('core_read');
 
-        $results = $readConnection->fetchAll($query);
+            $results = $readConnection->fetchAll($query);
 
 
             $total_data['by']=$by;
@@ -271,13 +272,13 @@ class Ecp_ReportToEmail_Model_Refund
                 $data[]=$rs;
             }
 
-            $this->add_log("getData => data=>");
+          //  $this->add_log("getData => data=>");
 
-            Mage::log($data,Zend_log::DEBUG,"report_to_email.log",true);
+          //  Mage::log($data,Zend_log::DEBUG,"report_to_email.log",true);
 
-            $this->add_log("totdal data");
+        //    $this->add_log("totdal data");
 
-            Mage::log($total_data,Zend_log::DEBUG,"report_to_email.log",true);
+          //  Mage::log($total_data,Zend_log::DEBUG,"report_to_email.log",true);
 
 
             if($total)
@@ -294,7 +295,7 @@ class Ecp_ReportToEmail_Model_Refund
 
     public function getHeader()
     {
-         return array(array(1=>"Order Date",2=>"Credit Memo Date",3=>"Order No",4=>"Order Total",5=>"Refund Amount",6=>"Online Refund",7=>"Offline Refund",8=>"Customer Id",9=>"Customer Email",10=>"Customer Group",11=>"Order Status"));
+        return array(array(1=>"Order Date",2=>"Credit Memo Date",3=>"Order No",4=>"Order Total",5=>"Refund Amount",6=>"Online Refund",7=>"Offline Refund",8=>"Customer Id",9=>"Customer Email",10=>"Customer Group",11=>"Order Status"));
     }
 
 
@@ -321,11 +322,11 @@ class Ecp_ReportToEmail_Model_Refund
 
     }
 
+
     public function  formatDate($date)
     {
         $diffZone="-".$this->getDiffTimezone();
         return date('Y-m-d h:i:s a', strtotime($diffZone,strtotime($date)));
-
     }
 
     public function getReport($post)
@@ -335,6 +336,9 @@ class Ecp_ReportToEmail_Model_Refund
         $from=$post['from_date'];
         $by=$post['order_type'];
         $order_statuses=$post['order_statuses'];
+        $customerGroup=$post['customer_group'];
+        $orderfrom=$post['create_order_method'];
+
 
 
         $diffZone = $this->getDiffTimezone();
@@ -343,9 +347,9 @@ class Ecp_ReportToEmail_Model_Refund
 
 
 
-        if($this->getReportCSV($from,$to,$by,$order_statuses))
+        if($this->getReportCSV($from,$to,$by,$order_statuses,$customerGroup,$orderfrom))
         {
-           return array("is_create"=>true,"value"=>$this->getReportCSV($from,$to,$by,$order_statuses));
+            return array("is_create"=>true,"value"=>$this->getReportCSV($from,$to,$by,$order_statuses,$customerGroup,$orderfrom));
         }
         else
         {

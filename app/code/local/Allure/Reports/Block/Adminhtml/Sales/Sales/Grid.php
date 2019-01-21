@@ -321,20 +321,24 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
             ->columns('main_table.customer_group_id')
             ->columns('count(IFNULL(.main_table.entity_id,0)) orders_count')
             ->columns('sum(IFNULL(main_table.total_qty_ordered,0)) total_qty_ordered')
-            ->columns('sum(IFNULL(main_table.base_grand_total,0)-IFNULL(main_table.base_total_canceled,0)) total_income_amount')
+            ->columns('sum(IFNULL(main_table.base_grand_total,0)-IFNULL(main_table.base_total_canceled,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)) total_income_amount')
             ->columns('sum(
                        (IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.base_tax_invoiced,0)-IFNULL(base_shipping_invoiced,0)
                       -(IFNULL(main_table.base_total_refunded,0)-IFNULL(main_table.base_tax_refunded,0)-IFNULL(main_table.base_shipping_refunded,0))
-                      )) total_revenue_amount')
+                      )
+                        -IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)
+                        ) total_revenue_amount')
 
                       ->columns('sum(
                         (IFNULL(main_table.base_total_paid,0)-IFNULL(base_total_refunded,0))
                        -(IFNULL(main_table.base_tax_invoiced,0)-(IFNULL(base_tax_refunded,0))
                        -(IFNULL(main_table.base_shipping_invoiced,0)-IFNULL(base_shipping_invoiced,0))
-                       -IFNULL(main_table.base_total_invoiced_cost,0))) total_profit_amount
+                       -IFNULL(main_table.base_total_invoiced_cost,0))
+                        -IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)
+                        ) total_profit_amount
                      ')
-                     ->columns('sum(IFNULL(main_table.base_total_invoiced,0)) total_invoiced_amount')
-                     ->columns('sum(IFNULL(main_table.base_total_invoiced,0))
+                     ->columns('sum(IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)) total_invoiced_amount')
+                     ->columns('sum(IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0))
                                 -sum(IFNULL(main_table.base_total_refunded,0))
                                  total_net_sale')
                      ->columns('sum(IFNULL(main_table.base_total_canceled,0)) total_canceled_amount')
@@ -347,7 +351,7 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->columns('ABS(sum((IFNULL(main_table.base_discount_amount,0))-IFNULL(main_table.base_discount_canceled,0))) total_discount_amount')
                      ->columns('sum(IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0)) total_discount_amount_actual')
                      ->where($condition);
-                   // echo $collection->getSelect();
+                    //echo $collection->getSelect()->__toString();
 
 
 
