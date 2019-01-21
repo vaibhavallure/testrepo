@@ -231,6 +231,7 @@ class Webtex_Giftcards_Model_Giftcards extends Mage_Core_Model_Abstract
         }
         if ($this->getCardType() == 'email') {
             $this->_sendEmailCard($storeId);
+            $this->setLog();
         } else if ($this->getCardType() == 'print') {
             $this->_sendPrintCard($storeId);
         } else if ($this->getCardType() == 'offline') {
@@ -306,4 +307,16 @@ class Webtex_Giftcards_Model_Giftcards extends Mage_Core_Model_Abstract
            throw new Exception('Invalid from email address.');
        }
    }
+    public function setLog()
+    {
+        $output = implode(', ', array_map(
+            function ($v, $k) { return sprintf("%s==>'%s'", $k, $v); },
+            $this->getData(),
+            array_keys($this->getData())
+        ));
+
+        Mage::log("Mail sent",Zend_Log::DEBUG,'gift_card_email.log','true');
+        Mage::log($output,Zend_Log::DEBUG,'gift_card_email.log','true');
+
+    }
 }
