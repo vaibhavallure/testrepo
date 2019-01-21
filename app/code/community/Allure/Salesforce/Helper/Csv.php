@@ -346,8 +346,8 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract
             }
             if ($objectType == "contact") {
                 $collection = Mage::getModel("customer/customer")->getCollection()
-                    ->addAttributeToSelect("*");
-                //->addAttributeToFilter('salesforce_customer_id', array('neq' => ''));
+                    ->addAttributeToSelect("*")
+                    ->addAttributeToFilter('salesforce_customer_id', array('neq' => ''));
             } elseif ($objectType == "product" || $objectType == "product-retail-price"
                 || $objectType == "product-wholesale-price") {
 
