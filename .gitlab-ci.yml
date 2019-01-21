@@ -63,6 +63,7 @@ deploy-cloud:
     - production
   script:
     - ln -s /usr/share/owncloud cloud
+    - ln -s /var/www/shared/sitemaps
     - mage-deploy
     - echo 'Deployed on Production'
 

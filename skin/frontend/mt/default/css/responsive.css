@@ -189,7 +189,9 @@
     #advice-required-entry-time-starttime_hidden,#advice-required-entry-firstname,
     #advice-required-entry-lastname, #advice-required-entry-email, #advice-required-entry-phone,
     #advice-required-entry-starttime_hidden, #advice-validate-number-phone,
-    #advice-validate-alpha-firstname, #advice-validate-email-email, #advice-validate-alpha-lastname{
+    #advice-validate-alpha-firstname, #advice-validate-email-email, #advice-validate-alpha-lastname
+    ,#advice-validate-intl-telephone-phone
+    {
         width:100%;
         text-align:right;
     }
