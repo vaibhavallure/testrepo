@@ -131,6 +131,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract
                 "FirstName=first_name",
                 "MiddleName=middle_name",
                 "LastName=last_name",
+                "Contact_Id__c=entity_id",
                 "Email=email",
                 "Phone=telephone",
                 "MailingStreet=bstreet",
@@ -304,6 +305,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract
     {
         return array(
             self::OBJ_ACCOUNT => array("id", "customer_id__c"),
+            self::OBJ_CONTACT => array("id", "contact_id__c"),
             self::OBJ_PRODUCT => array("id", "productcode"),
             self::OBJ_PRODUCT_RETAIL_PRICE => array("id", "product2id", "pricebook2id"),
             self::OBJ_PRODUCT_WHOLESALE_PRICE => array("id", "product2id", "pricebook2id"),
@@ -344,8 +346,8 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract
             }
             if ($objectType == "contact") {
                 $collection = Mage::getModel("customer/customer")->getCollection()
-                    ->addAttributeToSelect("*");
-                    //->addAttributeToFilter('salesforce_customer_id', array('neq' => ''));
+                    ->addAttributeToSelect("*")
+                    ->addAttributeToFilter('salesforce_customer_id', array('neq' => ''));
             } elseif ($objectType == "product" || $objectType == "product-retail-price"
                 || $objectType == "product-wholesale-price") {
 

@@ -20,7 +20,7 @@ class Allure_Salesforce_Model_Observer_Customer{
         $isFailure = false;
         if($responseArr["success"]){
             try{
-                $helper->salesforceLog('Set data on '.$fieldName. '  for objectType'.$objectType.' resMethod'.$requestMethod);
+//                $helper->salesforceLog('Set data on '.$fieldName. '  for objectType'.$objectType.' resMethod'.$requestMethod);
                 $object->setData($fieldName, $responseArr["id"]);
                 $object->getResource()->saveAttribute($object, $fieldName);
             }catch (Exception $e){
@@ -106,7 +106,7 @@ class Allure_Salesforce_Model_Observer_Customer{
             if ($defaultBillingAddr) {
                 if (!empty($defaultBillingAddr['region_id'])) {
                     $region = Mage::getModel('directory/region')
-                    ->load($defaultBillingAddr['region_id']);
+                        ->load($defaultBillingAddr['region_id']);
                     $state = $region->getName();
                 } else {
                     $state = $defaultBillingAddr['region'];
@@ -114,12 +114,12 @@ class Allure_Salesforce_Model_Observer_Customer{
 
                 $bcountryNm = $defaultBillingAddr['country_id'];
 
-				if (!empty($bcountryNm)) {
+                if (!empty($bcountryNm)) {
                     if (strlen($bcountryNm) > 3) {
                         $countryName = $bcountryNm;
                     } else {
                         $country = Mage::getModel('directory/country')
-                        ->loadByCode($defaultBillingAddr['country_id']);
+                            ->loadByCode($defaultBillingAddr['country_id']);
                         if($country->getId()){
                             $countryName = $country->getName();
                         }
@@ -134,7 +134,7 @@ class Allure_Salesforce_Model_Observer_Customer{
             if ($defaultShippingAddr) {
                 if (!empty($defaultBillingAddr['region_id'])) {
                     $region = Mage::getModel('directory/region')
-                    ->load($defaultShippingAddr['region_id']);
+                        ->load($defaultShippingAddr['region_id']);
                     $stateShip = $region->getName();
                 } else {
                     $stateShip = $defaultShippingAddr['region'];
@@ -147,7 +147,7 @@ class Allure_Salesforce_Model_Observer_Customer{
                         $countryNameShip = $scountryNm;
                     }else{
                         $country = Mage::getModel('directory/country')
-                        ->loadByCode($defaultShippingAddr['country_id']);
+                            ->loadByCode($defaultShippingAddr['country_id']);
                         if($country->getId()){
                             $countryNameShip = $country->getName();
                         }
@@ -205,6 +205,7 @@ class Allure_Salesforce_Model_Observer_Customer{
                 "MailingState"        => ($defaultBillingAddr) ? $state : "",
                 "MailingPostalCode"   => ($defaultBillingAddr) ? $defaultBillingAddr->getPostcode() : "",
                 "MailingCountry"      => ($defaultBillingAddr) ? $countryName : "",
+                "Contact_Id__c"       => $customer->getId(),
                 "AccountID"           => ""
             );
 
@@ -310,12 +311,12 @@ class Allure_Salesforce_Model_Observer_Customer{
 
         $customerAddress = $observer->getCustomerAddress();
         $helper->salesforceLog("customer id - ".$customerAddress->getCustomerId()." , address id - ".$customerAddress->getId());
-        
+
         if(Mage::registry('customer_address_'.$customerAddress->getCustomerId())){
             return $this;
         }
-        Mage::register('customer_address_'.$customerAddress->getCustomerId(),true); 
-        
+        Mage::register('customer_address_'.$customerAddress->getCustomerId(),true);
+
         if($customerAddress){
             $customerAddressObj = $customerAddress;
             $customerAddress = $customerAddress->getData();
@@ -336,14 +337,14 @@ class Allure_Salesforce_Model_Observer_Customer{
             $state = "";
             if($customerAddress['region_id']){
                 $region = Mage::getModel('directory/region')
-                ->load($customerAddress['region_id']);
+                    ->load($customerAddress['region_id']);
                 $state = $region->getName();
             }else{
                 $state = $customerAddress['region'];
             }
 
             $country = Mage::getModel('directory/country')
-            ->loadByCode($customerAddress['country_id']);
+                ->loadByCode($customerAddress['country_id']);
 
             $countryName = $country->getName();
 
