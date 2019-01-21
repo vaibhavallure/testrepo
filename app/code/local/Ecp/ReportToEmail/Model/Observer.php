@@ -39,11 +39,12 @@ class Ecp_ReportToEmail_Model_Observer
         }
 
     }
-    public function sendReportOld($runFrom=null)
+    public function sendReportOld($runFrom=null,$getdate=null)
     {
         $this->add_log("old script executed ".$runFrom);
 
         // Mage::log('ppp');
+
         $stores = Mage::getStoreConfig('report/general/enable_stores');
         $stores = explode(",", $stores);
 
@@ -57,7 +58,13 @@ class Ecp_ReportToEmail_Model_Observer
 
                 $storesId=1;
                 $storeId=$storesId;
+
+                if($getdate!=null)
+                    $yesterday=$getdate;
+                else
                 $yesterday=date('Y-m-d');
+
+
                 $from = $yesterday."00:00:00";
                 $to = $yesterday."23:59:59";
                 /* if($storeId==1){
@@ -226,9 +233,18 @@ class Ecp_ReportToEmail_Model_Observer
                 // Mage::log($mailbody);
                 /* Sender Email */
                 $sender = Mage::getStoreConfig('trans_email/ident_general/email');
-                $storeDate = date('Y-m-d');
-                $website = Mage::getModel('core/store')->load($storesId);
-                $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
+
+                if($getdate!=null) {
+                    $storeDate = $getdate;
+                    $yesterday = date("Y/m/d", strtotime($storeDate));
+                }
+                else {
+                    $storeDate = date('Y-m-d');
+                    $yesterday = date("Y/m/d", strtotime("-1 day", strtotime($storeDate)));
+                }
+
+        $website = Mage::getModel('core/store')->load($storesId);
+
 
                 $mail->setBodyHtml($mailbody)
                     ->setSubject($website->getName() . ': Daily Order Summary Report for ' . $yesterday)
