@@ -993,8 +993,17 @@ class Allure_Teamwork_Model_Tmobserver{
                 "DEPOSIT"       => "tm_pay_deposit",
                 "OFFLINE CREDIT CARD" => "tm_pay_offline_credit_card",
                 "CREDIT CARD" => "tm_pay_credit_card",
-                "PAYPAL" => "tm_pay_paypal",
-                "CASHUK" => "tm_pay_cashuk"
+                "PAYPAL"            => "tm_pay_paypal",
+                "CASHUK"            => "tm_pay_cashuk",
+                "AED Refund"        => "tm_pay_aedrefund",
+                "AED Credit Card"   => "tm_pay_aedcreditcard",
+                "AED Cash"          => "tm_pay_aedcash",
+                "AED Credit"        => "tm_pay_aedcredit",
+                "BROWN THOMAS TILL" => "tm_pay_brownthomastill",
+                "HARRODS TILL"      => "tm_pay_harrodstill",
+                "HOUSE ACCOUNT"     => "tm_pay_houseaccount",
+                "SQUARE"            => "tm_pay_square",
+                "CHECK US"          => "tm_pay_checkus"
             );
             
             $creditPaymentsArr = array(
@@ -1002,7 +1011,9 @@ class Allure_Teamwork_Model_Tmobserver{
                 "tm_pay_genius_refund",
                 "tm_pay_authrize",
                 "tm_pay_credit_card",
-                "tm_pay_offline_credit_card"
+                "tm_pay_offline_credit_card",
+                "tm_pay_aedrefund",
+                "tm_pay_aedcredit"
             );
             
             $cardCodeArr = array(
