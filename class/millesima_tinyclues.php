@@ -312,12 +312,15 @@ class Millesima_Tinyclues{
         $segmentClass->chargeEmailBdd("extraction_$nomFichier.csv",true);
         if(!$erreur){
             //ETAPE 3 CREER UN FICHIER AU FORMAT DML CONTENANT EMAIL + PAYSCOM pour chaque pays
+            $html .= "<b>La demande de création d'import a été prise en compte.</b><br/>";
             foreach($countries as $country) {
                 $nomFile = $segmentClass->createPickFile($country,$nomFichier);
-                $segmentClass->sendFileSegmentFtp($nomFichier,$nomFile);
-                $segmentClass->createInBdd($nomFile);
-                $html .= "<b>La demande de création d'import a été prise en compte.</b><br/>";
-                $html .= "<b>".$nomFile."</b><br/>";
+                $return = $segmentClass->sendFileSegmentFtp($nomFichier,$nomFile);
+                if($return){
+                    $segmentClass->createInBdd($nomFile);
+                    $html .= "<b>".$nomFile."</b><br/>";
+                }
+                $html .= "<b>Erreur envoi ftp".$nomFile."</b><br/>";
             }
         }
         return $html;

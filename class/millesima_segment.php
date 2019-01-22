@@ -211,10 +211,12 @@ class Millesima_Segment extends Millesima_Abstract
 
         if (ssh2_auth_password($connect, $login, $password)) {
             $myFile = self::REPOSITORY_SEGMENT."/".$nameSegment.'/'.$nomFile.'.csv';
-            ssh2_scp_send($connect, $myFile, $dossier_destination.$nomFile.'.csv', 0777);
+            $retour_ftp = ssh2_scp_send($connect, $myFile, $dossier_destination.$nomFile.'.csv', 0777);
         } else {
-            $retour_ftp="Connexion impossible en tant que ".$login."<br>";
+            $retour_ftp = "Connexion impossible en tant que ".$login."<br>";
         }
+
+        return $retour_ftp;
     }
 
 
