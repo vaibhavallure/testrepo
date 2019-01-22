@@ -30,7 +30,7 @@ foreach ($brief as $idBrief){
               and campaign_selligente.statut = 'reel'");
     if($nbCampaignCreate[0]['count(*)'] == $nbPays){
         $tabBriefComplete[] = $idBrief["id"];
-        $briefClass->updateStatus("7",$idBrief["id"]);
+        $briefClass->updateStatus("9",$idBrief["id"]);
     }
 }
 

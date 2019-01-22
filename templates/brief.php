@@ -75,9 +75,9 @@ function getCode($typebrief){
                     $color = "#8fc74e";
                 }else if($brief['statut'] == 5){
                     $color = "#37903d";
-                }else if($brief['statut'] == 6){
+                }else if($brief['statut'] == 8){
                     $color = "#3c8dbc";
-                }else if($brief['statut'] == 7){
+                }else if($brief['statut'] == 9){
                     $color = "#005878";
                 }
 

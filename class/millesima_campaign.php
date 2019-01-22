@@ -156,10 +156,10 @@ class Millesima_Campaign extends Millesima_Abstract
               and campaign_selligente.statut = $type ");
             if($nbCampaignCreate[0]['count(*)'] == $nbPays){
                 if($type == 'bat'){
-                    $briefClass->updateStatus("6",$briefId);
+                    $briefClass->updateStatus("8",$briefId);
                 }
                 if($type == 'reel'){
-                    $briefClass->updateStatus("7",$briefId);
+                    $briefClass->updateStatus("9",$briefId);
                 }
             }
         }else {

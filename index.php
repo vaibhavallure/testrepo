@@ -223,7 +223,7 @@ function actionBrief(){
                     if($message_mounted == "1" && $message_create != "1"){
                         $briefClass->updateStatus("5",$id);
                     }elseif ($message_mounted == "1" && $message_create == "1"){
-                        $briefClass->updateStatus("6",$id);
+                        $briefClass->updateStatus("5",$id);
                     }
                 }else{
                     $prob = false;
