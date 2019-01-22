@@ -82,8 +82,8 @@ class Millesima_Segment extends Millesima_Abstract
 
         if($tinyclues){
             $cellRef = 0;
-            $cellPC = 3;
-            $cellLangue = 5;
+            $cellPC = 1;
+            $cellLangue = 2;
         }
 
         //parse file csv and get row, insert data in dolistsegment

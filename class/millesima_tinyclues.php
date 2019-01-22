@@ -314,7 +314,7 @@ class Millesima_Tinyclues{
             //ETAPE 3 CREER UN FICHIER AU FORMAT DML CONTENANT EMAIL + PAYSCOM pour chaque pays
             foreach($countries as $country) {
                 $nomFile = $segmentClass->createPickFile($country,$nomFichier);
-                //$segmentClass->sendFileSegmentFtp($nomdusegment,$nomFile);
+                $segmentClass->sendFileSegmentFtp($nomFichier,$nomFile);
                 $segmentClass->createInBdd($nomFile);
                 $html .= "<b>La demande de création d'import a été prise en compte.</b><br/>";
                 $html .= "<b>".$nomFile."</b><br/>";

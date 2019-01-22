@@ -672,8 +672,6 @@ function traitementTinyclues(){
 
         //TRIE DES FICHIERS (DECROISSANT)
         $tabFichierNonUS = $tinycluesClass->sortBySize($fichierNonUS);
-        var_dump($tabFichierNonUS);
-
         $tinycluesClass->dedoublonneEtOrganise($tabFichierNonUS);
     }
 
