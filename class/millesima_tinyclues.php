@@ -319,8 +319,10 @@ class Millesima_Tinyclues{
                 if($return){
                     $segmentClass->createInBdd($nomFile);
                     $html .= "<b>".$nomFile."</b><br/>";
+                } else {
+                    $html .= "<b>Erreur envoi ftp".$nomFile."</b><br/>";
                 }
-                $html .= "<b>Erreur envoi ftp".$nomFile."</b><br/>";
+
             }
         }
         return $html;
