@@ -72,6 +72,11 @@ class Remarkety_Mgconnector_Model_Observer
     public function triggerCustomerUpdate($observer)
     {
         $this->_customer = $observer->getEvent()->getCustomer();
+        //block particaular domain customer
+        if(preg_match('/customers.mariatash.com/',trim($this->_customer->getEmail()))){
+            Mage::log("Blocked Customer Email : ".$this->_customer->getEmail(), Zend_Log::DEBUG, REMARKETY_LOG);
+            return $this;
+        }
 
         if(Mage::registry('remarkety_customer_save_observer_executed_'.$this->_customer->getId()) || !$this->_customer->getId()) {
             return $this;
@@ -242,6 +247,15 @@ class Remarkety_Mgconnector_Model_Observer
             $client = new Zend_Http_Client(self::REMARKETY_EVENTS_ENDPOINT, $this->_getRequestConfig($eventType));
             $payload = array_merge($payload, $this->_getPayloadBase($eventType));
             $json = json_encode($payload);
+            
+            //block particaular domain customer
+            $email = $payload["email"];
+            if($email){
+                if(preg_match('/customers.mariatash.com/',trim($email))){
+                    Mage::log("makeRequest Blocked Customer Email : ".$email, Zend_Log::DEBUG, REMARKETY_LOG);
+                    return true;
+                }
+            }
 
             $response = $client
                 ->setHeaders($this->_getHeaders($eventType, $payload))

@@ -19,6 +19,10 @@ class Allure_Teamwork_Model_Tmobserver{
     const TEAMWORK_DEPOSIT_ID   = "TEAMWORK-POS-DEPOSIT";
     const TEAMWORK_DEPOSIT_SKU  = "TEAMWORK-POS-DEPOSIT";
     
+    const TEAMWORK_SHIPPING_NAME    = "Pos Shipping";
+    const TEAMWORK_SHIPPING_ID      = "TEAMWORK-POS-SHIPPING";
+    const TEAMWORK_SHIPPING_SKU     = "TEAMWORK-POS-SHIPPING";
+    
     protected $teamwork_sync_log = "teamwork_sync_data.log";
     
     private function isTeamworkDataTransferToSalesforce(){
@@ -208,6 +212,11 @@ class Allure_Teamwork_Model_Tmobserver{
             $giftDepositDetails = null;
             if(array_key_exists("deposit_gift_details",$object)){
                 $giftDepositDetails = $object["deposit_gift_details"];
+            }
+            
+            $shipItemDetails = null;
+            if(array_key_exists("ship_details",$object)){
+                $shipItemDetails = $object["ship_details"];
             }
             
             $receiptId = $orderDetails["ReceiptId"];
@@ -573,6 +582,41 @@ class Allure_Teamwork_Model_Tmobserver{
                         $productObj = null;
                         
                     }
+                    
+                    //ship item add 
+                    foreach ($shipItemDetails as $shipItem){
+                        $shipItemAmt  = $shipItem["SHIP_PRICE"];
+                        $shipItemDesc = $shipItem["SHIP_DESC"];
+                        
+                        $teamworkShipItemId = self::TEAMWORK_SHIPPING_ID;
+                        $skuShipItem        = self::TEAMWORK_SHIPPING_SKU;
+                        $nameDescShipItem   = self::TEAMWORK_SHIPPING_NAME;
+                        $qtyShipItem = 1;
+                        
+                        if(!empty($shipItemDesc)){
+                            $nameDescShipItem = $shipItemDesc;
+                        }
+                        
+                        $productObj = Mage::getModel('catalog/product');
+                        $productObj->setTypeId("simple");
+                        $productObj->setSku($skuShipItem);
+                        $productObj->setName($nameDescShipItem);
+                        $productObj->setShortDescription($nameDescShipItem);
+                        $productObj->setDescription($nameDescShipItem);
+                        $productObj->setPrice($shipItemAmt);
+                        
+                        $quoteItem = Mage::getModel("allure_counterpoint/item")
+                        ->setProduct($productObj);
+                        $quoteItem->setQty($qtyShipItem);
+                        
+                        $quoteItem->setStoreId(1);
+                        $quoteItem->setOtherSysQty(1);
+                        $quoteItem->setTwItemId($teamworkShipItemId);
+                        
+                        $quoteObj->addItem($quoteItem);
+                        $productObj = null;
+                    }
+                    
                     
                     
                     //$quoteBillingAddress = Mage::getModel('sales/quote_address');
@@ -949,8 +993,17 @@ class Allure_Teamwork_Model_Tmobserver{
                 "DEPOSIT"       => "tm_pay_deposit",
                 "OFFLINE CREDIT CARD" => "tm_pay_offline_credit_card",
                 "CREDIT CARD" => "tm_pay_credit_card",
-                "PAYPAL" => "tm_pay_paypal",
-                "CASHUK" => "tm_pay_cashuk"
+                "PAYPAL"            => "tm_pay_paypal",
+                "CASHUK"            => "tm_pay_cashuk",
+                "AED Refund"        => "tm_pay_aedrefund",
+                "AED Credit Card"   => "tm_pay_aedcreditcard",
+                "AED Cash"          => "tm_pay_aedcash",
+                "AED Credit"        => "tm_pay_aedcredit",
+                "BROWN THOMAS TILL" => "tm_pay_brownthomastill",
+                "HARRODS TILL"      => "tm_pay_harrodstill",
+                "HOUSE ACCOUNT"     => "tm_pay_houseaccount",
+                "SQUARE"            => "tm_pay_square",
+                "CHECK US"          => "tm_pay_checkus"
             );
             
             $creditPaymentsArr = array(
@@ -958,7 +1011,9 @@ class Allure_Teamwork_Model_Tmobserver{
                 "tm_pay_genius_refund",
                 "tm_pay_authrize",
                 "tm_pay_credit_card",
-                "tm_pay_offline_credit_card"
+                "tm_pay_offline_credit_card",
+                "tm_pay_aedrefund",
+                "tm_pay_aedcredit"
             );
             
             $cardCodeArr = array(
@@ -1455,6 +1510,40 @@ class Allure_Teamwork_Model_Tmobserver{
             }
             $productObj = null;
         }
+        
+        
+        $shipDetails = null;
+        if(array_key_exists("ship_details",$object)){
+            $this->addLog("..... Ship Item Detais .....");
+            $shipDetails = $object["ship_details"];
+        }
+        
+        foreach ($shipDetails as $sipItem){
+            $shipDesc = $sipItem["SHIP_DESC"];
+            $shipAmt = $sipItem["SHIP_PRICE"];
+            
+            $teamworkShipItemId = self::TEAMWORK_SHIPPING_ID;
+            $skuShip    = self::TEAMWORK_SHIPPING_SKU;
+            $nameDescShip = self::TEAMWORK_SHIPPING_NAME;
+            
+            if(!empty($shipDesc)){
+                $nameDescShip = $shipDesc;
+            }
+            
+            $productObj = Mage::getModel("allure_teamwork/tmproduct")
+            ->load($teamworkShipItemId,"tm_item_id");
+            if(!$productObj->getEntityId()){
+                $productObj = Mage::getModel("allure_teamwork/tmproduct")
+                ->setTmItemId($teamworkShipItemId)
+                ->setName($nameDescShip)
+                ->setSku($skuShip)
+                ->setPrice($shipAmt)
+                ->save();
+                $this->addLog("Shipping Product add into teamwork product table. Sku - ".$skuShip);
+            }
+            $productObj = null;
+        }
+        
         
     }
     

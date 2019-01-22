@@ -31,14 +31,14 @@ class Ecp_ReportToEmail_Model_Refund
         $storesId=1;
         $storeId=$storesId;
 
-        if($getdate) {
+      /*  if($getdate) {
             $yesterday = $getdate;
             $from = $yesterday . "00:00:00";
             $to = $yesterday . "23:59:59";
 
             $this->add_log("getdate => from=>".$from." to=>".$to);
 
-        } else {
+        } else {*/
 
             $days = 1;
             $from = date('Y-m-d 00:00:00', strtotime('-' . ($days) . ' days'));
@@ -49,7 +49,7 @@ class Ecp_ReportToEmail_Model_Refund
             $this->add_log("default date => from=>".$from." to=>".$to." yesterday=>".$yesterday);
 
 
-        }
+     //   }
 
 
         $diffZone = $this->getDiffTimezone();
