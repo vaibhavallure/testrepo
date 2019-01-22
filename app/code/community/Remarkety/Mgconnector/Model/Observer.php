@@ -72,6 +72,11 @@ class Remarkety_Mgconnector_Model_Observer
     public function triggerCustomerUpdate($observer)
     {
         $this->_customer = $observer->getEvent()->getCustomer();
+        //block particaular domain customer
+        if(preg_match('/customers.mariatash.com/',$this->_customer->getEmail())){
+            Mage::log("Blocked Customer Email : ".$this->_customer->getEmail(), Zend_Log::DEBUG, REMARKETY_LOG);
+            return $this;
+        }
 
         if(Mage::registry('remarkety_customer_save_observer_executed_'.$this->_customer->getId()) || !$this->_customer->getId()) {
             return $this;
