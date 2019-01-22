@@ -313,7 +313,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['comp'] = '';
                     $data['sport'] = '';
                     $data['gender'] = $this->charEncode('UNISEX');
-                    $data['harrods_colour'] = $this->charEncode(strtoupper($harrodsColor));  //COlor
+                    $data['harrods_colour'] = $this->charEncode(strtoupper($optionLabel));  //COlor  $harrodsColor
                     $data['pack_size'] = '';
 
                     $data['prod_hierarchy'] = $this->charEncode('BA');
@@ -341,7 +341,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 if($splitsku['p_size'])
                 $data['gtin'] = $this->charEncode("(".$splitsku['p_size'].";".$_product->getGtinNumber().";;;;)");
                 else
-                $data['gtin'] = $this->charEncode("(ONE_SIZE;".$_product->getGtinNumber().";;;;)");
+                $data['gtin'] = $this->charEncode("(O/S;".$_product->getGtinNumber().";;;;)");
 
                 $data['sizeDelimited'] = $this->charEncode('SizeDelim');
 
