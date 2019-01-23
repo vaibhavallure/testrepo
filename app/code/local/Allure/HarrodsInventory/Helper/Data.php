@@ -264,13 +264,16 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     if (!empty($optionId))
                         $optionLabel = $attribute->getFrontend()->getOption($optionId);
 
-                    $harrodsColorOptionsArray=array("White Gold"=>"White","Yellow Gold"=>"Gold","Black Gold"=>"Black","Rose Gold"=>"Rose Gold");
+                   /* $harrodsColorOptionsArray=array("White Gold"=>"White","Yellow Gold"=>"Gold","Black Gold"=>"Black","Rose Gold"=>"Rose Gold");
 
 
                     if($_product->getHarrodsColor())
                         $harrodsColor= $attributeHarrodsColor->getFrontend()->getOption($_product->getHarrodsColor());
                     else
-                        $harrodsColor=$harrodsColorOptionsArray[$optionLabel];
+                        $harrodsColor=$harrodsColorOptionsArray[$optionLabel];*/
+
+
+                   $newHarrodsColorArray=array("YELLOW GOLD"=>"GOLD","WHITE GOLD"=>"WHITE","ROSE GOLD"=>"ROSE GOLD","BLACK RHODIUM"=>"BLACK","BLACK GOLD"=>"BLACK");
                     
 
 
@@ -313,7 +316,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['comp'] = '';
                     $data['sport'] = '';
                     $data['gender'] = $this->charEncode('UNISEX');
-                    $data['harrods_colour'] = $this->charEncode(strtoupper($optionLabel));  //COlor  $harrodsColor
+                    $data['harrods_colour'] = $this->charEncode($newHarrodsColorArray[strtoupper($optionLabel)]);  //COlor  $harrodsColor
                     $data['pack_size'] = '';
 
                     $data['prod_hierarchy'] = $this->charEncode('BA');
