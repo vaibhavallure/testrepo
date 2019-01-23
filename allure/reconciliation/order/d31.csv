@@ -1,0 +1,11 @@
+,Time,Till,Transaction,Operator No,Employee,Customer No,Item,Comment,Retail Value,Sales,Promotion Amount,Discount %,Discretionary Discount,Quantity,M. Order No.
+,14:07:35,68,95849,903434,Maulini Mattia,,505486538823,xsceth168cz rg,315,315,,,,1,
+12/31/2017,Transaction 95849 Total,,,,,,,,315,315,,,,1,
+,13:39:48,92,103441,902586,Tunney Paisley,100250421,505486538823,xstar45d wg,337,337,,,,1,
+12/31/2017,Transaction 103441 Total,,,,,,,,337,337,,,,1,
+,15:11:25,92,103458,902586,Tunney Paisley,10193964,505486538823,xr1sp8 rg,186,186,,,,1,
+12/31/2017,Transaction 103458 Total,,,,,,,,186,186,,,,1,
+,15:19:39,92,103461,903306,Dineen Zach,100580696,505486538823,ac,10,10,,,,1,
+12/31/2017,Transaction 103461 Total,,,,,,,,10,10,,,,1,
+,15:20:49,92,103462,903306,Dineen Zach,,505486538823,ac,30,30,,,,3,
+12/31/2017,Transaction 103462 Total,,,,,,,,30,30,,,,3,
