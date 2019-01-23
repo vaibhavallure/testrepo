@@ -7,7 +7,12 @@ $invoiceUrl = Mage::getModel('adminhtml/url')->getUrl('*/advr_order/invoices');
 <div class="advr-filter-<?php echo $_idx ?>">
 	<input type="hidden" name="orders" value="<?php  echo $column->getOrders(); ?>"/>
 </div>
-<a href="javascript:void(0);" onclick="window.open(advnGridJsObject._addVarToUrl('<?php echo $orderUrl ?>', advnGridJsObject.filterVar, getFilterValues(<?php echo $_idx ?>)), '_blank');"><?php echo Mage::helper('advr')->__('View orders') ?></a>
+<!--<a href="javascript:void(0);" onclick="window.open(advnGridJsObject._addVarToUrl('--><?php //echo $orderUrl ?><!--', advnGridJsObject.filterVar, getFilterValues(<?php //echo $_idx ?>//)), '_blank');"><?php //echo Mage::helper('advr')->__('View orders') ?><!--</a>-->
+<form action="<?php echo $orderUrl ?>" method="post">
+    <input type="hidden" name="filter" id="allure_filter_<?php echo $_idx ?>" value="">
+    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+    <button type="submit"><?php echo Mage::helper('advr')->__('View orders') ?></button>
+</form>
 <br>
 <?php if ($column->getInvoices()): ?>
 	<div class="advr-filter-<?php echo $_idx ?>">
@@ -29,4 +34,5 @@ $invoiceUrl = Mage::getModel('adminhtml/url')->getUrl('*/advr_order/invoices');
         }
         return encode_base64(Form.serializeElements(values));
     }
+    document.getElementById("allure_filter_<?php echo $_idx ?>").value=getFilterValues(<?php echo $_idx ?>);
 </script>
