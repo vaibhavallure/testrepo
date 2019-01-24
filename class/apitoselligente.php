@@ -21,7 +21,10 @@ class Millesima_Api_To_Selligente{
      * function to create client
      */
     public function getClientIndividual(){
-        $client = new soapclient(self::URL_SOAP_INDIVIDUAL);
+		$wsdl = "individual.xml";
+        $client = new soapclient($wsdl,array('cache_wsdl' => WSDL_CACHE_NONE));
+        //$client = new soapclient(self::URL_SOAP_INDIVIDUAL);
+		
         $header = new SoapHeader(
             'http://tempuri.org/',
             'AutomationAuthHeader',
@@ -35,7 +38,9 @@ class Millesima_Api_To_Selligente{
     }
 
     public function getClientBroadcast(){
-        $client = new soapclient(self::URL_SOAP_BROADCAST);
+		$wsdl = "broadcast.xml";
+        $client = new soapclient($wsdl,array('cache_wsdl' => WSDL_CACHE_NONE));
+        //$client = new soapclient(self::URL_SOAP_BROADCAST);
         $header  =new SoapHeader(
             'http://tempuri.org/',
             'AutomationAuthHeader',
