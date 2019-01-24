@@ -5,26 +5,22 @@ $orderUrl = Mage::getModel('adminhtml/url')->getUrl('*/advr_order/plain');
 $invoiceUrl = Mage::getModel('adminhtml/url')->getUrl('*/advr_order/invoices');
 ?>
 <div class="advr-filter-<?php echo $_idx ?>">
-	<input type="hidden" name="orders" value="<?php  echo $column->getOrders(); ?>"/>
+    <input type="hidden" name="orders" value="<?php  echo $column->getOrders(); ?>"/>
 </div>
-<!--<a href="javascript:void(0);" onclick="window.open(advnGridJsObject._addVarToUrl('--><?php //echo $orderUrl ?><!--', advnGridJsObject.filterVar, getFilterValues(<?php //echo $_idx ?>//)), '_blank');"><?php //echo Mage::helper('advr')->__('View orders') ?><!--</a>-->
-<form action="<?php echo $orderUrl ?>" method="post">
-    <input type="hidden" name="filter" id="allure_filter_<?php echo $_idx ?>" value="">
-    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-    <button type="submit"><?php echo Mage::helper('advr')->__('View orders') ?></button>
-</form>
+<input type="hidden" name="country_id" class="country_id_<?= $_idx ?>" value="<?php echo $this->getData()['column']->getData()['country_id'] ?>"/>
+<a href="javascript:void(0);" onclick="window.open(advnGridJsObject._addVarToUrl('<?php echo $orderUrl ?>', advnGridJsObject.filterVar, getFilterValues(<?php echo $_idx ?>)), '_blank');"><?php echo Mage::helper('advr')->__('View orders') ?></a>
 <br>
 <?php if ($column->getInvoices()): ?>
-	<div class="advr-filter-<?php echo $_idx ?>">
-		<input type="hidden" name="invoices" value="<?php  echo $column->getInvoices(); ?>"/>
-	</div>
-	<a href="javascript:void(0);" onclick="window.open(advnGridJsObject._addVarToUrl('<?php echo $invoiceUrl ?>', advnGridJsObject.filterVar, getFilterValues(<?php echo $_idx ?>)), '_blank');"><?php echo Mage::helper('advr')->__('View invoices') ?></a>
+    <div class="advr-filter-<?php echo $_idx ?>">
+        <input type="hidden" name="invoices" value="<?php  echo $column->getInvoices(); ?>"/>
+    </div>
+    <a href="javascript:void(0);" onclick="window.open(advnGridJsObject._addVarToUrl('<?php echo $invoiceUrl ?>', advnGridJsObject.filterVar, getFilterValues(<?php echo $_idx ?>)), '_blank');"><?php echo Mage::helper('advr')->__('View invoices') ?></a>
 <?php endif ?>
 
 <script type="text/javascript">
-	function getFilterValues(idx)
+    function getFilterValues(idx)
     {
-        var inputs = $$('.advr-widget-toolbar input, .advr-widget-toolbar select, .advr-extended-filter input, .advr-extended-filter select, .advr-filter-'+idx + ' input');
+        var inputs = $$('.advr-widget-toolbar input, .advr-widget-toolbar select, .advr-extended-filter input, .advr-extended-filter select,.country_id_'+idx); //.advr-filter-'+idx + ' input'
         var values = [];
 
         for(var i in inputs) {
@@ -34,5 +30,4 @@ $invoiceUrl = Mage::getModel('adminhtml/url')->getUrl('*/advr_order/invoices');
         }
         return encode_base64(Form.serializeElements(values));
     }
-    document.getElementById("allure_filter_<?php echo $_idx ?>").value=getFilterValues(<?php echo $_idx ?>);
 </script>
