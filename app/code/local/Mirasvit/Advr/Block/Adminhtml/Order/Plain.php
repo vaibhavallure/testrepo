@@ -104,7 +104,6 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Plain extends Mirasvit_Advr_Block_Admi
 
         $this->setCollection($collection);
 
-
         return $collection;
     }
 
