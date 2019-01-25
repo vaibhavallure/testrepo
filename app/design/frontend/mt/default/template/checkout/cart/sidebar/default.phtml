@@ -42,6 +42,7 @@ if(!is_null($parentId)){
 }
 
 ?>
+
 <li class="item<?php echo ' '.$_product->getTypeId()?>">
     <?php if ($this->hasProductUrl()): ?>
         <a href="<?php echo $url ?>" title="<?php echo $this->htmlEscape($this->getProductName()) ?>" class="product-image"><img src="<?php echo $this->getProductThumbnail()->resize(56, 73)->setWatermarkSize('30x10'); ?>" width="56" height="73" style="width:56px; height:73px;" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></a>
@@ -155,7 +156,7 @@ if(!is_null($parentId)){
         	</div>
         <?php endif; ?>
 
-        <div>  <a href="<?php echo $this->getDeleteUrl() ?>" title="<?php echo $this->__('Remove') ?>" onclick="return confirm('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>');" class="btn-remove"><?php echo $this->__('Remove') ?></a>
-
+        <div>  <a href="#" title="<?php echo $this->__('Remove') ?>" onclick="confirmBox('<?php echo $this->__('Are you sure you would like to remove this item from the shopping cart?') ?>', function(){window.location='<?php echo $this->getDeleteUrl() ?>'});" class="btn-remove"><?php echo $this->__('Remove') ?></a>
         </div>
 </li>
+

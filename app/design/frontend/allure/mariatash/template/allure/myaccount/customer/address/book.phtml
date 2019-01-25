@@ -58,7 +58,9 @@
                 </address>
                 <p>
                 	<a data-id=<?php echo Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId()?> onclick="editAddressData(this)" data-url="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
-                	<a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $billAddrId ?>');"><?php echo $this->__('Delete') ?></a>
+                	<a href="#" class="link-remove" onclick="confirmBox('<?php echo $this->__('Are you sure you want to delete this address?') ?>',function() {
+                            deleteAddress('<?php echo $billAddrId ?>');
+                            })"><?php echo $this->__('Delete') ?></a>
                 </p>
            </li>
         <?php else: ?>
@@ -81,7 +83,11 @@
                 </address>
                 <p>
                 	<a data-id="<?php echo Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId()?>" onclick="editAddressData(this)" data-url="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
-                	<a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $shipAddrId ?>');"><?php echo $this->__('Delete') ?></a>
+                	<a href="#" class="link-remove"
+                       onclick="confirmBox('<?php echo $this->__('Are you sure you want to delete this address?') ?>',function() {
+                               deleteAddress('<?php echo $shipAddrId ?>');
+                               })"
+                      ><?php echo $this->__('Delete') ?></a>
                 </p>
             </li>
         <?php else: ?>
@@ -110,7 +116,11 @@
                     </address>
                     <p class="additional-address-links">
                         <a data-id="<?php echo $_address->getId()?>" onclick="editAddressData(this)" data-url="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"><?php echo $this->__('Edit') ?></a><!-- <span class="separator">|</span> -->
-                        <a href="#" class="link-remove" onclick="return deleteAddress('<?php echo $_address->getId() ?>');"><?php echo $this->__('Delete') ?></a>
+                        <a href="#" class="link-remove"
+                           onclick="confirmBox('<?php echo $this->__('Are you sure you want to delete this address?') ?>',function() {
+                                   deleteAddress('<?php echo $_address->getId() ?>');
+                                   })"
+                        ><?php echo $this->__('Delete') ?></a>
                     	<a data-id="<?php echo $_address->getId()?>" onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_billing');"><?php echo $this->__('Default Billing') ?></a>
                     	<a data-id="<?php echo $_address->getId()?>" onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_shipping');"><?php echo $this->__('Default Shipping') ?></a>
                     </p>
@@ -187,7 +197,7 @@ function createNewAddress(){
 function deleteAddress(addressId) {
 	var form_key = jQuery('.mt-adrress-data .box > input').val();
 	console.log(form_key);
-    if(confirm('<?php echo $this->__('Are you sure you want to delete this address?') ?>')) {
+//    if(confirm('<?php //echo $this->__('Are you sure you want to delete this address?') ?>//')) {
     	showLoadingFancybox();
     	jQuery.ajax({
             url: '<?php echo Mage::getBaseUrl('web').'customer/address/deleteAjax';?>',
@@ -204,8 +214,8 @@ function deleteAddress(addressId) {
             	hideLoadingFancybox();
             }
         });
-    }
-    return false;
+//    }
+//    return false;
 }
 
 function saveAddressData(){
