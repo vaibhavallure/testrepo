@@ -401,4 +401,11 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
 		return Mage::helper('allure_virtualstore')->getStoreCode($storeId);
 	}
+
+	public function storeAppearName($store_id)
+    {
+        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+        $storeKey = array_search ($store_id, $configData['stores']);
+        return $configData['appears'][$storeKey];
+    }
 }

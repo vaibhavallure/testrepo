@@ -159,6 +159,10 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 				<span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
 				<span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingQty() ?></span>
 				</div>
+                <div class="success-field">
+                    <span class="apt-summary"><?php echo $this->__('Booking Location') ?></span>
+                    <span class="apt-summary" style="font-weight: bold"><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
+                </div>
 				<?php if($model->getPiercingLoc()):?>
 				<div class="success-field">
 				<span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
