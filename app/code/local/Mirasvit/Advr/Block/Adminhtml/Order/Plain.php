@@ -97,9 +97,13 @@ class Mirasvit_Advr_Block_Adminhtml_Order_Plain extends Mirasvit_Advr_Block_Admi
         $collection->setFilterData($filterData->unsOrders(), false, true) // Unset extra data from filters
             ->selectColumns(array_merge($this->getVisibleColumns(), array('order_id')));
 
+        $statusArray=explode(",",Mage::getStoreConfig('advr/report/process_orders'));
+        $collection->getSelect()->where("sales_order_table.status IN(". "'" . implode ( "', '", $statusArray ) . "')");
+
         $collection->getSelect()->group('sales_order_table.entity_id');
 
         $this->setCollection($collection);
+
 
         return $collection;
     }
