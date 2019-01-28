@@ -30,12 +30,15 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '</ul>';
         $html .= $this->_getAddRowButtonHtml('appointmentblocker_container',
             'appointmentblocker_template', $this->__('Add New Store'));
-        
+
+
+
+
         $html .= '<script>';
         $html .= 'jQuery(document).ready(function(){
         });
 
-        function enableStoreContainer(evt,inx){
+        /*function enableStoreContainer(evt,inx){
             //alert(jQuery(evt).parent().next().next().attr("class"));
             var selectVal = jQuery(evt).val();
             if(selectVal == 1){
@@ -45,7 +48,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
                jQuery(evt).parent().next().next().removeClass("active");
                jQuery(evt).parent().next().next().next().removeClass("active");
             }
-        } 
+        } */
 
         function enableCustomerEmail(evt,inx){
             var selectVal = jQuery(evt).val();
@@ -136,7 +139,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         
         $html .= '<hr id="enable-store-hr-'.$rowIndex.'" class="appointment-setting-hr enable-store-hr '.$enableStoreClass.'">';
         
-        $html .= '<div id="enable-store-container-'.$rowIndex.'" class="enable-store-container '.$enableStoreClass.'">';
+        $html .= '<div id="enable-store-container-'.$rowIndex.'" class="enable-store-container '.$enableStoreClass.' active" >';
         
         
         $html .= '<div class="appointment-setting-common apt-row-1 right">';
