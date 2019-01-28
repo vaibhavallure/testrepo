@@ -478,7 +478,7 @@ class Allure_Teamwork_Model_Tmobserver{
                         
                         $discPer = 0;
                         if($tmProduct["LineExtDiscountAmount"] > 0){
-                            $discPer = ($tmProduct["LineExtDiscountAmount"] * 100) / $origPriceWoutTax;
+                            $discPer = ($tmProduct["LineExtDiscountAmount"] * 100) / $origPriceWithTax;
                         }
                         
                         $tmItemId = trim($tmProduct["ReceiptItemId"]);
@@ -756,13 +756,13 @@ class Allure_Teamwork_Model_Tmobserver{
                         if($disc){
                             //$disc *= (-1);
                             $taxDisc = 0;
-                            $productDiscPer = $productArr[$iSku]["disc_per"];
+                            /* $productDiscPer = $productArr[$iSku]["disc_per"];
                             if($productDiscPer){
                                 if(!empty($taxI)){
                                     $taxDisc = ($productDiscPer * $taxI) / 100;
                                     $taxI = $taxI - $taxDisc;
                                 }
-                            }
+                            } */
                         }
                         
                         $singleTax = $productArr[$iSku]["single_tax"];
@@ -806,6 +806,8 @@ class Allure_Teamwork_Model_Tmobserver{
                     $totalAmtTw = trim($orderDetails["TotalAmountWithTax"]);
                     $totalAmtTax = trim($orderDetails["TAX"]);
                     
+                    $subtotalAmt = trim($orderDetails["TotalAmountWithoutTax"]);
+                    
                     if(1){
                         $totalAmmount =$totalAmmount + $taxAmmount;
                         $orderObj->setTaxAmount($totalAmtTax);
@@ -837,6 +839,9 @@ class Allure_Teamwork_Model_Tmobserver{
                     $orderObj->setShippingDescription("Store Pickup"); //self::SHIPPING_METHOD_NAME
                     $orderObj->setGrandTotal($totalAmtTw);
                     $orderObj->setBaseTaxAmount($totalAmtTax);
+                    $orderObj->setTaxAmount($totalAmtTax);
+                    $orderObj->setSubtotal($subtotalAmt);
+                    $orderObj->setBaseSubtotal($subtotalAmt);
                     $orderObj->setBaseGrandTotal($totalAmtTw);
                     
                     if(strtoupper($otherSysCur) != "MT"){
