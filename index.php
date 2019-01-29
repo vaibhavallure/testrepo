@@ -775,11 +775,13 @@ function createCampaign(){
                 $startDate = $data["dateenvoi-".$messageId].' '.$data["heureenvoi-".$messageId];
                 $format = "d/m/Y H:i:s";
                 $dateObj = DateTime::createFromFormat($format, $startDate);
+				$segment = (int) $segment;
             } else{
                 $dateObj = new DateTime('NOW');
+				$segment = 7748;
             }
 
-            //echo"<br />";var_dump($dateObj);
+            //echo"<br />";var_dump($segment);
             //die('gfdgdfgd');
 
             $campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segment,$dateObj,$type);

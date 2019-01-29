@@ -275,7 +275,7 @@ class Millesima_Campaign extends Millesima_Abstract
     public function setTargetWriter($writer, $segment){
         $writer->startElement('TARGET');
         $writer->writeAttribute('LISTID',657);
-        $writer->writeAttribute('SEGMENTID' , 7748);
+        $writer->writeAttribute('SEGMENTID' , $segment);
         $writer->writeAttribute('SCOPES' , '');
         $writer->endElement();
 
