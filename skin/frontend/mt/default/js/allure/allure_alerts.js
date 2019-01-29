@@ -39,7 +39,12 @@ function createCustomAlert(txt) {
 
 }
 
-window.confirmBox = function(txt,doYes) {
+window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
+
+    okBtn = okBtn || "OK";
+    cancelBtn = cancelBtn || "CANCEL";
+
+
 
     d = document;
 
@@ -63,7 +68,7 @@ window.confirmBox = function(txt,doYes) {
 
     btnc = alertObj.appendChild(d.createElement("a"));
     btnc.id = "cancelConfirm";
-    btnc.appendChild(d.createTextNode("CANCEL"));
+    btnc.appendChild(d.createTextNode(cancelBtn));
     btnc.href = "#";
 
     btnc.onclick = function() {
@@ -73,7 +78,7 @@ window.confirmBox = function(txt,doYes) {
 
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "okConfirm";
-    btn.appendChild(d.createTextNode("OK"));
+    btn.appendChild(d.createTextNode(okBtn));
     btn.href = "#";
     btn.focus();
     btn.onclick = function() {

@@ -1164,7 +1164,7 @@ dd.post-lengthds-lbl-options.last{
  }
 
 #allureAlertBox {
-    padding: 20px;
+    padding: 50px;
     position:relative;
     width:300px;
     min-height:100px;
@@ -1189,15 +1189,15 @@ dd.post-lengthds-lbl-options.last{
 #allureAlertBox p {
     text-align: center;
     font:12px arial,verdana;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     color: #3f4048;
 }
 
 #allureAlertBox #closeBtn{
     display:block;
     position:absolute;
-    bottom: 10px;
-    left: 125px;
+    bottom: 44px;
+    left: 152px;
     margin:5px auto;
     padding:7px;
     border:0 none;
@@ -1247,14 +1247,14 @@ dd.post-lengthds-lbl-options.last{
 #allureAlertBox #cancelConfirm
 {
     position:absolute;
-    bottom: 10px;
-    left: 60px;
+    bottom: 44px;
+    left: 85px;
 }
 #allureAlertBox #okConfirm
 {
     position:absolute;
-    bottom: 10px;
-    left: 185px;
+    bottom: 44px;
+    left: 221px;
 }
 
 #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
