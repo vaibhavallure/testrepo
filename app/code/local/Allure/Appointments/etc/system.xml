@@ -136,6 +136,25 @@
 						</debug_enabled>
 					</fields>
 				</debug>
+				<grouping_on translate="label">
+					<label>Location Dropdown Setting</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>12</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<groups translate="label">
+							<label>Enter Store Ids To Enable Group Drop down On Appontment Booking Page</label>
+							<frontend_type>text</frontend_type>
+							<comment>separate by comma</comment>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</groups>
+					</fields>
+				</grouping_on>
 			</groups>
 		</appointments>
 	</sections>

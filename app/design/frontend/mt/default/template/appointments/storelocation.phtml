@@ -3,9 +3,13 @@
 
 	$storeId = Mage::helper('appointments')->getStoreId();
 
+	$fetch_storeId=	Mage::helper('appointments')->getReqStoreId();
+
 	if($model){
 		$fetch_storeId = $model->getStoreId();
 	}
+
+
 ?>
 <label for="store_location">Store Location:</label>
 	<?php
@@ -13,7 +17,8 @@
 	$activeStores = $this->getActiveStore();
 	$multi_stores=array();
 
-	if(count($storeId_arr) >= 1){
+
+    if(count($storeId_arr) >= 1){
 
 		if($storeId):
 			foreach($storeId_arr as $st_key => $st_value){
