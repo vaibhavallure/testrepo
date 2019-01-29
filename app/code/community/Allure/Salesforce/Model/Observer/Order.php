@@ -759,6 +759,11 @@ class Allure_Salesforce_Model_Observer_Order{
                         $response2 = $helper->sendRequest($url2 , "POST" , $request1);
                         $responseArr2 = json_decode($response2,true);
                         if($responseArr2["success"]){
+                            $coreResource = Mage::getSingleton('core/resource');
+                            $write = $coreResource->getConnection('core_write');
+                            $sql_order = "UPDATE sales_flat_order SET salesforce_uploaded_doc_id='".$documentId."' WHERE entity_id ='".$order->getId()."'";
+                            $write->query($sql_order);
+                            $helper->salesforceLog("salesforce uploaded doc id updated into order table.");
                             $helper->salesforceLog("Invoice pdf uploaded.");
                         }
                     }
@@ -859,6 +864,11 @@ class Allure_Salesforce_Model_Observer_Order{
                         $response2 = $helper->sendRequest($url2 , "POST" , $request1);
                         $responseArr2 = json_decode($response2,true);
                         if($responseArr2["success"]){
+                            $coreResource = Mage::getSingleton('core/resource');
+                            $write = $coreResource->getConnection('core_write');
+                            $sql_order = "UPDATE sales_flat_order SET salesforce_uploaded_doc_id='".$documentId."' WHERE entity_id ='".$order->getId()."'";
+                            $write->query($sql_order);
+                            $helper->salesforceLog("salesforce uploaded doc id updated into order table.");
                             $helper->salesforceLog("Invoice pdf uploaded.");
                         }
                     }
