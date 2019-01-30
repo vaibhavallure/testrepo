@@ -120,4 +120,31 @@ class Allure_Virtualstore_Helper_Data extends Mage_Core_Helper_Data
 
         return $store->getId();
     }
+
+
+    public function getGroupId($storeid){
+        $store = Mage::getSingleton("allure_virtualstore/store")->load((int)$storeid);
+        return $store->getGroupId();
+    }
+
+
+    public function getStoresIdsByGroupId($group_id){
+
+        $collection = Mage::getModel('allure_virtualstore/store')->getCollection();
+
+        $collection->addFieldToFilter('group_id', (int)$group_id);
+
+        $stores=array();
+
+        foreach ($collection as $st)
+        {
+
+            $stores[]=$st->getId();
+
+        }
+
+        return implode(",",$stores);
+    }
+
+
 }
