@@ -393,8 +393,34 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 			$storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
 		}
 
+        if($storeId) {
+            $group_id=Mage::helper('allure_virtualstore')->getGroupId($storeId);
+
+		    if (in_array($group_id,explode(",",Mage::getStoreConfig('appointments/grouping_on/groups'))))
+                $storeId = Mage::helper('allure_virtualstore')->getStoresIdsByGroupId($group_id);
+        }
+
 		return $storeId;
 	}
+
+
+
+    public function getReqStoreId() {
+
+        $storeId = Mage::app()->getRequest()->getParam('store');
+
+        $storeCode = Mage::app()->getRequest()->getParam('code');
+
+        if (!$storeId && $storeCode) {
+            $storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
+        }
+
+        return $storeId;
+    }
+
+
+
+
 
 	public function getStoreCode() {
 		$storeId = $this->getStoreId();
