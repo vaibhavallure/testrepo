@@ -231,6 +231,9 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                 var no_pepole=jQuery(".pierqtyTxt").val();
                 var store=jQuery(".storeLocDiv p b").html();
 
+                if(typeof store==="undefined")
+                    store=jQuery(".storeLocationSelect :selected").text();
+
                 if(no_pepole<1) {
                     alert("Please select the number of people in your party.");
                     jQuery("html, body").animate({ scrollTop: 0 }, "slow");
