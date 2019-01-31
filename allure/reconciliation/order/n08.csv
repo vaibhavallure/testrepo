@@ -1,0 +1,12 @@
+,Time,Till,Transaction,Operator No,Employee,Customer No,Item,Comment,Retail Value,Sales,Promotion Amount,Discount %,Discretionary Discount,Quantity,M. Order No.
+,11:16:49,68,90914,902962,Markman Ekaterina,100391071,505486538823,ac,6,6,,,,1,
+,11:16:49,68,90914,902962,Markman Ekaterina,100391071,505486538823,xr1sp8tq yg,209,209,,,,1,
+11/8/2017,Transaction 90914 Total,,,,,,,,215,215,,,,2,
+,18:45:02,68,90986,903306,Dineen Zach,,505486538823,ac,6,6,,,,1,
+11/8/2017,Transaction 90986 Total,,,,,,,,6,6,,,,1,
+,15:34:20,92,98078,902413,Bottaro Alana,10160370,505486538823,xet65d yg,-383,-383,,,,-1,
+,15:34:20,92,98078,903210,Varley Helen,10160370,505486538823,esc2d yg,173,173,,,,1,
+,15:34:20,92,98078,903210,Varley Helen,10160370,505486538823,xet5d yg,328,328,,,,1,
+11/8/2017,Transaction 98078 Total,,,,,,,,118,118,,,,1,
+,19:10:31,92,98107,903306,Dineen Zach,10207345,505486538823,ac,10,10,,,,1,
+11/8/2017,Transaction 98107 Total,,,,,,,,10,10,,,,1,
