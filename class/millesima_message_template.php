@@ -532,6 +532,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 
 
         $bddClass = new Millesima_Bdd();
+        $messageClass = new Millesima_Message();
         $abtest=$data["abtest"];
         $dateenvoi = str_replace("/","-",$dateenvoi);
         $dateenvoi = date("Y-m-d", strtotime($dateenvoi));
@@ -539,13 +540,23 @@ class Millesima_Message_Template extends Millesima_Abstract
             $vartest=array("a", "b", "d");
             foreach($vartest as $var){
                 $nameMessage = $country.$codemessage."-".$var;
-                $bddClass->insert("INSERT INTO message (brief_id,name,created_at,file_html_link,html,text) VALUES (?,?,?,?,?,?)",array($data['brief_id'],$nameMessage,date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText));
+                $res = $messageClass->getMessageByName($nameMessage);
+                if(count($res)>0){
+                    $bddClass->insert("UPDATE message SET brief_id = ?,created_at = ?, file_html_link = ?,html = ? ,text = ? where name = ?",array($data['brief_id'],date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText,$nameMessage));
+                } else {
+                    $bddClass->insert("INSERT INTO message (brief_id,name,created_at,file_html_link,html,text) VALUES (?,?,?,?,?,?)",array($data['brief_id'],$nameMessage,date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText));
+                }
                 $bddClass->update("UPDATE message SET dateenvoi = (?) where brief_id = (?)", array($dateenvoi, $data['brief_id']));
                 $html .="Le message ".$nameMessage." a été créé <br />";
             }
         }else{
             $nameMessage = $country.$codemessage;
-            $bddClass->insert("INSERT INTO message (brief_id,name,created_at,file_html_link,html,text) VALUES (?,?,?,?,?,?)",array($data['brief_id'],$nameMessage,date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText));
+            $res = $messageClass->getMessageByName($nameMessage);
+            if(count($res)>0){
+                $bddClass->insert("UPDATE message SET brief_id = ?,created_at = ?, file_html_link = ?,html = ? ,text = ? where name = ?",array($data['brief_id'],date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText,$nameMessage));
+            } else {
+                $bddClass->insert("INSERT INTO message (brief_id,name,created_at,file_html_link,html,text) VALUES (?,?,?,?,?,?)",array($data['brief_id'],$nameMessage,date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText));
+            }
             $bddClass->update("UPDATE message SET dateenvoi = (?) where brief_id = (?)", array($dateenvoi, $data['brief_id']));
             $html .="Le message ".$nameMessage." a été créé <br />";
         }

@@ -26,10 +26,21 @@ class Millesima_Message extends Millesima_Abstract
     }
 
     /**
-     * Function to get info, from message by id
-     * @param string $id
+     * Function to get info, from message by $name
+     * @param string $name
      * @return mixed
      */
+    public function getMessageByName ($name){
+        $bddClass = new Millesima_Bdd();
+        $res = $bddClass->selectAll("SELECT * FROM message WHERE name = ?",array($name));
+        return $res;
+    }
+
+    /**
+ * Function to get info, from message by id
+ * @param string $id
+ * @return mixed
+ */
     public function getMessageById ($id){
         $bddClass = new Millesima_Bdd();
         $res = $bddClass->selectAll("SELECT * FROM message WHERE id = ?",array($id));
