@@ -11,10 +11,17 @@ if($fetch_model){
 	$timestamp = strtotime($f_pickurendtime);
 	$fetch_endtime = date('H:i', $timestamp);
 }
+
+
+$no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
+
 ?>
 <div class="pickur_time_main_container">
 	<label class="pickurtimeLable" for="pick_your_time" >Pick Your Time:</label><br/>
 
+    <?php
+    if($no_of_people>0):
+    ?>
 <?php if (!$this->getData("timing")):?>
 
 	<div class="notfreepeiercer validation-advice">Walk-ins are welcome but currently all appointments are booked for the selected date.</div>
@@ -355,6 +362,12 @@ if($fetch_model){
 	</div>
 
 <?php endif;?>
+
+
+    <?php else: ?>
+        <div class="notfreepeiercer validation-advice">Please select the number of people in your party.</div>
+
+    <?php endif; ?>
 </div>
 
 
