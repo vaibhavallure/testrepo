@@ -639,4 +639,123 @@ class Millesima_Abstract{
 		mail($to, $objet, $message,$headers);
 
 	}
+
+    /**
+     * Function to get last value of config
+     * @param string $type
+     * @param array $data
+     * @return string value
+     */
+    public function sendMailMessage($type,$data){
+        $objet = $this->getObjectMail($type,$data);
+
+        $message = 'Bonjour,'. '<br />';
+        $message .= ''. '<br />';
+        $headers = 'From: brief@millesima.com' . "\r\n" .
+            'Reply-To: jcortina@millesima.com' . "\r\n" .
+            'Content-Type: text/html; charset="utf-8' . "\r\n" .
+            'Content-Transfer-Encoding: 8bit' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        $message .= $this->getMessageMail($type,$data);
+
+        $message .= ''. '<br />';
+        $message .= 'Cordialement.'. '<br />';
+
+        $to="";
+        $pays = $data['pays'];
+        $recipiants = $this->getRecipiantMail($type,$pays);
+
+
+        foreach($recipiants as $recipiant){
+            $to.=$recipiant.',';
+            //$replyto.=$recipiant.';';
+        }
+        mail($to, $objet, $message,$headers);
+    }
+
+    /**
+     * Function to get last value of config
+     * @param string $type
+     * @param array $pays
+     * @return array tabRecipiant
+     */
+    public function getRecipiantMail($type,$pays){
+        $isTest = false;
+        $tabRecipiant = array();
+        if(!$isTest){
+            $tabRecipiant[] = 'alopes@millesima.com';
+            $tabRecipiant[] = 'mrouquairol@millesima.com';
+            $tabRecipiant[] = 'jcortina@millesima.com';
+            $tabRecipiant[] = 'ldeker@millesima.com';
+        } else {
+            $tabRecipiant[] = 'alopes@millesima.com';
+            $tabRecipiant[] = 'dgorski@millesima.com';
+        }
+
+        if(($type == 'commercial' || $type == 'messagecreate') && in_array(array('F','f','L','l','B','b'),$pays) && !$isTest){
+        }
+        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('D','d','O','o','SA','sa','SF','sf'),$pays) && !$isTest){
+            $tabRecipiant[] = 'utreptow@millesima.com';
+            $tabRecipiant[] = 'sniggl@millesima.com';
+            $tabRecipiant[] = 'ekohr@millesima.com';
+            $tabRecipiant[] = 'bteurquetil@millesima.com';
+        }
+        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('P','p'),$pays) && !$isTest){
+            $tabRecipiant[] = 'lantunes@millesima.com';
+        }
+        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('E','e','Y','y'),$pays) && !$isTest){
+            $tabRecipiant[] = 'srocamora@millesima.com';
+        }
+        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('U','u'),$pays) && !$isTest){
+        }
+        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('G','g','I','i','H','h','SG','sg'),$pays) && !$isTest){
+            $tabRecipiant[] = 'mrenaud@millesima.com';
+            $tabRecipiant[] = 'hgee@millesima.com';
+        }
+        if($type == 'marketing' && in_array(array('F','f','L','l','B','b','E','e','Y','y','P','p'),$pays) && !$isTest){
+            $tabRecipiant[] = 'bgibier@millesima.com';
+        }
+        if($type == 'marketing' && in_array(array('U','u'),$pays) && !$isTest){
+            $tabRecipiant[] = 'imiossec@millesima.com';
+            $tabRecipiant[] = 'hobernard@millesima.com';
+        }
+        if($type == 'marketing' && in_array(array('G','g','I','i','H','h','SG','sg','D','d','O','o','SA','sa','SF','sf'),$pays) && !$isTest){
+            $tabRecipiant[] = 'pastanislas@millesima.com';
+        }
+
+        return $tabRecipiant;
+    }
+
+    /**
+     * Function to get last value of config
+     * @param string $type
+     * @param array $data
+     * @return string $return
+     */
+    public function getMessageMail($type,$data){
+        $return = '';
+        if($type == 'messagecreate'){
+            $return = $data['content'];
+        }
+        return $return;
+    }
+
+    /**
+     * Function to get last value of config
+     * @param string $type
+     * @param array $data
+     * @return string $return
+     */
+    public function getObjectMail($type,$data){
+        $return = '';
+        if($type == 'messagecreate'){
+            $return = 'Un ou des messages ont été générés pour le '.$data['id'];
+        }
+        return $return;
+    }
+
+
+
+
 }

@@ -500,14 +500,20 @@ function getMessageView($html = '',$url = '../') {
 function createMessage(){
     $app = \Slim\Slim::getInstance();
     $data = $app->request->post();
+    //var_dump($data);
+
     $messageDataClass = new Millesima_Messagedata();
     $messageClass = new Millesima_Message_Template();
     //$file = $app->request->file();
     $btnAction = $data['btnaction'];
     unset($data['btnaction']);
     if($btnAction == 'envoyer'){
-        $html = $messageDataClass->saveMessageData($data);
-        $html .= $messageClass->createMessage($data);
+        $messageDataClass->saveMessageData($data);
+        $html = $messageClass->createMessage($data);
+        $mail['pays'] = $data['pays'];
+        $mail['content'] = $html;
+        $mail['id']=$data['codemessage'];
+        $messageClass->sendMailMessage('messagecreate', $mail);
     }elseif ($btnAction == 'sauvegarder'){
         $html = $messageDataClass->saveMessageData($data);
     }else{
