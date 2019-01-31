@@ -406,7 +406,7 @@ class Millesima_Abstract{
         $themeBrief = $brief['theme'];
         $dateEnvoiBrief = $brief['dateenvoi'];
         $objet = '';
-        $testenvoi = true;
+        $testenvoi = false;
 
         $pays = '';
         foreach ($brief as $key => $value) {
