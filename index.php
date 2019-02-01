@@ -642,6 +642,9 @@ function updateSegment(){
 }
 
 function traitementTinyclues(){
+    $logFile = fopen ('tinyclues.log', "a+" ); //on l'ouvre en ecriture
+    fputs ( $logFile, 'Debut traitement Tyniclues : '.date("Y-m-d H:i:s")."\r\n"); //on ecrit la ligne dedans
+
     $app = \Slim\Slim::getInstance();
     $data = $app->request->post();
 
@@ -661,21 +664,21 @@ function traitementTinyclues(){
 
     //RECUPERATION DES FICHIERS SUR LE SFTP TINYCLUES
     $fichierTinyclues = $tinycluesClass->ListeFichierSFTP($dir, $date);
-
+    fputs ( $logFile, 'Liste Fichier: '.date("Y-m-d H:i:s")."\r\n"); //on ecrit la ligne dedans
     //supression fichier residuel
 
     //DEPLACEMENT DU SFTP VERS DOSSIER TINYCLUES DOLIST
     foreach ($fichierTinyclues as $fichier){
+        fputs ( $logFile, $fichier."\r\n"); //on ecrit la ligne dedans
         $contents = file_get_contents("ssh2.sftp://$sftp/data/from_tc/$fichier");
         file_put_contents ("/var/www/emailing/tinyclues/$fichier", $contents);
     }
 
     //Dedoublonnage des fichiers non US (S'il y en a)
     $fichierNonUS = $tinycluesClass->recupFichier("non_us");
-
+    fputs ( $logFile, 'Dedoublonnage des fichiers non US: '.date("Y-m-d H:i:s")."\r\n"); //on ecrit la ligne dedans
 
     if($fichierNonUS){
-
         //TRIE DES FICHIERS (DECROISSANT)
         $tabFichierNonUS = $tinycluesClass->sortBySize($fichierNonUS);
         $tinycluesClass->dedoublonneEtOrganise($tabFichierNonUS);
@@ -684,6 +687,7 @@ function traitementTinyclues(){
 
     //Dedoublonnage des fichiers US (S'il y en a)
     $fichierUS = $tinycluesClass->recupFichier("us");
+    fputs ( $logFile, 'Dedoublonnage des fichiers US: '.date("Y-m-d H:i:s")."\r\n"); //on ecrit la ligne dedans
 
     if($fichierUS){
         //TRIE DES FICHIERS (DECROISSANT)
@@ -693,10 +697,12 @@ function traitementTinyclues(){
 
     //RECUPERATION DES FICHIERS DEDOUBONNE POUR ARCHIVAGE
     $fichier = $tinycluesClass->recupFichier("dedoublon");
-
+    fputs ( $logFile, 'RECUPERATION DES FICHIERS DEDOUBONNE POUR ARCHIVAGE: '.date("Y-m-d H:i:s")."\r\n"); //on ecrit la ligne dedans
 
     $html = '';
+    fputs ( $logFile, 'archivageEtEnvoiTinyclues: '.date("Y-m-d H:i:s")."\r\n"); //on ecrit la ligne dedans
     foreach ($fichier as $newFichier){
+        fputs ( $logFile, $newFichier."\r\n"); //on ecrit la ligne dedans
         $html .= $tinycluesClass->archivageEtEnvoiTinyclues($newFichier);
         unlink($newFichier);
         $oldfichier = explode("/", $newFichier);
@@ -705,6 +711,7 @@ function traitementTinyclues(){
     }
     rmdir("tinyclues/dedoublon");
 
+    fclose ( $logFile );
     getSegmentView($html,'../../');
 }
 /////////////////////  Function action Campaign   ////////////////////////////////////////
