@@ -718,7 +718,7 @@ function createCampaign(){
     $segmentClass = new Millesima_Segment();
     $briefClass = new Millesima_Brief();
     $bddClass = new Millesima_Bdd();
-    $messageList = $messageClass->getMessageOrderByDate();
+    $messageList = $messageClass->getMessageNotSend();
     $segmentList = $segmentClass->getSegmentList();
 
 

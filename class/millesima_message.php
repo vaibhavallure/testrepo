@@ -77,6 +77,19 @@ class Millesima_Message extends Millesima_Abstract
         $res= $bddClass->selectAll("SELECT * FROM message WHERE created_at > DATE_SUB(CURDATE(), INTERVAL 30 DAY) ORDER BY id DESC");
         return $res;
     }
+
+    /**
+     * Function to get list of message if create is less than 30 days
+     * @return mixed
+     */
+    public function getMessageNotSend(){
+        $bddClass = new Millesima_Bdd();
+        $res= $bddClass->selectAll("SELECT * FROM message
+        where id not in (select message_id from campaign_selligente where statut = 'reel')
+        and message.created_at > DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+        ORDER BY message.id DESC");
+        return $res;
+    }
 	
     /**
      * Function to get trad obj lang message by id
