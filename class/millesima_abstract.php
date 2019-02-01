@@ -688,12 +688,14 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'mrouquairol@millesima.com';
             $tabRecipiant[] = 'jcortina@millesima.com';
             $tabRecipiant[] = 'ldeker@millesima.com';
+            $tabRecipiant[] = 'bgibier@millesima.com';
         } else {
             $tabRecipiant[] = 'alopes@millesima.com';
             $tabRecipiant[] = 'dgorski@millesima.com';
         }
 
-        if(($type == 'commercial' || $type == 'messagecreate') && in_array(array('F','f','L','l','B','b'),$pays) && !$isTest){
+        if(($type == 'messagecreate') && in_array(array('F','f','L','l','B','b'),$pays) && !$isTest){
+            $tabRecipiant[] = 'pvalette@millesima.com';
         }
         if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('D','d','O','o','SA','sa','SF','sf'),$pays) && !$isTest){
             $tabRecipiant[] = 'utreptow@millesima.com';
@@ -707,7 +709,10 @@ class Millesima_Abstract{
         if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('E','e','Y','y'),$pays) && !$isTest){
             $tabRecipiant[] = 'srocamora@millesima.com';
         }
-        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('U','u'),$pays) && !$isTest){
+        if(($type == 'messagecreate')  && in_array(array('U','u'),$pays) && !$isTest){
+            $tabRecipiant[] = 'braphanel@millesima.com';
+            $tabRecipiant[] = 'hobernard@millesima.com';
+            $tabRecipiant[] = 'lkocsis@millesima.com';
         }
         if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('G','g','I','i','H','h','SG','sg'),$pays) && !$isTest){
             $tabRecipiant[] = 'mrenaud@millesima.com';
