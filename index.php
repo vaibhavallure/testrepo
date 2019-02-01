@@ -65,6 +65,7 @@ $app->get('/view/ajax/message_getlocalhtml/:message','getLocalHtml');
 $app->get('/view/ajax/segment_count/:data','countSegment');
 $app->get('/view/ajax/brief_info/:name','getConfigDataIndex');
 $app->get('/view/ajax/message_getBriefInfo/:brief','getBriefInfo');
+$app->post('/view/ajax/verif_brief/','verifBriefExist');
 $app->get('/view/ajax/message_getMessageSaveInfo/:brief','getMessageSaveInfo');
 $app->get('/view/ajax/trad_getExist/:data','getTradInfo');
 $app->post('/view/ajax/trad_save/','saveTradInfo');
@@ -133,8 +134,6 @@ function actionBrief(){
         $html = "c'est pas bien d'aller direct sur cette url";
 
     } else {
-        //var_dump($data);
-        //die('titi2');
         $html = '';
         $id = array_shift($data);
         $code = $data["code"];
@@ -916,6 +915,22 @@ function getConfigDataIndex($name) {
 }
 
 /////////////////////  brief  ////////////////////////////////////////
+function verifBriefExist(){
+    $app = \Slim\Slim::getInstance();
+    $data = $app->request->post();
+    $return = '';
+    $briefClass = new Millesima_Brief();
+    $briefDup = $briefClass->getBriefByCodeBriefAndTypeBrief($data['typebrief'],$data['code']);
+    if(!$briefDup){
+        $return['briefexist']='false';
+    } else {
+        $return['briefexist']='true';
+    }
+    echo json_encode($return);
+}
+
+
+
 function getBriefInfo($idBrief) {
     $return = '';
     $tabTrad = array();

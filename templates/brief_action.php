@@ -571,6 +571,7 @@ if($button == 'Modifier'){
     function validateForm() {
         //test des champs
         var code = $("#code").val();
+
         var tracking = $("#tracking").val();
         var dateenvoi = $("#dateenvoi").val();
         var objfr = $("#objfr").val();
@@ -595,8 +596,10 @@ if($button == 'Modifier'){
             showPopUp("Merci de cocher au moins 1 pays");
             return false;
         }
+
         showloading();
         return true;
+
     }
     $(function () {
         //Datemask dd/mm/yyyy
@@ -693,6 +696,29 @@ if($button == 'Modifier'){
                 alert(statut);
                 alert(erreur);
             }
+        });
+        var info = {};
+        info['code'] = code;
+        info['typebrief'] = elmValue;
+        var ret = false;
+        $.ajax({
+            url: '/emailing/view/ajax/verif_brief/',
+            type: 'POST',
+            data: info,
+            dataType: "json",
+            success: function(data)
+            {
+                if(data.briefexist == 'true'){
+                    showPopUp('Un brief du type ' + elmValue + ' avec le ' + code + ' existe déja' );
+                }
+            },
+            error : function(resultat, statut, erreur){
+                alert(resultat);
+                alert(statut);
+                alert(erreur);
+                hideloading();
+            }
+
         });
     }
 
