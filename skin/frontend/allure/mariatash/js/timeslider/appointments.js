@@ -35,7 +35,7 @@ var count = 0;
  			data: {request:request},
          beforeSend: function() { jQuery('#appointment_loader').show(); },
          complete: function() { jQuery('#appointment_loader').hide(); },
-         timeout: 10000,
+         timeout: 30000,
          error: function(jqXHR) {
              if(jqXHR.status==0) {
                  alert(" fail to connect, please check your internet connection");
@@ -87,7 +87,7 @@ var count = 0;
   			data: {request:request,id:Allure.appointmentId},
          beforeSend: function() { jQuery('#appointment_loader').show(); },
          complete: function() { jQuery('#appointment_loader').hide(); },
-         timeout: 10000,
+         timeout: 30000,
          error: function(jqXHR) {
              if(jqXHR.status==0) {
                  alert(" fail to connect, please check your internet connection");
@@ -174,7 +174,7 @@ var count = 0;
 				 			data: {request:request},
                          beforeSend: function() { jQuery('#appointment_loader').show(); },
                          complete: function() { jQuery('#appointment_loader').hide(); },
-                         timeout: 10000,
+                         timeout: 30000,
                          error: function(jqXHR) {
                              if(jqXHR.status==0) {
                                  alert(" fail to connect, please check your internet connection");
@@ -231,7 +231,7 @@ var count = 0;
 					 			data: {request:request},
                              beforeSend: function() { jQuery('#appointment_loader').show(); },
                              complete: function() { jQuery('#appointment_loader').hide(); },
-                             timeout: 10000,
+                             timeout: 30000,
                              error: function(jqXHR) {
                                  if(jqXHR.status==0) {
                                      alert(" fail to connect, please check your internet connection");
