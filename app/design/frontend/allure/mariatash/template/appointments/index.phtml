@@ -28,7 +28,7 @@ $embedded = $this->getRequest()->getParam('embedded');
     }
 
     #allureAlertBox {
-        padding: 20px;
+        padding: 25px;
         position:relative;
         width:300px;
         min-height:120px;
@@ -53,7 +53,8 @@ $embedded = $this->getRequest()->getParam('embedded');
     #allureAlertBox p {
         text-align: center;
         font:12px arial,verdana;
-        margin-top: 10px;
+        /*margin-top: 10px;*/
+        min-height: 40px;
         color: #3f4048;
     }
 
@@ -64,9 +65,9 @@ $embedded = $this->getRequest()->getParam('embedded');
 
     #allureAlertBox #closeBtn{
         display:block;
-        position:absolute;
-        bottom: 10px;
-        left: 115px;
+        position:initial;
+        bottom: 18px;
+        left: 110px;
         margin:5px auto;
         padding:7px;
         border:0 none;
@@ -113,14 +114,14 @@ $embedded = $this->getRequest()->getParam('embedded');
     #allureAlertBox #cancelConfirm
     {
         position:absolute;
-        bottom: 10px;
+        bottom: 17px;
         left: 55px;
     }
     #allureAlertBox #okConfirm
     {
         position:absolute;
-        bottom: 10px;
-        left: 175px;
+        bottom: 17px;
+        left: 165px;
     }
 
     #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{

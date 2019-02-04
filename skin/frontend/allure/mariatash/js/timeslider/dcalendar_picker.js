@@ -516,7 +516,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				 			data: {request:request},
                          beforeSend: function() { $('#appointment_loader').show(); },
                          complete: function() { $('#appointment_loader').hide(); },
-                         timeout: 10000,
+                         timeout: 30000,
                          error: function(jqXHR) {
                              if(jqXHR.status==0) {
                                  alert(" fail to connect, please check your internet connection");
