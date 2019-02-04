@@ -179,7 +179,7 @@ $embedded = $this->getRequest()->getParam('embedded');
 	</div>
 	<!-- </div> -->
 </div>
-
+<div style="display:none;" id="appointment_loader" class="loading">Loading&#8230;</div>
 <script type="text/javascript">
 if (typeof Allure == "undefined") {
     var Allure = {};
@@ -235,7 +235,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                     store=jQuery(".storeLocationSelect :selected").text();
 
                 if(no_pepole<1) {
-                    alert("Please select the number of people in your party.");
+                    alert("Please select the number of people in your party to see available appointment times.");
                     jQuery("html, body").animate({ scrollTop: 0 }, "slow");
                     jQuery("#count").focus();
                     return false;

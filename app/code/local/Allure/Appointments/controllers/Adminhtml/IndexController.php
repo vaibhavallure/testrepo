@@ -166,6 +166,14 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         $appendUrl = "?";
                         $appendUrl .= "store=" . $storep;
             }
+
+        if(!$this->validatePostData($post_data))
+        {
+            Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
+            $this->_redirect("admin_appointments/adminhtml_appointments/new");
+            return;
+        }
+
             
             if ($post_data) {
                 $configData = $this->getAppointmentStoreMapping();
@@ -914,4 +922,54 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         return $result;
     }
 
+    /**
+     * add customer log
+     */
+    private function addLog($data,$action){
+        Mage::helper("appointments/logs")->addCustomerLog($data,$action);
+    }
+
+
+    public function validatePostData($post)
+    {
+        $store_id= $post['store_id'];
+        $piercer_id= $post['piercer_id'];
+        $qty=$post['piercing_qty'];
+        $date= $post['app_date'];
+        $ap_start= $post['appointment_start'];
+        $ap_end= $post['appointment_end'];
+
+        /*check store id and piercer id */
+
+        if(empty($store_id) || empty($piercer_id))
+        {
+            $this->addLog("error store id or piercer id empty","save");
+            return false;
+        }
+        $piercer= Mage::getModel('appointments/piercers')->load($piercer_id);
+
+        if($piercer->getStoreId()!=$store_id) {
+            $this->addLog("store id and piercer id does not match","save");
+            return false;
+        }
+        /* ----------------------------       */
+
+
+        /* check no of people  */
+        if(empty($qty) || $qty<1) {
+            $this->addLog("invalid no of people","save");
+            return false;
+        }
+        /*-----------------------*/
+
+
+        /*check date and time*/
+
+        if(empty($ap_start) || empty($ap_end) || empty($date)) {
+            $this->addLog("empty date or time","save");
+            return false;
+        }
+
+        return true;
+    }
 }

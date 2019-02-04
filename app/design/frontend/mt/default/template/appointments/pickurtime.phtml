@@ -148,7 +148,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 
 
-		echo "<div class='image_carousel'>";
+		echo "<div class='image_carousel' id='time_blocks'>";
 		echo "<div style=''>";
 		echo " <ul id='foo2' class='jcarosel_main_ul' style='overflow: hidden;'>";
 
@@ -365,7 +365,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 
     <?php else: ?>
-        <div class="notfreepeiercer validation-advice">Please select the number of people in your party.</div>
+        <div class="notfreepeiercer validation-advice">Please select the number of people in your party to see available appointment times.</div>
 
     <?php endif; ?>
 </div>
