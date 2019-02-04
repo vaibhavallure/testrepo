@@ -139,7 +139,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 		$timeContainerClass = "image_carousel time_format_" . ($time_pref == 24 ? 'short' : 'long');
 
-		echo "<div class='$timeContainerClass'>";
+		echo "<div class='$timeContainerClass'    id='time_blocks'>";
 		echo "<div style=''>";
 		echo " <ul id='foo2' class='jcarosel_main_ul' style='overflow: hidden;'>";
 
