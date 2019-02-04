@@ -502,7 +502,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 
                     if(qty==0)
 					{
-						alert("Please select the number of people in your party.");
+						alert("Please select the number of people in your party to see available appointment times.");
                         return;
                     }
                     jQuery('#pick_ur_time_div').find('input:hidden').val('');
