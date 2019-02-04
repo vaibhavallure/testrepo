@@ -32,7 +32,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
         }
 
         #allureAlertBox {
-            padding: 20px;
+            padding: 50px;
             position:relative;
             width:300px;
             min-height:100px;
@@ -57,15 +57,15 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
         #allureAlertBox p {
             text-align: center;
             font:12px arial,verdana;
-            margin-top: 10px;
+            /*margin-top: 10px;*/
             color: #3f4048;
         }
 
         #allureAlertBox #closeBtn{
             display:block;
             position:absolute;
-            bottom: 10px;
-            left: 125px;
+            bottom: 44px;
+            left: 152px;
             margin:5px auto;
             padding:7px;
             border:0 none;
@@ -75,7 +75,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
             text-align:center;
             color:#3f4048;
             background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn.png'); ?>);
-            background-color:#c79546;
+            background-color:#906E39;
             border-radius: 3px;
             text-decoration:none;
         }
@@ -85,7 +85,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
             background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn_hover.png'); ?>) repeat-x;
             color: #3f4048;
             text-decoration: none;
-            background-color: #c79546ab;
+
         }
 
 
@@ -108,7 +108,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
             text-align:center;
             color:#3f4048;
             background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn.png'); ?>);
-            background-color:#c79546;
+            background-color:#906E39;
             border-radius: 3px;
             text-decoration:none;
         }
@@ -116,14 +116,14 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
         #allureAlertBox #cancelConfirm
         {
             position:absolute;
-            bottom: 10px;
-            left: 60px;
+            bottom: 44px;
+            left: 85px;
         }
         #allureAlertBox #okConfirm
         {
             position:absolute;
-            bottom: 10px;
-            left: 185px;
+            bottom: 44px;
+            left: 221px;
         }
 
         #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
@@ -132,7 +132,6 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
             text-decoration: none;
             background-color: #c79546ab;
         }
-
 
 
 
