@@ -190,8 +190,8 @@ class Millesima_Campaign extends Millesima_Abstract
         $writer->writeAttribute('NAME', $codeCampaign);
         $writer->writeAttribute('STATE' , $state);
 
-        //setFolderId : brief/2018  ----> 4803,brief/2019 ----> 4803
-        $writer->writeAttribute('FOLDERID' , 4803);
+        //setFolderId : brief/2018  ----> 4803,brief/2019 ----> 4804
+        $writer->writeAttribute('FOLDERID' , 4804);
         $writer->writeAttribute('START_DT' , $dateObj->format('YmdHis'));
         $writer->writeAttribute('DESCRIPTION' , $theme);//mettre le theme
         $writer->endElement();
@@ -219,8 +219,8 @@ class Millesima_Campaign extends Millesima_Abstract
 
         /*setFolderId :
         brief/2018  ----> 4803
-        brief/2019 ----> 4803*/
-        $writer->writeAttribute('FOLDERID' , 4803);
+        brief/2019 ----> 4804*/
+        $writer->writeAttribute('FOLDERID' , 4804);
         $writer->writeAttribute('MAILDOMAINID' , 134);
         $writer->writeAttribute('LIST_UNSUBSCRIBE' , false);
         $writer->writeAttribute('QUEUEID' , 2);
@@ -240,7 +240,7 @@ class Millesima_Campaign extends Millesima_Abstract
         $writer = $this->startElmCdata($writer,'REPLY_ADDR',$replyMail);
         $writer = $this->startElmCdata($writer,'REPLY_NAME',$replyName);
 
-        $subject = "~(IF(SYSTEM.TESTMAIL=1,'[BAT_seconde_commande]',''))~".$subject;
+        $subject = "~(IF(SYSTEM.TESTMAIL=1,'[BAT]',''))~".$subject;
         $writer = $this->startElmCdata($writer,'SUBJECT',$subject);
 
         $writer->endElement();//fin content
