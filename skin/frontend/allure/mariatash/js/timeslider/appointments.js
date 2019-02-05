@@ -6,7 +6,8 @@ var count = 0;
      count++;
      document.getElementById("count").value = count;
      //jQuery("#pick_ur_time_div").empty();
- 
+     jQuery('#pick_ur_time_div').find('input:hidden').val('');
+     jQuery("#time_blocks").empty();
      	
 	//ajax start to pass the selected date to get the time     
    /* var todaysDate = document.getElementById("datepicker-13_hidden").value;
@@ -32,6 +33,14 @@ var count = 0;
         	dataType : 'json',
  			type : 'POST',
  			data: {request:request},
+         beforeSend: function() { jQuery('#appointment_loader').show(); },
+         complete: function() { jQuery('#appointment_loader').hide(); },
+         timeout: 30000,
+         error: function(jqXHR) {
+             if(jqXHR.status==0) {
+                 alert(" fail to connect, please check your internet connection");
+             }
+         },
  			success : function(response){
  				jQuery("#pick_ur_time_div").html(response.output);
  				jQuery("#appointment-pricing").html(response.pricing_html);
@@ -48,6 +57,9 @@ var count = 0;
      count--;		     
      document.getElementById("count").value = count;
      //jQuery("#pick_ur_time_div").empty();
+
+         jQuery('#pick_ur_time_div').find('input:hidden').val('');
+         jQuery("#time_blocks").empty();
    
     //ajax start to pass the selected date to get the time
     /*var todaysDate = document.getElementById("datepicker-13_hidden").value;
@@ -73,6 +85,14 @@ var count = 0;
          	dataType : 'json',
   			type : 'POST',
   			data: {request:request,id:Allure.appointmentId},
+         beforeSend: function() { jQuery('#appointment_loader').show(); },
+         complete: function() { jQuery('#appointment_loader').hide(); },
+         timeout: 30000,
+         error: function(jqXHR) {
+             if(jqXHR.status==0) {
+                 alert(" fail to connect, please check your internet connection");
+             }
+         },
   			success : function(response){
   				jQuery("#pick_ur_time_div").html(response.output);
   				jQuery("#appointment-pricing").html(response.pricing_html);
@@ -152,6 +172,14 @@ var count = 0;
 				        	dataType : 'json',
 				 			type : 'POST',
 				 			data: {request:request},
+                         beforeSend: function() { jQuery('#appointment_loader').show(); },
+                         complete: function() { jQuery('#appointment_loader').hide(); },
+                         timeout: 30000,
+                         error: function(jqXHR) {
+                             if(jqXHR.status==0) {
+                                 alert(" fail to connect, please check your internet connection");
+                             }
+                         },
 				 			success : function(response){
 				 				jQuery("#pick_ur_time_div").html(response.output);
 				 				jQuery("#appointment-pricing").html(response.pricing_html);
@@ -172,6 +200,9 @@ var count = 0;
 	 //If store change pickurtime should display also change acc to store and date 
 	 jQuery("#store-id").on("change",function(){
 		 	//jQuery("#pick_ur_time_div").empty();
+         jQuery('#pick_ur_time_div').find('input:hidden').val('');
+         jQuery("#time_blocks").empty();
+
 		 	var todaysDate = document.getElementById("datepicker-13_hidden").value;	
 			//ajax start to pass the selected date to get the time
 			var qty = document.getElementById("count").value;
@@ -198,6 +229,14 @@ var count = 0;
 					        	dataType : 'json',
 					 			type : 'POST',
 					 			data: {request:request},
+                             beforeSend: function() { jQuery('#appointment_loader').show(); },
+                             complete: function() { jQuery('#appointment_loader').hide(); },
+                             timeout: 30000,
+                             error: function(jqXHR) {
+                                 if(jqXHR.status==0) {
+                                     alert(" fail to connect, please check your internet connection");
+                                 }
+                             },
 					 			success : function(response){
 					 				jQuery("#pick_ur_time_div").html(response.output);
 					 				jQuery("#appointment-pricing").html(response.pricing_html);

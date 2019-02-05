@@ -34,7 +34,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 	<input type = "hidden" class="" value="<?php if($fetch_endtime): echo $fetch_endtime; endif;?>" name="appointment_end" id="endtime_hidden">
 	<input type = "hidden" value="" name="piercer_id" id="piercer_id">
 		<?php
-
+        $notfreepeiercer_show=0;
 		$interval =10;
 		$timeslot_col_size = 7;
 		$time_pref = 24;
@@ -131,6 +131,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 			if(empty($collection->getData())){
 
 				echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
+                $notfreepeiercer_show=1;
 			}
 			/* If piercer is not free logic end*/
 		}
@@ -139,7 +140,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 		$timeContainerClass = "image_carousel time_format_" . ($time_pref == 24 ? 'short' : 'long');
 
-		echo "<div class='$timeContainerClass'>";
+		echo "<div class='$timeContainerClass'    id='time_blocks'>";
 		echo "<div style=''>";
 		echo " <ul id='foo2' class='jcarosel_main_ul' style='overflow: hidden;'>";
 
@@ -338,6 +339,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		}
 
 		if($noSlot){
+		    if(!$notfreepeiercer_show)
 			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
 		}
 		echo "</ul>";
@@ -353,7 +355,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 <?php endif;?>
     <?php else: ?>
-        <div class="notfreepeiercer validation-advice">Please select the number of people in your party.</div>
+        <div class="notfreepeiercer validation-advice">Please select the number of people in your party to see available appointment times</div>
     <?php endif; ?>
 </div>
 

@@ -118,6 +118,9 @@ Default layout, loads most of the pages
 
                 <action method="addCss"><stylesheet>css/universal.css</stylesheet></action>
 
+                <action method="addItem"><type>skin_js</type><name>js/allure/allure_alerts.js</name></action>
+
+
             </block>
 
             <block type="core/text_list" name="after_body_start" as="after_body_start" translate="label">
