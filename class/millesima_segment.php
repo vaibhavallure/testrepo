@@ -76,7 +76,7 @@ class Millesima_Segment extends Millesima_Abstract
         //truncate bdd dolistsegment
         $bddClass->truncate("TRUNCATE TABLE dolistsegment");
 
-        $cellRef = 0;
+        $cellRef = 10;
         $cellPC = 12;
         $cellLangue = 27;
 
