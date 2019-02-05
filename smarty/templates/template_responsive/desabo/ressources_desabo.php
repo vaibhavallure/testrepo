@@ -98,7 +98,7 @@ switch ($country) {
 
 	case "U" :
 		$desabo = array ("title" => "I want to be withdrawn from the mailing list",
-						"lien" => "[DL:UNSUBSCRIBE-18]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
