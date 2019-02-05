@@ -28,7 +28,7 @@ $embedded = $this->getRequest()->getParam('embedded');
     }
 
     #allureAlertBox {
-        padding: 20px;
+        padding: 25px;
         position:relative;
         width:300px;
         min-height:120px;
@@ -53,20 +53,22 @@ $embedded = $this->getRequest()->getParam('embedded');
     #allureAlertBox p {
         text-align: center;
         font:12px arial,verdana;
-        margin-top: 10px;
+        /*margin-top: 10px;*/
+        min-height: 40px;
         color: #3f4048;
     }
 
     #allureAlertBox p.confirmBox{
         text-align: center;
         margin-top:auto;
+        margin-bottom: 33px;
     }
 
     #allureAlertBox #closeBtn{
         display:block;
-        position:absolute;
-        bottom: 10px;
-        left: 115px;
+        position:initial;
+        bottom: 18px;
+        left: 110px;
         margin:5px auto;
         padding:7px;
         border:0 none;
@@ -113,14 +115,14 @@ $embedded = $this->getRequest()->getParam('embedded');
     #allureAlertBox #cancelConfirm
     {
         position:absolute;
-        bottom: 10px;
+        bottom: 17px;
         left: 55px;
     }
     #allureAlertBox #okConfirm
     {
         position:absolute;
-        bottom: 10px;
-        left: 175px;
+        bottom: 17px;
+        left: 165px;
     }
 
     #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
@@ -179,7 +181,7 @@ $embedded = $this->getRequest()->getParam('embedded');
 	</div>
 	<!-- </div> -->
 </div>
-
+<div style="display:none;" id="appointment_loader" class="loading">Loading&#8230;</div>
 <script type="text/javascript">
 if (typeof Allure == "undefined") {
     var Allure = {};
@@ -235,7 +237,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
                     store=jQuery(".storeLocationSelect :selected").text();
 
                 if(no_pepole<1) {
-                    alert("Please select the number of people in your party.");
+                    alert("Please select the number of people in your party to see available appointment times");
                     jQuery("html, body").animate({ scrollTop: 0 }, "slow");
                     jQuery("#count").focus();
                     return false;
@@ -243,7 +245,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
                 if(jQuery(".required-entry-time").val().length == 0)
                 {
-                    alert("Please select time slot.");
+                    alert("Please select time slot");
                   /*  var position=jQuery(".pickur_time_main_container").position();
                     jQuery('body').scrollTo(position.top-70);*/
                     return false;
@@ -257,7 +259,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
                 if (!conf)
                 {
-                    confirm("Please confirm your appointment at " + store + " on " + app_date + " from " + app_starttime + " - " + app_endtime + " <br> for " + no_pepole + " " + p+".");
+                    confirm("Please confirm your appointment at " + store + " on " + app_date + " from " + app_starttime + " - " + app_endtime + " for " + no_pepole + " " + p+" ");
                     return false;
                 }
 
@@ -323,7 +325,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
         btn = alertObj.appendChild(d.createElement("a"));
         btn.id = "okConfirm";
-        btn.appendChild(d.createTextNode("OK"));
+        btn.appendChild(d.createTextNode("CONFIRM"));
         btn.href = "#";
         btn.focus();
         btn.onclick = function() {

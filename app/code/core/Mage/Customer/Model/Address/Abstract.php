@@ -421,7 +421,7 @@ class Mage_Customer_Model_Address_Abstract extends Mage_Core_Model_Abstract
             && !Zend_Validate::is($this->getRegionId(), 'NotEmpty')
             && Mage::helper('directory')->isRegionRequired($this->getCountryId())
         ) {
-            $this->addError(Mage::helper('customer')->__('Please enter the state/province.'));
+            $this->addError(Mage::helper('customer')->__('Please enter the state / province'));
         }
     }
 
