@@ -239,7 +239,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
 
                 if (no_pepole < 1) {
-                    alert("Please select the number of people in your party.");
+                    alert("Please select the number of people in your party to see available appointment times");
                     jQuery("html, body").animate({scrollTop: 0}, "slow");
                     jQuery("#count").focus();
                     return false;
@@ -252,7 +252,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
 
                 if (jQuery(".required-entry-time").val().length == 0) {
-                    alert("Please select Time slot.");
+                    alert("Please select time slot");
                     var position = jQuery(".pickur_time_main_container").position();
                     jQuery('body').scrollTo(position.top - 20);
                     return false;
@@ -260,7 +260,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
                 if (!conf)
                 {
-                    var response = confirm("Please confirm your appointment at " + store + " on " + app_date + " from " + app_starttime + " - " + app_endtime + " for " + no_pepole + " " + p+".");
+                    var response = confirm("Please confirm your appointment at " + store + " on " + app_date + " from " + app_starttime + " - " + app_endtime + " for " + no_pepole + " " + p+" ");
                 return false;
             }
                // var response = confirm("Confirm your booking date:"+app_date+" from "+app_starttime+" to "+app_endtime+" for "+no_pepole+" "+p+" in "+store+" store");
@@ -341,7 +341,7 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
         btn = alertObj.appendChild(d.createElement("a"));
         btn.id = "okConfirm";
-        btn.appendChild(d.createTextNode("OK"));
+        btn.appendChild(d.createTextNode("CONFIRM"));
         btn.href = "#";
         btn.focus();
         btn.onclick = function() {
