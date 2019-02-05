@@ -182,9 +182,11 @@
     </div>
 </div>
 <?php
-		if($embedded!='1'):
-				echo $this->getAbsoluteFooter();
- 				echo $this->getChildHtml('footer');
- 		endif;?>
+	if ($embedded!='1'):
+			echo $this->getAbsoluteFooter();
+			echo $this->getChildHtml('footer');
+			echo $this->getChildHtml('account_popups');
+	endif;
+?>
 </body>
 </html>
