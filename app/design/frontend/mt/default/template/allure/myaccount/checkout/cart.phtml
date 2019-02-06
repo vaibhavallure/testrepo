@@ -171,17 +171,17 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 		jQuery("#myaccount-cart-total-item").show();
 
 		//remove product from cart
-		jQuery('.mt-my-cart .w-remove a.remov').on('click',function(){
+		/*jQuery('.mt-my-cart .w-remove a.remov').on('click',function(){
 
 			if(confirm("Are you sure you want to remove this product from your cart?")){
 				var item_id = jQuery(this).attr('data-item-id');
 				var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
 				var parent = jQuery(this).parent().parent().parent();
-				
+
 				if( itemXhr == null ) {
 					showLoadingFancybox();
 					itemXhr =	jQuery.ajax({
-				        url: '<?php echo Mage::getBaseUrl('web').'checkout/cart/removeItemAjax';?>',
+				        url: '<//?php echo Mage::getBaseUrl('web').'checkout/cart/removeItemAjax';?>',
 				        dataType : 'json',
 						type : 'POST',
 						data: {'id':item_id,'form_key':form_key},
@@ -204,7 +204,7 @@ $priceAlert = Mage::helper('shoppingcart')->dispatchPriceAlert();
 			}else{
 				return false;
 			}
-		});
+		});*/
 
 
 		//move product to wishlist

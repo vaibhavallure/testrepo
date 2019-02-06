@@ -161,6 +161,11 @@
 <?php $embedded = $this->getRequest()->getParam('embedded');?>
 <body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
 <?php echo $this->getChildHtml('after_body_start') ?>
+<?php
+	if ($embedded!='1'):
+		echo $this->getChildHtml('account_popups');
+	endif;
+?>
 <div class="wrapper">
     <?php echo $this->getChildHtml('global_notices') ?>
     <div class="page layout-grid">
@@ -182,9 +187,10 @@
     </div>
 </div>
 <?php
-		if($embedded!='1'):
-				echo $this->getAbsoluteFooter();
- 				echo $this->getChildHtml('footer');
- 		endif;?>
+	if ($embedded!='1'):
+			echo $this->getAbsoluteFooter();
+			echo $this->getChildHtml('footer');
+	endif;
+?>
 </body>
 </html>

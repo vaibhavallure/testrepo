@@ -114,6 +114,7 @@ Default layout, loads most of the pages
 
                 <action method="addCss"><stylesheet>css/jslider.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/jslider.plastic.css</stylesheet></action>
+                <action method="addItem"><type>skin_js</type><name>js/allure/allure_alerts.js</name></action>
 
                 <block type="cms/block" name="facebook_pixel" as="facebook_pixel" afer="-">
 		            <action method="setBlockId"><block_id>facebook_pixel</block_id></action>
@@ -121,6 +122,7 @@ Default layout, loads most of the pages
 
                 <action method="addItem"><type>js</type><name>lib/ds-sleight.js</name><params/><if>lt IE 7</if></action>
                 <action method="addItem"><type>skin_js</type><name>js/ie6.js</name><params/><if>lt IE 7</if></action>
+
             </block>
 
             <block type="core/text_list" name="after_body_start" as="after_body_start" translate="label">

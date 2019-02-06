@@ -671,7 +671,7 @@ ShippingMethod.prototype = {
                 return true;
             }
         }
-        alert(Translator.translate('Please specify shipping method.').stripTags());
+        alert(Translator.translate('Please specify shipping method').stripTags());
         return false;
     },
 

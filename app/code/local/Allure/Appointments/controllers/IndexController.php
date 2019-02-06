@@ -205,6 +205,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         $post_data = $this->getRequest()->getPost();
 
 
+
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $this->getRequest()->getParam('store');
 
@@ -216,6 +217,13 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             else
                 $appendUrl = "?";
             $appendUrl .= "store=" . $storep;
+        }
+
+        if(!$this->validatePostData($post_data))
+        {
+            Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
+            $this->_redirectReferer() . $appendUrl;
+            return;
         }
 
        if ($post_data) {
@@ -956,6 +964,50 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         $str.="Email=>".$customerInfo['email']." Cutomer_id=>".$customerInfo['customer_id']." store_id=>".$customerInfo['store_id']." piercer_id=>".$customerInfo['piercer_id']." piercing_qty=>".$customerInfo['piercing_qty']. " appointment_start=>".$customerInfo['appointment_start']." =>".$customerInfo['appointment_end']." ip=>".$customerInfo['ip'];
 
       return $str;
+    }
+
+
+    public function validatePostData($post)
+    {
+        $store_id= $post['store_id'];
+        $piercer_id= $post['piercer_id'];
+        $qty=$post['piercing_qty'];
+        $date= $post['app_date'];
+        $ap_start= $post['appointment_start'];
+        $ap_end= $post['appointment_end'];
+
+        /*check store id and piercer id */
+
+        if(empty($store_id) || empty($piercer_id))
+        {
+            $this->addLog("error store id or piercer id empty","save");
+            return false;
+        }
+         $piercer= Mage::getModel('appointments/piercers')->load($piercer_id);
+
+         if($piercer->getStoreId()!=$store_id) {
+             $this->addLog("store id and piercer id does not match","save");
+             return false;
+         }
+        /* ----------------------------       */
+
+
+        /* check no of people  */
+        if(empty($qty) || $qty<1) {
+            $this->addLog("invalid no of people","save");
+            return false;
+        }
+            /*-----------------------*/
+
+
+        /*check date and time*/
+
+         if(empty($ap_start) || empty($ap_end) || empty($date)) {
+             $this->addLog("empty date or time","save");
+             return false;
+         }
+
+         return true;
     }
 
 
