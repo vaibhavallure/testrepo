@@ -68,6 +68,23 @@ class Millesima_Segment extends Millesima_Abstract
     }
 
     /**
+     * Function to get one segment by name and status
+     * @param string $name
+     * @param string $status
+     * @return mixed
+     */
+    public function getSegmentByNameAndStatus($name,$status){
+        $bddClass = new Millesima_Bdd();
+        $res= $bddClass->selectAll("SELECT * FROM segment_selligente WHERE name = '".$name."' AND status = '".$status."'  ORDER BY id DESC");
+        if(count($res)>0){
+            $segment = $res[0];
+            return $res[0];
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Function to import segment file  in db
      */
     public function chargeEmailBdd($fileName,$tinyclues){
@@ -237,7 +254,7 @@ class Millesima_Segment extends Millesima_Abstract
             $segmentList = $results->segments->SegmentInfo;
             foreach($segmentList as $segment){
                 $bddClass = new Millesima_Bdd();
-                $segmentBdd = $this->getSegmentByName($segment->Name);
+                $segmentBdd = $this->getSegmentByNameAndStatus($segment->Name,'local');
                 if($segmentBdd){
                   $bddClass->update("UPDATE segment_selligente SET status = ?, selligente_id = ?, type = ? WHERE id = ?",array('selligente',(int) $segment->ID,$segment->Type,$segmentBdd['id']));
                   $return[] = $segment->Name;

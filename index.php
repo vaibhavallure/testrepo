@@ -770,6 +770,8 @@ function createCampaign(){
         $replyName = $data["replynamecampaign"];
         $subject = $data["subjectcampaign"];
         $type = $data['creation'];
+        $segSend = '';
+
 
         foreach ($messageIds as $messageId){
             $tmp = explode('-',$messageId);
@@ -778,10 +780,12 @@ function createCampaign(){
             $brief = $briefClass->getBrief($message[0]['brief_id']);
             foreach($segmentList as $segment){
                 if($segment['name'] == $message[0]['name']){
-                    $segment = $segment['selligente_id'];
+                    $segSend = $segment;
                     break;
                 }
             }
+
+
 
             if($type == 'reel'){
                 $startDate = $data["dateenvoi-".$messageId].' '.$data["heureenvoi-".$messageId];
@@ -790,21 +794,25 @@ function createCampaign(){
 				$segment = (int) $segment;
             } else{
                 $dateObj = new DateTime('NOW');
-				$segment = 7748;
+                $segSend['selligente_id'] = 7748;
             }
 
             //echo"<br />";var_dump($segment);
             //die('gfdgdfgd');
 
-            $campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segment,$dateObj,$type);
-            if($campaignResponse['success']){
-                $html .= "<b>La demande d'envoi ".$data['creation']." de campagne a été prise en compte.</b><br/>";
-                $html .= $campaignResponse['value']."<br/>";
+            if($type == 'reel' && ($segSend == '' || $segSend['status'] == 'local') ){
+                $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a échouer car le segment n'est pas valide.</b><br/>";
             } else {
-                $html =  " <h3>Error</h3>";
-                $html .=  "Message : ".$campaignResponse['value'];
-                $html .=  "<br>";
-                $html .=  "La demande n'a pas été prise en compte :(";
+                $campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segSend['selligente_id'],$dateObj,$type);
+                if($campaignResponse['success']){
+                    $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a été prise en compte.</b><br/>";
+                    $html .= $campaignResponse['value']."<br/>";
+                } else {
+                    $html =  " <h3>Error</h3>";
+                    $html .=  "Message : ".$campaignResponse['value'];
+                    $html .=  "<br>";
+                    $html .=  "La demande n'a pas été prise en compte :(";
+                }
             }
         }
     }
