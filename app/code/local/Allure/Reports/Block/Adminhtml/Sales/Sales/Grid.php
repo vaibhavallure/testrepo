@@ -317,6 +317,10 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
 
 
 
+
+
+        if(empty($requestParams)):
+
             $collection->getSelect()
             ->columns('main_table.customer_group_id')
             ->columns('count(IFNULL(.main_table.entity_id,0)) orders_count')
@@ -351,7 +355,49 @@ class Allure_Reports_Block_Adminhtml_Sales_Sales_Grid extends Mage_Adminhtml_Blo
                      ->columns('ABS(sum(((IFNULL(main_table.base_discount_amount,0))-IFNULL(main_table.base_discount_canceled,0)))* IF(main_table.base_to_global_rate != 0, main_table.base_to_global_rate, 1)) total_discount_amount')
                      ->columns('sum((IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0))* IF(main_table.base_to_global_rate != 0, main_table.base_to_global_rate, 1)) total_discount_amount_actual')
                      ->where($condition);
-                    //echo $collection->getSelect()->__toString();
+
+        else:
+
+
+            $collection->getSelect()
+                ->columns('main_table.customer_group_id')
+                ->columns('count(IFNULL(.main_table.entity_id,0)) orders_count')
+                ->columns('sum(IFNULL(main_table.total_qty_ordered,0)) total_qty_ordered')
+                ->columns('sum(IFNULL(main_table.base_grand_total,0)-IFNULL(main_table.base_total_canceled,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)) total_income_amount')
+                ->columns('sum(
+                       (IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.base_tax_invoiced,0)-IFNULL(base_shipping_invoiced,0)
+                      -(IFNULL(main_table.base_total_refunded,0)-IFNULL(main_table.base_tax_refunded,0)-IFNULL(main_table.base_shipping_refunded,0))
+                      )
+                        -IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)
+                        ) total_revenue_amount')
+
+                ->columns('sum(
+                        (IFNULL(main_table.base_total_paid,0)-IFNULL(base_total_refunded,0))
+                       -(IFNULL(main_table.base_tax_invoiced,0)-(IFNULL(base_tax_refunded,0))
+                       -(IFNULL(main_table.base_shipping_invoiced,0)-IFNULL(base_shipping_invoiced,0))
+                       -IFNULL(main_table.base_total_invoiced_cost,0))
+                        -IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)
+                        ) total_profit_amount
+                     ')
+                ->columns('sum(IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0)) total_invoiced_amount')
+                ->columns('sum(IFNULL(main_table.base_total_invoiced,0)-IFNULL(main_table.teamwork_gift_amount,0)-IFNULL(main_table.teamwork_deposit_amount,0))
+                                -sum(IFNULL(main_table.base_total_refunded,0))
+                                 total_net_sale')
+                ->columns('sum(IFNULL(main_table.base_total_canceled,0)) total_canceled_amount')
+                ->columns('sum(IFNULL(main_table.base_total_paid,0)) total_paid_amount')
+                ->columns('sum(IFNULL(main_table.base_total_refunded,0)) total_refunded_amount')
+                ->columns('sum(IFNULL(main_table.base_tax_amount,0)-IFNULL(main_table.base_tax_canceled,0)) total_tax_amount')
+                ->columns('sum(IFNULL(main_table.base_tax_invoiced,0)-IFNULL(main_table.base_tax_refunded,0)) total_tax_amount_actual')
+                ->columns('sum(IFNULL(main_table.base_shipping_amount,0)-IFNULL(main_table.base_shipping_canceled,0)) total_shipping_amount')
+                ->columns('sum(IFNULL(main_table.base_shipping_invoiced,0)-IFNULL(main_table.base_shipping_refunded,0)) total_shipping_amount_actual')
+                ->columns('ABS(sum((IFNULL(main_table.base_discount_amount,0))-IFNULL(main_table.base_discount_canceled,0))) total_discount_amount')
+                ->columns('sum(IFNULL(main_table.base_discount_invoiced,0)-IFNULL(main_table.base_discount_refunded,0)) total_discount_amount_actual')
+                ->where($condition);
+
+
+        endif;
+
+                   // echo $collection->getSelect()->__toString();
 
 
 
