@@ -344,11 +344,9 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 if($splitsku['p_size'])
                 $data['gtin'] = $this->charEncode("(".$splitsku['p_size'].";".$_product->getGtinNumber().";;;;)");
                 else
-<<<<<<< app/code/local/Allure/HarrodsInventory/Helper/Data.php
+
                 $data['gtin'] = $this->charEncode("(O/S;".$_product->getGtinNumber().";;;;)");
-=======
-                $data['gtin'] = $this->charEncode("(ONE_SIZE;".$_product->getGtinNumber().";;;;)");
->>>>>>> app/code/local/Allure/HarrodsInventory/Helper/Data.php
+                
 
                 $data['sizeDelimited'] = $this->charEncode('SizeDelim');
 
