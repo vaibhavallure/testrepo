@@ -124,7 +124,7 @@ class Millesima_Campaign extends Millesima_Abstract
         $writer = $this->setCampaignWriter($writer,$codeCampaign,$theme,$dateObj,$type);
 
         //set email info to xml
-        $writer = $this->setEmailWriter($writer,$codeCampaign,$message,$fromMail,$fromName,$replyMail,$replyName,$subject,$segment);
+        $writer = $this->setEmailWriter($writer,$codeCampaign,$message,$fromMail,$fromName,$replyMail,$replyName,$subject,$segment,$type);
 
         //close elm api
         $writer->endElement();
@@ -180,18 +180,24 @@ class Millesima_Campaign extends Millesima_Abstract
      * @return mixed
      */
     public function setCampaignWriter($writer,$codeCampaign,$theme,$dateObj,$type){
+        /*setFolderId :
+        brief/2018  ----> 4803,
+        brief/2019 ----> 4804
+        brief/2019/BAT ----> 5401
+        brief/2019/REEL ----> 5402*/
         if($type == 'reel'){
             $state = 'ACTIVE';
+            $folder = 5402;
         } else {
             $state = 'TEST';
+            $folder = 5401;
         }
 
         $writer->startElement('CAMPAIGN');
         $writer->writeAttribute('NAME', $codeCampaign);
         $writer->writeAttribute('STATE' , $state);
 
-        //setFolderId : brief/2018  ----> 4803,brief/2019 ----> 4804
-        $writer->writeAttribute('FOLDERID' , 4804);
+        $writer->writeAttribute('FOLDERID' , $folder);
         $writer->writeAttribute('START_DT' , $dateObj->format('YmdHis'));
         $writer->writeAttribute('DESCRIPTION' , $theme);//mettre le theme
         $writer->endElement();
@@ -210,17 +216,25 @@ class Millesima_Campaign extends Millesima_Abstract
      * @param $replyName
      * @param $subject
      * @param $segment
+     * @param $type
      * @return mixed
      */
-    public function setEmailWriter($writer,$codeCampaign,$message,$fromMail,$fromName,$replyMail,$replyName,$subject,$segment){
+    public function setEmailWriter($writer,$codeCampaign,$message,$fromMail,$fromName,$replyMail,$replyName,$subject,$segment,$type){
         $writer->startElement('EMAILS');
         $writer->startElement('EMAIL');
         $writer->writeAttribute('NAME', $codeCampaign);
 
         /*setFolderId :
-        brief/2018  ----> 4803
-        brief/2019 ----> 4804*/
-        $writer->writeAttribute('FOLDERID' , 4804);
+        brief/2018  ----> 4803,
+        brief/2019 ----> 4804
+        brief/2019/BAT ----> 5401
+        brief/2019/REEL ----> 5402*/
+        if($type == 'reel'){
+            $folder = 5402;
+        } else {
+            $folder = 5401;
+        }
+        $writer->writeAttribute('FOLDERID' , $folder);
         $writer->writeAttribute('MAILDOMAINID' , 134);
         $writer->writeAttribute('LIST_UNSUBSCRIBE' , false);
         $writer->writeAttribute('QUEUEID' , 2);
