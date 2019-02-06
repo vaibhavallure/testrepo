@@ -119,6 +119,15 @@ function getActionBriefView($html = '',$url = '../../', $brief = array(),$button
     }
     $app->view()->appendData(array( 'brief' => $brief));
     $app->view()->appendData(array( 'button' => $button));
+    if(is_array($brief) && isset($brief['id'])){
+        $app->view()->appendData(array( 'code' => $brief['code']));
+    } else {
+        $bddClass = new Millesima_Bdd();
+        $code = $bddClass->selectone("SELECT * FROM config Where name = ?", array('iosliv'),'value');
+        $code = date('y').'-'.$code;
+        $app->view()->appendData(array( 'code' => $code));
+    }
+
     $content = $app->view()->fetch('brief_action.php');
     getView($content,$url);
 }

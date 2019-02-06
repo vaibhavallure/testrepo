@@ -1,5 +1,5 @@
 <?php
-function getCode($typebrief){
+function getName($typebrief){
     $name = '';
     if($typebrief == 'livrable_eu'){
         $name = 'iosliv';
@@ -22,8 +22,9 @@ $html = '';
 $html = $this->data['html'];
 $brief = $this->data['brief'];
 $button = $this->data['button'];
+$code = $this->data['code'];
 if (is_array($brief) && isset($brief['id'])) {
-    $name = getCode($brief['typebrief']);
+    $name = getName($brief['typebrief']);
     $title = $name.$brief['code'];
 } else {
     $title = '';
@@ -122,7 +123,7 @@ if($button == 'Modifier'){
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="codemessage">Code (Depend du type)</label>
-                                        <input name="code" type="text" id="code" class="form-control" value="<?php echo ((isset($brief['id'])) ? $brief['code'] : '')?>" onchange="selectTypeBrief()">
+                                        <input name="code" type="text" id="code" class="form-control" value="<?php echo $code ?>" onchange="selectTypeBrief()">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -670,9 +671,9 @@ if($button == 'Modifier'){
             dataType: "json",
             success: function(data)
             {
-                if(code == ''){
+                //if(code == ''){
                     code = data;
-                }
+                //}
                 var marketing = '';
                 var marketing2 = name+code;
                 if(theme != ''){
