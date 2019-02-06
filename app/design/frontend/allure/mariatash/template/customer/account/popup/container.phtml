@@ -14,12 +14,12 @@
             var $body = $('body');
 
             /* bind events */
-			if ($("#username-login").length) {
-				$(document).on('blur', "#passwd-login", function() {
+			if ($("#popup-login-form #username-login").length) {
+				$(document).on('blur', "#popup-login-form #passwd-login", function() {
 					var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-			    	if (jQuery("#username-login").val() != "" && jQuery("#passwd-login").val() != "" && jQuery("#username-login").val().match(mailformat)) {
-						jQuery(this).parents('form').submit();
+			    	if (jQuery("#popup-login-form #username-login").val() != "" && jQuery("#popup-login-form #passwd-login").val() != "" && jQuery("#popup-login-form #username-login").val().match(mailformat)) {
+						jQuery('#popup-login-form').submit();
 					}
 			    });
 			}
