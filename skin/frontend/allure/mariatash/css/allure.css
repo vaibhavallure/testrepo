@@ -508,10 +508,16 @@ color: #666;
 }
 
 .products-grid .actions .price-box {text-align:center;    display: block !important;}
-.products-grid .actions .old-price {
+
+.products-grid .actions .old-price{
   float: none;
   display: inline-block;
 }
+.products-grid2  .s-both_discounted.special-price
+{
+     clear: both;
+}
+
 .products-grid .actions .regular-price {
   display: inline-block;
   vertical-align: top;
