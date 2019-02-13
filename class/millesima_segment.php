@@ -27,7 +27,13 @@ class Millesima_Segment extends Millesima_Abstract
      */
     public function createInBdd($leseg){
         $bddClass = new Millesima_Bdd();
-        $bddClass->insert("INSERT INTO segment_selligente (name,status,created_at) VALUES (?,?,?)",array($leseg,'local',date('Y-m-d H:i:s')));
+        $res = $this->getSegmentByName($leseg);
+        if(!$res){
+            $bddClass->insert("INSERT INTO segment_selligente (name,status,created_at) VALUES (?,?,?)",array($leseg,'local',date('Y-m-d H:i:s')));
+        } else {
+            $bddClass->update("UPDATE segment_selligente SET created_at = ? WHERE name = ?",array(date('Y-m-d H:i:s'),$leseg));
+        }
+
     }
 
     /**
