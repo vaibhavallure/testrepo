@@ -152,8 +152,8 @@ class Millesima_Campaign extends Millesima_Abstract
             $nbCampaignCreate = $bddClass->selectAll("select count(*) from campaign_selligente
               join message on message.id = campaign_selligente.message_id
               join brief on message.brief_id = brief.id
-              where brief_id = $briefId
-              and campaign_selligente.statut = $type ");
+              where brief_id = ?
+              and campaign_selligente.statut = ? ",array($briefId,$type));
             if($nbCampaignCreate[0]['count(*)'] == $nbPays){
                 if($type == 'bat'){
                     $briefClass->updateStatus("8",$briefId);
