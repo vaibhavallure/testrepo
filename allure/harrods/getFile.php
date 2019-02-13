@@ -5,7 +5,6 @@ Mage::app();
 
 if(!Mage::helper("harrodsinventory/config")->getModuleStatus())
 {
-
     echo "<h1 style='text-align: center;color: red'><strong>OOPS!!! </strong>Module Disabled, Enable From System Config</h1>";
     die();
 }
@@ -35,8 +34,6 @@ if($download)
         readfile($file);
         exit;
     }
-
-
 
     Mage::helper("harrodsinventory")->add_log("report generated and downloaded");
 
