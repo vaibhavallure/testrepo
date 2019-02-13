@@ -803,7 +803,7 @@ function createCampaign(){
 				$segment = (int) $segment;
             } else{
                 $dateObj = new DateTime('NOW');
-                $segSend['selligente_id'] = 7748;
+                $segSend['selligente_id'] = 7746;
             }
 
             //echo"<br />";var_dump($segment);
