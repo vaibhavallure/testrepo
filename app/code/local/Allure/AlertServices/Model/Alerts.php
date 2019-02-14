@@ -34,54 +34,54 @@ class Allure_AlertServices_Model_Alerts
 		}
 
 	public function alertSalesOfFour($debug = false){
-		/* Get the collection */
-		try{
-			$helper = Mage::helper('alertservices');
-			$status =	$this->getConfigHelper()->getEmailStatus();
-			$sales_status =	$this->getConfigHelper()->getSalesStatus();
-			if (!$sales_status) {
-					return;
-				}
-			if ($status) {
-				$currdate = Mage::getModel('core/date')->gmtDate();
-				$toDate	= $currdate;
-				$fromDate = date('Y-m-d H:i:s', strtotime($currdate) - 60 * 60 * 4);
+        /* Get the collection */
+        try{
+            $helper = Mage::helper('alertservices');
+            $status =	$this->getConfigHelper()->getEmailStatus();
+            $test_status =	$this->getConfigHelper()->getTestEmailStatus();
+            if (!$test_status) {
+                return;
+            }
+            if ($status) {
+                $currdate = Mage::getModel('core/date')->gmtDate();
+                $toDate	= $currdate;
+                $fromDate = date('Y-m-d H:i:s', strtotime($currdate) - 60 * 60 * 4);
+                /*$fromDate = date('Y-m-d H:i:s', strtotime($toDate) - 60 * 15);*/
+                $orders = Mage::getModel('sales/order')->getCollection()
+                    ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
+                    ->addAttributeToFilter('create_order_method',0)
+                    ->addAttributeToSelect('*')
+                    ->setCurPage(1)
+                    ->setPageSize(1);
+                $orders->getSelect()->order("entity_id desc");
+//						  ->setOrder('created_at', 'desc');
+                if ($debug) {
+                    $orderDate = $orders->getFirstItem()->getCreatedAt();
+                    echo $orders->getSelect()->__toString();
+                    echo "<br>order count : ".count($orders);
+                    echo "<br>4 hour for testing for sale<br>";
+                    echo "<br>Order Date :".$orderDate;
+                    if($orderDate != null)
+                        echo "<br>Last Order Date :".Mage::getModel('core/date')->date("F j, Y \a\\t g:i a",$orderDate);
 
-				if ($debug) {
-					echo "for 4 hours <br>";
-					echo "to date <br>";
-					var_dump($toDate).'<br>';
-					echo "from date <br>";
-					var_dump($fromDate).'<br>'; 
-				}
-				
-				$orders = Mage::getModel('sales/order')->getCollection()
-						  ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
-						  ->addAttributeToSelect('*')
-						  ->setCurPage(1)
-						  ->setPageSize(1)
-						  ->setOrder('created_at', 'desc');
-					if ($debug) {
-						echo $orders->getSelect()->__toString();
-						echo "<br>order count : ".count($orders);
-					}
+                }
+                if (count($orders)<=0) {
+                    $lastOrderDate = Mage::getModel("sales/order")
+                        ->getCollection()
+                        ->addAttributeToFilter('create_order_method',0)
+                        ->setCurPage(1)
+                        ->setPageSize(1);
+                    $lastOrderDate->getSelect()->order("entity_id desc");
+//										->setOrder('entity_id', 'desc');
 
-					if (count($orders) <=0 ) {
-						$lastOrderDate = Mage::getModel("sales/order")
-										->getCollection()
-										->setCurPage(1)
-										->setPageSize(1);
-                        $lastOrderDate->getSelect()->order("entity_id desc");
-//										->setOrder('main_table.entity_id', 'desc');
-						$lastDate = $lastOrderDate->getFirstItem()->getCreatedAt();
-						$hourReport = 4;
-						$helper->sendSalesOfEmailAlert($lastDate,$hourReport);
-					}
-			}
-			
-		}catch(Exception $e){
-			$helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
-    	}
+                    $lastDate = $lastOrderDate->getFirstItem()->getCreatedAt();
+                    $hourReport = 4;
+                    $helper->sendSalesOfEmailAlert($lastDate,$hourReport);
+                }
+            }
+        }catch(Exception $e){
+            $helper->alr_alert_log($e->getMessage(),'allureAlerts.log');
+        }
 		
 	}
 
