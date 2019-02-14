@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Allure_HarrodsInventory>
-      <version>0.1.0</version>
+      <version>0.1.1</version>
     </Allure_HarrodsInventory>
   </modules>
   <frontend>
@@ -72,10 +72,10 @@
       </harrods_inventory_update>
       <harrods_inventory_generate_files>
         <schedule>
-          <cron_expr>30 6 * * *</cron_expr>
+          <cron_expr>30 * * * *</cron_expr>
         </schedule>
         <run>
-          <model>harrodsinventory/cron::generateHarrodFiles</model>
+          <model>harrodsinventory/cron::generateHarrodsFiles</model>
         </run>
       </harrods_inventory_generate_files>
     </jobs>
