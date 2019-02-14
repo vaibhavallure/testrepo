@@ -14,8 +14,8 @@ Mage::getModel('alertservices/alerts')->alertNullUsers();
 Mage::getModel('alertservices/alerts')->alertProductPrice();
 Mage::getModel('alertservices/alerts')->alertCheckoutIssue();*/
 //Mage::getModel('alertservices/alerts')->alertSalesOfSix();
-//Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
-Mage::getModel('alertservices/alerts')->alertSalesOfTwo(true);
+Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
+//Mage::getModel('alertservices/alerts')->alertSalesOfTwo(true);
 
 
 /*9196a2*/
