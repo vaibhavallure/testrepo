@@ -691,36 +691,36 @@ if($button == 'Modifier'){
                 var tracking = 'utm_source=mail_millesima&utm_medium=email&utm_campaign='+marketing+'&utm_content='+marketing2+'';
                 document.getElementById('tracking').value = tracking;
                 document.getElementById('code').value = code;
-            },
-            error : function(resultat, statut, erreur){
-                alert(resultat);
-                alert(statut);
-                alert(erreur);
-            }
-        });
-        var info = {};
-        info['code'] = code;
-        info['typebrief'] = elmValue;
-        var ret = false;
-        $.ajax({
-            url: '/emailing/view/ajax/verif_brief/',
-            type: 'POST',
-            data: info,
-            dataType: "json",
-            success: function(data)
-            {
-                if(data.briefexist == 'true'){
-                    showPopUp('Un brief du type ' + elmValue + ' avec le ' + code + ' existe déja' );
-                }
-            },
-            error : function(resultat, statut, erreur){
-                alert(resultat);
-                alert(statut);
-                alert(erreur);
-                hideloading();
-            }
+				var info = {};
+				info['code'] = code;
+				info['typebrief'] = elmValue;
+				var ret = false;
+				$.ajax({
+					url: '/emailing/view/ajax/verif_brief/',
+					type: 'POST',
+					data: info,
+					dataType: "json",
+					success: function(data)
+					{
+						if(data.briefexist == 'true'){
+							showPopUp('Un brief du type ' + elmValue + ' avec le ' + code + ' existe déja' );
+						}
+					},
+					error : function(resultat, statut, erreur){
+						alert(resultat);
+						alert(statut);
+						alert(erreur);
+						hideloading();
+					}
 
-        });
+				});
+			},
+			error : function(resultat, statut, erreur){
+				alert(resultat);
+				alert(statut);
+				alert(erreur);
+			}
+		});
     }
 
     $( "#dateenvoi" ).change(function() {
