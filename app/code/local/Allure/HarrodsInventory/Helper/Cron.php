@@ -17,6 +17,7 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
 
     public function generateHarrodsFiles()
     {
+        $this->add_log("generateHarrodsFiles => cron call");
         if (!$this->harrodsConfig()->getModuleStatus()) {
             $this->add_log("generateHarrodsFiles => Module Disabled----");
             return;
