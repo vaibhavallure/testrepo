@@ -38,6 +38,9 @@ class Allure_HarrodsInventory_Helper_Config extends Mage_Core_Helper_Abstract
     public function getTimeoutSFTP(){
         return trim(Mage::getStoreConfig('harrodsinventory/sftp_details/timeout'));
     }
+    public function getLocationSFTP(){
+        return trim(Mage::getStoreConfig('harrodsinventory/sftp_details/location'));
+    }
     /*------------------------------------------------------------------------*/
 
 
@@ -51,6 +54,9 @@ class Allure_HarrodsInventory_Helper_Config extends Mage_Core_Helper_Abstract
    /* public function getMinuteProductCron(){
         return Mage::getStoreConfig('harrodsinventory/product_cron/minute');
     }*/
+    public function getContentTypePLU(){
+        return Mage::getStoreConfig('harrodsinventory/product_cron/file_content');
+    }
     /*------------------------------------------------------------------------*/
 
 
@@ -77,6 +83,9 @@ class Allure_HarrodsInventory_Helper_Config extends Mage_Core_Helper_Abstract
    /* public function getMinutePriceCron(){
         return Mage::getStoreConfig('harrodsinventory/price_cron/minute');
     }*/
+    public function getContentTypePPC(){
+        return Mage::getStoreConfig('harrodsinventory/price_cron/file_content');
+    }
     /*------------------------------------------------------------------------*/
 
 }

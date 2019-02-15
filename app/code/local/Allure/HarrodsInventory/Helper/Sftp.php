@@ -51,6 +51,7 @@ class Allure_HarrodsInventory_Helper_Sftp extends Mage_Core_Helper_Abstract
 
             try{
                 $sftp->write($remotefilepath,$localfilepath);
+                $this->add_log("File Transfer Successfully".$remotefilepath);
             }catch (Exception $e)
             {
                 $this->add_log("transferFile => Exception:".$e->getMessage());
