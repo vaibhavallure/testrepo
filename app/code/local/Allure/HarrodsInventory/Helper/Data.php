@@ -4,26 +4,17 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
     private function harrodsConfig() {
         return Mage::helper("harrodsinventory/config");
     }
+    private function cron() {
+        return Mage::helper("harrodsinventory/cron");
+    }
 
     public function add_log($message) {
 		if (!$this->harrodsConfig()->getDebugStatus()) {
             return;
     	}
-        Mage::log($message,Zend_log::DEBUG,"update_harrods_inventory.log",true);
+        Mage::log($message,Zend_log::DEBUG,"harrods_files.log",true);
     }
 
-
-
-    public function generateHarrodFiles()
-    {
-        //generate PLU txt and ok files
-        $this->generateReport();
-        // generate STK txt and ok files
-        $this->generateSTKReport();
-        // generate PPC txt and ok files
-        $this->generatePPCReport();
-
-    }
 
     public function  charEncode($str)
     {
@@ -31,20 +22,17 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         return mb_convert_encoding($str,"Windows-1252","UTF-8");
     }
 
-    public function generateReport()
+    public function generateReport($byCreatedAt=true)
     {
-        if (!$this->harrodsConfig()->getModuleStatus()) {
-            $this->add_log("Module Disabled----");
-            return;
-        }
 
         try {
+
 
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'harrodsFiles';
 
-            $date = Mage::getModel('core/date')->date('Ymd');
-            $filenm="70000369_".$date."_PLU.".$this->harrodsConfig()->getFileType();
+            $date =date("Ymd", $this->cron()->getCurrentDatetime());
+            $filenm="70000369_".$date."_PLU.txt";
             $file = $path . DS . $filenm;
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
@@ -72,7 +60,23 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $attribute = $attribute_details->getData();
             $attrbute_id = $attribute['attribute_id'];
 
-            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0');
+
+            /*------------ get dates --------------------*/
+            $from = date("Y-m-d H:i:s", strtotime('-24 hours', $this->cron()->getCurrentDatetime()));
+            $to = date("Y-m-d H:i:s", $this->cron()->getCurrentDatetime());
+
+            $diff=$this->cron()->getDiffUtc();
+            $from = date("Y-m-d H:i:s", strtotime($diff, strtotime($from)));
+            $to = date("Y-m-d H:i:s", strtotime($diff, strtotime($to)));
+            /*-------------------------------------------*/
+
+            $whr='WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0';
+
+            if($byCreatedAt)
+            $whr.=' AND (cpe.created_at >= "'.$from.'" AND cpe.created_at <= "'.$to.'")';
+
+
+            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id '.$whr);
 
             $some_attr_code = "metal";
             $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
@@ -99,20 +103,14 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                    /* $harrodsColorOptionsArray=array("White Gold"=>"White","Yellow Gold"=>"Gold","Black Gold"=>"Black","Rose Gold"=>"Rose Gold");
 
-
                     if($_product->getHarrodsColor())
                         $harrodsColor= $attributeHarrodsColor->getFrontend()->getOption($_product->getHarrodsColor());
                     else
                         $harrodsColor=$harrodsColorOptionsArray[$optionLabel];*/
 
-
-                   $newHarrodsColorArray=array("YELLOW GOLD"=>"GOLD","WHITE GOLD"=>"WHITE","ROSE GOLD"=>"ROSE GOLD","BLACK RHODIUM"=>"BLACK","BLACK GOLD"=>"BLACK");
-                    
-
+                    $newHarrodsColorArray=array("YELLOW GOLD"=>"GOLD","WHITE GOLD"=>"WHITE","ROSE GOLD"=>"ROSE GOLD","BLACK RHODIUM"=>"BLACK","BLACK GOLD"=>"BLACK");
 
                     $splitsku=$this->splitSku($_product->getSku());
-
-
 
                     $data = array();
                     $skuConfig = $this->charEncode(explode("|",$_product->getSku())[0]);
@@ -193,11 +191,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
-
-
-
-
-            $date = Mage::getModel('core/date')->date('Ymd');
+            $date =date("Ymd", $this->cron()->getCurrentDatetime());
             $filenm="70000369_".$date."_PLU.OK";
             $file2 = $path . DS . $filenm;
             $ioo->streamOpen($file2, 'w+');
@@ -205,38 +199,37 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
 
 
-
-
-
-               $files['txt']=$file;
-               $files['ok']=$file2;
-
-            return $files;
-
+            if(count($parentPro)) {
+                $files['txt'] = $file;
+                $files['ok'] = $file2;
+                return $files;
+            }
+            else
+            {
+                return false;
+            }
 
         }catch (Exception $e)
         {
             $this->add_log($e->getMessage());
         }
+
+        return false;
     }
 
 
 
 
-    public function generateSTKReport($type="txt")
+    public function generateSTKReport()
     {
-        if (!$this->harrodsConfig()->getModuleStatus()) {
-            $this->add_log("Module Disabled----");
-            return;
-        }
 
         try {
 
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'harrodsFiles';
 
-            $date = Mage::getModel('core/date')->date('Ymd');
-            $filenm="70000369_".$date."_STK.".$this->harrodsConfig()->getFileType();
+            $date =date("Ymd", $this->cron()->getCurrentDatetime());
+            $filenm="70000369_".$date."_STK.txt";
             $file = $path . DS . $filenm;
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
@@ -268,8 +261,19 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $data = array();
 
+                if($_product->getHarrodsInventory()=="0")
+                {
+                    if($this->lastStockZero($parentProductId))
+                    {
+                        continue;
+                    }
+                }else
+                {
+                    $this->removeStockZero($parentProductId);
+                }
+
                 $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
-                $data['harrods_inventory'] = $this->charEncode($_product->getHarrodsInventory());
+                $data['harrods_inventory'] = $_product->getHarrodsInventory();
                 $data['site_listings'] = $this->charEncode('D369');
 
                 $ioo->streamWriteCsv($data,"\t");
@@ -277,37 +281,34 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $sr_no++;
             }
 
-            $date = Mage::getModel('core/date')->date('Ymd');
+            $date =date("Ymd", $this->cron()->getCurrentDatetime());
             $filenm="70000369_".$date."_STK.OK";
             $file2 = $path . DS . $filenm;
             $ioo->streamOpen($file2, 'w+');
             $ioo->streamLock(true);
             $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
 
-            if($type=="OK")
-                return $file2;
-            else
-                return $file;
+            $files['txt']=$file;
+            $files['ok']=$file2;
+
+            return $files;
 
         } catch (Exception $e) {
             $this->add_log($e->getMessage());
         }
+        return false;
     }
 
-    public function generatePPCReport($type="txt")
+    public function generatePPCReport()
     {
-        if (!$this->harrodsConfig()->getModuleStatus()) {
-            $this->add_log("Module Disabled----");
-            return;
-        }
 
         try {
 
             $ioo = new Varien_Io_File();
             $path = Mage::getBaseDir('var') . DS . 'harrodsFiles';
 
-            $date = Mage::getModel('core/date')->date('Ymd');
-            $filenm="70000369_".$date."_PPC.".$this->harrodsConfig()->getFileType();
+            $date =date("Ymd", $this->cron()->getCurrentDatetime());
+            $filenm="70000369_".$date."_PPC.txt";
             $file = $path . DS . $filenm;
             $ioo->setAllowCreateFolders(true);
             $ioo->open(array('path' => $path));
@@ -349,7 +350,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $sr_no++;
             }
 
-            $date = Mage::getModel('core/date')->date('Ymd');
+            $date =date("Ymd", $this->cron()->getCurrentDatetime());
             $filenm="70000369_".$date."_PPC.OK";
             $file2 = $path . DS . $filenm;
             $ioo->streamOpen($file2, 'w+');
@@ -357,15 +358,16 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 //            if($sr_no!=1)
             $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
 
-            if($type=="OK")
-                return $file2;
-            else
-                return $file;
+            $files['txt']=$file;
+            $files['ok']=$file2;
+
+            return $files;
 
         }catch (Exception $e)
         {
             $this->add_log($e->getMessage());
         }
+        return false;
     }
 
     public function splitSku($sku)
@@ -394,45 +396,52 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         return $data;
     }
 
-
-    public function getDiffTimezone()
+    public function lastStockZero($productid)
     {
+        $resource = Mage::getSingleton('core/resource');
 
-         /* -- utc and backend set timezone -- */
-
-        $local_tz = new DateTimeZone('UTC');
-        $local = new DateTime('now', $local_tz);
+        $readConnection = $resource->getConnection('core_read');
+        $writeAdapter = $resource->getConnection('core_write');
 
 
-        $user_tz = new DateTimeZone($this->harrodsConfig()->getTimeZone());
-        $user = new DateTime('now', $user_tz);
+        $row= $readConnection->fetchCol("SELECT * FROM `allure_harrodsinventory_zero_stock` WHERE `productid`=".$productid);
 
-        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
-        $localsTime = new DateTime($local->format('Y-m-d H:i:s'));
-        $offset = $local_tz->getOffset($local) - $user_tz->getOffset($user);
-        $interval = $usersTime->diff($localsTime);
-
-        if($offset > 0)
-            return  $diffZone=$interval->h .' hours'.' '. $interval->i .' minutes';
+        if(count($row))
+        {
+            return true;
+        }
         else
-            return  $diffZone= '-'.$interval->h .' hours'.' '. $interval->i .' minutes';
-
+        {
+            $insertQuery = "INSERT INTO `allure_harrodsinventory_zero_stock`(`productid`, `stock`, `updated_date`) VALUES (".$productid.",0,(now()))";
+            try {
+                $writeAdapter->query($insertQuery);
+                $writeAdapter->commit();
+            }catch (Exception $e)
+            {
+                $this->add_log("lastStockZero=> Exception:".$e->getMessage());
+            }
+            return false;
+        }
     }
-
-    public function getCurrentDatetime()
+    public function removeStockZero($product_id)
     {
-        $user_tz = new DateTimeZone($this->harrodsConfig()->getTimeZone());
-        $user = new DateTime('now', $user_tz);
-        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
-        $ar=(array)$usersTime;
-        $date = $ar['date'];
-        return $date = strtotime($date);
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        $writeAdapter = $resource->getConnection('core_write');
 
+        $row= $readConnection->fetchCol("SELECT * FROM `allure_harrodsinventory_zero_stock` WHERE `productid`=".$product_id);
+         if(count($row))
+         {
+             $removeQuery = "DELETE FROM `allure_harrodsinventory_zero_stock` WHERE `productid`=".$product_id;
+             try {
+                 $writeAdapter->query($removeQuery);
+                 $writeAdapter->commit();
+             }catch (Exception $e)
+             {
+                 $this->add_log("removeStockZero=> Exception:".$e->getMessage());
+             }
+         }
     }
 
-    public function getCurrentHour()
-    {
-       return date('H',  $this->getCurrentDatetime());
-    }
 
 }

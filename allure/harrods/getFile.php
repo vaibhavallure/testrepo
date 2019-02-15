@@ -3,6 +3,83 @@ require_once('../../app/Mage.php');
 umask(0);
 Mage::app();
 
+
+Mage::helper("harrodsinventory/data")->generateReport();
+Mage::helper("harrodsinventory/data")->generateSTKReport();
+Mage::helper("harrodsinventory/data")->generatePPCReport();
+
+
+
+echo "DONE";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+echo $from = date("Y-m-d H:i:s", strtotime('-24 hours', Mage::helper("harrodsinventory/cron")->getCurrentDatetime()));
+echo "<br>";
+echo $to = date("Y-m-d H:i:s", Mage::helper("harrodsinventory/cron")->getCurrentDatetime());
+echo "<br>";
+
+echo $diff=Mage::helper("harrodsinventory/cron")->getDiffUtc();
+echo "<br>";
+
+echo $from = date("Y-m-d H:i:s", strtotime($diff, strtotime($from)));
+echo "<br>";
+
+echo $to = date("Y-m-d H:i:s", strtotime($diff, strtotime($to)));*/
+
+
+
+
+die();
+
+var_dump(Mage::helper("harrodsinventory/cron")->getMinute(Mage::helper("harrodsinventory/cron")->getCurrentDatetime()));
+
+
+var_dump(Mage::helper("harrodsinventory/config")->getHourProductCron());
+
+
+
+
+
+var_dump(Mage::helper("harrodsinventory/cron")->getHour(Mage::helper("harrodsinventory/cron")->getCurrentDatetime())==Mage::helper("harrodsinventory/config")->getHourProductCron());
+
+
+
+
+
+die();
+
+
+
+
+
+
+
+
 if(!Mage::helper("harrodsinventory/config")->getModuleStatus())
 {
     echo "<h1 style='text-align: center;color: red'><strong>OOPS!!! </strong>Module Disabled, Enable From System Config</h1>";
