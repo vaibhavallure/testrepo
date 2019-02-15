@@ -18,6 +18,15 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     public function generateHarrodsFiles()
     {
         $this->add_log("generateHarrodsFiles => cron call");
+
+        $this->add_log("set time");
+        $this->add_log($this->harrodsConfig()->getHourProductCron());
+        //$this->add_log($this->harrodsConfig()->getMinuteProductCron());
+        $this->add_log("current time");
+        $this->add_log($this->getHour($this->getCurrentDatetime()));
+        $this->add_log($this->getMinute($this->getCurrentDatetime()));
+
+
         if (!$this->harrodsConfig()->getModuleStatus()) {
             $this->add_log("generateHarrodsFiles => Module Disabled----");
             return;
@@ -30,9 +39,10 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     /*---------------------trigger reports----------------------------------*/
     public function PLU_Report()
     {
-        if ($this->harrodsConfig()->getHourProductCron() != $this->getHour($this->getCurrentDatetime()) || $this->harrodsConfig()->getMinuteProductCron() != $this->getMinute($this->getCurrentDatetime()))
+        if ($this->harrodsConfig()->getHourProductCron() != $this->getHour($this->getCurrentDatetime()) /*|| $this->harrodsConfig()->getMinuteProductCron() != $this->getMinute($this->getCurrentDatetime())*/)
             return;
-        if (!$this->harrodsConfig()->isEnabledProductCron()) {
+
+            if (!$this->harrodsConfig()->isEnabledProductCron()) {
             $this->add_log("productReport=> product report cron disabled from backend setting");
             return;
         }
@@ -41,7 +51,7 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     }
     public function STK_Report()
     {
-        if ($this->harrodsConfig()->getHourStockCron() != $this->getHour($this->getCurrentDatetime()) || $this->harrodsConfig()->getMinuteStockCron() != $this->getMinute($this->getCurrentDatetime()))
+        if ($this->harrodsConfig()->getHourStockCron() != $this->getHour($this->getCurrentDatetime()) /*|| $this->harrodsConfig()->getMinuteStockCron() != $this->getMinute($this->getCurrentDatetime()*/)
             return;
         if (!$this->harrodsConfig()->isEnabledStockCron()) {
             $this->add_log("stockReport=> stock report cron disabled from backend setting");
@@ -53,7 +63,7 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     }
     public function PPC_Report()
     {
-        if ($this->harrodsConfig()->getHourPriceCron() != $this->getHour($this->getCurrentDatetime()) || $this->harrodsConfig()->getMinutePriceCron() != $this->getMinute($this->getCurrentDatetime()))
+        if ($this->harrodsConfig()->getHourPriceCron() != $this->getHour($this->getCurrentDatetime()) /*|| $this->harrodsConfig()->getMinutePriceCron() != $this->getMinute($this->getCurrentDatetime())*/)
             return;
         if (!$this->harrodsConfig()->isEnabledPriceCron()) {
             $this->add_log("priceReport=> price report cron disabled from backend setting");
@@ -125,7 +135,7 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
 
     public function getMinute($datetime)
     {
-        return date('m',  $datetime);
+        return date('i',  $datetime);
     }
 
 

@@ -72,7 +72,7 @@
       </harrods_inventory_update>
       <harrods_inventory_generate_files>
         <schedule>
-          <cron_expr>30 * * * *</cron_expr>
+          <cron_expr>0 * * * *</cron_expr>
         </schedule>
         <run>
           <model>harrodsinventory/cron::generateHarrodsFiles</model>
