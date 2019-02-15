@@ -45,14 +45,40 @@ class Millesima_Traduction extends Millesima_Abstract
     }
 
     /**
+     * Function to get all trad brief
+     * @param int $briefId
+     * @param string $lang
+     * @return mixed
+     */
+    public function getAllTradLang ($briefId,$lang){
+        $bddClass = new Millesima_Bdd();
+        $res = $bddClass->selectAll("Select * from traduction where brief_id = (?) AND lang = ?",array($briefId,$lang));
+        return $res;
+    }
+
+    /**
      * Function to get nb trad brief
      * @param int $briefId
      * @return int
      */
     public function getNbTradByBriefId($briefId){
         $bddClass = new Millesima_Bdd();
-        $res = $bddClass->selectAll("select count(*) from traduction where brief_id = (?) and is_textmaster = 0",array($briefId));
-        return $res[0];
+        $res = $bddClass->selectAll("select * from traduction where brief_id = (?) and is_textmaster = 0",array($briefId));
+        return $res;
+    }
+
+
+
+    /**
+     * Function to get nb trad brief
+     * @param string $lang
+     * @param int $briefId
+     * @return int
+     */
+    public function getNbTradByBriefIdbyLang($briefId,$lang){
+        $bddClass = new Millesima_Bdd();
+        $res = $bddClass->selectAll("select * from traduction where brief_id = (?) and is_textmaster = 0 AND lang = ?",array($briefId,$lang));
+        return $res;
     }
 
     /**
@@ -62,20 +88,33 @@ class Millesima_Traduction extends Millesima_Abstract
      */
     public function getNbTradByBriefIdTextMaster($briefId){
         $bddClass = new Millesima_Bdd();
-        $res = $bddClass->selectAll("select count(*) from traduction where brief_id = (?) and is_textmaster = 1 and is_valid = 1",array($briefId));
-        return $res[0];
+        $res = $bddClass->selectAll("select * from traduction where brief_id = (?) and is_textmaster = 1 and is_valid = 1",array($briefId));
+        return $res;
     }
 
     /**
-     * Function to get all trad for lang and brief
+     * Function to get nb trad brief
      * @param int $briefId
      * @param string $lang
-     * @return mixed
+     * @return int
      */
-    public function getAllTradLang ($briefId,$lang){
+    public function getNbTradByBriefIdTextMasterBylang($briefId,$lang){
         $bddClass = new Millesima_Bdd();
-        $res = $bddClass->selectAll("Select * from traduction where brief_id = (?) AND lang = (?)",array($briefId,$lang));
+        $res = $bddClass->selectAll("select * from traduction where brief_id = (?) and is_textmaster = 1 and is_valid = 1 AND lang = ?",array($briefId,$lang));
         return $res;
+    }
+
+    /**
+     * Function to test une lang is traduction
+     * @param int $briefId
+     * @param int $lang
+     * @return string
+     */
+    public function getNbTradLang($briefId,$lang){
+        $nb = $this->getAllTradLang($briefId,$lang);
+        $nbTextMaster = $this->getNbTradByBriefIdTextMasterBylang($briefId,$lang);
+        $nbtrad = count($nb) + count($nbTextMaster);
+        return $nbtrad;
     }
 
     /**
@@ -248,39 +287,44 @@ class Millesima_Traduction extends Millesima_Abstract
         $pays = $brief['pays'];
         $listPays = explode('|',$pays);
 
-        $tabLang = array();
         if(in_array("g",$listPays) || in_array("i",$listPays) || in_array("h",$listPays) || in_array("sg",$listPays)){
-            $tabLang[] = "g";
+            $nbtrad = $this->getNbTradLang($briefId,"g");
+            if($nbChampTrad != $nbtrad ){
+                return false;
+            }
         }
         if(in_array("o",$listPays) || in_array("sa",$listPays) || in_array("d",$listPays)){
-            $tabLang[] = "d";
+            $nbtrad = $this->getNbTradLang($briefId,"d");
+            if($nbChampTrad != $nbtrad ){
+                return false;
+            }
         }
         if(in_array("y",$listPays)){
-            $tabLang[] = "y";
+            $nbtrad = $this->getNbTradLang($briefId,"y");
+            if($nbChampTrad != $nbtrad ){
+                return false;
+            }
         }
         if(in_array("e",$listPays)){
-            $tabLang[] = "e";
+            $nbtrad = $this->getNbTradLang($briefId,"e");
+            if($nbChampTrad != $nbtrad ){
+                return false;
+            }
         }
         if(in_array("p",$listPays)){
-            $tabLang[] = "p";
+            $nbtrad = $this->getNbTradLang($briefId,"p");
+            if($nbChampTrad != $nbtrad ){
+                return false;
+            }
         }
         if(in_array("u",$listPays)){
-            $tabLang[] = "u";
+            $nbtrad = $this->getNbTradLang($briefId,"u");
+            if($nbChampTrad != $nbtrad ){
+                return false;
+            }
         }
-        $nbLangATraduire = count($tabLang);
-
-        $nbLangATraduire = $nbLangATraduire*$nbChampTrad;
-        $nb = $this->getNbTradByBriefId($briefId);
-        $nb = (int) $nb['count(*)'];
-        $nbTextMaster = $this->getNbTradByBriefIdTextMaster($briefId);
-        $nbTextMaster = (int) $nbTextMaster['count(*)'];
-
-        $nbTot = $nb + $nbTextMaster;
-
-        if($nbLangATraduire != $nbTot ){
-            return false;
-        }else{
-            return true;
-        }
+        return true;
     }
+
+
 }
