@@ -496,7 +496,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             $date = new Zend_Date(Mage::getModel('core/date')->timestamp());
             $date->addDay('3');
-           $activeDate= $date->toString('YYYYMMdd');
+            $activeDate= $date->toString('YYYYMMdd');
 
             $products = $readConnection->fetchCol("SELECT `productid` FROM `allure_harrodsinventory_price` WHERE `updated_date` LIKE '".$curruntDate."%'");
 
@@ -508,7 +508,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $data = array();
 
                 $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
-                $data['harrods_price'] = $this->charEncode(round($_product->getHarrodsPrice(),2));
+                $data['harrods_price'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
                 $data['Active Date'] = $this->charEncode($activeDate);
                 $data['End Date'] = $this->charEncode("99991231");
 
@@ -560,6 +560,47 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         return $data;
+    }
+
+
+    public function getDiffTimezone()
+    {
+
+         /* -- utc and backend set timezone -- */
+
+        $local_tz = new DateTimeZone('UTC');
+        $local = new DateTime('now', $local_tz);
+
+
+        $user_tz = new DateTimeZone($this->harrodsConfig()->getTimeZone());
+        $user = new DateTime('now', $user_tz);
+
+        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
+        $localsTime = new DateTime($local->format('Y-m-d H:i:s'));
+        $offset = $local_tz->getOffset($local) - $user_tz->getOffset($user);
+        $interval = $usersTime->diff($localsTime);
+
+        if($offset > 0)
+            return  $diffZone=$interval->h .' hours'.' '. $interval->i .' minutes';
+        else
+            return  $diffZone= '-'.$interval->h .' hours'.' '. $interval->i .' minutes';
+
+    }
+
+    public function getCurrentDatetime()
+    {
+        $user_tz = new DateTimeZone($this->harrodsConfig()->getTimeZone());
+        $user = new DateTime('now', $user_tz);
+        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
+        $ar=(array)$usersTime;
+        $date = $ar['date'];
+        return $date = strtotime($date);
+
+    }
+
+    public function getCurrentHour()
+    {
+       return date('H',  $this->getCurrentDatetime());
     }
 
 }
