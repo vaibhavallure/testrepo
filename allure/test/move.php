@@ -7,7 +7,7 @@ Mage::app()->setCurrentStore(Mage_Core_Model_App::ADMIN_STORE_ID);
 
 
 $localfilename = 'allure_testing_file.txt';
-$remotefilename = '/allure_testing_file.txt';
+$remotefilename = 'allure_testing_file.txt';
 $sftp = new Varien_Io_Sftp();
 try{
     $sftp->open(

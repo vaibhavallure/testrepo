@@ -2,41 +2,12 @@
 class Allure_HarrodsInventory_Helper_Config extends Mage_Core_Helper_Abstract
 {
 
-    const XML_PATH_SENDER_EMAIL = 'harrodsinventory/alr_harrodsinventory/sender_email';
-    const XML_PATH_SENDER_NAME  = 'harrodsinventory/alr_harrodsinventory/sender_name';
-	const XML_PATH_EMAIL_STATUS = 'harrodsinventory/email_group/enabled';
-	const XML_PATH_GROUP_EMAILS = 'harrodsinventory/email_group/group_emails';
-	const XML_PATH_GROUP_EMAILS_NAMES = 'harrodsinventory/email_group/group_names';
-	const XML_PATH_TEMPLATE = 'harrodsinventory/email_group/product_update_temp';
+
     const XML_PATH_ALERT_DEBUG_ENABLED = 'harrodsinventory/email_group/debug_enabled';
     const XML_PATH_MODULE_ENABLED = 'harrodsinventory/module_status/module_enabled';
-    const XML_PATH_FILE_TYPE = 'harrodsinventory/email_group/filetype_enabled';
+    const XML_PATH_TIMEZONE = 'harrodsinventory/module_status/timezone';
 
     
-    public function getSenderEmail(){
-        return Mage::getStoreConfig(self::XML_PATH_SENDER_EMAIL);
-    }
-
-    public function getSenderName(){
-        return Mage::getStoreConfig(self::XML_PATH_SENDER_NAME);
-    }
-
-    public function getEmailStatus(){
-        return Mage::getStoreConfig(self::XML_PATH_EMAIL_STATUS);
-    }
-
-
-    public function getEmailsGroup(){
-        return Mage::getStoreConfig(self::XML_PATH_GROUP_EMAILS);
-    }
-
-    public function getEmailGroupNames(){
-        return Mage::getStoreConfig(self::XML_PATH_GROUP_EMAILS_NAMES);
-    }
-
-    public function getEmailTemplate(){
-        return Mage::getStoreConfig(self::XML_PATH_TEMPLATE);
-    }
 
     public function getDebugStatus(){
         return Mage::getStoreConfig(self::XML_PATH_ALERT_DEBUG_ENABLED);
@@ -45,10 +16,67 @@ class Allure_HarrodsInventory_Helper_Config extends Mage_Core_Helper_Abstract
     public function getModuleStatus(){
         return Mage::getStoreConfig(self::XML_PATH_MODULE_ENABLED);
     }
-    public function getFileType(){
-        return Mage::getStoreConfig(self::XML_PATH_FILE_TYPE);
+
+    public function getTimeZone(){
+        return Mage::getStoreConfig(self::XML_PATH_TIMEZONE);
     }
 
 
+    /*------------sftp config-----------------------------------------------*/
+    public function isEnabledSFTP(){
+        return Mage::getStoreConfig('harrodsinventory/sftp_details/enabled');
+    }
+    public function getHostSFTP(){
+        return trim(Mage::getStoreConfig('harrodsinventory/sftp_details/host'));
+    }
+    public function getPasswordSFTP(){
+        return trim(Mage::getStoreConfig('harrodsinventory/sftp_details/password'));
+    }
+    public function getUsernameSFTP(){
+        return trim(Mage::getStoreConfig('harrodsinventory/sftp_details/username'));
+    }
+    public function getTimeoutSFTP(){
+        return trim(Mage::getStoreConfig('harrodsinventory/sftp_details/timeout'));
+    }
+    /*------------------------------------------------------------------------*/
+
+
+    /*------------product cron config-----------------------------------------------*/
+    public function isEnabledProductCron(){
+        return Mage::getStoreConfig('harrodsinventory/product_cron/enabled');
+    }
+    public function getHourProductCron(){
+        return Mage::getStoreConfig('harrodsinventory/product_cron/hour');
+    }
+    public function getMinuteProductCron(){
+        return Mage::getStoreConfig('harrodsinventory/product_cron/minute');
+    }
+    /*------------------------------------------------------------------------*/
+
+
+    /*------------stock cron config-----------------------------------------------*/
+    public function isEnabledStockCron(){
+        return Mage::getStoreConfig('harrodsinventory/stock_cron/enabled');
+    }
+    public function getHourStockCron(){
+        return Mage::getStoreConfig('harrodsinventory/stock_cron/hour');
+    }
+    public function getMinuteStockCron(){
+        return Mage::getStoreConfig('harrodsinventory/stock_cron/minute');
+    }
+    /*------------------------------------------------------------------------*/
+
+
+    /*------------stock cron config-----------------------------------------------*/
+    public function isEnabledPriceCron(){
+        return Mage::getStoreConfig('harrodsinventory/price_cron/enabled');
+    }
+    public function getHourPriceCron(){
+        return Mage::getStoreConfig('harrodsinventory/price_cron/hour');
+    }
+    public function getMinutePriceCron(){
+        return Mage::getStoreConfig('harrodsinventory/price_cron/minute');
+    }
+    /*------------------------------------------------------------------------*/
 
 }
