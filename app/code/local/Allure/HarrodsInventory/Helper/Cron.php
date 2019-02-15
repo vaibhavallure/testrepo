@@ -18,15 +18,6 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     public function generateHarrodsFiles()
     {
         $this->add_log("generateHarrodsFiles => cron call");
-
-        $this->add_log("set time");
-        $this->add_log($this->harrodsConfig()->getHourProductCron());
-        //$this->add_log($this->harrodsConfig()->getMinuteProductCron());
-        $this->add_log("current time");
-        $this->add_log($this->getHour($this->getCurrentDatetime()));
-        $this->add_log($this->getMinute($this->getCurrentDatetime()));
-
-
         if (!$this->harrodsConfig()->getModuleStatus()) {
             $this->add_log("generateHarrodsFiles => Module Disabled----");
             return;
@@ -84,8 +75,7 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
             $remoteFilePathTxt= pathinfo($files['txt'])['basename'];
 
             $localFilePathOk=$files['ok'];
-            $remoteFilePathOk = pathinfo($files['ok'])['basename'];
-
+            $remoteFilePathOk = $this->harrodsConfig()->getLocationSFTP()."".pathinfo($files['ok'])['basename'];
 
             $this->sftp()->transferFile($localFilePathTxt,$remoteFilePathTxt);
             $this->sftp()->transferFile($localFilePathOk,$remoteFilePathOk);

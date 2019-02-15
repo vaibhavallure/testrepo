@@ -22,7 +22,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         return mb_convert_encoding($str,"Windows-1252","UTF-8");
     }
 
-    public function generateReport($byCreatedAt=true)
+    public function generateReport()
     {
 
         try {
@@ -72,7 +72,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             $whr='WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0';
 
-            if($byCreatedAt)
+            if($this->harrodsConfig()->getContentTypePLU()=="update")
             $whr.=' AND (cpe.created_at >= "'.$from.'" AND cpe.created_at <= "'.$to.'")';
 
 
@@ -190,6 +190,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 }
 
 
+            $this->add_log("PLU.txt file generated");
 
             $date =date("Ymd", $this->cron()->getCurrentDatetime());
             $filenm="70000369_".$date."_PLU.OK";
@@ -197,6 +198,8 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo->streamOpen($file2, 'w+');
             $ioo->streamLock(true);
             $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
+
+            $this->add_log("PLU.ok file generated");
 
 
             if(count($parentPro)) {
@@ -206,6 +209,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             }
             else
             {
+                $this->add_log("empty PLU file so return False");
                 return false;
             }
 
@@ -280,6 +284,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $sr_no++;
             }
+            $this->add_log("STK.txt file generated");
 
             $date =date("Ymd", $this->cron()->getCurrentDatetime());
             $filenm="70000369_".$date."_STK.OK";
@@ -287,6 +292,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo->streamOpen($file2, 'w+');
             $ioo->streamLock(true);
             $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
+            $this->add_log("STK.ok file generated");
 
             $files['txt']=$file;
             $files['ok']=$file2;
@@ -331,7 +337,23 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $date->addDay('3');
             $activeDate= $date->toString('YYYYMMdd');
 
-            $products = $readConnection->fetchCol("SELECT `productid` FROM `allure_harrodsinventory_price` WHERE `updated_date` LIKE '".$curruntDate."%'");
+
+
+            $attribute_code = "harrods_inventory";
+            $attribute_details = Mage::getSingleton("eav/config")->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute_code);
+
+            $attribute = $attribute_details->getData();
+            $attrbute_id = $attribute['attribute_id'];
+
+
+
+            if($this->harrodsConfig()->getContentTypePPC()=="full") {
+                $whr = 'WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0';
+                $products = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id ' . $whr);
+            }else{
+                $products = $readConnection->fetchCol("SELECT `productid` FROM `allure_harrodsinventory_price` WHERE `updated_date` LIKE '".$curruntDate."%'");
+
+            }
 
 
             foreach ($products as $productId) {
@@ -349,6 +371,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $sr_no++;
             }
+            $this->add_log("PPC.txt file generated");
 
             $date =date("Ymd", $this->cron()->getCurrentDatetime());
             $filenm="70000369_".$date."_PPC.OK";
@@ -357,6 +380,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $ioo->streamLock(true);
 //            if($sr_no!=1)
             $ioo->streamWrite(mb_convert_encoding(($sr_no-1),"ASCII","UTF-8"));
+            $this->add_log("PPC.ok file generated");
 
             $files['txt']=$file;
             $files['ok']=$file2;
