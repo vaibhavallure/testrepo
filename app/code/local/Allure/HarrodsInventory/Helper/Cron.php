@@ -72,7 +72,7 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
         if($files)
         {
             $localFilePathTxt=$files['txt'];
-            $remoteFilePathTxt= pathinfo($files['txt'])['basename'];
+            $remoteFilePathTxt= $this->harrodsConfig()->getLocationSFTP()."".pathinfo($files['txt'])['basename'];
 
             $localFilePathOk=$files['ok'];
             $remoteFilePathOk = $this->harrodsConfig()->getLocationSFTP()."".pathinfo($files['ok'])['basename'];
