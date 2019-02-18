@@ -107,8 +107,8 @@ switch ($country) {
 		
 	case "H" :
 		$livraison = array( 
-										//"phrase" => "<strong>Order before the 28th of October for a delivery from the 8th of November.</strong>",
-										"phrase" => "<strong>Delivery before Christmas guaranteed for orders received before the 9th of December.</strong>",
+										"phrase" => "<strong>Order before the 3rd of March for a delivery from the 14th of March onwards.</strong>",
+										//"phrase" => "<strong>Delivery before Christmas guaranteed for orders received before the 9th of December.</strong>",
 										//"phrase" => "<strong>Please make sure to order before the 6th of November at the latest for a delivery from the 17th onward!</strong>",
 										//"phrase" => "<strong>In order to guarantee the integrity of our wines, the next shipment to Hong Kong will take place at the end of August. Please make sure to order before the 23rd of August at the latest for delivery before the 15th of September in time for the Moon Festival.</strong>",
 										"detail" => "",
@@ -116,7 +116,7 @@ switch ($country) {
 										"styledetail" => ""
 						);
 		$livraison2 = array( 
-										"phrase" => "<strong>Order before 11th of November for a delivery from the 22nd of November.</strong>",
+										"phrase" => "<strong>Order before the 31st of March for a delivery from the 10th of April onwards.</strong>",
 										//"phrase" => "<strong>Delivery before Christmas guaranteed for orders received before the 6th of December.</strong>",
 										//"phrase" => "<strong>Please make sure to order before the 6th of November at the latest for a delivery from the 17th onward!</strong>",
 										//"phrase" => "<strong>In order to guarantee the integrity of our wines, the next shipment to Hong Kong will take place at the end of August. Please make sure to order before the 23rd of August at the latest for delivery before the 15th of September in time for the Moon Festival.</strong>",
@@ -124,13 +124,13 @@ switch ($country) {
 										"style" => "font-size: 12px;",
 										"styledetail" => ""
 						);
-		$datelivraison = "09/12/2018";
+		$datelivraison = "03/03/2019";
 		break;
 		
 	case "SG" :
 		$livraison = array( 
-										//"phrase" => "<strong>Order before the 28th of October for a delivery from the 8th of November.</strong>",
-										"phrase" => "<strong>Delivery before Christmas guaranteed for orders received before the 9th of December.</strong>",
+										"phrase" => "<strong>Order before the 3rd of March for a delivery from the 14th of March onwards.</strong>",
+										//"phrase" => "<strong>Delivery before Christmas guaranteed for orders received before the 9th of December.</strong>",
 										//"phrase" => "<strong>Please make sure to order before the 6th of November at the latest for a delivery from the 21st onward!</strong>",
 										//"phrase" => "<strong>In order to guarantee the integrity of our wines, the next shipment to Singapore will take place at the end of August. Please make sure to order before the 23rd of August at the latest for delivery before the 15th of September in time for the Moon Festival.</strong>",
 										"detail" => "",
@@ -138,7 +138,7 @@ switch ($country) {
 										"styledetail" => ""
 						);
 		$livraison2 = array( 
-										"phrase" => "<strong>Order before 11th of November for a delivery from the 22nd of November.</strong>",
+										"phrase" => "<strong>Order before the 31st of March for a delivery from the 10th of April onwards.</strong>",
 										//"phrase" => "<strong>Delivery before Christmas guaranteed for orders received before the 6th of December.</strong>",
 										//"phrase" => "<strong>Please make sure to order before the 6th of November at the latest for a delivery from the 17th onward!</strong>",
 										//"phrase" => "<strong>In order to guarantee the integrity of our wines, the next shipment to Hong Kong will take place at the end of August. Please make sure to order before the 23rd of August at the latest for delivery before the 15th of September in time for the Moon Festival.</strong>",
@@ -146,7 +146,7 @@ switch ($country) {
 										"style" => "font-size: 12px;",
 										"styledetail" => ""
 						);
-		$datelivraison = "09/12/2018";
+		$datelivraison = "03/03/2019";
 		break;
 
 	case "Y" :
