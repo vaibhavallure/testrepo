@@ -521,45 +521,49 @@ class Millesima_Message_Template extends Millesima_Abstract
 			}elseif($country == 'U'){
 				$htmlus .= "<a target='_blank' href='/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
 			}
-        }
-
-        //get version text of mail
-        $versionText = $output;
-        $regex='/<style[^>]*>[^<>]*?<\/style>/';
-        $versionText = preg_replace($regex,' ',$versionText);
-        $versionText = strip_tags($versionText);
-        $versionText = trim(preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $versionText));
 
 
-        $bddClass = new Millesima_Bdd();
-        $messageClass = new Millesima_Message();
-        $abtest=$data["abtest"];
-        $dateenvoi = str_replace("/","-",$dateenvoi);
-        $dateenvoi = date("Y-m-d", strtotime($dateenvoi));
-        if ($abtest == "true") {
-            $vartest=array("a", "b", "d");
-            foreach($vartest as $var){
-                $nameMessage = $country.$codemessage."-".$var;
+            //get version text of mail
+            $versionText = $output;
+            $regex='/<style[^>]*>[^<>]*?<\/style>/';
+            $versionText = preg_replace($regex,' ',$versionText);
+            $versionText = strip_tags($versionText);
+            $versionText = trim(preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $versionText));
+
+
+            $bddClass = new Millesima_Bdd();
+            $messageClass = new Millesima_Message();
+            $abtest=$data["abtest"];
+            $dateenvoi = str_replace("/","-",$dateenvoi);
+            $dateenvoi = date("Y-m-d", strtotime($dateenvoi));
+            if ($abtest == "true") {
+                $vartest=array("a", "b", "d");
+                foreach($vartest as $var){
+                    $nameMessage = $country.$codemessage."-".$var;
+                    $res = $messageClass->getMessageByName($nameMessage);
+                    if(count($res)>0){
+                        $bddClass->update("UPDATE message SET brief_id = ?,created_at = ?, file_html_link = ?,html = ? ,text = ? where name = ?",array($data['brief_id'],date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText,$nameMessage));
+                    } else {
+                        $bddClass->insert("INSERT INTO message (brief_id,name,created_at,file_html_link,html,text) VALUES (?,?,?,?,?,?)",array($data['brief_id'],$nameMessage,date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText));
+                    }
+                    $bddClass->update("UPDATE message SET dateenvoi = (?) where brief_id = (?)", array($dateenvoi, $data['brief_id']));
+                    $html .="Le message ".$nameMessage." a été créé <br />";
+                }
+            }else{
+
+                $nameMessage = $country.$codemessage;
                 $res = $messageClass->getMessageByName($nameMessage);
                 if(count($res)>0){
-                    $bddClass->insert("UPDATE message SET brief_id = ?,created_at = ?, file_html_link = ?,html = ? ,text = ? where name = ?",array($data['brief_id'],date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText,$nameMessage));
+                    $bddClass->update("UPDATE message SET brief_id = ?,created_at = ?, file_html_link = ?,html = ? ,text = ? where name = ?",array($data['brief_id'],date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText,$nameMessage));
                 } else {
                     $bddClass->insert("INSERT INTO message (brief_id,name,created_at,file_html_link,html,text) VALUES (?,?,?,?,?,?)",array($data['brief_id'],$nameMessage,date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText));
                 }
                 $bddClass->update("UPDATE message SET dateenvoi = (?) where brief_id = (?)", array($dateenvoi, $data['brief_id']));
                 $html .="Le message ".$nameMessage." a été créé <br />";
             }
-        }else{
-            $nameMessage = $country.$codemessage;
-            $res = $messageClass->getMessageByName($nameMessage);
-            if(count($res)>0){
-                $bddClass->insert("UPDATE message SET brief_id = ?,created_at = ?, file_html_link = ?,html = ? ,text = ? where name = ?",array($data['brief_id'],date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText,$nameMessage));
-            } else {
-                $bddClass->insert("INSERT INTO message (brief_id,name,created_at,file_html_link,html,text) VALUES (?,?,?,?,?,?)",array($data['brief_id'],$nameMessage,date('Y-m-d H:i:s'),$linkFileHtml,$output,$versionText));
-            }
-            $bddClass->update("UPDATE message SET dateenvoi = (?) where brief_id = (?)", array($dateenvoi, $data['brief_id']));
-            $html .="Le message ".$nameMessage." a été créé <br />";
         }
+
+
 
 
 		// affichage des liens vers les HTMl par groupement de pays de validation
