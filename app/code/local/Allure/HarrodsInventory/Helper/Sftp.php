@@ -50,7 +50,9 @@ class Allure_HarrodsInventory_Helper_Sftp extends Mage_Core_Helper_Abstract
             }
 
             try{
-                $sftp->write($remotefilepath,$localfilepath);
+                $file = new Varien_Io_File();
+                $filedata=$file->read($localfilepath);
+                $sftp->write($remotefilepath,$filedata);
                 $this->add_log("File Transfer Successfully=>".$remotefilepath);
             }catch (Exception $e)
             {
