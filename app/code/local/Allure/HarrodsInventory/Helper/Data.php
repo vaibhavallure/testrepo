@@ -90,7 +90,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                     $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
 
-                    $this->add_log("inside simple product---------");
+                    //$this->add_log("inside simple product---------");
                     $optionId = '';
 
                     if (!is_null($_product->getMetal()))
