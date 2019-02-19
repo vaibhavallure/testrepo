@@ -112,7 +112,8 @@ class Millesima_Campaign extends Millesima_Abstract
      */
     public function create($message,$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$theme,$segment,$dateObj,$type){
         //$segment = 7748; //segment test
-        $codeCampaign = $name.'-'.rand(1,6500); //'FIOSLIV18-204-'.rand(1,6500);
+        //$codeCampaign = $name.'-'.rand(1,6500); //'FIOSLIV18-204-'.rand(1,6500);
+        $codeCampaign = $name; //'FIOSLIV18-204-'.rand(1,6500);
 
         //create element xml
         $writer = new XMLWriter();
