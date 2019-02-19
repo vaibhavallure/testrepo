@@ -12,7 +12,7 @@
 
 $url="http://cdn.millesima.com.s3.amazonaws.com/ios/".$codemessage."/".$country.$codemessage.".html";
 
-$vsligne="[DL:ONLINE-0]";
+$vsligne="~PROBE(0)~";
 $vssmartphone="http://cdn.millesima.com.s3.amazonaws.com/ios/".$codemessage."/M".$country.$codemessage.".html";
 $vcard="http://cdn.millesima.com.s3.amazonaws.com/templates/vcard/MillesimaSA.vcf";
 

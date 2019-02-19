@@ -14,85 +14,85 @@
 switch ($country) {
 	case "F" :
 		$desabo = array ("title" => "&ecirc;tre retir&eacute; de notre liste de diffusion",
-						"lien" => "[DL:UNSUBSCRIBE-1]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 						
 	case "B" :
 		$desabo = array ("title" => "&ecirc;tre retir&eacute; de notre liste de diffusion",
-						"lien" => "[DL:UNSUBSCRIBE-12]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 						
 	case "L" :
 		$desabo = array ("title" => "&ecirc;tre retir&eacute; de notre liste de diffusion",
-						"lien" => "[DL:UNSUBSCRIBE-13]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 						
 	case "SF" :
 		$desabo = array ("title" => "&ecirc;tre retir&eacute; de notre liste de diffusion",
-						"lien" => "[DL:UNSUBSCRIBE-14]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
 	case "D" :
 		$desabo = array ("title" => "Streichung aus Verteilerliste - hier",
-						"lien" => "[DL:UNSUBSCRIBE-6]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
 	case "O" :
 		$desabo = array ("title" => "Streichung aus Verteilerliste - hier",
-						"lien" => "[DL:UNSUBSCRIBE-10]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 		
 	case "SA" :
 		$desabo = array ("title" => "Streichung aus Verteilerliste - hier",
-						"lien" => "[DL:UNSUBSCRIBE-9]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 		
 	case "G" :
 		$desabo = array ("title" => "I want to be withdrawn from the mailing list",
-						"lien" => "[DL:UNSUBSCRIBE-3]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
 	case "I" :
 		$desabo = array ("title" => "I want to be withdrawn from the mailing list",
-						"lien" => "[DL:UNSUBSCRIBE-11]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
 	case "Y" :
 		$desabo = array ("title" => "Essere cancellato dal nostro elenco",
-						"lien" => "[DL:UNSUBSCRIBE-5]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
 	case "E" :
 		$desabo = array ("title" => "Ser eliminado de la lista de difusi&oacute;n",
-						"lien" => "[DL:UNSUBSCRIBE-4]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
 	case "P" :
 		$desabo = array ("title" => "Desejo ser retirado da lista de difus&atilde;o",
-						"lien" => "[DL:UNSUBSCRIBE-15]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 	
 	case "H" :
 		$desabo = array ("title" => "I want to be withdrawn from the mailing list",
-						"lien" => "[DL:UNSUBSCRIBE-19]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
 	case "SG" :
 		$desabo = array ("title" => "I want to be withdrawn from the mailing list",
-						"lien" => "[DL:UNSUBSCRIBE-19]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 
@@ -104,7 +104,7 @@ switch ($country) {
 
 	default :
 		$desabo = array ("title" => "&ecirc;tre retir&eacute; de notre liste de diffusion",
-						"lien" => "[DL:UNSUBSCRIBE-1]"
+						"lien" => "https://avanci.emsecure.net/optiext/optiextension.dll?ID=04qsDB3BQNOTEdknuhkQejq%2BqBH5dXTVLZQ2ah8hTfivCurzBcbWkZJaPo2IBXpXk1cdVAhY5jP800&MAIL=~MAIL~"
 						);
 		break;
 	
