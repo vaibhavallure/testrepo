@@ -507,19 +507,19 @@ class Millesima_Message_Template extends Millesima_Abstract
             $linkFileHtml = '/emailing/fichiers/emailings/'.$codemessage.'/'.$country.$codemessage.'.html';
 			
 			if($country == 'F' || $country == 'B' || $country == 'L'){
-				$htmlfr .= "<a target='_blank' href='/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
+				$htmlfr .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
 			}elseif($country == 'D' || $country == 'O' || $country == 'SA' || $country == 'SF'){
-				$htmlde .= "<a target='_blank' href='/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
+				$htmlde .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
 			}elseif($country == 'G' || $country == 'I' || $country == 'H' || $country == 'SG'){
-				$htmluk .= "<a target='_blank' href='/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
+				$htmluk .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
 			}elseif($country == 'Y'){
-				$htmlit .= "<a target='_blank' href='/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
+				$htmlit .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
 			}elseif($country == 'E'){
-				$htmles .= "<a target='_blank' href='/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
+				$htmles .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
 			}elseif($country == 'P'){
-				$htmlpt .= "<a target='_blank' href='/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
+				$htmlpt .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
 			}elseif($country == 'U'){
-				$htmlus .= "<a target='_blank' href='/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
+				$htmlus .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
 			}
 
 
