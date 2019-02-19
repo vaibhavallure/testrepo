@@ -736,7 +736,6 @@ function createCampaign(){
     $messageList = $messageClass->getMessageNotSend();
     $segmentList = $segmentClass->getSegmentList();
 
-
     foreach ($messageList as $key=>$message){
         $briefId = $messageClass->getInfoById($message['id'],'brief_id');
         $brief = $briefClass->getBrief($briefId);
@@ -763,26 +762,48 @@ function createCampaign(){
 
     //verification param for creation
     $data = $app->request->post();
-
-
-
-    if(isset($data) && isset($data["namecampaign"]) && is_array($data["checkbox-message"]) && count($data["checkbox-message"]) > 0 ){
-        //var_dump($data);
+    if(isset($data) && isset($data["checkbox-message"]) && is_array($data["checkbox-message"]) && count($data["checkbox-message"]) > 0 ){
+        //var_dump($data);echo'<br />';
 
         //creation des message
         $campaignClass = new Millesima_Campaign();
-        $messageIds = $data["checkbox-message"];
-        $name = $data["namecampaign"];
-        $fromMail = $data["frommailcampaign"];
-        $fromName = $data["fromnamecampaign"];
-        $replyMail = $data["replymailcampaign"];
-        $replyName = $data["replynamecampaign"];
-        $subject = $data["subjectcampaign"];
+        $messageClass = new Millesima_Message();
+
         $type = $data['creation'];
         $segSend = '';
-
-
+        $messageIds = $data["checkbox-message"];
         foreach ($messageIds as $messageId){
+
+            //get information mail
+            $tmp = explode('-',$messageId, 2);
+            $store = substr($tmp[1], 0 ,2 );
+            if( $store == 'Di' || $store == 'Oi' || $store == 'SA'){
+                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'d');
+            } else if( $store == 'Ei' ){
+                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'e');
+            } else if( $store == 'Pi' ){
+                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'p');
+            } else if( $store == 'Yi' ){
+                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'y');
+            } else if( $store == 'UU' || $store == 'Ui' || $store == 'Uu'){
+                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'u');
+            } else if( $store == 'Gi' || $store == 'Hi' || $store == 'SG' || $store == 'Ii'){
+                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'g');
+            } else {
+                $briefId = $messageClass->getInfoById($messageId,'brief_id');
+                $briefClass = new Millesima_Brief();
+                $brief = $briefClass->getBrief($briefId);
+                $objet = $brief['objfr'];
+            }
+            $return = $messageClass->getInfoMessage($tmp[1],$objet);
+
+            $name = $return["name_camp"];
+            $fromMail = $return["mail_from"];
+            $fromName = $return["name_from"];
+            $replyMail = $return["mail_reply"];
+            $replyName = $return["name_reply"];
+            $subject = $return["subject_camp"];
+
             $tmp = explode('-',$messageId);
             $messageId = $tmp[0];
             $message = $messageClass->getMessageById($messageId);
@@ -794,8 +815,6 @@ function createCampaign(){
                 }
             }
 
-
-
             if($type == 'reel'){
                 $startDate = $data["dateenvoi-".$messageId].' '.$data["heureenvoi-".$messageId];
                 $format = "d/m/Y H:i:s";
@@ -805,9 +824,6 @@ function createCampaign(){
                 $dateObj = new DateTime('NOW');
                 $segSend['selligente_id'] = 7746;
             }
-
-            //echo"<br />";var_dump($segment);
-            //die('gfdgdfgd');
 
             if($type == 'reel' && ($segSend == '' || $segSend['status'] == 'local') ){
                 $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a échouer car le segment n'est pas valide.</b><br/>";

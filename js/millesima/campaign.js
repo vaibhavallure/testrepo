@@ -19,7 +19,7 @@ $('document').ready(
                 $('#nb_contact_total').val(totalNbContact);
             }
         );
-        $('input[class=checkbox-message]').click(
+        /*$('input[class=checkbox-message]').click(
             function(){
                 var message = $('input[class=checkbox-message]:checked').val();
                 if(typeof(message) == "undefined" ){
@@ -50,7 +50,7 @@ $('document').ready(
                     });
                 }
             }
-        );
+        );*/
     }
 );
 

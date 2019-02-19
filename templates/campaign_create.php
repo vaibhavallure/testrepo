@@ -48,7 +48,7 @@ $html = $this->data['html'];
                     </div>
                     <form id="form1" name="form1" method="post" action="/emailing/view/campaign_create" role="form">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <div class="box-body">
                                     <table id="message_list" class="table table-bordered table-striped dataTable" aria-describedby="message_list">
                                         <thead>
@@ -93,63 +93,15 @@ $html = $this->data['html'];
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <div class="form-group">
-                                            <label for="namecampaign">Nom Campagne</label>
-                                            <input name="namecampaign" type="text" id="namecampaign" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <div class="form-group">
-                                            <label for="storecampaign">Store Campagne</label>
-                                            <input name="storecampaign" type="text" id="storecampaign" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <div class="form-group">
-                                            <label for="frommailcampaign">Email From</label>
-                                            <input name="frommailcampaign" type="text" id="frommailcampaign" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <div class="form-group">
-                                            <label for="fromnamecampaign">Name From</label>
-                                            <input name="fromnamecampaign" type="text" id="fromnamecampaign" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <div class="form-group">
-                                            <label for="replymailcampaign">Email reply</label>
-                                            <input name="replymailcampaign" type="text" id="replymailcampaign" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <div class="form-group">
-                                            <label for="replynamecampaign">Nom reply</label>
-                                            <input name="replynamecampaign" type="text" id="replynamecampaign" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <div class="form-group">
-                                            <label for="subjectcampaign">Subject</label>
-                                            <input name="subjectcampaign" type="text" id="subjectcampaign" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-md-2">
                                 <div class="row">
                                     <div class="col-xs-5">
                                         <div class="box-footer">
                                             <button type="submit" class="btn btn-primary" name="creation" value="bat">Envoi BAT Now</button>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-xs-5">
                                         <div class="box-footer">
                                             <button type="submit" class="btn btn-primary" name="creation" value="reel">Envoi Réel Date</button>
@@ -158,7 +110,6 @@ $html = $this->data['html'];
                                 </div>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
