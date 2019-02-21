@@ -78,7 +78,7 @@ Product.Config.prototype.resetChildren = function(element){
 
 Product.Config.prototype.fillSelect = function(element){
     var attributeId = element.id.replace(/[a-z]*/, '');
-    console.log("attributeId:"+attributeId);
+   // console.log("attributeId:"+attributeId);
     var options = this.getAttributeOptions(attributeId);
     this.clearSelect(element);
     element.options[0] = new Option(this.config.chooseText, '');
@@ -153,7 +153,7 @@ Product.Config.prototype.configureElement = function(element)
     // extension Code
 
 	var oldIndex = element.nextSetting.selectedIndex; //allure new code add
-	console.log("oldIndex:"+oldIndex);
+	//console.log("oldIndex:"+oldIndex);
     optionId = element.value;
     if ($('amconf-image-' + optionId))
     {
@@ -379,18 +379,21 @@ Product.Config.prototype.updateData = function(key)
             }.bind(this));
 
             var img_id;  option_id = key.split(",");
+
+
             if(option_id[0]){
                 var img_id = option_id[0];
             }
             var check_reload = option_id[1];
             if(check_reload){
                 var current_attribute_name = jQuery('#current_attribute_name').text();
-                if((parseInt($('optionid').value) != parseInt(img_id)) || (current_attribute_name == 'DIRECTION')){
+                if((parseInt($('optionid').value) != parseInt(img_id)) || (jQuery("#attribute262").length  &&  parseInt($('direction_id').value)!=option_id[1]))
+                {
                     var url = confData.getData(key, 'media_url');
                     url = url + 'q/' + $('reloadmedia').value;
 
                     var current_option_id = jQuery('#current_option_id').text();
-                    if((current_option_id != img_id) || (current_attribute_name == 'DIRECTION')){
+                    if((parseInt($('optionid').value) != parseInt(img_id)) || (jQuery("#attribute262").length &&  parseInt($('direction_id').value)!=option_id[1])){
                       jQuery.ajax({
                         url: url,
                         dataType: 'html',
@@ -399,6 +402,9 @@ Product.Config.prototype.updateData = function(key)
                             var tm = setTimeout("applyProductZoom()",2500);
                             confData.currentIsMain = false;
                             $('optionid').value = img_id;
+
+                            if(jQuery("#attribute262").length)
+                            $('direction_id').value=option_id[1];
                         }
                       });
                     }
