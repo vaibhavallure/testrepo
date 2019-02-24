@@ -120,7 +120,7 @@ if(count($allAppointments)>0) {
                 $smsText = str_replace("(date)", $date, $smsText);
                 /* 		$smsText=str_replace("(book_link)",$booking_link,$smsText); */
 
-               /* if ($phone) {//if NotificationPref set to text sms i.e. 2
+                if ($phone) {//if NotificationPref set to text sms i.e. 2
                     $api = new SoapClient($url, array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1));
                     $session = $api->apiValidateLogin($username, $password);
                     preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
@@ -130,7 +130,7 @@ if(count($allAppointments)>0) {
                     Mage::log(" sent sms".$phone, Zend_Log::DEBUG, 'appointments.log', true);
 
 
-                }*/
+                }
             }
         }
 
