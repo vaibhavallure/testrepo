@@ -29,9 +29,9 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 	    $config = $this->getAppointmentStoreMapping();
 	    foreach ($config['stores'] as $store)
 	    {
-	        if($val == 0){
+	        /*if($val == 0){
 	            continue;
-	        }
+	        }*/
 	        $storeKey = array_search ($store, $config['stores']);
 	        $timezone = $config['timezones'][$storeKey];
 	        date_default_timezone_set($timezone);
@@ -80,7 +80,9 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		$sendEmail = false;
 		$sendSms = false;
 
-		$configData = $this->getAppointmentStoreMapping();
+
+
+        $configData = $this->getAppointmentStoreMapping();
 		foreach ($allAppointments as $appointment){
 			$storeId=$appointment->getStoreId();
 			$storeKey = array_search ($storeId, $configData['stores']);
