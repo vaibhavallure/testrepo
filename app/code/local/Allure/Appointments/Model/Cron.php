@@ -38,7 +38,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 	        $storeDate=date('Y-m-d H:i:s');
 	        
 	        //Send notification at store date time only
-	        Mage::log("Store Time Zone:".$timezone,Zend_Log::DEBUG,'appointments',true);
+	        Mage::log("Store Time Zone:".$timezone,Zend_Log::DEBUG,'appointments.log',true);
 	        $this->processCollection($storeDate,$store,$timezone);
 	        date_default_timezone_set("UTC");
 	    }
@@ -59,11 +59,11 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		if(count($allAppointments) > 0){
 			$this->sendNotification($allAppointments);
 		}
-		Mage::log("Check more than 7 day remaining appointments",Zend_Log::DEBUG,'appointments',true);
+		Mage::log("Check more than 7 day remaining appointments",Zend_Log::DEBUG,'appointments.log',true);
 		$nextTime = date("Y-m-d H:i:00",strtotime("7 day",strtotime($storeDate)));
-		Mage::log("nextTime After 7 day:".$nextTime,Zend_Log::DEBUG,'appointments',true);
+		Mage::log("nextTime After 7 day:".$nextTime,Zend_Log::DEBUG,'appointments.log',true);
 		$next2Time= date("Y-m-d H:i:59",strtotime("7 day 15 minutes",strtotime($storeDate)));
-		Mage::log("$next2Time After 7 day 15 minutes:".$nextTime,Zend_Log::DEBUG,'appointments',true);
+		Mage::log("$next2Time After 7 day 15 minutes:".$nextTime,Zend_Log::DEBUG,'appointments.log',true);
 		$allAppointments = Mage::getModel('appointments/appointments')->getCollection();
 		$allAppointments->addFieldToFilter('app_status',Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
 		$allAppointments->addFieldToFilter('appointment_start', array('gteq' => $nextTime));
@@ -71,7 +71,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		//$allAppointments->getSelect()->where('DATEDIFF(appointment_start,booking_time)>=7');
 		$allAppointments->addFieldToFilter('store_id', array('eq' => $storeId));
 		if(count($allAppointments) > 0){
-			Mage::log(" diff is greater than 7 days",Zend_Log::DEBUG,'appointments',true);
+			Mage::log(" diff is greater than 7 days",Zend_Log::DEBUG,'appointments.log',true);
 			$this->sendNotification($allAppointments);
 		}
 	}
@@ -79,7 +79,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 	public function sendNotification($allAppointments){
 		$sendEmail = false;
 		$sendSms = false;
-		
+
 		$configData = $this->getAppointmentStoreMapping();
 		foreach ($allAppointments as $appointment){
 			$storeId=$appointment->getStoreId();
@@ -117,7 +117,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			$appointment->save();
 			
 			   
-			Mage::log(" notication type  ".$notification_pref,Zend_Log::DEBUG,'appointments',true);
+			Mage::log(" notication type  ".$notification_pref,Zend_Log::DEBUG,'appointments.log',true);
 			if($notification_pref == 2){
 				$sendSms = true;
 				$sendEmail = true;
@@ -193,7 +193,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			}/* END sendemail if */
 			
 			if($sendSms){
-				Mage::log(" In send Sms ",Zend_Log::DEBUG,'appointments',true);
+				Mage::log(" In send Sms ",Zend_Log::DEBUG,'appointments.log',true);
 				$model = $appointment;
 				$username = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_USERNAME);
 				$password = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_PASSWORD);
