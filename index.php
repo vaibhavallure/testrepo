@@ -515,20 +515,36 @@ function createMessage(){
     //$file = $app->request->file();
     $btnAction = $data['btnaction'];
     unset($data['btnaction']);
-    if($btnAction == 'envoyer'){
+    if ($btnAction == 'envoyer'){
+        $messageDataClass->saveMessageData($data);
+        $html = $messageClass->createMessage($data);
+        $content=$html;
+    }elseif ($btnAction == 'master'){
+        $data["pays"] = array($data['pays'][0]);
         $messageDataClass->saveMessageData($data);
         $html = $messageClass->createMessage($data);
         $mail['pays'] = $data['pays'];
-        $mail['content'] = $html;
+        $content = 'Vous trouverez ci-dessous le BAT pour validation :<br />' ;
+        $content .= $html;
+        $content .= 'PS : ce message est automatique - si vous le recevez deux fois, c\'est qu\'une modification a été apportée au BAT. Merci de ne prendre en compte que l\'email le plus récent.<br />' ;
+        $mail['content'] = $content;
+        $mail['id']=$data['codemessage'];
+        $messageClass->sendMailMessage('master', $mail);
+    }elseif($btnAction == 'all'){
+        $messageDataClass->saveMessageData($data);
+        $html = $messageClass->createMessage($data);
+        $mail['pays'] = $data['pays'];
+        $content = 'Vous trouverez ci-dessous le BAT pour validation :<br />' ;
+        $content .= $html;
+        $content .= 'PS : ce message est automatique - si vous le recevez deux fois, c\'est qu\'une modification a été apportée au BAT. Merci de ne prendre en compte que l\'email le plus récent.<br />' ;
+        $mail['content'] = $content;
         $mail['id']=$data['codemessage'];
         $messageClass->sendMailMessage('messagecreate', $mail);
-    }elseif ($btnAction == 'sauvegarder'){
-        $html = $messageDataClass->saveMessageData($data);
     }else{
         $html = "Erreur";
     }
 
-    getMessageView($html,'../../');
+    getMessageView($content,'../../');
 }
 
 function actionMessage() {
@@ -763,8 +779,8 @@ function createCampaign(){
     //verification param for creation
     $data = $app->request->post();
     if(isset($data) && isset($data["checkbox-message"]) && is_array($data["checkbox-message"]) && count($data["checkbox-message"]) > 0 ){
-        //var_dump($data);echo'<br />';
-
+        //var_dump($data);
+        //die('gfdgdfg');
         //creation des message
         $campaignClass = new Millesima_Campaign();
         $messageClass = new Millesima_Message();
@@ -815,15 +831,30 @@ function createCampaign(){
                 }
             }
 
+
+
             if($type == 'reel'){
                 $startDate = $data["dateenvoi-".$messageId].' '.$data["heureenvoi-".$messageId];
                 $format = "d/m/Y H:i:s";
                 $dateObj = DateTime::createFromFormat($format, $startDate);
-				$segment = (int) $segment;
+                //$segSend['selligente_id'] = 7746;
             } else{
                 $dateObj = new DateTime('NOW');
                 $segSend['selligente_id'] = 7746;
             }
+            /*
+            //var_dump($message[0]);echo'<br />';
+            var_dump($name);echo'<br />';
+            var_dump($fromMail);echo'<br />';
+            var_dump($fromName);echo'<br />';
+            var_dump($replyMail);echo'<br />';
+            var_dump($replyName);echo'<br />';
+            var_dump($subject);echo'<br />';
+            var_dump($brief['theme']);echo'<br />';
+            var_dump($segSend['selligente_id']);echo'<br />';
+            var_dump($dateObj);echo'<br />';
+            var_dump($type);echo'<br />';
+            */
 
             if($type == 'reel' && ($segSend == '' || $segSend['status'] == 'local') ){
                 $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a échouer car le segment n'est pas valide.</b><br/>";
@@ -838,8 +869,10 @@ function createCampaign(){
                     $html .=  "<br>";
                     $html .=  "La demande n'a pas été prise en compte :(";
                 }
-            }
+          }
+
         }
+        //die('gfgdfsgfds');
     }
 
     //affichage page

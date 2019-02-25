@@ -483,8 +483,26 @@ function getCode($typebrief){
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <button type="submit" name="btnaction" class="btn btn-primary" value="envoyer" style="float: right;">Générer Message</button>
+                                        <div class="row">
+                                            <div class="col-xs-5" style="margin-bottom: 10px;">
+                                            <div class="form-group">
+                                                <button type="submit" name="btnaction" class="btn btn-primary" value="envoyer" style="float: right;">Générer Message</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-5"  style="margin-bottom: 10px;">
+                                            <div class="form-group">
+                                                <button type="submit" name="btnaction" class="btn btn-primary" value="master" style="float: right;">Envoi Master BAT</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                            <div class="form-group">
+                                                <button type="submit" name="btnaction" class="btn btn-primary" value="all" style="float: right;">Envoi tous les BAT</button>
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
