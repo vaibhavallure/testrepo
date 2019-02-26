@@ -99,15 +99,9 @@ class Millesima_Segment extends Millesima_Abstract
         //truncate bdd dolistsegment
         $bddClass->truncate("TRUNCATE TABLE dolistsegment");
 
-        $cellRef = 10;
-        $cellPC = 12;
-        $cellLangue = 27;
-
-        if($tinyclues){
-            $cellRef = 0;
-            $cellPC = 1;
-            $cellLangue = 2;
-        }
+        $cellRef = 0;
+        $cellPC = 1;
+        $cellLangue = 2;
 
         //parse file csv and get row, insert data in dolistsegment
         $objReader = PHPExcel_IOFactory::createReader('CSV');
