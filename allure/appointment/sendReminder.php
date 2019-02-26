@@ -41,8 +41,8 @@ if(count($allAppointments)>0) {
         $toSend = $configData['customer_email_enable'][$storeKey];
         //$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
         $templateId = $configData['email_template_appointment_remind'][$storeKey];
-        $sender = array('name' => Mage::getStoreConfig("trans_email/bookings/name", 1),
-            'email' => Mage::getStoreConfig("trans_email/bookings/email", 1));
+         $sender = array('name' => Mage::getStoreConfig("trans_email/bookings/name", 1),
+            'email' => $configData['store_email'][$storeKey]);
 
         //$toSendAdmin = Mage::getStoreConfig("appointments/admin/send_admin_email",$storeId);
         $toSendAdmin = $configData['admin_email_enable'][$storeKey];
