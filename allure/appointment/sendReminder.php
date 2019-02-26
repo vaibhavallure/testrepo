@@ -3,10 +3,8 @@ require_once '../../app/Mage.php';
 umask(0);
 Mage::app();
 
-if(!isset($_GET['storeid']))
+if(isset($_GET['storeid']))
 {
-    die();
-}
 
     $config=Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     $store=$_GET['storeid'];
@@ -15,8 +13,8 @@ if(!isset($_GET['storeid']))
     date_default_timezone_set($timezone);
     $storeDate=date('Y-m-d H:i:s');
 
-     $nextTime =$storeDate;
-     $next2Time= date("Y-m-d 23:59:59",strtotime($storeDate));
+    $nextTime =$storeDate;
+    $next2Time= date("Y-m-d 23:59:59",strtotime($storeDate));
 
 
     $allAppointments = Mage::getModel('appointments/appointments')->getCollection();
@@ -25,17 +23,28 @@ if(!isset($_GET['storeid']))
     $allAppointments->addFieldToFilter('app_status',Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     $allAppointments->addFieldToFilter('store_id', array('eq' => $store));
 
+}
+else if(isset($_GET['id']))
+{
+    $allAppointments[] = Mage::getModel('appointments/appointments')->load($_GET['id']);
+
+}
+else
+{
+    die();
+}
+
 
 if(count($allAppointments)>0) {
+
 
     $sendEmail = false;
     $sendSms = false;
 
-
     $configData = $config;
 
     foreach ($allAppointments as $appointment) {
-        $storeId = $appointment->getStoreId();
+        echo $storeId = $appointment->getStoreId();
         $storeKey = array_search($storeId, $configData['stores']);
         //$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
         $toSend = $configData['customer_email_enable'][$storeKey];
