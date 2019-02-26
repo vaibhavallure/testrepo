@@ -505,23 +505,32 @@ class Millesima_Message_Template extends Millesima_Abstract
             $handle = fopen("$filename", "w");
             fwrite($handle,$this->encodeVar($output));
             $linkFileHtml = '/emailing/fichiers/emailings/'.$codemessage.'/'.$country.$codemessage.'.html';
-			
-			if($country == 'F' || $country == 'B' || $country == 'L'){
-				$htmlfr .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
-			}elseif($country == 'D' || $country == 'O' || $country == 'SA' || $country == 'SF'){
-				$htmlde .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
-			}elseif($country == 'G' || $country == 'I' || $country == 'H' || $country == 'SG'){
-				$htmluk .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
-			}elseif($country == 'Y'){
-				$htmlit .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
-			}elseif($country == 'E'){
-				$htmles .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
-			}elseif($country == 'P'){
-				$htmlpt .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
-			}elseif($country == 'U'){
-				$htmlus .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a><br />";
-			}
 
+
+            $traductionClass = new Millesima_Traduction();
+			if($country == 'F' || $country == 'B' || $country == 'L'){
+                $briefClass = new Millesima_Brief();
+                $brief = $briefClass->getBrief($data['brief_id']);
+				$htmlfr .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$brief['objfr']."<br />";
+			}elseif($country == 'D' || $country == 'O' || $country == 'SA' || $country == 'SF'){
+				$objet = $traductionClass->getValueTrad($data['brief_id'],'d','objtrad');
+                $htmlde .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+			}elseif($country == 'G' || $country == 'I' || $country == 'H' || $country == 'SG'){
+                $objet = $traductionClass->getValueTrad($data['brief_id'],'g','objtrad');
+				$htmluk .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+			}elseif($country == 'Y'){
+                $objet = $traductionClass->getValueTrad($data['brief_id'],'y','objtrad');
+				$htmlit .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+			}elseif($country == 'E'){
+                $objet = $traductionClass->getValueTrad($data['brief_id'],'e','objtrad');
+				$htmles .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+			}elseif($country == 'P'){
+                $objet = $traductionClass->getValueTrad($data['brief_id'],'p','objtrad');
+				$htmlpt .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+			}elseif($country == 'U'){
+                $objet = $traductionClass->getValueTrad($data['brief_id'],'u','objtrad');
+				$htmlus .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
+			}
 
             //get version text of mail
             $versionText = $output;
@@ -529,7 +538,6 @@ class Millesima_Message_Template extends Millesima_Abstract
             $versionText = preg_replace($regex,' ',$versionText);
             $versionText = strip_tags($versionText);
             $versionText = trim(preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $versionText));
-
 
             $bddClass = new Millesima_Bdd();
             $messageClass = new Millesima_Message();
@@ -567,7 +575,6 @@ class Millesima_Message_Template extends Millesima_Abstract
 
 
 		// affichage des liens vers les HTMl par groupement de pays de validation
-        $html .=  "<h3>Messages créés :</h3>";
         $html .=  $htmlfr."<br />";
         $html .=  $htmlde."<br />";
         $html .=  $htmluk."<br />";

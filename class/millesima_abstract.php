@@ -653,8 +653,8 @@ class Millesima_Abstract{
 
         $message = 'Bonjour,'. '<br />';
         $message .= ''. '<br />';
-        $headers = 'From: brief@millesima.com' . "\r\n" .
-            'Reply-To: jcortina@millesima.com' . "\r\n" .
+        $headers = 'From: lbassagaits@millesima.com' . "\r\n" .
+            'Reply-To: lbassagaits@millesima.com;bgibier@millesima.com' . "\r\n" .
             'Content-Type: text/html; charset="utf-8' . "\r\n" .
             'Content-Transfer-Encoding: 8bit' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
@@ -691,6 +691,7 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'jcortina@millesima.com';
             $tabRecipiant[] = 'ldeker@millesima.com';
             $tabRecipiant[] = 'bgibier@millesima.com';
+            $tabRecipiant[] = 'lbassagaits@millesima.com';
         } else {
             $tabRecipiant[] = 'alopes@millesima.com';
             $tabRecipiant[] = 'dgorski@millesima.com';
@@ -704,12 +705,16 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'sniggl@millesima.com';
             $tabRecipiant[] = 'ekohr@millesima.com';
             $tabRecipiant[] = 'bteurquetil@millesima.com';
+            $tabRecipiant[] = 'pastanislas@millesima.com';
         }
         if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('P','p'),$pays) && !$isTest){
             $tabRecipiant[] = 'lantunes@millesima.com';
         }
-        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('E','e','Y','y'),$pays) && !$isTest){
+        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('E','e'),$pays) && !$isTest){
             $tabRecipiant[] = 'srocamora@millesima.com';
+        }
+        if(($type == 'commercial' || $type == 'messagecreate')  && in_array(array('Y','y'),$pays) && !$isTest){
+            $tabRecipiant[] = 'lspettoli@millesima.com';
         }
         if(($type == 'messagecreate')  && in_array(array('U','u'),$pays) && !$isTest){
             $tabRecipiant[] = 'braphanel@millesima.com';
@@ -720,6 +725,7 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'mrenaud@millesima.com';
             $tabRecipiant[] = 'hgee@millesima.com';
             $tabRecipiant[] = 'lkocsis@millesima.com';
+            $tabRecipiant[] = 'pastanislas@millesima.com';
         }
         if($type == 'marketing' && in_array(array('F','f','L','l','B','b','E','e','Y','y','P','p'),$pays) && !$isTest){
             $tabRecipiant[] = 'bgibier@millesima.com';
@@ -727,9 +733,25 @@ class Millesima_Abstract{
         if($type == 'marketing' && in_array(array('U','u'),$pays) && !$isTest){
             $tabRecipiant[] = 'imiossec@millesima.com';
             $tabRecipiant[] = 'hobernard@millesima.com';
+            $tabRecipiant[] = 'braphanel@millesima.com';
+            $tabRecipiant[] = 'ebrancato@millesima.com';
+            $tabRecipiant[] = 'hobernard@millesima.com';
+            $tabRecipiant[] = 'lkocsis@millesima.com';
+            $tabRecipiant[] = 'imiossec@millesima.com';
         }
         if($type == 'marketing' && in_array(array('G','g','I','i','H','h','SG','sg','D','d','O','o','SA','sa','SF','sf'),$pays) && !$isTest){
             $tabRecipiant[] = 'pastanislas@millesima.com';
+        }
+        if($type == 'master' && !$isTest){
+            $tabRecipiant[] = 'pastanislas@millesima.com';
+            $tabRecipiant[] = 'lbassagaits@millesima.com';
+            $tabRecipiant[] = 'obaldy@millesima.com';
+            $tabRecipiant[] = 'fbernard@millesima.com';
+            $tabRecipiant[] = 'bdejonckheere@millesima.com';
+            $tabRecipiant[] = 'mdutoya@millesima.com';
+            $tabRecipiant[] = 'smonneau@millesima.com';
+            $tabRecipiant[] = 'pastanislas@millesima.com';
+            $tabRecipiant[] = 'vvecchione@millesima.com';
         }
 
         return $tabRecipiant;
@@ -743,7 +765,7 @@ class Millesima_Abstract{
      */
     public function getMessageMail($type,$data){
         $return = '';
-        if($type == 'messagecreate'){
+        if($type == 'messagecreate' || $type == 'master'){
             $return = $data['content'];
         }
         return $return;
@@ -758,12 +780,13 @@ class Millesima_Abstract{
     public function getObjectMail($type,$data){
         $return = '';
         if($type == 'messagecreate'){
-            $return = 'Un ou des messages ont été générés pour le '.$data['id'];
+            $return = 'BAT '.$data['id'];
+        }
+        if($type == 'master'){
+            //get information mail
+            $return = 'BAT '.$data['id'];
         }
         return $return;
     }
-
-
-
 
 }
