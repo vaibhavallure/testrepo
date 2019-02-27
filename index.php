@@ -645,10 +645,16 @@ function createSegment(){
     //ETAPE 3 CREER UN FICHIER AU FORMAT DML CONTENANT EMAIL + PAYSCOM pour chaque pays
     foreach($countries as $country) {
         $nomFile = $segmentClass->createPickFile($country,$nomdusegment);
-        $segmentClass->sendFileSegmentFtp($nomdusegment,$nomFile);
-        $segmentClass->createInBdd($nomFile);
-        $html .= "<b>La demande de création d'import a été prise en compte.</b><br/>";
-        $html .= "<b>".$nomFile."</b><br/>";
+        $return = $segmentClass->sendFileSegmentFtp($nomdusegment,$nomFile);
+        if($return){
+            $segmentClass->createInBdd($nomFile);
+            $html .= "<b>La demande de création d'import a été prise en compte.</b><br/>";
+            $html .= "<b>".$nomFile."</b><br/>";
+        } else {
+            $html .= "<b>Erreur d'import du fichier.</b><br/>";
+            $html .= "<b>".$nomFile."</b><br/>";
+        }
+
     }
     //die('gdfgdfgd');
     getSegmentView($html,'../../');

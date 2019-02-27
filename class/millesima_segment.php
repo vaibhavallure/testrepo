@@ -225,15 +225,22 @@ class Millesima_Segment extends Millesima_Abstract
         $login="millesima";
         $password="HmnhixkCJikKYI32tucp";
         $dossier_destination="/Tmp/Selligent/";
+        $return = false;
 
         if (ssh2_auth_password($connect, $login, $password)) {
             $myFile = self::REPOSITORY_SEGMENT."/".$nameSegment.'/'.$nomFile.'.csv';
             $retour_ftp = ssh2_scp_send($connect, $myFile, $dossier_destination.$nomFile.'.csv', 0777);
+            $sftp = ssh2_sftp($connect);
+            $stat_ftp = ssh2_sftp_stat($sftp, $dossier_destination.$nomFile.'.csv');
+            if($retour_ftp && $stat_ftp['size'] > 0 ){
+               $return = true;
+            }
         } else {
             $retour_ftp = "Connexion impossible en tant que ".$login."<br>";
+            $return = false;
         }
 
-        return $retour_ftp;
+        return $return;
     }
 
 
