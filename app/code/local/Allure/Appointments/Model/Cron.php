@@ -76,16 +76,18 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		}
 	}
 	
-	public function sendNotification($allAppointments){
+	public function sendNotification($allAppointments,$from="cron"){
 		$sendEmail = false;
 		$sendSms = false;
 
+        Mage::log(" call from ".$from,Zend_Log::DEBUG,'appointments.log',true);
 
 
         $configData = $this->getAppointmentStoreMapping();
 		foreach ($allAppointments as $appointment){
 			$storeId=$appointment->getStoreId();
-			$storeKey = array_search ($storeId, $configData['stores']);
+
+            $storeKey = array_search ($storeId, $configData['stores']);
 			//$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
 			$toSend = $configData['customer_email_enable'][$storeKey];
 			//$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
@@ -103,17 +105,17 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			$notification_pref = $appointment->getNotificationPref();
 			$phone = $appointment->getPhone();
 			$appstatus = $appointment->getAppStatus();
-			
-			$date=Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s');
+
+            $date=Mage::getModel('core/date')->Date('Y-m-d H:i:s');
 			$dStart = new DateTime($appointment->getLastNotified());
 			$dEnd  = new DateTime($date);
 			$dDiff = $dStart->diff($dEnd);
 			$dDiff->format('%R'); // use for point out relation: smaller/greater
 			$dDiff->days;
-			
-			if($dDiff->days <= 0)
-			   continue;
-			
+			if($from=="cron") {
+                if ($dDiff->days <= 0)
+                    continue;
+            }
 			
 			$appointment->setLastNotified($date);
 			$appointment->save();
@@ -130,8 +132,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
 			$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
 			if($sendEmail){
-				
-				/*Email Code*/
+
+                /*Email Code*/
 				if($toSend){
 					$mailSubject="Appointment booking Reminder";
 					$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
@@ -157,7 +159,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 					$mail = Mage::getModel('core/email_template')
 					->setTemplateSubject($mailSubject)
 					->sendTransactional($templateId,$sender,$email,$name,$vars);
-				}
+                    Mage::log(" Email Send Successfully To ".$model->getEmail(),Zend_Log::DEBUG,'appointments.log',true);
+                }
 				/*End of Email Code*/
 				
 				/*Admin Email Code*/
@@ -211,12 +214,20 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		/* 		$smsText=str_replace("(book_link)",$booking_link,$smsText); */
 				
 				if($phone){//if NotificationPref set to text sms i.e. 2
-					$api = new SoapClient($url,array( 'cache_wsdl' => WSDL_CACHE_NONE,'soap_version' => SOAP_1_1));
-					$session = $api->apiValidateLogin($username,$password);
-					preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
-					$status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $smsText, 'text', '0', '0');
-					preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
-				}
+					try {
+                        $api = new SoapClient($url, array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1));
+                        $session = $api->apiValidateLogin($username, $password);
+                        preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
+                        $status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $smsText, 'text', '0', '0');
+                        preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
+
+                        Mage::log(" sent sms" . $phone, Zend_Log::DEBUG, 'appointments.log', true);
+                    }catch (Exception $e)
+                    {
+                        Mage::log("Exception=> " . $e->getMessage(), Zend_Log::DEBUG, 'appointments.log', true);
+
+                    }
+                }
 			}
 		}
 	}
