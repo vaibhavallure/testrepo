@@ -65,8 +65,9 @@ if(count($allAppointments)>0) {
         $phone = $appointment->getPhone();
         $appstatus = $appointment->getAppStatus();
 
+        $currentdate=Mage::getModel('core/date')->Date('Y-m-d H:i:s');
 
-        $appointment->setLastNotified($date);
+        $appointment->setLastNotified($currentdate);
         $appointment->save();
 
 
@@ -83,7 +84,7 @@ if(count($allAppointments)>0) {
         if ($sendEmail) {
             /*Email Code*/
             if ($toSend) {
-              
+
                 $mailSubject = "Appointment booking Reminder";
                 $apt_modify_link = Mage::getUrl('appointments/index/modify', array('id' => $model->getId(), 'email' => $model->getEmail(), '_secure' => true));
                 $email = $model->getEmail();
