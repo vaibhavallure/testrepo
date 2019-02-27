@@ -573,5 +573,37 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
 
     }
-    
+
+
+
+    public function sendReminderAction()
+    {
+        $data=$post_data = $this->getRequest()->getPost();
+
+
+        if (count($data['allure_appointments_ids']) > 0) {
+
+                foreach ($data['allure_appointments_ids'] as $id) {
+                    $appointment = Mage::getModel('appointments/appointments')->load($id);
+
+                    if($appointment->getAppStatus()!=2)
+                        continue;
+
+                    $appointments[]=$appointment;
+                }
+/*echo "<pre>";
+
+                var_dump($appointments);
+                die();*/
+
+
+            Mage::getModel('appointments/cron')->sendNotification($appointments,"manual");
+
+            Mage::getSingleton("adminhtml/session")->addSuccess(
+                Mage::helper("adminhtml")->__("Reminder sent to selected appointments"));
+        }
+
+        $this->_redirect("*/*/");
+
+    }
 }
