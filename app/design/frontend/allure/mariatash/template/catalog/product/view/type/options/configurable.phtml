@@ -37,6 +37,7 @@ if ($_product->getSizeSample() == 1) {
         </dd>
     <?php endforeach; ?>
     </dl>
+    <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
             //call priceHtml via ajax, to avoid varnish caching
@@ -61,7 +62,7 @@ if ($_product->getSizeSample() == 1) {
                     ?>
                var id = 'amconf-image-<?php echo $selectedColor; ?>';
                 if($(id)){
-                    $(id).simulate('click');
+                  //  $(id).simulate('click');
                     //document.getElementsByClassName("t_Tooltip t_Tooltip_customTiny")[0].hide();
                 }    
         });
@@ -277,4 +278,9 @@ jQuery(document).ready(function () {
         }
 
     });
+
+
+
+
+
 </script>

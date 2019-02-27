@@ -33,24 +33,14 @@ if ($_product->getSizeSample() == 1) {
                         <div class="styled attribute_select_default" id="<?php echo $_attribute->getAttributeId() ?>" style="width: 150px !important">
                             <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 170px !important">
                                 <option><?php echo $this->__('Select an Option') ?></option>
-                                    <?php
-                                    if(isset($_attribute['label'])) {
-                                        $attribute_label = $_attribute['label'];
-                                    }?>
-
-
-
                             </select>
                         </div>
                     <?php endif;?>
                 </div>
             </dd>
         <?php endforeach; ?>
-        <?php if(isset($attribute_label))
-            {?>
-        <div style="display: none" id="current_attribute_name"><?php echo $attribute_label?></div>
-        <?php }?>
     </dl>
+    <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
 
