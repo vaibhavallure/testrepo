@@ -99,6 +99,11 @@ if ($_product->getSizeSample() == 1) {
                     jQuery("#attribute<?php echo $selVal2?>").val(ele2).trigger('change');
                 }
 
+                if(<?=$selVal1?>==262){
+                    $(id).simulate('click');
+                }
+
+
                 <?php
                 if($core_ses->getData("child")):
                 $childproduct=Mage::getSingleton('catalog/product')->load($core_ses->getData("child"));
@@ -138,6 +143,7 @@ if ($_product->getSizeSample() == 1) {
             if(option_id){
                 jQuery('#'+ default_id).val(option_id);
             }else{
+
                 jQuery("#"+ default_id).val(jQuery("#"+ default_id + " option:eq(1)").val());
 
                 //Allure code for change first time attribute when page is reload
