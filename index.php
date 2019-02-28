@@ -795,88 +795,95 @@ function createCampaign(){
         $segSend = '';
         $messageIds = $data["checkbox-message"];
         foreach ($messageIds as $messageId){
-
             //get information mail
             $tmp = explode('-',$messageId, 2);
             $store = substr($tmp[1], 0 ,2 );
-            if( $store == 'Di' || $store == 'Oi' || $store == 'SA'){
-                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'d');
-            } else if( $store == 'Ei' ){
-                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'e');
-            } else if( $store == 'Pi' ){
-                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'p');
-            } else if( $store == 'Yi' ){
-                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'y');
-            } else if( $store == 'UU' || $store == 'Ui' || $store == 'Uu'){
-                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'u');
-            } else if( $store == 'Gi' || $store == 'Hi' || $store == 'SG' || $store == 'Ii'){
-                $objet = $messageClass->getTradObjetSendFromId($tmp[0],'g');
-            } else {
-                $briefId = $messageClass->getInfoById($messageId,'brief_id');
-                $briefClass = new Millesima_Brief();
-                $brief = $briefClass->getBrief($briefId);
-                $objet = $brief['objfr'];
-            }
-            $return = $messageClass->getInfoMessage($tmp[1],$objet);
 
-            $name = $return["name_camp"];
-            $fromMail = $return["mail_from"];
-            $fromName = $return["name_from"];
-            $replyMail = $return["mail_reply"];
-            $replyName = $return["name_reply"];
-            $subject = $return["subject_camp"];
+            $envoiCamp = $campaignClass->getCampaignReelByMessageId($tmp[0]);
+            if(count($envoiCamp) == 0){
 
-            $tmp = explode('-',$messageId);
-            $messageId = $tmp[0];
-            $message = $messageClass->getMessageById($messageId);
-            $brief = $briefClass->getBrief($message[0]['brief_id']);
-            foreach($segmentList as $segment){
-                if($segment['name'] == $message[0]['name']){
-                    $segSend = $segment;
-                    break;
-                }
-            }
-
-
-
-            if($type == 'reel'){
-                $startDate = $data["dateenvoi-".$messageId].' '.$data["heureenvoi-".$messageId];
-                $format = "d/m/Y H:i:s";
-                $dateObj = DateTime::createFromFormat($format, $startDate);
-                //$segSend['selligente_id'] = 7746;
-            } else{
-                $dateObj = new DateTime('NOW');
-                $segSend['selligente_id'] = 7746;
-            }
-            /*
-            //var_dump($message[0]);echo'<br />';
-            var_dump($name);echo'<br />';
-            var_dump($fromMail);echo'<br />';
-            var_dump($fromName);echo'<br />';
-            var_dump($replyMail);echo'<br />';
-            var_dump($replyName);echo'<br />';
-            var_dump($subject);echo'<br />';
-            var_dump($brief['theme']);echo'<br />';
-            var_dump($segSend['selligente_id']);echo'<br />';
-            var_dump($dateObj);echo'<br />';
-            var_dump($type);echo'<br />';
-            */
-
-            if($type == 'reel' && ($segSend == '' || $segSend['status'] == 'local') ){
-                $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a échouer car le segment n'est pas valide.</b><br/>";
-            } else {
-                $campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segSend['selligente_id'],$dateObj,$type);
-                if($campaignResponse['success']){
-                    $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a été prise en compte.</b><br/>";
-                    $html .= $campaignResponse['value']."<br/>";
+                //get information mail
+                $tmp = explode('-',$messageId, 2);
+                $store = substr($tmp[1], 0 ,2 );
+                if( $store == 'Di' || $store == 'Oi' || $store == 'SA'){
+                    $objet = $messageClass->getTradObjetSendFromId($tmp[0],'d');
+                } else if( $store == 'Ei' ){
+                    $objet = $messageClass->getTradObjetSendFromId($tmp[0],'e');
+                } else if( $store == 'Pi' ){
+                    $objet = $messageClass->getTradObjetSendFromId($tmp[0],'p');
+                } else if( $store == 'Yi' ){
+                    $objet = $messageClass->getTradObjetSendFromId($tmp[0],'y');
+                } else if( $store == 'UU' || $store == 'Ui' || $store == 'Uu'){
+                    $objet = $messageClass->getTradObjetSendFromId($tmp[0],'u');
+                } else if( $store == 'Gi' || $store == 'Hi' || $store == 'SG' || $store == 'Ii'){
+                    $objet = $messageClass->getTradObjetSendFromId($tmp[0],'g');
                 } else {
-                    $html =  " <h3>Error</h3>";
-                    $html .=  "Message : ".$campaignResponse['value'];
-                    $html .=  "<br>";
-                    $html .=  "La demande n'a pas été prise en compte :(";
+                    $briefId = $messageClass->getInfoById($messageId,'brief_id');
+                    $briefClass = new Millesima_Brief();
+                    $brief = $briefClass->getBrief($briefId);
+                    $objet = $brief['objfr'];
                 }
-          }
+                $return = $messageClass->getInfoMessage($tmp[1],$objet);
 
+                $name = $return["name_camp"];
+                $fromMail = $return["mail_from"];
+                $fromName = $return["name_from"];
+                $replyMail = $return["mail_reply"];
+                $replyName = $return["name_reply"];
+                $subject = $return["subject_camp"];
+
+                $tmp = explode('-',$messageId);
+                $messageId = $tmp[0];
+                $message = $messageClass->getMessageById($messageId);
+                $brief = $briefClass->getBrief($message[0]['brief_id']);
+                foreach($segmentList as $segment){
+                    if($segment['name'] == $message[0]['name']){
+                        $segSend = $segment;
+                        break;
+                    }
+                }
+
+                if($type == 'reel'){
+                    $startDate = $data["dateenvoi-".$messageId].' '.$data["heureenvoi-".$messageId];
+                    $format = "d/m/Y H:i:s";
+                    $dateObj = DateTime::createFromFormat($format, $startDate);
+                    //$segSend['selligente_id'] = 7746;
+                } else{
+                    $dateObj = new DateTime('NOW');
+                    $segSend['selligente_id'] = 7746;
+                }
+                /*
+                //var_dump($message[0]);echo'<br />';
+                var_dump($name);echo'<br />';
+                var_dump($fromMail);echo'<br />';
+                var_dump($fromName);echo'<br />';
+                var_dump($replyMail);echo'<br />';
+                var_dump($replyName);echo'<br />';
+                var_dump($subject);echo'<br />';
+                var_dump($brief['theme']);echo'<br />';
+                var_dump($segSend['selligente_id']);echo'<br />';
+                var_dump($dateObj);echo'<br />';
+                var_dump($type);echo'<br />';
+                */
+
+                if($type == 'reel' && ($segSend == '' || $segSend['status'] == 'local') ){
+                    $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a échouer car le segment n'est pas valide.</b><br/>";
+                } else {
+                    //$campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segSend['selligente_id'],$dateObj,$type);
+                    if($campaignResponse['success']){
+                        $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a été prise en compte.</b><br/>";
+                        $html .= $campaignResponse['value']."<br/>";
+                    } else {
+                        $html .=  " <h3>Error</h3>";
+                        $html .=  "Message : ".$campaignResponse['value'];
+                        $html .=  "<br>";
+                        $html .=  "La demande n'a pas été prise en compte :(";
+                    }
+                }
+            } else {
+                $html .=  " <h3>Error</h3>";
+                $html .=  "Message : la campagne ".$messageId.", a déja été envoyée";
+            }
         }
         //die('gfgdfsgfds');
     }
@@ -917,6 +924,8 @@ function statCampaign(){
     $content =$app->view()->fetch('campaign_stat.php');
     getView($content,$url);
 }
+
+
 
 /////////////////////  Function Action AJAX Campaign ////////////////////////////////////////
 /////////////////////  Message  ////////////////////////////////////////
