@@ -58,17 +58,18 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
     public function generateFoundationFile()
     {
         $file=$this->createFile(self::FOUNDATION_FILE);
+        $FITEM_FUDAS=$this->modelData()->getFITEM_FUDAS();
 
         /*-----------write header------------------------------*/
         $data=$this->modelData()->getFoundationHeader();
         $file->streamWrite($this->getWritableString($data));
 
         /*------------write FITEM----------------------------*/
-        $fitem=$this->modelData()->getFITEM();
+        $fitem=$FITEM_FUDAS['FITEM'];
         foreach ($fitem as $data) { $file->streamWrite($this->getWritableString($data)); }
 
         /*------------write FUDOS-----------------------------*/
-        $fudos=$this->modelData()->getFUDAS();
+        $fudos=$FITEM_FUDAS['FUDAS'];
         foreach ($fudos as $data) {$file->streamWrite($this->getWritableString($data));}
 
         return $this->file;
