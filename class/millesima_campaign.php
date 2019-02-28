@@ -76,6 +76,17 @@ class Millesima_Campaign extends Millesima_Abstract
     }
 
     /**
+     * function to get statut by message id
+     * @param $id
+     * @return mixed
+     */
+    public function getCampaignReelByMessageId($id){
+        $bddClass = new Millesima_Bdd();
+        $res= $bddClass->selectAll("select campaign_selligente.statut from campaign_selligente where statut = 'reel' and message_id = '".$id."'");
+        return $res;
+    }
+
+    /**
      * function to get stat campaign
      * @param $name
      * @return bool|mixed
@@ -188,10 +199,10 @@ class Millesima_Campaign extends Millesima_Abstract
         brief/2019/REEL ----> 5402*/
         if($type == 'reel'){
             $state = 'ACTIVE';
-            $folder = 5402;
+            $folder = 4803;
         } else {
             $state = 'TEST';
-            $folder = 5401;
+            $folder = 4803;
         }
 
         $writer->startElement('CAMPAIGN');
@@ -231,9 +242,9 @@ class Millesima_Campaign extends Millesima_Abstract
         brief/2019/BAT ----> 5401
         brief/2019/REEL ----> 5402*/
         if($type == 'reel'){
-            $folder = 5402;
+            $folder = 4803;
         } else {
-            $folder = 5401;
+            $folder = 4803;
         }
         $writer->writeAttribute('FOLDERID' , $folder);
         $writer->writeAttribute('MAILDOMAINID' , 134);
@@ -241,7 +252,7 @@ class Millesima_Campaign extends Millesima_Abstract
         $writer->writeAttribute('QUEUEID' , 2);
 
         /* Définition de la cible*/
-        $writer = $this->setTargetWriter($writer,$segment);
+        $writer = $this->setTargetWriter($writer,$segment,$type);
 
         /*definition du content*/
         $writer->startElement('CONTENT');
@@ -285,13 +296,17 @@ class Millesima_Campaign extends Millesima_Abstract
      * function to create segment
      * @param $writer
      * @param $segment
+     * @param $type
      * @return mixed
      */
-    public function setTargetWriter($writer, $segment){
+    public function setTargetWriter($writer, $segment,$type){
         $writer->startElement('TARGET');
         $writer->writeAttribute('LISTID',657);
         $writer->writeAttribute('SEGMENTID' , $segment);
         $writer->writeAttribute('SCOPES' , '');
+        if($type == 'reel'){
+            $writer->writeAttribute('CONSTRAINT' , '$SEGMENT_7634');
+        }
         $writer->endElement();
 
         return $writer;
