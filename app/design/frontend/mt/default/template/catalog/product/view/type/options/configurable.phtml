@@ -63,7 +63,7 @@ if ($_product->getSizeSample() == 1) {
                 }
 
                 $core_ses=Mage::getSingleton('core/session');
-                    
+
                 $selVal1=$core_ses->getData("selAtr1");
                 $selectValue1="";
                 if($selVal1)
@@ -99,10 +99,10 @@ if ($_product->getSizeSample() == 1) {
                     jQuery("#attribute<?php echo $selVal2?>").val(ele2).trigger('change');
                 }
 
-                if(<?=$selVal1?>==262){
-                    $(id).simulate('click');
-                }
 
+                <?php if(isset($selVal1) && $selVal1=="262"):?>
+                     $(id).simulate('click');
+                <?php endif; ?>
 
                 <?php
                 if($core_ses->getData("child")):
