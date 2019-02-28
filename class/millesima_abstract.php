@@ -739,6 +739,10 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'lkocsis@millesima.com';
             $tabRecipiant[] = 'imiossec@millesima.com';
         }
+		if($type == 'messagecreate' && in_array(array('U','u'),$pays) && !$isTest){
+            $tabRecipiant[] = 'imiossec@millesima.com';
+            $tabRecipiant[] = 'ebrancato@millesima.com';
+        }
         if($type == 'marketing' && array_intersect(array('G','g','I','i','H','h','SG','sg','D','d','O','o','SA','sa','SF','sf'),$pays) && !$isTest){
             $tabRecipiant[] = 'pastanislas@millesima.com';
         }
