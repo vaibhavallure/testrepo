@@ -626,4 +626,22 @@ class Teamwork_TransferMariatash_Model_Class_Item extends Teamwork_CEGiftcards_T
         }
         $product->setData(self::GALLERY_ATTRIBUTE_CODE, $productMediaGalleryData);
     }
+    
+    protected function _getMapAttributeValue($magentoAttrName, $mapAttrName, $objectData)
+    {
+        if($this->_attributeModel->isSpecialAttribute($mapAttrName))
+        {
+            $auxiliaryParams = array(
+                'magento_attribute_name' => $magentoAttrName,
+                'map_model'              => $this->_mapModel
+            );
+            return $this->_attributeModel->getSpecialAttributeValues($mapAttrName, $objectData, $auxiliaryParams, array('class_item_object' => $this));
+        }
+
+        $mapAttrName = $this->_mapModel->cutItemPrefixInAttributeName($mapAttrName); //cut item prefix if exists
+        
+        return (isset($objectData[$mapAttrName]) && strlen($objectData[$mapAttrName])) ?
+            array($objectData[$mapAttrName]) :
+        array();
+    }
 }
