@@ -19,7 +19,7 @@ $dir = "";
 
 const BASE_URL = "https://login.salesforce.com";
 const OAUTH_URL = "/services/oauth2/token?";
-const QUERY_URL = "/services/data/v43.0/query?q=SELECT+Increment_Id__c,Created_At__c,Grant_Total__c+FROM+Order+WHERE+";
+const QUERY_URL = "/services/data/v43.0/query?q=SELECT+Id,Title+FROM+ContentDocument+WHERE+";
 
 
 $filterIncrementIds = rtrim(buildIncrentIdForQuery($dir.$fileName), ',');
