@@ -555,6 +555,64 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                     $model = Mage::getModel('appointments/appointments')->load($id);
                     $model->setAppStatus($data['status']);
                     $model->save();
+
+                    if($data['status']=="4"):
+                    $storeId = $model->getStoreId();
+                    $configData = $this->getAppointmentStoreMapping();
+                    $storeKey = array_search ($storeId, $configData['stores']);
+
+
+
+                    $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+                    $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+                    $vars = array(
+                        'name' => $model->getFirstname() . " " .$model->getLastname(),
+                        'customer_name' => $model->getFirstname() ." " . $model->getLastname(),
+                        'customer_email' => $model->getEmail(),
+                        'customer_phone' => $model->getPhone(),
+                        'no_of_pier' => $model->getPiercingQty(),
+                        'piercing_loc' => $model->getPiercingLoc(),
+                        'special_notes' => $model->getSpecialNotes(),
+                        'apt_starttime' => $appointmentStart,
+                        'apt_endtime' => $appointmentEnd,
+                        'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+                        'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+                        'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+                        'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+                        'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+                        'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+
+                    );
+
+                    //send Customer email
+                    $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
+                    /*$sender = array(
+                        'name' => Mage::getStoreConfig("trans_email/bookings/name"),
+                        'email' => Mage::getStoreConfig("trans_email/bookings/email")
+                    );*/
+
+                    $sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",1),
+                        'email'=> $configData['store_email'][$storeKey]);
+
+                        $mailSubject="Appointment Canceled";
+
+                    try {
+
+                        if($enableCustomerEmail){
+                            $email=$model->getEmail();
+                            $name=$model->getFirstname() . " " .$model->getLastname();
+                            $templateId=$configData['email_template_appointment_cancel'][$storeKey];
+                            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+                                $mailSubject)->sendTransactional($templateId,
+                                $sender, $email, $name, $vars);
+                        }
+
+                    }catch(Exception $e){
+                        echo $e->getMessage();
+                    }
+
+                     endif;
+
                 }
                     //add logs
                     $helperLogs = $this->getLogsHelper();
@@ -563,10 +621,10 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                     Mage::getSingleton("adminhtml/session")->addSuccess(
                         Mage::helper("adminhtml")->__("Appointment Status Changed"));
 
-                $this->_redirect("*/*/");
+               // $this->_redirect("*/*/");
             } catch (Exception $e) {
-                Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
-                       $this->_redirect("*/*/");
+                //Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+                  //     $this->_redirect("*/*/");
 
             }
         }
