@@ -70,7 +70,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $to = date("Y-m-d H:i:s", strtotime($diff, strtotime($to)));
             /*-------------------------------------------*/
 
-            $whr='WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0';
+            $whr='WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL';
 
             if($this->harrodsConfig()->getContentTypePLU()=="update")
             $whr.=' AND (cpe.created_at >= "'.$from.'" AND cpe.created_at <= "'.$to.'")';
@@ -84,11 +84,17 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $harr_color = "harrods_color";
             $attributeHarrodsColor = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $harr_color);
 
+            var_dump($parentPro);
 
 
             foreach ($parentPro as $parentProductId) {
 
                     $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
+
+                    if(!is_numeric($_product->getHarrodsInventory()))
+                    {
+                       continue;
+                    }
 
                     //$this->add_log("inside simple product---------");
                     $optionId = '';
@@ -153,7 +159,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['prod_hierarchy'] = $this->charEncode('BA');
                     $data['contents'] = '';
                     $data['content_unit'] = '';
-                    $vendor_color=($optionLabel=="BLACK RHODIUM")? "BLACK GOLD" : $optionLabel;
+                    $vendor_color=(strtoupper($optionLabel)=="BLACK RHODIUM")? "BLACK GOLD" : $optionLabel;
                     $data['vendor_colour'] = $this->charEncode(strtoupper($vendor_color));  //Color ROSE GOLd
                     $data['order_units'] = '';
                     $data['single_size'] = '';
@@ -257,12 +263,24 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $attribute = $attribute_details->getData();
             $attrbute_id = $attribute['attribute_id'];
 
-            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0');
+            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL');
 
 
             foreach ($parentPro as $parentProductId) {
 
+
+
                 $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
+
+                if(!is_numeric($_product->getHarrodsInventory()))
+                {
+                    continue;
+                }
+
+                if($_product->getHarrodsInventory()<0)
+                {
+                    $_product->setHarrodsInventory(0);
+                }
 
                 $data = array();
 
@@ -349,7 +367,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
 
             if($this->harrodsConfig()->getContentTypePPC()=="full") {
-                $whr = 'WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >0';
+                $whr = 'WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL';
                 $products = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id ' . $whr);
             }else{
                 $products = $readConnection->fetchCol("SELECT `productid` FROM `allure_harrodsinventory_price` WHERE `updated_date` LIKE '".$curruntDate."%'");
@@ -361,6 +379,11 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $_product = Mage::getSingleton("catalog/product")->load($productId);
 
+                if(!is_numeric($_product->getHarrodsInventory()))
+                {
+                    continue;
+                }
+                
                 $data = array();
 
                 $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
