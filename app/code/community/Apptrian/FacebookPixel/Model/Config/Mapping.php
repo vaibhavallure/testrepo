@@ -23,7 +23,7 @@ class Apptrian_FacebookPixel_Model_Config_Mapping
     public function validate()
     {
         $errors    = array();
-        $helper    = Mage::helper('apptrian_facebookcatalog');
+        $helper    = Mage::helper('apptrian_facebookpixel');
         $value     = $this->getValue();
         $validator = Zend_Validate::is(
             $value,
