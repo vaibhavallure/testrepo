@@ -66,7 +66,7 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'index'  => 'booking_time',
 		));
         $this->addColumn('last_notified', array(
-            'header' => $helper->__('Last Notifed'),
+            'header' => $helper->__('Last Notifed (EST)'),
             'type' => 'datetime',
             'index'  => 'last_notified',
             'renderer' => 'appointments/adminhtml_render_notified'
