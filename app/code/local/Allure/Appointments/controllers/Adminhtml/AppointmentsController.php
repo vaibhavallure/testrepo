@@ -621,10 +621,10 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                     Mage::getSingleton("adminhtml/session")->addSuccess(
                         Mage::helper("adminhtml")->__("Appointment Status Changed"));
 
-               // $this->_redirect("*/*/");
+                $this->_redirect("*/*/");
             } catch (Exception $e) {
-                //Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
-                  //     $this->_redirect("*/*/");
+                Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+                       $this->_redirect("*/*/");
 
             }
         }
