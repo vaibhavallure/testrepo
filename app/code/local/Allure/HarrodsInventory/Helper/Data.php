@@ -154,7 +154,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                     $data['contents'] = '';
                     $data['content_unit'] = '';
                     $vendor_color=($optionLabel=="BLACK RHODIUM")? "BLACK GOLD" : $optionLabel;
-                    $data['vendor_colour'] = $this->charEncode(strtoupper($vendor_color);  //Color ROSE GOLd
+                    $data['vendor_colour'] = $this->charEncode(strtoupper($vendor_color));  //Color ROSE GOLd
                     $data['order_units'] = '';
                     $data['single_size'] = '';
                     $data['total_cost'] = '';
