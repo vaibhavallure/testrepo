@@ -344,7 +344,11 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                             if($enableCustomerEmail){
                                 $templateId=$configData['email_template_appointment'][$storeKey];
                                 $mail = Mage::getModel('core/email_template');
-                                $mail->addBcc(Mage::getStoreConfig('appointments/app_bcc/emails'));
+
+                               foreach (explode(",",Mage::getStoreConfig('appointments/app_bcc/emails')) as $emails) {
+                                   $mail->addBcc($emails);
+                               }
+
                                 $mail->setTemplateSubject(
                                     $mailSubject)->sendTransactional($templateId,
                                         $sender, $email, $name, $vars);
