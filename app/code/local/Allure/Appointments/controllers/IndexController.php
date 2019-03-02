@@ -380,7 +380,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     'store_phone' => $configData['store_phone'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
                     'store_hours' => $configData['store_hours_operation'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
                     'store_map' => $configData['store_map'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-                    'apt_modify_link' => $apt_modify_link
+                    'apt_modify_link' => $apt_modify_link,
+                    'booking_id'=>$model->getId()
                 );
 
 
@@ -422,7 +423,9 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                         if($enableCustomerEmail){
                             $templateId=$configData['email_template_appointment'][$storeKey];
                             $mail = Mage::getModel('core/email_template')->setTemplateSubject(
-                                $mailSubject)->sendTransactional($templateId,
+                                $mailSubject);
+                                $mail->addBcc(Mage::getStoreConfig('appointments/app_bcc/emails'));
+                                $mail->sendTransactional($templateId,
                                     $sender, $email, $name, $vars);
                         }
                         if($enableAdminEmail){
