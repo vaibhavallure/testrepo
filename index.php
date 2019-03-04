@@ -508,8 +508,9 @@ function getMessageView($html = '',$url = '../') {
 function createMessage(){
     $app = \Slim\Slim::getInstance();
     $data = $app->request->post();
-    //var_dump($data);
-
+    //var_dump($data['btnaction']);
+	//die('gfdgdfg');
+	
     $messageDataClass = new Millesima_Messagedata();
     $messageClass = new Millesima_Message_Template();
     //$file = $app->request->file();
@@ -540,7 +541,9 @@ function createMessage(){
         $mail['content'] = $content;
         $mail['id']=$data['codemessage'];
         $messageClass->sendMailMessage('messagecreate', $mail);
-    }else{
+    } elseif ($btnAction == 'sauvegarder'){
+        $html = $messageDataClass->saveMessageData($data);
+    } else {
         $html = "Erreur";
     }
 
@@ -869,7 +872,7 @@ function createCampaign(){
                 if($type == 'reel' && ($segSend == '' || $segSend['status'] == 'local') ){
                     $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a échouer car le segment n'est pas valide.</b><br/>";
                 } else {
-                    //$campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segSend['selligente_id'],$dateObj,$type);
+                    $campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segSend['selligente_id'],$dateObj,$type);
                     if($campaignResponse['success']){
                         $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a été prise en compte.</b><br/>";
                         $html .= $campaignResponse['value']."<br/>";

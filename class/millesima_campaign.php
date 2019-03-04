@@ -199,10 +199,10 @@ class Millesima_Campaign extends Millesima_Abstract
         brief/2019/REEL ----> 5402*/
         if($type == 'reel'){
             $state = 'ACTIVE';
-            $folder = 4803;
+            $folder = 5402;
         } else {
             $state = 'TEST';
-            $folder = 4803;
+            $folder = 5401;
         }
 
         $writer->startElement('CAMPAIGN');
@@ -242,9 +242,9 @@ class Millesima_Campaign extends Millesima_Abstract
         brief/2019/BAT ----> 5401
         brief/2019/REEL ----> 5402*/
         if($type == 'reel'){
-            $folder = 4803;
+            $folder = 5402;
         } else {
-            $folder = 4803;
+            $folder = 5401;
         }
         $writer->writeAttribute('FOLDERID' , $folder);
         $writer->writeAttribute('MAILDOMAINID' , 134);
