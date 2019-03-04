@@ -169,6 +169,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             "store"=>"STORE",
 //            "qty"=>"QTY",
             "sku"=>"SKU",
+            "plu"=>"PLU",
             "metal"=>"METAL",
             "product_name"=>"PRODUCT NAME",
             "price"=>"PRICE",
@@ -217,6 +218,9 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                 $orderStatus = $order['status'];
                 $customer_groupCode = $customer_group->getCode();
 
+                $product=Mage::getModel('catalog/product')->load($order->getProductId());
+
+
                 if ($order->getParentItemId()) {  //$order->getQtyBackordered() &&
                     $parentProductData = Mage::getSingleton("sales/order_item")->load($order->getParentItemId());
                     $symbol=Mage::app()->getLocale()->currency($parentProductData->getBaseCurrencyCode())->getSymbol();
@@ -263,6 +267,7 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["store"]=$store;
 //                  $row["qty"]=$qty;
                     $row["sku"]=explode("|",$sku)[0];
+                    $row["product_PLU"]=$product->getTeamworkPlu();
                     $row["metal"]=explode("|",$sku)[1];
                     $row["product_name"]=$productName;
                     $row["price"]=$price;
