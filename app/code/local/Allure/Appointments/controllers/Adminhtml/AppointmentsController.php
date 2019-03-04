@@ -279,7 +279,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     	if ($this->getRequest()->getParam("id") > 0) {
     		try {
     			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
-                if(!$this->validateSlotBeforeBookAppointment($model))
+                if($this->validateSlotBeforeBookAppointment($model))
                 {
                     Mage::getSingleton("adminhtml/session")->addError(
                         Mage::helper("adminhtml")->__("Can Not Undo ".$model->getId()." Another Appointment Present For Same Date And Time"));
@@ -559,6 +559,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     {
         $data=$post_data = $this->getRequest()->getPost();
 
+        $status_changed_flag=false;
 
         if (count($data['allure_appointments_ids']) > 0) {
             try {
@@ -568,7 +569,9 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
                     if($model->getAppStatus()=="4")
                     {
-                        if(!$this->validateSlotBeforeBookAppointment($model))
+
+
+                        if($this->validateSlotBeforeBookAppointment($model))
                         {
                             Mage::getSingleton("adminhtml/session")->addError(
                                 Mage::helper("adminhtml")->__("Can Not Undo ".$model->getId()." Another Appointment Present For Same Date And Time"));
@@ -579,6 +582,8 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                     $oldstatus=$model->getAppStatus();
                     $model->setAppStatus($data['status']);
                     $model->save();
+
+                    $status_changed_flag=true;
 
                     if($data['status']=="4") {
                         $this->notifyCancel($model);
@@ -593,9 +598,10 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                     $helperLogs = $this->getLogsHelper();
                     $helperLogs->saveLogs("admin");
 
-                    Mage::getSingleton("adminhtml/session")->addSuccess(
-                        Mage::helper("adminhtml")->__("Appointment Status Changed"));
-
+                    if($status_changed_flag) {
+                        Mage::getSingleton("adminhtml/session")->addSuccess(
+                            Mage::helper("adminhtml")->__("Appointment Status Changed"));
+                    }
                 $this->_redirect("*/*/");
             } catch (Exception $e) {
                 Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
@@ -852,6 +858,9 @@ if($sendSms)
         $collection->addFieldToFilter('id', array('neq' => $model->getId()));
         $collection->addFieldToFilter('appointment_start', array('lteq' => $model->getAppointmentStart()));
         $collection->addFieldToFilter('appointment_end', array('gteq' => $model->getAppointmentStart()));
+
+
+
 
 
         if($collection->getSize())
