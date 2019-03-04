@@ -431,8 +431,7 @@ class Millesima_Abstract{
             'X-Mailer: PHP/' . phpversion();
         if(!$testenvoi){
             $recipiants[] = 'alopes@millesima.com';
-            $recipiants[] = 'mrouquairol@millesima.com';
-            $replyto = "jcortina@millesima.com,alopes@millesima.com,mrouquairol@millesima.com;ldeker@millesima.com";
+            $replyto = "jcortina@millesima.com,alopes@millesima.com,ldeker@millesima.com";
         }else {
             $recipiants = array('dgorski@millesima.com');
         }
@@ -611,7 +610,7 @@ class Millesima_Abstract{
         } else if($type == 'batfr')	{
             if(!$testenvoi){
                 $recipiants[] = 'egarnaud@millesima.com, mdutoya@millesima.com, bgibier@millesima.com,pastanislas@millesima.com, vvecchione@millesima.com';
-			    $cc = 'jcortina@millesima.com, bdejonckheere@millesima.com, aperrin@millesima.com, smonneau@millesima.com, sbazerque@millesima.com, ecandau@millesima.com, alopes@millesima.com, mrouquairol@millesima.com,ldeker@millesima.com';
+			    $cc = 'jcortina@millesima.com, bdejonckheere@millesima.com, aperrin@millesima.com, smonneau@millesima.com, sbazerque@millesima.com, ecandau@millesima.com, alopes@millesima.com, ldeker@millesima.com';
             } else {
                 $cc = '';
             }
@@ -687,7 +686,6 @@ class Millesima_Abstract{
         $tabRecipiant = array();
         if(!$isTest){
             $tabRecipiant[] = 'alopes@millesima.com';
-            $tabRecipiant[] = 'mrouquairol@millesima.com';
             $tabRecipiant[] = 'jcortina@millesima.com';
             $tabRecipiant[] = 'ldeker@millesima.com';
             $tabRecipiant[] = 'bgibier@millesima.com';
@@ -739,7 +737,7 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'lkocsis@millesima.com';
             $tabRecipiant[] = 'imiossec@millesima.com';
         }
-		if($type == 'messagecreate' && in_array(array('U','u'),$pays) && !$isTest){
+		if($type == 'messagecreate' && array_intersect(array('U','u'),$pays) && !$isTest){
             $tabRecipiant[] = 'imiossec@millesima.com';
             $tabRecipiant[] = 'ebrancato@millesima.com';
         }
