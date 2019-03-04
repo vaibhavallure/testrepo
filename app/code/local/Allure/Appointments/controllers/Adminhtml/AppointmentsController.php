@@ -279,8 +279,11 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     	if ($this->getRequest()->getParam("id") > 0) {
     		try {
     			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
-    			$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
+                $model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     			$model->save();
+
+                $status_changed=" From Cancel To Assigned";
+                $this->notifyModify($model,$status_changed);
     			
     			//add logs
     			$helperLogs = $this->getLogsHelper();
@@ -555,12 +558,18 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
                 foreach ($data['allure_appointments_ids'] as $id) {
                     $model = Mage::getModel('appointments/appointments')->load($id);
+                    $oldstatus=$model->getAppStatus();
                     $model->setAppStatus($data['status']);
                     $model->save();
 
-                    if($data['status']=="4"):
+                    if($data['status']=="4") {
                         $this->notifyCancel($model);
-                     endif;
+                    }else
+                    {
+                       $status_changed=" From ".$this->getStatus($oldstatus)." To ".$this->getStatus($data['status']);
+                       $this->notifyModify($model,$status_changed);
+                    }
+
 
                 }
                     //add logs
@@ -598,10 +607,6 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
                     $appointments[]=$appointment;
                 }
-/*echo "<pre>";
-
-                var_dump($appointments);
-                die();*/
 
 
             Mage::getModel('appointments/cron')->sendNotification($appointments,"manual");
@@ -612,6 +617,100 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
         $this->_redirect("*/*/");
 
+    }
+
+
+    public function notifyModify($model,$status_changed){
+        $sendSms = false;
+        $sendEmail = false;
+        $notification_pref = $model->getNotificationPref();
+
+        if($notification_pref == 2){
+            $sendSms = true;
+            $sendEmail = true;
+        }else{
+            $sendEmail = true;
+        }
+
+
+        $storeId = $model->getStoreId();
+        $configData = $this->getAppointmentStoreMapping();
+        $storeKey = array_search ($storeId, $configData['stores']);
+
+        $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+
+        $email_status_changed="Your Appointment Changed ".$status_changed;
+
+        if($sendEmail) {
+            $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+            $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+            $vars = array(
+                'name' => $model->getFirstname() . " " . $model->getLastname(),
+                'customer_name' => $model->getFirstname() . " " . $model->getLastname(),
+                'customer_email' => $model->getEmail(),
+                'customer_phone' => $model->getPhone(),
+                'no_of_pier' => $model->getPiercingQty(),
+                'piercing_loc' => $model->getPiercingLoc(),
+                'special_notes' => $model->getSpecialNotes(),
+                'apt_starttime' => $appointmentStart,
+                'apt_endtime' => $appointmentEnd,
+                'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+                'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+                'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+                'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+                'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+                'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+                'booking_id'=>$model->getId(),
+                'status_changed'=>$email_status_changed
+            );
+
+            //send Customer email
+            $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
+            /*$sender = array(
+                'name' => Mage::getStoreConfig("trans_email/bookings/name"),
+                'email' => Mage::getStoreConfig("trans_email/bookings/email")
+            );*/
+
+            $sender = array('name' => Mage::getStoreConfig("trans_email/bookings/name", 1),
+                'email' => $configData['store_email'][$storeKey]);
+
+            $mailSubject = "Appointment Modified";
+
+            try {
+
+                if ($enableCustomerEmail) {
+                    $email = $model->getEmail();
+                    $name = $model->getFirstname() . " " . $model->getLastname();
+                    $templateId = $configData['email_template_appointment_modify'][$storeKey];
+
+                    $mail = Mage::getModel('core/email_template');
+                    foreach (explode(",",Mage::getStoreConfig('appointments/app_bcc/emails')) as $emails) {
+                        $mail->addBcc($emails);
+                    }
+                    $mail->setTemplateSubject(
+                        $mailSubject)->sendTransactional($templateId,
+                        $sender, $email, $name, $vars);
+
+                    $this->notify_Log("Email/Status_changed/admin", $app_string);
+
+                }
+
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+        }
+        if($sendSms)
+        {
+            $smsText="Your Maria Tash appointment status has been changed ".$status_changed;
+
+            if ($model->getPhone()) {
+                $phno_forsms = preg_replace('/\s+/', '', $model->getPhone());
+                $smsdata = Mage::helper('appointments')->sendsms($phno_forsms, $smsText, $storeId);
+                $model->setSmsStatus($smsdata);
+                $model->save();
+                $this->notify_Log("SMS/Status_changed/admin", $app_string);
+            }
+        }
     }
 
     public function notifyCancel($model)
@@ -632,6 +731,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         $configData = $this->getAppointmentStoreMapping();
         $storeKey = array_search ($storeId, $configData['stores']);
 
+        $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
 
 if($sendEmail) {
@@ -653,7 +753,7 @@ if($sendEmail) {
         'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
         'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
         'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-
+        'booking_id'=>$model->getId()
     );
 
     //send Customer email
@@ -674,9 +774,17 @@ if($sendEmail) {
             $email = $model->getEmail();
             $name = $model->getFirstname() . " " . $model->getLastname();
             $templateId = $configData['email_template_appointment_cancel'][$storeKey];
-            $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+
+            $mail = Mage::getModel('core/email_template');
+            foreach (explode(",",Mage::getStoreConfig('appointments/app_bcc/emails')) as $emails) {
+                $mail->addBcc($emails);
+            }
+            $mail->setTemplateSubject(
                 $mailSubject)->sendTransactional($templateId,
                 $sender, $email, $name, $vars);
+
+            $this->notify_Log("Email/Cancel/admin", $app_string);
+
         }
 
     } catch (Exception $e) {
@@ -701,9 +809,21 @@ if($sendSms)
         $smsdata = Mage::helper('appointments')->sendsms($phno_forsms, $smsText, $storeId);
         $model->setSmsStatus($smsdata);
         $model->save();
+        $this->notify_Log("SMS/Cancel/admin", $app_string);
     }
 }
 
 
     }
+
+
+    private function notify_Log($action,$string){
+        Mage::helper("appointments/logs")->addCustomerLog($action,$string);
+    }
+
+    public function getStatus($key)
+    {
+        return Mage::getModel('appointments/appointments')->getStatus($key);
+    }
+
 }
