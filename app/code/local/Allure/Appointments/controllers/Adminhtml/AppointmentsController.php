@@ -279,7 +279,14 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     	if ($this->getRequest()->getParam("id") > 0) {
     		try {
     			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
-                $model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
+                if(!$this->validateSlotBeforeBookAppointment($model))
+                {
+                    Mage::getSingleton("adminhtml/session")->addError(
+                        Mage::helper("adminhtml")->__("Can Not Undo ".$model->getId()." Another Appointment Present For Same Date And Time"));
+                    $this->_redirect("*/*/");
+                    return;
+                }
+    			$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     			$model->save();
 
                 $status_changed=" From Cancel To Assigned";
@@ -558,6 +565,17 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
                 foreach ($data['allure_appointments_ids'] as $id) {
                     $model = Mage::getModel('appointments/appointments')->load($id);
+
+                    if($data['status']=="4")
+                    {
+                        if(!$this->validateSlotBeforeBookAppointment($model))
+                        {
+                            Mage::getSingleton("adminhtml/session")->addError(
+                                Mage::helper("adminhtml")->__("Can Not Undo ".$model->getId()." Another Appointment Present For Same Date And Time"));
+                            continue;
+                        }
+                    }
+
                     $oldstatus=$model->getAppStatus();
                     $model->setAppStatus($data['status']);
                     $model->save();
@@ -569,7 +587,6 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                        $status_changed=" From ".$this->getStatus($oldstatus)." To ".$this->getStatus($data['status']);
                        $this->notifyModify($model,$status_changed);
                     }
-
 
                 }
                     //add logs
@@ -637,11 +654,11 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         $configData = $this->getAppointmentStoreMapping();
         $storeKey = array_search ($storeId, $configData['stores']);
 
-        $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+        $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
         $email_status_changed="Your Appointment Changed ".$status_changed;
 
-        if($sendEmail) {
+        if($sendEmail){
             $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
             $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
             $vars = array(
@@ -731,7 +748,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         $configData = $this->getAppointmentStoreMapping();
         $storeKey = array_search ($storeId, $configData['stores']);
 
-        $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+        $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
 
 if($sendEmail) {
@@ -818,12 +835,30 @@ if($sendSms)
 
 
     private function notify_Log($action,$string){
-        Mage::helper("appointments/logs")->addCustomerLog($action,$string);
+        Mage::helper("appointments/logs")->appointment_notification($action,$string);
     }
 
     public function getStatus($key)
     {
         return Mage::getModel('appointments/appointments')->getStatus($key);
+    }
+
+    public function validateSlotBeforeBookAppointment($model)
+    {
+        $collection = Mage::getModel('appointments/appointments')->getCollection();
+        $collection->addFieldToFilter('piercer_id', array('eq' => $model->getPiercerId()));
+        $collection->addFieldToFilter('store_id', array('eq' => $model->getStoreId()));
+        $collection->addFieldToFilter('app_status', array('eq' => 2));
+        $collection->addFieldToFilter('id', array('neq' => $model->getId()));
+        $collection->addFieldToFilter('appointment_start', array('lteq' => $model->getAppointmentStart()));
+        $collection->addFieldToFilter('appointment_end', array('gteq' => $model->getAppointmentStart()));
+
+
+        if($collection->getSize())
+            return true;
+        else
+            return false;
+
     }
 
 }

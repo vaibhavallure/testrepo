@@ -327,7 +327,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 ));
 
 
-                $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+                $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
 
                 if ($post_data['notification_pref'] === '2') {
@@ -642,7 +642,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 $configData = $this->getAppointmentStoreMapping();
                 $storeKey = array_search ($storeId, $configData['stores']);
 
-                $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+                $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
 
                 if ($model->getNotificationPref() === '2') {
@@ -1047,7 +1047,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     }
 
     private function notify_Log($action,$string){
-        Mage::helper("appointments/logs")->addCustomerLog($action,$string);
+        Mage::helper("appointments/logs")->appointment_notification($action,$string);
     }
 
 
