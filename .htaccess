@@ -82,7 +82,7 @@ RewriteRule ^(.git) - [R=404,L]
     # Insert filter on all content
     ###SetOutputFilter DEFLATE
     # Insert filter on selected content types only
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/octet-stream image/svg+xml application/font-woff application/font-woff2 application/vnd.ms-fontobject
 
     # Netscape 4.x has some problems...
     BrowserMatch ^Mozilla/4 gzip-only-text/html
