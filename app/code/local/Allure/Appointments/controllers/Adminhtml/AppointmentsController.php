@@ -565,7 +565,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
             try {
 
                 foreach ($data['allure_appointments_ids'] as $id) {
-                    $model = Mage::getModel('appointments/appointments')->load($id);
+                    $old_appointment=$model = Mage::getModel('appointments/appointments')->load($id);
 
                     if($model->getAppStatus()=="4")
                     {
@@ -587,10 +587,16 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
                     if($data['status']=="4") {
                         $this->notifyCancel($model);
-                    }else
+                    }
+                    else if($data['status']=="2")
                     {
-                       $status_changed=" From ".$this->getStatus($oldstatus)." To ".$this->getStatus($data['status']);
-                       $this->notifyModify($model,$status_changed);
+                        $status_changed=" From ".$this->getStatus($oldstatus)." To ".$this->getStatus($data['status']);
+                        $this->notifyModify($old_appointment,$model,$status_changed);
+                    }
+                    else
+                    {
+                       /*$status_changed=" From ".$this->getStatus($oldstatus)." To ".$this->getStatus($data['status']);
+                       $this->notifyModify($model,$status_changed);*/
                     }
 
                 }
@@ -643,7 +649,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     }
 
 
-    public function notifyModify($model,$status_changed){
+    public function notifyModify($old_appointment,$model,$status_changed){
         $sendSms = false;
         $sendEmail = false;
         $notification_pref = $model->getNotificationPref();
@@ -664,10 +670,31 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
         $email_status_changed="Your Appointment Changed ".$status_changed;
 
+        $apt_modify_link = Mage::getUrl('appointments/index/modify', array(
+            'id' => $model->getId(),
+            'email' => $model->getEmail(),
+            '_secure' => true
+        ));
+        
         if($sendEmail){
             $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
             $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+            if ($old_appointment) {
+                // If SMS is checked for notify me.
+                $oldAppointmentStart = date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
+                $oldAppointmentEnd = date("F j, Y H:i", strtotime($old_appointment->getAppointmentEnd()));
+            }
             $vars = array(
+                'pre_name' => $old_appointment ? $old_appointment->getFirstname() . " " . $old_appointment->getLastname() : '',
+                'pre_customer_name' => $old_appointment ? $old_appointment->getFirstname() . " " . $old_appointment->getLastname() : '',
+                'pre_customer_email' => $old_appointment ? $old_appointment->getEmail() : '',
+                'pre_customer_phone' => $old_appointment ? $old_appointment->getPhone() : '',
+                'pre_no_of_pier' => $old_appointment ? $old_appointment->getPiercingQty() : '',
+                'pre_piercing_loc' => $old_appointment ? $old_appointment->getPiercingLoc() : '',
+                'pre_special_notes' => $old_appointment ? $old_appointment->getSpecialNotes() : '',
+                'pre_apt_starttime' => $old_appointment ? $oldAppointmentStart : '',
+                'pre_apt_endtime' => $old_appointment ? $oldAppointmentEnd : '',
+
                 'name' => $model->getFirstname() . " " . $model->getLastname(),
                 'customer_name' => $model->getFirstname() . " " . $model->getLastname(),
                 'customer_email' => $model->getEmail(),
@@ -677,12 +704,13 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                 'special_notes' => $model->getSpecialNotes(),
                 'apt_starttime' => $appointmentStart,
                 'apt_endtime' => $appointmentEnd,
-                'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
-                'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
-                'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
-                'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
-                'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
-                'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+                'store_name' => $configData['store_name'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+                'store_address' => $configData['store_address'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+                'store_email_address' => $configData['store_email'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+                'store_phone' => $configData['store_phone'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+                'store_hours' => $configData['store_hours_operation'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+                'store_map' => $configData['store_map'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+                'apt_modify_link' => $apt_modify_link,
                 'booking_id'=>$model->getId(),
                 'status_changed'=>$email_status_changed
             );
