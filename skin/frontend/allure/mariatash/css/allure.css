@@ -2839,6 +2839,13 @@ width: 100%;
   text-decoration: none;
 }
 
+#amazon-buttons-wrapper .col-1
+{
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+
 
 
 
