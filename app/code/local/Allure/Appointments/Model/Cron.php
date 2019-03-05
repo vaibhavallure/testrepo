@@ -131,6 +131,9 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			$model = $appointment;
 			$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
 			$appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+
+            $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+
 			if($sendEmail){
 
                 /*Email Code*/
@@ -155,10 +158,21 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 					        'store_phone'	=> $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
 					        'store_hours'	=> $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
 					        'store_map'	=> $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-							'apt_modify_link'=> $apt_modify_link);
-					$mail = Mage::getModel('core/email_template')
-					->setTemplateSubject($mailSubject)
-					->sendTransactional($templateId,$sender,$email,$name,$vars);
+							'apt_modify_link'=> $apt_modify_link,
+                             'booking_id'=>$model->getId()
+                    );
+
+                    $mail = Mage::getModel('core/email_template');
+                    foreach (explode(",",Mage::getStoreConfig('appointments/app_bcc/emails')) as $emails) {
+                        $mail->addBcc($emails);
+                    }
+                    $mail->setTemplateSubject(
+                        $mailSubject)->sendTransactional($templateId,
+                        $sender, $email, $name, $vars);
+
+
+                    $this->notify_Log("Email/Reminder Sent/".$from, $app_string);
+
                     Mage::log(" Email Send Successfully To ".$model->getEmail(),Zend_Log::DEBUG,'appointments.log',true);
                 }
 				/*End of Email Code*/
@@ -220,6 +234,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
                         preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
                         $status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $smsText, 'text', '0', '0');
                         preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
+                        $this->notify_Log("SMS/Reminder Sent/".$from, $app_string);
 
                         Mage::log(" sent sms" . $phone, Zend_Log::DEBUG, 'appointments.log', true);
                     }catch (Exception $e)
@@ -229,7 +244,16 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
                     }
                 }
 			}
+
+
 		}
+
+
 	}
+
+
+    private function notify_Log($action,$string){
+        Mage::helper("appointments/logs")->addCustomerLog($action,$string);
+    }
 	
 }
