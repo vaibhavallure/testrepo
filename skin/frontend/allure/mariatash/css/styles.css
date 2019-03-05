@@ -20517,3 +20517,10 @@ input.giftcard-radio1 {
     background-color: #dedede !important;
 
 }
+
+@media only screen and (max-width:768px) {
+    .customer-account-index .main .col-main .messages {
+        position: relative;
+        top: -13px;
+    }
+}
