@@ -74,7 +74,7 @@ class Allure_Appointments_Helper_Logs extends Mage_Core_Helper_Abstract
     {
         if(Mage::getStoreConfig('appointments/debug/debug_enabled')):
 
-                Mage::log($action."=>",$string,Zend_Log::DEBUG,'appointment_notification.log',true);
+                Mage::log($action."=>".$string,Zend_Log::DEBUG,'appointment_notification.log',true);
             endif;
     }
 	
