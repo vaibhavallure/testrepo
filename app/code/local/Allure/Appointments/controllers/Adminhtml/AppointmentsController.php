@@ -566,7 +566,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                 foreach ($data['allure_appointments_ids'] as $id) {
                     $model = Mage::getModel('appointments/appointments')->load($id);
 
-                    if($data['status']=="4")
+                    if($model->getAppStatus()=="4")
                     {
                         if(!$this->validateSlotBeforeBookAppointment($model))
                         {
