@@ -69,8 +69,9 @@ $metal=explode('|', $_item->getSku());
      $reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
                         
      $storeColor = '';
-     $storeName = $storeList[$_item->getOldStoreId()];
-     if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
+    $_order = Mage::getModel('sales/order')->load($_item->getOrderId());
+    $storeName = $storeList[$_order->getOldStoreId()];
+     /*if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
          $storeColor .= 'style="';
          $frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
          if(!empty($frontColor))
@@ -80,7 +81,7 @@ $metal=explode('|', $_item->getSku());
              $storeColor .= 'background:'.$backColor.';';
          $storeColor .= '"';
          $storeName = $storeColorConfig[$_item->getStoreId()]['store_label'];
-      }
+      }*/
       
       $_order = Mage::getModel('sales/order')->load($_item->getOrderId());
 ?>
@@ -117,7 +118,7 @@ $metal=explode('|', $_item->getSku());
     	<?php if($_item->getPurchasedFrom()):?>
 		<span style="display: block;float:left" class="mt-purchase-added-at">Purchased From: <?php echo $_item->getPurchasedFrom();?></span>
 		<?php endif;?>
-    	<span style="display: block;float:left" class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime($_item->getCreatedAt()))?></span>
+    	<span style="display: block;float:left" class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime($_order->getCreatedAt()))?></span>
     </td>
 					    
 	<td class="table-remove a-center last">
