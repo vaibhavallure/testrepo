@@ -254,12 +254,17 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         'email' => $model->getEmail(),
                         '_secure' => true
                     ));
-                    
+
+                    $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+
+
                     if ($post_data['notification_pref'] === '2') {
                         if ($old_appointment) {
                             $smsText = $configData['modified_sms_message'][$storeKey];
+                            $noti_action="SMS/Modify";
                         }else {
                             $smsText = $configData['book_sms_message'][$storeKey];
+                            $noti_action="SMS/Create";
                         }
                         $url=Mage::helper('appointments')->getShortUrl($apt_modify_link);
                         $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
@@ -272,6 +277,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                             $smsdata = Mage::helper('appointments')->sendsms($post_data['phone'], $smsText, $storeId);
                             $model->setSmsStatus($smsdata);
                             $model->save();
+                            $this->notify_Log($noti_action, $app_string);
                         }
                     }
                     
@@ -304,7 +310,9 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         'apt_modify_link' => $apt_modify_link,
                         'booking_id'=>$model->getId()
                     );
-                    
+
+
+
                     //send Customer email
                     $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
                     $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
@@ -321,9 +329,18 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         if ($old_appointment) {
                             if($enableCustomerEmail){
                                 $templateId=$configData['email_template_appointment_modify'][$storeKey];
-                                $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+                                $mail = Mage::getModel('core/email_template');
+
+                                foreach (explode(",",Mage::getStoreConfig('appointments/app_bcc/emails')) as $emails) {
+                                    $mail->addBcc($emails);
+                                }
+
+                                $mail->setTemplateSubject(
                                     $mailSubject)->sendTransactional($templateId,
-                                        $sender, $email, $name, $vars);
+                                    $sender, $email, $name, $vars);
+
+                                $this->notify_Log("Email/Modify", $app_string);
+
                             }
                             if($enableAdminEmail){
                                 $adminEmail=$configData['admin_email_id'][$storeKey];
@@ -352,6 +369,9 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                                 $mail->setTemplateSubject(
                                     $mailSubject)->sendTransactional($templateId,
                                         $sender, $email, $name, $vars);
+
+                                $this->notify_Log("Email/create", $app_string);
+
                             }
                             if($enableAdminEmail){
                                 $adminEmail=$configData['admin_email_id'][$storeKey];
@@ -476,7 +496,6 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         //$apt_id = Mage::helper('core')->decrypt($encryptedId);
         //$apt_email = Mage::helper('core')->decrypt($encryptedEmail);
         
-        
         if( $apt_id && $apt_email )
         {
             //$append_url = "?apt_id=".$apt_id."&email=".$apt_email;
@@ -524,7 +543,9 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 echo "Your scheduled Appointment is Cancelled successfully.";
                 $configData = $this->getAppointmentStoreMapping();
                 $storeKey = array_search ($storeId, $configData['stores']);
-                
+
+                $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+
                 if ($model->getNotificationPref() === '2') {
                     $smsText = $configData['cancel_sms_message'][$storeKey];
                     $appointmentStart = date("F j, Y H:i",strtotime($model->getAppointmentStart()));
@@ -542,6 +563,8 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         $smsdata = Mage::helper('appointments')->sendsms($phno_forsms, $smsText, $storeId);
                         $model->setSmsStatus($smsdata);
                         $model->save();
+                        $this->notify_Log("SMS/Cancel", $app_string);
+
                     }
                 }
 
@@ -566,7 +589,8 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
                     'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
                     'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-                    'apt_modify_link' => $apt_modify_link
+                    'apt_modify_link' => $apt_modify_link,
+                    'booking_id'=>$model->getId()
                 );
                 
                 //send Customer email
@@ -587,9 +611,16 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         $email=$model->getEmail();
                         $name=$model->getFirstname() . " " .$model->getLastname();
                         $templateId=$configData['email_template_appointment_cancel'][$storeKey];
-                        $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+                        $mail = Mage::getModel('core/email_template');
+                            foreach (explode(",",Mage::getStoreConfig('appointments/app_bcc/emails')) as $emails) {
+                                $mail->addBcc($emails);
+                            }
+                            $mail->setTemplateSubject(
                             $mailSubject)->sendTransactional($templateId,
                                 $sender, $email, $name, $vars);
+
+                        $this->notify_Log("Email/Cancel", $app_string);
+
                     }
                     if($enableAdminEmail){
                         $adminEmail=$configData['admin_email_id'][$storeKey];
@@ -756,6 +787,10 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 
                 $appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
                 $appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+
+
+                $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+
                 if($model->getNotificationPref() === '2')
                 {
                     Mage::log("New appointment Bookig",Zend_Log::DEBUG,'appointments',true);
@@ -773,6 +808,8 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         $smsdata = Mage::helper('appointments')->sendsms($model->getPhone(),$smsText,$storeId);
                         $model->setSmsStatus($smsdata);
                         $model->save();
+                        $this->notify_Log("SMS/SendConfirmation", $app_string);
+
                         Mage::log("New appointment Message Sent",Zend_Log::DEBUG,'appointments',true);
                     }
                 }
@@ -812,8 +849,20 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         'store_phone'	=> $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
                         'store_hours'	=> $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
                         'store_map'	=> $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
-                        'apt_modify_link'=> $apt_modify_link);
-                    $mail = Mage::getModel('core/email_template')->setTemplateSubject($mailSubject)->sendTransactional($templateId,$sender,$email,$name,$vars);
+                        'apt_modify_link'=> $apt_modify_link,
+                        'booking_id'=>$model->getId()
+                        );
+
+                    $mail = Mage::getModel('core/email_template');
+                    foreach (explode(",",Mage::getStoreConfig('appointments/app_bcc/emails')) as $emails) {
+                        $mail->addBcc($emails);
+                    }
+                    $mail->setTemplateSubject(
+                        $mailSubject)->sendTransactional($templateId,
+                        $sender, $email, $name, $vars);
+
+                    $this->notify_Log("Email/SendConfirmation", $app_string);
+
                 }
                 Mage::getSingleton("adminhtml/session")->addSuccess(Mage::helper("appointments")->__("Confirmation send successfully "));
                 $this->_redirect("admin_appointments/adminhtml_appointments/");
@@ -944,10 +993,13 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
     }
 
     /**
-     * add customer log
+     * add custom log
      */
     private function addLog($data,$action){
         Mage::helper("appointments/logs")->addCustomerLog($data,$action);
+    }
+    private function notify_Log($action,$string){
+        Mage::helper("appointments/logs")->addCustomerLog($action,$string);
     }
 
 
