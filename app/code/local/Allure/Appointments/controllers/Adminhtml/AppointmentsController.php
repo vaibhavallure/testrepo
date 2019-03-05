@@ -278,7 +278,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     {
     	if ($this->getRequest()->getParam("id") > 0) {
     		try {
-    			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
+                $old_appointment=$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
                 if($this->validateSlotBeforeBookAppointment($model))
                 {
                     Mage::getSingleton("adminhtml/session")->addError(
@@ -290,7 +290,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model->save();
 
                 $status_changed=" From Cancel To Assigned";
-                $this->notifyModify($model,$status_changed);
+                $this->notifyModify($old_appointment,$model,$status_changed);
     			
     			//add logs
     			$helperLogs = $this->getLogsHelper();
@@ -675,7 +675,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
             'email' => $model->getEmail(),
             '_secure' => true
         ));
-        
+
         if($sendEmail){
             $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
             $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
