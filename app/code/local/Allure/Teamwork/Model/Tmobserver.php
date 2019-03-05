@@ -1281,8 +1281,7 @@ class Allure_Teamwork_Model_Tmobserver{
                     $this->addLog("05 - Exc - ".$e->getMessage());
                 }
             }
-
-            $tmOrderObj->queueNewOrderEmail();
+            
         }catch (Exception $e){
             $this->addLog("06 - Exc - ".$e->getMessage());
         }
