@@ -1,18 +1,18 @@
 
-                <?php 
+                <?php
                 $storeList = array();
                 $stores = Mage::app()->getStores();
-                
+
                 $storeColorConfig = Mage::helper('myaccount')->getStoreColorConfig();
                 $vstores=Mage::getModel('allure_virtualstore/store')->getCollection();
                 foreach ($vstores as $store) {
                 	$storeList[$store->getId()] = $store->getName();
                 }
-                
+
                 ?>
                     <?php $i = 0; $prices = array(); $skus = array(); ?>
                     <?php foreach ($this->getPurchaseOrderCollection() as $_item): ?>
-                        <?php 
+                        <?php
 
 
                         $metal=explode('|', $_item->getSku());
@@ -26,26 +26,26 @@
 
                         $productId = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
                         $product = Mage::getModel('catalog/product')->load($productId);
-                        
+
                         $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($_item->getProduct()->getId());
                         $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-                        
+
                         $configSku=explode('|', $product->getSku());
                         $configSku=$configSku[0];
                         $configId = Mage::getModel('catalog/product')->getIdBySku($configSku);
                         $config = Mage::getModel('catalog/product')->load($configId);
                         $url = $config->getProductUrl();
-                        
-                        
+
+
                         //$productDescr = $product->getDescription();
-                       
+
                         if(!is_null($parentId)){
                         	$parentProduct = Mage::getModel("catalog/product")->load($parentId);
                         	Mage::log("SKU::".$product->getSku()." Parent::".$parentId,Zend_log::DEBUG,'ajay.log',true);
                         	$url = $parentProduct->getProductUrl();
                         	//$productDescr = $parentProduct->getDescription();
                         }
-                        
+
                         $firstLetter = substr($product->getSku(),0,1);
                         if($firstLetter=='C' ||$firstLetter=='c'){
                             $sku=explode('|', $product->getSku());
@@ -53,41 +53,41 @@
                             $NEW_START_CHAR = "X";
                             $newSku = $NEW_START_CHAR . substr($sku, 1);
                             $productParentId = Mage::getModel('catalog/product')->getIdBySku($newSku);
-                            
+
                             if ($productParentId){
                                 $productParent = Mage::getModel('catalog/product')->load($productParentId);
                             }
                             else {
                                 $productParentId = Mage::getModel('catalog/product')->getIdBySku($product->getParentItemNumber());
                                 $productParent = Mage::getModel('catalog/product')->load($productParentId);
-                                
+
                             }
                             if(!empty($productParent))
                                 $url = $productParent->getProductUrl();
-                           
+
                         }
                         $productName = $product->getName();
                         $typeId = $product->getTypeId();
                         $productNotAvailableClass = "";
-                        
+
                         if(!$product->getId()){
                         	$productName = $_item->getName();
                         	$productNotAvailableClass = "current-item-not-available";
                         	$productDescr = $_item->getDescription();
                         }
-                        
+
                         /* if(!empty($productDescr)){
                         	if(strlen($productDescr)>=70)
                         		$productDescr = substr($productDescr,1,70)."...";
                         } */
-                        
+
                        if(!empty($url) && !empty($metal)){
                            $url=$url.$metal;
                        }
-                        
+
                         $receiptUrl = Mage::getUrl("sales/order/view")."order_id/".$_item->getOrderId()."/";
                         $reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
-                        
+
                         $storeColor = '';
 
 
@@ -99,7 +99,7 @@
                         	$storeColor .= 'style="';
                         	$frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
                         	if(!empty($frontColor))
-                        		$storeColor .= 'color:'.$frontColor.';'; 
+                        		$storeColor .= 'color:'.$frontColor.';';
                         	$backColor = $storeColorConfig[$_item->getStoreId()]['back_color'];
                         	if(!empty($backColor))
                         		$storeColor .= 'background:'.$backColor.';';
@@ -109,23 +109,23 @@
 
 
                         ?>
-                        
+
                       <tr data-id="<?php echo $_item->getId()?>" class="<?php echo $productNotAvailableClass?>">
 							<td class="cart_col1">
-								<a <?php echo ($product->getId())? "href='".$url."'":""?> title="<?php echo $productName?>" 
+								<a <?php echo ($product->getId())? "href='".$url."'":""?> title="<?php echo $productName?>"
 										class="product-image">
 									<img src="<?php echo Mage::helper('catalog/image')
-										->init($product, 'thumbnail')->resize(74,96)?>" 
+										->init($product, 'thumbnail')->resize(74,96)?>"
 											width="74" height="96" alt="<?php echo $productName?>">
 								</a>
 								<?php if(0):?>
 								<a data-img="<?php echo Mage::helper('catalog/image')
-									->init($product, 'thumbnail')->resize(350,350)?>" class="mt-piercing-photo" 
+									->init($product, 'thumbnail')->resize(350,350)?>" class="mt-piercing-photo"
 									href="javascript:void(0);">View Piercing Photo
 								</a>
 								<?php endif;?>
 							</td>
-			
+
 							<td class="cart_col2">
 								<h2 class="product-name <?php echo $typeId?>">
 									<a <?php echo ($product->getId())? "href='".$url."'":""?> ><?php echo ucwords(strtolower($productName))?></a>
@@ -141,33 +141,33 @@
 
                                 $diffZone=Mage::getModel('backorderrecord/cron')->getDiffTimezone();
                                 ?>
-								<span class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime("-".$diffZone,strtotime($_order->getCreatedAt())))?></span>
-								
+								<span class="mt-purchase-added-at">Purchased: <?php echo Mage::getModel('core/date')->date('M d, Y h:i a',strtotime($_order->getCreatedAt()));?></span>
+
 								<label <?php echo $storeColor?>  class="purchase-store-name"><?php echo "Purchase Location:  ".$storeName?></label>
 							</td>
-			
+
 							<td class="cart_col4">
 								<div class="qty-wrap">
 									<span><?php echo number_format($_item->getQtyOrdered())?></span>
 								</div>
 							</td>
-		
+
 							<td class="cart_col3">
 								<span class="price_multi"></span>
 								<span class="price">
 									<?php echo Mage::helper('core')->currency($_item->getPrice())?>
 								</span>
 							</td>
-							
+
 							<td class="cart_col6">
-							
+
 								<?php  if ($_order->getTracksCollection()->count()) : ?>
                 					<div class="mt-purchase-btn">
                 						<button class="button" onclick="openTrackOrder('<?php echo Mage::helper('myaccount')->getTrackingPopupUrlBySalesModel($_order) ?>')" title="<?php echo $this->__('Track') ?>">
                 					<?php echo $this->__('Track') ?></button>
                 					</div>
                 				<?php endif; ?>
-							
+
 								<div class="mt-purchase-btn">
 									<button data-url="<?php echo $receiptUrl?>" class="button" onclick="openPurchaseWindow(this)">See Receipts</button>
 								</div>
@@ -178,6 +178,6 @@
 								<?php endif;?>
 								</td>
 							</tr>
-                        
-                        
+
+
                     <?php endforeach ?>
