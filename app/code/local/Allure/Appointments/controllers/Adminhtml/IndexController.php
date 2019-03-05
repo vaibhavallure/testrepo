@@ -255,7 +255,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         '_secure' => true
                     ));
 
-                    $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+                    $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
 
                     if ($post_data['notification_pref'] === '2') {
@@ -544,7 +544,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 $configData = $this->getAppointmentStoreMapping();
                 $storeKey = array_search ($storeId, $configData['stores']);
 
-                $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+                $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
                 if ($model->getNotificationPref() === '2') {
                     $smsText = $configData['cancel_sms_message'][$storeKey];
@@ -789,7 +789,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 $appointmentEnd=date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
 
 
-                $app_string="id->".$model->getId()." email->".$model->getEmail() ."mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+                $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
                 if($model->getNotificationPref() === '2')
                 {
@@ -999,7 +999,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         Mage::helper("appointments/logs")->addCustomerLog($data,$action);
     }
     private function notify_Log($action,$string){
-        Mage::helper("appointments/logs")->addCustomerLog($action,$string);
+        Mage::helper("appointments/logs")->appointment_notification($action,$string);
     }
 
 
