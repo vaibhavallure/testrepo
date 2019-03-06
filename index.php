@@ -292,6 +292,26 @@ function actionBrief(){
                 $html .= $briefClass->delete($id);
             } else if($btnaction == 'copier'){
                 $data["dateenvoi"] = date("d/m/Y");
+
+                if($data['typebrief'] == 'livrable_eu'){
+                    $typebrief = 'iosliv';
+                }else if($data['typebrief'] == 'primeur_eu'){
+                    $typebrief = 'iosprim';
+                }else if($data['typebrief'] == 'livrable_us'){
+                    $typebrief = 'uiosliv';
+                }else if($data['typebrief'] == 'primeur_us'){
+                    $typebrief = 'uiosprim';
+                }else if($data['typebrief'] == 'edv'){
+                    $typebrief = 'edv';
+                }else if($data['typebrief'] == 'staff_pick'){
+                    $typebrief = 'uiospick';
+                }else if($data['typebrief'] == 'partenaire'){
+                    $typebrief = 'iospart';
+                }
+                $codeBrief= $bddClass->selectone("SELECT * FROM config Where name = ?", array($typebrief),'value');
+                $codeBrief = date('y').'-'.$codeBrief;
+                $data['code'] = $codeBrief;
+
                 $return = $briefClass->create($data, true);
                 $html .= $return['html'];
                 if($return['id'] != '0'){
@@ -521,7 +541,7 @@ function createMessage(){
         $html = $messageClass->createMessage($data);
         $content=$html;
     }elseif ($btnAction == 'master'){
-        $data["pays"] = array($data['pays'][0]);
+        $data["pays"] = array("F");
         $messageDataClass->saveMessageData($data);
         $html = $messageClass->createMessage($data);
         $mail['pays'] = $data['pays'];

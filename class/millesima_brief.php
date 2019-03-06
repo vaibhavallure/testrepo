@@ -394,26 +394,6 @@ class Millesima_Brief extends Millesima_Abstract
                 } else {
                     $pointInterogation .= ',?';
                 }
-                if($key == 'code' && $briefcopie == true){
-                    if($data['typebrief'] == 'livrable_eu'){
-                        $typebrief = 'iosliv';
-                    }else if($data['typebrief'] == 'primeur_eu'){
-                        $typebrief = 'iosprim';
-                    }else if($data['typebrief'] == 'livrable_us'){
-                        $typebrief = 'uiosliv';
-                    }else if($data['typebrief'] == 'primeur_us'){
-                        $typebrief = 'uiosprim';
-                    }else if($data['typebrief'] == 'edv'){
-                        $typebrief = 'edv';
-                    }else if($data['typebrief'] == 'staff_pick'){
-                        $typebrief = 'uiospick';
-                    }else if($data['typebrief'] == 'partenaire'){
-                        $typebrief = 'iospart';
-                    }
-                    $codeBrief= $bddClass->selectone("SELECT * FROM config Where name = ?", array($typebrief),'value');
-                    $codeBrief = date('y').'-'.$codeBrief;
-                    $value = $codeBrief;
-                }
                 if($key == 'dateenvoi'){
                     $value = str_replace('/', '-', $value);
                     $value = date('Y-m-d 00:00:00', strtotime($value));
