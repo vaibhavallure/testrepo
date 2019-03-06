@@ -655,7 +655,7 @@ class Millesima_Abstract{
         $headers = 'From: lbassagaits@millesima.com' . "\r\n" .
             'Reply-To: lbassagaits@millesima.com;bgibier@millesima.com' . "\r\n" .
             'Content-Type: text/html; charset="utf-8' . "\r\n" .
-            'Content-Transfer-Encoding: 8bit' . "\r\n" .
+            'Content-Transfer-Encoding: base64' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
 
         $message .= $this->getMessageMail($type,$data);
@@ -672,6 +672,7 @@ class Millesima_Abstract{
             $to.=$recipiant.',';
             //$replyto.=$recipiant.';';
         }
+        $message = chunk_split(base64_encode($message));
         mail($to, $objet, $message,$headers);
     }
 
