@@ -917,7 +917,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
 
 
         if($collection->getSize())
-            return false;
+            return true;
         else
             return false;
 
