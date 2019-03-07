@@ -167,7 +167,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         $appendUrl .= "store=" . $storep;
             }
 
-        if(!$this->helper()->validatePostData($post_data))
+        if(!$this->helper()->validatePostData($post_data,"admin"))
         {
             Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
             $this->_redirect("admin_appointments/adminhtml_appointments/new");

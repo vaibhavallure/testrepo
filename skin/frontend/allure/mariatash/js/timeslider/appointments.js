@@ -18,6 +18,18 @@ var count = 0;
 	}
 	if(document.getElementById("count")!= null ){
 		var qty = document.getElementById("count").value;
+
+        /*--------------no of people limitation---------------start--------*/
+        var qty_limit = document.getElementById("no_of_people_limit").value;
+        if(qty_limit!="" && qty>qty_limit)
+        {
+            alert("You can book appointment for "+qty_limit+" people at once");
+            document.getElementById("count").value=qty_limit;
+            qty=qty_limit;
+        }
+
+        /*--------------no of people limitation---------------end--------*/
+
 	}
 	if(document.getElementById("store-id")!= null){
 		var storeid = document.getElementById("store-id").value;
