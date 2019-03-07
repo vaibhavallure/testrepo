@@ -311,8 +311,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 // IF appointment is modified then send updates to ADMIN &
                   // PIERCER & CUSTOMER
 
-                $appointmentStart = date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
-                $appointmentEnd = date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
+                $appointmentStart = date("F j, Y \a\t H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd = date("F j, Y \a\t H:i", strtotime($model->getAppointmentEnd()));
                 if ($old_appointment) {
                     // If SMS is checked for notify me.
                     $oldAppointmentStart = date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
@@ -674,8 +674,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     }
                 }
                 // SMS CODE TO CANCEL Appointment end
-                $appointmentStart = date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
-                $appointmentEnd = date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
+                $appointmentStart = date("F j, Y \a\t H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd = date("F j, Y \a\t H:i", strtotime($model->getAppointmentEnd()));
                 $vars = array(
                     'name' => $model->getFirstname() . " " .$model->getLastname(),
                     'customer_name' => $model->getFirstname() ." " . $model->getLastname(),
