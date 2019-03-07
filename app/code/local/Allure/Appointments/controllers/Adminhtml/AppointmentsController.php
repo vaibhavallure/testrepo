@@ -677,12 +677,12 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         ));
 
         if($sendEmail){
-            $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-            $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+            $appointmentStart = date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
+            $appointmentEnd = date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
             if ($old_appointment) {
                 // If SMS is checked for notify me.
-                $oldAppointmentStart = date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
-                $oldAppointmentEnd = date("F j, Y H:i", strtotime($old_appointment->getAppointmentEnd()));
+                $oldAppointmentStart = date("F j, Y at H:i", strtotime($old_appointment->getAppointmentStart()));
+                $oldAppointmentEnd = date("F j, Y at H:i", strtotime($old_appointment->getAppointmentEnd()));
             }
             $vars = array(
                 'pre_name' => $old_appointment ? $old_appointment->getFirstname() . " " . $old_appointment->getLastname() : '',
@@ -786,8 +786,8 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
 
 if($sendEmail) {
-    $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-    $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+    $appointmentStart = date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
+    $appointmentEnd = date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
     $vars = array(
         'name' => $model->getFirstname() . " " . $model->getLastname(),
         'customer_name' => $model->getFirstname() . " " . $model->getLastname(),
