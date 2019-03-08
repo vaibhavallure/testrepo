@@ -670,8 +670,8 @@ class Millesima_Message_Template extends Millesima_Abstract
         if($article->pays == 'P'){
             $article->boiscarton = str_replace('cartao', 'cart&atilde;o', $article->boiscarton);
         }
-        $article->conditionnement=$data["Libelle_Cond_pluriel"];
-        $article->conditionnementsingulier=$data["Libelle_Cond_singulier"];
+        $article->conditionnement=utf8_encode($data["Libelle_Cond_pluriel"]);
+        $article->conditionnementsingulier=utf8_encode($data["Libelle_Cond_singulier"]);
         $article->Packaging=$data["Packaging"];
         $article->refcond=substr($data["Code_article"],10,2);
 
@@ -761,8 +761,13 @@ class Millesima_Message_Template extends Millesima_Abstract
                 case "702" /* Prix légers */:
                 case "703" /* Champagnes à prix légers */:
                 case "704" /* Rosés à prix légers */:
+                case "709" /* Instant Millésima */:
                     $article->prix_promo = $article->prix_remise;
                     break;
+                default:
+                    $article->prix_promo = $article->prix_remise;
+                    break;
+
             }
 
             if(isset($article->prix_promo)){
