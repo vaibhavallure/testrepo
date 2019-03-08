@@ -563,8 +563,10 @@ function createMessage(){
         $messageClass->sendMailMessage('messagecreate', $mail);
     } elseif ($btnAction == 'sauvegarder'){
         $html = $messageDataClass->saveMessageData($data);
+		$content = $html;
     } else {
         $html = "Erreur";
+		$content = $html;
     }
 
     getMessageView($content,'../../');
