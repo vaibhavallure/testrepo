@@ -2854,3 +2854,8 @@ width: 100%;
 .checkout-onepage-index ul#payment_form_authnetcim {
   display: block !important;
 }
+
+.my-account .box-address-edit input#phone {
+  width: 100% !important;
+  height : 32px !important;
+}
