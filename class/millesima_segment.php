@@ -229,10 +229,16 @@ class Millesima_Segment extends Millesima_Abstract
 
         if (ssh2_auth_password($connect, $login, $password)) {
             $myFile = self::REPOSITORY_SEGMENT."/".$nameSegment.'/'.$nomFile.'.csv';
-            $retour_ftp = ssh2_scp_send($connect, $myFile, $dossier_destination.$nomFile.'.csv', 0777);
+            //$retour_ftp = ssh2_scp_send($connect, $myFile, $dossier_destination.$nomFile.'.csv', 0777);
             $sftp = ssh2_sftp($connect);
-            $stat_ftp = ssh2_sftp_stat($sftp, $dossier_destination.$nomFile.'.csv');
-            if($retour_ftp && $stat_ftp['size'] > 0 ){
+            
+			$stream = fopen("ssh2.sftp://".$sftp.$dossier_destination.$nomFile.".csv", 'w');
+            $data_to_send = file_get_contents($myFile);
+            $send = fwrite($stream, $data_to_send);
+            fclose($stream);
+			
+			$stat_ftp = ssh2_sftp_stat($sftp, $dossier_destination.$nomFile.'.csv');
+            if($stat_ftp['size'] > 0 ){
                $return = true;
             }
         } else {
