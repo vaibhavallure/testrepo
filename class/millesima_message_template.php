@@ -442,6 +442,12 @@ class Millesima_Message_Template extends Millesima_Abstract
                 require($filename);
             }
 
+            /* Wallet Widget */
+            $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/wallet/ressources_wallet_selligent.php";
+            if (file_exists($filename)){
+                require($filename);
+            }
+
 
             /* Gestion CGV */
 			if(isset($cgv2) && $cgv2 && in_array($country, $cgvexceptions)){

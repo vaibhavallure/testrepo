@@ -56,6 +56,9 @@ td[class="button"] {max-width: 144px !important;width: 100% !important;margin: 0
 td[class="bg2"] {height: 240px !important;}
 td[class="box4"] {min-height: 70px;}
 }
+.sourcesanspro{font-family:'Source Sans Pro',Arial,Helvetica,sans-serif!important}
+@media screen and (min-width:451px) and (max-width:640px),screen and (min-device-width:451px) and (max-device-width:640px){.t_w100p{width:100%!important}.t_w28p{width:28%!important}.t_w55px{width:55px!important}.t_w72p{width:72%!important}}
+@media screen and (max-width:450px),screen and (max-device-width:450px){.m_w100p{width:100%!important}.m_w28p{width:28%!important}.m_w55px{width:55px!important}.m_w72p{width:72%!important}.m_fz16px{font-size:16px!important}.m_lh20px{line-height:20px!important}}
 /*-----Responsive code fin------*/
 </style>{/literal}
 </head>
@@ -173,6 +176,15 @@ td[class="box4"] {min-height: 70px;}
 							<tr>
 							  <td valign="top">{include file="$tpl/informations_importantes/structure_fdpo.tpl"}</td>
 							</tr><!-- fin date fdpo -->{/if}
+<!--==============Wallet debut ===============-->
+                            <tr>
+                              <td height="25"></td>
+                            </tr>
+                            <tr>
+                              <td bgcolor="#eeeeee" valign="top">
+                                {include file="$tpl/wallet/structure_widget.tpl"}
+                              </td>
+                            </tr>
 <!--==============Bloc push debut===============-->   
                             <tr>
                               <td height="25"></td>
