@@ -2846,7 +2846,11 @@ width: 100%;
   padding: 10px;
 }
 
-
-
-
 /*-------------------------alert end----------------------------------*/
+.opc .step .radio {
+  padding-left: 20px;
+}
+
+.checkout-onepage-index ul#payment_form_authnetcim {
+  display: block !important;
+}
