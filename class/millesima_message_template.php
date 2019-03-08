@@ -670,8 +670,14 @@ class Millesima_Message_Template extends Millesima_Abstract
         if($article->pays == 'P'){
             $article->boiscarton = str_replace('cartao', 'cart&atilde;o', $article->boiscarton);
         }
-        $article->conditionnement=utf8_encode($data["Libelle_Cond_pluriel"]);
+        $article->conditionnementpluriel=utf8_encode($data["Libelle_Cond_pluriel"]);
         $article->conditionnementsingulier=utf8_encode($data["Libelle_Cond_singulier"]);
+        if($article->quantite == 1){
+            $article->conditionnement = $article->conditionnementsingulier;
+        }else{
+            $article->conditionnement = $article->conditionnementpluriel;
+        }
+
         $article->Packaging=$data["Packaging"];
         $article->refcond=substr($data["Code_article"],10,2);
 
