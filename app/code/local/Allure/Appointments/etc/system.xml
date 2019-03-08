@@ -176,7 +176,7 @@
 				</app_bcc>
 
 				<no_of_people translate="label">
-					<label>No of people in group setting</label>
+					<label>Number of people in group - setting</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>12</sort_order>
 					<show_in_default>1</show_in_default>
@@ -201,6 +201,14 @@
 							<show_in_website>1</show_in_website>
 							<show_in_store>1</show_in_store>
 						</user_side>
+						<popup_msg translate="label">
+							<label>Popup Message</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</popup_msg>
 					</fields>
 				</no_of_people>
 			</groups>

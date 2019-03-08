@@ -23,7 +23,7 @@ var count = 0;
         var qty_limit = document.getElementById("no_of_people_limit").value;
         if(qty_limit!="" && qty>qty_limit)
         {
-            alert("You can book appointment for "+qty_limit+" people at once");
+            alert(document.getElementById("no_of_people_limit").dataset.popupmsg);
             document.getElementById("count").value=qty_limit;
             qty=qty_limit;
         }
