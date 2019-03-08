@@ -1,10 +1,13 @@
 .intl-tel-input {
 	position: relative;
-	display: inline-block;
+	display: block;
 	/* width: 100%; */
-	width: 495px;
+	max-width: 100%;
 }
-
+.my-account .intl-tel-input input#phone {
+	width: 245px;
+	display: block;
+}
 .opc .intl-tel-input {
 	max-width: 100%;
 }
