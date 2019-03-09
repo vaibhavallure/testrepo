@@ -240,8 +240,8 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     // IF appointment is modified then send updates to ADMIN &
                     // PIERCER & CUSTOMER
                     
-                    $appointmentStart = date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
-                    $appointmentEnd = date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
+                    $appointmentStart = date("F j, Y \a\t H:i", strtotime($model->getAppointmentStart()));
+                    $appointmentEnd = date("F j, Y \a\t H:i", strtotime($model->getAppointmentEnd()));
                     if ($old_appointment) {
                         // If SMS is checked for notify me.
                         $oldAppointmentStart = date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
@@ -571,8 +571,8 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 $mailSubject="Appointment Canceled";
 
                 // SMS CODE TO CANCEL Appointment end
-                $appointmentStart = date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
-                $appointmentEnd = date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
+                $appointmentStart = date("F j, Y \a\t H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd = date("F j, Y \a\t H:i", strtotime($model->getAppointmentEnd()));
                 $vars = array(
                     'name' => $model->getFirstname() . " " .$model->getLastname(),
                     'customer_name' => $model->getFirstname() ." " . $model->getLastname(),
@@ -785,8 +785,8 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                 $configData = $this->getAppointmentStoreMapping();
                 $storeKey = array_search ($storeId, $configData['stores']);
                 
-                $appointmentStart=date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
-                $appointmentEnd=date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
+                $appointmentStart=date("F j, Y \a\t H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd=date("F j, Y \a\t H:i", strtotime($model->getAppointmentEnd()));
 
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
