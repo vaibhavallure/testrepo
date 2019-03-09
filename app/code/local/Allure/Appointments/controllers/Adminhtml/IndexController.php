@@ -917,7 +917,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
 
 
         if($collection->getSize())
-            return true;
+            return false;
         else
             return false;
 
@@ -937,16 +937,21 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
 
         $day = date('l', strtotime($data['app_date']));
 
-        $slotAVL=false;
+
 
         if($collection->getSize())
         {
             foreach ($collection as $p)
             {
+                $workStart="";
+                $workend="";
+                $breakend="";
+                $breakstart="";
 
 
                 $workingHours = $p->getWorkingHours();
                 $workingHours = unserialize($workingHours);
+
 
                 foreach ($workingHours as $workSlot) {
 
@@ -954,23 +959,19 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                         continue;
 
                     }
+                    $this->addLog("piercer id ==>".$p->getId(),"save");
 
-                    $workStart = $workSlot['start'];
-                    $workend=$workSlot['end'];
-                    $breakstart=$workSlot['break_start'];
-                    $breakend=$workSlot['break_end'];
-                    $app_start=explode(":",explode(" ",$data['appointment_start'])[1])[0];
-                    $app_end= explode(":",explode(" ",$data['appointment_end'])[1])[0];
+                    $workStart = $this->changeTimeFormat($workSlot['start']);
+                    $workend=$this->changeTimeFormat($workSlot['end']);
+                    $breakstart=$this->changeTimeFormat($workSlot['break_start']);
+                    $breakend=$this->changeTimeFormat($workSlot['break_end']);
 
-
-
-                    if(($workStart<=$app_start && $workend>=$app_end) && (($breakstart>=$app_end && $breakstart>$app_start) || ($breakend<=$app_start)))
-                    {
-                        $slotAVL=true;
-                    }
                 }
 
-                if($slotAVL) {
+                if($this->checkPiercerTime(date("H:i",strtotime($data['appointment_start'])),date("H:i",strtotime($data['appointment_end'])),$breakstart,$breakend,$workStart,$workend)) {
+
+                    $this->addLog("checking piercer slot already booked","save");
+
                     $collection = Mage::getModel('appointments/appointments')->getCollection();
                     $collection->addFieldToFilter('piercer_id', array('eq' => $p->getId()));
                     $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
@@ -979,6 +980,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
 
                     if (!$collection->getSize()) {
+                        $this->addLog("checking piercer slot open => id =".$p->getId(),"save");
                         $result['success'] = true;
                         $result['p_id'] = $p->getId();
                         break;
@@ -1045,4 +1047,66 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
 
         return true;
     }
+
+
+    public function checkPiercerTime($app_start,$app_end,$bstart,$bend,$open,$close)
+    {
+
+        $this->addLog("app_start=>".$app_start." app_end=>".$app_end." break_start=>".$bstart." break_end=>".$bend." open=>".$open." close=>".$close,"save");
+
+
+        $app_start = DateTime::createFromFormat('H:i', $app_start);
+        $app_end = DateTime::createFromFormat('H:i', $app_end);
+
+        $bstart = DateTime::createFromFormat('H:i', $bstart);
+        $bend = DateTime::createFromFormat('H:i', $bend);
+
+
+        $open = DateTime::createFromFormat('H:i', $open);
+        $close = DateTime::createFromFormat('H:i', $close);
+
+
+
+        if((($open<= $app_start && $close > $app_start) && ($app_end > $open && $app_end < $close))) {
+            /*open-------------------*/
+            $this->addLog("open","save");
+
+            if ((($bstart <= $app_start && $bend > $app_start) || ($app_end > $bstart && $app_end < $bend)) || (($bstart >= $app_start && $bstart < $app_end) || ($app_end < $bend && $app_end > $bend))) {
+                /*between break---------------------*/
+                $this->addLog("between break","save");
+                return false;
+            }
+            else
+            {
+                /*not between break--------------------*/
+                $this->addLog("not between break","save");
+
+                return true;
+            }
+        }
+        else
+        {
+            /*close*/
+            $this->addLog("close","save");
+
+            return false;
+        }
+
+    }
+
+    public function changeTimeFormat($time)
+    {
+        if(count($arr=explode(".",$time))>1)
+        {
+            if($arr[1]==5)
+                $arr[1]=30;
+
+            return implode(":",$arr);
+        }
+        else
+        {
+            return $time.":00";
+        }
+    }
+
 }
