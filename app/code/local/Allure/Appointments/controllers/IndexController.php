@@ -219,7 +219,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             $appendUrl .= "store=" . $storep;
         }
 
-        if(!$this->validatePostData($post_data))
+        if(!$this->helper()->validatePostData($post_data))
         {
             Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
             $this->_redirectReferer() . $appendUrl;
@@ -267,11 +267,11 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
 
 
 
-                if($this->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
+                if($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
                    // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
                     $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Been Already Taken. Please Select Another Slot ",$post_data),"save");
 
-                    $piercer = $this->checkIfAnotherPiercerAvailable($post_data);
+                    $piercer = $this->helper()->checkIfAnotherPiercerAvailable($post_data);
 
                     if($piercer['success'])
                     {
@@ -311,8 +311,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                 // IF appointment is modified then send updates to ADMIN &
                   // PIERCER & CUSTOMER
 
-                $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-                $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+                $appointmentStart = date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd = date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
                 if ($old_appointment) {
                     // If SMS is checked for notify me.
                     $oldAppointmentStart = date("F j, Y H:i", strtotime($old_appointment->getAppointmentStart()));
@@ -674,8 +674,8 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
                     }
                 }
                 // SMS CODE TO CANCEL Appointment end
-                $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-                $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
+                $appointmentStart = date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd = date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
                 $vars = array(
                     'name' => $model->getFirstname() . " " .$model->getLastname(),
                     'customer_name' => $model->getFirstname() ." " . $model->getLastname(),
@@ -894,93 +894,9 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     }
 
-    public function validateSlotBeforeBookAppointment($data)
-    {
-        $collection = Mage::getModel('appointments/appointments')->getCollection();
-        $collection->addFieldToFilter('piercer_id', array('eq' => $data['piercer_id']));
-        $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
-        $collection->addFieldToFilter('app_status', array('eq' => 2));
-        $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
-        $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
-
-
-       if($collection->getSize())
-           return true;
-       else
-           return false;
-
-    }
-
-    public function checkIfAnotherPiercerAvailable($data)
-    {
-
-        $result=array();
-        $result['success']=false;
-
-        $collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' =>$data['store_id']))
-            ->addFieldToFilter('is_active', array('eq' => '1'))
-            ->addFieldToFilter('id', array('neq' => $data['piercer_id']));
-        $collection->addFieldToFilter('working_days', array('like' => '%'.$data['app_date'].'%'));
-
-
-         $day = date('l', strtotime($data['app_date']));
 
 
 
-        if($collection->getSize())
-        {
-            foreach ($collection as $p)
-            {
-                $workStart="";
-                $workend="";
-                $breakend="";
-                $breakstart="";
-
-
-                $workingHours = $p->getWorkingHours();
-                $workingHours = unserialize($workingHours);
-
-
-                foreach ($workingHours as $workSlot) {
-
-                    if ($workSlot['day'] != $day) {
-                        continue;
-
-                    }
-                    $this->addLog("piercer id ==>".$p->getId(),"save");
-
-                    $workStart = $this->changeTimeFormat($workSlot['start']);
-                     $workend=$this->changeTimeFormat($workSlot['end']);
-                     $breakstart=$this->changeTimeFormat($workSlot['break_start']);
-                     $breakend=$this->changeTimeFormat($workSlot['break_end']);
-
-                }
-
-                if($this->checkPiercerTime(date("H:i",strtotime($data['appointment_start'])),date("H:i",strtotime($data['appointment_end'])),$breakstart,$breakend,$workStart,$workend)) {
-
-                    $this->addLog("checking piercer slot already booked","save");
-
-                    $collection = Mage::getModel('appointments/appointments')->getCollection();
-                    $collection->addFieldToFilter('piercer_id', array('eq' => $p->getId()));
-                    $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
-                    $collection->addFieldToFilter('app_status', array('eq' => 2));
-                    $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
-                    $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
-
-                    if (!$collection->getSize()) {
-                        $this->addLog("checking piercer slot open => id =".$p->getId(),"save");
-                        $result['success'] = true;
-                        $result['p_id'] = $p->getId();
-                        break;
-                    }
-                }
-            }
-        }
-
-
-
-        return $result;
-    }
 
     /**
      * add customer log
@@ -1005,112 +921,17 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
     }
 
 
-    public function validatePostData($post)
-    {
-        $store_id= $post['store_id'];
-        $piercer_id= $post['piercer_id'];
-        $qty=$post['piercing_qty'];
-        $date= $post['app_date'];
-        $ap_start= $post['appointment_start'];
-        $ap_end= $post['appointment_end'];
 
-        /*check store id and piercer id */
-
-        if(empty($store_id) || empty($piercer_id))
-        {
-            $this->addLog("error store id or piercer id empty","save");
-            return false;
-        }
-         $piercer= Mage::getModel('appointments/piercers')->load($piercer_id);
-
-         if($piercer->getStoreId()!=$store_id) {
-             $this->addLog("store id and piercer id does not match","save");
-             return false;
-         }
-        /* ----------------------------       */
-
-
-        /* check no of people  */
-        if(empty($qty) || $qty<1) {
-            $this->addLog("invalid no of people","save");
-            return false;
-        }
-            /*-----------------------*/
-
-
-        /*check date and time*/
-
-         if(empty($ap_start) || empty($ap_end) || empty($date)) {
-             $this->addLog("empty date or time","save");
-             return false;
-         }
-
-         return true;
-    }
 
     private function notify_Log($action,$string){
         Mage::helper("appointments/logs")->appointment_notification($action,$string);
     }
 
-    public function checkPiercerTime($app_start,$app_end,$bstart,$bend,$open,$close)
-    {
-
-        $this->addLog("app_start=>".$app_start." app_end=>".$app_end." break_start=>".$bstart." break_end=>".$bend." open=>".$open." close=>".$close,"save");
-
-
-        $app_start = DateTime::createFromFormat('H:i', $app_start);
-        $app_end = DateTime::createFromFormat('H:i', $app_end);
-
-        $bstart = DateTime::createFromFormat('H:i', $bstart);
-        $bend = DateTime::createFromFormat('H:i', $bend);
-
-
-        $open = DateTime::createFromFormat('H:i', $open);
-        $close = DateTime::createFromFormat('H:i', $close);
-
-
-
-        if((($open<= $app_start && $close > $app_start) && ($app_end > $open && $app_end < $close))) {
-            /*open-------------------*/
-            $this->addLog("open","save");
-
-            if ((($bstart <= $app_start && $bend > $app_start) || ($app_end > $bstart && $app_end < $bend)) || (($bstart >= $app_start && $bstart < $app_end) || ($app_end < $bend && $app_end > $bend))) {
-                /*between break---------------------*/
-                $this->addLog("between break","save");
-                return false;
-            }
-            else
-            {
-                /*not between break--------------------*/
-                $this->addLog("not between break","save");
-
-                return true;
-            }
-        }
-        else
-        {
-            /*close*/
-            $this->addLog("close","save");
-
-            return false;
-        }
-
+    private function helper(){
+        return Mage::helper("appointments/data");
     }
 
-    public function changeTimeFormat($time)
-    {
-        if(count($arr=explode(".",$time))>1)
-        {
-            if($arr[1]==5)
-                $arr[1]=30;
 
-            return implode(":",$arr);
-        }
-        else
-        {
-            return $time.":00";
-        }
-    }
 
 
 }
