@@ -22,7 +22,15 @@ var count = 1;
         var qty_limit = document.getElementById("no_of_people_limit").value;
         if(qty_limit!="" && qty>qty_limit)
         {
-            alert(document.getElementById("no_of_people_limit").dataset.popupmsg);
+            var no_limit=document.getElementById("no_of_people_limit");
+            var msg=no_limit.dataset.popupmsg;
+            var email=no_limit.dataset.storeemail;
+            var phone=no_limit.dataset.storephone;
+
+            msg=msg.replace("(email)",email);
+            msg=msg.replace("(phone)",phone);
+
+            alert(msg);
             document.getElementById("count").value=qty_limit;
             qty=qty_limit;
         }

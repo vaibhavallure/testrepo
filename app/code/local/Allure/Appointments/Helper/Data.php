@@ -435,6 +435,25 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         return $configData['appears'][$storeKey];
     }
 
+    public function getStoreEmail($store_id=null)
+    {
+        if($store_id==null)
+            return null;
+
+        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+        $storeKey = array_search ($store_id, $configData['stores']);
+        return $configData['store_email'][$storeKey];
+    }
+
+    public function getStorePhone($store_id=null)
+    {
+        if($store_id==null)
+            return null;
+
+        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+        $storeKey = array_search ($store_id, $configData['stores']);
+        return $configData['store_phone'][$storeKey];
+    }
 
 
     public function checkPiercerAvailable($data,$piercer)
