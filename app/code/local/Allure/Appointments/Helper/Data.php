@@ -582,7 +582,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
 
 
-    public function validatePostData($post)
+    public function validatePostData($post,$from="user")
     {
         $store_id= $post['store_id'];
         $piercer_id= $post['piercer_id'];
@@ -590,6 +590,8 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $date= $post['app_date'];
         $ap_start= $post['appointment_start'];
         $ap_end= $post['appointment_end'];
+
+        
 
         /*check store id and piercer id */
 
@@ -607,9 +609,15 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         /* ----------------------------       */
 
 
+        if($from=="admin")
+            $no_of_people=Mage::getStoreConfig('appointments/no_of_people/admin_side');
+        else
+            $no_of_people=Mage::getStoreConfig('appointments/no_of_people/user_side');
+
+
         /* check no of people  */
-        if(empty($qty) || $qty<1) {
-            $this->addLog("invalid no of people","save");
+        if(empty($qty) || $qty<1 || (!empty($no_of_people) && $qty > $no_of_people)) {
+            $this->addLog("invalid no of people qty=".$qty,"save");
             return false;
         }
         /*-----------------------*/

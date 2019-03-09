@@ -219,7 +219,7 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
             $appendUrl .= "store=" . $storep;
         }
 
-        if(!$this->helper()->validatePostData($post_data))
+        if(!$this->helper()->validatePostData($post_data,"user"))
         {
             Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
             $this->_redirectReferer() . $appendUrl;
