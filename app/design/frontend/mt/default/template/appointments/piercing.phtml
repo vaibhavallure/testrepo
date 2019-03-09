@@ -16,7 +16,7 @@
             <?php if($fetch_piercing_qty):?>
             	<input type="text" size="5" name="piercing_qty" value="<?php echo $fetch_piercing_qty;?>" id="count" class="pierqtyTxt" readonly>
             <?php else:?>
-           		<input type="text" size="5" name="piercing_qty" value="0" id="count" class="pierqtyTxt" onkeypress="return isNumber(event)" disabled>
+           		<input type="text" size="5" name="piercing_qty" value="0" id="count" class="pierqtyTxt" onkeypress="return isNumber(event)" readonly>
             <?php endif;?>			    
             <input type="button" value="+" id="plus" class="plusBtn" onclick="increase();">
      </div>
