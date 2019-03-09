@@ -16,12 +16,12 @@
             <?php if($fetch_piercing_qty):?>
             	<input type="text" size="5" name="piercing_qty" value="<?php echo $fetch_piercing_qty;?>" id="count" class="pierqtyTxt" readonly>
             <?php else:?>
-           		<input type="text" size="5" name="piercing_qty" value="0" id="count" class="pierqtyTxt" onkeypress="return isNumber(event)" readonly>
+           		<input type="text" size="5" name="piercing_qty" value="0" id="count" class="pierqtyTxt" onkeypress="return isNumber(event)" disabled>
             <?php endif;?>			    
             <input type="button" value="+" id="plus" class="plusBtn" onclick="increase();">
      </div>
 </div>
-<input type="hidden" name="no_of_people_limit" id="no_of_people_limit" value="<?= Mage::getStoreConfig('appointments/no_of_people/user_side');?>">
+<input type="hidden" name="no_of_people_limit" id="no_of_people_limit" value="<?= Mage::getStoreConfig('appointments/no_of_people/user_side');?>" data-popupmsg="<?= Mage::getStoreConfig('appointments/no_of_people/popup_msg');?>">
 <div class="piercingDiv">
     <label for="piercing_locatiion">Piercing Location(s):</label>
 	<div>
