@@ -215,6 +215,14 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             . $this->getElement()->getName() . '[store_phone][]" value="'
                 . $this->_getValue('store_phone/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
         $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_support_phone">Support Phone </label>';
+        $html .= '<input class="appointment-setting-input" name="'
+            . $this->getElement()->getName() . '[support_phone][]" value="'
+            . $this->_getValue('support_phone/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
+        $html .= '</div>';
+
         
         $html .= '<div class="appointment-setting-common apt-row-1">';
         $html .= '<label for="appointments_store_email">Store Email </label>';

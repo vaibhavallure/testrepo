@@ -25,7 +25,7 @@
 <?php $storeId = Mage::helper('appointments')->getStoreId()?>
 <input type="hidden" name="no_of_people_limit" id="no_of_people_limit" value="<?= Mage::getStoreConfig('appointments/no_of_people/admin_side');?>" data-popupmsg="<?= Mage::getStoreConfig('appointments/no_of_people/popup_msg');?>"
        data-storeEmail="<?= Mage::helper('appointments')->getStoreEmail($storeId) ?>"
-       data-storePhone="<?= Mage::helper('appointments')->getStorePhone($storeId) ?>"
+       data-storePhone="<?= Mage::helper('appointments')->getSupportPhone($storeId); ?>"
 >
 
 <div class="piercingDiv">
