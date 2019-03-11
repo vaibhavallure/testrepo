@@ -1148,6 +1148,30 @@ function getCode($typebrief){
                                 </div>
                             </div>
                         </div>
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Widget Wallet</h3>
+                            </div>
+                            <div class="box-body" style="margin-left: 20px">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Affichage :</label>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type=radio name="w_wallet" id="wallet_oui" value="1" checked>
+                                                    oui
+                                                </label>
+                                                <label>
+                                                    <input type=radio name="w_wallet" id="wallet_non" value="0">
+                                                    non
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>

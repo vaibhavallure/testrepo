@@ -468,6 +468,13 @@ function getMessageSaveInfo(this_select) {
                     }
                 }
             }
+            //remplissage widget wallet
+            if(data.messageData.w_wallet == '0'){
+                $('input[type=radio][name=w_wallet][value="0"]').attr('checked', true);
+            }
+            if(data.messageData.w_wallet == '1'){
+                $('input[type=radio][name=w_wallet][value="1"]').attr('checked', true);
+            }
 
             //remplissage image principale
            if(data.messageData.block_image == "1"){

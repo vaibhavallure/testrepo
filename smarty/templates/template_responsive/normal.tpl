@@ -176,7 +176,7 @@ td[class="box4"] {min-height: 70px;}
 							<tr>
 							  <td valign="top">{include file="$tpl/informations_importantes/structure_fdpo.tpl"}</td>
 							</tr><!-- fin date fdpo -->{/if}
-<!--==============Wallet debut ===============-->
+<!--==============Wallet debut ===============-->{if $w_wallet}
                             <tr>
                               <td height="25"></td>
                             </tr>
@@ -184,7 +184,7 @@ td[class="box4"] {min-height: 70px;}
                               <td bgcolor="#eeeeee" valign="top">
                                 {include file="$tpl/wallet/structure_widget.tpl"}
                               </td>
-                            </tr>
+                            </tr>{/if}
 <!--==============Bloc push debut===============-->   
                             <tr>
                               <td height="25"></td>

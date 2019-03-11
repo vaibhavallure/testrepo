@@ -443,9 +443,12 @@ class Millesima_Message_Template extends Millesima_Abstract
             }
 
             /* Wallet Widget */
-            $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/wallet/ressources_wallet_selligent.php";
-            if (file_exists($filename)){
-                require($filename);
+            if(isset($_POST["w_wallet"]) && $_POST["w_wallet"]){
+                $filename = self::REPAPPLI.'smarty/templates/'.$tpl."/wallet/ressources_wallet_selligent.php";
+                if (file_exists($filename)){
+                    require($filename);
+                }
+                $oSmarty->assign('w_wallet', $_POST["w_wallet"]);
             }
 
 
