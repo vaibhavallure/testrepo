@@ -541,8 +541,8 @@ function createMessage(){
         $html = $messageClass->createMessage($data);
         $content=$html;
     }elseif ($btnAction == 'master'){
-        $data["pays"] = array("F");
         $messageDataClass->saveMessageData($data);
+        $data["pays"] = array("F");
         $html = $messageClass->createMessage($data);
         $mail['pays'] = $data['pays'];
         $content = 'Vous trouverez ci-dessous le BAT pour validation :<br />' ;
