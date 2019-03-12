@@ -129,8 +129,8 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 				$sendEmail = true;
 			}
 			$model = $appointment;
-			$appointmentStart=date("F j, Y at H:i", strtotime($model->getAppointmentStart()));
-			$appointmentEnd=date("F j, Y at H:i", strtotime($model->getAppointmentEnd()));
+			$appointmentStart=date("F j, Y \\a\\t H:i", strtotime($model->getAppointmentStart()));
+			$appointmentEnd=date("F j, Y \\a\\t H:i", strtotime($model->getAppointmentEnd()));
 
             $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
