@@ -56,6 +56,13 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         }
     }
 
+    public function getAttributeId($attribute_code)
+    {
+        $attribute_details = Mage::getSingleton("eav/config")->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute_code);
+        $attribute = $attribute_details->getData();
+        return $attrbute_id = $attribute['attribute_id'];
+    }
+
     public function generateReport()
     {
 
@@ -89,17 +96,20 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $readConnection = $resource->getConnection('core_read');
 
             $attribute_code = "harrods_inventory";
-            $attribute_details = Mage::getSingleton("eav/config")->getAttribute(Mage_Catalog_Model_Product::ENTITY, $attribute_code);
+            $attrbute_id = $this->getAttributeId($attribute_code);
 
-            $attribute = $attribute_details->getData();
-            $attrbute_id = $attribute['attribute_id'];
+
+            $status_attr_id=$this->getAttributeId('status');
 
 
 
             $query='SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL';
 
+
+
+
             if($this->harrodsConfig()->getContentTypePLU()=="update") {
-                $query='SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id LEFT JOIN allure_harrodsinventory_product ahp ON cpv.entity_id = ahp.productid WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND ahp.row_id IS NULL';
+                $query='SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id LEFT JOIN allure_harrodsinventory_product ahp ON cpv.entity_id = ahp.productid JOIN catalog_product_entity_int ea ON cpv.entity_id=ea.entity_id WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL) AND ahp.row_id IS NULL AND (ea.attribute_id='.$status_attr_id.' AND ea.value=1)';
             }
 
             $parentPro = $readConnection->fetchCol($query);
@@ -398,12 +408,10 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $products = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id ' . $whr);
             }else{
                 $products = $readConnection->fetchCol("SELECT `productid` FROM `allure_harrodsinventory_price` WHERE `file_generated`=0");
-                $query='SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id LEFT JOIN allure_harrodsinventory_product ahp ON cpv.entity_id = ahp.productid WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND ahp.ppc=0';
+                $query='SELECT productid from allure_harrodsinventory_product WHERE ppc=0';
                 $products2=$readConnection->fetchCol($query);
 
                 $products = array_unique(array_merge($products,$products2),SORT_REGULAR);
-
-                echo implode(" ",$products);
             }
 
 
