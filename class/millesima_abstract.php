@@ -53,7 +53,7 @@ class Millesima_Abstract{
             $return['pays'] =  'Angleterre';
             $return['mail_from'] =  'info@infos.millesima.com';
             $return['name_from'] =  'Millesima';
-            $return['mail_reply'] =  'hgee@millesima.com';
+            $return['mail_reply'] =  'customercare@millesima.com';
             $return['name_reply'] =  'Millesima';
             $return['subject_camp'] =  $objet;
             $return['name_camp'] =  $name;
@@ -61,7 +61,7 @@ class Millesima_Abstract{
             $return['pays'] =  'Hong Kong';
             $return['mail_from'] =  'info@infos.millesima.com';
             $return['name_from'] =  'Millesima';
-            $return['mail_reply'] =  'hgee@millesima.com';
+            $return['mail_reply'] =  'customercare@millesima.com';
             $return['name_reply'] =  'Millesima';
             $return['subject_camp'] =  $objet;
             $return['name_camp'] =  $name;
@@ -69,7 +69,7 @@ class Millesima_Abstract{
             $return['pays'] =  'Singapour';
             $return['mail_from'] =  'info@infos.millesima.com';
             $return['name_from'] =  'Millesima';
-            $return['mail_reply'] =  'hgee@millesima.com';
+            $return['mail_reply'] =  'customercare@millesima.com';
             $return['name_reply'] =  'Millesima';
             $return['subject_camp'] =  $objet;
             $return['name_camp'] =  $name;
@@ -77,7 +77,7 @@ class Millesima_Abstract{
             $return['pays'] =  'Ireland';
             $return['mail_from'] =  'info@infos.millesima.com';
             $return['name_from'] =  'Millesima';
-            $return['mail_reply'] =  'hgee@millesima.com';
+            $return['mail_reply'] =  'customercare@millesima.com';
             $return['name_reply'] =  'Millesima';
             $return['subject_camp'] =  $objet;
             $return['name_camp'] =  $name;
@@ -701,7 +701,6 @@ class Millesima_Abstract{
         }
         if(($type == 'commercial' || $type == 'messagecreate')  && array_intersect(array('D','d','O','o','SA','sa','SF','sf'),$pays) && !$isTest){
             $tabRecipiant[] = 'utreptow@millesima.com';
-            $tabRecipiant[] = 'sniggl@millesima.com';
             $tabRecipiant[] = 'ekohr@millesima.com';
             $tabRecipiant[] = 'bteurquetil@millesima.com';
             $tabRecipiant[] = 'pastanislas@millesima.com';
@@ -721,8 +720,6 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'lkocsis@millesima.com';
         }
         if(($type == 'commercial' || $type == 'messagecreate')  && array_intersect(array('G','g','I','i','H','h','SG','sg'),$pays) && !$isTest){
-            $tabRecipiant[] = 'mrenaud@millesima.com';
-            $tabRecipiant[] = 'hgee@millesima.com';
             $tabRecipiant[] = 'lkocsis@millesima.com';
             $tabRecipiant[] = 'pastanislas@millesima.com';
         }
