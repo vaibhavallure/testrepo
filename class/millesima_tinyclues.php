@@ -104,8 +104,9 @@ class Millesima_Tinyclues{
                         $user_id = $celule[0];
                         $pays = $celule[3];
                         $langue = $celule[5];
-                            if (!in_array($user_id, $listeRef)) {
-                                $listeRef[] = $user_id;
+                            if ($i == 1 || !isset($listeRef[$user_id])) {
+                                //$listeRef[] = $user_id;
+                                $listeRef[$user_id] = 1;
                                 $tabSorti = array("$user_id","$pays","$langue");
                                 fwrite($f, implode(";", $tabSorti));
                             }
