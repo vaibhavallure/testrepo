@@ -33,7 +33,7 @@ var count = 0;
 
             alert(msg);
             document.getElementById("count").value=qty_limit;
-            qty=qty_limit;
+            count=qty=qty_limit;
         }
 
         /*--------------no of people limitation---------------end--------*/
