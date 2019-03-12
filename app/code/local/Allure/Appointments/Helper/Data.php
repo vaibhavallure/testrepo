@@ -466,6 +466,17 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
 
+    public function getSupportMessage($store_id=null)
+    {
+        if($store_id==null)
+            return null;
+
+        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
+        $storeKey = array_search ($store_id, $configData['stores']);
+        return $configData['limit_message'][$storeKey];
+    }
+
+
 
     public function checkPiercerAvailable($data,$piercer)
     {
