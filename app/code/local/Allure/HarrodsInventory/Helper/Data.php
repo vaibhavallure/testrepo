@@ -15,11 +15,45 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         Mage::log($message,Zend_log::DEBUG,"harrods_files.log",true);
     }
 
-
     public function  charEncode($str)
     {
         if(!empty($str))
         return mb_convert_encoding($str,"Windows-1252","UTF-8");
+    }
+
+    public function writeConnection()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        return $resource->getConnection('core_write');
+    }
+
+    public function pluGenerated($product_id)
+    {
+        try {
+            $query = "INSERT INTO `allure_harrodsinventory_product`(`productid`, `updated_date`) VALUES ({$product_id},(now()))";
+            $this->writeConnection()->query($query);
+        }
+        catch(Exception $e)
+        {
+               $this->add_log("pluGenerated() Exception".$e->getMessage());
+        }
+    }
+
+    public function ppcGenerated($product_id)
+    {
+        try {
+            $query = "UPDATE `allure_harrodsinventory_price` SET `file_generated`=1 WHERE productid=".$product_id;
+            $this->writeConnection()->query($query);
+
+            $query = "UPDATE `allure_harrodsinventory_product` SET `ppc`=1  WHERE productid=".$product_id;
+            $this->writeConnection()->query($query);
+
+
+        }
+        catch(Exception $e)
+        {
+            $this->add_log("pluGenerated() Exception".$e->getMessage());
+        }
     }
 
     public function generateReport()
@@ -61,22 +95,15 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $attrbute_id = $attribute['attribute_id'];
 
 
-            /*------------ get dates --------------------*/
-            $from = date("Y-m-d H:i:s", strtotime('-24 hours', $this->cron()->getCurrentDatetime()));
-            $to = date("Y-m-d H:i:s", $this->cron()->getCurrentDatetime());
 
-            $diff=$this->cron()->getDiffUtc();
-            $from = date("Y-m-d H:i:s", strtotime($diff, strtotime($from)));
-            $to = date("Y-m-d H:i:s", strtotime($diff, strtotime($to)));
-            /*-------------------------------------------*/
+            $query='SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL';
 
-            $whr='WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL';
+            if($this->harrodsConfig()->getContentTypePLU()=="update") {
+                $query='SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id LEFT JOIN allure_harrodsinventory_product ahp ON cpv.entity_id = ahp.productid WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND ahp.row_id IS NULL';
+            }
 
-            if($this->harrodsConfig()->getContentTypePLU()=="update")
-            $whr.=' AND (cpe.created_at >= "'.$from.'" AND cpe.created_at <= "'.$to.'")';
+            $parentPro = $readConnection->fetchCol($query);
 
-
-            $parentPro = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id '.$whr);
 
             $some_attr_code = "metal";
             $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
@@ -84,7 +111,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $harr_color = "harrods_color";
             $attributeHarrodsColor = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $harr_color);
 
-            var_dump($parentPro);
+
 
 
             foreach ($parentPro as $parentProductId) {
@@ -193,6 +220,8 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $ioo->streamWrite($dataStr);
 
+                $this->pluGenerated($parentProductId);
+
                 $sr_no++;
                 }
 
@@ -267,8 +296,6 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
 
             foreach ($parentPro as $parentProductId) {
-
-
 
                 $_product = Mage::getSingleton("catalog/product")->load($parentProductId);
 
@@ -370,8 +397,13 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $whr = 'WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL';
                 $products = $readConnection->fetchCol('SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id ' . $whr);
             }else{
-                $products = $readConnection->fetchCol("SELECT `productid` FROM `allure_harrodsinventory_price` WHERE `updated_date` LIKE '".$curruntDate."%'");
+                $products = $readConnection->fetchCol("SELECT `productid` FROM `allure_harrodsinventory_price` WHERE `file_generated`=0");
+                $query='SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id LEFT JOIN allure_harrodsinventory_product ahp ON cpv.entity_id = ahp.productid WHERE cpe.type_id="simple" AND cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND ahp.ppc=0';
+                $products2=$readConnection->fetchCol($query);
 
+                $products = array_unique(array_merge($products,$products2),SORT_REGULAR);
+
+                echo implode(" ",$products);
             }
 
 
@@ -386,12 +418,15 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 
                 $data = array();
 
+                $data['product_id'] = $this->charEncode($_product->getId());
                 $data['GTIN_number'] = $this->charEncode($_product->getGtinNumber());
                 $data['harrods_price'] = $this->charEncode(number_format((float)$_product->getHarrodsPrice(), 2, '.', ''));
                 $data['Active Date'] = $this->charEncode($activeDate);
                 $data['End Date'] = $this->charEncode("99991231");
 
                 $ioo->streamWriteCsv($data,"\t");
+
+                $this->ppcGenerated($productId);
 
                 $sr_no++;
             }
