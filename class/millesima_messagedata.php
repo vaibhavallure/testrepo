@@ -349,9 +349,6 @@ class Millesima_Messagedata extends Millesima_Abstract
         if (!isset($data["desctitreupper"])) {
             $data["desctitreupper"] = null;
         }
-        if (!isset($data["alignleft"])) {
-            $data["alignleft"] = null;
-        }
         if (!isset($data["iscodepromo"])) {
             $data["iscodepromo"] = null;
         }

@@ -18,7 +18,7 @@
                                               <td height="16"></td>
                                             </tr>{/if}
                                             <tr>
-                                              <td style="font-family:Arial, Helvetica, sans-serif, Trebuchet MS; font-size:13px; line-height:18px; color:#313440;padding-top:4px;{if $desc.alignleft}text-align:left;{else}text-align:center;{/if}" class="description">{$desc.text}{if $lstprmodesc}{if $desc.text != ""}<br /><br />{/if}{$lstpromotab.desc}{/if}</td>
+                                              <td style="font-family:Arial, Helvetica, sans-serif, Trebuchet MS; font-size:13px; line-height:18px; color:#313440;padding-top:4px;text-align:{$desc.textalign};" class="description">{$desc.text}{if $lstprmodesc}{if $desc.text != ""}<br /><br />{/if}{$lstpromotab.desc}{/if}</td>
                                             </tr>
 											{if $iscodepromo}<tr>
                                               <td height="16"></td>

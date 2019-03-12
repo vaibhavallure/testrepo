@@ -402,10 +402,10 @@ function getMessageSaveInfo(this_select) {
                 if(data.messageData.desctitreupper != "on"){
                     $('input[type=checkbox][name=desctitreupper]').attr('checked', false);
                 }
-                //remplissage Aligner à gauche
-                if(data.messageData.alignleft == "on"){
-                    $('input[type=checkbox][name=alignleft]').attr('checked', true);
-                }
+
+                //remplissage de l'alignement du texte description
+                $('input[type=radio][name=align_desc][value="'+data.messageData.align_desc+'"]').attr('checked', true);
+
                 //remplissage Ajout code promo
                 if(data.messageData.iscodepromo == "on"){
                     $('input[type=checkbox][name=iscodepromo]').attr('checked', true);

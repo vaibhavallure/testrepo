@@ -877,8 +877,23 @@ function getCode($typebrief){
                                     <label>
                                         <input type="checkbox" name="desctitreupper" /> Mettre le titre en majuscule
                                     </label>
+                                </div>
+                                <div class="radio">
                                     <label>
-                                        <input type="checkbox" name="alignleft" /> Aligner à gauche
+                                        <input type=radio name="align_desc" value="center" checked />
+                                        Centrer
+                                    </label>
+                                    <label>
+                                        <input type=radio name="align_desc" value="justify" />
+                                        Justifier
+                                    </label>
+                                    <label>
+                                        <input type=radio name="align_desc" value="left" />
+                                        Aligner à gauche
+                                    </label>
+                                    <label>
+                                        <input type=radio name="align_desc" value="right" />
+                                        Aligner à droite
                                     </label>
                                 </div>
                                 <div class="checkbox">

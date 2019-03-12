@@ -250,23 +250,21 @@ class Millesima_Message_Template extends Millesima_Abstract
 				$titre = $this->encodeVar($_POST["desctitre".$country]);
 				$text = $_POST["desctext".$country];
 				$titreupper = "";
-				$alignleft = "";
+                $textalign = "";
 				$offexc = "";
 				if(isset($_POST["desctitreupper"])){
 					$titreupper = $_POST["desctitreupper"];
 				}
-				if(isset($_POST["alignleft"])){
-					$alignleft = $_POST["alignleft"];
-				}
 				if(isset($_POST["offexc"])){
 					$offexc = $_POST["offexc"];
-				}
+                }
+                $textalign = $_POST["align_desc"];
 				$btn = $_POST["desctypebtn"];
 				$proprietesDesc = array("url" => $url,
 												"titre" => $titre,
 												"text" => $text,
 												"titreupper" => $titreupper,
-												"alignleft" => $alignleft,
+												"textalign" => $textalign,
 												"offexc" => $offexc,
 												"btn" => $btn);
 				$oSmarty->assign('desc', $proprietesDesc);
