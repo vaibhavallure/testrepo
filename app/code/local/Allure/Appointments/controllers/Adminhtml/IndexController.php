@@ -653,7 +653,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
             $model->save();
         }
     }
-    
+
     
     //To get the Working days depend on storeid by bhagya
     public function ajaxGetWorkingDaysAction()

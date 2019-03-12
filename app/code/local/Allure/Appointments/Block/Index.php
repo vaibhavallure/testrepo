@@ -31,6 +31,10 @@ class Allure_Appointments_Block_Index extends Mage_Core_Block_Template{
 	{
 		return $this->getUrl('*/index/ajaxGetWorkingDays', array('_secure' => true));
 	}
+    public function getSupportDetailsActionUrl()
+    {
+        return $this->getUrl('*/index/ajaxSupportDetails', array('_secure' => true));
+    }
 
 	public function getStoreId() {
 
