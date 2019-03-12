@@ -29,15 +29,10 @@ var count = 0;
 
 			var no_limit=document.getElementById("no_of_people_limit");
             var msg=no_limit.dataset.popupmsg;
-            var email=no_limit.dataset.storeemail;
-            var phone=no_limit.dataset.storephone;
-
-            msg=msg.replace("(email)",email);
-            msg=msg.replace("(phone)",phone);
 
             alert(msg);
             document.getElementById("count").value=qty_limit;
-            qty=qty_limit;
+            count=qty=qty_limit;
 		}
 
         /*--------------no of people limitation---------------end--------*/
@@ -171,6 +166,12 @@ var count = 0;
 	 	if(document.getElementById("store-id")!= null){
 			var storeid = document.getElementById("store-id").value;
 		}
+
+
+     setSupportDetails(storeid);
+
+
+
 	 	jQuery.ajax({
 	 		url : Allure.ajaxGetWorkingDaysUrl,
 			type : 'POST',
@@ -234,10 +235,14 @@ var count = 0;
 	 jQuery("#store-id").on("change",function(){
          jQuery('#pick_ur_time_div').find('input:hidden').val('');
          jQuery("#time_blocks").empty();
-		 	
+
+
+
 			//ajax start to pass the selected date to get the time
 			var qty = document.getElementById("count").value;
 			var storeid = document.getElementById("store-id").value;
+
+         setSupportDetails(storeid);
 			 
 		 	//ajax start to get the working days of piercers according to store			 	
 			 	jQuery.ajax({
@@ -299,6 +304,21 @@ var count = 0;
 });
 
 
+
+ function setSupportDetails(storeid) {
+     jQuery.ajax({
+         url : Allure.getSupportDetailsActionUrl,
+         type : 'POST',
+         dataType:'json',
+         data: {storeid:storeid},
+         success : function(response) {
+         	console.log(response.message);
+             jQuery('#no_of_people_limit').attr("data-popupmsg",response.message);
+
+
+         }
+     });
+ }
 
  /*---------------------custom alert----------------------------*/
 

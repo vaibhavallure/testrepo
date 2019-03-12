@@ -25,16 +25,9 @@
 
 $storeId = Mage::helper('appointments')->getStoreId();
 
-if($storeId==18)
-    $store_phone="0203 950 5230";
-else
-    $store_phone=Mage::helper('appointments')->getStorePhone($storeId);
-
-
 ?>
-<input type="hidden" name="no_of_people_limit" id="no_of_people_limit" value="<?= Mage::getStoreConfig('appointments/no_of_people/user_side');?>" data-popupmsg="<?= Mage::getStoreConfig('appointments/no_of_people/popup_msg');?>"
-       data-storeEmail="<?= Mage::helper('appointments')->getStoreEmail($storeId) ?>"
-       data-storePhone="<?= $store_phone ?>"
+<input type="hidden" name="no_of_people_limit" id="no_of_people_limit" value="<?= Mage::getStoreConfig('appointments/no_of_people/user_side');?>" data-popupmsg="<?= Mage::helper('appointments')->getSupportMessage($storeId) ?>"
+
 >
 <div class="piercingDiv">
     <label for="piercing_locatiion">Piercing Location(s):</label>

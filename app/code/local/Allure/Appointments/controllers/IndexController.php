@@ -751,6 +751,15 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         }
     }
 
+    public function ajaxSupportDetailsAction()
+    {
+        $storeid = $this->getRequest()->getParam('storeid');
+
+        $result['message']=$this->helper()->getSupportMessage($storeid);
+
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+
+    }
     // To get the Working days depend on storeid by bhagya
     public function ajaxGetWorkingDaysAction ()
     {
