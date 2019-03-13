@@ -45,7 +45,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
         $_option = $this->getOption();
       
         $category = Mage::registry('current_category');
-        
+
         $temparray = array();
         if ($category) {
             $lengths = $category->getAssignedLengths();
@@ -56,8 +56,8 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
             $defaultTitleTxt = mage::helper('allure_category')->getOptionText($defaultLength);
             
             $enableLength = $category->getEnablePostlengths();
-           
-            
+
+
             $count = 2;
             if ($enableLength) {
                 
@@ -108,7 +108,8 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                     ));
                 }
             } else {
-                
+                $select->addOption('', 'Select Post Length', '', $store, false);
+
                 foreach ($_option->getValues() as $_value) {
                     $priceStr = $this->_formatPrice(array(
                         'is_percent' => ($_value->getPriceType() == 'percent'),
