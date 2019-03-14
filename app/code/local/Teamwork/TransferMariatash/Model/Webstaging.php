@@ -9,7 +9,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
             $billing = $this->_order->getBillingAddress();
             $shipping = $this->_order->getShippingAddress();
             $orderNo = $this->_order->getIncrementId();
-            
+
             $weborder = new Varien_Object();
 			/*Send Magento Status to CHQ to the Sales Order Line - CustomText1*/
             $weborder->setData(
@@ -23,7 +23,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                     'OrderDate'                 => date($this->_timeFormat, Mage::getModel('core/date')->timestamp($this->_order->getCreatedAt())),
                     'Status'                    => ($this->_order->getStatus() == Mage_Sales_Model_Order::STATE_COMPLETE) ? 'Completed' : 'Processing',
                     'GuestCheckout'             => (int)$this->_order->getCustomerIsGuest(),
-                    
+
                     'WebOrderProcessingArea'    => $this->getGlobalOrderType($channelId),
                     'EComCustomerId'            => $this->_order->getCustomerEmail(),
 
@@ -41,10 +41,10 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                     'BillCountry'               => $billing->getCountry(),
                     'BillPostalCode'            => $billing->getPostcode(),
                     'BillState'                 => $billing->getRegion(),
-                    
+
                     'BillMobilePhone'           => '',
                     'Instruction'               => '',
-                    
+
                     'ShipAddressType'       => $this->_order->getCustomerIsGuest() ? 'Magento 1' : null,
 					'CustomText1'			=> $this->_order->getStatus(),
                 )
@@ -75,7 +75,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
             Mage::dispatchEvent('add_extra_webstagind_data', array('order' => $this->_order, 'weborder' => $weborder));
 
             $this->addUndefinedShippingMethod($weborder, $channelId);
-            
+
             $table = Mage::getSingleton('core/resource')->getTableName('service_weborder');
             $select = $this->_db->select()
                 ->from($table, array('WebOrderId'))
@@ -99,7 +99,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
             $this->_getLogger()->addMessage(sprintf("There is no Channel ID: file: %s; line: %s", __FILE__, __LINE__));
         }
     }
-	
+
 	public function isValidForChq($completedOnly)
     {
 		/**/$createdAtLimitation = '2018-04-04';
@@ -114,9 +114,9 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
         $allowAuthorizeOnly = Mage::helper('teamwork_transfer/webstaging')->allowAuthorizeOnlyPayment( $this->_order->getPayment()->getMethod(), $this->_getChannelId() );
         $authorizedAmount = floatval($this->_order->getPayment()->getBaseAmountAuthorized()); /**/
         $paidAmount = floatval( $this->_order->getPayment()->getBaseAmountPaid() );/**/
-        
+
         $completedOnly = ($completedOnly == 'false') ? false : true;
-        
+
 		switch($completedOnly)
         {
             case true:
@@ -134,7 +134,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
         }
         return false;
     }
-    
+
     public function generateWeborderFromOrder($order)
     {
         Mage::helper('teamwork_service')->fatalErrorObserver();
@@ -165,7 +165,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
             $observerObject->getEvent()->setOrder($order);
             Mage::getSingleton("teamwork_cegiftcards/observer")->generateGiftCards($observerObject);
         }
-        
+
         if( !empty($channelId) )
         {
             try
@@ -175,14 +175,12 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                     ->where('setting_name = ?', Teamwork_Service_Model_Settings::CONST_COMPLETED_ORDERS)
                 ->where('channel_id = ?', $channelId);
                 $completedOnly = $this->_db->fetchOne($select);
-                
+
                 Mage::dispatchEvent('webstaging_validate_before', array('order' => $this->_order));
-                if( $this->isValidForChq($completedOnly) )
-                {
+                if ($this->isValidForChq($completedOnly) ) {
                     $this->_createWebOrder();
 
-                    if(!empty($this->_webOrderId))
-                    {
+                    if (!empty($this->_webOrderId)) {
                         $this->_createWebOrderDiscount();
                         /*fix for possible customization to prevent extra items taxes accumulation*/
                         $this->_lineTaxAmountAccumulator = 0;
@@ -190,16 +188,15 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
                         $this->_createWebOrderFee();
                         $this->_createWebOrderItemsDiscount(); /*should be after _createWebOrderItems*/
                         $this->_createWebOrderPayment();
-                        
+
                         $this->_db->update( /**/
                             Mage::getSingleton('core/resource')->getTableName('service_weborder'),
                             array('IsReady' => 1),
                             "WebOrderId = '{$this->_webOrderId}'"
                         );
                     }
-                    Mage::log("Order::".$this->_order->getIncrementId()." STATUS::".$this->_order->getStatus(),Zend_log::DEBUG,'change_status.log',true);
+                    Mage::log("generateWeborderFromOrder:: ORDER #".$this->_order->getIncrementId().", ORDER ID: ".$this->_order->getIncrementId().", STATUS: ".$this->_order->getStatus(),Zend_log::DEBUG,'change_status.log',true);
 					Mage::dispatchEvent('sent_in_chq', array('order' => $this->_order));
-					
                 }
             }
             catch(Exception $e)
@@ -210,7 +207,7 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
 
         return $this;
     }
-    
+
     public function getShippingFeeId()
     {
         /**/
@@ -219,13 +216,13 @@ class Teamwork_TransferMariatash_Model_Webstaging extends Teamwork_CEGiftcards_T
             ->join(array('feemap' => Mage::getSingleton('core/resource')->getTableName('service_fee_mapping')), 'setship.entity_id = feemap.shipping_id')
         ->where('setship.name = ?', trim($this->_getShippingMethod()));
 		$feeId = $this->_db->fetchOne($select);
-        
+
 		if(!empty($feeId))
 		{
 			return $feeId;
 		}
 		/**/
-        
+
         $select = $this->_db->select()
             ->from(array('fee' => Mage::getSingleton('core/resource')->getTableName('service_fee')))
             ->join(array('feest' => Mage::getSingleton('core/resource')->getTableName('service_fee_status')), 'fee.fee_id = feest.fee_id')

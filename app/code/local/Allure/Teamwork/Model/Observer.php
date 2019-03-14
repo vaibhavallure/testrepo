@@ -771,7 +771,6 @@ class Allure_Teamwork_Model_Observer{
           $mLog = Mage::getModel("allure_teamwork/log")
             ->load($operation,'operation');
 
-
           $lastQueryTime = (int) $mLog->getPage();//$helper->getLastSyncQueryTime();
           $syncURL   = $helper::SYNC_TEAMWORK_CUSTOMER_URLPATH;
           $pageLimit = (int) $helper->getTeamworkPageLimit();
@@ -883,17 +882,16 @@ class Allure_Teamwork_Model_Observer{
   function changeOrderStatus($observer){
       $order = $observer->getEvent()->getOrder();
 
-       Mage::log("Order::".$order->getId(),Zend_log::DEBUG,'change_status.log',true);
-      if($order->getStatus()=='processing'){
+      Mage::log("changeOrderStatus:: ORDER #".$order->getIncrementId().", ORDER ID: ".$order->getIncrementId().", STATUS: ".$order->getStatus(),Zend_log::DEBUG,'change_status.log',true);
+
+      if ($order->getStatus()=='processing'){
          try{
               $order=Mage::getModel('sales/order')->load($order->getId());
               $order->setStatus('in_chq', true)->save();
-         }catch(Exception $e){
+         } catch(Exception $e) {
              Mage::log("Order::".$order->getId()." Exception::".$e->getMessage(),Zend_log::DEBUG,'change_status.log',true);
          }
       }
-
-
   }
 
 
