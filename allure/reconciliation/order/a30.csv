@@ -1,0 +1,17 @@
+,Time,Till,Transaction,Operator No,Employee,Customer No,Item,Comment,Retail Value,Sales,Promotion Amount,Discount %,Discretionary Discount,Quantity,M. Order No.,,
+,13:58:20,68,85164,902665,Pagorete Renato,100504289,505486538823,after care,10,10,,,,1,,,
+,13:58:20,68,85164,902665,Pagorete Renato,100504289,505486583754,,30,30,,,,1,,,
+08/30/2017,Transaction 85164 Total,,,,,,,,40,40,,,,2,,,
+,18:08:20,68,85201,903003,Beard Rosa,,505486538823,helix,20,20,,,,1,,,
+,18:08:20,68,85201,903003,Beard Rosa,,505486538823,tash rook,30,30,,,,1,,,
+,18:08:20,68,85201,903003,Beard Rosa,,505486538823,xet8op yg,319,319,,,,1,,,
+,18:08:20,68,85201,903003,Beard Rosa,,505486538823,xpaisrd rg,127,127,,,,1,,,
+08/30/2017,Transaction 85201 Total,,,,,,,,496,496,,,,4,,,
+,12:44:59,92,91574,902665,Pagorete Renato,100626284,505486538823,e3op wg,254,240.58,-13.42,,,2,,,
+,12:44:59,92,91574,902665,Pagorete Renato,100626284,505486538824,,30,28.42,-1.58,,,2,,,15 voucher not deducted in magento
+08/30/2017,Transaction 91574 Total,,,,,,,,284,269,-15,,,4,,,
+,13:06:47,92,91580,902665,Pagorete Renato,,505486538823,xr65 bg,106,106,,,,1,,,ring went through magento as 100
+,13:06:47,92,91580,902665,Pagorete Renato,,505486538823,xr95 rg,-112,-112,,,,-1,,,"found the printed form with a value of -2, but not appearing in magento report"
+08/30/2017,Transaction 91580 Total,,,,,,,,-6,-6,,,,0,,,
+,13:07:52,92,91581,902665,Pagorete Renato,,505486538823,after care,10,10,,,,1,,,part of the above transaction
+08/30/2017,Transaction 91581 Total,,,,,,,,10,10,,,,1,,,

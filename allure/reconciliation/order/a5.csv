@@ -1,0 +1,38 @@
+,Time,Till,Transaction,Operator No,Employee,Customer No,Item,Comment,Retail Value,Sales,Promotion Amount,Discount %,Discretionary Discount,Quantity,M. Order No.,,
+,11:40:53,68,83160,902376,Wilkinson India Megan,100589201,505486538823,xr65 rg,100,100,,,,1,,,
+,11:40:53,68,83160,902962,Markman Ekaterina,100589201,505486538823,xr8 yg,-106,-106,,,,-1,,,
+08/05/2017,Transaction 83160 Total,,,,,,,,-6,-6,,,,0,,,Order Not found on magento
+,13:15:21,68,83171,902586,Tunney Paisley,100536541,505486538822,,15,15,,,,1,,,
+,13:15:21,68,83171,902586,Tunney Paisley,100536541,505486538823,xet8bkd bg,344,344,,,,1,,,
+08/05/2017,Transaction 83171 Total,,,,,,,,359,359,,,,2,,,
+,13:20:32,68,83173,902376,Wilkinson India Megan,10118678,505486538823,xet8d22 yg,474,474,,,,1,,,
+,13:20:32,68,83173,902665,Pagorete Renato,10118678,505486538823,xetst6545d yg,-524,-524,,,,-1,,,
+,13:20:32,68,83173,902665,Pagorete Renato,10118678,505486583757,,-20,-20,,,,-1,,,
+08/05/2017,Transaction 83173 Total,,,,,,,,-70,-70,,,,-1,,,Order Not found
+,13:22:31,68,83174,903003,Beard Rosa,10520330,505486538823,,200,200,,,,1,,,
+08/05/2017,Transaction 83174 Total,,,,,,,,200,200,,,,1,,,Order Not found. No sku code
+,14:35:52,68,83189,902376,Wilkinson India Megan,100622072,505486538823,xet5d rg x2,656,641,-15,,,2,,,
+08/05/2017,Transaction 83189 Total,,,,,,,,656,641,-15,,,2,,,
+,18:47:16,68,83215,903076,Lowe Charlotte,,505486538823,xmnspad yg,273,245.7,,,-27.3,1,,,
+,18:47:16,68,83215,903076,Lowe Charlotte,,505486538823,xr1sp8op yg,209,188.1,,,-20.9,1,,,
+08/05/2017,Transaction 83215 Total,,,,,,,,482,433.8,,,-48.2,2,,,Price mismatch
+,10:29:35,92,89268,902962,Markman Ekaterina,7770052488,505486538823,x3btr wg,104,104,,,,1,,,
+,10:29:35,92,89268,902962,Markman Ekaterina,7770052488,505486538823,xar75d wg,196,181,,,-15,1,,,
+,10:29:35,92,89268,902962,Markman Ekaterina,7770052488,505486538823,xfl3d wg,228,228,,,,1,,,
+08/05/2017,Transaction 89268 Total,,,,,,,,528,513,,,-15,3,,,Discount not applied on magento
+,13:15:28,92,89296,903003,Beard Rosa,100622041,505486538823,xsc15d yg,177,162,-15,,,1,,,
+08/05/2017,Transaction 89296 Total,,,,,,,,177,162,-15,,,1,,,Discount not applied
+,14:23:56,92,89308,902376,Wilkinson India Megan,,505486538823,xpaisrd yg ,127,127,,,,1,,,
+,14:23:56,92,89308,902376,Wilkinson India Megan,,505486538824,,15,15,,,,1,,,
+08/05/2017,Transaction 89308 Total,,,,,,,,142,142,,,,2,,,
+,16:11:49,92,89328,902962,Markman Ekaterina,10018625,505486538823,xar1od rg,279,279,,,,1,,,
+08/05/2017,Transaction 89328 Total,,,,,,,,279,279,,,,1,,,
+,16:41:28,92,89333,902376,Wilkinson India Megan,10482517,505486538823,xet5bkd wg,246,246,,,,1,,,
+,16:41:28,92,89333,902376,Wilkinson India Megan,10482517,505486538823,xstar45d wg,337,337,,,,1,,,
+,16:41:28,92,89333,902962,Markman Ekaterina,10482517,505486538823,xc3std wg,-2097,-2097,,,,-1,,,
+08/05/2017,Transaction 89333 Total,,,,,,,,-1514,-1514,,,,1,,,Not found
+,18:02:02,92,89349,903003,Beard Rosa,639947,505486538823,xcn8pe rg,369,369,,,,1,,,
+,18:02:02,92,89349,903003,Beard Rosa,639947,505486538823,xet2d8d wg,570,570,,,,1,,,
+08/05/2017,Transaction 89349 Total,,,,,,,,939,939,,,,2,,,
+,15:25:48,92,89324,903003,Beard Rosa,373729,505486538823,xc3fld rg,829,829,,,,1,,,
+08/05/2017,Transaction 89324 Total,,,,,,,,829,829,,,,1,,,

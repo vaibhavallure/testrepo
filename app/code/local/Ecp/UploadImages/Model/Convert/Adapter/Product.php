@@ -96,12 +96,31 @@ class Ecp_UploadImages_Model_Convert_Adapter_Product extends Mage_Dataflow_Model
         $imgName = str_replace('|', '-', trim($sku));
         $imageFile = $imgName . '#' . $image . '.' . $ext;
         $imageFilePath = MAGENTO . '/var/import/imagesFile/' . $imageFile;
-        
+
         $skuArr = explode('|', $sku);
         $skuCode = $sku;
         if (isset($skuArr[1])) {
-            $skuCode = $skuArr[0] . '|' . $skuArr[1] . '%';
+            //MT-114 Directional Image Upload Issue Fixed
+            if(isset($skuArr[2]))
+            {
+                if((strtoupper(trim($skuArr[2]))=='LEFT')||(strtoupper(trim($skuArr[2]))=='RIGHT')){
+                    $skuCode = $skuArr[0] . '|' . $skuArr[1] .'|'.$skuArr[2].'%';
+                    Mage::log('In Directional Image SKU',Zend_Log::DEBUG,'directionImageUpload.log',true);
+                    Mage::log('SKU Code (From Image) : '.$skuCode,Zend_Log::DEBUG,'directionImageUpload.log',true);
+                }
+                else
+                {
+                    $skuCode = $skuArr[0] . '|' . $skuArr[1] . '%';
+                }
+            }
+            else
+                {
+                    $skuCode = $skuArr[0] . '|' . $skuArr[1] . '%';
+                }
+
         }
+        self::log('SKU CODE'.$skuCode);
+
 
         self::log('Checking Image for SKU "#'.$skuCode.'" ...');
         

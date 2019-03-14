@@ -215,7 +215,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             . $this->getElement()->getName() . '[store_phone][]" value="'
                 . $this->_getValue('store_phone/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
         $html .= '</div>';
-        
+
         $html .= '<div class="appointment-setting-common apt-row-1">';
         $html .= '<label for="appointments_store_email">Store Email </label>';
         $html .= '<input class="appointment-setting-input" name="'
@@ -270,6 +270,14 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<textarea class="appointment-setting-textarea" name="'
                                     . $this->getElement()->getName() . '[cancel_sms_message][]" value="'
                                         . $this->_getValue('cancel_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('cancel_sms_message/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="appointments_limit_popup_message">Limit Popup Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[limit_message][]" value="'
+            . $this->_getValue('limit_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('limit_message/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
         
         

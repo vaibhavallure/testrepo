@@ -2839,7 +2839,23 @@ width: 100%;
   text-decoration: none;
 }
 
-
-
+#amazon-buttons-wrapper .col-1
+{
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
 
 /*-------------------------alert end----------------------------------*/
+.opc .step .radio {
+  padding-left: 20px;
+}
+
+.checkout-onepage-index ul#payment_form_authnetcim {
+  display: block !important;
+}
+
+.my-account .box-address-edit input#phone {
+  width: 100% !important;
+  height : 32px !important;
+}

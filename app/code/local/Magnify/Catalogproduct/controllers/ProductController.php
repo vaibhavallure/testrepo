@@ -147,7 +147,7 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
             $selectValue1 = $this->getRequest()->getParam("selectValue1", false);
         }
         if(!empty($this->getRequest()->getParam("selectValue2", false))) {
-            $selectValue2 = $this->getRequest()->getParam("selectValue1", false);
+            $selectValue2 = $this->getRequest()->getParam("selectValue2", false);
 
         }
 
@@ -176,6 +176,7 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
         $core_ses=Mage::getSingleton('core/session');
 
         if (!$selectedColor || $core_ses->getData("view_product_id")!=$productId) {
+
 
             $core_ses->setData("view_product_id",$productId);
             $core_ses->unsetData("selAtr1");
@@ -239,7 +240,7 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
 
                     $resource = Mage::getSingleton('core/resource');
                     $readConnection = $resource->getConnection('core_read');
-                    $query="SELECT rel.parent_id,rel.child_id,atr.product_super_attribute_id,atr.attribute_id,itm.qty,cpen.value FROM `catalog_product_relation` rel JOIN catalog_product_super_attribute atr on atr.product_id = rel.parent_id join cataloginventory_stock_item itm on itm.product_id = rel.child_id JOIN catalog_product_entity_int cpen ON (cpen.attribute_id=atr.attribute_id AND cpen.entity_id=rel.child_id) where rel.parent_id = ".$productId." and itm.qty > 0";
+                    $query="SELECT rel.parent_id,rel.child_id,atr.product_super_attribute_id,atr.attribute_id,itm.qty,cpen.value FROM `catalog_product_relation` rel JOIN catalog_product_super_attribute atr on atr.product_id = rel.parent_id join cataloginventory_stock_item itm on itm.product_id = rel.child_id JOIN catalog_product_entity_int cpen ON (cpen.attribute_id=atr.attribute_id AND cpen.entity_id=rel.child_id) where rel.parent_id = ".$productId." and itm.qty > 0 GROUP BY atr.attribute_id";
                     $results = $readConnection->fetchAll($query);
 
                     if(count($results)>=2)
@@ -253,11 +254,13 @@ class Magnify_Catalogproduct_ProductController extends Mage_Core_Controller_Fron
 
 
                             $query = "SELECT attribute_code FROM `eav_attribute` WHERE `attribute_id` = " . $res['attribute_id'];
+
+
                             $results = $readConnection->fetchAll($query);
+
                             if ($results[0]['attribute_code'] != 'metal') {
                                 if ($res['value'] != $selectedColor) {
                                     $cnt++;
-//                                    Mage::log("value : " . $res['value'] . " Selected Color" . $selectedColor, Zend_Log::DEBUG, "abc.log", true);
 
                                     if ($cnt == 1) {
                                         $selectValue1 = $res['value'];

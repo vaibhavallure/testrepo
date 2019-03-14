@@ -49,13 +49,13 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 		));
 		date_default_timezone_set(Mage::getStoreConfig('general/locale/timezone'));
 		$this->addColumn('appointment_start', array(
-				'header' => $helper->__('Appointment Start Time'),
+				'header' => $helper->__('Appointment Start'),
 				'type' => 'datetime',
 				'index'  => 'appointment_start',
 		));
 		
 		$this->addColumn('appointment_end', array(
-				'header' => $helper->__('Appointment End Time'),
+				'header' => $helper->__('Appointment End'),
 				'type' => 'datetime',
 				'index'  => 'appointment_end',
 		));
@@ -65,8 +65,14 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'type' => 'datetime',
 				'index'  => 'booking_time',
 		));
+        $this->addColumn('last_notified', array(
+            'header' => $helper->__('Last Notifed (EST)'),
+            'type' => 'datetime',
+            'index'  => 'last_notified',
+            'renderer' => 'appointments/adminhtml_render_notified'
+        ));
 		$this->addColumn('piercing_qty', array(
-				'header' => $helper->__('No of People in Group'),
+				'header' => $helper->__('No of People'),
 				'index'  => 'piercing_qty'
 		));
 		
@@ -102,6 +108,8 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 		        'options' => Mage::helper("appointments")->getPiercersAsOptions(), // aws02- add line
 				//'renderer' => 'appointments/adminhtml_appointments_edit_renderer_piercername' //aws02 - comment the line
 		));
+
+
 		$this->addColumn('action',array(
 				'header'    => $helper->__('Modify'),
 				'width'     => '5%',
@@ -143,6 +151,12 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
                     'values' => Mage::getModel('appointments/appointments')->getStatus()
                 )
             )
+        ));
+        $this->getMassactionBlock()->addItem('send_reminder', array(
+            'label' => Mage::helper('appointments')->__('Send Reminder'),
+            'url' => Mage::helper('adminhtml')->getUrl('*/adminhtml_appointments/sendReminder', array('redirect' => 'allure_appointments')),
+            'confirm' => Mage::helper('appointments')->__('send reminder to selected appointments'),
+
         ));
 
         return $this;

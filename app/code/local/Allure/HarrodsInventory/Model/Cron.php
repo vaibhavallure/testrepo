@@ -8,7 +8,7 @@ class Allure_HarrodsInventory_Model_Cron
         Mage::helper("harrodsinventory/cron")->generateHarrodsFiles();
     }
 
-    public function updateHarrodsInventory()
+    /*public function updateHarrodsInventory()
     {
 
         if(!Mage::helper("harrodsinventory/config")->getModuleStatus())
@@ -68,7 +68,7 @@ SELECT en.entity_id,4,{$attrbute_id} from catalog_product_entity en where en.typ
 
 
 
-    }
+    }*/
 
 
 

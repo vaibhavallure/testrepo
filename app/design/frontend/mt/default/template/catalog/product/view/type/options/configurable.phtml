@@ -2,6 +2,7 @@
 $_optionId = $this->getRequest()->getParam('optionId','');
 $_product    = $this->getProduct();
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
+$attribute_label='';
 //echo "<pre>";
 //print_r($_attributes->getData());
 ?>
@@ -39,6 +40,7 @@ if ($_product->getSizeSample() == 1) {
             </dd>
         <?php endforeach; ?>
     </dl>
+    <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
 
@@ -61,7 +63,7 @@ if ($_product->getSizeSample() == 1) {
                 }
 
                 $core_ses=Mage::getSingleton('core/session');
-                    
+
                 $selVal1=$core_ses->getData("selAtr1");
                 $selectValue1="";
                 if($selVal1)
@@ -96,6 +98,11 @@ if ($_product->getSizeSample() == 1) {
 
                     jQuery("#attribute<?php echo $selVal2?>").val(ele2).trigger('change');
                 }
+
+
+                <?php if(isset($selVal1) && $selVal1=="262"):?>
+                     $(id).simulate('click');
+                <?php endif; ?>
 
                 <?php
                 if($core_ses->getData("child")):
@@ -136,6 +143,7 @@ if ($_product->getSizeSample() == 1) {
             if(option_id){
                 jQuery('#'+ default_id).val(option_id);
             }else{
+
                 jQuery("#"+ default_id).val(jQuery("#"+ default_id + " option:eq(1)").val());
 
                 //Allure code for change first time attribute when page is reload

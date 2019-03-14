@@ -7576,27 +7576,28 @@ f /********** Product Prices > */
 }
 
 .product-shop .product-collateral .product-options div.styled {
-	width: 254px;
+	/*width: 254px;*/
+width: 170px !important;
 }
 
 .product-shop .product-collateral .product-options div.styled select {
 	-moz-appearance: none;
 	text-indent: 0.01px;
 	text-overflow: '';
-	padding-right: 38px;
+	padding-right: 10px;
 	padding-left: 5px;
 }
 
 .chrome .product-shop .product-collateral .product-options div.styled select
 {
-	padding-left: 1px;
-	padding-right: 36px;
+	padding-left: 5px;
+	padding-right: 10px;
 }
 
 .chrome.mac .product-shop .product-collateral .product-options div.styled select
 {
 	padding-left: 5px;
-	padding-right: 38px;
+	padding-right: 10px;
 }
 /*Safari style*/
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -18233,8 +18234,9 @@ ul.products-grid2 {
 }
 
 .product-view .product-shop .product-options dd select {
-	width: 271px;
+	width: 271px !important;
 	cursor: pointer;
+	background: transparent;
 }
 
 .amconf-images-container img.amconf-image {
@@ -19979,5 +19981,6 @@ input.giftcard-radio1 {
 	margin-left: 25px !important;
 }
 .product-view .product-options .ajax-error-messages{
-	left: 0px;
+	/*left: 0px;*/
+right: 20px;
 }

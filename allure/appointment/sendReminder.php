@@ -2,21 +2,19 @@
 require_once '../../app/Mage.php';
 umask(0);
 Mage::app();
+$config=Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
 
-if(!isset($_GET['storeid']))
+if(isset($_GET['storeid']))
 {
-    die();
-}
 
-    $config=Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     $store=$_GET['storeid'];
     $storeKey = array_search ($store, $config['stores']);
     $timezone = $config['timezones'][$storeKey];
     date_default_timezone_set($timezone);
     $storeDate=date('Y-m-d H:i:s');
 
-     $nextTime =$storeDate;
-     $next2Time= date("Y-m-d 23:59:59",strtotime($storeDate));
+    $nextTime =$storeDate;
+    $next2Time= date("Y-m-d 23:59:59",strtotime($storeDate));
 
 
     $allAppointments = Mage::getModel('appointments/appointments')->getCollection();
@@ -25,24 +23,36 @@ if(!isset($_GET['storeid']))
     $allAppointments->addFieldToFilter('app_status',Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     $allAppointments->addFieldToFilter('store_id', array('eq' => $store));
 
+}
+else if(isset($_GET['id']))
+{
+    $allAppointments[] = Mage::getModel('appointments/appointments')->load($_GET['id']);
+
+}
+else
+{
+    die();
+}
+
 
 if(count($allAppointments)>0) {
+
 
     $sendEmail = false;
     $sendSms = false;
 
-
     $configData = $config;
 
     foreach ($allAppointments as $appointment) {
-        $storeId = $appointment->getStoreId();
+         $storeId = $appointment->getStoreId();
         $storeKey = array_search($storeId, $configData['stores']);
         //$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
-        $toSend = $configData['customer_email_enable'][$storeKey];
+         $toSend = $configData['customer_email_enable'][$storeKey];
+
         //$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
         $templateId = $configData['email_template_appointment_remind'][$storeKey];
-        $sender = array('name' => Mage::getStoreConfig("trans_email/bookings/name", 1),
-            'email' => Mage::getStoreConfig("trans_email/bookings/email", 1));
+         $sender = array('name' => Mage::getStoreConfig("trans_email/bookings/name", 1),
+            'email' => $configData['store_email'][$storeKey]);
 
         //$toSendAdmin = Mage::getStoreConfig("appointments/admin/send_admin_email",$storeId);
         $toSendAdmin = $configData['admin_email_enable'][$storeKey];
@@ -55,8 +65,9 @@ if(count($allAppointments)>0) {
         $phone = $appointment->getPhone();
         $appstatus = $appointment->getAppStatus();
 
+        $currentdate=Mage::getModel('core/date')->Date('Y-m-d H:i:s');
 
-        $appointment->setLastNotified($date);
+        $appointment->setLastNotified($currentdate);
         $appointment->save();
 
 
@@ -71,9 +82,9 @@ if(count($allAppointments)>0) {
         $appointmentStart = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
         $appointmentEnd = date("F j, Y H:i", strtotime($model->getAppointmentEnd()));
         if ($sendEmail) {
-
             /*Email Code*/
             if ($toSend) {
+
                 $mailSubject = "Appointment booking Reminder";
                 $apt_modify_link = Mage::getUrl('appointments/index/modify', array('id' => $model->getId(), 'email' => $model->getEmail(), '_secure' => true));
                 $email = $model->getEmail();
@@ -100,7 +111,7 @@ if(count($allAppointments)>0) {
                     ->sendTransactional($templateId, $sender, $email, $name, $vars);
 
                 Mage::log("reminder email sent to " . $email, Zend_Log::DEBUG, 'appointments.log', true);
-
+echo "reminder email sent to" . $email."<br>";
             }
             /*End of Email Code*/
 
@@ -129,6 +140,7 @@ if(count($allAppointments)>0) {
 
                     Mage::log(" sent sms".$phone, Zend_Log::DEBUG, 'appointments.log', true);
 
+                    echo " sent sms".$phone."<br>";
 
                 }
             }

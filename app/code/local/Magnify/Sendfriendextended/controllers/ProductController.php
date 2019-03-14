@@ -138,7 +138,7 @@ class Magnify_Sendfriendextended_ProductController extends Mage_Sendfriend_Produ
         }
 
         $model->setSender($this->getRequest()->getPost('sender'));
-        $model->setRecipients($this->getRequest()->getPost('recipients'));
+        $model->getRecipients()->setData($this->getRequest()->getPost('recipients'));
         $model->setProduct($product);
 
         try {

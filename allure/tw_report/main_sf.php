@@ -100,7 +100,7 @@ function refreshToken()
     $clientId = "3MVG9CEn_O3jvv0xFGmB78Bd4pSsSTm2n7Q.ifFizt29IJDVSzTb0e5UtkQ2VeCOapw.rbvbNhyjga2X2Mgid";
     $clientSecret = "3819778418826826068";
     $username = "indrajeetlatthe@allureinc.co";
-    $password = 'A11ure$$jNdIJcZGZ9GR80sTNlngyhS6';
+    $password = 'mt@$h183MzHobusdJGqcdHbOSdy4xTAKv';
 
     $tokenUrl = BASE_URL . OAUTH_URL . "grant_type={$grantType}&client_id={$clientId}&" .
         "client_secret={$clientSecret}&username={$username}&password={$password}";
@@ -142,6 +142,25 @@ function buildIncrentIdForQuery($fileName)
             $incrementIds .= "Increment_Id__c+LIKE+'TW-" . $lineArray[0] . "'";
         else
             $incrementIds .= "Increment_Id__c+LIKE+'TW-" . $lineArray[0] . "'+OR+";
+    }
+    return $incrementIds;
+}
+
+/**
+ * @param fileName
+ * @desc Returns increment ids in String comma seperated
+ */
+function buildPDFNameForQuery($fileName)
+{
+    $lines = file($fileName);
+    $incrementIds = "";
+    foreach ($lines as $lineNumber => $line) {
+        $myvalue = $lines[$lineNumber];
+        $lineArray = explode(',', trim($myvalue));
+        if ($lineNumber == sizeof($lines) - 1)
+            $incrementIds .= "Title+LIKE+'" . $lineArray[0] . "'";
+        else
+            $incrementIds .= "Title+LIKE+'" . $lineArray[0] . "'+OR+";
     }
     return $incrementIds;
 }

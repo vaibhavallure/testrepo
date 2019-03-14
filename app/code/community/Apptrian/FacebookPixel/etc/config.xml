@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  Apptrian
+ * @package   Apptrian_FacebookPixel
+ * @author    Apptrian
+ * @copyright Copyright (c) Apptrian (http://www.apptrian.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License
+ */
+-->
+<config>
+    <modules>
+        <Apptrian_FacebookPixel>
+            <version>1.2.1</version>
+        </Apptrian_FacebookPixel>
+    </modules>
+    <global>
+        <models>
+            <apptrian_facebookpixel>
+                <class>Apptrian_FacebookPixel_Model</class>
+            </apptrian_facebookpixel>
+        </models>
+        <resources>
+            <apptrian_facebookpixel_setup>
+                <setup>
+                    <module>Apptrian_FacebookPixel</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </apptrian_facebookpixel_setup>
+        </resources>
+        <blocks>
+            <apptrian_facebookpixel>
+                <class>Apptrian_FacebookPixel_Block</class>
+            </apptrian_facebookpixel>
+        </blocks>
+        <helpers>
+            <apptrian_facebookpixel>
+                <class>Apptrian_FacebookPixel_Helper</class>
+            </apptrian_facebookpixel>
+        </helpers>
+    </global>
+    <default>
+        <apptrian_facebookpixel>
+            <general>
+                <enabled>1</enabled>
+                <pixel_id>123456789012345</pixel_id>
+                <mapping_product>google_product_category=google_product_category|color=color</mapping_product>
+                <mapping_order>google_product_category=google_product_category|color=color</mapping_order>
+            </general>
+        </apptrian_facebookpixel>
+    </default>
+    <frontend>
+        <layout>
+            <updates>
+                <apptrian_facebookpixel>
+                    <file>apptrian_facebookpixel.xml</file>
+                </apptrian_facebookpixel>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Apptrian_FacebookPixel>
+                    <files>
+                        <default>Apptrian_FacebookPixel.csv</default>
+                    </files>
+                </Apptrian_FacebookPixel>
+            </modules>
+        </translate>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <apptrian_info>
+                                            <title>Info</title>
+                                        </apptrian_info>
+                                        <apptrian_facebookpixel>
+                                            <title>Facebook Pixel</title>
+                                        </apptrian_facebookpixel>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <translate>
+            <modules>
+                <Apptrian_FacebookPixel>
+                    <files>
+                        <default>Apptrian_FacebookPixel.csv</default>
+                    </files>
+                </Apptrian_FacebookPixel>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>

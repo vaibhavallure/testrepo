@@ -304,7 +304,10 @@ class Allure_Teamwork_Model_Tmobserver{
                         ->setTwAcceptMarketing($customerDetails["AcceptMarketing"])
                         ->setTwAcceptTransactional($customerDetails["AcceptTransactional1"])
                         ->save();
-                    
+
+
+                    $customer->sendNewAccountEmail();
+
                     //updated customer status 
                     if($tmOrderObj->getEntityId())  {
                         $tmOrderObj->setCustomerStatus("create")->save();
@@ -930,6 +933,9 @@ class Allure_Teamwork_Model_Tmobserver{
                     $this->addLog("Order create. Order Id:".$orderObj->getId());
                     $dataArr = array($object);
                     $this->createInvoice($dataArr);
+                    
+
+
                     $this->createCreditMemo($dataArr);
                     $this->createShipment($dataArr);
                     $tmOrderObj = null;
@@ -1269,7 +1275,7 @@ class Allure_Teamwork_Model_Tmobserver{
                     $this->addLog("05 - Exc - ".$e->getMessage());
                 }
             }
-            
+
         }catch (Exception $e){
             $this->addLog("06 - Exc - ".$e->getMessage());
         }
