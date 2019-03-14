@@ -90,7 +90,7 @@ if($_product->getTypeId()=="configurable"){
     ?>
 
 <?php if (($collection && $collection->getSize())) : ?>
-    <div class="mt-allure-instagram-block block-title fancybox">
+    <div class="mt-allure-instagram-block block-title">
         <strong><span class="mt-title-instagram"><?php echo $this->__('As seen on instagram') ?></span></strong>
     </div>
     <div class="image_carousel mt-allure-instacarasal">
@@ -187,9 +187,9 @@ if($_product->getTypeId()=="configurable"){
 	                        	$class='style="width:150px"';
 	                        	$isclass = true;
 	                        }
-	                        else{
-	                            $class='style="width:150px"';
-	                            $isclass = true;
+                            else{
+                                $class='style="width:150px"';
+                                $isclass = true;
                             }
                         ?>
                         <img  src="<?php echo $imageUrl ?>" alt="" <?php echo ($isclass)?$class:""?>" />
