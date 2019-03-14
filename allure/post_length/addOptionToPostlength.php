@@ -13,7 +13,7 @@ umask(0);
 Mage::app('default');
 
 
-const OPTION="9.5MM";
+const OPTION="9.5mm";
 
 
 $resource = Mage::getSingleton('core/resource');
