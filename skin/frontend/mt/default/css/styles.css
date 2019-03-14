@@ -7597,7 +7597,7 @@ width: 170px !important;
 .chrome.mac .product-shop .product-collateral .product-options div.styled select
 {
 	padding-left: 5px;
-	padding-right: 38px;
+	padding-right: 10px;
 }
 /*Safari style*/
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -18234,8 +18234,9 @@ ul.products-grid2 {
 }
 
 .product-view .product-shop .product-options dd select {
-	width: 271px;
+	width: 271px !important;
 	cursor: pointer;
+	background: transparent;
 }
 
 .amconf-images-container img.amconf-image {
