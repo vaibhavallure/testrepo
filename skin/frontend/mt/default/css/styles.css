@@ -7576,21 +7576,22 @@ f /********** Product Prices > */
 }
 
 .product-shop .product-collateral .product-options div.styled {
-	width: 254px;
+	/*width: 254px;*/
+width: 170px !important;
 }
 
 .product-shop .product-collateral .product-options div.styled select {
 	-moz-appearance: none;
 	text-indent: 0.01px;
 	text-overflow: '';
-	padding-right: 38px;
+	padding-right: 10px;
 	padding-left: 5px;
 }
 
 .chrome .product-shop .product-collateral .product-options div.styled select
 {
-	padding-left: 1px;
-	padding-right: 36px;
+	padding-left: 5px;
+	padding-right: 10px;
 }
 
 .chrome.mac .product-shop .product-collateral .product-options div.styled select
