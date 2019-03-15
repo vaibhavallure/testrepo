@@ -9,6 +9,26 @@ a.navbar-brand {
     padding-bottom: 0.5125rem;
 }
 
+.row.footer-links {
+    max-width: 768px;
+    margin: 0 auto;
+}
+
+.row.footer-links > div > div {
+    display: block;
+    text-align: center;
+}
+
+a#footer-link-main {
+    margin-top: 14px;
+    display: inline-block;
+}
+
+.footer a {
+    color: #2c2c2c;
+    font-size: 14px;
+}
+
 .mt-bg {
 	padding-top: 10px;
 	background-color: #000000;
@@ -477,14 +497,17 @@ input[type="checkbox"]:focus+label::before {
 /*FOOTER*/
 
 button#btnSubscribe {
-	color: black;
-	width: 150px;
-	border: 2px solid;
-	text-transform: uppercase;
+    color: #2c2c2c;
+    width: 150px;
+    border: 2px solid;
+    text-transform: uppercase;
+    line-height: 39px;
+    margin-top: 19px;
+    padding: 0;
 }
 
 input#subscribe_email {
-	height: 40px;
+	line-height: 30px;
 	background: #000;
 }
 
