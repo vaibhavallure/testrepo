@@ -146,7 +146,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments.log', true );
                     /* If piercer is not free logic start*/
                     if(empty($collection->getData())){
-                        echo "<input type='text' readonly class='input-box '>All appointments are booked for the selected date.</option>";
+                        echo "<input type='text' readonly class='input-box ' value='All appointments are booked for the selected date'/>";
                         $notfreepeiercer_show=1;
                     }
                     /* If piercer is not free logic end*/
@@ -159,9 +159,10 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
             $isFour = 0;
             $countSlot = 0;
-            $noSlot=true;?>
-            <select class="input-box" name="selectTime" id="selectTime">
-                <?php
+            $noSlot=true;
+            if($totalSlot):
+            echo "<select class='input-box' name='selectTime' id='selectTime' >";
+                endif;
             for($i=0;$i< $totalSlot;$i++)
             {
                 $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
@@ -299,9 +300,9 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     }
 
 
-echo "<option class='$htmlsel'  id='time_slot_$i'
- data-start_time_slot=''$selectedTime' data-end_time_slot='$endTime'
- data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$slotval</option>";
+echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
+ data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
+ data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
 
 
                     echo "<span >";
