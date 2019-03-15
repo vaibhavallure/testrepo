@@ -390,12 +390,10 @@ p.label {
 
 }
 .half-div-left{
-    background-image: url("/skin/bootstrap/images/maria.png");
     background-repeat: no-repeat;
     background-position:center;
     background-attachment: scroll;
-    width: 690px;
-    height: 850px;
+
 }
 
 
@@ -485,8 +483,12 @@ p.footer-subtitle-small
 {
    opacity: 0;
 }
-input#datepicker-13_hidden {
+input#datepicker-13_hidden,
+select#selectTime,
+text#erroMsg
+{
     width: 235px;
+    margin-right: 10px;
 }
 input#datepickerpopup {
     margin-right: 10px;
