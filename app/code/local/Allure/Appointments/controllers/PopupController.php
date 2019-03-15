@@ -43,9 +43,9 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         }
 
         $block = $this->getLayout()
-            ->createBlock('core/template', 'appointments_popup_picktime',
+            ->createBlock('core/template', 'appointments_popup_picktimes',
                 array(
-                    'template' => 'appointments/popup/picktime.phtml'
+                    'template' => 'allure/appointments/popup/picktime.phtml'
                 ))
             ->setData("timing", $time)
             ->setData("date", $request['date'])
@@ -66,15 +66,15 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         $storeKey = array_search ($request['store'], $configData['stores']);
         $storeMap = $configData['store_map'][$storeKey];
 
-        $blockIdentifier = $configData['piercing_pricing_block'][$storeKey];
-
-        $pricingBlock = $this->getLayout()->createBlock('appointments/pricing','appointments_piercing_pricing',
-            array('template' => 'appointments/pricing.phtml'))
-            ->setPricingCollection($collection)
-            ->setStoreMap($storeMap)
-            ->setCmsBlockId($blockIdentifier);
-        $pricingHtml = $pricingBlock->toHtml();
-        $result['pricing_html'] = $pricingHtml;
+//        $blockIdentifier = $configData['piercing_pricing_block'][$storeKey];
+//
+//        $pricingBlock = $this->getLayout()->createBlock('appointments/pricing','appointments_piercing_pricing',
+//            array('template' => 'appointments/pricing.phtml'))
+//            ->setPricingCollection($collection)
+//            ->setStoreMap($storeMap)
+//            ->setCmsBlockId($blockIdentifier);
+//        $pricingHtml = $pricingBlock->toHtml();
+//        $result['pricing_html'] = $pricingHtml;
 
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 
@@ -360,6 +360,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 return;
             }
         }
+        Mage::log('END OF SAVE ACTION IN POPUP Controller',Zend_Log::DEBUG,'myLog.log',true);
         $this->_redirectReferer().$appendUrl;
         // $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
     }
@@ -547,9 +548,9 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         $storeKey = array_search ($storeid, $configData['stores']);
 
         $block = $this->getLayout()
-            ->createBlock('core/template', 'appointments_pickurday',
+            ->createBlock('core/template', 'appointments_popup_pickurday',
                 array(
-                    'template' => 'appointments/pickurday.phtml'
+                    'template' => 'allure/appointments/popup/pickdate.phtml'
                 ))
             ->setData("workingdays", $jsonDATA);
 

@@ -1,3 +1,37 @@
+<?php
+//To modify the appointment get the data from registry start
+$fetch_model = Mage::registry('apt_modify_data');
+
+if($fetch_model){
+
+    $f_pickurday = $fetch_model->getAppointmentStart();
+    $timestamp = strtotime($f_pickurday);
+    $fetch_date = date('m/d/Y', $timestamp);
+
+
+}
+//To get the ajax call block
+$workingdays = $this->getData("workingdays");
+$workingdaysArray=json_decode($workingdays);
+//$arr = array('11-01-2012', '01-01-2014', '01-01-2015', '09-02-2013', '01-01-2013');
+function date_sort($a, $b) {
+    return strtotime($a) - strtotime($b);
+}
+usort($workingdaysArray, "date_sort");
+//print_r($workingdaysArray);
+
+if (!$fetch_date){
+    //   $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
+    foreach ($workingdaysArray as $value){
+        if($dateCurrent<=$value){
+            $fetch_date =$value ;
+            break;
+        }
+    }
+}
+?>
+
+
 <input  class="input-box"  id="datepicker-13_hidden" />
 
 <script>

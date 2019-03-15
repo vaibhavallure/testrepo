@@ -28,9 +28,10 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
     <?php
     if($no_of_people>0):
         ?>
-        <?php if (!$this->getData("timing")):?>
+        <?php if (!$this->getData("timing")):
+        echo "<input type='text' readonly class='input-box ' value='Not Availables'/>";
+        ?>
 
-        <input type='text' readonly class=' input-box validation-advice' value='All appointments are booked for the selected date.'/>
   <!--        <div class="notfreepeiercer ">Walk-ins are welcome but currently all appointments are booked for the selected date.</div>-->
     <?php else: ?>
 
@@ -146,7 +147,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments.log', true );
                     /* If piercer is not free logic start*/
                     if(empty($collection->getData())){
-                        echo "<input type='text' readonly class='input-box ' value='All appointments are booked for the selected date'/>";
+                        echo "<input type='text' readonly class='input-box ' value='No Slots Available'/>";
                         $notfreepeiercer_show=1;
                     }
                     /* If piercer is not free logic end*/
@@ -160,9 +161,9 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $isFour = 0;
             $countSlot = 0;
             $noSlot=true;
-            if($totalSlot):
-            echo "<select class='input-box' name='selectTime' id='selectTime' >";
-                endif;
+            if(!empty($collection->getData())) {
+                echo "<select class='input-box' name='selectTime' id='selectTime' >";
+            }
             for($i=0;$i< $totalSlot;$i++)
             {
                 $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
@@ -346,7 +347,7 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
 
             if($noSlot){
                 if(!$notfreepeiercer_show)
-                    echo "<input type='text' readonly class=' input-box ' value='All appointments are booked for the selected date.'></option>";
+                    echo "<input type='text' readonly class=' input-box ' value='No Slots Available'>";
             }
 
 
@@ -357,10 +358,9 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
     <?php endif;?>
 
 
-    <?php else: ?>
-        <input type='text' readonly class=' input-box ' value='All appointments are booked for the selected date.'></option>
-
-    <?php endif; ?>
+    <?php else:
+        echo "<input type='text' readonly class='input-box ' value='All Booked'/>";
+    endif;?>
 
 
 <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/timeslider/sliderDemo.js"></script>
@@ -427,21 +427,19 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
         }
     });
 
-    function slotSelected(id){
 
-        var demo = jQuery("#"+id);
-        var starttime = demo[0].getAttribute('data-start_time_slot');
-        var endtime = demo[0].getAttribute('data-end_time_slot');
-        var piercerId = demo[0].getAttribute('data-piercer');
-        jQuery("#starttime_hidden").val(starttime);
-        jQuery("#endtime_hidden").val(endtime);
-        jQuery("#piercer_id").val(piercerId);
+
+</script>
+<script>
+var values =jQuery('#selectTime :selected');
+var starttime = values[0].getAttribute('data-start_time_slot');
+var endtime = values[0].getAttribute('data-end_time_slot');
+var piercerId = values[0].getAttribute('data-piercer');
+jQuery("#starttime_hidden").val(starttime);
+jQuery("#endtime_hidden").val(endtime);
+jQuery("#piercer_id").val(piercerId);
 //			    jQuery(".timeslot").css('background-color',"");
-        //		    jQuery("#"+id).css("background-color","palegoldenrod");
-        jQuery(".timeslot").removeClass("selectedTime");
-        jQuery("#"+id).addClass("selectedTime");
-
-    }
-
-    //});
+//		    jQuery("#"+id).css("background-color","palegoldenrod");
+jQuery(".timeslot").removeClass("selectedTime");
+jQuery("#"+id).addClass("selectedTime");
 </script>
