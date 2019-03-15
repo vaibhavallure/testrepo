@@ -39,6 +39,7 @@ class Allure_BrownThomas_Model_Data
 
         $whr = 'WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)';
         $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id ' . $whr;
+
         $products = $readConnection->fetchCol($sql);
         $data = array();
         $dataFudas=array();
@@ -155,6 +156,38 @@ class Allure_BrownThomas_Model_Data
         else
         {
             $data['p_size']="";
+        }
+
+        return $data;
+    }
+
+    public function getEnrichData()
+    {
+        $readConnection = $this->readConnection();
+        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
+        $barcode_attr_id=$this->data()->getAttributeId('barcode');
+
+        $whr = 'WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)';
+        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id ' . $whr;
+
+        $products = $readConnection->fetchCol($sql);
+        $data = array();
+
+        foreach ($products as $product_id) {
+            $_product = Mage::getSingleton("catalog/product")->load($product_id);
+
+            $formatedSKU = strtolower(preg_replace("/[^a-zA-Z0-9 ]+/", "", $_product->getSKU()));
+            $data[$product_id]['WC_Product_ID'] = $this->formatString(SELF::DEPARTMENT . "x" . SELF::SUPPLIER . "x" . $formatedSKU, 45);
+            $data[$product_id]['Barcode'] = $this->formatString($_product->getBarcode(), 13);
+            $data[$product_id]['department'] = self::DEPARTMENT;
+            $data[$product_id]['brand'] = 'Maria Tash';
+            $data[$product_id]['VPN'] = $this->formatString($formatedSKU, 30);
+            $data[$product_id]['color_shade'] = 'Multi';
+            $data[$product_id]['color_family']='MULTI';
+            $data[$product_id]['product_name']=$_product->getName();
+            $data[$product_id]['copy']=$_product->getShortDescription();
+            $data[$product_id]['copy']=$_product->getShortDescription();
+
         }
 
         return $data;
