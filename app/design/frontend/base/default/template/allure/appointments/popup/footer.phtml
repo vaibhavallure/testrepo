@@ -29,15 +29,15 @@
                 </div>
                 <div class="col-md-4">
                     <div class="row">
-                        <a class="footer-subtitle-small" href="#about-maria-nav" id="footer-link-about">ABOUT MARIA TASH</a>
+                        <a class="footer-subtitle-small" href="#about-maria" id="footer-link-about">ABOUT MARIA TASH</a>
                     </div>
                     <div class="row">
-                        <a class="footer-subtitle-small" href="#" id="footer-link-profiles">PIERCER PROFILES</a>
+                        <a class="footer-subtitle-small" href="#faq" id="footer-link-profiles">PIERCER PROFILES</a>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="row">
-                        <a class="footer-subtitle-small" target="_blank" href="https://www.mariatash.com/" id="footer-link-main">POP UP INFORMATION</a>
+                        <a class="footer-subtitle-small" target="_blank" href="https://www.mariatash.com/" id="footer-link-main">MARIATASH.COM</a>
                     </div>
 
                 </div>
@@ -47,7 +47,8 @@
 </div>
 <!--FOOTER SECTION END-->
 
-<script>
+<script type="text/javascript">
+/*
     jQuery("#top-nav").click(function() {
         jQuery('html, body').animate({
             scrollTop: jQuery("#top").offset().top
@@ -90,5 +91,12 @@
             scrollTop: jQuery("#booking").offset().top
         }, 1000);
     });
+    */
 
+    jQuery("a.nav-link,a.footer-subtitle-small").click(function(e) {
+        var targetElement = jQuery(jQuery(this).attr('href'));
+        jQuery('html, body').animate({
+            scrollTop: targetElement.offset().top - jQuery('.navbar').outerHeight()
+        }, 1000);
+    });
 </script>
