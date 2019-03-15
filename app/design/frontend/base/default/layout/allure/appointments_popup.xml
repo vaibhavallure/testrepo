@@ -2,22 +2,21 @@
 <layout version="0.1.0">
 	<default_popup>
         <reference name="head">
-            <action method="addItem"><type>skin_js</type><name>js/timeslider/sliderDemo.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/timeslider/jQAllRangeSliders-min.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/timeslider/appointments.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/timeslider/dcalendar_picker.js</name></action>
-			<action method="addItem"><type>skin_js</type><name>js/allure/input_validate.js</name></action>
-            <action method="addCss"><stylesheet>css/timeslider/appointments.css</stylesheet></action>
-            <!-- <action method="addCss"><stylesheet>css/style.css</stylesheet></action> -->
-            <action method="addCss"><stylesheet>css/responsive.css</stylesheet></action>
-            <action method="addCss"><stylesheet>css/timeslider/sliderDemo.css</stylesheet></action>
-            <action method="addCss"><stylesheet>css/timeslider/dcalendar_picker.css</stylesheet></action>
-             <action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action>
-             <action method="addJs"><script>jquery/jquery.jcarousel.min.js</script></action>
-             <action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/sliderDemo.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/jQAllRangeSliders-min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/appointments.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/dcalendar_picker.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/input_validate.js</name></action>
+			<action method="addCss"><stylesheet>css/allure/appointments/appointments.css</stylesheet></action>
+			<!-- <action method="addCss"><stylesheet>css/style.css</stylesheet></action> -->
+			<action method="addCss"><stylesheet>css/responsive.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/allure/appointments/sliderDemo.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/allure/appointments/dcalendar_picker.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action>
+			<action method="addJs"><script>jquery/jquery.jcarousel.min.js</script></action>
+			<action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
 
 			<!--CSS & JS FOR POP UP -->
-			<action method="addItem"><type>skin_js</type><name>js/bootstrap/jquery-boot.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap.js</name></action>
 			<!--<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap-datepicker.js</name></action>-->
 			<action method="addCss"><stylesheet>css/allure/allure_popup.css</stylesheet></action>
