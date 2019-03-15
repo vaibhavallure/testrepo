@@ -24,8 +24,6 @@
 			<action method="addCss"><stylesheet>css/allure/font.css</stylesheet></action>
 			<action method="addCss"><stylesheet>css/bootstrap/bootstrap.css</stylesheet></action>
 			<!--<action method="addCss"><stylesheet>css/bootstrap/css/bootstrap-datepicker3.css</stylesheet></action>-->
-			<action method="addJs"><script>allure/intel-tel-validation.js</script></action>
-			<action method="addJs"><script>allure/phone_valid.js</script></action>
         </reference>
 	</default_popup>
 	<!--NEW POP UP-->
@@ -35,8 +33,8 @@
 			<action method="setTemplate"><template>allure/page/empty.phtml</template></action>
 		</reference>
 		<reference name="content">
-			<block type="appointments/popup" name="appointments_popup" as="appointments_popup" template="allure/appointments/popup/nordstom_popup.phtml">
-				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_menu" template="allure/appointments/popup/top.phtml"/>
+			<block type="appointments/popup" name="appointments_popup_container" as="appointments_popup_container" template="allure/appointments/popup/container.phtml">
+				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_top" template="allure/appointments/popup/top.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_menu" template="allure/appointments/popup/menu.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/popup/register.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/popup/pickdatetime.phtml">
@@ -44,6 +42,7 @@
 					<block type="appointments/popup" name="appointments_popup_picktime" as="appointments_popup_picktime" template="allure/appointments/popup/picktime.phtml"/>
 				</block>
 				<block type="appointments/popup" name="appointments_popup_register_end" as="appointments_popup_register_end" template="allure/appointments/popup/register_end.phtml"/>
+				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_faq" template="allure/appointments/popup/faq.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_footer" as="appointments_popup_footer" template="allure/appointments/popup/footer.phtml"/>
 			</block>
 		</reference>
