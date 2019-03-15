@@ -96,7 +96,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
 
         $embeded = $this->getRequest()->getParam('embedded');
-        $storep = 'london';
+        $storep = $post_data['store-id'];
 
         if ($embeded == '1')
             $appendUrl = "?embedded=" . $embeded;
@@ -130,6 +130,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                     $step="save";
                     $action="save";
                 }
+
 
                 // http://www.geoplugin.net/php.gp?ip=219.91.251.70
                 $post_data['ip'] = $this->get_client_ip();
