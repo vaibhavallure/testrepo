@@ -41,73 +41,73 @@ switch ($country) {
 		
 	case "SF" :
 		$contacts = array ("conseil" => "Vous avez besoin d'un conseil",
-						"noms" => "Contactez <strong>Ulrike Treptow</strong> ou <strong>Stephanie Niggl</strong>",
+						"noms" => "Contactez <strong>Ulrike Treptow</strong> ou <strong>Elodie Kohr</strong>",
 						"telephone" => array(array ("label" => "+41 43 550 03 42", "href" => "+41435500342")),
 						"ouverture" => "Du lundi au vendredi de <strong>9h &agrave; 17h</strong>",
-						"emails" => array("utreptow@millesima.com","sniggl@millesima.com")
+						"emails" => array("utreptow@millesima.com", "ekohr@millesima.com")
 						);
 		break;
 
 	case "D" :
 		$contacts = array ("conseil" => "Service und Beratung",
-						"noms" => "Kontaktieren Sie <strong>Ulrike Treptow</strong> oder <strong>Stephanie Niggl</strong>",
+						"noms" => "Kontaktieren Sie <strong>Ulrike Treptow</strong> oder <strong>Elodie Kohr</strong>",
 						"telephone" => array(array ("label" => "00 800 267 33 289", "href" => "+80026733289")),
 						"ouverture" => "Mo-Frei zu B&uuml;rozeiten",
-						"emails" => array("utreptow@millesima.com","sniggl@millesima.com")
+						"emails" => array("utreptow@millesima.com", "ekohr@millesima.com")
 						);
 		break;
 		
 	case "O" :
 		$contacts = array ("conseil" => "Service und Beratung",
-						"noms" => "Kontaktieren Sie <strong>Ulrike Treptow</strong> oder <strong>Stephanie Niggl</strong>",
+						"noms" => "Kontaktieren Sie <strong>Ulrike Treptow</strong> oder <strong>Elodie Kohr</strong>",
 						"telephone" => array(array ("label" => "+43 720 77 59 18", "href" => "+43720775918")),
 						"ouverture" => "Mo-Frei zu B&uuml;rozeiten",
-						"emails" => array("utreptow@millesima.com","sniggl@millesima.com")
+						"emails" => array("utreptow@millesima.com", "ekohr@millesima.com")
 						);
 		break;
 		
 	case "SA" :
 		$contacts = array ("conseil" => "Service und Beratung",
-						"noms" => "Kontaktieren Sie <strong>Ulrike Treptow</strong> oder <strong>Stephanie Niggl</strong>",
+						"noms" => "Kontaktieren Sie <strong>Ulrike Treptow</strong> oder <strong>Elodie Kohr</strong>",
 						"telephone" => array(array ("label" => "+41 43 550 03 42", "href" => "+41435500342")),
 						"ouverture" => "Mo-Frei zu B&uuml;rozeiten",
-						"emails" => array("utreptow@millesima.com","sniggl@millesima.com")
+						"emails" => array("utreptow@millesima.com", "ekohr@millesima.com")
 						);
 		break;
 		
 	case "G" :
 		$contacts = array ("conseil" => "Need advice?",
-						"noms" => "Feel free to contact <strong>Hope Gee</strong>",
+						"noms" => "Feel free to contact <strong>our team</strong>",
 						"telephone" => array(array ("label" => "+44 (0) 20 8089 1875", "href" => "+442080891875")),
 						"ouverture" => "Monday to Friday from <strong>8 AM to 5&nbsp;PM</strong>",
-						"emails" => array("hgee@millesima.com")
+						"emails" => array("customercare@millesima.com")
 						);
 		break;
 		
 	case "I" :
 		$contacts = array ("conseil" => "Need advice?",
-						"noms" => "Feel free to contact <strong>Hope Gee</strong>",
+						"noms" => "Feel free to contact <strong>our team</strong>",
 						"telephone" => array(array ("label" => "1 800 55 3393", "href" => "1800553393")),
 						"ouverture" => "Monday to Friday from <strong>8 AM to 5&nbsp;PM</strong>",
-						"emails" => array("hgee@millesima.com")
+						"emails" => array("customercare@millesima.com")
 						);
 		break;
 		
 	case "H" :
 		$contacts = array ("conseil" => "Need advice?",
-						"noms" => "Feel free to contact <strong>Morgane Renaud</strong> or <strong>Hope Gee</strong>",
+						"noms" => "Feel free to contact <strong>our team</strong>",
 						"telephone" => array(array ("label" => "(852) 5801 0939", "href" => "85258010939")),
 						"ouverture" => "Monday to Friday from <strong>3 PM to 11&nbsp;PM</strong>",
-						"emails" => array("mrenaud@millesima.com", "hgee@millesima.com")
+						"emails" => array("customercare@millesima.com")
 						);
 		break;
 
 	case "SG" :
 		$contacts = array ("conseil" => "Need advice?",
-						"noms" => "Feel free to contact <strong>Morgane Renaud</strong> or <strong>Hope Gee</strong>",
+						"noms" => "Feel free to contact <strong>our team</strong>",
 						"telephone" => array(array ("label" => "(65) 3159 1767", "href" => "6531591767")),
 						"ouverture" => "Monday to Friday from <strong>3 PM to 11&nbsp;PM</strong>",
-						"emails" => array("mrenaud@millesima.com", "hgee@millesima.com")
+						"emails" => array("customercare@millesima.com")
 						);
 		break;
 
