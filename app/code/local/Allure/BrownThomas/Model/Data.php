@@ -182,15 +182,30 @@ class Allure_BrownThomas_Model_Data
             $data[$product_id]['department'] = self::DEPARTMENT;
             $data[$product_id]['brand'] = 'Maria Tash';
             $data[$product_id]['VPN'] = $this->formatString($formatedSKU, 30);
-            $data[$product_id]['color_shade'] = 'Multi';
-            $data[$product_id]['color_family']='MULTI';
+            $data[$product_id]['color_shade'] = $this->formatString(strtoupper($this->getVendorColor($_product)), 24);;
+            $data[$product_id]['color_family']='GOLD';
             $data[$product_id]['product_name']=$_product->getName();
             $data[$product_id]['copy']=$_product->getShortDescription();
-            $data[$product_id]['copy']=$_product->getShortDescription();
+            $data[$product_id]['product_detail']="";
 
         }
 
         return $data;
+    }
+    public function getEnrichTitles()
+    {
+        return array(
+            1=>"WCID",
+            2=>"Barcode",
+            3=>"Department",
+            4=>"Brand",
+            5=>"VPN",
+            6=>"Colour Shade",
+            7=>"Colour Family",
+            8=>"Product Name",
+            9=>"Copy",
+            10=>"Product Details"
+        );
     }
 
 
