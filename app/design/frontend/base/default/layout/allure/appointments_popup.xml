@@ -24,8 +24,6 @@
 			<action method="addCss"><stylesheet>css/allure/font.css</stylesheet></action>
 			<action method="addCss"><stylesheet>css/bootstrap/bootstrap.css</stylesheet></action>
 			<!--<action method="addCss"><stylesheet>css/bootstrap/css/bootstrap-datepicker3.css</stylesheet></action>-->
-			<action method="addJs"><script>allure/intel-tel-validation.js</script></action>
-			<action method="addJs"><script>allure/phone_valid.js</script></action>
         </reference>
 	</default_popup>
 	<!--NEW POP UP-->

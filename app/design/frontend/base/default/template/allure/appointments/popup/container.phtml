@@ -1,0 +1,41 @@
+<?php
+/**
+ * nordstorm popup
+ */
+?>
+
+<div id="appointments-popup-wrapper">
+    <?php echo $this->getChildHtml("appointments_popup_top");?>
+    <?php echo $this->getChildHtml("appointments_popup_menu");?>
+    <?php echo $this->getChildHtml("appointments_popup_register");?>
+    <?php echo $this->getChildHtml("appointments_popup_pickdatetime");?>
+    <?php echo $this->getChildHtml("appointments_popup_register_end");?>
+    <?php echo $this->getChildHtml("appointments_popup_faq");?>
+    <?php echo $this->getChildHtml("appointments_popup_footer");?>
+</div>
+
+<script type="text/javascript">
+    if (typeof Allure == "undefined") {
+        var Allure = {};
+    }
+    Allure.appointmentId = '<?php echo $this->getRequest()->getParam('id')?>';
+    //console.log(Allure.appointmentId);
+    Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
+    Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
+    Allure.getSupportDetailsActionUrl = '<?php echo $this->getSupportDetailsActionUrl()?>';
+
+    function formatDate(date) {
+        var monthNames = [
+            "Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "Jul",
+            "Aug", "Sep", "Oct",
+            "Nov", "Dec"
+        ];
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return monthNames[monthIndex] + ' ' +  day + ', ' + year;
+    }
+</script>
