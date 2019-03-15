@@ -40,7 +40,7 @@ input#selectDate {
 
 .hero-image {
 
-    background-image: url("/skin/frontend/mt/default/images/popup/topBg.png");
+    background-image: url("../../images/allure/popup/topBg.png");
     background-repeat: no-repeat;
     background-position:center;
     height: 100%;
@@ -54,7 +54,7 @@ input#selectDate {
     /*margin-top: 50px;*/
 
     width: 400px;
-    background: #000000;
+    background: #2c2c2c;
     /*top: 50%;*/
     /*transform: translate(0,-50%);*/
 }
@@ -392,7 +392,7 @@ p.label {
 
 }
 .half-div-left{
-    background-image: url("/skin/bootstrap/images/maria.png");
+    background-image: url("../../images/allure/popup/maria.png");
     background-repeat: no-repeat;
     background-position:center;
     background-attachment: scroll;
@@ -577,5 +577,3 @@ a.down-arrow {
 
 
 }
-
-

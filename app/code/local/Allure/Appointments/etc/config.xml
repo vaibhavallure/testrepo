@@ -23,6 +23,9 @@
 				<appointments>
 					<file>appointments.xml</file>
 				</appointments>
+				<appointments_popup>
+					<file>allure/appointments_popup.xml</file>
+				</appointments_popup>
 			</updates>
 		</layout>
 	</frontend>
@@ -87,7 +90,7 @@
 			</appointments_read>
 		</resources>
 	</global>
-	
+
 	<crontab>
 		<jobs>
 			<appointments_schedule>
@@ -100,7 +103,7 @@
 			</appointments_schedule>
 		</jobs>
 	</crontab>
-	
+
 	<admin>
 		<routers>
 			<appointments>
@@ -121,4 +124,4 @@
 			</updates>
 		</layout>
 	</adminhtml>
-</config> 
+</config>

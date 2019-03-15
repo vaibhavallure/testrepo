@@ -618,9 +618,6 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         return $str;
     }
 
-
-
-
     private function notify_Log($action,$string){
         Mage::helper("appointments/logs")->appointment_notification($action,$string);
     }
@@ -628,8 +625,4 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
     private function helper(){
         return Mage::helper("appointments/data");
     }
-
-
-
-
 }
