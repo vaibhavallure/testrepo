@@ -288,6 +288,24 @@ p.label + div.box {
 	padding: 10px 0px;
 }
 
+.box.people {
+    text-align: center;
+}
+
+.people-wrapper {
+    display: inline-block;
+    float: none;
+    padding: 0 0.75rem;
+}
+
+.people-wrapper > * {
+    display: inline-block;
+}
+
+.datetime-box > div {
+    overflow: hidden;
+}
+
 input#firstname,
 input#datepicker-13 {
 	margin-right: 10px;
