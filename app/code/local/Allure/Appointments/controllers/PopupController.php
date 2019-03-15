@@ -84,16 +84,8 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
     public function saveAction ()
     {
-        if (! $this->_validateFormKey()) {
-            $this->_redirect('*/*/');
-            return;
-        }
-
-        Mage::getSingleton('core/session')->renewFormKey();
 
         $post_data = $this->getRequest()->getPost();
-
-
 
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $post_data['store-id'];
@@ -114,6 +106,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
             $this->_redirectReferer() . $appendUrl;
             return;
         }
+
 
         if ($post_data) {
             $configData = $this->getAppointmentStoreMapping();
