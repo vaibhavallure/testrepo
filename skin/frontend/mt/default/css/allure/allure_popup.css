@@ -382,8 +382,6 @@ p.label {
 }
 .fill img {
     flex-shrink: 0;
-    min-width: 661px;
-    min-height: 900px;
 }
 .half-div-right,
 .half-div-left

@@ -161,7 +161,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $countSlot = 0;
             $noSlot=true;
             if($totalSlot):
-            echo "<select class='input-box' name='selectTime' id='selectTime' >";
+            echo "<select class='input-box' name='selectTime' id='selectTime'>";
                 endif;
             for($i=0;$i< $totalSlot;$i++)
             {
@@ -302,7 +302,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
- data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
+ data-pos='$i' data-piercer='$piercerAllocated' >$selectedTime</option>";
 
 
                     echo "<span >";
@@ -427,24 +427,39 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
             jQuery('#foo2_next, #foo2_prev').hide();
         }
     });
-
-    function slotSelected(id){
-
-        var demo = jQuery("#"+id);
-        var starttime = demo[0].getAttribute('data-start_time_slot');
-        var endtime = demo[0].getAttribute('data-end_time_slot');
-        var piercerId = demo[0].getAttribute('data-piercer');
+//
+//     function slotSelected(id){
+//
+//         var demo = jQuery("#"+id);
+//         var starttime = demo[0].getAttribute('data-start_time_slot');
+//         var endtime = demo[0].getAttribute('data-end_time_slot');
+//         var piercerId = demo[0].getAttribute('data-piercer');
+//         jQuery("#starttime_hidden").val(starttime);
+//         jQuery("#endtime_hidden").val(endtime);
+//         jQuery("#piercer_id").val(piercerId);
+// //			    jQuery(".timeslot").css('background-color',"");
+//         //		    jQuery("#"+id).css("background-color","palegoldenrod");
+//         jQuery(".timeslot").removeClass("selectedTime");
+//         jQuery("#"+id).addClass("selectedTime");
+//
+//     }
+    jQuery("#selectTime").change(function() {
+     var values = jQuery('#selectTime :selected');
+        var starttime = values[0].getAttribute('data-start_time_slot');
+        var endtime = values[0].getAttribute('data-end_time_slot');
+        var piercerId = values[0].getAttribute('data-piercer');
         jQuery("#starttime_hidden").val(starttime);
         jQuery("#endtime_hidden").val(endtime);
         jQuery("#piercer_id").val(piercerId);
-//			    jQuery(".timeslot").css('background-color',"");
-        //		    jQuery("#"+id).css("background-color","palegoldenrod");
-        jQuery(".timeslot").removeClass("selectedTime");
-        jQuery("#"+id).addClass("selectedTime");
 
-    }
+    });
 
-
-
+    var values = jQuery('#selectTime :selected');
+    var starttime = values[0].getAttribute('data-start_time_slot');
+    var endtime = values[0].getAttribute('data-end_time_slot');
+    var piercerId = values[0].getAttribute('data-piercer');
+    jQuery("#starttime_hidden").val(starttime);
+    jQuery("#endtime_hidden").val(endtime);
+    jQuery("#piercer_id").val(piercerId);
     //});
 </script>
