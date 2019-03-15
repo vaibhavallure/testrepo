@@ -1,5 +1,13 @@
 <!--BOOKING SECTION-->
 
+<link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
+<style>
+    .intl-tel-input.allow-dropdown{
+        margin-top: 20px;
+    }
+</style>
 <div id="booking" class="container-fluid booking nopad">
     <div class="container nopad">
         <div class="row">
@@ -7,7 +15,9 @@
                 <div class="booking-box">
                     <p class="xpaces">BOOK YOUR APPOINTMENT</p>
 
-                    <form class="col-md-12 appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post">
+
+
+                    <form class="col-md-12 appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post" id="appointemnet_form">
 
                         <input type="hidden" id="store-id" value="2">
                         <div class="name-box">
@@ -17,7 +27,9 @@
                         </div>
 
                         <input class="input-box required-entry"  type="email" name="email" id="email" placeholder="EMAIL" required>
-                        <input class="input-box required-entry" type="text" name="phonenumber" id="phonenumber" placeholder="PHONE NUMBER" required>
+
+
+                        <input class="input-box required-entry validate-intl-telephone" type="text" name="phonenumber" id="phonenumber" placeholder="PHONE NUMBER" required>
 
                         <p class="label notify-label">I would like to be notified by:</p>
                         <div class="box notify-box">
@@ -41,3 +53,54 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="select-box">
+
+                            <script>
+                                var appointmentForm = new VarienForm('appointemnet_form');
+
+
+                                Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+                                //initialize itel tel input
+                                var input = document.querySelector("#phonenumber")
+                                var iti = window.intlTelInput(input, {
+                                    autoFormat: false,
+                                    autoHideDialCode: false,
+                                    autoPlaceholder: false,
+                                    nationalMode: false,
+                                    utilsScript: Allure.UtilPath
+                                });
+
+                                // take phone number and check if it exist
+                                // if it does not exist then
+                                // first check if we can get Geo Location based Country Code if its there then set it
+                                // otherwise set default as country as 'us'
+                                // Magento module - Allure/GeoLocation
+                                var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
+                                //console.log('[signing_register.phtml] length',phone.length)
+                                if(phone.length <= 0){
+                                    var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+                                    if (country_code == undefined || country_code == null || country_code == "") {
+                                        country_code = "us"
+                                    }
+
+                                    iti.setCountry(country_code.toLowerCase());
+                                } else if (phone.charAt(0) != '+') {
+
+                                    <?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
+                                    var country_code = '<?php echo $f_cntry;?>';
+                                    iti.setCountry(country_code.toLowerCase());
+                                    <?php } ?>
+
+                                    <?php if ((isset($cntry) && !empty($cntry))) { ?>
+                                    var country_code = '<?php echo $cntry;?>';
+                                    iti.setCountry(country_code.toLowerCase());
+                                    <?php } ?>
+                                }
+
+                                //custom validator for itel tel input
+                                //FileName - intel-tel-validation.js
+                                allureIntlTelValidate(jQuery("#phonenumber"),iti);
+                            </script>
