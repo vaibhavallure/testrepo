@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default_popup>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/timeslider/sliderDemo.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/timeslider/jQAllRangeSliders-min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/timeslider/appointments.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/timeslider/dcalendar_picker.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/input_validate.js</name></action>
+            <action method="addCss"><stylesheet>css/timeslider/appointments.css</stylesheet></action>
+            <!-- <action method="addCss"><stylesheet>css/style.css</stylesheet></action> -->
+            <action method="addCss"><stylesheet>css/responsive.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/timeslider/sliderDemo.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/timeslider/dcalendar_picker.css</stylesheet></action>
+             <action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action>
+             <action method="addJs"><script>jquery/jquery.jcarousel.min.js</script></action>
+             <action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
+
+			<!--CSS & JS FOR POP UP -->
+			<action method="addItem"><type>skin_js</type><name>js/bootstrap/jquery-boot.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap.js</name></action>
+			<!--<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap-datepicker.js</name></action>-->
+			<action method="addCss"><stylesheet>css/allure/allure_popup.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/allure/font.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/bootstrap/bootstrap.css</stylesheet></action>
+			<!--<action method="addCss"><stylesheet>css/bootstrap/css/bootstrap-datepicker3.css</stylesheet></action>-->
+        </reference>
+	</default_popup>
+	<!--NEW POP UP-->
+	<appointments_popup_index>
+		<update handle="default_popup"/>
+		<reference name="root">
+			<action method="setTemplate"><template>allure/page/empty.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="appointments/popup" name="appointments_popup" as="appointments_popup" template="allure/appointments/popup/nordstom_popup.phtml">
+				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_menu" template="allure/appointments/popup/menu.phtml"/>
+				<block type="appointments/popup" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/popup/register.phtml"/>
+				<block type="appointments/popup" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/popup/pickdate.phtml"/>
+				<block type="appointments/popup" name="appointments_popup_picktime" as="appointments_popup_picktime" template="allure/appointments/popup/picktime.phtml"/>
+				<block type="appointments/popup" name="appointments_popup_register_end" as="appointments_popup_register_end" template="allure/appointments/popup/register_end.phtml"/>
+				<block type="appointments/popup" name="appointments_popup_footer" as="appointments_popup_footer" template="allure/appointments/popup/footer.phtml"/>
+			</block>
+		</reference>
+	</appointments_popup_index>
+</layout>

@@ -1,0 +1,569 @@
+/*NAV BAR*/
+li.nav-item {
+	margin-right: 36px;
+}
+
+a.navbar-brand {
+	font-size: 30px;
+	padding-right: 40px;
+}
+
+.mt-bg {
+	padding-top: 10px;
+	background-color: #000000;
+	font-family: urw-din-medium;
+}
+
+.mt_logo {
+	text-align: center;
+	font-family: urw-din-medium;
+	font-size: 60px;
+	color: #FFFFFF;
+	padding: 10px 0 0 10px;
+	margin-bottom: 60px;
+}
+
+.booking {
+	background-color: #000000;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+
+input#selectDate {
+	margin-right: 15px;
+}
+
+.hero-image {
+	background-image: url("../../images/allure/popup/topBg.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 100%;
+	padding-bottom: 80px;
+}
+
+.pop-up-div {
+	position: relative;
+	left: 50px;
+	/*margin-top: 50px;*/
+	width: 400px;
+	background: #2c2c2c;
+	/*top: 50%;*/
+	/*transform: translate(0,-50%);*/
+}
+
+.pop-up-content {
+	padding: 30px 20px;
+}
+
+
+/*DOWN ARROWS*/
+
+.down-arrow {
+	z-index: 200;
+	position: absolute;
+	padding-top: 30px;
+	right: 50%;
+}
+
+.down-arrowfrm {
+	z-index: 200;
+	position: absolute;
+	margin-top: -50px;
+	right: 50%;
+}
+
+.down-arrow-maria {
+	z-index: 200;
+	position: absolute;
+	margin-top: -90px;
+	right: 50%;
+}
+
+.down-arrow-size {
+	width: 35px;
+}
+
+
+/*HEADING for pop-up & faq*/
+
+p.xpaces,
+p.faq-title {
+	text-align: center;
+	color: #FFFFFF;
+	font-size: 30px;
+	line-height: 43px;
+	font-family: urw-din-medium;
+	text-transform: uppercase;
+}
+
+p.faq-title {
+	padding-top: 75px;
+}
+
+.faq {
+	background-color: #000000;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	padding-bottom: 60px;
+}
+
+.faq-answer {
+	font-family: urw-din-light;
+	font-size: 14px;
+	line-height: 22px;
+	color: #D8D8D8;
+	text-align: center;
+}
+
+p.faq-question {
+	font-size: 16px;
+	font-family: urw-din-medium;
+	text-align: center;
+	color: #FFFFFF;
+	line-height: 22px;
+}
+
+.div-question {
+	padding-top: 20px;
+}
+
+.faq-first {
+	padding-top: 40px;
+}
+
+.faq-last {
+	padding-bottom: 40px;
+}
+
+.appointment-input-box {
+	margin: 50px 0 10px;
+}
+
+.input-box {
+	width: 100%;
+	border: 0.5px solid #FFFFFF;
+	border-radius: 0;
+	background: none;
+	text-align: center;
+	color: #FFFFFF;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-family: urw-din-medium;
+	-webkit-box-align: center;
+	font-weight: 400;
+	padding: .375rem .75rem;
+	margin-top: 20px;
+}
+
+button.input-box.btn {
+	width: auto;
+	border: 0.5px solid #FFFFFF;
+	border-radius: 0;
+	background: none;
+	text-align: center;
+	color: #FFFFFF;
+	margin-bottom: 0;
+	font-size: 16px;
+	font-family: urw-din-medium;
+	-webkit-box-align: center;
+	font-weight: 400;
+	padding: .375rem .75rem;
+	margin-top: 20px;
+}
+
+input::placeholder {
+	color: #BBB;
+}
+
+
+/*Paragrapph titles like question */
+
+p.subtitle {
+	margin: 35px 0px;
+	font-size: 16px;
+	font-family: urw-din-medium;
+	text-align: center;
+	color: #FFFFFF;
+	line-height: 22px;
+}
+
+p.black-subtitle {
+	padding-top: 100px;
+	font-size: 30px;
+	font-family: urw-din-medium;
+	text-align: left;
+	color: #000000;
+	letter-spacing: 1px;
+	line-height: 22px;
+	text-transform: uppercase;
+}
+
+p.p-white {
+	margin: 35px 0px;
+	font-size: 14px;
+	font-family: urw-din-medium;
+	text-align: justify;
+	color: #FFFFFF;
+	line-height: 22px;
+}
+
+p.p-black {
+	font-size: 14px;
+	font-family: urw-din-medium;
+	text-align: left;
+	color: #000000;
+	line-height: 30px;
+	padding-right: 85px;
+	padding-top: 20px;
+}
+
+p.p-center {
+	margin: 35px 0px;
+	font-size: 14px;
+	font-family: urw-din-medium;
+	text-align: center;
+	color: #FFFFFF;
+	line-height: 22px;
+}
+
+option {
+	color: #FFFFFF;
+	background: #000000;
+}
+
+.plus-btn,
+.minus-btn {
+	background-color: #000000;
+	color: #ffffff;
+	border: none;
+	border-radius: 0px;
+	color: #ffffff;
+	padding: 7px 12px;
+	font-family: urw-din-medium;
+	font-size: 14px;
+}
+
+.minus-btn {
+	margin-left: 20px;
+}
+
+.booking-box {
+	margin-top: 70px;
+	margin-bottom: 70px;
+	padding: 0px 30px;
+}
+
+.name-box,
+.faq {
+	display: flex;
+}
+
+.price-list-box {
+	display: flex;
+	padding-top: 30px;
+	padding-left: 50px;
+}
+
+.select-box {
+	display: flex;
+	padding: 10px 0px;
+}
+
+input#firstname,
+input#datepicker-13 {
+	margin-right: 10px;
+}
+
+input#count {
+	margin-top: 0px;
+	width: 50px;
+	font-size: 14px;
+	font-family: urw-din-medium;
+}
+
+label.p-white {
+	margin-top: 10px;
+}
+
+.btn-div {
+	display: flex;
+	justify-content: center;
+}
+
+.mob {
+	display: none;
+}
+
+
+/*USED IN PRICE LIST */
+
+.earlobe {
+	font-family: urw-din-medium;
+	font-size: 14px;
+	line-height: 30px;
+	color: #ffffff;
+	margin-right: 10px;
+	text-align: left;
+}
+
+.jewelry {
+	font-family: urw-din-light;
+	font-size: 11px;
+	line-height: 30px;
+	color: #D8D8D8;
+	text-align: left;
+}
+
+tr.tr-piercing {
+	border: none;
+}
+
+td.td-piercing-name {
+	text-align: left;
+	color: #FFFFFF;
+	border: none !important;
+}
+
+td.td-price {
+	font-family: urw-din-medium;
+	font-size: 14px;
+	line-height: 30px;
+	color: #ffffff;
+	text-align: right;
+	border: none !important;
+}
+
+td.td-piercing-name,
+td.td-price {
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+
+.label {
+	font-size: 14px;
+	font-family: urw-din-medium;
+	color: #FFFFFF;
+	line-height: 30px;
+}
+
+.box .label {
+	padding-top: 0px;
+	line-height: 15px;
+	margin-left: -8px;
+}
+
+p.label {
+	padding-top: 30px;
+}
+
+
+/*ABOUT MARIA*/
+
+.about-maria {
+	padding: 0px;
+}
+
+.div-about-maria {
+	padding: 0px 60px;
+}
+
+.fill {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden
+}
+
+.fill img {
+	flex-shrink: 0;
+}
+
+.half-div-right,
+.half-div-left {
+	background: #F0F0F0;
+}
+
+.half-div-left {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: scroll;
+}
+
+.box {
+	width: auto;
+	padding: 10px 0px;
+	margin: 1em auto;
+}
+
+input[type="checkbox"] {
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+}
+
+input[type="checkbox"]+label:before {
+	border: 1px solid #fff;
+	content: "\00a0";
+	display: inline-block;
+	font: 16px/1em sans-serif;
+	height: 16px;
+	margin: 0 .25em 0 0;
+	padding: 0;
+	vertical-align: top;
+	width: 16px;
+}
+
+input[type="checkbox"]:checked+label:before {
+	background: #000;
+	color: #fff;
+	content: "\2713";
+	text-align: center;
+}
+
+input[type="checkbox"]:checked+label:after {
+	font-weight: bold;
+	color: #fff;
+}
+
+input[type="checkbox"]:focus+label::before {
+	outline: rgb(59, 153, 252) auto 5px;
+}
+
+
+/*FOOTER*/
+
+button#btnSubscribe {
+	color: black;
+	width: 150px;
+	border: 2px solid;
+	text-transform: uppercase;
+}
+
+input#subscribe_email {
+	height: 40px;
+	background: #000;
+}
+
+p.footer-subtitle-medium {
+	padding-top: 20px;
+	font-size: 16px;
+	font-family: urw-din-medium;
+	text-align: right;
+	color: #2C2C2C;
+	line-height: 43px;
+	text-transform: uppercase;
+}
+
+p.footer-subtitle-small {
+	font-size: 14px;
+	font-family: urw-din-medium;
+	text-align: center;
+	color: #2C2C2C;
+	line-height: 30px;
+	text-transform: uppercase;
+}
+
+.footer {
+	padding: 30px 0px;
+}
+
+.footer-frm {
+	padding-bottom: 20px;
+}
+
+.desk {
+	opacity: 0;
+}
+
+input#datepicker-13_hidden,
+select#selectTime,
+text#erroMsg {
+	width: 235px;
+	margin-right: 10px;
+}
+
+input#datepickerpopup {
+	margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+	.booking-box {
+		padding: 0px;
+	}
+	button.input-box.btn {
+		width: auto;
+	}
+	/*Down Arrows*/
+	a.down-arrow {
+		z-index: 200;
+		position: absolute;
+		padding-top: 6%;
+		right: 50%;
+	}
+	.img-piercer {
+		width: 300px;
+		height: 300px;
+		border: 0;
+	}
+	.pop-up-div {
+		left: 0px;
+		width: auto;
+	}
+	.mt_logo {
+		font-size: 50px;
+	}
+	p.xpaces {
+		font-size: 22px;
+	}
+	.booking-box p.xpaces {
+		font-size: 30px;
+	}
+	.down-arrow,
+	.mt-bg,
+	div#price-list,
+	a.down-arrowfrm,
+	.div-about-maria p.black-subtitle,
+	.down-arrow-maria {
+		display: none;
+	}
+	.about-maria,
+	p.p-black,
+	.div-about-maria,
+	.nopad {
+		padding: 0px;
+	}
+	.desk {
+		opacity: 1;
+		position: absolute;
+		top: 0;
+		font-size: 35px !important;
+		padding-top: 20px;
+	}
+	.btnSub {
+		text-align: center;
+	}
+	p.footer-subtitle-medium {
+		line-height: 20px;
+		padding: 30px 0px 0px;
+	}
+	.people,
+	.mob {
+		display: block;
+	}
+	.peoplediv {
+		text-align: center;
+	}
+	.plus-btn,
+	.minus-btn {
+		font-size: 18px;
+	}
+	.hero-image {
+		background-image: url("../../images/allure/popup/topBgMobile.png");
+	}
+}
