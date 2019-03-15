@@ -73,6 +73,17 @@ input#selectDate {
 	padding-bottom: 80px;
 }
 
+#about-maria .half-div-left {
+   background-image: url("../../images/allure/popup/MariaTash.jpg");
+   background-repeat: no-repeat;
+   background-size: contain;
+   background-position: left;
+}
+
+#about-maria .half-div-left img {
+    visibility: hidden;
+}
+
 .pop-up-div {
 	position: relative;
 	left: 50px;
