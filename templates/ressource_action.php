@@ -60,9 +60,9 @@ var_dump($data);
                                             <option value="livraison_style" <?php echo ((isset($data['name']) && $data['name'] == 'livraison_style') ? 'selected' : '')?>>Bandeau livraison header style</option>
                                             <option value="offexc_valid" <?php echo ((isset($data['name']) && $data['name'] == 'offexc_valid') ? 'selected' : '')?>>Astérisque divers</option>
                                             <option value="validdefaut" <?php echo ((isset($data['name']) && $data['name'] == 'validdefaut') ? 'selected' : '')?>>Conditions validité sans date</option>
-                                            <option value="fdpo" <?php echo ((isset($data['name']) && $data['name'] == 'validdefaut') ? 'selected' : '')?>>Bandeau FDP offert footer</option>
-                                            <option value="fdpo_ssphrase" <?php echo ((isset($data['name']) && $data['name'] == 'validdefaut') ? 'selected' : '')?>>Bandeau FDP offert footer validité</option>
-                                            <option value="fdpo_detail" <?php echo ((isset($data['name']) && $data['name'] == 'validdefaut') ? 'selected' : '')?>>Bandeau FDP offert footer detail</option>
+                                            <option value="bdf_fdpo" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo') ? 'selected' : '')?>>Bandeau footer FDPO titre</option>
+                                            <option value="bdf_fdpo_ssphrase" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo_ssphrase') ? 'selected' : '')?>>Bandeau footer FDPO validité</option>
+                                            <option value="bdf_fdpo_detail" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo_detail') ? 'selected' : '')?>>Astérisque Description FDPO (coche CGV)</option>
                                         </select>
                                     </div>
                                 </div>

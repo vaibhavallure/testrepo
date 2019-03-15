@@ -184,10 +184,6 @@ class Millesima_Message_Template extends Millesima_Abstract
             $oSmarty->assign('phraseprimeur', $phraseprimeur);
             $oSmarty->assign('primeur', $primeur);
 
-            $fdpo = array('phrase'=>$ressourceClass->getRessourceValue($country,'fdpo'),'ssphrase'=>$ressourceClass->getRessourceValue($country,'fdpo_ssphrase'),'detail'=>$ressourceClass->getRessourceValue($country,'fdpo_detail',array('datefdpo'=>$datefdpo)),'style'=>$ressourceClass->getRessourceValue($country,'fdpo_style'),'styledetail'=>$ressourceClass->getRessourceValue($country,'fdpo_styledetail'));
-            $oSmarty->assign('fdpo', $fdpo);
-			
-
 
             //faire le tableau avec les sujects
             $objet_alt_title = $data['objet-'.$country];
@@ -489,13 +485,23 @@ class Millesima_Message_Template extends Millesima_Abstract
                 }
             }
 			
-			/* FDPO */
-			if(isset($data["fdpo_bandeau"]) && $data["fdpo_bandeau"]){
-				$oSmarty->assign("fdpo_bandeau",$data["fdpo_bandeau"]);
-			}
-			if(isset($data["fdpo_conditions"]) && $data["fdpo_conditions"]){
-				$oSmarty->assign("fdpo_conditions",$data["fdpo_conditions"]);
-			}
+            /* FDPO */
+            if($cgv == 'livraison'){
+                $fdpo = array(
+                    'titre'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo'),
+                    'ssphrase'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo_ssphrase'),
+                    'detail'=>$ressourceClass->getRessourceValue($country,
+                    'bdf_fdpo_detail',array('datefdpo'=>$datefdpo))
+                );
+                $oSmarty->assign('fdpo', $fdpo);
+                if(isset($data["fdpo_bandeau"]) && $data["fdpo_bandeau"]){
+                    $oSmarty->assign("fdpo_bandeau",$data["fdpo_bandeau"]);
+                }
+                if(isset($data["fdpo_conditions"]) && $data["fdpo_conditions"]){
+                    $oSmarty->assign("fdpo_conditions",$data["fdpo_conditions"]);
+                }
+            }
+			
 			
 			/* Gestion Trigger */ 
 			/*if($data["tpl"] == "trigger_responsive"){

@@ -168,7 +168,7 @@ td[class="box4"] {min-height: 70px;}
 {if $type_listing == "staffpicks"}{include file="$tpl/listing_produits/staffpicks/listing.tpl"}{else}{include file="$tpl/listing_produits/listing.tpl"}{/if}
 </td></tr>{/if}
               {if $articles_nb > 0}{include file="$tpl/articles/article.tpl"}{/if}
-			  {if $country != "SG" && $country != "U" && $typecgv != "primeurs" && (($typecgv == "livraison" && $fdpo_bandeau) || $country == "D" || $country == "O" || $country == "Y" || $country == "E" || $country == "H")}<!-- debut date fdpo -->
+			  {if $typecgv != "primeurs" && $fdpo.titre != '' && (($typecgv == "livraison" && $fdpo_bandeau) || $country == "D" || $country == "O" || $country == "Y" || $country == "E" || $country == "H")}<!-- debut date fdpo -->
                             <tr>
                               <td height="25"></td>
                             </tr>

@@ -42,8 +42,8 @@
                                             <tr>
                                               <td height="{if $desc.offexc || $lstprmodesc}16{else}35{/if}"></td>
                                             </tr>
-                                            {if $typecgv == "livraison" && $fdpo_conditions && $country != "D" && $country != "O" && $country != "Y" && $country != "E" && $country != "SG" && $country != "H" && $country != "U"}<tr>
-                                              <td style="font-size:11px;font-family:Arial, Helvetica, sans-serif, Trebuchet MS;color: #444444;font-style:italic;{$fdpo.styledetail}">{$fdpo.detail}</td>
+                                            {if $typecgv == "livraison" && $fdpo_conditions && $fdpo.detail != ''}<tr>
+                                              <td style="font-size:11px;font-family:Arial, Helvetica, sans-serif, Trebuchet MS;color: #444444;font-style:italic;">{$fdpo.detail}</td>
                                             </tr>
                                             <tr>
                                               <td height="{if $desc.offexc}20{else}35{/if}"></td>

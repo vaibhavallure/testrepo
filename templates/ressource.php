@@ -79,9 +79,9 @@ $html = $this->data['html'];
                                             <option value="livraison_style" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'livraison_style') ? 'selected' : '')?>>Bandeau livraison header style</option>
                                             <option value="offexc_valid" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'offexc_valid') ? 'selected' : '')?>>Astérisque divers</option>
                                             <option value="validdefaut" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'validdefaut') ? 'selected' : '')?>>Conditions validité sans date</option>
-                                            <option value="fdpo" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'fdpo') ? 'selected' : '')?>>Bandeau FDP offert footer</option>
-                                            <option value="fdpo_ssphrase" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'fdpo_ssphrase') ? 'selected' : '')?>>Bandeau FDP offert footer validité</option>
-                                            <option value="fdpo_detail" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'fdpo_detail') ? 'selected' : '')?>>Bandeau FDP offert footer detail</option>
+                                            <option value="bdf_fdpo" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'bdf_fdpo') ? 'selected' : '')?>>Bandeau footer FDPO titre</option>
+                                            <option value="bdf_fdpo_ssphrase" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'bdf_fdpo_ssphrase') ? 'selected' : '')?>>Bandeau footer FDPO validité</option>
+                                            <option value="bdf_fdpo_detail" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'bdf_fdpo_detail') ? 'selected' : '')?>>Astérisque Description FDPO (coche CGV)</option>
                                         </select>
                                     </div>
                                 </div>
