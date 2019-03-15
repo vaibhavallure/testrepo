@@ -76,7 +76,7 @@ input#selectDate {
 #about-maria .half-div-left {
    background-image: url("../../images/allure/popup/MariaTash.jpg");
    background-repeat: no-repeat;
-   background-size: contain;
+   background-size: cover;
    background-position: left;
 }
 
