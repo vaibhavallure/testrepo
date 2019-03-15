@@ -39,3 +39,31 @@
         return monthNames[monthIndex] + ' ' +  day + ', ' + year;
     }
 </script>
+
+<script type="text/javascript">
+        var appointmentForm = new VarienForm('appointemnet_form');
+
+        Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+        //initialize itel tel input
+        var input = document.querySelector("#phonenumber")
+        var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
+            utilsScript: Allure.UtilPath
+        });
+
+        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+        if (country_code == undefined || country_code == null || country_code == "") {
+            country_code = "us"
+        }
+
+        iti.setCountry(country_code.toLowerCase());
+
+        //custom validator for itel tel input
+        //FileName - intel-tel-validation.js
+        allureIntlTelValidate(jQuery("#phonenumber"),iti);
+</script>
