@@ -34,10 +34,13 @@
 		</reference>
 		<reference name="content">
 			<block type="appointments/popup" name="appointments_popup" as="appointments_popup" template="allure/appointments/popup/nordstom_popup.phtml">
+				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_menu" template="allure/appointments/popup/top.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_menu" template="allure/appointments/popup/menu.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/popup/register.phtml"/>
-				<block type="appointments/popup" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/popup/pickdate.phtml"/>
-				<block type="appointments/popup" name="appointments_popup_picktime" as="appointments_popup_picktime" template="allure/appointments/popup/picktime.phtml"/>
+				<block type="appointments/popup" name="appointments_popup_pickdatetime" as="appointments_popup_pickdatetime" template="allure/appointments/popup/pickdatetime.phtml">
+					<block type="appointments/popup" name="appointments_popup_pickdate" as="appointments_popup_pickdate" template="allure/appointments/popup/pickdate.phtml"/>
+					<block type="appointments/popup" name="appointments_popup_picktime" as="appointments_popup_picktime" template="allure/appointments/popup/picktime.phtml"/>
+				</block>
 				<block type="appointments/popup" name="appointments_popup_register_end" as="appointments_popup_register_end" template="allure/appointments/popup/register_end.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_footer" as="appointments_popup_footer" template="allure/appointments/popup/footer.phtml"/>
 			</block>

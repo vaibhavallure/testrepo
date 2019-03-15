@@ -430,7 +430,7 @@ input[type="checkbox"]+label:before {
     border: 1px solid #fff;
     content: "\00a0";
     display: inline-block;
-    font: 16px/1em sans-serif;
+    font: 12px/1em sans-serif;
     height: 12px;
     margin: 0 .75em 0 0;
     padding: 0;
