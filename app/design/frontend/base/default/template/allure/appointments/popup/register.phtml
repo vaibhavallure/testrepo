@@ -1,14 +1,11 @@
 <!--BOOKING SECTION-->
 
 <div id="booking" class="container-fluid booking nopad">
-
     <div class="container nopad">
         <div class="row">
             <div class="col-md-6">
                 <div class="booking-box">
                     <p class="xpaces">BOOK YOUR APPOINTMENT</p>
-
-
 
                     <form class="col-md-12 appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post">
 
@@ -20,25 +17,19 @@
                         </div>
 
                         <input class="input-box required-entry"  type="email" name="email" id="email" placeholder="EMAIL" required>
-
-
                         <input class="input-box required-entry" type="text" name="phonenumber" id="phonenumber" placeholder="PHONE NUMBER" required>
 
-                        <p class="label">I would like to be notified by:</p>
-                        <div >
-                            <div class="box">
-                                <p class="label">
-                                    <input type="checkbox" id="c1" name="cb">
-                                    <label class="label" for="c1">Email</label>
-                                </p >
-                                <p class="label">
-                                    <input type="checkbox" id="c2" name="cb">
-                                    <label class="label" for="c2">Text Message</label>
-                                </p>
-
-                            </div>
+                        <p class="label notify-label">I would like to be notified by:</p>
+                        <div class="box notify-box">
+                            <p class="label">
+                                <input type="checkbox" id="c1" name="cb">
+                                <label class="label" for="c1">Email</label>
+                            </p >
+                            <p class="label">
+                                <input type="checkbox" id="c2" name="cb">
+                                <label class="label" for="c2">Text Message</label>
+                            </p>
                         </div>
-
 
                         <div class="select-box people"><label class="label">Number of people in your party:</label>
                             <br class="mob">
@@ -51,4 +42,3 @@
                         </div>
 
                         <div class="select-box">
-
