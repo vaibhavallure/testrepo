@@ -50,6 +50,8 @@ jQuery.ajax({
 			 jQuery('#login-msg').html(data.msg);
 			 jQuery('#reg_form').html(data.output);
 			 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
+            location.reload();
+
 		}else{
 		 jQuery('#login-msg').html(data.error);
 		}
