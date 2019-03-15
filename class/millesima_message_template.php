@@ -19,6 +19,7 @@ class Millesima_Message_Template extends Millesima_Abstract
     const DEBUG = false;
 
     public function createMessage($data){
+        $ressourceClass = new Millesima_Ressource();
 
         //param default
         $titre = "Ceci est un email automatique";
@@ -182,6 +183,8 @@ class Millesima_Message_Template extends Millesima_Abstract
             $oSmarty->assign('promos',$promo_courtes);
             $oSmarty->assign('phraseprimeur', $phraseprimeur);
             $oSmarty->assign('primeur', $primeur);
+
+            $fdpo = array('phrase'=>$ressourceClass->getRessourceValue($country,'fdpo'),'ssphrase'=>$ressourceClass->getRessourceValue($country,'fdpo_ssphrase'),'detail'=>$ressourceClass->getRessourceValue($country,'fdpo_detail',array('datefdpo'=>$datefdpo)),'style'=>$ressourceClass->getRessourceValue($country,'fdpo_style'),'styledetail'=>$ressourceClass->getRessourceValue($country,'fdpo_styledetail'));
             $oSmarty->assign('fdpo', $fdpo);
 			
 
@@ -229,7 +232,8 @@ class Millesima_Message_Template extends Millesima_Abstract
             if (file_exists($filename)){
                 require($filename);
             }
-			
+
+            /*
 			$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/informations_importantes/ressources_livraison.php";
             if (file_exists($filename)){
                 require($filename);
@@ -237,7 +241,26 @@ class Millesima_Message_Template extends Millesima_Abstract
 			$filename = self::REPAPPLI.'smarty/templates/'.$tpl."/informations_importantes/ressources_conditionsvalidite.php";
             if (file_exists($filename)){
                 require($filename);
+            }*/
+            $livraison = array('phrase'=>$ressourceClass->getRessourceValue($country,'livraison'),'detail'=>$ressourceClass->getRessourceValue($country,'livraison_detail'),'style'=>$ressourceClass->getRessourceValue($country,'livraison_style'),'styledetail'=>$ressourceClass->getRessourceValue($country,'livraison_style_detail'));
+            $datelivraison = $ressourceClass->getRessourceValue($country,'datelivraison');
+            $fdpofferts = array('phrase'=>$ressourceClass->getRessourceValue($country,'fdpofferts',array('datevalide'=>$datevalide)),'style'=>$ressourceClass->getRessourceValue($country,'fdpofferts_style'));
+            $conditionvalidite = array('phrase'=>$ressourceClass->getRessourceValue($country,'conditionvalidite',array('datevalide'=>$datevalide)),'style'=>$ressourceClass->getRessourceValue($country,'conditionvalidite_style'));
+            $validdefaut = $ressourceClass->getRessourceValue($country,'validdefaut');
+            $offexc = array("explications" => $ressourceClass->getRessourceValue($country,'offexc_explications'),'valid'=>$ressourceClass->getRessourceValue($country,'offexc_valid',array('datevalide'=>$datevalide)),'style'=>$ressourceClass->getRessourceValue($country,'offexc_style'));
+
+            if ($country == 'H' or $country == 'SG'){
+                $livraison2 = array('phrase'=>$ressourceClass->getRessourceValue($country,'livraison2'),'style'=>$ressourceClass->getRessourceValue($country,'fdpofferts_style'));
+                $oSmarty->assign('livraison2', $livraison2);
             }
+            $oSmarty->assign('livraison', $livraison);
+            $oSmarty->assign('datelivraison', $datelivraison);
+            $oSmarty->assign('conditionvalidite', $conditionvalidite);
+            $oSmarty->assign('fdpofferts', $fdpofferts);
+            $oSmarty->assign('offexc', $offexc);
+            $oSmarty->assign('validdefaut', $validdefaut);
+
+
 			
             /* Section Description gÃ©nÃ©rale sous l'image */
 

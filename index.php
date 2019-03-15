@@ -18,6 +18,7 @@ include 'class/millesima_traduction.php';
 include 'class/millesima_messagedata.php';
 include 'class/millesima_tinyclues.php';
 include 'class/millesima_textmaster.php';
+include 'class/millesima_ressource.php';
 
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim(array(
@@ -57,7 +58,10 @@ $app->post('/view/campaign_create','createCampaign');
 $app->get('/view/campaign_stat','statCampaign');
 $app->post('/view/campaign_stat','statCampaign');
 
-
+$app->get('/view/ressource','getRessource');
+$app->post('/view/ressource','getRessource');
+$app->get('/view/ressource_action','getActionRessource');
+$app->post('/view/ressource_action','getActionRessource');
 
 /////////////////////  Action AJAX Campaign ////////////////////////////////////////
 $app->get('/view/ajax/campaign/:message','getInfoMessage');
@@ -72,6 +76,8 @@ $app->post('/view/ajax/trad_save/','saveTradInfo');
 $app->post('/view/ajax/trad_inv/','invalidTraduction');
 $app->post('/view/ajax/send_reel/','sendCampaignReelAjax');
 $app->get('/view/ajax/campaign_search/:name','searchCampaign');
+$app->post('/view/ajax/ressource_info/','searchRessource');
+
 /////////////////////  Function Route Page  ////////////////////////////////////////
 function getView($content,$url = '../') {
     //die('ggfdgdfgd');
@@ -950,7 +956,104 @@ function statCampaign(){
     getView($content,$url);
 }
 
+/////////////////////  Function action Ressource   ////////////////////////////////////////
 
+function getRessource($html = ''){
+    $url = '../';
+    $app = \Slim\Slim::getInstance();
+    $filter = $app->request->post();
+    //$filter = array();
+    $ressourceClass = new Millesima_Ressource();
+
+    if((isset($filter['store_filter']) && $filter['store_filter'] != '') || (isset($filter['name_filter']) && $filter['name_filter'] != '') || (isset($filter['name_filter']) && $filter['name_filter'] != '0')){
+        $ressourceList = $ressourceClass->getRessourceListFilter($filter);
+    } else {
+        $ressourceList = $ressourceClass->getRessourceList();
+    }
+    $app->view()->appendData(array('ressourceList' => $ressourceList));
+    $app->view()->appendData(array('filter' => $filter));
+
+    //affichage page
+    if($html != ''){
+        $app->view()->appendData(array( 'html' => $html));
+    }
+    $content = $app->view()->fetch('ressource.php');
+    getView($content,$url);
+}
+
+function getActionRessource(){
+    $url = '../';
+    $app = \Slim\Slim::getInstance();
+    $data = $app->request->post();
+    $ressourceClass = new Millesima_Ressource();
+    $bddClass = new Millesima_Bdd();
+
+    if (isset($data['btn_mod'])) {
+        $ressource = $ressourceClass->getRessourceById($data['btn_mod']);
+        $app->view()->appendData(array('ressource' => $ressource[0]));
+        $app->view()->appendData(array('title' => 'Modification Ressource'));
+        $content = $app->view()->fetch('ressource_action.php');
+        getView($content,$url);
+    } else if (isset($data['btn_dup'])) {
+        $ressource = $ressourceClass->getRessourceById($data['btn_dup']);
+        $ressource[0]['id'] = '';
+        $app->view()->appendData(array('ressource' => $ressource[0]));
+        $app->view()->appendData(array('title' => 'Duplication Ressource'));
+        $content = $app->view()->fetch('ressource_action.php');
+        getView($content,$url);
+    } else if (isset($data['creation'])) {
+        $app->view()->appendData(array('ressource' => array()));
+        $app->view()->appendData(array('title' => 'Creation Ressource'));
+        $content = $app->view()->fetch('ressource_action.php');
+        getView($content,$url);
+    } else if (isset($data['btn_ok'])) {
+        $html = '';
+        $conflit = 0;
+
+        //get all conflit
+        $startDate = date("Y-m-d", strtotime(str_replace('/', '-', $data['start_date'])));
+        if (isset($data['endnull'])){
+            $endDate = null;
+        } else {
+            $endDate = date("Y-m-d", strtotime(str_replace('/', '-', $data['end_date'])));
+        }
+        $res = $ressourceClass->getRessourceSubmit($data['store'],$data['name'],$startDate,$endDate);
+
+        //set date fin  at all conflit
+        foreach($res as $ressource){
+            if($ressource['id'] != $data['id']){
+                if($ressource['start_date'] > $startDate){
+                    $bddClass->update("UPDATE ressource SET start_date = ?, end_date = ? WHERE id = ?",array($startDate,$startDate,$ressource['id']));
+                } else {
+                    //var_dump($startDate);
+                    //var_dump($startDate);
+                    $bddClass->update("UPDATE ressource SET end_date = ? WHERE id = ?",array($startDate,$ressource['id']));
+                    //die('totot');
+                }
+                $conflit++;
+            }
+        }
+        //die('gfgdf');
+        $html .= $conflit. ' conflit(s) réglé(s)';
+
+        if($data['id'] == ""){
+            $bddClass->insert("INSERT INTO ressource (name,value,store,start_date,end_date) VALUES (?,?,?,?,?)",array($data['name'],$data['value'],$data['store'],$startDate,$endDate));
+            $html .= 'la création de la ressource a été éfféctuée';
+        } else {
+            $bddClass->update("UPDATE ressource SET name = ?, value = ?, store = ?, start_date = ?, end_date = ? WHERE id = ?",array($data['name'],$data['value'],$data['store'],$startDate,$endDate,$data['id']));
+            $html .= $endDate;
+            $html .= 'la modification de la ressource a été éfféctuée';
+        }
+        //var_dump($html);
+        getRessource($html);
+    } else if (isset($data['btn_sup'])) {
+        $bddClass->delete("Delete from ressource WHERE id = (?)",array($data['btn_sup']));
+        $html = 'la suppression de la ressource a été éfféctuée';
+        getRessource($html);
+    }
+
+
+}
 
 /////////////////////  Function Action AJAX Campaign ////////////////////////////////////////
 /////////////////////  Message  ////////////////////////////////////////
@@ -1131,5 +1234,23 @@ function  searchCampaign($name){
         $return['campaign'] = $campaignClass->getStatCampaign($name);
     }
     echo json_encode($return);
+}
+
+function searchRessource(){
+    $app = \Slim\Slim::getInstance();
+    $data = $app->request->post();
+    $return = '';
+
+    $ressourceClass = new Millesima_Ressource();
+    $startDate = date("Y-m-d", strtotime(str_replace('/', '-', $data['start_date'])));
+    if ($data['endnull'] == 'true'){
+        $endDate = null;
+    } else {
+        $endDate = date("Y-m-d", strtotime(str_replace('/', '-', $data['end_date'])));
+    }
+
+    $res = $ressourceClass->getRessourceSubmit($data['store'],$data['name'],$startDate,$endDate);
+    $return = json_encode($res);
+    echo $return;
 }
 $app->run();

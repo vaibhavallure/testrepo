@@ -71,12 +71,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Frais de port offerts</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Frais de port offerts</strong>",
 										"ssphrase" => "jusqu'au 31/08/2018",
 										"detail" => "*Hors vins primeurs - Livraison en une seule fois à une seule adresse en France M&eacute;tropolitaine - Valable jusqu'au $datefdpo",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 		
 		/* ------ Primeurs ------ */
 		$primeur="Primeur";
@@ -172,12 +172,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Frais de port offerts</strong>",
+		/* = array( "phrase" => "<strong>Frais de port offerts</strong>",
 										"ssphrase" => "jusqu'au 31/08/2018",
 										"detail" => "*Hors vins primeurs - Livraison en une seule fois à une seule adresse en Belgique - Valable jusqu'au $datefdpo",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 		
 		
 		/* ------ Primeurs ------ */
@@ -275,12 +275,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Frais de port offerts</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Frais de port offerts</strong>",
 										"ssphrase" => "jusqu'au 31/08/2018",
 										"detail" => "*Hors vins primeurs - Livraison en une seule fois à une seule adresse au Luxembourg - Valable jusqu'au $datefdpo",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 
 		
 		/* ------ Primeurs ------ */
@@ -376,12 +376,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Lieferung gratis</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Lieferung gratis</strong>",
 										"ssphrase" => "",
 										"detail" => "",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 		/* ------ Primeurs ------ */
 		$primeur="Primeurweine";
 		
@@ -476,12 +476,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Lieferung gratis</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Lieferung gratis</strong>",
 										"ssphrase" => "",
 										"detail" => "",
 										"style" => "",
 										"styledetail" => ""
-						);					
+						);*/
 		/* ------ Primeurs ------ */
 		$primeur="Primeurweine";
 		
@@ -577,12 +577,12 @@ switch ($country) {
 										),
 							);
 							
-		$fdpo = array( "phrase" => "<strong>Lieferung gratis</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Lieferung gratis</strong>",
 										"ssphrase" => "G&uuml;ltig bis 31/08/2018",
 										"detail" => "*Primeurweine ausgeschlossen - Lieferung an eine einzige Adresse in der Schweiz - G&uuml;ltig bis $datefdpo",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 						
 						
 		/* ------ Primeurs ------ */
@@ -677,12 +677,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Frais de port offerts</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Frais de port offerts</strong>",
 										"ssphrase" => "jusqu'au 31/08/2018",
 										"detail" => "*Hors vins primeurs - Livraison en une seule fois à une seule adresse en Suisse - Valable jusqu'au $datefdpo",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 		/* ------ Primeurs ------ */
 		$primeur="Primeur";
 		
@@ -776,12 +776,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Free delivery</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Free delivery</strong>",
 										"ssphrase" => "until the 31/08/2018",
 										"detail" => "*Excluding en primeur wines. Free delivery on one order to one address – valid until the $datefdpo",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 		/* ------ Primeurs ------ */
 		$primeur="En-Primeur";
 		
@@ -875,12 +875,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Free delivery</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Free delivery</strong>",
 										"ssphrase" => "until the 31/08/2018",
 										"detail" => "*Excluding en primeur wines. Free delivery on one order to one address – valid until the $datefdpo",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 		/* ------ Primeurs ------ */
 		$primeur="En-Primeur";
 		
@@ -975,12 +975,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Spedizione gratuita</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Spedizione gratuita</strong>",
 										"ssphrase" => "",
 										"detail" => "",
 										"style" => "",
 										"styledetail" => ""
-						);					
+						);	*/
 		/* ------ Primeurs ------ */
 		$primeur="In-Primeur";
 		
@@ -1075,12 +1075,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Entrega gratuita</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Entrega gratuita</strong>",
 										"ssphrase" => "",
 										"detail" => "",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 		/* ------ Primeurs ------ */
 		$primeur="En-Primeur";
 		
@@ -1174,12 +1174,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Transporte gr&aacute;tis</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Transporte gr&aacute;tis</strong>",
 										"ssphrase" => "at&eacute; 31/08/2018",
 										"detail" => "*Fora dos vinhos primeurs – Entrega numa morada em Portugal Continental - At&eacute; $datefdpo",
 										"style" => "",
 										"styledetail" => ""
-						);
+						);*/
 		/* ------ Primeurs ------ */
 		$primeur="Primeur";
 		
@@ -1280,12 +1280,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Free delivery</strong>",
+		/*$fdpo = array( "phrase" => "<strong>Free delivery</strong>",
 										"ssphrase" => "",
 										"detail" => "",
 										"style" => "",
 										"styledetail" => ""
-						);					
+						);	*/
 		/* ------ Primeurs ------ */
 		$primeur="En-Primeur";
 		
@@ -1380,12 +1380,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "<strong>Free delivery</strong>",
+		/* = array( "phrase" => "<strong>Free delivery</strong>",
 										"ssphrase" => "until the 31/08/2018",
 										"detail" => "",
 										"style" => "",
 										"styledetail" => ""
-						);					
+						);					*/
 		/* ------ Primeurs ------ */
 		$primeur="En-Primeur";
 		
@@ -1480,12 +1480,12 @@ switch ($country) {
 										"nbcaisses" => "",
 										),
 							);
-		$fdpo = array( "phrase" => "",
+		/*$fdpo = array( "phrase" => "",
 										"ssphrase" => "",
 										"detail" => "",
 										"style" => "",
 										"styledetail" => ""
-						);					
+						);	*/
 							
 		/* ------ Primeurs ------ */
 		$primeur="Future";

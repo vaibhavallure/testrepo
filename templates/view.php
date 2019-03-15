@@ -165,6 +165,13 @@
                     <li><a href="/emailing/view/campaign_stat"><i class="fa fa-edit"></i>Statistiques des campagnes</a></li>
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="/emailing/view/ressource">
+                    <i class="fa fa-paper-plane-o"></i>
+                    <span>Gestion Des Ressources</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
@@ -203,6 +210,8 @@
         $("#segment_list").dataTable({"iDisplayLength": 15, "aLengthMenu": [[15, 20, 30, 50, -1], [15, 20, 30, 50, "All"]], "order":[[1,'desc']]});
         $("#campaign_list").dataTable({"iDisplayLength": 15, "aLengthMenu": [[15, 20, 30, 50, -1], [15, 20, 30, 50, "All"]], "order":[[1,'desc']]});
         $("#statCampaign").dataTable({"iDisplayLength": 15, "aLengthMenu": [[15, 20, 30, 50, -1], [15, 20, 30, 50, "All"]], "order":[[0,"desc"]]});
+        $("#ressource_list").dataTable({"iDisplayLength": 15, "aLengthMenu": [[15, 20, 30, 50, -1], [15, 20, 30, 50, "All"]], "order":[[1,'desc']]});
+
     });
 
 
