@@ -80,6 +80,17 @@
             jQuery('body').removeClass('navbar-active');
         }
     });
+
+    jQuery(document).ready(function() {
+        if (jQuery(window).outrWidth() <= 767) {
+            jQuery('.faq-question').click();
+
+            setTimeout(function(){ jQuery('.faq-question').click(); }, 3000);
+        } else {
+            setTimeout(function(){ jQuery('.faq-question').click(); }, 3000);
+        }
+
+    });
 </script>
 <!--Subscribe Mailing List Jquery-->
 <script>
