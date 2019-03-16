@@ -103,7 +103,7 @@ input#selectDate {
 }
 
 .hero-image {
-	background-image: url("../../images/allure/popup/topBg.png");
+	background-image: url("../../images/allure/popup/topBg.jpg");
 	background-repeat: no-repeat;
 	background-position: right;
 	height: 100%;
@@ -791,6 +791,9 @@ select#selectTime {
     display: none;
 }
 
+a#btnPriceList,
+a#icon-price-close {display: none;}
+
 @media (min-width: 768px) {
     #navbar-menu {
         display: flex;
@@ -811,14 +814,31 @@ select#selectTime {
 
     .box {border: none;}
 
+    .hero-image {
+        background-image: url(../../images/allure/popup/topBgMobile.jpg);
+        background-position: top center;
+        background-size: contain;
+    }
+
     .datepicker {width: auto;}
 
     .navbar .navbar-brand {
-        width: 65%;
+        width: 100%;
+        font-family: urw-din-medium;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: #fff !important;
     }
 
     #faq .faq-answer:not(.in) {
         /* display: none; */
+    }
+    div#appointments-popup-wrapper {
+        background-color: #2c2c2c;
+    }
+    div#footer {
+        background-color: #fff;
     }
 
     #navbar {
@@ -841,6 +861,7 @@ select#selectTime {
         background-color: #2c2c2c;
         box-shadow: none;
         text-align: center;
+        padding-top: 50px;
     }
 
     #navbar-menu.collapsing {
@@ -947,21 +968,26 @@ select#selectTime {
     .pop-up-div {
         position: relative;
         left: 0;
-        top: 400px;
-        max-width: 100%;
-    }
-    .pop-up-div {
-        position: relative;
-        left: 0;
-        top: 640px;
+        top: 375px;
         max-width: 100%;
         clear: both;
-        margin-bottom: 125px;
+        margin-bottom: 0;
         z-index: 999;
+    }
+    a#btnPriceList {
+        text-align: center;
+        display: block;
+        margin: 25px auto;
+        color: #C3C2C5;
+        font-size: 18px;
+        text-transform: uppercase;
+        text-decoration: underline;
+        line-height: 43px;
+        font-family: urw-din-medium;
     }
 
     div#booking {
-        padding-top: 375px;
+        padding-top: 250px;
     }
 
     .down-arrow-maria,
@@ -992,8 +1018,22 @@ select#selectTime {
         margin: 0 -15px;
     }
 
+    a#icon-price-close {
+        margin: 15px 0px;
+        display: block;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {color: #fff}
+
     div#price-list {
-        padding: 0;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #2c2c2c;
+        z-index: 9999;
+        display: none;
     }
 
     div#booking-wrapper {

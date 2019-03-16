@@ -73,6 +73,8 @@ var loadSlotAvailability = function (date) {
 var updateSlotAvailability  = function () {
     var date = jQuery('#appointment_date').val();
 
+    console.log(date);
+
     if (date != '') {
         loadSlotAvailability(date);
     }
@@ -103,3 +105,24 @@ var decreaseQty= function () {
 
     console.log(peopleCount);
 }
+
+jQuery(document).ready(function() {
+    var $ =  jQuery;
+
+    jQuery('a#btnPriceList').click(function(){
+        if ($(this).hasClass('active')) {
+            $('#price-list').hide();
+            $(this).removeClass('active');
+        } else {
+            $('#price-list').show();
+            $(this).addClass('active');
+        }
+    });
+
+    jQuery('#icon-price-close').click(function(){
+        jQuery('a#btnPriceList').removeClass('active');
+        $('#price-list').hide();
+    });
+
+    updateSlotAvailability();
+});
