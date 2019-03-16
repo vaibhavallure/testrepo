@@ -1,3 +1,19 @@
+/*Loader*/
+.overlay {
+	position: absolute;
+    overflow-x: auto;
+    overflow-y: scroll;
+    cursor: pointer;
+	z-index: 1000;
+	background: #000000;
+	display: none;
+
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: 0.8;
+}
 /*NAV BAR*/
 li.nav-item {
 	margin-right: 36px;

@@ -465,13 +465,13 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				data[opts]();
 			} else {
 				cal = $('<table class="calendar"></table>');
-				that.wrap($('<div class="datepicker" style="display:inline-block;position:relative;"></div>'));
+				// that.wrap($('<div class="datepicker" style="display:inline-block;position:relative;"></div>'));
 				cal.css({
-					//position:'absolute',
-					left:0, display:'block',
+					// position:'absolute',
+					left:0, display:'inline-block',
 					'box-shadow':'0 4px 6px 1px rgba(0, 0, 0, 0.14)',
-					//width:'230px',
-					//width:'300px',
+					// width:'230px',
+					// width:'300px',
 				}).appendTo(that.parent());
 				if(opts){
 					opts.mode = 'datepicker';

@@ -365,71 +365,7 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
 
 <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/timeslider/sliderDemo.js"></script>
 
-<script>
-    //jQuery(document).ready(function (){
 
-    jQuery('#foo2').jcarousel({
-        initCallback: mycarousel_initCallbackProd2,
-        buttonNextCallback: mycarousel_buttonPrevCallbackProd2,
-        buttonPrevCallback: mycarousel_buttonNextCallbackProd2,
-        // This tells jCarousel NOT to autobuild prev/next buttons
-        buttonNextHTML: null,
-        buttonPrevHTML: null,
-        itemFallbackDimension: 90,
-    });
-
-    jQuery(window).resize();
-
-    function mycarousel_initCallbackProd2(carousel) {
-        jQuery('#foo2_prev').bind('click', function() {
-            carousel.prev();
-            return false;
-        });
-
-        jQuery('#foo2_next').bind('click', function() {
-            carousel.next();
-            return false;
-        });
-    };
-
-    function mycarousel_buttonNextCallbackProd2(carousel, button, enabled) {
-        if(enabled){
-            jQuery("#foo2_prev").css('opacity',1);
-        }else{
-            jQuery("#foo2_prev").css('opacity',0.13);
-        }
-    };
-
-    function mycarousel_buttonPrevCallbackProd2(carousel, button, enabled) {
-        if(enabled){
-            jQuery("#foo2_next").css('opacity',1);
-        }else{
-            jQuery("#foo2_next").css('opacity',0.13);
-        }
-    };
-
-    /* if(jQuery('ul#foo2 li.item').length <= 5){
-        jQuery("#foo2_next , #foo2_prev").hide();
-        jQuery(".timeslot").css('margin-right',0);
-        jQuery(".timeslot").css('margin-left',0);
-
-    } */
-    jQuery(window).resize(function() {
-        var wi = 0;
-        jQuery('ul#foo2 li').each(function(key,element){
-            wi += jQuery(element).width();
-        });
-
-        if(wi >= document.body.offsetWidth){
-            jQuery('#foo2_next, #foo2_prev').show();
-        }else{
-            jQuery('#foo2_next, #foo2_prev').hide();
-        }
-    });
-
-
-
-</script>
 <script>
 var values =jQuery('#selectTime :selected');
 var starttime = values[0].getAttribute('data-start_time_slot');

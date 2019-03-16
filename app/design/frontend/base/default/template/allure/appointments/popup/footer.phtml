@@ -46,7 +46,19 @@
     </div>
 </div>
 <!--FOOTER SECTION END-->
+<!--LOADER-->
+<div id='loadingmessage' class="overlay">
+    <img src="<?php echo $this->getSkinUrl('images/allure/popup/white-spinner.gif')?>"/>
+</div>
+<script>
+    $(document).ajaxStart(function(){
+        $("#loadingmessage").css("display", "block");
+    });
 
+    $(document).ajaxComplete(function(){
+        $("#loadingmessage").css("display", "none");
+    });
+</script>
 <script type="text/javascript">
 /*
     jQuery("#top-nav").click(function() {
