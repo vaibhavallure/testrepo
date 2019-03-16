@@ -1,22 +1,23 @@
-
 <!--FOOTER SECTION START-->
 <div id="footer" class="container-fluid">
     <div class="footer">
         <div class="container">
             <div class="footer-frm">
+<!--                <form action="--><?php //echo $this->getSubscribeUrl()?><!--" method="post" id="appointemnet_form">-->
                 <div class="row">
                     <div class="col-md-4">
                         <p class="footer-subtitle-medium">SIGN UP FOR OUR NEWSLETTER</p>
                     </div>
                     <div class="col-md-4">
-                        <input class="input-box" type="text" name="subscribe_email" id="subscribe_email" placeholder="EMAIL">
+                        <input class="input-box" type="email" name="subscribe_email" id="subscribe_email" placeholder="EMAIL">
                     </div>
                     <div class="col-md-4">
                         <div class="btnSub">
-                            <button id="btnSubscribe" class="input-box btn"  type="submit">sign up</button>
+                            <button id="btnSubscribe" class="input-box btn"  type="submit" onclick="subscribe()">sign up</button>
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="row footer-links hidden-xs">
                 <div class="col-md-4">
@@ -88,4 +89,50 @@
             jQuery('body').removeClass('navbar-active');
         }
     });
+</script>
+<!--Subscribe Mailing List Jquery-->
+<script>
+    var subscribeUrl ="<?php echo $this->getSubscribeUrl();?>" ;
+    function subscribe() {
+
+        var  email= jQuery('#subscribe_email').val();
+
+        if (!ValidateEmail(email)) {
+            alert('Please Enter Valid Email Id');
+        }
+        else {
+            jQuery.ajax({
+                url: subscribeUrl,
+                // dataType: 'json',
+                type: 'POST',
+                data: {'email': email},
+                success: function (response) {
+                    response=JSON.parse(response);
+                    console.log(response.msg);
+                    if (response.status != "OK") {
+                        alert(response.msg);
+                        jQuery('#subscribe_email').val('');
+                    }
+                    else {
+                       alert(response.msg);
+                        jQuery('#subscribe_email').val('');
+                    }
+
+                },
+            });
+        }
+    }
+</script>
+
+<script>
+    function ValidateEmail(mail)
+    {
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(mailformat.match(mail))
+        {
+            return (true)
+        }
+
+        return (false)
+    }
 </script>

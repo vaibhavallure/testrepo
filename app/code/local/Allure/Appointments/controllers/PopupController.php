@@ -436,7 +436,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     'appointment_availablity', false);
             }
         }
-        Mage::log('IN MODIFY APPOINTMENT',Zend_Log::DEBUG,'myLog.log',true);
+        //Mage::log('IN MODIFY APPOINTMENT',Zend_Log::DEBUG,'myLog.log',true);
         $this->loadLayout();
         $this->renderLayout();
     }
@@ -586,6 +586,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         return $d->format($df2);
     }
 
+
     /* Create the customer*/
     public function createCust ($cust_data)
     {
@@ -669,6 +670,8 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         }
         return false;
     }
+
+
 
     public function ajaxSupportDetailsAction()
     {
@@ -796,6 +799,10 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     }
 
+
+
+
+
     /**
      * add customer log
      */
@@ -826,46 +833,42 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         return Mage::helper("appointments/data");
     }
 
-    public function getDateAvailabilityAction() {
+    public function subscribeAction()
+    {
+        if(isset($_POST['email'])){
+            $response='';
+            $email = $_POST['email'];
+            try {
+                $status = Mage::getModel('newsletter/subscriber')->subscribe($email);
 
-    }
+                    $response = [
+                        'status' => 'OK',
+                        'msg' => 'Thank you for your subscription.',
+                        'sta'=> $status,
+                    ];
 
-    public function getSlotAvailabilityAction() {
 
-        $result = array(
-            'success' => false
-        );
+            }
 
-        $request = $this->getRequest()->getParams();
 
-        $time = Mage::helper('appointments')->getTimeByStoreAndPeople($request['qty'], $request['store']);
+            catch (Exception $exception)
+            {
+                Mage::log('ERROR SUBSCRIBE '.$exception->getMessage(),Zend_Log::DEBUG,'appointment_la.log',true);
+                $response = [
+                    'status' => 'ERROR',
+                    'msg' => 'Sorry there is problem in subscription.',
+                    'sta'=> $status,
+                ];
+            }
 
-        Mage::log($time, Zend_Log::DEBUG, 'appointments_time.log', true);
-
-        $storeCurrentTime = "";
-        $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
-        $storeKey = array_search ($request['store'], $configData['stores']);
-        $timeZone = $configData['timezones'][$storeKey];
-        $timePref = $configData['time_pref'][$storeKey];
-
-        if (!empty($timeZone) && $request['date'] == date("m/d/Y")){
-            $storeCurrentTime = $this->date_convert(date('H:i'), 'UTC', 'H:i', $timeZone, 'H:i');
-            $storeCurrentTime = explode(":", $storeCurrentTime);
-            $storeCurrentTime = (($storeCurrentTime[0]*60)+$storeCurrentTime[1]) / 60;
         }
-
-        $result['success'] = true;
-        $result['message'] = $time;
-        $result['data'] = $time;
-
-        $collection = Mage::getModel("appointments/pricing")->getCollection()
-            ->addFieldToFilter('store_id',$request['store']);
-
-        $helper = Mage::helper("appointments/storemapping");
-        $configData = $helper->getStoreMappingConfiguration();
-        $storeKey = array_search ($request['store'], $configData['stores']);
-        $storeMap = $configData['store_map'][$storeKey];
-
-        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        else
+        {
+            $response = [
+                'status' => 'ERROR',
+                'msg' => 'Please enter your Email',
+            ];
+        }
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
     }
 }
