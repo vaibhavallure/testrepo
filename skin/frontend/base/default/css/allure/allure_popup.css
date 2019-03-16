@@ -50,12 +50,12 @@ a#footer-link-main {
 	margin-bottom: 60px;
 }
 
-.appointments-popup-index .navbar-dark .navbar-nav .nav-link {
+.appointments-popup-index .navbar-dark .nav-link {
     color: #fff;
     padding-bottom: 0;
 }
-.appointments-popup-index .navbar-dark .navbar-nav .nav-link:hover,
-.appointments-popup-index .navbar-dark .navbar-nav .nav-link:focus {
+.appointments-popup-index .navbar-dark .nav-link:hover,
+.appointments-popup-index .navbar-dark .nav-link:focus {
     color: #838483;
 }
 
@@ -605,6 +605,25 @@ a#navbar-icon {
     font-weight: lighter;
 }
 
+#navbar {
+    margin-bottom: 0;
+    background-color: #2c2c2c !important;
+    margin: 0;
+    border-radius: 0;
+}
+
+ul#navbar-menu {
+    padding-bottom: 0;
+    margin-bottom: -7px;
+
+}
+
+a.nav-link {
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #fff;
+}
+
 @media screen and (max-width: 1024px) {
     .footer > .container {
         max-width: 100%;
@@ -613,18 +632,45 @@ a#navbar-icon {
 
 @media (max-width: 767px) {
 
-    nav#navbar-menu {
+    .navbar .navbar-brand {
+        width: 65%;
+    }
+
+    #navbar {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        bottom: 0;
         display: block;
         text-align: center;
         height: auto !important;
+        background-color: #2c2c2c !important;
+    }
+    ul#navbar-menu {
+        bottom: 0;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 50px;
+        border: 0;
+        background-color: #2c2c2c;
+        box-shadow: none;
+        text-align: center;
     }
 
-    nav#navbar-menu.collapse {
+    ul#navbar-menu[aria-expanded="true"] {
+        display: flex;
+    }
+
+    #navbar-icon .fa-close {
+        display: none;
+    }
+
+    #navbar-icon[aria-expanded="true"] .fa-close {
+        display: inline-block;
+    }
+
+    #navbar-icon[aria-expanded="true"] .fa-bars {
         display: none;
     }
 
@@ -656,7 +702,8 @@ a#navbar-icon {
     ul.navbar-nav li {
         margin: 0;
     }
-    .appointments-popup-index .navbar-dark .navbar-nav .nav-link {
+
+    .navbar-dark .nav-link {
         font-size: 16px;
         line-height: 72px;
     }
