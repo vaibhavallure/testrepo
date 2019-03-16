@@ -686,7 +686,7 @@ a.nav-link {
     */
 
     #navbar {
-        /* position: fixed; */
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
@@ -817,6 +817,15 @@ a.nav-link {
         left: 0;
         top: 400px;
         max-width: 100%;
+    }
+    .pop-up-div {
+        position: relative;
+        left: 0;
+        top: 640px;
+        max-width: 100%;
+        clear: both;
+        margin-bottom: 125px;
+        z-index: 999;
     }
 
     .down-arrow-maria,
