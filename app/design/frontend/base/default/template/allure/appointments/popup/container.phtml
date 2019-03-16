@@ -6,9 +6,14 @@
 <div id="appointments-popup-wrapper">
     <?php echo $this->getChildHtml("appointments_popup_top");?>
     <?php echo $this->getChildHtml("appointments_popup_menu");?>
+    <?php if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
+        echo $this->getChildHtml('appointments_popup_success');
+    else:
+    ?>
     <?php echo $this->getChildHtml("appointments_popup_register");?>
     <?php echo $this->getChildHtml("appointments_popup_pickdatetime");?>
     <?php echo $this->getChildHtml("appointments_popup_register_end");?>
+    <?php endif;?>
     <?php echo $this->getChildHtml("appointments_popup_faq");?>
     <?php echo $this->getChildHtml("appointments_popup_footer");?>
 </div>

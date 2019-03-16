@@ -148,7 +148,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                 if($action=="save")
                     $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
 
-
+                Mage::log('Before Save'.$step,Zend_Log::DEBUG,'myLog.log',true);
 
                 if($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
                     // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
@@ -178,7 +178,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                 $bookingdata['booking_id']=$model->getId();
 
                 $this->addLog($this->createSaveLogString("After ".$step,$bookingdata),$action);
-
+                Mage::log('After Save'.json_encode($bookingdata,true),Zend_Log::DEBUG,'myLog.log',true);
                 // Create customer if flag set
                 if ($post_data['password'] != null || $post_data['password'] != '') {
                     $websiteId = Mage::app()->getWebsite()->getId();
@@ -203,7 +203,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                 }
                 $email = $model->getEmail();
                 $name = $model->getFirstname() . " " . $model->getLastname();
-                $apt_modify_link = Mage::getUrl('appointments/index/modify', array(
+                $apt_modify_link = Mage::getUrl('appointments/popup/modify', array(
                     'id' => $model->getId(),
                     'email' => $model->getEmail(),
                     '_secure' => true
@@ -212,7 +212,13 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
-
+                if(isset($post_data['noti_sms']))
+                {
+                    if($post_data['noti_sms']=='on')
+                    {
+                        $post_data['notification_pref']='2';
+                    }
+                }
                 if ($post_data['notification_pref'] === '2') {
                     if ($old_appointment) {
                         $smsText = $configData['modified_sms_message'][$storeKey];
@@ -350,6 +356,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     Mage::log($e->getMessage(),Zend_log::DEBUG,'appointments.log',true);
                 }
                 Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
+                Mage::log('APPOINTMENT SUBMITTED','myLog.log',true);
                 $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
                 $this->_redirectReferer() . $appendUrl;
                 return;

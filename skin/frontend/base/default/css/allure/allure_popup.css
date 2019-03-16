@@ -1,4 +1,10 @@
 /*Loader*/
+
+button.input-box.b {
+	border: 1px solid;
+	background: #fff;
+	color: #000;
+}
 .overlay {
 	position: absolute;
     overflow-x: auto;
