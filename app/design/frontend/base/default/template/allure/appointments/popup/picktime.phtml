@@ -163,6 +163,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $noSlot=true;
             if(!empty($collection->getData())) {
                 echo "<select class='input-box' name='selectTime' id='selectTime' >";
+                echo "<option >--- Select Slot ---</option>";
             }
             for($i=0;$i< $totalSlot;$i++)
             {
@@ -306,7 +307,7 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
 
 
-                    echo "<span >";
+
                     if($time_pref == 12){
                         if($time_pref <= $selectedTime)
                         {
@@ -321,24 +322,11 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
                             $selectedTime = $selectedTime." AM";
                         }
                     }
-                    echo "<span >";
-                    echo $selectedTime ;
-                    echo "</span>";
-                    echo "</li>";
 
 
-                    if($isFour == $timeslot_col_size) {
-                        echo "</ul>";
-                        echo "</li>";
-                        $isFour = 0;
-                    }
 
                 endif;
-                if($isFour != $timeslot_col_size && $i == ($totalSlot - 1)) {
-                    echo "</ul>";
-                    echo "</li>";
-                    $isFour = 0;
-                }
+
                 $newStartTime = date('H:i', $newStartTime);
                 $selectedTime = ($newStartTime);
                 /* if($noSlot)
@@ -380,17 +368,4 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
         jQuery(".timeslot").removeClass("selectedTime");
         jQuery("#"+id).addClass("selectedTime");
     });
-</script>
-<script>
-var values =jQuery('#selectTime :selected');
-var starttime = values[0].getAttribute('data-start_time_slot');
-var endtime = values[0].getAttribute('data-end_time_slot');
-var piercerId = values[0].getAttribute('data-piercer');
-jQuery("#starttime_hidden").val(starttime);
-jQuery("#endtime_hidden").val(endtime);
-jQuery("#piercer_id").val(piercerId);
-//			    jQuery(".timeslot").css('background-color',"");
-//		    jQuery("#"+id).css("background-color","palegoldenrod");
-jQuery(".timeslot").removeClass("selectedTime");
-jQuery("#"+id).addClass("selectedTime");
 </script>
