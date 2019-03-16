@@ -33,7 +33,7 @@ if (!$fetch_date){
 
 <script type="text/javascript">
     var currentDate = new Date();
-    var currentDateString = currentDate.getMonth()+'/'+currentDate.getDate()+'/'+currentDate.getYear();
+    var currentDateString = parseInt(1 + currentDate.getMonth()).pad(2)+'/'+currentDate.getDate()+'/'+currentDate.getFullYear();
 
     jQuery("#appointment_date").val(currentDateString);
 

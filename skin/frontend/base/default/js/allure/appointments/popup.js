@@ -2,6 +2,12 @@ if (typeof Allure == "undefined") {
     var Allure = {};
 }
 
+Number.prototype.pad = function(size) {
+    var s = String(this);
+    while (s.length < (size || 2)) {s = "0" + s;}
+    return s;
+}
+
 var setSlotAvailability = function (response) {
     console.log(response);
     jQuery("#pick_ur_time_div").html(response.output);
