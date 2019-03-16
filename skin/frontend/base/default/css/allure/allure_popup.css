@@ -21,6 +21,7 @@ li.nav-item {
 
 a.navbar-brand {
 	font-size: 30px;
+    padding-left: 30px;
 	padding-right: 40px;
     padding-bottom: 0.5125rem;
 }
@@ -145,12 +146,23 @@ input#selectDate {
 .down-arrow-maria {
 	z-index: 200;
 	position: absolute;
-	margin-top: -90px;
+	margin-top: -50px;
 	right: 50%;
 }
 
 .down-arrow-size {
 	width: 35px;
+}
+
+a#footer-top-link {
+    margin-top: 20px;
+    background: #2c2c2c;
+    padding: 10px;
+    display: inline-block;
+}
+
+a#footer-top-link img {
+    width: 25px
 }
 
 
@@ -182,16 +194,22 @@ p.faq-title {
 	font-family: urw-din-light;
 	font-size: 14px;
 	line-height: 22px;
-	color: #D8D8D8;
+	color: #fff;
 	text-align: center;
 }
 
-p.faq-question {
+div#faq {
+    background-color: #2c2c2c;
+}
+
+p.faq-question,
+h4.faq-question {
 	font-size: 16px;
 	font-family: urw-din-medium;
 	text-align: center;
 	color: #FFFFFF;
 	line-height: 22px;
+    margin-bottom: 1rem;
 }
 
 .div-question {
@@ -516,7 +534,7 @@ input[type="checkbox"]+label:before {
 }
 
 input[type="checkbox"]:checked+label:before {
-	background: #000;
+	background: #2c2c2c;
 	color: #fff;
 	content: "\2713";
 	text-align: center;
@@ -546,7 +564,7 @@ button#btnSubscribe {
 
 input#subscribe_email {
 	line-height: 30px;
-	background: #000;
+	background: #2c2c2c;
 }
 
 p.footer-subtitle-medium {
@@ -591,7 +609,67 @@ input#datepickerpopup {
 	margin-right: 10px;
 }
 
-@media screen and (max-width: 768px) {
+/** RESPOSIVE **/
+
+@media screen and (max-width: 1024px) {
+    .footer > .container {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    p.footer-subtitle-medium {
+        text-align: center;
+    }
+    .div-question {
+        padding-top: 10px;
+    }
+    p.faq-question, h4.faq-question {
+        text-align: left;
+        padding-top: 10px;
+        border-top: 1px solid #fff;
+        margin-bottom: 0;
+    }
+    p.faq-answer {
+        text-align: left;
+    }
+    div#faq-right .faq-first {
+        padding-top: 10px;
+    }
+    div#faq-left .faq-last {
+        padding-bottom: 0;
+    }
+
+    div#faq-left .faq-first h4.faq-question {
+        border-top: none;
+    }
+
+    #about-maria p.black-subtitle {
+        display: none;
+    }
+
+    .div-about-maria {
+        padding: 0px;
+    }
+    p.p-black {
+        margin: 0;
+        padding: 0;
+    }
+    .price-list-box {
+        margin: 0;
+        padding: 0;
+    }
+
+    #about-maria #maria-cover {
+        right: 0;
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 1px) {
 	.booking-box {
 		padding: 0px;
 	}
