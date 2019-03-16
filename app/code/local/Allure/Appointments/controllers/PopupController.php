@@ -841,18 +841,12 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
             try {
                 $status = Mage::getModel('newsletter/subscriber')->subscribe($email);
 
-                    $response = [
-                        'status' => 'OK',
-                        'msg' => 'Thank you for your subscription.',
-                        'sta'=> $status,
-                    ];
-
-
-            }
-
-
-            catch (Exception $exception)
-            {
+                $response = [
+                    'status' => 'OK',
+                    'msg' => 'Thank you for your subscription.',
+                    'sta'=> $status,
+                ];
+            } catch (Exception $exception) {
                 Mage::log('ERROR SUBSCRIBE '.$exception->getMessage(),Zend_Log::DEBUG,'appointment_la.log',true);
                 $response = [
                     'status' => 'ERROR',
@@ -860,10 +854,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     'sta'=> $status,
                 ];
             }
-
-        }
-        else
-        {
+        } else {
             $response = [
                 'status' => 'ERROR',
                 'msg' => 'Please enter your Email',

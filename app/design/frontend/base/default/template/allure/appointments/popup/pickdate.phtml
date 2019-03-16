@@ -32,7 +32,14 @@ if (!$fetch_date){
 <input name="date" id="appointment_date" type="text" class="input-box required-entry">
 
 <script type="text/javascript">
+    var currentDate = new Date();
+    var currentDateString = currentDate.getMonth()+'/'+currentDate.getDate()+'/'+currentDate.getYear();
+
+    jQuery("#appointment_date").val(currentDateString);
+
     jQuery('#appointment_date').datepicker({
+        startDate: currentDateString,
+        endDate: '',
         datesDisabled: ['04/02/2019','03/22/2019']
     }).on('changeDate', function(e) {
         // `e` here contains the extra attributes
@@ -54,5 +61,5 @@ if (!$fetch_date){
 <script>
     var date=new Date();
     var val=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
-    document.getElementById("datepicker-13_hidden").value = val;
+    document.getElementById("appointment_date").value = val;
 </script>
