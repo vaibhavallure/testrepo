@@ -808,6 +808,11 @@ a#icon-price-close {display: none;}
     .footer > .container {
         max-width: 100%;
     }
+
+    .navbar-dark .navbar-brand {
+        color: #fff;
+        padding-left: 50px;
+    }
 }
 
 @media (max-width: 767px) {

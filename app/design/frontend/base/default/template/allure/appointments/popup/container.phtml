@@ -62,7 +62,7 @@
             utilsScript: Allure.UtilPath
         });
 
-        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getGeoAddress()->getCountry();?>";
 
         if (country_code == undefined || country_code == null || country_code == "") {
             country_code = "us"
