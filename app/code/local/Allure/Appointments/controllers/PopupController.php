@@ -436,7 +436,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     'appointment_availablity', false);
             }
         }
-        Mage::log('IN MODIFY APPOINTMENT',Zend_Log::DEBUG,'myLog.log',true);
+        //Mage::log('IN MODIFY APPOINTMENT',Zend_Log::DEBUG,'myLog.log',true);
         $this->loadLayout();
         $this->renderLayout();
     }
@@ -831,5 +831,44 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
 
     private function helper(){
         return Mage::helper("appointments/data");
+    }
+
+    public function subscribeAction()
+    {
+        if(isset($_POST['email'])){
+            $response='';
+            $email = $_POST['email'];
+            try {
+                $status = Mage::getModel('newsletter/subscriber')->subscribe($email);
+
+                    $response = [
+                        'status' => 'OK',
+                        'msg' => 'Thank you for your subscription.',
+                        'sta'=> $status,
+                    ];
+
+
+            }
+
+
+            catch (Exception $exception)
+            {
+                Mage::log('ERROR SUBSCRIBE '.$exception->getMessage(),Zend_Log::DEBUG,'appointment_la.log',true);
+                $response = [
+                    'status' => 'ERROR',
+                    'msg' => 'Sorry there is problem in subscription.',
+                    'sta'=> $status,
+                ];
+            }
+
+        }
+        else
+        {
+            $response = [
+                'status' => 'ERROR',
+                'msg' => 'Please enter your Email',
+            ];
+        }
+        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
     }
 }

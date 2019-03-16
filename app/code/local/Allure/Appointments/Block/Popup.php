@@ -79,4 +79,11 @@ class Allure_Appointments_Block_Popup extends Mage_Core_Block_Template{
     private function getAppointmentStoreMapping(){
         return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     }
+/**
+ * Subscribe Action URL
+ */
+   public function getSubscribeUrl()
+   {
+       return $this->getUrl('*/popup/subscribe', array('_secure' => true));
+   }
 }
