@@ -163,8 +163,8 @@ var count = 0;
 	 
 	 
 	//ajax start to get the working days of piercers according to store
-	 	if(document.getElementById("store-id")!= null){
-			var storeid = document.getElementById("store-id").value;
+	 	if(document.getElementById("store_id")!= null){
+			var storeid = document.getElementById("store_id").value;
 		}
 
 
@@ -191,7 +191,7 @@ var count = 0;
 					var todaysDate = document.getElementById("datepicker-13_hidden").value;	
 					//ajax start to pass the selected date to get the time
 					var qty = document.getElementById("count").value;
-					var storeid = document.getElementById("store-id").value;
+					var storeid = document.getElementById("store_id").value;
 					var request = {
 				 				"qty":qty,
 				 				"store":storeid,
