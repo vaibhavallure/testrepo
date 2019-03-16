@@ -204,6 +204,10 @@ p.faq-title {
 	text-align: center;
 }
 
+#faq .faq-answer.collapse {
+    display: block;
+}
+
 div#faq {
     background-color: #2c2c2c;
 }
@@ -646,6 +650,10 @@ a.nav-link {
     color: #fff;
 }
 
+#faq .faq-answer.collapse {
+    overflow: hidden;
+}
+
 @media screen and (max-width: 1024px) {
     .footer > .container {
         max-width: 100%;
@@ -656,6 +664,13 @@ a.nav-link {
 
     .navbar .navbar-brand {
         width: 65%;
+    }
+
+    #faq .faq-answer[aria-expanded="false"] {
+        display: none;
+    }
+    #faq .faq-answer[aria-expanded="true"] {
+        display: block;
     }
 
     #navbar {
