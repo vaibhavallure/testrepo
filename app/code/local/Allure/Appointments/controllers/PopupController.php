@@ -2,6 +2,28 @@
 class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Action{
     public function indexAction()
     {
+        // MODIFY ACTION start by bhagya
+        $apt_id = $this->getRequest()->getParam('id');
+        $apt_email = $this->getRequest()->getParam('email');
+
+        if ($apt_id && $apt_email) {
+            $models = Mage::getModel('appointments/appointments')->getCollection();
+            $models->addFieldToFilter('id', $apt_id)->addFieldToFilter('email',
+                $apt_email);
+            if (count($models)) {
+                foreach ($models as $model) {
+                    $model = $model;
+                    break;
+                }
+                Mage::register('apt_modify_data', $model);
+                Mage::getSingleton("core/session")->setData(
+                    'appointmentData_availablity', true);
+            } else {
+                Mage::getSingleton("core/session")->setData(
+                    'appointmentData_availablity', false);
+            }
+        }
+        // MODIFY ACTION
         $this->loadLayout();
         $this->renderLayout();
     }
@@ -86,7 +108,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
     {
 
         $post_data = $this->getRequest()->getPost();
-
+Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $post_data['store-id'];
 
@@ -148,7 +170,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 if($action=="save")
                     $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
 
-
+                Mage::log('Before Save'.$step,Zend_Log::DEBUG,'myLog.log',true);
 
                 if($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
                     // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
@@ -178,7 +200,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 $bookingdata['booking_id']=$model->getId();
 
                 $this->addLog($this->createSaveLogString("After ".$step,$bookingdata),$action);
-
+                Mage::log('After Save'.json_encode($bookingdata,true),Zend_Log::DEBUG,'myLog.log',true);
                 // Create customer if flag set
                 if ($post_data['password'] != null || $post_data['password'] != '') {
                     $websiteId = Mage::app()->getWebsite()->getId();
@@ -203,7 +225,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 }
                 $email = $model->getEmail();
                 $name = $model->getFirstname() . " " . $model->getLastname();
-                $apt_modify_link = Mage::getUrl('appointments/index/modify', array(
+                $apt_modify_link = Mage::getUrl('appointments/popup/modify', array(
                     'id' => $model->getId(),
                     'email' => $model->getEmail(),
                     '_secure' => true
@@ -212,7 +234,13 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
-
+                if(isset($post_data['noti_sms']))
+                {
+                    if($post_data['noti_sms']=='on')
+                    {
+                        $post_data['notification_pref']='2';
+                    }
+                }
                 if ($post_data['notification_pref'] === '2') {
                     if ($old_appointment) {
                         $smsText = $configData['modified_sms_message'][$storeKey];
@@ -350,6 +378,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                     Mage::log($e->getMessage(),Zend_log::DEBUG,'appointments.log',true);
                 }
                 Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
+                Mage::log('APPOINTMENT SUBMITTED','myLog.log',true);
                 $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
                 $this->_redirectReferer() . $appendUrl;
                 return;
@@ -365,6 +394,189 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         // $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
     }
 
+/* Modify or Cancel URL Action */
+    public function modifyAction ()
+    {
+
+        $apt_id = $this->getRequest()->getParam('id');
+        $apt_email = $this->getRequest()->getParam('email');
+
+        // $apt_id = Mage::helper('core')->decrypt($encryptedId);
+        // $apt_email = Mage::helper('core')->decrypt($encryptedEmail);
+
+        if ($apt_id && $apt_email) {
+            // $append_url = "?apt_id=".$apt_id."&email=".$apt_email;
+            $models = Mage::getModel('appointments/appointments')->getCollection();
+            $models->addFieldToFilter('id', $apt_id)
+                ->addFieldToFilter('email', $apt_email)
+                ->addFieldToFilter('app_status',
+                    array(
+                        'in' => array(
+                            Allure_Appointments_Model_Appointments::STATUS_REQUEST,
+                            Allure_Appointments_Model_Appointments::STATUS_ASSIGNED
+                        )
+                    ));
+            if (count($models)) {
+                foreach ($models as $model) {
+                    $model = $model;
+                    break;
+                }
+
+
+                $logdata=$model->getData();
+                $logdata['ip']=$this->get_client_ip();
+                $this->addLog($this->createSaveLogString("Modify INIT ",$logdata),"modify");
+
+
+                Mage::register('appointment_modified', $model);
+                Mage::getSingleton("core/session")->setData(
+                    'appointment_availablity', true);
+            } else {
+                Mage::getSingleton("core/session")->setData(
+                    'appointment_availablity', false);
+            }
+        }
+        Mage::log('IN MODIFY APPOINTMENT',Zend_Log::DEBUG,'myLog.log',true);
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+/* CancelaptAction by bhagya */
+    public function cancelaptAction ()
+    {
+        $apt_id = $this->getRequest()->getParam('id');
+        $apt_email = $this->getRequest()->getParam('email');
+
+        if ($apt_id || $apt_email) {
+            $data = array(
+                'app_status' => Allure_Appointments_Model_Appointments::STATUS_CANCELLED
+            );
+            $model = Mage::getModel('appointments/appointments')->load($apt_id);
+            $storeId = $model->getStoreId();
+            $model = Mage::getModel('appointments/appointments')->load($apt_id)->addData(
+                $data);
+
+            try {
+                $model->setId($apt_id)->save();
+
+
+                $logdata=$model->getData();
+                $logdata['ip']=$this->get_client_ip();
+                $this->addLog($this->createSaveLogString("Canceled",$logdata),"modify");
+
+
+                echo "Your scheduled Appointment is Cancelled successfully.";
+                $configData = $this->getAppointmentStoreMapping();
+                $storeKey = array_search ($storeId, $configData['stores']);
+
+                $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
+
+
+                if ($model->getNotificationPref() === '2') {
+                    $smsText = $configData['cancel_sms_message'][$storeKey];
+                    $appointmentStart = date("F j, Y H:i",strtotime($model->getAppointmentStart()));
+                    $date = date("F j, Y ",strtotime($model->getAppointmentStart()));
+                    $timePref = $configData['time_pref'][$storeKey];
+                    if($timePref == 24)
+                        $time = date('H:i', strtotime($model->getAppointmentStart()));
+                    else if($timePref == 12)
+                        $time = date('h:i A', strtotime($model->getAppointmentStart()));
+                    else
+                        $time = date('H:i', strtotime($model->getAppointmentStart()));
+
+                    $booking_link = Mage::getBaseUrl('web') . 'appointments/';
+                    $booking_link = Mage::helper('appointments')->getShortUrl($booking_link);
+                    $smsText = str_replace("(time)", $time, $smsText);
+                    $smsText = str_replace("(date)", $date, $smsText);
+                    $smsText = str_replace("(book_link)", $booking_link,$smsText);
+
+                    if ($model->getPhone()) {
+                        $phno_forsms = preg_replace('/\s+/', '', $model->getPhone());
+                        $smsdata = Mage::helper('appointments')->sendsms($phno_forsms, $smsText, $storeId);
+                        $model->setSmsStatus($smsdata);
+                        $model->save();
+
+                        $this->notify_Log("Email/Cancel", $app_string);
+
+                    }
+                }
+                // SMS CODE TO CANCEL Appointment end
+                $appointmentStart = date("F j, Y \\a\\t H:i", strtotime($model->getAppointmentStart()));
+                $appointmentEnd = date("F j, Y \\a\\t H:i", strtotime($model->getAppointmentEnd()));
+                $vars = array(
+                    'name' => $model->getFirstname() . " " .$model->getLastname(),
+                    'customer_name' => $model->getFirstname() ." " . $model->getLastname(),
+                    'customer_email' => $model->getEmail(),
+                    'customer_phone' => $model->getPhone(),
+                    'no_of_pier' => $model->getPiercingQty(),
+                    'piercing_loc' => $model->getPiercingLoc(),
+                    'special_notes' => $model->getSpecialNotes(),
+                    'apt_starttime' => $appointmentStart,
+                    'apt_endtime' => $appointmentEnd,
+                    'store_name' => $configData['store_name'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
+                    'store_address' => $configData['store_address'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
+                    'store_email_address' => $configData['store_email'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_email",$storeId),
+                    'store_phone' => $configData['store_phone'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_phone",$storeId),
+                    'store_hours' => $configData['store_hours_operation'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_hours",$storeId),
+                    'store_map' => $configData['store_map'][$storeKey],//Mage::getStoreConfig("appointments/genral_email/store_map",$storeId),
+                    'apt_modify_link' => $apt_modify_link,
+                    'booking_id'=>$model->getId()
+                );
+
+                //send Customer email
+                $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
+                $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
+                $enablePiercerEmail = $configData['piercer_email_enable'][$storeKey];
+                $sender = array(
+                    'name' => Mage::getStoreConfig("trans_email/bookings/name"),
+                    'email' => $configData['store_email'][$storeKey]
+                );
+
+                try {
+
+                    if($enableCustomerEmail){
+                        $email=$model->getEmail();
+                        $name=$model->getFirstname() . " " .$model->getLastname();
+                        $templateId=$configData['email_template_appointment_cancel'][$storeKey];
+                        $mail = Mage::getModel('core/email_template');
+                        foreach (explode(",",Mage::getStoreConfig('appointments/app_bcc/emails')) as $emails) {
+                            $mail->addBcc($emails);
+                        }
+                        $mail->setTemplateSubject(
+                            $mailSubject)->sendTransactional($templateId,
+                            $sender, $email, $name, $vars);
+
+                        $this->notify_Log("Email/Cancel", $app_string);
+
+                    }
+                    if($enableAdminEmail){
+                        $adminEmail=$configData['admin_email_id'][$storeKey];
+                        $name='';
+                        $templateId=$configData['admin_email_template_cancel'][$storeKey];
+                        $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+                            $mailSubject)->sendTransactional($templateId,
+                            $sender, $email, $name, $vars);
+                    }
+                    if($enablePiercerEmail){
+                        $piercer=Mage::getModel('appointment/piercer')->load($model->getPiercerId());
+                        $email=$piercer->getEmail();
+                        $name=$piercer->getFirstname();
+                        $templateId=$configData['piercer_email_template_cancel'][$storeKey];
+                        $mail = Mage::getModel('core/email_template')->setTemplateSubject(
+                            $mailSubject)->sendTransactional($templateId,
+                            $sender, $email, $name, $vars);
+                    }
+                }catch(Exception $e){
+                    echo $e->getMessage();
+                }
+
+
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+            $model->save();
+        }
+    }
     function date_convert($dt, $tz1, $df1, $tz2, $df2) {
         // create DateTime object
         $d = DateTime::createFromFormat($df1, $dt, new DateTimeZone($tz1));

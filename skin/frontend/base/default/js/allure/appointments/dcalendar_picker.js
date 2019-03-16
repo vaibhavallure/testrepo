@@ -465,13 +465,13 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				data[opts]();
 			} else {
 				cal = $('<table class="calendar"></table>');
-				that.wrap($('<div class="datepicker" style="display:inline-block;position:relative;"></div>'));
+				// that.wrap($('<div class="datepicker" style="display:inline-block;position:relative;"></div>'));
 				cal.css({
-					//position:'absolute',
-					left:0, display:'block',
+					// position:'absolute',
+					left:0, display:'inline-block',
 					'box-shadow':'0 4px 6px 1px rgba(0, 0, 0, 0.14)',
-					//width:'230px',
-					//width:'300px',
+					// width:'230px',
+					// width:'300px',
 				}).appendTo(that.parent());
 				if(opts){
 					opts.mode = 'datepicker';
@@ -497,7 +497,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 					
 					$('#currDay').css({"color":"#3f4048"});
 					
-					//ajax start to pass the selected date to get the time
+					//ajax start to pass the selected date to get the ime
 					var qty = document.getElementById("count").value;
 
                     if(qty==0)
@@ -508,7 +508,7 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
                     jQuery('#pick_ur_time_div').find('input:hidden').val('');
                     jQuery("#time_blocks").empty();
 
-                    var storeid = document.getElementById("store-id").value;
+                    var storeid = document.getElementById("store_id").value;
 					var request = {
 				 				"qty":qty,
 				 				"store":storeid,

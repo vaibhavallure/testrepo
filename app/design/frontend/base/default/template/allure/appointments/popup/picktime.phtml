@@ -163,6 +163,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $noSlot=true;
             if(!empty($collection->getData())) {
                 echo "<select class='input-box' name='selectTime' id='selectTime' >";
+                echo "<option >--- Select Slot ---</option>";
             }
             for($i=0;$i< $totalSlot;$i++)
             {
@@ -306,7 +307,7 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
 
 
-                    echo "<span >";
+
                     if($time_pref == 12){
                         if($time_pref <= $selectedTime)
                         {
@@ -321,24 +322,11 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
                             $selectedTime = $selectedTime." AM";
                         }
                     }
-                    echo "<span >";
-                    echo $selectedTime ;
-                    echo "</span>";
-                    echo "</li>";
 
 
-                    if($isFour == $timeslot_col_size) {
-                        echo "</ul>";
-                        echo "</li>";
-                        $isFour = 0;
-                    }
 
                 endif;
-                if($isFour != $timeslot_col_size && $i == ($totalSlot - 1)) {
-                    echo "</ul>";
-                    echo "</li>";
-                    $isFour = 0;
-                }
+
                 $newStartTime = date('H:i', $newStartTime);
                 $selectedTime = ($newStartTime);
                 /* if($noSlot)
@@ -365,81 +353,19 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
 
 <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/timeslider/sliderDemo.js"></script>
 
+
 <script>
-    //jQuery(document).ready(function (){
-
-    jQuery('#foo2').jcarousel({
-        initCallback: mycarousel_initCallbackProd2,
-        buttonNextCallback: mycarousel_buttonPrevCallbackProd2,
-        buttonPrevCallback: mycarousel_buttonNextCallbackProd2,
-        // This tells jCarousel NOT to autobuild prev/next buttons
-        buttonNextHTML: null,
-        buttonPrevHTML: null,
-        itemFallbackDimension: 90,
-    });
-
-    jQuery(window).resize();
-
-    function mycarousel_initCallbackProd2(carousel) {
-        jQuery('#foo2_prev').bind('click', function() {
-            carousel.prev();
-            return false;
-        });
-
-        jQuery('#foo2_next').bind('click', function() {
-            carousel.next();
-            return false;
-        });
-    };
-
-    function mycarousel_buttonNextCallbackProd2(carousel, button, enabled) {
-        if(enabled){
-            jQuery("#foo2_prev").css('opacity',1);
-        }else{
-            jQuery("#foo2_prev").css('opacity',0.13);
-        }
-    };
-
-    function mycarousel_buttonPrevCallbackProd2(carousel, button, enabled) {
-        if(enabled){
-            jQuery("#foo2_next").css('opacity',1);
-        }else{
-            jQuery("#foo2_next").css('opacity',0.13);
-        }
-    };
-
-    /* if(jQuery('ul#foo2 li.item').length <= 5){
-        jQuery("#foo2_next , #foo2_prev").hide();
-        jQuery(".timeslot").css('margin-right',0);
-        jQuery(".timeslot").css('margin-left',0);
-
-    } */
-    jQuery(window).resize(function() {
-        var wi = 0;
-        jQuery('ul#foo2 li').each(function(key,element){
-            wi += jQuery(element).width();
-        });
-
-        if(wi >= document.body.offsetWidth){
-            jQuery('#foo2_next, #foo2_prev').show();
-        }else{
-            jQuery('#foo2_next, #foo2_prev').hide();
-        }
-    });
-
-
-
-</script>
-<script>
-var values =jQuery('#selectTime :selected');
-var starttime = values[0].getAttribute('data-start_time_slot');
-var endtime = values[0].getAttribute('data-end_time_slot');
-var piercerId = values[0].getAttribute('data-piercer');
-jQuery("#starttime_hidden").val(starttime);
-jQuery("#endtime_hidden").val(endtime);
-jQuery("#piercer_id").val(piercerId);
+    jQuery("#selectTime").change(function(){
+        var values =jQuery('#selectTime :selected');
+        var starttime = values[0].getAttribute('data-start_time_slot');
+        var endtime = values[0].getAttribute('data-end_time_slot');
+        var piercerId = values[0].getAttribute('data-piercer');
+        jQuery("#starttime_hidden").val(starttime);
+        jQuery("#endtime_hidden").val(endtime);
+        jQuery("#piercer_id").val(piercerId);
 //			    jQuery(".timeslot").css('background-color',"");
 //		    jQuery("#"+id).css("background-color","palegoldenrod");
-jQuery(".timeslot").removeClass("selectedTime");
-jQuery("#"+id).addClass("selectedTime");
+        jQuery(".timeslot").removeClass("selectedTime");
+        jQuery("#"+id).addClass("selectedTime");
+    });
 </script>

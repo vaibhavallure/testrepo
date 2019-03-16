@@ -260,7 +260,8 @@
 }
 .selectedTime,.selectedDate{
 	background: url(../images/button_newsletter.png) no-repeat center transparent;
-	color:white !important;
+	color:#fff;
+	background-color: #000;
 }
 /* .calendar{
 	display:block !important;

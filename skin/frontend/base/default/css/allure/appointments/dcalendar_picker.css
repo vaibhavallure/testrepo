@@ -12,14 +12,14 @@
 	font-family: dinmittelschriftregular;
 	font-size: 12px;
 	border-collapse: collapse;
-	padding: 0;	
+	padding: 0;
 	border:1px solid rgba(0,0,0,0.08);
 	/* width: 230px; */
 	color: #000;
-	margin: 20px 0 0 0;
+	margin: 0px 0 0 0;
 	text-align: center;
 	background-color: #FFF;
-	display:block !important;
+	display:none ;
 	height:auto;
 	/* height:250px !important; */
 }
@@ -35,10 +35,10 @@
 	margin-left: 5px;
 }
 .calendar span {
-	padding: 1px 15px;
+	padding: 1px 8px;
 	display: block;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 14px;
 }
 .calendar .disabled span {
     font-size: 12px;

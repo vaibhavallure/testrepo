@@ -31,8 +31,9 @@ if (!$fetch_date){
 }
 ?>
 
+<strong id="availablewdays" data-original='<?php echo $workingdays;?>'></strong>
 
-<input  class="input-box"  id="datepicker-13_hidden" />
+<input  name="app_date"  class="input-box"  id="datepicker-13_hidden"  value="<?php if($fetch_date):echo $fetch_date;endif;?>" />
 
 <script>
     //Pick ur day updated with custom calendar code
