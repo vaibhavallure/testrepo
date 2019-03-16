@@ -72,12 +72,12 @@ a#footer-link-main {
 	margin-bottom: 60px;
 }
 
-.appointments-popup-index .navbar-dark .navbar-nav .nav-link {
+.appointments-popup-index .navbar-dark .nav-link {
     color: #fff;
     padding-bottom: 0;
 }
-.appointments-popup-index .navbar-dark .navbar-nav .nav-link:hover,
-.appointments-popup-index .navbar-dark .navbar-nav .nav-link:focus {
+.appointments-popup-index .navbar-dark .nav-link:hover,
+.appointments-popup-index .navbar-dark .nav-link:focus {
     color: #838483;
 }
 
@@ -617,6 +617,35 @@ input#datepickerpopup {
 
 /** RESPOSIVE **/
 
+a#navbar-icon {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 28px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: lighter;
+}
+
+#navbar {
+    margin-bottom: 0;
+    background-color: #2c2c2c !important;
+    margin: 0;
+    border-radius: 0;
+}
+
+ul#navbar-menu {
+    padding-bottom: 0;
+    margin-bottom: -7px;
+
+}
+
+a.nav-link {
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #fff;
+}
+
 @media screen and (max-width: 1024px) {
     .footer > .container {
         max-width: 100%;
@@ -624,6 +653,83 @@ input#datepickerpopup {
 }
 
 @media (max-width: 767px) {
+
+    .navbar .navbar-brand {
+        width: 65%;
+    }
+
+    #navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: block;
+        text-align: center;
+        height: auto !important;
+        background-color: #2c2c2c !important;
+    }
+    ul#navbar-menu {
+        bottom: 0;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 50px;
+        border: 0;
+        background-color: #2c2c2c;
+        box-shadow: none;
+        text-align: center;
+    }
+
+    ul#navbar-menu[aria-expanded="true"] {
+        display: flex;
+    }
+
+    #navbar-icon .fa-close {
+        display: none;
+    }
+
+    #navbar-icon[aria-expanded="true"] .fa-close {
+        display: inline-block;
+    }
+
+    #navbar-icon[aria-expanded="true"] .fa-bars {
+        display: none;
+    }
+
+    a.navbar-brand {
+        margin: 30px auto;
+        float: none;
+    }
+
+    a.navbar-close {
+        position: fixed;
+        left: 20px;
+        color: #fff;
+        font-size: 26px;
+        outline: none;
+        border: 0;
+    }
+
+    a.navbar-close:active,
+    a.navbar-close:hover,
+    a.navbar-close:visited {
+        color: #fff;
+    }
+
+    ul.navbar-nav {
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.navbar-nav li {
+        margin: 0;
+    }
+
+    .navbar-dark .nav-link {
+        font-size: 16px;
+        line-height: 72px;
+    }
+
     p.footer-subtitle-medium {
         text-align: center;
     }
@@ -668,6 +774,84 @@ input#datepickerpopup {
 
     #about-maria #maria-cover {
         right: 0;
+    }
+
+    .booking-box {
+        padding: 0;
+    }
+
+    .pop-up-div {
+        position: relative;
+        left: 0;
+        top: 400px;
+        max-width: 100%;
+    }
+
+    .down-arrow-maria,
+    .link-down {
+        display: none;
+    }
+
+    .mt_logo {
+        font-size: 28px;
+    }
+
+    #about-maria .half-div-right .container {
+        padding: 0;
+    }
+
+    .footer-frm {
+        margin: 0 -15px;
+    }
+
+    div#price-list {
+        padding: 0;
+    }
+
+    div#booking-wrapper {
+        padding: 0;
+    }
+
+    .notify-label {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+    .box.notify-box {
+        border: 0;
+    }
+    .notify-box > p.label {
+        width: 100%;
+        display: inline-block;
+        text-align: left;
+        line-height: 30px;
+        padding: 0;
+    }
+
+    .notify-box label.label {
+        vertical-align: bottom;
+    }
+
+    input[type="checkbox"]+label:before {
+        margin-bottom: 1px;
+    }
+
+    .box.people {
+        border: 0;
+        border-top: 1px solid #ddd;
+        margin: 15px 3em;
+        padding-top: 30px;
+    }
+
+    .people-wrapper label.label {
+        margin-bottom: 25px;
+    }
+
+    input.minus-btn {
+        margin-left: 0;
+    }
+
+    input#count {
+        text-align: center;
     }
 }
 
