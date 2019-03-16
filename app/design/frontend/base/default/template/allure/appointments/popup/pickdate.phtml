@@ -29,7 +29,7 @@ if (!$fetch_date){
     }
 }
 ?>
-<input name="date" id="appointment_date" type="text" class="input-box required-entry">
+<input name="app_date" id="appointment_date" type="text" class="input-box required-entry" value="<?php if($fetch_date):echo $fetch_date;endif;?>">
 
 <script type="text/javascript">
     var currentDate = new Date();
@@ -52,7 +52,7 @@ if (!$fetch_date){
 
 <!--<strong id="availablewdays" data-original='--><?php //echo $workingdays;?><!--'></strong>-->
 
-<input  name="app_date"  class="input-box"  id="datepicker-13_hidden"  value="<?php if($fetch_date):echo $fetch_date;endif;?>" />
+<!--<input  name="app_date"  class="input-box"  id="datepicker-13_hidden"  value="--><?php //if($fetch_date):echo $fetch_date;endif;?><!--" />-->
 
 <script>
     //Pick ur day updated with custom calendar code
