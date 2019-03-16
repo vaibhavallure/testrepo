@@ -586,7 +586,19 @@ input#datepickerpopup {
 	margin-right: 10px;
 }
 
-@media screen and (max-width: 768px) {
+/** RESPOSIVE **/
+
+@media screen and (max-width: 1024px) {
+    .footer > .container {
+        max-width: 100%;
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 1px) {
 	.booking-box {
 		padding: 0px;
 	}
