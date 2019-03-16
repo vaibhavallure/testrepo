@@ -86,7 +86,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
     {
 
         $post_data = $this->getRequest()->getPost();
-
+Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $post_data['store-id'];
 
