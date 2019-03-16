@@ -595,6 +595,16 @@ input#datepickerpopup {
 
 /** RESPOSIVE **/
 
+a#navbar-icon {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 28px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: lighter;
+}
+
 @media screen and (max-width: 1024px) {
     .footer > .container {
         max-width: 100%;
@@ -602,6 +612,55 @@ input#datepickerpopup {
 }
 
 @media (max-width: 767px) {
+
+    nav#navbar-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        text-align: center;
+        height: auto !important;
+    }
+
+    nav#navbar-menu.collapse {
+        display: none;
+    }
+
+    a.navbar-brand {
+        margin: 30px auto;
+        float: none;
+    }
+
+    a.navbar-close {
+        position: fixed;
+        left: 20px;
+        color: #fff;
+        font-size: 26px;
+        outline: none;
+        border: 0;
+    }
+
+    a.navbar-close:active,
+    a.navbar-close:hover,
+    a.navbar-close:visited {
+        color: #fff;
+    }
+
+    ul.navbar-nav {
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.navbar-nav li {
+        margin: 0;
+    }
+    .appointments-popup-index .navbar-dark .navbar-nav .nav-link {
+        font-size: 16px;
+        line-height: 72px;
+    }
+
     p.footer-subtitle-medium {
         text-align: center;
     }
@@ -646,6 +705,84 @@ input#datepickerpopup {
 
     #about-maria #maria-cover {
         right: 0;
+    }
+
+    .booking-box {
+        padding: 0;
+    }
+
+    .pop-up-div {
+        position: relative;
+        left: 0;
+        top: 400px;
+        max-width: 100%;
+    }
+
+    .down-arrow-maria,
+    .link-down {
+        display: none;
+    }
+
+    .mt_logo {
+        font-size: 28px;
+    }
+
+    #about-maria .half-div-right .container {
+        padding: 0;
+    }
+
+    .footer-frm {
+        margin: 0 -15px;
+    }
+
+    div#price-list {
+        padding: 0;
+    }
+
+    div#booking-wrapper {
+        padding: 0;
+    }
+
+    .notify-label {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+    .box.notify-box {
+        border: 0;
+    }
+    .notify-box > p.label {
+        width: 100%;
+        display: inline-block;
+        text-align: left;
+        line-height: 30px;
+        padding: 0;
+    }
+
+    .notify-box label.label {
+        vertical-align: bottom;
+    }
+
+    input[type="checkbox"]+label:before {
+        margin-bottom: 1px;
+    }
+
+    .box.people {
+        border: 0;
+        border-top: 1px solid #ddd;
+        margin: 15px 3em;
+        padding-top: 30px;
+    }
+
+    .people-wrapper label.label {
+        margin-bottom: 25px;
+    }
+
+    input.minus-btn {
+        margin-left: 0;
+    }
+
+    input#count {
+        text-align: center;
     }
 }
 
