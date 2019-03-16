@@ -13,17 +13,7 @@ if($model){
     $fetch_piercing_qty = $model->getPiercingQty();
     $fetch_piercing_loc = $model->getPiercingLoc();
 }
-//CODE FOR CHOOSING STORE ID IT IS STATIC ONE
-$url = Mage::getBaseUrl();
-$store_id=2;
-if($url=='https://mt-appointments.allurecommerce.com/'):
-    $store_id=24;
-else:
-if ($url=='https://www.mariatash.com/'):
-    $store_id=28;
-else:
-endif;
-endif;
+
 ?>
 <!--BOOKING SECTION-->
 
@@ -42,7 +32,7 @@ endif;
                 <div class="booking-box">
                     <p class="xpaces">BOOK YOUR APPOINTMENT</p>
 
-                    <form class="col-md-12 appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post" id="appointemnet_form">
+                    <form class="col-md-12 appointment-input-box" action="24" method="post" id="appointemnet_form">
                         <?php if($fetch_aptId):?> <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>"><?php endif;?>
                         <input type="hidden" name="store_id" id="store_id" value="<?php echo $store_id?>">
                         <input type="hidden" name="no_of_people_limit" id="no_of_people_limit" value="4">
