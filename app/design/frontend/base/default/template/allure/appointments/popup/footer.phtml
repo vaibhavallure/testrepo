@@ -79,4 +79,13 @@
             scrollTop: 0
         }, 1000);
     });
+
+    jQuery('.navbar-toggler').click(function() {
+        console.log(jQuery(this).attr('aria-expanded'));
+        if (jQuery(this).attr('aria-expanded')  == undefined || jQuery(this).attr('aria-expanded') == false || jQuery(this).attr('aria-expanded') == 'false') {
+            jQuery('body').addClass('navbar-active');
+        } else {
+            jQuery('body').removeClass('navbar-active');
+        }
+    });
 </script>
