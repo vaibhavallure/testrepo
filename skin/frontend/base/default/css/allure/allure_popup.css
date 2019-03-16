@@ -1,4 +1,7 @@
 /*Loader*/
+* {
+    box-sizing: border-box;
+}
 
 button.input-box.b {
 	border: 1px solid;
