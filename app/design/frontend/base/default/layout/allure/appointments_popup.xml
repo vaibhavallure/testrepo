@@ -47,4 +47,15 @@
 			</block>
 		</reference>
 	</appointments_popup_index>
+
+	<appointments_popup_modify>
+		<update handle = "default_app" />
+		<reference name="root">
+			<action method="setTemplate"><template>allure/page/empty.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="appointments/modify" name="appointments_popup_modify" as="appointments_popup_modify" template="allure/appointments/popup/modify_appointments.phtml">
+			</block>
+		</reference>
+	</appointments_popup_modify>
 </layout>

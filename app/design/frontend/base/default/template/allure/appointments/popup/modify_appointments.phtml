@@ -1,0 +1,296 @@
+<?php
+/**
+ *
+ *	Allure checkout step success order.
+ *
+ */
+if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
+
+    $model = Mage::registry('appointment_modified');
+    $apt_id = $model->getId();
+    $apt_email = $model->getEmail();
+    //$encryptedId = Mage::helper('core')->encrypt($apt_id)->toString();
+    //$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();
+
+    ?>
+    <?php if($apt_id):?>
+
+
+    <style>
+
+        /*-------------------new alert box--------------------------*/
+
+        #allureModalContainer {
+            background-color: rgba(0, 0, 0, 0.47);
+            position:absolute;
+            width:100%;
+            height:100%;
+            top:0px;
+            left:0px;
+            z-index:10000;
+            /*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
+        }
+
+        #allureAlertBox {
+            padding: 50px;
+            position:relative;
+            width:300px;
+            min-height:100px;
+            margin-top:100px;
+            background-color:#dcdcdc;
+            box-shadow: 2px 2px 8px #00000063
+        }
+
+        #allureModalContainer > #allureAlertBox {
+            position:fixed;
+        }
+
+        #allureAlertBox h1 {
+            margin:0;
+            font:bold 0.9em verdana,arial;
+            background-color:#3073BB;
+            color:#FFF;
+            border-bottom:1px solid #000;
+            padding:2px 0 2px 5px;
+        }
+
+        #allureAlertBox p {
+            text-align: center;
+            font:12px arial,verdana;
+            /*margin-top: 10px;*/
+            color: #3f4048;
+        }
+
+        #allureAlertBox #closeBtn{
+            display:block;
+            position:absolute;
+            bottom: 44px;
+            left: 152px;
+            margin:5px auto;
+            padding:7px;
+            border:0 none;
+            width:80px;
+            font:12px dinmittelschriftregular,arial;
+            text-transform:uppercase;
+            text-align:center;
+            color:#3f4048;
+            background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn.png'); ?>);
+            background-color:#906E39;
+            border-radius: 3px;
+            text-decoration:none;
+        }
+
+
+        #allureAlertBox #closeBtn:hover{
+            background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn_hover.png'); ?>) repeat-x;
+            color: #3f4048;
+            text-decoration: none;
+
+        }
+
+
+
+        /*-------------confirm popup----------------*/
+
+
+
+        #allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
+            display:block;
+            position:absolute;
+            bottom: 10px;
+            left: 125px;
+            margin:5px auto;
+            padding:7px;
+            border:0 none;
+            width:80px;
+            font:12px dinmittelschriftregular,arial;
+            text-transform:uppercase;
+            text-align:center;
+            color:#3f4048;
+            background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn.png'); ?>);
+            background-color:#906E39;
+            border-radius: 3px;
+            text-decoration:none;
+        }
+
+        #allureAlertBox #cancelConfirm
+        {
+            position:absolute;
+            bottom: 44px;
+            left: 85px;
+        }
+        #allureAlertBox #okConfirm
+        {
+            position:absolute;
+            bottom: 44px;
+            left: 221px;
+        }
+
+        #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
+            background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn_hover.png'); ?>) repeat-x;
+            color: #3f4048;
+            text-decoration: none;
+            background-color: #c79546ab;
+        }
+
+
+
+        /*-------------------------alert end----------------------------------*/
+
+    </style>
+    <div class="page-title">
+        <h1><p class="detailofapt"><?php echo $this->__('Appointment Details') ?></p></h1>
+    </div>
+    <div class="checkout-success">
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Name') ?></span>
+            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
+        </div>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Email') ?></span>
+            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getEmail() ?></span>
+        </div>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Phone') ?></span>
+            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getPhone() ?></span>
+        </div>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
+            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingQty() ?></span>
+        </div>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Booking Location') ?></span>
+            <span class="apt-summary" style="font-weight: bold"><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
+        </div>
+        <?php if($model->getPiercingLoc()):?>
+            <div class="success-field">
+                <span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
+                <span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingLoc() ?></span>
+            </div>
+        <?php endif;?>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
+            <span class="apt-summary" style="font-weight: bold"><?php
+                /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
+                $appStartDate = $appStartDate->toString(); */
+                $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+                if($model->getStoreId())
+                    $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
+                else
+                    $format = "EST";
+
+                echo  $appStartDate." ".$format?></span>
+        </div>
+
+        <div class="btns-setDiv">
+            <div class="apt-cancel-buttons-set">
+                <button type="button" class="button input-box b" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
+            </div>
+            <div class="apt-modify-buttons-set">
+                <button type="button" class="button input-box b"  title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*/popup',array('_secure' => true,'id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
+            </div>
+
+            <div class="apt-buttons-set">
+                <button type="button" class="button input-box b" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href=''"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+    <!--  If the id or email not correct  -->
+
+<?php else:?>
+    <div class="page-title">
+        <h1><p class="detailofapt"><?php echo $this->__('Sorry,Record not found to cancel the appointment!') ?></p></h1>
+    </div><hr/>
+    <div class="sryBookPierbtn" >
+        <button type="button" class="button" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo $this->getUrl('*/popup',array('_secure' => true)); ?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+    </div>
+<?php endif;?>
+
+
+<script>
+
+
+    var conf=false;
+
+    function confirmCancelApt() {
+
+        if (!conf)
+        {
+            createCustomConfirm("Are you sure you want to cancel an scheduled appointment?");
+            return false;
+        }
+
+        //Logic to cancel the apt
+        var reloadurl = '<?php echo $this->getUrl('*/popup/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
+        jQuery.ajax({
+            url: reloadurl, //Relative or absolute path to response.php file
+            method: 'get',
+            success: function (data) {
+                jQuery('.detailofapt').html(data);
+                //jQuery('.checkout-success .success-field').empty();
+                jQuery('.checkout-success .apt-cancel-buttons-set').empty();
+                jQuery('.checkout-success .apt-modify-buttons-set').empty();
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+    function createCustomConfirm(txt) {
+        d = document;
+
+        if(d.getElementById("allureModalContainer")) return;
+
+        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+        mObj.id = "allureModalContainer";
+        mObj.style.height = d.documentElement.scrollHeight + "px";
+
+        alertObj = mObj.appendChild(d.createElement("div"));
+        alertObj.id = "allureAlertBox";
+        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+        alertObj.style.visiblity="visible";
+
+        msg = alertObj.appendChild(d.createElement("p"));
+        //msg.appendChild(d.createTextNode(txt));
+        msg.innerHTML = txt;
+
+        btnc = alertObj.appendChild(d.createElement("a"));
+        btnc.id = "cancelConfirm";
+        btnc.appendChild(d.createTextNode("CANCEL"));
+        btnc.href = "#";
+
+
+        btnc.onclick = function() {
+            removeCustomAlert();
+            return false;
+        }
+
+
+        btn = alertObj.appendChild(d.createElement("a"));
+        btn.id = "okConfirm";
+        btn.appendChild(d.createTextNode("OK"));
+        btn.href = "#";
+        btn.focus();
+        btn.onclick = function() {
+            removeCustomAlert();
+            conf=true;
+            confirmCancelApt();
+            return false;
+        }
+
+        alertObj.style.display = "block";
+
+    }
+
+
+</script>
+
+

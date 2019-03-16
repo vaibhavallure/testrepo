@@ -1,3 +1,21 @@
+<?php
+$storeId = Mage::helper('appointments')->getStoreId();
+?>
+<?php
+$model = Mage::registry('apt_modify_data');
+if($model){
+    $fetch_aptId = $model->getId();
+    $f_firstName = $model->getFirstname();
+    $f_lastName = $model->getLastname();
+    $f_email = $model->getEmail();
+    $f_telephone = $model->getPhone();
+    $f_notification_pref = $model->getNotificationPref();
+    $fetch_piercing_qty = $model->getPiercingQty();
+    $fetch_piercing_loc = $model->getPiercingLoc();
+}
+
+
+?>
 <!--BOOKING SECTION-->
 
 <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
@@ -16,18 +34,18 @@
                     <p class="xpaces">BOOK YOUR APPOINTMENT</p>
 
                     <form class="col-md-12 appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post" id="appointemnet_form">
-
-                        <input type="hidden" name="store_id" id="store-id" value="24">
+                        <?php if($fetch_aptId):?> <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>"><?php endif;?>
+                        <input type="hidden" name="store_id" id="store-id" value="2">
                         <div class="name-box">
-                            <input class="input-box required-entry" type="text" name="firstname" id="firstname" placeholder="FIRST NAME" required>
+                            <input class="input-box required-entry" type="text" name="firstname" id="firstname" placeholder="FIRST NAME" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>"required>
 
-                            <input class="input-box required-entry" type="text" name="lastname" id="lastname" placeholder="LAST NAME" required>
+                            <input class="input-box required-entry" type="text" name="lastname" id="lastname" placeholder="LAST NAME" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" required>
                         </div>
 
-                        <input class="input-box required-entry"  type="email" name="email" id="email" placeholder="EMAIL" required>
+                        <input class="input-box required-entry"  type="email" name="email" id="email" placeholder="EMAIL" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" required>
 
 
-                        <input class="input-box required-entry validate-intl-telephone" type="text" name="phone" id="phonenumber" placeholder="PHONE NUMBER" required>
+                        <input class="input-box required-entry validate-intl-telephone" type="text" name="phone" id="phonenumber" placeholder="PHONE NUMBER" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>" required>
 
                         <p class="label notify-label">I would like to be notified by:</p>
                         <div class="box notify-box">
@@ -46,7 +64,11 @@
                                 <label class="label">Number of people in your party:</label>
                                 <div class="peoplediv">
                                     <input type="button" value="-" class="minus-btn" onclick="decrease();" >
-                                    <input size="5" class="input-box"  value="1" type="text" name="piercing_qty" id="count" readonly >
+                                    <?php if($fetch_piercing_qty):?>
+                                        <input size="5" class="input-box"  value="<?php echo $fetch_piercing_qty;?>" type="text" name="piercing_qty" id="count"  readonly >
+                                    <?php else:?>
+                                    <input size="5" class="input-box"  value="0" type="text" name="piercing_qty" id="count"  readonly >
+                                    <?php endif;?>
                                     <input type="button" value="+" class="plus-btn" onclick="increase();" >
                                 </div>
                             </div>
