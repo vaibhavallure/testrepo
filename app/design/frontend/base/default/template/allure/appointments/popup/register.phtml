@@ -17,17 +17,17 @@
 
                     <form class="col-md-12 appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post" id="appointemnet_form">
 
-                        <input type="hidden" id="store-id" value="2">
+                        <input type="hidden" name="store_id" id="store-id" value="24">
                         <div class="name-box">
                             <input class="input-box required-entry" type="text" name="firstname" id="firstname" placeholder="FIRST NAME" required>
 
-                            <input class="input-box required-entry" type="text" name="firstname" id="lastname" placeholder="LAST NAME" required>
+                            <input class="input-box required-entry" type="text" name="lastname" id="lastname" placeholder="LAST NAME" required>
                         </div>
 
                         <input class="input-box required-entry"  type="email" name="email" id="email" placeholder="EMAIL" required>
 
 
-                        <input class="input-box required-entry validate-intl-telephone" type="text" name="phonenumber" id="phonenumber" placeholder="PHONE NUMBER" required>
+                        <input class="input-box required-entry validate-intl-telephone" type="text" name="phone" id="phonenumber" placeholder="PHONE NUMBER" required>
 
                         <p class="label notify-label">I would like to be notified by:</p>
                         <div class="box notify-box">
@@ -46,7 +46,7 @@
                                 <label class="label">Number of people in your party:</label>
                                 <div class="peoplediv">
                                     <input type="button" value="-" class="minus-btn" onclick="decrease();" >
-                                    <input size="5" class="input-box"  value="1" type="text" name="numPeople" id="count" readonly >
+                                    <input size="5" class="input-box"  value="1" type="text" name="piercing_qty" id="count" readonly >
                                     <input type="button" value="+" class="plus-btn" onclick="increase();" >
                                 </div>
                             </div>
