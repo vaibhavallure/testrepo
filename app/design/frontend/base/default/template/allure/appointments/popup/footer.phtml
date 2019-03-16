@@ -42,6 +42,13 @@
 
                 </div>
             </div>
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <a id="footer-top-link" href="#top"  class="link-top" >
+                        <img src="<?php echo $this->getSkinUrl("images/allure/popup/up-white.png")?>" class="down-arrow-size " >
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -93,10 +100,16 @@
     });
     */
 
-    jQuery("a.nav-link,a.footer-subtitle-small").click(function(e) {
+    jQuery("a.nav-link,a.footer-subtitle-small,a.link-down").click(function(e) {
         var targetElement = jQuery(jQuery(this).attr('href'));
         jQuery('html, body').animate({
             scrollTop: targetElement.offset().top - jQuery('.navbar').outerHeight()
+        }, 1000);
+    });
+
+    jQuery("a.link-top").click(function(e) {
+        jQuery('html, body').animate({
+            scrollTop: 0
         }, 1000);
     });
 </script>
