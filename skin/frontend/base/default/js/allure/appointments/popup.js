@@ -107,5 +107,16 @@ jQuery(document).ready(function() {
         $('#price-list').hide();
     });
 
+    jQuery('.navbar-icon').click(function() {
+        
+        if ($(this).hasClass('active')) {
+            $('.navbar-icon').removeClass('active');
+            jQuery('ul#navbar-menu').hide();
+        } else {
+            $('.navbar-icon').addClass('active');
+            jQuery('ul#navbar-menu').show();
+        }
+    });
+
     updateSlotAvailability();
 });
