@@ -147,7 +147,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $noSlot=true;
             if(!empty($collection->getData())) {
                 echo "<select class='input-box' name='selectTime' id='selectTime' >";
-                echo "<option >--- Select Slot ---</option>";
+                echo "<option >TIME</option>";
             }
             for($i=0;$i< $totalSlot;$i++)
             {
@@ -318,10 +318,10 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
 
 
     <?php else:
-        echo "<div id='time-wrapper'><input type='text' readonly class='input-box ' value='READY'/></div>";
+        echo "<div id='time-wrapper'><input type='text' readonly class='input-box ' value='TIME'/></div>";
     endif;?>
 
-
+<div id="loaderAppointmentTime" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/timeslider/sliderDemo.js"></script>
 
 
@@ -337,6 +337,6 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
 //			    jQuery(".timeslot").css('background-color',"");
 //		    jQuery("#"+id).css("background-color","palegoldenrod");
         jQuery(".timeslot").removeClass("selectedTime");
-        jQuery("#"+id).addClass("selectedTime");
+        //jQuery("#"+id).addClass("selectedTime");
     });
 </script>

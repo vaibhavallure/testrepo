@@ -64,13 +64,13 @@ if($model){
                             <div class="people-wrapper">
                                 <label class="label">Number of people in your party:</label>
                                 <div class="peoplediv">
-                                    <input type="button" value="-" class="minus-btn" onclick="decrease();" >
+                                    <input type="button" value="-" class="minus-btn" onclick="decreaseQty();" >
                                     <?php if($fetch_piercing_qty):?>
-                                        <input size="5" class="input-box" value="<?php echo $fetch_piercing_qty;?>" type="text" name="piercing_qty" id="count"  readonly >
+                                        <input size="5" class="input-box" value="<?php echo $fetch_piercing_qty;?>" type="text" name="piercing_qty" id="count" readonly >
                                     <?php else:?>
-                                    <input size="5" class="input-box"  value="0" type="text" name="piercing_qty" id="count"  readonly >
+                                    <input size="5" class="input-box"  value="1" type="text" name="piercing_qty" id="count"  readonly >
                                     <?php endif;?>
-                                    <input type="button" value="+" class="plus-btn" onclick="increase();" >
+                                    <input type="button" value="+" class="plus-btn" onclick="increaseQty();" >
                                 </div>
                             </div>
                         </div>

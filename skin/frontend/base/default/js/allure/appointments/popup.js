@@ -21,10 +21,12 @@ var getSlotAvailability = function (store_id, people, date) {
         data: {request:request},
         beforeSend: function() {
             jQuery('#appointment_date').datepicker('hide');
-            jQuery('#appointment_loader').show();
+            jQuery('#loaderAppointmentTime').prev().hide();
+            jQuery('#loaderAppointmentTime').show();
         },
         complete: function() {
-            jQuery('#appointment_loader').hide();
+            jQuery('#loaderAppointmentTime').hide();
+            jQuery('#loaderAppointmentTime').prev().show();
         },
         timeout: 30000,
         error: function(jqXHR) {
@@ -38,6 +40,43 @@ var getSlotAvailability = function (store_id, people, date) {
 
 var loadSlotAvailability = function (date) {
     var store_id = 2;
-    var people = 1;//jQuery('#count').val();
-    getSlotAvailability(store_id, people, date);
+    var people = jQuery('#count').val();
+
+    if (date != '') {
+        getSlotAvailability(store_id, people, date);
+    }
 };
+
+var updateSlotAvailability  = function () {
+    var date = jQuery('#appointment_date').val();
+
+    if (date != '') {
+        loadSlotAvailability(date);
+    }
+
+};
+
+var peopleCount = 1;
+
+var increaseQty = function () {
+
+    if (peopleCount < 5) {
+        peopleCount++;
+        jQuery("#count").val(peopleCount);
+
+        updateSlotAvailability();
+    }
+
+    console.log(peopleCount);
+}
+
+var decreaseQty= function () {
+    if (peopleCount > 1) {
+        peopleCount--;
+        jQuery("#count").val(peopleCount);
+
+        updateSlotAvailability();
+    }
+
+    console.log(peopleCount);
+}
