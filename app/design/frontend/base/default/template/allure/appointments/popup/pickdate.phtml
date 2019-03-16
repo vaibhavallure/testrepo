@@ -11,13 +11,13 @@ if($fetch_model){
 //To get the ajax call block
 $workingdays = $this->getData("workingdays");
 $workingdaysArray=json_decode($workingdays);
-
+Mage::log('working '.$workingdaysArray,Zend_Log::DEBUG,'myLog.log',true);
 //$arr = array('11-01-2012', '01-01-2014', '01-01-2015', '09-02-2013', '01-01-2013');
 function date_sort($a, $b) {
     return strtotime($a) - strtotime($b);
 }
 usort($workingdaysArray, "date_sort");
-//print_r($workingdaysArray);
+Mage::log('Working Days'.$workingdaysArray,Zend_Log::DEBUG,'myLog.log',true);
 
 if (!$fetch_date){
     //   $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
@@ -33,6 +33,9 @@ if (!$fetch_date){
 <input name="app_date" id="appointment_date" type="text" class="input-box required-entry" value="<?php if($fetch_date):echo $fetch_date;endif;?>">
 
 <script type="text/javascript">
+    var subscribeUrl ="<?php echo $this->getWorkingDaysActionUrl();?>" ;
+     loadWorkingDays(subscribeUrl);
+     console.log(availableDateArr);
     var currentDate = new Date();
     var currentDateString = parseInt(1 + currentDate.getMonth()).pad(2)+'/'+currentDate.getDate()+'/'+currentDate.getFullYear();
 
@@ -81,4 +84,5 @@ if (!$fetch_date){
     var date=new Date();
     var val=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
     document.getElementById("appointment_date").value = val;
+    jQuery(#app)
 </script>

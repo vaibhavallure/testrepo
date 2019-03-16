@@ -739,12 +739,15 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         }
 
         $available_wdays = array();
+        $available_wdays_ajax = array();
+
         foreach ($avial_workDays as $avail_wd) {
             foreach ($avail_wd as $wd) {
                 if (! $notAvailabledays[strtotime($wd)]) {
                     $dateCurrent = Mage::getModel('core/date')->date('m/d/Y');
                     if (strtotime($dateCurrent) <= strtotime($wd)) {
                         $available_wdays[strtotime($wd)] = $wd;
+                        array_push($available_wdays_ajax,$wd);
                     }
                 }
             }
@@ -759,19 +762,12 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         $configData = $this->getAppointmentStoreMapping();
         $storeKey = array_search ($storeid, $configData['stores']);
 
-        $block = $this->getLayout()
-            ->createBlock('core/template', 'appointments_popup_pickurday',
-                array(
-                    'template' => 'allure/appointments/popup/pickdate.phtml'
-                ))
-            ->setData("workingdays", $jsonDATA);
-
-        $output = $block->toHtml();
         //$schedule = Mage::getStoreConfig("appointments/piercer_schedule/schedule", $storeid);
         $schedule = $configData['piercers_available'][$storeKey];
         $result['success'] = true;
-        $result['output'] = $output;
         $result['schedule'] = $schedule;
+        $result['available_dates']=array_unique($available_wdays_ajax);
+//        Mage::log('Dates'.$jsonDATA,Zend_Log::DEBUG,'myLog.log',true);
 
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }

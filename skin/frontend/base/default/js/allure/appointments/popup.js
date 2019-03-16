@@ -43,7 +43,24 @@ var getSlotAvailability = function (store_id, people, date) {
         success : setSlotAvailability
     });
 };
+//LOAD WORKING DAYS FOR PARTICULAR STORE
+var loadWorkingDays  = function(workingDayUrl)
+{
+    var storeid = document.getElementById("store_id").value;
+    var availableDateArr='';
+    jQuery.ajax({
+        url: workingDayUrl,
+        // dataType: 'json',
+        type: 'POST',
+        data: {storeid:storeid,id:Allure.appointmentId},
 
+        success: function (response) {
+            response = JSON.parse(response);
+            availableDateArr = response.available_dates;
+            console.log(availableDateArr);
+        },
+    });
+}
 var loadSlotAvailability = function (date) {
     var store_id = document.getElementById("store_id").value;
     var people = jQuery('#count').val();
