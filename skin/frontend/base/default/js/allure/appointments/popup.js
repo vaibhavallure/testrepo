@@ -45,7 +45,7 @@ var getSlotAvailability = function (store_id, people, date) {
 };
 
 var loadSlotAvailability = function (date) {
-    var store_id = 2;
+    var store_id = document.getElementById("store_id").value;
     var people = jQuery('#count').val();
 
     if (date != '') {

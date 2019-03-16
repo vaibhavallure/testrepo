@@ -5,22 +5,19 @@
  */
 ?>
 <div id="appointments-popup-wrapper">
-    <?php echo $this->getChildHtml("appointments_popup_top");?>
-    <?php echo $this->getChildHtml("appointments_popup_menu");?>
     <?php if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
         echo $this->getChildHtml('appointments_popup_success');
-    else:
-        if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
-            echo $this->getChildHtml('appointments_popup_modify');
-            else:
+    endif;
     ?>
+    <?php echo $this->getChildHtml("appointments_popup_top");?>
+    <?php echo $this->getChildHtml("appointments_popup_menu");?>
+
     <?php echo $this->getChildHtml("appointments_popup_register");?>
 <!-- field end -->
 <!--<div class="field">-->
     <?php echo $this->getChildHtml("appointments_popup_pickdatetime");?>
 <!--</div><!-- field end -->-->
     <?php echo $this->getChildHtml("appointments_popup_register_end");?>
-    <?php endif; endif;?>
     <?php echo $this->getChildHtml("appointments_popup_faq");?>
     <?php echo $this->getChildHtml("appointments_popup_footer");?>
 </div>
