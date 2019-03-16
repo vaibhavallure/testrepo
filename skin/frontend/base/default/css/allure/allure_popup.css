@@ -814,7 +814,12 @@ select#selectTime {
     .datepicker {width: auto;}
 
     .navbar .navbar-brand {
-        width: 65%;
+        width: 100%;
+        font-family: urw-din-medium;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: #fff !important;
     }
 
     #faq .faq-answer:not(.in) {
