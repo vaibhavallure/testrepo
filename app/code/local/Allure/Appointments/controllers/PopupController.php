@@ -767,7 +767,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         $result['success'] = true;
         $result['schedule'] = $schedule;
         $result['available_dates']=array_unique($available_wdays_ajax);
-//        Mage::log('Dates'.$jsonDATA,Zend_Log::DEBUG,'myLog.log',true);
+        Mage::log('Dates'.$jsonDATA,Zend_Log::DEBUG,'myLog.log',true);
 
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }

@@ -47,9 +47,10 @@ var getSlotAvailability = function (store_id, people, date) {
 var loadWorkingDays  = function(workingDayUrl)
 {
     var storeid = document.getElementById("store_id").value;
-    var availableDateArr='';
+    var availableDateArr=[];
     jQuery.ajax({
         url: workingDayUrl,
+        async:false,
         // dataType: 'json',
         type: 'POST',
         data: {storeid:storeid,id:Allure.appointmentId},
@@ -57,9 +58,10 @@ var loadWorkingDays  = function(workingDayUrl)
         success: function (response) {
             response = JSON.parse(response);
             availableDateArr = response.available_dates;
-            console.log(availableDateArr);
+
         },
     });
+    return availableDateArr;
 }
 var loadSlotAvailability = function (date) {
     var store_id = document.getElementById("store_id").value;
