@@ -654,6 +654,10 @@ a.nav-link {
     overflow: hidden;
 }
 
+#navbar-menu {
+    display: flex;
+}
+
 @media screen and (max-width: 1024px) {
     .footer > .container {
         max-width: 100%;
@@ -688,11 +692,12 @@ a.nav-link {
         position: fixed;
         left: 0;
         right: 0;
-        top: 50px;
+        top: 47px;
         border: 0;
         background-color: #2c2c2c;
         box-shadow: none;
         text-align: center;
+        display: none;
     }
 
     #navbar-menu.collapsing {
