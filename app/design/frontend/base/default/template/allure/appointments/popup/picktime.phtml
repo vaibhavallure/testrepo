@@ -367,6 +367,21 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
 
 
 <script>
+    jQuery("#selectTime").change(function(){
+        var values =jQuery('#selectTime :selected');
+        var starttime = values[0].getAttribute('data-start_time_slot');
+        var endtime = values[0].getAttribute('data-end_time_slot');
+        var piercerId = values[0].getAttribute('data-piercer');
+        jQuery("#starttime_hidden").val(starttime);
+        jQuery("#endtime_hidden").val(endtime);
+        jQuery("#piercer_id").val(piercerId);
+//			    jQuery(".timeslot").css('background-color',"");
+//		    jQuery("#"+id).css("background-color","palegoldenrod");
+        jQuery(".timeslot").removeClass("selectedTime");
+        jQuery("#"+id).addClass("selectedTime");
+    });
+</script>
+<script>
 var values =jQuery('#selectTime :selected');
 var starttime = values[0].getAttribute('data-start_time_slot');
 var endtime = values[0].getAttribute('data-end_time_slot');
