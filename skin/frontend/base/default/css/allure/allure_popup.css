@@ -5,6 +5,12 @@ button.input-box.b {
 	background: #fff;
 	color: #000;
 }
+
+.appointments-popup-index a,
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+}
+
 .overlay {
 	position: absolute;
     overflow-x: auto;
@@ -809,16 +815,8 @@ select#selectTime {
     }
 
     #faq .faq-answer:not(.in) {
-        display: none;
+        /* display: none; */
     }
-    /*
-    #faq .faq-answer[aria-expanded="false"] {
-        display: none;
-    }
-    #faq .faq-answer[aria-expanded="true"] {
-        display: block;
-    }
-    */
 
     #navbar {
         position: fixed;
