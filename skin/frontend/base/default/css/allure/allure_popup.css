@@ -5,6 +5,12 @@ button.input-box.b {
 	background: #fff;
 	color: #000;
 }
+
+.appointments-popup-index a,
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+}
+
 .overlay {
 	position: absolute;
     overflow-x: auto;
