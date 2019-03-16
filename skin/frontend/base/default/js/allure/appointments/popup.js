@@ -56,6 +56,8 @@ var loadSlotAvailability = function (date) {
 var updateSlotAvailability  = function () {
     var date = jQuery('#appointment_date').val();
 
+    console.log(date);
+
     if (date != '') {
         loadSlotAvailability(date);
     }
@@ -104,4 +106,6 @@ jQuery(document).ready(function() {
         jQuery('a#btnPriceList').removeClass('active');
         $('#price-list').hide();
     });
+
+    updateSlotAvailability();
 });
