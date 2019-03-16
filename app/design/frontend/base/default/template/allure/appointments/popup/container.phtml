@@ -30,10 +30,13 @@
         var Allure = {};
     }
     Allure.appointmentId = '<?php echo $this->getRequest()->getParam('id')?>';
-    //console.log(Allure.appointmentId);
+
     Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
     Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
     Allure.getSupportDetailsActionUrl = '<?php echo $this->getSupportDetailsActionUrl()?>';
+
+    Allure.getSlotAvailabilityUrl = '<?php echo $this->getSlotAvailabilityUrl()?>';
+    Allure.getDateAvailabilityUrl = '<?php echo $this->getDateAvailabilityUrl()?>';
 
     function formatDate(date) {
         var monthNames = [

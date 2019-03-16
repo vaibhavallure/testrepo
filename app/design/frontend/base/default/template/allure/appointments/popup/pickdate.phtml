@@ -7,12 +7,11 @@ if($fetch_model){
     $f_pickurday = $fetch_model->getAppointmentStart();
     $timestamp = strtotime($f_pickurday);
     $fetch_date = date('m/d/Y', $timestamp);
-
-
 }
 //To get the ajax call block
 $workingdays = $this->getData("workingdays");
 $workingdaysArray=json_decode($workingdays);
+
 //$arr = array('11-01-2012', '01-01-2014', '01-01-2015', '09-02-2013', '01-01-2013');
 function date_sort($a, $b) {
     return strtotime($a) - strtotime($b);
@@ -30,6 +29,19 @@ if (!$fetch_date){
     }
 }
 ?>
+<input name="date" id="appointment_date" type="text" class="input-box required-entry">
+
+<script type="text/javascript">
+    jQuery('#appointment_date').datepicker({
+        datesDisabled: ['04/02/2019','03/22/2019']
+    }).on('changeDate', function(e) {
+        // `e` here contains the extra attributes
+        console.log(jQuery(this).val())
+        loadSlotAvailability(jQuery(this).val());
+    });;
+</script>
+
+<?php return; ?>
 
 <!--<strong id="availablewdays" data-original='--><?php //echo $workingdays;?><!--'></strong>-->
 
@@ -44,4 +56,3 @@ if (!$fetch_date){
     var val=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
     document.getElementById("datepicker-13_hidden").value = val;
 </script>
-

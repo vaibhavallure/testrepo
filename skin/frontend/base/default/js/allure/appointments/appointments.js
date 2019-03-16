@@ -1,8 +1,8 @@
 if (typeof Allure == "undefined") {
     var Allure = {};
-} 
+}
 var count = 0;
- function increase(){			  
+ function increase(){
      count++;
      document.getElementById("count").value = count;
      //jQuery("#pick_ur_time_div").empty();
@@ -11,7 +11,7 @@ var count = 0;
 
 
 
-	//ajax start to pass the selected date to get the time     
+	//ajax start to pass the selected date to get the time
    /* var todaysDate = document.getElementById("datepicker-13_hidden").value;
 	var qty = document.getElementById("count").value;
 	var storeid = document.getElementById("store-id").value;*/
@@ -74,7 +74,7 @@ var count = 0;
  }
  function decrease(){
 	 if (count > 1) {
-     count--;		     
+     count--;
      document.getElementById("count").value = count;
 
          jQuery('#pick_ur_time_div').find('input:hidden').val('');
@@ -82,7 +82,7 @@ var count = 0;
 
 
          //jQuery("#pick_ur_time_div").empty();
-   
+
     //ajax start to pass the selected date to get the time
     /*var todaysDate = document.getElementById("datepicker-13_hidden").value;
  	var qty = document.getElementById("count").value;
@@ -125,20 +125,20 @@ var count = 0;
          });
  	//ajax end
    }
- } 
- 
-  
- 
- 
+ }
+
+
+
+
  jQuery( function() {
 	 //Pick Ur Time
 	 var simple = jQuery("#appointemnet_form").find(".pick_your_time").append();
 	 simple.sliderDemo();
 
-	 //Pick Ur Day	 	 
+	 //Pick Ur Day
 	 /*jQuery( "#datepicker-13" ).datepicker({
-		 
-		 onSelect: function (date, instance) {			 
+
+		 onSelect: function (date, instance) {
 			 var qty = document.getElementById("count").value;
 			 jQuery("#datepicker-13_hidden").val(date);
 			 console.log(Allure.ajaxGetTimeUrl);
@@ -158,10 +158,10 @@ var count = 0;
 						 simple.sliderDemo();
 					}
 		        });
-		    }		 
+		    }
 	 }).datepicker("show");*/
-	 
-	 
+
+
 	//ajax start to get the working days of piercers according to store
 	 	if(document.getElementById("store_id")!= null){
 			var storeid = document.getElementById("store_id").value;
@@ -188,7 +188,7 @@ var count = 0;
 
 				 if(document.getElementById("datepicker-13_hidden")!= null )
 				 {
-					var todaysDate = document.getElementById("datepicker-13_hidden").value;	
+					var todaysDate = document.getElementById("datepicker-13_hidden").value;
 					//ajax start to pass the selected date to get the time
 					var qty = document.getElementById("count").value;
 					var storeid = document.getElementById("store_id").value;
@@ -214,7 +214,7 @@ var count = 0;
                              }
 							},
 				 			success : function(response){
-				 				
+
 				 				jQuery("#pick_ur_time_div").html(response.output);
 				 				jQuery("#appointment-pricing").html(response.pricing_html);
 				 				window.sample = 30;
@@ -228,10 +228,10 @@ var count = 0;
 			}
      });
 	 //ajax start to get the working days of piercers according to store
-	 
-		 
-	 
-	 //If store change pickurtime should display also change acc to store and date 
+
+
+
+	 //If store change pickurtime should display also change acc to store and date
 	 jQuery("#store-id").on("change",function(){
          jQuery('#pick_ur_time_div').find('input:hidden').val('');
          jQuery("#time_blocks").empty();
@@ -243,10 +243,10 @@ var count = 0;
 			var storeid = document.getElementById("store-id").value;
 
          setSupportDetails(storeid);
-			 
-		 	//ajax start to get the working days of piercers according to store			 	
+
+		 	//ajax start to get the working days of piercers according to store
 			 	jQuery.ajax({
-			 		url : Allure.ajaxGetWorkingDaysUrl,			 		
+			 		url : Allure.ajaxGetWorkingDaysUrl,
 					type : 'POST',
 					dataType:'json',
 					data: {storeid:storeid,id:Allure.appointmentId
@@ -287,20 +287,20 @@ var count = 0;
 				 			}
 				        });
 					//ajax end
-						
+
 					}
 		     });
-			
-		 	
+
+
 			 //ajax start to get the working days of piercers according to store
-		 	 
-		 	 
-		 	 
+
+
+
 	 });
-	 
-	 
-	 
-	
+
+
+
+
 });
 
 
