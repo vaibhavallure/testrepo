@@ -35,7 +35,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
   <!--        <div class="notfreepeiercer ">Walk-ins are welcome but currently all appointments are booked for the selected date.</div>-->
     <?php else: ?>
 
-        <div>
+        <div id="time-wrapper">
             <input type = "hidden" class="required-entry-time" value="<?php if($fetch_starttime): echo $fetch_starttime;endif;?>" name="appointment_start" id="starttime_hidden">
             <input type = "hidden" class="" value="<?php if($fetch_endtime): echo $fetch_endtime; endif;?>" name="appointment_end" id="endtime_hidden">
             <input type = "hidden" value="" name="piercer_id" id="piercer_id">
@@ -59,18 +59,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
                 $selectedStoreId = intval($selectedStoreId);
                 $storeKey = array_search ($selectedStoreId, $configData['stores']);
-
-                /* if($selectedStoreId){
-                    foreach($storeUnSerializeData as $de){
-                        //$allStores = Mage::app()->getStores();
-                        $storeId = intval($de['store']);
-                        //echo "STORE= ".$storeId . "  ".$selectedStoreId;
-                        if($storeId == $selectedStoreId){
-
-                            $time_pref = intval($de['time']);			//24 or 12	hrs
-                        }
-                    }
-                } */
 
                 if($selectedStoreId){
                     $time_pref = intval($configData['time_pref'][$storeKey]);
@@ -153,10 +141,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     /* If piercer is not free logic end*/
                 }
             endif;
-            /*EO Piercer Logic */
-
-
-
 
             $isFour = 0;
             $countSlot = 0;
@@ -249,14 +233,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                         if((strtotime($workStart)<=strtotime($selectedTime) && strtotime($breakStart)>=strtotime($endTime)) ||
                             (strtotime($breakEnd)<=strtotime($selectedTime) && strtotime($workEnd)>=strtotime($endTime)))
                         {
-
-
-                            //Mage::log($country_data,Zend_Log::DEBUG, 'store', true );
-                            //$value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId()));
-
-                            /* Logic to get most available piercer */
-                            /* This logic count number of allocated appointments on that day for particular piercer*/
-
                             $fromDate = date('Y-m-d', strtotime($date))." 00:00:00";
                             $toDate = date('Y-m-d', strtotime($date))." 23:59:00";
                             $appCount = Mage::getModel('appointments/appointments')->getCollection();
@@ -276,9 +252,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                                 $piercerAllocated = $piercer->getId();
                                 $noSlot=false;
                                 break 2;
-                            }
-                            elseif (count($appCount)<=$allocatedApps)
-                            {
+                            } elseif (count($appCount)<=$allocatedApps) {
                                 $show = true;
                                 $allocatedApps = count($appCount);
                                 $noSlot=false;
@@ -301,12 +275,9 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                             $htmlsel = "selectedTime";
                     }
 
-
 echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
-
-
 
                     if($time_pref == 12){
                         if($time_pref <= $selectedTime)
@@ -347,7 +318,7 @@ echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
 
 
     <?php else:
-        echo "<input type='text' readonly class='input-box ' value='All Booked'/>";
+        echo "<div id='time-wrapper'><input type='text' readonly class='input-box ' value='READY'/></div>";
     endif;?>
 
 

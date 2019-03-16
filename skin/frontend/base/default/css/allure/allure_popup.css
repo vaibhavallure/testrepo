@@ -650,6 +650,65 @@ a.nav-link {
     overflow: hidden;
 }
 
+input#appointment_date {
+    display: block !important;
+}
+
+.datepicker td, .datepicker th {
+    font-size: 16px;
+    border-radius: 0;
+    padding: 7.5px 10px !important;
+}
+
+.datepicker table tr td:not(.disabled),
+.datepicker table tr td:not(.disabled):hover {
+    font-weight: bold;
+}
+.datepicker table tr td:not(.disabled):hover {
+    background-color: #E2E2E2;
+}
+.datepicker .datepicker-switch, .datepicker .prev, .datepicker .next, .datepicker tfoot tr th {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.datepicker table tr td.active, .datepicker table tr td.active:hover, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled:hover {
+    background-image: none !important;
+    background-color: #2c2c2c !important;
+    padding: 10px;
+    border-radius: 0;
+}
+
+select#selectTime {
+    line-height: 30px;
+    padding: .375rem .75rem;
+    border: 0;
+    background: #2c2c2c;
+    border: 0.5px solid #d8d8d8;
+    color: #fff;
+    box-shadow: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    height: auto;
+    font-size: 14px;
+    -webkit-appearance: none;
+    font-family: urw-din-medium;
+    text-align: center;
+}
+
+#time-wrapper {
+    padding: 0 .75rem;
+    margin-top: 20px;
+}
+
+#time-wrapper input.input-box {
+    margin-top: 0;
+}
+
+#navbar-icon .fa-close {
+    display: none;
+}
 
 @media (min-width: 768px) {
     #navbar-menu {
@@ -668,6 +727,10 @@ a.nav-link {
 }
 
 @media (max-width: 767px) {
+
+    .box {border: none;}
+
+    .datepicker {width: auto;}
 
     .navbar .navbar-brand {
         width: 65%;
@@ -714,10 +777,6 @@ a.nav-link {
     ul#navbar-menu[aria-expanded="true"] {
         display: flex;
         height: 100%;
-    }
-
-    #navbar-icon .fa-close {
-        display: none;
     }
 
     #navbar-icon[aria-expanded="true"] .fa-close {
@@ -828,6 +887,10 @@ a.nav-link {
         z-index: 999;
     }
 
+    div#booking {
+        padding-top: 375px;
+    }
+
     .down-arrow-maria,
     .link-down {
         display: none;
@@ -905,9 +968,16 @@ a.nav-link {
     input#count {
         text-align: center;
     }
+    .intl-tel-input .selected-flag .iti-flag {
+        left: 12px;
+    }
 }
 
-
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    div#booking {
+        padding-top: 0px;
+    }
+}
 
 
 
