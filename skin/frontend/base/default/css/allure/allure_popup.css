@@ -815,16 +815,8 @@ select#selectTime {
     }
 
     #faq .faq-answer:not(.in) {
-        display: none;
+        /* display: none; */
     }
-    /*
-    #faq .faq-answer[aria-expanded="false"] {
-        display: none;
-    }
-    #faq .faq-answer[aria-expanded="true"] {
-        display: block;
-    }
-    */
 
     #navbar {
         position: fixed;
