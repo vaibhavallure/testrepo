@@ -32,6 +32,8 @@ if($model){
                 <div class="booking-box">
                     <p class="xpaces">BOOK YOUR APPOINTMENT</p>
 
+                    <a href="#price-list" id="btnPriceList" data-target="#btnPriceList" class="btn-price-list">View Price List</a>
+
                     <form class="col-md-12 appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post" id="appointemnet_form">
                         <?php if($fetch_aptId):?> <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>"><?php endif;?>
                         <input type="hidden" name="store_id" id="store_id" value="24">
@@ -73,3 +75,20 @@ if($model){
                                 </div>
                             </div>
                         </div>
+
+                        <?php echo $this->getChildHtml("appointments_popup_pickdatetime");?>
+
+                        <div class="btn-div">
+                            <button class="input-box btn" id="btnConfirm" type="submit">CONFIRM</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <?php echo $this->getChildHtml("appointments_popup_price_list");?>
+        </div>
+    </div>
+<a id="about-maria-arrow" href="#about-maria"  class="link-down down-arrowfrm" >
+    <img src="<?php echo $this->getSkinUrl("images/allure/popup/down.png")?>" class="down-arrow-size " >
+</a>
+</div>

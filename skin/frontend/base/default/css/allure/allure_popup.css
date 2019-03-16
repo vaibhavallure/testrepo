@@ -791,6 +791,9 @@ select#selectTime {
     display: none;
 }
 
+a#btnPriceList,
+a#icon-price-close {display: none;}
+
 @media (min-width: 768px) {
     #navbar-menu {
         display: flex;
@@ -858,6 +861,7 @@ select#selectTime {
         background-color: #2c2c2c;
         box-shadow: none;
         text-align: center;
+        padding-top: 50px;
     }
 
     #navbar-menu.collapsing {
@@ -970,6 +974,17 @@ select#selectTime {
         margin-bottom: 0;
         z-index: 999;
     }
+    a#btnPriceList {
+        text-align: center;
+        display: block;
+        margin: 25px auto;
+        color: #C3C2C5;
+        font-size: 18px;
+        text-transform: uppercase;
+        text-decoration: underline;
+        line-height: 43px;
+        font-family: urw-din-medium;
+    }
 
     div#booking {
         padding-top: 250px;
@@ -1003,8 +1018,22 @@ select#selectTime {
         margin: 0 -15px;
     }
 
+    a#icon-price-close {
+        margin: 15px 0px;
+        display: block;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {color: #fff}
+
     div#price-list {
-        padding: 0;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #2c2c2c;
+        z-index: 9999;
+        display: none;
     }
 
     div#booking-wrapper {
