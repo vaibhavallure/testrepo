@@ -93,8 +93,11 @@ if($model){
 </a>
 </div>
 <script>
-    if(jQuery('#noslot'))
+    if(jQuery('#noslot').val())
     {
         jQuery('#btnConfirm').attr('disabled',true);
+    }
+    else {
+        jQuery('#btnConfirm').attr('disabled',false);
     }
 </script>
