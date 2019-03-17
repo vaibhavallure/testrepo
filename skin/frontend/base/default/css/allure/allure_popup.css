@@ -290,6 +290,7 @@ p.subtitle {
 	text-align: center;
 	color: #FFFFFF;
 	line-height: 22px;
+	font-weight: normal;
 }
 
 p.black-subtitle {
