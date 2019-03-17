@@ -121,9 +121,10 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $storeId= $this->getData("store_id");
             $collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
                 ->addFieldToFilter('is_active', array('eq' => '1'));
-
+            $checkDate='';
             if($this->getData("date")) :
                 $date = $this->getData("date");
+                $checkDate=$date;
                 Mage::log("default Date",Zend_log::DEBUG,'mylogs',true);
                 Mage::log($date,Zend_log::DEBUG,'mylogs',true);
 
@@ -274,12 +275,12 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     if($appointmentId){
                         if(($selectedTime==$old_app_start)&&($old_app_piercer==$piercerAllocated)&&($old_app_end==$endTime)&&($old_app_date==$date))
                             $htmlsel = "selectedTime";
-                    }
-if($selectedTime!='10:00' && $i) {
-    echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
+                    }var_dump($date);
+
+                            echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
-}
+                            
                     if($time_pref == 12){
                         if($time_pref <= $selectedTime)
                         {
