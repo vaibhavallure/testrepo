@@ -1,55 +1,54 @@
 <?php
-
 $model = Mage::getSingleton("core/session")->getData('appointment_submitted');
 Mage::getSingleton("core/session")->setData('appointment_submitted',false);
-
 ?>
-<div class="page-title">
-    <h1><p class="detailofapt"><?php echo $this->__('Appointment Details') ?></p></h1>
-</div><hr/>
-<div class="checkout-success">
-    <div class="success-field">
-        <span class="apt-summary"><?php echo $this->__('Name') ?></span>
-        <span class="apt-summary" ><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
-    </div>
-    <div class="success-field">
-        <span class="apt-summary"><?php echo $this->__('Email') ?></span>
-        <span class="apt-summary" style="font-weight: bold"><?php echo $model->getEmail() ?></span>
-    </div>
-    <div class="success-field">
-        <span class="apt-summary"><?php echo $this->__('Phone') ?></span>
-        <span class="apt-summary" ><?php echo $model->getPhone() ?></span>
-    </div>
-    <div class="success-field">
-        <span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
-        <span class="apt-summary" ><?php echo $model->getPiercingQty() ?></span>
-    </div>
-    <div class="success-field">
-        <span class="apt-summary"><?php echo $this->__('Booking Location') ?></span>
-        <span class="apt-summary" ><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
-    </div>
-    <?php if( $model->getPiercingLoc()):?>
+<div id="popupConfirmAppointmet">
+    <div class="page-title">
+        <h1><p class="detailofapt"><?php echo $this->__('Appointment Details') ?></p></h1>
+    </div><hr/>
+    <div class="checkout-success">
         <div class="success-field">
-            <span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
-            <span class="apt-summary" ><?php echo $model->getPiercingLoc() ?></span>
+            <span class="apt-summary"><?php echo $this->__('Name') ?></span>
+            <span class="apt-summary" ><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
         </div>
-    <?php endif;?>
-    <div class="success-field">
-        <span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
-        <span class="apt-summary" ><?php
-            /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
-            $appStartDate = $appStartDate->toString(); */
-            $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-            if($model->getStoreId())
-                $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
-            else
-                $format = "EST";
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Email') ?></span>
+            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getEmail() ?></span>
+        </div>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Phone') ?></span>
+            <span class="apt-summary" ><?php echo $model->getPhone() ?></span>
+        </div>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
+            <span class="apt-summary" ><?php echo $model->getPiercingQty() ?></span>
+        </div>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Booking Location') ?></span>
+            <span class="apt-summary" ><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
+        </div>
+        <?php if( $model->getPiercingLoc()):?>
+            <div class="success-field">
+                <span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
+                <span class="apt-summary" ><?php echo $model->getPiercingLoc() ?></span>
+            </div>
+        <?php endif;?>
+        <div class="success-field">
+            <span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
+            <span class="apt-summary" ><?php
+                /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
+                $appStartDate = $appStartDate->toString(); */
+                $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+                if($model->getStoreId())
+                    $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
+                else
+                    $format = "EST";
 
-            echo  $appStartDate." ".$format?></span>
-    </div>
+                echo  $appStartDate." ".$format?></span>
+        </div>
 
-    <div class="buttons-set apt-buttons-set">
-        <button type="button" class="input-box b" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.reload();"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+        <div class="buttons-set apt-buttons-set">
+            <button type="button" class="input-box b" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.reload();"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+        </div>
     </div>
 </div>
-
