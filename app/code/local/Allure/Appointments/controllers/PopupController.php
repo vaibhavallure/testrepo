@@ -304,7 +304,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                 );
 
 
-
+                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
 
                 //send Customer email
                 $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
@@ -377,7 +377,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     Mage::log("Exception Occured",Zend_log::DEBUG,'appointments.log',true);
                     Mage::log($e->getMessage(),Zend_log::DEBUG,'appointments.log',true);
                 }
-                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
+//                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
                 Mage::log('APPOINTMENT SUBMITTED','myLog.log',true);
                 $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
                 $this->_redirectReferer() . $appendUrl;
