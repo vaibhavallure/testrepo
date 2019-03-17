@@ -1,6 +1,6 @@
 <?php
 //To modify the appointment get the data from registry start
-$fetch_model = Mage::registry('apt_modify_data');
+$fetch_model = Mage::registry('apt_modify_data');;
 
 if($fetch_model){
 
@@ -9,25 +9,25 @@ if($fetch_model){
     $fetch_date = date('m/d/Y', $timestamp);
 }
 //To get the ajax call block
-$workingdays = $this->getData("workingdays");
-$workingdaysArray=json_decode($workingdays);
-Mage::log('working '.$workingdaysArray,Zend_Log::DEBUG,'myLog.log',true);
+//$workingdays = $this->getData("workingdays");
+//$workingdaysArray=json_decode($workingdays);
+//Mage::log('working '.$workingdaysArray,Zend_Log::DEBUG,'myLog.log',true);
 //$arr = array('11-01-2012', '01-01-2014', '01-01-2015', '09-02-2013', '01-01-2013');
-function date_sort($a, $b) {
-    return strtotime($a) - strtotime($b);
-}
-usort($workingdaysArray, "date_sort");
-Mage::log('Working Days'.$workingdaysArray,Zend_Log::DEBUG,'myLog.log',true);
-
-if (!$fetch_date){
-    //   $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
-    foreach ($workingdaysArray as $value){
-        if($dateCurrent<=$value){
-            $fetch_date =$value ;
-            break;
-        }
-    }
-}
+//function date_sort($a, $b) {
+//    return strtotime($a) - strtotime($b);
+//}
+//usort($workingdaysArray, "date_sort");
+//Mage::log('Working Days'.$workingdaysArray,Zend_Log::DEBUG,'myLog.log',true);
+//
+//if (!$fetch_date){
+//    //   $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
+//    foreach ($workingdaysArray as $value){
+//        if($dateCurrent<=$value){
+//            $fetch_date =$value ;
+//            break;
+//        }
+//    }
+//}
 ?>
 
 <input name="app_date" id="appointment_date" type="text" class="input-box required-entry" value="<?php if($fetch_date):echo $fetch_date;endif;?>">
@@ -40,7 +40,7 @@ if (!$fetch_date){
     var currentDate = new Date();
     var currentDateString = parseInt(1 + currentDate.getMonth()).pad(2)+'/'+currentDate.getDate().pad(2)+'/'+currentDate.getFullYear();
 
-    var datesAvailable = ["04/03/2019", "04/04/2019", "04/05/2019", "04/06/2019", "04/07/2019"];
+    var datesAvailable = ["04/04/2019", "04/05/2019", "04/06/2019", "04/07/2019"];
     var datesDisabled = ['04/02/2019','03/22/2019'];
 
     //datesAvailable.push('04/07/2019');
@@ -85,8 +85,12 @@ if (!$fetch_date){
     jQuery('#datepicker-13_hidden').dcalendarpicker();
 </script>
 <script>
-    var date=new Date();
-    var val=(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
-    document.getElementById("appointment_date").value = val;
+    var mod_date = '<?php echo $fetch_date?>';
+    if(!mod_date) {
+        var date = new Date();
+        var val = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+        document.getElementById("#appointment_date").value = val;
+    }
+    document.getElementById("#appointment_date").value = mod_date;
     jQuery(#app)
 </script>
