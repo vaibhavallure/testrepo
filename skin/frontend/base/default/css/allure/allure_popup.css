@@ -1,7 +1,6 @@
 /*Loader*/
-* {
-    box-sizing: border-box;
-}
+
+div#appointments-popup-wrapper,
 .checkout-success
 {
 	background-color: #2c2c2c;
@@ -9,6 +8,7 @@
 
 .detailofapt {
 	font-family: urw-din-medium;
+	color: #ffffff;
 }
 span.apt-summary
 {
@@ -19,7 +19,28 @@ button.input-box.b {
 	background: #2C2C2C;
 	color: #fff;
 }
-
+#allureAlertBox #closeBtn:hover{
+		background:none;
+}
+#allureAlertBox #closeBtn {
+	display: block;
+	 position: initial;
+	bottom: 44px;
+	left: 152px;
+	margin: 5px auto;
+	padding: 7px;
+	border: 0 none;
+	width: 80px;
+	font: 12px dinmittelschriftregular,arial;
+	text-transform: uppercase;
+	text-align: center;
+	color: #fff;
+	background: none;
+	/* background: transparent url(../images/bkg_brown_btn.png); */
+	background-color: #000;
+	border-radius: 3px;
+	text-decoration: none;
+}
 .appointments-popup-index a,
 .navbar-dark .navbar-nav .nav-link {
     color: #fff;
@@ -114,7 +135,7 @@ input#selectDate {
 }
 
 .hero-image {
-	background-image: url("../../images/allure/popup/topBg.jpg");
+	background-image: url("../../images/allure/popup/topBg.png");
 	background-repeat: no-repeat;
 	background-position: right;
 	height: 100%;
