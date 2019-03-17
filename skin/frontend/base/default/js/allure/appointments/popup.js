@@ -130,13 +130,14 @@ jQuery(document).ready(function() {
     });
 
     jQuery('.navbar-icon').click(function() {
-        
-        if ($(this).hasClass('active')) {
-            $('.navbar-icon').removeClass('active');
-            jQuery('ul#navbar-menu').hide();
-        } else {
-            $('.navbar-icon').addClass('active');
-            jQuery('ul#navbar-menu').show();
+        if (window.outerWidth < 768) {
+            if ($(this).hasClass('active')) {
+                $('.navbar-icon').removeClass('active');
+                jQuery('ul#navbar-menu').hide();
+            } else {
+                $('.navbar-icon').addClass('active');
+                jQuery('ul#navbar-menu').show();
+            }
         }
     });
 

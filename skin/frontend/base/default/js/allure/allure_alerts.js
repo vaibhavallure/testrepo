@@ -7,8 +7,6 @@ if(document.getElementById) {
     }
 }
 
-
-
 function createCustomAlert(txt) {
     d = document;
     if(d.getElementById("allureModalContainer")) return;
@@ -36,15 +34,12 @@ function createCustomAlert(txt) {
 
     alertObj.style.display = "block";
 
-
 }
 
 window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
 
     okBtn = okBtn || "OK";
     cancelBtn = cancelBtn || "CANCEL";
-
-
 
     d = document;
 
@@ -91,8 +86,6 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
     alertObj.style.display = "block";
 };
 
-
 function removeCustomAlert() {
     document.getElementsByTagName("body")[0].removeChild(document.getElementById("allureModalContainer"));
 }
-
