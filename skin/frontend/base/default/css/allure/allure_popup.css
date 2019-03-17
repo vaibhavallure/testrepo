@@ -3,7 +3,7 @@
     display: none !important;
 }
 div#appointments-popup-wrapper,
-.checkout-success {
+.checkout-success ,.btns-setDiv{
 	background-color: #2c2c2c;
 }
 .detailofapt {
@@ -19,6 +19,7 @@ button.input-box.b {
 	border: 1px solid #fff;
 	background: #2C2C2C;
 	color: #fff;
+    border-radius: 0;
 }
 
 #closeBtn:hover{
