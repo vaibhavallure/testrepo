@@ -277,14 +277,19 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                             $htmlsel = "selectedTime";
                     }
 //                    var_dump($date);
-                    Mage::log('IN pick Time '.$checkDate,Zend_Log::DEBUG,'myLog.log',true);
-if(($checkDate!='04/07/2019')&&(($selectedTime!='10:00') ||($selectedTime!='19:40'))) {
+if(($checkDate!='04/07/2019')&&($selectedTime!='10:00') &($selectedTime!='19:40')) {
 
     echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
 }
-
+else
+if(($checkDate=='04/07/2019')&&($selectedTime!='10:00')&&($selectedTime!='10:20')&&($selectedTime!='10:40')&&($selectedTime!='11:00')&&($selectedTime!='18:40')&&($selectedTime!='19:00')&&($selectedTime!='19:20')&&($selectedTime!='19:40'))
+{
+    echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
+ data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
+ data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
+}
                     if($time_pref == 12){
                         if($time_pref <= $selectedTime)
                         {
