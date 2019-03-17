@@ -7,6 +7,7 @@
 
 
 <?php
+$errprint=false;
 $fetch_model = Mage::registry('apt_modify_data');
 
 if($fetch_model){
@@ -29,7 +30,9 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
     if($no_of_people>0):
         ?>
         <?php if (!$this->getData("timing")):
-        echo "<input type='text' readonly class='input-box ' value='Not Availables'/>";
+        echo "<input type='hidden' id='noslot' value='no'>";
+        echo "<input type='text' readonly class='input-box ' value='Not Slots Availables'/>";
+        $errprint=true;
         ?>
 
   <!--        <div class="notfreepeiercer ">Walk-ins are welcome but currently all appointments are booked for the selected date.</div>-->
@@ -137,7 +140,11 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments.log', true );
                     /* If piercer is not free logic start*/
                     if(empty($collection->getData())){
-                        echo "<input type='text' readonly class='input-box ' value='No Slots Available'/>";
+                        if(!$errprint) {
+                            echo "<input type='hidden' id='noslot' value='no'>";
+                            echo "<input type='text' readonly class='input-box ' value='No Slots Available'/>";
+                        $errprint=true;
+                        }
                         $notfreepeiercer_show=1;
                     }
                     /* If piercer is not free logic end*/
@@ -316,8 +323,13 @@ if(($checkDate=='04/07/2019')&&($selectedTime!='10:00')&&($selectedTime!='10:20'
             }
 
             if($noSlot){
-                if(!$notfreepeiercer_show)
-                    echo "<input type='text' readonly class=' input-box ' value='No Slots Available'>";
+                if(!$notfreepeiercer_show) {
+                    if(!$errprint) {
+                        echo "<input type='hidden' id='noslot' value='no'>";
+                        echo "<input type='text' readonly class=' input-box ' value='No Slots Available'>";
+                    $errprint=true;
+                    }
+                }
             }
 
 
