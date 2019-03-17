@@ -33,7 +33,8 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
         ?>
 
   <!--        <div class="notfreepeiercer ">Walk-ins are welcome but currently all appointments are booked for the selected date.</div>-->
-    <?php else: ?>
+    <?php else:
+        ?>
 
         <div id="time-wrapper">
             <input type = "hidden" class="required-entry-time" value="<?php if($fetch_starttime): echo $fetch_starttime;endif;?>" name="appointment_start" id="starttime_hidden">
@@ -274,11 +275,11 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                         if(($selectedTime==$old_app_start)&&($old_app_piercer==$piercerAllocated)&&($old_app_end==$endTime)&&($old_app_date==$date))
                             $htmlsel = "selectedTime";
                     }
-
-echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
+if($selectedTime!='10:00' && $i) {
+    echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
-
+}
                     if($time_pref == 12){
                         if($time_pref <= $selectedTime)
                         {

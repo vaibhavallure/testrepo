@@ -87,11 +87,14 @@ var peopleCount = 1;
 
 var increaseQty = function () {
 
-    if (peopleCount < 5) {
+    if (peopleCount < 4) {
         peopleCount++;
         jQuery("#count").val(peopleCount);
 
         updateSlotAvailability();
+    }
+    else {
+        alert('You Can Select 4 People')
     }
 
     console.log(peopleCount);

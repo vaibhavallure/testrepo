@@ -230,7 +230,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     'email' => $model->getEmail(),
                     '_secure' => true
                 ));
-
+                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
@@ -377,7 +377,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     Mage::log("Exception Occured",Zend_log::DEBUG,'appointments.log',true);
                     Mage::log($e->getMessage(),Zend_log::DEBUG,'appointments.log',true);
                 }
-                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
+//                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
                 Mage::log('APPOINTMENT SUBMITTED','myLog.log',true);
                 $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
                 $this->_redirectReferer() . $appendUrl;
