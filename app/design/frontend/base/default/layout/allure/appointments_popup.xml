@@ -50,4 +50,14 @@
 			</block>
 		</reference>
 	</appointments_popup_index>
+	<appointments_popup_modify>
+		<update handle="default_popup"/>
+		<reference name="root">
+			<action method="setTemplate"><template>allure/page/empty.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="appointments/popup" name="appointments_popup_success" as="appointments_popup_success" template="allure/appointments/popup/success.phtml">
+			</block>
+		</reference>
+	</appointments_popup_modify>
 </layout>
