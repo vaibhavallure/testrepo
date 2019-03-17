@@ -230,7 +230,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     'email' => $model->getEmail(),
                     '_secure' => true
                 ));
-
+                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
@@ -304,7 +304,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                 );
 
 
-                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
+
 
                 //send Customer email
                 $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
