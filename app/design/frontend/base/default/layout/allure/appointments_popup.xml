@@ -35,7 +35,7 @@
 		</reference>
 		<reference name="content">
 			<block type="appointments/popup" name="appointments_popup_container" as="appointments_popup_container" template="allure/appointments/popup/container.phtml">
-			<block type="appointments/popup" name="appointments_popup_success" as="appointments_popup_success" template="allure/appointments/popup/success.phtml">
+			<block type="appointments/popup" name="appointments_popup_success" as="appointments_popup_success" template="allure/appointments/popup/success.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_top" template="allure/appointments/popup/top.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_menu" as="appointments_popup_menu" template="allure/appointments/popup/menu.phtml"/>
 				<block type="appointments/popup" name="appointments_popup_register" as="appointments_popup_register" template="allure/appointments/popup/register.phtml">
