@@ -19,8 +19,11 @@ button.input-box.b {
 	background: #2C2C2C;
 	color: #fff;
 }
-#allureAlertBox #closeBtn:hover{
+#allureAlertBox {
 		background:none;
+}
+#closeBtn:hover{
+    background-color: #000;
 }
 #allureAlertBox #closeBtn {
 	display: block;
