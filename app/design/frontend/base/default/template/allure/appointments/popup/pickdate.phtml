@@ -35,12 +35,16 @@ if (!$fetch_date){
 <script type="text/javascript">
     var subscribeUrl ="<?php echo $this->getWorkingDaysActionUrl();?>" ;
     var datesAvailable = loadWorkingDays(subscribeUrl);
+    console.log('datesAvailable::');
     console.log(datesAvailable);
     var currentDate = new Date();
-    var currentDateString = parseInt(1 + currentDate.getMonth()).pad(2)+'/'+currentDate.getDate()+'/'+currentDate.getFullYear();
+    var currentDateString = parseInt(1 + currentDate.getMonth()).pad(2)+'/'+currentDate.getDate().pad(2)+'/'+currentDate.getFullYear();
 
-    var datesAvailable =["04/03/2019", "04/04/2019", "04/05/2019", "04/06/2019", "04/07/2019"];
+    //var datesAvailable = ["04/03/2019", "04/04/2019", "04/05/2019", "04/06/2019", "04/07/2019"];
     var datesDisabled = ['04/02/2019','03/22/2019'];
+
+    //datesAvailable.push('04/07/2019');
+    //datesAvailable.push('05/12/2019');
 
     jQuery("#appointment_date").val(currentDateString);
 
@@ -51,7 +55,9 @@ if (!$fetch_date){
         beforeShowDay: function(date) {
             var enabled = false;
 
-            var currentDate = parseInt(1 + date.getMonth()).pad(2)+'/'+date.getDate()+'/'+date.getFullYear();
+            var currentDate = parseInt(1 + date.getMonth()).pad(2)+'/'+date.getDate().pad(2)+'/'+date.getFullYear();
+
+            //console.log(currentDate);
 
             if (datesAvailable.indexOf(currentDate) != -1) {
                 enabled = true;
