@@ -1,5 +1,7 @@
 /*Loader*/
-
+.dialogBg.popupid21 {
+	display: none !important;
+}
 div#appointments-popup-wrapper,
 .checkout-success
 {
