@@ -144,33 +144,33 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
     <div class="checkout-success">
         <div class="success-field">
             <span class="apt-summary"><?php echo $this->__('Name') ?></span>
-            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
+            <span class="apt-summary" ><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
         </div>
         <div class="success-field">
             <span class="apt-summary"><?php echo $this->__('Email') ?></span>
-            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getEmail() ?></span>
+            <span class="apt-summary" ><?php echo $model->getEmail() ?></span>
         </div>
         <div class="success-field">
             <span class="apt-summary"><?php echo $this->__('Phone') ?></span>
-            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getPhone() ?></span>
+            <span class="apt-summary" ><?php echo $model->getPhone() ?></span>
         </div>
         <div class="success-field">
             <span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
-            <span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingQty() ?></span>
+            <span class="apt-summary" ><?php echo $model->getPiercingQty() ?></span>
         </div>
         <div class="success-field">
             <span class="apt-summary"><?php echo $this->__('Booking Location') ?></span>
-            <span class="apt-summary" style="font-weight: bold"><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
+            <span class="apt-summary" ><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
         </div>
         <?php if($model->getPiercingLoc()):?>
             <div class="success-field">
                 <span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
-                <span class="apt-summary" style="font-weight: bold"><?php echo $model->getPiercingLoc() ?></span>
+                <span class="apt-summary" ><?php echo $model->getPiercingLoc() ?></span>
             </div>
         <?php endif;?>
         <div class="success-field">
             <span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
-            <span class="apt-summary" style="font-weight: bold"><?php
+            <span class="apt-summary" ><?php
                 /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
                 $appStartDate = $appStartDate->toString(); */
                 $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));

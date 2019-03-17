@@ -34,9 +34,11 @@
 
 		else:
 			foreach ($activeStores as $key=>$store){
-				$requestStoreName = $store;
-				$requestStoreId = $key;
-				$multi_stores[$key]= $store;
+		    if($store!='nordstrom_la') {
+                $requestStoreName = $store;
+                $requestStoreId = $key;
+                $multi_stores[$key] = $store;
+            }
 			}
 		endif;
 	}
