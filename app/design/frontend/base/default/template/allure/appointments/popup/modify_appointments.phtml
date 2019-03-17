@@ -4,7 +4,8 @@
  *	Allure checkout step success order.
  *
  */
-if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
+<div id="popupConfirmAppointmet">
+if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
     $model = Mage::registry('appointment_modified');
     $apt_id = $model->getId();
@@ -14,10 +15,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
     ?>
     <?php if($apt_id):?>
-
-
-    <style>
-
+    <style type="text/css">
         /*-------------------new alert box--------------------------*/
 
         #allureModalContainer {
@@ -80,7 +78,6 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
             text-decoration:none;
         }
 
-
         #allureAlertBox #closeBtn:hover{
             background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn_hover.png'); ?>) repeat-x;
             color: #3f4048;
@@ -88,11 +85,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
         }
 
-
-
         /*-------------confirm popup----------------*/
-
-
 
         #allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
             display:block;
@@ -133,10 +126,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
             background-color: #c79546ab;
         }
 
-
-
         /*-------------------------alert end----------------------------------*/
-
     </style>
     <div class="page-title">
         <h1><p class="detailofapt"><?php echo $this->__('Appointment Details') ?></p></h1>
@@ -207,10 +197,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
     </div>
 <?php endif;?>
 
-
-<script>
-
-
+<script type="text/javascript">
     var conf=false;
 
     function confirmCancelApt() {
@@ -236,12 +223,6 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
         });
 
     }
-
-
-
-
-
-
 
     function createCustomConfirm(txt) {
         d = document;
@@ -287,10 +268,6 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
         }
 
         alertObj.style.display = "block";
-
     }
-
-
 </script>
-
-
+</div>
