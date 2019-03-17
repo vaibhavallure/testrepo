@@ -1,11 +1,7 @@
 /*Loader*/
-
-div#appointments-popup-wrapper,
-.checkout-success
-{
+.checkout-success {
 	background-color: #2c2c2c;
 }
-
 .detailofapt {
 	font-family: urw-din-medium;
 	color: #ffffff;
@@ -20,11 +16,11 @@ button.input-box.b {
 	color: #fff;
 }
 #allureAlertBox #closeBtn:hover{
-		background:none;
+	background:none;
 }
 #allureAlertBox #closeBtn {
 	display: block;
-	 position: initial;
+	position: initial;
 	bottom: 44px;
 	left: 152px;
 	margin: 5px auto;
@@ -45,7 +41,6 @@ button.input-box.b {
 .navbar-dark .navbar-nav .nav-link {
     color: #fff;
 }
-
 .overlay {
 	position: absolute;
     overflow-x: auto;
@@ -162,17 +157,13 @@ input#selectDate {
 .pop-up-div {
 	position: relative;
 	left: 50px;
-	/*margin-top: 50px;*/
 	width: 400px;
 	background: #2c2c2c;
-	/*top: 50%;*/
-	/*transform: translate(0,-50%);*/
 }
 
 .pop-up-content {
 	padding: 30px 20px;
 }
-
 
 /*DOWN ARROWS*/
 
@@ -465,53 +456,53 @@ div#loaderAppointmentTime {
     height: 38px;
 }
 .lds-ellipsis div {
-  position: absolute;
-  top: 10px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #fff;
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+	position: absolute;
+	top: 10px;
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	background: #fff;
+	animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .lds-ellipsis div:nth-child(1) {
-  left: 6px;
-  animation: lds-ellipsis1 0.6s infinite;
+	left: 6px;
+	animation: lds-ellipsis1 0.6s infinite;
 }
 .lds-ellipsis div:nth-child(2) {
-  left: 6px;
-  animation: lds-ellipsis2 0.6s infinite;
+	left: 6px;
+	animation: lds-ellipsis2 0.6s infinite;
 }
 .lds-ellipsis div:nth-child(3) {
-  left: 26px;
-  animation: lds-ellipsis2 0.6s infinite;
+	left: 26px;
+	animation: lds-ellipsis2 0.6s infinite;
 }
 .lds-ellipsis div:nth-child(4) {
-  left: 45px;
-  animation: lds-ellipsis3 0.6s infinite;
+	left: 45px;
+	animation: lds-ellipsis3 0.6s infinite;
 }
 @keyframes lds-ellipsis1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
+	0% {
+		transform: scale(0);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 @keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(0);
+	}
 }
 @keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(19px, 0);
-  }
+	0% {
+		transform: translate(0, 0);
+	}
+	100% {
+		transform: translate(19px, 0);
+	}
 }
 
 label.p-white {
@@ -526,7 +517,6 @@ label.p-white {
 .mob {
 	display: none;
 }
-
 
 /*USED IN PRICE LIST */
 
