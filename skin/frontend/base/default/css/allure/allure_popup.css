@@ -10,7 +10,8 @@ div#appointments-popup-wrapper,
 	font-family: urw-din-medium;
 	color: #ffffff;
 }
-span.apt-summary
+span.apt-summary,
+.validation-advice
 {
 	color: #fff;
 }
@@ -21,7 +22,7 @@ button.input-box.b {
 }
 
 #closeBtn:hover{
-    background-color: #000;
+    background-color: #000 ;
     color: #fff;
 }
 #allureAlertBox #closeBtn {
