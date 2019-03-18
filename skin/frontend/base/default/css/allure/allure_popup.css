@@ -1023,13 +1023,13 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 #allureAlertBox #cancelConfirm
 {
     position:absolute;
-    bottom: 44px;
+    bottom: 20px;
     left: 85px;
 }
 #allureAlertBox #okConfirm
 {
     position:absolute;
-    bottom: 44px;
+    bottom: 20px;
     left: 221px;
 }
 
@@ -1113,7 +1113,7 @@ div#btnBookTop {
 	/*MENU REMOVE MOBILE*/
 	.checkout-success
 	{
-		font-size: 07em;
+		font-size: 0.7em;
 	}
 	.row.footer-links.hidden-xs
 	{
