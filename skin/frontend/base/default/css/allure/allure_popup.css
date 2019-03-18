@@ -1314,6 +1314,9 @@ div#btnBookTop {
     .div-about-maria {
         padding: 15px;
     }
+	.about-maria-content p:nth-child(2n) {
+	    padding-top: 15px;
+	}
     p.p-black {
         margin: 0;
         padding: 0;
