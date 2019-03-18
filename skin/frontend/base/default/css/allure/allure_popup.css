@@ -1445,6 +1445,10 @@ div#btnBookTop {
 		[name="selectTime"] {
 			border-left: 1px solid #d8d8d8;
 		}
+
+		button.input-box.b {
+			border: 1px solid #d8d8d8;
+		}
 	}
 
 /* 2436x1125px at 458ppi */
@@ -1455,6 +1459,10 @@ div#btnBookTop {
 		select#selectTime,
 		[name="selectTime"] {
 			border-left: 1px solid #d8d8d8;
+		}
+
+		button.input-box.b {
+			border: 1px solid #d8d8d8;
 		}
 	}
 
@@ -1467,6 +1475,10 @@ div#btnBookTop {
 		[name="selectTime"] {
 			border-left: 1px solid #d8d8d8;
 		}
+
+		button.input-box.b {
+			border: 1px solid #d8d8d8;
+		}
 	}
 
 /*@media screen and (max-width: 767px) and (orientation: landscape) {*/
@@ -1474,81 +1486,3 @@ div#btnBookTop {
         /*padding-top: 0px;*/
     /*}*/
 /*}*/
-
-
-
-@media screen and (max-width: 1px) {
-	.booking-box {
-		padding: 0px;
-	}
-	button.input-box.btn {
-		width: auto;
-	}
-	/*Down Arrows*/
-	a.down-arrow {
-		z-index: 200;
-		position: absolute;
-		padding-top: 6%;
-		right: 50%;
-	}
-	.img-piercer {
-		width: 300px;
-		height: 300px;
-		border: 0;
-	}
-	.pop-up-div {
-		left: 0px;
-		width: auto;
-	}
-	.mt_logo {
-		font-size: 50px;
-	}
-	p.xpaces {
-		font-size: 22px;
-	}
-	.booking-box p.xpaces {
-		font-size: 30px;
-	}
-	.down-arrow,
-	.mt-bg,
-	div#price-list,
-	a.down-arrowfrm,
-	.div-about-maria p.black-subtitle,
-	.down-arrow-maria {
-		display: none;
-	}
-	.about-maria,
-	p.p-black,
-	.div-about-maria,
-	.nopad {
-		padding: 0px;
-	}
-	.desk {
-		opacity: 1;
-		position: absolute;
-		top: 0;
-		font-size: 35px !important;
-		padding-top: 20px;
-	}
-	.btnSub {
-		text-align: center;
-	}
-	p.footer-subtitle-medium {
-		line-height: 20px;
-		padding: 30px 0px 0px;
-	}
-	.people,
-	.mob {
-		display: block;
-	}
-	.peoplediv {
-		text-align: center;
-	}
-	.plus-btn,
-	.minus-btn {
-		font-size: 18px;
-	}
-	.hero-image {
-		background-image: url("../../images/allure/popup/topBgMobile.png");
-	}
-}
