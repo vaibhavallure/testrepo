@@ -1,6 +1,14 @@
 /*Loader*/
+p.p-white.d-none.d-sm-block {
+	padding: 0px 20px;
+}
 div#btnBookBottom {
     text-align: center;
+}
+button#btnBooking,
+button#btnConfirm
+{
+	width: 150px;
 }
 body {
 	font-family: urw-din-medium;
@@ -833,7 +841,6 @@ input#appointment_date {
 div#btnContinue {
     width: auto;
     overflow: hidden;
-    width: 175px;
     margin: 30px auto 0;
 	display: inline-block;
 }
@@ -1065,7 +1072,32 @@ div#btnBookTop {
         padding-left: 40px;
     }
 }
+/*IPad Vertical*/
+@media screen and (max-width: 1024px) and (orientation : portrait) {
+    .footer > .container {
+        max-width: 100%;
+    }
 
+    .navbar-dark .navbar-brand {
+        color: #fff;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    li.nav-item {
+        margin-right: 5px;
+    }
+	.div-about-maria {
+		padding-left: 20px;
+	}
+	p.p-black
+	{
+		padding-right: 0px;
+	}
+	.price-list-box
+	{
+		padding-left: 0px;
+	}
+}
 @media (max-width: 767px) {
 
 	.navbar-main.navbar-close {
