@@ -12,8 +12,6 @@ if($fetch_model){
     $timestamp = strtotime($f_pickurendtime);
     $fetch_endtime = date('H:i', $timestamp);
 }
-
-
 $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 ?>
@@ -132,9 +130,9 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments.log', true );
                     /* If piercer is not free logic start*/
                     if(empty($collection->getData())){
-                        if(!$errprint) {
+                        if (!$errprint) {
                             echo "<input type='hidden' id='noslot' value='no'>";
-                            echo "<input type='text' name="selectTime" readonly class='input-box' value='No Slots Available'/>";
+                            echo "<input type='text' name='selectTime' readonly class='input-box' value='No Slots Available'/>";
                             $errprint=true;
                         }
                         $notfreepeiercer_show=1;
