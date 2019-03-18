@@ -7,6 +7,8 @@ if(document.getElementById) {
     }
 }
 
+
+
 function createCustomAlert(txt) {
     d = document;
     if(d.getElementById("allureModalContainer")) return;
@@ -28,11 +30,12 @@ function createCustomAlert(txt) {
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "closeBtn";
     btn.appendChild(d.createTextNode("OK"));
-    btn.href = "javascript:void()";
+    btn.href = "#";
     btn.focus();
     btn.onclick = function() { removeCustomAlert(); }
 
     alertObj.style.display = "block";
+
 
 }
 
@@ -64,7 +67,7 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
     btnc = alertObj.appendChild(d.createElement("a"));
     btnc.id = "cancelConfirm";
     btnc.appendChild(d.createTextNode(cancelBtn));
-    btnc.href = "javascript:void()";
+    btnc.href = "#";
 
     btnc.onclick = function() {
         removeCustomAlert();
@@ -74,7 +77,7 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "okConfirm";
     btn.appendChild(d.createTextNode(okBtn));
-    btn.href = "javascript:void()";
+    btn.href = "#";
     btn.focus();
     btn.onclick = function() {
         if (doYes && (typeof doYes === "function")) {
@@ -86,6 +89,8 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
     alertObj.style.display = "block";
 };
 
+
 function removeCustomAlert() {
     document.getElementsByTagName("body")[0].removeChild(document.getElementById("allureModalContainer"));
 }
+

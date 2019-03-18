@@ -94,7 +94,7 @@ var increaseQty = function () {
         updateSlotAvailability();
     }
     else {
-        alert('You Can Select 4 People')
+        alert('You can select 4 people maximum in one appointment')
     }
 
     console.log(peopleCount);

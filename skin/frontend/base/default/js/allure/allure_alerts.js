@@ -28,7 +28,7 @@ function createCustomAlert(txt) {
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "closeBtn";
     btn.appendChild(d.createTextNode("OK"));
-    btn.href = "#";
+    btn.href = "javascript:void()";
     btn.focus();
     btn.onclick = function() { removeCustomAlert(); }
 
@@ -64,7 +64,7 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
     btnc = alertObj.appendChild(d.createElement("a"));
     btnc.id = "cancelConfirm";
     btnc.appendChild(d.createTextNode(cancelBtn));
-    btnc.href = "#";
+    btnc.href = "javascript:void()";
 
     btnc.onclick = function() {
         removeCustomAlert();
@@ -74,7 +74,7 @@ window.confirmBox = function(txt,doYes,okBtn,cancelBtn) {
     btn = alertObj.appendChild(d.createElement("a"));
     btn.id = "okConfirm";
     btn.appendChild(d.createTextNode(okBtn));
-    btn.href = "#";
+    btn.href = "javascript:void()";
     btn.focus();
     btn.onclick = function() {
         if (doYes && (typeof doYes === "function")) {

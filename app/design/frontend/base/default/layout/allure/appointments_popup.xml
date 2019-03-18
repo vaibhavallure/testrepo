@@ -2,29 +2,117 @@
 <layout version="0.1.0">
 	<default_popup>
         <reference name="head">
-			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/sliderDemo.js</name></action>
-			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/jQAllRangeSliders-min.js</name></action>
+
+			<!--CSS & JS FOR POP UP -->
+			<action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/tattoo.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/fancybox/jquery.fancybox.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/tipped.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/custom_cart.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/widgets.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/giftcardpage.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/tashtv.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/styles_celeb.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/press.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/piercing-service.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/customer_care.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/reviews.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/frecuently_asked.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/try_on.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/contact-mt.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/styles-form-mt.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/allure.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/universal.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/jslider.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/jslider.plastic.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/selectboxit.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/easytabs.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/webtexgiftcards.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/contact/intlTelInput.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/dtnteam.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/quickview/scroll/jquery.mCustomScrollbar.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/instacatalog/instacatalog.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/instacatalog/instacatalog_showcase.css</name></action>
+
+			<action method="removeItem"><type>skin_css</type><name>aw_ajaxcatalog/css/styles.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>aw_autorelated/css/category.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>aw_autorelated/css/product.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>allure/googleconnect/css/button.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>allure/facebook/css/fstyle.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/ecp/belvg/ddmenu.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/magebird_popup/style_v148.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/jquery-ui.css</name></action>
+
+			<action method="removeItem"><type>js</type><name>lib/ccard.js</name></action>
+			<action method="removeItem"><type>js</type><name>varien/configurable.js</name></action>
+			<action method="removeItem"><type>js</type><name>varien/product.js</name></action>
+			<action method="removeItem"><type>js</type><name>varien/menu.jss</name></action>
+			<action method="removeItem"><type>js</type><name>scriptaculous/builder.js</name></action>
+			<action method="removeItem"><type>js</type><name>scriptaculous/effects.js</name></action>
+			<action method="removeItem"><type>js</type><name>scriptaculous/dragdrop.js</name></action>
+			<action method="removeItem"><type>js</type><name>scriptaculous/controls.js</name></action>
+			<action method="removeItem"><type>js</type><name>scriptaculous/slider.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/jquery.mCustomScrollbar.concat.min.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/tipped/excanvas/excanvas.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/tipped/tipped/tipped.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/tipped/spinners/spinners.min.js</name></action>
+			<action method="removeItem"><type>js</type><name>ecp/addtocart.js</name></action>
+			<action method="removeItem"><type>js</type><name>priceslider/jshashtable-2.1_src.js</name></action>
+			<action method="removeItem"><type>js</type><name>priceslider/jquery.numberformatter-1.2.3.js</name></action>
+			<action method="removeItem"><type>js</type><name>priceslider/tmpl.js</name></action>
+			<action method="removeItem"><type>js</type><name>priceslider/jquery.dependClass-0.1.js</name></action>
+			<action method="removeItem"><type>js</type><name>priceslider/draggable-0.1.js</name></action>
+			<action method="removeItem"><type>js</type><name>priceslider/jquery.slider.js</name></action>
+			<action method="removeItem"><type>js</type><name>ecp/overlay.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/inputToSelect.v1.1.js</name></action>
+			<action method="removeItem"><type>js</type><name>selectivizr.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery.hoverIntent.minified.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/fancybox/jquery.fancybox.pack.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/fancybox/jquery.mousewheel-3.0.6.pack.js</name></action>
+			<action method="removeItem"><type>js</type><name>allure/currencymanager/round.js</name></action>
+			<action method="removeItem"><type>js</type><name>belvg/jqueryDd.noconflict.jss</name></action>
+			<action method="removeItem"><type>js</type><name>belvg/jquery.easing-1.3.pack.js</name></action>
+			<action method="removeItem"><type>js</type><name>belvg/doTimeout/jquery.ba-dotimeout.min.js</name></action>
+			<action method="removeItem"><type>js</type><name>iwd/all/modal.js</name></action>
+			<action method="removeItem"><type>js</type><name>ecp/addtocart.js</name></action>
+			<action method="removeItem"><type>js</type><name>iwd/all/iwd-jquery-2.1.3.min.js</name></action>
+			<action method="removeItem"><type>js</type><name>calendar/calendar.jss</name></action>
+			<action method="removeItem"><type>js</type><name>calendar/calendar-setup.jss</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/jquery.scrollTo.js</name></action>
+			<action method="removeItem"><type>js</type><name>jquery/jquery.select.js</name></action>
+			<action method="removeItem"><type>js</type><name>mirasvit/code/feedexport/performance.js</name></action>
+			<action method="removeItem"><type>js</type><name>allure/phone_valid.js</name></action>
+
+			<action method="removeItem"><type>skin_js</type><name>js/selectboxit/selectboxit.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/allure/instagramview.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/allure/appointments/dcalendar_picker.jss</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/timeslider/sliderDemo.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/allure/appointments/sliderDemo.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/allure/appointments/jQAllRangeSliders-min.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/ecp/belvg/ddmenu.jss</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/checkout/iwd-jquery-2.1.3.min.jss</name></action>
+			<action method="removeItem"><type>skin_js</type><name>aw_ajaxcatalog/js/script.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/checkout/paypal-in-context.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/magebird_popup/main.js?v=1.5.3</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/allure/input_validate.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/select-menu.js</name></action>
+
+            <action method="addJs"><script>jquery/jquery-1.12.4.min.js</script></action>
+            <action method="addJs"><script>jquery/jquery.noconflict.js</script></action>
+            <action method="addJs"><script>jquery/jquery-migrate-1.4.1.min.js</script></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/jquery.validate.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/allure/jquery.validate.extra.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/popup.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/dcalendar_picker.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/allure/appointments/input_validate.js</name></action>
-			<action method="addCss"><stylesheet>css/allure/appointments/appointments.css</stylesheet></action>
-			<!-- <action method="addCss"><stylesheet>css/style.css</stylesheet></action> -->
-			<action method="addCss"><stylesheet>css/responsive.css</stylesheet></action>
-			<action method="addCss"><stylesheet>css/allure/appointments/sliderDemo.css</stylesheet></action>
-			<action method="addCss"><stylesheet>css/allure/appointments/dcalendar_picker.css</stylesheet></action>
-			<action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action>
-			<action method="addJs"><script>jquery/jquery.jcarousel.min.js</script></action>
-			<action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
 
-			<!--CSS & JS FOR POP UP -->
 			<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap-datepicker.js</name></action>
-			<!--<action method="addItem"><type>skin_js</type><name>js/bootstrap/bootstrap-datepicker.js</name></action>-->
-			<action method="addCss"><stylesheet>css/allure/allure_popup.css</stylesheet></action>
-			<action method="addCss"><stylesheet>css/allure/font.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action>
 			<action method="addCss"><stylesheet>css/bootstrap/bootstrap.css</stylesheet></action>
 			<action method="addCss"><stylesheet>css/bootstrap/bootstrap-datepicker.css</stylesheet></action>
-			<!--<action method="addCss"><stylesheet>css/bootstrap/css/bootstrap-datepicker3.css</stylesheet></action>-->
+			<action method="addCss"><stylesheet>css/allure/font.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/allure/allure_popup.css</stylesheet></action>
         </reference>
 	</default_popup>
 	<!--NEW POP UP-->

@@ -48,7 +48,62 @@
 </script>
 
 <script type="text/javascript">
-        var appointmentForm = new VarienForm('appointemnet_form');
+
+        //jQuery('#appointemnet_form').validate();
+        jQuery(document).ready(function() {
+            var $ = jQuery;
+
+            $("#appointemnet_form").validate( {
+    				rules: {
+    					firstname: "required",
+    					lastname: "required",
+    					email: {
+    						required: true,
+    						email: true
+    					},
+    					phone: {
+    						required: true,
+    						phone: true
+    					},
+                        piercing_qty: 'required',
+                        app_date: {
+    						required: true,
+    						date: true
+    					},
+                        selectTime:  {
+    						required: true,
+    						notEqualTo: 'No Slots Available'
+    					}
+    				},
+    				messages: {
+    					firstname: "Please enter your firstname",
+    					lastname: "Please enter your lastname",
+    					email: "Please enter a valid email address",
+    					phone: "Please enter a valid phone number",
+                        piercing_qty: "Please enter people in the group",
+                        app_date: "Please select a booking date",
+                        selectTime: "Please select a booking time"
+    				},
+    				errorElement: "em",
+    				errorPlacement: function ( error, element ) {
+    					// Add the `invalid-feedback` class to the error element
+    					error.addClass( "invalid-feedback" );
+    					if ( element.prop( "type" ) === "checkbox" ) {
+    						error.insertAfter( element.next( "label" ) );
+    					} else {
+    						error.insertAfter( element );
+    					}
+    				},
+    				highlight: function ( element, errorClass, validClass ) {
+    					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+    				},
+    				unhighlight: function (element, errorClass, validClass) {
+    					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+    				}
+    			} );
+            });
+
+        //var appointmentForm = new VarienForm('appointemnet_form');
 
         Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
