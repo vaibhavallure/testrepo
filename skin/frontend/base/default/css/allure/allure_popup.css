@@ -915,8 +915,9 @@ div#datetime-box {
 }
 
 .invalid-feedback {
-	font-style: normal;
-	color: #cc9b50;
+    font-style: normal;
+    color: #fff;
+    font-family: urw-din-medium;
 }
 
 /*-------------------new alert box--------------------------*/
