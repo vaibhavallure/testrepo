@@ -1,5 +1,6 @@
 /*Loader*/
 p.p-white.d-none.d-sm-block {
+    margin-top: 25px;
 	padding: 0px 20px;
 }
 div#btnBookBottom {
@@ -68,7 +69,8 @@ button.input-box.b {
 	background: #2C2C2C;
 	color: #fff;
     border-radius: 0;
-	text-transform: uppercase;
+    text-transform: uppercase;
+    text-align: center
 }
 
 #closeBtn:hover{
@@ -382,7 +384,6 @@ input::placeholder {
 /*Paragrapph titles like question */
 
 p.subtitle {
-	margin: 35px 0px;
 	font-size: 16px;
 	font-family: urw-din-medium;
 	text-align: center;
@@ -839,7 +840,7 @@ input#appointment_date {
 }
 
 div#btnContinue {
-    width: auto;
+    width: 200px;
     overflow: hidden;
     margin: 30px auto 0;
 	display: inline-block;
