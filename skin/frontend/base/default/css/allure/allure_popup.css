@@ -597,9 +597,7 @@ label.p-white {
 	justify-content: center;
 }
 
-.mob {
-	display: none;
-}
+
 
 
 /*USED IN PRICE LIST */
@@ -891,7 +889,7 @@ select#selectTime {
     padding: .375rem .75rem;
     border: 0;
     background: #2c2c2c;
-    border: 0.5px solid #d8d8d8;
+    border: 2px solid #d8d8d8;
     color: #fff;
     box-shadow: none;
     box-sizing: border-box;
@@ -1110,6 +1108,9 @@ div#btnBookTop {
 	}
 }
 @media (max-width: 767px) {
+	.mob {
+		display: none;
+	}
 	/*MENU REMOVE MOBILE*/
 	.checkout-success
 	{

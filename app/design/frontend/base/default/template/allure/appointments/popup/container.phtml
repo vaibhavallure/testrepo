@@ -49,7 +49,7 @@
 
 <script type="text/javascript">
     <?php
-    if(Mage::getSingleton('core/session')->getSlotInvalid()=="true")
+    if((Mage::getSingleton('core/session')->getSlotInvalid()=="true")&&(!Mage::getSingleton("core/session")->getData('appointment_submitted')))
     {
         echo "alert('This appointment time is no longer available. <br> Please select another time.');";
         Mage::getSingleton('core/session')->setSlotInvalid("false");
