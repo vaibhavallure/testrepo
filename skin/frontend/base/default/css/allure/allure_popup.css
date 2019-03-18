@@ -808,8 +808,7 @@ input#appointment_date {
     display: block !important;
 }
 input#appointment_date,
-[name="selectTime"],
-select#selectTime {
+[name="selectTime"] {
     -webkit-appearance: none;
 	-moz-appearance: none;
   	appearance: none;
@@ -856,9 +855,14 @@ select#selectTime {
     margin: 0;
     height: auto;
     font-size: 14px;
-    -webkit-appearance: none;
     font-family: urw-din-medium;
     text-align: center;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23FFFFFF'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+	background-size: 18px;
+	background-position: 95% 16px;
 }
 
 #time-wrapper {
