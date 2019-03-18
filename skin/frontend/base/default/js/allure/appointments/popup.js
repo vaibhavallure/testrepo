@@ -144,4 +144,22 @@ jQuery(document).ready(function() {
     if (jQuery("#count").length) {
         updateSlotAvailability();
     }
+
+    if (jQuery(window).outerWidth() <= 767) {
+        jQuery('.faq-question').click(function() {
+            console.log(jQuery(this));
+            console.log(jQuery(this).attr('area-expanded'));
+            if (!jQuery(this).hasClass('data-expanded')) {
+                jQuery('.faq-question.data-expanded').removeClass('data-expanded');
+                jQuery('.faq-answer.data-expanded').removeClass('data-expanded').slideUp();
+                jQuery(this).next().slideDown();
+                jQuery(this).addClass('data-expanded');
+                jQuery(this).next().addClass('data-expanded');
+            } else {
+                jQuery(this).removeClass('data-expanded');
+                jQuery(this).next().removeClass('data-expanded');
+                jQuery(this).next().slideUp();
+            }
+        });
+    }
 });
