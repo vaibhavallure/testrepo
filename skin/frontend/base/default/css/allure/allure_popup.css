@@ -325,7 +325,7 @@ h4.faq-question {
 }
 
 .div-question {
-	padding-top: 20px;
+    padding: 20px 40px 0;
 }
 
 .faq-first {
@@ -1260,7 +1260,7 @@ div#btnBookTop {
         text-align: center;
     }
     .div-question {
-        padding-top: 10px;
+        padding: 10px 0 0;
     }
     p.faq-question, h4.faq-question {
         text-align: left;
