@@ -70,10 +70,15 @@
     						required: true,
     						date: true
     					},
-                        selectTime:  {
+                        selectTimeSlot:  {
     						required: true,
     						notEqualTo: 'No Slots Available'
-    					}
+    					},
+                        selectTime:
+                            {
+                                required:true,
+                                notEqualTo:'TIME'
+                            }
     				},
     				messages: {
     					firstname: "Please enter your firstname",
@@ -82,7 +87,8 @@
     					phone: "Please enter a valid phone number",
                         piercing_qty: "Please enter people in the group",
                         app_date: "Please select a booking date",
-                        selectTime: "Please select a booking time"
+                        selectTime: "Please select a booking time",
+                        selectTimeSlot: "Please select a booking time"
     				},
     				errorElement: "em",
     				errorPlacement: function ( error, element ) {

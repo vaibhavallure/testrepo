@@ -1,6 +1,16 @@
 /*Loader*/
+
+p.p-white.d-none.d-sm-block {
+    margin-top: 25px;
+	padding: 0px 20px;
+}
 div#btnBookBottom {
     text-align: center;
+}
+button#btnBooking,
+button#btnConfirm
+{
+	width: 150px;
 }
 body {
 	font-family: urw-din-medium;
@@ -22,7 +32,8 @@ p.notify-label {
     padding: 0 5px;
 	position: relative;
 }
-.dialogBg.popupid21 {
+.dialogBg.popupid21,
+.mbdialog.popupid12 .dialogBody{
     display: none !important;
 }
 .intl-tel-input .selected-flag .iti-flag {
@@ -60,7 +71,8 @@ button.input-box.b {
 	background: #2C2C2C;
 	color: #fff;
     border-radius: 0;
-	text-transform: uppercase;
+    text-transform: uppercase;
+    text-align: center
 }
 
 #closeBtn:hover{
@@ -374,7 +386,6 @@ input::placeholder {
 /*Paragrapph titles like question */
 
 p.subtitle {
-	margin: 35px 0px;
 	font-size: 16px;
 	font-family: urw-din-medium;
 	text-align: center;
@@ -831,11 +842,9 @@ input#appointment_date {
 }
 
 div#btnContinue {
-    width: auto;
+    width: 200px;
     overflow: hidden;
-    width: 175px;
     margin: 30px auto 0;
-	display: inline-block;
 }
 
 div#wrapperConfirmAppointment {
@@ -916,8 +925,9 @@ div#datetime-box {
 }
 
 .invalid-feedback {
-	font-style: normal;
-	color: #cc9b50;
+    font-style: normal;
+    color: #fff;
+    font-family: urw-din-medium;
 }
 
 /*-------------------new alert box--------------------------*/
@@ -1064,9 +1074,38 @@ div#btnBookTop {
         padding-left: 40px;
     }
 }
+/*IPad Vertical*/
+@media screen and (max-width: 1024px) and (orientation : portrait) {
+    .footer > .container {
+        max-width: 100%;
+    }
 
+    .navbar-dark .navbar-brand {
+        color: #fff;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    li.nav-item {
+        margin-right: 5px;
+    }
+	.div-about-maria {
+		padding-left: 20px;
+	}
+	p.p-black
+	{
+		padding-right: 0px;
+	}
+	.price-list-box
+	{
+		padding-left: 0px;
+	}
+}
 @media (max-width: 767px) {
-
+	/*MENU REMOVE MOBILE*/
+	.row.footer-links.hidden-xs
+	{
+		display: none;
+	}
 	.navbar-main.navbar-close {
 		display: block;
 	}
@@ -1215,7 +1254,8 @@ div#btnBookTop {
     }
 
     #about-maria p.black-subtitle {
-        display: none;
+        text-align: center;
+		padding: 0px;
     }
 
     .div-about-maria {
