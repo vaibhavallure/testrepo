@@ -57,6 +57,7 @@ button.input-box.b {
 	background: #2C2C2C;
 	color: #fff;
     border-radius: 0;
+	text-transform: uppercase;
 }
 
 #closeBtn:hover{
@@ -1070,6 +1071,10 @@ div#btnBookTop {
 
 	#top-subtitle {
 	    margin-top: 5em;
+	}
+
+	.detailofapt {
+		font-size: 28px;
 	}
 
 	.pop-up-content {

@@ -42,6 +42,8 @@
 			<action method="removeItem"><type>skin_css</type><name>css/ecp/belvg/ddmenu.css</name></action>
 			<action method="removeItem"><type>skin_css</type><name>css/magebird_popup/style_v148.css</name></action>
 			<action method="removeItem"><type>skin_css</type><name>css/jquery-ui.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/bootstrap.min.css</name></action>
+			<action method="removeItem"><type>skin_css</type><name>css/bootstrap-theme.min.css</name></action>
 
 			<action method="removeItem"><type>js</type><name>lib/ccard.js</name></action>
 			<action method="removeItem"><type>js</type><name>varien/configurable.js</name></action>
@@ -145,8 +147,7 @@
 			<action method="setTemplate"><template>allure/page/empty.phtml</template></action>
 		</reference>
 		<reference name="content">
-			<block type="appointments/popup" name="appointments_popup_modify" as="appointments_popup_modify" template="allure/appointments/popup/modify_appointments.phtml">
-			</block>
+			<block type="appointments/popup" name="appointments_popup_modify" as="appointments_popup_modify" template="allure/appointments/popup/modify_appointments.phtml" />
 		</reference>
 	</appointments_popup_modify>
 </layout>

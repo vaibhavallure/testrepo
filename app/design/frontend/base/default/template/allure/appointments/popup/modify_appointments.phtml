@@ -1,4 +1,6 @@
-<div id="popupConfirmAppointmet">
+<div class="modal fade bd-example-modal-lg modal-confirm-appointment" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
 <?php
 /**
  *
@@ -15,181 +17,87 @@ if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
     //$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();
 
     ?>
+    <div class="modal-header">
+        <h5 class="modal-title detailofapt" id="exampleModalLongTitle"><?php echo $this->__('Appointment Details') ?></h5>
+    </div>
+    <div id="popupConfirmAppointment" class="modal-body">
+        <div id="wrapperConfirmAppointment" class="row">
     <?php if($apt_id):?>
-    <style type="text/css">
-        /*-------------------new alert box--------------------------*/
+            <div class="checkout-success col-md-12">
+                <div class="success-field row row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Name') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
+                </div>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Email') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getEmail() ?></span>
+                </div>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Phone') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPhone() ?></span>
+                </div>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('No of People in Group') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPiercingQty() ?></span>
+                </div>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Booking Location') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
+                </div>
+                <?php if($model->getPiercingLoc()):?>
+                    <div class="success-field row">
+                        <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Piercing Location') ?></span>
+                        <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPiercingLoc() ?></span>
+                    </div>
+                <?php endif;?>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Appointment Start') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php
+                        /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
+                        $appStartDate = $appStartDate->toString(); */
+                        $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+                        if($model->getStoreId())
+                            $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
+                        else
+                            $format = "EST";
 
-        #allureModalContainer {
-            background-color: rgba(0, 0, 0, 0.47);
-            position:absolute;
-            width:100%;
-            height:100%;
-            top:0px;
-            left:0px;
-            z-index:10000;
-            /*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
-        }
+                        echo  $appStartDate." ".$format?></span>
+                </div>
 
-        #allureAlertBox {
-            padding: 50px;
-            position:relative;
-            width:300px;
-            min-height:100px;
-            margin-top:100px;
-            background-color:#dcdcdc;
-            box-shadow: 2px 2px 8px #00000063
-        }
+                <div class="btns-setDiv row mt-4">
+                    <div class="apt-cancel-buttons-set col-md-4 col-6 form-group">
+                        <button type="button" class="button input-box b" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
+                    </div>
+                    <div class="apt-modify-buttons-set col-md-4 col-6 form-group">
+                        <button type="button" class="button input-box b"  title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*/popup',array('_secure' => true,'id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
+                    </div>
 
-        #allureModalContainer > #allureAlertBox {
-            position:fixed;
-        }
-
-        #allureAlertBox h1 {
-            margin:0;
-            font:bold 0.9em verdana,arial;
-            background-color:#3073BB;
-            color:#FFF;
-            border-bottom:1px solid #000;
-            padding:2px 0 2px 5px;
-        }
-
-        #allureAlertBox p {
-            text-align: center;
-            font:12px arial,verdana;
-            /*margin-top: 10px;*/
-            color: #3f4048;
-        }
-
-        #allureAlertBox #closeBtn{
-            display:block;
-            position:absolute;
-            bottom: 44px;
-            left: 152px;
-            margin:5px auto;
-            padding:7px;
-            border:0 none;
-            width:80px;
-            font:12px dinmittelschriftregular,arial;
-            text-transform:uppercase;
-            text-align:center;
-            color:#fff;
-            background-color:#2C2C2C;
-            text-decoration:none;
-        }
-
-
-
-        /*-------------confirm popup----------------*/
-        #allureAlertBox #okConfirm{
-            position: absolute;
-            left: 182px;
-            bottom: 16px;
-            color: #fff;
-            background: #2c2c2c;
-            border-radius: 0;
-            display:block;
-            margin:5px auto;
-            padding:7px;
-            border:0 none;
-            width:80px;
-            font:12px urw-din-medium;
-            text-transform:uppercase;
-            text-align:center;
-            text-decoration:none;
-        }
-        #allureAlertBox #cancelConfirm{
-            position: absolute;
-            bottom: 16px;
-            left: 40px;
-            color: #fff;
-            border-radius: 0;
-            background: #2c2c2c;
-             display:block;
-            position:absolute;
-            margin:5px auto;
-            padding:7px;
-            border:0 none;
-            width:80px;
-            font:12px urw-din-medium;
-            text-transform:uppercase;
-            text-align:center;
-            text-decoration:none;
-        }
-        
-        
-
-        /*-------------------------alert end----------------------------------*/
-    </style>
-    <div class="page-title">
-        <h1><p class="detailofapt"><?php echo $this->__('Appointment Details') ?></p></h1>
-    </div>
-    <div class="checkout-success">
-        <div class="success-field">
-            <span class="apt-summary"><?php echo $this->__('Name') ?></span>
-            <span class="apt-summary" ><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
-        </div>
-        <div class="success-field">
-            <span class="apt-summary"><?php echo $this->__('Email') ?></span>
-            <span class="apt-summary" ><?php echo $model->getEmail() ?></span>
-        </div>
-        <div class="success-field">
-            <span class="apt-summary"><?php echo $this->__('Phone') ?></span>
-            <span class="apt-summary" ><?php echo $model->getPhone() ?></span>
-        </div>
-        <div class="success-field">
-            <span class="apt-summary"><?php echo $this->__('No of People in Group') ?></span>
-            <span class="apt-summary" ><?php echo $model->getPiercingQty() ?></span>
-        </div>
-        <div class="success-field">
-            <span class="apt-summary"><?php echo $this->__('Booking Location') ?></span>
-            <span class="apt-summary" ><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
-        </div>
-        <?php if($model->getPiercingLoc()):?>
-            <div class="success-field">
-                <span class="apt-summary"><?php echo $this->__('Piercing Location') ?></span>
-                <span class="apt-summary" ><?php echo $model->getPiercingLoc() ?></span>
+                    <div class="apt-buttons-set col-md-4 col-12">
+                        <button type="button" class="button input-box b" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo $this->getUrl('LA',array('_secure' => true));?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+                    </div>
+                </div>
             </div>
-        <?php endif;?>
-        <div class="success-field">
-            <span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
-            <span class="apt-summary" ><?php
-                /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
-                $appStartDate = $appStartDate->toString(); */
-                $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-                if($model->getStoreId())
-                    $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
-                else
-                    $format = "EST";
-
-                echo  $appStartDate." ".$format?></span>
-        </div>
-
-        <div class="btns-setDiv">
-            <div class="apt-cancel-buttons-set">
-                <button type="button" class="button input-box b" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
-            </div>
-            <div class="apt-modify-buttons-set">
-                <button type="button" class="button input-box b"  title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*/popup',array('_secure' => true,'id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
-            </div>
-
-            <div class="apt-buttons-set">
-                <button type="button" class="button input-box b" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo $this->getUrl('*/popup',array('_secure' => true));?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
-            </div>
-        </div>
-    </div>
 <?php endif;?>
     <!--  If the id or email not correct  -->
 
 <?php else:?>
-    <div class="page-title">
+    <div class="col-md-12">
         <h1><p class="detailofapt"><?php echo $this->__('Sorry,Record not found to cancel the appointment!') ?></p></h1>
     </div><hr/>
-    <div class="sryBookPierbtn" >
-        <button type="button" class="button" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo $this->getUrl('*/popup',array('_secure' => true)); ?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+    <div id="btnContinue" class="buttons-set apt-buttons-set">
+        <a class="input-box b" href="/LA">
+          <span aria-hidden="true">Book Another Piercing</span>
+      </a>
     </div>
 <?php endif;?>
 
 <script type="text/javascript">
+
+    jQuery(document).ready(function() {
+        jQuery('.modal-confirm-appointment').on('hide.bs.modal', function (e) {return false;});
+        jQuery('.modal-confirm-appointment').modal('show', {backdrop: 'static', keyboard: false});
+    });
+
     var conf=false;
 
     function confirmCancelApt() {
@@ -262,4 +170,8 @@ if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
         alertObj.style.display = "block";
     }
 </script>
+</div>
+</div>
+</div>
+</div>
 </div>

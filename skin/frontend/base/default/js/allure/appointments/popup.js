@@ -141,5 +141,7 @@ jQuery(document).ready(function() {
         }
     });
 
-    updateSlotAvailability();
+    if (jQuery("#count").length) {
+        updateSlotAvailability();
+    }
 });
