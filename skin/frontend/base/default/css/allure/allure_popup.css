@@ -215,7 +215,9 @@ input#selectDate {
 }
 
 #about-maria .half-div-left img {
-    visibility: hidden;
+	width: 100%;
+	height: auto;
+	padding: 15px 0;
 }
 
 .pop-up-div {
@@ -668,12 +670,12 @@ p.label {
 	padding: 0px 60px;
 }
 
-.fill {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	overflow: hidden
-}
+/*.fill {*/
+	/*display: flex;*/
+	/*justify-content: center;*/
+	/*align-items: center;*/
+	/*overflow: hidden*/
+/*}*/
 
 .fill img {
 	flex-shrink: 0;
@@ -684,11 +686,11 @@ p.label {
 	background: #F0F0F0;
 }
 
-.half-div-left {
-	background-repeat: no-repeat;
-	background-position: center;
-	background-attachment: scroll;
-}
+/*.half-div-left {*/
+	/*background-repeat: no-repeat;*/
+	/*background-position: center;*/
+	/*background-attachment: scroll;*/
+/*}*/
 
 .box {
 	width: auto;
