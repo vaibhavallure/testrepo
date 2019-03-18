@@ -96,7 +96,7 @@ var increaseQty = function () {
         updateSlotAvailability();
     }
     else {
-        alert('You can select 4 people maximum in one appointment')
+        alert('For bookings of 5 or more, please contact rsvp@mariatash.com')
     }
 
     console.log(peopleCount);

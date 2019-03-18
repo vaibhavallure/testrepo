@@ -1,5 +1,7 @@
 /*Loader*/
-
+div#allureAlertBox{
+	left: 35% !important;
+}
 p.p-white.d-none.d-sm-block {
     margin-top: 25px;
 	padding: 0px 20px;
@@ -15,6 +17,7 @@ button#btnConfirm
 body {
 	font-family: urw-din-medium;
 	font-weight: normal;
+	overflow-x: hidden;
 }
 p.notify-label {
     margin-bottom: 0;
@@ -367,7 +370,7 @@ input[type="checkbox"] {
 
 button.input-box.btn {
 	width: auto;
-	border: 0.5px solid #a2a2a2;
+	border: 2px solid #a2a2a2;
 	border-radius: 0;
 	background: none;
 	text-align: center;
@@ -1059,6 +1062,7 @@ div#btnBookTop {
 }
 
 @media (min-width: 768px) {
+
     #navbar-menu {
         display: flex;
     }
@@ -1106,6 +1110,9 @@ div#btnBookTop {
 }
 @media (max-width: 767px) {
 	/*MENU REMOVE MOBILE*/
+	div#allureAlertBox {
+		left: 0 !important;
+	}
 	.row.footer-links.hidden-xs
 	{
 		display: none;
