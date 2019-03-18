@@ -32,7 +32,7 @@ Mage::getSingleton("core/session")->setData('appointment_submitted',false);
                         </div>
                         <div class="success-field row">
                             <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Booking Location') ?></span>
-                            <span class="apt-summary col-md-6 col-6" ><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
+                            <span class="apt-summary col-md-6 col-6" ><?php echo"Nordstrom LA";//echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
                         </div>
                         <?php if( $model->getPiercingLoc()):?>
                             <div class="success-field row">
