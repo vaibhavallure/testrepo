@@ -55,7 +55,9 @@ Mage::getSingleton("core/session")->setData('appointment_submitted',false);
                         </div>
 
                         <div id="btnContinue" class="buttons-set apt-buttons-set row">
-                            <button type="button" class="input-box b" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.reload();"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+                            <button type="button" class="input-box b" data-dismiss="modal" aria-label="Book Another Piercing">
+                              <span aria-hidden="true">Book Another Piercing</span>
+                            </button>
                         </div>
                     </div>
                 </div>
