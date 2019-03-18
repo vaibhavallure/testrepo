@@ -96,7 +96,7 @@ var increaseQty = function () {
         updateSlotAvailability();
     }
     else {
-        alert('For bookings of 5 or more, please contact CS@mariatash.com');
+        alert('For bookings of 5 or more, please contact cs@mariatash.com');
     }
 
     console.log(peopleCount);
