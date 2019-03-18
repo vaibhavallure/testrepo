@@ -1,4 +1,7 @@
 /*Loader*/
+div#btnBookBottom {
+    text-align: center;
+}
 body {
 	font-family: urw-din-medium;
 	font-weight: normal;
