@@ -3,9 +3,9 @@ $model = Mage::getSingleton("core/session")->getData('appointment_submitted');
 Mage::getSingleton("core/session")->setData('appointment_submitted',false);
 ?>
 <div class="modal fade bd-example-modal-lg modal-confirm-appointment" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div id="popupConfirmAppointmet" class="col-md-12">
+            <div id="popupConfirmAppointmet">
                 <div id="wrapperConfirmAppointmet" class="row">
                     <div class="page-title">
                         <h1><p class="detailofapt"><?php echo $this->__('Appointment Details') ?></p></h1>
