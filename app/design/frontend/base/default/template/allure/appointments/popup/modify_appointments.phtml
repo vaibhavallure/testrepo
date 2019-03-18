@@ -72,60 +72,51 @@ if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
             font:12px dinmittelschriftregular,arial;
             text-transform:uppercase;
             text-align:center;
-            color:#3f4048;
-            background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn.png'); ?>);
-            background-color:#906E39;
-            border-radius: 3px;
+            color:#fff;
+            background-color:#2C2C2C;
             text-decoration:none;
         }
 
-        #allureAlertBox #closeBtn:hover{
-            background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn_hover.png'); ?>) repeat-x;
-            color: #3f4048;
-            text-decoration: none;
 
-        }
 
         /*-------------confirm popup----------------*/
-
-        #allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
+        #allureAlertBox #okConfirm{
+            position: absolute;
+            left: 182px;
+            bottom: 16px;
+            color: #fff;
+            background: #2c2c2c;
+            border-radius: 0;
             display:block;
-            position:absolute;
-            bottom: 10px;
-            left: 125px;
             margin:5px auto;
             padding:7px;
             border:0 none;
             width:80px;
-            font:12px dinmittelschriftregular,arial;
+            font:12px urw-din-medium;
             text-transform:uppercase;
             text-align:center;
-            color:#3f4048;
-            background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn.png'); ?>);
-            background-color:#906E39;
-            border-radius: 3px;
             text-decoration:none;
         }
-
-        #allureAlertBox #cancelConfirm
-        {
+        #allureAlertBox #cancelConfirm{
+            position: absolute;
+            bottom: 16px;
+            left: 40px;
+            color: #fff;
+            border-radius: 0;
+            background: #2c2c2c;
+             display:block;
             position:absolute;
-            bottom: 44px;
-            left: 85px;
+            margin:5px auto;
+            padding:7px;
+            border:0 none;
+            width:80px;
+            font:12px urw-din-medium;
+            text-transform:uppercase;
+            text-align:center;
+            text-decoration:none;
         }
-        #allureAlertBox #okConfirm
-        {
-            position:absolute;
-            bottom: 44px;
-            left: 221px;
-        }
-
-        #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
-            background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn_hover.png'); ?>) repeat-x;
-            color: #3f4048;
-            text-decoration: none;
-            background-color: #c79546ab;
-        }
+        
+        
 
         /*-------------------------alert end----------------------------------*/
     </style>
