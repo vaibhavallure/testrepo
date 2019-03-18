@@ -991,6 +991,9 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 .about-maria {
     position: relative;
 }
+div#btnBookTop {
+    text-align: center;
+}
 #about-maria-title {
     line-height: 43px;
     color: #fff;
@@ -1031,6 +1034,15 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 		display: block;
 	}
     .box {border: none;}
+
+	#top-subtitle {
+	    margin-top: 5em;
+	}
+
+	.pop-up-content {
+	    border-bottom: 0.5px solid #d8d8d8;
+		padding-bottom: 10px;
+	}
 
     .hero-image {
         background-image: url(../../images/allure/popup/topBgMobile.jpg);

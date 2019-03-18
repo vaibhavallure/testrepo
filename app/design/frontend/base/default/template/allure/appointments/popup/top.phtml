@@ -2,4 +2,59 @@
     <i class="fa fa-bars"></i>
     <i class="fa fa-close"></i>
 </a>
-<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('nordstrom-popup-top')->toHtml();?>
+
+<!--TOP SECTION-->
+<div id="top" class="container-fluid hero-image" >
+    <div class="mt_logo">MARIA TASH</div>
+    <div class="pop-up-div">
+        <div class="container">
+            <div class="pop-up-title">
+                <p class="xpaces">Maria Tash x SPACE Los Angeles Pop-up</p>
+            </div>
+            <div class="pop-up-content">
+                <p class="p-white hidden visible-xs">Join Maria Tash and her team of global experts in Los Angeles for four days only.</p>
+
+                <div id="btnBookTop" class="btn-div hidden visible-xs">
+                    <a href="#booking">
+                        <button id="btnBooking" class="input-box btn" type="submit">BOOK NOW</button>
+                    </a>
+                </div>
+
+                <p id="top-subtitle" class="subtitle">Exclusively at Nordstrom Local</p>
+                <p class="p-white hidden-xs">Renowned for her innovation in piercing, Tash has
+                    developed a technique through which each client’s
+                    personal style, complexion, and anatomy guide the
+                    curation of jewelry combined to best flatter the
+                    wearer. The brand’s unique approach to piercing
+                    and styling looks makes it one of the most coveted
+                    brands today. Shop the fine jewelry collections and
+                    experience Luxury Piercing and custom styling.</p>
+                <p class="p-center">Thursday April 4th - Saturday April 6th <br>
+                    10am - 8pm<br>
+                    Sunday April 7th<br>
+                    11am -7pm
+                </p>
+                <p class="p-center">
+                    Melrose Place , 8401 Melrose Place<br>
+                    Los Angeles, CA 90069<br>
+                    323.602.2201
+                </p>
+                <p class="p-center">
+                    Walk-ins for each day subject to availability
+                </p>
+                <div id="btnBookBottom" class="btn-div hidden-xs">
+                    <a href="#booking">
+                        <button  id="btnBooking" class="input-box btn"  type="submit">BOOK NOW</button>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="down-arrow">
+        <a href="#booking" id="booking-dwn" class="link-down"><img src="<?php echo $this->getSkinUrl("images/allure/popup/down.png")?>" class="down-arrow-size" ></a>
+    </div>
+</div>
+
+<!--END OF TOP SECTION-->
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('nordstrom-popup-top')->toHtml();?>

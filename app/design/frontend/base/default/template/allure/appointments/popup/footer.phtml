@@ -59,7 +59,7 @@
     <img src="<?php echo $this->getSkinUrl('images/allure/popup/white-spinner.gif')?>"/>
 </div>
 <script type="text/javascript">
-    jQuery("a.nav-link,a.footer-subtitle-small,a.link-down").click(function(e) {
+    jQuery("a.nav-link,a.footer-subtitle-small,a.link-down,#btnBookTop a,#btnBookBottom a").click(function(e) {
         var targetElement = jQuery(jQuery(this).attr('href'));
         jQuery('html, body').animate({
             scrollTop: targetElement.offset().top - jQuery('.navbar').outerHeight()
