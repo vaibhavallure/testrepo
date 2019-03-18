@@ -202,6 +202,7 @@ input#selectDate {
 	background-position: right;
 	height: 100%;
 	padding-bottom: 80px;
+	background-size: cover;
 }
 
 #about-maria #maria-cover {
