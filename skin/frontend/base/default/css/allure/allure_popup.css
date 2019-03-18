@@ -886,9 +886,7 @@ div#datetime-box {
 	color: #cc9b50;
 }
 
-
 /*-------------------new alert box--------------------------*/
-
  #allureModalContainer {
      background-color: rgba(0, 0, 0, 0.47);
      position:absolute;
@@ -897,8 +895,7 @@ div#datetime-box {
      top:0px;
      left:0px;
      z-index:10000;
-     /*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
- }
+}
 
 #allureAlertBox {
     padding: 50px;
@@ -951,7 +948,6 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 }
 /*-------------confirm popup----------------*/
 
-
  #allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
      display:block;
      position:absolute;
@@ -992,7 +988,21 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 
 
 /*-------------------------alert end-------------------------*/
-
+.about-maria {
+    position: relative;
+}
+#about-maria-title {
+    line-height: 43px;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 30px;
+    position: absolute;
+    top: 0;
+    z-index: 999;
+    left: 0;
+    right: 0;
+}
 
 @media (min-width: 768px) {
     #navbar-menu {
@@ -1011,7 +1021,7 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 
     .navbar-dark .navbar-brand {
         color: #fff;
-        padding-left: 50px;
+        padding-left: 40px;
     }
 }
 
@@ -1154,7 +1164,7 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
     }
 
     .div-about-maria {
-        padding: 0px;
+        padding: 15px;
     }
     p.p-black {
         margin: 0;
@@ -1210,7 +1220,7 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
     }
 
     a.navbar-brand {
-        font-size: 28px;
+        font-size: 30px;
         padding-top: 0;
     }
 
