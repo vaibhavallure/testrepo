@@ -1143,7 +1143,7 @@ div#btnBookTop {
 
     .hero-image {
         background-image: url(../../images/allure/popup/topBgMobile.jpg);
-        background-position: top center;
+        background-position: top left;
         background-size: cover;
     }
 
