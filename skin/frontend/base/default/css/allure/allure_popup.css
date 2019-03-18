@@ -215,7 +215,9 @@ input#selectDate {
 }
 
 #about-maria .half-div-left img {
-    visibility: hidden;
+	width: 100%;
+	height: auto;
+	padding: 15px 0;
 }
 
 .pop-up-div {
@@ -668,12 +670,12 @@ p.label {
 	padding: 0px 60px;
 }
 
-.fill {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	overflow: hidden
-}
+/*.fill {*/
+	/*display: flex;*/
+	/*justify-content: center;*/
+	/*align-items: center;*/
+	/*overflow: hidden*/
+/*}*/
 
 .fill img {
 	flex-shrink: 0;
@@ -684,11 +686,11 @@ p.label {
 	background: #F0F0F0;
 }
 
-.half-div-left {
-	background-repeat: no-repeat;
-	background-position: center;
-	background-attachment: scroll;
-}
+/*.half-div-left {*/
+	/*background-repeat: no-repeat;*/
+	/*background-position: center;*/
+	/*background-attachment: scroll;*/
+/*}*/
 
 .box {
 	width: auto;
@@ -772,7 +774,7 @@ p.footer-subtitle-small {
 }
 
 .footer {
-	padding: 30px 0px;
+	padding: 0px 0px 30px;
 }
 
 .footer-frm {
@@ -944,7 +946,7 @@ div#datetime-box {
 #allureAlertBox {
     padding: 50px;
     position:relative;
-    width:300px;
+    width:auto;
     min-height:100px;
     margin-top:100px;
     background-color:#dcdcdc;
@@ -1037,6 +1039,7 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 }
 div#btnBookTop {
     text-align: center;
+	margin-bottom: 20px;
 }
 #about-maria-title {
     line-height: 43px;
@@ -1052,6 +1055,7 @@ div#btnBookTop {
 }
 .pop-up-title {
     padding-top: 20px;
+	width:100%
 }
 
 @media (min-width: 768px) {
@@ -1124,12 +1128,13 @@ div#btnBookTop {
 		padding-bottom: 10px;
 		background-color: #2c2c2c;
 		padding: 20px;
+		margin:20px;
 	}
 
     .hero-image {
         background-image: url(../../images/allure/popup/topBgMobile.jpg);
         background-position: top center;
-        background-size: contain;
+        background-size: cover;
     }
 
     .datepicker {width: auto;}
@@ -1169,13 +1174,22 @@ div#btnBookTop {
         position: fixed;
         left: 0;
         right: 0;
-        top: 47px;
+        top: 0;
         border: 0;
         background-color: #2c2c2c;
         box-shadow: none;
         text-align: center;
         padding-top: 50px;
     }
+	.close-nav{
+		filter: invert(1);
+		position: absolute;
+		top: 15px;
+		left: 15px;
+	}
+	.close-nav img{
+		width: 20px;
+	}
 
     #navbar-menu.collapsing {
         /* transition: none !important; */
@@ -1287,8 +1301,9 @@ div#btnBookTop {
     .pop-up-div {
         position: relative;
         left: 0;
-        top: 375px;
+        top: 385px;
         max-width: 100%;
+		width: 100%;
         clear: both;
         margin-bottom: 0;
         z-index: 999;
@@ -1412,11 +1427,11 @@ div#btnBookTop {
     }
 }
 
-@media screen and (max-width: 767px) and (orientation: landscape) {
-    div#booking {
-        padding-top: 0px;
-    }
-}
+/*@media screen and (max-width: 767px) and (orientation: landscape) {*/
+    /*div#booking {*/
+        /*padding-top: 0px;*/
+    /*}*/
+/*}*/
 
 
 
