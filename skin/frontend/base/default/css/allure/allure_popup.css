@@ -1184,6 +1184,7 @@ div#btnBookTop {
         position: fixed;
         left: 0;
         right: 0;
+		height:100%!important;
         top: 0;
         border: 0;
         background-color: #2c2c2c;
@@ -1210,13 +1211,13 @@ div#btnBookTop {
         height: 100%;
     }
 
-    #navbar-icon[aria-expanded="true"] .fa-close {
-        display: inline-block;
-    }
+    /*#navbar-icon[aria-expanded="true"] .fa-close {*/
+        /*display: inline-block;*/
+    /*}*/
 
-    #navbar-icon[aria-expanded="true"] .fa-bars {
-        display: none;
-    }
+    /*#navbar-icon[aria-expanded="true"] .fa-bars {*/
+        /*display: none;*/
+    /*}*/
 
     a.navbar-brand {
         float: none;

@@ -116,9 +116,11 @@ var decreaseQty= function () {
 jQuery(document).ready(function() {
     var $ =  jQuery;
 
-    $('.close-nav').on('click', function(){console.log('m in');
-        $('#navbar-icon').removeClass('active');
-        $('#navbar-menu').css('display','none');
+    $('#close-nav').click(function(){
+        console.log('m in');
+        $('#navbar-icon').trigger('click');
+        // $('#navbar-icon').removeClass('active');
+        // $('#navbar-menu').css('display','none');
     });
 
     jQuery('a#btnPriceList').click(function(){
