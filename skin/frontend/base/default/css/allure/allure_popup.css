@@ -808,7 +808,8 @@ input#appointment_date {
     display: block !important;
 }
 input#appointment_date,
-[name="selectTime"] {
+[name="selectTime"],
+select#selectTime {
     -webkit-appearance: none;
 	-moz-appearance: none;
   	appearance: none;
