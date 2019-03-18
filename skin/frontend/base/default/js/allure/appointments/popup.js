@@ -146,6 +146,18 @@ jQuery(document).ready(function() {
     }
 
     if (jQuery(window).outerWidth() <= 767) {
+
+        jQuery( window ).scroll(function() {
+            var scrollTop = jQuery(window).scrollTop();
+            var offsetHeight = jQuery('.pop-up-div').position().top - jQuery('.navbar-brand').height();
+            console.log(scrollTop+'::'+offsetHeight);
+            if (scrollTop >= offsetHeight) {
+                jQuery( "#navbar" ).css( "background-color",'#2c2c2c' );
+            } else {
+                jQuery( "#navbar" ).css( "background-color",'transparent' );
+            }
+        });
+
         jQuery('.faq-question').click(function() {
             console.log(jQuery(this));
             console.log(jQuery(this).attr('area-expanded'));
