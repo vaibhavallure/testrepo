@@ -1006,6 +1006,9 @@ div#btnBookTop {
     left: 0;
     right: 0;
 }
+.pop-up-title {
+    padding-top: 20px;
+}
 
 @media (min-width: 768px) {
     #navbar-menu {
@@ -1042,6 +1045,8 @@ div#btnBookTop {
 	.pop-up-content {
 	    border-bottom: 0.5px solid #d8d8d8;
 		padding-bottom: 10px;
+		background-color: #2c2c2c;
+		padding: 20px;
 	}
 
     .hero-image {
@@ -1191,6 +1196,12 @@ div#btnBookTop {
         right: 0;
     }
 
+	#top-subheading {
+	    margin-top: 0;
+	    padding: 0px 24px;
+	    text-align: center;
+	}
+
     .booking-box {
         padding: 0;
     }
@@ -1203,6 +1214,7 @@ div#btnBookTop {
         clear: both;
         margin-bottom: 0;
         z-index: 999;
+		background: transparent;
     }
     a#btnPriceList {
         text-align: center;
