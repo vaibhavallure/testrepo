@@ -811,7 +811,7 @@ a#navbar-icon {
 
 #navbar {
     margin-bottom: 0;
-    background-color: #2c2c2c !important;
+    background-color: #2c2c2c;
     margin: 0;
     border-radius: 0;
 }
@@ -1166,7 +1166,7 @@ div#btnBookTop {
         display: block;
         text-align: center;
         height: auto !important;
-        background-color: transparent !important;
+        background-color: transparent;
 		padding: 0;
     }
     ul#navbar-menu {
@@ -1331,9 +1331,9 @@ div#btnBookTop {
     }
 
     .mt_logo {
-        font-size: 28px;
-        margin: 0 -15px;
-        padding-top: 5px;
+		font-size: 30px;
+		margin: 0 -15px;
+		padding: 0;
     }
 
     a.navbar-brand {
