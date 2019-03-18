@@ -801,7 +801,7 @@ input#datepickerpopup {
 
 a#navbar-icon {
     position: absolute;
-    top: 0px;
+    top: 2px;
     left: 20px;
     font-size: 28px;
     color: #fff;
