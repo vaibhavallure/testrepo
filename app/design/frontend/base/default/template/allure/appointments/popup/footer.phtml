@@ -65,7 +65,9 @@
             scrollTop: targetElement.offset().top - jQuery('.navbar').outerHeight()
         }, 1000);
 
-        jQuery('ul#navbar-menu').hide();
+        if (jQuery(window).outerWidth() <= 767) {
+            jQuery('ul#navbar-menu').hide();
+        }
     });
 
     jQuery("a.link-top").click(function(e) {
