@@ -1,7 +1,5 @@
 /*Loader*/
-div#allureAlertBox{
-	left: 35% !important;
-}
+
 p.p-white.d-none.d-sm-block {
     margin-top: 25px;
 	padding: 0px 20px;
@@ -948,13 +946,18 @@ div#datetime-box {
 }
 
 #allureAlertBox {
-    padding: 50px;
-    position:relative;
-    width:auto;
-    min-height:100px;
-    margin-top:100px;
-    background-color:#dcdcdc;
-    box-shadow: 2px 2px 8px #00000063
+	padding: 50px;
+	width: 400px;
+	left: 50%!important;
+	top: 50%;
+	margin-left: -200px;
+	margin-top: -90px;
+	position: fixed;
+	min-height: 100px;
+	height: auto;
+	background-color: #ffffff;
+	box-shadow: 2px 2px 8px #00000063;
+
 }
 
 #allureModalContainer > #allureAlertBox {
@@ -1011,8 +1014,6 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
      text-transform:uppercase;
      text-align:center;
      color:#3f4048;
-     background: transparent url(../images/bkg_brown_btn.png);
-     background-color:#906E39;
      border-radius: 3px;
      text-decoration:none;
  }
@@ -1031,7 +1032,6 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
 }
 
 #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
-    background: transparent url(../images/bkg_brown_btn_hover.png) repeat-x;
     color: #3f4048;
     text-decoration: none;
 }
@@ -1111,9 +1111,7 @@ div#btnBookTop {
 }
 @media (max-width: 767px) {
 	/*MENU REMOVE MOBILE*/
-	div#allureAlertBox {
-		left: 0 !important;
-	}
+
 	.row.footer-links.hidden-xs
 	{
 		display: none;
