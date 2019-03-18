@@ -21,7 +21,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
         ?>
         <?php if (!$this->getData("timing")):
         echo "<input type='hidden' id='noslot' value='no'>";
-        echo "<input type='text' name='selectTime' readonly class='input-box' value='Not Slots Availables'/>";
+        echo "<input type='text' name='selectTimeSlot' readonly class='input-box' value='Not Slots Availables'/>";
         $errprint=true;
         ?>
 
@@ -132,7 +132,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                     if(empty($collection->getData())){
                         if (!$errprint) {
                             echo "<input type='hidden' id='noslot' value='no'>";
-                            echo "<input type='text' name='selectTime' readonly class='input-box' value='No Slots Available'/>";
+                            echo "<input type='text' name='selectTimeSlot' readonly class='input-box' value='No Slots Available'/>";
                             $errprint=true;
                         }
                         $notfreepeiercer_show=1;
@@ -311,7 +311,7 @@ if(($checkDate=='04/07/2019')&&($selectedTime!='10:00')&&($selectedTime!='10:20'
                 if(!$notfreepeiercer_show) {
                     if(!$errprint) {
                         echo "<input type='hidden' id='noslot' value='no'>";
-                        echo "<input type='text' readonly class=' input-box ' value='No Slots Available'>";
+                        echo "<input type='text' readonly name='selectTimeSlot' class=' input-box ' value='No Slots Available'>";
                     $errprint=true;
                     }
                 }
@@ -324,7 +324,7 @@ if(($checkDate=='04/07/2019')&&($selectedTime!='10:00')&&($selectedTime!='10:20'
 
     <?php endif;?>
     <?php else:
-        echo "<div id='time-wrapper'><input type='text' name='selectTime' readonly class='input-box' value='TIME'/></div>";
+        echo "<div id='time-wrapper'><input type='text' name='selectTimeSlot' readonly class='input-box' value='TIME'/></div>";
     endif;?>
 
 <div id="loaderAppointmentTime" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>

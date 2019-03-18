@@ -1,4 +1,5 @@
 /*Loader*/
+
 p.p-white.d-none.d-sm-block {
     margin-top: 25px;
 	padding: 0px 20px;
@@ -31,7 +32,8 @@ p.notify-label {
     padding: 0 5px;
 	position: relative;
 }
-.dialogBg.popupid21 {
+.dialogBg.popupid21,
+.mbdialog.popupid12 .dialogBody{
     display: none !important;
 }
 .intl-tel-input .selected-flag .iti-flag {
@@ -843,7 +845,6 @@ div#btnContinue {
     width: 200px;
     overflow: hidden;
     margin: 30px auto 0;
-	display: inline-block;
 }
 
 div#wrapperConfirmAppointment {
@@ -1100,7 +1101,11 @@ div#btnBookTop {
 	}
 }
 @media (max-width: 767px) {
-
+	/*MENU REMOVE MOBILE*/
+	.row.footer-links.hidden-xs
+	{
+		display: none;
+	}
 	.navbar-main.navbar-close {
 		display: block;
 	}
