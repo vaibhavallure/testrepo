@@ -807,8 +807,7 @@ a.nav-link {
 input#appointment_date {
     display: block !important;
 }
-input#appointment_date,
-[name="selectTime"] {
+input#appointment_date {
     -webkit-appearance: none;
 	-moz-appearance: none;
   	appearance: none;
