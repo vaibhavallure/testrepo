@@ -107,3 +107,29 @@ if($model){
     <img src="<?php echo $this->getSkinUrl("images/allure/popup/down.png")?>" class="down-arrow-size " >
 </a>
 </div>
+
+//CODE ADDED FOR MOBILE NO ISSUE WHILE MODIFY
+<script>
+var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
+//console.log('[signing_register.phtml] length',phone.length)
+if(phone.length <= 0){
+var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+if (country_code == undefined || country_code == null || country_code == "") {
+country_code = "us"
+}
+
+iti.setCountry(country_code.toLowerCase());
+} else if (phone.charAt(0) != '+') {
+
+<?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
+    var country_code = '<?php echo $f_cntry;?>';
+    iti.setCountry(country_code.toLowerCase());
+<?php } ?>
+
+<?php if ((isset($cntry) && !empty($cntry))) { ?>
+    var country_code = '<?php echo $cntry;?>';
+    iti.setCountry(country_code.toLowerCase());
+<?php } ?>
+}
+</script>
