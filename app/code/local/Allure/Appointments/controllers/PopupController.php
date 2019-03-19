@@ -106,6 +106,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
     public function saveAction ()
     {
+        usleep(rand(100000, 800000));
 
         $post_data = $this->getRequest()->getPost();
 Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
@@ -149,6 +150,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
 
                 // http://www.geoplugin.net/php.gp?ip=219.91.251.70
                 $post_data['ip'] = $this->get_client_ip();
+                $mail_apt_start =  $post_data['appointment_start']. " on " .$post_data['app_date'];
                 $post_data['appointment_start'] = $post_data['app_date'] . " " . $post_data['appointment_start'];
                 $post_data['appointment_start'] = strtotime($post_data['appointment_start'] . ":00");
                 $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
@@ -291,7 +293,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     'no_of_pier' => $model->getPiercingQty(),
                     'piercing_loc' => $model->getPiercingLoc(),
                     'special_notes' => $model->getSpecialNotes(),
-                    'apt_starttime' => $appointmentStart,
+                    'apt_starttime' => $mail_apt_start,
                     'apt_endtime' => $appointmentEnd,
                     'store_name' => $configData['store_name'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
                     'store_address' => $configData['store_address'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
@@ -747,7 +749,9 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     $dateCurrent = Mage::getModel('core/date')->date('m/d/Y');
                     if (strtotime($dateCurrent) <= strtotime($wd)) {
                         $available_wdays[strtotime($wd)] = $wd;
-                        array_push($available_wdays_ajax,$wd);
+                        if($wd!='03/04/2019') {
+                            array_push($available_wdays_ajax, $wd);
+                        }
                     }
                 }
             }
@@ -856,6 +860,13 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                 'msg' => 'Please enter your Email',
             ];
         }
+        $remarkety = Mage::getModel('mgconnector/observer');
+        $remarkety->makeRequest('customers/create', array(
+            'email' => $email,
+            'tags' => array("LA_Popup"),
+            'accepts_marketing' => true
+        ));
+        Mage::log('Remarkety : '.$email,Zend_Log::DEBUG,'popup_remarkety.log',true);
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
     }
 }

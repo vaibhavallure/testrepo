@@ -36,7 +36,7 @@ p.notify-label {
 	position: relative;
 }
 .dialogBg.popupid21,
-.mbdialog.popupid12 .dialogBody{
+.mbdialog{
     display: none !important;
 }
 .intl-tel-input .selected-flag .iti-flag {
@@ -1011,7 +1011,8 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
      font:12px dinmittelschriftregular,arial;
      text-transform:uppercase;
      text-align:center;
-     color:#3f4048;
+     color:#fff;
+	 background-color: #2C2C2C;
      border-radius: 3px;
      text-decoration:none;
  }
@@ -1106,6 +1107,11 @@ div#btnBookTop {
 	}
 }
 @media (max-width: 767px) {
+	td.td-piercing-name,
+	td.td-price {
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
 
 	.faq-first {
 	    padding-top: 1em;
@@ -1206,7 +1212,6 @@ div#btnBookTop {
         padding-top: 50px;
     }
 	.close-nav{
-		filter: invert(1);
 		position: absolute;
 		top: 15px;
 		left: 15px;
@@ -1312,7 +1317,7 @@ div#btnBookTop {
     }
 
     .div-about-maria {
-        padding: 15px;
+        padding: 15px 0px;
     }
 	.about-maria-content p:nth-child(2n) {
 	    padding-top: 15px;
@@ -1322,7 +1327,6 @@ div#btnBookTop {
         padding: 0;
     }
     .price-list-box {
-        margin: 0;
         padding: 0;
     }
 
@@ -1337,6 +1341,7 @@ div#btnBookTop {
 	}
 
     .booking-box {
+		margin-top:45px;
         padding: 0;
     }
 
@@ -1508,6 +1513,13 @@ div#btnBookTop {
 			border: 1px solid #d8d8d8;
 		}
 	}
+
+@media screen and (device-aspect-ratio: 40/71) {
+	.price-list-box {
+		margin: 0;
+		padding: 0;
+	}
+}
 
 /*@media screen and (max-width: 767px) and (orientation: landscape) {*/
     /*div#booking {*/

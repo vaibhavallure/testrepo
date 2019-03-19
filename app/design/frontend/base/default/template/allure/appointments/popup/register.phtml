@@ -1,5 +1,9 @@
 <?php
-$storeId = Mage::helper('appointments')->getStoreId();
+$storeId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+if(!$storeId)
+{
+    $storeId = '28';
+}
 ?>
 <?php
 $model = Mage::registry('apt_modify_data');
@@ -37,7 +41,7 @@ if($model){
                                     <?php if($fetch_aptId):?>
                                         <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>">
                                     <?php endif;?>
-                                    <input type="hidden" name="store_id" id="store_id" value="24">
+                                    <input type="hidden" name="store_id" id="store_id" value="<?php echo $storeId?>">
                                 </div>
                                 <div id="name-box" class="col-md-12 name-box">
                                     <div class="row">
@@ -103,3 +107,29 @@ if($model){
     <img src="<?php echo $this->getSkinUrl("images/allure/popup/down.png")?>" class="down-arrow-size " >
 </a>
 </div>
+
+<!--cODE ADDED FOR MOBILE NO ISSUE WHILE MODIFY-->
+<script>
+var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
+//console.log('[signing_register.phtml] length',phone.length)
+if(phone.length <= 0){
+var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+if (country_code == undefined || country_code == null || country_code == "") {
+country_code = "us"
+}
+
+iti.setCountry(country_code.toLowerCase());
+} else if (phone.charAt(0) != '+') {
+
+<?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
+    var country_code = '<?php echo $f_cntry;?>';
+    iti.setCountry(country_code.toLowerCase());
+<?php } ?>
+
+<?php if ((isset($cntry) && !empty($cntry))) { ?>
+    var country_code = '<?php echo $cntry;?>';
+    iti.setCountry(country_code.toLowerCase());
+<?php } ?>
+}
+</script>
