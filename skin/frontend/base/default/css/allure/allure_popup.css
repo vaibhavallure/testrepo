@@ -36,7 +36,7 @@ p.notify-label {
 	position: relative;
 }
 .dialogBg.popupid21,
-.mbdialog.popupid12 .dialogBody{
+.mbdialog{
     display: none !important;
 }
 .intl-tel-input .selected-flag .iti-flag {
