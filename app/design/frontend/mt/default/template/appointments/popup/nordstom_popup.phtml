@@ -1,0 +1,50 @@
+<?php
+/**
+ * nordstorm popup
+ */
+?>
+
+<div>
+    <?php
+    echo $this->getLayout()->createBlock('cms/block')->setBlockId('nordstrom-popup-top')->toHtml();
+    ?>
+    <?php echo $this->getChildHtml("appointments_popup_menu");?>
+    <?php echo $this->getChildHtml("appointments_popup_register");?>
+    <?php echo $this->getChildHtml("appointments_popup_pickdate");?>
+<!--    --><?php //echo $this->getChildHtml("appointments_popup_picktime");?>
+    <?php echo $this->getChildHtml("appointments_popup_register_end");?>
+    <?php
+    echo $this->getLayout()->createBlock('cms/block')->setBlockId('nordstrom-faq')->toHtml();
+    ?>
+    <?php echo $this->getChildHtml("appointments_popup_footer");?>
+</div>
+
+
+<script type="text/javascript">
+    if (typeof Allure == "undefined") {
+        var Allure = {};
+    }
+    Allure.appointmentId = '<?php echo $this->getRequest()->getParam('id')?>';
+    //console.log(Allure.appointmentId);
+    Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
+    Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
+    Allure.getSupportDetailsActionUrl = '<?php echo $this->getSupportDetailsActionUrl()?>';
+
+</script>
+
+<script type="text/javascript">
+    function formatDate(date) {
+        var monthNames = [
+            "Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "Jul",
+            "Aug", "Sep", "Oct",
+            "Nov", "Dec"
+        ];
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return monthNames[monthIndex] + ' ' +  day + ', ' + year;
+    }
+</script>

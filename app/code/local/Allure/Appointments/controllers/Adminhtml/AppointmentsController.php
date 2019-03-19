@@ -665,16 +665,24 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
         $storeId = $model->getStoreId();
         $configData = $this->getAppointmentStoreMapping();
         $storeKey = array_search ($storeId, $configData['stores']);
-
+        $store_nm = $configData['store_name'][$storeKey];
         $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
         $email_status_changed="Your Appointment Changed ".$status_changed;
-
-        $apt_modify_link = Mage::getUrl('appointments/index/modify', array(
-            'id' => $model->getId(),
-            'email' => $model->getEmail(),
-            '_secure' => true
-        ));
+        if(trim($store_nm)=='Nordstrom Local Melrose') {
+            $apt_modify_link = Mage::getUrl('appointments/popup/modify', array(
+                'id' => $model->getId(),
+                'email' => $model->getEmail(),
+                '_secure' => true
+            ));
+        }
+        else {
+            $apt_modify_link = Mage::getUrl('appointments/index/modify', array(
+                'id' => $model->getId(),
+                'email' => $model->getEmail(),
+                '_secure' => true
+            ));
+        }
 
         if($sendEmail){
             $appointmentStart = date("F j, Y \\a\\t H:i", strtotime($model->getAppointmentStart()));

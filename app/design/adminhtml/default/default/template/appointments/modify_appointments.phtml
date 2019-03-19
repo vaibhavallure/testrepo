@@ -17,7 +17,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 	$apt_id = $model->getId();
 	$apt_email = $model->getEmail();
 	//$encryptedId = Mage::helper('core')->encrypt($apt_id)->toString();
-	//$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();	
+	//$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();
 
 ?>
 	<?php if($apt_id):?>
@@ -49,7 +49,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 				<?php endif;?>
 				<div class="success-field">
 				<span class="apt-summary"><?php echo $this->__('Appointment Start') ?></span>
-				<span class="apt-summary" style="font-weight: bold"><?php 
+				<span class="apt-summary" style="font-weight: bold"><?php
 				/* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
 				$appStartDate = $appStartDate->toString(); */
 				$appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
@@ -57,10 +57,10 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 					$format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
 				else
 					$format = "EST";
-				
+
 				echo  $appStartDate." ".$format?></span>
 				</div>
-				
+
 				<div class="btns-setDiv">
 					<div class="apt-cancel-buttons-set">
 				         <button type="button" class="button" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
@@ -74,8 +74,8 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 				</div>
 			</div>
 		<?php endif;?>
-<!--  If the id or email not correct  -->	
-		
+<!--  If the id or email not correct  -->
+
 <?php else:?>
 			<div class="page-title">
 			    <h1><p class="detailofapt"><?php echo $this->__('Sorry,Record not found to cancel the appointment!') ?></p></h1>
@@ -89,7 +89,7 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 <script>
 	function confirmCancelApt(){
 		var result = confirm("Are you sure you want to Cancel an Scheduled Appointment?");
-		
+
 		if (result) {
 		    //Logic to cancel the apt
 			var reloadurl = '<?php echo Mage::helper('adminhtml')->getUrl('*/adminhtml_index/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
@@ -98,14 +98,12 @@ if(Mage::getSingleton("core/session")->getData('appointment_availablity')):
 		        method: 'get',
 		        success: function (data) {
 					jQuery('.detailofapt').html(data);
-					//jQuery('.checkout-success .success-field').empty();	
+					//jQuery('.checkout-success .success-field').empty();
 					jQuery('.checkout-success .apt-cancel-buttons-set').empty();
 					jQuery('.checkout-success .apt-modify-buttons-set').empty();
-									
+
 		        }
 		    });
-		}		
+		}
 	}
 </script>
-
-
