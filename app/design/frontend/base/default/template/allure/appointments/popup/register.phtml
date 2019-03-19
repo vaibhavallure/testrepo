@@ -1,5 +1,9 @@
 <?php
-$storeId = Mage::helper('appointments')->getStoreId();
+$storeId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+if(!$storeId)
+{
+    $storeId = '28';
+}
 ?>
 <?php
 $model = Mage::registry('apt_modify_data');
@@ -37,7 +41,7 @@ if($model){
                                     <?php if($fetch_aptId):?>
                                         <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>">
                                     <?php endif;?>
-                                    <input type="hidden" name="store_id" id="store_id" value="24">
+                                    <input type="hidden" name="store_id" id="store_id" value="<?php echo $storeId?>">
                                 </div>
                                 <div id="name-box" class="col-md-12 name-box">
                                     <div class="row">
