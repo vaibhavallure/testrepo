@@ -1134,7 +1134,7 @@ div#btnBookTop {
 		display: none;
 	}
 	.navbar-main.navbar-close {
-		display: block;
+		display: none;
 	}
     .box {border: none;}
 
@@ -1376,6 +1376,7 @@ div#btnBookTop {
 		font-size: 30px;
 		margin: 0 -15px;
 		padding: 0;
+		display: none;
     }
 
     a.navbar-brand {
