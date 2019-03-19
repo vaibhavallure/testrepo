@@ -139,7 +139,17 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
                 /*Email Code*/
 				if($toSend){
 					$mailSubject="Appointment booking Reminder";
-					$apt_modify_link = Mage::getUrl('appointments/index/modify',array('id'=>$model->getId(),'email'=>$model->getEmail(),'_secure' => true));
+                    $store_nm = $configData['store_name'][$storeKey];
+                    if(trim($store_nm)=='Nordstrom Local Melrose') {
+                        $apt_modify_link = Mage::getUrl('appointments/popup/modify', array(
+                            'id' => $model->getId(),
+                            'email' => $model->getEmail(),
+                            '_secure' => true
+                        ));
+                    }
+                    else {
+                        $apt_modify_link = Mage::getUrl('appointments/index/modify', array('id' => $model->getId(), 'email' => $model->getEmail(), '_secure' => true));
+                    }
 					$email = $model->getEmail();
 					$name = $model->getFirstname()." ".$model->getLastname();
 					$vars = array(
