@@ -682,7 +682,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $collection->addFieldToFilter('app_status', array('eq' => 2));
         $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
         $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
-
+        Mage::log('In Validate Log Before Book'.$collection->getSelect(),Zend_Log::DEBUG,'myLog.log',true);
 
         if($collection->getSize())
         {
