@@ -106,6 +106,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
     public function saveAction ()
     {
+        usleep(rand(100000, 800000));
 
         $post_data = $this->getRequest()->getPost();
 Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
@@ -748,7 +749,9 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     $dateCurrent = Mage::getModel('core/date')->date('m/d/Y');
                     if (strtotime($dateCurrent) <= strtotime($wd)) {
                         $available_wdays[strtotime($wd)] = $wd;
-                        array_push($available_wdays_ajax,$wd);
+                        if($wd!='03/04/2019') {
+                            array_push($available_wdays_ajax, $wd);
+                        }
                     }
                 }
             }
@@ -857,6 +860,13 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                 'msg' => 'Please enter your Email',
             ];
         }
+        $remarkety = Mage::getModel('mgconnector/observer');
+        $remarkety->makeRequest('customers/create', array(
+            'email' => $email,
+            'tags' => array("LA_Popup"),
+            'accepts_marketing' => true
+        ));
+        Mage::log('Remarkety : '.$email,Zend_Log::DEBUG,'popup_remarkety.log',true);
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
     }
 }
