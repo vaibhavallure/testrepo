@@ -1,6 +1,6 @@
 <?php
 	$model = Mage::registry('apt_modify_data');
-
+    $storeIdNone = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
 	$storeId = Mage::helper('appointments')->getStoreId();
 
 	$fetch_storeId=	Mage::helper('appointments')->getReqStoreId();
@@ -34,7 +34,7 @@
 
 		else:
 			foreach ($activeStores as $key=>$store){
-		    if($store!='Nordstrom Los Angeles') {
+		    if($key!=$storeIdNone) {
                 $requestStoreName = $store;
                 $requestStoreId = $key;
                 $multi_stores[$key] = $store;
