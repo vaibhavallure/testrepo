@@ -259,41 +259,57 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
 							$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
 	                    }
 
-						$workStart 	= date("Y-m-d", strtotime($singeDay))." " .$workStart;
-    	                $workEnd 	= date("Y-m-d", strtotime($singeDay))." " .$workEnd;
-						$breakStart = date("Y-m-d", strtotime($singeDay))." " .$breakStart;
-						$breakEnd 	= date("Y-m-d", strtotime($singeDay))." " .$breakEnd;
+						if ($breakStart == $breakEnd) {
+							$workStart 	= date("Y-m-d", strtotime($singeDay))." " .$workStart;
+	    	                $workEnd 	= date("Y-m-d", strtotime($singeDay))." " .$workEnd;
 
-						$calenderEvents[] = array(
-							'title'	=>	$piercer->getFirstname()." ".$piercer->getLastname(),
-							'day'	=>	$singeDay,
-							'start'	=>	$workStart,
-							'end'	=>	$breakStart,
-							'session'=>	'pre',
-							'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
-							'color'	=>	$color
-						);
+							$calenderEvents[] = array(
+								'title'	=>	$piercer->getFirstname()." ".$piercer->getLastname(),
+								'day'	=>	$singeDay,
+								'start'	=>	$workStart,
+								'end'	=>	$workEnd,
+								'session'=>	'full',
+								'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
+								'color'	=>	$color
+							);
+						} else {
 
-    	                $breakColor="#D08040";
-    	                $calenderEvents[] = array(
-							'title'	=>	"Lunch Break"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
-							'day'	=>	$singeDay,
-							'start'	=>	$breakStart,
-							'end'	=>	$breakEnd,
-							'session'=>	'break',
-    	                    'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
-    	                    'color'	=>	$breakColor
-    	                );
+							$workStart 	= date("Y-m-d", strtotime($singeDay))." " .$workStart;
+	    	                $workEnd 	= date("Y-m-d", strtotime($singeDay))." " .$workEnd;
+							$breakStart = date("Y-m-d", strtotime($singeDay))." " .$breakStart;
+							$breakEnd 	= date("Y-m-d", strtotime($singeDay))." " .$breakEnd;
 
-    	                $calenderEvents[] = array(
-							'title'	=>	$piercer->getFirstname()." ".$piercer->getLastname(),
-							'day'	=>	$singeDay,
-							'start'	=>	$breakEnd,
-							'end'	=>	$workEnd,
-							'session'=>	'post',
-    	                    'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
-    	                    'color'	=>	$color
-    	                );
+							$calenderEvents[] = array(
+								'title'	=>	$piercer->getFirstname()." ".$piercer->getLastname(),
+								'day'	=>	$singeDay,
+								'start'	=>	$workStart,
+								'end'	=>	$breakStart,
+								'session'=>	'pre',
+								'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
+								'color'	=>	$color
+							);
+
+	    	                $breakColor="#D08040";
+	    	                $calenderEvents[] = array(
+								'title'	=>	"Lunch Break"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
+								'day'	=>	$singeDay,
+								'start'	=>	$breakStart,
+								'end'	=>	$breakEnd,
+								'session'=>	'break',
+	    	                    'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
+	    	                    'color'	=>	$breakColor
+	    	                );
+
+	    	                $calenderEvents[] = array(
+								'title'	=>	$piercer->getFirstname()." ".$piercer->getLastname(),
+								'day'	=>	$singeDay,
+								'start'	=>	$breakEnd,
+								'end'	=>	$workEnd,
+								'session'=>	'post',
+	    	                    'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
+	    	                    'color'	=>	$color
+	    	                );
+						}
     	            }
     	        }
     	    }
