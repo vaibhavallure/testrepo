@@ -108,7 +108,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
     {
         $rand_value = rand(1000000, 10000000);
         usleep($rand_value);
-        Mage::log('Rand '.$rand_value,Zend_Log::DEBUG,'myLog.log',true);
+//        Mage::log('Rand '.$rand_value,Zend_Log::DEBUG,'myLog.log',true);
         $post_data = $this->getRequest()->getPost();
 Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         $embeded = $this->getRequest()->getParam('embedded');
