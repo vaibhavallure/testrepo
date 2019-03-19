@@ -249,11 +249,22 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     }
                     $email = $model->getEmail();
                     $name = $model->getFirstname() . " " . $model->getLastname();
-                    $apt_modify_link = Mage::getUrl('appointments/index/modify', array(
-                        'id' => $model->getId(),
-                        'email' => $model->getEmail(),
-                        '_secure' => true
-                    ));
+                    $store_nord = $storeKey; //To change modify link for Popup
+                    if(trim($store_nord)=='nordstrom_la') {
+                        $apt_modify_link = Mage::getUrl('appointments/popup/modify', array(
+                            'id' => $model->getId(),
+                            'email' => $model->getEmail(),
+                            '_secure' => true
+                        ));
+                    }
+                    else
+                    {
+                        $apt_modify_link = Mage::getUrl('appointments/index/modify', array(
+                            'id' => $model->getId(),
+                            'email' => $model->getEmail(),
+                            '_secure' => true
+                        ));
+                    }
 
                     $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 

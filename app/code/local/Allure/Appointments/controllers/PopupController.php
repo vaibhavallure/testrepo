@@ -149,7 +149,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
 
                 // http://www.geoplugin.net/php.gp?ip=219.91.251.70
                 $post_data['ip'] = $this->get_client_ip();
-                $post_data['appointment_start'] = $post_data['app_date'] . " " . $post_data['appointment_start'];
+                $post_data['appointment_start'] =  $post_data['appointment_start'] . " on " . $post_data['app_date'];
                 $post_data['appointment_start'] = strtotime($post_data['appointment_start'] . ":00");
                 $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
 
