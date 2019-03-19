@@ -11,7 +11,7 @@ Number.prototype.pad = function(size) {
 }
 
 var setSlotAvailability = function (response) {
-    console.log(response);
+    // console.log(response);
     jQuery("#pick_ur_time_div").html(response.output);
 };
 
@@ -77,7 +77,7 @@ var loadSlotAvailability = function (date) {
 var updateSlotAvailability  = function () {
     var date = jQuery('#appointment_date').val();
 
-    console.log(date);
+    // console.log(date);
 
     if (date != '') {
         loadSlotAvailability(date);
@@ -99,7 +99,7 @@ var increaseQty = function () {
         alert('For bookings of 5 or more, please contact cs@mariatash.com');
     }
 
-    console.log(peopleCount);
+    // console.log(peopleCount);
 }
 
 var decreaseQty= function () {
@@ -110,14 +110,14 @@ var decreaseQty= function () {
         updateSlotAvailability();
     }
 
-    console.log(peopleCount);
+    // console.log(peopleCount);
 }
 
 jQuery(document).ready(function() {
     var $ =  jQuery;
 
     $('#close-nav').click(function(){
-        console.log('m in');
+        // console.log('m in');
         $('#navbar-icon').trigger('click');
         // $('#navbar-icon').removeClass('active');
         // $('#navbar-menu').css('display','none');
@@ -159,7 +159,7 @@ jQuery(document).ready(function() {
         jQuery( window ).scroll(function() {
             var scrollTop = jQuery(window).scrollTop();
             var offsetHeight = jQuery('.pop-up-div').position().top - jQuery('.navbar-brand').height();
-            console.log(scrollTop+'::'+offsetHeight);
+            // console.log(scrollTop+'::'+offsetHeight);
             if (scrollTop >= offsetHeight) {
                 jQuery( "#navbar" ).css( "background-color",'#2c2c2c' );
             } else {
@@ -168,8 +168,8 @@ jQuery(document).ready(function() {
         });
 
         jQuery('.faq-question').click(function() {
-            console.log(jQuery(this));
-            console.log(jQuery(this).attr('area-expanded'));
+            // console.log(jQuery(this));
+            // console.log(jQuery(this).attr('area-expanded'));
             if (!jQuery(this).hasClass('data-expanded')) {
                 jQuery('.faq-question.data-expanded').removeClass('data-expanded');
                 jQuery('.faq-answer.data-expanded').removeClass('data-expanded').slideUp();
