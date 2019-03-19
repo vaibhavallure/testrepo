@@ -207,99 +207,96 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
     public function calendereventsAction(){
     	$calenderEvents = array();
 
-    	/* $name = "test name";
-
-    	$time = strtotime('3/16/2017 3:28 AM');
-
-    	$newformat = date('Y-m-d H:i',$time);
-
-    	$start_time = $newformat;
-    	$end_time = $newformat;
-    	$url = "not found"; */
     	$piercer_id=0;
     	$piercer_id = $this->getRequest()->getParam('piercer_id');
-    	Mage::log($piercer_id,Zend_Log::DEBUG, 'appointments', true );
+
     	$url = "not found";
-  /*   	$allAppointments = Mage::getModel('appointments/appointments')->getCollection();
-    	$allAppointments->addFieldToFilter('app_status',array('in'=>array('1','2')));
 
-    	if(!empty($piercer_id) && $piercer_id!=0)
-    		$allAppointments->addFieldToFilter('piercer_id',$piercer_id);
-
-    	if($allAppointments){
-
-    		foreach ($allAppointments as $appointment){
-    			$calenderEvents[] = array('title'=>$appointment->getFirstname()." ".$appointment->getLastname(),
-    					'start'=>$appointment->getAppointmentStart(),
-    					'end'=>$appointment->getAppointmentEnd(),
-    					'url'=>$this->getUrl('admin_appointments/adminhtml_appointments/view/id/'.$appointment->getId(),array('_secure' => true))
-    			);
-    		}
-    	} */
     	$helper=Mage::helper('appointments');
     	$piercers = Mage::getModel('appointments/piercers')->getCollection();
     	$piercers->addFieldToFilter('is_active',array('in'=>array('1')));
+
     	if(!empty($piercer_id) && $piercer_id!=0)
     	    $piercers->addFieldToFilter('id',$piercer_id);
+
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
     	$calenderEvents=array();
     	foreach ($piercers as $piercer){
     	    $color=$piercer->getColor();
-    	    Mage::log($color,Zend_Log::DEBUG,'abc',true);
+
     	    $workdaysarr = explode(",", $piercer->getWorkingDays());
-    	    if(count($workdaysarr)){
-    	        foreach ($workdaysarr as $singeDay){
+
+    	    if (count($workdaysarr)){
+
+				$specialStore = false;
+
+				if ($specialStoreId == $piercer->getStoreId()) {
+					$specialStore = true;
+				}
+
+    	        foreach ($workdaysarr as $singeDay) {
+					$singeDay = trim($singeDay);
     	            $dayOfWeek = date("d", strtotime($singeDay));
     	            $day = date('l', strtotime($singeDay));
     	            $workingHours = $piercer->getWorkingHours();
     	            $workingHours = unserialize($workingHours);
-    	            foreach ($workingHours as $workSlot)
-    	            {
-    	                //$workStart = $workSlot['start'].":00";
 
-    	                if($workSlot['day']!=$day){
-    	                    continue;
+					foreach ($workingHours as $workSlot) {
+						if($workSlot['day']!=$day){
+							continue;
+						}
 
-    	                }
-    	                $start=$helper->decimalToTime($workSlot['start']);
-    	                $start = date("Y-m-d", strtotime($singeDay))." " .$start;
-    	                 Mage::log($start,Zend_Log::DEBUG,'abc',true);
-    	                 $breakStart=$helper->decimalToTime($workSlot['break_start']);
-    	                 $breakStart = date("Y-m-d", strtotime($singeDay))." " .$breakStart;
+	                    if ($specialStore) {
+							$workStart = $helper->getBreakTimeByValue($workSlot['start']);
+							$workEnd = $helper->getBreakTimeByValue($workSlot['end']);
+							$breakStart = $helper->getBreakTimeByValue($workSlot['break_start']);
+							$breakEnd = $helper->getBreakTimeByValue($workSlot['break_end']);
+	                    } else {
+							$workStart = $helper->getTimeByValue($workSlot['start']);
+							$workEnd = $helper->getTimeByValue($workSlot['end']);
+							$breakStart = $helper->getTimeByValue($workSlot['break_start']);
+							$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
+	                    }
 
-    	                $calenderEvents[] = array('title'=>$piercer->getFirstname()." ".$piercer->getLastname(),
-    	                    'start'=>$start,
-    	                    'end'=>$breakStart,
-    	                    'url'=>$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
-    	                    'color'=>$color
+						$workStart 	= date("Y-m-d", strtotime($singeDay))." " .$workStart;
+    	                $workEnd 	= date("Y-m-d", strtotime($singeDay))." " .$workEnd;
+						$breakStart = date("Y-m-d", strtotime($singeDay))." " .$breakStart;
+						$breakEnd 	= date("Y-m-d", strtotime($singeDay))." " .$breakEnd;
 
-    	                );
+						$calenderEvents[] = array(
+							'title'	=>	$piercer->getFirstname()." ".$piercer->getLastname(),
+							'day'	=>	$singeDay,
+							'start'	=>	$workStart,
+							'end'	=>	$breakStart,
+							'session'=>	'pre',
+							'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
+							'color'	=>	$color
+						);
 
-    	                $breakEnd=$helper->decimalToTime($workSlot['break_end']);
-    	                $end=$helper->decimalToTime($workSlot['end']);
-
-    	                $breakEnd = date("Y-m-d", strtotime($singeDay))." " .$breakEnd;
-
-    	                $end = date("Y-m-d", strtotime($singeDay))." " .$end;
-    	                $calenderEvents[] = array('title'=>$piercer->getFirstname()." ".$piercer->getLastname(),
-    	                    'start'=>$breakEnd,
-    	                    'end'=>$end,
-    	                    'url'=>$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
-    	                    'color'=>$color
-    	                );
     	                $breakColor="#D08040";
-    	                $calenderEvents[] = array('title'=>"Lunch Break"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
-    	                    'start'=>$breakStart,
-    	                    'end'=>$breakEnd,
-    	                    'url'=>$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
-    	                    'color'=>$breakColor
+    	                $calenderEvents[] = array(
+							'title'	=>	"Lunch Break"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
+							'day'	=>	$singeDay,
+							'start'	=>	$breakStart,
+							'end'	=>	$breakEnd,
+							'session'=>	'break',
+    	                    'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
+    	                    'color'	=>	$breakColor
+    	                );
 
+    	                $calenderEvents[] = array(
+							'title'	=>	$piercer->getFirstname()." ".$piercer->getLastname(),
+							'day'	=>	$singeDay,
+							'start'	=>	$breakEnd,
+							'end'	=>	$workEnd,
+							'session'=>	'post',
+    	                    'url'	=>	$this->getUrl('admin_appointments/adminhtml_appointmentpiercers/edit/id/'.$piercer->getId(),array('_secure' => true)),
+    	                    'color'	=>	$color
     	                );
     	            }
     	        }
-
     	    }
-
-
     	}
     	$_currentStore=Mage::app()->getStore();
     	$code1 = $_currentStore->getCode();

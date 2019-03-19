@@ -1,9 +1,9 @@
-<?php 
+<?php
 /*
- * 
+ *
  * Calender Events
- * 
- * 
+ *
+ *
  */
 ?>
 <?php  echo Mage::app()->getLayout()->createBlock('appointments/adminhtml_switcher')->toHtml();
@@ -36,14 +36,12 @@
 
 <script>
 	$j(document).ready(function() {
-		
+
 		var initialLangCode = 'en';
 		$j('#loading-mask').show();
 
 		var convertDate = function (dateString) {
-			var dateArray = dateString.split(/[^0-9]/);
-			//for (i=0;i<a.length;i++) { alert(a[i]); }
-			return new Date (dateArray[0], dateArray[1]-1, dateArray[2], dateArray[3], dateArray[4], dateArray[5]);
+			return new Date(dateString);
 		}
 
  		<?php $k = Mage::getSingleton('core/session')->getFormKey(); ?>
@@ -68,43 +66,42 @@
 					var startDate = convertDate(data[i].start);
 
 					var endDate = convertDate(data[i].end);
+
 					var color = data[i].color;
 
 					events[i] =  {
-		 					title: data[i].title,
-		                    start: startDate,
-		                    end: endDate,
-		                    allDay: false,
-		                    url : data[i].url,
-		                    backgroundColor: color
-		                   
-		                    
+	 					title: data[i].title,
+	                    start: startDate,
+	                    end: endDate,
+	                    allDay: false,
+	                    url : data[i].url,
+	                    backgroundColor: color
 		 			};
 		 		}
 
-		 		
+				console.log(events);
+
 		 		$j('#loading-mask').hide();
-			 		$j('#calendar').fullCalendar({
-			 			header: {
-							left: 'prev,next today',
-							center: 'title',
-							right: 'month,agendaWeek,agendaDay,listMonth'
 
-						},
+		 		$j('#calendar').fullCalendar({
+		 			header: {
+						left: 'prev,next today',
+						center: 'title',
+						right: 'month,agendaWeek,agendaDay,listMonth'
+					},
 
-						// customize the button names,
-						// otherwise they'd all just say "list"
-						slotDuration: '00:30:01',
-						lang: initialLangCode,
-						defaultDate: new Date(),
-						navLinks: true, // can click day/week names to navigate views
-						editable: true,
-						eventLimit: true, // allow "more" link when too many events
-						events: events,
-						defaultView: 'agendaWeek',
-					    aspectRatio: 1.5
-						
-					});
+					// customize the button names,
+					// otherwise they'd all just say "list"
+					slotDuration: '00:30:01',
+					lang: initialLangCode,
+					defaultDate: new Date(),
+					navLinks: true, // can click day/week names to navigate views
+					editable: true,
+					eventLimit: true, // allow "more" link when too many events
+					events: events,
+					defaultView: 'agendaWeek',
+				    aspectRatio: 1.5
+				});
 	 		}
 		});
 	});
