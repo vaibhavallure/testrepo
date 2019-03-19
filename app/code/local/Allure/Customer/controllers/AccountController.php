@@ -72,6 +72,18 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			} else {
 				try
 				{
+                    $customerEmail = $this->getRequest()->getParam('email');
+                    $customerOb = Mage::getModel('customer/customer')->loadByEmail($customerEmail);
+
+                    if(!empty($customerOb)){
+                        $tw_uc_guid = $customerOb->getTwUcGuid();
+                        $tw_customer_id = $customerOb->getTeamworkCustomerId();
+                        if(empty($tw_uc_guid) && !empty($tw_customer_id)){
+                            $customerOb->setTwUcGuid($tw_customer_id);
+                            $customerOb->save();
+                        }
+                    }
+
 					$session->login($username, $password);
 					$result['success'] = true;
 					$result['msg'] = Mage::helper('core')->__('Login Successfull');
