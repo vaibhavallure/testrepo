@@ -1,0 +1,135 @@
+<?php
+$storeId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+if(!$storeId)
+{
+    $storeId = '28';
+}
+?>
+<?php
+$model = Mage::registry('apt_modify_data');
+if($model){
+    $fetch_aptId = $model->getId();
+    $f_firstName = $model->getFirstname();
+    $f_lastName = $model->getLastname();
+    $f_email = $model->getEmail();
+    $f_telephone = $model->getPhone();
+    $f_notification_pref = $model->getNotificationPref();
+    $fetch_piercing_qty = $model->getPiercingQty();
+    $fetch_piercing_loc = $model->getPiercingLoc();
+}
+
+?>
+<!--BOOKING SECTION-->
+
+<link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js');?>"></script>
+<div id="booking" class="container-fluid booking nopad">
+    <div class="container nopad">
+        <div class="row">
+            <div class="col-md-6" id="booking-wrapper">
+                <div id="booking-box" class="row booking-box">
+                    <div class="col-md-12">
+                        <p class="xpaces">BOOK YOUR APPOINTMENT</p>
+
+                        <a href="#price-list" id="btnPriceList" data-target="#btnPriceList" class="btn-price-list">View Price List</a>
+                    </div>
+                    <div class="col-md-12">
+                        <form class="appointment-input-box" action="<?php echo $this->getActionUrl()?>" method="post" id="appointemnet_form">
+                            <div class="row">
+                                <div class="col-md-12 hide">
+                                    <?php if($fetch_aptId):?>
+                                        <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>">
+                                    <?php endif;?>
+                                    <input type="hidden" name="store_id" id="store_id" value="<?php echo $storeId?>">
+                                </div>
+                                <div id="name-box" class="col-md-12 name-box">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <input class="input-box required-entry" type="text" name="firstname" id="firstname" placeholder="FIRST NAME" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>"required>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <input class="input-box required-entry" type="text" name="lastname" id="lastname" placeholder="LAST NAME" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="email-box" class="col-md-12 form-group">
+                                    <input class="input-box required-entry"  type="email" name="email" id="email" placeholder="EMAIL" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" required>
+                                </div>
+                                <div id="phone-box" class="col-md-12 form-group">
+                                    <input class="input-box required-entry validate-intl-telephone" type="text" name="phone" id="phonenumber" placeholder="PHONE NUMBER" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>" required>
+                                </div>
+
+                                <div id="notify-box" class="col-md-12 form-group">
+                                    <p class="label notify-label">I would like to be notified by:</p>
+
+                                    <div class="notify-box row">
+                                        <div class="col-md-12 notify-label">
+                                            <input type="checkbox" id="c1" name="noti_email">
+                                            <label class="label" for="c1">Email</label>
+                                        </div>
+                                        <div class="col-md-12 notify-label">
+                                            <input type="checkbox" id="c2" name="noti_sms">
+                                            <label class="label" for="c2">Text Message (<em>Message and data rates may apply</em>)</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="people-box" class="people form-group col-md-12 text-center">
+                                    <div id="people-wrapper" class="people-wrapper form-group">
+                                        <label class="label">Number of people in your party:</label>
+                                        <div class="peoplediv">
+                                            <input type="button" value="-" class="minus-btn" onclick="decreaseQty();" >
+                                            <?php if($fetch_piercing_qty):?>
+                                                <input size="5" class="input-box" value="<?php echo $fetch_piercing_qty;?>" type="text" name="piercing_qty" id="count" readonly min="1" max="4">
+                                            <?php else:?>
+                                                <input size="5" class="input-box"  value="1" type="text" name="piercing_qty" id="count"  readonly min="1" max="4">
+                                            <?php endif;?>
+                                            <input type="button" value="+" class="plus-btn" onclick="increaseQty();" >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php echo $this->getChildHtml("appointments_popup_pickdatetime");?>
+
+                                <div class="form-group col-md-12 btn-div text-center">
+                                    <button class="input-box btn" id="btnConfirm" type="submit">CONFIRM</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php echo $this->getChildHtml("appointments_popup_price_list");?>
+        </div>
+    </div>
+<a id="about-maria-arrow" href="#about-maria"  class="link-down down-arrowfrm" >
+    <img src="<?php echo $this->getSkinUrl("images/allure/popup/down.png")?>" class="down-arrow-size " >
+</a>
+</div>
+
+<!--cODE ADDED FOR MOBILE NO ISSUE WHILE MODIFY-->
+<script>
+var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
+//console.log('[signing_register.phtml] length',phone.length)
+if(phone.length <= 0){
+var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+
+if (country_code == undefined || country_code == null || country_code == "") {
+country_code = "us"
+}
+
+iti.setCountry(country_code.toLowerCase());
+} else if (phone.charAt(0) != '+') {
+
+<?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
+    var country_code = '<?php echo $f_cntry;?>';
+    iti.setCountry(country_code.toLowerCase());
+<?php } ?>
+
+<?php if ((isset($cntry) && !empty($cntry))) { ?>
+    var country_code = '<?php echo $cntry;?>';
+    iti.setCountry(country_code.toLowerCase());
+<?php } ?>
+}
+</script>

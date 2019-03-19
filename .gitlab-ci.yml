@@ -3,6 +3,7 @@ before_script:
 stages:
   - alpha
   - beta
+  - appointments
   - deploy
 cloud_alpha:
   environment: staging
@@ -41,6 +42,16 @@ beta_staging:
     - rm -f media && ln -s /var/www/shared/mt-staging/media media
     - rm -f var && ln -s /var/www/shared/mt-staging/var var
     - rm -f app/etc/local.xml && ln -s /var/www/shared/mt-staging/etc/local.xml app/etc/local.xml
+    - echo 'Deployed on Beta Staging'
+beta_appointments:
+  environment: appointments
+  stage: appointments
+  tags:
+    - beta
+  only:
+    - la_popup
+  script:
+    - mage-deploy mt-appointments
     - echo 'Deployed on Beta Staging'
 
 deploy-cloud:

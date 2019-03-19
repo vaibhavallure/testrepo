@@ -1,0 +1,177 @@
+<div class="modal fade bd-example-modal-lg modal-confirm-appointment" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+<?php
+/**
+ *
+ *	Allure checkout step success order.
+ *
+ */
+
+if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
+
+    $model = Mage::registry('appointment_modified');
+    $apt_id = $model->getId();
+    $apt_email = $model->getEmail();
+    //$encryptedId = Mage::helper('core')->encrypt($apt_id)->toString();
+    //$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();
+
+    ?>
+    <div class="modal-header">
+        <h5 class="modal-title detailofapt" id="exampleModalLongTitle"><?php echo $this->__('Appointment Details') ?></h5>
+    </div>
+    <div id="popupConfirmAppointment" class="modal-body">
+        <div id="wrapperConfirmAppointment" class="row">
+    <?php if($apt_id):?>
+            <div class="checkout-success col-md-12">
+                <div class="success-field row row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Name') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
+                </div>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Email') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getEmail() ?></span>
+                </div>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Phone') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPhone() ?></span>
+                </div>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('No of People in Group') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPiercingQty() ?></span>
+                </div>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Booking Location') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
+                </div>
+                <?php if($model->getPiercingLoc()):?>
+                    <div class="success-field row">
+                        <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Piercing Location') ?></span>
+                        <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPiercingLoc() ?></span>
+                    </div>
+                <?php endif;?>
+                <div class="success-field row">
+                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Appointment Start') ?></span>
+                    <span class="apt-summary col-md-6 col-6" ><?php
+                        /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
+                        $appStartDate = $appStartDate->toString(); */
+                        $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+                        if($model->getStoreId())
+                            $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
+                        else
+                            $format = "EST";
+
+                        echo  $appStartDate." ".$format?></span>
+                </div>
+
+                <div class="btns-setDiv row mt-4">
+                    <div class="apt-cancel-buttons-set col-md-4 col-6 form-group">
+                        <button type="button" class="button input-box b" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
+                    </div>
+                    <div class="apt-modify-buttons-set col-md-4 col-6 form-group">
+                        <button type="button" class="button input-box b"  title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*/popup',array('_secure' => true,'id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
+                    </div>
+
+                    <div class="apt-buttons-set col-md-4 col-12">
+                        <button type="button" class="button input-box b" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo $this->getUrl('LA',array('_secure' => true));?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
+                    </div>
+                </div>
+            </div>
+<?php endif;?>
+    <!--  If the id or email not correct  -->
+
+<?php else:?>
+    <div class="col-md-12">
+        <h1><p class="detailofapt"><?php echo $this->__('Sorry,Record not found to cancel the appointment!') ?></p></h1>
+    </div><hr/>
+    <div id="btnContinue" class="buttons-set apt-buttons-set">
+        <a class="input-box b" href="/LA">
+          <span aria-hidden="true">Book Another Piercing</span>
+      </a>
+    </div>
+<?php endif;?>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function() {
+        jQuery('.modal-confirm-appointment').on('hide.bs.modal', function (e) {return false;});
+        jQuery('.modal-confirm-appointment').modal('show', {backdrop: 'static', keyboard: false});
+    });
+
+    var conf=false;
+
+    function confirmCancelApt() {
+
+        if (!conf)
+        {
+            createCustomConfirm("Are you sure you want to cancel an scheduled appointment?");
+            return false;
+        }
+
+        //Logic to cancel the apt
+        var reloadurl = '<?php echo $this->getUrl('*/popup/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
+        jQuery.ajax({
+            url: reloadurl, //Relative or absolute path to response.php file
+            method: 'get',
+            success: function (data) {
+                jQuery('.detailofapt').html(data);
+                //jQuery('.checkout-success .success-field').empty();
+                jQuery('.checkout-success .apt-cancel-buttons-set').empty();
+                jQuery('.checkout-success .apt-modify-buttons-set').empty();
+
+            }
+        });
+
+    }
+
+    function createCustomConfirm(txt) {
+        d = document;
+
+        if(d.getElementById("allureModalContainer")) return;
+
+        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+        mObj.id = "allureModalContainer";
+        mObj.style.height = d.documentElement.scrollHeight + "px";
+
+        alertObj = mObj.appendChild(d.createElement("div"));
+        alertObj.id = "allureAlertBox";
+        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+        alertObj.style.visiblity="visible";
+
+        msg = alertObj.appendChild(d.createElement("p"));
+        //msg.appendChild(d.createTextNode(txt));
+        msg.innerHTML = txt;
+
+        btnc = alertObj.appendChild(d.createElement("a"));
+        btnc.id = "cancelConfirm";
+        btnc.appendChild(d.createTextNode("CANCEL"));
+        btnc.href = "#";
+
+
+        btnc.onclick = function() {
+            removeCustomAlert();
+            return false;
+        }
+
+
+        btn = alertObj.appendChild(d.createElement("a"));
+        btn.id = "okConfirm";
+        btn.appendChild(d.createTextNode("OK"));
+        btn.href = "#";
+        btn.focus();
+        btn.onclick = function() {
+            removeCustomAlert();
+            conf=true;
+            confirmCancelApt();
+            return false;
+        }
+
+        alertObj.style.display = "block";
+    }
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
