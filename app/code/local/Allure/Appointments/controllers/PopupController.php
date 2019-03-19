@@ -149,7 +149,8 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
 
                 // http://www.geoplugin.net/php.gp?ip=219.91.251.70
                 $post_data['ip'] = $this->get_client_ip();
-                $post_data['appointment_start'] =  $post_data['appointment_start'] . " on " . $post_data['app_date'];
+                $mail_apt_start =  $post_data['appointment_start']. " on " .$post_data['app_date'];
+                $post_data['appointment_start'] = $post_data['app_date'] . " on " . $post_data['appointment_start'];
                 $post_data['appointment_start'] = strtotime($post_data['appointment_start'] . ":00");
                 $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
 
@@ -291,7 +292,7 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                     'no_of_pier' => $model->getPiercingQty(),
                     'piercing_loc' => $model->getPiercingLoc(),
                     'special_notes' => $model->getSpecialNotes(),
-                    'apt_starttime' => $appointmentStart,
+                    'apt_starttime' => $mail_apt_start,
                     'apt_endtime' => $appointmentEnd,
                     'store_name' => $configData['store_name'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_name",$storeId),
                     'store_address' => $configData['store_address'][$storeKey], // Mage::getStoreConfig("appointments/genral_email/store_address",$storeId),
