@@ -1011,7 +1011,8 @@ button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disab
      font:12px dinmittelschriftregular,arial;
      text-transform:uppercase;
      text-align:center;
-     color:#3f4048;
+     color:#fff;
+	 background-color: #2C2C2C;
      border-radius: 3px;
      text-decoration:none;
  }
