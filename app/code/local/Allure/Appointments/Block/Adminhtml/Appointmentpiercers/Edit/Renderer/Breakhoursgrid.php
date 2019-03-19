@@ -18,7 +18,10 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 		}
 
 		foreach ($timing as $time) {
-
+			if ($time['break_start'] == $time['break_end']) {
+				$data .= $time['day']." <div style='float:right'> NO BREAK</div><br>";
+				continue;
+			}
 			if ($specialStore) {
 				$data .= $time['day']." <div style='float:right'>".$helper->getBreakTimeByValue($time['break_start'] )."-".  $helper->getBreakTimeByValue($time['break_end'] )."</div> <br/>";
 			} else {

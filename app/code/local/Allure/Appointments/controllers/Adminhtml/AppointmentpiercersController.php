@@ -223,7 +223,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
 
     	$calenderEvents=array();
     	foreach ($piercers as $piercer){
-    	    $color=$piercer->getColor();
+    	    $color = $piercer->getColor();
 
     	    $workdaysarr = explode(",", $piercer->getWorkingDays());
 
@@ -291,7 +291,7 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
 
 	    	                $breakColor="#D08040";
 	    	                $calenderEvents[] = array(
-								'title'	=>	"Lunch Break"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
+								'title'	=>	"B R E A K"." - ".$piercer->getFirstname()." ".$piercer->getLastname(),
 								'day'	=>	$singeDay,
 								'start'	=>	$breakStart,
 								'end'	=>	$breakEnd,
