@@ -17,7 +17,7 @@
 }(function( $ ) {
 
 	$.validator.addMethod( "phone", function( value, element ) {
-		value.replace(' ','');
+		value = value.replace(/\s+/g, '');
 		return this.optional( element ) || /^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/.test( value );
 	}, "Please specify a valid phone number" );
 
@@ -25,7 +25,7 @@
 
 		// Bind to the blur event of the target in order to revalidate whenever the target field is updated
 		var target = param;
-		
+
 		return value != param;
 	}, "Please select correct value" );
 

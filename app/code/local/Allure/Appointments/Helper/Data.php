@@ -29,7 +29,20 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    $endTime = $configData['end_work_time'][$storeKey];
 
 		$timing =array();
-		$timings=Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
+
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+		$specialStore = false;
+
+		if ($specialStoreId == $currentStoreId) {
+			$specialStore = true;
+		}
+
+		if ($specialStore) {
+			$timings = Mage::getModel('appointments/adminhtml_source_timing')->toSpecialOptionArray();
+		} else {
+			$timings = Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
+		}
 
 		foreach ($timings as $time){
 			if ($startTime<=$time['value'] && $endTime>=$time['value']){
@@ -56,7 +69,20 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 
 	    $timing  = array();
-	    $timings = Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
+
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+		$specialStore = false;
+
+		if ($specialStoreId == $storeId) {
+			$specialStore = true;
+		}
+
+		if ($specialStore) {
+			$timings = Mage::getModel('appointments/adminhtml_source_timing')->toSpecialOptionArray();
+		} else {
+			$timings = Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
+		}
 
 	    foreach ($timings as $time){
 
@@ -192,31 +218,43 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
 		return $timezone;
 	}
-	public function getTimeByValue($value){
+	public function getTimeByValue ($value) {
 
-		$timings=Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
-		$label="";
-		foreach ($timings as $time){
-			if ($time['value'] >= $value){
-				$label = $time['label'];
-				break;
+		$timings = Mage::getModel('appointments/adminhtml_source_timing')->toOptionArray();
+
+		foreach ($timings as $time) {
+			$timeValue = $time['value'];
+			if ("$timeValue" ==  "$value"){
+				return $time['label'];
 			}
 		}
-		return $label;
+		return '';
 	}
-	public function getTimeByStoreAndPeople($qty ,$storeId){
-		$collection=Mage::getModel('appointments/timing')->getCollection()->addFieldToFilter('qty', $qty)->addFieldToFilter('store_id', $storeId);
-		 if($collection->getFirstItem()->getTime()){
+	public function getBreakTimeByValue($value){
+
+		$timings = Mage::getModel('appointments/adminhtml_source_timing')->toSpecialOptionArray();
+
+		foreach ($timings as $time) {
+			$timeValue = $time['value'];
+			if ("$timeValue" ==  "$value"){
+				return $time['label'];
+			}
+		}
+		return '';
+	}
+	public function getTimeByStoreAndPeople($qty , $storeId){
+		$collection = Mage::getModel('appointments/timing')->getCollection()->addFieldToFilter('qty', $qty)->addFieldToFilter('store_id', $storeId);
+
+		if($collection->getFirstItem()->getTime()) {
 			return $collection->getFirstItem()->getTime();
 		}else {
 			return  15 * $qty;
 		}
 	}
 	public function decimalToTime($val){
-	       $hr=(int)$val/1;
-	       $min = fmod($val, 1)*60;
-	       return $hr.":".$min.':00';
-
+       $hr=(int)$val/1;
+       $min = fmod($val, 1)*60;
+       return $hr.":".$min.':00';
 	}
 	public function getShortUrl($url){
 	    $apiKey = '';
@@ -632,7 +670,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $ap_start= $post['appointment_start'];
         $ap_end= $post['appointment_end'];
 
-        
+
 
         /*check store id and piercer id */
 
