@@ -20,9 +20,9 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 		foreach ($timing as $time) {
 
 			if ($specialStore) {
-				$data .= $time['day']." ".$helper->getBreakTimeByValue($time['start'] )."-".  $helper->getBreakTimeByValue($time['end'] )." <br/>";
+				$data .= $time['day']." <div style='float:right'>".$helper->getBreakTimeByValue($time['start'] )."-".  $helper->getBreakTimeByValue($time['end'] )."</div> <br/>";
 			} else {
-				$data .= $time['day']." ".$helper->getTimeByValue($time['start'] )."-".  $helper->getTimeByValue($time['end'] )." <br/>";
+				$data .= $time['day']." <div style='float:right'>".$helper->getTimeByValue($time['start'] )."-".  $helper->getTimeByValue($time['end'] )."</div> <br/>";
 			}
 		}
 		return $data;
