@@ -250,7 +250,7 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
                     $email = $model->getEmail();
                     $name = $model->getFirstname() . " " . $model->getLastname();
                     $store_nm = $configData['store_name'][$storeKey];
-                    if(trim($store_nm)=='Nordstrom Local Melrose') {
+                    if(trim($store_nm)=='Nordstrom') {
                         $apt_modify_link = Mage::getUrl('appointments/popup/modify', array(
                             'id' => $model->getId(),
                             'email' => $model->getEmail(),
