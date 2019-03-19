@@ -72,8 +72,8 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
 			} else {
 				try
 				{
-                    $customerEmail = $this->getRequest()->getParam('email');
-                    $customerOb = Mage::getModel('customer/customer')->loadByEmail($customerEmail);
+
+                    $customerOb = Mage::getModel('customer/customer')->loadByEmail($username);
 
                     if(!empty($customerOb)){
                         $tw_uc_guid = $customerOb->getTwUcGuid();
