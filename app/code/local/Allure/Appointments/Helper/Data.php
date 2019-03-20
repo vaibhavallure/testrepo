@@ -720,22 +720,16 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $collection->addFieldToFilter('app_status', array('eq' => 2));
         $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
         $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
- 
 
-        if($collection->getSize())
-        {
+        if ($collection->getSize()) {
             return true;
-        }
-        else
-        {
+        } else {
             $result=$this->checkPiercerAvailable($data,"same");
             if($result['success']==false)
                 return true;
             else
                 return false;
         }
-
-
     }
 
     /**

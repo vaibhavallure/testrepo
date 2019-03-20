@@ -114,7 +114,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
             $appendUrl .= "store=" . $storep;
         }
 
-        if(!$this->helper()->validatePostData($post_data,"user"))
+        if(!$this->helper()->validatePostData($post_data, "user"))
         {
             Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
             $this->_redirectReferer($appendUrl);
@@ -130,9 +130,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                     $old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
                     if (empty($post_data['app_date']))
                         $post_data['app_date'] = date('m/d/Y', strtotime($old_appointment->getAppointmentStart()));
-                }
-                else
-                {
+                } else {
                     $step="save";
                     $action="save";
                 }
@@ -160,7 +158,8 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 if($action=="save")
                     $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
 
-                Mage::log('Before Save'.$step,Zend_Log::DEBUG,'myLog.log',true);
+                Mage::log('POST DATA UPDATED::',Zend_Log::DEBUG,'myLog.log',true);
+                Mage::log($post_data, Zend_Log::DEBUG,'appointments.log',true);
 
                 if ($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
                     // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
