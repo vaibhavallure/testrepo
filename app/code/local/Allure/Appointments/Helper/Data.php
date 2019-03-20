@@ -369,15 +369,15 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
                     }
 
 					if ($specialStore) {
-						$workStart = $helper->getSpecialTimeByValue($workSlot['start']);
-						$workEnd = $helper->getSpecialTimeByValue($workSlot['end']);
-						$breakStart = $helper->getSpecialTimeByValue($workSlot['break_start']);
-						$breakEnd = $helper->getSpecialTimeByValue($workSlot['break_end']);
+						$workStart = $this->getSpecialTimeByValue($workSlot['start']);
+						$workEnd = $this->getSpecialTimeByValue($workSlot['end']);
+						$breakStart = $this->getSpecialTimeByValue($workSlot['break_start']);
+						$breakEnd = $this->getSpecialTimeByValue($workSlot['break_end']);
 					} else {
-						$workStart = $helper->getTimeByValue($workStart);
-						$workEnd = $helper->getTimeByValue($workSlot['end']);
-						$breakStart = $helper->getTimeByValue($workSlot['break_start']);
-						$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
+						$workStart = $this->getTimeByValue($workStart);
+						$workEnd = $this->getTimeByValue($workSlot['end']);
+						$breakStart = $this->getTimeByValue($workSlot['break_start']);
+						$breakEnd = $this->getTimeByValue($workSlot['break_end']);
 					}
 
                     $fromDateTime = date("H:i",strtotime($fromTime));
