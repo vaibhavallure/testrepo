@@ -158,7 +158,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 if($action=="save")
                     $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
 
-                Mage::log('POST DATA UPDATED::',Zend_Log::DEBUG,'myLog.log',true);
+                Mage::log('POST DATA UPDATED::',Zend_Log::DEBUG,'appointments.log',true);
                 Mage::log($post_data, Zend_Log::DEBUG,'appointments.log',true);
 
                 if ($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
