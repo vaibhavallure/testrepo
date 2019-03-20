@@ -90,9 +90,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
     			$specialStore = true;
     		}
 
-            $selectedTime = $helper->getTimeByValue($startTime);
-            $endTimeSystem= $helper->getTimeByValue($endTimeSystem);
-
             if ($specialStore) {
                 $selectedTime = $helper->getSpecialTimeByValue($startTime);
                 $endTimeSystem = $helper->getSpecialTimeByValue($endTimeSystem);
