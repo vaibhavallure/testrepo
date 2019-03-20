@@ -162,11 +162,13 @@
                     return false;
                 }
                 var submitChildren = jQuery("#btnConfirm");
+                submitChildren[0].innerHTML = "Please wait..!"
                 submitChildren.attr('disabled', 'disabled');
                 submitChildren.addClass('disabled');
-                submitChildren.val('Please Wait...!');
+                
                 formAlreadySubmitted = true;
             }
+         
         }
     });
 </script>
