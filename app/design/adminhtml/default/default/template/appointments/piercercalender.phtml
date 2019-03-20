@@ -27,12 +27,23 @@
 
 <script src="<?php echo $this->getSkinUrl('js/jQuery/noconflict.js');?>"></script>
 
-<link href="<?php echo $this->getSkinUrl('css/calender/fullcalendar.css');?>"  rel="stylesheet" />
-<link href='<?php echo $this->getSkinUrl('css/calender/fullcalendar.print.css');?>' rel='stylesheet' media='print' />
 <script src="<?php echo $this->getSkinUrl('js/calender/moment.min.js');?>"></script>
-<script src="<?php //echo $this->getSkinUrl('js/calender/fullcalendar.js');?>"></script>
-<script src="<?php echo $this->getSkinUrl('js/calender/fullcalendar.min.js');?>"></script>
 
+<link href="<?php echo $this->getSkinUrl('css/calender/core/main.min.css');?>"  rel="stylesheet" />
+<link href="<?php echo $this->getSkinUrl('css/calender/daygrid/main.min.css');?>"  rel="stylesheet" />
+<link href="<?php echo $this->getSkinUrl('css/calender/timegrid/main.min.css');?>"  rel="stylesheet" />
+<link href="<?php echo $this->getSkinUrl('css/calender/list/main.min.css');?>"  rel="stylesheet" />
+
+<script src="<?php echo $this->getSkinUrl('js/calender/core/main.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/interaction/main.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/daygrid/main.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/timegrid/main.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/list/main.min.js');?>"></script>
+<style type="text/css">
+#calendar button {
+	background: #2c2c2c;
+}
+</style>
 
 <script>
 	$j(document).ready(function() {
@@ -46,6 +57,7 @@
 
  		<?php $k = Mage::getSingleton('core/session')->getFormKey(); ?>
 		$j('#loading-indicator-calender').show();
+
 		$j.ajax({
 			url : '<?php echo $this->getUrl('*/*/calenderevents',array('_secure' => true));?>',
 	 		dataType : 'json',
@@ -83,6 +95,9 @@
 
 		 		$j('#loading-mask').hide();
 
+				loadCalendar(events);
+				return;
+
 		 		$j('#calendar').fullCalendar({
 		 			header: {
 						left: 'prev,next today',
@@ -105,7 +120,48 @@
 	 		}
 		});
 	});
-			//jQuery(".appointments-adminhtml-appointments-viewcalender .myacc-heading").prepend(jQuery('#store_switcher :selected').text());
+
+	function loadCalendar(events) {
+		var calendarEl = document.getElementById('calendar');
+
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+			//timeZone: 'UTC',
+			defaultView: 'dayGridMonth',
+			header: {
+			  left: 'prev,next today',
+			  center: 'title',
+			  right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+			},
+			editable: true,
+
+			// JSON FEED INSTRUCTIONS
+			//
+			// 1. Open a new browser tab. Go to codepen.io
+			//
+			// 2. Create a new pen (Create > New Pen)
+			//
+			// 3. Paste your JSON into the JS pane
+			//
+			// 4. Hit the "Save" button
+			//
+			// 5. The page's URL will change. It will look like this:
+			//    https://codepen.io/anon/pen/eWPBOx
+			//
+			// 6. Append ".js" to it. Will become like this:
+			//    https://codepen.io/anon/pen/eWPBOx.js
+			//
+			// 7. Paste this URL below.
+			//
+			events: events//'https://fullcalendar.io/demo-events.json'
+
+			// 8. Then, enter a date for defaultDate that best displays your events.
+			//
+			// defaultDate: 'XXXX-XX-XX'
+		});
+
+		calendar.render();
+	}
 </script>
 <style>
 
