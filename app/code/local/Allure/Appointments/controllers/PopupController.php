@@ -42,16 +42,6 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
         Mage::log($time, Zend_Log::DEBUG, 'appointments_time.log', true);
 
-        /*
-         * $coreResource = Mage::getSingleton('core/resource');
-         * $connection = $coreResource->getConnection('core_read');
-         * $sql = "SELECT * FROM allure_appointment_piercers
-         * WHERE your_field_here REGEXP
-         * '.*"array_key_here";s:[0-9]+:"your_value_here".*'";
-         * //Mage::log($country_data,Zend_Log::DEBUG, 'store', true );
-         * $value = $connection->fetchRow($sql,
-         * array($item->getProductId(),$countryCode->getWarehouseId()));
-         */
 
         $storeCurrentTime = "";
         $configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
@@ -110,7 +100,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         usleep($rand_value);
 //        Mage::log('Rand '.$rand_value,Zend_Log::DEBUG,'myLog.log',true);
         $post_data = $this->getRequest()->getPost();
-Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
+        Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $post_data['store-id'];
 
@@ -152,8 +142,8 @@ Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
                 // http://www.geoplugin.net/php.gp?ip=219.91.251.70
                 $post_data['ip'] = $this->get_client_ip();
                 $mail_apt_start =  $post_data['appointment_start']. " on " .$post_data['app_date'];
-                $post_data['appointment_start'] = $post_data['app_date'] . " " . $post_data['appointment_start'];
-                $post_data['appointment_start'] = strtotime($post_data['appointment_start'] . ":00");
+                
+                $post_data['appointment_start'] = strtotime($post_data['app_date'] .' '. $post_data['appointment_start']);
                 $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
 
                 $post_data['appointment_end'] = $post_data['app_date'] . " " . $post_data['appointment_end'];
