@@ -56,6 +56,7 @@
     }
 
     ?>
+    var isSuccess=false;
         //jQuery('#appointemnet_form').validate();
         jQuery(document).ready(function() {
             var $ = jQuery;
@@ -108,10 +109,12 @@
     					}
     				},
     				highlight: function ( element, errorClass, validClass ) {
-    					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                        $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                        isSuccess = false;
     				},
     				unhighlight: function (element, errorClass, validClass) {
-    					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                        $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                        isSuccess = true;
     				}
     			} );
             });
@@ -141,4 +144,30 @@
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js
         allureIntlTelValidate(jQuery("#phonenumber"),iti);
+</script>
+<script>
+    var formAlreadySubmitted = false;
+    jQuery('#appointemnet_form').submit(function () {
+        if(isSuccess){
+            var selTm = jQuery('#selectTime').val();
+            var fname = jQuery('#firstname').val().split(' ').join('');
+            var lname = jQuery('#lastname').val().split(' ').join('');
+            var email = jQuery('#email').val().split(' ').join('');
+            var phone = jQuery('#phonenumber').val().split(' ').join('');
+
+            if(selTm !== "TIME" && fname!=='' && lname!=='' && email!=='' && phone!=='' ) {
+                console.log('No error');
+                if (formAlreadySubmitted) {
+                    e.preventDefault();
+                    return false;
+                }
+                var submitChildren = jQuery("#btnConfirm");
+                submitChildren.attr('disabled', 'disabled');
+                submitChildren.addClass('disabled');
+                submitChildren.val('Please Wait...!');
+                formAlreadySubmitted = true;
+            }
+            console.log('Dont Submit TIME SELECT');
+        }
+    });
 </script>
