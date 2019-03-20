@@ -40,8 +40,20 @@
 <script src="<?php echo $this->getSkinUrl('js/calender/timegrid/main.min.js');?>"></script>
 <script src="<?php echo $this->getSkinUrl('js/calender/list/main.min.js');?>"></script>
 <style type="text/css">
-#calendar button {
-	background: #2c2c2c;
+.fc-button-group>.fc-button {
+    background: #2c2c2c;
+}
+.fc-button-primary:not(:disabled).fc-button-active, .fc-button-primary:not(:disabled):active {
+    color: #fff;
+    background-color: #ffac47;
+    border-color: #ffac47;
+}
+.fc-button-primary:disabled {
+    background: #2C3E50;
+}
+.fc-toolbar>*>:not(:first-child) {
+    margin-left: .75em;
+    background: #2C3E50;
 }
 </style>
 
