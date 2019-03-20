@@ -117,7 +117,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         if(!$this->helper()->validatePostData($post_data,"user"))
         {
             Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
-            $this->_redirectReferer() . $appendUrl;
+            $this->_redirectReferer($appendUrl);
             return;
         }
 
@@ -162,21 +162,19 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
                 Mage::log('Before Save'.$step,Zend_Log::DEBUG,'myLog.log',true);
 
-                if($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
+                if ($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
                     // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
                     $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Been Already Taken. Please Select Another Slot ",$post_data),"save");
 
                     $piercer = $this->helper()->checkIfAnotherPiercerAvailable($post_data);
 
-                    if($piercer['success'])
-                    {
+                    if ($piercer['success']) {
                         $post_data['piercer_id']=$piercer['p_id'];
                         $this->addLog($this->createSaveLogString("new piercer assigned ",$post_data),"save");
-                    }
-                    else {
+                    } else {
                         $this->addLog($this->createSaveLogString("not found any other piercer ",$post_data),"save");
                         Mage::getSingleton('core/session')->setSlotInvalid("true");
-                        $this->_redirectReferer() . $appendUrl;
+                        $this->_redirectReferer($appendUrl);
                         return;
                     }
                 }
@@ -368,17 +366,17 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 //                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
                 Mage::log('APPOINTMENT SUBMITTED','myLog.log',true);
                 $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
-                $this->_redirectReferer() . $appendUrl;
+                $this->_redirectReferer($appendUrl);
                 return;
             } catch(Exception $e) {
                 Mage::getSingleton("core/session")->addError($e->getMessage());
 
-                $this->_redirectReferer() . $appendUrl;
+                $this->_redirectReferer($appendUrl);
                 return;
             }
         }
         Mage::log('END OF SAVE ACTION IN POPUP Controller',Zend_Log::DEBUG,'myLog.log',true);
-        $this->_redirectReferer().$appendUrl;
+        $this->_redirectReferer($appendUrl);
         // $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
     }
 
