@@ -166,7 +166,8 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 Mage::log('Before Save'.$step,Zend_Log::DEBUG,'myLog.log',true);
 
                 if($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
-                    // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
+                    Mage::log('In Validate Slot Before'.$post_data,Zend_Log::DEBUG,'myLog.log',true);
+//                     Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
                     $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Been Already Taken. Please Select Another Slot ",$post_data),"save");
 
                     $piercer = $this->helper()->checkIfAnotherPiercerAvailable($post_data);
