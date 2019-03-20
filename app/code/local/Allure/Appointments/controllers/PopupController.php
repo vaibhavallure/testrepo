@@ -98,7 +98,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
     {
         $rand_value = rand(1000000, 10000000);
         usleep($rand_value);
-//        Mage::log('Rand '.$rand_value,Zend_Log::DEBUG,'myLog.log',true);
+
         $post_data = $this->getRequest()->getPost();
         Mage::log($post_data,Zend_Log::DEBUG,'myLog.log',true);
         $embeded = $this->getRequest()->getParam('embedded');
@@ -121,7 +121,6 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
             return;
         }
 
-
         if ($post_data) {
             $configData = $this->getAppointmentStoreMapping();
             try {
@@ -138,11 +137,10 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                     $action="save";
                 }
 
-
                 // http://www.geoplugin.net/php.gp?ip=219.91.251.70
                 $post_data['ip'] = $this->get_client_ip();
                 $mail_apt_start =  $post_data['appointment_start']. " on " .$post_data['app_date'];
-                
+
                 $post_data['appointment_start'] = strtotime($post_data['app_date'] .' '. $post_data['appointment_start']);
                 $post_data['appointment_start'] = date('Y-m-d H:i:s', $post_data['appointment_start']);
 
@@ -158,7 +156,6 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
                 $post_data['phone'] = $phno;
                 $storeId = $post_data['store_id'];
-
 
                 if($action=="save")
                     $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
@@ -183,8 +180,6 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                         return;
                     }
                 }
-
-
 
                 $storeKey = array_search($storeId, $configData['stores']);
                 $model = Mage::getModel('appointments/appointments')->addData($post_data)->save();
