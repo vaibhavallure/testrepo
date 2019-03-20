@@ -405,11 +405,9 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                     break;
                 }
 
-
                 $logdata=$model->getData();
                 $logdata['ip']=$this->get_client_ip();
                 $this->addLog($this->createSaveLogString("Modify INIT ",$logdata),"modify");
-
 
                 Mage::register('appointment_modified', $model);
                 Mage::getSingleton("core/session")->setData(
@@ -442,18 +440,15 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
             try {
                 $model->setId($apt_id)->save();
 
-
                 $logdata=$model->getData();
                 $logdata['ip']=$this->get_client_ip();
                 $this->addLog($this->createSaveLogString("Canceled",$logdata),"modify");
-
 
                 echo "Your scheduled Appointment is Cancelled successfully.";
                 $configData = $this->getAppointmentStoreMapping();
                 $storeKey = array_search ($storeId, $configData['stores']);
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
-
 
                 if ($model->getNotificationPref() === '2') {
                     $smsText = $configData['cancel_sms_message'][$storeKey];

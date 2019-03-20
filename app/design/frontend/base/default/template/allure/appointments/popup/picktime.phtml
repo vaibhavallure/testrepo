@@ -49,17 +49,15 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             //	$storeUnSerializeData = unserialize($storeSerializeData);
 
             $storeKey = array_search ($selectedStoreId, $configData['stores']);
-            if(count($configData) > 0){
 
-                $selectedStoreId = intval($selectedStoreId);
+            if (count($configData) > 0) {
                 $storeKey = array_search ($selectedStoreId, $configData['stores']);
 
-                if($selectedStoreId){
+                if ($selectedStoreId) {
                     $time_pref = intval($configData['time_pref'][$storeKey]);
                 }
-
-
             }
+
             $intervalTime=$helper->getTimeByStoreAndPeople(1,$selectedStoreId);
 
             if($this->getData("timing")) $interval = $this->getData("timing");
@@ -78,25 +76,36 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             //$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
             $startTime = $configData['start_work_time'][$storeKey];
             $storeCurrentTime = $this->getData("store_current_time");
-            if(!empty($storeCurrentTime)){
+
+            if (!empty($storeCurrentTime)) {
                 if($storeCurrentTime >= $startTime)
                     $startTime = $storeCurrentTime;
             }
-            //echo $startTime." isd sajofasf";
 
-            //$selectedTime = sprintf('%02d', $startTime ).":00";
+            $specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+    		$specialStore = false;
+
+    		if ($specialStoreId == $selectedStoreId) {
+    			$specialStore = true;
+    		}
+
             $selectedTime = $helper->getTimeByValue($startTime);
+            $endTimeSystem= $helper->getTimeByValue($endTimeSystem);
 
+            if ($specialStore) {
+                $selectedTime = $helper->getSpecialTimeByValue($startTime);
+                $endTimeSystem = $helper->getSpecialTimeByValue($endTimeSystem);
+            } else {
+                $selectedTime = $helper->getTimeByValue($startTime);
+                $endTimeSystem = $helper->getTimeByValue($endTimeSystem);
+            }
 
-            //$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time",$selectedStoreId);
             $endTimeSystem = $configData['end_work_time'][$storeKey];
 
             $selectedStartTime = strtotime($selectedTime);
-
-            $endTimeSystem=$helper->getTimeByValue($endTimeSystem);
             $selectedEndTime = strtotime($endTimeSystem);
 
-            //echo $startTime."wq,koeow eomkqw"; die;
             $dateDiff = intval(($selectedEndTime-$selectedStartTime)/60);
 
             $hours = intval($dateDiff/60)*60;
@@ -104,7 +113,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $minutes = $dateDiff%60;
 
             $totalMinutes = $hours + $minutes;
-
 
             $totalSlot = (int) $totalMinutes/$intervalTime;
             //echo $totalSlot;
@@ -208,6 +216,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                         }
 
                         $workStart = $workSlot['start'];
+
                         if(!empty($storeCurrentTime)){
                             if($storeCurrentTime >= $workStart)
                                 $workStart = $storeCurrentTime;
@@ -222,26 +231,14 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                 		}
 
                         if ($specialStore) {
-                            $workStart = $helper->getBreakTimeByValue($workStart);
+                            $workStart = $helper->getSpecialTimeByValue($workStart);
+                            $workEnd = $helper->getSpecialTimeByValue($workSlot['end']);
+                            $breakStart = $helper->getSpecialTimeByValue($workSlot['break_start']);
+                            $breakEnd = $helper->getSpecialTimeByValue($workSlot['break_end']);
                         } else {
                             $workStart = $helper->getTimeByValue($workStart);
-                        }
-
-                        if ($specialStore) {
-                            $workEnd = $helper->getBreakTimeByValue($workSlot['end']);
-                        } else {
                             $workEnd = $helper->getTimeByValue($workSlot['end']);
-                        }
-
-                        if ($specialStore) {
-                            $breakStart = $helper->getBreakTimeByValue($workSlot['break_start']);
-                        } else {
                             $breakStart = $helper->getTimeByValue($workSlot['break_start']);
-                        }
-
-                        if ($specialStore) {
-                            $breakEnd = $helper->getBreakTimeByValue($workSlot['break_end']);
-                        } else {
                             $breakEnd = $helper->getTimeByValue($workSlot['break_end']);
                         }
 
@@ -256,13 +253,11 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                             if(isset($appointmentId))
                                 $appCount->addFieldToFilter('id', array('neq' => $appointmentId));
 
-                            if($allocatedApps==null)
-                            {
+                            if ($allocatedApps==null) {
                                 $allocatedApps = count($appCount);
                             }
 
-                            if(count($appCount)==0)
-                            {
+                            if (count($appCount)==0) {
                                 $show = true;
                                 $piercerAllocated = $piercer->getId();
                                 $noSlot=false;
@@ -274,9 +269,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                                 $piercerAllocated = $piercer->getId();
                             }
                         }
-
                     }
-
                 }
 
                 if($show==true) :
