@@ -58,7 +58,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                 }
             }
 
-            $intervalTime=$helper->getTimeByStoreAndPeople(1,$selectedStoreId);
+            $intervalTime=$helper->getTimeByStoreAndPeople(1, $selectedStoreId);
 
             if($this->getData("timing")) $interval = $this->getData("timing");
 
@@ -90,6 +90,8 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
     			$specialStore = true;
     		}
 
+            $endTimeSystem = $configData['end_work_time'][$storeKey];
+
             if ($specialStore) {
                 $selectedTime = $helper->getSpecialTimeByValue($startTime);
                 $endTimeSystem = $helper->getSpecialTimeByValue($endTimeSystem);
@@ -97,8 +99,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                 $selectedTime = $helper->getTimeByValue($startTime);
                 $endTimeSystem = $helper->getTimeByValue($endTimeSystem);
             }
-
-            $endTimeSystem = $configData['end_work_time'][$storeKey];
 
             $selectedStartTime = strtotime($selectedTime);
             $selectedEndTime = strtotime($endTimeSystem);
@@ -146,12 +146,13 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             $isFour = 0;
             $countSlot = 0;
             $noSlot=true;
-            if(!empty($collection->getData())) {
+
+            if (!empty($collection->getData())) {
                 echo "<select class='input-box' name='selectTime' id='selectTime' >";
                 echo "<option >TIME</option>";
             }
-            for($i=0;$i< $totalSlot;$i++)
-            {
+
+            for($i=0;$i< $totalSlot;$i++) {
                 $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
                 $endTime = strtotime("+$interval minutes", strtotime($selectedTime));
 
@@ -180,7 +181,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
                     $appCollection2=null;
 
-                    if ($appCollection && !count($appCollection)){
+                    if ($appCollection && !count($appCollection)) {
                         $appCollection2 = Mage::getModel('appointments/appointments')->getCollection();
                         $appCollection2->addFieldToFilter('appointment_start', array('lteq'=>$fromTime))
                             ->addFieldToFilter("appointment_end",array('gteq'=>$toTime))
@@ -209,7 +210,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
                         if($workSlot['day']!=$day){
                             continue;
-
                         }
 
                         $workStart = $workSlot['start'];
@@ -228,12 +228,12 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                 		}
 
                         if ($specialStore) {
-                            $workStart = $helper->getSpecialTimeByValue($workStart);
+                            $workStart = $helper->getSpecialTimeByValue($workSlot['start']);
                             $workEnd = $helper->getSpecialTimeByValue($workSlot['end']);
                             $breakStart = $helper->getSpecialTimeByValue($workSlot['break_start']);
                             $breakEnd = $helper->getSpecialTimeByValue($workSlot['break_end']);
                         } else {
-                            $workStart = $helper->getTimeByValue($workStart);
+                            $workStart = $helper->getTimeByValue($workSlot['start']);
                             $workEnd = $helper->getTimeByValue($workSlot['end']);
                             $breakStart = $helper->getTimeByValue($workSlot['break_start']);
                             $breakEnd = $helper->getTimeByValue($workSlot['break_end']);
