@@ -88,6 +88,32 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 
     }
 
+    public function generateEnrichFile()
+    {
+        $ioo = new Varien_Io_File();
+        $path = Mage::getBaseDir('var') . DS . 'brownthomasfiles';
+        $filenm="Concession Enrichment Requirements_Maria Tash.xlsx";
+        $filepath = $path . DS . $filenm;
+
+        $ioo->setAllowCreateFolders(true);
+        $ioo->open(array('path' => $path));
+        $ioo->streamOpen($filepath, 'w+');
+        $ioo->streamLock(true);
+
+        $file=$ioo;
+
+        /*write title row---*/
+        $file->streamWrite($this->getWritableString($this->modelData()->getEnrichTitles()));
+
+        /*write data row---*/
+        $enrich_data=$this->modelData()->getEnrichData();
+        foreach ($enrich_data as $data) {$file->streamWrite($this->getWritableString($data));}
+
+        return $filepath;
+
+    }
+
+
 
 
 
