@@ -917,7 +917,7 @@ function getCode($typebrief){
                                 </label>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="offexc" /> Asterisque conditions validité
+                                        <input type="checkbox" name="astdesc" /> Asterisque conditions validité
                                     </label>
                                 </div>
                             </div>

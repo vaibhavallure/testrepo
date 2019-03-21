@@ -109,11 +109,9 @@ td[class="box4"] {min-height: 70px;}
                         <td height="20" bgcolor="#ffffff"></td>
                         
                     </tr>{/if}{/if}
-					{if $typecgv != "primeurs" && $country != "U"}{if $country == "H" || $country == "SG"}<!-- debut date liv  --><tr>
+					{if $typecgv != "primeurs" && ($bdheader.title != "" || $bdheader.detail != "")}<!-- debut bandeau header --><tr>
                       <td valign="top">{include file="$tpl/informations_importantes/structure_info.tpl"}</td>
-                    </tr><!-- fin date liv -->{elseif ($datelivraison|replace:'/':'.'|date_format:"%Y%m%d") > ($dateenvoi|replace:'/':'.'|date_format:"%Y%m%d")}<!-- debut date liv  --><tr>
-                      <td valign="top">{include file="$tpl/informations_importantes/structure_info.tpl"}</td>
-                    </tr><!-- fin date liv -->{/if}{/if}
+                    </tr><!-- fin bandeau header -->{/if}
 					{if $lstprmodesc}<tr><td valign="top" bgcolor="#ffffff">
 {include file="$tpl/block_image/templates_images/bandeau_promo.tpl"}
 </td></tr>

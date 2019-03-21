@@ -425,8 +425,8 @@ function getMessageSaveInfo(this_select) {
                     $('select[name=desctypebtn] option[value="jrsv"]').prop('selected', true);
                 }
                 //remplissage Email offre exclusive
-                if(data.messageData.offexc == "on"){
-                    $('input[type=checkbox][name=offexc]').attr('checked', true);
+                if(data.messageData.astdesc == "on"){
+                    $('input[type=checkbox][name=astdesc]').attr('checked', true);
                 }
             }
             //remplissage section articles supplémentaire

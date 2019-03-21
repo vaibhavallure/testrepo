@@ -352,8 +352,8 @@ class Millesima_Messagedata extends Millesima_Abstract
         if (!isset($data["iscodepromo"])) {
             $data["iscodepromo"] = null;
         }
-        if (!isset($data["offexc"])) {
-            $data["offexc"] = null;
+        if (!isset($data["astdesc"])) {
+            $data["astdesc"] = null;
         }
         if (!isset($data["push_url_content"])) {
             $data["push_url_content"] = null;

@@ -1,8 +1,8 @@
 <?php
 $data = $this->data['ressource'];
 $title = $this->data['title'];
-var_dump('ttttttttttttttttttttttttttttttttttttttttt');
-var_dump($data);
+//var_dump('data');
+//var_dump($data);
 ?>
 
 <div class="content-wrapper">
@@ -53,16 +53,19 @@ var_dump($data);
                                     <div class="form-group">
                                         <label for="codemessage">Name</label>
                                         <select class="form-control" name="name" size="1" id="name" >
-                                            <option value="conditionvalidite" <?php echo ((isset($data['name']) && $data['name'] == 'conditionvalidite') ? 'selected' : '')?>>Conditions validité + date brief </option>
+                                            <option value="bd_header_title" <?php echo ((isset($data['name']) && $data['name'] == 'bd_header_title') ? 'selected' : '')?>>Header Bandeau Title</option>
+                                            <option value="bd_header_detail" <?php echo ((isset($data['name']) && $data['name'] == 'bd_header_detail') ? 'selected' : '')?>>Header Bandeau Detail</option>
+                                            <option value="bd_header_asterisque" <?php echo ((isset($data['name']) && $data['name'] == 'bd_header_asterisque') ? 'selected' : '')?>>Header Bandeau Asterisque sous CTA</option>
+                                            <option value="ast_description" <?php echo ((isset($data['name']) && $data['name'] == 'ast_description') ? 'selected' : '')?>>Description Asterisque</option>
+                                            <option value="bdf_fdpo" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo') ? 'selected' : '')?>>Footer Bandeau FDPO titre</option>
+                                            <option value="bdf_fdpo_ssphrase" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo_ssphrase') ? 'selected' : '')?>>Footer Bandeau footer FDPO validite</option>
+                                            <option value="bdf_fdpo_detail" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo_detail') ? 'selected' : '')?>>Footer Asterisque Description FDPO (coche CGV)</option>
+                                            
+                                            
+                                            
                                             <option value="fdpofferts" <?php echo ((isset($data['name']) && $data['name'] == 'fdpofferts') ? 'selected' : '')?>>* FDP offerts + validité brief</option>
-                                            <option value="livraison" <?php echo ((isset($data['name']) && $data['name'] == 'livraison') ? 'selected' : '')?>>Bandeau livraison header</option>
-                                            <option value="livraison_detail" <?php echo ((isset($data['name']) && $data['name'] == 'livraison_detail') ? 'selected' : '')?>>Bandeau livraison header detail</option>
-                                            <option value="livraison_style" <?php echo ((isset($data['name']) && $data['name'] == 'livraison_style') ? 'selected' : '')?>>Bandeau livraison header style</option>
-                                            <option value="offexc_valid" <?php echo ((isset($data['name']) && $data['name'] == 'offexc_valid') ? 'selected' : '')?>>Astérisque divers</option>
                                             <option value="validdefaut" <?php echo ((isset($data['name']) && $data['name'] == 'validdefaut') ? 'selected' : '')?>>Conditions validité sans date</option>
-                                            <option value="bdf_fdpo" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo') ? 'selected' : '')?>>Bandeau footer FDPO titre</option>
-                                            <option value="bdf_fdpo_ssphrase" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo_ssphrase') ? 'selected' : '')?>>Bandeau footer FDPO validité</option>
-                                            <option value="bdf_fdpo_detail" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo_detail') ? 'selected' : '')?>>Astérisque Description FDPO (coche CGV)</option>
+                                            
                                         </select>
                                     </div>
                                 </div>

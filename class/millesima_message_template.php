@@ -43,7 +43,8 @@ class Millesima_Message_Template extends Millesima_Abstract
 
         $datevalide = $data["datevalide"];
         $dateenvoi = $data["dateenvoi"];
-		$datefdpo = $data["datefdpo"];
+        $datefdpo = $data["datefdpo"];
+        $vardates = array('datevalide'=>$datevalide,'datefdpo'=>$datefdpo, 'dateenvoi'=>$dateenvoi);
         $tpl = $data["tpl"];
         $type_message = "ios";
 
@@ -238,22 +239,19 @@ class Millesima_Message_Template extends Millesima_Abstract
             if (file_exists($filename)){
                 require($filename);
             }*/
-            $livraison = array('phrase'=>$ressourceClass->getRessourceValue($country,'livraison'),'detail'=>$ressourceClass->getRessourceValue($country,'livraison_detail'),'style'=>$ressourceClass->getRessourceValue($country,'livraison_style'),'styledetail'=>$ressourceClass->getRessourceValue($country,'livraison_style_detail'));
-            $datelivraison = $ressourceClass->getRessourceValue($country,'datelivraison');
+            $bdheader = array('title'=>$ressourceClass->getRessourceValue($country,'bd_header_title'),'detail'=>$ressourceClass->getRessourceValue($country,'bd_header_detail'),'asterisque'=>$ressourceClass->getRessourceValue($country,'bd_header_asterisque'));
+
+            $oSmarty->assign('bdheader', $bdheader);
+            
+
             $fdpofferts = array('phrase'=>$ressourceClass->getRessourceValue($country,'fdpofferts',array('datevalide'=>$datevalide)),'style'=>$ressourceClass->getRessourceValue($country,'fdpofferts_style'));
             $conditionvalidite = array('phrase'=>$ressourceClass->getRessourceValue($country,'conditionvalidite',array('datevalide'=>$datevalide)),'style'=>$ressourceClass->getRessourceValue($country,'conditionvalidite_style'));
             $validdefaut = $ressourceClass->getRessourceValue($country,'validdefaut');
-            $offexc = array("explications" => $ressourceClass->getRessourceValue($country,'offexc_explications'),'valid'=>$ressourceClass->getRessourceValue($country,'offexc_valid',array('datevalide'=>$datevalide)),'style'=>$ressourceClass->getRessourceValue($country,'offexc_style'));
 
-            if ($country == 'H' or $country == 'SG'){
-                $livraison2 = array('phrase'=>$ressourceClass->getRessourceValue($country,'livraison2'),'style'=>$ressourceClass->getRessourceValue($country,'fdpofferts_style'));
-                $oSmarty->assign('livraison2', $livraison2);
-            }
-            $oSmarty->assign('livraison', $livraison);
-            $oSmarty->assign('datelivraison', $datelivraison);
-            $oSmarty->assign('conditionvalidite', $conditionvalidite);
+            
+            
             $oSmarty->assign('fdpofferts', $fdpofferts);
-            $oSmarty->assign('offexc', $offexc);
+            
             $oSmarty->assign('validdefaut', $validdefaut);
 
 
@@ -270,12 +268,14 @@ class Millesima_Message_Template extends Millesima_Abstract
 				$text = $_POST["desctext".$country];
 				$titreupper = "";
                 $textalign = "";
-				$offexc = "";
+                $astdesc = "";
+                $asterisquedesc = "";
 				if(isset($_POST["desctitreupper"])){
-					$titreupper = $_POST["desctitreupper"];
+                    $titreupper = $_POST["desctitreupper"];
 				}
-				if(isset($_POST["offexc"])){
-					$offexc = $_POST["offexc"];
+				if(isset($_POST["astdesc"])){
+                    $astdesc = $_POST["astdesc"];
+                    $asterisquedesc = $ressourceClass->getRessourceValue($country,'ast_description',$vardates);
                 }
                 $textalign = $_POST["align_desc"];
 				$btn = $_POST["desctypebtn"];
@@ -284,7 +284,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 												"text" => $text,
 												"titreupper" => $titreupper,
 												"textalign" => $textalign,
-												"offexc" => $offexc,
+												"astdesc" => $asterisquedesc,
 												"btn" => $btn);
 				$oSmarty->assign('desc', $proprietesDesc);
 				

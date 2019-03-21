@@ -6,13 +6,19 @@
                                   <tbody>
                                     <tr>
                                       <td height="15" bgcolor="{$codecouleur}"></td>
-                                    </tr>
+                                    </tr>{if $bdheader.title !=""}
                                     <tr>
-                                      <td style="font-size:14px; text-align:center; color:{$couleurtxtbtn}; font-family:Arial, Helvetica, sans-serif, Trebuchet MS;{$livraison.style}">{if ($dateenvoi|replace:'/':'.'|date_format:"%Y%m%d") >= ($datelivraison|replace:'/':'.'|date_format:"%Y%m%d")}{$livraison2.phrase}{else}{$livraison.phrase}{/if}</td>
+                                      <td style="font-size:26px; text-align:center; color:{$couleurtxtbtn}; font-family:Arial, Helvetica, sans-serif, Trebuchet MS;">{$bdheader.title}</td>
                                     </tr>
                                     <tr>
                                       <td height="15"></td>
+                                    </tr>{/if}{if $bdheader.detail !=""}
+                                    <tr>
+                                      <td style="font-size:12px; text-align:center; color:{$couleurtxtbtn}; font-family:Arial, Helvetica, sans-serif, Trebuchet MS;">{$bdheader.detail}</td>
                                     </tr>
+                                    <tr>
+                                      <td height="15"></td>
+                                    </tr>{/if}
                                   </tbody>
                                 </table></td>
                               <td width="20" bgcolor="{$codecouleur}" ></td>
