@@ -1,13 +1,13 @@
 <?php
-
 /**
  * nordstorm popup
  */
 ?>
 <div id="appointments-popup-wrapper">
-    <?php if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
-        echo $this->getChildHtml('appointments_popup_success');
-    endif;
+    <?php
+        if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
+            echo $this->getChildHtml('appointments_popup_success');
+        endif;
     ?>
     <?php echo $this->getChildHtml("appointments_popup_top");?>
     <?php echo $this->getChildHtml("appointments_popup_menu");?>
@@ -48,11 +48,9 @@
         return monthNames[monthIndex] + ' ' +  day + ', ' + year;
     }
 </script>
-
 <script type="text/javascript">
-    <?php
-    if((Mage::getSingleton('core/session')->getSlotInvalid()=="true")&&(!Mage::getSingleton("core/session")->getData('appointment_submitted')))
-    {
+<?php
+    if ((Mage::getSingleton('core/session')->getSlotInvalid() == "true") && (!Mage::getSingleton("core/session")->getData('appointment_submitted'))) {
         echo "alert('This appointment time is no longer available. <br> Please select another time.');";
         Mage::getSingleton('core/session')->setSlotInvalid("false");
     }
@@ -130,6 +128,6 @@
                     $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
                     isSuccess = true;
 				}
-			} );
+			});
         });
 </script>
