@@ -129,17 +129,16 @@ if($model){
     if (phone.length <= 0) {
         country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getGeoAddress()->getCountry();?>";
     } else if (phone.charAt(0) != '+') {
+        <?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
+                country_code = '<?php echo $f_cntry;?>';
+        <?php } ?>
 
-    <?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
-            country_code = '<?php echo $f_cntry;?>';
-    <?php } ?>
-
-    <?php if ((isset($cntry) && !empty($cntry))) { ?>
-            country_code = '<?php echo $cntry;?>';
-    <?php } ?>
+        <?php if ((isset($cntry) && !empty($cntry))) { ?>
+                country_code = '<?php echo $cntry;?>';
+        <?php } ?>
     }
 
-    if (phone.length && phone.charAt(0) != '+') {
+    if (!phone.length || (phone.length && phone.charAt(0) != '+')) {
         iti.setCountry(country_code.toLowerCase());
     }
 
