@@ -154,8 +154,9 @@
             var lname = jQuery('#lastname').val().split(' ').join('');
             var email = jQuery('#email').val().split(' ').join('');
             var phone = jQuery('#phonenumber').val().split(' ').join('');
-
-            if(selTm !== "TIME" && fname!=='' && lname!=='' && email!=='' && phone!=='' ) {
+            var emailErr =  jQuery('#email-error');
+            var phoneErr = jQuery('#phonenumber-error');
+            if(selTm !== "TIME" && fname!=='' && lname!=='' && email.length>5 && phone>=10 && (emailErr.css('display') === 'none')&& (phoneErr.css('display') === 'none')) {
                 console.log('No error');
                 if (formAlreadySubmitted) {
                     e.preventDefault();
