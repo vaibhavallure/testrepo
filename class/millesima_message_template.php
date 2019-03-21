@@ -244,14 +244,7 @@ class Millesima_Message_Template extends Millesima_Abstract
             $oSmarty->assign('bdheader', $bdheader);
             
 
-            $fdpofferts = array('phrase'=>$ressourceClass->getRessourceValue($country,'fdpofferts',array('datevalide'=>$datevalide)),'style'=>$ressourceClass->getRessourceValue($country,'fdpofferts_style'));
-            $conditionvalidite = array('phrase'=>$ressourceClass->getRessourceValue($country,'conditionvalidite',array('datevalide'=>$datevalide)),'style'=>$ressourceClass->getRessourceValue($country,'conditionvalidite_style'));
             $validdefaut = $ressourceClass->getRessourceValue($country,'validdefaut');
-
-            
-            
-            $oSmarty->assign('fdpofferts', $fdpofferts);
-            
             $oSmarty->assign('validdefaut', $validdefaut);
 
 

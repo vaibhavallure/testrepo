@@ -60,10 +60,6 @@ $title = $this->data['title'];
                                             <option value="bdf_fdpo" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo') ? 'selected' : '')?>>Footer Bandeau FDPO titre</option>
                                             <option value="bdf_fdpo_ssphrase" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo_ssphrase') ? 'selected' : '')?>>Footer Bandeau footer FDPO validite</option>
                                             <option value="bdf_fdpo_detail" <?php echo ((isset($data['name']) && $data['name'] == 'bdf_fdpo_detail') ? 'selected' : '')?>>Footer Asterisque Description FDPO (coche CGV)</option>
-                                            
-                                            
-                                            
-                                            <option value="fdpofferts" <?php echo ((isset($data['name']) && $data['name'] == 'fdpofferts') ? 'selected' : '')?>>* FDP offerts + validité brief</option>
                                             <option value="validdefaut" <?php echo ((isset($data['name']) && $data['name'] == 'validdefaut') ? 'selected' : '')?>>Conditions validité sans date</option>
                                             
                                         </select>

@@ -80,9 +80,6 @@ $html = $this->data['html'];
                                             <option value="bdf_fdpo_ssphrase" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'bdf_fdpo_ssphrase') ? 'selected' : '')?>>Footer Bandeau footer FDPO validite</option>
                                             <option value="bdf_fdpo_detail" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'bdf_fdpo_detail') ? 'selected' : '')?>>Footer Asterisque Description FDPO (coche CGV)</option>
 
-
-                                            
-                                            <option value="fdpofferts" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'fdpofferts') ? 'selected' : '')?>>* FDP offerts + validité brief</option>
                                             <option value="validdefaut" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'validdefaut') ? 'selected' : '')?>>Conditions validité sans date</option>
                                             
                                         </select>
