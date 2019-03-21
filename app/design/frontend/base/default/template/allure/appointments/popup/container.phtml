@@ -56,6 +56,7 @@
     }
 
     ?>
+    var isSuccess=false;
         //jQuery('#appointemnet_form').validate();
         jQuery(document).ready(function() {
             var $ = jQuery;
@@ -108,10 +109,12 @@
     					}
     				},
     				highlight: function ( element, errorClass, validClass ) {
-    					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                        $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                        isSuccess = false;
     				},
     				unhighlight: function (element, errorClass, validClass) {
-    					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                        $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                        isSuccess = true;
     				}
     			} );
             });
@@ -141,4 +144,33 @@
         //custom validator for itel tel input
         //FileName - intel-tel-validation.js
         allureIntlTelValidate(jQuery("#phonenumber"),iti);
+</script>
+<script>
+    var formAlreadySubmitted = false;
+    jQuery('#appointemnet_form').submit(function () {
+        if(isSuccess){
+            var selTm = jQuery('#selectTime').val();
+            var fname = jQuery('#firstname').val().split(' ').join('');
+            var lname = jQuery('#lastname').val().split(' ').join('');
+            var mail = jQuery('#email');
+            var email = mail.val().split(' ').join('');
+            var phn = jQuery('#phonenumber');
+            var phone = phn.val().split(' ').join('');
+            console.log('Mail Is Valid'+mail.hasClass('is-valid'));
+            if(selTm !== "TIME" && fname!=='' && lname!=='' && (phn.hasClass('is-valid') && phone>=10) && (mail.hasClass('is-valid') &&  email.length!==0 )) {
+                console.log('No error');
+                if (formAlreadySubmitted) {
+                    e.preventDefault();
+                    return false;
+                }
+                var submitChildren = jQuery("#btnConfirm");
+                submitChildren[0].innerHTML = "Please wait..!"
+                submitChildren.attr('disabled', 'disabled');
+                submitChildren.addClass('disabled');
+                
+                formAlreadySubmitted = true;
+            }
+         
+        }
+    });
 </script>
