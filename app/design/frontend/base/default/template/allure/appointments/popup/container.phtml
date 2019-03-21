@@ -65,7 +65,7 @@
                 submitHandler: function(form) {
                     if (!Allure.isProcessing) {
                         Allure.isProcessing = true
-                        $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text("Processing..");
+                        $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text("PROCESSING ...");
                         form.submit();
                     }
                 },
