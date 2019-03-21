@@ -157,7 +157,7 @@
             var phn = jQuery('#phonenumber');
             var phone = phn.val().split(' ').join('');
             console.log('Mail Is Valid'+mail.hasClass('is-valid'));
-            if(selTm !== "TIME" && fname!=='' && lname!=='' && (phn.hasClass('is-valid') && phone>=10) && (mail.hasClass('is-valid') &&  email.length>5 )) {
+            if(selTm !== "TIME" && fname!=='' && lname!=='' && (phn.hasClass('is-valid') && phone>=10) && (mail.hasClass('is-valid') &&  email.length!==0 )) {
                 console.log('No error');
                 if (formAlreadySubmitted) {
                     e.preventDefault();
