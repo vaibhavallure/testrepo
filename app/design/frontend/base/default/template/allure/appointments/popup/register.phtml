@@ -139,9 +139,9 @@ if($model){
     <?php } ?>
     }
 
-    console.log(country_code);
-
-    iti.setCountry(country_code.toLowerCase());
+    if (phone.length && phone.charAt(0) != '+') {
+        iti.setCountry(country_code.toLowerCase());
+    }
 
     //custom validator for itel tel input
     //FileName - intel-tel-validation.js
