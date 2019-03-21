@@ -72,8 +72,14 @@
                     }
                 },
 				rules: {
-					firstname: "required",
-					lastname: "required",
+					firstname:  {
+						required: true,
+						nospace: true
+					},
+					lastname:  {
+						required: true,
+						nospace: true
+					},
 					email: {
 						required: true,
 						email: true
