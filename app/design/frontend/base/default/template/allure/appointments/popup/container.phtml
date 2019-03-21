@@ -152,11 +152,12 @@
             var selTm = jQuery('#selectTime').val();
             var fname = jQuery('#firstname').val().split(' ').join('');
             var lname = jQuery('#lastname').val().split(' ').join('');
-            var email = jQuery('#email').val().split(' ').join('');
-            var phone = jQuery('#phonenumber').val().split(' ').join('');
-            var emailErr =  jQuery('#email-error');
-            var phoneErr = jQuery('#phonenumber-error');
-            if(selTm !== "TIME" && fname!=='' && lname!=='' && phone>=10 && (emailErr.css('display') === 'none' ||  email.length>5 )) {
+            var mail = jQuery('#email');
+            var email = mail.val().split(' ').join('');
+            var phn = jQuery('#phonenumber');
+            var phone = phn.val().split(' ').join('');
+            console.log('Mail Is Valid'+mail.hasClass('is-valid'));
+            if(selTm !== "TIME" && fname!=='' && lname!=='' && (phn.hasClass('is-valid') && phone>=10) && (mail.hasClass('is-valid') &&  email.length>5 )) {
                 console.log('No error');
                 if (formAlreadySubmitted) {
                     e.preventDefault();
