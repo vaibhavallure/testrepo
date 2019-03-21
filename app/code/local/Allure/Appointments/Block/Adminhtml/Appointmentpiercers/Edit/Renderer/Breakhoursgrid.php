@@ -8,9 +8,25 @@ extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 		$timing = unserialize($row->getWorkingHours());
 		$helper=Mage::helper("appointments");
 		$data = "";
-		foreach ($timing as $time)
-		{
-			$data .= $time['day']." ".$helper->getTimeByValue($time['break_start'] )."-".   $helper->getTimeByValue($time['break_end'] )." <br/>";
+
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+		$specialStore = false;
+
+		if ($row->getStoreId() == $specialStoreId) {
+			$specialStore = true;
+		}
+
+		foreach ($timing as $time) {
+			if ($time['break_start'] == $time['break_end']) {
+				$data .= $time['day']." <div style='float:right'> NO BREAK</div><br>";
+				continue;
+			}
+			if ($specialStore) {
+				$data .= $time['day']." <div style='float:right'>".$helper->getBreakTimeByValue($time['break_start'] )."-".  $helper->getBreakTimeByValue($time['break_end'] )."</div> <br/>";
+			} else {
+				$data .= $time['day']." <div style='float:right'>".$helper->getTimeByValue($time['break_start'] )."-".  $helper->getTimeByValue($time['break_end'] )."</div> <br/>";
+			}
 		}
 		return $data;
 	}
