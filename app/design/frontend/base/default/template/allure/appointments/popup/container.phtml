@@ -31,6 +31,8 @@
     Allure.getSlotAvailabilityUrl = '<?php echo $this->getSlotAvailabilityUrl()?>';
     Allure.getDateAvailabilityUrl = '<?php echo $this->getDateAvailabilityUrl()?>';
 
+    Allure.isProcessing = false;
+
     function formatDate(date) {
         var monthNames = [
             "Jan", "Feb", "Mar",
@@ -58,125 +60,70 @@
     ?>
     var isSuccess=false;
         //jQuery('#appointemnet_form').validate();
-        jQuery(document).ready(function() {
-            var $ = jQuery;
+    jQuery(document).ready(function() {
+        var $ = jQuery;
 
-            $("#appointemnet_form").validate( {
-    				rules: {
-    					firstname: {
-    					    required: true,
-                            nospace: true
-                        },
-    					lastname: {
-    					    required: true,
-                            nospace: true
-                        },
-    					email: {
-    						required: true,
-    						email: true
-    					},
-    					phone: {
-    						required: true,
-    						phone: true
-    					},
-                        piercing_qty: 'required',
-                        app_date: {
-    						required: true,
-    						date: true
-    					},
-                        selectTimeSlot:  {
-    						required: true,
-    						notEqualTo: 'No Slots Available'
-    					},
-                        selectTime:
-                            {
-                                required:true,
-                                notEqualTo:'TIME'
-                            }
-    				},
-    				messages: {
-    					firstname: "Please enter your firstname",
-    					lastname: "Please enter your lastname",
-    					email: "Please enter a valid email address",
-    					phone: "Please enter a valid phone number",
-                        piercing_qty: "Please enter people in the group",
-                        app_date: "Please select a booking date",
-                        selectTime: "Please select a booking time",
-                        selectTimeSlot: "Please select a booking time",
-    				},
-    				errorElement: "em",
-    				errorPlacement: function ( error, element ) {
-    					// Add the `invalid-feedback` class to the error element
-    					error.addClass( "invalid-feedback" );
-    					if ( element.prop( "type" ) === "checkbox" ) {
-    						error.insertAfter( element.next( "label" ) );
-    					} else {
-    						error.insertAfter( element );
-    					}
-    				},
-    				highlight: function ( element, errorClass, validClass ) {
-                        $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
-                        isSuccess = false;
-    				},
-    				unhighlight: function (element, errorClass, validClass) {
-                        $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
-                        isSuccess = true;
-    				}
-    			} );
-            });
-
-        //var appointmentForm = new VarienForm('appointemnet_form');
-
-        Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
-
-        //initialize itel tel input
-        var input = document.querySelector("#phonenumber")
-        var iti = window.intlTelInput(input, {
-            autoFormat: false,
-            autoHideDialCode: false,
-            autoPlaceholder: false,
-            nationalMode: false,
-            utilsScript: Allure.UtilPath
+        $("#appointemnet_form").validate({
+                submitHandler: function(form) {
+                    if (!Allure.isProcessing) {
+                        Allure.isProcessing = true
+                        $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text("Processing..");
+                        form.submit();
+                    }
+                },
+				rules: {
+					firstname: "required",
+					lastname: "required",
+					email: {
+						required: true,
+						email: true
+					},
+					phone: {
+						required: true,
+						phone: true
+					},
+                    piercing_qty: 'required',
+                    app_date: {
+						required: true,
+						date: true
+					},
+                    selectTimeSlot:  {
+						required: true,
+						notEqualTo: 'No Slots Available'
+					},
+                    selectTime: {
+                        required:true,
+                        notEqualTo:'TIME'
+                    }
+				},
+				messages: {
+					firstname: "Please enter your firstname",
+					lastname: "Please enter your lastname",
+					email: "Please enter a valid email address",
+					phone: "Please enter a valid phone number",
+                    piercing_qty: "Please enter people in the group",
+                    app_date: "Please select a booking date",
+                    selectTime: "Please select a booking time",
+                    selectTimeSlot: "Please select a booking time"
+				},
+				errorElement: "em",
+				errorPlacement: function ( error, element ) {
+					// Add the `invalid-feedback` class to the error element
+					error.addClass( "invalid-feedback" );
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.next( "label" ) );
+					} else {
+						error.insertAfter( element );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+                    $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                    isSuccess = false;
+				},
+				unhighlight: function (element, errorClass, validClass) {
+                    $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                    isSuccess = true;
+				}
+			} );
         });
-
-        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getGeoAddress()->getCountry();?>";
-
-        if (country_code == undefined || country_code == null || country_code == "") {
-            country_code = "us"
-        }
-
-        iti.setCountry(country_code.toLowerCase());
-
-        //custom validator for itel tel input
-        //FileName - intel-tel-validation.js
-        allureIntlTelValidate(jQuery("#phonenumber"),iti);
-</script>
-<script>
-    var formAlreadySubmitted = false;
-    jQuery('#appointemnet_form').submit(function () {
-        if(isSuccess){
-            var selTm = jQuery('#selectTime').val();
-            var fname = jQuery('#firstname').val().split(' ').join('');
-            var lname = jQuery('#lastname').val().split(' ').join('');
-            var mail = jQuery('#email');
-            var email = mail.val().split(' ').join('');
-            var phn = jQuery('#phonenumber');
-            var phone = phn.val().split(' ').join('');
-            console.log('Mail Is Valid'+mail.hasClass('is-valid'));
-            if(selTm !== "TIME" && fname!=='' && lname!=='' && ((!phn.hasClass('is-invalid')) && phone>=10) && ((!mail.hasClass('is-invalid')) &&  email.length!==0 )) {
-                console.log('No error');
-                if (formAlreadySubmitted) {
-                    e.preventDefault();
-                    return false;
-                }
-                var submitChildren = jQuery("#btnConfirm");
-                submitChildren[0].innerHTML = "Please wait..!"
-                submitChildren.attr('disabled', 'disabled');
-                submitChildren.addClass('disabled');
-                
-                formAlreadySubmitted = true;
-            }
-         
-        }
-    });
 </script>
