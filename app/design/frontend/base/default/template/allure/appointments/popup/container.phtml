@@ -156,7 +156,7 @@
             var phone = jQuery('#phonenumber').val().split(' ').join('');
             var emailErr =  jQuery('#email-error');
             var phoneErr = jQuery('#phonenumber-error');
-            if(selTm !== "TIME" && fname!=='' && lname!=='' && email.length>5 && phone>=10 && (emailErr.css('display') === 'none')&& (phoneErr.css('display') === 'none')) {
+            if(selTm !== "TIME" && fname!=='' && lname!=='' && phone>=10 && (emailErr.css('display') === 'none' ||  email.length>5 )) {
                 console.log('No error');
                 if (formAlreadySubmitted) {
                     e.preventDefault();
