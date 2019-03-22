@@ -103,33 +103,46 @@ if($model){
             <?php echo $this->getChildHtml("appointments_popup_price_list");?>
         </div>
     </div>
-<a id="about-maria-arrow" href="#about-maria"  class="link-down down-arrowfrm" >
+    <a id="about-maria-arrow" href="#about-maria"  class="link-down down-arrowfrm" >
     <img src="<?php echo $this->getSkinUrl("images/allure/popup/down.png")?>" class="down-arrow-size " >
 </a>
 </div>
 
 <!--cODE ADDED FOR MOBILE NO ISSUE WHILE MODIFY-->
-<script>
-var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
-//console.log('[signing_register.phtml] length',phone.length)
-if(phone.length <= 0){
-var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+<script type="text/javascript">
+    Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
-if (country_code == undefined || country_code == null || country_code == "") {
-country_code = "us"
-}
+    //initialize itel tel input
+    var input = document.querySelector("#phonenumber")
+    var iti = window.intlTelInput(input, {
+        autoFormat: false,
+        autoHideDialCode: false,
+        autoPlaceholder: false,
+        nationalMode: false,
+        utilsScript: Allure.UtilPath
+    });
 
-iti.setCountry(country_code.toLowerCase());
-} else if (phone.charAt(0) != '+') {
+    var phone = "<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>";
 
-<?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
-    var country_code = '<?php echo $f_cntry;?>';
-    iti.setCountry(country_code.toLowerCase());
-<?php } ?>
+    var country_code = 'us';
 
-<?php if ((isset($cntry) && !empty($cntry))) { ?>
-    var country_code = '<?php echo $cntry;?>';
-    iti.setCountry(country_code.toLowerCase());
-<?php } ?>
-}
+    if (phone.length <= 0) {
+        country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getGeoAddress()->getCountry();?>";
+    } else if (phone.charAt(0) != '+') {
+        <?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
+                country_code = '<?php echo $f_cntry;?>';
+        <?php } ?>
+
+        <?php if ((isset($cntry) && !empty($cntry))) { ?>
+                country_code = '<?php echo $cntry;?>';
+        <?php } ?>
+    }
+
+    if (!phone.length || (phone.length && phone.charAt(0) != '+')) {
+        iti.setCountry(country_code.toLowerCase());
+    }
+
+    //custom validator for itel tel input
+    //FileName - intel-tel-validation.js
+    allureIntlTelValidate(jQuery("#phonenumber"),iti);
 </script>
