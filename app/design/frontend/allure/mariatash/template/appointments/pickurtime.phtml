@@ -114,8 +114,18 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		$collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
 			->addFieldToFilter('is_active', array('eq' => '1'));
 
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+		$specialStore = false;
+
+		if ($specialStoreId == $storeId) {
+			$specialStore = true;
+		}
+
 		if($this->getData("date")) :
 		$date = $this->getData("date");
+
+
 
 		$dayOfWeek = date("d", strtotime($date));
 		$day = date('l', strtotime($date));
@@ -203,21 +213,12 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 
 					if($workSlot['day']!=$day){
 						continue;
-
 					}
 
 					$workStart = $workSlot['start'];
 					if(!empty($storeCurrentTime)){
 					    if($storeCurrentTime >= $workStart)
 					        $workStart = $storeCurrentTime;
-					}
-
-					$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
-
-					$specialStore = false;
-
-					if ($specialStoreId == $storeId) {
-						$specialStore = true;
 					}
 
 					if ($specialStore) {
