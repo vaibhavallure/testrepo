@@ -717,6 +717,25 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function validateSlotBeforeBookAppointment($data)
     {
+        /*If Already Booked then Check for Same Slot Selected or Not*/
+        if($data['id'])
+        {
+            Mage::log('IN MODIFY',Zend_Log::DEBUG,'myLog.log',true);
+            $model = Mage::getModel('appointments/appointments')->load($data['id']);
+            if(($model->getPiercerId()==$data['piercer_id']) && ($model->getAppointmentStart()==$data['appointment_start']) && ($model->getAppointmentEnd()==$data['appointment_end']))
+            {
+                $this->addLog("same time and date","modify");
+                Mage::log('Same date',Zend_Log::DEBUG,'myLog.log',true);//It's Temp Log do not remove it
+                return true;
+            }
+            else
+            {
+                $this->addLog("different date or time","modify");
+                Mage::log('Different date',Zend_Log::DEBUG,'myLog.log',true);//It's Temp Log do not remove it
+
+            }
+        }
+        /*If Not Same Slot or New Slot*/
         $collection = Mage::getModel('appointments/appointments')->getCollection();
         $collection->addFieldToFilter('piercer_id', array('eq' => $data['piercer_id']));
         $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
@@ -733,6 +752,8 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
             else
                 return false;
         }
+
+
     }
 
     /**

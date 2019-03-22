@@ -161,7 +161,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 Mage::log('POST DATA UPDATED::',Zend_Log::DEBUG,'appointments.log',true);
                 Mage::log($post_data, Zend_Log::DEBUG,'appointments.log',true);
 
-                if ($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
+                if ($this->helper()->validateSlotBeforeBookAppointment($post_data)) {
                     // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
                     $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Been Already Taken. Please Select Another Slot ",$post_data),"save");
 
@@ -177,6 +177,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                         return;
                     }
                 }
+
 
                 $storeKey = array_search($storeId, $configData['stores']);
                 $model = Mage::getModel('appointments/appointments')->addData($post_data)->save();
