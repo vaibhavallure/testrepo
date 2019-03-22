@@ -144,7 +144,13 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		endif;
 		/*EO Piercer Logic */
 
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
 
+		$specialStore = false;
+
+		if ($specialStoreId == $storeId) {
+			$specialStore = true;
+		}
 
 		echo "<div class='image_carousel' id='time_blocks'>";
 		echo "<div style=''>";
@@ -222,14 +228,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 					if(!empty($storeCurrentTime)){
 					    if($storeCurrentTime >= $workStart)
 					       $workStart = $storeCurrentTime;
-					}
-
-					$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
-
-					$specialStore = false;
-
-					if ($specialStoreId == $storeId) {
-						$specialStore = true;
 					}
 
 					if ($specialStore) {

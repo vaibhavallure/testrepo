@@ -259,10 +259,11 @@ class Allure_Appointments_Adminhtml_AppointmentpiercersController extends Mage_A
 							$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
 	                    }
 
-						if ($breakStart == $breakEnd) {
+						if ("$breakStart" == "$breakEnd") {
+
 							$workStart 	= date("Y-m-d", strtotime($singeDay))." " .$workStart;
 	    	                $workEnd 	= date("Y-m-d", strtotime($singeDay))." " .$workEnd;
-
+							
 							$calenderEvents[] = array(
 								'title'	=>	$piercer->getFirstname()." ".$piercer->getLastname(),
 								'day'	=>	$singeDay,
