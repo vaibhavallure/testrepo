@@ -123,6 +123,14 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		$collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
 			->addFieldToFilter('is_active', array('eq' => '1'));
 
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+		$specialStore = false;
+
+		if ($specialStoreId == $storeId) {
+			$specialStore = true;
+		}
+
 		if($this->getData("date")) :
 		$date = $this->getData("date");
 
@@ -143,14 +151,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		}
 		endif;
 		/*EO Piercer Logic */
-
-		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
-
-		$specialStore = false;
-
-		if ($specialStoreId == $storeId) {
-			$specialStore = true;
-		}
 
 		echo "<div class='image_carousel' id='time_blocks'>";
 		echo "<div style=''>";

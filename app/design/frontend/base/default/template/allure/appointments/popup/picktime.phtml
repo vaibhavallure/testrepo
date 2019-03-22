@@ -58,6 +58,14 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                 }
             }
 
+            $specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+            $specialStore = false;
+
+            if ($specialStoreId == $storeId) {
+                $specialStore = true;
+            }
+
             $intervalTime=$helper->getTimeByStoreAndPeople(1, $selectedStoreId);
 
             if($this->getData("timing")) $interval = $this->getData("timing");
@@ -81,14 +89,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                 if($storeCurrentTime >= $startTime)
                     $startTime = $storeCurrentTime;
             }
-
-            $specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
-
-    		$specialStore = false;
-
-    		if ($specialStoreId == $selectedStoreId) {
-    			$specialStore = true;
-    		}
 
             $endTimeSystem = $configData['end_work_time'][$storeKey];
 
@@ -218,14 +218,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
                             if($storeCurrentTime >= $workStart)
                                 $workStart = $storeCurrentTime;
                         }
-
-                		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
-
-                		$specialStore = false;
-
-                		if ($specialStoreId == $storeId) {
-                			$specialStore = true;
-                		}
 
                         if ($specialStore) {
                             $workStart = $helper->getSpecialTimeByValue($workSlot['start']);
