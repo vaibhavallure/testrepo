@@ -100,6 +100,15 @@ if($fetch_model){
 		$collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
 			->addFieldToFilter('is_active', array('eq' => '1'));
 
+
+        $specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+        $specialStore = false;
+
+        if ($specialStoreId == $selectedStoreId) {
+            $specialStore = true;
+        }
+
 		if($this->getData("date")) :
 		$date = $this->getData("date");
 		Mage::log("default Date",Zend_log::DEBUG,'mylogs',true);
@@ -191,14 +200,6 @@ if($fetch_model){
 					if($workSlot['day']!=$day){
 						continue;
 					}
-
-                    $specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
-
-                    $specialStore = false;
-
-                    if ($specialStoreId == $selectedStoreId) {
-                        $specialStore = true;
-                    }
 
                     if ($specialStore) {
                         $workStart = $helper->getBreakTimeByValue($workSlot['start']);
@@ -393,13 +394,7 @@ if($fetch_model){
                         jQuery("#foo2_next").css('opacity',0.13);
                     }
                 };
-
-                /* if(jQuery('ul#foo2 li.item').length <= 5){
-                    jQuery("#foo2_next , #foo2_prev").hide();
-                    jQuery(".timeslot").css('margin-right',0);
-                    jQuery(".timeslot").css('margin-left',0);
-
-                } */
+                
                 jQuery(window).resize(function() {
                     var wi = 0;
                     jQuery('ul#foo2 li').each(function(key,element){
@@ -428,8 +423,5 @@ if($fetch_model){
 				jQuery("#"+id).addClass("selectedTime");
 
 			}
-
-
-
 		//});
 </script>
