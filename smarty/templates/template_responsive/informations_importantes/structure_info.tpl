@@ -6,13 +6,13 @@
                                   <tbody>
                                     <tr>
                                       <td height="15" bgcolor="{$codecouleur}"></td>
-                                    </tr>{if $bdheader.title !=""}
+                                    </tr>{if $bdheader.title != ""}
                                     <tr>
                                       <td style="font-size:26px; text-align:center; color:{$couleurtxtbtn}; font-family:Arial, Helvetica, sans-serif, Trebuchet MS;">{$bdheader.title}</td>
                                     </tr>
                                     <tr>
                                       <td height="15"></td>
-                                    </tr>{/if}{if $bdheader.detail !=""}
+                                    </tr>{/if}{if $bdheader.detail != ""}
                                     <tr>
                                       <td style="font-size:12px; text-align:center; color:{$couleurtxtbtn}; font-family:Arial, Helvetica, sans-serif, Trebuchet MS;">{$bdheader.detail}</td>
                                     </tr>
