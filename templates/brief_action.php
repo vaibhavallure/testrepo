@@ -569,6 +569,9 @@ if($button == 'Modifier'){
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <script type="text/javascript">
+    function comfirmYear() {
+        return confirm("cliquer sur confirm pour 17 ou annuler pour 18");
+    }
     function validateForm() {
         //test des champs
         var code = $("#code").val();
@@ -673,7 +676,17 @@ if($button == 'Modifier'){
             success: function(data)
             {
                 if(id == ''){
+                    if(name == 'iosprim' ||name == 'uiosprim'){
+                        var year = ((new Date().getFullYear())-1).toString().substr(-2);
+                        data = data.split('-');
+                        var inc = data[1];
+                        if(parseInt(inc)<10){
+                            var inc = '0' + inc;
+                        }
+                        data = year + '-' + inc;
+                    }
                     code = data;
+
                 }
                 var marketing = '';
                 var marketing2 = name+code;
@@ -774,6 +787,8 @@ if($button == 'Modifier'){
 
         }
         $('#demande-trad').html(htmlTrad + htmlTextM);
+
+
 
     }
 </script>
