@@ -328,8 +328,10 @@ class Allure_Inventory_Model_Cron {
 	    }
 	    
 	    try {
-	        $backDate='in 6 to 8 weeks';
-	        if(count($productArr) > 0){
+	        //changed after MT-1047 request from "in 6 to 8 weeks" to "in 8 to 12 weeks";
+            $backDate='in 8 to 12 weeks';
+
+            if(count($productArr) > 0){
 	            Mage::getResourceSingleton('catalog/product_action')
 	            ->updateAttributes($productArr, array(
 	                'backorder_time' => $backDate
