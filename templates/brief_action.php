@@ -123,7 +123,7 @@ if($button == 'Modifier'){
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="codemessage">Code (Depend du type)</label>
-                                        <input name="code" type="text" id="code" class="form-control" value="<?php echo $code ?>" onchange="selectTypeBrief()">
+                                        <input name="code" type="text" id="code" class="form-control" value="<?php echo $code ?>" onchange="selectTypeBrief()" <?php echo (isset($brief['id']) ? 'readonly' : '') ?>>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -645,6 +645,7 @@ if($button == 'Modifier'){
     function selectTypeBrief(){
         var elmValue = document.getElementById('typebrief').value;
         var theme =  document.getElementById('theme').value;
+        var id =  document.getElementById('id').value;
         var codePromoPick =  document.getElementById('codepromopick').value;
         var categ =  document.getElementById('categ').value;
         var name = '';
@@ -671,9 +672,9 @@ if($button == 'Modifier'){
             dataType: "json",
             success: function(data)
             {
-                //if(code == ''){
+                if(id == ''){
                     code = data;
-                //}
+                }
                 var marketing = '';
                 var marketing2 = name+code;
                 if(theme != ''){
@@ -768,7 +769,7 @@ if($button == 'Modifier'){
         }
         if (htmlTrad != ''){
             htmlTrad = '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>' +
-                '<h4 class="modal-title">Choisir les option de traduction, Comerciaux</h4>' +
+            '<h4 class="modal-title">Choisir les option de traduction, Comerciaux</h4>' +
                 '</div><div class="modal-body"><div id="textmaster-choice">' + htmlTrad + '</div></div>';
 
         }
