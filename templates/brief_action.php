@@ -569,9 +569,6 @@ if($button == 'Modifier'){
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 <script type="text/javascript">
-    function comfirmYear() {
-        return confirm("cliquer sur confirm pour 17 ou annuler pour 18");
-    }
     function validateForm() {
         //test des champs
         var code = $("#code").val();
