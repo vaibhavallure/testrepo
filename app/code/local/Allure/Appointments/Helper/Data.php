@@ -224,7 +224,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 
 		foreach ($timings as $time) {
 			$timeValue = $time['value'];
-			if ("$timeValue" ==  "$value"){
+			if ("$timeValue" >=  "$value"){
 				return $time['label'];
 			}
 		}
