@@ -23,15 +23,13 @@ class Millesima_Ressource extends Millesima_Abstract
         $bddClass = new Millesima_Bdd();
         $return = '';
         $res= $bddClass->selectAll("SELECT * FROM ressource WHERE store = ? AND name = ? ORDER BY id DESC",array($store,$name));
-        if(count($res)>1){
+        if(count($res)>0){
             $now = date("Y-m-d H:i:s");
             foreach($res as $line){
                 if( ($line['start_date'] < $now) && ($line['end_date'] > $now || is_null($line['end_date'])) ){
                     $return =  $line['value'];
                 }
             }
-        } else if (count($res)>0){
-            $return =  $res[0]['value'];
         }
 
         foreach($info as $key=>$value ){
