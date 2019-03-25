@@ -7,9 +7,11 @@
                                     <tr>
                                       <td height="15" bgcolor="#202125"></td>
                                     </tr>
+                                    {if $fdpo.titre != ""}
                                     <tr>
-                                      <td style="font-size:32px; text-align:center; color:#FFFFFF; font-family:Arial, Helvetica, sans-serif, Trebuchet MS;text-transform:uppercase;">{$fdpo.titre}{if $typecgv == "livraison"}*{/if}</td>
+                                      <td style="font-size:26px; text-align:center; color:#FFFFFF; font-family:Arial, Helvetica, sans-serif, Trebuchet MS;text-transform:uppercase;">{$fdpo.titre}*</td>
                                     </tr>
+                                    {/if}
                                     {if $fdpo.ssphrase != ""}<tr>
                                       <td style="font-size:12px; text-align:center; color:#FFFFFF; font-family:Arial, Helvetica, sans-serif, Trebuchet MS;">{$fdpo.ssphrase}</td>
                                     </tr>{/if}
