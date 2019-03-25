@@ -49,7 +49,7 @@
                                                   </tbody>
                                                 </table></td>
                                             </tr>
-											{if $articles.$article.offexc}<tr>
+											{if $articles.$article.astart != ""}<tr>
                                               <td height="20"></td>
                                             </tr>
 											<tr>
@@ -57,7 +57,7 @@
 													<table width="100%" border="0" cellspacing="0" cellpadding="0">
 														<tr>
 															<td width="25">&nbsp;</td>
-															<td style="font-size:11px;font-family:Arial, Helvetica, sans-serif, Trebuchet MS;color: #444444;font-style:italic;">{$validdefaut}</td>
+															<td style="font-size:11px;font-family:Arial, Helvetica, sans-serif, Trebuchet MS;color: #444444;font-style:italic;">{$articles.$article.astart}</td>
 															<td width="25"></td>
 														</tr>
 													</table>

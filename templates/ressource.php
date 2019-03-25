@@ -79,8 +79,10 @@ $html = $this->data['html'];
                                             <option value="bdf_fdpo" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'bdf_fdpo') ? 'selected' : '')?>>Footer Bandeau FDPO titre</option>
                                             <option value="bdf_fdpo_ssphrase" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'bdf_fdpo_ssphrase') ? 'selected' : '')?>>Footer Bandeau footer FDPO validite</option>
                                             <option value="bdf_fdpo_detail" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'bdf_fdpo_detail') ? 'selected' : '')?>>Footer Asterisque Description FDPO (coche CGV)</option>
-
-                                            <option value="validdefaut" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'validdefaut') ? 'selected' : '')?>>Conditions validité sans date</option>
+                                            <option value="ast_articles" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'ast_articles') ? 'selected' : '')?>>Articles Asterisque</option>
+                                            <option value="ast_article1" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'ast_article1') ? 'selected' : '')?>>Article 1 Asterisque</option>
+                                            <option value="ast_article2" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'ast_article2') ? 'selected' : '')?>>Article 2 Asterisque</option>
+                                            <option value="ast_article3" <?php echo ((isset($filter['name_filter']) && $filter['name_filter'] == 'ast_article3') ? 'selected' : '')?>>Article 3 Asterisque</option>
                                             
                                         </select>
                                     </div>

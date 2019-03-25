@@ -1064,7 +1064,7 @@ function getCode($typebrief){
                                         </label>
 										<div class="checkbox">
 											<label>
-												<input type="checkbox" name="article1_offexc" /> Asterisque conditions validité
+												<input type="checkbox" name="article1_astart" /> Asterisque conditions validité
 											</label>
 											<label>
 												<input type="checkbox" name="article1_artimgprim" /> Image primeurs générique

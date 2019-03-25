@@ -697,9 +697,9 @@ function getMessageSaveInfo(this_select) {
                                 $('select[name=article'+i+'typebtn] option[value="jrsv"]').prop('selected', true);
                             }
                         }
-						if(str == 'article'+i+'_offexc'){
+						if(str == 'article'+i+'_astart'){
                             if(tabLangue[nb].value != null){
-                                $('input[type=checkbox][name=article'+i+'_offexc]').attr('checked', true);
+                                $('input[type=checkbox][name=article'+i+'_astart]').attr('checked', true);
                             }
                         }
 						if(str == 'article'+i+'_artimgprim'){
@@ -890,7 +890,7 @@ function ajouteArticleMessage(defaultValue,newValue){
                 html += '       </label>';
                 html += '       <div class="checkbox">';
                 html += '       	<label>';
-                html += '       		<input type="checkbox" name="article'+i+'_offexc" /> Asterisque conditions validité';
+                html += '       		<input type="checkbox" name="article'+i+'_astart" /> Asterisque conditions validité';
                 html += '       	</label>';
                 html += '       	<label>';
                 html += '       		<input type="checkbox" name="article'+i+'_artimgprim" /> Image primeurs générique';

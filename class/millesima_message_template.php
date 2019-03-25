@@ -239,16 +239,10 @@ class Millesima_Message_Template extends Millesima_Abstract
             if (file_exists($filename)){
                 require($filename);
             }*/
-            $bdheader = array('title'=>$ressourceClass->getRessourceValue($country,'bd_header_title'),'detail'=>$ressourceClass->getRessourceValue($country,'bd_header_detail'),'asterisque'=>$ressourceClass->getRessourceValue($country,'bd_header_asterisque'));
+            $bdheader = array('title'=>$ressourceClass->getRessourceValue($country,'bd_header_title', $vardates),'detail'=>$ressourceClass->getRessourceValue($country,'bd_header_detail', $vardates),'asterisque'=>$ressourceClass->getRessourceValue($country,'bd_header_asterisque', $vardates));
 
             $oSmarty->assign('bdheader', $bdheader);
-            
 
-            $validdefaut = $ressourceClass->getRessourceValue($country,'validdefaut');
-            $oSmarty->assign('validdefaut', $validdefaut);
-
-
-			
             /* Section Description gÃ©nÃ©rale sous l'image */
 
             if(isset($_POST["descgen"]) && $_POST["descgen"]){
@@ -279,7 +273,7 @@ class Millesima_Message_Template extends Millesima_Abstract
 												"textalign" => $textalign,
 												"astdesc" => $asterisquedesc,
 												"btn" => $btn);
-				$oSmarty->assign('desc', $proprietesDesc);
+                $oSmarty->assign('desc', $proprietesDesc);
 				
 				if(isset($_POST["iscodepromo"])){
 					$iscodepromo = $_POST["iscodepromo"];
@@ -362,13 +356,13 @@ class Millesima_Message_Template extends Millesima_Abstract
 				$titre = "";
 				$text = "";
 				$titreupper = "";
-				$offexc = "";
 				$artimgprim = "";
 				$btn = "";
 				$btnwidth = "";
 				$exception = "";
-				$nb = "00";
-				
+                $nb = "00";
+				$articles_ast = $ressourceClass->getRessourceValue($country,'ast_articles', $vardates);
+                
 				for ($i = 1; $i <= intval($_POST["articles_nb"]); $i++){
 					$article = "article".$i;
 					$url = "";
@@ -392,21 +386,26 @@ class Millesima_Message_Template extends Millesima_Abstract
 					$text = $_POST[$article."text".$country];
 					if(isset($_POST[$article."titreupper"])){
 						$titreupper = $_POST[$article."titreupper"];
-					}
-					if(isset($_POST[$article."_offexc"])){
-						$offexc = $_POST[$article."_offexc"];
-					}
+                    }
+                    $ast_art = '';
+					if(isset($_POST[$article."_astart"])){
+                        $astart = $_POST[$article."_astart"];
+                        $ast_art = $ressourceClass->getRessourceValue($country,'ast_article'.$i, $vardates);
+                        if($ast_art == '' && $articles_ast != ''){
+                            $ast_art = $articles_ast;
+                        }
+                    }
 					if(isset($_POST[$article."_artimgprim"])){
 						$artimgprim = $_POST[$article."_artimgprim"];
 					}
-					$btn = $_POST[$article."typebtn"];
-					
+                    $btn = $_POST[$article."typebtn"];
+
 					$proprietesArticles[$article] = array("url" => $url,
 												"imgnb" => $nb,
 												"titre" => $titre,
 												"text" => $text,
 												"titreupper" => $titreupper,
-												"offexc" => $offexc,
+												"astart" => $ast_art,
 												"artimgprim" => $artimgprim,
 												"btn" => $btn,
 												/*"btnwidth" => $btns[$btn]["width"],*/
@@ -481,10 +480,9 @@ class Millesima_Message_Template extends Millesima_Abstract
             /* FDPO */
             if($cgv == 'livraison'){
                 $fdpo = array(
-                    'titre'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo'),
-                    'ssphrase'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo_ssphrase'),
-                    'detail'=>$ressourceClass->getRessourceValue($country,
-                    'bdf_fdpo_detail',array('datefdpo'=>$datefdpo))
+                    'titre'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo', $vardates),
+                    'ssphrase'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo_ssphrase', $vardates),
+                    'detail'=>$ressourceClass->getRessourceValue($country,'bdf_fdpo_detail',$vardates)
                 );
                 $oSmarty->assign('fdpo', $fdpo);
                 if(isset($data["fdpo_bandeau"]) && $data["fdpo_bandeau"]){

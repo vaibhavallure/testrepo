@@ -137,11 +137,11 @@ class Millesima_Messagedata extends Millesima_Abstract
                 } else {
                     $langue["article" . $i . "titreupper"] = null;
                 }
-				if (isset($data["article" . $i . "_offexc"])) {
-                    $langue["article" . $i . "_offexc"] = $data["article" . $i . "_offexc"];
-                    unset($data["article" . $i . "_offexc"]);
+				if (isset($data["article" . $i . "_astart"])) {
+                    $langue["article" . $i . "_astart"] = $data["article" . $i . "_astart"];
+                    unset($data["article" . $i . "_astart"]);
                 } else {
-                    $langue["article" . $i . "_offexc"] = null;
+                    $langue["article" . $i . "_astart"] = null;
                 }
 				if (isset($data["article" . $i . "_artimgprim"])) {
                     $langue["article" . $i . "_artimgprim"] = $data["article" . $i . "_artimgprim"];
@@ -201,11 +201,11 @@ class Millesima_Messagedata extends Millesima_Abstract
             } else {
                 $langue["article1titreupper"] = null;
             }
-            if (isset($data["article1_offexc"])) {
-                $langue["article1_offexc"] = $data["article1_offexc"];
-                unset($data["article1_offexc"]);
+            if (isset($data["article1_astart"])) {
+                $langue["article1_astart"] = $data["article1_astart"];
+                unset($data["article1_astart"]);
             } else {
-                $langue["article1_offexc"] = null;
+                $langue["article1_astart"] = null;
             }
             if (isset($data["article1_artimgprim"])) {
                 $langue["article1_artimgprim"] = $data["article1_artimgprim"];
