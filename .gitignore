@@ -1,0 +1,4 @@
+fichiers/emailings/**
+fichiers/segment-file/**
+smarty/templates_c/**
+.htaccess
