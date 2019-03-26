@@ -13,7 +13,7 @@ if($fetch_model){
     $fetch_endtime = date('H:i', $timestamp);
 }
 $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
-
+$storeId= $this->getData("store_id");
 ?>
 
     <?php
@@ -115,7 +115,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
             //echo $totalSlot;
 
             /* logic for getting workday Piercer */
-            $storeId= $this->getData("store_id");
+//            $storeId= $this->getData("store_id"); Declared at Top
             $collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
                 ->addFieldToFilter('is_active', array('eq' => '1'));
             $checkDate='';
