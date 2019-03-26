@@ -64,7 +64,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		$allAppointments->addFieldToFilter('app_status',Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
 		$allAppointments->addFieldToFilter('store_id', array('eq' => $storeId));
 		if(count($allAppointments) > 0){
-			$this->sendNotification($allAppointments);
+			$this->sendNotification($allAppointments,"cron","day");
 		}
 		Mage::log("Check more than 7 day remaining appointments",Zend_Log::DEBUG,'appointments.log',true);
 		$nextTime = date("Y-m-d H:i:00",strtotime("7 day",strtotime($storeDate)));
@@ -79,11 +79,11 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		$allAppointments->addFieldToFilter('store_id', array('eq' => $storeId));
 		if(count($allAppointments) > 0){
 			Mage::log(" diff is greater than 7 days",Zend_Log::DEBUG,'appointments.log',true);
-			$this->sendNotification($allAppointments);
+			$this->sendNotification($allAppointments,"cron","week");
 		}
 	}
 	
-	public function sendNotification($allAppointments,$from="cron"){
+	public function sendNotification($allAppointments,$from="cron",$type="nd"){
 		$sendEmail = false;
 		$sendSms = false;
 
@@ -98,7 +98,18 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 			//$toSend = Mage::getStoreConfig("appointments/customer/send_customer_email",$storeId);
 			$toSend = $configData['customer_email_enable'][$storeKey];
 			//$templateId = Mage::getStoreConfig("appointments/customer/customer_reminder_template",$storeId);
-			$templateId = $configData['email_template_appointment_remind'][$storeKey];
+
+
+            if($type=="day")
+                $templateId = $configData['email_template_appointment_remind_day'][$storeKey];
+            elseif ($type=="week")
+                $templateId = $configData['email_template_appointment_remind_week'][$storeKey];
+            else
+                $templateId = $configData['email_template_appointment_remind'][$storeKey];
+
+
+
+
 			$sender = array('name'=>Mage::getStoreConfig("trans_email/bookings/name",1),
 			    'email'=> $configData['store_email'][$storeKey]);
 			
@@ -236,8 +247,20 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 				$url = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_BASEURL);
 				$smsfrom = Mage::getStoreConfig(Allure_Appointments_Helper_Data::SMS_FROM);
 				//$smsText = Mage::getStoreConfig("appointments/api/smstext_reminder",$storeId);
-				$smsText = $configData['reminder_sms_message'][$storeKey];
-				$appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+
+
+
+                if($type=="day")
+                    $smsText = $configData['day_reminder_sms_message'][$storeKey];
+				elseif ($type=="week")
+                    $smsText = $configData['week_reminder_sms_message'][$storeKey];
+                else
+                    $smsText = $configData['reminder_sms_message'][$storeKey];
+
+
+
+
+                $appointmentStart=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
 				$date = date("F j, Y ", strtotime($model->getAppointmentStart()));
 				$time=date('h:i A', strtotime($model->getAppointmentStart()));
 				$smsText=str_replace("(time)",$time,$smsText);
