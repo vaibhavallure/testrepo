@@ -180,6 +180,13 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
 
                 $storeKey = array_search($storeId, $configData['stores']);
+
+                $post_data['notification_pref']='1';
+                if (isset($post_data['noti_sms'])) {
+                    if ($post_data['noti_sms']=='on') {
+                        $post_data['notification_pref']='2';
+                    }
+                }
                 $model = Mage::getModel('appointments/appointments')->addData($post_data)->save();
 
                 $bookingdata=$post_data;
@@ -221,11 +228,6 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
-                if (isset($post_data['noti_sms'])) {
-                    if ($post_data['noti_sms']=='on') {
-                        $post_data['notification_pref']='2';
-                    }
-                }
 
                 if ($post_data['notification_pref'] === '2') {
                     if ($old_appointment) {
