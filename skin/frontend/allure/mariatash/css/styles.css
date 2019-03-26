@@ -14157,7 +14157,7 @@ div.styled {
 .product-options-bottom .price-tax { float:left; }
 .product-options-bottom .add-to-cart { /*float:right; margin:0; padding:9px 0; border:0; background:none;*/ }
 .product-options-bottom .add-to-cart label { color:#000000; font-weight: bold; }
-.catalog-product-view .product-options-bottom .add-to-cart label { color:#3f3f47; font-weight: bold; margin-top: 0px;  min-width: 110px !important; text-transform:uppercase;  line-height: 32px; }
+.catalog-product-view .product-options-bottom .add-to-cart label { color:#3f3f47; font-weight: normal; margin-top: 0px;  min-width: 110px !important; text-transform:uppercase;  line-height: 32px; }
 .product-shop .add-to-cart button.button { float:right; margin:0 20px 0 20px; padding: 5px 11px 4px; width:106px; text-align:center; }
 .product-shop .product-options-bottom .price-box { float:none; margin:0; }
 .product-shop .product-options-bottom .price-label { float:none; padding-right:0; }
