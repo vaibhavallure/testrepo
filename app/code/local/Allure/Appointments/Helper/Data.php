@@ -183,7 +183,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 			$api = new SoapClient($url,array( 'cache_wsdl' => WSDL_CACHE_NONE,'soap_version' => SOAP_1_1));
 			$session = $api->apiValidateLogin($username,$password);
 			preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
-			$status = $api->apiSendSms($response['ticket'], $smsfrom, $phone, $text, 'text', '0', '0');
+			$status = $api->apiSendLongSms($response['ticket'], $smsfrom, $phone, $text, 'text', '0', '0');
 			preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
 
 			Mage::log("**************************************",Zend_Log::DEBUG,'appointments_sms_log.log',true);
