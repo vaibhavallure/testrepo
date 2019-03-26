@@ -176,7 +176,12 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
             "back_qty"=>"QUANTITY",
             "customization"=>"CUSTOMIZATION",
             "group"=>"GROUP",
-            "order_status"=>"ORDER STATUS"
+            "order_status"=>"ORDER STATUS",
+            "inv1"=>"Liberty Inventory",
+            "inv2"=>"Harrods Inventory",
+            "inv3"=>"Rinascente Inventory",
+            "inv4"=>"Brown Thomas Inventory",
+            "inv5"=>"Dubai Mall Inventory",
 
         );
 
@@ -282,8 +287,17 @@ class Allure_BackorderRecord_Helper_Data extends Mage_Core_Helper_Abstract
                     $row["order_status"]=$orderStatus;
 //                  $row["product_type"]=$order->getProductType();
 
+                    $row["liberty_inv"]=$product->getLibertyInventory();
+                    $row["harrods_inv"]=$product->getHarrodsInventory();
+                    $row["rinascente_inv"]=$product->getRinascenteInventory();
+                    $row["BrownThomasInv"]=$product->getBrownThomasInventory();
+                    $row["DubaiMallInv"]=$product->getDubaiMallInventory();
 
-                    $rowData[] = $row;
+
+
+
+
+                $rowData[] = $row;
 
 
             }
