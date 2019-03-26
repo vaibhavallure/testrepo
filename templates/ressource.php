@@ -151,9 +151,23 @@ $html = $this->data['html'];
                                                 <td class=""><?php echo $ressource['id']?></td>
                                                 <td class="sorting_1"><?php echo $ressource['name']?></td>
                                                 <td class="sorting_1"><?php echo $ressource['store']?></td>
-                                                <td class="sorting_1"><?php echo utf8_encode($ressource['value'])?></td>
-                                                <td class="bootstrap-datepicker"><?php echo $ressource['start_date']?></td>
-                                                <td class="bootstrap-datepicker"><?php echo $ressource['end_date']?></td>
+                                                <td class="sorting_1"><?php echo htmlentities($ressource['value'])?></td>
+                                                <td class="bootstrap-datepicker">
+                                                    <?php 
+                                                        if($ressource['start_date'] != NULL) 
+                                                            echo date("d/m/Y" , strtotime($ressource['start_date']));
+                                                        else 
+                                                            echo $ressource['start_date'];
+                                                    ?>
+                                                </td>
+                                                <td class="bootstrap-datepicker">
+                                                    <?php 
+                                                        if($ressource['end_date'] != NULL) 
+                                                            echo date("d/m/Y" , strtotime($ressource['end_date']));
+                                                        else 
+                                                            echo $ressource['end_date'];
+                                                    ?>
+                                                </td>
                                                 <td class=""><button type="submit" name="btn_mod" id="btn_val_search" class="btn btn-primary" value="<?php echo $ressource['id']?>">Modifier</button></td>
                                                 <td class=""><button type="submit" name="btn_sup" id="btn_val_search" class="btn btn-primary" value="<?php echo $ressource['id']?>" onclick="return confirm('Etes-vous sûr ?');">Supprimer</button></td>
                                                 <td class=""><button type="submit" name="btn_dup" id="btn_val_search" class="btn btn-primary" value="<?php echo $ressource['id']?>">Dupliquer</button></td>
