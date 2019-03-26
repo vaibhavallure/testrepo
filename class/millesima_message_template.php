@@ -535,11 +535,11 @@ class Millesima_Message_Template extends Millesima_Abstract
 
 
             $traductionClass = new Millesima_Traduction();
-			if($country == 'F' || $country == 'B' || $country == 'L'){
+			if($country == 'F' || $country == 'B' || $country == 'L' || $country == 'SF'){
                 $briefClass = new Millesima_Brief();
                 $brief = $briefClass->getBrief($data['brief_id']);
 				$htmlfr .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$brief['objfr']."<br />";
-			}elseif($country == 'D' || $country == 'O' || $country == 'SA' || $country == 'SF'){
+			}elseif($country == 'D' || $country == 'O' || $country == 'SA'){
 				$objet = $traductionClass->getValueTrad($data['brief_id'],'d','objtrad');
                 $htmlde .= "<a target='_blank' href='http://srv-zend:8000/emailing/fichiers/emailings/".$codemessage."/".$country.$codemessage.".html'>".$country.$codemessage.".html"."</a> | objet : ".$objet['value']."<br />";
 			}elseif($country == 'G' || $country == 'I' || $country == 'H' || $country == 'SG'){
