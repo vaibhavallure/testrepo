@@ -2,6 +2,9 @@
 $errprint=false;
 $fetch_model = Mage::registry('apt_modify_data');
 
+/*declare avlble slots for 4/3/2019*/
+$allowdslotsArray=array("10:20","10:40","11:00","11:20","11:40","12:00","12:20","12:40","13:00","13:20","13:40");
+
 if($fetch_model){
 
     $f_pickurday = $fetch_model->getAppointmentStart();
@@ -122,6 +125,7 @@ $storeId= $this->getData("store_id");
             if($this->getData("date")) :
                 $date = $this->getData("date");
                 $checkDate=$date;
+
 
                 $dayOfWeek = date("d", strtotime($date));
                 $day = date('l', strtotime($date));
@@ -269,20 +273,32 @@ $storeId= $this->getData("store_id");
                         if(($selectedTime==$old_app_start)&&($old_app_piercer==$piercerAllocated)&&($old_app_end==$endTime)&&($old_app_date==$date))
                             $htmlsel = "selectedTime";
                     }
-//                    var_dump($date);
-if(($checkDate!='04/07/2019')&&($selectedTime!='10:00')&&($selectedTime!='19:40')) {
+
+
+ if(($checkDate=='04/03/2019')) {
+     if (in_array($selectedTime, $allowdslotsArray)) {
+         echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
+ data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
+ data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
+     }
+ }
+ else if(($checkDate!='04/07/2019')&&($selectedTime!='19:40')) {
 
     echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
 }
-else
-if(($checkDate=='04/07/2019')&&($selectedTime!='10:00')&&($selectedTime!='10:20')&&($selectedTime!='10:40')&&($selectedTime!='11:00')&&($selectedTime!='18:40')&&($selectedTime!='19:00')&&($selectedTime!='19:20')&&($selectedTime!='19:40'))
+else if(($checkDate=='04/07/2019')&&($selectedTime!='18:40')&&($selectedTime!='19:00')&&($selectedTime!='19:20')&&($selectedTime!='19:40'))
 {
     echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
 }
+
+
+
+
+
                     if($time_pref == 12){
                         if($time_pref <= $selectedTime)
                         {
