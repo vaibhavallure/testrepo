@@ -288,12 +288,12 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 				
 				if($phone){//if NotificationPref set to text sms i.e. 2
 					try {
-                        /*$api = new SoapClient($url, array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1));
+                        $api = new SoapClient($url, array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1));
                         $session = $api->apiValidateLogin($username, $password);
                         preg_match("/<ticket>(?<ticket>.+)<\/ticket>/", $session, $response);
                         $status = $api->apiSendLongSms($response['ticket'], $smsfrom, $phone, $smsText, 'text', '0', '0');
                         preg_match("/<resp err=\"(?<error>.+)\">(<res>(<dest>(?<dest>.+)<\/dest>)?(<msgid>(?<msgid>.+)<\/msgid>)?.*<\/res>)?<\/resp>/", $status, $statusData);
-                        $this->notify_Log("SMS/Reminder Sent/".$from, $app_string);*/
+                        $this->notify_Log("SMS/Reminder Sent/".$from, $app_string);
 
                         Mage::log(" sent sms" . $phone, Zend_Log::DEBUG, 'appointments.log', true);
                     }catch (Exception $e)
