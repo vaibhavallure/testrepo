@@ -107,7 +107,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 
              $storeaddress=$configData['store_address'][$storeKey];
 
-            if($storeId==28)
+            if($storeId==24)
             {
                 if($type=="day")
                       $templateId = $configData['email_template_appointment_remind_day'][$storeKey];
@@ -270,7 +270,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 
                  $smsText = $configData['reminder_sms_message'][$storeKey];
 
-                if($storeId==28) {
+                if($storeId==24) {
                     if ($type == "day")
                         $smsText = $configData['day_reminder_sms_message'][$storeKey];
                     elseif ($type == "week")
