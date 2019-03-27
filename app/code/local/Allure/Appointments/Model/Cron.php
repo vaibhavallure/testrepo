@@ -32,11 +32,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 	        /*if($val == 0){
 	            continue;
 	        }*/
-
-            if($store==28) {
-                continue;
-            }
-
+            
 
             $storeKey = array_search ($store, $config['stores']);
 	        $timezone = $config['timezones'][$storeKey];
