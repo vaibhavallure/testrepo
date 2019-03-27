@@ -203,7 +203,7 @@ input#selectDate {
 .hero-image {
 	background-image: url("../../images/allure/popup/banner.jpg");
 	background-repeat: no-repeat;
-	background-position: right;
+	background-position: 92%;
 	height: 100%;
 	padding-bottom: 80px;
 	background-size: cover;
