@@ -255,6 +255,27 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
                     . $this->getElement()->getName() . '[reminder_sms_message][]" value="'
                         . $this->_getValue('reminder_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('reminder_sms_message/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
+
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_week_reminder_sms_message">Week Before Reminder Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[week_reminder_sms_message][]" value="'
+            . $this->_getValue('week_reminder_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('week_reminder_sms_message/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_day_reminder_sms_message">Day Before Reminder Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[day_reminder_sms_message][]" value="'
+            . $this->_getValue('day_reminder_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('day_reminder_sms_message/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+
+
                         
                         
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
@@ -319,6 +340,19 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<label for="customer_eamil_template_appointment_remind">Customer Email Temaplate Appointment Reminder </label>';
         $html .= $this->prepareEmailTemplate($rowIndex,"remind");
         $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_eamil_template_appointment_remind_day">Customer Email Temaplate Appointment Reminder Day</label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"remind_day");
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_eamil_template_appointment_remind">Customer Email Temaplate Appointment Reminder Week</label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"remind_week");
+        $html .= '</div>';
+
         
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="customer_eamil_template_appointment_cancel">Customer Email Temaplate Appointment Cancel </label>';
@@ -608,7 +642,12 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             $email_template = "email_template_appointment_modify";
         }elseif($state == "remind"){
             $email_template = "email_template_appointment_remind";
+        }elseif($state == "remind_day"){
+            $email_template = "email_template_appointment_remind_day";
+        }elseif($state == "remind_week"){
+            $email_template = "email_template_appointment_remind_week";
         }
+
         
         foreach ($arr as $val)
         {
