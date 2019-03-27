@@ -33,9 +33,12 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 	            continue;
 	        }*/
 
+            if($store==28) {
+                continue;
+            }
 
 
-	        $storeKey = array_search ($store, $config['stores']);
+            $storeKey = array_search ($store, $config['stores']);
 	        $timezone = $config['timezones'][$storeKey];
 	        date_default_timezone_set($timezone);
 	        $storeDate=date('Y-m-d H:i:s');
@@ -50,8 +53,9 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 	
 	
 	public function processCollection($storeDate, $storeId){
-		
-		//Send notification before one day
+
+        Mage::log("Check more than 1 day remaining appointments",Zend_Log::DEBUG,'appointments.log',true);
+        //Send notification before one day
 		 $nextTime = date("Y-m-d H:i:00",strtotime("1 day",strtotime($storeDate)));
 		 $next2Time= date("Y-m-d H:i:59",strtotime("1 day 15 minutes",strtotime($storeDate)));
 
@@ -62,9 +66,6 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 		$allAppointments->addFieldToFilter('appointment_start', array('lteq' => $next2Time));
 		$allAppointments->addFieldToFilter('app_status',Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
 		$allAppointments->addFieldToFilter('store_id', array('eq' => $storeId));
-
-
-
 
 		if(count($allAppointments) > 0){
 			$this->sendNotification($allAppointments,"cron","day");
@@ -93,6 +94,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
         Mage::log(" call from ".$from,Zend_Log::DEBUG,'appointments.log',true);
 
 
+
         $configData = $this->getAppointmentStoreMapping();
 		foreach ($allAppointments as $appointment){
 			 $storeId=$appointment->getStoreId();
@@ -107,14 +109,14 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 
              $storeaddress=$configData['store_address'][$storeKey];
 
-            if($storeId==24)
+            $specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+            if($storeId==$specialStoreId)
             {
                 if($type=="day")
                       $templateId = $configData['email_template_appointment_remind_day'][$storeKey];
                 elseif ($type=="week")
                      $templateId = $configData['email_template_appointment_remind_week'][$storeKey];
-
-
 
 
                 if($type!="nd")
@@ -270,7 +272,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 
                  $smsText = $configData['reminder_sms_message'][$storeKey];
 
-                if($storeId==24) {
+                if($storeId==$specialStoreId) {
                     if ($type == "day")
                         $smsText = $configData['day_reminder_sms_message'][$storeKey];
                     elseif ($type == "week")
