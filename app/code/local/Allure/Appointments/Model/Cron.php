@@ -105,7 +105,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 
              $templateId = $configData['email_template_appointment_remind'][$storeKey];
 
-            $storeaddress=$configData['store_name'][$storeKey];
+             $storeaddress=$configData['store_address'][$storeKey];
 
             if($storeId==28)
             {
@@ -119,7 +119,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 
                 if($type!="nd")
                 {
-                     $addressAr=explode(",",$configData['store_name'][$storeKey]);
+                     $addressAr=explode(",",$configData['store_address'][$storeKey]);
                      $addressAr[0]="";
                      $storeaddress=implode($addressAr);
 
