@@ -50,7 +50,7 @@ class Allure_BrownThomas_Model_Data
             $data[$product_id]['action_type'] = 'N';
             $data[$product_id]['UPC'] = $this->formatString($_product->getBarcode(), 13);
             $data[$product_id]['UPC_TYPE'] = 'EAN13';
-            $formatedSKU = strtolower(preg_replace("/[^a-zA-Z0-9]+/", "", $_product->getSKU()));
+            $formatedSKU = $this->formatSKU($_product->getSKU());
             $data[$product_id]['WC_Product_ID'] = $this->formatString(SELF::DEPARTMENT . "x" . SELF::SUPPLIER . "x" . $formatedSKU, 45);
             $data[$product_id]['VPN'] = $this->formatString($_product->getSKU(), 30);
             $data[$product_id]['department'] = self::DEPARTMENT;
@@ -63,7 +63,7 @@ class Allure_BrownThomas_Model_Data
             $data[$product_id]['size_system'] = $this->formatString("", 4);
             $splitsku=$this->splitSku($_product->getSku());
             $data[$product_id]['size_1'] = $this->formatString($splitsku['p_size'], 10);
-            $data[$product_id]['size_2'] = $this->formatString("N/A", 10);
+            $data[$product_id]['size_2'] = $this->formatString("", 10);
             $data[$product_id]['color'] = $this->formatString("GOLD", 10);
             $data[$product_id]['supplier_color'] = $this->formatString(strtoupper($this->getVendorColor($_product)), 24);
             $data[$product_id]['color_group'] = $this->formatString("ARN_COLORS", 10);
@@ -206,6 +206,18 @@ class Allure_BrownThomas_Model_Data
             9=>"Copy",
             10=>"Product Details"
         );
+    }
+
+    public function formatSKU($sku)
+    {
+        $searchVal = array("yellow","rose","black","white","rhodium","gold");
+        $replaceVal = array("y","r","b","w","r","g");
+
+        $newsku =strtolower($sku);
+        $newsku = str_replace($searchVal, $replaceVal,$newsku);
+        $formattedSKU=preg_replace("/[^a-zA-Z0-9]+/", "", $newsku);
+
+        return $formattedSKU;
     }
 
 
