@@ -285,6 +285,10 @@ $noSlotAvlbForDay=false;
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
      }
+     else
+     {
+         $noSlot=true;
+     }
  }
  else if(($checkDate!='04/07/2019')&&($selectedTime!='19:40')) {
 
@@ -297,6 +301,9 @@ else if(($checkDate=='04/07/2019')&&($selectedTime!='18:40')&&($selectedTime!='1
     echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
+}
+else{
+                        $noSlot=true;
 }
 
 
@@ -350,7 +357,9 @@ else if(($checkDate=='04/07/2019')&&($selectedTime!='18:40')&&($selectedTime!='1
 <script type="text/javascript">
 <?php if($noSlotAvlbForDay): ?>
 jQuery(".slot_msg").html("<p class='p-center'> Walk-ins are welcome!  There are no open appointments for this date. </p>");
-
+jQuery("#selectTime").hide();
+<?php else: ?>
+jQuery(".slot_msg").html("");
  <?php endif;?>
 
     jQuery("#selectTime").change(function(){
