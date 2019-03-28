@@ -43,6 +43,7 @@ beta_staging:
     - rm -f var && ln -s /var/www/shared/mt-staging/var var
     - rm -f app/etc/local.xml && ln -s /var/www/shared/mt-staging/etc/local.xml app/etc/local.xml
     - echo 'Deployed on Beta Staging'
+    
 beta_appointments:
   environment: appointments
   stage: appointments
