@@ -84,8 +84,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		    $old_app_piercer=$oldApp->getPiercerId();
 		    $old_app_date= date('m/d/Y',strtotime($oldApp->getAppointmentStart()));
 		}
-		Mage::log($appointmentId,Zend_log::DEBUG,'mylogs',true);
-
 		//$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
 		$startTime = $configData['start_work_time'][$storeKey];
 		$storeCurrentTime = $this->getData("store_current_time");
@@ -125,10 +123,16 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		$collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
 			->addFieldToFilter('is_active', array('eq' => '1'));
 
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+		$specialStore = false;
+
+		if ($specialStoreId == $storeId) {
+			$specialStore = true;
+		}
+
 		if($this->getData("date")) :
 		$date = $this->getData("date");
-		Mage::log("default Date",Zend_log::DEBUG,'mylogs',true);
-		Mage::log($date,Zend_log::DEBUG,'mylogs',true);
 
 		$dayOfWeek = date("d", strtotime($date));
 		$day = date('l', strtotime($date));
@@ -148,8 +152,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		endif;
 		/*EO Piercer Logic */
 
-
-
 		echo "<div class='image_carousel' id='time_blocks'>";
 		echo "<div style=''>";
 		echo " <ul id='foo2' class='jcarosel_main_ul' style='overflow: hidden;'>";
@@ -161,8 +163,6 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 		{
 		    $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
 			$endTime = strtotime("+$interval minutes", strtotime($selectedTime));
-			//Mage::log("Start time:".$selectedTime,Zend_log::DEBUG,'mylogs',true);
-			//Mage::log("End time:".$endTime,Zend_log::DEBUG,'mylogs',true);
 
 			$slotval ="`". "time_slot_".$i ."`";
 			//echo '<br>'.$slotval;
@@ -229,22 +229,35 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 					    if($storeCurrentTime >= $workStart)
 					       $workStart = $storeCurrentTime;
 					}
-					$workStart = $helper->getTimeByValue($workStart);
-					//$workEnd = $workSlot['end'].":00";
-					$workEnd = $helper->getTimeByValue($workSlot['end']);
 
-					//Break
-					$breakStart = $helper->getTimeByValue($workSlot['break_start']);
-					$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
+					if ($specialStore) {
+						$workStart = $helper->getBreakTimeByValue($workStart);
+					} else {
+						$workStart = $helper->getTimeByValue($workStart);
+					}
+
+					if ($specialStore) {
+						$workEnd = $helper->getBreakTimeByValue($workSlot['end']);
+					} else {
+						$workEnd = $helper->getTimeByValue($workSlot['end']);
+					}
+
+					if ($specialStore) {
+						$breakStart = $helper->getBreakTimeByValue($workSlot['break_start']);
+					} else {
+						$breakStart = $helper->getTimeByValue($workSlot['break_start']);
+					}
+
+					if ($specialStore) {
+						$breakEnd = $helper->getBreakTimeByValue($workSlot['break_end']);
+					} else {
+						$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
+					}
 
 					Mage::log($day,Zend_Log::DEBUG, 'appointments.log', true );
 					if((strtotime($workStart)<=strtotime($selectedTime) && strtotime($breakStart)>=strtotime($endTime)) ||
 							(strtotime($breakEnd)<=strtotime($selectedTime) && strtotime($workEnd)>=strtotime($endTime)))
 					{
-
-
-						//Mage::log($country_data,Zend_Log::DEBUG, 'store', true );
-						//$value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId()));
 
 						/* Logic to get most available piercer */
 						/* This logic count number of allocated appointments on that day for particular piercer*/

@@ -114,10 +114,10 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
             $appendUrl .= "store=" . $storep;
         }
 
-        if(!$this->helper()->validatePostData($post_data,"user"))
+        if(!$this->helper()->validatePostData($post_data, "user"))
         {
             Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
-            $this->_redirectReferer() . $appendUrl;
+            $this->_redirectReferer($appendUrl);
             return;
         }
 
@@ -130,9 +130,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                     $old_appointment = Mage::getModel('appointments/appointments')->load($post_data['id']);
                     if (empty($post_data['app_date']))
                         $post_data['app_date'] = date('m/d/Y', strtotime($old_appointment->getAppointmentStart()));
-                }
-                else
-                {
+                } else {
                     $step="save";
                     $action="save";
                 }
@@ -160,28 +158,35 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                 if($action=="save")
                     $this->addLog($this->createSaveLogString("Before ".$step,$post_data),$action);
 
-                Mage::log('Before Save'.$step,Zend_Log::DEBUG,'myLog.log',true);
+                Mage::log('POST DATA UPDATED::',Zend_Log::DEBUG,'appointments.log',true);
+                Mage::log($post_data, Zend_Log::DEBUG,'appointments.log',true);
 
-                if($this->helper()->validateSlotBeforeBookAppointment($post_data) && !isset($post_data['id'])) {
+                if ($this->helper()->validateSlotBeforeBookAppointment($post_data)) {
                     // Mage::getSingleton("core/session")->addError("Sorry This Slot Has Been Already Taken. Please Select Another Slot.");
                     $this->addLog($this->createSaveLogString("Err => Sorry This Slot Has Been Already Taken. Please Select Another Slot ",$post_data),"save");
 
                     $piercer = $this->helper()->checkIfAnotherPiercerAvailable($post_data);
 
-                    if($piercer['success'])
-                    {
+                    if ($piercer['success']) {
                         $post_data['piercer_id']=$piercer['p_id'];
                         $this->addLog($this->createSaveLogString("new piercer assigned ",$post_data),"save");
-                    }
-                    else {
+                    } else {
                         $this->addLog($this->createSaveLogString("not found any other piercer ",$post_data),"save");
                         Mage::getSingleton('core/session')->setSlotInvalid("true");
-                        $this->_redirectReferer() . $appendUrl;
+                        $this->_redirectReferer($appendUrl);
                         return;
                     }
                 }
 
+
                 $storeKey = array_search($storeId, $configData['stores']);
+
+                $post_data['notification_pref']='1';
+                if (isset($post_data['noti_sms'])) {
+                    if ($post_data['noti_sms']=='on') {
+                        $post_data['notification_pref']='2';
+                    }
+                }
                 $model = Mage::getModel('appointments/appointments')->addData($post_data)->save();
 
                 $bookingdata=$post_data;
@@ -189,6 +194,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
                 $this->addLog($this->createSaveLogString("After ".$step,$bookingdata),$action);
                 Mage::log('After Save'.json_encode($bookingdata,true),Zend_Log::DEBUG,'myLog.log',true);
+
                 // Create customer if flag set
                 if ($post_data['password'] != null || $post_data['password'] != '') {
                     $websiteId = Mage::app()->getWebsite()->getId();
@@ -222,18 +228,12 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
 
-                if(isset($post_data['noti_sms']))
-                {
-                    if($post_data['noti_sms']=='on')
-                    {
-                        $post_data['notification_pref']='2';
-                    }
-                }
+
                 if ($post_data['notification_pref'] === '2') {
                     if ($old_appointment) {
                         $smsText = $configData['modified_sms_message'][$storeKey];
                         $action_string="SMS/Modify";
-                    }else {
+                    } else {
                         $smsText = $configData['book_sms_message'][$storeKey];
                         $action_string="SMS/Create";
                     }
@@ -245,6 +245,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                         $time = date('h:i A', strtotime($model->getAppointmentStart()));
                     else
                         $time = date('H:i', strtotime($model->getAppointmentStart()));
+
                     $url=Mage::helper('appointments')->getShortUrl($apt_modify_link);
                     $date = date("F j, Y ", strtotime($model->getAppointmentStart()));
 
@@ -257,7 +258,6 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                         $model->setSmsStatus($smsdata);
                         $model->save();
                         $this->notify_Log($action_string, $app_string);
-
                     }
                 }
 
@@ -291,13 +291,11 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                     'booking_id'=>$model->getId()
                 );
 
-
-
-
                 //send Customer email
                 $enableCustomerEmail = $configData['customer_email_enable'][$storeKey];
                 $enableAdminEmail = $configData['admin_email_enable'][$storeKey];
                 $enablePiercerEmail = $configData['piercer_email_enable'][$storeKey];
+
                 $sender = array(
                     'name' => Mage::getStoreConfig("trans_email/bookings/name"),
                     'email' => $configData['store_email'][$storeKey]
@@ -305,7 +303,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
                 try {
                     if ($old_appointment) {
-                        if($enableCustomerEmail){
+                        if ($enableCustomerEmail){
                             $templateId=$configData['email_template_appointment_modify'][$storeKey];
                             $mail = Mage::getModel('core/email_template')->setTemplateSubject(
                                 $mailSubject);
@@ -317,7 +315,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
                             $this->notify_Log("Email/Modify", $app_string);
                         }
-                        if($enableAdminEmail){
+                        if ($enableAdminEmail){
                             $adminEmail=$configData['admin_email_id'][$storeKey];
                             $name='';
                             $templateId=$configData['admin_email_template_modify'][$storeKey];
@@ -325,15 +323,15 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                                 $mailSubject)->sendTransactional($templateId,
                                 $sender, $email, $name, $vars);
                         }
-                        if($enablePiercerEmail){
+                        if ($enablePiercerEmail){
                             $templateId=$configData['piercer_email_template_modify'][$storeKey];
                             $mail = Mage::getModel('core/email_template')->setTemplateSubject(
                                 $mailSubject)->sendTransactional($templateId,
                                 $sender, $email, $name, $vars);
                         }
 
-                    }else{
-                        if($enableCustomerEmail){
+                    } else {
+                        if ($enableCustomerEmail){
                             $templateId=$configData['email_template_appointment'][$storeKey];
                             $mail = Mage::getModel('core/email_template')->setTemplateSubject(
                                 $mailSubject);
@@ -368,21 +366,21 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 //                Mage::getSingleton("core/session")->setData('appointment_submitted', $model);
                 Mage::log('APPOINTMENT SUBMITTED','myLog.log',true);
                 $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
-                $this->_redirectReferer() . $appendUrl;
+                $this->_redirectReferer($appendUrl);
                 return;
             } catch(Exception $e) {
                 Mage::getSingleton("core/session")->addError($e->getMessage());
 
-                $this->_redirectReferer() . $appendUrl;
+                $this->_redirectReferer($appendUrl);
                 return;
             }
         }
         Mage::log('END OF SAVE ACTION IN POPUP Controller',Zend_Log::DEBUG,'myLog.log',true);
-        $this->_redirectReferer().$appendUrl;
+        $this->_redirectReferer($appendUrl);
         // $this->getResponse()->setRedirect(Mage::getUrl("*/*/", array('_secure' => true)) . $appendUrl);
     }
 
-/* Modify or Cancel URL Action */
+    /* Modify or Cancel URL Action */
     public function modifyAction ()
     {
 
@@ -410,11 +408,9 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
                     break;
                 }
 
-
                 $logdata=$model->getData();
                 $logdata['ip']=$this->get_client_ip();
                 $this->addLog($this->createSaveLogString("Modify INIT ",$logdata),"modify");
-
 
                 Mage::register('appointment_modified', $model);
                 Mage::getSingleton("core/session")->setData(
@@ -447,18 +443,15 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
             try {
                 $model->setId($apt_id)->save();
 
-
                 $logdata=$model->getData();
                 $logdata['ip']=$this->get_client_ip();
                 $this->addLog($this->createSaveLogString("Canceled",$logdata),"modify");
-
 
                 echo "Your scheduled Appointment is Cancelled successfully.";
                 $configData = $this->getAppointmentStoreMapping();
                 $storeKey = array_search ($storeId, $configData['stores']);
 
                 $app_string="id->".$model->getId()." email->".$model->getEmail() ." mobile->".$model->getPhone()." name->".$model->getFirstname()." ".$model->getLastname()." ";
-
 
                 if ($model->getNotificationPref() === '2') {
                     $smsText = $configData['cancel_sms_message'][$storeKey];

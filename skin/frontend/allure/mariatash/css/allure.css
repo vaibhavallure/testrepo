@@ -2508,7 +2508,7 @@ width: 100%;
     text-transform: uppercase;
 }
 .gift-confirm  .redirect{
-	margin: 5 px !important;
+	margin: 5px !important;
 }
 
 .buttons-set #delete-my-account{
@@ -2858,4 +2858,15 @@ width: 100%;
 .my-account .box-address-edit input#phone {
   width: 100% !important;
   height : 32px !important;
+}
+/*DRAG ISSUE FIXED*/
+body.catalog-product-view .container-fluid{
+  overflow-x:  hidden;
+}
+/*POST LEGNTH DISPlAY FIXED*/
+.product-view .product-options .product-custom-option {
+  width: 195px !important;
+  cursor: pointer;
+  background: white url(../images/formelements-select.png) no-repeat center right;
+  font-weight: normal !important;
 }

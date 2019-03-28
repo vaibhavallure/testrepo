@@ -13863,7 +13863,7 @@ f/********** Product Prices > */
 .product-collateral .box-collateral {}
 .product-collateral .box-awautorelated2 { /*margin-top:20px;*/ margin-bottom:0px; }
 .product-collateral select,
-.add-to-cart .input-text.qty { padding:3px; width: 81px; margin-right: 10px; font-weight:bold;  }
+.add-to-cart .input-text.qty { padding:3px; width: 81px; margin-right: 10px; font-weight:normal;  }
 .product-collateral select.super-attribute-select {
     width: 130px;
     height: auto !important;
@@ -14157,7 +14157,7 @@ div.styled {
 .product-options-bottom .price-tax { float:left; }
 .product-options-bottom .add-to-cart { /*float:right; margin:0; padding:9px 0; border:0; background:none;*/ }
 .product-options-bottom .add-to-cart label { color:#000000; font-weight: bold; }
-.catalog-product-view .product-options-bottom .add-to-cart label { color:#000000; font-weight: bold; margin-top: 0px;  min-width: 110px !important; text-transform:uppercase;  line-height: 32px; }
+.catalog-product-view .product-options-bottom .add-to-cart label { color:#3f3f47; font-weight: bold; margin-top: 0px;  min-width: 110px !important; text-transform:uppercase;  line-height: 32px; }
 .product-shop .add-to-cart button.button { float:right; margin:0 20px 0 20px; padding: 5px 11px 4px; width:106px; text-align:center; }
 .product-shop .product-options-bottom .price-box { float:none; margin:0; }
 .product-shop .product-options-bottom .price-label { float:none; padding-right:0; }
@@ -19639,8 +19639,9 @@ ul.products-grid2 { margin-left:auto; margin-right: auto; }
 }
 
 .product-view .product-shop .product-options dd select{
-    width:271px;
+    width:195px !important;
     cursor:pointer;
+    background: white url(../images/formelements-select.png) no-repeat center right;
 }
 .amconf-images-container img.amconf-image{
     width:32px;

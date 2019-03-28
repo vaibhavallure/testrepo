@@ -90,32 +90,37 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function generateEnrichFile()
     {
-        $ioo = new Varien_Io_File();
         $path = Mage::getBaseDir('var') . DS . 'brownthomasfiles';
         $filenm="Concession Enrichment Requirements_Maria Tash.xlsx";
         $filepath = $path . DS . $filenm;
+        include_once Mage::getBaseDir('lib') . "/PHPExcel/Classes/PHPExcel.php";
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $cl=0;
 
-        $ioo->setAllowCreateFolders(true);
-        $ioo->open(array('path' => $path));
-        $ioo->streamOpen($filepath, 'w+');
-        $ioo->streamLock(true);
+         foreach ($this->modelData()->getEnrichTitles() as $titles)
+          {
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($cl,1,$titles);
+            $cl++;
+          }
+           $enrich_data=$this->modelData()->getEnrichData();
+           $rw=2;
 
-        $file=$ioo;
+           foreach ($enrich_data as $data)
+          {
+           $cl=0;
+           foreach ($data as $value)
+           {
+           $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($cl,$rw,$value);
+           $cl++;
+           }
+           $rw++;
+          }
 
-        /*write title row---*/
-        $file->streamWrite($this->getWritableString($this->modelData()->getEnrichTitles()));
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            $objWriter->save($filepath);
 
-        /*write data row---*/
-        $enrich_data=$this->modelData()->getEnrichData();
-        foreach ($enrich_data as $data) {$file->streamWrite($this->getWritableString($data));}
-
-        return $filepath;
-
+            return $filepath;
     }
-
-
-
-
-
 
 }
