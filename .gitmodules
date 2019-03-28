@@ -1,4 +1,4 @@
 [submodule "digital-release"]
 	path = digital-release
-	url = git@code.allureinc.co:mariatash/release-form.git
+	url = ../release-form.git
 	branch = production
