@@ -13,4 +13,8 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Renderer_Action extends Mag
 			$output.='<a href='.Mage::helper('adminhtml')->getUrl('adminhtml/inventory_purchase/accept', array('_secure' => true,'id'=>$value,'key'=>$key)).'>Accept</a>';
 		return $output;
 	}
+	public function renderExport(Varien_Object $row)
+	{
+	    return '';
+	}
 }

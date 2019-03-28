@@ -43,19 +43,19 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
     {
         self::$isGetProductsByItems = $value;
     }
-    
+
     public static function getStockItem($product, $store = null)
     {
         $stockItem = null;
-        
+
         if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
             $stockItem = Mage::getModel('cataloginventory/stock_item')
                 ->loadByProduct($product);
         }
-        
+
         return $stockItem;
     }
-    
+
     public static function getTagCollection($product, $store = null)
     {
         $tagCollection = null;
@@ -63,21 +63,21 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
         if (self::$flWithoutTags) {
             return $tagCollection;
         }
-        
+
         $tagModel = Mage::getModel('tag/tag');
-        
+
         if ($tagModel) {
             $tagCollection = $tagModel->getResourceCollection();
         }
         // Check if tags don't work correctly.
         if (!$tagCollection) {
             self::$flWithoutTags = true;
-        
+
         } else {
             $tagCollection = $tagCollection
                 ->setFlag('relation', true)
                 ->setActiveFilter();
-            
+
             if (!empty($store)) {
                 $tagCollection->addStoreFilter($store->getId(), true);
             }
@@ -89,8 +89,8 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 ->addProductFilter($product->getId())
                 ->load();
         }
-        
-        
+
+
         return $tagCollection;
     }
 
@@ -143,7 +143,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
         if ($product) {
             $image = self::generateImage($product, 'small_image', $flagKeepFrame, $width, $height);
-            
+
             if (empty($image)) {
                 $image = self::generateImage($product, 'image', $flagKeepFrame, $width, $height);
             }
@@ -254,7 +254,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
         }
 
         $_priceModel = $product->getPriceModel();
-        
+
         if ($_priceModel && $product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE) {
             // [1.5]
             if (version_compare(Mage::getVersion(), '1.6', '<')) {
@@ -344,7 +344,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
         return $customerGroups;
     }
-        
+
 
     private static function _generateProductPrices(&$item, $product, $childrenProducts = null, $store = null)
     {
@@ -532,7 +532,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
                 // unitedValues - main value + childrens values
                 $unitedValues = self::_getIdAttributesValues($unitedProducts, $attributeCode);
-               
+
                 $inputType = $attribute->getData('frontend_input');
                 $isSearchable = $attribute->getIsSearchable();
                 $isVisibleInAdvancedSearch = $attribute->getIsVisibleInAdvancedSearch();
@@ -542,7 +542,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 $attributeName = 'attribute_' . $attribute->getId();
 
                 $isNecessaryAttribute = $useFullFeed || $isSearchable || $isVisibleInAdvancedSearch || $usedForSortBy || $isFilterableInSearch || in_array($attributeCode, $requiredAttributes);
-                
+
                 if (!$isNecessaryAttribute) {
                     continue;
                 }
@@ -584,8 +584,8 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                     }
 
                 } elseif (
-                    $attributeCode == 'meta_title' || 
-                    $attributeCode == 'meta_description' || 
+                    $attributeCode == 'meta_title' ||
+                    $attributeCode == 'meta_description' ||
                     $attributeCode == 'meta_keyword') {
 
                     $item[$attributeCode] = $unitedValues;
@@ -601,7 +601,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
                 } elseif ($inputType == 'text' || $inputType == 'textarea') {
                     $item[$attributeCode] = $unitedValues;
-                    
+
                 } elseif ($inputType == 'date') {
                     $dateTimestamp = Mage::getModel('core/date')->timestamp(strtotime($value));
                     $item[$attributeCode] = $dateTimestamp;
@@ -642,7 +642,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             }
         }
 
-        $item['id'] = $product->getId();      
+        $item['id'] = $product->getId();
         $item['title'] = $product->getName();
         $item['summary'] = $product->getData('short_description');
         $item['link'] = $product->getProductUrl(false);
@@ -711,34 +711,34 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
         return $item;
     }
-    
+
     public static function getOptionCollection($filter, $store = null)
     {
         // not used in current module
         $optionCollection = Mage::getResourceModel('eav/entity_attribute_option_collection');
-        
+
         if (!empty($store)) {
             $optionCollection->setStoreFilter($store); //fixme need check
         }
-        
+
         return $optionCollection
             ->setAttributeFilter($filter->getId())
             ->setPositionOrder('desc', true)
             ->load();
     }
-    
+
     private static function _getPriceNavigationStep($store = null)
     {
         if (!$store) {
             $store = Mage::app()->getStore(0);
         }
-        
+
         $priceRangeCalculation = $store->getConfig(Mage_Catalog_Model_Layer_Filter_Price::XML_PATH_RANGE_CALCULATION);
-        
+
         if ($priceRangeCalculation == Mage_Catalog_Model_Layer_Filter_Price::RANGE_CALCULATION_MANUAL) {
             return $store->getConfig(Mage_Catalog_Model_Layer_Filter_Price::XML_PATH_RANGE_STEP);
         }
-        
+
         return null;
     }
 
@@ -759,7 +759,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             // "Can be used only with catalog input type Dropdown, Multiple Select and Price".
             if (($inputType == 'select') || ($inputType == 'multiselect')) {
                 $item['type'] = 'select';
-                
+
             } elseif ($inputType == 'price') {
                 $item['type'] = 'dynamic';
                 $step = self::_getPriceNavigationStep($store);
@@ -777,14 +777,14 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 $item['attribute'] = $attribute->getAttributeCode();
             }
         }
-        
+
         return $item;
     }
-    
+
     private static function _generateFacetFromCustom($title = '', $position = 0, $attribute = '', $type = '')
     {
         $facet = array();
-        
+
         $facet['title'] = $title;
         $facet['position'] = $position;
         $facet['attribute'] = $attribute;
@@ -837,7 +837,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 if (empty($productId)) {
                     continue;
                 }
-                
+
                 // It can use various types of data.
                 if (is_array($productId)) {
                     if (isset($productId['entity_id'])) {
@@ -864,9 +864,9 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
     public static function getProducts($productIds = null, $store = null, $customerGroupId = null)
     {
-        $resultProducts = array();
+        $products = array();
         if (empty($productIds)) {
-            return $resultProducts;
+            return $products;
         }
 
         // Need for generate correct url and get right products.
@@ -876,74 +876,52 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             Mage::app()->setCurrentStore(0);
         }
 
-        static $arrProducts = array();
-
-        $keyProducts = '';
-        if ($productIds) {
-            if (is_array($productIds)) {
-                $keyProducts .= implode('_', $productIds);
-            } else {
-                $keyProducts .= $productIds;
-            }
-        }
-        $keyProducts .= ':' .  ($store ? $store->getId() : '0');
-        $keyProducts .= ':' .  $customerGroupId;
-        $keyProducts .= ':' .  (self::$isGetProductsByItems ? '1' : '0');
-
-        if (isset($arrProducts[$keyProducts])) {
-            // Nothing
+        if (self::$isGetProductsByItems) {
+            $products = self::_getProductsByItems($productIds, $store);
         } else {
-            $products = array();
-            if (self::$isGetProductsByItems) {
-                $products = self::_getProductsByItems($productIds, $store);
-            } else {
-                $products = Mage::getModel('catalog/product')
-                    ->getCollection()
-                    ->addAttributeToSelect('*')
-                    ->addUrlRewrite();
+            $products = Mage::getModel('catalog/product')
+                ->getCollection()
+                ->addAttributeToSelect('*')
+                ->addUrlRewrite();
 
-                if ($customerGroupId != null) {
-                    if ($store) {
-                        $products->addPriceData($customerGroupId, $store->getWebsiteId());
-                    } else {
-                        $products->addPriceData($customerGroupId);
-                    }
-                }
-                    
+            if ($customerGroupId != null) {
                 if ($store) {
-                    $products
-                        ->setStoreId($store)
-                        ->addStoreFilter($store);
-                }
-                
-                if ($productIds !== Simtech_Searchanise_Model_Queue::NOT_DATA) {
-                    // Already exist automatic definition 'one value' or 'array'.
-                    $products->addIdFilter($productIds);
-                }
-
-                $products->load();
-            }
-
-            // Fixme in the future
-            // Maybe create cache without customerGroupId and setCustomerGroupId after using cache.
-            if ($products && ($store || $customerGroupId != null)) {
-                foreach ($products as $key => &$product) {
-                    if ($product) {
-                        if ($store) {
-                            $product->setWebsiteId($store->getWebsiteId());
-                        }
-                        if ($customerGroupId != null) {
-                            $product->setCustomerGroupId($customerGroupId);
-                        }
-                    }
+                    $products->addPriceData($customerGroupId, $store->getWebsiteId());
+                } else {
+                    $products->addPriceData($customerGroupId);
                 }
             }
-            // end fixme
 
-            $arrProducts[$keyProducts] = $products;
+            if ($store) {
+                $products
+                ->setStoreId($store)
+                ->addStoreFilter($store);
+            }
+
+            if ($productIds !== Simtech_Searchanise_Model_Queue::NOT_DATA) {
+                // Already exist automatic definition 'one value' or 'array'.
+                $products->addIdFilter($productIds);
+            }
+
+            $products->load();
         }
 
-        return $arrProducts[$keyProducts];
+        // Fixme in the future
+        // Maybe create cache without customerGroupId and setCustomerGroupId after using cache.
+        if ($products && ($store || $customerGroupId != null)) {
+            foreach ($products as $key => &$product) {
+                if ($product) {
+                    if ($store) {
+                        $product->setWebsiteId($store->getWebsiteId());
+                    }
+                    if ($customerGroupId != null) {
+                        $product->setCustomerGroupId($customerGroupId);
+                    }
+                }
+            }
+        }
+
+        return $products;
     }
 
     // Main functions //
@@ -975,8 +953,8 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             if (Mage::helper('catalog/product_flat')->isEnabled()) {
                 Mage::helper('searchanise/ApiProducts')->setIsGetProductsByItems(true);//workaround for get all attributes
                 Mage::getResourceModel('catalog/product_collection')->setStore($store->getId());//workaround for magento flat products table bug
-            }   
-        } 
+            }
+        }
 
         $startId = 0;
         $endId = 0;
@@ -1017,7 +995,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
         return array($startId, $endId);
     }
-    
+
     public static function getProductIdsFormRange($start, $end, $step, $store = null, $isOnlyActive = false)
     {
         $arrProducts = array();
@@ -1026,17 +1004,17 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             if (Mage::helper('catalog/product_flat')->isEnabled()) {
                 Mage::helper('searchanise/ApiProducts')->setIsGetProductsByItems(true);//workaround for get all attributes
                 Mage::getResourceModel('catalog/product_collection')->setStore($store->getId());//workaround for magento flat products table bug
-            }   
+            }
             Mage::app()->setCurrentStore($store->getId());
         } else {
             Mage::app()->setCurrentStore(0);
         }
-        
+
         $products = Mage::getModel('catalog/product')
             ->getCollection()
             ->addFieldToFilter('entity_id', array("from" => $start, "to" => $end))
             ->setPageSize($step);
-        
+
         if ($store) {
             $products->addStoreFilter($store);
         }
@@ -1050,7 +1028,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 $products->addAttributeToFilter('visibility', array('in' => Mage::getSingleton('catalog/product_visibility')->getVisibleInSearchIds()));
             }
         }
-        
+
         $products->load();
         if ($products) {
             // Not used because 'arrProducts' comprising 'stock_item' field and is 'array(array())'
@@ -1093,7 +1071,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
         $attributeName = 'attribute_' . $attribute->getId();
 
         $isNecessaryAttribute = $useFullFeed || $isSearchable || $isVisibleInAdvancedSearch || $usedForSortBy || $isFilterableInSearch || in_array($attributeCode, $requiredAttributes);
-        
+
         if (!$isNecessaryAttribute) {
             return $items;
         }
@@ -1161,10 +1139,10 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             $attributeWeight = ($attributeCode == 'short_description')? self::WEIGHT_SHORT_DESCRIPTION : self::WEIGHT_SHORT_TITLE;
 
         } elseif (
-            $attributeCode == 'short_description' || 
+            $attributeCode == 'short_description' ||
             $attributeCode == 'description' ||
-            $attributeCode == 'meta_title' || 
-            $attributeCode == 'meta_description' || 
+            $attributeCode == 'meta_title' ||
+            $attributeCode == 'meta_description' ||
             $attributeCode == 'meta_keyword') {
 
             if ($isSearchable) {
@@ -1208,7 +1186,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 }
             }
             $type = 'text';
-            
+
         } elseif ($inputType == 'date') {
             $type = 'int';
 
@@ -1271,7 +1249,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             if (Mage::helper('searchanise/ApiSe')->getResultsWidgetEnabled($store)) {
                 $schema[] = array(
                     'name'        => 'categories',
-                    'title'       => Mage::helper('catalog')->__('Category'),
+                    'title'       => Mage::helper('core')->__('Category'),
                     'type'        => 'text',
                     'weight'      => self::WEIGHT_CATEGORIES,
                     'text_search' => 'Y',
@@ -1279,7 +1257,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
                 );
                 $schema[] = array(
                     'name'        => 'category_ids',
-                    'title'       => Mage::helper('catalog')->__('Category') . ' - IDs',
+                    'title'       => Mage::helper('core')->__('Category') . ' - IDs',
                     'type'        => 'text',
                     'weight'      => 0,
                     'text_search' => 'N',
@@ -1287,24 +1265,24 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
             } else {
                 $schema[] = array(
                     'name'        => 'categories',
-                    'title'       => Mage::helper('catalog')->__('Category'),
+                    'title'       => Mage::helper('core')->__('Category'),
                     'type'        => 'text',
                     'weight'      => self::WEIGHT_CATEGORIES,
                     'text_search' => 'Y',
                 );
                 $schema[] = array(
                     'name'        => 'category_ids',
-                    'title'       => Mage::helper('catalog')->__('Category') . ' - IDs',
+                    'title'       => Mage::helper('core')->__('Category') . ' - IDs',
                     'type'        => 'text',
                     'weight'      => 0,
                     'text_search' => 'N',
-                    'facet'       => self::_generateFacetFromCustom(Mage::helper('catalog')->__('Category'), 10, 'category_ids', 'select'),
+                    'facet'       => self::_generateFacetFromCustom(Mage::helper('core')->__('Category'), 10, 'category_ids', 'select'),
                 );
             }
 
             $schema[] = array(
                 'name'        => 'tags',
-                'title'       => Mage::helper('catalog')->__('Product Tags'),
+                'title'       => Mage::helper('core')->__('Product Tags'),
                 'type'        => 'text',
                 'weight'      => self::WEIGHT_TAGS,
                 'text_search' => 'Y',
@@ -1312,7 +1290,7 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
             $schema[] = array(
                 'name'        => 'is_in_stock',
-                'title'       => Mage::helper('catalog')->__('Stock Availability'),
+                'title'       => Mage::helper('core')->__('Stock Availability'),
                 'type'        => 'text',
                 'weight'      => 0,
                 'text_search' => 'N',
@@ -1333,16 +1311,10 @@ class Simtech_Searchanise_Helper_ApiProducts extends Mage_Core_Helper_Data
 
         return $schemas[$store->getId()];
     }
-    
+
     public static function getHeader($store = null)
     {
-        $url = '';
-        
-        if ($store) {
-            $url = Mage::app()->getStore()->getBaseUrl();
-        } else {
-            $url = $store->getUrl();
-        }
+        $url = $store ? $store->getUrl() : Mage::app()->getStore()->getBaseUrl();
         $date = date('c');
 
         return array(

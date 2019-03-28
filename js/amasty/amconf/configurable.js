@@ -78,6 +78,7 @@ Product.Config.prototype.resetChildren = function(element){
 
 Product.Config.prototype.fillSelect = function(element){
     var attributeId = element.id.replace(/[a-z]*/, '');
+   // console.log("attributeId:"+attributeId);
     var options = this.getAttributeOptions(attributeId);
     this.clearSelect(element);
     element.options[0] = new Option(this.config.chooseText, '');
@@ -150,8 +151,9 @@ Product.Config.prototype.fillSelect = function(element){
 Product.Config.prototype.configureElement = function(element)
 {
     // extension Code
+
 	var oldIndex = element.nextSetting.selectedIndex; //allure new code add
-	
+	//console.log("oldIndex:"+oldIndex);
     optionId = element.value;
     if ($('amconf-image-' + optionId))
     {
@@ -170,7 +172,11 @@ Product.Config.prototype.configureElement = function(element)
 
     this.reloadOptionLabels(element);
     if(element.value){
+        console.log('ELELEMENT VALUE');
+        console.log(element.value);
         this.state[element.config.id] = element.value;
+        console.log('Next Setting');
+        console.log(element.nextSetting);
         if(element.nextSetting){
             element.nextSetting.disabled = false;
             this.fillSelect(element.nextSetting);
@@ -255,6 +261,12 @@ Product.Config.prototype.configureImage = function(event){
     optionId = element.id.replace(/[a-z-]*/, '');
 
     var options = this.getAttributeOptions(attributeId);
+    console.log('OPTION IN CONFIGURE IMG');
+    console.log(options);
+    console.log('Attribute ID in Config IMG');
+    console.log(attributeId);
+    console.log('Option ID in Config IMG');
+    console.log(optionId);
     for (var i = 0; i < options.length; i ++) {
         if (options[i].id && options[i].id == optionId) {
             if (typeof options[i].stock_status_text !== 'undefined') {
@@ -367,17 +379,21 @@ Product.Config.prototype.updateData = function(key)
             }.bind(this));
 
             var img_id;  option_id = key.split(",");
+
+
             if(option_id[0]){
                 var img_id = option_id[0];
             }
             var check_reload = option_id[1];
             if(check_reload){
-                if(parseInt($('optionid').value) != parseInt(img_id)){
+                var current_attribute_name = jQuery('#current_attribute_name').text();
+                if((parseInt($('optionid').value) != parseInt(img_id)) || (jQuery("#attribute262").length  &&  parseInt($('direction_id').value)!=option_id[1]))
+                {
                     var url = confData.getData(key, 'media_url');
                     url = url + 'q/' + $('reloadmedia').value;
 
                     var current_option_id = jQuery('#current_option_id').text();
-                    if(current_option_id != img_id){
+                    if((parseInt($('optionid').value) != parseInt(img_id)) || (jQuery("#attribute262").length &&  parseInt($('direction_id').value)!=option_id[1])){
                       jQuery.ajax({
                         url: url,
                         dataType: 'html',
@@ -386,6 +402,9 @@ Product.Config.prototype.updateData = function(key)
                             var tm = setTimeout("applyProductZoom()",2500);
                             confData.currentIsMain = false;
                             $('optionid').value = img_id;
+
+                            if(jQuery("#attribute262").length)
+                            $('direction_id').value=option_id[1];
                         }
                       });
                     }
@@ -404,7 +423,8 @@ Product.Config.prototype.updateData = function(key)
                     });
                     */
                }
-            }else{
+            }
+            else{
                 if(parseInt($('optionid').value) != parseInt(img_id)){
                     var url = confData.getData(key, 'media_url');
                     url = url + 'q/' + $('reloadmedia').value;
@@ -597,16 +617,21 @@ Product.Config.prototype.updateFormProductId = function(productId){
     //allure commented
     //newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');
     //$('product_addtocart_form').action = newcurrentAction;
-    //$('product_addtocart_form').product.value = productId;
+    $('product_addtocart_form').product.value = productId;
     
-    var flag = true;
+    var flag = false;
     if(jQuery('#parent-child-product').length){ 
     	var checkParentChild = jQuery('#parent-child-product').val();
     	if(checkParentChild == 1){
     		flag = false;
     	}
     }
-    
+ 
+   var checkGiftcard = jQuery('#is_gift_card').val();
+    	if(checkGiftcard == 1){
+    		flag = true;
+    	}
+ 
     if(flag){
     	//for non parent child
     	newcurrentAction = currentAction.sub(/product\/\d+\//, 'product/' + productId + '/');

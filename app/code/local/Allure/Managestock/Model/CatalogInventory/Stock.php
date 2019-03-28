@@ -9,7 +9,7 @@ class Allure_Managestock_Model_CatalogInventory_Stock extends Mage_CatalogInvent
      */
     public function getId()
     {
-        	return Mage::helper('managestock')->getStockIdOfCurrentWebsite();
+    	return Mage::helper('managestock')->getStockIdOfCurrentWebsite();
     }
 
 }

@@ -42,7 +42,7 @@
 
 <?php $totalPages = $_orders->getLastPageNumber();?>
 	
-<div class="col2-set">
+<div class="col2-set open-order-view">
     <div class="box">
         <div class="box-title">
             <h3>
@@ -119,6 +119,7 @@
     </div>
     
 </div>
+ <div id="load-open-order-data" style="width: 100%; display: none;"></div>
 <?php endif;?>
 
 
@@ -217,6 +218,27 @@ function moveToNextPage1(evt){
 		
 	}
 	
+}
+
+function loadOpenOrderView(evt){
+	var orderId = jQuery(evt).attr("data-order-id");
+	showLoadingFancybox();
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/loadOrderView';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'order_id':orderId,'order_type':'open'},
+        success: function(data) {
+            jQuery('#load-open-order-data').html(data.data.html);
+            jQuery('#mt-openorders-tab #mt-filter-toolbar').hide();
+            jQuery('.open-order-view').hide();
+            jQuery('#load-open-order-data').show();
+            hideLoadingFancybox();
+            var type = window.location.hash.substr(1);
+            var order_id   = jQuery(evt).attr("data-order-id");
+            window.location.hash = type+"#info#"+order_id;
+        }
+    });
 }
 
 </script>

@@ -101,10 +101,10 @@
 		<jobs>
 			<allure_instacatalog>
 				<schedule>
-					<cron_expr>0 22 * * *</cron_expr>
+					<cron_expr>30 * * * *</cron_expr>
 				</schedule>
 				<run>
-					<model>Allure_InstaCatalog/cron::syncFeeds</model>
+					<model>allure_instacatalog/cron::syncFeeds</model>
 				</run>
 			</allure_instacatalog>
 		</jobs>

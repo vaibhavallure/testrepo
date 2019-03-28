@@ -88,6 +88,10 @@
                                 <title>Reports</title>
                                 <sort_order>26</sort_order>
                             </reports>
+                            <shifts translate="title">
+                                <title>Shifts</title>
+                                <sort_order>48</sort_order>
+                            </shifts>
                             <posconfig translate="title">
                                 <title>Configuration</title>
                                 <sort_order>10</sort_order>

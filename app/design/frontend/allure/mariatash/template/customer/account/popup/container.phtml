@@ -1,0 +1,29 @@
+<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()) :?>
+<div id="account-modal-wrapper" class="modal-wrapper">
+	<?php echo $this->getChildHtml();?>
+
+    <script type="text/javascript">
+        if (typeof Allure == "undefined") {
+             var Allure = {};
+        }
+        Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+        Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
+
+        jQuery(document).ready(function() {
+			var $ = jQuery;
+            var $body = $('body');
+
+            /* bind events */
+			if ($("#popup-login-form #username-login").length) {
+				$(document).on('blur', "#popup-login-form #passwd-login", function() {
+					var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+			    	if (jQuery("#popup-login-form #username-login").val() != "" && jQuery("#popup-login-form #passwd-login").val() != "" && jQuery("#popup-login-form #username-login").val().match(mailformat)) {
+						jQuery('#popup-login-form').submit();
+					}
+			    });
+			}
+        });
+    </script>
+</div>
+<?php endif;?>

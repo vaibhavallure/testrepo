@@ -22,9 +22,9 @@ class Simtech_Searchanise_Model_Tag_Relation extends Mage_Tag_Model_Tag_Relation
     protected function _afterSave()
     {
         $ret = parent::_afterSave();
-        
+
         Mage::dispatchEvent('searchanise_tag_relation_save_after', array('object' => $this));
-        
+
         return $ret;
     }
 }

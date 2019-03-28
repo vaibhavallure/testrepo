@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Magento
  *
@@ -51,17 +51,17 @@
 				<a id="sign_in_label" href="#" class="navbar-icon glyphicon glyphicon-user"><span>My Account</span></a>
                 <?php endif;?>
 		      	<a href="<?php echo Mage::getBaseUrl();?>checkout/cart" class="navbar-icon glyphicon glyphicon-shopping-cart" <?php if ($_counter) :?>counter="<?php echo $_counter;?>"<?php endif;?>><span>Cart</span></a>
-		      	
+
 		      	<?php //allure store currency swticher?>
 		      	<?php echo $this->getChildHtml('store_currency_selector') ?>
 		      </div>
-		      
+
     			<?php //echo $this->getChildHtml('topBar') ?>
 		    </div>
-		
+
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      
+
         		<?php echo $this->getChildHtml('topSearch') ?>
 		    	<?php echo $this->getChildHtml('topMenu') ?>
 		    </div><!-- /.navbar-collapse -->
@@ -69,26 +69,29 @@
 		</nav>
     </div>
     <?php echo $this->getChildHtml('topContainer'); ?>
-</div>
-<script type="text/javascript">
-if(Mage.Cookies.get('is_logged_in') && Mage.Cookies.get('frontend_timeout'))  {
-	jQuery('#sign_in_label').addClass('display_none');	
-} else {
-	//document.title = 'Customer Sign in';
-	jQuery('#sign_out_label').addClass('display_none');
-}
-var pathname = window.location.pathname;
-if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
-else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
-var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
-// jQuery( document ).ready(function() {
-//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
-// });
-// jQuery( window ).resize(function() {
-//     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
-// });
+	<script type="text/javascript">
+		if(Mage.Cookies.get('is_logged_in') && Mage.Cookies.get('frontend_timeout'))  {
+			jQuery('#sign_in_label').addClass('display_none');
+		} else {
+			//document.title = 'Customer Sign in';
+			jQuery('#sign_out_label').addClass('display_none');
+		}
+		var pathname = window.location.pathname;
+		if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
+		else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
+		var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
 
+	</script>
+</div>
+<?php
+$alr_status = Mage::helper("alertservices/config")->getAlrStatus();
+if ($alr_status) { ?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125115574-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125115574-1');
 </script>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/login.phtml')->toHtml(); ?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/register.phtml')->toHtml(); ?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/reset_password.phtml')->toHtml(); ?>
+<?php } ?>

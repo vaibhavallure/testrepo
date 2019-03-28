@@ -55,15 +55,25 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                 </tr>
                 <tr>
                     <td class="label"><label><?php echo Mage::helper('sales')->__('Purchased From') ?></label></td>
+                    <?php  if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')):?>
+                    <td class="value"><strong><?php echo Mage::helper("allure_virtualstore")->getOrderStoreName($_order) ?></strong></td>
+                    <?php else:?>
                     <td class="value"><strong><?php echo $this->getOrderStoreName() ?></strong></td>
+                    <?php endif;?>
                 </tr>
+                <?php if(!is_null($this->getOrderOldStoreName())):?>
+                <tr>
+                    <td class="label"><label><?php echo Mage::helper('sales')->__('Old Store Name') ?></label></td>
+                    <td class="value"><strong><?php  echo $this->getOrderOldStoreName() ?></strong></td>
+                </tr>
+                <?php endif?>
                 <?php if ($_order->getRelationChildId()): ?>
                     <tr>
                         <td class="label">
                             <label><?php echo Mage::helper('sales')->__('Link to the New Order') ?></label></td>
                         <td class="value"><a href="<?php echo $this->getViewUrl($_order->getRelationChildId()) ?>">
                                 <?php echo $_order->getRelationChildRealId() ?>
-                            </a></td>
+                         </a></td>
                     </tr>
                 <?php endif; ?>
                 <?php if ($_order->getRelationParentId()): ?>
@@ -101,10 +111,87 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                 <?php endif; ?>
                 
                 <?php //mt-allure code added?>
-                 <tr>
-                      <td class="label"><label><?php echo Mage::helper('sales')->__('Order Type') ?></label></td>
-                      <td class="value"><strong><?php if($_order->getOrderType()!=null)echo $_order->getOrderType();?></strong></td>
-                 </tr>
+                <?php if(!$_order->getCreateOrderMethod()):?>
+                     <tr>
+                          <td class="label"><label><?php echo Mage::helper('sales')->__('Delivery Mode') ?></label></td>
+                          <td class="value"><strong><?php if($_order->getOrderType()!=null) echo ($_order->getDeliveryMethod() == 'two_ship' ? 'Multiple' : 'Single');?></strong></td>
+                     </tr>
+                 
+                     <?php
+                            $_orderType = $_order->getOrderType();
+    
+                            $_orderTypeArray = array();
+    
+                            if ($_orderType) {
+                                $_orderTypeArray = explode(' - ', $_orderType);
+                                $_orderType = ucfirst($_orderTypeArray[1]);
+                            }
+    
+                            if (!$_orderType) {
+                                $_orderType = ($_order->getIsChildOrder() ? 'Backorder' : 'Main');
+                            }
+    
+                     ?>
+                 
+                     <tr>
+                          <td class="label"><label><?php echo Mage::helper('sales')->__('Delivery Type') ?></label></td>
+                          <td class="value"><strong><?php echo $_orderType;?></strong></td>
+                     </tr>
+                     <tr>
+                          <td class="label"><label><?php echo Mage::helper('sales')->__('Payment Mode') ?></label></td>
+                          <td class="value"><strong><?php if($_order->getOrderType()!=null) {echo ($_order->getWholesalePayOption() ? ($_order->getWholesalePayOption()  == 'pay_as_ship' ? 'Pay As Ship' : 'Pay Now') : (($_order->getIsReadyToShip() && $_order->getIsChildOrder()) ? 'Pay As Ship' : 'Pay Now'));}?></strong></td>
+                     </tr>
+                 <?php endif;?>
+                 
+                 <?php if($_order->getCreateOrderMethod()):?>
+                     <?php if($_order->getCreateOrderMethod() == 1):?>
+                     <tr>
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Counterpoint Ticket Number') ?></label></td>
+                        <td class="value"><strong><?php echo $_order->getCounterpointOrderId();?></strong></td>
+                     </tr>	
+                     <tr>
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Counterpoint Doc Id') ?></label></td>
+                        <td class="value"><strong><?php echo $_order->getCounterpointDocId();?></strong></td>
+                     </tr>	
+                     <?php elseif ($_order->getCreateOrderMethod() == 2):?>
+                     <?php $tmData = json_decode($_order->getOtherSysExtraInfo(),true);
+                           $universalNumber = $tmData["DeviceTransactionNumber"];
+                           $receiptNumer = $tmData["ReceiptNum"]; 
+                           $empName = $tmData["EMPNAME"];
+                     ?>
+                     <tr>
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Teamwork Receipt Number') ?></label></td>
+                        <td class="value"><strong><?php echo $receiptNumer;?></strong></td>
+                     </tr>
+                     <tr>
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Teamwork Universal Number') ?></label></td>
+                        <td class="value"><strong><?php echo $universalNumber;?></strong></td>
+                     </tr>
+                     <tr>
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Cashier') ?></label></td>
+                        <td class="value"><strong><?php echo $empName;?></strong></td>
+                     </tr>
+                     <?php $origTeamworkId = $_order->getTeamworkOrigReceiptId();?>
+                     <?php if($origTeamworkId):?>
+                     <tr style="color: #eb5e00;">
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Original Receipt Id') ?></label></td>
+                        <td class="value"><strong><?php echo $origTeamworkId;?></strong></td>
+                     </tr>
+                     <tr style="color: #eb5e00;">
+                     	<?php $incrementId = "TW-".$origTeamworkId;?>
+                     	<?php $orderObj = Mage::getModel('sales/order')->loadByIncrementId($incrementId);?>
+                     	<?php $urlKey = $incrementId;?>
+                     	<?php if($orderObj):?>
+                     	<?php $orderUrl = Mage::helper("adminhtml")->getUrl("adminhtml/sales_order/view/order_id/{$orderObj->getId()}");?>
+                     	<?php $urlKey = "<a href='".$orderUrl."' target='_blank'>".$incrementId."</a>"?>
+                     	<?php endif;?>
+                     	<td class="label"><label><?php echo Mage::helper('sales')->__('Referenced Order Id') ?></label></td>
+                        <td class="value"><strong><?php echo $urlKey?></strong></td>
+                     </tr>
+                     <?php endif;?>
+                     <?php endif;?>
+                 <?php endif;?>
+                 
             </table>
         </div>
     </div>

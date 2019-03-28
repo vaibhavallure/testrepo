@@ -23,6 +23,21 @@ class Ebizmarts_BakerlooPayment_Helper_Data extends Mage_Core_Helper_Abstract
         return $amount;
     }
 
+    /**
+     * @param float $amount
+     * @param Mage_Directory_Model_Currency $baseCurrency
+     * @param Mage_Directory_Model_Currency $currentCurrency
+     * @return float
+     */
+    public function convertFromBaseCurrency($amount, $baseCurrency, $currentCurrency)
+    {
+        if ($baseCurrency->getCode() != $currentCurrency->getCode()) {
+            $amount = $baseCurrency->convert($amount, $currentCurrency);
+        }
+
+        return $amount;
+    }
+
     public function getBakerlooPaymentMethods($store = null)
     {
         $methods = array();
@@ -69,6 +84,16 @@ class Ebizmarts_BakerlooPayment_Helper_Data extends Mage_Core_Helper_Abstract
                             }
                             $paymentMethodData['cc_types'] []= array('code' => $ccCode, 'label' => $creditCards[$ccCode]);
                         }
+                    }
+
+                    //Transaction types
+                    $tTypes = $method->getConfigData('transaction_types', $store);
+                    if($tTypes) {
+                        $typeOptions = Mage::getModel('bakerloo_payment/source_transactiontype')->toOption();
+                        $tTypes = explode(',', $tTypes);
+
+                        foreach($tTypes as $tCode)
+                            $paymentMethodData['transaction_types'][] = array('code' => $tCode, 'label' => $typeOptions[$tCode]);
                     }
 
                     //Merchant Email for PayPal.

@@ -4,7 +4,16 @@
 <td>
     <?php if (Mage::helper('iwd_ordermanager')->isShowItemImage()):
         try {
-            $product = Mage::getModel('catalog/product')->setStoreId($_item->getOrder()->getStoreId())->load($_item->getProductId());
+            $sku = $_item->getSku();
+            if($sku){
+                $product = Mage::getModel('catalog/product');
+                $product = Mage::getModel('catalog/product')->load($product->getIdBySku($sku));
+            }
+            else {
+                $product = Mage::getModel('catalog/product')->setStoreId($_item->getOrder()->getStoreId())->load($_item->getProductId());
+            }
+            
+           
             $img = Mage::helper('catalog/image')->init($product, 'small_image')->resize(75);
             ?>
             <img src="<?php echo $img; ?>" class="order_item_image" width="75" height="75"/>
@@ -25,7 +34,15 @@
     </div>
 <?php endif ?>
 </td>
-<td class="a-center"><?php echo $_item->getStatus()?></td>
+<td class="a-center">
+<?php if($_item->getTeamworkReason()):?>
+<?php echo $_item->getTeamworkReason(); ?>
+<?php elseif($_item->getOtherSysQty() < 0):?>
+<?php echo Mage::helper('sales')->__('Return') ?>
+<?php else :?>
+<?php echo $_item->getStatus()?>
+<?php endif;?>
+</td>
 <td class="a-right"><?php echo $this->displayPriceAttribute('original_price') ?></td>
 <td class="a-right">
     <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>

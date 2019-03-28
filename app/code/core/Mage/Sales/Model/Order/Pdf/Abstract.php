@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Sales
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -63,7 +63,6 @@ abstract class Mage_Sales_Model_Order_Pdf_Abstract extends Varien_Object
      * @var Zend_Pdf
      */
     protected $_pdf;
-    protected  $_pdfPage;
 
     /**
      * Default total model

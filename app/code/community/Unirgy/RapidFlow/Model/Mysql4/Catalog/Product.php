@@ -43,7 +43,7 @@ class Unirgy_RapidFlow_Model_Mysql4_Catalog_Product
     protected $_csvRows = array();
 
     /**
-     * actual export of formated product data to file
+     * actual export of formatted product data to file
      */
     public function export()
     {
@@ -55,6 +55,21 @@ class Unirgy_RapidFlow_Model_Mysql4_Catalog_Product
         }
         if (!empty($tune['page_sleep_delay'])) {
             $this->_pageSleepDelay = (int)$tune['page_sleep_delay'];
+        }
+        if (!empty($tune['curl_connect_timeout'])) {
+            $this->_curlConnectTimeout = (int)$tune['curl_connect_timeout'];
+        }
+        if (!empty($tune['curl_timeout'])) {
+            $this->_curlTimeout = (int)$tune['curl_timeout'];
+        }
+        if (!empty($tune['curl_useragent'])) {
+            $this->_curlUserAgent = $tune['curl_useragent'];
+        }
+        if (!empty($tune['curl_customrequest'])) {
+            $this->_curlCustomRequest = $tune['curl_customrequest'];
+        }
+        if (!empty($tune['curl_headers'])) {
+            $this->_curlHeaders = array_filter(preg_split("/\r\n|\n\r|\r|\n/", $tune['curl_headers']));
         }
 
         $profile = $this->_profile;
@@ -72,10 +87,12 @@ class Unirgy_RapidFlow_Model_Mysql4_Catalog_Product
         $manageStock = Mage::getStoreConfig('cataloginventory/item_options/manage_stock', $storeId);
 
         $pUrl = Mage::getSingleton('catalog/url');
+        $suffix = $this->_getPathSuffix($storeId);
         $secure = $profile->getData('options/export/image_https');
         $baseUrl = Mage::app()->getStore($storeId)->getBaseUrl('web', $secure);
         $mediaUrl = Mage::app()->getStore($storeId)->getBaseUrl('media', $secure);
         $mediaDir = Mage::getBaseDir('media');
+        /* @var $imgModel Mage_Catalog_Model_Product_Image */
         $imgModel = Mage::getModel('catalog/product_image');
 
         $exportImageFiles = $profile->getData('options/export/image_files');
@@ -122,7 +139,7 @@ class Unirgy_RapidFlow_Model_Mysql4_Catalog_Product
             $columns = array();
             $i = 1;
             foreach ($this->_attributesByCode as $k=>$a) {
-                if ($k=='product.entity_id') {
+                if ($k === 'product.entity_id') {
                     continue;
                 }
                 $columns[$i-1] = array('field' => $k, 'title' => $k, 'alias' => $k, 'default' => '');
@@ -154,7 +171,7 @@ class Unirgy_RapidFlow_Model_Mysql4_Catalog_Product
         $profile->setRowsFound($count)->setStartedAt(now())->sync(true, array('rows_found', 'started_at'), false);
         $profile->activity($this->__('Exporting'));
 #memory_get_usage(true);
-if ($benchmark) Mage::log("============================= IMPORT START: ".memory_get_usage().', '.memory_get_peak_usage());
+if ($benchmark) Mage::log('============================= EXPORT START: ' . memory_get_usage() . ', ' . memory_get_peak_usage());
 
         // open export file
         $profile->ioOpenWrite();
@@ -174,7 +191,7 @@ if ($benchmark) Mage::log("============================= IMPORT START: ".memory_
         // data will loaded page by page to conserve memory
         for ($page = 0; ; $page++) {
 #memory_get_usage(true);
-if ($benchmark) Mage::log("================ PAGE START: ".memory_get_usage().', '.memory_get_peak_usage());
+if ($benchmark) Mage::log('================ PAGE START: ' . memory_get_usage() . ', ' . memory_get_peak_usage());
             // set limit for current page
             $select->limitPage($page+1, $this->_pageRowCount);
             // retrieve product entity data and attributes in filters
@@ -194,22 +211,22 @@ if ($benchmark) Mage::log("================ PAGE START: ".memory_get_usage().', 
             }
             unset($rows);
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_readRows: ".memory_get_usage().', '.memory_get_peak_usage());
+if ($benchmark) Mage::log('_readRows: ' . memory_get_usage() . ', ' . memory_get_peak_usage());
 
             $this->_productIds = array_keys($this->_products);
 
             $this->_fetchAttributeValues($storeId, true);
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_fetchAttributeValues: ".memory_get_usage().', '.memory_get_peak_usage());
+if ($benchmark) Mage::log('_fetchAttributeValues: ' . memory_get_usage() . ', ' . memory_get_peak_usage());
             $this->_fetchWebsiteValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_fetchWebsiteValues: ".memory_get_usage().', '.memory_get_peak_usage());
+if ($benchmark) Mage::log('_fetchWebsiteValues: ' . memory_get_usage() . ', ' . memory_get_peak_usage());
             $this->_fetchStockValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_fetchStockValues: ".memory_get_usage().', '.memory_get_peak_usage());
+if ($benchmark) Mage::log('_fetchStockValues: ' . memory_get_usage() . ', ' . memory_get_peak_usage());
             $this->_fetchCategoryValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memory_get_peak_usage());
+if ($benchmark) Mage::log('_fetchCategoryValues: ' . memory_get_usage() . ', ' . memory_get_peak_usage());
 
             $this->_csvRows = array();
 
@@ -223,7 +240,7 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
             )));
 
             // format product data as needed
-            foreach ($this->_products as $id=>$p) {
+            foreach ($this->_products as $id => $p) {
                 $logger->setLine(++$rowNum)->setColumn(0);
                 $csvRow = array();
                 $value = null;
@@ -234,7 +251,7 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
                     $sourceModel = $this->_attr($attr, 'source_model');
 
                     // retrieve correct value for current row and field
-                    if (($v = $this->_attr($attr, 'force_value'))) {
+                    if ($v = $this->_attr($attr, 'force_value')) {
                         $value = $v;
                     } elseif (!empty($this->_fieldAttributes[$attr])) {
                         $a = $this->_fieldAttributes[$attr];
@@ -243,28 +260,28 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
                         $value = isset($p[$storeId][$attr]) ? $p[$storeId][$attr] : (isset($p[0][$attr]) ? $p[0][$attr] : null);
                     }
 
-                    if ((is_null($value) || $value==='') && !empty($c['default'])) {
+                    if (($value === null || $value==='') && !empty($c['default'])) {
                         $value = $c['default'];
                     }
 
                     // replace raw numeric values with source option labels
-                    if ((!$exportInternalValues || strpos($attr, 'category.')===0)
-                        && ($inputType=='select' || $inputType=='multiselect' || $sourceModel)
+                    if ((!$exportInternalValues || strpos($attr, 'category.') === 0)
+                        && ($inputType === 'select' || $inputType === 'multiselect' || $sourceModel)
                         && ($options = $this->_attr($attr, 'options'))
                     ) {
-                        if (!is_array($value) && $inputType=='multiselect') {
+                        if (!is_array($value) && $inputType === 'multiselect') {
                             $value = explode(',', $value);
                         } elseif (!is_array($value)) {
                             $value = array($value);
                         }
-                        foreach ($value as $k=>&$v) {
-                            if ($v==='') {
+                        foreach ($value as $k => &$v) {
+                            if ($v === '') {
                                 continue;
                             }
                             if (!isset($options[$v])) {
-                                $profile->addValue('num_warnings');
+                                $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
                                 $logger->setColumn($f['column_num'])
-                                    ->warning($this->__("Unknown option '%s' for product '%s' attribute '%s'", $v, $p[0]['sku'], $attr));
+                                       ->warning($this->__("Unknown option '%s' for product '%s' attribute '%s'", $v, $p[0]['sku'], $attr));
                                 if (!$exportInvalidValues) {
                                     unset($value[$k]);
                                 }
@@ -277,15 +294,19 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
 
                     // combine multiselect values
                     if (is_array($value)) {
-                        $value = join(!empty($f['separator']) ? $f['separator'] : $defaultSeparator, $value);
+                        $value = implode(!empty($f['separator']) ? $f['separator'] : $defaultSeparator, $value);
                     }
 
                     // process special cases of loaded attributes
                     switch ($attr) {
                     // product url
                     case 'url_path':
-                        if (!empty($f['format']) && $f['format']=='url') {
+                    case 'url_key':
+                        if (!empty($f['format']) && $f['format'] === 'url') {
                             $value = $baseUrl.$value;
+                            if(strpos($value, $suffix) === false){
+                                $value .= $suffix;
+                            }
                         }
                         break;
 
@@ -314,7 +335,7 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
 
                     switch ($this->_attr($attr, 'backend_type')) {
                     case 'decimal':
-                        if (!is_null($value) && !empty($f['format'])) {
+                        if ($value !== null && !empty($f['format'])) {
                             $value =  sprintf($f['format'], $value);
                         }
                         break;
@@ -328,20 +349,22 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
 
                     switch ($this->_attr($attr, 'frontend_input')) {
                     case 'media_image':
-                        if ($value=='no_selection') {
+                        if ($value ==='no_selection') {
                             $value = '';
                         }
                         if ($value!=='' && $exportImageFiles) {
                             $logger->setColumn($f['column_num']);
                             $this->_copyImageFile($imagesFromDir, $imagesToDir, $value);
                         }
-                        if (!empty($f['format']) && $f['format']=='url' && !empty($value)) {
+                        if (!empty($f['format']) && $f['format'] === 'url' && !empty($value)) {
                             try {
                                 $path = $imgModel->setBaseFile($value)->getBaseFile();
                                 $path = str_replace($mediaDir . DS, "", $path);
                                 $value = $mediaUrl . str_replace(DS, '/', $path);
 
                             } catch (Exception $e) {
+                                Mage::log($e->getMessage(), Zend_Log::ERR, 'rf.log', true);
+                                Mage::log($e->getTraceAsString(), Zend_Log::ERR, 'rf.log', true);
                                 $value = '';
                             }
                         }
@@ -357,7 +380,7 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
                 #$profile->ioWrite($csvRow);
                 $this->_csvRows[] = $csvRow;
 
-                $profile->addValue('rows_processed');
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_PROCESSED);
             } // foreach ($this->_products as $id=>&$p)
 
             Mage::dispatchEvent('urapidflow_catalog_product_export_before_output', array('vars'=>array(
@@ -369,7 +392,7 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
 
             foreach ($this->_csvRows as $row) {
                 $profile->ioWrite($row);
-                $profile->addValue('rows_success');
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_SUCCESS);
             }
 
             $profile->setMemoryUsage(memory_get_usage(true))->setMemoryPeakUsage(memory_get_peak_usage(true))
@@ -378,7 +401,7 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
             $this->_checkLock();
 
             // stop repeating if this is the last page
-            if (sizeof($this->_products)<$this->_pageRowCount) {
+            if (sizeof($this->_products) < $this->_pageRowCount) {
                 break;
             }
             if ($this->_pageSleepDelay) {
@@ -400,6 +423,21 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
         if (!empty($tune['page_sleep_delay'])) {
             $this->_pageSleepDelay = (int)$tune['page_sleep_delay'];
         }
+        if (!empty($tune['curl_connect_timeout'])) {
+            $this->_curlConnectTimeout = (int)$tune['curl_connect_timeout'];
+        }
+        if (!empty($tune['curl_timeout'])) {
+            $this->_curlTimeout = (int)$tune['curl_timeout'];
+        }
+        if (!empty($tune['curl_useragent'])) {
+            $this->_curlUserAgent = $tune['curl_useragent'];
+        }
+        if (!empty($tune['curl_customrequest'])) {
+            $this->_curlCustomRequest = $tune['curl_customrequest'];
+        }
+        if (!empty($tune['curl_headers'])) {
+            $this->_curlHeaders = array_filter(preg_split("/\r\n|\n\r|\r|\n/", $tune['curl_headers']));
+        }
 
         $profile = $this->_profile;
         $logger = $profile->getLogger();
@@ -413,11 +451,11 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
 
         $dryRun = $profile->getData('options/import/dryrun');
 
-        if (Mage::app()->isSingleStoreMode()) {
-            $storeId = 0;
-        } else {
+        //if (Mage::app()->isSingleStoreMode()) {
+        //    $storeId = 0;
+        //} else {
             $storeId = $profile->getStoreId();
-        }
+        //}
         $this->_storeId = $storeId;
         $this->_entityTypeId = $this->_getEntityType($this->_entityType, 'entity_type_id');
 
@@ -461,7 +499,7 @@ if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage().', '.memor
 
         $this->_profile->activity('Importing');
 #memory_get_usage(true);
-if ($benchmark) Mage::log("============================= IMPORT START: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('============================= IMPORT START: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
 
         $this->_isLastPage = false;
 
@@ -475,74 +513,74 @@ if ($benchmark) Mage::log("============================= IMPORT START: ".memory_
                     $this->_write->beginTransaction();
                 }
 #memory_get_usage(true);
-if ($benchmark) Mage::log("================ PAGE START: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('================ PAGE START: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 $this->_importResetPageData();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importResetPageData: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importResetPageData: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 $this->_importFetchNewData();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importFetchNewData: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importFetchNewData: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 $this->_importFetchOldData();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importFetchOldData: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importFetchOldData: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 $this->_fetchAttributeValues($storeId, true);
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_fetchAttributeValues: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_fetchAttributeValues: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 $this->_fetchWebsiteValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_fetchWebsiteValues: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_fetchWebsiteValues: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 $this->_fetchStockValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_fetchStockValues: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_fetchStockValues: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 $this->_fetchCategoryValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_fetchCategoryValues: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_fetchCategoryValues: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
 
                 $this->_importProcessNewData();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importProcessNewData: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importProcessNewData: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
 
                 $this->_checkLock();
 
                 Mage::dispatchEvent('urapidflow_product_import_after_fetch', array('vars'=>$eventVars));
                 $this->_importValidateNewData();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importValidateNewData: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importValidateNewData: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 Mage::dispatchEvent('urapidflow_product_import_after_validate', array('vars'=>$eventVars));
                 $this->_importProcessDataDiff();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importProcessDataDiff: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importProcessDataDiff: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                 Mage::dispatchEvent('urapidflow_product_import_after_diff', array('vars'=>$eventVars));
 
                 if (!$dryRun) {
                     $this->_importSaveEntities();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importSaveEntities: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importSaveEntities: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                     $this->_importCopyImageFiles();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importCopyImageFiles: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importCopyImageFiles: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                     $this->_importGenerateAttributeValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importGenerateAttributeValues: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importGenerateAttributeValues: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
 
                     $this->_importSaveAttributeValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importSaveAttributeValues: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importSaveAttributeValues: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                     $this->_importSaveWebsiteValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importSaveWebsiteValues: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importSaveWebsiteValues: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                     $this->_importSaveProductCategories();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importSaveProductCategories: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importSaveProductCategories: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
                     $this->_importSaveStockValues();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importSaveStockValues: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importSaveStockValues: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
 
                     #$this->_importReindexProducts();
                     #$this->_importRefreshRewrites();
                     $this->_importUpdateImageGallery();
 #memory_get_usage(true);
-if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).', '.memory_get_peak_usage(true));
+if ($benchmark) Mage::log('_importUpdateImageGallery: ' . memory_get_usage(true) . ', ' . memory_get_peak_usage(true));
 
                     Mage::dispatchEvent('urapidflow_product_import_after_save', array('vars'=>$eventVars));
 
@@ -561,7 +599,7 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                 }
             } catch (Exception $e) {
                 if ($useTransactions && !$dryRun) {
-                    $this->_write->rollback();
+                    $this->_write->rollBack();
                 }
 #print_r($e);
                 throw $e;
@@ -592,7 +630,7 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
         if (!empty($attr['frontend_input'])) {
             switch ($attr['frontend_input']) {
             case 'media_image':
-                if (!is_null($oldValue)) {
+                if ($oldValue !== null) {
                     if ($oldValue=='no_selection') {
                         $oldValue = '';
                     }
@@ -600,7 +638,7 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                 break;
 
             case 'multiselect':
-                if (is_null($oldValue)) {
+                if ($oldValue === null) {
                     $oldValue = array();
                 }
                 if ($newValue==='') {
@@ -612,20 +650,20 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
         if (!empty($attr['backend_type'])) {
             switch ($attr['backend_type']) {
             case 'int':
-                if (!is_null($newValue) && !is_array($newValue)) {
+                if ($newValue !== null && !is_array($newValue)) {
                     if ($newValue==='') {
                         $newValue = null;
                     } else {
                         $newValue = $this->_locale->getNumber($newValue);
                         if ($newValue != (int)$newValue) {
-                            $this->_profile->addValue('num_errors');
-                            $this->_profile->getLogger()->error($this->__("Invalid int value"));
+                            $this->_profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                            $this->_profile->getLogger()->error($this->__(self::ERROR_INVALID_INT_VALUE));
                         } else {
                             $newValue = (int)$newValue;
                         }
                     }
                 }
-                if (!is_null($oldValue) && !is_array($oldValue)) {
+                if ($oldValue !== null && !is_array($oldValue)) {
                     if ($oldValue==='') {
                         $oldValue = null;
                     } else {
@@ -635,20 +673,20 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                 break;
 
             case 'decimal':
-                if (!is_null($newValue)) {
+                if ($newValue !== null) {
                     if ($newValue==='') {
                         $newValue = null;
                     } else {
                         $newValue = $this->_locale->getNumber($newValue);
                         if (!is_numeric($newValue)) {
-                            $this->_profile->addValue('num_errors');
-                            $this->_profile->getLogger()->error($this->__("Invalid decimal value"));
+                            $this->_profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                            $this->_profile->getLogger()->error($this->__(self::ERROR_INVALID_DECIMAL_VALUE));
                         } else {
                             $newValue *= 1.0;
                         }
                     }
                 }
-                if (!is_null($oldValue)) {
+                if ($oldValue !== null) {
                     if ($oldValue==='') {
                         $oldValue = null;
                     } else {
@@ -658,54 +696,54 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                 break;
 
             case 'datetime':
-                if (!is_null($newValue)) {
+                if ($newValue !== null) {
                     if ($newValue==='') {
                         $newValue = null;
                     } else {
                     static $_dp;
-                    	if (null === $_dp) {
-                    		$_dp = Mage::getStoreConfig('urapidflow/import_options/date_processor');
-                    		if ($_dp == 'date_parse_from_format' && !version_compare(phpversion(), '5.3.0', '>=')) {
-                    			$_dp = 'strtotime';
-                    		}
-                    	}
-                    	static $_attrFormat = array();
-                    	$_attrCode = $attr['attribute_code'];
-                    	if (!isset($_attrFormat[$_attrCode])) {
-                    		if (isset($this->_fields[$_attrCode]['format'])) {
-                    			$_attrFormat[$_attrCode] = $this->_fields[$_attrCode]['format'];
-                    		} else {
-                    			$_attrFormat[$_attrCode] = $this->_profile->getDefaultDatetimeFormat();
-                    		}
-                    		if ($_dp == 'zend_date') {
-                    			$_attrFormat[$_attrCode] = Zend_Locale_Format::convertPhpToIsoFormat($_attrFormat[$_attrCode]);
-                    		}
-                    	}
-                    	switch ($_dp) {
-                    		case 'zend_date':
-                    			static $_zendDate;
-                    			if (null === $_zendDate) {
-                    				$_zendDate = new Zend_Date($newValue, $_attrFormat[$_attrCode], $this->_profile->getProfileLocale());
-                    			} else {
-                    				$_zendDate->set($newValue, $_attrFormat[$_attrCode]);
-                    			}
-                    			$newValue = $_zendDate->toString(Varien_Date::DATETIME_INTERNAL_FORMAT);
-                    			break;
-                    		case 'date_parse_from_format':
-                    			$_phpDatetime = DateTime::createFromFormat($_attrFormat[$_attrCode], $newValue);
-                    			$newValue = $_phpDatetime->format("Y-m-d H:i:s");
-                    			break;
-                    		default:
-                    			$newValue = date("Y-m-d H:i:s", strtotime($newValue));
-                    			break;
-                    	}
+                        if (null === $_dp) {
+                            $_dp = Mage::getStoreConfig('urapidflow/import_options/date_processor');
+                            if ($_dp === 'date_parse_from_format' && !version_compare(phpversion(), '5.3.0', '>=')) {
+                                $_dp = 'strtotime';
+                            }
+                        }
+                        static $_attrFormat = array();
+                        $_attrCode = $attr['attribute_code'];
+                        if (!isset($_attrFormat[$_attrCode])) {
+                            if (isset($this->_fields[$_attrCode]['format'])) {
+                                $_attrFormat[$_attrCode] = $this->_fields[$_attrCode]['format'];
+                            } else {
+                                $_attrFormat[$_attrCode] = $this->_profile->getDefaultDatetimeFormat();
+                            }
+                            if ($_dp == 'zend_date') {
+                                $_attrFormat[$_attrCode] = Zend_Locale_Format::convertPhpToIsoFormat($_attrFormat[$_attrCode]);
+                            }
+                        }
+                        switch ($_dp) {
+                            case 'zend_date':
+                                static $_zendDate;
+                                if (null === $_zendDate) {
+                                    $_zendDate = new Zend_Date($newValue, $_attrFormat[$_attrCode], $this->_profile->getProfileLocale());
+                                } else {
+                                    $_zendDate->set($newValue, $_attrFormat[$_attrCode]);
+                                }
+                                $newValue = $_zendDate->toString(Varien_Date::DATETIME_INTERNAL_FORMAT);
+                                break;
+                            case 'date_parse_from_format':
+                                $_phpDatetime = DateTime::createFromFormat($_attrFormat[$_attrCode], $newValue);
+                                $newValue = $_phpDatetime->format("Y-m-d H:i:s");
+                                break;
+                            default:
+                                $newValue = date("Y-m-d H:i:s", strtotime($newValue));
+                                break;
+                        }
                         if (!$newValue) {
-                            $this->_profile->addValue('num_errors');
-                            $this->_profile->getLogger()->error($this->__("Invalid datetime value"));
+                            $this->_profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                            $this->_profile->getLogger()->error($this->__(self::ERROR_INVALID_DATETIME_VALUE));
                         }
                     }
                 }
-                if (!is_null($oldValue)) {
+                if ($oldValue !== null) {
                     if ($oldValue==='') {
                         $oldValue = null;
                     }
@@ -713,9 +751,9 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                 break;
 
             case 'varchar': case 'text':
-                if ($oldValue==='' && is_null($newValue)) {
+                if ($oldValue==='' && $newValue === null) {
                     $newValue = '';
-                } elseif (is_null($oldValue) && $newValue==='') {
+                } elseif ($oldValue === null && $newValue==='') {
                     $newValue = null;
                 } elseif (is_numeric($newValue)) {
                     $newValue = (string)$newValue;
@@ -727,23 +765,28 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
 
     /**
      * retrieve attr record by id or code, with optional record field and value
+     *
+     * @param      $attribute
+     * @param null $field
+     * @param null $value
+     * @return array|bool
      */
-    protected function _attr($attribute, $field=null, $value=null)
+    protected function _attr($attribute, $field = null, $value = null)
     {
-        if (is_numeric($attribute)) {
+        if (isset($this->_attributesById[$attribute])) {
             $attr = $this->_attributesById[$attribute];
         } elseif (isset($this->_attributesByCode[$attribute])) {
             $attr = $this->_attributesByCode[$attribute];
         } else {
             return false;
         }
-        if (!is_null($field) && !is_null($value)) {
-            if ($field=='options_bytext') {
+        if ($field !== null && $value !== null) {
+            if ($field === 'options_bytext') {
                 $value = strtolower($value);
             }
-            return isset($attr[$field][$value]) ? $attr[$field][$value] : false;
-        } elseif (!is_null($field)) {
-            return isset($attr[$field]) ? $attr[$field] : false;
+            return isset($attr[$field][$value])? $attr[$field][$value]: false;
+        } elseif ($field !== null) {
+            return isset($attr[$field])? $attr[$field]: false;
         } else {
             return $attr;
         }
@@ -760,8 +803,9 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
     protected function _importFetchNewData()
     {
         $profile = $this->_profile;
-        $logger = $profile->getLogger();
+        $logger  = $profile->getLogger();
 
+        $emptyValueStrategy = $profile->getData('options/import/empty_value_strategy');
         $defaultSeparator = $profile->getData('options/csv/multivalue_separator');
         if (!$defaultSeparator) {
             $defaultSeparator = ';';
@@ -770,80 +814,82 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
         // read rows from file into memory and collect skus
         $this->_newData = array();
         // $i1 should be preserved during the loop
-        for ($i1=0; $i1<$this->_pageRowCount; $i1++) {
-            $error = false;
+        for ($i1 = 0; $i1 < $this->_pageRowCount; $i1++) {
+            /** @var array $row */
             $row = $profile->ioRead();
             if (!$row) {
                 // last row
                 $this->_isLastPage = true;
+
 #var_dump($this->_newData);
                 return true;
             }
+            //Mage::dispatchEvent('urapidflow_product_import_fetch_row', array('row' => &$row));
 
             $empty = true;
             foreach ($row as $v) {
-                if (trim($v)!=='') {
+                if (trim($v) !== '') {
                     $empty = false;
                     break;
                 }
             }
             if ($empty) {
-                $profile->addValue('rows_empty');
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_EMPTY);
                 continue;
             }
 
-            $profile->addValue('rows_processed');
-            $logger->setLine($this->_startLine+$i1);
+            $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_PROCESSED);
+            $logger->setLine($this->_startLine + $i1);
             if (empty($row[$this->_skuIdx])) {
-                $profile->addValue('rows_errors')->addValue('num_errors');
-                $logger->setColumn($this->_skuIdx+1)->error($this->__('Empty SKU'));
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_ERRORS)->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                $logger->setColumn($this->_skuIdx + 1)->error($this->__(self::ERROR_EMPTY_SKU));
                 continue;
             }
             if (!empty($this->_newData[$row[$this->_skuIdx]])) {
-                $profile->addValue('rows_errors')->addValue('num_errors');
-                $logger->setColumn($this->_skuIdx+1)->error($this->__('Duplicate SKU'));
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_ERRORS)->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                $logger->setColumn($this->_skuIdx + 1)->error($this->__(self::ERROR_DUPLICATE_SKU));
                 continue;
             }
-            $sku = $row[$this->_skuIdx];
-            $this->_skuLine[$sku] = $this->_startLine+$i1;
-            $this->_newData[$sku] = $this->_newDataTemplate;
+            $sku                      = $row[$this->_skuIdx];
+            $this->_skuLine[$sku]     = $this->_startLine + $i1;
+            $this->_newData[$sku]     = $this->_newDataTemplate;
             $this->_defaultUsed[$sku] = $this->_newDataTemplate;
 
             $error = false;
-            foreach ($row as $col=>$v) {
-                if (!isset($this->_fieldsIdx[$col]) && $v!=='') {
-                    $profile->addValue('num_warnings');
-                    $logger->setColumn($col+1)
-                        ->warning($this->__('Column is out of boundaries, ignored'));
+            foreach ($row as $col => $v) {
+                if (!isset($this->_fieldsIdx[$col]) && $v !== '') {
+                    $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
+                    $logger->setColumn($col + 1)
+                           ->warning($this->__(self::WARNING_COLUMN_OUT_OF_BOUNDARIES));
                     continue;
                 }
-                $_kk = (array)$this->_fieldsIdx[$col];
-                $_v = $v;
+                $_kk = (array) $this->_fieldsIdx[$col];
+                $_v  = $v;
                 foreach ($_kk as $k) {
                     $v = $_v;
-                    if ($k===false || in_array($k,array('const.value','const.function'))) {
+                    if ($k === false || in_array($k, array('const.value', 'const.function'))) {
                         continue;
                     }
-                    $input = $this->_attr($k, 'frontend_input');
-                    $multiselect = $input=='multiselect';
-                    $separator = trim(!empty($this->_fields[$k]['separator']) ? $this->_fields[$k]['separator'] : $defaultSeparator);
+                    $input       = $this->_attr($k, 'frontend_input');
+                    $multiselect = $input === 'multiselect';
+                    $separator   = trim(!empty($this->_fields[$k]['separator'])? $this->_fields[$k]['separator']: $defaultSeparator);
                     try {
                         $v = $this->_convertEncoding($v);
-                    } catch (Exception $e) {
-                        $profile->addValue('num_warnings');
-                        $logger->setColumn($col+1)->warning($e);
+                    } catch(Exception $e) {
+                        $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
+                        $logger->setColumn($col + 1)->warning($e);
                         #$error = true;
                     }
-                    if ($v!=='') {
+                    if ($v !== '') {
                         // options and multiselect
-                        if ($input=='select') {
+                        if ($input === 'select') {
                             $v = trim($v);
                         } elseif ($multiselect) {
                             $values = explode($separator, $v);
-                            $v = array();
+                            $v      = array();
                             foreach ($values as $v1) {
                                 $v1 = trim($v1);
-                                if ($v1!=='') {
+                                if ($v1 !== '') {
                                     $v[] = $v1;
                                 }
                             }
@@ -853,7 +899,19 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                             }
                         }
                     }
-                    if (!isset($this->_defaultUsed[$sku][$k]) || $v!=='' && $v!==array()) {
+                    if ($v === '#EMPTY#' || $emptyValueStrategy === 'empty' && $v === '') {
+                        $this->_newData[$sku][$k] = '';
+                        unset($this->_defaultUsed[$sku][$k]);
+                    } elseif ($v === ['#EMPTY#'] || $emptyValueStrategy === 'empty' && $v === ['']) {
+                        $this->_newData[$sku][$k] = [''];
+                        unset($this->_defaultUsed[$sku][$k]);
+                    } elseif ($v === '#DEFAULT#' || $emptyValueStrategy === 'default' && $v === '') {
+                        $this->_newData[$sku][$k] = !empty($this->_newDataTemplate[$k]) ? $this->_newDataTemplate[$k] : '';
+                        unset($this->_defaultUsed[$sku][$k]);
+                    } elseif ($v === ['#DEFAULT#'] || $emptyValueStrategy === 'default' && $v === ['']) {
+                        $this->_newData[$sku][$k] = !empty($this->_newDataTemplate[$k]) ? [$this->_newDataTemplate[$k]] : [''];
+                        unset($this->_defaultUsed[$sku][$k]);
+                    } elseif (!isset($this->_defaultUsed[$sku][$k]) || $v !== '' && $v !== array()) {
                         $this->_newData[$sku][$k] = $v;
                         unset($this->_defaultUsed[$sku][$k]);
                     }
@@ -888,7 +946,7 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                 $oldProduct = $isNew ? array() : $this->_products[$this->_skus[$sku]][0];
 
                 if ($isNew && $actions=='update' || !$isNew && $actions=='create') {
-                    $profile->addValue('rows_nochange');
+                    $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_NOCHANGE);
                     $this->_valid[$sku] = false;
                     continue;
                 }
@@ -906,19 +964,19 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                         if (!$isNew) {
                             if (!$changeTypeSet && $typeId!=$oldProduct[$k]) {
                                 $this->_newData[$sku][$k] = $oldProduct[$k];
-                                $profile->addValue('num_warnings');
-                                $logger->warning($this->__('Will not change product type for an existing product'));
+                                $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
+                                $logger->warning($this->__(self::WARNING_WILL_NOT_CHANGE_PRODUCT_TYPE));
                             }
                         } elseif (!$typeId) {
-                            $profile->addValue('num_errors');
-                            $logger->error($this->__('Empty or invalid product type for a new product'));
+                            $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                            $logger->error($this->__(self::ERROR_EMPTY_INVALID_PRODUCT_TYPE));
                             $this->_valid[$sku] = false;
                         }
                     }
                 } else { // not set
                     if ($isNew) {
-                        $profile->addValue('num_errors');
-                        $logger->error($this->__('Empty or invalid product type for a new product'));
+                        $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                        $logger->error($this->__(self::ERROR_EMPTY_INVALID_PRODUCT_TYPE));
                         $this->_valid[$sku] = false;
                     } else {
                         $typeId = $this->_products[$this->_skus[$sku]][0]['product.type'];
@@ -939,25 +997,25 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                         if (!$isNew) {
                             if (!$changeTypeSet && $attrSetId!=$oldProduct[$k]) {
                                 $attrSetId = $oldProduct[$k];
-                                $profile->addValue('num_warnings');
-                                $logger->warning($this->__('Will not change attribute set for an existing product'));
+                                $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
+                                $logger->warning($this->__(self::WARNING_WILL_NOT_CHANGE_ATTRIBUTE_SET));
                             }
                         } elseif (!$attrSetId) {
                             if ($p[$k] && $autoCreateAttributeSets) {
                                 $attrSetId = $this->_importCreateAttributeSet($p[$k]);
-                                $profile->addValue('num_warnings');
-                                $logger->warning($this->__("Created a new attribute set '%s'", $p[$k]));
+                                $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
+                                $logger->warning($this->__(self::WARNING_CREATED_ATTRIBUTE_SET, $p[$k]));
                             } else {
-                                $profile->addValue('num_errors');
-                                $logger->error($this->__('Empty or invalid attribute set for a new product'));
+                                $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                                $logger->error($this->__(self::ERROR_EMPTY_OR_INVALID_ATTRIBUTE_SET));
                                 $this->_valid[$sku] = false;
                             }
                         }
                     }
                 } else {
                     if ($isNew) {
-                        $profile->addValue('num_errors');
-                        $logger->error($this->__('Empty or invalid attribute set for a new product'));
+                        $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                        $logger->error($this->__(self::ERROR_EMPTY_OR_INVALID_ATTRIBUTE_SET));
                         $this->_valid[$sku] = false;
                     } else {
                         $attrSetId = $this->_products[$this->_skus[$sku]][0]['product.attribute_set'];
@@ -966,7 +1024,7 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
 
                 // continue on error
                 if (!$this->_valid[$sku]) {
-                    $profile->addValue('rows_errors');
+                    $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_ERRORS);
                     continue;
                 }
 
@@ -975,11 +1033,19 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
 
                 $attrSetFields = $this->_getAttributeSetFields($attrSetId);
                 $typeId = !empty($typeId) ? $typeId : $oldProduct['type_id'];
-                $isParentProduct = $typeId=='configurable' || $typeId=='grouped' || $typeId=='bundle';
+                $isParentProduct = $typeId === 'configurable' || $typeId === 'grouped' || $typeId === 'bundle';
 
                 $dynamic = $this->__('Dynamic');
-                $dynPrice = ($typeId=='configurable' || $typeId=='bundle') && (isset($p['price_type']) && !empty($p['price_type'])  && (in_array($p['price_type'], array($dynamic, 1))) || !isset($p['price_type']) && !empty($oldProduct['price_type']));
-                $dynWeight = ($typeId=='configurable' || $typeId=='bundle') && (isset($p['weight_type']) && !empty($p['weight_type']) && (in_array($p['weight_type'], array($dynamic, 1))) || !isset($p['weight_type']) && !empty($oldProduct['weight_type']));
+                $dynPrice = $typeId === 'bundle' &&
+                            (isset($p['price_type']) && !empty($p['price_type']) &&
+                             in_array($p['price_type'], array($dynamic, Mage_Bundle_Model_Product_Price::PRICE_TYPE_DYNAMIC)) ||
+                             (!isset($p['price_type']) && isset($oldProduct['price_type']) &&
+                             $oldProduct['price_type'] == Mage_Bundle_Model_Product_Price::PRICE_TYPE_DYNAMIC));
+
+                $dynWeight = ($typeId === 'configurable' || $typeId === 'bundle') &&
+                             (isset($p['weight_type']) && !empty($p['weight_type']) &&
+                              (in_array($p['weight_type'], array($dynamic, 1)) ||
+                              !isset($p['weight_type']) && !empty($oldProduct['weight_type'])));
 
                 if ($isNew) {
                     // check missing required columns
@@ -993,9 +1059,9 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                         $parentQty = $k=='stock.qty' && $isParentProduct;
 
                         if ($appliesTo && $inAttrSet && !$dynAttr && !$parentQty) {
-                            $profile->addValue('num_errors');
+                            $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
                             $logger->setColumn(1);
-                            $logger->error($this->__("Missing required value for '%s'", $k));
+                            $logger->error($this->__(self::ERROR_MISSING_REQUIRED_VALUE, $k));
                             $this->_valid[$sku] = false;
                         }
                     }
@@ -1006,7 +1072,7 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                     $attr = $this->_attr($k);
                     $logger->setColumn(isset($this->_fieldsCodes[$k]) ? $this->_fieldsCodes[$k]+1 : -1);
 
-                    $empty = is_null($newValue) || $newValue==='' || $newValue===array();
+                    $empty = $newValue === null || $newValue==='' || $newValue===array();
                     $required = !empty($attr['is_required']);
                     $visible = !empty($attr['is_visible']);
                     $appliesTo = empty($attr['apply_to']) || !empty($attr['apply_to'][$typeId]);
@@ -1020,26 +1086,26 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                         #$this->_newData[$sku][$k] = null;
                         unset($this->_newData[$sku][$k]);
                         $newValue = null;
-                        $profile->addValue('num_warnings');
+                        $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
                         if (!$appliesTo) {
-                            $logger->warning($this->__("The attribute '%s' does not apply to product type '%s', and will not be imported", $k, $typeId));
+                            $logger->warning($this->__(self::WARNING_ATTRIBUTE_DOES_NOT_APPLY, $k, $typeId));
                         } elseif (!$inAttrSet) {
                             $attrSetName = $this->_attr('product.attribute_set', 'options', $attrSetId);
-                            $logger->warning($this->__("The attribute '%s' does not apply to attribute set '%s', and will not be imported", $k, $attrSetName));
+                            $logger->warning($this->__(self::WARNING_ATTRIBUTE_DOES_NOT_APPLY_SET, $k, $attrSetName));
                         } elseif ($dynAttr) {
-                            $logger->warning($this->__("The attribute '%s' is not used, as it is a dynamic value in this product, and will not be imported", $k));
+                            $logger->warning($this->__(self::WARNING_ATTRIBUTE_NOT_USED_DYNAMIC, $k));
                         }
                     } elseif ($empty && $required && $appliesTo && $inAttrSet && !$dynAttr && !$parentQty) {
-                        if ($typeId=='configurable' && $selectable
+                        if ($typeId === 'configurable' && $selectable
                             && !empty($attr['is_global']) && !empty($attr['is_configurable'])
                         ) {
-                            if (!$isNew && !$this->_write->fetchOne("select product_id from {$this->_t('catalog/product_super_attribute')} where product_id={$this->_skus[$sku]} and attribute_id={$attr['attribute_id']}")) {
-                                $profile->addValue('num_warnings');
-                                $logger->warning($this->__("If the attribute '%s' will not used in configurable subproducts, this value might be missing", $k));
+                            if (!$isNew && !$this->_write->fetchOne("SELECT product_id FROM {$this->_t('catalog/product_super_attribute')} WHERE product_id={$this->_skus[$sku]} AND attribute_id={$attr['attribute_id']}")) {
+                                $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
+                                $logger->warning($this->__(self::WARNING_IF_ATTRIBUTE_NOT_USED_CONFIGURABLE, $k));
                             }
                         } else {
-                            $profile->addValue('num_errors');
-                            $logger->error($this->__("Missing required value for '%s'", $k));
+                            $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                            $logger->error($this->__(self::ERROR_MISSING_REQUIRED_VALUE, $k));
                             $this->_valid[$sku] = false;
                             continue;
                         }
@@ -1051,12 +1117,12 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                         }
                         foreach ((array)$newValue as $i=>$v) {
                             $vLower = strtolower(trim($v));
-                            if ($k=='category.name') {
-                                $delimiter = !empty($this->_fields[$k]['delimiter']) ? $this->_fields[$k]['delimiter'] : '>';
-                                $vLower = str_replace($delimiter, '>', $vLower);
+                            if ($k === 'category.name') {
+                                $delimiter = !empty($this->_fields[$k]['delimiter'])? $this->_fields[$k]['delimiter']: '>';
+                                $vLower    = str_replace($delimiter, '>', $vLower);
                             }
                             if (isset($this->_defaultUsed[$sku][$k])
-                            	&& !in_array($k, array('category.name', 'category.path'))
+                                && !in_array($k, array('category.name', 'category.path'))
                             ) {
                                 // default value used, no mapping required
                             } elseif (isset($attr['options_bytext'][$vLower])) {
@@ -1072,10 +1138,10 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                                 } else {
                                     $this->_newData[$sku][$k] = $vId;
                                 }
-                            } elseif ($allowSelectIds && isset($attr['options'][$v])) {
+                            } else if ($allowSelectIds && isset($attr['options'][$v])) {
                                 // select ids used, no mapping required
                             } else {
-                                if ($k=='category.name') {
+                                if ($k === 'category.name') {
                                     if ($autoCreateCategories) {
                                         $newOptionId = $this->_importCreateCategory($v);
                                         if (is_array($newValue)) {
@@ -1083,28 +1149,30 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                                         } else {
                                             $this->_newData[$sku][$k] = $newOptionId;
                                         }
-                                        $profile->addValue('num_warnings');
-                                        $logger->warning($this->__("Created a new category '%s'", $v));
+                                        $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
+                                        $logger->warning($this->__(self::WARNING_CREATED_CATEGORY, $v));
                                     } else {
-                                        $profile->addValue('num_errors');
-                                        $logger->error('Invalid category: '.$v);
+                                        $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                                        $logger->error(self::ERROR_INVALID_CATEGORY . $v);
                                         $this->_valid[$sku] = false;
                                     }
-                                } elseif ($autoCreateOptions && !empty($attr['attribute_id']) && (empty($attr['source_model']) || $attr['source_model']=='eav/entity_attribute_source_table')) {
+                                } elseif ($k === 'category.path'){
+                                    
+                                }elseif ($autoCreateOptions && !empty($attr['attribute_id']) && (empty($attr['source_model']) || $attr['source_model'] === 'eav/entity_attribute_source_table')) {
                                     $newOptionId = $this->_importCreateAttributeOption($attr, $v);
                                     if (is_array($newValue)) {
                                         $this->_newData[$sku][$k][$i] = $newOptionId;
                                     } else {
                                         $this->_newData[$sku][$k] = $newOptionId;
                                     }
-                                    $profile->addValue('num_warnings');
-                                    $logger->warning($this->__("Created a new option '%s' for attribute '%s'", $v, $k));
-                                } else {
-                                    if ($k!='product.websites'
+                                    $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
+                                    $logger->warning($this->__(self::WARNING_CREATED_NEW_OPTION_FOR_ATTRIBUTE, $v, $k));
+                                }else {
+                                    if ($k !== 'product.websites'
                                         || !Mage::helper('urapidflow')->hasEeGwsFilter()
                                     ) {
-                                        $profile->addValue('num_errors');
-                                        $logger->error($this->__("Invalid option '%s'", $v));
+                                        $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
+                                        $logger->error($this->__(self::ERROR_INVALID_OPTION, $v));
                                         $this->_valid[$sku] = false;
                                     }
                                 }
@@ -1115,19 +1183,19 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
                         ) {
                             $wIdsOrig = (array)$this->_newData[$sku][$k];
                             $this->_newData[$sku][$k] = Mage::helper('urapidflow')->filterEeGwsWebsiteIds($wIdsOrig);
-                            if (($wIdsSkipped = array_diff($wIdsOrig, $this->_newData[$sku][$k]))) {
-                                $logger->warning($this->__("You are not allowed to associate products with this websites: %s", implode(',', $wIdsSkipped)));
+                            if ($wIdsSkipped = array_diff($wIdsOrig, $this->_newData[$sku][$k])) {
+                                $logger->warning($this->__(self::WARNING_NOT_ALLOWED_ASSOCIATE_PRODUCTS_WEBSITES, implode(',', $wIdsSkipped)));
                             }
                         }
                     }
                 } // foreach ($p as $k=>$newValue)
 
                 if (!$this->_valid[$sku]) {
-                    $profile->addValue('rows_errors');
+                    $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_ERRORS);
                 }
             } catch (Unirgy_RapidFlow_Exception_Row $e) {
                 $logger->error($e->getMessage());
-                $profile->addValue('rows_error');
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_ERRORS);
             }
         } // foreach ($this->_newData as $p)
         unset($p);
@@ -1142,7 +1210,7 @@ if ($benchmark) Mage::log("_importUpdateImageGallery: ".memory_get_usage(true).'
         $stockZeroOut = $profile->getData('options/import/stock_zero_out');
 
         $deleteOldCat = $profile->getData('options/import/delete_old_category_products');
-
+        $sameAsDefault = $profile->getData('options/import/store_value_same_as_default');
         $importImageFiles = $profile->getData('options/import/image_files');
         $imagesFromDir = $profile->getImagesBaseDir();
         $imagesToDir = Mage::getBaseDir('media').DS.'catalog'.DS.'product';
@@ -1193,11 +1261,14 @@ $oldValues = array();
                 }
                 // walk the attributes
                 foreach ($p as $k=>$newValue) {
+                    if($k=='max_qty' || $k=='stock.notify_stock_qty' ||  $k=='category.path')
+                        continue;
+                        //'category.path'
                     $logger->setColumn(isset($this->_fieldsCodes[$k]) ? $this->_fieldsCodes[$k]+1 : 0);
 
                     $oldValue = !$pId ? null : (
                         isset($this->_products[$pId][$storeId][$k]) ? $this->_products[$pId][$storeId][$k] : (
-                        		isset($this->_products[$pId][1][$k]) ? $this->_products[$pId][1][$k] : null
+                            isset($this->_products[$pId][0][$k]) ? $this->_products[$pId][0][$k] : null
                         )
                     );
                     $attr = $this->_attr($k);
@@ -1206,11 +1277,15 @@ $oldValues = array();
                     $this->_cleanupValues($attr, $oldValue, $newValue);
 
                     if (strpos($k, 'stock.')===0) {
-                        if ($oldValue!==$newValue && !is_null($newValue)) {
-                            list(, $f) = explode('.', $k, 2);
+                        if ($k == "stock.qty")
+                            $allowQty = true;
+                        else
+                            $allowQty = false;
+                        if (($oldValue !== $newValue && $newValue !== null) || $allowQty) {
+                            list (, $f) = explode('.', $k, 2);
                             $this->_changeStock[$sku][$f] = $newValue;
-                            if (!$isNew && isset($this->_fieldsCodes[$k])) {
-                                $logger->success();
+                            if (! $isNew && isset($this->_fieldsCodes[$k])) {
+                                $logger->success(null, null, $newValue, $oldValue);
                             }
                             $isUpdated = true;
                         }
@@ -1230,7 +1305,7 @@ $oldValues = array();
                             $isUpdated = true;
                         }
                         if (Mage::helper('urapidflow')->hasMageFeature('product.required_options')) {
-                            if ($k==='product.required_options' && $this->_products[$pId][0]['product.required_options'] != $newValue) {
+                            if ($k === 'product.required_options' && $this->_products[$pId][0]['product.required_options'] != $newValue) {
                                 $this->_updateEntity[$pId]['required_options'] = $newValue;
                                 $isUpdated = true;
                             }
@@ -1246,13 +1321,13 @@ $oldValues = array();
                         if ($insert || $delete) {
                             $this->_changeWebsite[$sku] = array('I'=>$insert, 'D'=>$delete);
                             if (!$isNew) {
-                                $logger->success();
+                                $logger->success(null, null, $newValue, $oldValue);
                             }
                             $isUpdated = true;
                         }
                         continue;
                     }
-                    if (($k==='category.ids' || $k==='category.path' || $k==='category.name') && ($newValue || $deleteOldCat)) {
+                    if (($k === 'category.ids' || $k === 'category.path' || $k === 'category.name') && ($newValue || $deleteOldCat)) {
                         $newValue = array_unique((array)$newValue);
                         $oldValue = !empty($this->_products[$pId][0][$k]) ? (array)$this->_products[$pId][0][$k] : array();
 
@@ -1260,61 +1335,66 @@ $oldValues = array();
                         $insert = array();
                         $pos = !empty($this->_products[$pId][0]['category.position']) ? max($this->_products[$pId][0]['category.position']) : 0;
                         foreach ($insert1 as $cId) {
+                            if(!is_numeric($cId)){
+                                $logger->warning($this->__(self::WARNING_DOES_NOT_SEEM_LIKE_CATEGORY_ID, $cId));
+                                continue;
+                            }
                             $insert[$cId] = ++$pos;
                         }
 
                         $delete = $deleteOldCat ? array_diff($oldValue, $newValue) : array();
 
                         if ($insert || $delete) {
-                        	if ($isNew || !$deleteOldCat) {
-                        		$this->_changeCategoryProduct[$sku]['D'] = array();
-                        		if (empty($this->_changeCategoryProduct[$sku]['I'])) {
-                        			$this->_changeCategoryProduct[$sku]['I'] = array();
-                        		}
-                        		foreach ($insert as $cId=>$pos) {
-                        			$this->_changeCategoryProduct[$sku]['I'][$cId] = $pos;
-                        		}
-                        	} else {
-                        		$this->_changeCategoryProduct[$sku] = array('I' => $insert, 'D'=>$delete);
-                        	}
+                            if ($isNew || !$deleteOldCat) {
+                                $this->_changeCategoryProduct[$sku]['D'] = array();
+                                if (empty($this->_changeCategoryProduct[$sku]['I'])) {
+                                    $this->_changeCategoryProduct[$sku]['I'] = array();
+                                }
+                                foreach ($insert as $cId => $pos) {
+                                    $this->_changeCategoryProduct[$sku]['I'][$cId] = $pos;
+                                }
+                            } else {
+                                $this->_changeCategoryProduct[$sku] = array('I' => $insert, 'D' => $delete);
+                            }
                             if ($hasCategoryIds) {
                                 if ($isNew) {
-                                	if (!empty($this->_insertEntity[$sku]['category_ids'])) {
-                                		$newValue = array_unique(array_merge(
-                                			explode(',', $newValue),
-                                			$this->_insertEntity[$sku]['category_ids']
-                                		));
-                                	}
+                                    if (!empty($this->_insertEntity[$sku]['category_ids'])) {
+                                        $newValue = array_unique(array_merge(
+                                                                     explode(',', $newValue),
+                                                                     $this->_insertEntity[$sku]['category_ids']
+                                                                 ));
+                                    }
                                     $this->_insertEntity[$sku]['category_ids'] = join(',', $newValue);
                                 } else {
-                                	if ($deleteOldCat) {
-                                		$newValue = $newValue;
-                                	} else {
-                                		$ueCids = !empty($this->_updateEntity[$pId]['category_ids'])
-                                			? explode(',', $this->_updateEntity[$pId]['category_ids'])
-                                			: array();
-                                    	$newValue = array_unique(array_merge($oldValue, $newValue, $ueCids));
-                                	}
+                                    if ($deleteOldCat) {
+                                        $newValue = $newValue;
+                                    } else {
+                                        $ueCids   = !empty($this->_updateEntity[$pId]['category_ids'])
+                                            ? explode(',', $this->_updateEntity[$pId]['category_ids'])
+                                            : array();
+                                        $newValue = array_unique(array_merge($oldValue, $newValue, $ueCids));
+                                    }
                                     $this->_updateEntity[$pId]['category_ids'] = join(',', $newValue);
                                 }
                             }
                             if (!$isNew) {
-                                $logger->success();
+                                $logger->success(null, null, $newValue, $oldValue);
                             }
                             $isUpdated = true;
                         }
                         continue;
                     }
-                    if (empty($attr['attribute_id']) || empty($attr['backend_type']) || $attr['backend_type']=='static') {
+                    if (empty($attr['attribute_id']) || empty($attr['backend_type']) || $attr['backend_type'] == 'static') {
                         continue;
                     }
                     // existing attribute values
                     $isValueChanged = false;
-                    if ($attr['frontend_input']=='media_image' && $newValue) {
+                    if ($attr['frontend_input'] === 'media_image' && $newValue) {
                         if ($importImageFiles) {
                             if (!$dryRun) {
+                                $this->_currentMediaSku = $sku;
                                 $isValueChanged = $this->_copyImageFile($imagesFromDir, $imagesToDir, $newValue, true, $oldValue);
-                                if (is_null($isValueChanged)) {
+                                if ($isValueChanged === null) {
                                     $isValueChanged = $newValue!==$oldValue;
                                 }
                             } else {
@@ -1327,8 +1407,8 @@ $oldValues = array();
                                 $isValueChanged = false;
                             }
                         }
-                        if ($newValue!=$oldValue && !$isNew) {
-                            $this->_mediaChanges[$sku.'-'.$k] = array($newValue, $oldValue, $sku);
+                        if ($newValue !== $oldValue && !$isNew) {
+                            $this->_mediaChanges[$sku . '-' . $k] = array($newValue, $oldValue, $sku);
                         }
                     } elseif (is_array($newValue)) {
                         $oldValue = (array)$oldValue;
@@ -1336,16 +1416,20 @@ $oldValues = array();
                     } else {
                         $isValueChanged = $newValue!==$oldValue;
                     }
+                    if(!$isValueChanged && !isset($this->_products[$pId][$storeId][$k]) && $sameAsDefault === 'duplicate'){
+                        // if new value is same as old, and old is for default store and duplicate on store level is selected, set value to be changed
+                        $isValueChanged = true;
+                    }
                     // add updated attribute values
-                    $empty = $newValue==='' || is_null($newValue) || $newValue===array();
+                    $empty = $newValue === '' || $newValue === null || $newValue === array();
                     if (($isNew && !$empty) || $isValueChanged) {
-    #$profile->getLogger()->log('DIFF', $sku.'/'.$k.': '.print_r($oldValue,1).';'.print_r($newValue,1));
-    $oldValues[$sku][$k] = $oldValue;
+                        #$profile->getLogger()->log('DIFF', $sku.'/'.$k.': '.print_r($oldValue,1).';'.print_r($newValue,1));
+                        $oldValues[$sku][$k] = $oldValue;
                         $this->_changeAttr[$sku][$k] = $newValue;
                         if (!$isNew) {
-                            $logger->success();
+                            $logger->success(null, null, $newValue, $oldValue);
                         }
-                        if ($storeId && $attr['is_global']==2 && !empty($attr['attribute_id'])) {
+                        if ($storeId && $attr['is_global'] == 2 && !empty($attr['attribute_id'])) {
                             $aId = $attr['attribute_id'];
                             $this->_websiteScope[$sku][$aId] = 1;
                             $this->_websiteScopeAttributes[$aId] = 1;
@@ -1358,7 +1442,7 @@ $oldValues = array();
                 } // foreach ($p as $k=>$newValue)
 
                 if ($isUpdated) {
-                    $profile->addValue('rows_success');
+                    $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_SUCCESS);
     /*
     $logger->setColumn(0);
     if (!empty($oldValues[$sku])) $logger->success('OLD: '.print_r($oldValues[$sku],1));
@@ -1370,11 +1454,11 @@ $oldValues = array();
                         $this->_updateEntity[$pId]['updated_at'] = now();
                     }
                 } else {
-                    $profile->addValue('rows_nochange');
+                    $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_NOCHANGE);
                 }
             } catch (Unirgy_RapidFlow_Exception_Row $e) {
                 $logger->error($e->getMessage());
-                $profile->addValue('rows_error');
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_ERRORS);
             }
         } // foreach ($this->_newData as $p)
 /*
@@ -1389,6 +1473,37 @@ var_dump($this->_changeStock);
 var_dump($this->_changeWebsite);
 echo '<hr>';
 */
+    }
+
+    protected $_currentMediaSku;
+    protected $_mediaProductsProcessed = array();
+
+    /**
+     * Get unique image name
+     *
+     * When importing product images, given the appropriate setting is configured, we need to provide unique image name
+     * However the image should be unique compared to other products or previous imports, if this product had same file
+     * stored with different name during this import (e.g. importing image, small and thumbnail with same image name)
+     * then we should use the same name for all media attributes of the product.
+     *
+     * @param string $toFilename
+     * @return string
+     */
+    protected function _getUniqueImageName($toFilename)
+    {
+        // initialize product media cache
+        if(empty($this->_mediaProductsProcessed[$this->_currentMediaSku])){
+            $this->_mediaProductsProcessed[$this->_currentMediaSku] = array();
+        }
+
+        // if there is no entry for this original file name, get new unique name and store it
+        if(!isset($this->_mediaProductsProcessed[$this->_currentMediaSku][$toFilename])){
+            $this->_mediaProductsProcessed[$this->_currentMediaSku][$toFilename] = parent::_getUniqueImageName($toFilename);
+        }
+
+        // return unique file name
+        return $this->_mediaProductsProcessed[$this->_currentMediaSku][$toFilename];
+
     }
 
     protected function _rtIdxRegisterAttrChange($pId, $attrCode, $value, $isSku=true)

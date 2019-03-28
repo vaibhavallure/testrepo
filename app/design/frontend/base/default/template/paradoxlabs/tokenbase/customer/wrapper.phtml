@@ -5,7 +5,7 @@
 <?php if( count( $this->getActiveMethods() ) > 1 ): ?>
 	<ul class="links">
 		<?php foreach( $this->getActiveMethods() as $method ): ?>
-			<li <?php if( Mage::registry('method') == $method ): ?>class="active"<?php endif; ?>><a href="<?php echo $this->getUrl( '*/*/*', array( 'method' => $method ) ); ?>"><?php echo Mage::getStoreConfig( 'payment/' . $method . '/title' ); ?></a></li>
+			<li <?php if( Mage::registry('method') == $method ): ?>class="active"<?php endif; ?>><a href="<?php echo $this->getUrl( '*/*/*', array( 'method' => $method, '_secure' => true ) ); ?>"><?php echo Mage::getStoreConfig( 'payment/' . $method . '/title' ); ?></a></li>
 		<?php endforeach; ?>
 	</ul>
 <?php endif; ?>

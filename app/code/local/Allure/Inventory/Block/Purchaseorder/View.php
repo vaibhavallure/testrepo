@@ -14,6 +14,7 @@ class Allure_Inventory_Block_Purchaseorder_view extends Mage_Page_Block_Html_Pag
 		->getAttributeId();
 		
 		$id=Mage::app()->getRequest()->getParam('id');
+		
 		$collection=Mage::getModel('inventory/orderitems')->getCollection()
 		->addFieldToFilter("po_id",$id);
 		$collection->getSelect()->joinLeft('catalog_product_entity', 'catalog_product_entity.entity_id = main_table.product_id', array('sku'));
@@ -42,7 +43,7 @@ class Allure_Inventory_Block_Purchaseorder_view extends Mage_Page_Block_Html_Pag
 		parent::_prepareLayout();
 
 		$pager = $this->getLayout()->createBlock('page/html_pager', 'custom.pager');
-		$pager->setAvailableLimit(array(20=>20,50=>50,100=>100,'all'=>'all'));
+		$pager->setAvailableLimit(array(1000=>1000));
 		$pager->setCollection($this->getCollection());
 		$this->setChild('pager', $pager);
 		$this->getCollection()->load();

@@ -1,0 +1,11 @@
+<?php
+?>
+
+<h3><?php echo $this->__("No Access")?></h3>
+
+<form method="post" action="<?php echo $this->getIndexUrl()?>">
+<?php echo $this->getBlockHtml('formkey')?>
+	<label>Add Key</label>
+	<input type="password" name="uid" />
+	<button type="submit" class="scalable" >Submit</button>
+</form>

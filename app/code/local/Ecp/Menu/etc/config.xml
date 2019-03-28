@@ -35,12 +35,12 @@
         </routers>
     </admin>
     <adminhtml>
-     
-        
-        
+
+
+
         <menu>
             <cms module="ecp_menu">
-                <sort_order>71</sort_order>               
+                <sort_order>71</sort_order>
                 <children>
                     <submenu module="ecp_menu">
                         <title>Sub menu</title>
@@ -50,10 +50,10 @@
                 </children>
             </cms>
         </menu>
-        
-        
-        
-        
+
+
+
+
         <acl>
             <resources>
                 <all>
@@ -76,7 +76,7 @@
                 </ecp_menu>
             </updates>
         </layout>
-    </adminhtml>   
+    </adminhtml>
     <global>
         <models>
             <ecp_menu>
@@ -127,7 +127,7 @@
         <ecp_menu>
             <menu>
                 <value>87</value>
-                <blog_link>http://www.venusbymariatash.com/blog/</blog_link>
+                <blog_link>http://www.mariatash.com/blog/</blog_link>
             </menu>
         </ecp_menu>
     </default>

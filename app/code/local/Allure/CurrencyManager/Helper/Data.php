@@ -264,4 +264,20 @@ class Allure_CurrencyManager_Helper_Data extends Mage_Core_Helper_Abstract
         return false;
     }
 
+
+    /**
+     * get base currency with grandtotal
+     */
+    public function getGrandTotalWithBaseCurrency(){
+        $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+        $val = "";
+        if(strtoupper($currentCurrencyCode) != "USD"){
+            $symbol = Mage::app()->getLocale()->currency(Mage::app()->getStore()->getBaseCurrencyCode())->getSymbol();
+            $baseGrandTotal = Mage::getModel('checkout/session')->getQuote()->getBaseGrandTotal();
+            $baseGrandTotal = round($baseGrandTotal,2);
+            $val = $symbol.$baseGrandTotal;
+        }
+        return $val;
+    }
+
 }

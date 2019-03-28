@@ -73,7 +73,7 @@ class Simtech_Searchanise_Helper_ApiCategories extends Mage_Core_Helper_Data
         }
 
         static $arrCategories = array();
-        
+
         $keyCategories = '';
         if ($categoryIds) {
             if (is_array($categoryIds)) {
@@ -95,7 +95,7 @@ class Simtech_Searchanise_Helper_ApiCategories extends Mage_Core_Helper_Data
             $collection
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('path', array('like' => "1/{$rootCategoryId}/%"));
-            
+
             if ($categoryIds !== Simtech_Searchanise_Model_Queue::NOT_DATA) {
                 // Already exist automatic definition 'one value' or 'array'.
                 $collection->addIdFilter($categoryIds);
@@ -177,11 +177,11 @@ class Simtech_Searchanise_Helper_ApiCategories extends Mage_Core_Helper_Data
             ->getCollection()
             ->addFieldToFilter('entity_id', array("from" => $start, "to" => $end))
             ->setPageSize($step);
-        
+
         if ($store) {
             $categories = $categories->setStoreId($store->getId());
         }
-        
+
         $categories = $categories->load();
         if ($categories) {
             // Not used because 'arrCategories' comprising 'stock_item' field and is 'array(array())'

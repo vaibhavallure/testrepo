@@ -1,0 +1,29 @@
+
+div.allure-google-connect-checkout,
+div.allure-google-connect-login {
+    margin-top: 28px;
+}
+
+div.allure-google-connect-login .content {
+    min-height: 0;
+}
+
+div.allure-google-connect-account .col3-set .col-1 {
+    width: 29%
+}
+
+div.allure-google-connect-account .col3-set .col-2 {
+    width: 49%
+}
+
+div.allure-google-connect-account .col3-set .col-3 {
+    width: 19%
+}
+
+div.allure-google-connect-account .col2-set .col-1 {
+    width: 79%
+}
+
+div.allure-google-connect-account .col2-set .col-2 {
+    width: 19%
+}

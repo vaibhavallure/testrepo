@@ -37,7 +37,7 @@
 	<li <?php if( $this->haveStoredCards() ): ?>style="display:none"<?php endif; ?> class="<?php echo $newClass; ?>">
 		<label for="<?php echo $this->getMethodCode(); ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type') ?></label>
 		<div class="input-box">
-			<select id="<?php echo $this->getMethodCode(); ?>_cc_type" name="payment[cc_type]" class="<?php echo $requireClass; ?>">
+			<select id="<?php echo $this->getMethodCode(); ?>_cc_type" name="payment[cc_type]" class="<?php echo $requireClass; ?> validate-cc-type-select">
 				<option value=""><?php echo $this->__('-- Select One --')?></option>
 				<?php foreach( $this->getCcAvailableTypes() as $k => $v ): ?>
 					<option value="<?php echo $k; ?>" <?php if( $k == $this->getInfoData('cc_type') ): ?>selected="selected"<?php endif ?>><?php echo $v; ?></option>

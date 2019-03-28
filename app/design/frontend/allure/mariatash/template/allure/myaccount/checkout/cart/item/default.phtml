@@ -200,7 +200,10 @@
     </td>
     <td  class="table-remove a-center last">
         <div class="cart-item-remove">
-        	<a onclick="removeCartItem(this)" data-item-id="<?php echo $_item->getId()?>" href="javascript:void(0);<?php //echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="button btn-cart glyphicon glyphicon-remove"></a>
+        	<a onclick="confirmBox('Are you sure you want to delete this?',
+                    function() {
+                    removeCartItem(<?php echo $_item->getId()?>);
+                    },'DELETE')" data-item-id="<?php echo $_item->getId()?>" href="javascript:void(0);<?php //echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="button btn-cart glyphicon glyphicon-remove"></a>
         </div>
         <?php if ($this->helper('customer')->isLoggedIn()): ?>            
          <div class="cart-item-fav">

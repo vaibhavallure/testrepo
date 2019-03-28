@@ -17,7 +17,7 @@
  * Do not edit or add to this file if you wish to upgrade to newer
  * versions in the future. If you wish to customize for your
  * needs please refer to Entrepids Event-Observer for more information.
- * 
+ *
  * @category    Ecp
  * @package     Ecp_Contactus
  * @copyright   Copyright (c) 2010 Entrepids Inc. (http://www.entrepids.com)
@@ -31,25 +31,30 @@
  * @package     Ecp_Contactus
  * @author      Entrepids Core Team <core@entrepids.com>
  */
-header("access-control-allow-origin: http://www.venusbymariatash.com");
+header("access-control-allow-origin: http://www.mariatash.com");
 class Ecp_Contactus_IndexController extends Mage_Core_Controller_Front_Action
 {
     public function indexAction()
-    {    	    	
-        $this->loadLayout();     
+    {
+        $this->loadLayout();
         $this->renderLayout();
     }
-    
+
     public function sendMailAction(){
+
+        if (!$this->_validateFormKey()) {
+            $this->_redirect('*/*/');
+            return;
+        }
         $response = array();
         if ($data = $this->getRequest()->getParams()) {
             $response['success'] = false;
             $model = Mage::getModel('ecp_contactus/contactus');
             $model->setData($data);
             try {
-                $model->setCreatedTime(now());	
+                $model->setCreatedTime(now());
                 $model->save();
-                
+
 //                $emailTemplate = Mage::getModel('core/email_template')->loadDefault('custom_email_contact_us');
 //Mage::log($emailTemplate,null,'milog.log');
                 $emailTemplateVariables = array();
@@ -70,9 +75,9 @@ class Ecp_Contactus_IndexController extends Mage_Core_Controller_Front_Action
                 $response['success'] = true;
                 $response['firstname'] = $this->getRequest()->getParam('firstname');
                 die(Mage::helper('core')->jsonEncode($response));
-                
+
             } catch (Exception $e) {
-                
+
                 die(Mage::helper('core')->jsonEncode($response));
             }
         }

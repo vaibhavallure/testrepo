@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Magento
  *
@@ -59,17 +59,17 @@ jQuery(document).ajaxComplete(function(){
                 <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
 				<li id="sign_out_label"><a href="<?php echo Mage::getBaseUrl();?>customer/account/logout">Sign out</a></li>
                 <?php else:?>
-				<li id="sign_in_label"><a href="#">Sign in</a></li>
+				<li id="sign_in_label"><a href="#"><?php echo $this->__('Sign In')?></a></li>
                 <?php endif;?>
                  <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
                 <li><a href="<?php echo Mage::getBaseUrl();?>customer/account">My Account</a></li>
                 <?php endif;?>
                  <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()) :?>
-                	<li id="wishlist_label"><a  href="#">Wishlist</a></li>
+                	<li id="wishlist_label"><a  href="#"><?php echo $this->__('Wishlist')?></a></li>
                 <?php else: ?>
-                	<li><a href="<?php echo $this->getUrl('myaccount', array('_secure' => $this->getRequest()->isSecure())).'#wishlist' ?>">Wishlist</a></li>
+                	<li><a href="<?php echo $this->getUrl('myaccount', array('_secure' => $this->getRequest()->isSecure())).'#wishlist' ?>"><?php echo $this->__('Wishlist')?></a></li>
                 <?php endif;?>
-                <li style="position:relative;"><div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div></li>                
+                <li style="position:relative;"><div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div></li>
                 <li><?php echo $this->getChildHtml('store_currency_selector') ?></li>
                 </ul>
                 <div id="top_links"></div>
@@ -84,13 +84,6 @@ jQuery(document).ajaxComplete(function(){
     <?php echo $this->getChildHtml('topContainer'); ?>
 </div>
 <script type="text/javascript">
-if(Mage.Cookies.get('is_logged_in') && Mage.Cookies.get('frontend_timeout'))  {
-	//jQuery('#sign_in_label').addClass('display_none');	 //allure comment
-	
-} else {
-	//document.title = 'Customer Sign in';
-	//jQuery('#sign_out_label').addClass('display_none');	//allure comment
-}
 var pathname = window.location.pathname;
 if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
 else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
@@ -102,6 +95,45 @@ jQuery( window ).resize(function() {
     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
 });
 </script>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/login.phtml')->toHtml(); ?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/register.phtml')->toHtml(); ?>
-<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/account/popup/reset_password.phtml')->toHtml(); ?>
+
+<?php echo $this->getChildHtml('account_popups'); ?>
+<?php echo $this->getChildHtml('account.popups'); ?>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<?php
+$alr_status = Mage::helper("alertservices/config")->getAlrStatus();
+if ($alr_status) { ?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125115574-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125115574-1');
+</script>
+<?php } ?>
+
+
+<!-- added by AWS12 -->
+<?php
+    $collection = Mage::getModel('catalog/product')->getCollection()
+                  ->addAttributeToSelect('id')
+                  ->addAttributeToFilter(array(array("attribute"=>"sku","in"=>array('gift','STORECARD'))))
+                  ->addAttributeToFilter(array(array("attribute"=>"status","eq"=>1)));
+        $prodIds = array();
+         foreach ($collection as $key => $product) {
+           $prodIds[]=$product->getId();
+         }
+if(count($prodIds)):
+      echo "<style type='text/css'>";
+    foreach ($prodIds as $key => $prodId) {
+        echo '#snize-product-'.$prodId.' .snize-price-list {
+                display: none;
+            }';
+        echo '#snize-ac-product-'.$prodId.' .snize-price-list {
+                display: none;
+            }';
+    }
+    echo "</style>";
+endif;
+?>

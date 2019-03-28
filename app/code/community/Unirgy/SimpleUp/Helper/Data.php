@@ -14,11 +14,20 @@ class Unirgy_SimpleUp_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function download($uri)
     {
+        $parsed = parse_url($uri);
+        if (empty($parsed['host']) || !preg_match('#(^|\.)unirgy\.com$#', $parsed['host'])) {
+            Mage::throwException('Invalid download URL: '.$uri);
+        }
         $dlDir = Mage::getConfig()->getVarDir('usimpleup/download');
         Mage::getConfig()->createDirIfNotExists($dlDir);
 
-        $filePath = $dlDir.'/'.basename($uri);
+        $filePath = $dlDir.'/'.basename($parsed['path']);
         $fd = fopen($filePath, 'wb');
+
+        $uri .= (strpos($uri, '?') === false ? '?' : '&') . 'php=' . PHP_VERSION;
+        if (function_exists('ioncube_loader_version')) {
+            $uri .= '&ioncube=' . ioncube_loader_version();
+        }
 
         $ch = curl_init();
         curl_setopt_array($ch, array(
@@ -26,7 +35,14 @@ class Unirgy_SimpleUp_Helper_Data extends Mage_Core_Helper_Abstract
             CURLOPT_BINARYTRANSFER => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FILE => $fd,
+            CURLOPT_FOLLOWLOCATION => 1,
         ));
+        if ((bool)Mage::getStoreConfigFlag('usimpleup/general/verify_ssl')) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_CAINFO, dirname( __DIR__ ) . '/ssl/cacert.pem');
+        } else {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        }
         if (curl_exec($ch)===false) {
             $error = $this->__('Error while downloading file: %s', curl_error($ch));
             curl_close($ch);
@@ -180,6 +196,25 @@ class Unirgy_SimpleUp_Helper_Data extends Mage_Core_Helper_Abstract
                     ->setLastDownloaded(now())
                     ->setLastVersion((string)$modConf->version)
                     ->save();
+                /*
+                $email = Mage::getStoreConfig('trans_email/ident_general/email');
+                $mail = new Zend_Mail('utf-8');
+                $mail->setFrom($email);
+                $mail->addTo($email);
+                $mail->setSubject('New Unirgy extension installation: ' . $modName);
+                $mail->setBodyText(<<<EOT
+Hello,
+
+There has been a new installation of Unirgy extension {$modName} on {$_SERVER['HTTP_HOST']}.
+
+Please make sure that this installation was authorized.
+
+Best regards,
+Unirgy Installer.
+EOT
+                );
+                $mail->send();
+                */
             }
         }
     }
@@ -201,31 +236,45 @@ class Unirgy_SimpleUp_Helper_Data extends Mage_Core_Helper_Abstract
             $uriMods[(string)$usimpleup['remote'].$mod->getLicenseKey()][$modName] = $mod;
         }
 
+        $uSimpleUpVersion = Mage::app()->getConfig()->getNode('modules/Unirgy_SimpleUp/version');
         foreach ($uriMods as $uri=>$mods) {
+            $uri .= (strpos($uri, '?')!==false ? '&' : '?').'usuv='.$uSimpleUpVersion;
             $ch = curl_init();
             curl_setopt_array($ch, array(
                 CURLOPT_URL =>  $uri,
                 CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_HEADER => false,
+                CURLOPT_FOLLOWLOCATION => true,
             ));
+            if ((bool)Mage::getStoreConfigFlag('usimpleup/general/verify_ssl')) {
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+                curl_setopt($ch, CURLOPT_CAINFO, dirname( __DIR__ ) . '/ssl/cacert.pem');
+            } else {
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            }
             $response = curl_exec($ch);
             curl_close($ch);
             if ($response===false) {
                 Mage::throwException($this->__('Error while downloading file: %s', curl_error($ch)));
             }
-            /*
-            $response = @file_get_contents($uri);
+            //$response = @file_get_contents($uri);
             if (!$response) {
                 Mage::throwException($this->__('Invalid meta uri resource: %s', $uri));
             }
-            */
             //$xml = new Varien_Simplexml_Element($response);
             try {
-                $result = Zend_Json::decode($response);
+                $json = trim($response);
+                if ($json[0]==='{' || $json[0]==='[') {
+                    $result = Mage::helper('core')->jsonDecode($json);
+                } else {
+                    $result = array();
+                }
             } catch (Exception $e) {
                 if ($e->getMessage()=='Decoding failed: Syntax error') {
                     $result = array();
                 } else {
-                    throw $e;
+                    //throw $e;
+                    $result = array();
                 }
             }
             foreach ((array)$result as $modName=>$node) {

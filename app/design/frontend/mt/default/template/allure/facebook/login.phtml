@@ -1,0 +1,16 @@
+
+<div class="account-login facebook-login">
+	<div class="content new-users" style="min-height: 70px;">
+		<h2><?php echo $this->__('Facebook Connect') ?></h2>
+		<p><?php echo $this->__('Use your Facebook account to login or register within our store. You\'re just one click away.' ) ?></p>
+	</div>
+    
+    <?php if(false):?>
+	<div class="buttons-set">
+		<button rel="facebook-connect" type="button" title="<?php echo $this->__('Connect with Facebook') ?>" class="button"><span><span><?php echo $this->__('Connect with Facebook') ?></span></span></button>
+	</div>
+	<?php endif;?>
+	
+	<?php echo $this->getChildHtml("facebook_login_button");?>
+
+</div>

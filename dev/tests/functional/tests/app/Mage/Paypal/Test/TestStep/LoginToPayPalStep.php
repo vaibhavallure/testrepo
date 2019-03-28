@@ -20,7 +20,7 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -99,12 +99,28 @@ class LoginToPayPalStep implements TestStepInterface
             : $this->paypalPage->getOldReviewBlock();
         $reviewBlock->logOut();
 
-        $payPalLoginBlock = $this->paypalPage->getLoginBlock()->isVisible()
-            ? $this->paypalPage->getLoginBlock()
-            : $this->paypalPage->getOldLoginBlock();
+        $reviewBlock->waitLoader();
+        $payPalLoginBlock = $this->getActualBlock();
         $payPalLoginBlock->fill($this->customer);
         $payPalLoginBlock->submit();
         $payPalLoginBlock->switchOffPayPalFrame();
         $reviewBlock->waitLoader();
+    }
+
+    /**
+     * Returns actual login block by selector
+     *
+     * @return \Mage\Paypal\Test\Block\Login|\Mage\Paypal\Test\Block\OldLogin|\Mage\Paypal\Test\Page\NewLogin
+     */
+    protected function getActualBlock()
+    {
+        if ($this->paypalPage->getNewLoginBlock()->isVisible()) {
+            $returnBlock = $this->paypalPage->getNewLoginBlock();
+        } elseif ($this->paypalPage->getLoginBlock()->isVisible()) {
+            $returnBlock = $this->paypalPage->getLoginBlock();
+        } else {
+            $returnBlock = $this->paypalPage->getOldLoginBlock();
+        }
+        return $returnBlock;
     }
 }

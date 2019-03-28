@@ -17,11 +17,14 @@ class Amazon_Payments_Model_Observer_Order
      */
     public function updateCustomerAddress(Varien_Event_Observer $observer)
     {
+        /** @var Mage_Sales_Model_Order $order */
         $order    = $observer->getEvent()->getOrder();
+        /** @var Mage_Customer_Model_Customer $customer */
         $customer = $order->getCustomer();
         $payment  = $order->getPayment();
 
         if ($customer && $customer->getId() && $payment->getMethodInstance()->getCode() == 'amazon_payments') {
+            $billingAddress = $order->getBillingAddress();
             $customerAddress = $order->getShippingAddress() ? $order->getShippingAddress() : $order->getBillingAddress();
 
             $newAddress = Mage::getModel('customer/address')
@@ -29,25 +32,107 @@ class Amazon_Payments_Model_Observer_Order
                 ->setCustomerId($customer->getId())
       			    ->setSaveInAddressBook('1');
 
-            // Create new default shipping address
-            if (!$customer->getDefaultShipping()) {
-                $newAddress->setIsDefaultShipping('1');
-            }
-            // Check for duplicate addresses
-            else {
+            $newAddressBilling = Mage::getModel('customer/address')
+                ->addData($billingAddress->getData())
+                ->setCustomerId($customer->getId())
+                ->setSaveInAddressBook('1');
+
+            // See if billing and shipping are the same
+            if ($newAddress->getPostcode() == $newAddressBilling->getPostcode() && $newAddress->getStreet() == $newAddressBilling->getStreet()) {
+
+                // Evaluate for existing address
                 foreach ($customer->getAddresses() as $address) {
                     if ($address->getPostcode() == $newAddress->getPostcode() && $address->getStreet() == $newAddress->getStreet()) {
+
+                        // Set default if exists
+                        if (!$customer->getDefaultBilling()) {
+                            $address->setIsDefaultBilling('1');
+                        }
+                        if (!$customer->getDefaultShipping()) {
+                            $address->setIsDefaultShipping('1');
+                        }
+                        try {
+                            $address->save();
+                        } catch (Exception $e) {
+                            Mage::logException($e);
+                        }
                         return;
                     }
                 }
+
+                // Set new default billing address
+                if (!$customer->getDefaultBilling()) {
+                    $newAddress->setIsDefaultBilling('1');
+                }
+
+                // Create new default shipping address
+                if (!$customer->getDefaultShipping()) {
+                    $newAddress->setIsDefaultShipping('1');
+                }
+
+                try {
+                    $newAddress->save();
+                } catch (Exception $e) {
+                    Mage::logException($e);
+                }
             }
 
-            try {
-                $newAddress->save();
-            } catch (Exception $e) {
-                Mage::logException($e);
-            }
+            // Create multiple addresses if different
+            else {
+                $foundBilling = false;
+                $foundShipping = false;
+                // Check for existing addresses and set as default
+                foreach ($customer->getAddresses() as $address) {
+                    if (!$foundBilling) {
+                        if ($address->getPostcode() == $newAddressBilling->getPostcode() && $address->getStreet() == $newAddressBilling->getStreet()) {
+                            if (!$customer->getDefaultBilling()) {
+                                $address->setIsDefaultBilling('1');
+                                $foundBilling = true;
+                                try {
+                                    $address->save();
+                                } catch (Exception $e) {
+                                    Mage::logException($e);
+                                }
+                            }
+                        }
+                    }
+                    if (!$foundShipping) {
+                        if ($address->getPostcode() == $newAddress->getPostcode() && $address->getStreet() == $newAddress->getStreet()) {
+                            if (!$customer->getDefaultShipping()) {
+                                $address->setIsDefaultShipping('1');
+                                $foundShipping = true;
+                                try {
+                                    $address->save();
+                                } catch (Exception $e) {
+                                    Mage::logException($e);
+                                }
+                            }
+                        }
+                    }
+                    // If both addresses already exist, we're done
+                    if ($foundBilling && $foundShipping) return;
+                }
 
+                // Create new default billing address
+                if (!$foundBilling && !$customer->getDefaultBilling()) {
+                    $newAddressBilling->setIsDefaultBilling('1');
+                    try {
+                        $newAddressBilling->save();
+                    } catch (Exception $e) {
+                        Mage::logException($e);
+                    }
+                }
+
+                // Create new default shipping address
+                if (!$foundShipping && !$customer->getDefaultShipping()) {
+                    $newAddress->setIsDefaultShipping('1');
+                    try {
+                        $newAddress->save();
+                    } catch (Exception $e) {
+                        Mage::logException($e);
+                    }
+                }
+            }
         }
     }
 

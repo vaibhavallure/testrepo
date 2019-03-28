@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <allure>
+            <children>
+                <store module="allure_virtualstore">
+                    <title>Store</title>
+                    <sort_order>3</sort_order>
+                    <children>
+                        <virtualstores module="allure_virtualstore">
+                            <title>Manage Virtual Store</title>
+                            <sort_order>30</sort_order>
+                            <action>adminhtml/virtualstores</action>
+                        </virtualstores>
+                    </children>
+                </store>
+            </children>
+        </allure>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <allure  module="allure" translate="title">
+                        <title>Allure</title>
+                        <children>
+                            <store module="allure_virtualstore" translate="title">
+                                <title>Store</title>
+                                <sort_order>300</sort_order>
+                                <children>
+                                    <virtualstores translate="title">
+			                            <title>Manage Virtual Store</title>
+			                            <sort_order>3000</sort_order>
+			                        </virtualstores>
+                                </children>
+                            </store>
+                        </children>
+                    </allure>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

@@ -55,6 +55,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
             $this->_pageSleepDelay = (int)$tune['page_sleep_delay'];
         }
 
+        $rfHlp = Mage::helper('urapidflow');
         $profile = $this->_profile;
         $logger = $profile->getLogger();
 
@@ -64,6 +65,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
 
         $this->_prepareAttributes($profile->getAttributeCodes());
         $this->_prepareSystemAttributes();
+        $this->_prepareCategories();
 
         $storeId = $profile->getStoreId();
         $this->_storeId = $storeId;
@@ -79,12 +81,8 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
         // main product table
         $table = $this->_t('catalog/category');
 
-        if ($storeId) {
-            $this->_rootCatId = Mage::app()->getStore($storeId)->getGroup()->getRootCategoryId();
-        } elseif (!$this->_upPrependRoot) {
-            $this->_rootCatId = $this->_read->fetchOne("select g.root_category_id from {$this->_t('core/website')} w inner join {$this->_t('core/store_group')} g on g.group_id=w.default_group_id where w.is_default=1");
-        }
-        $rootPath = $this->_rootCatId ? '1/'.$this->_rootCatId : '1';
+        $rootCatId = $this->_getRootCatId();
+        $rootPath = $rootCatId? '1/'. $rootCatId: '1';
 
         if ($this->_upPrependRoot) {
             $nameAttrId = $this->_attr('name', 'attribute_id');
@@ -95,23 +93,39 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
                 ->join(array('name'=>$table.'_varchar'), "name.entity_id=e.entity_id and name.attribute_id={$nameAttrId} and name.value<>'' and name.value is not null and name.store_id=0", array('value'))
                 ->group('e.entity_id');
             if ($storeId) {
-                $rootCatPathsSel->where('e.entity_id=?', $this->_rootCatId);
+                $rootCatPathsSel->where('e.entity_id=?', $rootCatId);
             }
             $this->_rootCatPaths = $this->_read->fetchPairs($rootCatPathsSel);
         }
 
         // start select
         $upAttrId = $this->_attr('url_path', 'attribute_id');
-        $select = $this->_read->select()->from(array('e'=>$table))
-            ->join(array('up'=>$table.'_varchar'), "up.entity_id=e.entity_id and up.attribute_id={$upAttrId} and up.value<>'' and up.value is not null and up.store_id=0", array())
-            ->order('path');
-        
+        $ukAttrId = $this->_attr('url_key', 'attribute_id');
+        /* @var $select Varien_Db_Select */
+        $select = $this->_read->select()->from(array('e'=>$table))->order('path');
+
+        $noUrlPath = Mage::helper('urapidflow')->hasMageFeature('no_url_path');
+
+        if($noUrlPath){
+            $select->joinLeft(array('up'=>$table.'_varchar'), "up.entity_id=e.entity_id and up.attribute_id={$ukAttrId} and up.store_id=0", array());
+            $select->joinLeft(array('upk'=>$table.'_url_key'), "upk.entity_id=e.entity_id and upk.attribute_id={$ukAttrId} and upk.store_id=0", array());
+        } else{
+            $select->join(array('up'=>$table.'_varchar'), "up.entity_id=e.entity_id and up.attribute_id={$upAttrId} and up.value<>'' and up.value is not null and up.store_id=0", array());
+        }
+
         if ($this->_upPrependRoot && !empty($this->_rootCatPaths)) {
             $_rcPaths = array();
+            $_rcMatchCases = array();
             foreach ($this->_rootCatPaths as $_rcPath => $_rcName) {
-                $_rcPaths[] = $this->_read->quoteInto('path=?', $_rcPath);
-                $_rcPaths[] = $this->_read->quoteInto('path like ?', $_rcPath.'/%');
+                $__pathEqSql = $this->_read->quoteInto('path=?', $_rcPath);
+                $__pathLikeSql = $this->_read->quoteInto('path like ?', $_rcPath.'/%');
+                $__pathMatchSql = $__pathEqSql.' OR '.$__pathLikeSql;
+                $_rcPaths[] = $__pathEqSql;
+                $_rcPaths[] = $__pathLikeSql;
+                $_rcMatchCases[$__pathMatchSql] = $this->_read->quote($_rcPath);
             }
+            $_rcMatchCaseSql = $rfHlp->getMultiCheckSql($_rcMatchCases);
+            $select->columns(array('root_category_path'=>$_rcMatchCaseSql));
             $select->where(implode(' OR ', $_rcPaths));
         } else {
             $select->where(
@@ -119,12 +133,24 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
                 .$this->_read->quoteInto(' OR path like ?', $rootPath.'/%')
             );
         }
-        
+
         if ($storeId!=0) {
-            $select->joinLeft(array('ups'=>$table.'_varchar'), "ups.entity_id=e.entity_id and ups.attribute_id={$upAttrId} and ups.value<>'' and up.value is not null and ups.store_id='{$storeId}'", array());
-            $select->columns(array('url_path'=>'IFNULL(ups.value, up.value)'));
+            if($noUrlPath) { // no url path, fetch url key
+                $select->joinLeft(array('upks'=>$table.'_url_key'),
+                              $this->_read->quoteInto("upks.entity_id=e.entity_id and upks.attribute_id=?", $ukAttrId)
+                              . $this->_read->quoteInto(" and upks.store_id=?", $storeId),
+                              array("url_key" => "IFNULL(upk.value, upks.value)"));
+//                $select->columns(array("url_key" => "IFNULL(upk.value, upks.value)"));
+            } else {
+                $select->joinLeft(array('ups' => $table . '_varchar'), "ups.entity_id=e.entity_id and ups.attribute_id={$upAttrId} and ups.value<>'' and up.value is not null and ups.store_id='{$storeId}'", array());
+                $select->columns(array('url_path' => 'IFNULL(ups.value, up.value)'));
+            }
         } else {
-            $select->columns(array('url_path'=>'up.value'));
+            if($noUrlPath){
+                $select->columns(array("url_key" => "upk.value"));
+            } else {
+                $select->columns(array('url_path' => 'up.value'));
+            }
         }
 
         $this->_attrJoined = array($upAttrId);
@@ -240,7 +266,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
                                 continue;
                             }
                             if (!isset($options[$v])) {
-                                $profile->addValue('num_warnings');
+                                $profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_WARNINGS);
                                 $logger->warning($this->__("Unknown option '%s' for category '%s' attribute '%s'", $v, $p[0]['url_path'], $attr));
                                 continue;
                             }
@@ -258,6 +284,10 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
                     switch ($attr) {
                     // product url
                     case 'url_path':
+                        if(empty($value)){
+                            $value = isset($this->_categories[$id]['url_path'])? $this->_categories[$id]['url_path']: $this->catBuildPath($p[0]);
+                            //$value = $this->catBuildPath($p[0], $this->_categories);
+                        }
                         if (!empty($f['format']) && $f['format']=='url') {
                             $value = $baseUrl.$value;
                         } else {
@@ -310,7 +340,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
 
                 $this->_csvRows[] = $this->_convertEncoding($csvRow);
 //                $profile->ioWrite($csvRow);
-                $profile->addValue('rows_processed');//->addValue('rows_success');
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_PROCESSED);//->->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_SUCCESS);
             } // foreach ($this->_entities as $id=>&$p)
 
             Mage::dispatchEvent('urapidflow_catalog_category_export_before_output', array('vars'=>array(
@@ -322,7 +352,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
 
             foreach ($this->_csvRows as $row) {
                 $profile->ioWrite($row);
-                $profile->addValue('rows_success');
+                $profile->addValue(Unirgy_RapidFlow_Model_Profile::ROWS_SUCCESS);
             }
 
             $profile->setMemoryUsage(memory_get_usage(true))->setMemoryPeakUsage(memory_get_peak_usage(true))
@@ -495,7 +525,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
                     } else {
                         $newValue = $this->_locale->getNumber($newValue);
                         if ($newValue != (int)$newValue) {
-                            $this->_profile->addValue('num_errors');
+                            $this->_profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
                             $this->_profile->getLogger()->error($this->__("Invalid int value"));
                         } else {
                             $newValue = (int)$newValue;
@@ -518,7 +548,7 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
                     } else {
                         $newValue = $this->_locale->getNumber($newValue);
                         if (!is_numeric($newValue)) {
-                            $this->_profile->addValue('num_errors');
+                            $this->_profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
                             $this->_profile->getLogger()->error($this->__("Invalid decimal value"));
                         } else {
                             $newValue *= 1.0;
@@ -539,45 +569,45 @@ class Unirgy_RapidFlowPro_Model_Mysql4_Category
                     if ($newValue==='') {
                         $newValue = null;
                     } else {
-                    	static $_dp;
-                    	if (null === $_dp) {
-                    		$_dp = Mage::getStoreConfig('urapidflow/import_options/date_processor');
-                    		if ($_dp == 'date_parse_from_format' && !version_compare(phpversion(), '5.3.0', '>=')) {
-                    			$_dp = 'strtotime';
-                    		}
-                    	}
-                    	static $_attrFormat = array();
-                    	$_attrCode = $attr['attribute_code'];
-                    	if (!isset($_attrFormat[$_attrCode])) {
-                    		if (isset($this->_fields[$_attrCode]['format'])) {
-                    			$_attrFormat[$_attrCode] = $this->_fields[$_attrCode]['format'];
-                    		} else {
-                    			$_attrFormat[$_attrCode] = $this->_profile->getDefaultDatetimeFormat();
-                    		}
-                    		if ($_dp == 'zend_date') {
-                    			$_attrFormat[$_attrCode] = Zend_Locale_Format::convertPhpToIsoFormat($_attrFormat[$_attrCode]);
-                    		}
-                    	}
-                    	switch ($_dp) {
-                    		case 'zend_date':
-                    			static $_zendDate;
-                    			if (null === $_zendDate) {
-                    				$_zendDate = new Zend_Date($newValue, $_attrFormat[$_attrCode], $this->_profile->getProfileLocale());
-                    			} else {
-                    				$_zendDate->set($newValue, $_attrFormat[$_attrCode]);
-                    			}
-                    			$newValue = $_zendDate->toString(Varien_Date::DATETIME_INTERNAL_FORMAT);
-                    			break;
-                    		case 'date_parse_from_format':
-                    			$_phpDatetime = DateTime::createFromFormat($_attrFormat[$_attrCode], $newValue);
-                    			$newValue = $_phpDatetime->format("Y-m-d H:i:s");
-                    			break;
-                    		default:
-                    			$newValue = date("Y-m-d H:i:s", strtotime($newValue));
-                    			break;
-                    	}
+                        static $_dp;
+                        if (null === $_dp) {
+                            $_dp = Mage::getStoreConfig('urapidflow/import_options/date_processor');
+                            if ($_dp == 'date_parse_from_format' && !version_compare(phpversion(), '5.3.0', '>=')) {
+                                $_dp = 'strtotime';
+                            }
+                        }
+                        static $_attrFormat = array();
+                        $_attrCode = $attr['attribute_code'];
+                        if (!isset($_attrFormat[$_attrCode])) {
+                            if (isset($this->_fields[$_attrCode]['format'])) {
+                                $_attrFormat[$_attrCode] = $this->_fields[$_attrCode]['format'];
+                            } else {
+                                $_attrFormat[$_attrCode] = $this->_profile->getDefaultDatetimeFormat();
+                            }
+                            if ($_dp == 'zend_date') {
+                                $_attrFormat[$_attrCode] = Zend_Locale_Format::convertPhpToIsoFormat($_attrFormat[$_attrCode]);
+                            }
+                        }
+                        switch ($_dp) {
+                            case 'zend_date':
+                                static $_zendDate;
+                                if (null === $_zendDate) {
+                                    $_zendDate = new Zend_Date($newValue, $_attrFormat[$_attrCode], $this->_profile->getProfileLocale());
+                                } else {
+                                    $_zendDate->set($newValue, $_attrFormat[$_attrCode]);
+                                }
+                                $newValue = $_zendDate->toString(Varien_Date::DATETIME_INTERNAL_FORMAT);
+                                break;
+                            case 'date_parse_from_format':
+                                $_phpDatetime = DateTime::createFromFormat($_attrFormat[$_attrCode], $newValue);
+                                $newValue = $_phpDatetime->format("Y-m-d H:i:s");
+                                break;
+                            default:
+                                $newValue = date("Y-m-d H:i:s", strtotime($newValue));
+                                break;
+                        }
                         if (!$newValue) {
-                            $this->_profile->addValue('num_errors');
+                            $this->_profile->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
                             $this->_profile->getLogger()->error($this->__("Invalid datetime value"));
                         }
                     }

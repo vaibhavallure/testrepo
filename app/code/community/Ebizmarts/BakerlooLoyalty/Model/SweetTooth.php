@@ -75,6 +75,19 @@ class Ebizmarts_BakerlooLoyalty_Model_SweetTooth extends Ebizmarts_BakerlooLoyal
         return "";
     }
 
+    public function applyRewardsToQuote(Mage_Sales_Model_Quote $quote, $rules = array())
+    {
+        $applied = Mage::getModel('rewards/salesrule_list_applied')->initQuote($quote);
+
+        foreach ($rules as $rule) {
+            if ($rule['points_amount'] > 0) {
+                $quote->setPointsSpending($rule['points_amount']);
+            }
+
+            $applied->add($rule['rule_id'])->saveToQuote($quote);
+        }
+    }
+
     public function getYouWillEarnPoints(Mage_Sales_Model_Quote $cart)
     {
         $rewardsSession = Mage::getSingleton('rewards/session');
@@ -95,8 +108,6 @@ class Ebizmarts_BakerlooLoyalty_Model_SweetTooth extends Ebizmarts_BakerlooLoyal
             }
 
             $pointsToEarnHash = Mage::helper('rewards')->unhashIt($item->getEarnedPointsHash());
-            //Mage::helper ( 'rewards/transfer' )->getEarnedPointsOnItem ( $item )
-
             if (empty($pointsToEarnHash)) {
                 continue;
             }
@@ -172,6 +183,7 @@ class Ebizmarts_BakerlooLoyalty_Model_SweetTooth extends Ebizmarts_BakerlooLoyal
         $cartRules = Mage::getSingleton('rewards/session')->collectShoppingCartRedemptions($quote);
 
         $model = Mage::getModel('rewards/salesrule_rule');
+        $rewardsHelper = Mage::helper('rewards');
 
         foreach ($cartRules['applicable'] as $id => $ruleData) {
             $model->load($id);
@@ -179,20 +191,20 @@ class Ebizmarts_BakerlooLoyalty_Model_SweetTooth extends Ebizmarts_BakerlooLoyal
             $salesrule = Mage::helper('rewards/transfer')->getSalesRule($ruleData['rule_id']);
 
             $data = array(
-                "points_amt" => abs($ruleData['amount']),
-                "points_currency_id" => (int)$ruleData['currency'],
-                "rule_id" => (int)$ruleData['rule_id'],
-                "rule_name" => $ruleData['rule_name'],
-                "points_max_uses" => 0,
-                "points_max_qty" => (int)$model->getPointsMaxQty(),
-                "points_max_percentage" => 0,
-                "max_expendable_points" => $this->_getNeededPointsRedeem($quote, $ruleData, 'applicable', $salesrule)
+                self::OPTIONS_POINTS_AMT            => abs($ruleData['amount']),
+                self::OPTIONS_POINTS_CURR_ID        => (int)$ruleData['currency'],
+                self::OPTIONS_RULE_ID               => (int)$ruleData['rule_id'],
+                self::OPTIONS_RULE_NAME             => $ruleData['rule_name'],
+                self::OPTIONS_POINTS_MAX_USES       => 0,
+                self::OPTIONS_POINTS_MAX_QTY        => (int)$model->getPointsMaxQty(),
+                self::OPTIONS_POINTS_MAX_PERCENTAGE => 0,
+                self::OPTIONS_MAX_EXPENDABLE        => $this->_getNeededPointsRedeem($quote, $ruleData, 'applicable', $salesrule)
             );
 
             if (isset($ruleData['caption']) and !empty($ruleData['caption'])) {
-                $data['legend'] = $ruleData['caption'];
+                $data[self::OPTIONS_LEGEND] = $ruleData['caption'];
             } else {
-                $data['legend'] = strip_tags(Mage::helper('rewards')->__('Spend <b>%s</b>, Get <b>%s</b>', $ruleData['points_cost'], $ruleData['action_str']));
+                $data[self::OPTIONS_LEGEND] = strip_tags($rewardsHelper->__('Spend <b>%s</b>, Get <b>%s</b>', $ruleData['points_cost'], $ruleData['action_str']));
             }
 
             $options[] = $data;
@@ -209,29 +221,30 @@ class Ebizmarts_BakerlooLoyalty_Model_SweetTooth extends Ebizmarts_BakerlooLoyal
             $salesrule = Mage::helper('rewards/transfer')->getSalesRule($ruleData['rule_id']);
 
             $data = array(
-                "points_amt" =>  (int)$model->getPointsAmount(), //abs($ruleData['amount']),
-                "points_currency_id" => (int)$ruleData['currency'],
-                "rule_id" => (int)$ruleData['rule_id'],
-                "rule_name" => $ruleData['rule_name'],
-                "points_max_uses" => 0,
-                "points_max_qty" => (int)$model->getPointsMaxQty(),
-                "points_max_percentage" => 0,
-                "max_expendable_points" => $this->_getNeededPointsRedeem($quote, $ruleData, 'applied', $salesrule, (int)$model->getPointsAmount())
+                self::OPTIONS_POINTS_AMT            => (int)$model->getPointsAmount(), //abs($ruleData['amount']),
+                self::OPTIONS_POINTS_CURR_ID        => (int)$ruleData['currency'],
+                self::OPTIONS_RULE_ID               => (int)$ruleData['rule_id'],
+                self::OPTIONS_RULE_NAME             => $ruleData['rule_name'],
+                self::OPTIONS_POINTS_MAX_USES       => 0,
+                self::OPTIONS_POINTS_MAX_QTY        => (int)$model->getPointsMaxQty(),
+                self::OPTIONS_POINTS_MAX_PERCENTAGE => 0,
+                self::OPTIONS_MAX_EXPENDABLE        => $this->_getNeededPointsRedeem($quote, $ruleData, 'applied', $salesrule, (int)$model->getPointsAmount())
             );
 
             if (isset($ruleData['caption']) and !empty($ruleData['caption'])) {
-                $data['legend'] = $ruleData['caption'];
+                $data[self::OPTIONS_LEGEND] = $ruleData['caption'];
             } else {
                 $actionStr = (int)$model->getPointsDiscountAmount();
                 if ($salesrule->getPointsDiscountAction() === 'by_percent')
                     $actionStr .= "% off";
                 else
                     $actionStr .= Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol();
-                $data['legend'] = strip_tags(Mage::helper('rewards')->__('Spend <b>%s</b>, Get <b>%s</b>', $data['points_amt'], $actionStr));
+                $data[self::OPTIONS_LEGEND] = strip_tags($rewardsHelper->__('Spend <b>%s</b>, Get <b>%s</b>', $data['points_amt'], $actionStr));
             }
 
             $options[] = $data;
         }
+
         Varien_Profiler::stop('POS::' . __METHOD__);
         return $options;
     }

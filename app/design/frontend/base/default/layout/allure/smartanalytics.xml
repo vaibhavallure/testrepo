@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <block type="allure_smartanalytics/ga" name="allure_smartanalytics"
+                   template="allure/smartanalytics/ga.phtml">
+				   <action method="setPageType"><type>other</type></action>
+			</block>
+			<action method="addJs" ifconfig="allure_smartanalytics/enhanced/enhanced_ecommerce_enabled">
+				<script>allure/smartanalytics/require_jquery.js</script>
+				<params><![CDATA[data-group="js001"]]></params>
+			</action>
+			<action method="addJs" ifconfig="allure_smartanalytics/enhanced/enhanced_ecommerce_enabled">
+				<script>allure/smartanalytics/promotion.js</script>
+				<params><![CDATA[data-group="js001"]]></params>
+			</action>
+			<action method="addJs" ifconfig="allure_smartanalytics/enhanced/enhanced_ecommerce_enabled">
+				<script>allure/smartanalytics/trafficsource.js</script>
+				<params><![CDATA[data-group="js001"]]></params>
+			</action>
+			<action method="addJs" ifconfig="allure_smartanalytics/enhanced/send_form_data_enabled">
+				<script>allure/smartanalytics/ga_formdata.js</script>
+				<params><![CDATA[data-group="js001"]]></params>
+			</action>
+        </reference>
+    </default>
+
+    <catalog_category_default>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>category</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/list" name="allure_smartanalytics_list"
+                   template="allure/smartanalytics/list.phtml">
+                <action method="setMode">
+                    <mode>category</mode>
+                </action>
+            </block>
+        </reference>
+    </catalog_category_default>
+
+    <catalog_category_layered>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>category</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/list" name="allure_smartanalytics_list"
+                   template="allure/smartanalytics/list.phtml">
+                <action method="setMode">
+                    <mode>category</mode>
+                </action>
+            </block>
+        </reference>
+    </catalog_category_layered>
+
+    <catalogsearch_result_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>category</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/list" name="allure_smartanalytics_list"
+                   template="allure/smartanalytics/list.phtml">
+                <action method="setMode">
+                    <mode>search</mode>
+                </action>
+            </block>
+        </reference>
+    </catalogsearch_result_index>
+
+    <catalogsearch_advanced_result>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>category</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/list" name="allure_smartanalytics_list"
+                   template="allure/smartanalytics/list.phtml">
+                <action method="setMode">
+                    <mode>search</mode>
+                </action>
+            </block>
+        </reference>
+    </catalogsearch_advanced_result>
+
+    <catalog_product_view>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>product</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/view" name="allure_smartanalytics_view"
+                   template="allure/smartanalytics/view.phtml">
+            </block>
+        </reference>
+    </catalog_product_view>
+
+	<oscheckout_index_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml"/>
+        </reference>
+    </oscheckout_index_index>
+
+	<firecheckout_index_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml"/>
+        </reference>
+    </firecheckout_index_index>
+
+	<opc_index_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml"/>
+        </reference>
+    </opc_index_index>
+
+	<onepagecheckout_index_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml"/>
+        </reference>
+    </onepagecheckout_index_index>
+
+	<onestepcheckout_index_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml"/>
+        </reference>
+    </onestepcheckout_index_index>
+
+	<checkout_onestep_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml"/>
+        </reference>
+    </checkout_onestep_index>
+
+    <checkout_onepage_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml">
+				<action method="setCheckoutType">
+					<mode>standard</mode>
+				</action>
+			</block>
+        </reference>
+    </checkout_onepage_index>
+
+	<gomage_checkout_onepage_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml"/>
+        </reference>
+    </gomage_checkout_onepage_index>
+
+	<anattadesign_awesomecheckout_onepage_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <remove name="allure_smartanalytics_checkout_onepage"/>
+        </reference>
+	</anattadesign_awesomecheckout_onepage_index>
+
+	<aw_onestepcheckout_index_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+                   template="allure/smartanalytics/checkout/onepage.phtml"/>
+        </reference>
+    </aw_onestepcheckout_index_index>
+
+    <checkout_onepage_success>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>purchase</type></action>
+		</reference>
+        <reference name="head">
+            <block type="allure_smartanalytics/checkout_success" name="allure_smartanalytics_checkout_success"
+                   template="allure/smartanalytics/checkout/success.phtml"/>
+        </reference>
+    </checkout_onepage_success>
+
+	<onepagecheckout_index_success>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>purchase</type></action>
+		</reference>
+		<reference name="head">
+            <block type="allure_smartanalytics/checkout_success" name="allure_smartanalytics_checkout_success"
+                   template="allure/smartanalytics/checkout/success.phtml"/>
+        </reference>
+	</onepagecheckout_index_success>
+
+    <checkout_cart_index>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>cart</type></action>
+		</reference>
+        <reference name="content">
+            <block type="allure_smartanalytics/checkout_cart" name="allure_smartanalytics_checkout_cart"
+                   template="allure/smartanalytics/checkout/cart.phtml"/>
+        </reference>
+    </checkout_cart_index>
+
+	<paypal_express_review>
+		<reference name="content">
+			<block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_paypal_review"
+                   template="allure/smartanalytics/checkout/paypalreview.phtml"/>
+		</reference>
+	</paypal_express_review>
+
+	<checkout_pureplay_login>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>checkout</type></action>
+		</reference>
+		<reference name="content">
+			<block type="allure_smartanalytics/checkout_onepage" name="allure_smartanalytics_checkout_onepage"
+				   template="allure/smartanalytics/checkout/onepage.phtml"/>
+		</reference>
+	</checkout_pureplay_login>
+
+	<checkout_pureplay_success>
+		<reference name="allure_smartanalytics">
+			<action method="setPageType"><type>purchase</type></action>
+		</reference>
+		<reference name="head">
+			<block type="allure_smartanalytics/checkout_success" name="allure_smartanalytics_checkout_success"
+				   template="allure/smartanalytics/checkout/success.phtml"/>
+		</reference>
+	</checkout_pureplay_success>
+</layout>

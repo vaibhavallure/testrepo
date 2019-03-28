@@ -58,12 +58,14 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
                         }
                     }
                 } */
+                $hideAddToCart = Mage::helper('amstockstatus')->getCustomOutOfStockStatus($product);
                 $stockStatus = Mage::helper('amstockstatus')->getCustomStockStatusText($product);
                 if ($key)
                 {
                     $aStockStatus[implode(',', $key)] = array(
-                        'is_in_stock'   => $product->isSaleable(),
+                        'is_in_stock'   =>$this->checkStockStatus($product),
                         'custom_status' => $stockStatus,
+                        'hideAddToCart_button' => $hideAddToCart,
 			   'custom_status_icon' =>  Mage::helper('amstockstatus')->getStatusIconImage($product),
 			   'custom_status_icon_only' => Mage::getStoreConfig('amstockstatus/general/icononly'),
                         'is_qnt_0'      => (int)($product->isInStock() && $stockItem->getData('qty') <= Mage::helper('amstockstatus')->getBackorderQnt()),
@@ -82,6 +84,13 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
         }
         $html = $this->helper('amstockstatus')->processViewStockStatus($this->getProduct(), $html);
         return $html;
+    }
+    public function checkStockStatus($product){
+        if($product->isInStock() || ($product->getBackorders()==1 || $product->getBackorders()==2)){
+           return true;
+        }else {
+            return false;
+        }
     }
 
     public function getAllowProducts()

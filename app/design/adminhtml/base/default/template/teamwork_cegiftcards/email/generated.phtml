@@ -1,0 +1,11 @@
+<?php $_codes = $this->getGcInfo(); ?>
+
+<?php foreach ($_codes as $_code => $_gcInfo): ?>
+    <?php if($_gcInfo['barcode_link']): ?>
+    <img src="<?php echo $_gcInfo['barcode_link']; ?>" alt="<?php echo $_code;?>"/>
+    <?php endif; ?>
+    
+    <br />
+    <?php echo $this->escapeHtml($_gcInfo['label']); ?>
+    <br />
+<?php endforeach; ?>

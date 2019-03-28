@@ -2,9 +2,9 @@
 <config>
     <modules>
         <Unirgy_RapidFlowPro>
-            <version>2.0.0.2</version>
-            <usimpleup remote="http://download.unirgy.com/simple/client_api/version/"
-                changelog="http://unirgy.com/support/portal/announcements"
+            <version>2.0.0.26</version>
+            <usimpleup remote="https://download.unirgy.com/simple/client_api/version/"
+                changelog="https://unirgy.com/release-notes"
                 uninstall="urapidflowpro/observer::usimpleup_uninstall"/>
         </Unirgy_RapidFlowPro>
     </modules>
@@ -51,9 +51,9 @@
         </translate>
 
         <events>
-            <controller_action_layout_render_before_urapidflowadmin_adminhtml_profile_index>
+            <controller_action_layout_render_before_adminhtml_urapidflowadmin_profile_index>
                 <observers><urapidflowpro><type>singleton</type><class>urapidflowpro/observer</class><method>adminhtml_version</method></urapidflowpro></observers>
-            </controller_action_layout_render_before_urapidflowadmin_adminhtml_profile_index>
+            </controller_action_layout_render_before_adminhtml_urapidflowadmin_profile_index>
         </events>
     </adminhtml>
 </config>

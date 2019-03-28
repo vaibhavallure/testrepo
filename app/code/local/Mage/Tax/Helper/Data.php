@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Tax
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -1204,38 +1204,38 @@ class Mage_Tax_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return (bool)$this->_config->crossBorderTradeEnabled($store);
     }
-    
+
     public function getSkippedTaxCountries()
     {
         $countriesRestricted = Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/countries');
-        
+
         if (!empty($countriesRestricted)) {
             $countriesRestricted = strtoupper($countriesRestricted);
             return  explode(',', $countriesRestricted);
         }
-        
+
         return  array();
     }
-    
-    private function allowedTaxOnCatalog()
+
+    public function allowedTaxOnCatalog()
     {
         if (Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/status')) {
-            
+
             $countries = $this->getSkippedTaxCountries();
-        
+
             if (count($countries)) {
-            
+
                 $request = Mage::getSingleton('tax/calculation')->getRateRequest();
-                
+
                 if (in_array($request->getCountryId(), $countries)) {
                     return false;
                 }
             }
         }
-        
+
         return true;
     }
-    
+
     public function getTaxDisplaySummary()
     {
         return ($this->allowedTaxOnCatalog() ? Mage::getStoreConfig('allure_taxconfig/skip_catalog_display/summary') : NULL);
@@ -1259,7 +1259,7 @@ class Mage_Tax_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function displayBothPrices($store = null)
     {
-        return ($this->getPriceDisplayType($store) == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH && $this->allowedTaxOnCatalog());
+        return ($this->getPriceDisplayType($store) == Mage_Tax_Model_Config::DISPLAY_TYPE_BOTH);
     }
 
     /**
@@ -1278,6 +1278,7 @@ class Mage_Tax_Helper_Data extends Mage_Core_Helper_Abstract
     public function getPrice($product, $price, $includingTax = null, $shippingAddress = null, $billingAddress = null,
                              $ctc = null, $store = null, $priceIncludesTax = null, $roundPrice = true)
     {
+       // Mage::log("price= ".$price,Zend_Log::DEBUG,'allure_log.log',true);
         if (!$price) {
             return $price;
         }
@@ -1310,6 +1311,10 @@ class Mage_Tax_Helper_Data extends Mage_Core_Helper_Abstract
                     ->getRate($request->setProductClassId($taxClassId));
             }
         }
+
+        $request = Mage::getSingleton('tax/calculation')
+        ->getRateRequest($shippingAddress, $billingAddress, $ctc, $store);
+        $percent = Mage::getSingleton('tax/calculation')->getTaxPercentOfProduct($request,$percent,$price);
 
         if ($percent === false || is_null($percent)) {
             if ($priceIncludesTax && !$includingPercent) {

@@ -31,6 +31,7 @@
  * @see Mage_Catalog_Block_Product_View
  * @see Mage_Review_Block_Product_View
  */
+
 $imgArr = array();
 $backOrderArray = array();
 $matches1 = array();
@@ -41,8 +42,12 @@ $_product = $this->getProduct();
 $_productId = $_product->getId();
 
 //parent child check
-$prHelper        = Mage::helper("alluremultistore_catalog");
+$prHelper        = Mage::helper("allure_catalog");
 $isCustomOptions = $prHelper->isCustomOptionsAvailable($_productId);
+
+$isGiftCard= $prHelper->isGiftCard($_productId);
+$isGiftCardValue=($isGiftCard)?1:0;
+
 $parentVal = ($isCustomOptions)?1:0;
 
 $aprod = Mage::getModel("catalog/product")->load($_productId);
@@ -110,7 +115,7 @@ if ($_product->isConfigurable()) {
         $backOrderArray[$sprod->getId()] = Mage::getModel('cataloginventory/stock_item')->loadByProduct($sprod)->getBackorders();
         if ($sprod->getVideo()) {
             preg_match('#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=embed\/)[^"&\n]+|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#', $sprod->getVideo(), $matches1);
-            
+
             if (count($matches1)) {
 	            $videoArr[$sprod->getId()]['video'] = $matches1[0];
 	            if ($_product->getVideoThumb() == 'thumbnail/video/') {
@@ -280,7 +285,7 @@ if ($_product->getSizeSample() == 1) {
         //if ($cid == 2) $cid = $s_cat->getId();
         $category = Mage::getModel('catalog/category')->load($cid);
         ?>
-        <h1><?php echo $category->getName(); ?></h1></div>
+        <h1><?php //echo $category->getName(); ?></h1></div>
     <div class="product-essential">
     <?php if ($showSampleForm): ?>
         <div style="display: none;">
@@ -294,19 +299,20 @@ if ($_product->getSizeSample() == 1) {
             </form>
         </div>
     <?php endif; ?>
-    
+
     <?php if(!$isCustomOptions):?>
     <form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <?php else:?>
     <?php //for parent child?>
     <form action="<?php echo $this->getSubmitUrl($_product)//.'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <?php endif;?>
-    
+
         <div class="no-display">
             <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="related_product" id="related-products-field" value=""/>
         	<input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
+        	<input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
         </div>
 
         <div class="product-view-left">
@@ -400,7 +406,11 @@ if ($_product->getSizeSample() == 1) {
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
-
+            <?php $category='';?>
+			<?php if(Mage::registry('current_category')):?>
+				<?php $category=Mage::registry('current_category')->getName();?>
+			<?php endif;?>
+			<input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
             <?php //echo $this->getPriceHtml($_product) ?>
             <div id="ajax-price"><?php echo $this->getPriceHtml($_product) ?></div>
 
@@ -434,8 +444,10 @@ if ($_product->getSizeSample() == 1) {
                     </button>
                     <?php echo $this->getChildHtml('alert_urls') ?>
                 <?php endif;?>
-				
+
 				<?php //echo $this->getChildHtml('special_instruction')?>
+
+		       <?php if ($_product->getShowSpecialInstruction()):?>
 				<div class="product-special-instructions">
 					<div class="special-instruction-label">
 						<label>Special Instructions:</label>
@@ -447,7 +459,8 @@ if ($_product->getSizeSample() == 1) {
                         <div style="width: 250px">Special requests might delay your order due to production time)</div>
 					</div>
 				</div>
-				
+				<?php endif;?>
+
                 <?php echo $this->getChildHtml('product_additional_data') ?>
             </div>
 
@@ -497,7 +510,8 @@ if ($_product->getSizeSample() == 1) {
         var stockFlowControl;
         productAddToCartForm.submit = function (button, form) {
         var instru = jQuery('.special-inst-product').val();
-	    <?php 
+        console.log(instru);
+	    <?php
 	     //$_POST['"product-"'.'$_product->getId()']= document.write(instru);
 	    //Mage::getSingleton('core/session')->setData("product-".$_product->getId(),instru);
 	    //Mage::getSingleton('core/session')->setInstruction(instru); ?>
@@ -516,7 +530,7 @@ if ($_product->getSizeSample() == 1) {
 
 			//old code
             //jQuery('.required-entry:not(.selectboxit)').each(function () {
-            
+
             //new code -allure
             jQuery('.main-container .required-entry:not(.selectboxit)').each(function () {
                 console.log("Add to Cart")

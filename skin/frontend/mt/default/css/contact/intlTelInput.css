@@ -1,8 +1,15 @@
 .intl-tel-input {
 	position: relative;
-	display: inline-block;
+	display: block;
 	/* width: 100%; */
-	width: 495px;
+	max-width: 100%;
+}
+.my-account .intl-tel-input input#phone {
+	width: 245px;
+	display: block;
+}
+.opc .intl-tel-input {
+	max-width: 100%;
 }
 
 .intl-tel-input * {
@@ -34,6 +41,10 @@
 	bottom: 0;
 	right: 0;
 	padding: 1px
+}
+
+.opc .intl-tel-input .flag-container {
+	height: 21px;
 }
 
 .intl-tel-input .selected-flag {

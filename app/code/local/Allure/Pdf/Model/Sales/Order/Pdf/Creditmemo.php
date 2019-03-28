@@ -102,6 +102,15 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Creditmemo extends Mage_Sales_Model_Order
             $addressesHeight = max($addressesHeight, $this->_calcAddressHeight($shippingAddress));
         }
         
+        //aws02 - address height calculate function with extra data start
+        $customerGroupId = $order->getCustomerGroupId();
+        $groupname = Mage::getModel('customer/group')->load($customerGroupId)->getCustomerGroupCode();
+        $groupname = "Customer Group : ".$groupname;
+        $customerEmail = "Email : ".$order->getCustomerEmail();
+        $extraData = array($customerEmail,$groupname);
+        $addressesHeight =  max($addressesHeight,$helper->calHeightExtraData($addressesHeight,$extraData));
+        //end
+        
         $page->setFillColor(new Zend_Pdf_Color_GrayScale(1));
         $page->drawRectangle(25, ($top - 25), 570, $top - 33 - $addressesHeight);
         $page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
@@ -122,6 +131,13 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Creditmemo extends Mage_Sales_Model_Order
             }
         }
         
+        //aws02 - email & customer group Start
+        $page->drawText(strip_tags(ltrim("{$customerEmail}")), 35, $this->y, 'UTF-8');
+        $this->y -= 15;
+        $page->drawText(strip_tags(ltrim("{$groupname}")), 35, $this->y, 'UTF-8');
+        $this->y -= 15;
+        //End
+        
         $addressesEndY = $this->y;
         
         if (!$order->getIsVirtual()) {
@@ -138,6 +154,13 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Creditmemo extends Mage_Sales_Model_Order
                     }
                 }
             }
+            
+            //aws02 - email & customer group Start
+            $page->drawText(strip_tags(ltrim("{$customerEmail}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            $page->drawText(strip_tags(ltrim("{$groupname}")), 285, $this->y, 'UTF-8');
+            $this->y -= 15;
+            //End
             
             $addressesEndY = min($addressesEndY, $this->y);
             $this->y = $addressesEndY;
@@ -298,8 +321,9 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Creditmemo extends Mage_Sales_Model_Order
             /* Add table head */
             $this->_drawHeader($page);
             /* Add body */
-            $cnt = 1;
+            $cnt = 0;
             foreach ($creditmemo->getAllItems() as $item){
+                $cnt ++;
                 if ($item->getOrderItem()->getParentItem()) {
                     continue;
                 }
@@ -310,7 +334,7 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Creditmemo extends Mage_Sales_Model_Order
                 }else{
                     $this->_drawItem($item, $page, $order);
                 }
-                $cnt ++;
+                
                 $page = end($pdf->pages);
             }
             /* Add totals */

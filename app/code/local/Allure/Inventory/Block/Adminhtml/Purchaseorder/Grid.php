@@ -31,12 +31,13 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         	$subCollection = Mage::getModel('inventory/orderitems')->getCollection()->addFieldToSelect('po_id');
         	$subCollection->getSelect()->joinLeft('catalog_product_entity', 'catalog_product_entity.entity_id = main_table.product_id', array('sku'));
         	$subCollection->addFieldToFilter(
-        			array('admin_comment', 'vendor_comment','ref_no','sku'),
+        			array('admin_comment', 'vendor_comment','ref_no','sku','vendor_sku'),
         			array(
         					array('like'=>'%'.$_GET['search'].'%'),
         					array('like'=>'%'.$_GET['search'].'%'),
         					array('like'=>'%'.$_GET['search'].'%'),
-        					array('like'=>'%'.$_GET['search'].'%')
+        					array('like'=>'%'.$_GET['search'].'%'),
+        			        array('like'=>'%'.$_GET['search'].'%')
         			)
         			);
         	$subCollection->getSelect()->group('main_table.po_id');
@@ -47,7 +48,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         	$collection->addFieldToFilter('po_id', array('in' => $ids));
         	
         	}
-        $collection->setOrder('updated_date', 'DESC');
+        	 $collection->setOrder('po_id', 'DESC');
         
         $this->setCollection($collection);
         return parent::_prepareCollection();
@@ -62,6 +63,7 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     			'index'     =>'po_id',
     			'filter'    =>'adminhtml/widget_grid_column_filter_range',
     	));
+    	
     	if(!Mage::helper('allure_vendor')->isUserVendor())
     	{
 	    	$this->addColumn('vendor_name', array(
@@ -77,21 +79,23 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     			'index'     => 'ref_no',
     	));
     	
-    	$this->addColumn('items_ordered', array(
+    	/* $this->addColumn('items_ordered', array(
     			'header'    =>Mage::helper('reports')->__('Items Ordered'),
     			'sortable'  =>false,
     			'index'     =>'po_id',
     			'renderer'  => 'inventory/adminhtml_purchaseorder_renderer_items'
-    	));
+    	)); */
     	
     	
-    
+    	if(!Mage::helper('allure_vendor')->isUserVendor())
+    	{
         
         $this->addColumn('total_amount', array(
         		'header'    =>Mage::helper('reports')->__('Amount(USD)'),
         		'sortable'  =>True,
         		'index'     =>'total_amount'
         ));
+    	}
         $this->addColumn('stock_id', array(
         		'header'    =>Mage::helper('reports')->__('Store'),
         		'sortable'  =>True,
@@ -109,12 +113,13 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         		"type" =>   "datetime",
         ));
         
-        $this->addColumn('updated_date', array(
+       /*  $this->addColumn('updated_date', array(
         		'header'    =>Mage::helper('reports')->__('Updated Date'),
         		'sortable'  =>True,
         		'index'     =>'updated_date',
         		"type" =>   "datetime",
-        ));
+        )); */
+        
         $this->addColumn('status', array(
         		'header'    => Mage::helper('reports')->__('Status'),
         		'align'     => 'left',
@@ -124,24 +129,46 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
         		'options'   => Mage::helper('inventory')->getOrderStatusArray(),
         ));
         
-       
+       /* 
         $this->addColumn('action',
         		array(
         				'header'=> Mage::helper('catalog')->__('Action'),
         				'index' => 'po_id',
+        		        'is_system' => true,
         				'renderer'  => 'Allure_Inventory_Block_Adminhtml_Purchaseorder_Renderer_Action',// THIS IS WHAT THIS POST IS ALL ABOUT
         		));
+        */
+        
        
+        $this->addColumn('export',
+        array(
+        'header'=> Mage::helper('catalog')->__('Export'),
+        'index' => 'po_id',
+        'is_system' => true,
+        'renderer'  => 'Allure_Inventory_Block_Adminhtml_Purchaseorder_Renderer_Export',// THIS IS WHAT THIS POST IS ALL ABOUT
+        ));
+       
+        $this->addColumn('lastupdatedby', array(
+            'header'    => Mage::helper('reports')->__('Last Updated By'),
+            'align'     =>'left',
+            'width'     => '300px',
+            'index'     => 'lastupdatedby',
+            'renderer'     => 'inventory/adminhtml_purchaseorder_renderer_updatedby'
+        ));
+        
         $this->addExportType('*/*/exportDownloadsCsv', Mage::helper('reports')->__('CSV'));
         $this->addExportType('*/*/exportDownloadsExcel', Mage::helper('reports')->__('Excel'));
 
         return parent::_prepareColumns();
     }
     public function getRowUrl($row)
-    {
-    
-    	return $this->getUrl('*/*/view', array('id' => $row->getId()));
-    
+    {    
+        if(Mage::helper('allure_vendor')->isUserVendor())
+        {
+            return $this->getUrl('*/*/vendorview', array('id' => $row->getId()));
+        }else{
+            return $this->getUrl('*/*/view', array('id' => $row->getId()));
+        }
     }
     
     protected function _prepareMassaction()
@@ -170,3 +197,6 @@ class Allure_Inventory_Block_Adminhtml_Purchaseorder_Grid extends Mage_Adminhtml
     
     
 }
+
+
+

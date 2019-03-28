@@ -31,7 +31,7 @@ class Simtech_Searchanise_Model_Searchanise extends Mage_Core_Model_Abstract
     public function initSearchaniseRequest()
     {
         $this->_searchaniseRequest = Mage::getModel('searchanise/request');
-        
+
         return $this;
     }
 
@@ -44,7 +44,7 @@ class Simtech_Searchanise_Model_Searchanise extends Mage_Core_Model_Abstract
     public function setCollection($collection)
     {
         $this->_collection = $collection;
-        
+
         return $this;
     }
 
@@ -57,26 +57,26 @@ class Simtech_Searchanise_Model_Searchanise extends Mage_Core_Model_Abstract
     {
         return $this->_collection;
     }
-    
+
     public function checkSearchaniseResult()
     {
         return Mage::helper('searchanise/ApiSe')->checkSearchaniseResult($this->_searchaniseRequest);
     }
-    
+
     public function setSearchaniseRequest($request)
     {
         $this->_searchaniseRequest = $request;
     }
-    
+
     public function getSearchaniseRequest()
     {
         return $this->_searchaniseRequest;
     }
-    
+
     public function addSearchaniseFilter()
     {
         $this->_collection->addFieldToFilter('entity_id', array('in' => $this->getSearchaniseRequest()->getProductIds()));
-        
+
         return $this->_collection;
     }
 
@@ -90,7 +90,7 @@ class Simtech_Searchanise_Model_Searchanise extends Mage_Core_Model_Abstract
         if (!$this->checkSearchaniseResult()) {
             return $this->_collection->getLastPageNumberParent();
         }
-        
+
         $collectionSize = (int) $this
             ->getSearchaniseRequest()
             ->getTotalProduct();
@@ -104,7 +104,7 @@ class Simtech_Searchanise_Model_Searchanise extends Mage_Core_Model_Abstract
                 return ceil($collectionSize/$pageSize);
             }
         }
-        
+
         return 1;
     }
 
@@ -129,7 +129,7 @@ class Simtech_Searchanise_Model_Searchanise extends Mage_Core_Model_Abstract
             $sortBy = "FIELD(e.entity_id, {$product_ids}) asc";
             $this->_collection->getSelect()->order(new Zend_Db_Expr($sortBy));
         }
-        
+
         return $this;
     }
 }

@@ -60,6 +60,7 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
         $result = array();
 
         foreach ($columns as $col) {
+
             if (isset($columnData[$col])) {
                 $result[] = $columnData[$col]['label'];
             }
@@ -129,7 +130,6 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
 
     public function populate(Varien_Db_Adapter_Interface $writer)
     {
-
         Varien_Profiler::start('POS::' . __METHOD__);
 
         $dataSources = unserialize($this->getDataSources());
@@ -164,7 +164,7 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
             ->setCurPage(1);
 
         $iterator->walk($collection->getSelect(), array(array($this, 'loadData')), array('writer' => $writer, 'table' => $table));
-
+	
         $this->_hasDataChanges = true;
         $this->save();
 
@@ -173,7 +173,6 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
 
     public function loadData($args = array())
     {
-
         Varien_Profiler::start('POS::' . __METHOD__);
 
         try {
@@ -217,7 +216,7 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
             $data = array('id' => 'NULL');
 
             $data = $this->getRowData($row, $data, $payload, $hasMultiplePayments, $payments, $order, $id);
-
+	
             if (!empty($data)) {
                 $writer->insert($table, $data);
             }
@@ -230,10 +229,10 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
         Varien_Profiler::stop('POS::' . __METHOD__);
     }
 
-    protected function getValueFromJson($json, $path)
+    protected function getValueFromJson($json, $path, $refundType = null)
     {
         $value = null;
-
+        
         if (is_string($path)) {
             $value = $json->$path;
         } elseif (is_array($path)) {
@@ -244,6 +243,18 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
                     $offset = array_search($_p, $path) + 1;
                     $subPath = array_slice($path, $offset, null, true);
                     $_v = $this->getValueFromProducts($_v, $subPath);
+                    break;
+                } elseif (!is_null($refundType) && $_p == 'refunds') {
+                    foreach ($_v->$_p as $refund) {
+                        $offset = array_search($_p, $path) + 1;
+                        $subPath = array_slice($path, $offset, null, true);
+
+                        if ($refund->method == $refundType) {
+                           $_v = $this->getValueFromJson($refund, $subPath);
+                           break;
+                        }
+                    }
+
                     break;
                 } else {
                     $_v = isset($_v->$_p) ? $_v->$_p : null;
@@ -426,7 +437,7 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
             if ($attribute == 'order_date') {
                 $from = isset($_filter['from']) ? $_filter['from'] : false;
                 $to = isset($_filter['to']) ? $_filter['to'] : false;
-                $format = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_FULL);
+                $format = Mage::app()->getLocale()->getDateFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
 
                 if (!$from and !$to) {
                     continue;
@@ -473,7 +484,6 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
     protected function getRowData($row, &$data, $payload, $hasMultiplePayments, $payments, $order, $id)
     {
         foreach ($this->_columns as $_col) {
-
             if ($_col == 'id') {
                 continue;
             }
@@ -504,22 +514,31 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
                         $add = true;
 
                         if (!is_null($condition)) {
-                            $range = $this->getValueFromJson($payload, $condition['path']);
-                            list($comp, $value) = $condition['cond'];
+                            if (strpos($_col, 'refunds') !== false) {
+                                $range = $this->getValueFromJson($payload, $condition['path'], str_replace('_refunds', '', $_col));
+                            } else {
+                                $range = $this->getValueFromJson($payload, $condition['path']);
+                            }
 
+                            list($comp, $value) = $condition['cond'];
                             if ($range != $value) {
                                 $add = false;
                             }
                         }
-
+			
                         if ($add === true) {
                             if (is_string($column)) {
                                 $data[$_col] = $payload->$column;
                             } else {
-                                $data[$_col] = $this->getValueFromJson($payload, $column['path']);
+                                if (strpos($_col, 'refunds') !== false) {
+                                    $data[$_col] = $this->getValueFromJson($payload, $column['path'], str_replace('_refunds', '', $_col));
+                                } else {
+                              	    $data[$_col] = $this->getValueFromJson($payload, $column['path']);
+                                }
                             }
                         }
                     }
+
                 } elseif ($model == 'sales/order') {
                     $get = $this->getCamelized($column);
                     $data[$_col] = $order->$get();
@@ -543,6 +562,7 @@ class Ebizmarts_BakerlooReports_Model_Report extends Mage_Core_Model_Abstract
             }
 
         }
+
         return $data;
     }
 

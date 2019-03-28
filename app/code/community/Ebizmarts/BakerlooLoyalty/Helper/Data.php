@@ -9,6 +9,10 @@ class Ebizmarts_BakerlooLoyalty_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
     const LOYALTY_INTEGRATIONS_CONFIG_PATH = 'default/bakerloo_loyalty/integrations';
+    const CODE_SWEETTOOTH = 'TBT_Rewards';
+    const CODE_ENTERPRISE = 'Enterprise_Reward';
+    const CODE_AHEADWORKS = 'AW_Points';
+    const AW_POINTS_AMOUNT = 'pos_aw_points_amount';
 
     /**
      * Simple config check.
@@ -35,7 +39,7 @@ class Ebizmarts_BakerlooLoyalty_Helper_Data extends Mage_Core_Helper_Abstract
             $loyalty = Mage::getModel('bakerloo_restful/integrationDispatcher', array('integration_type' => 'loyalty'));
         }
 
-        $configOk  = ($loyalty->getLoyaltyConfig() == 'TBT_Rewards');
+        $configOk  = ($loyalty->getLoyaltyConfig() == self::CODE_SWEETTOOTH);
         $isEnabled = $loyalty->isEnabled();
 
         return (bool)($configOk and $isEnabled);

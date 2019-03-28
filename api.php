@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -29,7 +29,7 @@ if (version_compare(phpversion(), '5.2.0', '<')) {
     exit;
 }
 
-$magentoRootDir = dirname(__FILE__);
+$magentoRootDir = getcwd();
 $bootstrapFilename = $magentoRootDir . '/app/bootstrap.php';
 $mageFilename = $magentoRootDir . '/app/Mage.php';
 

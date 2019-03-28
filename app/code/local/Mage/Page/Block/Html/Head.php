@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Page
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -473,8 +473,14 @@ class Mage_Page_Block_Html_Head extends Mage_Core_Block_Template
      */
     public function getIncludes()
     {
+        $moduleName = Mage::app()->getRequest()->getModuleName();
         if (empty($this->_data['includes'])) {
-            $this->_data['includes'] = Mage::getStoreConfig('design/head/includes');
+            if($moduleName != "quickview"){
+                $this->_data['includes'] = Mage::getStoreConfig('design/head/includes');
+            }
+        }
+        if($moduleName == "quickview"){
+            $this->_data['includes'] = '';
         }
         return $this->_data['includes'];
     }

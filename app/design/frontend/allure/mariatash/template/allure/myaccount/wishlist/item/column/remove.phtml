@@ -25,6 +25,9 @@
  */
 
 ?>
-<a data-item-id="<?php echo $this->getItem()->getId()?>" href="javascript:void(0);<?php //echo $this->getItemRemoveUrl($this->getItem()); ?>" 
-	onclick="wishlistRemoveItem(this);//return confirmRemoveWishlistItem();" title="<?php echo $this->__('Remove Item') ?>"
+<a data-item-id="<?php echo $this->getItem()->getId()?>" href="javascript:void(0);<?php //echo $this->getItemRemoveUrl($this->getItem()); ?>"
+   onclick="confirmBox('Are you sure you want to remove this product from your wish list?',function() {
+           wishlistRemoveItem(<?php echo $this->getItem()->getId() ?>);
+           },'REMOVE')"
+	  title="<?php echo $this->__('Remove Item') ?>"
     class="btn-remove btn-remove2"><?php echo $this->__('Remove item');?></a>

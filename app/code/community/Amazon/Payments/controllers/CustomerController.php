@@ -86,7 +86,7 @@ class Amazon_Payments_CustomerController extends Mage_Core_Controller_Front_Acti
                         $this->_redirectUrl(Mage::helper('customer')->getDashboardUrl());
                     }
                     else {
-                        $this->_redirect($redirect);
+                        $this->_redirect($redirect, array('_secure' => Mage::app()->getStore()->isCurrentlySecure()));
                     }
 
                 }

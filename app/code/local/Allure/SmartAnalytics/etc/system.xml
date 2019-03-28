@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+		<allure_smartanalytics>
+			<label>SmartAnalytics</label>
+			<tab>allure</tab>
+			<sort_order>1000</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+                <options translate="label">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled>
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <account_id>
+                            <label>Account Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment></comment>
+                        </account_id>
+						<anonymize_ip>
+                            <label>Anonymize Ip</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </anonymize_ip>
+						<display_feature>
+                            <label>Display Feature</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </display_feature>
+						<enable_userid>
+                            <label>Enable User ID</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>55</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>The User-ID lets you associate engagement data from different devices and multiple sessions, so you can discover how users interact with your content over an extended period of time. Please make sure this feature is enabled in Google Analytics first before enabling in Magento.</comment>
+                        </enable_userid>
+						<ecommerce_enabled>
+                            <label>E-commerce Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ecommerce_enabled>
+						<domain_auto>
+                            <label>Domain Auto</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>When set to no, it will get the domain name from http host name otherwise it will be set to auto</comment>
+                        </domain_auto>
+						<linker_enabled>
+                            <label>Linker Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </linker_enabled>
+						<domains_to_link>
+                            <label>Domains to link</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Example 'destination.com', 'dest3.com' or /^example\.(com|de|nl)$/</comment>
+							<depends><linker_enabled>1</linker_enabled></depends>
+                        </domains_to_link>
+						<link_accounts_enabled>
+                            <label>Link Two GA Accounts Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </link_accounts_enabled>
+						<linked_account_id>
+                            <label>Linked Account Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>If you want to send page data to more than one account then add another GA account id here</comment>
+							<depends><link_accounts_enabled>1</link_accounts_enabled></depends>
+                        </linked_account_id>
+						<linked_account_name>
+                            <label>Linked Account Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Give the name of the another linked GA account for tracking purpose, this could be any arbitrary name</comment>
+							<depends><link_accounts_enabled>1</link_accounts_enabled></depends>
+                        </linked_account_name>
+						<base>
+							<label>Base</label>
+							<frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Set 'Yes' if you want to send base order data and 'No' to send store order data to Google</comment>
+						</base>
+						<enable_optimize>
+							<label>Enable Optimize</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Enable Optimize with Google Analytics</comment>
+						</enable_optimize>
+						<optimize_container_id translate="label">
+                            <label>Container Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>You can add your optimize container id here</comment>
+							<depends><enable_optimize>1</enable_optimize></depends>
+                        </optimize_container_id>
+						<force_decline translate="label comment">
+							<label>Force decline</label>
+							<comment><![CDATA[If you set this to yes then this tracking will be turned off unless customer accepts the cookie policy from the cookie notification message from your website]]></comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>160</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends>
+								<enabled>1</enabled>
+								<gdpr_cookie_enabled>1</gdpr_cookie_enabled>
+							</depends>
+						</force_decline>
+						<!-- <gdpr_cookie_enabled translate="label comment">
+							<label>Enable GDPR cookie check</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>150</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<depends><enabled>1</enabled></depends>
+						</gdpr_cookie_enabled> -->
+						<!-- <gdpr_cookie_key translate="label">
+                            <label>GDPR Cookie Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends>
+								<enabled>1</enabled>
+								<gdpr_cookie_enabled>1</gdpr_cookie_enabled>
+							</depends>
+                        </gdpr_cookie_key> -->
+                    </fields>
+                </options>
+                <enhanced translate="label">
+                    <label>Enhanced Ecommerce</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enhanced_ecommerce_enabled>
+                            <label>Enable Enhanced Ecommerce</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Please make sure this feature is enabled in Google Analytics first before enabling in Magento.</comment>
+                        </enhanced_ecommerce_enabled>
+                        <steps translate="label">
+                            <label>Steps</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>allure_smartanalytics/source_step</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+                        </steps>
+                        <brand_dropdown translate="label">
+                            <label>Brand Attribute</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>allure_smartanalytics/source_brand_dropdown</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Select product attribute which you use to set your brand names</comment>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+                        </brand_dropdown>
+                        <brand_text translate="label">
+                            <label>Brand text box</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>You can add your brand name here to pass this to Google</comment>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+                        </brand_text>
+						<send_phone_order_transaction>
+                            <label>Send Phone or Admin Orders</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+							<comment>Enable this feature only if you want to send admin orders on order creation</comment>
+                        </send_phone_order_transaction>
+						<admin_source translate="label">
+                            <label>Source</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>You can add your source here to pass this to Google for admin orders</comment>
+							<depends>
+								<enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled>
+								<send_phone_order_transaction>1</send_phone_order_transaction>
+							</depends>
+                        </admin_source>
+						<admin_medium translate="label">
+                            <label>Medium</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>You can add your medium here to pass this to Google for admin orders</comment>
+							<depends>
+								<enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled>
+								<send_phone_order_transaction>1</send_phone_order_transaction>
+							</depends>
+                        </admin_medium>
+						<send_offline_order_transaction>
+                            <label>Send Transactional Data Offline</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+							<comment>Enable this feature only if your payment gateway show their own success page instead of Magento order confirmation page like Klarna and you don't create invoices</comment>
+                        </send_offline_order_transaction>
+						<send_transaction_on_invoice>
+                            <label>Send Transactional Data Only On Invoice Creation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+							<comment>Enable this feature only if you either take payment on dispatch or your payment gateway show their own success page instead of Magento order confirmation page</comment>
+                        </send_transaction_on_invoice>
+						<allow_sending_transaction_offline>
+                            <label>Allow sending transaction offline</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+							<comment>Enable this feature for sending missing transactions to Google. This will show a button against orders.</comment>
+                        </allow_sending_transaction_offline>
+						<send_cancel_order_enabled>
+							<label>Send Cancel Order to GA</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+							<comment>Enable this feature for sending cancel orders to Google.</comment>
+						</send_cancel_order_enabled>
+						<send_form_data_enabled>
+							<label>Send Frontend Form Data to GA</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+							<comment>Enable this feature if you want to send user inputs on the frontend to Google as events like Registration or Checkout form data.</comment>
+						</send_form_data_enabled>
+						<!--cancel_order_status translate="label">
+                            <label>Order Statuses for cancel orders</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<depends><send_cancel_order_enabled>1</send_cancel_order_enabled></depends>
+                        </cancel_order_status-->
+						<debugging>
+							<label>Debugging</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<depends><enhanced_ecommerce_enabled>1</enhanced_ecommerce_enabled></depends>
+							<comment>Turn on debugging to see the transactional data going to Google using measurement protocol</comment>
+						</debugging>
+
+                        <!--variant translate="label">
+                            <label>Custom option title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Variant property</comment>
+                        </variant-->
+                    </fields>
+                </enhanced>
+			</groups>
+		</allure_smartanalytics>
+    </sections>
+</config>

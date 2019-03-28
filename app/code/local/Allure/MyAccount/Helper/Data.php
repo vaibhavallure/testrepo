@@ -12,6 +12,8 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
 	const OPEN_ORDER = 1;
 	const ALL_ORDER  = 2;
 	
+	const MAIN_STORE_ID = 1;
+	
     public function getStoreColorConfig(){
     	$storeColorConfig = Mage::getStoreConfig(self::STORE_COLOR_MAPPING_XML);
     	$config=unserialize($storeColorConfig);
@@ -80,37 +82,25 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
     /*
      * get product current stock status
      */
-    public function getProductCurrentStatus($sku,$qty,$storeId){
+    public function getProductCurrentStatus($item,$sku,$qty,$storeId){
         $orderType  = Mage::app()->getRequest()->getParam('order_type');
         $stockMsg = "";
         $isShow = false;
+        
+        if($this->isVirtualStoreActive()){
+            $storeId = ($item->getOldStoreId())?$item->getOldStoreId():$item->getStoreId();
+        }else{
+            $storeId = $item->getStoreId();
+        }
+        
         if(empty($storeId)){
             return array("is_show"=>$isShow,"message"=>$stockMsg);
         }
         
         if($storeId == 1){
-            if($orderType=="open"){
-                $store      = Mage::getModel('core/store')->load($storeId);
-                $websiteId  = $store->getWebsiteId();
-                $website    = Mage::getModel('core/website')->load($websiteId);
-                $stockId    = $website->getStockId();
-                $productId  = Mage::getModel('catalog/product')->getIdBySku($sku);
-                $product    = Mage::getModel('catalog/product')
-                                ->setStoreId($storeId)
-                                ->load($productId);
-                $stockItem  = Mage::getModel('cataloginventory/stock_item')
-                                ->loadByProductAndStock($product,$stockId);
-                $stockQty   = intval($stockItem->getQty());
-                if($stockQty > 0){
-                    $stockMsg = "(In Stock: Ships Within 24 hours (Mon-Fri).)";
-                }else{ 
-                    $backTime = $product->getData('backorder_time');
-                    $stockMsg = "";
-                    if(!is_null($backTime) && !empty($backTime))
-                        $stockMsg = "(The metal color or length combination you selected is backordered. Order now and It will ship "." - ".$backTime.")";
-                    else 
-                        $stockMsg = "(The metal color or length combination you selected is backordered.)";
-                }
+            if($orderType == "open"){
+                $amstockHelper = Mage::helper('amstockstatus');
+                $stockMsg = $amstockHelper->getOrderSalesProductStockStatus($item);
                 $isShow = true;
             }
         }
@@ -164,12 +154,22 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         
         if(!empty($store)){
             if($store!='all'){
-                $collection->addFieldToFilter('main_table.store_id',$store);
+                if($this->isVirtualStoreActive()){
+                   /*  if($store == self::MAIN_STORE_ID){
+                        $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
+                    }else{
+                        $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    } */
+                    $collection->addFieldToFilter('orders.old_store_id',$store);
+                }else{
+                    $collection->addFieldToFilter('main_table.store_id',$store);
+                }
             }
         }
         if(!empty($sortOrder)){
             $collection->setOrder('main_table.created_at', $sortOrder);
         }
+        
         $collection->setCurPage($pageNo);
         $collection->setPageSize($limit);
         return $collection;
@@ -180,10 +180,12 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
      */
     public function getOrdersHistory($orderFlag){
         $request = Mage::app()->getRequest()->getParams();
-        $pageNo     = 1;
-        $limit      = 10;
-        $store      = "all";
-        $sortOrder  = "desc";
+        $pageNo             = 1;
+        $limit              = 10;
+        $store              = "all";
+        $sortOrder          = "desc";
+        $openOrderStatus    = "all";
+        $closeOrderStatus   = "all";
         
         if(count($request)>0){
             if(!empty($request['m_store'])){
@@ -193,10 +195,16 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
                 $sortOrder = $request['m_sort'];
             }
             if($request['page']){
-                $pageNo=$request['page'];
+               $pageNo = $request['page'];
             }
             if($request['limit']){
-                $limit = $request['limit'];
+               $limit = $request['limit'];
+            }
+            if($request['m_order']){
+                $openOrderStatus = $request['m_order'];
+            }
+            if($request['m_aorder']){
+                $closeOrderStatus = $request['m_aorder'];
             }
         }
         $customer   = Mage::getSingleton('customer/session')->getCustomer();
@@ -206,19 +214,48 @@ class Allure_MyAccount_Helper_Data extends Mage_Customer_Helper_Data
         
         if($orderFlag == self::ALL_ORDER){
             $collection->addFieldToFilter('state', array('in' => array('canceled','complete','closed'))); 
+            if(!empty($closeOrderStatus)){
+                if($closeOrderStatus != "all"){
+                    $collection->addFieldToFilter('state',$closeOrderStatus);
+                }
+            }
         }elseif($orderFlag == self::OPEN_ORDER){
             $collection->addFieldToFilter('state', array('nin' => array('canceled','complete','closed'))); 
+            if(!empty($openOrderStatus)){
+                if($openOrderStatus != "all"){
+                    $collection->addFieldToFilter('state',$openOrderStatus);
+                }
+            }
         }
         
         if(!empty($store)){
             if($store!='all'){
-                $collection->addFieldToFilter('main_table.store_id',$store);
+                if($this->isVirtualStoreActive()){
+                   /*  if($store == self::MAIN_STORE_ID){
+                        $collection->getSelect()->where("main_table.old_store_id = {$store} OR (main_table.old_store_id = 0 AND main_table.store_id = {$store}) ");
+                    }else{
+                        $collection->addFieldToFilter('main_table.old_store_id',$store);
+                    } */
+                    $collection->addFieldToFilter('main_table.old_store_id',$store);
+                }else{
+                    $collection->addFieldToFilter('main_table.store_id',$store);
+                }
             }
         }
+                
         $collection->setOrder('main_table.created_at', $sortOrder);
         $collection->setCurPage($pageNo);
         $collection->setPageSize($limit);
         return $collection;
+    }
+    
+    /**
+     * return true | false
+     */
+    public function isVirtualStoreActive(){
+        if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore'))
+            return true;
+        return false;
     }
         
 }

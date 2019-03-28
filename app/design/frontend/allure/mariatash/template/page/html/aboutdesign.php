@@ -1,5 +1,5 @@
 <div class="content-about-designer">
-<div class="img-designer"><img src="http://dev.venusbymariatash.com//media/wysiwyg/portrait_about_maria.jpg" alt="" />
+<div class="img-designer"><img src="/media/wysiwyg/portrait_about_maria.jpg" alt="" />
 <div class="links-maria"><a>Maria's Videos </a><a>Maria's Blog</a></div>
 </div>
 <div class="text-designer">

@@ -22,7 +22,7 @@ $slide = 0;
 if (isset($url[1])) {
 	$slide = preg_replace('/\D/', '', $url[1]);
 }
-
+$currentSildeId=$slide;
 $slidePos = -1;
 
 if(!empty($slide) && !empty($looks)):
@@ -33,6 +33,7 @@ endif;
 if($slidePos < 0) $slide = $slidePos = 0;
 $url = $url[0];
 $currentLook = $looks[$slidePos];
+
 ?>
 <script type="text/javascript">// <![CDATA[
     /*(function (w, d, load) {
@@ -114,18 +115,30 @@ $currentLook = $looks[$slidePos];
                     jQuery('#prev, #next').removeClass('currentAction');
                     
                     var lookId = jQuery('div#carousel img.carrousel-images').first().next().attr('data-item-id');
-                    
+                    var url=jQuery(location).attr('href');
+                 
+                    var sURLVariables = url.split('?');
+                    if(sURLVariables.size()>=2){
+                        sURLVariables=sURLVariables[1].split('-');
+                        lookId=sURLVariables[1];
+                    }
                     if(currentAction.attr('id') == 'prev') {
+                      
                         lookId = jQuery('div#carousel img.carrousel-images').first().attr('data-item-id');
                     }
-                    jQuery('div.gallery-looks div.products-look').each(function () {
+                    if(currentAction.attr('id') == 'next') {
+                        
+                        lookId = jQuery('div#carousel img.carrousel-images').first().next().attr('data-item-id');
+                    }
+                    
+                  jQuery('div.gallery-looks div.products-look').each(function () {
                         jQuery(this).addClass('inactive');
                         jQuery(this).removeClass('active');
                     });
                     setTimeout(function() {
                         jQuery("div#look-products-" + lookId).addClass('active');
                         jQuery("div#look-products-" + lookId).removeClass('inactive');
-                    }, 300);
+                    }, 300); 
                 },
                 onAfter: function (data) {
                     var itemID = jQuery(data.items.visible[0]).attr('data-item-id');
@@ -285,8 +298,16 @@ $currentLook = $looks[$slidePos];
 
             <div class="gallery-looks">
                 <div class="title-products-looks"><h3><?php echo $this->__('PURCHASE THIS LOOK') ?></h3></div>
-                    <?php $first = true;
+                    <?php 
+                    $first = true;
+                    if($currentSildeId){
+                        $first = FALSE;
+                    }
                     foreach ($looks as $look): ?>
+ 					<?php 
+                    if($currentSildeId==$look['id']){
+                        $first = true;
+                    }?>
                     <div class="products-look <?php echo $first ? 'active' : 'inactive' ?>" id="look-products-<?php echo $look['id'] ?>">
                         <?php if (empty($look['products'])): ?>
                         <p class="products-look-msg"><!--<span id="remove-look-msg" onclick="jQuery('.products-look-msg').fadeOut()" title="<?php echo $this->__('Remove') ?>">x</span>--><?php echo $this->__('There are no products matching the selection') ?></p>
@@ -382,7 +403,7 @@ $currentLook = $looks[$slidePos];
                             </script>
     <?php endforeach; ?>
                     </div>
-    <?php $first = false;
+                    <?php $first = false;
 endforeach; ?>
             </div>
         </div>

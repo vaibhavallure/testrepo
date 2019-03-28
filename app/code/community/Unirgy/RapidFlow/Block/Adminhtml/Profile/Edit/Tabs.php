@@ -89,7 +89,7 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tabs extends Mage_Adminhtml_
                 $this->addTab($key.'_section', array(
                     'label'     => $this->__((string)$tab->title),
                     'title'     => $this->__((string)$tab->title),
-                    'content'   => $this->getLayout()->createBlock((string)$tab->block)
+                    'content'   => $this->getLayout()->createBlock((string)$tab->block, '', array('profile' => $profile))
                         ->setProfile($profile)
                         ->toHtml(),
                 ));

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Teamwork_TransferMariatash>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Teamwork_TransferMariatash>
+    </modules>
+</config>

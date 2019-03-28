@@ -46,11 +46,25 @@ class Allure_MyAccount_Block_Adminhtml_StoreInformation extends Mage_Adminhtml_B
         if ($columnName === "store"){
         	
         	$countryStr = "";
-        	$allStores = Mage::app()->getStores();
+        //	$allStores = Mage::app()->getStores();
+        	
+        	$allStores = array();
+        	if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+        	    $virtualStoreHelper = Mage::helper("allure_virtualstore");
+        	    $allStores = $virtualStoreHelper->getVirtualStores();
+        	}else{
+        	    $allStores = Mage::app()->getStores();
+        	}
+        	
         	foreach ($allStores as $_eachStoreId => $val)
         	{
-        		$_storeName = Mage::app()->getStore($_eachStoreId)->getName();
-        		$_storeId = Mage::app()->getStore($_eachStoreId)->getId();
+        		//$_storeName = Mage::app()->getStore($_eachStoreId)->getName();
+        		//$_storeId = Mage::app()->getStore($_eachStoreId)->getId();
+        		
+        		$_storeName = $val->getName();
+        		$_storeId   = $val->getId();
+        		
+        		
         		$countryStr .= '<option value="'.$_storeId.'">'.$_storeName .'</option>';
         	}
             return '<select name="' . $inputName . '" style="width:150px;">'.$countryStr.'</select>';

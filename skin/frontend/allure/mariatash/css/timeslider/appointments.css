@@ -194,7 +194,7 @@
     height: auto;
     /* padding: 8px 10px 15px 16px !important; */
     /* margin-bottom: 60px; */
-    margin: 10px 0;x; */
+
     margin:10px 0px;
     border-radius: 3px;    
     color: white;
@@ -421,6 +421,12 @@ a#foo2_next {
 	pointer-events: none !important;
     cursor: not-allowed !important;	
 }
+.custom-disable span{
+    padding: 1px 15px;
+    display: block;
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
 #fetchpickurday{
 	width: 45%;
     float: left;    
@@ -446,4 +452,322 @@ a#foo2_next {
 }
 #app_create_account{
 	margin-top: 25px;
+}
+
+
+/*Piercing Pricing start*/
+
+#appointment-pricing .appointment-storemap{
+	margin-top: 15px;
+}
+
+.appointments-piercing-pricing{
+	/* background: #fff; */
+}
+.piercing-pricing-table{
+	width: 100%;
+}
+
+.piercing-pricing-table .pricing-th{
+	width: 30%;
+	text-transform: uppercase;
+	padding: 10px;
+	text-align: center;
+}
+
+.pricing-th.pricing-type-th{
+	text-align: left ! important;
+}
+
+.pricing-th.service-cost{
+	width: 25%;
+}
+
+.piercing-pricing-table .pricing-td{
+	width: 30% ! important;
+	padding: 10px 0px 10px 10px;
+    border-bottom: 0.5px solid rgb(153, 153, 153);
+}
+
+.pricing-td.jewelry-at,
+.pricing-td.service-cost{
+	text-align: center;
+	vertical-align: middle;
+}
+
+.pricing-td .piercer-type{
+	word-wrap: break-word;
+	width: 140px;
+	text-align: justify;
+}
+
+.piercing-pricing-note{
+	margin-top: 15px;
+	padding: 0px 0px 10px 10px;
+    font-weight: 600;
+}
+
+.appointment-storemap a > img{
+	width: 100%;
+}
+
+#appointment-pricing .piercing_block{
+	background: #aaa;
+    margin-top: 20px;
+}
+
+#appointment-pricing .piercing_block h3{
+	padding: 5px;
+    text-align: center;
+}
+
+.appointment-pricing-textarea{
+	height: 35px ! important;
+}
+
+.appointment-login-popup-header{
+	font-size: 14px;
+}
+
+
+
+/*-------------------new alert box--------------------------*/
+
+#allureModalContainer {
+	background-color: rgba(0, 0, 0, 0.47);
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	z-index:10000;
+	/*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
+}
+
+#allureAlertBox {
+	padding: 20px;
+	position:relative;
+	width:300px;
+	min-height:120px;
+	margin-top:100px;
+	background-color:#dcdcdc;
+	box-shadow: 2px 2px 8px #00000063
+}
+
+#allureModalContainer > #allureAlertBox {
+	position:fixed;
+}
+
+#allureAlertBox h1 {
+	margin:0;
+	font:bold 0.9em verdana,arial;
+	background-color:#3073BB;
+	color:#FFF;
+	border-bottom:1px solid #000;
+	padding:2px 0 2px 5px;
+}
+
+#allureAlertBox p {
+	text-align: center;
+	font:12px arial,verdana;
+	margin-top: 10px;
+	color: #3f4048;
+}
+
+#allureAlertBox p.confirmBox{
+	text-align: center;
+	margin-top:auto;
+}
+
+#allureAlertBox #closeBtn{
+	display:block;
+	position:absolute;
+	bottom: 10px;
+	left: 115px;
+	margin:5px auto;
+	padding:7px;
+	border:0 none;
+	width:80px;
+	font:12px dinmittelschriftregular,arial;
+	text-transform:uppercase;
+	text-align:center;
+	color:#3f4048;
+	background: transparent url(../../images/bkg_brown_btn.png);
+	background-color:#906E39;
+	border-radius: 3px;
+	text-decoration:none;
+}
+
+
+#allureAlertBox #closeBtn:hover{
+	background: transparent url(../../images/bkg_brown_btn_hover.png) repeat-x;
+	color: #3f4048;
+	text-decoration: none;
+}
+
+
+
+/*-------------confirm popup----------------*/
+
+
+
+#allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
+	display:block;
+	margin:5px auto;
+	padding:7px;
+	border:0 none;
+	width:80px;
+	font:12px dinmittelschriftregular,arial;
+	text-transform:uppercase;
+	text-align:center;
+	color:#3f4048;
+	background: transparent url(../../images/bkg_brown_btn.png);
+	background-color:#906E39;
+	border-radius: 3px;
+	text-decoration:none;
+}
+
+#allureAlertBox #cancelConfirm
+{
+	position:absolute;
+	bottom: 10px;
+	left: 55px;
+}
+#allureAlertBox #okConfirm
+{
+	position:absolute;
+	bottom: 10px;
+	left: 175px;
+}
+
+#allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
+	background: transparent url(../../images/bkg_brown_btn_hover.png) repeat-x;
+	color: #3f4048;
+	text-decoration: none;
+}
+
+/*-------------------------alert end----------------------------------*/
+
+
+
+#appointment_loader {
+	position: fixed;
+	z-index: 999;
+	height: 2em;
+	width: 2em;
+	overflow: show;
+	margin: auto;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+/* Transparent Overlay */
+#appointment_loader:before {
+	content: '';
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.3);
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+#appointment_loader:not(:required) {
+	/* hide "loading..." text */
+	font: 0/0 a;
+	color: transparent;
+	text-shadow: none;
+	background-color: transparent;
+	border: 0;
+}
+
+#appointment_loader:not(:required):after {
+	content: '';
+	display: block;
+	font-size: 10px;
+	width: 1em;
+	height: 1em;
+	margin-top: -0.5em;
+	-webkit-animation: spinner 1500ms infinite linear;
+	-moz-animation: spinner 1500ms infinite linear;
+	-ms-animation: spinner 1500ms infinite linear;
+	-o-animation: spinner 1500ms infinite linear;
+	animation: spinner 1500ms infinite linear;
+	border-radius: 0.5em;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+	box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+}
+
+
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@-moz-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@-o-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+
 }

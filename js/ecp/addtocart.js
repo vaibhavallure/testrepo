@@ -6,7 +6,7 @@ jQuery(document).ready(function () {
     });
 });
 
-function addToShoppingCart(button, formId) {
+function addToShoppingCart(button, formId, relode=false) {
 
     if (jQuery("div.t_Tooltip_customcart").length) {
         jQuery(".close-tooltip").trigger('click');
@@ -57,20 +57,27 @@ function addToShoppingCart(button, formId) {
                         mibandera = false;
                     datos += ',"' + this.name + '":"' + this.value + '"';
                 });
-		
+
 				/*gift message code here added*/
 				var specialInstruction = jQuery("#" + formId.id +" .special-inst-product").val();
-                datos = '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
-		
+
+
+                datos += '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
+
+
+
+                var purchased_from = jQuery("#" + formId.id +" .puchsed-from-cat").val();
+                datos += '' + ',"purchased_from_cat":"'+jQuery.trim(purchased_from)+'"';
+
               //allure code start
-                var flagP = false;
-                if(jQuery('#parent-child-product').length){ 
+                var flagP = true;
+                if(jQuery('#parent-child-product').length){
                 	var checkParentChild = jQuery('#parent-child-product').val();
                 	if(checkParentChild == 1){
                 		flagP = true;
                 	}
                 }
-                
+
                 if(flagP){
 	                var super_attribute = {};
 	                var options= {};
@@ -95,13 +102,13 @@ function addToShoppingCart(button, formId) {
 	                 if(Object.keys(options).length>0){
 	                	 optionStr = optionStr + '"options":'+JSON.stringify(options);
 	                 }
-	                    
+
 	                 stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":"",'+optionStr+'}';
                 }else{
                 	var stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":""}';
                 }
-                 //allure code end   
-                
+                 //allure code end
+
                 //var stringJSON = '{"qty":"' + jQuery(clicked).parent().find("#qty").val() + '"' + datos + ',"related_product":""}';
                 var dataSend = JSON.parse(stringJSON);
                 var urlAdd2Cart = jQuery("#product_addtocart_form").attr('action');
@@ -137,12 +144,17 @@ function addToShoppingCart(button, formId) {
             //jQuery('#just_added').slideDown(500).delay( 5000 ).slideUp( 600 );
             jQuery('#just_added').slideDown(1000);
             jQuery('#topcart-popup').addClass('just_added');
+
+
+            if(relode)
+            location.reload();
+
             setTimeout(function() {
                 jQuery('#just_added').slideUp(1000);
                 jQuery('#topcart-popup').removeClass('just_added');
             }, 5000);
         }
-    }); 
+    });
 //.done(function() { alert("second success"); })
 //.fail(function() { alert("error"); })
 //.always(function() { alert("finished"); });
@@ -150,7 +162,6 @@ function addToShoppingCart(button, formId) {
 };
 
 function addToShoppingCartFromQuickView(button, formId) {
-
     if (parent.jQuery("div.t_Tooltip_customcart").length) {
         parent.jQuery(".close-tooltip").trigger('click');
     }
@@ -172,11 +183,41 @@ function addToShoppingCartFromQuickView(button, formId) {
                 datos += ',"' + this.name + '":"' + this.value + '"';
             });
             
+            
+            var super_attribute = {};
+            var options= {};
+            var optionStr = '';
+            var formData = jQuery('#product_addtocart_form').serializeArray();
+            for(var i = 0; i<formData.length; i++){
+            	var record = formData[i];
+                if(record.name.indexOf("super_attribute") >= 0){
+                	var index = record.name.match(/\[(.*?)\]/)[1];
+                    super_attribute[index]=record.value;
+                }
+                if(record.name.indexOf("options") >= 0){
+                	var index = record.name.match(/\[(.*?)\]/)[1];
+                    options[index]=record.value;
+                }
+             }
+             if(Object.keys(super_attribute).length>0){
+            	 optionStr = optionStr + '"super_attribute":'+JSON.stringify(super_attribute);
+            	 if(Object.keys(options).length>0)
+            		 optionStr = optionStr + ',';
+             }
+             if(Object.keys(options).length>0){
+            	 optionStr = optionStr + '"options":'+JSON.stringify(options);
+             }
+            
+            
+
             var specialInstruction = jQuery("#" + formId.id +" .special-inst-product").val();
             datos += '' + ',"gift-special-instruction":"'+jQuery.trim(specialInstruction)+'"';
-            
+
+            var purchased_from = jQuery("#" + formId.id +" .puchsed-from-cat").val();
+            datos = '' + ',"purchased_from_cat":"'+jQuery.trim(purchased_from)+'"';
+
             var qty = parent.document.getElementById(parent.jQuery('iframe.fancybox-iframe').attr('id')).contentWindow.document.getElementById('qty').value;
-            var stringJSON = '{"qty":"' + qty + '"' + datos + ',"related_product":""}';
+            var stringJSON = '{"qty":"' + qty + '"' + datos + ',"related_product":"",'+optionStr+'}';
             var dataSend = JSON.parse(stringJSON);
             var urlAdd2Cart = jQuery("#product_addtocart_form").attr('action');
         } else {
@@ -184,6 +225,7 @@ function addToShoppingCartFromQuickView(button, formId) {
             var urlAdd2Cart = jQuery(clicked).attr('href');
         }
     }
+    
     parent.jQuery("div.top-cart").css("background", "url('" + parent.SKIN_URL + "frontend/mt/default/images/loading.gif') no-repeat scroll 0 0 transparent");
     var jqxhr = jQuery.get(urlAdd2Cart, dataSend, function (data) {
         if('The requested quantity' == data.substr(0, 22)) { //expecting string 'The requested quantity for "%s" is not available' from /app/code/local/Mage/CatalogInventory/Model/Stock/Item.php #590
@@ -193,15 +235,15 @@ function addToShoppingCartFromQuickView(button, formId) {
                 scrollTop: 0
             }, "slow");
             parent.jQuery('#ajax_cart_content').html(data);
-            if(parent.jQuery('#ajax_cart_content').hasClass('checkout_cart')) 
+            if(parent.jQuery('#ajax_cart_content').hasClass('checkout_cart'))
                 parent.window.location.reload();
             parent.jQuery('#just_added').slideDown(1000);
-            parent.jQuery('#topcart-popup').addClass('just_added');        
+            parent.jQuery('#topcart-popup').addClass('just_added');
             parent.setTimeoutDtn();
             parent.jQuery.fancybox.close();
         }
-    }); 
-    
+    });
+
 }
 function setTimeoutDtn(){
     setTimeout(function() {

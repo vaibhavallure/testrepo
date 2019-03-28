@@ -14,8 +14,36 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </customer_default_website>
+                        <email_bcc translate="label">
+                            <label>Welcome Emails Bcc</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_bcc>
                     </fields>
                 </create_account>
+                 <wholesale_reports translate="label">
+                    <label>Wholesale Customer Revert</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <emails translate="label">
+                            <label>List of emails</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Comma separate</comment>
+                        </emails>
+                    </fields>
+                </wholesale_reports>
+
             </groups>
         </customer>
      </sections> 

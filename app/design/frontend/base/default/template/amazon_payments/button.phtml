@@ -51,6 +51,10 @@
         OffAmazonPayments.Button("<?php echo $this->getAmazonPayButtonId(); ?>", "<?php echo $this->getSellerId(); ?>", AmazonButtonOptions);
 
     }
+
+    if (typeof OffAmazonPayments !== 'undefined' && OffAmazonPayments.INITIALIZED) {
+        onAmazonPaymentsReady();
+    }
   </script>
 
 <?php endif; ?>

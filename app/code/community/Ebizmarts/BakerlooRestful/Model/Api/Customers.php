@@ -2,6 +2,7 @@
 
 class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRestful_Model_Api_Api
 {
+    const EDITABLE_ATTR_EVENT = 'return_editable_attributes_before';
 
     protected $_model = "customer/customer";
 
@@ -457,6 +458,12 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
         if ($customerExists === false) {
             $password     = substr(uniqid(), 0, 8);
             $customer     = $this->getHelper('bakerloo_restful')->createCustomer($websiteId, $data, $password);
+
+            //Set attributes.
+            if (isset($data['customer']['editable_attributes']) and is_array($data['customer']['editable_attributes']) and !empty($data['customer']['editable_attributes'])) {
+                $this->_updateAttributes($customer, $data['customer']['editable_attributes']);
+            }
+
         } else {
             Mage::throwException($this->getHelper('bakerloo_restful')->__("Customer already exists."));
         }
@@ -568,7 +575,12 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
         $config = $this->_getEditableAttributeConfig();
         foreach ($attributes as $attr) {
             if (in_array($attr['name'], $config)) {
-                $customer->setData($attr['name'], $attr['value']);
+		if ($attr['type'] === 'select') {
+		    $selectAttr = $customer->getAttribute($attr['name']);
+		    $customer->setData($attr['name'], $selectAttr->getSource()->getOptionId($attr['value']));
+		} else {
+                    $customer->setData($attr['name'], $attr['value']);
+		}
             }
         }
         $customer->save();
@@ -658,24 +670,29 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
         if (!empty($editableAttributes)) {
             $entityType = Mage::getSingleton('eav/config')->getEntityType('customer');
 
-            $ca = Mage::getModel('customer/attribute');
-
             foreach ($editableAttributes as $attr) {
-                $attribute = $ca->loadByCode($entityType, $attr);
+                $attribute = Mage::getModel('customer/attribute')->loadByCode($entityType, $attr);
 
-                $config []= array(
-                    'name'  => $attribute->getAttributeCode(),
-                    'label' => $attribute->getFrontendLabel(),
-                    'type'  => $attribute->getFrontendInput(),
+                $attributeConfig = array(
+                    'name'     => $attribute->getAttributeCode(),
+                    'label'    => $attribute->getFrontendLabel(),
+                    'type'     => $attribute->getFrontendInput(),
+                    'required' => false,
+                    'options'  => array()
                 );
 
+                if ($attribute->getFrontendInput() == 'select') {
+                    $attributeConfig['options'] = $attribute->getSource()->getAllOptions(false);
+                }
 
-                $ca->unsetOldData();
-                $ca->unsetData();
+                $config []= $attributeConfig;
             }
         }
 
-        return $config;
+        $config = new Varien_Object($config);
+        Mage::dispatchEvent(self::EDITABLE_ATTR_EVENT, array('attributes' => $config));
+        
+        return $config->getData();
     }
 
     protected function _editableAttributesConfig()
@@ -731,10 +748,10 @@ class Ebizmarts_BakerlooRestful_Model_Api_Customers extends Ebizmarts_BakerlooRe
      */
     public function _updateExistingAddress($addressData, Mage_Customer_Model_Address $addressObject)
     {
-        //$addressObject->addData((array)$addressData);
         $addressObject->addData($addressData);
-        //$addressObject->setStreet(array($addressData->street, $addressData->street2));
         $addressObject->setStreet(array($addressData['street'], $addressData['street2']));
+        $addressObject->setIsDefaultBilling(((int)$addressData['is_billing_address']))
+            ->setIsDefaultShipping(((int)$addressData['is_shipping_address']));
 
         $addressObject->save();
     }

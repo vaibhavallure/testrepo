@@ -1,0 +1,16 @@
+,Time,Till,Transaction,Operator No,Employee,Customer No,Item,Comment,Retail Value,Sales,Promotion Amount,Discount %,Discretionary Discount,Quantity,M. Order No.
+1,16:37:57,11,77730,999997,Mail Order ,7770246063,505486538823,,114.36,114.36,,,,1,
+1/22/2018,Transaction 77730 Total,,,,,,,,114.36,114.36,,,,1,,ORDER ID NA
+2,16:39:46,11,77731,999997,Mail Order ,7770160556,505486538823,,273,273,,,,1,
+1/22/2018,Transaction 77731 Total,,,,,,,,273,273,,,,1,,ORDER ID NA
+3,16:42:07,11,77732,999997,Mail Order ,7770246063,505486538823,,-5.56,-5.56,,,-27.2,-1,
+1/22/2018,Transaction 77732 Total,,,,,,,,-5.56,-5.56,,,-27.2,-1,,EB-77732,ORDER:1,AL201818874
+4,15:45:57,92,105405,903003,Beard Rosa,10500562,505486538823,,106,106,,,,1,
+1/22/2018,Transaction 105405 Total,,,,,,,,106,106,,,,1,,ORDER ID NA
+5,18:01:24,92,105422,903434,Maulini Mattia,,505486538823,xdh8cz yg,310,310,,,,1,
+,18:01:24,92,105422,903434,Maulini Mattia,,505486579000,daith piercing ,30,30,,,,1,
+1/22/2018,Transaction 105422 Total,,,,,,,,340,340,,,,2,,ORDER ID NA
+6,18:37:16,92,105425,903306,Dineen Zach,100661405,505486538823,x3btrl yg,328,319.67,-8.33,,,2,
+,18:37:16,92,105425,903306,Dineen Zach,100661405,505486538823,xb3 yg,218,212.47,-5.53,,,2,
+,18:37:16,92,105425,903306,Dineen Zach,100661405,505486538824,,45,43.86,-1.14,,,3,
+1/22/2018,Transaction 105425 Total,,,,,,,,591,576,-15,,,7,,ORDER ID NA

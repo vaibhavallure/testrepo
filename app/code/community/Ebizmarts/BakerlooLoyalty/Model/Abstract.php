@@ -7,6 +7,15 @@
  */
 abstract class Ebizmarts_BakerlooLoyalty_Model_Abstract extends Varien_Object
 {
+    const OPTIONS_POINTS_AMT            = 'points_amt';
+    const OPTIONS_POINTS_CURR_ID        = 'points_currency_id';
+    const OPTIONS_RULE_ID               = 'rule_id';
+    const OPTIONS_RULE_NAME             = 'rule_name';
+    const OPTIONS_POINTS_MAX_USES       = 'points_max_uses';
+    const OPTIONS_POINTS_MAX_QTY        = 'points_max_qty';
+    const OPTIONS_POINTS_MAX_PERCENTAGE = 'points_max_percentage';
+    const OPTIONS_MAX_EXPENDABLE        = 'max_expendable_points';
+    const OPTIONS_LEGEND                = 'legend';
 
     /**
      * @var Stores reward instance.
@@ -70,6 +79,15 @@ abstract class Ebizmarts_BakerlooLoyalty_Model_Abstract extends Varien_Object
      * @return mixed
      */
     abstract public function rewardCustomer($customer, $points);
+
+    /**
+     * Applies points to redeem as specified in POS order.
+     *
+     * @param Mage_Sales_Model_Quote $quote
+     * @param array $rules
+     * @return mixed
+     */
+    abstract public function applyRewardsToQuote(Mage_Sales_Model_Quote $quote, $rules = array());
 
     /**
      * Return redeem options for product.

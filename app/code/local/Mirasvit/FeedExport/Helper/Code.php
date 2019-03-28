@@ -6,5 +6,5 @@ class Mirasvit_FeedExport_Helper_Code extends Mirasvit_MstCore_Helper_Code
     protected $l = "18113";
     protected $v = "1.1.5";
     protected $b = "711";
-    protected $d = "venusbymariatash.com";
+    protected $d = "mariatash.com";
 }

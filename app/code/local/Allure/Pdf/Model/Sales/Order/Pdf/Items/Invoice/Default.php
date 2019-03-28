@@ -15,13 +15,15 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Invoice_Default extends Mage_Sales_
         
         // draw Product name
         $lines[0] = array(array(
-            'text' => Mage::helper('core/string')->str_split($item->getName(), 35, true, true),
+            'text' => Mage::helper('core/string')->str_split($item->getName(), 25, true, true),
             'feed' => 35,
         ));
         
         // draw SKU
+        $sku=$this->getSku($item);
+        $sku=explode("|", $sku);
         $lines[0][] = array(
-            'text'  => Mage::helper('core/string')->str_split($this->getSku($item), 17),
+            'text'  => Mage::helper('core/string')->str_split($sku[0], 17),
             'feed'  => 290,
             'align' => 'right'
         );
@@ -57,7 +59,7 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Invoice_Default extends Mage_Sales_
             // draw Price
             $lines[$i][] = array(
                 'text'  => $priceData['price'],
-                'feed'  => $feedPrice,
+                'feed'  => '370',
                 'font'  => 'bold',
                 'align' => 'right'
             );
@@ -93,13 +95,13 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Invoice_Default extends Mage_Sales_
                         $_printValue = strip_tags($option['value']);
                     }
                 }
-                $optionStr = $optionStr ." : ".$_printValue;
+                $optionStr = $optionStr ." : ".strtolower($_printValue);
                 
-                $lines[][] = array(
-                    'text' => Mage::helper('core/string')->str_split(strip_tags($optionStr), 40, true, true),
-                    'font' => 'italic',
-                    'feed' => 35
-                );
+                if (empty($mainPptionStr))
+                    $mainPptionStr = $optionStr;
+                else
+                    $mainPptionStr = $mainPptionStr . "         " . $optionStr;
+                
                 
                 //allure comment
                 /* if ($option['value']) {
@@ -117,6 +119,10 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Invoice_Default extends Mage_Sales_
                     }
                 } */
             }
+            $lines[][] = array(
+                'text' => $mainPptionStr,
+                'feed' => 50
+            );
         }
         
         $lineBlock = array(
@@ -138,14 +144,14 @@ class Allure_Pdf_Model_Sales_Order_Pdf_Items_Invoice_Default extends Mage_Sales_
                 $lineBlockStockMessage = $lineBlockArr['line_block'];
                 $page = $pdf->drawLineBlocks($page, array($lineBlockStockMessage), array('table_header' => true));
                 $this->setPage($page);
-                
-                $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed);
-                if($salesInstr['is_show']){
-                    $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
-                    $this->setPage($page);
-                    $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
-                    $this->setPage($page);
-                }
+            }
+            
+            $salesInstr = $helper->getSalesOrderItemSpecialInstruction($item,$feed);
+            if($salesInstr['is_show']){
+                $page = $pdf->drawLineBlocks($page, array($salesInstr['label_block']), array('table_header' => true));
+                $this->setPage($page);
+                $page = $pdf->drawLineBlocks($page, array($salesInstr['value_block']), array('table_header' => true));
+                $this->setPage($page);
             }
             
             $lineSeparator = $helper->getLineSeparator();

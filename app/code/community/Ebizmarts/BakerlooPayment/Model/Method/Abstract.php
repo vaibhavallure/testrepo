@@ -52,4 +52,10 @@ class Ebizmarts_BakerlooPayment_Model_Method_Abstract extends Mage_Payment_Model
 
         return $this;
     }
+
+    public function getAdditionalDetails($data)
+    {
+        $comments = isset($data['comments']) ? (string)$data['comments'] : '';
+        return $comments;
+    }
 }

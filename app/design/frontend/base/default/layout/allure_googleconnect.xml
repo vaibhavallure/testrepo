@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<layout>
+    <default>
+        <reference name="head">
+            <action method="addItem"
+                    ifconfig="customer/allure_googleconnect/enabled">
+                <type>skin_css</type>
+                <name>allure/googleconnect/css/button.css</name>
+            </action>
+        </reference>
+    </default>
+
+    <customer_account_login>
+        <reference name="head">
+            <action method="addItem"
+                    ifconfig="customer/allure_googleconnect/enabled">
+                <type>skin_css</type>
+                <name>allure/googleconnect/css/styles.css</name>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="allure_googleconnect/login" name="allure_googleconnect_login">
+                <block type="allure_googleconnect/button" name="allure_googleconnect_login_button" />
+            </block>
+        </reference>
+    </customer_account_login>
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="allure_googleconnect"
+                    ifconfig="customer/allure_googleconnect/enabled">
+                <name>allure_googleconnect</name>
+                <path>googleconnect/account</path>
+                <label>Google Connect</label>
+            </action>
+        </reference>
+    </customer_account>
+
+    <allure_googleconnect_account_index translate="label">
+        <label>Customer My Account Google Connect</label>
+        <update handle="customer_account"/>
+        <reference name="head">
+            <action method="setTitle" translate="title" module="allure_googleconnect"
+                    ifconfig="customer/allure_googleconnect/enabled">
+                <title>Google Connect</title>
+            </action>
+            <action method="addItem"
+                    ifconfig="customer/allure_googleconnect/enabled">
+                <type>skin_css</type>
+                <name>allure/googleconnect/css/styles.css</name>
+            </action>
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="allure_googleconnect/account" name="allure_googleconnect_account">
+                <block type="allure_googleconnect/button" name="allure_googleconnect_account_button" />
+            </block>
+        </reference>
+        <reference name="customer_account_navigation">
+            <action method="setActive" translate="label" module="allure_googleconnect">
+                <path>googleconnect/account</path>
+            </action>
+        </reference>
+    </allure_googleconnect_account_index>
+
+    <checkout_onepage_index>
+        <reference name="head">
+            <action method="addItem"
+                    ifconfig="customer/allure_googleconnect/enabled">
+                <type>skin_css</type>
+                <name>allure/googleconnect/css/styles.css</name>
+            </action>
+        </reference>
+        <reference name="checkout.onepage.login">
+            <action method="setTemplate" ifconfig="customer/allure_googleconnect/enabled">
+                <template>allure/googleconnect/checkout/onepage/login.phtml</template>
+            </action>
+            <block type="allure_googleconnect/checkout" name="allure_googleconnect_checkout">
+                <block type="allure_googleconnect/button" name="allure_googleconnect_checkout_button" />
+            </block>
+        </reference>
+    </checkout_onepage_index>
+</layout>

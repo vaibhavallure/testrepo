@@ -1,0 +1,30 @@
+<div id="openModal" class="popupDelMyAccModel">
+	<div>
+		<div class="pop-title">
+			<a href="#close" title="Close" class="close">X</a>
+			<h2><?php echo $this->__("Delete Account")?></h2>
+		</div>
+		<div class="body">
+			<div id="login_msg_div">
+				<span id="login-msg"></span>
+			</div>
+		    <p class="del_my_acc_confirm_p">Do you really want to delete your account and lose the ability to make your shopping better?</p>
+		    <div>
+		    <input type="checkbox" name="is_subscribed" title="confirm box" id="popupcheckbox_delmyacc_confirm">
+		    <label class="popupcheckbox_lbl_delacc popupcheckbox_lbl">I understand that I will not be able to recover my data upon deletion.</label>
+		    </div>
+		</div>
+        <div class="submit-delete">
+                <span id="popup_loader" class="please-wait-popup-del" style="display: none;">
+                <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
+                <button type="button" id="delmyacc-btn-popup" class="button"><?php echo $this->__("Delete")?></button>
+          </div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+if (typeof Allure == "undefined") {
+	 var Allure = {};
+}
+</script> 

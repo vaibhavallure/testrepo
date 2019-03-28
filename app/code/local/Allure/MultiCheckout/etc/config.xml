@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_MultiCheckout>
 			<name>Allure - Multicheckout</name>
-			<version>1.0.3</version>
+			<version>1.0.4</version>
 			<depends>
 				<Allure_Core />
 			</depends>
@@ -17,6 +17,7 @@
 					<checkout>Allure_MultiCheckout_Onepage</checkout>
 					<checkout>Allure_MultiCheckout_Cart</checkout>
 					<sales>Allure_MultiCheckout_Order</sales>
+					<paypal>Allure_MultiCheckout_Express</paypal>
 				</rewrite>
 			</Allure_MultiCheckout>
 		</controllers>
@@ -40,6 +41,11 @@
 				</rewrite>
 
 			</checkout>
+			<paypal>
+				<rewrite>
+					<express_review>Allure_MultiCheckout_Block_Paypal_Express_Review</express_review>
+				</rewrite>
+			</paypal>
 			<sales>
 				<rewrite>
 					<order_totals>Allure_MultiCheckout_Block_Sales_Order_Totals</order_totals>
@@ -87,6 +93,12 @@
 					<discount_observer>Allure_MultiCheckout_Model_Giftcards_Discount_Observer</discount_observer>
 				</rewrite>
 			</giftcards>
+			
+			<paypal>
+				<rewrite>
+					<express_checkout>Allure_MultiCheckout_Model_Paypal_Express_Checkout</express_checkout>
+				</rewrite>
+			</paypal>
 
 			<!-- <salesrule> <rewrite> <validator>Allure_MultiCheckout_Model_SalesRule_Validator</validator> </rewrite> </salesrule> -->
 
@@ -122,6 +134,11 @@
 					<to_order>*</to_order>
 				</order_type>
 			</sales_convert_quote>
+			<sales_convert_quote_item> 
+				<purchased_from>
+					 <to_order_item>*</to_order_item> 
+			    </purchased_from> 
+			 </sales_convert_quote_item> 
 		</fieldsets>
 
 		<events>
@@ -153,6 +170,13 @@
 					</modules>
 				</args>
 			</sales>
+			<paypal>
+				<args>
+					<modules>
+						<Allure_MultiCheckout before="Mage_Checkout">Allure_MultiCheckout</Allure_MultiCheckout>
+					</modules>
+				</args>
+			</paypal>
 		</routers>
 		<layout>
 			<updates>

@@ -25,7 +25,7 @@ class Simtech_Searchanise_Model_Resource_Eav_Mysql4_Product_Action extends Mage_
      */
     public function updateAttributes($entityIds, $attrData, $storeId)
     {
-        if (version_compare(Mage::getVersion(), '1.6', '<')) {  
+        if (version_compare(Mage::getVersion(), '1.6', '<')) {
             Mage::dispatchEvent('searchanise_product_attribute_update_before', array(
                 'attributes_data' => &$attrData,
                 'product_ids'     => &$entityIds,

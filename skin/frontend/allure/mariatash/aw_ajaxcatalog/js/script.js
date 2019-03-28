@@ -132,6 +132,9 @@ AWAjaxCatalog.prototype = {
                 return true;
             }
             resizeWindow2();
+         /*allure code to show price of product*/
+            jQuery('.price-box').show();
+            /*-----allure code ended----*/
         };
         this._doUpdate(onSuccessFn);
     },

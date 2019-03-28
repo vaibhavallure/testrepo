@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -141,6 +141,11 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
      */
     public function getJsonConfig()
     {
+        $_currency = Mage::app()->getStore()->getCurrentCurrency();
+        $_currency_usd = Mage::app()->getStore()->getBaseCurrency();
+        $baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
+        $currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
+
         $attributes = array();
         $options    = array();
         $store      = $this->getCurrentStore();
@@ -159,6 +164,9 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
             $productStock[$productId] = $product->getStockItem()->getIsInStock();
             foreach ($this->getAllowAttributes() as $attribute) {
                 $productAttribute   = $attribute->getProductAttribute();
+
+				if (!$productAttribute) continue;
+
                 $productAttributeId = $productAttribute->getId();
                 $attributeValue     = $product->getData($productAttribute->getAttributeCode());
                 if (!isset($options[$productAttributeId])) {
@@ -178,6 +186,9 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
 
         foreach ($this->getAllowAttributes() as $attribute) {
             $productAttribute = $attribute->getProductAttribute();
+
+			if (!$productAttribute) continue;
+
             $attributeId = $productAttribute->getId();
             $info = array(
                'id'        => $productAttribute->getId(),
@@ -206,32 +217,40 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
                     if (isset($options[$attributeId][$value['value_index']])) {
                         $productsIndexOptions = $options[$attributeId][$value['value_index']];
                         $productsIndex = array();
-                       
                         foreach ($productsIndexOptions as $productIndex) {
-                        	
-                        	//Existing code
-                        	
+
+                            //Existing code
+
                             /* if ($productStock[$productIndex]) {
+                             $productsIndex[] = $productIndex;
+                             } */
+
+                            //Allure code
+
+                            if(!$showOutOfStockProducts){
+                                if ($productStock[$productIndex]) {
+                                    $productsIndex[] = $productIndex;
+                                }
+                            } else{
                                 $productsIndex[] = $productIndex;
-                            } */
-                        	
-                        	//Allure code
-                        	
-                        	if(!$showOutOfStockProducts){
-                        		if ($productStock[$productIndex]) {
-                        			$productsIndex[] = $productIndex;
-                        		}
-                        	} else{
-                        		$productsIndex[] = $productIndex;
-                        	}
+                            }
                         }
                     } else {
                         $productsIndex = array();
                     }
+                    if ($currentProduct->getSku() == 'STORECARD') {
+                         if ($_currency->getCurrencyCode() == $_currency_usd->getCurrencyCode()) {
+                            $labeldisp = $_currency_usd->formatTxt($value['label']);
+                        }else{
+                            $labeldisp = $_currency_usd->formatTxt($value['label'])." (".$_currency->formatTxt(Mage::helper('directory')->currencyConvert($value['label'],$baseCurrencyCode, $currentCurrencyCode)).")";
+                        }
+                    }else{
+                        $labeldisp =  $value['label'];
+                    }
 
                     $info['options'][] = array(
                         'id'        => $value['value_index'],
-                        'label'     => $value['label'],
+                        'label'     => $labeldisp,
                         'price'     => $configurablePrice,
                         'oldPrice'  => $this->_prepareOldPrice($value['pricing_value'], $value['is_percent']),
                         'products'  => $productsIndex,
@@ -380,6 +399,6 @@ class Mage_Catalog_Block_Product_View_Type_Configurable extends Mage_Catalog_Blo
      */
     protected function _convertPrice($price, $round = false)
     {
-        return $this->_getHelper()->convertPrice($price, $round);
+        return $this->_getHelper()->convertPrice($price, $round,null);
     }
 }

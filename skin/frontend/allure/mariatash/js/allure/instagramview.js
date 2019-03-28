@@ -9,7 +9,7 @@ InstagramView.prototype = {
 	show:function(e){
 		var id = jQuery(e).attr('media-id');
 		var url = this.url+'/id/'+id;
-		
+
 		var selector = jQuery("#details-insta-"+id);
 		var username = selector.attr('data-user-name');
 		var img = selector.attr('data-img-url');
@@ -31,6 +31,8 @@ InstagramView.prototype = {
 		var caption = jQuery('#insta-caption-'+id).html();
 		var points = jQuery('#insta-product-mark-'+id).html();
 		var products = jQuery('#insta-product-details-'+id).html();
+		
+		jQuery(".fs-post-info a").attr('href',url);
 		
 		jQuery("#fs-detail-response").attr("data-resource-url",username);
 		jQuery("#fs_main_image").attr("src",img);

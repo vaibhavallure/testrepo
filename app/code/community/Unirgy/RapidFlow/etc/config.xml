@@ -19,9 +19,9 @@
 <config>
     <modules>
         <Unirgy_RapidFlow>
-            <version>2.0.0.2</version>
-            <usimpleup remote="http://download.unirgy.com/simple/client_api/version/"
-                changelog="http://unirgy.com/support/portal/announcements"
+            <version>2.0.0.44</version>
+            <usimpleup remote="https://download.unirgy.com/simple/client_api/version/"
+                changelog="https://unirgy.com/release-notes"
                 uninstall="urapidflow/observer::usimpleup_uninstall"/>
         </Unirgy_RapidFlow>
     </modules>
@@ -93,6 +93,7 @@
 
     <admin>
         <routers>
+<!--
             <urapidflowadmin>
                 <use>admin</use>
                 <args>
@@ -100,6 +101,14 @@
                     <frontName>urapidflowadmin</frontName>
                 </args>
             </urapidflowadmin>
+-->
+            <adminhtml>
+                <args>
+                    <modules>
+                        <urapidflowadmin before="Mage_Adminhtml">Unirgy_RapidFlow</urapidflowadmin>
+                    </modules>
+                </args>
+            </adminhtml>
         </routers>
     </admin>
 
@@ -110,7 +119,8 @@
                     <urapidflow translate="title" module="urapidflow">
                         <title>RapidFlow</title>
                         <sort_order>45</sort_order>
-                        <action>urapidflowadmin/adminhtml_profile</action>
+                        <action>adminhtml/urapidflowadmin_profile</action>
+                        <!--<action>urapidflowadmin/adminhtml_profile</action>-->
                         <!--
                         <children>
                             <batch module="urapidflow">
@@ -171,9 +181,16 @@
         </translate>
 
         <events>
-            <controller_action_layout_render_before_urapidflowadmin_adminhtml_profile_index>
+            <controller_action_layout_load_before>
+                <observers><urapidflow>
+                    <type>singleton</type>
+                    <class>urapidflow/observer</class>
+                    <method>controller_action_layout_load_before</method>
+                </urapidflow></observers>
+            </controller_action_layout_load_before>
+            <controller_action_layout_render_before_adminhtml_urapidflowadmin_profile_index>
                 <observers><urapidflow><type>singleton</type><class>urapidflow/observer</class><method>adminhtml_version</method></urapidflow></observers>
-            </controller_action_layout_render_before_urapidflowadmin_adminhtml_profile_index>
+            </controller_action_layout_render_before_adminhtml_urapidflowadmin_profile_index>
             <controller_action_predispatch>
                 <observers>
                     <urapidflow>
@@ -193,6 +210,8 @@
                 <export_page_size>100</export_page_size>
                 <page_sleep_delay>0</page_sleep_delay>
                 <status_refresh_delay>3</status_refresh_delay>
+                <curl_connect_timeout>5</curl_connect_timeout>
+                <curl_timeout>10</curl_timeout>
             </finetune>
             <dirs>
                 <import_dir>{var}/urapidflow/import</import_dir>

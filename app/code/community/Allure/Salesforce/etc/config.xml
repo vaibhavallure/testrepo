@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Salesforce>
+			<name>Allure - Salesforce</name>
+			<version>1.0.3</version>
+		</Allure_Salesforce>
+	</modules>
+
+	<global>
+		<helpers>
+			<allure_salesforce>
+				<class>Allure_Salesforce_Helper</class>
+			</allure_salesforce>
+		</helpers>
+		
+		<blocks>
+			<allure_salesforce>
+				<class>Allure_Salesforce_Block</class>
+			</allure_salesforce>
+		</blocks>
+
+		<models>
+			<allure_salesforce>
+				<class>Allure_Salesforce_Model</class>
+				<resourceModel>allure_salesforce_resource</resourceModel>
+			</allure_salesforce>
+			<allure_salesforce_resource>
+				<class>Allure_Salesforce_Model_Resource</class>
+				<entities>
+					<salesforcelog>
+						<table>allure_salesforce_log</table>
+					</salesforcelog>
+					<deletedproduct>
+						<table>product_deleted_log</table>
+					</deletedproduct>
+				</entities>
+			</allure_salesforce_resource>
+		</models>
+
+		<resources>
+			<allure_salesforce_setup>
+				<setup>
+					<module>Allure_Salesforce</module>
+				</setup>
+				<connection>
+					<use>default_setup</use>
+				</connection>
+			</allure_salesforce_setup>
+		</resources>
+		
+		<events>
+			<customer_save_after>
+				<observers>
+					<allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_customer</class>
+	                    <method>changeCustomerToSalesforce</method>
+	                </allure_salesforce>
+				</observers>
+			</customer_save_after>
+			
+			<customer_address_save_after>
+				<observers>
+					<allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_customer</class>
+	                    <method>changeCustomerAddressToSalesforce</method>
+	                </allure_salesforce>
+				</observers>
+			</customer_address_save_after>
+			
+			
+			<sales_order_save_after>
+		        <observers>
+		            <allure_salesforce>
+		                <type>singleton</type>
+		                <class>allure_salesforce/observer_order</class>
+		                <method>addOrderToSalesforce</method>
+		            </allure_salesforce>
+		        </observers>
+		    </sales_order_save_after>
+			
+			
+			<!-- <sales_order_place_after>
+                <observers>
+                    <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>addOrderToSalesforce</method>
+	                </allure_salesforce>
+                </observers>
+            </sales_order_place_after> -->
+            
+            <sales_order_creditmemo_save_after>
+                <observers>
+                    <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>addCreditmemoToSalesforce</method>
+	                </allure_salesforce>
+                </observers>
+            </sales_order_creditmemo_save_after>
+            
+            <sales_order_invoice_save_after>
+                <observers>
+                    <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>addInvoiceToSalesforce</method>
+	                </allure_salesforce>
+                </observers>
+            </sales_order_invoice_save_after>
+            
+           <!--  <sales_order_invoice_pay>
+            	<observers>
+                    <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>addInvoiceToSalesforce</method>
+	                </allure_salesforce>
+                </observers>
+            </sales_order_invoice_pay> -->
+            
+            <sales_order_shipment_save_after>
+	            <observers>
+	                <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>addShipmentToSalesforce</method>
+	                </allure_salesforce>
+	            </observers>
+        	</sales_order_shipment_save_after>
+        	
+        	<sales_order_shipment_delete_after>
+	            <observers>
+	                <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>deleteShipmentToSalesforce</method>
+	                </allure_salesforce>
+	            </observers>
+        	</sales_order_shipment_delete_after>
+        
+        	<!-- <sales_order_shipment_track_save_after>
+			    <observers>
+			      <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>addTrackingInfoToSalesforce</method>
+	                </allure_salesforce>
+			    </observers>
+		    </sales_order_shipment_track_save_after> -->
+		    
+		    <sales_order_shipment_track_delete_after>
+			    <observers>
+			      <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_order</class>
+	                    <method>deleteTrackInfoSalesforce</method>
+	                </allure_salesforce>
+			    </observers>
+		    </sales_order_shipment_track_delete_after>
+            
+		</events>
+
+		<!-- <events>
+			<customer_save_after>
+				<observers>
+					<allure_counterpoint>
+						<class>allure_counterpoint/observer</class>
+						<method>sendCustomerInfoToSugarcrm</method>
+					</allure_counterpoint>
+				</observers>
+			</customer_save_after>
+
+			<customer_address_save_after>
+				<observers>
+					<allure_counterpoint>
+						<class>allure_counterpoint/observer</class>
+						<method>sendCustomerAddressInfoToSugarcrm</method>
+					</allure_counterpoint>
+				</observers>
+			</customer_address_save_after>
+		</events> -->
+	</global>
+	
+	<adminhtml>
+		<events>
+			<catalog_product_save_after>
+	            <observers>
+	                <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_product</class>
+	                    <method>changeProductToSalesforce</method>
+	                </allure_salesforce>
+	            </observers>
+	        </catalog_product_save_after>
+			<catalog_product_delete_after_done>
+                <observers>
+                    <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_product</class>
+	                    <method>deleteProductToSalesforce</method>
+	                </allure_salesforce>
+                </observers>
+            </catalog_product_delete_after_done>
+            
+            <customer_delete_after>
+                <observers>
+                    <allure_salesforce>
+	                    <type>singleton</type>
+	                    <class>allure_salesforce/observer_customer</class>
+	                    <method>deleteCustomerToSalesforce</method>
+	                </allure_salesforce>
+                </observers>
+            </customer_delete_after>
+		</events>
+		<layout>
+			<updates>
+				<allure_salesforce>
+					<file>allure/salesforce.xml</file>
+				</allure_salesforce>
+			</updates>
+		</layout>
+	</adminhtml>
+	
+	<!-- <adminhtml>
+		<layout>
+			<updates>
+				<crmleads>
+					<file>allurecrm/leads.xml</file>
+				</crmleads>
+			</updates>
+		</layout>
+	</adminhtml> -->
+	
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Allure_Salesforce before="Mage_Adminhtml">Allure_Salesforce_Adminhtml</Allure_Salesforce>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+	
+</config>

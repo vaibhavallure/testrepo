@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_BackorderRecord>
+      <active>true</active>
+      <codePool>local</codePool>
+      <version>0.1.0</version>
+    </Allure_BackorderRecord>
+  </modules>
+</config>

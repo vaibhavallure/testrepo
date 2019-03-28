@@ -13,7 +13,7 @@ Ajax.Responders.unregister(varienLoaderHandler.handler);
 
 <?php if ($_p->getRunStatus()=='pending'): ?>
 new Ajax.Request(
-    '<?php echo $this->getUrl('urapidflowadmin/adminhtml_profile/ajaxStart', array('id'=>$_p->getId())) ?>',
+    '<?php echo $this->getUrl('adminhtml/urapidflowadmin_profile/ajaxStart', array('id'=>$_p->getId())) ?>',
     {
         method:'get',
         evalJSON:'force',
@@ -24,7 +24,7 @@ new Ajax.Request(
             var res = transport.responseJSON;
             if (!res && transport.responseText) {
                 alert(transport.responseText);
-                location.href = '<?php echo $this->getUrl('urapidflowadmin/adminhtml_profile/stop', array('id'=>$_p->getId())) ?>';
+                location.href = '<?php echo $this->getUrl('adminhtml/urapidflowadmin_profile/stop', array('id'=>$_p->getId())) ?>';
             } else if (res.error) {
                 alert(res.error);
                 location.reload();
@@ -37,7 +37,7 @@ new Ajax.Request(
 <?php if (in_array($_p->getRunStatus(), array('pending', 'running'))): ?>
 function updateStatus() {
     new Ajax.Request(
-        '<?php echo $this->getUrl('urapidflowadmin/adminhtml_profile/ajaxStatus', array('id'=>$_p->getId())) ?>',
+        '<?php echo $this->getUrl('adminhtml/urapidflowadmin_profile/ajaxStatus', array('id'=>$_p->getId())) ?>',
         {
             method:'get',
             evalJSON:'force',

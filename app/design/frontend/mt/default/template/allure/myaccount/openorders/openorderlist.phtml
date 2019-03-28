@@ -10,22 +10,25 @@
                     $request = Mage::app()->getRequest();
                 ?>
         <?php if($_orders->getSize()): ?>
-         <div class="box-content">
-        <table class="data-table" id="my-openorders-table">
-            <thead>
-                <tr>
-                    <th><div class="mt-myaccount-th" style="width:130px; padding-left:0px;"><?php echo $this->__('Order number') ?></div></th>
-                    <th class="a-left" style="padding-left: 25px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Date') ?></div></th>
-                    <th class="a-left" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Ship To') ?></div></th>
-                    <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Order Total') ?></div></th>
-                    <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:110px;"><?php echo $this->__('Order Status') ?></div></th>
-                    <th class="a-center" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:110px;"><?php //echo $this->__('Actions') ?></div></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php echo $this->getChildHtml('sales.order.openorder')?>
-            </tbody>
-        </table>
+        
+        <div id="load-open-order-data" style="width: 100%;position: absolute; display: none;"></div>
+        
+         <div class="box-content open-order-view">
+            <table class="data-table" id="my-openorders-table">
+                <thead>
+                    <tr>
+                        <th><div class="mt-myaccount-th" style="width:130px; padding-left:0px;"><?php echo $this->__('Order number') ?></div></th>
+                        <th class="a-left" style="padding-left: 25px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Date') ?></div></th>
+                        <th class="a-left" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Ship To') ?></div></th>
+                        <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Order Total') ?></div></th>
+                        <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:110px;"><?php echo $this->__('Order Status') ?></div></th>
+                        <th class="a-center" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:110px;"><?php //echo $this->__('Actions') ?></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo $this->getChildHtml('sales.order.openorder')?>
+                </tbody>
+            </table>
         </div>
         <script type="text/javascript">decorateTable('my-orders-table');</script>
         <?php // echo $this->getPagerHtml(); ?>
@@ -82,4 +85,27 @@ jQuery(function($){
 	jQuery("#total-openorders-count").text(odrCount1);
 	jQuery("#total-openorders-count").show();
 });
+
+
+
+function loadOpenOrderView(evt){
+	var orderId = jQuery(evt).attr("data-order-id");
+	showLoadingFancybox1('box-history');
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/loadOrderView';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'order_id':orderId,'order_type':'open'},
+        success: function(data) {
+            jQuery('#load-open-order-data').html(data.data.html);
+            jQuery('#new-mt-myproduct-openorders .block-layered-nav-bg').hide();
+            jQuery('.open-order-view').hide();
+            jQuery('#load-open-order-data').show();
+            hideLoadingFancybox1('box-history');
+            var type = window.location.hash.substr(1);
+            var order_id   = jQuery(evt).attr("data-order-id");
+            window.location.hash = type+"#info#"+order_id;
+        }
+    });
+}
 </script>

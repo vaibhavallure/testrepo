@@ -10,20 +10,152 @@
     <message name="counterpointOrderListRequest">
     	<part name="sessionId" type="xsd:string" />
     	<part name="counterpoint_data" type="xsd:string" />
+    	<part name="memory_limit" type="xsd:string" />
+    	<part name="is_memory_limit" type="xsd:int" />
 	</message>
 	<message name="counterpointOrderListResponse">
 	    <part name="result" type="xsd:int"  />
 	</message>
+	<message name="counterpointOrderAddPaymentRequest">
+    	<part name="sessionId" type="xsd:string" />
+    	<part name="payment_data" type="xsd:string" />
+	</message>
+	<message name="counterpointOrderAddPaymentResponse">
+	    <part name="result" type="xsd:int"  />
+	</message>
+	<message name="counterpointOrderAddShipmentRequest">
+    	<part name="sessionId" type="xsd:string" />
+    	<part name="shipment_data" type="xsd:string" />
+	</message>
+	<message name="counterpointOrderAddShipmentResponse">
+	    <part name="result" type="xsd:int"  />
+	</message>
+	<message name="counterpointOrderUpdateTicketByOrignalTicketRequest">
+    	<part name="sessionId" type="xsd:string" />
+    	<part name="order_data" type="xsd:string" />
+	</message>
+	<message name="counterpointOrderUpdateTicketByOrignalTicketResponse">
+	    <part name="result" type="xsd:int"  />
+	</message>
+	<message name="counterpointOrderAddOrignalTicketRequest">
+    	<part name="sessionId" type="xsd:string" />
+    	<part name="ticket_data" type="xsd:string" />
+	</message>
+	<message name="counterpointOrderAddOrignalTicketResponse">
+	    <part name="result" type="xsd:int"  />
+	</message>
+	<message name="counterpointOrderAddCustomerRequest">
+    	<part name="sessionId" type="xsd:string" />
+    	<part name="customer_data" type="xsd:string" />
+	</message>
+	<message name="counterpointOrderAddCustomerResponse">
+	    <part name="result" type="xsd:int"  />
+	</message>
     <portType name="{{var wsdl.handler}}PortType">
         <operation name="counterpointOrderList">
-	      <documentation>List of events</documentation>
+	      <documentation>List of Counterpoint orders</documentation>
 	      <input message="typens:counterpointOrderListRequest" />
 	      <output message="typens:counterpointOrderListResponse" />
+	   </operation>
+    </portType>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="counterpointOrderAddPayment">
+	      <documentation>Add Payemnts</documentation>
+	      <input message="typens:counterpointOrderAddPaymentRequest" />
+	      <output message="typens:counterpointOrderAddPaymentResponse" />
+	   </operation>
+    </portType>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="counterpointOrderAddShipment">
+	      <documentation>Add Shipment</documentation>
+	      <input message="typens:counterpointOrderAddShipmentRequest" />
+	      <output message="typens:counterpointOrderAddShipmentResponse" />
+	   </operation>
+    </portType>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="counterpointOrderUpdateTicketByOrignalTicket">
+	      <documentation>update order id by orignal ticket</documentation>
+	      <input message="typens:counterpointOrderUpdateTicketByOrignalTicketRequest" />
+	      <output message="typens:counterpointOrderUpdateTicketByOrignalTicketResponse" />
+	   </operation>
+    </portType>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="counterpointOrderAddOrignalTicket">
+	      <documentation>add orignal ticket</documentation>
+	      <input message="typens:counterpointOrderAddOrignalTicketRequest" />
+	      <output message="typens:counterpointOrderAddOrignalTicketResponse" />
+	   </operation>
+    </portType>
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="counterpointOrderAddCustomer">
+	      <documentation>add orignal ticket</documentation>
+	      <input message="typens:counterpointOrderAddCustomerRequest" />
+	      <output message="typens:counterpointOrderAddCustomerResponse" />
 	   </operation>
     </portType>
     <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
         <operation name="counterpointOrderList">
+	      <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+	      <input>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </input>
+	      <output>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </output>
+	    </operation>
+    </binding>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="counterpointOrderAddPayment">
+	      <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+	      <input>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </input>
+	      <output>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </output>
+	    </operation>
+    </binding>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="counterpointOrderAddShipment">
+	      <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+	      <input>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </input>
+	      <output>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </output>
+	    </operation>
+    </binding>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="counterpointOrderUpdateTicketByOrignalTicket">
+	      <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+	      <input>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </input>
+	      <output>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </output>
+	    </operation>
+    </binding>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="counterpointOrderAddOrignalTicket">
+	      <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+	      <input>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </input>
+	      <output>
+	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+	      </output>
+	    </operation>
+    </binding>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="counterpointOrderAddCustomer">
 	      <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
 	      <input>
 	        <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />

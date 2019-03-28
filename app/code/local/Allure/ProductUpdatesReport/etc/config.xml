@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_ProductUpdatesReport>
+      <version>0.1.0</version>
+    </Allure_ProductUpdatesReport>
+  </modules>
+  <frontend>
+    <routers>
+      <productupdatereport>
+        <use>standard</use>
+        <args>
+          <module>Allure_ProductUpdatesReport</module>
+          <frontName>productupdatereport</frontName>
+        </args>
+      </productupdatereport>
+    </routers>    
+  </frontend>
+  <global>
+    <helpers>
+      <productupdatereport>
+        <class>Allure_ProductUpdatesReport_Helper</class>
+      </productupdatereport>
+      <Allure_ProductUpdatesReport>
+        <class>Allure_ProductUpdatesReport_Helper</class>
+      </Allure_ProductUpdatesReport>
+    </helpers>    
+    <models>
+          <productupdatereport>
+            <class>Allure_ProductUpdatesReport_Model</class>
+          </productupdatereport>
+    </models>   
+  </global> 
+  <crontab>
+    <jobs>
+      <alert_page_not_found>
+        <schedule>
+          <cron_expr>10 8 * * 1</cron_expr>
+        </schedule>
+        <run>
+          <model>productupdatereport/cron::getProductUpdatesReport</model>
+        </run>
+      </alert_page_not_found>
+    </jobs>
+  </crontab>
+</config> 

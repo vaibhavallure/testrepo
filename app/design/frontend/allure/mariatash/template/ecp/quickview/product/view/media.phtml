@@ -33,77 +33,78 @@
 <?php
 $_product = $this->getProduct();
 $childId = null;
-if($_product->isConfigurable()){    
+if($_product->isConfigurable()){
     $allowAttrs   = array();
     $allAtributes = $_product->getTypeInstance(true)->getConfigurableAttributes($_product);
+	
     foreach ($allAtributes as $attribute) {
         $productAttribute = $attribute->getProductAttribute();
+
+		if (!$productAttribute) continue;
+
         $attrid = $productAttribute->getId();
-        $allowAttrs[] = $productAttribute->getAttributeCode();         
+        $allowAttrs[] = $productAttribute->getAttributeCode();
     }
-   
-    
-    $colorOptionId = $this->getRequest()->getParam("optionId",'');  
-    
+
+
+    $colorOptionId = $this->getRequest()->getParam("optionId",'');
+
     $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $_product);
-    $config_attr = null;   
+    $config_attr = null;
     if(count($allowAttrs) == 1){
-        $config_attr = $allowAttrs[0];           
-    }
-    else{           
+        $config_attr = $allowAttrs[0];
+    } else {
         $colors = Mage::getStoreconfig('ecp_color/color_attr');
         $colors = explode(",", $colors);
         foreach($colors as $code){
             if(in_array($code, $allowAttrs)){
-                $config_attr = $code; 
+                $config_attr = $code;
                 break;
             }
         }
         $realAttribute = @array_diff($config_attr,$colors);
-        if(count($realAttribute)) $config_attr   = $realAttribute[0];            
+        if (count($realAttribute)) $config_attr   = $realAttribute[0];
     }
-   
-    if($colorOptionId){
-        foreach($childProducts as $prod){     
+
+    if ($colorOptionId) {
+        foreach($childProducts as $prod){
             $method = 'get'.ucfirst($config_attr);
-            $attribute_code = $prod->$method();                             
+            $attribute_code = $prod->$method();
             if($colorOptionId == $attribute_code){
                 $childId = $prod->getEntityId();
                 break;
             }
         }
-    }
-    // Non color attribute
-    else{
-        foreach($childProducts as $prod){     
+    } else { // Non color attribute
+        foreach($childProducts as $prod){
             $method = 'get'.ucfirst($config_attr);
-            $attribute_code = $prod->$method();                             
+            $attribute_code = $prod->$method();
             $colorOptionId  = $attribute_code;
             $childId = $prod->getEntityId();
             break;
-        }        
+        }
     }
-    
+
 }
 
 $_helper = $this->helper('catalog/output');
 ?>
-<?php 
+<?php
 if($childId){
-    $_product = Mage::getModel('catalog/product')->load($childId);    
+    $_product = Mage::getModel('catalog/product')->load($childId);
 }
 $prodID = $_product->getEntityId();
 ?>
 <div style="display: none;" id="current_option_id"><?php echo $colorOptionId ;?></div>
 <script>
-    jQuery.noConflict();  
+    jQuery.noConflict();
     jQuery(document).ready(function(){
         jQuery('#downImagesQuickview .imageClass').each(function(){
             jQuery('#downImagesQuickview .imageClass').first().addClass('imageClass_hover');
             jQuery(this).hover(function(){
                 jQuery('#downImagesQuickview .imageClass').removeClass('imageClass_hover');
                 jQuery(this).addClass('imageClass_hover');
-                var src = jQuery(this).attr('rel');               
+                var src = jQuery(this).attr('rel');
                 jQuery('.product-image-<?php echo $prodID;?> img').attr('src',src);
                 return false;
             });
@@ -128,29 +129,29 @@ $prodID = $_product->getEntityId();
     <?php endforeach; ?>
 </div>
 <?php endif; ?>
-<script type="text/javascript">   
+<script type="text/javascript">
     jQuery(document).ready(function(){
-        var id = 'amconf-image-<?php echo $colorOptionId ;?>';        
+        var id = 'amconf-image-<?php echo $colorOptionId ;?>';
         if($(id)){
-            $(id).simulate('click');  
+            $(id).simulate('click');
             jQuery('.qv-color_label').text(jQuery('#'+id).attr('alt'));
-        }  
+        }
         /* Add tooltip for color icon*/
         jQuery('.amconf-images-container').each(function(){
                 jQuery(this).find('img').each(function(){
-                    var imgid  = jQuery(this).attr('id');  
-                    var imgalt = jQuery(this).attr('alt'); 
+                    var imgid  = jQuery(this).attr('id');
+                    var imgalt = jQuery(this).attr('alt');
                     Tipped.create(jQuery("#"+imgid), imgalt, {
                             skin: 'customTiny',
                             showOn: ['click', 'mouseover'],
                             background: { color: '#fff', opacity: .9 }
                         });
                 });
-            });   
-         
+            });
+
         /* Attribute Post Length */
         if(jQuery('#attribute189').html()){
-            var optionId = '<?php echo $colorOptionId;?>';            
+            var optionId = '<?php echo $colorOptionId;?>';
             if(optionId){
                 jQuery('#attribute189 option').each(function(){
                     if(jQuery(this).attr('value') == optionId){
@@ -160,18 +161,18 @@ $prodID = $_product->getEntityId();
                 });
             }
         }
-        
+
         jQuery(document).ready(function(){
             if(jQuery('.amconf-images-container').html()){
-                var color_attribute_text = jQuery('.amconf-images-container').parent().find('label.required').text();                
+                var color_attribute_text = jQuery('.amconf-images-container').parent().find('label.required').text();
                 jQuery('.qv-attribute_label').text(color_attribute_text);
                 jQuery('.amconf-images-container img').each(function(){
-                    jQuery(this).click(function(){                        
+                    jQuery(this).click(function(){
                         jQuery('.qv-color_label').text(jQuery(this).attr('alt'));
                     });
                 });
-                
+
             }
         });
-    });   
+    });
 </script>

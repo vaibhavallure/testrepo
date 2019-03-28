@@ -1,9 +1,13 @@
-<?php 
-	$collection = $this->getInstagramCollection();
-	$_feed= null;
-	$search_action  = Mage::getUrl('adminhtml/allure_instaCatalog_feed/searchAjax').'?isAjax=true';
-	$block_class =  Mage::getBlockSingleton('allure_instacatalog/adminhtml_custom');
-	$syncFeedAction = Mage::getUrl('adminhtml/allure_instaCatalog_feed/syncFeed');
+<?php
+$collection = $this->getInstagramCollection();
+$_feed= null;
+$search_action  = Mage::getUrl('adminhtml/allure_instaCatalog_feed/searchAjax').'?isAjax=true';
+$block_class =  Mage::getBlockSingleton('allure_instacatalog/adminhtml_custom');
+$syncFeedAction = Mage::helper("adminhtml")->getUrl('adminhtml/allure_instaCatalog_feed/syncFeed');
+$syncOtherFeedAction = Mage::helper("adminhtml")->getUrl('adminhtml/allure_instaCatalog_feed/syncExistingFeed');
+$access_token = Mage::getStoreConfig('allure_instacatalog/feed/access_token');
+$syncOtherFeedAction .= "type/allure/akey/mariatash";
+
 ?>
 <?php if( count($collection)>0):?>
 
@@ -19,13 +23,25 @@
 	</a>
 </div>
 
-<div class="clearfix"></div>
+<div class="feed-sync-post" style="float: right;display: none">
+	<a class="button tiny success sync-button" 
+		href="<?php echo $syncOtherFeedAction?>"> 
+		<span>Other Post</span>
+	</a>
+</div>
 
+<div class="clearfix"></div>
+<div class="pager-instagram">
+	<?php echo $this->getPagerHtml(); ?>
+</div>
 <div >
 <?php foreach ($collection as $feed):
+$media_id = $feed->getMediaId();
+/* Call Instagram API */
+
 	//$_feed = $feed;?>
 	<div class="post">
-		<div class="img" style="background-image: url(<?php echo $feed->getStandardResolution()?>); position: relative">
+		<div class="img" style="background-image: url('<?php echo $feed->getStandardResolution()?>'); position: relative">
 		    <div class="taggable-image-info">
 		      <?php 
 		      	$taggedProducts = json_decode($feed->getHotspots());
@@ -56,7 +72,12 @@
 	             onclick = "openView(this);">
 	      			Tag Products
 	    		</a>
-	    	</div>
+
+                <!--<a class="reload" onclick="relaodInstaImage('<?php // echo $feed->getMediaId()?>','<?php // echo $feed->getUsername()?>')">
+                    <img alt="" src="<?php //echo Mage::getDesign()->getSkinUrl('images/img_306090.png');?>">
+                </a>-->
+
+            </div>
 	    	<div class="upper-text">
 			    <p class="text-content" style="margin-top: 0">
 			    <?php echo (json_decode($feed->getCaption())!="")?json_decode($feed->getCaption()):$feed->getCaption()?>
@@ -94,7 +115,9 @@
 <p>Their is no instagram feeds.</p>
 <?php endif;?>
 </div>
-
+<div class="pager-instagram">
+	<?php echo $this->getPagerHtml(); ?>
+</div>
 
 <div id="product-tagged-view" style="display: none;">
 	<div class="tagger flex-center schedule-form">
@@ -129,6 +152,7 @@
 	Allure.FeedStatusUrl = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/allure_instaCatalog_feed/saveFeedStatusAjax', array('_secure' => true));?>';
 	Allure.ProductGetUrl = '<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/allure_instaCatalog_lookbook/getproduct")?>';
 	Allure.SearchProductUrl = '<?php echo $search_action?>';
+	Allure.ReloadImage = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/allure_instaCatalog_feed/reloadimage', array('_secure' => true));?>';
 </script>
 
 <script>
@@ -137,7 +161,7 @@ function openView(e){
 	var src = jQuery(e).attr('data-img-src');
 	//console.log(src);
 	jQuery('#taggable-container').html('<div class="lookbookBlock">'+
-			'<img id="LookbookImage" class="tag-img" src="'+src+'" /></div>'+
+			'<img id="LookbookImage" class="tag-img" src="'+src+'" / style="display:none"></div>'+
 			'<input id="feed_hotspots" name="feed[hotspots]" value="" type="hidden">'+
 			'<input id="feed_id" name="feed[id]" value="" type="hidden">'+
 			//'<label class="visible-label" style="color: white;">'+
@@ -161,5 +185,20 @@ function closeView(){
 	jQuery("#image-annotate-edit-form").remove();
 	jQuery("#search-list-view").remove();
 	
+}
+function relaodInstaImage(media,username){
+
+	jQuery.ajax({
+        url: Allure.ReloadImage,
+        dataType : 'json',
+		type : 'POST',
+		data: {'media_id':media,'username':username,'form_key':Allure.TagProductFormKey},
+		
+        success: function(data) {
+        	location.reload();
+        }
+    });
+    
+	//alert(media);
 }
 </script>

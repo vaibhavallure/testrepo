@@ -63,14 +63,16 @@
         </reference>
     </checkout_onepage_index> -->
 
-   
-   <checkout_onepage_allureshippingmethod>
+
+
+	<checkout_onepage_allureshippingmethod>
         <!-- Mage_Checkout -->
         <remove name="right"/>
         <remove name="left"/>
 
         <block type="checkout/onepage_shipping_method_available" name="root" output="toHtml" template="checkoutstep/checkout/onepage/shipping_method/available.phtml"/>
-    </checkout_onepage_allureshippingmethod> 
+    </checkout_onepage_allureshippingmethod>
+    
    
    
    <checkout_onepage_allurepaymentmethod>

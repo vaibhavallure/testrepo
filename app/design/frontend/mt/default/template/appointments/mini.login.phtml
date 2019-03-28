@@ -1,7 +1,7 @@
 <div id="openModal" class="modalDialog">
 	<div>
 		<a href="#close" title="Close" class="close">X</a>
-		<h2>Sign In with Maria Tash</h2>
+		<h2 class="appointment-login-popup-header">Sign In with Maria Tash</h2>
 		<div>
 			<label for="name">Username*:  <input id='username' type="text" name='username' class="ele_width"/>
 			</label>
@@ -50,6 +50,8 @@ jQuery.ajax({
 			 jQuery('#login-msg').html(data.msg);
 			 jQuery('#reg_form').html(data.output);
 			 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
+            location.reload();
+
 		}else{
 		 jQuery('#login-msg').html(data.error);
 		}

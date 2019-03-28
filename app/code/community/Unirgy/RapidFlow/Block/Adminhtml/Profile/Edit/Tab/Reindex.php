@@ -66,6 +66,7 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Reindex extends Mage_Adm
         $source = Mage::getSingleton('urapidflow/source');
         $profile = Mage::registry('profile_data');
         $newIndexer = $hlp->hasMageFeature('indexer_1.4');
+        $catalogSwatches = $hlp->hasMageFeature('catalog.swatches');
         $cacheFields = array();
         
         if ($newIndexer) {
@@ -75,6 +76,16 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Reindex extends Mage_Adm
                 'id' => 'clean_media',
                 'cache_type' => Mage::helper('adminhtml')->__('Flush JavaScript/CSS Cache'),
             ));
+            $cacheTypes['clean_images'] = new Varien_Object(array(
+                'id' => 'clean_images',
+                'cache_type' => Mage::helper('adminhtml')->__('Flush Catalog Images Cache'),
+            ));
+            if ($catalogSwatches) {
+                $cacheTypes['clean_swatches'] = new Varien_Object(array(
+                    'id' => 'clean_swatches',
+                    'cache_type' => Mage::helper('adminhtml')->__('Flush Swatch Images Cache'),
+                ));
+            }
             foreach ($cacheTypes as $type) {
                 $code = $type->getId();
                 $cacheFields[] = array(

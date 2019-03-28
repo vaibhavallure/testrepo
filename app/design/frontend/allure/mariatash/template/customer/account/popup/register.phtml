@@ -1,39 +1,48 @@
 <div id="openModal" class="popupRegisterModel">
-	<div>
+	<div id="register-modal-container" class="modal-container">
     	<form class="form-signup" method="post" id="popup-register-form">
     		<div class="pop-title">
     			<a href="#close" title="Close" class="close">X</a>
     			<h2><?php echo $this->__("New account")?></h2>
     		</div>
-    		<div>
+    		<div class="pop-content">
     			<div id="reg_msg_div">
     				<span id="register-msg"></span>
     			</div>
     			<div class="form-group ">
-    	 		    <label class="popup-login-lbl" for="firstname"><?php echo $this->__("First Name")?><em>*</em></label>
+    	 		    <label class="popup-login-lbl" for="firstname"><em>*</em><?php echo $this->__(" First Name")?></label>
     	  		    <input id='firstname' type="text" name='firstname' class="ele_width required-entry"/>
     			</div>
     			<div class="form-group">
-    	 		    <label class="popup-login-lbl" for="lastname"><?php echo $this->__("Last Name")?><em>*</em></label>
+    	 		    <label class="popup-login-lbl" for="lastname"><em>*</em><?php echo $this->__(" Last Name")?></label>
     	  		       <input id='lastname' type="text" name='lastname' class="ele_width required-entry"/>
     			</div>
     			<div class="form-group">
-    	 		    <label class="popup-login-lbl" for="email"><?php echo $this->__("Email Address")?><em>*</em></label>
+    	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo $this->__(" Email Address")?></label>
     	  		    <input id='email-register' type="text" name='email' class="ele_width required-entry validate-email"/>
     			</div>
     			<div class="form-group">
-    	 		    <label class="popup-login-lbl" for="password"><?php echo $this->__("Password")?><em>*</em></label>
+    	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Password")?></label>
     	  		    <input id='password' type="password" name='password' class="ele_width   input-text required-entry validate-password"/>
     			</div>
     			<div class="form-group">
-    	 		    <label class="popup-login-lbl" for="password"><?php echo $this->__("Confirm Password")?><em>*</em></label>
+    	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Confirm Password")?></label>
     	  		    <input id='confirmation' type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
     			</div>
-    			<div class=" form-group news-letter">
-    	  		      <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
-    	  		      <label class="popup-login-lbl "><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
-    			</div>
-    		</div>
+				<div class="form-group news-letter ">
+					<label for="popup_is_privacy_agree" class="mt-custom-checkbox mt-register-privacy-label"><?php echo $this->__("* I understand the terms and conditions of the Maria Tash <a href='/privacy-policy'  target='_blank' >privacy policy</a>.")?>
+						<input type="checkbox" name="popup_is_privacy_agree"
+						title="Agree for Privacy policy" id="popup_is_privacy_agree"
+						class="checkbox checkout-privacy-policy"> <span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="form-group news-letter-subscribe">
+					<label class="mt-custom-checkbox"><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?>
+						<input type="checkbox" name="is_subscribed"
+						title="Sign Up for Newsletter" id="popup_is_subscribed"
+						class="checkbox"> <span class="checkmark"></span> </label>
+				</div>
+			</div>
     		<div class="pop-link">
     			<button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
     			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
@@ -41,12 +50,12 @@
     		</div>
         </form>
 	</div>
-</div>
 
-<script type="text/javascript">
-if (typeof Allure == "undefined") {
-	 var Allure = {};
-}
-Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
-</script> 
+    <script type="text/javascript">
+        if (typeof Allure == "undefined") {
+             var Allure = {};
+        }
+        Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+        Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
+    </script> 
+</div>

@@ -90,9 +90,9 @@
 
 <script>
 
-function wishlistRemoveItem(event){
-	if(confirm("Are you sure you want to remove this product from your wishlist?")){
-		var item_id = jQuery(event).attr('data-item-id');
+function wishlistRemoveItem(item_id){
+//	if(confirm("Are you sure you want to remove this product from your wish list?")){
+		//var item_id = jQuery(event).attr('data-item-id');
 		var form_key 	= jQuery(' #wishlist-view-form input[name="form_key"]').val();
 		showLoadingFancybox();
 		jQuery.ajax({
@@ -108,9 +108,9 @@ function wishlistRemoveItem(event){
 	        	hideLoadingFancybox();
 	        }
 	    });
-	}else{
+	/*}else{
 		return false;
-	}
+	}*/
 }
 
 
@@ -217,20 +217,26 @@ function cancelShareForm(){
 }
 
 function sendShareData(){
-	showLoadingFancybox();
-	jQuery.ajax({
-        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/sendAjax';?>',
-        dataType : 'json',
-		type : 'POST',
-		data: jQuery(".mt-wishlist-share-form #form-validate").serialize(),
-        success: function(data) {
-            if(data.success)
-            	cancelShareForm();
-        	jQuery('#mt-wishlist-msg p').text(data.message);
-        	jQuery('#mt-wishlist-msg').show();
-        	hideLoadingFancybox();
-        }
-	});
+	var myform_share = new VarienForm('form-validate', false); 
+	if(myform_share.validator.validate()){ 
+		showLoadingFancybox();
+		jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'wishlist/index/sendAjax';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: jQuery(".mt-wishlist-share-form #form-validate").serialize(),
+	        success: function(data) {
+	            if(data.success)
+	            	cancelShareForm();
+	        	jQuery('#mt-wishlist-msg p').text(data.message);
+	        	jQuery('#mt-wishlist-msg').show();
+	        	hideLoadingFancybox();
+	        }
+		});
+		
+	}
 }
+
+
 
 </script>

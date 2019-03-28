@@ -1,0 +1,6 @@
+options:
+  result:
+    - value: ''
+      label: 'No admin user'
+    - value: 1
+      label: admin

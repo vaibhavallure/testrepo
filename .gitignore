@@ -5,6 +5,7 @@
 /var
 /media
 /includes/src/*
+.github
 .idea
 .project
 .settings/
@@ -12,6 +13,8 @@ readme.md
 /nbproject
 errors/local.xml
 .hg
+.htaccess
 .hgignore
 sftp-config.json
+*.komodoproject
 .DS_Store

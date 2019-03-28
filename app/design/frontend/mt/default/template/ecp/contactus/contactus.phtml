@@ -4,6 +4,7 @@
     </div>
     <div class="contact-us-form">
         <form action="<?php echo  preg_replace("/^http:/i", "https:",$this->getSubmitUrl()) ?>" method="post" id="contact-us-form">
+           	<?php echo $this->getBlockHtml('formkey');?>
             <div class="field">
                 <label><?php echo $this->__('First Name') ?><em>*</em></label>
                 <input type="text" name="firstname" id="first_name" title="<?php echo $this->__('first_name') ?>" class="input-text required-entry" />
@@ -25,6 +26,10 @@
                 <textarea name="details" id="details" title="<?php  echo $this->__('details') ?>" class="input-text required-entry"></textarea>
                 <!--<textarea name="details" id="details"></textarea>-->
             </div>
+             <div class="field custom_recaptcha">
+                <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit');?>
+            </div>
+              
             <button type="button" class="button-conact-us" onclick="contactusForm.submit(this.form)" ><span>Submit</span></button>
         </form>
     </div>

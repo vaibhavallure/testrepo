@@ -26,12 +26,12 @@ class Simtech_Searchanise_Model_Advanced extends Mage_CatalogSearch_Model_Advanc
             return parent::addFilters($values);
         }
         $collection = $this->getProductCollection();
-     
+
         if (!$collection && !method_exists($collection, 'checkSearchaniseResult') || !$collection->checkSearchaniseResult()) {
             return parent::addFilters($values);
         }
         // Nothing,
-        
+
         return $this;
     }
 }

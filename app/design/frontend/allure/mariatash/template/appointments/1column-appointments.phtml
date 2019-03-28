@@ -36,12 +36,136 @@
 <!--[if gt IE 8]><!--> <html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>"> <!--<![endif]-->
 <head>
 <?php echo $this->getChildHtml('head') ?>
+<style type="text/css">
+
+	iframe {
+		max-width: 100%;
+	}
+
+	#advice-required-entry-time-starttime_hidden {
+		text-align: center;
+	}
+
+	.wrapper {
+		min-height: auto;
+		height: auto;
+	}
+	.pickur_time_main_container .image_carousel {
+		width: 100%;
+		padding: 15px 30px !important;
+		max-width: 500px;
+		margin: 0 auto;
+	}
+	.pickurdayDIV > div {
+	    float: left;
+	    max-width: 500px;
+	    margin: 0 auto;
+	    float: none;
+	    width: 100%;
+	    display: block !important;
+	}
+	#pick_ur_time_div .prev, #pick_ur_time_div .next {
+	    width: 28px;
+	}
+	#pick_ur_time_div .prev {
+		left: 0px !important;
+		margin: 0;
+	}
+	#pick_ur_time_div .next {
+	    right: 0px !important;
+	    position: absolute;
+	    margin: 0;
+	}
+	#fetchpickurday .calendar {
+		margin-bottom: 15px;
+		max-width: 500px;
+		width: 100%;
+	}
+	#fetchpickurday .calendar span {
+	    font-size: 16px;
+		padding: 7px 10px !important;
+		font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif;
+	}
+	.calendar th, .calendar td {
+	    text-align: center;
+	    width: 14.2857%;
+	}
+
+    .timeslot.selectedTime,
+	.calendar td.date.selectedDate,
+	/*.calendar .date:not(.disabled):hover,*/
+	.calendar .pMDate:not(.disabled):hover,
+	.calendar .nMDate:not(.disabled):hover,
+	.calendar .month:hover {
+		background-color: #bda268 !important;
+		background-image: none;
+	}
+	ul#foo2 > li {
+	    padding: 5px;
+	    width: 25%;
+	    margin: 0 auto !important;
+	    min-width: 75px;
+	    float: none !important;
+	    vertical-align: top !important;
+	    display: inline-block !important;
+	}
+	.timeslot {
+	    margin: 10px auto;
+	    padding: 10px 0;
+	    border-radius: 0;
+	    display: block;
+	    text-align: center;
+	    width: 100%;
+	    float: none;
+	}
+	.timeslot span {
+		padding: 0px !important;
+	}
+	.timeslot > span {
+		padding: 10px !important;
+	}
+
+	.image_carousel.time_format_long .timeslot > span {
+		padding: 0 5px !important;
+	}
+
+	.jcarosel_main_ul {
+	    min-width: auto;
+	    max-width: 100%;
+		margin: 0 auto !important;
+		text-align: center;
+	}
+
+	.calendar tr:first-child th {
+		font-family: 'Euphemia UCAS', dinmittelschriftregular, Helevetica, Arial, sans-serif;
+		text-transform: uppercase;
+		padding: 5px 5px 10px;
+		font-weight: bold;
+	}
+
+	.mbdialog {
+		position: fixed;
+	}
+
+	.mbdialog.popupid21 .dialogBody h1 span,
+	.mbdialog.popupid21 .dialogBody h1 span span {
+	    font-size: 20px !important;
+	    font-weight: normal;
+	}
+
+	.mbdialog {
+		position: fixed;
+	}
+</style>
 </head>
-<body
-<?php $embedded = $this->getRequest()->getParam('embedded');
-?>
-<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php $embedded = $this->getRequest()->getParam('embedded');?>
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
 <?php echo $this->getChildHtml('after_body_start') ?>
+<?php
+	if ($embedded!='1'):
+		echo $this->getChildHtml('account_popups');
+	endif;
+?>
 <div class="wrapper">
     <?php echo $this->getChildHtml('global_notices') ?>
     <div class="page layout-grid">
@@ -53,19 +177,20 @@
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
                 <div class="col-main">
                     <?php echo $this->getChildHtml('global_messages') ?>
-                    
+
                     <?php echo $this->getChildHtml('content') ?>
                 </div>
             </div>
         </div>
-        
+
         <?php echo $this->getChildHtml('before_body_end') ?>
     </div>
 </div>
-<?php 
-		if($embedded!='1'):
-				echo $this->getAbsoluteFooter(); 
- 				echo $this->getChildHtml('footer');
- 		endif;?>
+<?php
+	if ($embedded!='1'):
+			echo $this->getAbsoluteFooter();
+			echo $this->getChildHtml('footer');
+	endif;
+?>
 </body>
 </html>

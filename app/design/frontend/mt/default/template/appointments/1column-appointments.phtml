@@ -37,35 +37,37 @@
 <head>
 <?php echo $this->getChildHtml('head') ?>
 </head>
-<body
-<?php $embedded = $this->getRequest()->getParam('embedded');
+<?php
+	$embedded = (((bool) $this->getRequest()->getParam('embedded')) == true);
+	$embeddedClass = $embedded ? ' embedded' : '';
 ?>
-<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<body <?php echo $this->getBodyClass() ? ' class="'.$this->getBodyClass().$embeddedClass.'"' : '' ?>>
 <?php echo $this->getChildHtml('after_body_start') ?>
 <div class="wrapper">
     <?php echo $this->getChildHtml('global_notices') ?>
     <div class="page layout-grid">
-        <?php if($embedded!='1'):
+        <?php
+			if(!$embedded):
         		echo $this->getChildHtml('header');
-        	  endif; ?>
+        	endif;
+		?>
         <div class="main-container col1-layout">
             <div class="main">
                 <?php echo $this->getChildHtml('breadcrumbs') ?>
                 <div class="col-main">
                     <?php echo $this->getChildHtml('global_messages') ?>
-                    
+
                     <?php echo $this->getChildHtml('content') ?>
                 </div>
             </div>
         </div>
-        
         <?php echo $this->getChildHtml('before_body_end') ?>
     </div>
 </div>
-<?php 
-		if($embedded!='1'):
-				echo $this->getAbsoluteFooter(); 
- 				echo $this->getChildHtml('footer');
- 		endif;?>
+<?php
+	if(!$embedded):
+		echo $this->getAbsoluteFooter();
+		echo $this->getChildHtml('footer');
+	endif;?>
 </body>
 </html>

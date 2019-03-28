@@ -1,0 +1,144 @@
+<!--FOOTER SECTION START-->
+<div id="footer" class="container-fluid">
+    <div class="footer">
+        <div class="container">
+            <div class="footer-frm">
+<!--                <form action="--><?php //echo $this->getSubscribeUrl()?><!--" method="post" id="appointemnet_form">-->
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <p class="footer-subtitle-medium">SIGN UP FOR OUR NEWSLETTER</p>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <input class="input-box" type="email" name="subscribe_email" id="subscribe_email" placeholder="EMAIL">
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <div class="btnSub">
+                            <button id="btnSubscribe" class="input-box btn"  type="submit" onclick="subscribe()">sign up</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row footer-links hidden-xs">
+                <div class="col-md-6">
+                    <div class="row ">
+                        <a class="footer-subtitle-small" href="#top" id="footer-link-top">POP UP INFORMATION</a>
+                    </div>
+                    <div class="row">
+                        <a class="footer-subtitle-small" href="#booking" id="footer-link-booking">BOOKING & PRICING</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <a class="footer-subtitle-small" href="#about-maria" id="footer-link-about">ABOUT MARIA TASH</a>
+                    </div>
+                    <div class="row">
+                        <a class="footer-subtitle-small" href="#faq" id="footer-link-profiles">FAQ</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer-links">
+                <div class="col-md-12">
+                    <div class="row">
+                        <a target="_blank" href="https://www.instagram.com/maria_tash/" ><img src="<?php echo $this->getSkinUrl('images/allure/popup/instagram.png')?>"></a>
+                    </div>
+                    <div class="row">
+                        <a class="footer-subtitle-small" target="_blank" href="https://www.mariatash.com/" id="footer-link-main">MARIATASH.COM</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <a id="footer-top-link" href="#top"  class="link-top" >
+                        <img src="<?php echo $this->getSkinUrl("images/allure/popup/up-white.png")?>" class="down-arrow-size " >
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--FOOTER SECTION END-->
+<!--LOADER-->
+<div id='loadingmessage' class="overlay">
+    <img src="<?php echo $this->getSkinUrl('images/allure/popup/white-spinner.gif')?>"/>
+</div>
+<script type="text/javascript">
+    jQuery("a.nav-link,a.footer-subtitle-small,a.link-down,#btnBookTop a,#btnBookBottom a").click(function(e) {
+        var targetElement = jQuery(jQuery(this).attr('href'));
+        jQuery('html, body').animate({
+            scrollTop: targetElement.offset().top - jQuery('.navbar').outerHeight()
+        }, 1000);
+
+        if (jQuery(window).outerWidth() <= 767) {
+            jQuery('ul#navbar-menu').hide();
+        }
+    });
+
+    jQuery("a.link-top").click(function(e) {
+        jQuery('html, body').animate({
+            scrollTop: 0
+        }, 1000);
+    });
+
+    jQuery('.navbar-toggler').click(function() {
+        console.log(jQuery(this).attr('aria-expanded'));
+        if (jQuery(this).attr('aria-expanded')  == undefined || jQuery(this).attr('aria-expanded') == false || jQuery(this).attr('aria-expanded') == 'false') {
+            jQuery('body').addClass('navbar-active');
+        } else {
+            jQuery('body').removeClass('navbar-active');
+        }
+    });
+
+    jQuery(document).ready(function() {
+
+        if (jQuery('.modal-confirm-appointment').length) {
+            jQuery('.modal-confirm-appointment').modal('show');
+        }
+    });
+</script>
+<!--Subscribe Mailing List Jquery-->
+<script>
+    var subscribeUrl ="<?php echo $this->getSubscribeUrl();?>" ;
+    function subscribe() {
+
+        var  email= jQuery('#subscribe_email').val();
+
+        if (!ValidateEmail(email)) {
+            alert('Please Enter Valid Email Id');
+        }
+        else {
+            jQuery.ajax({
+                url: subscribeUrl,
+                // dataType: 'json',
+                type: 'POST',
+                data: {'email': email},
+                success: function (response) {
+                    response=JSON.parse(response);
+                    console.log(response.msg);
+                    if (response.status != "OK") {
+                        alert(response.msg);
+                        jQuery('#subscribe_email').val('');
+                    }
+                    else {
+                       alert(response.msg);
+                        jQuery('#subscribe_email').val('');
+                    }
+
+                },
+            });
+        }
+    }
+</script>
+
+<script>
+    function ValidateEmail(mail)
+    {
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if(mailformat.match(mail))
+        {
+            return (true)
+        }
+
+        return (false)
+    }
+</script>

@@ -266,7 +266,7 @@ class Ebizmarts_BakerlooRestful_Model_OrderDtoBuilder
             foreach ($childrenAux as $itemId => $iData) {
                 if (array_key_exists($itemId, $orderItems)) {
                     foreach ($iData as $key => $value) {
-                        if ($value) {
+                        if (abs($value) > abs($orderItems[$itemId][$key])) {
                             $orderItems[$itemId][$key] = $value;
                         }
                     }

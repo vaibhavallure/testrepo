@@ -4,58 +4,69 @@
 		<div class="pop-title">
 			<a href="#close" title="Close" class="close">X</a>
 			<h2><?php echo $this->__("create a new account")?></h2>
-			
+
 		</div>
 		<div>
 			<div id="reg_msg_div">
 				<span id="register-msg"></span>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="firstname"><em>*</em><?php echo $this->__("First Name")?></label>
+	 		    <label class="popup-login-lbl" for="firstname"><em>*</em><?php echo $this->__(" First Name")?></label>
 	  		    <input id='firstname' type="text" name='firstname' class="ele_width required-entry"/>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="lastname"><em>*</em><?php echo $this->__("Last Name")?></label>
+	 		    <label class="popup-login-lbl" for="lastname"><em>*</em><?php echo $this->__(" Last Name")?></label>
 	  		       <input id='lastname' type="text" name='lastname' class="ele_width required-entry"/>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo $this->__("Email Address")?></label>
+	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo $this->__(" Email Address")?></label>
 	  		    <input id='email-register' type="text" name='email' class="ele_width required-entry validate-email"/>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__("Password")?></label>
+	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Password")?></label>
 	  		    <input id='password' type="password" name='password' class="ele_width   input-text required-entry validate-password"/>
 			</div>
 			<div class="row">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__("Confirm Password")?></label>
+	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Confirm Password")?></label>
 	  		    <input id='confirmation' type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
 			</div>
-			
+
 			<div class="row">
-	 		    <label for="required fields"><em>*</em><?php echo $this->__("Required Fields")?></label>
+	 		    <label for="required fields"><em>*</em><?php echo $this->__(" Required Fields")?></label>
 			</div>
-			
-			<div class="row news-letter">
+			<div class="row news-letter ">
+	  		    <label for="popup_is_privacy_agree" class="mt-custom-checkbox mt-privacy-label-register"><?php echo $this->__("* I understand the terms and conditions of the Maria Tash <a href='/privacy-policy'  target='_blank' >privacy policy</a>.")?>
+	  		    <input type="checkbox" name="popup_is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox checkout-privacy-policy">
+  				<span class="checkmark"></span>
+	  		    </label>
+			</div>
+			<div class="row news-letter mt-subscribe-register">
+	  		    <label class="mt-custom-checkbox"><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?>
 	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
-	  		    <label class="popup-login-lbl popupcheckbox_lbl"><strong><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?></strong></label>
+	  		    <span class="checkmark mt-checkmark-reg"></span>
+	  		    </label>
 			</div>
-		
+
 		</div>
 		<div class="pop-link">
-			<a id="register-back-link" onclick="gotoLoginPage();" class="register-back-link"><?php echo $this->__("Back to login")?></a>
+
             <button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
 			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
-			
+			<button type="button"  onclick="gotoLoginPage();" id="signup-btn-popup"  class="button"><?php echo $this->__("Back to Login")?></button>
 			<?php if(0):?>
 			<img src="https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png" class=" amazon-button-image-2017" style="cursor:pointer; max-height:32px;" id="OffAmazonPaymentsWidgets0">
             <?php endif;?>
-            
-            <?php 
+
+            <?php
+
+                echo $this->getLayout()->createBlock('amazon_payments/script')
+                    ->setTemplate('amazon_payments/script.phtml')->toHtml();
+
                 echo $this->getLayout()->createBlock('amazon_payments/button')
-                    ->setTemplate('amazon_payments/button.phtml')->toHtml(); 
+                    ->setTemplate('amazon_payments/button.phtml')->toHtml();
             ?>
-            
-            
+
+
             <span id="popup_loader_register" class="please-wait-popup-register" style="display: none;">
                 <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
 
@@ -65,9 +76,9 @@
 </div>
 
 
-<?php 
+<?php
    //echo $this->getLayout()->createBlock('amazon_payments/script')
-     //    ->setTemplate('amazon_payments/script.phtml')->toHtml(); 
+     //    ->setTemplate('amazon_payments/script.phtml')->toHtml();
 ?>
 
 <script type="text/javascript">
@@ -76,4 +87,4 @@ if (typeof Allure == "undefined") {
 }
 Allure.RegisterModelFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 Allure.RegisterModelUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/createCustomer';?>';
-</script> 
+</script>

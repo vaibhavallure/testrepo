@@ -152,6 +152,9 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 				Mage::throwException( Mage::helper('tokenbase')->__( sprintf( "Payment Gateway: Unknown parameter '%s'", $key ) ) );
 			}
 		}
+		elseif( $val === null ) {
+			unset( $this->_params[ $key ] );
+		}
 		
 		return $this;
 	}
@@ -251,9 +254,6 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 	{
 		$xml = Mage::getModel('tokenbase/gateway_xml')->createXML( $rootName, $array );
 
-		Mage::log("Xml Request",Zend_Log::DEBUG,'authcim_allure',true);
-		Mage::log($xml,Zend_Log::DEBUG,'authcim_allure',true);
-		
 		return $xml->saveXML();
 	}
 	
@@ -271,12 +271,7 @@ abstract class ParadoxLabs_TokenBase_Model_Gateway extends Mage_Core_Model_Abstr
 	protected function _xmlToArray( $xml )
 	{
 		try {
-			
-			//return Mage::getModel('tokenbase/gateway_xml')->createArray( $xml );
-			$arr = Mage::getModel('tokenbase/gateway_xml')->createArray( $xml );
-			Mage::log("_xmlToArray",Zend_Log::DEBUG,'authcim_allure',true);
-			Mage::log($arr,Zend_Log::DEBUG,'authcim_allure',true);
-			return $arr;
+			return Mage::getModel('tokenbase/gateway_xml')->createArray( $xml );
 		}
 		catch( Exception $e ) {
 			Mage::helper('tokenbase')->log( $this->_code, $e->getMessage() . "\n" . $this->_sanitizeLog( $xml ) );

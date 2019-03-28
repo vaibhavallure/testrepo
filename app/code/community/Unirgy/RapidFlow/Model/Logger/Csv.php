@@ -29,7 +29,7 @@ class Unirgy_RapidFlow_Model_Logger_Csv extends Unirgy_RapidFlow_Model_Logger_Ab
         return $this;
     }
 
-    public function success($message='')
+    public function success($message = null)
     {
         if ($this->getLevelSuccess()) {
             $this->log('SUCCESS', array($this->getLine(), $this->getColumn(), $message));
@@ -37,7 +37,7 @@ class Unirgy_RapidFlow_Model_Logger_Csv extends Unirgy_RapidFlow_Model_Logger_Ab
         return $this;
     }
 
-    public function warning($message)
+    public function warning($message = null)
     {
         if ($this->getLevelWarning()) {
             $this->log('WARNING', array($this->getLine(), $this->getColumn(), $message));
@@ -45,7 +45,13 @@ class Unirgy_RapidFlow_Model_Logger_Csv extends Unirgy_RapidFlow_Model_Logger_Ab
         return $this;
     }
 
-    public function error($message)
+    public function notice($message = null)
+    {
+        $this->log('NOTICE', array($this->getLine(), $this->getColumn(), $message));
+        return $this;
+    }
+
+    public function error($message = null)
     {
         if ($this->getLevelError()) {
             $this->log('ERROR', array($this->getLine(), $this->getColumn(), $message));

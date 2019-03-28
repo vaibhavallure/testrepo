@@ -17,10 +17,19 @@
 
 class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
 {
+    const NUM_WARNINGS = 'num_warnings';
+    const NUM_ERRORS = 'num_errors';
+    const ROWS_EMPTY = 'rows_empty';
+    const ROWS_SUCCESS = 'rows_success';
+    const ROWS_NOCHANGE = 'rows_nochange';
+    const ROWS_DEPENDS = 'rows_depends';
+    const ROWS_PROCESSED = 'rows_processed';
+    const ROWS_ERRORS = 'rows_errors';
     protected $_resourceModel;
 
     protected $_defaultIoModel = 'urapidflow/io_csv';
     protected $_defaultLoggerModel = 'urapidflow/logger_csv';
+    protected $_altLoggerModel = 'urapidflow/logger_csvAlt';
 
     protected $_saveFields = array(
         'snapshot_at',
@@ -126,6 +135,7 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
 
     protected function _run()
     {
+        /** @var Unirgy_RapidFlow_Model_Mysql4_Abstract $res */
         $res = $this->getDataTypeModel();
         $res->setProfile($this);
 
@@ -135,7 +145,7 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
             Mage::throwException(Mage::helper('urapidflow')->__('You are not allowed to run this profile'));
         }
 
-        if ($this->getProfileType()=='import') {
+        if ($this->getProfileType() === 'import') {
             $res->import();
         } else {
             $res->export();
@@ -163,8 +173,9 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
             $this->stop()->save();
         } catch (Exception $e) {
             $this->setCurrentActivity(Mage::helper('urapidflow')->__('Error'));
-            $this->addValue('num_errors');
+            $this->addValue(Unirgy_RapidFlow_Model_Profile::NUM_ERRORS);
             $this->getLogger()->error($e->getMessage());
+            $this->getLogger()->error($e->getTraceAsString());
             $this->stop()->save();
             throw $e;
         }
@@ -308,7 +319,7 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
         $this->setRunStatus('running');
         $this->loggerStartProfile();
 
-        Mage::dispatchEvent('urapidflow_profile_action', array('action'=>'start', 'profile'=>$this));
+        Mage::dispatchEvent('urapidflow_profile_action', array('action' => 'start', 'profile' => $this));
 
         return $this;
     }
@@ -468,6 +479,9 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
         $this->doFileActions('after');
     }
 
+    /**
+     * @return Unirgy_RapidFlow_Model_Logger_Csv
+     */
     public function getLogger()
     {
         if (!$this->hasData('logger')) {
@@ -549,131 +563,24 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
         if ($this->getProfileType()!='import' || $this->getSkipReindex() || $this->getData('options/import/dryrun')) {
             return $this;
         }
-        if (Mage::helper('urapidflow')->hasMageFeature('indexer_1.4')) {
-            if ($this->getData('options/import/reindex_type') != 'realtime') {
-                $indexer = Mage::getSingleton('index/indexer');
-                $processes = (array)$this->getData('options/reindex');
-                $pricesReindexed = $catalogRulesApplied = false;
-                if (array_key_exists('catalog_rules', $processes)) {
-                	$priceProcess = Mage::getSingleton('index/indexer')->getProcessByCode('catalog_product_price');
-                	if ($this->getData('options/import/reindex_type') == 'full') {
-                		$this->activity(Mage::helper('urapidflow')->__('Reindexing: %s', Mage::helper('catalogrule')->__('Catalog Rules')));
-                		Mage::getModel('urapidflow/catalogRule')->applyAllNoIndex();
-            			Mage::app()->removeCache('catalog_rules_dirty');
-	                	if ($priceProcess) {
-	                		$this->activity(Mage::helper('urapidflow')->__('Reindexing: %s', $priceProcess->getIndexer()->getName()));
-						    $priceProcess->reindexEverything();
-						}
-                	} else {
-                		Mage::app()->saveCache(1, 'catalog_rules_dirty');
-                		$this->activity(Mage::helper('urapidflow')->__('Invalidating index: %s', Mage::helper('catalogrule')->__('Catalog Rules')));
-	                	if ($priceProcess) {
-	                		$this->activity(Mage::helper('urapidflow')->__('Invalidating index: %s', $priceProcess->getIndexer()->getName()));
-						    $priceProcess->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
-						}
-                	}
-                }
-                foreach ($processes as $code=>$sortOrder) {
-                    $process = $indexer->getProcessByCode($code);
-                    if (!$process) continue;
-                    if ($this->getData('options/import/reindex_type') == 'full') {
-                        $this->activity(Mage::helper('urapidflow')->__('Reindexing: %s', $process->getIndexer()->getName()));
-                    } elseif ($this->getData('options/import/reindex_type') == 'manual') {
-                        $this->activity(Mage::helper('urapidflow')->__('Invalidating index: %s', $process->getIndexer()->getName()));
-                    }
-                    try {
-                        if ($this->getData('options/import/reindex_type') == 'full') {
-                            $process->reindexEverything();
-                        } elseif ($this->getData('options/import/reindex_type') == 'manual') {
-                            $process->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
-                        }
-                    } catch (Exception $e) {
-                        $this->getLogger()->unsLine()->unsColumn()->error($e->getMessage());
-                    }
-                }
-            }
+        if (Mage::helper('urapidflow')->hasMageFeature('indexer_1.13')) {
 
-        } else {
-            $processes = (array)$this->getData('options/reindex');
-            $labels = $this->getReindexTypeNames();
-            foreach ($processes as $code=>$sortOrder) {
-                $this->activity(Mage::helper('urapidflow')->__('Reindexing: %s', !empty($labels[$code]) ? $labels[$code] : $code));
-                try {
-                    switch ($code) {
-                    case 'catalog_index':
-                        Mage::getSingleton('catalog/index')->rebuild();
-                        break;
+            $this->reindexEE113(); // reindexing for EE 1.13
 
-                    case 'layered_navigation':
-                        $flag = Mage::getModel('catalogindex/catalog_index_flag')->loadSelf();
-                        if ($flag->getState() == Mage_CatalogIndex_Model_Catalog_Index_Flag::STATE_RUNNING) {
-                            $kill = Mage::getModel('catalogindex/catalog_index_kill_flag')->loadSelf();
-                            $kill->setFlagData($flag->getFlagData())->save();
-                        }
-
-                        $flag->setState(Mage_CatalogIndex_Model_Catalog_Index_Flag::STATE_QUEUED)->save();
-                        Mage::getSingleton('catalogindex/indexer')->plainReindex();
-                        break;
-
-                    case 'images_cache':
-                        Mage::getModel('catalog/product_image')->clearCache();
-                        break;
-
-                    case 'catalog_url':
-                        Mage::getSingleton('catalog/url')->refreshRewrites();
-                        break;
-
-                    case 'catalog_product_flat':
-                        Mage::getResourceModel('catalog/product_flat_indexer')->rebuild();
-                        break;
-
-                    case 'catalog_category_flat':
-                        Mage::getResourceModel('catalog/category_flat')->rebuild();
-                        break;
-
-                    case 'catalogsearch_fulltext':
-                        Mage::getSingleton('catalogsearch/fulltext')->rebuildIndex();
-                        break;
-
-                    case 'cataloginventory_stock':
-                        Mage::getSingleton('cataloginventory/stock_status')->rebuild();
-                        break;
-                    case 'catalog_rules':
-			            Mage::getResourceSingleton('catalogrule/rule')->applyAllRulesForDateRange();
-			            Mage::app()->removeCache('catalog_rules_dirty');
-                        break;
-                    }
-                } catch (Exception $e) {
-                    $this->getLogger()->unsLine()->unsColumn()->error($e->getMessage());
-                }
-            }
-        }
-
-        if (Mage::helper('urapidflow')->hasMageFeature('indexer_1.4')) {
+            $this->cacheRefreshEE113(); // cache refresh for EE 1.13
+        } else if (Mage::helper('urapidflow')->hasMageFeature('indexer_1.4')) {
+            $this->reindexCE14(); // reindexing after 1.4 CE till 1.13 EE
             $labels = array();
             foreach (Mage::app()->getCacheInstance()->getTypes() as $type) {
                 $labels[$type->getId()] = $type->getDescription();
             }
         } else {
+            $this->reindexCE13();
             $labels = Mage::helper('core')->getCacheTypes();
         }
-        $refresh = (array)$this->getData('options/refresh');
-        foreach ($refresh as $code=>$sortOrder) {
-            switch ($code) {
-            case 'clean_media':
-                $this->activity(Mage::helper('urapidflow')->__('Refreshing: %s', $code));
-                Mage::getModel('catalog/product_image')->clearCache();
-                Mage::dispatchEvent('clean_catalog_images_cache_after');
-                Mage::getModel('core/design_package')->cleanMergedJsCss();
-                Mage::dispatchEvent('clean_media_cache_after');
-                break;
-
-            default:
-                $this->activity(Mage::helper('urapidflow')->__('Refreshing: %s', !empty($labels[$code]) ? $labels[$code] : $code));
-                Mage::app()->cleanCache(array($code));
-            }
+        if(!empty($labels)){
+            $this->cacheRefresh14($labels);
         }
-
         return $this;
     }
 
@@ -681,7 +588,7 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
     {
         $remoteType = $this->getData('options/remote/type');
         $compressType = $this->getData('options/compress/type');
-        if ($when=='before' && $this->getProfileType()=='import') {
+        if ($when === 'before' && $this->getProfileType() === 'import') {
             switch ($remoteType) {
             case 'ftp': case 'ftps':
                 $this->_ftpDownload();
@@ -692,7 +599,7 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
                 $this->_zipExtract();
                 break;
             }
-        } elseif ($when=='after' && $this->getProfileType()=='export') {
+        } elseif ($when === 'after' && $this->getProfileType() === 'export') {
             switch ($compressType) {
             case 'zip':
                 $this->_zipArchive();
@@ -782,7 +689,7 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
         $result = @ftp_put($conn, $this->getFilename(), $localFile, $fileMode);
         if (!$result) {
             $e = error_get_last();
-            Mage::throwException(Mage::helper('urapidflow')->__("Error transferring remote file: ", $e['message']));
+            Mage::throwException(Mage::helper('urapidflow')->__("Error transferring remote file: %s", $e['message']));
         }
         @ftp_close($conn);
     }
@@ -851,12 +758,18 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
         return $this->_processDir($dir);
     }
 
-    public function getExcelReportFilename()
+    public function getExcelReportFilename($timeStamped = false)
     {
-        return $this->getFilename().'.xls';
+        $fileName =  $this->getFilename();
+        if($timeStamped){
+            $fileName .= date('-m-d-Y_H-i-s');
+        }
+        $fileName .= '.xls';
+
+        return $fileName;
     }
 
-    public function exportExcelReport()
+    public function exportExcelReport($alternative = false)
     {
         // open import file
         $this->ioOpenRead(false);
@@ -865,7 +778,7 @@ class Unirgy_RapidFlow_Model_Profile extends Mage_Core_Model_Abstract
         // start excel out file
         $out = Mage::getModel('urapidflow/io_file')
             ->setBaseDir($this->getExcelReportBaseDir())
-            ->open($this->getExcelReportFilename(), 'w');
+            ->open($this->getExcelReportFilename($alternative), 'w');
 
         // excel report header
         $out->write('<?xml version="1.0"?>
@@ -897,11 +810,12 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
         $rowNum = 1;
         $row = true;
         $logRows = array();
+
         while (true) {
             if ($logRows) {
                 $oldLogRows = $logRows;
                 if ($lastLogRowNum) {
-                    $logRows = array($lastLogRowNum=>$oldLogRows[$lastLogRowNum]);
+                    $logRows = array($lastLogRowNum => $oldLogRows[$lastLogRowNum]);
                 } else {
                     $logRows = array();
                 }
@@ -910,24 +824,24 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
             }
             if ($log) {
                 $lastLogRowNum = 0;
-                for ($i=0; $i<1000; $i++) {
+                for ($i = 0; $i < 1000; $i++) {
                     $l = $log->read();
                     if (!$l) {
                         $lastLogRowNum = false;
                         break;
                     }
-                    if (sizeof($l)!=4) {
+                    if (sizeof($l) != 4) {
                         continue;
                     }
-                    $logRows[$l[1]][$l[2]-1][0] = $l[0];
-                    $logRows[$l[1]][$l[2]-1][1][] = $l[3];
-                    $lastLogRowNum = $l[1];
+                    $logRows[$l[1]][$l[2] - 1][0]   = $l[0];
+                    $logRows[$l[1]][$l[2] - 1][1][] = $l[3];
+                    $lastLogRowNum                  = $l[1];
                 }
             }
-            while (!empty($row) && (!$lastLogRowNum || $rowNum<$lastLogRowNum)) {
+            while (!empty($row) && (!$lastLogRowNum || $rowNum < $lastLogRowNum)) {
                 $row = $this->ioRead();
                 if (empty($row)) break 2;
-                $logData = $rowNum==1 ? true : (!empty($logRows[$rowNum]) ? $logRows[$rowNum] : array());
+                $logData = $rowNum == 1 ? true : (!empty($logRows[$rowNum]) ? $logRows[$rowNum] : array());
                 $out->write($this->_getExcelRow($row, $logData));
                 $rowNum++;
             }
@@ -943,9 +857,9 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
         $hlp = Mage::helper('urapidflow');
         if ($l===true) {
             $l = array(
-                0=>array('SUCCESS', Mage::helper('urapidflow')->__('Sample for searching')),
-                1=>array('WARNING', Mage::helper('urapidflow')->__('Sample for searching')),
-                2=>array('ERROR', Mage::helper('urapidflow')->__('Sample for searching')),
+                0=>array('SUCCESS', $hlp->__('Sample for searching')),
+                1=>array('WARNING', $hlp->__('Sample for searching')),
+                2=>array('ERROR', $hlp->__('Sample for searching')),
             );
         }
         $out = '<Row>';
@@ -976,11 +890,11 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 
     protected function _processColumnsPost()
     {
-    	if ($this->hasColumnsPost()) {
+        if ($this->hasColumnsPost()) {
             $columns = array();
-            foreach ($this->getColumnsPost() as $k=>$a) {
-                foreach ($a as $i=>$v) {
-                    if ($v!=='') {
+            foreach ($this->getColumnsPost() as $k => $a) {
+                foreach ($a as $i => $v) {
+                    if ($v !== '') {
                         $columns[$i][$k] = $v;
                     }
                 }
@@ -1012,7 +926,7 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
     {
         foreach ($this->_jsonFields as $k=>$f) {
             if (!is_null($this->getData($f))) {
-                $this->setData($k, Zend_Json::decode($this->getData($f)));
+                $this->setData($k, Mage::helper('core')->jsonDecode($this->getData($f)));
             }
         }
     }
@@ -1026,7 +940,7 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
 
     public function importFromJson($json)
     {
-        $data = Zend_Json::decode($json);
+        $data = Mage::helper('core')->jsonDecode($json);
         if (!$data) {
             return $this;
         }
@@ -1139,23 +1053,235 @@ xmlns:html="http://www.w3.org/TR/REC-html40">
     protected $_defaultDatetimeFormat;
     public function getDefaultDatetimeFormat()
     {
-    	if (null === $this->_defaultDatetimeFormat) {
-	    	Mage::app()->getLocale()->emulate($this->getStoreId());
-	    	$this->_defaultDatetimeFormat = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
-	    	Mage::app()->getLocale()->revert();
-	    	$this->_defaultDatetimeFormat = Mage::helper('urapidflow')->convertIsoToPhpDateFormat($this->_defaultDatetimeFormat);
-    	}
-    	return $this->_defaultDatetimeFormat;
+        if (null === $this->_defaultDatetimeFormat) {
+            Mage::app()->getLocale()->emulate($this->getStoreId());
+            $this->_defaultDatetimeFormat = Mage::app()->getLocale()
+                                                ->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_SHORT);
+            Mage::app()->getLocale()->revert();
+            $this->_defaultDatetimeFormat = Mage::helper('urapidflow')
+                                                ->convertIsoToPhpDateFormat($this->_defaultDatetimeFormat);
+        }
+        return $this->_defaultDatetimeFormat;
     }
 
     protected $_profileLocale;
     public function getProfileLocale()
     {
-    	if (null === $this->_profileLocale) {
-    		Mage::app()->getLocale()->emulate($this->getStoreId());
-	    	$this->_profileLocale = clone Mage::app()->getLocale()->getLocale();
-	    	Mage::app()->getLocale()->revert();
-    	}
-    	return $this->_profileLocale;
+        if (null === $this->_profileLocale) {
+            Mage::app()->getLocale()->emulate($this->getStoreId());
+            $this->_profileLocale = clone Mage::app()->getLocale()->getLocale();
+            Mage::app()->getLocale()->revert();
+        }
+        return $this->_profileLocale;
     }
+
+    protected function reindexEE113()
+    {
+        $factory = Mage::getModel('core/factory');
+        /* @var $indexMgr Mage_Index_Model_Indexer */
+        $indexMgr  = $factory->getSingleton($factory->getIndexClassAlias());
+        $processes = (array)$this->getData('options/reindex');
+        try {
+            $processes = $indexMgr->getProcessesCollectionByCodes(array_keys($processes));
+            Mage::dispatchEvent('shell_reindex_init_process');
+            foreach ($processes as $process) {
+                if ($process->getIndexer()->isVisible() === false) {
+                    continue;
+                }
+                /* @var $process Mage_Index_Model_Process */
+                try {
+                    if ($this->getData('options/import/reindex_type') == 'full') {
+                        $process->reindexEverything();
+                        Mage::dispatchEvent($process->getIndexerCode() . '_shell_reindex_after');
+                        $this->activity($process->getIndexer()->getName() . " index was rebuilt successfully");
+                    } elseif ($this->getData('options/import/reindex_type') == 'manual') {
+                        $process->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
+                    }
+                } catch (Mage_Core_Exception $e) {
+                    $this->getLogger()->log('ERROR', $e->getMessage());
+                } catch (Exception $e) {
+                    $this->getLogger()->log('ERROR',
+                                            $process->getIndexer()->getName() . " index process unknown error:\n" . $e);
+                }
+            }
+
+            if ($indexMgr->hasErrors()) {
+                $this->activity(implode(PHP_EOL, $indexMgr->getErrors()));
+            }
+
+            Mage::dispatchEvent('shell_reindex_finalize_process');
+        } catch (Exception $e) {
+            Mage::dispatchEvent('shell_reindex_finalize_process');
+            $this->getLogger()->log("ERROR", $e->getMessage());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function reindexCE14()
+    {
+        if ($this->getData('options/import/reindex_type') != 'realtime') {
+            $indexer         = Mage::getSingleton('index/indexer');
+            $processes       = (array)$this->getData('options/reindex');
+            $pricesReindexed = $catalogRulesApplied = false;
+            if (array_key_exists('catalog_rules', $processes)) {
+                $priceProcess = Mage::getSingleton('index/indexer')->getProcessByCode('catalog_product_price');
+                if ($this->getData('options/import/reindex_type') == 'full') {
+                    $this->activity(Mage::helper('urapidflow')->__('Reindexing: %s', Mage::helper('catalogrule')
+                                                                                     ->__('Catalog Rules')));
+                    Mage::getModel('urapidflow/catalogRule')->applyAllNoIndex();
+                    Mage::app()->removeCache('catalog_rules_dirty');
+                    if ($priceProcess) {
+                        $this->activity(Mage::helper('urapidflow')->__('Reindexing: %s', $priceProcess->getIndexer()
+                                                                                         ->getName()));
+                        $priceProcess->reindexEverything();
+                    }
+                } else {
+                    Mage::app()->saveCache(1, 'catalog_rules_dirty');
+                    $this->activity(Mage::helper('urapidflow')->__('Invalidating index: %s', Mage::helper('catalogrule')
+                                                                                             ->__('Catalog Rules')));
+                    if ($priceProcess) {
+                        $this->activity(Mage::helper('urapidflow')->__('Invalidating index: %s', $priceProcess
+                                                                                                 ->getIndexer()
+                                                                                                 ->getName()));
+                        $priceProcess->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
+                    }
+                }
+            }
+            foreach ($processes as $code => $sortOrder) {
+                $process = $indexer->getProcessByCode($code);
+                if (!$process) continue;
+                if ($this->getData('options/import/reindex_type') == 'full') {
+                    $this->activity(Mage::helper('urapidflow')->__('Reindexing: %s', $process->getIndexer()
+                                                                                     ->getName()));
+                } elseif ($this->getData('options/import/reindex_type') == 'manual') {
+                    $this->activity(Mage::helper('urapidflow')->__('Invalidating index: %s', $process->getIndexer()
+                                                                                             ->getName()));
+                }
+                try {
+                    if ($this->getData('options/import/reindex_type') == 'full') {
+                        $process->reindexEverything();
+                    } elseif ($this->getData('options/import/reindex_type') == 'manual') {
+                        $process->changeStatus(Mage_Index_Model_Process::STATUS_REQUIRE_REINDEX);
+                    }
+                } catch (Exception $e) {
+                    $this->getLogger()->unsLine()->unsColumn()->error($e->getMessage());
+                }
+            }
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function reindexCE13()
+    {
+        $processes = (array)$this->getData('options/reindex');
+        $labels    = $this->getReindexTypeNames();
+        foreach ($processes as $code => $sortOrder) {
+            $this->activity(Mage::helper('urapidflow')
+                            ->__('Reindexing: %s', !empty($labels[$code]) ? $labels[$code] : $code));
+            try {
+                switch ($code) {
+                    case 'catalog_index':
+                        Mage::getSingleton('catalog/index')->rebuild();
+                        break;
+
+                    case 'layered_navigation':
+                        $flag = Mage::getModel('catalogindex/catalog_index_flag')->loadSelf();
+                        if ($flag->getState() == Mage_CatalogIndex_Model_Catalog_Index_Flag::STATE_RUNNING) {
+                            $kill = Mage::getModel('catalogindex/catalog_index_kill_flag')->loadSelf();
+                            $kill->setFlagData($flag->getFlagData())->save();
+                        }
+
+                        $flag->setState(Mage_CatalogIndex_Model_Catalog_Index_Flag::STATE_QUEUED)->save();
+                        Mage::getSingleton('catalogindex/indexer')->plainReindex();
+                        break;
+
+                    case 'images_cache':
+                        Mage::getModel('catalog/product_image')->clearCache();
+                        break;
+
+                    case 'catalog_url':
+                        Mage::getSingleton('catalog/url')->refreshRewrites();
+                        break;
+
+                    case 'catalog_product_flat':
+                        Mage::getResourceModel('catalog/product_flat_indexer')->rebuild();
+                        break;
+
+                    case 'catalog_category_flat':
+                        Mage::getResourceModel('catalog/category_flat')->rebuild();
+                        break;
+
+                    case 'catalogsearch_fulltext':
+                        Mage::getSingleton('catalogsearch/fulltext')->rebuildIndex();
+                        break;
+
+                    case 'cataloginventory_stock':
+                        Mage::getSingleton('cataloginventory/stock_status')->rebuild();
+                        break;
+                    case 'catalog_rules':
+                        Mage::getResourceSingleton('catalogrule/rule')->applyAllRulesForDateRange();
+                        Mage::app()->removeCache('catalog_rules_dirty');
+                        break;
+                }
+            } catch (Exception $e) {
+                $this->getLogger()->unsLine()->unsColumn()->error($e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * For EE 1.13 safest is to just flush cache
+     * eventually we'll add key by key refresh
+     */
+    protected function cacheRefreshEE113()
+    {
+        Mage::app()->cleanCache();
+        Mage::dispatchEvent('adminhtml_cache_flush_system');
+    }
+
+    /**
+     * @param array $labels
+     */
+    protected function cacheRefresh14($labels)
+    {
+        $refresh = (array)$this->getData('options/refresh');
+        foreach ($refresh as $code => $sortOrder) {
+            switch ($code) {
+                case 'clean_media':
+                    $this->activity(Mage::helper('urapidflow')->__('Refreshing: %s', $code));
+                    Mage::getModel('core/design_package')->cleanMergedJsCss();
+                    Mage::dispatchEvent('clean_media_cache_after');
+                    break;
+                case 'clean_images':
+                    $this->activity(Mage::helper('urapidflow')->__('Refreshing: %s', $code));
+                    Mage::getModel('catalog/product_image')->clearCache();
+                    Mage::dispatchEvent('clean_catalog_images_cache_after');
+                    break;
+                case 'clean_swatches':
+                    $this->activity(Mage::helper('urapidflow')->__('Refreshing: %s', $code));
+                    Mage::helper('configurableswatches/productimg')->clearSwatchesCache();
+                    Mage::dispatchEvent('clean_configurable_swatches_cache_after');
+                    break;
+
+                default:
+                    $this->activity(Mage::helper('urapidflow')
+                                    ->__('Refreshing: %s', !empty($labels[$code]) ? $labels[$code] : $code));
+                    Mage::app()->cleanCache(array($code));
+            }
+        }
+    }
+
+    public function getStoreId()
+    {
+        $storeId = $this->getData('store_id');
+        if (Mage::app()->isSingleStoreMode()) {
+            $storeId = (int)Mage::app()->getStore(true)->getId();
+        }
+        return $storeId;
+    }
+
 }

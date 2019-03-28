@@ -163,9 +163,9 @@
     }
 
 
-    function removeCartItem(event){
-    	if(confirm("Are you sure you want to delete this?")){
-			var item_id = jQuery(event).attr('data-item-id');
+    function removeCartItem(item_id){
+//    	if(confirm("Are you sure you want to delete this?")){
+			//var item_id = jQuery(event).attr('data-item-id');
 			var form_key = jQuery('#mt-cart-tab #shopping-cart-form input[name="form_key"]').val();
 				showLoadingFancybox();
 				itemXhr =	jQuery.ajax({
@@ -182,9 +182,9 @@
 			        	hideLoadingFancybox();
 			        }
 			    });
-		}else{
+		/*}else{
 			return false;
-		}
+		}*/
     }
 
     function addItemToWishlist(event){

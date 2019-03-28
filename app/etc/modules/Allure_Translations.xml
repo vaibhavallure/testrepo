@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Translations>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Allure_Translations>
+	</modules>
+</config>

@@ -1,0 +1,19 @@
+<?php
+?>
+<div class="page-title gift-confirm">
+	<h1 class="gift-confirm-msg">Confirmation message has been sent</h1>
+	<p class="redirect">You will be redirected to our homepage in 5 seconds.</p>
+</div>
+
+<script>
+
+jQuery(document).ready(function(){
+	 var url ='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);?>';
+	 window.setTimeout(function(){
+
+	        window.location.href = url;
+
+	    }, 5000);
+
+});
+</script>

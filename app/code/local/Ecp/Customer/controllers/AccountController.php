@@ -38,8 +38,8 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
             $this->_getSession()->setNoReferer(true);
         }
     }
-    
-        
+
+
     /**
      * Forgot customer password page
      */
@@ -55,7 +55,7 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
         $this->_initLayoutMessages('customer/session');
         $this->renderLayout();
     }
-    
+
      /**
      * Forgot customer password page
      */
@@ -76,12 +76,12 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
      * Forgot customer password action
      */
     public function forgotPasswordPostAction()
-    {   
+    {
         if('onepage' == $this->getRequest()->getParam('back')){
-            $back_url = Mage::getBaseUrl('web').'checkout/onepage/';            
+            $back_url = Mage::getBaseUrl('web').'checkout/onepage/';
         }else{
-            $back_url = Mage::getBaseUrl('web').'customer/account/login';            
-        }      
+            $back_url = Mage::getBaseUrl('web').'customer/account/login';
+        }
         $email = (string) $this->getRequest()->getPost('email');
         if ($email) {
             if (!Zend_Validate::is($email, 'EmailAddress')) {
@@ -113,7 +113,7 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
 				$this->_redirect('*/*/forgotpassword');
 				return;
 			}
-            $this->_redirectUrl($back_url); 
+            $this->_redirectUrl($back_url);
             return;
         } else {
             $this->_getSession()->addError($this->__('Please enter your email.'));
@@ -121,7 +121,7 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
             return;
         }
     }
-    
+
     /**
      * Add welcome message and send new account email.
      * Returns success URL
@@ -172,15 +172,12 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
         $session = $this->_getSession();
 
         if (!$session->getBeforeAuthUrl() || $session->getBeforeAuthUrl() == Mage::getBaseUrl()) {
-           
+
             // Redirect customer to the last page visited after logging in
             if ($session->isLoggedIn()) {
-            	
                 if (!Mage::getStoreConfigFlag(
-                 
                     Mage_Customer_Helper_Data::XML_PATH_CUSTOMER_STARTUP_REDIRECT_TO_DASHBOARD
                 )) {
-                	die ("En el 1");
                     $referer = $this->getRequest()->getParam(Mage_Customer_Helper_Data::REFERER_QUERY_PARAM_NAME);
                     if ($referer) {
                         // Rebuild referer URL to handle the case when SID was changed
@@ -190,13 +187,10 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
                             $session->setBeforeAuthUrl($referer);
                         }
                     }
-                    
-                    
                 } else if ($session->getAfterAuthUrl()) {
                     $session->setBeforeAuthUrl($session->getAfterAuthUrl(true));
                 }
-        
-                
+
             } else {
                 $session->setBeforeAuthUrl(Mage::helper('customer')->getLoginUrl());
             }
@@ -210,24 +204,25 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
                 $session->setBeforeAuthUrl($session->getAfterAuthUrl(true));
             }
         }
+
         //to home
         if($session->getBeforeAuthUrl()=='' || $session->getBeforeAuthUrl() == 'NULL'){
-        
         	$session->setBeforeAuthUrl(Mage::getBaseUrl());
         }
-      //
-		if(Mage::getModel('core/cookie')->get('from_checkout_page') == 1) {
+      	//
+
+		if (Mage::getModel('core/cookie')->get('from_checkout_page') == 1) {
 			Mage::getModel('core/cookie')->delete('from_checkout_page');
-			$this->_redirect('checkout/onepage');			
+			$this->_redirect('checkout/onepage');
         } elseif(Mage::getModel('core/cookie')->get('from_multi_checkout_page') == 1) {
 			Mage::getModel('core/cookie')->delete('from_multi_checkout_page');
-			$this->_redirect('checkout/multishipping');			
+			$this->_redirect('checkout/multishipping');
         } else {
 			$this->_redirectUrl($session->getBeforeAuthUrl(true));
 		}
-      
+
     }
-    
+
     /**
      * Login post action
      */
@@ -237,7 +232,7 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
             $this->_redirect('*/*/');
             return;
         }
-        $session = $this->_getSession();        
+        $session = $this->_getSession();
         if ((count(explode('/wishlist/', $session->getBeforeAuthUrl())) < 2) && (count(explode('/multishipping/', $session->getBeforeAuthUrl())) < 2)) {
             if ('onepage' == $this->getRequest()->getParam('back')) {
                 $back_url = Mage::getBaseUrl('web') . 'checkout/onepage/';
@@ -281,7 +276,7 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
 
         $this->_loginPostRedirect();
     }
-    
+
     /**
      * Change customer password action
      */
@@ -290,7 +285,7 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
     	if (!$this->_validateFormKey()) {
     		return ;//$this->_redirect('*/*/edit');
     	}
-    	
+
     	if ($this->getRequest()->isPost()) {
     		/** @var $customer Mage_Customer_Model_Customer */
     		$customer = $this->_getSession()->getCustomer();
@@ -299,9 +294,9 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
     		$customerForm = $this->_getModel('customer/form');
     		$customerForm->setFormCode('customer_account_edit')
     		->setEntity($customer);
-    		
+
     		$customerData = $customerForm->extractData($this->getRequest());
-    		
+
     		$errors = array();
     		$customerErrors = $customerForm->validateData($customerData);
     		if ($customerErrors !== true) {
@@ -309,22 +304,24 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
     		} else {
     			$customerForm->compactData($customerData);
     			$errors = array();
-    			
-    			if (!$customer->validatePassword($this->getRequest()->getPost('current_password'))) {
-    				$errors[] = $this->__('Invalid current password');
+
+    			if($this->getRequest()->getPost('is_change') == 1){ //allure code
+    			    if (!$customer->validatePassword($this->getRequest()->getPost('current_password'))) {
+    			        $errors[] = $this->__('Invalid current password');
+    			    }
     			}
-    			
+
     			// If email change was requested then set flag
     			$isChangeEmail = ($customer->getOldEmail() != $customer->getEmail()) ? true : false;
     			$customer->setIsChangeEmail($isChangeEmail);
-    			
+
     			// If password change was requested then add it to common validation scheme
     			$customer->setIsChangePassword($this->getRequest()->getParam('change_password'));
-    			
+
     			if ($customer->getIsChangePassword()) {
     				$newPass    = $this->getRequest()->getPost('password');
     				$confPass   = $this->getRequest()->getPost('confirmation');
-    				
+
     				if (strlen($newPass)) {
     					/**
     					 * Set entered password and its confirmation - they
@@ -336,39 +333,39 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
     					$errors[] = $this->__('New password field cannot be empty.');
     				}
     			}
-    			
+
     			// Validate account and compose list of errors if any
     			$customerErrors = $customer->validate();
     			if (is_array($customerErrors)) {
     				$errors = array_merge($errors, $customerErrors);
     			}
     		}
-    		
+
     		if (!empty($errors)) {
     		 	$result['success'] = 0;
     		 	$result['error'] = $errors;
     		} else{
 	    		try {
 	    			$customer->cleanPasswordsValidationData();
-	    			
+
 	    			// Reset all password reset tokens if all data was sufficient and correct on email change
 	    			if ($customer->getIsChangeEmail()) {
 	    				$customer->setRpToken(null);
 	    				$customer->setRpTokenCreatedAt(null);
 	    			}
-	    			
+
 	    			$customer->save();
 	    			$result['success'] = 1;
 	    			$result['message'] =  $this->__('The account information has been saved.');
-	    			
+
 	    			$this->loadLayout('myaccount_customer_form_edit');
 	    			$html = $this->getLayout()->getBlock('customer_edit')->toHtml();
 	    			$result['html']  = $html;
-	    			
+
 	    			if ($customer->getIsChangeEmail() || $customer->getIsChangePassword()) {
 	    				$customer->sendChangedPasswordOrEmail();
 	    			}
-	    			
+
 	    		} catch (Mage_Core_Exception $e) {
 	    			$result['success'] = 0;
 	    			$result['message'] =  $e->getMessage();
@@ -380,10 +377,10 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
 	    		}
 	    	}
     	}
-    	
+
     	$this->getResponse()->setHeader('Content-type', 'application/json');
     	$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-    	
+
     }
 
 }

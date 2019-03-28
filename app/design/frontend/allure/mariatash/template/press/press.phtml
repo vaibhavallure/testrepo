@@ -197,6 +197,9 @@ if (!empty($pressId)) {
                     <p style="text-align:left;"><?php echo $item->getTitle() . ' ' . $item->getDescription() .' ';
                 $date = date_create($item->getPublishDate());
                 echo date_format($date, 'd/M/Y'); ?></p>
+                 <?php if(!empty($item->getOriginalLink())):?>
+                <p style="text-align:left; margin-bottom: 10px;"><a target="_blank" href='<?php echo $item->getOriginalLink()?>'><?php echo $item->getOriginalName() ?></a></p>
+                <?php endif;?>
                     <div class="navi">
                         <a href="#" id="foo3_prev<?php echo $i; ?>" onclick="prevImage(<?php echo $i; ?>);" class="prev disabled" style="display: none;"><span>prev</span></a>
                         <ul class="gallery" id="gallery<?php echo $i; ?>">
@@ -222,7 +225,43 @@ if (!empty($pressId)) {
                                     <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
                                         <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageFour(); ?>" data="4"/>
                                     </li>
-        <?php } ?>
+                               <?php } ?>
+                                <?php if ($item->getImageFive() != '') {
+                                    $numImages++; ?>
+                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageFive(); ?>" data="5"/>
+                                    </li>
+                                <?php } ?>
+                                <?php if ($item->getImageSix() != '') {
+                                    $numImages++; ?>
+                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageSix(); ?>" data="6"/>
+                                    </li>
+                                <?php } ?>
+                                <?php if ($item->getImageSeven() != '') {
+                                    $numImages++; ?>
+                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageSeven(); ?>" data="7"/>
+                                    </li>
+                                <?php } ?>
+                                <?php if ($item->getImageEight() != '') {
+                                    $numImages++; ?>
+                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageEight(); ?>" data="8"/>
+                                    </li>
+                                <?php } ?>
+                                <?php if ($item->getImageNine() != '') {
+                                    $numImages++; ?>
+                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageNine(); ?>" data="9"/>
+                                    </li>
+                                <?php } ?>
+                                <?php if ($item->getImageTen() != '') {
+                                    $numImages++; ?>
+                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTen(); ?>" data="10"/>
+                                    </li>
+                                <?php } ?>
     <?php } ?>
                         </ul>
                         <a href="#" id="foo3_next<?php echo $i; ?>" onclick="nextImage(<?php echo $i; ?>);" class="next" style="display: none;"><span>next</span></a>

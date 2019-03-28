@@ -1,6 +1,7 @@
 <?php 
 	$collection = $this->getCollection();
 	$helper = Mage::helper("inventory");
+	$sets = $this->getProductAttributeSets();
 ?>
 <div class="content-header">
 	<h3 class="icon-head"><?php echo $helper->__('Inventory Transfer')?></h3>
@@ -42,30 +43,30 @@
 		<th><?php echo $helper->__('STORE')?></th>
 		<th><?php echo $helper->__('QUANTITY')?></th>
     	<?php foreach ($collection as $_product):
-    		$product = Mage::getModel ( 'catalog/product' )->load ( $_product->getId() );
+    		//$product = Mage::getModel ( 'catalog/product' )->load ( $_product->getId() );
     	?>
-		 <tr id="inventory-row-<?php echo $product->getId(); ?>">
+		 <tr id="inventory-row-<?php echo $_product->getId(); ?>">
 			<td><?php echo $_product->getSku();?></td>
 			<td>
 				<img style="width: 100px; height: 100px;" class="product_inventory_thumbnail" 
-					src="<?php  echo  Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(100);?>"/>
+					src="<?php  echo  Mage::helper('catalog/image')->init($_product, 'thumbnail')->resize(100);?>"/>
 			</td>
 			<td><?php echo $_product->getName();?></td>
 			<?php 
-				$attributeSetModel = Mage::getModel("eav/entity_attribute_set");
-				$attributeSetModel->load($_product->getAttributeSetId());
-				$attributeSetName  = $attributeSetModel->getAttributeSetName();
+				/* $attributeSetModel = Mage::getModel("eav/entity_attribute_set");
+				$attributeSetModel->load($_product->getAttributeSetId()); */
+			$attributeSetName = $sets[$_product->getAttributeSetId()];//$attributeSetModel->getAttributeSetName();
 			?>	
 			<td><?php echo $attributeSetName;?></td>
 			<?php 
-				$inven=Mage::getModel('cataloginventory/stock_item')
-					->loadByProductAndStock($_product,$stockId)
+				/* $inven=Mage::getModel('cataloginventory/stock_item')
+					->loadByProductAndStock($_product,$stockId) */
 			?>
 			<td>
 				<div>
-					<span ><?php echo round($inven->getQty())?></span>
+					<span ><?php echo round($_product->getQty())?></span>
 						<input type="hidden" id="current_<?php echo $_product->getId() ?>" 
-						value="<?php  echo round($inven->getQty()) ?>"/>
+						value="<?php  echo round($_product->getQty()) ?>"/>
 				</div>
 			</td>
 			<td>
@@ -98,6 +99,8 @@
 	if (typeof Allure == "undefined") {
 	   var Allure = {};
 	}
+	
+	Allure.currentStore = 1; //main website default
 	Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 	Allure.InventoryStoreSwitch = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_stock/store', array('_secure' => true));?>';
 </script>

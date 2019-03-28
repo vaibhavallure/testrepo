@@ -38,5 +38,21 @@ $product = $item->getProduct();
 <div class="h-mt-wishlist-product-name">
 	<h3 class="product-name"><a href="<?php echo $this->getProductUrl($item) ?>" title="<?php echo $this->escapeHtml($product->getName()) ?>"><?php echo $this->escapeHtml($product->getName()) ?></a></h3>
 	
+<?php //allure code start?>
+<?php 
+    $helper = Mage::helper('catalog/product_configuration');
+	if($item->getProduct()->getTypeId() == "configurable"):
+	$_options = $helper->getConfigurableOptions($item);
+?>
+<?php if ($_options):?>
+<?php foreach ($_options as $_option) : ?>
+	<div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>		
+	<?php echo $_option['value'] ?>
+	</div>
+<?php endforeach; ?>
+<?php endif;?>	
+<?php endif;?>
+<?php //allure code end?>	
+	
 	<?php echo $this->getPriceHtml($product);?>
 </div>

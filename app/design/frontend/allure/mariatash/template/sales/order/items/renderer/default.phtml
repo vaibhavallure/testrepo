@@ -28,13 +28,13 @@
 <tr class="border mt-order-view-tr" id="order-item-row-<?php echo $_item->getId() ?>">
     <td class="mt-td-order-view-block mt-order-veiw-pr-name">
         <div class="mt-deiv-order-view-allre" style="margin-bottom: 10px; width: 80vw">
-            <p style="margin-bottom: 0px">PRODUCT:</p>
+            <p class="mt-order-view-column" style="margin-bottom: 0px">Product Name:</p>
     <h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options">
         <?php foreach ($_options as $_option) : ?>
-            <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
-            <?php if (!$this->getPrintStatus()): ?>
+            <dt><span class="mt-order-view-column"><?php echo $this->htmlEscape($_option['label']) ?></span><?php echo " - ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? $_option['print_value'] : $_option['value']) )) ?></dt>
+            <?php if (0 && !$this->getPrintStatus()): //allure 0 ?>
                 <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
                 <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>>
                     <?php echo $_formatedOptionValue['value'] ?>
@@ -48,9 +48,11 @@
                     <?php endif; ?>
                 </dd>
             <?php else: ?>
+            	<?php if (0): //allure code?>
                 <dd>
                     <?php echo nl2br($this->htmlEscape( (isset($_option['print_value']) ? $_option['print_value'] : $_option['value']) )) ?>
                 </dd>
+                <?php endif; ?>
             <?php endif; ?>
         <?php endforeach; ?>
         </dl>
@@ -66,7 +68,7 @@
         $qty = $this->getItem()->getQtyOrdered()*1;
         $storeId = $this->getItem()->getStoreId();
         $stockStatus = Mage::helper("myaccount")
-            ->getProductCurrentStatus($this->getSku(),$qty,$storeId);
+        ->getProductCurrentStatus($this->getItem(),$this->getSku(),$qty,$storeId);
         ?>
         <?php if($stockStatus['is_show']):?>
             <dl class="item-options">
@@ -85,15 +87,21 @@
             </dl>
 
         <?php endif; ?>
+         <?php if($_item->getPurchasedFrom()):?>
+         <dl class="item-options">
+           <dt><strong><?php echo $this->escapeHtml('Purchased From(Category)') ?></strong></dt>
+           <dd><?php echo  $_item->getPurchasedFrom();?></dd>
+         </dl>
+        <?php endif;?>
         <br>
             <span class="nobr">
-            SKU : <?php echo $_item->getSku() ?><br />
+            <span class="mt-order-view-column">SKU :</span> <?php echo $_item->getSku() ?><br />
     	</span>
-            <span class="nobr">
+            <span class="mt-order-view-column nobr">
                 Qty : <strong><?php echo $this->getItem()->getQtyOrdered()*1 //allure code //$_item->getQty()*1 //existing code ?></strong><br />
     	    </span>
             <br>
-        <span>Price : </span>
+        <span class="mt-order-view-column">Price : </span>
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
             <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>
@@ -208,7 +216,7 @@
                 <?php endif; ?>
             </span>
         <?php endif; ?>
-                <span>SubTotal:
+                <span class="mt-order-view-column">SubTotal:
                     <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
                     <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>

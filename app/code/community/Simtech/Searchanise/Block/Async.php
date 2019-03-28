@@ -43,7 +43,7 @@ class Simtech_Searchanise_Block_Async extends Mage_Core_Block_Text
                 if ($textNotification != '') {
                     Mage::helper('searchanise/ApiSe')->setNotification('N', Mage::helper('searchanise')->__('Notice'), $textNotification);
                     $this->_startSignup();
-                    
+
                 } else {
                     Mage::helper('searchanise/ApiSe')->showNotificationAsyncCompleted();
                 }
@@ -57,7 +57,7 @@ class Simtech_Searchanise_Block_Async extends Mage_Core_Block_Text
                 }
 
                 if (Mage::helper('searchanise/ApiSe')->checkAjaxAsync()) {
-                    $html .= 
+                    $html .=
                         "<script type=\"text/javascript\">
                         //<![CDATA[
                             new Ajax.Request('$asyncUrl', {method: 'get', asynchronous: true});

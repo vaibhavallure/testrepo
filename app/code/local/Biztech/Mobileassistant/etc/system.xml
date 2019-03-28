@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <tabs>
+        <biztech translate="label" module="mobileassistant">
+            <label>Biztech Extensions</label>
+            <sort_order>400</sort_order>
+        </biztech>
+    </tabs>
+    <sections>
+        <mobileassistant translate="label" module="mobileassistant">
+            <label>MageMob Admin</label>
+            <tab>biztech</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <mobileassistant_general translate="label">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Select Yes to enable this feature.</comment>
+                        </enabled>
+                        <base_url translate="label">
+                            <label>Store Base Url</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>mobileassistant/config_baseurl</frontend_model>    
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Configure this URL on your device.If there are multiple website, Base Url will display according that.</comment>
+                        </base_url>
+                        <notification translate="label">
+                            <label>Send Notification For</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>mobileassistant/system_config_notification</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </notification>
+                       
+                        <notification_msg translate="label">
+                            <label>New Order Notification Message</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enter your message which will be received on the Mobile app whenever a New Order is received.</comment>
+                        </notification_msg>
+                        <customer_register_notification_msg translate="label">
+                            <label>New Customer Register Notification Message</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enter your message which will be received on the Mobile app whenever a New Customer is registered.</comment>
+                        </customer_register_notification_msg>
+                         
+                        <minimum_qty translate="label">
+                            <label>Minimum Quantity Required For Product</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-zero-or-greater</validate>
+                            <comment>Enter minimum quantity required for product inventory alerts</comment>
+                        </minimum_qty>
+                        <product_inventory_notification_msg translate="label">
+                            <label>Product Inventory Notification Message</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enter your message which will be received on the Mobile app whenever a product qty is lower than or equal to minimum qty.</comment>
+                        </product_inventory_notification_msg>
+                        <barcode_for_url translate="label">
+                            <label>Store Base Url QRcode</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>mobileassistant/config_barcodeurl</frontend_model>    
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Displays QR code for store base url. If there are multiple website, QR code will display according that.</comment>
+                        </barcode_for_url>
+                    </fields>
+                </mobileassistant_general>
+            </groups>
+        </mobileassistant>
+    </sections>
+</config>

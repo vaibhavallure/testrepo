@@ -17,9 +17,9 @@
     <checkout_cart_index>
 
         <reference name="head">
-            <action method="addJs" ifconfig="payment/amazon_payments/enabled"><script>prototype/window.js</script></action>
-            <action method="addItem" ifconfig="payment/amazon_payments/enabled"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
-            <action method="addItem" ifconfig="payment/amazon_payments/enabled"><type>js_css</type><name>prototype/windows/themes/alphacube.css</name></action>
+            <action method="addJs" ifconfig="payment/amazon_payments/active"><script>prototype/window.js</script></action>
+            <action method="addItem" ifconfig="payment/amazon_payments/active"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addItem" ifconfig="payment/amazon_payments/active"><type>js_css</type><name>prototype/windows/themes/alphacube.css</name></action>
             <action method="addItem"><type>skin_css</type><name>amazon_payments/css/popup_alphacube.css</name><params/></action>
             <block type="amazon_payments/script" name="amazon_payments.script" template="amazon_payments/script.phtml" />
         </reference>
@@ -62,7 +62,7 @@
 
         <reference name="checkout.onepage.login">
             <!-- Remove this to prevent "Login with Amazon" button from appearing on checkout -->
-            <action method="setTemplate" ifconfig="payment/amazon_payments/enabled">
+            <action method="setTemplate" ifconfig="payment/amazon_payments/active">
                 <template helper="amazon_payments/data/switchOnepageLoginTemplateIf">
                     <template_amazon>amazon_payments/onepage/login.phtml</template_amazon>
                     <template_default>checkout/onepage/login.phtml</template_default>
@@ -187,6 +187,11 @@
 
             <block type="amazon_payments/checkout" name="amazon_payments.checkout" template="amazon_payments/checkout.phtml">
 
+<!-- new delivery method after shipping information allureinc -->
+                <block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option" as="delivery_option" template="checkoutstep/checkout/onepage/delivery_option.phtml">
+                	<block type="checkoutstep/checkout_onepage_deliveryoption" name="checkout.onepage.delivery_option_details" as="delivery_option_details" template="checkoutstep/checkout/onepage/delivery_option_details.phtml"></block>
+                  </block>
+
                 <block type="checkout/onepage_shipping_method" name="checkout.onepage.shipping_method" as="shipping_method" template="amazon_payments/shipping_method.phtml">
                     <block type="checkout/onepage_shipping_method_available" name="checkout.onepage.shipping_method.available" as="available" template="checkout/onepage/shipping_method/available.phtml"/>
                     <block type="checkout/onepage_shipping_method_additional" name="checkout.onepage.shipping_method.additional" as="additional" template="checkout/onepage/shipping_method/additional.phtml"/>
@@ -278,9 +283,9 @@
     <catalog_product_view>
 
         <reference name="head">
-            <action method="addJs" ifconfig="payment/amazon_payments/enabled"><script>prototype/window.js</script></action>
-            <action method="addItem" ifconfig="payment/amazon_payments/enabled"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
-            <action method="addItem" ifconfig="payment/amazon_payments/enabled"><type>js_css</type><name>prototype/windows/themes/alphacube.css</name></action>
+            <action method="addJs" ifconfig="payment/amazon_payments/active"><script>prototype/window.js</script></action>
+            <action method="addItem" ifconfig="payment/amazon_payments/active"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addItem" ifconfig="payment/amazon_payments/active"><type>js_css</type><name>prototype/windows/themes/alphacube.css</name></action>
             <action method="addItem"><type>skin_css</type><name>amazon_payments/css/popup_alphacube.css</name><params/></action>
         </reference>
 
@@ -433,7 +438,7 @@
         </reference>
 
         <reference name="checkout.onepage.login">
-            <action method="setTemplate" ifconfig="payment/amazon_payments/enabled">
+            <action method="setTemplate" ifconfig="payment/amazon_payments/active">
                 <template helper="amazon_payments/data/switchOnepageLoginTemplateIf">
                     <template_amazon>amazon_payments/onepage/login.phtml</template_amazon>
                     <template_default>checkout/onepage/login.phtml</template_default>
@@ -487,7 +492,7 @@
 
         <!-- ifconfig only works with action -->
         <reference name="content">
-            <action method="insert" ifconfig="payment/amazon_payments/enabled">
+            <action method="insert" ifconfig="payment/amazon_payments/active">
                 <block>amazon_login.button_create</block>
             </action>
         </reference>
@@ -505,7 +510,7 @@
         <block type="amazon_payments/login_button" name="amazon_login.button_create" template="amazon_payments/login/button.phtml" after="customer_form_login" />
 
         <reference name="customer.form.register.fields.before">
-            <action method="append" ifconfig="payment/amazon_payments/enabled">
+            <action method="append" ifconfig="payment/amazon_payments/active">
                 <block>amazon_login.button_create</block>
             </action>
         </reference>

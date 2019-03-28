@@ -178,8 +178,8 @@ div.tab button:hover {
 /* Create an active/current tablink class */
 div.tab button.active {
     background-color: #fff;/*#ccc;*/
-    
-    border: none;;
+    /* border: none; */
+    transition-duration: 2s;
 }
 
 /* Style the tab content */
@@ -330,7 +330,7 @@ div.tab button.active {
 
 .myaccount-index-index .main-container {
     margin: 0 auto;
-    width: 960px;
+    width: 980px;
 }
 
 .myaccount-index-index .main-container>.page-title {
@@ -1176,7 +1176,7 @@ width: 63%;
 #myaccount-shopping-cart-table .mt-purchase-added-at {
    display: block;
    font-weight: normal;
-   color: #999;
+   color: #3f4048;
 }
 
 #myaccount-shopping-cart-table tr td .product-image {
@@ -1228,11 +1228,11 @@ width: 63%;
 }
 
 .mt-new-purchase .cart-table .cart_col2 .purchase-store-name{
-	background-color: #dedede;
-    padding: 0px 20px;
+	background-color: #d1d1d1;
+   /*  padding: 0px 20px; */
     border-radius: 3px;
     position: absolute;
-    bottom: 38px;
+    bottom: 15px;
 }
 
 .mt-new-purchase .cart-table .cart_col4 .qty-wrap{
@@ -1286,8 +1286,7 @@ width: 63%;
 	width: 100%;
 }
 
-.tabcontent .myaccount-filter-store-list{
-	/* padding-left: 115px; */
+.tabcontent .myaccount-filter-store-list.purchase-order-filter{
 	width: 35%;
 	float: left;
 	padding-top: 7px;
@@ -1305,11 +1304,31 @@ width: 63%;
 }
 
 
-.tabcontent .myaccount-filter-sort-order-list{
+.tabcontent .myaccount-filter-sort-order-list.purchase-order-filter{
 	width: 35%;
 	float: left;
 	padding-top: 7px;
 }
+
+
+.tabcontent .myaccount-filter-store-list.order-filter-status{
+	width: 25%;
+	float: left;
+	padding-top: 7px;
+	margin-right: 20px;
+}
+.tabcontent .myaccount-filter-sort-order-list.order-filter-status{
+	width: 25%;
+	float: left;
+	padding-top: 7px;
+	margin-right: 20px;
+}
+.myaccount-filter-order-status-list.order-filter-status{
+	width: 25%;
+	float: left;
+	padding-top: 7px;
+}
+
 
 .tabcontent .filter-label-list{
 	width: 17%;
@@ -1831,4 +1850,140 @@ width: 245px;
 .popupResetPasswordModel #resetpass-back-link{
 	position: absolute;
 	margin-top: 10px;
+}
+
+.mt-myaccount-new .messages{
+	width: 80%;
+    float: right;
+}
+
+.mt-myaccount-new.sales-order-shipment .block-account a {
+    font-size: 12px ! important;
+}
+
+
+
+
+
+#load-open-order-data .order-info{
+	/* margin-top: 8px;
+	margin-bottom: 20px; */
+	margin-top: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#load-complete-order-data .order-info{
+	/* margin-top: -2px;
+	margin-bottom: 20px; */
+	margin-top: 10px;
+	padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+
+li.open-custom-order-info-tabs,li.complete-custom-order-info-tabs {
+	cursor: pointer;
+}
+
+li.open-custom-order-info-tabs.active,li.complete-custom-order-info-tabs.active {
+	font-weight: bold ! important;
+	cursor: auto;
+}
+
+
+#load-open-order-data #order-info-tabs ,#load-complete-order-data #order-info-tabs{
+	display: none;
+}
+
+#load-complete-order-data .box-title{
+	display: block ! important;
+}
+
+#load-complete-order-data .box-content , #load-open-order-data .box-content{
+	margin-left: 10px;
+}
+
+.complete-order-view tbody td a , .open-order-view tbody td a{
+	cursor: pointer;
+}
+
+.custom-order-info-ul{
+	float: right;
+}
+.custom-order-info-tabs.order-info-tab-back{
+	float: left;
+}
+
+.complete-order-view #my-orders-table{
+	background: #cfcfd1;
+	margin-top: -18px;
+}
+
+.mt-custom-order-info{
+	border-bottom: 9px solid #DEDEDE;
+}
+
+.mt-custom-order-info dd{
+	margin-bottom: 10px;
+}
+
+#load-open-order-data #back-to-url,
+#load-complete-order-data #back-to-url{
+	display: none;
+}
+
+#load-open-order-data .my-account .order-date,
+#load-complete-order-data .my-account .order-date {
+    margin-top: 0px;
+}
+
+
+.mt-myaccount-new.sales-order-view .col2-left-layout .col-left{
+	width: 18%;
+}
+.mt-myaccount-new.sales-order-view .col2-left-layout .col-main{
+	width: 80%;
+}
+
+
+
+
+.mt-default-addr-delete-link{
+	margin-left: 10px;
+}
+
+
+li.order-info-tab-back{
+	float: right;
+	cursor: pointer;
+}
+
+.mt-myaccount-page #shopping-cart-table,
+.mt-myaccount-page .data-table#wishlist-table{
+	margin-top: 0px ! important;
+}
+
+
+.complete-order-view #my-orders-table td,
+.open-order-view #my-openorders-table td{
+	padding-top: 6px;
+}
+
+#open-order-info .mt-header-sku,
+#complete-order-info .mt-header-sku{
+	text-align: center;
+}
+
+#open-order-invoice .mt-header-sku,
+#open-order-shipment .mt-header-sku,
+#open-order-creditmemo .mt-header-sku,
+#complete-order-invoice .mt-header-sku,
+#complete-order-shipment .mt-header-sku,
+#complete-order-creditmemo .mt-header-sku{
+	padding-left: 40px ! important;
+}
+
+.myaccount-dashbord-img.mt-product-img{
+	margin-top: -10px;
 }

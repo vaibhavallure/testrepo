@@ -75,8 +75,12 @@ if($product->getTypeId() =='configurable'){
         if(count($check)){
             // Ignore images
         }else{  
-            $simpleId = Mage::getModel('catalog/product_type_configurable')->getProductByAttributes($superAttribute, $product)->getEnTityId();
-            $product = Mage::getModel('catalog/product')->load($simpleId);
+            $prod =  Mage::getModel('catalog/product_type_configurable')->getProductByAttributes($attribute, $product);
+            if($prod){
+                $simpleId = $prod->getEnTityId();
+                $product = Mage::getModel('catalog/product')->load($simpleId);
+            }
+            
             $option_id = null;
             foreach($item->getBuyRequest()->getSuperAttribute() as $id) {
                 $option_id = $id; break;

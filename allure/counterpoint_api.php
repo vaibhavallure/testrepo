@@ -65,7 +65,7 @@ if($conn){
                           join ps_ord_hist_contact c on(a.doc_id=c.doc_id) WHERE (a.TAX_OVRD_REAS<>'MAGENTO' or a.TAX_OVRD_REAS is null)
                           and a.tkt_dt like '%2008%' order by a.BUS_DAT desc;";
         
-        $query = " select a.DOC_ID,a.TKT_NO order_id,a.event_no ,a.TKT_DT order_date,
+        $query2 = " select a.DOC_ID,a.TKT_NO order_id,a.event_no ,a.TKT_DT order_date,
                     a.TAX_OVRD_REAS place,a.SUB_TOT subtotal,a.tax_amt tax,
 					a.tot total,concat(b.ITEM_NO,'|',b.CELL_DESCR) sku,
                     b.QTY_SOLD qty,b.prc prc,b.descr pname,
@@ -83,18 +83,65 @@ if($conn){
                     and a.tkt_typ='T' 
                     order by a.BUS_DAT desc;";
         
+        
+        $query = "SELECT MAIN_TABLE.doc_id,MAIN_TABLE.str_id,MAIN_TABLE.sta_id,
+                    MAIN_TABLE.tkt_typ,MAIN_TABLE.drw_id,MAIN_TABLE.usr_id,MAIN_TABLE.stk_loc_id,MAIN_TABLE.cust_no,
+                    MAIN_TABLE.tkt_no order_id, MAIN_TABLE.event_no , MAIN_TABLE.tkt_dt order_date,
+                    MAIN_TABLE.tax_ovrd_reas place, MAIN_TABLE.sub_tot subtotal, MAIN_TABLE.tax_amt tax,MAIN_TABLE.tot total, 
+                    CONCAT(ITEM_TABLE.ITEM_NO,'|',ITEM_TABLE.CELL_DESCR) sku,
+                    ITEM_TABLE.QTY_SOLD qty, ITEM_TABLE.PRC prc, ITEM_TABLE.DESCR pname,
+                    ITEM_TABLE.lin_seq_no,
+                    CONTACT_TABLE.EMAIL_ADRS_1 as email, CONTACT_TABLE.NAM name, CONTACT_TABLE.NAM_TYP nam_typ, CONTACT_TABLE.ADRS_1 street, CONTACT_TABLE.CITY city,
+                    CONTACT_TABLE.STATE state, CONTACT_TABLE.ZIP_COD zip_code , CONTACT_TABLE.CNTRY as country, CONTACT_TABLE.PHONE_1 phone,
+                    DISC_TABLE.DISC_AMT dis_amount, DISC_TABLE.DISC_PCT dis_pct,
+                    PMT_TABLE.pay_cod, PMT_TABLE.pay_cod_typ, PMT_TABLE.descr,PMT_TABLE.pmt_lin_typ,PMT_TABLE.amt,
+                    PMT_TABLE.pmt_seq_no,
+                    PMT_CARD_TABLE.cr_card_no, PMT_CARD_TABLE.cr_card_no_msk, PMT_CARD_TABLE.cr_card_nam, PMT_CARD_TABLE.cr_card_exp_dat,
+                    PMT_RCPT_TABLE.trans_typ, PMT_RCPT_TABLE.unique_trans_id, PMT_RCPT_TABLE.trans_stat, PMT_RCPT_TABLE.trans_approved,
+                    PMT_RCPT_TABLE.processor_trans_id, PMT_RCPT_TABLE.rcpt_card_no_msk, PMT_RCPT_TABLE.rcpt_card_typ,
+                    PMT_RCPT_TABLE.rcpt_amt, PMT_RCPT_TABLE.processor_msg, PMT_RCPT_TABLE.rcpt_msg, PMT_RCPT_TABLE.entry_meth,
+                    PMT_RCPT_TABLE.processor_client_rcpt, PMT_RCPT_TABLE.processor_merch_rcpt
+
+                    FROM PS_TKT_HIST MAIN_TABLE 
+                    JOIN PS_TKT_HIST_LIN ITEM_TABLE ON ( MAIN_TABLE.TKT_NO = ITEM_TABLE.TKT_NO )
+                    JOIN PS_TKT_HIST_PMT PMT_TABLE ON ( MAIN_TABLE.TKT_NO = PMT_TABLE.TKT_NO ) 
+                    JOIN PS_TKT_HIST_CONTACT CONTACT_TABLE ON ( MAIN_TABLE.DOC_ID = CONTACT_TABLE.DOC_ID )
+                    LEFT JOIN PS_TKT_HIST_DISC DISC_TABLE ON ( MAIN_TABLE.DOC_ID = DISC_TABLE.DOC_ID AND DISC_TABLE.LIN_SEQ_NO is null)
+                    LEFT JOIN PS_TKT_HIST_PMT_CHK PMT_CHECK_TABLE ON ( PMT_TABLE.DOC_ID = PMT_CHECK_TABLE.DOC_ID )
+                    LEFT JOIN PS_TKT_HIST_PMT_CR_CARD PMT_CARD_TABLE ON( PMT_TABLE.DOC_ID = PMT_CARD_TABLE.DOC_ID )
+                    LEFT JOIN PS_TKT_HIST_PMT_RCPT PMT_RCPT_TABLE on(PMT_TABLE.DOC_ID = PMT_RCPT_TABLE.DOC_ID)
+                    WHERE 
+                    MAIN_TABLE.STR_ID NOT IN(3 , 7)
+                    AND MAIN_TABLE.TKT_TYP = 'T'
+                    AND MAIN_TABLE.TKT_DT >= convert(datetime,'".$startDate."') 
+                    AND MAIN_TABLE.TKT_DT <= convert(datetime,'".$endDate."')  
+                    AND CONTACT_TABLE.CONTACT_ID = ".$state."
+                    -- AND MAIN_TABLE.TKT_NO = '285086' 
+                    ORDER BY MAIN_TABLE.TKT_DT DESC";
+        
         $result = odbc_exec($conn, $query);
         $count = 0;
         $i 	   = 0;
         $mainArr = array();
-        $itemHeader = array('qty','sku','prc','pname');
+        $itemHeader = array('qty','sku','prc','pname','lin_seq_no');
         $addressHeader = array('email','name','street','city','state','zip_code','country','phone','nam_typ');
+        $paymentHeader = array('pmt_seq_no','pay_cod','pay_cod_typ','descr','pmt_lin_typ',
+            'amt','cr_card_no','cr_card_no_msk','cr_card_nam','cr_card_exp_dat',
+            'trans_typ','unique_trans_id','trans_stat','trans_approved','processor_trans_id',
+            'rcpt_card_no_msk','rcpt_card_typ','rcpt_amt','processor_msg','rcpt_msg',
+            'entry_meth','processor_client_rcpt','processor_merch_rcpt'
+            );
+        $extHeader = array('doc_id','str_id','sta_id','tkt_typ','drw_id','event_no','stk_loc_id','cust_no');
         while(odbc_fetch_row($result)){
-            $order_id = odbc_result($result, 'order_id');
+            $order_id   = odbc_result($result, 'order_id');
+            $lin_seq_no = odbc_result($result, 'lin_seq_no');
+            $pmt_seq_no = odbc_result($result, 'pmt_seq_no');
             $arr 		= array();
             $items 		= array();
             $address 	= array();
             $info		= array();
+            $payment    = array();
+            $extra      = array();
             
             //parse row data as required format
             for ($j = 1; $j <= odbc_num_fields($result); $j++){
@@ -111,20 +158,31 @@ if($conn){
                     }
                 }elseif(in_array($field_name, $addressHeader)){
                     if($field_name == 'email')
-                        $field_value = strtolower($field_value);
-                        $address[$field_name] = $field_value;
+                        $field_value = "sagar@allureinc.co";//strtolower($field_value);
+                     $address[$field_name] = $field_value;
+                }elseif(in_array($field_name, $paymentHeader)){
+                    $payment[$field_name] = $field_value;
+                }elseif(in_array($field_name, $extHeader)){
+                    $extra[$field_name] = $field_value;
                 }else{
                     $info[$field_name] = $field_value;
                 }
             }
             
             if(!array_key_exists($order_id, $mainArr)){
-                $mainArr[$order_id] = array('item_detail'=>array($items),
-                    'customer_detail'=>$address,'order_detail'=>$info);
+                $mainArr[$order_id] = array('item_detail'=>array($lin_seq_no=>$items),
+                    'customer_detail'=>$address,'order_detail'=>$info,
+                    'payment'=>array($pmt_seq_no=>$payment),'extra_data'=>$extra
+                );
             }else{
                 $tempItems = $mainArr[$order_id]['item_detail'];
-                $tempItems[] = $items;
+                $tempItems[$lin_seq_no] = $items;
                 $mainArr[$order_id]['item_detail'] = $tempItems;
+                
+                $tempPayment = $mainArr[$order_id]['payment'];
+                $tempPayment[$pmt_seq_no] = $payment;
+                $mainArr[$order_id]['payment'] = $tempPayment;
+                
             }
             $i++;
         }
@@ -151,7 +209,7 @@ if($conn){
  echo "<pre>";
  print_r(count($mainArr));
 /* print_r(($mainArr));
-die;  */
+die; */ 
 
 
 //remote site wsdl url
@@ -229,8 +287,8 @@ for($i=0;$i<1;$i++){
 try{
     $_AUTH_DETAILS_ARR = getMagentoSiteCredentials();
     $_WSDL_SOAP_OPTIONS_ARR = getSoapWSDLOptions();
-    $client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
-    $session = $client->login($_AUTH_DETAILS_ARR);
+    //$client = new SoapClient($_URL, $_WSDL_SOAP_OPTIONS_ARR);
+    //$session = $client->login($_AUTH_DETAILS_ARR);
     
     $reqS = addslashes(serialize($mainArr));
     $reqU = utf8_encode('"'.$reqS.'"');
@@ -241,11 +299,11 @@ try{
         'counterpoint_data' => $reqU
     );
     
-    $result  = $client->counterpointOrderList($_RequestData);
-    //$result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
+    //$result  = $client->counterpointOrderList($_RequestData);
+    $result = Mage::getModel('allure_counterpoint/order_api')->test($reqU);
     echo "<pre>";
     print_r($result);
-    $client->endSession(array('sessionId' => $session->result));
+    //$client->endSession(array('sessionId' => $session->result));
 }catch (Exception $e){
     echo "<pre>";
     print_r($e);

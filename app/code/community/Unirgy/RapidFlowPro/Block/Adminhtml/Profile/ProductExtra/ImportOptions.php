@@ -94,6 +94,14 @@ class Unirgy_RapidFlowPro_Block_Adminhtml_Profile_ProductExtra_ImportOptions
             'value'     => $profile->getData('options/import/image_missing_file'),
         ));
 
+        $fieldset->addField('import_image_existing_file', 'select', array(
+            'label'  => $this->__('Action on existing image file'),
+            'name'   => 'options[import][image_existing_file]',
+            'values' => $source->setPath('import_image_existing_file')->toOptionArray(),
+            'value'  => $profile->getData('options/import/image_existing_file'),
+            'note'   => $this->__('Select what to do when imported image has same name as existing image.'),
+        ));
+
         $fieldset->addField('import_image_source_dir', 'text', array(
             'label'     => $this->__('Local Source Folder'),
             'name'      => 'options[dir][images]',

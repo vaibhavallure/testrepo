@@ -24,7 +24,12 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-
+<?php 
+	$quote = Mage::getSingleton('checkout/session')->getQuote();
+	$this->setEntity($quote);
+	$this->setItems($quote->getAllVisibleItems());
+?>
+<?php $hasGiftMessages = ($this->getItemsHasMesssages() || $this->getEntityHasMessage()); ?>
 <script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>charcount.js"></script>
 <?php if(!$this->getDontDisplayContainer()): ?>
 <script type="text/javascript">
@@ -94,6 +99,7 @@ if(!window.toogleRequired) {
 }
 if(window.shipping) {
 
+<?php if(0): //allure?>
 shipping.onSave = function(evt){
     new Ajax.Updater('onepage-checkout-shipping-method-additional-load', '<?php echo $this->getAdditionalUrl(); ?>', {onSuccess: function() {
           this.nextStep(evt);
@@ -105,6 +111,7 @@ billing.onSave = function(evt){
           this.nextStep(evt);
     }.bind(this), evalScripts:true});
 }.bindAsEventListener(billing);
+<?php endif;?>
 
 }
 //]]>
@@ -113,17 +120,29 @@ billing.onSave = function(evt){
 <?php if ($this->isMessagesAvailable() || $this->isItemsAvailable()): ?>
 <?php switch ($this->getType()): ?>
 <?php case 'onepage_checkout': ?>
+     <div class="gift-messages">
+      <h3><?php echo $this->__('For Saturday delivery options please contact us at cs@mariatash.com.'); ?></h3>
+     </div>
+    <div class="gift-messages">
+        <h3 style="margin-top: 10px;"><?php echo $this->__('Delivery Signature Option.'); ?></h3>
+       
+        <p class="control">
+            <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="1" class="checkbox" checked="checked" />
+            <label for="no_signature_delivery"><?php echo $this->__('Require signature upon delivery.') ?></label>
+            <span class="signature_message" style ="display: none;"><?php echo $this->__('Please note shipments left at a residence/business unsigned and unattended are considered valid deliveries - coverage ceases at the point of delivery.'); ?></span>
+        </p>
+    </div>
     <div class="gift-messages">
         <h3><?php echo $this->__('Do you have any gift items in your order? If yes, the receipt will not include pricing information.'); ?></h3>
         <p class="control">
-            <input type="checkbox" name="allow_gift_messages" id="allow_gift_messages" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container']);"<?php if($this->getItemsHasMesssages() || $this->getEntityHasMessage()): ?> checked="checked"<?php endif; ?> class="checkbox" />
-            <label for="allow_gift_messages"><?php echo $this->__('Check this checkbox if you want to send as a gift and add a gift message.') ?></label>
+            <input type="checkbox" name="allow_gift_messages" id="allow_gift_messages" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container']);"<?php if($hasGiftMessages): ?> checked="checked"<?php endif; ?> class="checkbox" />
+            <label for="allow_gift_messages"><?php echo $this->__('Check this checkbox if you want to send as a gift and add a gift message or for special instructions.') ?></label>
         </p>
     </div>
     <div class="gift-messages-form" id="allow-gift-message-container" style="display: none;">
         <div class="inner-box">
             <?php if ($this->isMessagesAvailable()): ?>
-                <h4><?php echo $this->__('Add a general gift message for all the items in you cart.'); ?></h4>
+                <h4><?php echo $this->__('Add a general gift message or special instructions for all the items in you cart.'); ?></h4>
                 <input type="hidden" name="allow_gift_messages_for_order" id="allow_gift_messages_for_order" value="1" />
                 <div class="allow-gift-messages-for-order-container" id="allow-gift-messages-for-order-container">
                     <input type="hidden" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][type]"  value="quote" />
@@ -131,22 +150,16 @@ billing.onSave = function(evt){
                         <li class="fields">
                             <div class="field">
                                 <label  style="padding-right:20px;"  for="gift-message-whole-from"><?php echo $this->__('Sender') ?></label>
-                                <div class="input-box">
-                                    <input type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][from]" id="gift-message-whole-from" title="<?php echo $this->__('From') ?>"  value="<?php echo $this->getEscaped($this->getMessage()->getSender(), $this->getDefaultFrom()) ?>" class="input-text validation-passed" />
-                                </div>
+                                <input type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][from]" id="gift-message-whole-from" title="<?php echo $this->__('From') ?>"  value="<?php echo $this->getEscaped($this->getMessage()->getSender(), $this->getDefaultFrom()) ?>" class="input-text1 validation-passed" />
                             </div>
                             <div class="field">
                                 <label  style="padding-right:8px;"  for="gift-message-whole-to"><?php echo $this->__('Recipient') ?></label>
-                                <div class="input-box">
-                                    <input type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][to]" id="gift-message-whole-to" title="<?php echo $this->__('To') ?>" value="<?php echo $this->getEscaped($this->getMessage()->getRecipient(), $this->getDefaultTo()) ?>" class="input-text validation-passed" />
-                               </div>
+                                <input type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][to]" id="gift-message-whole-to" title="<?php echo $this->__('To') ?>" class="input-text1 validation-passed" />
                             </div>
                         </li>
                         <li class="wide">
                             <label for="gift-message-whole-message" style="padding-right:5px;" ><?php echo $this->__('Message') ?> </label>
-                            <div class="input-box">
-                                <textarea id="gift-message-whole-message" onchange="toogleRequired('gift-message-whole-message', ['gift-message-whole-from','gift-message-whole-to'])" class="input-text validation-passed giftmessage-area" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][message]" title="<?php echo $this->__('Message') ?>" rows="5" cols="10"><?php echo $this->getEscaped($this->getMessage()->getMessage()) ?></textarea>
-                            </div>
+                            <textarea id="gift-message-whole-message" onchange="toogleRequired('gift-message-whole-message', ['gift-message-whole-from','gift-message-whole-to'])" class="input-text validation-passed giftmessage-area" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][message]" title="<?php echo $this->__('Message') ?>" rows="5" cols="10"><?php echo $this->getEscaped($this->getMessage()->getMessage()) ?></textarea>
                         </li>
                     </ul>
                     <script type="text/javascript">
@@ -160,11 +173,16 @@ billing.onSave = function(evt){
 
              <h4 class="gift-message-or">OR</h4>
         
-                 <h4><?php echo $this->__('Add special instructions for each individual item in your cart.'); ?></h4>
+                 <h4>
+                 <?php 
+                 	//echo $this->__('Add a different gift message or special instructions for each individual item in your cart.'); 
+                 echo $this->__('Add special instructions for each individual item in your cart.');
+                 ?>
+                 </h4>
                  <input type="hidden" name="allow_gift_messages_for_items" id="allow_gift_messages_for_items" value="1" />
-                <div id="allow-gift-messages-for-items-container">
+                 <div id="allow-gift-messages-for-items-container">
                      <ol>
-                         <?php $quote =  Mage::getSingleton('checkout/session')->getQuote() ?>
+                         <?php $quote =  Mage::getSingleton('checkout/session')->getQuote(); ?>
                          <?php foreach($quote->getAllVisibleItems() as $_index=>$_item): ?>
                          <?php $_product = $_item->getProduct(); 
                             if($_product->getTypeId() =='configurable'){
@@ -172,6 +190,8 @@ billing.onSave = function(evt){
                                      $_product =  $option->getProduct();
                                 }
                             }
+                            
+                            $giftMessage = $this->getMessage($_item)->getMessage();
                          ?>
                          <li class="item">
                              <div class="product-img-box">
@@ -196,13 +216,13 @@ billing.onSave = function(evt){
                                              <div class="field" style="display: none;">
                                                  <label for="gift-message-<?php echo $_item->getId() ?>-to"><?php echo $this->__('Recipient') ?></label>
                                                  <div class="input-box">
-                                                     <input type="text" name="giftmessage[<?php echo $_item->getId() ?>][to]" id="gift-message-<?php echo $_item->getId() ?>-to" title="<?php echo $this->__('To') ?>" value="<?php echo $this->getEscaped($this->getMessage($_item)->getRecipient(), $this->getDefaultTo()) ?>" class="input-text validation-passed" />
+                                                     <input type="text" name="giftmessage[<?php echo $_item->getId() ?>][to]" id="gift-message-<?php echo $_item->getId() ?>-to" title="<?php echo $this->__('To') ?>" class="input-text validation-passed" />
                                                  </div>
                                              </div>
                                              <div class="field">
                                                  <label for="gift-message-<?php echo $_item->getId() ?>-message"><?php echo $this->__('Message') ?></label>
                                                  <div class="input-box">
-                                                     <textarea id="gift-message-<?php echo $_item->getId() ?>-message" onchange="toogleRequired('gift-message-<?php echo $_item->getId() ?>-message', ['gift-message-<?php echo $_item->getId() ?>-from','gift-message-<?php echo $_item->getId() ?>-to'])" class="input-text validation-passed giftmessage-area" name="giftmessage[<?php echo $_item->getId() ?>][message]" title="<?php echo $this->__('Message') ?>" rows="5" cols="40" style="width: 100%; padding: 0;"><?php echo $this->getEscaped($this->getMessage($_item)->getMessage()) ?></textarea>
+                                                     <textarea id="gift-message-<?php echo $_item->getId() ?>-message" onchange="toogleRequired('gift-message-<?php echo $_item->getId() ?>-message', ['gift-message-<?php echo $_item->getId() ?>-from','gift-message-<?php echo $_item->getId() ?>-to'])" class="input-text validation-passed <?php //echo "giftmessage-area" ;?>" name="giftmessage[<?php echo $_item->getId() ?>][message]" title="<?php echo $this->__('Message') ?>" rows="5" cols="40" style="width: 100%; padding: 0;"><?php echo $this->getEscaped($giftMessage) ?></textarea>
                                                  </div>
                                              </div>
                                          </li>
@@ -232,8 +252,19 @@ billing.onSave = function(evt){
 <?php break; ?>
 <?php case 'multishipping_adress': ?>
     <div class="gift-messages">
+      <h3><?php echo $this->__('For Saturday delivery options please contact us at cs@mariatash.com.'); ?></h3>
+    </div>
+    <div class="gift-messages">
+        <h3 style="margin-top: 10px;"><?php echo $this->__('Delivery Signature Option.'); ?></h3>
         <p class="control">
-            <input type="checkbox" name="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>" id="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container-<?php echo $this->getEntity()->getId() ?>']);"<?php if($this->getItemsHasMesssages() || $this->getEntityHasMessage()): ?> checked="checked"<?php endif ?> class="checkbox" />
+            <input type="checkbox" name="no_signature_delivery" id="no_signature_delivery" value="1" class="checkbox" checked="checked" />
+            <label for="no_signature_delivery"><?php echo $this->__('Require signature upon delivery.') ?></label>
+            <span class="signature_message" style ="display: none;"><?php echo $this->__('Please note shipments left at a residence/business unsigned and unattended are considered valid deliveries - coverage ceases at the point of delivery.'); ?></span>
+        </p>
+    </div>
+    <div class="gift-messages">
+        <p class="control">
+            <input type="checkbox" name="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>" id="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>" value="1" onclick="toogleVisibilityOnObjects(this, ['allow-gift-message-container-<?php echo $this->getEntity()->getId() ?>']);"<?php if($hasGiftMessages): ?> checked="checked"<?php endif ?> class="checkbox" />
             <label for="allow_gift_messages_<?php echo $this->getEntity()->getId() ?>"><?php echo $this->__('Check this box if you want to add a gift message.') ?><br/><span><?php echo $this->__('Gift receipt will not include pricing information.') ?></span></label>
         </p>
     </div>
@@ -241,7 +272,7 @@ billing.onSave = function(evt){
       
             <?php if ($this->isMessagesAvailable()): ?>           
             <div style="display:block;" id="allow-gift-messages-for-order-container2-<?php echo $this->getEntity()->getId() ?>">
-                <p><?php echo $this->__('Add a general gift message for all the items in you cart.') ?></p>
+                <p><?php echo $this->__('Add a general gift message or special instructions for all the items in you cart.') ?></p>
                 <input type="hidden" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][type]" value="quote_address" />
                 <ul class="form-list">
                     <li class="fields">
@@ -252,7 +283,7 @@ billing.onSave = function(evt){
                         <div class="field">
                             <label  style="padding-right:8px;"  for="gift-message-<?php echo $this->getEntity()->getId() ?>-to"><?php echo $this->__('Recipient') ?></label>
                             
-                                <input type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][to]" id="gift-message-<?php echo $this->getEntity()->getId() ?>-to" title="<?php echo $this->__('To') ?>" value="<?php echo $this->getEscaped($this->getMessage()->getRecipient(), $this->getDefaultTo()) ?>" class="input-text validation-passed" />
+                                <input type="text" name="giftmessage[<?php echo $this->getEntity()->getId() ?>][to]" id="gift-message-<?php echo $this->getEntity()->getId() ?>-to" title="<?php echo $this->__('To') ?>" class="input-text validation-passed" />
                             
                         </div>
                     </li>
@@ -301,7 +332,7 @@ billing.onSave = function(evt){
                                      <div class="field">
                                          <label for="gift-message-<?php echo $_item->getId() ?>-to"><?php echo $this->__('Recipient') ?></label>
                                          <div class="input-box">
-                                             <input type="text" name="giftmessage[<?php echo $_item->getId() ?>][to]" id="gift-message-<?php echo $_item->getId() ?>-to" title="<?php echo $this->__('To') ?>" value="<?php echo $this->getEscaped($this->getMessage($_item)->getRecipient(), $this->getDefaultTo()) ?>" class="input-text validation-passed" />
+                                             <input type="text" name="giftmessage[<?php echo $_item->getId() ?>][to]" id="gift-message-<?php echo $_item->getId() ?>-to" title="<?php echo $this->__('To') ?>" class="input-text validation-passed" />
                                          </div>
                                      </div>
                                  </li>
@@ -337,3 +368,4 @@ billing.onSave = function(evt){
     <?php break; ?>
 <?php endswitch ?>
 <?php endif; ?>
+

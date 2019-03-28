@@ -49,13 +49,13 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 		));
 		date_default_timezone_set(Mage::getStoreConfig('general/locale/timezone'));
 		$this->addColumn('appointment_start', array(
-				'header' => $helper->__('Appointment Start Time'),
+				'header' => $helper->__('Appointment Start'),
 				'type' => 'datetime',
 				'index'  => 'appointment_start',
 		));
 		
 		$this->addColumn('appointment_end', array(
-				'header' => $helper->__('Appointment End Time'),
+				'header' => $helper->__('Appointment End'),
 				'type' => 'datetime',
 				'index'  => 'appointment_end',
 		));
@@ -65,8 +65,14 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'type' => 'datetime',
 				'index'  => 'booking_time',
 		));
+        $this->addColumn('last_notified', array(
+            'header' => $helper->__('Last Notifed (EST)'),
+            'type' => 'datetime',
+            'index'  => 'last_notified',
+            'renderer' => 'appointments/adminhtml_render_notified'
+        ));
 		$this->addColumn('piercing_qty', array(
-				'header' => $helper->__('No of People in Group'),
+				'header' => $helper->__('No of People'),
 				'index'  => 'piercing_qty'
 		));
 		
@@ -79,21 +85,31 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'sortable' => false,
 		));
 		
-		if (!Mage::app()->isSingleStoreMode()) {
+		//if (!Mage::app()->isSingleStoreMode()) {
+		    if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+		        $storeOptions = Mage::getSingleton('allure_virtualstore/adminhtml_store')->getStoreOptionHash();
+		    }else{
+		        $storeOptions = Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash();
+		    }
+		    
 			$this->addColumn('store_id', array(
 					'header' => $helper->__('Store'),
 					'type' => 'options',
-					'options' => Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
+			        'options' => $storeOptions,//Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
 					'index' => 'store_id',
 					'sortable' => false,
 			));
-		}
+		//}
 		
 		$this->addColumn('piercer_id', array(
 				'header' => $helper->__('Piercer'),
 				'index'  => 'piercer_id',
-				'renderer' => 'appointments/adminhtml_appointments_edit_renderer_piercername'
+		        'type' => 'options',// aws02- add line
+		        'options' => Mage::helper("appointments")->getPiercersAsOptions(), // aws02- add line
+				//'renderer' => 'appointments/adminhtml_appointments_edit_renderer_piercername' //aws02 - comment the line
 		));
+
+
 		$this->addColumn('action',array(
 				'header'    => $helper->__('Modify'),
 				'width'     => '5%',
@@ -112,6 +128,40 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 		
 		return parent::_prepareColumns();
 	}
+
+
+    protected function _prepareMassaction()
+    {
+        $this->setMassactionIdField('entity_id');
+        $this->getMassactionBlock()->setFormFieldName('allure_appointments_ids');
+        $this->getMassactionBlock()->setUseSelectAll(false);
+
+
+
+        $this->getMassactionBlock()->addItem('app_update_status', array(
+            'label' => Mage::helper('appointments')->__('Change status '),
+            'url' => Mage::helper('adminhtml')->getUrl('*/adminhtml_appointments/changeStatus', array('redirect' => 'allure_appointments')),
+            'confirm' => Mage::helper('appointments')->__('Are you sure to change status for the selected Appointment'),
+            'additional' => array(
+                'visibility' => array(
+                    'name' => 'status',
+                    'type' => 'select',
+                    'class' => 'required-entry',
+                    'label' => Mage::helper('appointments')->__('Status '),
+                    'values' => Mage::getModel('appointments/appointments')->getStatus()
+                )
+            )
+        ));
+        $this->getMassactionBlock()->addItem('send_reminder', array(
+            'label' => Mage::helper('appointments')->__('Send Reminder'),
+            'url' => Mage::helper('adminhtml')->getUrl('*/adminhtml_appointments/sendReminder', array('redirect' => 'allure_appointments')),
+            'confirm' => Mage::helper('appointments')->__('send reminder to selected appointments'),
+
+        ));
+
+        return $this;
+    }
+
 
 	public function filterCallback($collection, $column)
 	{

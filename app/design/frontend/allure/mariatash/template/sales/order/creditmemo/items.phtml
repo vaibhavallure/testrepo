@@ -25,10 +25,14 @@
  */
 ?>
 <?php $_order = $this->getOrder() ?>
-<p class="" style="font-size: 12px"><a href="<?php echo $this->getPrintAllCreditmemosUrl($_order) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print All Refunds') ?></a></p>
+<?php 
+$_allCreditmemoPrintUrl = Mage::getUrl('sales/order/printCreditmemo', array('order_id' => $_order->getId()));
+?>
+<p class="" style="font-size: 12px"><a href="<?php echo $_allCreditmemoPrintUrl;//$this->getPrintAllCreditmemosUrl($_order) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print All Refunds') ?></a></p>
 <?php foreach ($_order->getCreditmemosCollection() as $_creditmemo): ?>
-<h2 class="sub-title"><?php echo $this->__('Refund #') ?><?php echo $_creditmemo->getIncrementId(); ?> <span class="separator">|</span> <a style="font-size: 12px" href="<?php echo $this->getPrintCreditmemoUrl($_creditmemo) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print Refund') ?></a></h2>
-<h3 class="table-caption"><?php echo $this->__('Items Refunded') ?></h3>
+<?php $_creditMemoPrintUrl = Mage::getUrl('sales/order/printCreditmemo', array('creditmemo_id' => $_creditmemo->getId()));?>
+<h2 class="sub-title"><?php echo $this->__('Refund #') ?><?php echo $_creditmemo->getIncrementId(); ?> <span class="separator">|</span> <a style="font-size: 12px" href="<?php echo $_creditMemoPrintUrl;//$this->getPrintCreditmemoUrl($_creditmemo) ?>" onclick="this.target='_blank'" class="link-print"><?php echo $this->__('Print Refund') ?></a></h2>
+<h2 class="table-caption"><?php echo $this->__('Items Refunded') ?></h2>
 <table class="data-table" id="my-refund-table-<?php echo $_creditmemo->getId(); ?>">
     <col />
     <col width="1" />
@@ -53,9 +57,9 @@
     </tfoot>
     <?php $_items = $_creditmemo->getAllItems(); ?>
     <?php $_count = count($_items) ?>
-    <?php foreach ($_items as $_item): ?>
-    <?php if ($_item->getOrderItem()->getParentItem()) continue; ?>
-    <tbody>
+    <?php $i=0; foreach ($_items as $_item): ?>
+    <?php if ($_item->getOrderItem()->getParentItem()) continue;else $i++; ?>
+    <tbody <?php echo $i%2 ? ' bgcolor="#F6F6F6"' : '' ?>>
         <?php echo $this->getItemHtml($_item) ?>
     </tbody>
     <?php endforeach; ?>

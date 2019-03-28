@@ -1,0 +1,15 @@
+#giftcard_custom_amount_box{width:99px;float:left;clear: left;}
+#giftcard_amount_custom{width:70px;}
+#giftcard_amount_box{width:150px;float:left;clear: right;}
+#giftcard_amount{width:150px;}
+#giftcard_amount_label,
+#giftcard_amount_custom_label{width:269px;}
+#giftcard_custom_amount_box .notice,
+#giftcard_custom_amount_box .validation-advice,
+#giftcard_amount_box validation-advice
+{width:269px;}
+#giftcard_custom_amount_box .notice span{display:block;}
+#giftcard_amount_custom_label span,
+#giftcard_amount_label span{width:auto;float: left;display:block;}
+#giftcard_amount_custom_label span em,
+#giftcard_amount_label span em{position:relative;}

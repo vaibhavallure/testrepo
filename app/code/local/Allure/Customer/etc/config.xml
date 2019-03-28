@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_Customer>
             <name>Allure Customer</name>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</Allure_Customer>
 	</modules>
 	<global>
@@ -51,15 +51,23 @@
         </layout>
 	</frontend>
 	 <crontab>
-		<joballure_customers>
-			<allure_customer_schedule>
-				<schedule>
-			        <cron_expr>* 12 * * *</cron_expr>
-                </schedule>
-				<run>
-					<model>allure_customer/observer::setcustomerStatusActive</model>
-				</run>
-			</allure_customer_schedule>
-		</joballure_customers>
+	<jobs>
+		<!-- <allure_customer_schedule>
+			<schedule>
+				<cron_expr>* 12 * * *</cron_expr>
+			</schedule>
+			<run>
+				<model>allure_customer/observer::setcustomerStatusActive</model>
+			</run>
+		</allure_customer_schedule> -->
+		<allure_wholesale_schedule>
+			<schedule>
+				<cron_expr>*/30 * * * *</cron_expr>
+			</schedule>
+			<run>
+				<model>allure_customer/observer::setcustomerGroup</model>
+			</run>
+		</allure_wholesale_schedule>
+	</jobs>
 	</crontab>
 </config>

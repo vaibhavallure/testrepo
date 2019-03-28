@@ -42,15 +42,15 @@
             <?php //$separated[] = $cat; continue; ?>
         <?php //endif; ?>
         <?php if(strtoupper($cat->getName()) == 'BLOG') { ?>
-        <li><a href="#blog" onclick="window.open('<?php echo Mage::getStoreConfig('ecp_menu/menu/blog_link') ?>', '_blank')"><?php echo $cat->getName() ?></a></li>
+        <li><a href="#blog" onclick="window.open('<?php echo Mage::getStoreConfig('ecp_menu/menu/blog_link') ?>', '_blank')"><?php echo $this->__($cat->getName()) ?></a></li>
         <?php } else { ?>
-        <li><a href="<?php echo $cat->getUrl() ?>"><?php echo $cat->getName() ?></a></li>
+        <li><a href="<?php echo $cat->getUrl() ?>"><?php echo $this->__($cat->getName()) ?></a></li>
         <?php } ?>
     <?php endforeach ?>
     <?php if(count($separated)>0): ?>
         <hr />
     <?php endif; ?>
     <?php foreach($separated as $key => $else): ?>
-        <li><a href="<?php echo $else->getUrl() ?>"><?php echo $else->getName() ?></a></li>
+        <li><a href="<?php echo $else->getUrl() ?>"><?php echo $this->__($else->getName()) ?></a></li>
     <?php endforeach; ?>
 </ul>

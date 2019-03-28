@@ -5,41 +5,42 @@
 	 data-limit="10" type="hidden" id="receipt-type" 
 	data-count="<?php echo count($this->getOrders())?>" >
 	 
-<div class="col2-set">
     <div id="box-history" class="box <?php echo ($_orders->getSize())?"":"box-no-order"?>">
                 <?php
                     $request = Mage::app()->getRequest();
                 ?>
         <?php if($_orders->getSize()): ?>
-         <div class="box-content">
-        <table class="data-table" id="my-orders-table">
-            <thead>
-                <tr>
-                    <th><div class="mt-myaccount-th" style="width:130px; padding-left:10px;"><?php echo $this->__('Order number') ?></div></th>
-                    <th class="a-left" style="padding-left: 25px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Date') ?></div></th>
-                    <th class="a-left" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Ship To') ?></div></th>
-                    <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Order Total') ?></div></th>
-                    <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:110px;"><?php echo $this->__('Order Status') ?></div></th>
-                    <th class="a-center" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:110px;"><?php //echo $this->__('Actions') ?></div></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php echo $this->getChildHtml('sales.order.history')?>
-            </tbody>
-        </table>
+        
+        <div id="load-complete-order-data" style="width: 100%;position: absolute; display: none;"></div>
+        
+        <div class="box-content complete-order-view">
+            <table class="data-table" id="my-orders-table">
+                <thead>
+                    <tr>
+                        <th><div class="mt-myaccount-th" style="width:130px; padding-left:10px;"><?php echo $this->__('Order number') ?></div></th>
+                        <th class="a-left" style="padding-left: 25px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Date') ?></div></th>
+                        <th class="a-left" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Ship To') ?></div></th>
+                        <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Order Total') ?></div></th>
+                        <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:110px;"><?php echo $this->__('Order Status') ?></div></th>
+                        <th class="a-center" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:110px;"><?php //echo $this->__('Actions') ?></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo $this->getChildHtml('sales.order.history')?>
+                </tbody>
+            </table>
         </div>
         <script type="text/javascript">decorateTable('my-orders-table');</script>
         <?php // echo $this->getPagerHtml(); ?>
         <?php else: ?>
             <p class="no-order-msg"><?php echo $this->__('No orders found in your account.'); ?></p>
         <?php endif; ?>
-        <?php if($request->getModuleName() != 'customer'): ?>
+        <?php if(0 && $request->getModuleName() != 'customer'): ?>
             <div class="box-title">
-			<?php $totalPageSize = $this->getOrders()->getLastPageNumber()?>
 			</div>
 		<?php endif;?>
+		<?php $totalPageSize = $this->getOrders()->getLastPageNumber()?>
     </div>
-</div>
 
 
 <script>
@@ -84,4 +85,27 @@ jQuery(function($){
 	jQuery("#total-orders-count").attr('data-count',odrCount);
 	jQuery("#total-orders-count").show();
 });
+
+
+function loadOrderView(evt){
+	var orderId = jQuery(evt).attr("data-order-id");
+	showLoadingFancybox1('box-history');
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/loadOrderView';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'order_id':orderId,'order_type':'complete'},
+        success: function(data) {
+            jQuery('#load-complete-order-data').html(data.data.html);
+            jQuery('#new-mt-myproduct-receipts .block-layered-nav-bg').hide();
+            jQuery('.complete-order-view').hide();
+            jQuery('#load-complete-order-data').show();
+            hideLoadingFancybox1('box-history');
+            var type = window.location.hash.substr(1);
+            var order_id   = jQuery(evt).attr("data-order-id");
+            window.location.hash = type+"#info#"+order_id;
+        }
+    });
+}
+
 </script>

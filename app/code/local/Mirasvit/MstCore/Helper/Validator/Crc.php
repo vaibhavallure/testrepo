@@ -2,16 +2,15 @@
 /**
  * Mirasvit
  *
- * This source file is subject to the Mirasvit Software License, which is available at http://mirasvit.com/license/.
+ * This source file is subject to the Mirasvit Software License, which is available at https://mirasvit.com/license/.
  * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
  * If you wish to customize this module for your needs.
  * Please refer to http://www.magentocommerce.com for more information.
  *
  * @category  Mirasvit
- * @package   Advanced Product Feeds
- * @version   1.1.5
- * @build     711
- * @copyright Copyright (C) 2016 Mirasvit (http://mirasvit.com/)
+ * @package   mirasvit/extension_mcore
+ * @version   1.0.22
+ * @copyright Copyright (C) 2018 Mirasvit (https://mirasvit.com/)
  */
 
 
@@ -24,49 +23,54 @@ class Mirasvit_MstCore_Helper_Validator_Crc extends Mirasvit_MstCore_Helper_Vali
     public function testMirasvitCrc($modules)
     {
         $result = self::SUCCESS;
-        $title = 'Files of extension Mirasvit '.implode(',', $modules).'';
+        $title = 'Extension Mirasvit '.implode(',', $modules).'';
         $description = array();
 
+
         foreach ($modules as $module) {
-            $crcFile = Mage::getBaseDir('code').'/local/Mirasvit/MstCore/etc/'.strtolower($module).'.crc';
-            if (!is_file($crcFile)) {
-                $crcFile = Mage::getBaseDir('code').'/local/Mirasvit/MstCore/etc/'.$module.'.crc';
-            }
-            if (!is_file($crcFile)) {
-                if ($result !== self::FAILED) {
-                    $result = self::INFO;
-                }
-                $description[] = "Check of extension Mirasvit {$module} is skipped";
-                continue;
-            }
-            $res = $this->checkCrc($crcFile);
-            if ($res === self::SUCCESS) {
-                continue;
-            } elseif (is_array($res)) {
-                list($cantFindFiles, $cantReadFiles, $modifiedFiles) = $res;
-                foreach ($cantFindFiles as $file) {
-                    $description[] = "Can't find a file $file";
-                    $result = self::FAILED;
-                }
-                foreach ($cantReadFiles as $file) {
-                    $description[] = "Can't read a file $file";
-                    $result = self::FAILED;
-                }
-                $changeLog = '';
                 $changeLogFile = Mage::getBaseDir('code').'/local/Mirasvit/'.$module.'/changelog.txt';
                 if (file_exists($changeLogFile)) {
-                    $changeLog = file_get_contents($changeLogFile);
+                    $description = 'For information on files, modified by Mirasvit support, please see ' . $changeLogFile . ' <br>';
                 }
-                foreach ($modifiedFiles as $file) {
-                    $baseFile = trim(str_replace(Mage::getBaseDir(), '', $file), '/');
-                    if (strpos($changeLog, $baseFile) !== false) {
-                        $description[] = "Modified file $file (present in changelog)";
-                    } else {
-                        $description[] = "Modified file $file";
-                        $result = self::FAILED;
-                    }
-                }
-            }
+            // $crcFile = Mage::getBaseDir('code').'/local/Mirasvit/MstCore/etc/'.strtolower($module).'.crc';
+            // if (!is_file($crcFile)) {
+            //     $crcFile = Mage::getBaseDir('code').'/local/Mirasvit/MstCore/etc/'.$module.'.crc';
+            // }
+            // if (!is_file($crcFile)) {
+            //     if ($result !== self::FAILED) {
+            //         $result = self::INFO;
+            //     }
+            //     $description[] = "Check of extension Mirasvit {$module} is skipped";
+            //     continue;
+            // }
+            // $res = $this->checkCrc($crcFile);
+            // if ($res === self::SUCCESS) {
+            //     continue;
+            // } elseif (is_array($res)) {
+            //     list($cantFindFiles, $cantReadFiles, $modifiedFiles) = $res;
+            //     foreach ($cantFindFiles as $file) {
+            //         $description[] = "Can't find a file $file";
+            //         $result = self::FAILED;
+            //     }
+            //     foreach ($cantReadFiles as $file) {
+            //         $description[] = "Can't read a file $file";
+            //         $result = self::FAILED;
+            //     }
+            //     $changeLog = '';
+            //     $changeLogFile = Mage::getBaseDir('code').'/local/Mirasvit/'.$module.'/changelog.txt';
+            //     if (file_exists($changeLogFile)) {
+            //         $changeLog = file_get_contents($changeLogFile);
+            //     }
+            //     foreach ($modifiedFiles as $file) {
+            //         $baseFile = trim(str_replace(Mage::getBaseDir(), '', $file), '/');
+            //         if (strpos($changeLog, $baseFile) !== false) {
+            //             $description[] = "Modified file $file (present in changelog)";
+            //         } else {
+            //             $description[] = "Modified file $file";
+            //             $result = self::FAILED;
+            //         }
+            //     }
+            // }
         }
 
         return array($result, $title, $description);
@@ -77,31 +81,32 @@ class Mirasvit_MstCore_Helper_Validator_Crc extends Mirasvit_MstCore_Helper_Vali
         $result = self::SUCCESS;
         $title = 'Magento Core files';
         $description = array();
+        $description[] = 'Check of Magento Core files is skipped.';
 
-        $crcFile = $this->getCrcFile();
-        if (is_file($crcFile)) {
-            $res = $this->checkCrc($crcFile, $filters);
-            if ($res === self::SUCCESS) {
-            } elseif (is_array($res)) {
-                $result = self::SUCCESS;
-                list($cantFindFiles, $cantReadFiles, $modifiedFiles) = $res;
-                foreach ($cantFindFiles as $file) {
-                    $description[] = "Can't find a file $file";
-                    $result = self::FAILED;
-                }
-                foreach ($cantReadFiles as $file) {
-                    $description[] = "Can't read a file $file";
-                    $result = self::FAILED;
-                }
-                foreach ($modifiedFiles as $file) {
-                    $description[] = "File $file was changed";
-                    $result = self::INFO;
-                }
-            }
-        } else {
-            $result = self::INFO;
-            $description[] = "Check of Magento Core files is skipped (we don't have CRC sum for this magento version)";
-        }
+        // $crcFile = $this->getCrcFile();
+        // if (is_file($crcFile)) {
+        //     $res = $this->checkCrc($crcFile, $filters);
+        //     if ($res === self::SUCCESS) {
+        //     } elseif (is_array($res)) {
+        //         $result = self::SUCCESS;
+        //         list($cantFindFiles, $cantReadFiles, $modifiedFiles) = $res;
+        //         foreach ($cantFindFiles as $file) {
+        //             $description[] = "Can't find a file $file";
+        //             $result = self::FAILED;
+        //         }
+        //         foreach ($cantReadFiles as $file) {
+        //             $description[] = "Can't read a file $file";
+        //             $result = self::FAILED;
+        //         }
+        //         foreach ($modifiedFiles as $file) {
+        //             $description[] = "File $file was changed";
+        //             $result = self::INFO;
+        //         }
+        //     }
+        // } else {
+        //     $result = self::INFO;
+        //     $description[] = "Check of Magento Core files is skipped (we don't have CRC sum for this magento version)";
+        // }
 
         return array($result, $title, $description);
     }

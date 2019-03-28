@@ -390,6 +390,13 @@ class ParadoxLabs_TokenBase_Helper_Data extends Mage_Core_Helper_Abstract
 	 */
 	public function replaceArray( $target, $source )
 	{
+		if( !is_array( $source ) ) {
+			return $target;
+		}
+		elseif( !is_array( $target ) ) {
+			return $source;
+		}
+		
 		if( function_exists('array_replace_recursive') ) {
 			return call_user_func_array( 'array_replace_recursive', func_get_args() );
 		}

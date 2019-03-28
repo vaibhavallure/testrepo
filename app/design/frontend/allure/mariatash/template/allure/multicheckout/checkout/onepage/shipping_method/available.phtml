@@ -55,6 +55,7 @@
     
     <?php $shippingCodePrice = array(); ?>
     <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
+        
         <?php 
         
         //Allure code to hide usps method for order over $400
@@ -165,7 +166,7 @@ new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/r
         ?>
         <dt <?php echo $shipcode_class?>><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
         <dd <?php echo $shipcode_class?>>
-            <ul <?php echo $shipcode_class?> >
+            <ul <?php echo $shipcode_class?>>
             <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
                 <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
                 <li class="mt-shipping-methods-list" style="display:<?php echo (strpos($_rate->getCode(),$freeMethod) && $isWholeSale)  ? 'none':'block' ?>">

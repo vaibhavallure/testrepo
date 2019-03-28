@@ -121,9 +121,9 @@ class Allure_GeoLocation_Model_GeoLocation
     	foreach ($this->infoMap as $key => $value) {
     		$geoInfo[$key] = isset($geoInfo[$value]) ? $geoInfo[$value] : null;
     	}
-    	
-    	Mage::log(json_encode($geoInfo), Zend_Log::DEBUG, 'allure_geolocation.log', $this->_helper->getDebugMode());
-    
+    	if($this->_helper->getDebugMode()){
+    	       Mage::log(json_encode($geoInfo), Zend_Log::DEBUG, 'allure_geolocation.log', $this->_helper->getDebugMode());
+    	}
     	return (array) $geoInfo;
     }
     

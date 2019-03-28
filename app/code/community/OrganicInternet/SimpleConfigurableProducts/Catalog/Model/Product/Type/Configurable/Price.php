@@ -55,7 +55,10 @@ class OrganicInternet_SimpleConfigurableProducts_Catalog_Model_Product_Type_Conf
         } else {
             return false;
         }
-
+        if (Mage::app()->getRequest()->getParams()['order']['account']['group_id'] == 2) {
+            $fp = $this->getBasePrice($product,$qty);
+        }
+        
         $product->setFinalPrice($fp);
         return $fp;
     }

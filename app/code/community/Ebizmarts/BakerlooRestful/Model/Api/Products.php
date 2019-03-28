@@ -88,7 +88,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
 
         if (!is_null($filterByNameCategory)) {
             $categoryId = $this->returnFirstValueForFilter(array($filterByNameCategory), 'category_id');
-            $category = $this->getCatalogCategory()->load($categoryId);
+            $category = $this->getModel('catalog/category')->load($categoryId);
 
             if ($category->getId()) {
                 $this->_sortByPosition($this->_getCollection(), $category);
@@ -154,7 +154,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
     {
 
         /* @var $reader Varien_Db_Adapter_Interface */
-        $connection = $this->getCoreResource();
+        $connection = $this->getModel('core/resource', true);
 
         /* @var $subquerySelect Varien_Db_Select */
         $subquerySelect = $this->getSubquerySelect($connection);
@@ -180,9 +180,6 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
             } elseif (preg_match('/cat_index/', $_alias)) {
                 $_fromSection['joinCondition'] = preg_replace('/child_cat_index.product_id=e.entity_id/', 'child_cat_index.product_id = child_e.entity_id', $_fromSection['joinCondition']);
             }
-//            elseif(preg_match('/cat_index/', $_alias)) {
-//                $_fromSection['joinCondition'] = preg_replace('/child_cat_index.product_id=e.entity_id/', 'child_cat_index.product_id = child_e.entity_id', $_fromSection['joinCondition']);
-//            }
 
             $from['child_' . $_alias] = $_fromSection;
         }
@@ -201,14 +198,15 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
 
             $table = preg_replace('/' . $t . '/', 'child_' . $t, $t);
             if ($e instanceof Zend_Db_Expr) {
-                $e = preg_replace('/' . $t . '/', 'child_' . $t, (string)$e);
-                $expression = new Zend_Db_Expr($e);
+                $expression = preg_replace('/' . $t . '/', 'child_' . $t, (string)$e);
+                $expression = new Zend_Db_Expr($expression);
             } else {
                 $expression = $e;
             }
 
             $subquerySelect->columns(array($a => $expression), $table);
             $columns[$a] = array($table, $expression);
+            $originalColumns[$a] = array($t, (string)$e);
         }
 
         //add order
@@ -246,12 +244,15 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
 
         if (isset($columns['status'])) {
             list($t, $e) = $columns['status'];
+            $parentStatus = $originalColumns['status'];
 
             if ($e instanceof Zend_Db_Expr) {
-                $subquerySelect->where(sprintf("(%s %s)", (string)$e, '= 1'));
+                $statusExpression = sprintf("(%s %s AND %s %s)", (string)$e, '= 1', $parentStatus[1], '= 1');
             } else {
-                $subquerySelect->where(sprintf("(%s.%s %s)", $t, (string)$e, '= 1'));
+                $statusExpression = sprintf("(%s.%s %s AND %s %s)", $t, (string)$e, '= 1', $parentStatus[1], '= 1');
             }
+            
+            $subquerySelect->where($statusExpression);
         }
 
         if (isset($columns['visibility'])) {
@@ -436,7 +437,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
         Varien_Profiler::start('POS::' . __METHOD__);
 
         $result  = array();
-        $product = $this->getCatalogProduct()->setStoreId($this->getStoreId())->load($id);
+        $product = $this->getModel($this->_model)->setStoreId($this->getStoreId())->load($id);
         if ($product->getId()) {
             //If data is null, no need to go to DB to fetch images
             if (is_null($data)) {
@@ -635,7 +636,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
 
             Varien_Profiler::stop('POS::' . __METHOD__ . '::additional_attributes');
             if ($since != -1) {
-                $result['inventory'] = $this->getApiInventory()->setStoreId($this->getStoreId())->_createDataObject($product->getId());
+                $result['inventory'] = $this->getModel('bakerloo_restful/api_inventory')->setStoreId($this->getStoreId())->_createDataObject($product->getId());
             }
         }
 
@@ -722,8 +723,10 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
                 $productAttribute = $attribute->getProductAttribute();
 
                 if (!is_object($productAttribute)) {
+                    // START Allure Fixes
                     Mage::log("Attribute error: " . $attribute->getLabel() . '-' . $attribute->getProductId(), Zend_Log::DEBUG, 'pos_exception.log', true);
                     continue;
+                    // END Allure Fixes
                     //Mage::throwException("Attribute error: " . $attribute->getLabel() . '-' . $attribute->getProductId());
                 }
 
@@ -743,8 +746,10 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
             $productAttribute = $attribute->getProductAttribute();
 
             if (!is_object($productAttribute)) {
+                // START Allure Fixes
                 Mage::log("Attribute error: " . $attribute->getLabel() . '-' . $attribute->getProductId(), Zend_Log::DEBUG, 'pos_exception.log', true);
                 continue;
+                // END Allure Fixes
                 //Mage::throwException("Attribute error: " . $attribute->getLabel() . '-' . $attribute->getProductId());
             }
 
@@ -862,7 +867,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
             Mage::throwException('Please provide a store ID.');
         }
 
-        $model = $this->getModelLastSoldProduct();
+        $model = $this->getModel('bakerloo_restful/api_lastSoldProducts');
         $latest = $model->_getAllItems();
         return $latest;
     }
@@ -879,7 +884,7 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
             Mage::throwException('Please provide a store ID.');
         }
 
-        $model = $this->getModelBestSellingProduct();
+        $model = $this->getModel('bakerloo_restful/api_bestSellingProducts');
         $bestSellers = $model->_getAllItems();
         return $bestSellers;
     }
@@ -1164,9 +1169,44 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
         return null;
     }
 
-    public function getCatalogProduct()
+    public function shareProduct()
     {
-        return Mage::getModel($this->_model);
+        if (!$this->getStoreId()) {
+            Mage::throwException('Please provide a Store ID.');
+        }
+
+        Mage::app()->setCurrentStore($this->getStoreId());
+        $data = $this->getJsonPayload(true);
+
+        if (!isset($data['sender_email'])) {
+            Mage::throwException('Please provide a valid sender email address.');
+        }
+
+        $senderEmail = filter_var($data['sender_email'], FILTER_VALIDATE_EMAIL);
+        if ($senderEmail === false) {
+            Mage::throwException('Please provide a valid sender email address.');
+        }
+
+        if (!isset($data['recipients']) or empty($data['recipients'])) {
+            Mage::throwException('Please provide at least one recipient.');
+        }
+
+        if (!isset($data['product_id'])) {
+            Mage::throwException('Please provide a Product ID.');
+        }
+
+        $product = Mage::getModel('catalog/product')->load($data['product_id']);
+        if (!$product->getId()) {
+            Mage::throwException('Product could not be found.');
+        }
+
+        $dataObject = new Varien_Object($data);
+
+        /** @var Ebizmarts_BakerlooRestful_Helper_Email $helper */
+        $helper = $this->getHelper('bakerloo_restful/email');
+        $helper->sendProduct($dataObject, $product, $this->getStoreId());
+
+        return array('sent' => $helper->getEmailSent());
     }
 
     public function getNewSelect()
@@ -1177,30 +1217,5 @@ class Ebizmarts_BakerlooRestful_Model_Api_Products extends Ebizmarts_BakerlooRes
     public function getSubquerySelect($connection)
     {
         return new Varien_Db_Select($connection->getConnection(Mage_Core_Model_Resource::DEFAULT_READ_RESOURCE));
-    }
-
-    public function getCoreResource()
-    {
-        return Mage::getSingleton('core/resource');
-    }
-
-    public function getCatalogCategory()
-    {
-        return Mage::getModel('catalog/category');
-    }
-
-    public function getApiInventory()
-    {
-        return Mage::getModel('bakerloo_restful/api_inventory');
-    }
-
-    public function getModelBestSellingProduct()
-    {
-        return Mage::getModel('bakerloo_restful/api_bestSellingProducts');
-    }
-
-    public function getModelLastSoldProduct()
-    {
-        return Mage::getModel('bakerloo_restful/api_lastSoldProducts');
     }
 }

@@ -1,13 +1,13 @@
 @CHARSET "UTF-8";
 
 .field#reg_form {
-	    overflow: hidden;
+    overflow: hidden;
 }
 
 @media only screen and (min-width: 320px) {
-	.piercing_input {
-		width: 100%;
-	}	
+    .piercing_input {
+        width: 100%;
+    }
 }
 
 @media only screen and (min-width: 480px) {
@@ -32,170 +32,173 @@
 }
 
 @media only screen and (max-width: 768px) {
-	/* iphone 6+ and nexus V view....*/
-	
-	.image_carousel {
-    width: 90%;
-    height:auto;
-    /* margin-bottom: 60px; */
-    margin-bottom: 0px;
-    padding:8px 32px 15px 22px !important;
-	}
-	
-	.jcarosel_main_ul{
-		min-width: 470px;
-	}
-	
-	.pickur_time_main_container{
-		width:100% 
-	}
-	.firsttitle {
-		margin: 0 auto;
-		width: 100%;
-	}
-	.secondtitle {
-		width: 100%;
-		text-align:center;
-		font-size:12px;
-	}
-	.datepicker {
-		width: 100%;
-	}
-	.store_location_appointments {
-		width: 100%;
-	}
-	.ele_width {
-		width: 100%;
-	}
-	.splnotesTxtarea {
-		width: 100%;
-	}
-	.pickurdayDIV {
-		width: 100%;	
-		min-height: 300px;	
-	}
-	.regDiv {
-	    float: left;
-	    width: 48%;
-	    margin: 0;
-	    overflow: hidden;
-	}
-	.createaccDiv {
-	    width: 48%;
-	    float: right;
-	}
-	
-	.splnotesDiv {
-		width:100%;
-		overflow: hidden;
-	}
-	.field {
-	    overflow: hidden;
-	    float: none;
-	    width: auto;
-	    margin: 0;
-	}
-	.picktime {
-		float: left;
-		width: 100%;
-	}
-	.appointmentContainer {
-	    width: 100%;
-	    overflow: hidden;
-	    margin: 15px 0;
-	}
-	.app-col-6-left,.app-col-6-right{
-		width:100%;
-	}
-	.piercing_locTxt{
-		width:100%;
-	}
-	input[type="radio"] {
-    	position: absolute;
-    	opacity: 1;
-	}
-	.apt-summary{
-		font-size:12px;
-	}
-	.detailofapt{
-		text-align:center;
-	}
-	#aptformDiv .page-title h1{
-		font-size:14px;
-	}
-	.apt-buttons-set{
-		clear:both;
-		width:100%;
-		float:right;		
-    	text-align: center;
-	}
-	.success-field{
-		clear:both;
-		/* margin: 0 10px; */		
-	}
-	.appointments-index-index .wrapper{
-		height: auto !important;
-	}
-	.apt-prev{
-		left: -10px !important;
-		top: 60px !important;
-	}
-	.apt-next{
-		right: -20px !important;
-		top: 60px !important;
-	}
-	.calendar span {
-    	padding: 6px 15px !important; 
+    /* iphone 6+ and nexus V view....*/
+
+    .image_carousel {
+        width: 90%;
+        height:auto;
+        /* margin-bottom: 60px; */
+        margin-bottom: 0px;
+        padding:8px 32px 15px 22px !important;
+    }
+
+    .jcarosel_main_ul{
+        min-width: 470px;
+    }
+
+    .pickur_time_main_container{
+        width:100%
+    }
+    .firsttitle {
+        margin: 0 auto;
+        width: 100%;
+    }
+    .secondtitle {
+        width: 100%;
+        text-align:center;
+        font-size:12px;
+    }
+    .datepicker {
+        width: 100%;
+    }
+    .store_location_appointments {
+        width: 100%;
+    }
+    .ele_width {
+        width: 100%;
+    }
+    .splnotesTxtarea {
+        width: 100%;
+    }
+    .pickurdayDIV {
+        width: 100% !important;
+        min-height: 300px;
+    }
+    .regDiv {
+        float: left;
+        width: 48%;
+        margin: 0;
+        overflow: hidden;
+    }
+    .createaccDiv {
+        width: 48%;
+        float: right;
+    }
+
+    .splnotesDiv {
+        width:100%;
+        overflow: hidden;
+    }
+    .field {
+        overflow: hidden;
+        float: none;
+        width: auto;
+        margin: 0;
+    }
+    .picktime {
+        float: left;
+        width: 100%;
+    }
+    .appointmentContainer {
+        width: 100%;
+        overflow: hidden;
+        margin: 15px 0;
+    }
+    .app-col-6-left,.app-col-6-right{
+        width:100%;
+    }
+    .piercing_locTxt{
+        width:100%;
+    }
+    input[type="radio"] {
+        position: absolute;
+        opacity: 1;
+    }
+    .apt-summary{
+        font-size:12px;
+    }
+    .detailofapt{
+        text-align:center;
+    }
+    #aptformDiv .page-title h1{
+        font-size:14px;
+    }
+    .apt-buttons-set{
+        clear:both;
+        width:100%;
+        float:right;
+        text-align: center;
+    }
+    .success-field{
+        clear:both;
+        /* margin: 0 10px; */
+    }
+    .appointments-index-index .wrapper{
+        height: auto !important;
+    }
+    .apt-prev{
+        left: -10px !important;
+        top: 60px !important;
+    }
+    .apt-next{
+        right: -20px !important;
+        top: 60px !important;
+    }
+    .calendar span {
+        padding: 6px 15px !important;
     }
     .notifyRadio{
-	    margin: 3px 3px 0 0px;
+        margin: 3px 3px 0 0px;
     }
     .pickurtimeLable{
-    	padding-left: 0px;
+        padding-left: 0px;
     }
     #fetchpickurday{
-	    width: 100%;
-	    float: left;
+        width: 100%;
+        float: left;
     }
     #pick_ur_time_div{
-    	width: 100%;
-	    float: left;
+        width: 100%;
+        float: left;
     }
     .notfreepeiercer{
-    	font-size: 11px;
-    	width: 100%;
-    	margin: 10px 0px;  
+        font-size: 11px;
+        width: 100%;
+        margin: 10px 0px;
     }
     .checkout-success{
-    	width: 100%;
+        width: 100%;
     }
     #appointemnet_form .modalDialog > div{
-    	width:275px;
-    	padding: 45px;
+        width:275px;
+        padding: 45px;
     }
     #appointemnet_form .modalDialog .close{
-    	top:-5px;
-    	right:-5px;
+        top:-5px;
+        right:-5px;
     }
     .checkout-success .btns-setDiv{
-    	margin: 0px;
-    	/* width:100%; */
+        margin: 0px;
+        /* width:100%; */
     }
     .apt-cancel-buttons-set{
-    	width:47%;
-    	margin-left:10px;
-    	margin-bottom:20px;
+        width:47%;
+        margin-left:10px;
+        margin-bottom:20px;
     }
-    #advice-required-entry-time-starttime_hidden,#advice-required-entry-firstname, 
+    #advice-required-entry-time-starttime_hidden,#advice-required-entry-firstname,
     #advice-required-entry-lastname, #advice-required-entry-email, #advice-required-entry-phone,
     #advice-required-entry-starttime_hidden, #advice-validate-number-phone,
-    #advice-validate-alpha-firstname, #advice-validate-email-email, #advice-validate-alpha-lastname{
-    	width:100%;
-    	text-align:right;
+    #advice-validate-alpha-firstname, #advice-validate-email-email, #advice-validate-alpha-lastname
+    ,#advice-validate-intl-telephone-phone
+    {
+        width:100%;
+        text-align:right;
     }
     .intl-tel-input{
-    	width:100% !important;
+        width:100% !important;
     }
+
 }
 
 @media only screen and (max-width: 740px) {
@@ -206,7 +209,7 @@
 
 
 @media only screen and (max-width: 480px) {
-	
+
 }
 
 @media only screen and (max-width: 420px) {
@@ -216,9 +219,9 @@
 }
 
 @media only screen and (max-width: 320px) {
-	.calendar span {
-		padding: 5px 12px !important;
-	}
+    .calendar span {
+        padding: 5px 12px !important;
+    }
 }
 
 @media only screen and (min-width: 410px) and (max-width: 480px) {
@@ -231,53 +234,53 @@
 }
 
 @media screen and (orientation: portrait) and (min-device-width: 768px)
-	and (max-device-width: 1024px) {
-	
+and (max-device-width: 1024px) {
+
 }
 
 @media screen and (orientation: landscape) and (min-device-width: 769px)
-	and (max-device-width: 1025px) {
-	
-	.image_carousel {
-    		width: 76% ;    
-	}
-	.ele_width{	
-		width:98%;
-    	padding: 6px 9px;
+and (max-device-width: 1025px) {
+
+    .image_carousel {
+        width: 76% ;
     }
-	.piercing_locTxt{
-		padding: 6px 0px;
-	}
-	.firsttitle{
-		text-align:center;
-	}
-	.pickurdayDIV{
-		width: 70%;
-    	min-height: 275px;
-	}
-	.pickur_time_main_container{
-		width:48%;
-		min-height: 275px;
-	}
-	.splnotesTxtarea{
-	    width: 99%;
-	}
-	.countrySelect{
-	    width: 100%;
-	}
-	#fetchpickurday{
-		width:50%;
-		float:left;
-	}
-	#pick_ur_time_div{
-		width:50%;
-	}
-	.signin-field{
-		width:100%;		
-	}
-	.intl-tel-input.allow-dropdown input, .intl-tel-input.allow-dropdown input[type=text], .intl-tel-input.allow-dropdown input[type=tel], .intl-tel-input.separate-dial-code input, .intl-tel-input.separate-dial-code input[type=text], .intl-tel-input.separate-dial-code input[type=tel]{
-		width:100% !important;
-	}
+    .ele_width{
+        width:98%;
+        padding: 6px 9px;
+    }
+    .piercing_locTxt{
+        padding: 6px 0px;
+    }
+    .firsttitle{
+        text-align:center;
+    }
+    .pickurdayDIV{
+        width: 100%;
+        min-height: 275px;
+    }
+    .pickur_time_main_container{
+        width:48%;
+        min-height: 275px;
+    }
+    .splnotesTxtarea{
+        width: 99%;
+    }
+    .countrySelect{
+        width: 100%;
+    }
+    #fetchpickurday{
+        width:50%;
+        float:left;
+    }
+    #pick_ur_time_div{
+        width:50%;
+    }
+    .signin-field{
+        width:100%;
+    }
+    .intl-tel-input.allow-dropdown input, .intl-tel-input.allow-dropdown input[type=text], .intl-tel-input.allow-dropdown input[type=tel], .intl-tel-input.separate-dial-code input, .intl-tel-input.separate-dial-code input[type=text], .intl-tel-input.separate-dial-code input[type=tel]{
+        width:100% !important;
+    }
 }
 
 @media only screen and (min-width: 340px) and (max-width: 700px) {

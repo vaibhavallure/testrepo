@@ -41,7 +41,7 @@
 		?>
 	    <?php 
 	    	foreach ($collection as $_product):
-	    	$product = Mage::getModel ( 'catalog/product' )->setStoreId($stockId)->load ( $_product->getId() );
+	    	$product = $_product;//Mage::getModel ( 'catalog/product' )->setStoreId($stockId)->load ( $_product->getId() );
 	    ?>
 		<tr id="inventory-row-<?php echo $product->getId(); ?>">
 			<td><?php echo $_product->getSku();?></td>
@@ -51,12 +51,12 @@
 			</td>
 			<td><?php echo $_product->getName();?></td>
 			<?php 
-				$inven=Mage::getModel('cataloginventory/stock_item')->
-					loadByProductAndStock($_product,$stockId)
+				/* $inven=Mage::getModel('cataloginventory/stock_item')->
+					loadByProductAndStock($_product,$stockId) */
 			?>
 						
 			<td>
-				<div><label><?php echo round($inven->getQty())?></label>
+				<div><label><?php echo round($product->getQty())?></label>
 				</div>
 			</td>
 						
@@ -66,7 +66,7 @@
 				type="text" value=""/>
 				
 				<div>
-					<span><?php echo "(". round($inven->getData()['notify_stock_qty']).")"?></span>
+					<span><?php echo "(". round($product->getData()['notify_stock_qty']).")"?></span>
 				</div>
 			</td>
 						
@@ -109,6 +109,8 @@
 	if (typeof Allure == "undefined") {
 	   var Allure = {};
 	}
+
+	Allure.currentStore = 1; //main website default
 	Allure.ViewPurchaseOrderFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 	Allure.InventoryStoreSwitch = '<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/inventory_stock/store', array('_secure' => true));?>';
 </script>

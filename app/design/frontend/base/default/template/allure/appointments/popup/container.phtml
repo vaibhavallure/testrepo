@@ -1,0 +1,133 @@
+<?php
+/**
+ * nordstorm popup
+ */
+?>
+<div id="appointments-popup-wrapper">
+    <?php
+        if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
+            echo $this->getChildHtml('appointments_popup_success');
+        endif;
+    ?>
+    <?php echo $this->getChildHtml("appointments_popup_top");?>
+    <?php echo $this->getChildHtml("appointments_popup_menu");?>
+
+    <?php echo $this->getChildHtml("appointments_popup_register");?>
+    <?php echo $this->getChildHtml("appointments_popup_about");?>
+    <?php echo $this->getChildHtml("appointments_popup_faq");?>
+    <?php echo $this->getChildHtml("appointments_popup_footer");?>
+</div>
+
+<script type="text/javascript">
+    if (typeof Allure == "undefined") {
+        var Allure = {};
+    }
+    Allure.appointmentId = '<?php echo $this->getRequest()->getParam('id')?>';
+
+    Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
+    Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
+    Allure.getSupportDetailsActionUrl = '<?php echo $this->getSupportDetailsActionUrl()?>';
+
+    Allure.getSlotAvailabilityUrl = '<?php echo $this->getSlotAvailabilityUrl()?>';
+    Allure.getDateAvailabilityUrl = '<?php echo $this->getDateAvailabilityUrl()?>';
+
+    Allure.isProcessing = false;
+
+    function formatDate(date) {
+        var monthNames = [
+            "Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "Jul",
+            "Aug", "Sep", "Oct",
+            "Nov", "Dec"
+        ];
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return monthNames[monthIndex] + ' ' +  day + ', ' + year;
+    }
+</script>
+<script type="text/javascript">
+<?php
+    if ((Mage::getSingleton('core/session')->getSlotInvalid() == "true") && (!Mage::getSingleton("core/session")->getData('appointment_submitted'))) {
+        echo "alert('This appointment time is no longer available. <br> Please select another time.');";
+        Mage::getSingleton('core/session')->setSlotInvalid("false");
+    }
+
+    ?>
+    var isSuccess=false;
+        //jQuery('#appointemnet_form').validate();
+    jQuery(document).ready(function() {
+        var $ = jQuery;
+
+        $("#appointemnet_form").validate({
+                submitHandler: function(form) {
+                    if (!Allure.isProcessing) {
+                        Allure.isProcessing = true
+                        $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text("PROCESSING ...");
+                        form.submit();
+                    }
+                },
+				rules: {
+					firstname:  {
+						required: true,
+						nospace: true
+					},
+					lastname:  {
+						required: true,
+						nospace: true
+					},
+					email: {
+						required: true,
+						email: true
+					},
+					phone: {
+						required: true,
+						phone: true
+					},
+                    piercing_qty: 'required',
+                    app_date: {
+						required: true,
+						date: true
+					},
+                    selectTimeSlot:  {
+						required: true,
+						notEqualTo: 'No Slots Available'
+					},
+                    selectTime: {
+                        required:true,
+                        notEqualTo:'TIME'
+                    }
+				},
+				messages: {
+					firstname: "Please enter your firstname",
+					lastname: "Please enter your lastname",
+					email: "Please enter a valid email address",
+					phone: "Please enter a valid phone number",
+                    piercing_qty: "Please enter people in the group",
+                    app_date: "Please select a booking date",
+                    selectTime: "Please select a booking time",
+                    selectTimeSlot: "Please select a booking time"
+				},
+				errorElement: "em",
+				errorPlacement: function ( error, element ) {
+					// Add the `invalid-feedback` class to the error element
+					error.addClass( "invalid-feedback" );
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.next( "label" ) );
+					} else {
+						error.insertAfter( element );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+                    $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                    isSuccess = false;
+				},
+				unhighlight: function (element, errorClass, validClass) {
+                    $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                    isSuccess = true;
+				}
+			});
+        });
+</script>

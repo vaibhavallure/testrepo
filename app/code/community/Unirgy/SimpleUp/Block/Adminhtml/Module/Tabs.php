@@ -37,13 +37,13 @@ class Unirgy_SimpleUp_Block_Adminhtml_Module_Tabs extends Mage_Adminhtml_Block_W
             'title'     => Mage::helper('usimpleup')->__('Manage Modules'),
             'content'   => $this->getLayout()->createBlock('usimpleup/adminhtml_module_grid')->toHtml(),
         ));
-
+/*
         $this->addTab('add_modules_section', array(
             'label'     => Mage::helper('usimpleup')->__('Add Modules'),
             'title'     => Mage::helper('usimpleup')->__('Add Modules'),
             'content'   => $this->getLayout()->createBlock('core/template')->setTemplate('usimpleup/add_modules.phtml')->toHtml(),
         ));
-
+*/
         return parent::_beforeToHtml();
     }
 }

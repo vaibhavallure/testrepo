@@ -32,15 +32,20 @@ class Allure_Appointments_Block_Adminhtml_Piercingtiming_Grid extends Mage_Admin
 				'header' => $helper->__('Time Required (in min)'),
 				'index'  => 'time'
 		));
-		if (!Mage::app()->isSingleStoreMode()) {
+		//if (!Mage::app()->isSingleStoreMode()) {
+		    if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+		        $storeOptions = Mage::getSingleton('allure_virtualstore/adminhtml_store')->getStoreOptionHash();
+		    }else{
+		        $storeOptions = Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash();
+		    }
 			$this->addColumn('store_id', array(
 					'header' => $helper->__('Store'),
 					'type' => 'options',
-					'options' => Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
+			        'options' => $storeOptions,//Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(),
 					'index' => 'store_id',
 					'sortable' => false,
 			));
-		}
+		//}
 				
 		$this->addColumn(
 				'action',

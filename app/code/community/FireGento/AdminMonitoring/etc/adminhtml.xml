@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * This file is part of a FireGento e.V. module.
+ *
+ * This FireGento e.V. module is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * This script is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * @category  FireGento
+ * @package   FireGento_AdminMonitoring
+ * @author    FireGento Team <team@firegento.com>
+ * @copyright 2014 FireGento Team (http://www.firegento.com)
+ * @license   http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
+ */
+-->
+<config>
+    <menu>
+        <system>
+            <children>
+                <history module="firegento_adminmonitoring" translate="title">
+                    <title>Admin Monitoring</title>
+                    <sort_order>10</sort_order>
+                    <action>adminhtml/history</action>
+                </history>
+            </children>
+        </system>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <history>
+                                <title>Admin Monitoring</title>
+                                <sort_order>10</sort_order>
+                            </history>
+                            <config>
+                                <children>
+                                    <firegento_adminmonitoring translate="title" module="firegento_adminmonitoring">
+                                        <title>Firegento AdminMonitoring</title>
+                                        <sort_order>200</sort_order>
+                                    </firegento_adminmonitoring>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

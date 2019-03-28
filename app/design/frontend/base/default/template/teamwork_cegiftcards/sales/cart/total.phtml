@@ -1,0 +1,23 @@
+<?php
+    $_cards = $this->getQuoteGiftCards();
+?>
+<?php if ($this->getTotal()->getValue()): ?>
+<?php foreach ($_cards as $_c): ?>
+    <tr>
+        <td colspan="<?php echo $this->getColspan(); ?>" style="<?php echo $this->getTotal()->getStyle() ?>" class="a-right">
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?><strong><?php endif; ?>
+                <?php $_title = $this->__('Remove'); ?>
+                <?php $_url = Mage::getUrl('teamwork_cegiftcards/quote/removegc', array('gc_code'=>$_c->getData('gc_code'))); ?>
+                <a href="<?php echo $_url; ?>" title="<?php echo $_title; ?>" class="btn-remove"><img src="<?php echo $this->getSkinUrl('images/btn_remove.gif') ?>" alt="<?php echo $this->__('Remove')?>" /></a>
+
+                <?php echo $this->__('Gift Card (%s)', $_c->getData('gc_code')); ?>
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?></strong><?php endif; ?>
+        </td>
+        <td style="<?php echo $this->getTotal()->getStyle() ?>" class="a-right">
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?><strong><?php endif; ?>
+                -<?php echo $this->helper('checkout')->formatPrice($_c->getData('amount')) ?>
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?></strong><?php endif; ?>
+        </td>
+    </tr>
+<?php endforeach; ?>
+<?php endif; ?>

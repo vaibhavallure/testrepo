@@ -3,7 +3,7 @@ $_product = $this->getProduct();
 $_currency = Mage::app()->getStore()->getCurrentCurrency();
 $_currency_usd = Mage::app()->getStore()->getBaseCurrency();
 $baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
-$currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode(); 
+$currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode();
 $_from = Mage::getStoreConfig('giftcards/default/min_card_value') ? Mage::getStoreConfig('giftcards/default/min_card_value') : 0;
 $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStoreConfig('giftcards/default/max_card_value') : 0;
 ?>
@@ -20,11 +20,11 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
                 var val = parseFloat(v);
                 result = !((v < min && min > 0) || (v > max && max > 0));
             }
-        }); 
+        });
         return result;
     });
 </script>
-<div class="giftcard-info"> 
+<div class="giftcard-info">
     <?php /*?><fieldset class="giftt" style="height: 100%;" >
         <div class="field-label"><?php echo $this->__('Choose the type of Gift Card') ?>:</div>
         <div>
@@ -64,10 +64,6 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
                     </select>
                 </div>
             </div>
-            <div class="field input-box" id="amount">
-                <label for="card-amount" class="required"><?php echo $this->__('Amount') ?><em>*</em><span class="smaller-text">(<?php echo $_currency->format($_from) ?> - <?php echo $_currency->format($_to) ?>)</span></label>
-                <input style="width:100px;" type="text" id="card-amount" name="card_amount" class="input-text required-entry validate-float-range float-range-<?php echo $_from;?>-<?php echo $_to;?>"/>
-            </div>
             <!--<div class="currency-code"><?php // echo Mage::app()->getStore()->getCurrentCurrencyCode() ?></div>-->
             <?php else: ?>
             <?php echo $this->getPriceHtml($_product) ?>
@@ -91,14 +87,14 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
             <!-- Personalizacion -->
             <div class="field input-box" >
                 <label for="date-input" class="required delivery_option_mo"><?php echo $this->__('Date to be delivered') ?></label><br/>
-                <input type="text" name="date" id="date-input" class="date_input" />                
+                <input type="text" name="date" id="date-input" class="date_input" />
             </div>
             <!-- Personalizacion -->
         </div>
         <div class="giftcard-rigth-form">
         <div class="field input-box">
             <label for="mail-message"><?php echo $this->__('Message to Recipient') ?></label><br/>
-            <textarea id="mail-message" name="mail_message" onKeyUp="maxLong(this,300)"></textarea>            
+            <textarea id="mail-message" name="mail_message" onKeyUp="maxLong(this,300)"></textarea>
         </div>
         <div id="mail-message-characters-info"><span>0</span> out of 300 characters</div>
         <div class="field input-box">
@@ -154,7 +150,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
         }
     }
     changeFieldset('email');
-    
+
     jQuery.noConflict();
     jQuery(document).ready(function(){
         jQuery('.date_input').inputToSelect({
@@ -164,15 +160,15 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
             defaultToday: true
         });
 //        jQuery('select').customStyle();
-        
+
         jQuery("div#amount").hide();
-        
+
         jQuery("div.add-to-box div.add-to-cart label").text("Qty");
     });
 
     function maxLong(texto,maxlong) {
         var in_value, out_value;
-        
+
         if (jQuery(texto).val().length > maxlong) {
             in_value = jQuery(texto).val();
             out_value = in_value.substring(0,maxlong);
@@ -183,9 +179,9 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
         jQuery(texto).val(textAreaContent);
         jQuery('div#mail-message-characters-info span').html(jQuery(texto).val().length);
     }
-    
+
     //jQuery('select#cart-amount').append('<option value="other">Other</option>');
-    
+
     /*function checkSelected(){
         var selected = jQuery("select#cart-amount option:selected").val();
         if(selected == 'other'){
@@ -196,12 +192,12 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
             jQuery("select#cart-amount").attr("name","card_amount");
         }
     }*/
-    
+
     <?php if(Mage::helper('customer')->isLoggedIn()):?>
         jQuery('.giftcard-info input#mail-from').val('<?php echo Mage::helper('customer')->getCustomerName() ?>');
         jQuery('.giftcard-info input#mail-from-email').val('<?php echo Mage::helper('customer')->getCustomer()->getEmail() ?>');
     <?php endif; ?>
-        
+
 </script>
 
 <?php if(Mage::helper('customer')->isLoggedIn()): ?>
@@ -213,7 +209,7 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
 
 <script>
     jQuery.noConflict();
-    
+
     jQuery.ajax({
         url: '<?php echo Mage::getBaseUrl(); ?>checkout/cart/getemail/'
     }).done(function(data) {
@@ -223,4 +219,4 @@ $_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStore
         jQuery('input#qty').after( jQuery('div#addToFavDiv a') );
     });
 </script>
-<?php endif; ?> 
+<?php endif; ?>

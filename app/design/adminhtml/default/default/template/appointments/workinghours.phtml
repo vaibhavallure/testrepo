@@ -5,9 +5,12 @@ $_htmlName    = $this->getElement()->getName();
 $_readonly    = $this->getElement()->getReadonly();
 
 if(Mage::registry('appointment_piercers_data')){
- $collection = Mage::registry('appointment_piercers_data')
-                ->getWorkingHours();
- $collection = unserialize($collection);
+    $piercerModel  = Mage::registry('appointment_piercers_data');
+    $collection    = $piercerModel->getWorkingHours();
+    $collection    = unserialize($collection);
+
+    //new
+    $storeId       = $piercerModel->getStoreId();
 }
 $_counter = 0;
 ?>
@@ -26,10 +29,10 @@ $_counter = 0;
 <?php foreach ($collection as $key => $_item): ?>
 <tr class="option-row appointment-timing-qty" id="hour-row-<?php echo $_counter?>">
     <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][day]"><?php echo Mage::helper('appointments')->getDaysSelectHtml($_item['day']); ?></select></td>
-    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][start]"><?php echo Mage::helper('appointments')->getTimeSelectHtml($_item['start']); ?></select></td>
-    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][end]"><?php echo Mage::helper('appointments')->getTimeSelectHtml($_item['end']); ?></select></td>
-    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][break_start]"><?php echo Mage::helper('appointments')->getTimeSelectHtml($_item['break_start']); ?></select></td>
-    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][break_end]"><?php echo Mage::helper('appointments')->getTimeSelectHtml($_item['break_end']); ?></select></td>
+    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][start]"><?php echo Mage::helper('appointments')->getTimeSelectHtmlNew($storeId, $_item['start']); ?></select></td>
+    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][end]"><?php echo Mage::helper('appointments')->getTimeSelectHtmlNew($storeId, $_item['end']); ?></select></td>
+    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][break_start]"><?php echo Mage::helper('appointments')->getTimeSelectHtmlNew($storeId, $_item['break_start']); ?></select></td>
+    <td><select name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][break_end]"><?php echo Mage::helper('appointments')->getTimeSelectHtmlNew($storeId, $_item['break_end']); ?></select></td>
     <td class="a-left" id="delete_button_container_option_<?php echo $_counter ?>'">
         <input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][id]" value="<?php echo $_item['id'] ?>" type="hidden">
         <input id="delete-row-<?php echo $_counter ?>" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_<?php echo $_counter ?>]" value=""/>
@@ -43,7 +46,7 @@ $_counter = 0;
 </tbody></table>
 <script type="text/javascript">//<![CDATA[
 
-var _form_html_row = '<tr class="option-row appointment-timing-qty" id="hour-row-{{id}}"><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][day]"><?php echo Mage::helper('appointments')->getDaysSelectHtml(); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][start]"><?php echo Mage::helper('appointments')->getTimeSelectHtml(); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][end]"><?php echo Mage::helper('appointments')->getTimeSelectHtml(); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][break_start]"><?php echo Mage::helper('appointments')->getTimeSelectHtml(); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][break_end]"><?php echo Mage::helper('appointments')->getTimeSelectHtml(); ?></select></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'hour-row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
+var _form_html_row = '<tr class="option-row appointment-timing-qty" id="hour-row-{{id}}"><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][day]"><?php echo Mage::helper('appointments')->getDaysSelectHtml(); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][start]"><?php echo Mage::helper('appointments')->getTimeSelectHtmlNew($storeId); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][end]"><?php echo Mage::helper('appointments')->getTimeSelectHtmlNew($storeId); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][break_start]"><?php echo Mage::helper('appointments')->getTimeSelectHtmlNew($storeId); ?></select></td><td><select name="<?php echo $_htmlName; ?>[value][option_{{id}}][break_end]"><?php echo Mage::helper('appointments')->getTimeSelectHtmlNew($storeId); ?></select></td><td class="a-left" id="delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'hour-row-{{id}}\').style.display=\'none\'; $(\'delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
 console.log(_form_html_row);
 var _appointment_timing_counter = <?php echo $_counter?>;
 

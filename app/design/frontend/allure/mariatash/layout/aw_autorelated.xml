@@ -12,6 +12,10 @@
                 <type>skin_js</type>
                 <name>js/msrp.js</name>
             </action>
+            <!-- allure -->
+            <action method="addItem"><type>skin_js</type><name>js/allure/instagramview.js</name><params/></action>
+            <action method="addItem"><type>skin_css</type><name>css/instacatalog/instacatalog.css</name><params/></action>
+        	<action method="addItem"><type>skin_css</type><name>css/instacatalog/instacatalog_showcase.css</name><params/></action>
         </reference>
     </default>
     <cms_page>

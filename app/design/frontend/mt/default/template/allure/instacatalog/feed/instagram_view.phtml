@@ -1,14 +1,14 @@
 <?php $feedModel = $this->getFeed();?>
 <?php if(!is_null($feedModel->getId())):?>
-<?php 
+<?php
 	$mediaId = $feedModel->getMediaId();
 	$shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
-	$instagramObj = unserialize($feedModel->getInstagramData());
+	$instagramObj = @unserialize($feedModel->getInstagramData());
 	$createDate = $feedModel->getCreatedTimestamp();
 	if($createDate!=null){
 		$createDate = date('d M Y', $createDate);
 	}
-	
+
 	$_options = json_decode($feedModel->getHotspots());
 	$points = "";
 	$productsLinks = "";
@@ -16,17 +16,20 @@
 	foreach ($_options as $option){
 		$sku = $option->text;
 		$numberOfProducts += 1;
-		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+		$product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+
+		if (!$product || !$product->getId()) continue;
+
 		$productName = $product->getName();
 		$productId = $product->getId();
-		
+
 		$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
 		$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
 		$productUrl = $product->getProductUrl();
 		if(!is_null($parentId)){
 			$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
 		}
-		
+
 		$points .= '<a data-original-url="'.$productUrl.'"';
 		$points .= ' href="'.$productUrl.'" target="_blank">';
 		$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
@@ -36,7 +39,7 @@
 		$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
 		$points .= '<div class="fs-arrow-up"></div>';
 		$points .= 'Shop it // " '.$productName.'</div></div></a>';
-		
+
 		$productsLinks .= '<div class="fs-text-link-container ">';
 		$productsLinks .= '<a class="fs-text-product fs-link-list" ';
 		$productsLinks .= 'data-original-url="'.$productUrl.'"';
@@ -52,7 +55,7 @@
 				data-resource-url="<?php echo $feedModel->getUsername()?>">
 				<div class="fs-detail-content">
 					<div class="fs-detail-left">
-						<div class="fs-image-container" style="position: relative;">
+						<div class="fs-image-container">
 							<img class="fs-detail-image" id="fs_main_image"
 								src="<?php echo $feedModel->getStandardResolution()
 //$feedModel->getImage()?>">
@@ -61,56 +64,31 @@
 						</div>
 					</div>
 					<div class="fs-detail-right">
-						
-						<div class="fs-detail-nav-bar-arrows">
-						<?php if(0):?>
-							<span class="fs-detail-nav-button fs-button-inactive"> <!--?xml version="1.0"?-->
-								<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-									xmlns:svg="http://www.w3.org/2000/svg">
-									<g>
-									<path class="fs-arrow" fill="none" stroke-width="1px"
-										d="m22.5,0l-15,15l15,15" id="fs-left-path" stroke="#ddd"></path></g></svg>
-							</span>
-							 <a class="fs-detail-nav-button" id="fs-next-post"> <!--?xml version="1.0"?-->
-								<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-									xmlns:svg="http://www.w3.org/2000/svg">
-									<g>
-									<path class="fs-arrow" stroke="#222" id="fs-left-path"
-										d="m7.5,0l15,15l-15,15" fill="none"></path></g></svg>
-							</a>
-							<?php endif;?>
-							<div class="fs-detail-nav-bar-close">
-								<a class="fs-detail-nav-button" id="fs-detail-close" onclick="closeView(this);"><svg
-										width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-										xmlns:svg="http://www.w3.org/2000/svg"> <g id="layer1"
-											stroke="#222" class="fs-arrow" stroke-width="1px" fill="none">   <path
-											d="m0,0l30,30"></path>   <path d="m30,0l-30,30"></path></g></svg></a>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
+
+
 						<div class="fs-products-title fs-plural-products"></div>
-						
+
 						<?php echo $productsLinks?>
-						
+
 						<div class="fs-divider"></div>
 						<div style="clear: both;"></div>
-						<div class="fs-detail-title"><?php echo $feedModel->getText()?></div>
-						
+						<div class="fs-detail-title"><?php echo json_decode(($feedModel->getText()))?></div>
+
 						<div class="fs-post-info">
 							<a href="<?php echo $feedModel->getUsername()?>"
-								target="_blank"> 
+								target="_blank">
 								<span class="fs-service-username"> maria_tash</span>
 								<span class="fs-slashes">//</span> INSTAGRAM <span
-								class="fs-slashes">//</span> 
+								class="fs-slashes">//</span>
 								<span class="fs-detail-date"><?php echo $createDate?></span>
 							</a>
 						</div>
-						
+
 						<div class="fs-detail-shares">
 							<a class="fs-share fs-facebook-share"
 								href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=<?php echo $shareUrl ?>/&amp;p[image]=<?php echo $feedModel->getStandardResolution()?>"
 								target="_blank"><i class="fa fa-facebook"></i>
-							</a> 
+							</a>
 							<a class="fs-share fs-link-share"
 								href="mailto:?subject=Thought you might be into this @maria_tash Instagram!&amp;body=<?php echo $shareUrl ?>/"
 								target="_blank"><i class="fa fa-envelope"></i>
@@ -123,7 +101,7 @@
 								href="http://www.pinterest.com/pin/create/button/?url=<?php echo $shareUrl ?>/&amp;media=<?php echo $feedModel->getStandardResolution()?>&amp;description=Shop this Instagram from @maria_tash"
 								target="_blank" data-pin-do="buttonPin" data-pin-config="above">
 								<i class="fa fa-pinterest"></i>
-							</a> 
+							</a>
 							<a class="fs-share fs-link-share"
 								href="<?php echo $shareUrl ?>/"
 								target="_blank"><i class="fa fa-link"></i>
@@ -133,8 +111,19 @@
 				</div>
 			</div>
 			<div class="fs-buy-container fs-unslid"></div>
-		
-
+<style>
+.fs-detail-left {
+	position: relative;
+	display: table-cell;
+	text-align: left;
+}
+.fs-detail-right{
+    position: relative;
+    display: table-cell;
+    text-align: left;
+    width: 600px;
+}
+</style>
 <script>
 	jQuery(document).ready(function(){
 		jQuery('.fs-text-product').hover(function(){
@@ -164,7 +153,7 @@
 	    	selector.css(
 					{"background-color":"","color":""});
 		});
-		
+
 	});
 	function showView(e){
 		jQuery('#showcase').show();

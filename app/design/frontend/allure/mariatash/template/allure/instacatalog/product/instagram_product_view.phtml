@@ -14,7 +14,7 @@ if($old_sku[0]=='X' || $old_sku[0]=='x'){
     if (isset($E_ProductId) && !empty($E_ProductId)){
         $skForwordingArray[]=$E_ProductId;
         $childProductArr[] = $E_ProductId;
-        
+
     }
 }
 if($old_sku[0]=='C' || $old_sku[0]=='S'||$old_sku[0]=='N'||$old_sku[0]=='c'||$old_sku[0]=='s'||$old_sku[0]=='n'){
@@ -30,7 +30,7 @@ if($old_sku[0]=='C' || $old_sku[0]=='S'||$old_sku[0]=='N'||$old_sku[0]=='c'||$ol
        $skForwordingArray[]=$X_ProductId;
        $childProductArr[] = $X_ProductId;
     }
-        
+
 }
 
 //MT-362 SKu forwording logic
@@ -38,7 +38,7 @@ if($old_sku[0]=='C' || $old_sku[0]=='S'||$old_sku[0]=='N'||$old_sku[0]=='c'||$ol
 
 if($_product->getTypeId()=="configurable"){
 	$childrenIds = $_product->getTypeInstance()->getChildrenIds($productId);
-	
+
 
 	$childProductArr[] = $productId;
 	if($_product->getTypeId()=="configurable"){
@@ -60,8 +60,8 @@ if($_product->getTypeId()=="configurable"){
       }
       $childrenProducts->addAttributeToFilter( array(
             array('attribute'=> 'type_id','eq'=>'configurable')));
-        
-    
+
+
          $collection = Mage::getResourceModel('allure_instacatalog/feed_collection');
          $str = '';
          $cnt = 0;
@@ -73,7 +73,7 @@ if($_product->getTypeId()=="configurable"){
          		/* if(count($childrenProducts)>1 && count($childrenProducts)>$cnt)
          			$str.= ' OR '; */
          	}
-         	
+
          }else{
          	//$collection->addFieldToFilter('product_ids',array('finset'=> array($productId)));
          	//$str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
@@ -85,7 +85,7 @@ if($_product->getTypeId()=="configurable"){
     	//->addFieldToFilter('product_ids',array('finset'=> array($productId)))
         // $collection->addFieldToFilter('status', 1);
     	$collection->getSelect()->where( 'status = 1 AND ('.$str.')');
-   
+
         //var_dump($collection->getSelect()->__toString());
     ?>
 
@@ -98,23 +98,23 @@ if($_product->getTypeId()=="configurable"){
             <?php foreach ($collection as $feeds): ?>
                 <?php
                     $feed = Mage::getModel('allure_instacatalog/feed')->load($feeds->getId());
-                    $instagramObj = unserialize($feed->getInstagramData());
-                    $media_id=$feed->getId();/* getMediaId(); */
-                    
+                    $instagramObj = @unserialize($feed->getInstagramData());
+                    $mediaId = $feed->getId();/* getMediaId(); */
+
                     $_post = $feed;
                     $shareUrl = Mage::getBaseUrl('web')."instacatalog/feed/shareview/id/".$mediaId;
                     $createDate = $_post->getCreatedTimestamp();
                     if($createDate!=null){
                     	$createDate = date('d M Y', $createDate);
                     }
-                    
+
                     $imageUrl = $_post->getThumbnail();
                     if(empty($imageUrl)){
                     	$imageUrl = $_post->getLowResolution();
                     	if(empty($imageUrl))
                     		$imageUrl = $_post->getStandardResolution();
                     }
-                    
+
                     $_options = json_decode($_post->getHotspots());
                     $points = "";
                     $productsLinks = "";
@@ -132,12 +132,12 @@ if($_product->getTypeId()=="configurable"){
                     	    Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
                     	    $sku = $old_sku;
                     	}
-                    	
+
                     	if (substr($temp_sku, 1)==substr($sku_main, 1)) {
                     	    Mage::log($temp_sku . "=" . $sku_main, Zend_log::DEBUG, 'abc', true);
                     	    $sku = $old_sku;
                     	}
-                    	
+
                     	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
                     	if(!empty($product)){
                     	    $productName = $product->getName();
@@ -151,12 +151,12 @@ if($_product->getTypeId()=="configurable"){
                     	        $productUrl = $product->getProductUrl();
                     	    }
                     	}
-                    
-                    	
+
+
                     	$current_product_class = "";
                     	if(in_array($productId, $childProductArr))
                     	    $current_product_class = "fs_current_product";
-                    
+
                     	$points .= '<a data-original-url="'.$productUrl.'"';
                     	$points .= ' href="'.$productUrl.'" target="_blank">';
                     	$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink '.$current_product_class.'" ';
@@ -166,7 +166,7 @@ if($_product->getTypeId()=="configurable"){
                     	$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
                     	$points .= '<div class="fs-arrow-up"></div>';
                     	$points .= 'Shop it // " '.$productName.'</div></div></a>';
-                    
+
                     	$productsLinks .= '<div class="fs-text-link-container ">';
                     	$productsLinks .= '<a class="fs-text-product fs-link-list '.$current_product_class.'" ';
                     	$productsLinks .= 'data-original-url="'.$productUrl.'"';
@@ -176,10 +176,10 @@ if($_product->getTypeId()=="configurable"){
                     	$productsLinks .= '<span class="fs-link-text"> Shop it // '.$productName.' </span></span>';
                     	$productsLinks .= '<div class="fs-text-product-cta"></div></a></div>';
                     }
-                    
+
                 ?>
                 <li class="item product-view-instagram-item" >
-                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $feed->getId() ?>' onclick="instagramView.show(this);" media-id="<?php echo $media_id?>"">
+                    <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $feed->getId() ?>' onclick="instagramView.show(this);" media-id="<?php echo $mediaId?>"">
                         <?php
                         	$class = '';
                         	$isclass = false;
@@ -187,15 +187,19 @@ if($_product->getTypeId()=="configurable"){
 	                        	$class='style="width:150px"';
 	                        	$isclass = true;
 	                        }
+                            else{
+                                $class='style="width:150px"';
+                                $isclass = true;
+                            }
                         ?>
                         <img  src="<?php echo $imageUrl ?>" alt="" <?php echo ($isclass)?$class:""?>" />
                     </a>
-                    <div style="display: none;" id="details-insta-<?php echo $media_id?>"
+                    <div style="display: none;" id="details-insta-<?php echo $mediaId?>"
 								data-user-name="<?php $_post->getUsername()?>" data-img-url="<?php echo $_post->getStandardResolution()?>"
 							 	data-create-date="<?php echo $createDate?>" data-share-url="<?php echo $shareUrl?>">
-							 	<div id="insta-caption-<?php echo $media_id?>" style="display: none;"><?php echo json_encode($_post->getCaption()) ?></div>
-								<div id="insta-product-mark-<?php echo $media_id?>" style="display: none;"><?php echo $points ?></div>
-								<div id="insta-product-details-<?php echo $media_id?>" style="display: none;"><?php echo $productsLinks ?></div>
+							 	<div id="insta-caption-<?php echo $mediaId?>" style="display: none;"><?php echo json_encode($_post->getCaption()) ?></div>
+								<div id="insta-product-mark-<?php echo $mediaId?>" style="display: none;"><?php echo $points ?></div>
+								<div id="insta-product-details-<?php echo $mediaId?>" style="display: none;"><?php echo $productsLinks ?></div>
 							</div>
                 </li>
             <?php endforeach; ?>
@@ -206,8 +210,8 @@ if($_product->getTypeId()=="configurable"){
 
         <div class="pagination" id="foo6_pag"></div>
     </div>
-    
-    
+
+
     <div id="instagram-view-container">
 		<div id="showcase"
 			class="fs-wide-timeline  fs-desktop fs-prepended-detail"
@@ -216,15 +220,15 @@ if($_product->getTypeId()=="configurable"){
 				<div id="fs-instagram-view-container"
 					class="fs-detail-outer-container ">
 					<div class="instagram-loader"></div>
-					
+
 					<div id="fs-detail-response" class="fs-detail-container "
 				data-resource-url="<?php //echo $feedModel->getUsername()?>">
-				
-						
+
+
 						<div class="fs-detail-nav-bar-arrows">
-								
+
 								<div ><h1 class="fs-instagram-view-title">Instagram View</h1></div>
-								
+
 								<div class="fs-detail-nav-bar-close">
 										<a class="fs-detail-nav-button" id="fs-detail-close" onclick="closeView(this);"><svg
 												width="30" height="30" xmlns="http://www.w3.org/2000/svg"
@@ -232,11 +236,11 @@ if($_product->getTypeId()=="configurable"){
 													stroke="#222" class="fs-arrow" stroke-width="1px" fill="none">   <path
 													d="m0,0l30,30"></path>   <path d="m30,0l-30,30"></path></g></svg></a>
 								</div>
-								
+
 						</div>
 						<div style="clear: both;"></div>
-				
-				
+
+
 				<div class="fs-detail-content">
 					<div class="fs-detail-left">
 						<div class="fs-image-container" style="position: relative;">
@@ -249,16 +253,16 @@ if($_product->getTypeId()=="configurable"){
 						</div>
 					</div>
 					<div class="fs-detail-right">
-						
+
 						<div class="fs-detail-nav-bar-arrows">
 						<?php if(0):?>
-							<a class="fs-detail-nav-button" id="fs-prev-post">                 
+							<a class="fs-detail-nav-button" id="fs-prev-post">
 								<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
 								<g><path class="fs-arrow" fill="none" stroke-width="1px" d="m22.5,0l-15,15l15,15" id="fs-left-path" stroke="#222"></path>
 								</g>
-								</svg>               
+								</svg>
 							</a>
-							
+
 							 <a class="fs-detail-nav-button" id="fs-next-post"> <!--?xml version="1.0"?-->
 								<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
 									xmlns:svg="http://www.w3.org/2000/svg">
@@ -279,29 +283,29 @@ if($_product->getTypeId()=="configurable"){
 							<div style="clear: both;"></div>
 						</div>
 						<div class="fs-products-title fs-plural-products"></div>
-						
+
 						<?php //echo $productsLinks?>
 						<div id="product-info"></div>
-						
+
 						<div class="fs-divider"></div>
 						<div style="clear: both;"></div>
 						<div class="fs-detail-title"><?php //echo $feedModel->getText()?></div>
-						
+
 						<div class="fs-post-info">
 							<a href="<?php //echo $feedModel->getUsername()?>"
-								target="_blank"> 
+								target="_blank">
 								<span class="fs-service-username"> maria_tash</span>
 								<span class="fs-slashes">//</span> INSTAGRAM <span
-								class="fs-slashes">//</span> 
+								class="fs-slashes">//</span>
 								<span class="fs-detail-date"><?php //echo $createDate?></span>
 							</a>
 						</div>
-						
+
 						<div class="fs-detail-shares">
 							<a id="insta-facebook" class="fs-share fs-facebook-share"
 								href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=<?php //echo $shareUrl ?>/&amp;p[image]=<?php //echo $feedModel->getStandardResolution()?>"
 								target="_blank"><i class="fa fa-facebook"></i>
-							</a> 
+							</a>
 							<a id="insta-envelope" class="fs-share fs-link-share"
 								href="mailto:?subject=Thought you might be into this @maria_tash Instagram!&amp;body=<?php //echo $shareUrl ?>/"
 								target="_blank"><i class="fa fa-envelope"></i>
@@ -314,7 +318,7 @@ if($_product->getTypeId()=="configurable"){
 								href="http://www.pinterest.com/pin/create/button/?url=<?php //echo $shareUrl ?>/&amp;media=<?php //echo $feedModel->getStandardResolution()?>&amp;description=Shop this Instagram from @maria_tash"
 								target="_blank" data-pin-do="buttonPin" data-pin-config="above">
 								<i class="fa fa-pinterest"></i>
-							</a> 
+							</a>
 							<a id="insta-share-link" class="fs-share fs-link-share"
 								href="<?php //echo $shareUrl ?>/"
 								target="_blank"><i class="fa fa-link"></i>
@@ -324,18 +328,18 @@ if($_product->getTypeId()=="configurable"){
 				</div>
 			</div>
 			<div class="fs-buy-container fs-unslid"></div>
-					
+
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript">
 	//<![CDATA[
 		var instagramView = new InstagramView('fs-instagram-view-container','<?php echo Mage::getBaseUrl('web').'instacatalog/feed/view'?>');
 		//]]>
 	</script>
-	
+
 	<script>
 		jQuery(document).ready(function(){
 			jQuery('.fs-text-product').hover(function(){
@@ -353,7 +357,7 @@ if($_product->getTypeId()=="configurable"){
 			});
 		});
 
-		
+
 		function showView(e){
 			jQuery('#showcase').show();
 		}
@@ -372,10 +376,10 @@ if($_product->getTypeId()=="configurable"){
 			var mediaId = jQuery(this).attr('media-id');
 			jQuery('#fs-post-'+mediaId).trigger('click');
 		});
-		
+
 	</script>
-    
-    
+
+
     <script type="text/javascript">
         jQuery.noConflict();
 

@@ -146,16 +146,18 @@ function addColumnLine(field, skipRedecorate) {
         }
         var defArr = def instanceof Array ? def : def.split(',');
         for (i in f.options) {
-            if (typeof f.options[i] == 'object') {
-                tds += '<optgroup label="'+i+'">';
-                for (j in f.options[i]) {
-                    v = j.replace(/ $/,'');
-                    tds += '<option value="'+v+'"'+(defArr.indexOf(v)!=-1?' selected="selected"':'')+'>'+f.options[i][j].escapeHTML()+'</option>';
+            if (f.options.hasOwnProperty(i)) {
+                if (typeof f.options[i] == 'object') {
+                    tds += '<optgroup label="' + i + '">';
+                    for (j in f.options[i]) {
+                        v = j.replace(/ $/, '');
+                        tds += '<option value="' + v + '"' + (defArr.indexOf(v) != -1 ? ' selected="selected"' : '') + '>' + f.options[i][j].escapeHTML() + '</option>';
+                    }
+                    tds += '</optgroup>';
+                } else {
+                    v = i.replace(/ $/, '');
+                    tds += '<option value="' + v + '"' + (defArr.indexOf(v) != -1 ? ' selected="selected"' : '') + '>' + f.options[i].escapeHTML() + '</option>';
                 }
-                tds += '</optgroup>';
-            } else {
-                v = i.replace(/ $/,'');
-                tds += '<option value="'+v+'"'+(defArr.indexOf(v)!=-1?' selected="selected"':'')+'>'+f.options[i].escapeHTML()+'</option>';
             }
         }
         tds += '</select></td>';
@@ -163,7 +165,7 @@ function addColumnLine(field, skipRedecorate) {
         tds += '<td><input type="hidden" name="columns_post[default_multiselect][]" value=""><input type="text" name="columns_post[default][]" class="input-text" value="'+def.escapeHTML()+'" style="width:95%" title="<?php echo $this->__('Default Value') ?>"/></td>';
     }
 
-    if (isExport && (f.frontend_input=='media_image' || f.attribute_code=='url_path')) {
+    if (isExport && (f.frontend_input=='media_image' || f.attribute_code=='url_path' || f.attribute_code=='url_key')) {
         tds += '<td><select name="columns_post[format][]" style="width:100px" title="<?php echo $this->__('Format') ?>">';
         tds += '<option value=""'+(!field.format?' selected="selected"':'')+'><?php echo $this->__('Raw Value') ?></option>';
         tds += '<option value="url"'+(field.format=='url'?' selected="selected"':'')+'><?php echo $this->__('URL') ?></option>';

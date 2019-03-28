@@ -39,9 +39,14 @@
 									<sort_order>53</sort_order>
 									<action>adminhtml/inventory_reports/stocktransfer</action>
 								</transfer>
+								<minmax module="inventory" translate="title">
+									<title>Min Max </title>
+									<sort_order>54</sort_order>
+									<action>adminhtml/inventory_reports/minmax</action>
+								</minmax>
 								<lowstock module="inventory" translate="title">
 									<title>Low Stock</title>
-									<sort_order>54</sort_order>
+									<sort_order>55</sort_order>
 									<action>adminhtml/inventory_reports/lowstock</action>
 								</lowstock>
 							</children>

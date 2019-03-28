@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Teamwork_CommonMariatash>
+            <version>1.0.0</version>
+        </Teamwork_CommonMariatash>
+    </modules>
+    <global>
+        <models>
+            <teamwork_commonmariatash>
+                <class>Teamwork_CommonMariatash_Model</class>
+            </teamwork_commonmariatash>
+            <teamwork_common>
+                <rewrite>
+                    <chq>Teamwork_CommonMariatash_Model_Chq</chq>
+                    <chq_xml_response>Teamwork_CommonMariatash_Model_Chq_Xml_Response</chq_xml_response>
+                    <chq_xml_response_product>Teamwork_CommonMariatash_Model_Chq_Xml_Response_Product</chq_xml_response_product>
+                    <chq_xml_request_price>Teamwork_CommonMariatash_Model_Chq_Xml_Request_Price</chq_xml_request_price>
+                </rewrite>
+            </teamwork_common>
+        </models>
+    </global>
+</config>

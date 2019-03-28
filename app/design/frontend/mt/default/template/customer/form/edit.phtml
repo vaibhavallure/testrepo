@@ -44,15 +44,20 @@
 				<div class="field">
 					<label for="email" class="required"><em>*</em><?php echo $this->__('Email Address') ?></label>
 					<div class="input-box">
-						<input type="text" name="email" id="email" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry validate-email" />
+						<input type="text" name="email" disabled="disabled" readonly="readonly" id="email" value="<?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text required-entry validate-email" />
 					</div>
 				</div>
 				
 				<div class="field">
+					<?php if(0):?>
 					<label for="phone" class="mt-phone"><?php echo $this->__('Phone') ?></label>
 					<div class="input-box">
 						<input type="text" name="phone" id="phone" value="<?php echo $this->getCustomer()->getPhone()?>" class="input-text" />
 					</div>
+					<?php endif;?>
+					
+					<?php //allure temp field?>
+					<input type="hidden" style="display: none;" value="0" id="is_change" name="is_change" />
 				</div>
 				
             </li>
@@ -111,21 +116,36 @@
         <button onclick="jQuery('.error-msg').html('');" type="submit" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
     </div>
 </form>
+<div class="page-title">
+    <p class="deletemyaccount-login-security"><?php echo $this->__('Delete Account') ?></p>
+</div>
+ <div class="buttons-set">
+ 		<input type="hidden" id="del_acc_email" value='<?php echo  $this->htmlEscape($this->getCustomer()->getEmail()); ?>'>
+ 		<input type="hidden" id="del_acc_id" value='<?php echo  $this->htmlEscape($this->getCustomer()->getId()); ?>'>
+ 		<p class="required del-my-acc-note"><?php echo $this->__('I no longer wish to share my information with Maria Tash') ?></p>
+        <button onclick="openDelMyAccountModal()" title="<?php echo $this->__('Delete My Account') ?>" type="button" class="button"><span><span><?php echo $this->__('Delete My Account') ?></span></span></button>
+</div>
+<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('customer/form/popup/delmyaccount.phtml')->toHtml(); ?>
 <script type="text/javascript">
 //<![CDATA[
+	Allure.DeleteAccountModelFormKey='<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+	Allure.DeleteAccuntURL='<?php echo Mage::getBaseUrl('web').'customers/account/deletemyaccount'; ?>';
     var dataForm = new VarienForm('form-validate', true);
     function setPasswordForm(arg){
+        console.log(arg);
         if(arg){
             $('current_password').up(4).show();
             $('current_password').addClassName('required-entry');
             $('password').addClassName('required-entry');
             $('confirmation').addClassName('required-entry');
+            jQuery('#is_change').val(1);
 
         }else{
             $('current_password').up(4).hide();
             $('current_password').removeClassName('required-entry');
             $('password').removeClassName('required-entry');
             $('confirmation').removeClassName('required-entry');
+            jQuery('#is_change').val(0);
         }
     }
     <?php if($this->getCustomer()->getChangePassword()): ?>

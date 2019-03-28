@@ -85,3 +85,11 @@
 	/* background: url('./icon.png') transparent right no-repeat; */
 	background-size: contain;
 }
+
+.appointments-index-index #currDay{
+	color: #3f4048 ! important;
+}
+
+.appointments-index-index #currDay.selectedDate{
+	color: white ! important;
+}

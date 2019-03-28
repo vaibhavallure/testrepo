@@ -46,6 +46,23 @@
         if (response.price != '') {     
             jQuery("#ajax-price").html(response.price);
             jQuery("#ajax-price .price-box").show();
+
+            //copied from media.phtml
+            //there was misplace of tooltip div because of ajax price rendering
+            console.log(jQuery('.amconf-images-container'))
+            jQuery('.amconf-images-container').each(function(){
+                jQuery(this).find('img').each(function(){
+                    var imgid  = jQuery(this).attr('id'),
+                        imgalt = jQuery(this).attr('alt');
+                    Tipped.create(jQuery("#"+imgid)
+                        , imgalt, {
+                            skin: 'white',
+                            zIndex: 1,
+                            showOn: ['click','mouseover'],
+                            background: { color: '#fff', opacity: .7 }
+                        });
+                });
+            });
         }      
         
     });
@@ -59,6 +76,14 @@ $videoArr = array();
 $_helper = $this->helper('catalog/output');
 $_product = $this->getProduct();
 $_productId = $_product->getId();
+
+//Added for parent child check
+$prHelper        = Mage::helper("allure_catalog");
+$isCustomOptions = $prHelper->isCustomOptionsAvailable($_productId);
+$parentVal = ($isCustomOptions)?1:0;
+
+$isGiftCard= $prHelper->isGiftCard($_productId);
+$isGiftCardValue=($isGiftCard)?1:0;
 
 $aprod = Mage::getModel("catalog/product")->load($_productId);
 $backOrderArray[$aprod->getId()] = Mage::getModel('cataloginventory/stock_item')->loadByProduct($aprod)->getBackorders();
@@ -212,7 +237,7 @@ if ($_product->getSizeSample() == 1) {
                     jQuery('div#advice-required-entry-date').show();
                 } else {
                     jQuery('div#advice-required-entry-date').hide();
-                    addToShoppingCart(button, form);
+                    addToShoppingCart(button, form, true);
                 }
             }
         }.bind(productAddToCartForm);
@@ -280,11 +305,17 @@ if ($_product->getSizeSample() == 1) {
             </form>
         </div>
     <?php endif; ?>
+     <?php if(!$isCustomOptions):?>
     <form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+     <?php else:?>
+     <form action="<?php echo $this->getSubmitUrl($_product)./* 'cpid/'.$_product->getId(). */'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+       <?php endif;?>
         <div class="no-display">
             <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="related_product" id="related-products-field" value=""/>
+            <input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
+            <input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
         </div>
 
         <div class="product-view-left">
@@ -299,11 +330,23 @@ if ($_product->getSizeSample() == 1) {
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
-            
+              <?php $category='';?>
+			<?php if(Mage::registry('current_category')):?>
+				<?php $category=Mage::registry('current_category')->getName();?>
+			<?php endif;?>
+			<input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
             <?php //echo $this->getPriceHtml($_product) ?>
             <div id="ajax-price">Loading price...</div>
             
-			<?php if ( $_product->getTypeId() != 'giftcards'):?>
+			<?php 
+                    //if ( $_product->getTypeId() != 'giftcards'):  old code(teamwork changes the attribute set)
+
+                    //new code - ALR -- aws12
+                    $skuStr = $_product->getSku();
+                    $skuArr = explode("|", $skuStr);
+                    $sku = $skuArr[0];
+            ?>
+            <?php  if($sku != "STORECARD"):?>
 			<?php if ($_product->isAvailable()): ?>
 			    <p class="availability in-stock" style="width: 300px;"><span><?php echo $this->__('In stock') ?></span></p>
 			<?php else: ?>
@@ -312,6 +355,7 @@ if ($_product->getSizeSample() == 1) {
 			<?php endif; ?>
 			
 			<?php //Gift special instruction ?>
+			<?php if ($_product->getShowSpecialInstruction()):?>
 			 <div class="product-special-instructions">
 				<div class="special-instruction-label">
 					<label>Special Instructions:</label>
@@ -324,7 +368,8 @@ if ($_product->getSizeSample() == 1) {
 
                 </div>
 			</div>
-
+			<?php endif;?>
+			
             <div class="product-collateral">
                 <?php if (!$this->hasOptions()): ?>
                     <div id="product-options-wrapper" class="product-options"></div>

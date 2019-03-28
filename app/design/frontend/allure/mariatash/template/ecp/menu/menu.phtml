@@ -4,7 +4,7 @@
     <?php foreach ($collection as $item) {?>    
         <?php //if( $counter < 3 ){?> 
             <a class="level-top-submenu" href="<?php echo $item->getUrl();?>"> 
-                <span><?php echo $item->getTitle();?></span>
+                <span><?php echo $this->__($item->getTitle());?></span>
             </a>
         <?php //}?> 
         <?php //$counter++;?>

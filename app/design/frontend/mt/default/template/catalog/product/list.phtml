@@ -43,35 +43,35 @@ $mode  = $this->getMode();
     function productItemHoverBinding(listSelector) {
         jQuery(listSelector + ' .item').mouseenter(function() {
             jQuery(this).addClass('over');
-            var product_id = parseInt(jQuery(this).attr('id').replace('item-', ''));            
+            var product_id = parseInt(jQuery(this).attr('id').replace('item-', ''));
             var superAtt  = 'super-attribute-' + product_id;
-            var quickview = 'product-quickview-' + product_id;   
-            jQuery('#' + quickview).show(); 
+            var quickview = 'product-quickview-' + product_id;
+            jQuery('#' + quickview).show();
             jQuery('.price-box').show();
             var listIds   = jQuery('#list-'+product_id).text();
             // Check configurable
             //if(!listIds) return false;
             if(!listIds) listIds = product_id;
-            
+
             if (jQuery('#list-img-'+product_id).text()=='1')
                 return false;
 
             if(!jQuery(this).hasClass('ajax-request-sent')) {
                 jQuery(this).addClass('ajax-request-sent');
                 jQuery.ajax({
-                    type: "POST",    
+                    type: "POST",
                     dataType : "json",
                     url: BASE_URL + "ecpcolor/",
                     data: {options: listIds,mode:'<?php echo $mode;?>', location: "Boston"}
                     })
                     .done(function(response) {
-                    if (response.colors != '') {                  
+                    if (response.colors != '') {
                        jQuery("#color-icons-"+product_id).html(response.colors);
                        jQuery('#list-img-'+product_id).text('1') ;
-         
+
                        jQuery('#color-icons-' + product_id + ' li').each(function(){
-                            var color_id  = jQuery(this).attr('id'),  
-                                color_title = jQuery(this).attr('title'); 
+                            var color_id  = jQuery(this).attr('id'),
+                                color_title = jQuery(this).attr('title');
                                     Tipped.create(jQuery("#" + color_id), color_title, {
                                             skin: 'customTiny',
                                             showOn: ['click', 'mouseover'],
@@ -79,17 +79,17 @@ $mode  = $this->getMode();
                                     });
 
                             jQuery(this).click(function(){
-                                var option = jQuery(this).attr('value'); 
+                                var option = jQuery(this).attr('value');
                                 removeActive(product_id);
                                 jQuery(this).addClass('active');
-                                var imgSrc = jQuery('#img-'+ jQuery(this).attr('id')).text();   
+                                var imgSrc = jQuery('#img-'+ jQuery(this).attr('id')).text();
                                 var price  = jQuery('#price-'+ jQuery(this).attr('id')).html();
                                 var pv = jQuery('#link-pv-'+product_id).text() + '?optionId=' +option;
-                                var qv = jQuery('#link-qv-'+product_id).text() + '?optionId=' +option;  
+                                var qv = jQuery('#link-qv-'+product_id).text() + '?optionId=' +option;
                                 if(price){
                                     jQuery("#default-price-"+product_id).html(price);
                                 }
-                                if(imgSrc) {                                
+                                if(imgSrc) {
                                     jQuery('#img-'+ product_id).attr('src',imgSrc);
                                     jQuery('a#' + product_id).attr('href',pv);
                                     jQuery('#product-quickview-'+ product_id).attr('href',qv)
@@ -97,13 +97,13 @@ $mode  = $this->getMode();
                                 jQuery('.price-box').show();
                             });
                         });
-                    }   
+                    }
 
-                    if (response.price != '') {     
+                    if (response.price != '') {
                         jQuery("#default-price-"+product_id).html(response.price);
                         jQuery("#default-price-"+product_id+" .price-box").show();
-                    }      
-                    
+                    }
+
                 });
             }
         }).mouseleave(function() {
@@ -158,7 +158,7 @@ $mode  = $this->getMode();
                             $quickViewUrl = $this->getUrl('quickview/index/index', array('id' => $_product->getId()));
                             $productUrl = $_product->getProductUrl();
                             $currentProductId = $_product->getId();
-                            $simples = $this->getIcons($currentProductId); 
+                            $simples = $this->getIcons($currentProductId);
                             $firstOption = null;
                             ?>
                             <li class="item" id="item-<?php echo $_product->getId() ?>">
@@ -178,54 +178,54 @@ $mode  = $this->getMode();
                                         <span id="link-pv-<?php echo $_product->getId(); ?>"><?php echo $productUrl; ?></span>
                                     </div>
                                     <div class="actions">
-                                        <div class="priceCategory default" id="default-price-<?php echo $_product->getEntityId(); ?>">
+                                        <div class="priceCategory default " id="default-price-<?php echo $_product->getEntityId(); ?>">
                                             <p><?= $this->getPriceHtml($_product) ?></p>
                                         </div>
                                         <?php if ($_product->getIsSalable()): ?>
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
                                                <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
-                                                <div class="super_attribute" id="super-attribute-<?php echo $_product->getId() ?>">                                                    
-                                                    <?php 
+                                                <div class="super_attribute" id="super-attribute-<?php echo $_product->getId() ?>">
+                                                    <?php
                                                     $productId = $_product->getId();
-                                                    $optionsValues = $this->getIcons($productId);  
+                                                    $optionsValues = $this->getIcons($productId);
                                                     if(!empty($optionsValues)):
                                                         $attribute_code = $optionsValues['code'];
-                                                        $attribute_label = $optionsValues['label']; 
+                                                        $attribute_label = $optionsValues['label'];
                                                         ?>
                                                         <div id="list-<?php echo $productId;?>" style="display: none;"><?php echo json_encode($optionsValues);?></div>
                                                         <div id="list-img-<?php echo $productId;?>" style="display:none">0</div>
                                                         <div id="color-option" class="color-icon">
                                                             <span>
-                                                                <?php echo $attribute_label; ?>: 
+                                                                <?php echo $attribute_label; ?>:
                                                             </span>
-                                                        </div>    
+                                                        </div>
                                                         <ul id="color-icons-<?php echo $productId;?>">
-                                                            <?php 
-                                                            $j=0; 
-                                                            foreach ($optionsValues['value'] as $option): ?>  
-                                                                <?php 
+                                                            <?php
+                                                            $j=0;
+                                                            foreach ($optionsValues['value'] as $option): ?>
+                                                                <?php
                                                                 $optionId = $option[$attribute_code];
                                                                 $optionLb = $option[$attribute_code . "_value"];
-                                                                $simple_id = $option['child_id'];  
+                                                                $simple_id = $option['child_id'];
                                                                 if($j==0) $firstOption = $optionId;
                                                                 $j++;
                                                                 ?>
-                                                                <li id="<?php echo $simple_id ?>" 
-                                                                    style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;" 
-                                                                    class="colorSelector tipped-create" value="<?php echo $optionId ?>" 
+                                                                <li id="<?php echo $simple_id ?>"
+                                                                    style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;"
+                                                                    class="colorSelector tipped-create" value="<?php echo $optionId ?>"
                                                                     title="<?php echo $optionLb ?>" >
                                                                     <div style="display: none">
                                                                           <span id="img-<?php echo $simple_id; ?>"></span>
                                                                           <span id="price-<?php echo $simple_id; ?>"></span>
                                                                     </div>
-                                                                </li>            
+                                                                </li>
                                                             <?php endforeach; ?>
-                                                        </ul>                                            
+                                                        </ul>
                                                     <?php endif;?>
                                                 </div>
                                                 <a class="fancybox fancybox.iframe button btn-quickview"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
-                                                   href="<?php echo $quickViewUrl; ?><?php if($firstOption) echo "?optionId=$firstOption";?>"
+                                                   href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
                                                    title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
                                             <?php else: ?>
                                                 <a class="fancybox fancybox.iframe button btn-quickview"
@@ -288,59 +288,59 @@ $mode  = $this->getMode();
                                     </div>
                                     <div class="actions">
                                         <div class="priceCategory default" id="default-price-<?php echo $_product->getEntityId(); ?>"><p><?= $this->getPriceHtml($_product) ?></p></div>
-                                        <?php 
+                                        <?php
                                                $check = true;
                                                if($_test == 1)
                                                 $check = $_product->getIsSalable();
-                                               else 
+                                               else
                                                 $check = $_product->getIsSalable2();
                                          ?>
                                         <?php if ($check): ?>
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
                                                 <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
-                                                <div class="super_attribute" id="super-attribute-<?php echo $_product->getId() ?>">                                                    
-                                                    <?php 
+                                                <div class="super_attribute" id="super-attribute-<?php echo $_product->getId() ?>">
+                                                    <?php
                                                     $productId = $_product->getId();
-                                                    $optionsValues = $this->getIcons($productId);  
+                                                    $optionsValues = $this->getIcons($productId);
                                                     if(!empty($optionsValues)):
                                                     $attribute_code = $optionsValues['code'];
-                                                    $attribute_label = $optionsValues['label'];  
+                                                    $attribute_label = $optionsValues['label'];
                                                     ?>
                                                     <div id="list-<?php echo $productId;?>" style="display: none;"><?php echo json_encode($optionsValues);?></div>
                                                     <div id="list-img-<?php echo $productId;?>" style="display:none">0</div>
                                                     <div id="color-option" class="color-icon">
                                                         <span>
-                                                            <?php echo $attribute_label; ?>: 
+                                                            <?php echo $attribute_label; ?>:
                                                         </span>
-                                                    </div>    
+                                                    </div>
                                                     <ul id="color-icons-<?php echo $productId;?>">
-                                                        <?php 
-                                                        $j=0; 
+                                                        <?php
+                                                        $j=0;
                                                         $firstOption = '';
-                                                        foreach ($optionsValues['value'] as $option): ?>  
-                                                            <?php                                                            
+                                                        foreach ($optionsValues['value'] as $option): ?>
+                                                            <?php
                                                             $optionId = $option[$attribute_code];
                                                             $optionLb = $option[$attribute_code . "_value"];
-                                                            $simple_id = $option['child_id'];  
+                                                            $simple_id = $option['child_id'];
                                                             if($j==0) $firstOption = $optionId;
                                                             $j++;
                                                             ?>
-                                                            <li id="<?php echo $simple_id ?>" 
-                                                                style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;" 
-                                                                class="colorSelector tipped-create" value="<?php echo $optionId ?>" 
+                                                            <li id="<?php echo $simple_id ?>"
+                                                                style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;"
+                                                                class="colorSelector tipped-create" value="<?php echo $optionId ?>"
                                                                 title="<?php echo $optionLb ?>" >
                                                                 <div style="display: none">
                                                                       <span id="img-<?php echo $simple_id; ?>"></span>
                                                                       <span id="price-<?php echo $simple_id; ?>"></span>
                                                                 </div>
-                                                            </li>            
+                                                            </li>
                                                     <?php endforeach; ?>
-                                                    </ul>                                                   
+                                                    </ul>
                                                     <?php endif;?>
                                                 </div>
                                                 <a class="fancybox fancybox.iframe button btn-quickview"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
-                                                   href="<?php echo $quickViewUrl; ?><?php if($firstOption) echo "?optionId=$firstOption";?>"
+                                                   href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
                                                    title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
                                             <?php else: ?>
                                                 <a class="fancybox fancybox.iframe button btn-quickview"
@@ -380,13 +380,13 @@ $mode  = $this->getMode();
 
         /* Add tooltip for color icon*/
         jQuery('.colorSelector').each(function(){
-            var li_id = jQuery(this).attr('id');  
-            var li_title = jQuery(this).attr('title'); 
+            var li_id = jQuery(this).attr('id');
+            var li_title = jQuery(this).attr('title');
             Tipped.create(jQuery("#"+li_id), li_title, {
                     skin: 'customTiny',
                     showOn: ['click', 'mouseover']
                 });
-        });  
+        });
     });
 
     jQuery.noConflict();

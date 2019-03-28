@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <teamwork_transfer translate="label">
+            <label>Transfer settings</label>
+            <tab>teamwork</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>Inventory</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <update_inventory>
+                            <label>Update inventory</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </update_inventory>
+                        <import_products translate="label">
+                            <label>Import Products</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </import_products>
+                        <import_categories translate="label">
+                            <label>Import categories and 'item-category' links</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </import_categories>
+                        <update_product_positions translate="label">
+                            <label>Update product positions</label>
+                            <comment>update product position in category product list</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </update_product_positions>
+                        <sku_for_simple_products translate="label">
+                            <label>Form sku for child products as</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>teamwork_transfer/adminhtml_config_source_itemsku</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </sku_for_simple_products>
+                        <import_relationships translate="label">
+                            <label>Import product relationships</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </import_relationships>
+                        <update_statuses translate="label">
+                            <label>Update product statuses</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </update_statuses>
+                        <update_visibility translate="label">
+                            <label>Update products visibility</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </update_visibility>
+                        <update_stock_avaliability translate="label">
+                            <label>Update stock avaliability</label>
+                            <comment>whether set "In stock" / "Out of stock" product status</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>65</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </update_stock_avaliability>
+                        <default_value_for_configurable_attribute translate="label">
+                            <label>Use default label for configurable attribute</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </default_value_for_configurable_attribute>
+                        <throw_wrong_pricing_errors translate="label">
+                            <label>Send error message if pricing error detected</label>
+                            <comment>it is not necessary (for example, if you use SimpleConfigurable module)</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </throw_wrong_pricing_errors>
+                        <ecm_reindex_mode translate="label">
+                            <label>Trigger full reindex</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>teamwork_transfer/adminhtml_config_source_reindexeachecm</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </ecm_reindex_mode>
+                        <ecm_cache_mode translate="label">
+                            <label>Cache action after ECM</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>teamwork_transfer/adminhtml_config_source_ecmcachemode</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </ecm_cache_mode>
+                        <max_ecm_update_interval translate="label">
+                            <label>Max ECM update interval (minutes)</label>
+                            <comment>if processed ECM doesn't report any updates longer than this interval, it will get 'error' status</comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits validate-number validate-zero-or-greater validate-number-range number-range-1-100000</validate>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </max_ecm_update_interval>
+                        <max_reindex_interval translate="label">
+                            <label>Max ECM reindex interval (minutes)</label>
+                            <comment>if reindexing is performed longer than this interval, ECM will get 'error' or 'done' status</comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits validate-number validate-zero-or-greater validate-number-range number-range-1-100000</validate>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </max_reindex_interval>
+                        <several_stores translate="label">
+                            <label>Several stores is in use</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </several_stores>
+
+
+                        <richmedia_push_rich_media_from translate="label">
+                            <label>ECM channel to import rich media from</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>teamwork_transfer/adminhtml_config_source_richmediachannel</source_model>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </richmedia_push_rich_media_from>
+                        <richmedia_import_images translate="label">
+                            <label>Import product images</label>
+                            <comment>import images at all</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </richmedia_import_images>
+                        <richmedia_import_item_images_to_item translate="label">
+                            <label>Import item images to item</label>
+                            <comment>import child images to child products</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory><richmedia_import_images>1</richmedia_import_images></depends>
+                        </richmedia_import_item_images_to_item>
+                        <richmedia_import_item_images_to_style translate="label">
+                            <label>Import item images to style</label>
+                            <comment>import child images to parent product</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory><richmedia_import_images>1</richmedia_import_images></depends>
+                        </richmedia_import_item_images_to_style>
+                        <richmedia_delete_product_images_absent_in_ecm translate="label">
+                            <label>Delete product images absent in ECM and DAM</label>
+                            <comment>whether to delete existing product images if they are absent in both CHQ ECM and DAM</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>180</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends><update_inventory>1</update_inventory><richmedia_import_images>1</richmedia_import_images></depends>
+                        </richmedia_delete_product_images_absent_in_ecm>
+
+                        <default_attribute_set>
+                            <label>Default Attribute Set:</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>190</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>teamwork_transfer/adminhtml_config_source_attributesets</source_model>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </default_attribute_set>
+
+                        <attribute_set>
+                            <label>Use Attribute Set From:</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <source_model>teamwork_transfer/adminhtml_config_source_stylecustomtextfields</source_model>
+                            <comment>CHQ Style custom text fields</comment>
+                            <depends><update_inventory>1</update_inventory></depends>
+                        </attribute_set>
+
+                    </fields>
+                </general>
+                <weborder translate="label">
+                    <label>Weborder</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <weborder_item_secondary_id translate="label">
+                            <label>Weborder item secondary id</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>teamwork_transfer/adminhtml_config_source_webordersecondaryid</source_model>
+                        </weborder_item_secondary_id>
+                        <process_unknown_weborders translate="label">
+                            <label>Process weborders from unknown channel</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </process_unknown_weborders>
+                        <chq_as_processing_zone translate="label">
+                            <label>Send order update to CHQ</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </chq_as_processing_zone>
+                        <unknown_weborder_default_channel>
+                            <label>Default channel</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>teamwork_transfer/adminhtml_config_source_channel</source_model>
+                            <depends><process_unknown_weborders>1</process_unknown_weborders></depends>
+                        </unknown_weborder_default_channel>
+                        <send_shipment_emails translate="label">
+                            <label>Send shipment emails when order was shipped via CHQ</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Magento will send emails if correponding setting on 'Sales->Sales Emails' section is Yes</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </send_shipment_emails>
+                        <send_creditmemo_emails translate="label">
+                            <label>Send creditmemo emails when order was canceled via CHQ</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Magento will send emails if correponding setting on 'Sales->Sales Emails' section is Yes</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </send_creditmemo_emails>
+                    </fields>
+                </weborder>
+            </groups>
+        </teamwork_transfer>
+    </sections>
+</config>

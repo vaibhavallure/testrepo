@@ -2,10 +2,22 @@
 <config>
     <modules>
         <Allure_Category>
-            <version>0.1.0</version>
+            <version>0.1.3</version>
         </Allure_Category>
     </modules>
     <global>
+    	
+    	<models>
+			<allure_category>
+				<class>Allure_Category_Model</class>
+			</allure_category>
+		</models>
+		
+       <helpers>
+			<allure_category>
+				<class>Allure_Category_Helper</class>
+			</allure_category>
+		</helpers>
         <resources>
             <allure_category_setup>
               <setup>
@@ -14,5 +26,17 @@
               </setup>
           </allure_category_setup>
         </resources>  
+        
+        <events>
+			<catalog_category_save_commit_after>
+            	<observers>
+					<allure_category>
+						<class>allure_category/observer</class>
+						<method>setProductToCategory</method>
+					</allure_category>
+				</observers>
+        </catalog_category_save_commit_after>
+		</events>
+		
     </global>
 </config> 

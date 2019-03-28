@@ -30,18 +30,37 @@
 </script>
 <?php 
 $_helper = $this->helper('catalog/output'); ?>
-<?php $_product = $this->getProduct(); ?>
+<?php $_product = $this->getProduct();
+
+$prHelper        = Mage::helper("allure_catalog");
+$isCustomOptions = $prHelper->isCustomOptionsAvailable($_product->getId());
+$parentVal = ($isCustomOptions)?1:0;
+
+
+$isGiftCard= $prHelper->isGiftCard($_productId);
+$isGiftCardValue=($isGiftCard)?1:0;
+
+?>
 <script type="text/javascript">
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view sample-size">
 <div class="product-essential">
-<form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" target="_top" method="post"
+ <?php if(!$isCustomOptions):?>
+ 
+<form action="<?php echo $this->getSubmitUrl($_product). 'cpid/'.$_product->getId().'/' ?>" target="_top" method="post"
       id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+      <?php else:?>
+      <form action="<?php echo $this->getSubmitUrl($_product). /* 'cpid/'.$_product->getId(). */'/' ?>" target="_top" method="post"
+      id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+      
+        <?php endif;?>
     <div class="no-display">
         <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
         <input type="hidden" name="related_product" id="related-products-field" value=""/>
+        <input type="hidden" name="parent-child-product" id="parent-child-product" value="<?php echo $parentVal?>" />
+        <input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
     </div>
 
     <div class="product-shop-quickview">
@@ -57,14 +76,19 @@ $_helper = $this->helper('catalog/output'); ?>
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
+             <?php $category='';?>
+			<?php if(Mage::registry('current_category')):?>
+				<?php $category=Mage::registry('current_category')->getName();?>
+			<?php endif;?>
+			<input type="hidden" name="puchsed-from-cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
             <?php echo $this->getPriceHtml($_product) ?>
             <?php echo $this->getChildHtml('product_type_data') ?>
             <div id="quickview_des" class="product-collateral">
                 <?php // echo $this->getChildHtml('description') ?>
                 <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_product->getShortDescription(), 'short description') ?>
             </div>
-            
-            <div class="product-special-instructions">
+             <?php if ($_product->getShowSpecialInstruction()):?>
+           	 <div class="product-special-instructions">
 					<div class="special-instruction-label">
 						<label>Special Instructions:</label>
 					</div>
@@ -73,7 +97,8 @@ $_helper = $this->helper('catalog/output'); ?>
 						<br/>
 						(Special requests might delay your order due to production time)
 					</div>
-				</div>
+			</div>
+			<?php endif;?>
 
                 <?php if (!$this->hasOptions()): ?>
                     <div class="add-to-box">
@@ -106,14 +131,14 @@ $_helper = $this->helper('catalog/output'); ?>
                         </button>
                         <?php echo $this->getChildHtml('alert_urls') ?>
                     <?php endif;?>
-                    <!-- <div>Availability for this model:<br><span style="color:#790000"><?= Mage::helper('amstockstatus')->showStockStatus($_product, false, false) ?></span></div> -->
+                    <!-- <div>Availability for this model:<br><span style="color:#830000"><?= Mage::helper('amstockstatus')->showStockStatus($_product, false, false) ?></span></div> -->
 
                     <?php $_product = $this->getProduct() ?>
                     <?php if ( $_product->getTypeId() != 'giftcards'):?>
                     <?php if ($_product->isAvailable()): ?>
-                        <div><p class="availability in-stock"><?php echo $this->__('Availability for this model:') ?><br/><span style="color:#790000;font-weight: normal !important;"><?php echo $this->__('In stock') ?></span></p></div>
+                        <div><p class="availability in-stock"><?php echo $this->__('Availability for this model:') ?><br/><span style="color:#830000;font-weight: normal !important;"><?php echo $this->__('In stock') ?></span></p></div>
                     <?php else: ?>
-                        <div><p class="availability out-of-stock"><?php echo $this->__('Availability for this model:') ?> <span style="color:#790000;font-weight: normal !important;"><?php echo $this->__('Out of stock') ?></span></p></div>
+                        <div><p class="availability out-of-stock"><?php echo $this->__('Availability for this model:') ?> <span style="color:#830000;font-weight: normal !important;"><?php echo $this->__('Out of stock') ?></span></p></div>
                     <?php endif; ?>
                     <?php endif; ?>
                     <?php echo $this->getChildHtml('product_type_data_extra') ?>
@@ -145,7 +170,7 @@ $_helper = $this->helper('catalog/output'); ?>
                                 return false;
                             }
                             var pid = jQuery('#pid-hidden').val();
-                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>cpid/<?php echo $_product->getId()?>/product/'+pid +'/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
+                            wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>product/<?php echo $_product->getId()?>/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
                             
                         }
                     </script>

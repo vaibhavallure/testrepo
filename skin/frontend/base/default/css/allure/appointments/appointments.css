@@ -1,0 +1,918 @@
+@CHARSET "UTF-8";
+
+/* Appointments page css by bhagya start*/
+.firsttitle{
+	margin: 0 auto;
+	width: 960px;
+	padding: 0px;
+}
+
+.pickur_time_main_container{
+	/* float: left;
+	width:48% ; */
+}
+
+.image_carousel {
+	width: 78%;
+	height:auto;
+	/* padding: 8px 10px 15px 16px !important; */
+	padding: 0px 10px 15px 16px !important;
+	/* margin-bottom: 60px; */
+	margin-bottom: 0px;
+}
+#pick_ur_time_div .prev,
+#pick_ur_time_div .next{
+	top:50% !important;
+	margin-top: -25px !important;
+
+}
+
+.jcarosel_main_ul{
+	min-width: 470px;
+	max-width: 100%;
+}
+
+.secondtitle{
+	font-size:16px;
+	margin: 0 auto;
+	width: 960px;
+	font-weight: normal;
+	color: #5F5D5C;
+	text-transform: uppercase;
+	font-size: 17px;
+	padding: 0px;
+}
+.sliderZone,.logZone{
+	margin-right:400px;
+}
+
+/* .ui-datepicker-div{
+	display:block !important;
+	height:200px !important;
+	left: 451.778px !important;
+}
+.ui-datepicker {
+ 	display:block !important;
+ 	width: 23em !important;
+} */
+#aptformDiv{
+	clear: both;
+	width: 100%;
+	float:left;
+	background:#cfcfd1;
+	font-size:12px;
+	/* padding-bottom: 126px;	 */
+}
+#aptformDiv .lbl{
+	width:50%;
+}
+/* .lbltxt{
+	width:30%;
+} */
+.ele_width{
+	width:65%;
+	/* margin-bottom: 2%; */
+	padding: 6px 9px;
+}
+.appointmentContainer{
+	width: 960px;
+	margin: auto;
+	max-width: 100%;
+	overflow: hidden;
+	/* margin: 0 auto;
+    background: #cfcfd1; */
+}
+
+.appointment-header{
+	background-color : #3f4048;
+	overflow:hidden;
+}
+.appointment-header .page-title h1{
+	color: #ffffff;
+}
+.appointment-header .secondtitle{
+	color: #dad8d8;
+}
+.app-col-6-left{
+	width:50%;
+	float:left;
+}
+.appointment-header{
+	background-color : #3f4048;
+	overflow:hidden;
+}
+.appointment-header .page-title h1{
+	color: #ffffff;
+	padding: 10px 15px;
+}
+.appointment-header .secondtitle{
+	color: #dad8d8;
+	padding: 0px 15px 10px;
+}
+.app-col-6-right{
+	float:left;
+	width:50%;
+	text-align: right;
+}
+.app-col-6-right img{
+	padding :15px;
+}
+
+
+
+/* Modal CSS */
+
+.modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+.modalDialog:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.modalDialog > div {
+	width: 320px;
+	position: relative;
+	margin: 10% auto;
+	/* padding: 5px 20px 13px 20px; */
+	padding: 20px;
+	/* border-radius: 10px; */
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #999);
+	background: -webkit-linear-gradient(#fff, #999);
+	background: -o-linear-gradient(#fff, #999);
+}
+.modalDialog #login-msg{
+	color:#f00;
+}
+
+.close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover { background: #00d9ff; }
+
+#signin-btn{
+	float:right;
+}
+.field{
+	width:100%;
+	float:left;
+	padding:10px 20px 10px 20px;
+}
+.timeslot{
+	border-color: #ccc;
+	/* float: left; */
+	/*  display: inline-block; */
+	cursor: pointer;
+	/* margin-right: 10px; */
+	/* margin:3px 0p    width: 78%;
+    height: auto;
+    /* padding: 8px 10px 15px 16px !important; */
+	/* margin-bottom: 60px; */
+
+    margin:10px 0px;
+	border-radius: 3px;
+	color: white;
+	background-color: rgba(56, 56, 58, 0.79);
+	/* margin-bottom: 5px; */
+}
+.timeslot span{
+	padding:0 5px;
+
+}
+/* #pick_ur_time_div{
+	max-height: 181px;
+    overflow-y: scroll;
+} */
+.submitbtn{
+	color: #fff;
+	margin: 5px 0px 5px 0;
+	border: medium none;
+	border-radius: 2px 2px 2px 2px;
+	cursor: pointer;
+	display: inline-block;
+	font-family: dinmittelschriftregular;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 6px 12px;
+	text-align: left;
+	text-decoration: none;
+	text-transform: uppercase;
+	/* background: linear-gradient(to bottom, #38383a 0%,#5e5d62 100%); */
+	background: url(../images/button_newsletter.png) no-repeat center transparent;
+	height: 30px;
+	background-size: 100% 100%;
+}
+.signbtn{
+	margin: 5px 0px 5px 0;
+	border: medium none;
+	border-radius: 2px 2px 2px 2px;
+	cursor: pointer;
+	display: inline-block;
+	font-family: dinmittelschriftregular;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 0px 8px;
+	text-align: left;
+	text-decoration: none;
+	text-transform: uppercase;
+	background: linear-gradient(to bottom, #38383a 0%,#5e5d62 100%);
+	height: 30px;
+	color: #fff;
+}
+.button.signin {
+
+}
+.minusBtn,.plusBtn{
+	background-color: #aaa;
+	border: none;
+	border-radius: 0px;
+	color: #ffffff;
+	padding: 7px 12px;
+}
+.selectedTime,.selectedDate{
+	background: url(../images/button_newsletter.png) no-repeat center transparent;
+	color:#fff;
+	background-color: #000;
+}
+/* .calendar{
+	display:block !important;
+	height:250px !important;
+
+
+} */
+.apt-summary{
+	font-size: 14px;
+	width: 50%;
+	float: left;
+}
+.regDiv{
+	float: left;width:48%;
+}
+.pickurdayDIV{
+	width: 45%;float: left;min-height: 220px;
+}
+.piercingDiv{
+	float: right;width:65%;
+}
+.pierqty{
+	text-align: left;
+}
+.pierqtyDiv{
+	float: left;
+	width: 20%;
+	text-align: left;
+}
+.storeLocDiv{
+	width: 20%;float:left;
+}
+.AptPierDiv{
+	width:80%;float: left;
+}
+.pickurtimeLable{
+	padding-left:6%;
+}
+.storeLocationSelect{
+	width: 180px;
+	font-size:12px;
+	padding:6px 9px;
+}
+.storeLocationSelect,.countrySelect,.stateSelect{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	font-size:12px;
+}
+.piercing_locTxt{
+	width:67%;
+	padding: 5px 9px;
+}
+.splnotesDiv{
+	/* float:left; */
+	width: 215px;
+}
+.pierqtyTxt{
+	text-align: center;
+	padding: 5px 0px;
+	margin:0px 5px;
+}
+.countrySelect,.stateSelect{
+	width: 320px;
+	/* width: 70%; */
+	line-height: 17px;
+}
+.success-field{
+	clear:both;
+	margin: 0 10px;
+}
+.detailofapt{
+	text-align:center;
+}
+.apt-buttons-set{
+	/* clear: both; */
+	/* 	width:50%; */
+	float: right;
+}
+#appointemnet_form .pagination{
+	margin:0px;
+}
+input[name="notification_pref"] {
+	margin-right: 5px;
+}
+
+.pickurdayDIV > div {
+	float: left;
+}
+.notfreepeiercer{
+	text-align: center;
+	margin: 15%;
+	font-size: 14px;
+	width: 65%;
+	float: left;
+	line-height: 1.5em;
+	font-weight: normal;
+}
+
+#advice-required-entry-firstname,#advice-required-entry-lastname,
+#advice-required-entry-email,#advice-required-entry-phone,
+#advice-required-entry-starttime_hidden,#advice-validate-number-phone,#advice-validate-alpha-firstname,
+#advice-validate-email-email,#advice-validate-alpha-lastname,#advice-required-entry-country,
+#advice-validate-password-password,#advice-validate-password-confirmpassword,
+.pwdBlock .validation-advice,#advice-validate-intl-telephone-phone
+
+{
+	width: 69%;
+	text-align: right;
+	float:none;
+	/* margin: 3px 0; */
+}
+
+#advice-validate-phone-len-phone{
+	width: 64%;
+	text-align: right;
+	float:none;
+	font-size:10px;
+	position:absolute;
+}
+#advice-required-entry-time-starttime_hidden{
+	width: 89%;
+	float: none;
+	text-align: right;
+	margin: 0px;
+}
+.notifyRadio,#createaccCheck{
+	position: inherit !important;
+	float: left;
+	margin: 3px 3px 0px 0px !important;
+}
+@-moz-document url-prefix() {
+	.notifyRadio{
+		margin: 0px !important;
+		margin-right: 3px!important;
+	}
+}
+
+.apt-prev{
+	left: -10px; top: 60px;
+}
+.apt-next{
+	right: -32px; top: 60px;
+}
+
+a#foo2_next {
+	margin-right: -25px;
+}
+.apt-cancel-buttons-set{
+	clear:both;
+	width:25%;
+	float:left;
+}
+.apt-modify-buttons-set{
+	width:25%;
+	float:left;
+}
+.btns-setDiv{
+	width:100%;
+	float:left;
+	margin: 10px;
+}
+.checkout-success{
+	width: 550px;
+	margin: 0 auto;
+}
+.sryBookPierbtn{
+	text-align:center;
+}
+.custom-disable{
+	pointer-events: none !important;
+	cursor: not-allowed !important;
+}
+.custom-disable span{
+	padding: 1px 15px;
+	display: block;
+	font-weight: bold !important;
+	font-size: 16px !important;
+}
+#fetchpickurday{
+	width: 45% ;
+	float: left;
+}
+#pick_ur_time_div{
+	width: 45%;
+	float: left;
+}
+#reg_form .regDiv .fieldDiv,.createaccDiv .fieldDiv{
+	margin:10px 0px;
+}
+.createaccDiv{
+	width:48%;float:left;
+}
+.pwdBlock{
+	display:none;
+}
+.pwdBlock .fieldDiv{
+	width:100%;float:left;
+}
+.pwdele_width{
+	width:65%;padding: 6px 9px;
+}
+
+#foo2>li {
+	margin: 0 7.5px !important;
+}
+
+.checkout-success{
+	border: 1px solid #ccc;
+	overflow: hidden;
+	padding: 15px;
+	/*  border-radius: 5px; */
+	/*   margin-top: 5%; */
+	background-color: #cfcfd1;;
+}
+
+.success-field{
+	float: left;
+	width: 95%;
+	padding: 7px 10px;
+	border-bottom: 1px solid #dedede;
+}
+
+.btns-setDiv{
+	width: 95%;
+	float: left;
+	background-color: #dedede;
+	padding: 15px 10px;
+}
+
+.apt-cancel-buttons-set{
+	float: left;
+	margin-right: 10px;
+}
+
+.apt-modify-buttons-set{
+	float: left;
+	margin-right: 10px;
+}
+
+.apt-buttons-set{
+	float: right;
+}
+#app_create_account{
+	margin-top: 25px;
+}
+.splnotesTxtarea{
+	min-height: 15px !important;
+	width: 308px;
+}
+.appt_ph .intl-tel-input{
+	width: 100% !important;
+}
+.appt_ph input{
+	width: 320px;
+}
+@-moz-document url-prefix() {
+	.appt_ph input{
+		width: 332px;
+	}
+}
+
+@-moz-document url-prefix() {
+	.appt_country select{
+		width: 332px;
+	}}
+
+#appointment_loader {
+	position: fixed;
+	z-index: 999;
+	height: 2em;
+	width: 2em;
+	overflow: show;
+	margin: auto;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+/* Transparent Overlay */
+#appointment_loader:before {
+	content: '';
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	/*  width: 100%;
+     height: 100%;
+     background-color: rgba(0,0,0,0.3); */
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+#appointment_loader:not(:required) {
+	/* hide "loading..." text */
+	font: 0/0 a;
+	color: transparent;
+	text-shadow: none;
+	background-color: transparent;
+	border: 0;
+}
+
+#appointment_loader:not(:required):after {
+	content: '';
+	display: block;
+	font-size: 10px;
+	width: 1em;
+	height: 1em;
+	margin-top: -0.5em;
+	-webkit-animation: spinner 1500ms infinite linear;
+	-moz-animation: spinner 1500ms infinite linear;
+	-ms-animation: spinner 1500ms infinite linear;
+	-o-animation: spinner 1500ms infinite linear;
+	animation: spinner 1500ms infinite linear;
+	border-radius: 0.5em;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+	box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@-moz-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@-o-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+
+}
+.appointments-index-facebook{
+	min-width: 0px !important;
+}
+.appointments-index-facebook  .appointmentContainer{
+	width: 770px;
+	margin: auto;
+}
+.appointments-index-facebook .appt_ph input {
+	width: 71%;
+}
+.appointments-index-facebook .countrySelect, .stateSelect {
+	width: 71%;
+}
+.appointments-index-facebook  .pierqtyDiv {
+	float: left;
+	width: 30%;
+	text-align: left;
+}
+.appointments-index-facebook .pierqtyDiv label{
+	margin-left: 40px;
+}
+.appointments-index-facebook  .pierqty {
+	text-align: left;
+	margin-left: 40px;
+}
+.appointments-index-facebook .calendar span {
+	padding: 1px 13px;
+}
+.appointments-index-facebook .field {
+	padding: 10px 2px 10px 20px !important;
+	width: 98%;
+}
+@-moz-document url-prefix() {
+	.appointments-index-facebook .appt_ph input {
+		width: 74%;
+	}
+	.appointments-index-facebook .countrySelect, .stateSelect {
+		width: 74%;
+	}
+}
+
+/*Piercing Pricing start*/
+.appointments-piercing-pricing{
+	/* background: #fff; */
+}
+.piercing-pricing-table{
+	width: 100%;
+}
+
+.piercing-pricing-table .pricing-th{
+	width: 30%;
+	text-transform: uppercase;
+	padding: 10px;
+	text-align: center;
+}
+.pricing-th.pricing-type-th{
+	text-align: left ! important;
+}
+
+.pricing-th.service-cost{
+	width: 25%;
+}
+
+.piercing-pricing-table .pricing-td{
+	width: 30% ! important;
+	padding: 10px 0px 10px 10px;
+	border-bottom: 0.5px solid rgb(153, 153, 153);
+}
+
+.pricing-td.jewelry-at,
+.pricing-td.service-cost{
+	text-align: center;
+	vertical-align: middle;
+}
+
+.pricing-td .piercer-type{
+	word-wrap: break-word;
+	width: 140px;
+	text-align: justify;
+}
+
+.piercing-pricing-note{
+	margin-top: 15px;
+	padding: 0px 0px 10px 10px;
+	font-weight: 600;
+}
+
+.appointment-storemap a > img{
+	width: 100%;
+}
+
+#appointment-pricing .piercing_block{
+	background: #aaa;
+	margin-top: 20px;
+}
+
+#appointment-pricing .piercing_block h3{
+	padding: 5px;
+	text-align: center;
+}
+
+body.embedded {
+	min-width: 100%;
+	max-width: 100%;
+}
+
+body.embedded .main {
+    padding: 12px;
+}
+
+body.embedded .col1-layout .col-main {
+    margin-bottom: 0px;
+}
+
+body.embedded .appointmentContainer {
+    max-width: 100%;
+}
+
+body.embedded .appt_ph input,
+body.embedded .countrySelect,
+body.embedded .stateSelect {
+    width: 268px;
+}
+
+body.embedded .splnotesTxtarea {
+    width: 255px;
+}
+
+body.embedded .zopim {
+    display: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+	/*FOR CALENDRA INDRAJIT IPAD*/
+	#fetchpickurday{
+		width: 37% !important; ;
+		float: left;
+	}
+	#pick_ur_time_div
+	{
+		padding-left: 32px !important;
+		width: 45% !important;
+	}
+
+	.appt_ph input{
+		width: 100% !important;
+	}
+
+}
+
+/*
+
+!*-------------------new alert box--------------------------*!
+
+#allureModalContainer {
+	background-color: rgba(0, 0, 0, 0.47);
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	z-index:10000;
+	!*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*!
+}
+
+#allureAlertBox {
+	padding: 20px;
+	position:relative;
+	width:300px;
+	min-height:100px;
+	margin-top:100px;
+	background-color:#dcdcdc;
+	box-shadow: 2px 2px 8px #00000063
+}
+
+#allureModalContainer > #allureAlertBox {
+	position:fixed;
+}
+
+#allureAlertBox h1 {
+	margin:0;
+	font:bold 0.9em verdana,arial;
+	background-color:#3073BB;
+	color:#FFF;
+	border-bottom:1px solid #000;
+	padding:2px 0 2px 5px;
+}
+
+#allureAlertBox p {
+	text-align: center;
+	font:12px arial,verdana;
+	margin-top: 10px;
+	color: #3f4048;
+}
+
+#allureAlertBox #closeBtn{
+	display:block;
+	position:absolute;
+	bottom: 10px;
+	left: 125px;
+	margin:5px auto;
+	padding:7px;
+	border:0 none;
+	width:80px;
+	font:12px dinmittelschriftregular,arial;
+	text-transform:uppercase;
+	text-align:center;
+	color:#3f4048;
+	background: transparent url(../../images/bkg_brown_btn.png);
+	background-color:#906E39;
+	border-radius: 3px;
+	text-decoration:none;
+}
+
+
+#allureAlertBox #closeBtn:hover{
+	background: transparent url(../../images/bkg_brown_btn_hover.png) repeat-x;
+	color: #3f4048;
+	text-decoration: none;
+}
+
+
+
+!*-------------confirm popup----------------*!
+
+
+
+#allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
+	display:block;
+	position:absolute;
+	bottom: 10px;
+	left: 125px;
+	margin:5px auto;
+	padding:7px;
+	border:0 none;
+	width:80px;
+	font:12px dinmittelschriftregular,arial;
+	text-transform:uppercase;
+	text-align:center;
+	color:#3f4048;
+	background: transparent url(../../images/bkg_brown_btn.png);
+	background-color:#906E39;
+	border-radius: 3px;
+	text-decoration:none;
+}
+
+#allureAlertBox #cancelConfirm
+{
+	position:absolute;
+	bottom: 10px;
+	left: 60px;
+}
+#allureAlertBox #okConfirm
+{
+	position:absolute;
+	bottom: 10px;
+	left: 185px;
+}
+
+#allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
+	background: transparent url(../../images/bkg_brown_btn_hover.png) repeat-x;
+	color: #3f4048;
+	text-decoration: none;
+}
+
+
+
+
+!*-------------------------alert end----------------------------------*!*/

@@ -62,7 +62,7 @@ class ParadoxLabs_TokenBase_Block_Info extends Mage_Payment_Block_Info_Cc
 		}
 		
 		// If this is admin, show different info.
-		if( Mage::app()->getStore()->isAdmin() ) {
+		if( Mage::app()->getStore()->isAdmin() && $this->getInfo()->getAdditionalInformation('transaction_id') != null ) {
 			$data[Mage::helper('payment')->__('Transaction ID')]	= $this->getInfo()->getAdditionalInformation('transaction_id');
 		}
 		

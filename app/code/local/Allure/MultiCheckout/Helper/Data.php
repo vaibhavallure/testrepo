@@ -27,6 +27,8 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
 
     const XML_PATH_WHOLESALE_CUSTOMER_PAY_AS_SHIP_OPTIONS = 'allure_multicheckout/wholesale/payment_methods_pay_as_ship';
 
+    const XML_PATH_ONEPAGE_LOG = 'allure_multicheckout/multi_log/multi_log_status';
+
     public function getWholeCustomerPaymentMethods ()
     {
         $pay1 = $this->getWholesaleCustomersPayNowMethods();
@@ -76,27 +78,7 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
 
     public function isQuoteContainOutOfStockProducts ()
     {
-        $isBackorderAvailable = false;
-        $quote = $this->getQuote();
-        $qouteItems = $quote->getAllVisibleItems(); // getAllItems();
-        foreach ($qouteItems as $item) :
-            $productInventoryQty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProduct())
-                ->getQty();
-            
-            $stock_qty = intval($item->getProduct()
-                ->getStockItem()
-                ->getQty());
-            if ($stock_qty < $item->getQty() && $item->getProduct()
-                ->getStockItem()
-                ->getIsInStock()) :
-                // if($productInventoryQty<=0):
-                $isBackorderAvailable = true;
-                break;
-	    	endif;
-            
-        endforeach
-        ;
-        return $isBackorderAvailable;
+        return $this->isQuoteContainsBackorderProduct();
     }
 
     public function getFedexFreeShippingMethod ()
@@ -114,5 +96,41 @@ class Allure_MultiCheckout_Helper_Data extends Mage_Customer_Helper_Data
             return true;
         else
             return false;
+    }
+    
+    /**
+     * return true|false if quote contains out of stock product
+     */
+    public function isQuoteContainsBackorderProduct(){
+        $isBackOrderProduct = false;
+        $storeId            = Mage::app()->getStore()->getStoreId();
+        $quote              = Mage::getSingleton("checkout/session")->getQuote();
+        $qouteItems         = $quote->getAllVisibleItems();
+        foreach ($qouteItems as $item){
+            $sku = $item->getSku();
+            $_product = Mage::getModel('catalog/product')
+                            ->setStoreId($storeId)
+                            ->loadByAttribute('sku',$sku);
+           $stock = Mage::getModel('cataloginventory/stock_item')
+            ->loadByProduct($_product);
+           $stock_qty=$stock->getQty();
+           if ($stock_qty < $item->getQty() && $stock->getManageStock()==1) {
+               $isBackOrderProduct = true;
+               break;
+           }
+        }
+        return $isBackOrderProduct;
+    }
+
+    public function getOnePagelogStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_ONEPAGE_LOG);
+    }
+    
+    public function isTwoShipment(){
+        $quote = $this->getQuote();
+        $status = false;
+        if(strtolower($quote->getDeliveryMethod()) == self::TWO_SHIP)
+            $status = true;
+            return $status;
     }
 }

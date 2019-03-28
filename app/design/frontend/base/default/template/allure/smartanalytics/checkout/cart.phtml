@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var $this Allure_SmartAnalytics_Block_Checkout_Cart
+ */
+?>
+
+<?php
+
+$helper = Mage::helper('allure_smartanalytics');
+
+if (!$helper->isEnabled() || !$helper->isEnhancedEcommerceEnabled()) return;
+
+$_impressionList    = 'Cross Sell';
+$_clickLabel        = 'Cross';
+$_loop = 1;
+
+$_products = array();
+$_productUrls = array();
+
+foreach ($this->getItems() as $_product){
+    //$_productUrl = $_product->getProductUrl();
+    $_productUrls[] = $_product->getProductUrl();
+
+    $_products[] = array(
+        'id' => $this->jsQuoteEscape($_product->getSku()),
+        'name'  => $this->jsQuoteEscape($_product->getName()),
+        'category' => $this->jsQuoteEscape($helper->getProductCategoryName($_product)),
+        'brand' => $this->jsQuoteEscape($helper->getBrand($_product)),
+        'list'  => $_impressionList,
+        'position' => $_loop
+    );
+
+    $_loop++;
+}
+
+$_JsProducts = json_encode($_products);
+$_JsProductUrls = json_encode($_productUrls);
+
+echo $this->getLayout()
+			->createBlock('allure_smartanalytics/impression')
+			->setJsProducts($_JsProducts)
+			->setJsProductUrls($_JsProductUrls)
+			->setclickLabel($_clickLabel)
+			->setPageView('Upsell') //leave it as upsell because there is if condition in impression.phtml
+			->setTemplate('allure/smartanalytics/impression.phtml')
+			->toHtml();?>
+
+<script type='text/javascript'>
+//<![CDATA[
+<?php echo $this->getLayout()
+					->createBlock('allure_smartanalytics/sendview')
+					->setTemplate('allure/smartanalytics/sendview.phtml')
+					->toHtml();
+?>
+//]]>
+</script>

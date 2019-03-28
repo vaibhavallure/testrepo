@@ -115,6 +115,17 @@ abstract class ParadoxLabs_TokenBase_Block_Adminhtml_Config_ApiTest extends Mage
 		
 		return $this->_storeId;
 	}
+
+	/**
+	 * Determine whether the given string contains values outside the standard ASCII charset.
+	 *
+	 * @param string $string
+	 * @return bool
+	 */
+	protected function _containsInvalidCharacters($string)
+	{
+		return (bool)preg_match('/[^ -~]/i', $string);
+	}
 	
 	abstract protected function _testApi();
 }

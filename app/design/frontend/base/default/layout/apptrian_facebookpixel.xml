@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @category  Apptrian
+ * @package   Apptrian_FacebookPixel
+ * @author    Apptrian
+ * @copyright Copyright (c) Apptrian (http://www.apptrian.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License
+ */
+-->
+<layout version="0.1.0">
+    <cms_index_index>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.home" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </cms_index_index>
+    <cms_page_view>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.cms" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </cms_page_view>
+    <catalog_category_default>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.category" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </catalog_category_default>
+    <catalog_category_layered>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.category" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </catalog_category_layered>
+    <catalog_product_view>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.product" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </catalog_product_view>
+    <catalogsearch_result_index>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.search" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </catalogsearch_result_index>
+    <catalogsearch_advanced_result>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.search" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </catalogsearch_advanced_result>
+    <customer_account_create>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.registration" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </customer_account_create>
+    <checkout_onepage_index>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.checkout" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </checkout_onepage_index>
+    <onepagecheckout_index_index>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.checkout" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </onepagecheckout_index_index>
+    <onestepcheckout_index_index>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.checkout" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </onestepcheckout_index_index>
+    <opc_index_index>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.checkout" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </opc_index_index>
+    <checkout_onepage_success>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.purchase" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </checkout_onepage_success>
+    <onepagecheckout_index_success>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.purchase" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </onepagecheckout_index_success>
+    <wishlist_index_index>
+        <reference name="before_body_end">
+            <block type="apptrian_facebookpixel/code" name="apptrian.facebookpixel.wishlist" after="-">
+                <action method="setTemplate" ifconfig="apptrian_facebookpixel/general/enabled">
+                    <template>apptrian/facebookpixel/code.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </wishlist_index_index>
+</layout>

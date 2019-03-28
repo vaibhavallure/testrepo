@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Allure_Appointments>
-			<version>0.1.5</version>
+			<version>0.2.0</version>
 		</Allure_Appointments>
 	</modules>
 	<frontend>
@@ -23,6 +23,9 @@
 				<appointments>
 					<file>appointments.xml</file>
 				</appointments>
+				<appointments_popup>
+					<file>allure/appointments_popup.xml</file>
+				</appointments_popup>
 			</updates>
 		</layout>
 	</frontend>
@@ -44,6 +47,15 @@
                     <appointments>
                         <table>allure_piercing_appointments</table>
                     </appointments>
+                     <dates>
+                        <table>allure_appointment_dates</table>
+                    </dates>
+                    <logs>
+                        <table>allure_appointments_log</table>
+                    </logs>
+                    <pricing>
+                        <table>allure_piercing_price</table>
+                    </pricing>
                 </entities>
             </appointments_resource>
         </models>
@@ -78,7 +90,7 @@
 			</appointments_read>
 		</resources>
 	</global>
-	
+
 	<crontab>
 		<jobs>
 			<appointments_schedule>
@@ -91,7 +103,7 @@
 			</appointments_schedule>
 		</jobs>
 	</crontab>
-	
+
 	<admin>
 		<routers>
 			<appointments>
@@ -112,4 +124,4 @@
 			</updates>
 		</layout>
 	</adminhtml>
-</config> 
+</config>

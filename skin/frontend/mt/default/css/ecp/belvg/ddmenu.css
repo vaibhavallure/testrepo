@@ -16,7 +16,7 @@
           box-shadow:0 3px 15px rgba(0,0,0, 0.6);*/
         }
             #top-nav .sub-menu .sub > table{overflow:hidden; text-align:left; }
-                #top-nav .sub-menu .sub > table td{border-right:1px solid #ddd; padding:11px 22px; min-width: 150px; }
+                #top-nav .sub-menu .sub > table td{border-right:1px solid #ddd; padding:11px 22px; min-width: 195px; }
                 #top-nav .sub-menu .sub > table td.last{border-right:0px}
             #top-nav .sub-menu .sub a{color:#B3B8C1; font-size:13px; font-weight:400; text-decoration:none; -webkit-font-smoothing: antialiased; }
             #top-nav .sub-menu .sub a:hover{text-decoration:none; color:#ecc388;}

@@ -1,13 +1,141 @@
 <?php
 $embedded = $this->getRequest()->getParam('embedded');
 ?>
-<?php 	
+<?php
 		$model = Mage::registry('apt_modify_data');
 		if($model){
 			$fetch_aptId = $model->getId();
-		}		
-		
+		}
+
 ?>
+
+
+<style>
+
+
+
+    /*-------------------new alert box--------------------------*/
+
+    #allureModalContainer {
+        background-color: rgba(0, 0, 0, 0.47);
+        position:absolute;
+        width:100%;
+        height:100%;
+        top:0px;
+        left:0px;
+        z-index:10000;
+        /*background-image:url(tp.png); !* required by MSIE to prevent actions on lower z-index elements *!*/
+    }
+
+    #allureAlertBox {
+        padding: 25px;
+        position:relative;
+        width:300px;
+        min-height:120px;
+        margin-top:100px;
+        background-color:#dcdcdc;
+        box-shadow: 2px 2px 8px #00000063
+    }
+
+    #allureModalContainer > #allureAlertBox {
+        position:fixed;
+    }
+
+    #allureAlertBox h1 {
+        margin:0;
+        font:bold 0.9em verdana,arial;
+        background-color:#3073BB;
+        color:#FFF;
+        border-bottom:1px solid #000;
+        padding:2px 0 2px 5px;
+    }
+
+    #allureAlertBox p {
+        text-align: center;
+        font:12px arial,verdana;
+        /*margin-top: 10px;*/
+        min-height: 40px;
+        color: #3f4048;
+    }
+
+    #allureAlertBox p.confirmBox{
+        text-align: center;
+        margin-top:auto;
+        margin-bottom: 33px;
+    }
+
+    #allureAlertBox #closeBtn{
+        display:block;
+        position:initial;
+        bottom: 18px;
+        left: 110px;
+        margin:5px auto;
+        padding:7px;
+        border:0 none;
+        width:80px;
+        font:12px dinmittelschriftregular,arial;
+        text-transform:uppercase;
+        text-align:center;
+        color:#3f4048;
+        background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn.png'); ?>);
+        background-color:#906E39;
+        border-radius: 3px;
+        text-decoration:none;
+    }
+
+
+    #allureAlertBox #closeBtn:hover{
+        background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn_hover.png'); ?>) repeat-x;
+        color: #3f4048;
+        text-decoration: none;
+    }
+
+
+
+    /*-------------confirm popup----------------*/
+
+
+
+    #allureAlertBox #okConfirm, #allureAlertBox #cancelConfirm{
+        display:block;
+        margin:5px auto;
+        padding:7px;
+        border:0 none;
+        width:80px;
+        font:12px dinmittelschriftregular,arial;
+        text-transform:uppercase;
+        text-align:center;
+        color:#3f4048;
+        background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn.png'); ?>);
+        background-color:#906E39;
+        border-radius: 3px;
+        text-decoration:none;
+    }
+
+    #allureAlertBox #cancelConfirm
+    {
+        position:absolute;
+        bottom: 17px;
+        left: 55px;
+    }
+    #allureAlertBox #okConfirm
+    {
+        position:absolute;
+        bottom: 17px;
+        left: 165px;
+    }
+
+    #allureAlertBox #okConfirm:hover, #allureAlertBox #cancelConfirm:hover{
+        background: transparent url(<?= $this->getSkinUrl('images/bkg_brown_btn_hover.png'); ?>) repeat-x;
+        color: #3f4048;
+        text-decoration: none;
+    }
+
+
+
+
+    /*-------------------------alert end----------------------------------*/
+</style>
 <div class="appointmentContainer" >
 <div class="<?php if($embedded=='1'): echo 'appointment-header'; endif;?>">
 	<div class="app-col-6-left">
@@ -26,15 +154,15 @@ $embedded = $this->getRequest()->getParam('embedded');
 		else:
 		?>
 		<?php //if(Mage::getSingleton("core/session")->getData('appointmentData_availablity')):?>
-			<form action="<?php echo $this->getActionUrl()?>" name="" id="appointemnet_form" method="POST">		
+			<form action="<?php echo $this->getActionUrl()?>" name="" id="appointemnet_form" method="POST">
 			<?php if($fetch_aptId):?> <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>"><?php endif;?>
 			<?php echo $this->getBlockHtml('formkey');?>
 					<div class="field">
-					      <div class="storeLocDiv">  
-					      	<?php echo $this->getChildHtml('appointments_storelocation')?>    
+					      <div class="storeLocDiv">
+					      	<?php echo $this->getChildHtml('appointments_storelocation')?>
 					      </div>
-					      
-					      <div class="AptPierDiv">   
+
+					      <div class="AptPierDiv">
 					      	<?php echo $this->getChildHtml('appointments_piercing')?>
 					      </div>
 					</div><!-- field end -->
@@ -44,22 +172,20 @@ $embedded = $this->getRequest()->getParam('embedded');
 					</div><!-- field end -->
 					<?php echo $this->getChildHtml('appointments_signin_register')?>
 					<?php echo $this->getChildHtml('appointments_signin')?>
-					<div class="field">
-						<input type="submit" Value="CONFIRM" class="submitbtn" >
-					</div><!-- field end -->
+
 			</form>
 		<?php //else:?>
-			
-		<?php //endif;?>			
+
+		<?php //endif;?>
 	<?php endif;?>
 	</div>
 	<!-- </div> -->
 </div>
-
+<div style="display:none;" id="appointment_loader" class="loading">Loading&#8230;</div>
 <script type="text/javascript">
 if (typeof Allure == "undefined") {
     var Allure = {};
-} 
+}
 Allure.appointmentId = '<?php echo $this->getRequest()->getParam('id')?>';
 Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
 Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
@@ -67,32 +193,149 @@ Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
 
 <script type="text/javascript">
     //< ![CDATA[
-        var myForm = new VarienForm('appointemnet_form', false);
-        Validation.add('required-entry-time', "Please Select Time.", function(v) {
+
+    <?php
+    if(Mage::getSingleton('core/session')->getSlotInvalid()=="true")
+    {
+        echo "alert('This appointment time is no longer available. <br> Please select another time.');";
+        Mage::getSingleton('core/session')->setSlotInvalid("false");
+    }
+
+    ?>
+
+       var myForm = new VarienForm('appointemnet_form', false);
+
+       var conf=false;
+
+       /* Validation.add('required-entry-time', "Please Select Time.", function(v) {
             return !Validation.get('IsEmpty').test(v);
-		});
-        
-        Validation.add('validate-phone-len', "Enter Valid Mobile No with country code.", function(v) {
+		});*/
+
+        Validation.add('validate-phone-len', "Enter valid phone number with country code.", function(v) {
         	var telInput = jQuery("#phone").val();
             if(telInput.charAt(0)=='+' && v.length > 6){
             	return true;
-            }               
+            }
 		});
-        var formAlreadySubmitted = false; 
-        jQuery('#appointemnet_form').submit(function(e){ 
-            if(myForm.validator.validate()){ 
-                if(formAlreadySubmitted){ 
-                    e.preventDefault(); 
-                    return false; 
-                 } 
-                var submitChildren = jQuery(this).find('input[type=submit]'); 
-                submitChildren.attr('disabled', 'disabled'); 
-                submitChildren.addClass('disabled'); 
-                formAlreadySubmitted = true; 
-              } 
+
+        var formAlreadySubmitted = false;
+        jQuery('#appointemnet_form').submit(function(e){
+            if(myForm.validator.validate()){
+                    if(formAlreadySubmitted){
+                        e.preventDefault();
+                        return false;
+                     }
+
+
+                var app_date=formatDate(new Date(jQuery("#datepicker-13_hidden").val()));
+                var app_starttime=jQuery("#starttime_hidden").val();
+                var app_endtime=jQuery("#endtime_hidden").val();
+                var no_pepole=jQuery(".pierqtyTxt").val();
+                var store=jQuery(".storeLocDiv p b").html();
+
+                if(typeof store==="undefined")
+                    store=jQuery(".storeLocationSelect :selected").text();
+
+                if(no_pepole<1) {
+                    alert("Please select the number of people in your party to see available appointment times");
+                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+                    jQuery("#count").focus();
+                    return false;
+                }
+
+                if(jQuery(".required-entry-time").val().length == 0)
+                {
+                    alert("Please select time slot");
+                  /*  var position=jQuery(".pickur_time_main_container").position();
+                    jQuery('body').scrollTo(position.top-70);*/
+                    return false;
+                }
+
+                if(no_pepole==1)
+                   var p="person";
+                else
+                    var p="people";
+
+
+                if (!conf)
+                {
+                    confirm("Please confirm your appointment at " + store + " on " + app_date + " from " + app_starttime + " - " + app_endtime + " for " + no_pepole + " " + p+" ");
+                    return false;
+                }
+
+                var submitChildren = jQuery(this).find('input[type=submit]');
+                submitChildren.attr('disabled', 'disabled');
+                submitChildren.addClass('disabled');
+                formAlreadySubmitted = true;
+              }
 
             });
+
+    function formatDate(date) {
+        var monthNames = [
+            "Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "Jul",
+            "Aug", "Sep", "Oct",
+            "Nov", "Dec"
+        ];
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return monthNames[monthIndex] + ' ' +  day + ', ' + year;
+    }
+
+    if(document.getElementById) {
+        window.confirm = function(txt) {
+            return createCustomConfirm(txt);
+        }
+    }
+
+    function createCustomConfirm(txt) {
+        d = document;
+
+        if(d.getElementById("allureModalContainer")) return;
+
+        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+        mObj.id = "allureModalContainer";
+        mObj.style.height = d.documentElement.scrollHeight + "px";
+
+        alertObj = mObj.appendChild(d.createElement("div"));
+        alertObj.id = "allureAlertBox";
+        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+        alertObj.style.visiblity="visible";
+
+        msg = alertObj.appendChild(d.createElement("p"));
+        msg.classList.add("confirmBox");
+
+        //msg.appendChild(d.createTextNode(txt));
+        msg.innerHTML = txt;
+
+        btnc = alertObj.appendChild(d.createElement("a"));
+        btnc.id = "cancelConfirm";
+        btnc.appendChild(d.createTextNode("CANCEL"));
+        btnc.href = "#";
+
+        btnc.onclick = function() {
+            removeCustomAlert();
+            return false;
+        }
+
+        btn = alertObj.appendChild(d.createElement("a"));
+        btn.id = "okConfirm";
+        btn.appendChild(d.createTextNode("CONFIRM"));
+        btn.href = "#";
+        btn.focus();
+        btn.onclick = function() {
+            removeCustomAlert();
+            conf=true;
+            jQuery('#appointemnet_form').trigger('submit');
+            return false;
+        }
+
+        alertObj.style.display = "block";
+    }
     //]]>
 </script>
-
-

@@ -16,7 +16,7 @@
 class Simtech_Searchanise_Model_Resource_Fulltext_Collection extends Mage_CatalogSearch_Model_Resource_Fulltext_Collection
 {
     /**
-     * Searchanise Collection Product 
+     * Searchanise Collection Product
      *
      * @var Simtech_Searchanise_Model_Searchanise
      */
@@ -49,17 +49,17 @@ class Simtech_Searchanise_Model_Resource_Fulltext_Collection extends Mage_Catalo
     {
         return $this->_searchaniseCollection->initSearchaniseRequest();
     }
-    
+
     public function checkSearchaniseResult()
     {
         return $this->_searchaniseCollection->checkSearchaniseResult();
     }
-    
+
     public function setSearchaniseRequest($request)
     {
         return $this->_searchaniseCollection->setSearchaniseRequest($request);
     }
-    
+
     public function getSearchaniseRequest()
     {
         return $this->_searchaniseCollection->getSearchaniseRequest();
@@ -73,12 +73,12 @@ class Simtech_Searchanise_Model_Resource_Fulltext_Collection extends Mage_Catalo
 
         return parent::addSearchFilter($query);
     }
-    
+
     public function addSearchaniseFilter()
     {
         return $this->_searchaniseCollection->addSearchaniseFilter();
     }
-    
+
     /**
      * Set Order field
      *
@@ -132,12 +132,33 @@ class Simtech_Searchanise_Model_Resource_Fulltext_Collection extends Mage_Catalo
             return call_user_func_array(array(__CLASS__, 'parent::_loadEntities'), $args);
         }
 
-        $pageSize = $this->_pageSize;
-        $this->_pageSize = false;
+        // Load items and add them to the magento result manually
+        $results = $this->_searchaniseCollection->getSearchaniseRequest()->getSearchResult();
 
-        call_user_func_array(array(__CLASS__, 'parent::_loadEntities'), $args);
+        if (!empty($results['items'])) {
+            $productIds = array_map(function($product_data) {
+                return $product_data['product_id'];
+            }, $results['items']);
 
-        $this->_pageSize = $pageSize;
+            $products = Mage::getModel('catalog/product')
+                ->getCollection()
+                ->addAttributeToSelect('*')
+                ->addIdFilter($productIds)
+                ->addMinimalPrice()
+                ->addFinalPrice()
+                ->addTaxPercents()
+                ->load();
+
+            // Sort items accoring to returning searchanise result
+            foreach ($results['items'] as $item) {
+                foreach ($products as $product) {
+                    if ($item['product_id'] == $product->getId()) {
+                        $this->addItem($product);
+                        break;
+                    }
+                }
+            }
+        }
 
         return $this;
     }

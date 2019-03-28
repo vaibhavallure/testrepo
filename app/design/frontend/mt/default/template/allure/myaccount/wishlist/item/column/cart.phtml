@@ -43,6 +43,8 @@ $product = $item->getProduct();
 <?php endforeach;?>
 
 <div class="w-remove">
-<a onclick="wishlistRemoveItem(<?php echo $item->getId()?>)" href="javascript:void(0);<?php //echo $this->getItemRemoveUrl($this->getItem()); ?>" title="<?php echo $this->__('Remove Item') ?>"
+<a onclick="confirmBox('Are you sure you want to remove this product from your wish list?',function() {
+        wishlistRemoveItem(<?php echo $item->getId()?>);
+},'REMOVE')" href="javascript:void(0);<?php //echo $this->getItemRemoveUrl($this->getItem()); ?>" title="<?php echo $this->__('Remove Item') ?>"
     class="remov"><?php echo $this->__('Remove ');?></a></div>
 </td>

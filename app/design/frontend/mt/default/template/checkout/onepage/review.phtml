@@ -27,3 +27,22 @@
 <div class="order-review" id="checkout-review-load">
     <?php echo $this->getChildHtml('info') ?>
 </div>
+
+<script>
+function placeOrder(){
+	var checkoutPrivacyPolicySelector = jQuery(".checkout-privacy-policy #checkout_privacy_confirm");
+	var len = checkoutPrivacyPolicySelector.length;
+	if(len){
+		var isCheck = checkoutPrivacyPolicySelector.prop('checked');
+		if(isCheck == false){
+			checkoutPrivacyPolicySelector.addClass("checkbox-error-validate");
+			checkoutPrivacyPolicySelector.parent().addClass("label-error-validate");
+			return;
+		}else{
+			checkoutPrivacyPolicySelector.removeClass("checkbox-error-validate");
+			checkoutPrivacyPolicySelector.parent().removeClass("label-error-validate");
+			review.save();
+		}
+	}
+}
+</script>

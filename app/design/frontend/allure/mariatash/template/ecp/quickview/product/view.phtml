@@ -57,6 +57,11 @@ $_helper = $this->helper('catalog/output'); ?>
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
+              <?php $category='';?>
+			<?php if(Mage::registry('current_category')):?>
+				<?php $category=Mage::registry('current_category')->getName();?>
+			<?php endif;?>
+			<input type="hidden" name="purchased_from_cat" class="puchsed-from-cat" id="puchsed-from-cat-<?php echo $_product->getId(); ?>" value="<?php echo $category;?>">
             <?php echo $this->getPriceHtml($_product) ?>
             <?php echo $this->getChildHtml('product_type_data') ?>
             <div id="quickview_des" class="product-collateral">
@@ -95,14 +100,14 @@ $_helper = $this->helper('catalog/output'); ?>
                         </button>
                         <?php echo $this->getChildHtml('alert_urls') ?>
                     <?php endif;?>
-                    <!-- <div>Availability for this model:<br><span style="color:#790000"><?= Mage::helper('amstockstatus')->showStockStatus($_product, false, false) ?></span></div> -->
+                    <!-- <div>Availability for this model:<br><span style="color:#830000"><?= Mage::helper('amstockstatus')->showStockStatus($_product, false, false) ?></span></div> -->
 
                     <?php $_product = $this->getProduct() ?>
                     <?php if ( $_product->getTypeId() != 'giftcards'):?>
                     <?php if ($_product->isAvailable()): ?>
-                        <div><p class="availability in-stock"><?php echo $this->__('Availability for this model:') ?><br/><span style="color:#790000;font-weight: normal !important;"><?php echo $this->__('In stock') ?></span></p></div>
+                        <div><p class="availability in-stock"><?php echo $this->__('Availability for this model:') ?><br/><span style="color:#830000;font-weight: normal !important;"><?php echo $this->__('In stock') ?></span></p></div>
                     <?php else: ?>
-                        <div><p class="availability out-of-stock"><?php echo $this->__('Availability for this model:') ?> <span style="color:#790000;font-weight: normal !important;"><?php echo $this->__('Out of stock') ?></span></p></div>
+                        <div><p class="availability out-of-stock"><?php echo $this->__('Availability for this model:') ?> <span style="color:#830000;font-weight: normal !important;"><?php echo $this->__('Out of stock') ?></span></p></div>
                     <?php endif; ?>
                     <?php endif; ?>
                     <?php echo $this->getChildHtml('product_type_data_extra') ?>

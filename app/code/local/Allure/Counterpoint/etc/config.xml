@@ -3,7 +3,7 @@
 	<modules>
 		<Allure_Counterpoint>
 			<name>Allure - Counterpoint Bridge</name>
-			<version>1.0.0</version>
+			<version>1.0.5</version>
 			<depends>
 				<Allure_Core />
 			</depends>
@@ -34,6 +34,8 @@
 			<adminhtml>
 				<rewrite>
 					<customer_grid>Allure_Counterpoint_Block_Adminhtml_Customer_Grid</customer_grid>
+					<sales_order_payment>Allure_Counterpoint_Block_Adminhtml_Sales_Order_Payment</sales_order_payment>
+					<sales_order_view_tab_invoices>Allure_Counterpoint_Block_Adminhtml_Sales_Order_View_Tab_Invoices</sales_order_view_tab_invoices>
 				</rewrite>
 			</adminhtml>
 		</blocks>
@@ -58,6 +60,27 @@
 				<counterpoint_order_id>
 					<to_order>*</to_order>
 				</counterpoint_order_id>
+				<counterpoint_str_id>
+					<to_order>*</to_order>
+				</counterpoint_str_id>
+				<counterpoint_sta_id>
+					<to_order>*</to_order>
+				</counterpoint_sta_id>
+				<counterpoint_drw_id>
+					<to_order>*</to_order>
+				</counterpoint_drw_id>
+				<counterpoint_doc_id>
+					<to_order>*</to_order>
+				</counterpoint_doc_id>
+				<counterpoint_extra_info>
+					<to_order>*</to_order>
+				</counterpoint_extra_info>
+				<counterpoint_orig_tkt_no>
+					<to_order>*</to_order>
+				</counterpoint_orig_tkt_no>
+				<counterpoint_order_type>
+					<to_order>*</to_order>
+				</counterpoint_order_type>
 			</sales_convert_quote>
 		</fieldsets>
 
@@ -89,5 +112,145 @@
 				<debug>0</debug>
 			</general>
 		</allure_counterpoint>
+		
+		<carriers>
+			<counterpoint_storepickupshipping>
+				<active>1</active>
+				<model>allure_counterpoint/shipping_carrier_Storepickupshipping</model>
+				<name>Store Pickup</name>
+				<price>0.00</price>
+				<title>Store Pickup</title>
+                <sallowspecific>0</sallowspecific>
+                <showmethod>0</showmethod>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+			</counterpoint_storepickupshipping>
+		</carriers>
+		
+		<payment>
+			<counterpoint_cash>
+                <active>1</active>
+                <model>allure_counterpoint/payment_cash</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Cash</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_cash>
+            <counterpoint_creditcard>
+                <active>0</active>
+                <model>allure_counterpoint/payment_cc</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Counterpoint Saved Credit/Debit Card</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_creditcard>
+            
+            <counterpoint_check>
+                <active>1</active>
+                <model>allure_counterpoint/payment_check</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Check</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_check>
+            <counterpoint_gift>
+                <active>1</active>
+                <model>allure_counterpoint/payment_gift</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Gift</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_gift>
+            <counterpoint_paypal>
+                <active>1</active>
+                <model>allure_counterpoint/payment_paypal</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Paypal</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_paypal>
+            <counterpoint_stcr>
+                <active>1</active>
+                <model>allure_counterpoint/payment_stcr</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>STCR</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_stcr>
+            <counterpoint_wholesale>
+                <active>1</active>
+                <model>allure_counterpoint/payment_wholesale</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Wholesale</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_wholesale>
+            <counterpoint_wired>
+                <active>1</active>
+                <model>allure_counterpoint/payment_wired</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Wired</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_wired>
+            
+            <counterpoint_authorize>
+                <active>1</active>
+                <model>allure_counterpoint/payment_authorize</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Authorize</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_authorize>
+            <counterpoint_coup>
+                <active>1</active>
+                <model>allure_counterpoint/payment_coup</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Coupan</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_coup>
+            <counterpoint_internet>
+                <active>1</active>
+                <model>allure_counterpoint/payment_internet</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Internet</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_internet>
+            <counterpoint_amazon>
+                <active>1</active>
+                <model>allure_counterpoint/payment_amazon</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Amazon</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_amazon>
+            <counterpoint_bday>
+                <active>1</active>
+                <model>allure_counterpoint/payment_bday</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Bday</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_bday>
+            <counterpoint_pldgc>
+                <active>1</active>
+                <model>allure_counterpoint/payment_pldgc</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Pldgc</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_pldgc>
+            <counterpoint_poundcash>
+                <active>1</active>
+                <model>allure_counterpoint/payment_poundcash</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>£ CASH</title>
+                <allowspecific>0</allowspecific>
+            </counterpoint_poundcash>
+            
+		</payment>
+		
 	</default>
 </config>

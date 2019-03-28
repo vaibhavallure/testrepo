@@ -36,6 +36,15 @@ class Allure_MyAccount_Block_Adminhtml_Customerorderstatus extends Mage_Adminhtm
         	$stateStr = "";
         	$orderStateArr = Mage::getSingleton('sales/order_config')
         	                   ->getStates();
+        	$status        = Mage::getSingleton('sales/order_config')
+        	                   ->getStatuses();
+        	
+        	foreach ($status as $key=>$value){
+        	    if(!array_key_exists($key, $orderStateArr)){
+        	        $orderStateArr[$key] = $value;
+        	   }
+        	}
+        	                   
         	foreach ($orderStateArr as $state => $val)
         	{
         	    $stateStr .= '<option value="'.$state.'">'.$val .'</option>';

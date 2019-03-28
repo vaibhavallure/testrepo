@@ -25,58 +25,58 @@
  */
 ?>
 <?php
-	$_item = $this->getItem();
-	$isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
-	$canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
-	$messages = $this->getMessages();
-	$typeId = $_item->getProduct()->getTypeId();
+$_item = $this->getItem();
+$isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
+$canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
+$messages = $this->getMessages();
+$typeId = $_item->getProduct()->getTypeId();
 ?>
 <?php $productId = $this->getProduct()->getId();
-		      $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
-              $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-              $url = $this->getProductUrl();
-              if(!is_null($parentId)){
-              	$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
-              }
-              
-              ?>
+$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+$url = $this->getProductUrl();
+if(!is_null($parentId)){
+    $url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+}
+
+?>
 <tr <?php if ($messages): ?>class="messages-tr"<?php endif; ?>>
-    <td class="table-product-image"> 
+    <td class="table-product-image">
         <?php if ($this->hasProductUrl()):?>
-            <a href="<?php echo $url ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
-        <?php endif;?>
+        <a href="<?php echo $url ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(74,96); ?>" width="74" height="96" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a>
+    <?php endif;?>
 
         <?php // if ($isVisibleProduct && $this->getOptionList()): ?>
-            <!--<p><a class="link-edit" href="<?php // echo $this->getConfigureUrl() ?>" title="<?php // echo $this->__('Edit item parameters') ?>"><?php // echo $this->__('Edit') ?></a></p>-->
+        <!--<p><a class="link-edit" href="<?php // echo $this->getConfigureUrl() ?>" title="<?php // echo $this->__('Edit item parameters') ?>"><?php // echo $this->__('Edit') ?></a></p>-->
         <?php // endif ?>
     </td>
 
     <td class="table-product-info">
         <!--a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2"><?php echo $this->__('Remove item')?></a>-->
-		
+
         <h2 class="product-name">
-        <?php if ($this->hasProductUrl()):?>
-            <a href="<?php echo $url ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
-        <?php else: ?>
-            <?php echo $this->escapeHtml($this->getProductName()) ?>
-        <?php endif; ?>
+            <?php if ($this->hasProductUrl()):?>
+                <a href="<?php echo $url ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
+            <?php else: ?>
+                <?php echo $this->escapeHtml($this->getProductName()) ?>
+            <?php endif; ?>
         </h2>
         <?php if ($_options = $this->getOptionList()):?>
-        <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
-        <div class="product-options" style="display:none;">-->
-        <div class="item-options">
-            <?php foreach ($_options as $_option) : ?>
-                <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
-                <div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
-                <?php if (isset($_formatedOptionValue['full_view'])): ?>
-                    <?php echo $_formatedOptionValue['full_view'] ?>
-                <?php else: ?>
-                    <?php echo $_formatedOptionValue['value'] ?>
-                <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-        <!--</div>-->
+            <!--<span class="toggle" onclick="$(this).next('.product-options').toggle(); return false;">Show Options</span>
+            <div class="product-options" style="display:none;">-->
+            <div class="item-options">
+                <?php foreach ($_options as $_option) : ?>
+                    <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+                    <div><?php echo $this->escapeHtml($_option['label'])=='Color'? 'Metal Color:': $this->escapeHtml($_option['label']).":" ?>
+                        <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                            <?php echo $_formatedOptionValue['full_view'] ?>
+                        <?php else: ?>
+                            <?php echo $_formatedOptionValue['value'] ?>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <!--</div>-->
         <?php endif;?>
 
         <?php $addInfoBlock = $this->getProductAdditionalInformationBlock(); ?>
@@ -89,7 +89,7 @@
             <!--div class="qty-wrap">
                 <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
                 <span<?php if ($this->getQty() == 1) echo ' style="display:none;"' ?>>×</span>
-            </div-->                        
+            </div-->
 
         </div>
 
@@ -99,42 +99,42 @@
     </td>
     <td  class="table-qty a-center">
         <div class="minus_icon" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-        <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="glyphicon glyphicon-menu-left" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"></button>
+            <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', -1 )" class="glyphicon glyphicon-menu-left" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"></button>
         </div>
         <div class="qty-wrap">
             <input id="qtyid_<?php echo $_item->getId() ?>" name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" <?php if($_item->getProductType() == 'customproduct') echo 'readonly="readonly"'; ?> />
             <input type="hidden" value="<?php echo $this->getQty() ?>"/>
         </div>
         <div class="plus_icon" <?php if($_item->getProductType() == 'customproduct') echo 'style="display:none;"'; ?>>
-        <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="glyphicon glyphicon-menu-right" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"></button>
+            <button onclick="plusMinus( '#qtyid_<?php echo $_item->getId() ?>', 1 )" class="glyphicon glyphicon-menu-right" title="Update Shopping Cart" value="update_qty" name="update_cart_action" type="button"></button>
         </div>
     </td>
     <td  class="table-price-subtotal">
-    	<h6 class="hidden-sm hidden-md hidden-lg">Sub Total:</h6>
+        <h6 class="hidden-sm hidden-md hidden-lg">Sub Total:</h6>
         <div class="cart-price-box">
 
-                <?php if ($this->helper('tax')->displayCartPriceExclTax() && !$_item->getNoSubtotal()): ?>
+            <?php if ($this->helper('tax')->displayCartPriceExclTax() && !$_item->getNoSubtotal()): ?>
 
-                    <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
-                        <span class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
+            <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+            <span class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
                     <?php else: ?>
-                        <span class="cart-price">
+                <span class="cart-price">
                     <?php endif; ?>
 
-                        <?php if ($canApplyMsrp): ?>
-                            <span class="cart-msrp-subtotal">--</span>
+                    <?php if ($canApplyMsrp): ?>
+                        <span class="cart-msrp-subtotal">--</span>
+                    <?php else: ?>
+                        <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(0, 1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                            <?php echo $this->helper('checkout')->formatPrice($_item->getRowTotal()+$_item->getWeeeTaxAppliedRowAmount()+$_item->getWeeeTaxRowDisposition()); ?>
                         <?php else: ?>
-                            <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(0, 1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
-                                <?php echo $this->helper('checkout')->formatPrice($_item->getRowTotal()+$_item->getWeeeTaxAppliedRowAmount()+$_item->getWeeeTaxRowDisposition()); ?>
-                            <?php else: ?>
-                                <?php echo $this->helper('checkout')->formatPrice($_item->getRowTotal()) ?>
-                            <?php endif; ?>
+                            <?php echo $this->helper('checkout')->formatPrice($_item->getRowTotal()) ?>
                         <?php endif; ?>
+                    <?php endif; ?>
 
                     </span>
-                    <?php if (Mage::helper('weee')->getApplied($_item)): ?>
+                <?php if (Mage::helper('weee')->getApplied($_item)): ?>
 
-                        <div class="cart-tax-info" id="esubtotal-item-tax-details<?php echo $_item->getId(); ?>" style="display:none;">
+                    <div class="cart-tax-info" id="esubtotal-item-tax-details<?php echo $_item->getId(); ?>" style="display:none;">
                             <?php if (Mage::helper('weee')->typeOfDisplay($_item, 1, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
                                 <?php foreach (Mage::helper('weee')->getApplied($_item) as $tax): ?>
                                     <span class="weee"><?php echo $tax['title']; ?>: <?php echo Mage::helper('checkout')->formatPrice($tax['row_amount'],true,true); ?></span>
@@ -151,21 +151,21 @@
                         </div>
 
                         <?php if (Mage::helper('weee')->typeOfDisplay($_item, 2, 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
-                            <div class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
+                        <div class="cart-tax-total" onclick="taxToggle('esubtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
                                 <span class="weee"><?php echo Mage::helper('weee')->__('Total'); ?>: <?php echo $this->helper('checkout')->formatPrice($_item->getRowTotal()+$_item->getWeeeTaxAppliedRowAmount()+$_item->getWeeeTaxRowDisposition()); ?></span>
                             </div>
-                        <?php endif; ?>
                     <?php endif; ?>
+                <?php endif; ?>
 
                 <?php endif; ?>
 
                 <?php if (($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()) && !$_item->getNoSubtotal()): ?>
 
-                    <?php $_incl = $this->helper('checkout')->getSubtotalInclTax($_item); ?>
-                    <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
-                        <span class="cart-tax-total" onclick="taxToggle('subtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
+                <?php $_incl = $this->helper('checkout')->getSubtotalInclTax($_item); ?>
+                <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
+                <span class="cart-tax-total" onclick="taxToggle('subtotal-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
                     <?php else: ?>
-                        <span class="cart-price">
+                    <span class="cart-price">
                     <?php endif; ?>
 
                         <?php if ($canApplyMsrp): ?>
@@ -206,24 +206,24 @@
                         <?php endif; ?>
                     <?php endif; ?>
 
-                <?php endif; ?>
+                    <?php endif; ?>
 
-            </div>
+        </div>
     </td>
     <td  class="table-remove a-center last">
         <div class="cart-item-remove">
-        	<a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="button btn-cart glyphicon glyphicon-remove">&nbsp;</a>
+            <a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="button btn-cart glyphicon glyphicon-remove">&nbsp;</a>
         </div>
-        <?php if ($this->helper('customer')->isLoggedIn()): ?>            
-         <div class="cart-item-fav">
+        <?php if ($this->helper('customer')->isLoggedIn()): ?>
+            <div class="cart-item-fav">
                 <a id="saveToFave" class="button link-wishlist glyphicon glyphicon-star" href="<?php echo Mage::getBaseUrl("web").'wishlist/index/fromcart/item/'. $_item->getId(); ?>">&nbsp;</a>
-            </div> 
+            </div>
             <script type="text/javascript">
-            	jQuery("#saveToFave").click(function(){
-            		if(jQuery('select.color-attribute').val() == ''){
-            			jQuery('.ajax-error-messages').html('Please select a color');
-            		}
-            	});
+                jQuery("#saveToFave").click(function(){
+                    if(jQuery('select.color-attribute').val() == ''){
+                        jQuery('.ajax-error-messages').html('Please select a color');
+                    }
+                });
             </script>
         <?php endif; ?>
     </td>
@@ -231,43 +231,53 @@
 <?php if (count($messages)): $html = "";?>
     <tr class="table-messages">
         <td colspan="6">
-            <div class="item-msg <?php echo $message['type'] ?>">
-            
-            <?php if(0): //commented to add Parent child code?>
-            <?php if ( intval($_item->getProduct()->getStockItem()->getQty()) < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() && $_item->getProduct()->getStockItem()->getManageStock()==1 ) : ?>
-                <p>This product is not available in the requested quantity. <?php echo $_item->getQty()-intval($_item->getProduct()->getStockItem()->getQty()); ?> of the items will be backordered.</p>
-            <?php else : ?>
-                <?php foreach ($messages as $message): ?>
-                    <?php $html .= $message['text']; ?>
-                <?php endforeach;?>
-                    <p>* <?php echo $html; ?></p>
-            <?php endif; ?>    
-            <?php endif; //commented to add Parent child code?>
-            
-            
-            <?php //Parent child code starts
-              $storeId=Mage::app()->getStore()->getStoreId();
-              $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$_item->getProduct()->getSku());
-              $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($_product,$storeId);
+
+            <?php //new code - ALR -- aws12
+            $product = $_item->getProduct();
+            $skuStr = $product->getSku();
+            $skuArr = explode("|", $skuStr);
+            $sku = $skuArr[0];
             ?>
-            <?php if ( intval($stock->getQty()) < $_item->getQty() && $stock->getIsInStock() && $stock->getManageStock()==1 ) : ?>
-                <p>This product is not available in the requested quantity. <?php echo $_item->getQty()-intval($_product->getStockItem()->getQty()); ?> of the items will be backordered.</p>
-            <?php else : ?>
-                <?php foreach ($messages as $message): ?>
-                    <?php $html .= $message['text']; ?>
-                <?php endforeach;?>
-                    <p>* <?php echo $html; ?></p>
-            <?php endif;   //End of Parent-child code ?>  
-                
-            </div>
+            <?php if($sku != "STORECARD"):?>
+
+                <div class="item-msg <?php echo $message['type'] ?>">
+
+                    <?php if(0): //commented to add Parent child code?>
+                        <?php if ( intval($_item->getProduct()->getStockItem()->getQty()) < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() && $_item->getProduct()->getStockItem()->getManageStock()==1 ) : ?>
+                            <p>This product is not available in the requested quantity. <?php echo $_item->getQty()-intval($_item->getProduct()->getStockItem()->getQty()); ?> of the items will be backordered.</p>
+                        <?php else : ?>
+                            <?php foreach ($messages as $message): ?>
+                                <?php $html .= $message['text']; ?>
+                            <?php endforeach;?>
+                            <p>* <?php echo $html; ?></p>
+                        <?php endif; ?>
+                    <?php endif; //commented to add Parent child code?>
+
+
+                    <?php //Parent child code starts
+                    $storeId=Mage::app()->getStore()->getStoreId();
+                    $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$_item->getProduct()->getSku());
+                    $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($_product,$storeId);
+                    ?>
+                    <?php if ( intval($stock->getQty()) < $_item->getQty() && $stock->getIsInStock() && $stock->getManageStock()==1 ) : ?>
+                        <p>This product is not available in the requested quantity. <?php echo $_item->getQty()-intval($_product->getStockItem()->getQty()); ?> of the items will be backordered.</p>
+                    <?php else : ?>
+                        <?php foreach ($messages as $message): ?>
+                            <?php $html .= $message['text']; ?>
+                        <?php endforeach;?>
+                        <p>* <?php echo $html; ?></p>
+                    <?php endif;   //End of Parent-child code ?>
+
+                </div>
+            <?php endif;?>
         </td>
     </tr>
 <?php endif; ?>
 <script>
-jQuery(document).ready(function(){
-	if (jQuery('.messages').length > 0) {
-		jQuery('tr.messages-tr').css('border','none');
-	}
-});
+    jQuery(document).ready(function(){
+        if (jQuery('.messages').length > 0) {
+            jQuery('tr.messages-tr').css('border','none');
+        }
+    });
 </script>
 

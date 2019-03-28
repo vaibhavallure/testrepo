@@ -2,7 +2,7 @@
 <config>
     <modules>
         <ECP_Ajaxify>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
         </ECP_Ajaxify>
     </modules>

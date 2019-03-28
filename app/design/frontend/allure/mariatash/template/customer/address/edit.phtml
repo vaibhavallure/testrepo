@@ -31,6 +31,17 @@
  * @see Mage_Customer_Block_Address_Edit
  */
 ?>
+<style>
+    .address-edit-itel-cstm {
+        border: none;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ddd;
+        height:20px;
+        width:50%;
+        background: #F7F7F7;
+        line-height: 20px;
+    }
+</style>
 <div class="box box-address-edit">
 <?php if($this->getTitle()): ?>
 <div class="page-title">
@@ -58,7 +69,8 @@
                 <div class="field">
                     <label for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
                     <div class="input-box">
-                        <input type="text" name="telephone" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="telephone" />
+<!--                        <input type="text" name="telephone" value="--><?php //echo $this->escapeHtml($this->getAddress()->getTelephone()) ?><!--" title="--><?php //echo $this->__('Telephone') ?><!--" class="input-text --><?php //echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?><!--" id="telephone" />-->
+                        <input id="phone" name="telephone" type="text" class="validate-mobileno address-edit-itel-cstm ele_width validate-intl-telephone" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>">
                     </div>
                 </div>
                 <div class="field">
@@ -164,7 +176,38 @@
     var regionUpdater = new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
 //]]>
     jQuery(document).ready(function(){
-    	
+
+        var utilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
+
+        //initialize itel tel input
+        var input = document.querySelector("#phone")
+        var iti = window.intlTelInput(input, {
+            autoFormat: false,
+            autoHideDialCode: false,
+            autoPlaceholder: false,
+            nationalMode: false,
+            utilsScript: utilPath
+        });
+
+        // take phone number and check if it exist
+        // if it does not exist then
+        // first check if we can get Geo Location based Country Code if its there then set it
+        // otherwise set default as country as 'us'
+        // Magento module - Allure/GeoLocation
+        //var phone = jQuery("#phone").val();
+        var phone = "<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>";
+        var country_code = "<?= Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode();?>";
+        if(phone.length <=0){
+            if(country_code == undefined || country_code == null || country_code == "")
+                country_code = "us"
+
+            iti.setCountry(country_code.toLowerCase());
+        }
+
+        //custom validator for itel tel input
+        //FileName - intel-tel-validation.js
+        allureIntlTelValidate(jQuery("#phone"),iti);
+
     	if(jQuery('#country').val() !='US') {
 			jQuery('#zip').removeClass( "validate-zip-international");
 		} else {

@@ -7,11 +7,11 @@ function send(){
 var url = "{{store url=""}}/tattoo/index/send?page={{store url=""}}discover-maria-tash/about-designer.html";
         emailWindow = window.open(url, "mywindow", "location=1,status=1,scrollbars=1,width=400,height=600");
         emailWindow.moveTo(0, 0);
-    } 
+    }
 
-            
+
 	jQuery('document').ready(function(){
-            
+
         jQuery('.emailBtn').click(function(){
              //send();
              jQuery.fancybox({
@@ -36,7 +36,7 @@ var url = "{{store url=""}}/tattoo/index/send?page={{store url=""}}discover-mari
              print();
         });
 
-           
+
             //FACEBOOK
             /*jQuery('#facebookaboutdesigner').sharrre({
                 share: { facebook: true },
@@ -61,12 +61,12 @@ var url = "{{store url=""}}/tattoo/index/send?page={{store url=""}}discover-mari
                       api.openPopup('twitter');
                 }
             });*/
-                        
+
         });
 // ]]></script>
 </p>
 <div class="content-about-designer">
-<div class="img-designer"><img src="http://dev.venusbymariatash.com//media/wysiwyg/portrait_about_maria.jpg" alt="" />
+<div class="img-designer"><img src="/media/wysiwyg/portrait_about_maria.jpg" alt="" />
 <div class="links-maria"><a>Maria's Videos </a><a>Maria's Blog</a></div>
 <div class="botones-social-media">
 <div class="social-mt">
@@ -85,7 +85,7 @@ var url = "{{store url=""}}/tattoo/index/send?page={{store url=""}}discover-mari
 <script type="text/javascript">// <![CDATA[
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 // ]]></script>
-<div id="pinitaboutdesigner"><a href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fdev.venusbymariatash.com%2Fdiscover-maria-tash%2Fabout-the-designer.html&amp;media=http%3A%2F%2Fdev.venusbymariatash.com%2F%2Fmedia%2Fwysiwyg%2Fportrait_about_maria.jpg&amp;description=Maria%20Tash%20About%20Designer" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" alt="" /></a></div>
+<div id="pinitaboutdesigner"><a href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.mariatash.com%2Fdiscover-maria-tash%2Fabout-the-designer.html&amp;media=http%3A%2F%2Fwww.mariatash.com%2F%2Fmedia%2Fwysiwyg%2Fportrait_about_maria.jpg&amp;description=Maria%20Tash%20About%20Designer" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" alt="" /></a></div>
 <!--/PINTERES ENDS/-->
 <div id="mail" style="display: inline-block;">
 <div class="button mail">
@@ -110,4 +110,4 @@ var url = "{{store url=""}}/tattoo/index/send?page={{store url=""}}discover-mari
 <p>&nbsp;</p>
 </div>
 </div>
-<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+<script type="text/javascript" src="https://assets.pinterest.com/js/pinit.js" integrity="bG4YV5J6LGjCFgrdce+FhMfTP1i8aU7iUqjpXqU+MfXEeZs5nUXaEBDibb5jdrTY" crossorigin="anonymous"></script>

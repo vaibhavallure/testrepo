@@ -11,4 +11,13 @@ class Allure_Inventory_Block_Adminhtml_Reports_Stockreceive_Renderer_Total exten
 		$output='<lable>'.$total.'</lable>';
 		return $output;
 	}
+	public function renderExport(Varien_Object $row)
+	{
+	    $value      = $row->getData($this->getColumn()->getIndex());
+	    $inventory = Mage::getModel('inventory/inventory')->load($value);
+	    $total="0";
+	    if(isset($inventory) && $inventory)
+	        $total=$inventory->getPreviousQty()+$inventory->getAddedQty();
+	    return $total;
+	}
 }

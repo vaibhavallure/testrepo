@@ -6,7 +6,13 @@
  * 
  */
 ?>
-<?php echo Mage::app()->getLayout()->createBlock('adminhtml/store_switcher')->toHtml();
+<?php 
+if (Mage::helper('core')->isModuleEnabled('Allure_Virtualstore')){
+    echo Mage::app()->getLayout()->createBlock('allure_virtualstore/adminhtml_store_switcher')->toHtml();
+}else{
+    echo Mage::app()->getLayout()->createBlock('adminhtml/store_switcher')->toHtml();
+}
+
 //echo Mage::app()->getLayout()->createBlock('appointments/registration','appointment_store',array('template' => 'appointments/appointment_store.phtml'))->toHtml();?>
 
 

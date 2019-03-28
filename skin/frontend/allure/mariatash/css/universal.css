@@ -212,19 +212,21 @@
 	#mt-openorders-tab .sales-order-history .pager .pages,
 	#mt-report-tab .sales-order-history .pager .pages {
     	margin-right: 0px;
+    	float: none;
+    	display: inline-block;
 	}
 
 	#mt-openorders-tab .pager-mt-1 .limiter,
 	#mt-report-tab .pager-mt-1 .limiter {
-		float: left;
-		margin-left: 17%;
+		float: none;
+		/* margin-left: 17%; */
 	}
 }
 
 @media only screen and (max-device-width : 320px){
 	#mt-openorders-tab .pager-mt-1 .limiter,
 	#mt-report-tab .pager-mt-1 .limiter {
-		margin-left: 5%;
+		/* margin-left: 5%; */
 	}
 }
 	
@@ -1026,3 +1028,57 @@ td.a-right.mt-td-order-view-block{
 /* .mt-myaccount-page .nav-tabs{
 	z-index: 1000 ! important;
 } */
+
+
+
+
+.custom-tab-hr-bar,.custom-tab-hr-bar.last-l{
+	margin: -3px 0 0 0 ;
+}
+
+li.complete-custom-order-info-tabs.active,li.open-custom-order-info-tabs.active{
+	font-weight: bold ! important;
+	margin-top: -3px;
+}
+
+#complete-order-info .back a, #open-order-info .back a{
+	display: none;
+}
+
+li.complete-custom-order-info-tabs,li.open-custom-order-info-tabs{
+	font-size: 12px;
+}
+
+#load-complete-order-data #order-info-tabs,#load-open-order-data #order-info-tabs{
+	display: none;
+}
+
+.order-info li{
+	padding-bottom: 7px;
+}
+
+.order-info-tab-back{
+	text-decoration: none ! important;
+}
+
+
+ul#custom-order-info-tabs{
+	margin-top: 10px;
+}
+
+
+/*order items styles*/
+
+.mt-order-view-column{
+	font-weight: 600;
+}
+#load-open-order-data .item-options,
+#load-complete-order-data .item-options{
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+#load-open-order-data .item-options dt,
+#load-complete-order-data .item-options dt{
+	font-style:normal;
+}
+

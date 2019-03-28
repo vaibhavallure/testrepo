@@ -200,3 +200,14 @@
 .piercing-service .legal p {
 	font-weight:bold;
 }
+
+@keyframes blink {
+	0% { color  : #906E39; text-decoration: underline}
+	49% { color : #906E39; }
+	50% { color : #ecc388;text-decoration: underline}
+	100% { color: #ecc388; }
+}
+
+.allure_blinking {
+	animation: blink 2s linear infinite;
+}

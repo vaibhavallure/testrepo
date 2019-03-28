@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_AlertServices>
+			<version>0.1.0</version>
+		</Allure_AlertServices>
+	</modules>
+	<frontend>
+		<routers>
+			<alertservices>
+				<use>standard</use>
+				<args>
+					<module>Allure_AlertServices</module>
+					<frontName>alertservices</frontName>
+				</args>
+			</alertservices>
+		</routers>
+	</frontend>
+	<global>
+		<helpers>
+			<alertservices>
+				<class>Allure_AlertServices_Helper</class>
+			</alertservices>
+			<Allure_AlertServices>
+				<class>Allure_AlertServices_Helper</class>
+			</Allure_AlertServices>
+		</helpers>
+		<models>
+	        <alertservices>
+	          <class>Allure_AlertServices_Model</class>
+	          <resourceModel>allure_alertservices_resource</resourceModel>
+	        </alertservices>
+	        <allure_alertservices_resource>
+				<class>Allure_AlertServices_Model_Resource</class>
+				<entities>
+					<issues>
+						<table>allure_issues</table>
+					</issues>
+				</entities>
+			</allure_alertservices_resource>
+      	</models>
+		<resources>
+			<allure_alertservice_setup>
+				<setup>
+                    <module>Allure_AlertServices</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+			</allure_alertservice_setup>
+		</resources>
+	</global>
+	<crontab>
+		<jobs>
+			<alert_product_price>
+				<schedule>
+					<cron_expr>5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertProductPrice</model>
+				</run>
+			</alert_product_price>
+			<alert_sale_two>
+				<schedule>
+					<cron_expr>10 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertSalesOfTwo</model>
+				</run>
+			</alert_sale_two>
+			<alert_sale_four>
+				<schedule>
+					<cron_expr>15 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertSalesOfFour</model>
+				</run>
+			</alert_sale_four>
+			<alert_sale_six>
+				<schedule>
+					<cron_expr>20 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertSalesOfSix</model>
+				</run>
+			</alert_sale_six>
+			<alert_checkout_issue>
+				<schedule>
+					<cron_expr>25 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertCheckoutIssue</model>
+				</run>
+			</alert_checkout_issue>
+			<alert_null_users>
+				<schedule>
+					<cron_expr>30 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertNullUsers</model>
+				</run>
+			</alert_null_users>
+			<alert_page_not_found>
+				<schedule>
+					<cron_expr>35 6 * * 1</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertPageNotFound</model>
+				</run>
+			</alert_page_not_found>
+			<!-- <alert_avg_page_load>
+				<schedule>
+					<cron_expr>*/1 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertAvgPageLoad</model>
+				</run>
+			</alert_avg_page_load> -->
+			<!-- <alert_avg_page_load_email>
+				<schedule>
+					<cron_expr>*/7 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::alertAvgPageLoadEmail</model>
+				</run>
+			</alert_avg_page_load_email> -->
+		</jobs>
+	</crontab>
+</config>

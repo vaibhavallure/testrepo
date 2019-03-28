@@ -28,10 +28,16 @@
 <tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
     <td><h4 class="product-name"><?php echo $this->htmlEscape($_item->getName()) ?></h4>
         <?php if($_options = $this->getItemOptions()): ?>
-        <dl class="item-options">
+        <dl class="item-options custom-options-univaersal">
+        <?php $optionslist="";?>
         <?php foreach ($_options as $_option) : ?>
-            <dt><?php echo $this->htmlEscape($_option['label']) ?></dt>
-            <?php if (!$this->getPrintStatus()): ?>
+       <?php 
+       if(empty($optionslist))
+           $optionslist=$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
+       else 
+           $optionslist=$optionslist.str_repeat("&nbsp;", 10).$this->htmlEscape(ucwords($_option['label'])). ":  ". nl2br($this->htmlEscape( (isset($_option['print_value']) ? strtolower($_option['print_value']) : strtolower($_option['value'])) ));
+        ?>
+            <?php if (0 && !$this->getPrintStatus()): //allure add 0?>
                 <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
                 <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>>
                     <?php echo $_formatedOptionValue['value'] ?>
@@ -39,17 +45,20 @@
                     <div class="truncated_full_value">
                         <dl class="item-options">
                             <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
-                            <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+                            <dd><?php echo strtolower($_formatedOptionValue['full_view']) ?></dd>
                         </dl>
                     </div>
                     <?php endif; ?>
                 </dd>
             <?php else: ?>
+            	<?php if(0): //allure add?>
                 <dd>
                     <?php echo nl2br($this->htmlEscape( (isset($_option['print_value']) ? $_option['print_value'] : $_option['value']) )) ?>
                 </dd>
+                <?php endif;?>
             <?php endif; ?>
         <?php endforeach; ?>
+        <dt><?php echo $optionslist;?></dt>
         </dl>
         <?php endif; ?>
         <?php $addtInfoBlock = $this->getProductAdditionalInformationBlock(); ?>
@@ -63,7 +72,7 @@
         $qty = $this->getItem()->getQtyOrdered()*1;
         $storeId = $this->getItem()->getStoreId();
         $stockStatus = Mage::helper("myaccount")
-            ->getProductCurrentStatus($this->getSku(),$qty,$storeId); 
+        ->getProductCurrentStatus($this->getItem(),$this->getSku(),$qty,$storeId); 
         ?>
         <?php if($stockStatus['is_show']):?>
             <dl class="item-options">
@@ -74,12 +83,16 @@
         
          
         <?php if($this->helper('giftmessage/message')->getIsMessagesAvailable('order_item', $_item) && $_item->getGiftMessageId() && $this->helper('giftmessage/message')->getEscapedGiftMessage($_item)!=''): ?>
-            <dl class="item-options">
-                <dt><strong><?php echo $this->escapeHtml('Special Message:') ?></strong></dt>
-                <dd><?php echo  $this->helper('giftmessage/message')->getEscapedGiftMessage($_item)?></dd>
+            <dl class="item-options custom-options-univaersal">
+                <dt><?php echo $this->escapeHtml('Special Message:  ').$this->helper('giftmessage/message')->getEscapedGiftMessage($_item) ?></dt>
                 <dt>(Special requests might delay your order due to production time)</dt>
             </dl>
         <?php endif; ?>
+        <?php if($_item->getPurchasedFrom()):?>
+         <dl class="item-options custom-options-univaersal">
+           <dt><?php echo $this->escapeHtml('Purchased From').':  '.$_item->getPurchasedFrom() ?></dt>
+         </dl>
+        <?php endif;?>
     </td>
     <td class="a-center nobr-sku"><?php echo $this->htmlEscape(Mage::helper('core/string')->splitInjection($this->getSku())) ?></td>
     <td class="a-center print-price">
@@ -198,7 +211,7 @@
             </span>
         <?php endif; ?>
     </td>
-    <td class="a-right">
+    <td class="a-center">
         <span class="nobr">
             <strong><?php echo $this->getItem()->getQtyOrdered()*1 ?></strong><br />
                 <!--<?php // if ($this->getItem()->getQtyOrdered() > 0): ?>
@@ -215,7 +228,7 @@
         <?php // endif; ?>-->
         </span>
     </td>
-    <td class="a-right print-price">
+    <td class="a-center print-price">
         <?php if ($this->helper('tax')->displaySalesBothPrices() || $this->helper('tax')->displaySalesPriceExclTax()): ?>
             <span class="price-excl-tax">
                 <?php if ($this->helper('tax')->displaySalesBothPrices()): ?>
@@ -342,3 +355,4 @@
     <?php endif; ?>
     -->
 </tr>
+

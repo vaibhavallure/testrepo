@@ -4,7 +4,7 @@
 		height: 350px;
 	}
 </style>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false" integrity="i0kP64uc/OPhGwhEiMtwfEHNpYOtbpliX3hfAEeTEr8FUgFanDQJK1Mvl84JEwkL" crossorigin="anonymous"></script>
 
 <div class="piercing-service">
     <!--div class="page-title">
@@ -18,7 +18,7 @@
             <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_services_locations')->toHtml()?>
         </div>
         
-         <?php echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml();?>
+         <?php //echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml();?>
 
     </div>
     <div class="right-content">

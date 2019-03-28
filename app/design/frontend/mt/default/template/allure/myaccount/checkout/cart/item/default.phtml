@@ -217,7 +217,11 @@ $typeId = $_item->getProduct()->getTypeId();
     </td>
     <td  class="cart_col6">
         <div class="w-remove">
-	        <a data-item-id="<?php echo $_item->getId()?>" href="javascript:void(0);<?php //echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov"><?php echo $this->__('Remove ');?></a>
+	        <a data-item-id="<?php echo $_item->getId()?>" id="remove_id_<?php echo $_item->getId()?>" href="javascript:void(0);<?php //echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove Item') ?>" class="remov"
+            onclick="confirmBox('Are you sure you want to remove this product from your cart?',function() {
+              removeProductFromCart(<?php echo $_item->getId()?>);
+            },'REMOVE')"
+            ><?php echo $this->__('Remove ');?></a>
 	        <span id="item-loader-<?php echo $_item->getId()?>" class="mt-loader" style="display: none;"></span>
 	        <span id="item-span-<?php echo $_item->getId()?>" style="display: none;">Removed</span>
         </div>
@@ -248,65 +252,52 @@ $typeId = $_item->getProduct()->getTypeId();
         <?php endif; ?>
     </td>
 </tr>
-<?php if (count($messages)): $html = "";?>
-    <tr class="messages">
+
+<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+<?php if(!empty($message)): ?>  
+<tr class="messages">
         <td colspan="6">
-            <div class="item-msg <?php echo $message['type'] ?>">
-            <?php 
-            	$stockQty = intval($_item->getProduct()->getStockItem()->getQty());
-                
-            	$manageStock = $_item->getProduct()->getStockItem()->getManageStock();
-                     
-                $isInStock = $_item->getProduct()->getStockItem()->getIsInStock();
-                     
-                $isBackordered = false;
-                     
-                $backorderedQty = $_item->getQty();
-                     
-                if ($stockQty < $backorderedQty) {
-                	$isBackordered = true;
-                    
-                    if ($stockQty >= 0) {
-                    	$backorderedQty = $_item->getQty() - $stockQty;
-                    }
-                }
-                 
-                if (0):  //existing code allure add code flag
-	                if ($isBackordered) : ?>
-	                	<p>This product is not available in the requested quantity. <?php echo $backorderedQty; ?> of the items will be backordered.</p>
-	               	<?php else : ?>
-		                <?php foreach ($messages as $message): ?>
-		                    <?php $html .= $message['text'];break; ?>
-		                <?php endforeach;?>
-	                    <p>* <?php echo $html; ?></p>
-	            	<?php endif; ?>  
-				<?php endif; ?> 
-				
-				<?php //allure add code start?>
-				<?php if ($isBackordered) :?> 
-				<?php
-                	$message = "";
-                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());
-                	if(!empty($stockMsg))
-                		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-                	else 
-                		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
-                ?>
-                <p><?php echo $message ?></p>
-				<?php else : ?> 
-					<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
-				<?php endif; ?>
-				<?php //allure add code end?>    
-				
+            <div class="item-msg">
+             	<p><?php echo $message ?></p>
             </div>
         </td>
     </tr>
 <?php endif; ?>
+
 <script>
 jQuery(document).ready(function(){
 	if (jQuery('.messages').length > 0) {
 		jQuery('tr.messages-tr').css('border','none');
 	}
 });
+
+function removeProductFromCart(item_id) {
+        var form_key = jQuery('.mt-my-cart #shopping-cart-form input').val();
+
+        if (itemXhr == null) {
+            showLoadingFancybox();
+            itemXhr = jQuery.ajax({
+                url: '<?php echo Mage::getBaseUrl('web') . 'checkout/cart/removeItemAjax';?>',
+                dataType: 'json',
+                type: 'POST',
+                data: {'id': item_id, 'form_key': form_key},
+                success: function (data) {
+                    if (data.success) {
+                        jQuery('#ajax_cart_content').html(data.top_cart);
+                        jQuery('.mt-my-cart').html("");
+
+                        if (!jQuery("#myaccount-cart-count").length) {
+                            jQuery("#myaccount-cart-total-item").text(0);
+                            jQuery("#myaccount-cart-total-item").show();
+                        }
+                        jQuery('.mt-my-cart').html(data.html);
+                    }
+                    itemXhr = null;
+                    hideLoadingFancybox();
+                }
+            });
+        }
+
+}
 </script>
 

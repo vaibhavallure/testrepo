@@ -46,7 +46,6 @@ $typeId = $_item->getProduct()->getTypeId();
 
     <td class="cart_col2">
         <!--a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove2"><?php echo $this->__('Remove item')?></a>-->
-
         <h2 class="product-name">
         <?php if ($this->hasProductUrl()):?>
             <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
@@ -216,7 +215,7 @@ $typeId = $_item->getProduct()->getTypeId();
         <?php endif; ?>
     </td>
 </tr>
-<?php if (count($messages)): ?>
+<?php if (count($messages) && 0): ?>
     <tr class="messages">
         <td colspan="6">
             <div class="item-msg <?php echo $message['type'] ?>">

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Teamwork_Universalcustomers>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Teamwork_Universalcustomers>
+    </modules>
+</config>

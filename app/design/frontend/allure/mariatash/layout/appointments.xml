@@ -1,5 +1,5 @@
-<?xml version="1.0"?>   
-<layout version="0.1.0"> 
+<?xml version="1.0"?>
+<layout version="0.1.0">
 	<default_app>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/timeslider/sliderDemo.js</name></action>
@@ -11,17 +11,46 @@
             <action method="addCss"><stylesheet>css/responsive.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/timeslider/sliderDemo.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/timeslider/dcalendar_picker.css</stylesheet></action>
-            <!-- <action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action> -->  <!--This added for calender styling  -->      
+            <!-- <action method="addCss"><stylesheet>css/jquery-ui.css</stylesheet></action> -->  <!--This added for calender styling  -->
              <action method="addJs"><script>jquery/jquery.jcarousel.min.js</script></action>
-             <action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>                  
+             <action method="addCss"><stylesheet>css/recently.viewed.css</stylesheet></action>
         </reference>
-    </default_app>   
-  	<appointments_index_index>  
-  	<update handle = "default_app" /> 
-	    <reference name="root">   
-	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>   
-	    </reference>   
-	    <reference name="content">   
+    </default_app>
+  	<appointments_index_index>
+		<update handle = "default_app" />
+	    <reference name="root">
+	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+	    </reference>
+	    <reference name="content">
+	      <block type="appointments/index" name="appointments_index" as="appointments_index" template="appointments/index.phtml">
+	      	  	<block type="appointments/index" name="appointments_storelocation" as="appointments_storelocation" template="appointments/storelocation.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_piercing" as="appointments_piercing" template="appointments/piercing.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_pickurday" as="appointments_pickurday" template="appointments/pickurday.phtml"/>
+	      	  	<block type="appointments/index" name="appointments_pickurtime" as="appointments_pickurtime" template="appointments/pickurtime.phtml"/>
+	      	  	<block type="appointments/registration" name="appointments_signin_register" as="appointments_signin_register" template="appointments/signin_register.phtml">
+	      	  		<block type="appointments/pricing" name="appointments_piercing_pricing" as="appointments_piercing_pricing" template="appointments/pricing.phtml"/>
+	      	  	</block>
+	      	  	<block type="core/template" name="appointments_signin" as="appointments_signin" template="appointments/mini.login.phtml"/>
+	      	  	<block type="core/template" name="appointments_success" as="appointments_success" template="appointments/success_appointments.phtml"/>
+	      </block>
+	    </reference>
+	</appointments_index_index>
+	<appointments_index_modify>
+	  <update handle = "default_app" />
+	    <reference name="root">
+	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+	    </reference>
+	    <reference name="content">
+	      <block type="appointments/modify" name="appointments_modify" as="appointments_modify" template="appointments/modify_appointments.phtml">
+	      </block>
+	    </reference>
+	</appointments_index_modify>
+	<appointments_index_facebook>
+  		<update handle = "default_app" />
+	    <reference name="root">
+	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+	    </reference>
+	    <reference name="content">
 	      <block type="appointments/index" name="appointments_index" as="appointments_index" template="appointments/index.phtml">
 	      	  	<block type="appointments/index" name="appointments_storelocation" as="appointments_storelocation" template="appointments/storelocation.phtml"/>
 	      	  	<block type="appointments/index" name="appointments_piercing" as="appointments_piercing" template="appointments/piercing.phtml"/>
@@ -30,17 +59,43 @@
 	      	  	<block type="appointments/registration" name="appointments_signin_register" as="appointments_signin_register" template="appointments/signin_register.phtml"/>
 	      	  	<block type="core/template" name="appointments_signin" as="appointments_signin" template="appointments/mini.login.phtml"/>
 	      	  	<block type="core/template" name="appointments_success" as="appointments_success" template="appointments/success_appointments.phtml"/>
-	      </block>   
-	    </reference>   
-  </appointments_index_index>  
-  <appointments_index_modify>   
-  <update handle = "default_app" /> 
-	    <reference name="root">   
-	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>   
-	    </reference>   
-	    <reference name="content">   
-	      <block type="appointments/modify" name="appointments_modify" as="appointments_modify" template="appointments/modify_appointments.phtml">	      	  	
-	      </block>   
-	    </reference>   
-  </appointments_index_modify>
+	      </block>
+	    </reference>
+	</appointments_index_facebook>
+	<appointments_book_store>
+		<update handle = "default_app" />
+		<reference name="root">
+			<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="appointments/index" name="appointments_index" as="appointments_index" template="appointments/index.phtml">
+				  <block type="appointments/index" name="appointments_storelocation" as="appointments_storelocation" template="appointments/storelocation.phtml"/>
+				  <block type="appointments/index" name="appointments_piercing" as="appointments_piercing" template="appointments/piercing.phtml"/>
+				  <block type="appointments/index" name="appointments_pickurday" as="appointments_pickurday" template="appointments/pickurday.phtml"/>
+				  <block type="appointments/index" name="appointments_pickurtime" as="appointments_pickurtime" template="appointments/pickurtime.phtml"/>
+				  <block type="appointments/registration" name="appointments_signin_register" as="appointments_signin_register" template="appointments/signin_register.phtml">
+					  <block type="appointments/pricing" name="appointments_piercing_pricing" as="appointments_piercing_pricing" template="appointments/pricing.phtml"/>
+				  </block>
+				  <block type="core/template" name="appointments_signin" as="appointments_signin" template="appointments/mini.login.phtml"/>
+				  <block type="core/template" name="appointments_success" as="appointments_success" template="appointments/success_appointments.phtml"/>
+			</block>
+		</reference>
+	</appointments_book_store>
+	<appointments_book_facebook>
+    	<update handle = "default_app" />
+  	    <reference name="root">
+  	     	<action method="setTemplate"><template>appointments/1column-appointments.phtml</template></action>
+  	    </reference>
+  	    <reference name="content">
+  	      <block type="appointments/index" name="appointments_index" as="appointments_index" template="appointments/index.phtml">
+  	      	  	<block type="appointments/index" name="appointments_storelocation" as="appointments_storelocation" template="appointments/storelocation.phtml"/>
+  	      	  	<block type="appointments/index" name="appointments_piercing" as="appointments_piercing" template="appointments/piercing.phtml"/>
+  	      	  	<block type="appointments/index" name="appointments_pickurday" as="appointments_pickurday" template="appointments/pickurday.phtml"/>
+  	      	  	<block type="appointments/index" name="appointments_pickurtime" as="appointments_pickurtime" template="appointments/pickurtime.phtml"/>
+  	      	  	<block type="appointments/registration" name="appointments_signin_register" as="appointments_signin_register" template="appointments/signin_register.phtml"/>
+  	      	  	<block type="core/template" name="appointments_signin" as="appointments_signin" template="appointments/mini.login.phtml"/>
+  	      	  	<block type="core/template" name="appointments_success" as="appointments_success" template="appointments/success_appointments.phtml"/>
+  	      </block>
+  	    </reference>
+    </appointments_book_facebook>
 </layout>

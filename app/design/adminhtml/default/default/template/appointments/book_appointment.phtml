@@ -1,7 +1,7 @@
 <?php ?>
 <div class="content-header">
 	<h3 class="icon-head"><?php echo 'Book New Appointment' ?></h3>
-	<button  onclick="location.href='<?php echo Mage::getBaseUrl('web').'admin_appointments/adminhtml_appointments/'?>'" style="float:right" id="book_another" class="book_another" ><?php echo 'Back' ?></button>
+	<button  onclick="location.href='<?php echo Mage::helper('adminhtml')->getUrl('admin_appointments/adminhtml_appointments/')?>'" style="float:right" id="book_another" class="book_another" ><?php echo 'Back' ?></button>
 </div>
 
 <?php
@@ -22,7 +22,7 @@ $embedded = $this->getRequest()->getParam('embedded');
 		else:
 		?>
 		<?php //if(Mage::getSingleton("core/session")->getData('appointmentData_availablity')):?>
-			<form action="<?php echo   Mage::getBaseUrl('web').'admin_appointments/adminhtml_index/save' ?>" name="" id="admin_appointemnet_form" method="POST">		
+			<form action="<?php echo Mage::helper('adminhtml')->getUrl('admin_appointments/adminhtml_index/save'); ?>" name="" id="admin_appointemnet_form" method="POST">		
 			<?php if($fetch_aptId):?> <input type="hidden" name="id" value="<?php echo $fetch_aptId;?>"><?php endif;?>
 			<?php //echo $this->getBlockHtml('formkey');?>
 			<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
@@ -59,8 +59,8 @@ if (typeof Allure == "undefined") {
 } 
 Allure.appointmentId = '<?php echo $this->getRequest()->getParam('id')?>';
 Allure.adminFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
-Allure.adminAjaxGetTimeUrl = '<?php echo  Mage::getBaseUrl('web').'admin_appointments/index/ajaxGetTime';?>';
-Allure.adminAjaxGetWorkingDaysUrl = '<?php echo Mage::getBaseUrl('web').'admin_appointments/adminhtml_index/ajaxGetWorkingDays';?>';
+Allure.adminAjaxGetTimeUrl = '<?php echo  Mage::helper('adminhtml')->getUrl('admin_appointments/index/ajaxGetTime');?>';
+Allure.adminAjaxGetWorkingDaysUrl = '<?php echo Mage::helper('adminhtml')->getUrl('admin_appointments/adminhtml_index/ajaxGetWorkingDays');?>';
 
 </script>
 

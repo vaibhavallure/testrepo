@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Sendfriend
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -126,7 +126,7 @@ class Mage_Sendfriend_Model_Sendfriend extends Mage_Core_Model_Abstract
 
         $message = nl2br(htmlspecialchars($this->getSender()->getMessage()));
         $sender  = array(
-            'name'  => 'Venus by Maria Tash',
+            'name'  => $this->_getHelper()->escapeHtml($this->getSender()->getName()),
             'email' => $this->_getHelper()->escapeHtml($this->getSender()->getEmail())
         );
 
@@ -148,11 +148,10 @@ class Mage_Sendfriend_Model_Sendfriend extends Mage_Core_Model_Abstract
                     'product_name'  => $this->getProduct()->getName(),
                     'product_url'   => $this->getProduct()->getUrlInStore(),
                     'message'       => $message,
-                    'sender_name'   => $this->_getHelper()->htmlEscape($this->getSender()->getName()),
+                    'sender_name'   => $sender['name'],
                     'sender_email'  => $sender['email'],
-                    'product_image' => Mage::helper('catalog/image')
-                                        ->init($this->getProduct(), 'small_image')
-                                        ->resize(350),
+                    'product_image' => Mage::helper('catalog/image')->init($this->getProduct(),
+                        'small_image')->resize(150)
                 )
             );
         }
@@ -292,7 +291,9 @@ class Mage_Sendfriend_Model_Sendfriend extends Mage_Core_Model_Abstract
         $bHasNames = false;
 
         // validate array
-        if (!is_array($recipients) OR !isset($recipients['email']) OR !is_array($recipients['email'])) {
+        if (!is_array($recipients) OR !isset($recipients['email'])
+            OR !isset($recipients['name']) OR !is_array($recipients['email'])
+            OR !is_array($recipients['name'])) {
             return $this;
         }
 

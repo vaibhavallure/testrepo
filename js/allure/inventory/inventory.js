@@ -4,7 +4,7 @@ if (typeof Allure == "undefined") {
 }
 $j(document).ready(function (){
 	var data=getStoredData();
-	$j("input:checkbox").change(function(){
+	$j(".include_items").change(function(){
 		var selected = [];
         var ischecked= $j(this).is(':checked');
         
@@ -13,6 +13,7 @@ $j(document).ready(function (){
         var is_custom=parseInt($j('#is_custom_'+id).val());
         var cost=parseFloat($j('#cost_'+id).val());
     	var refence_no=$j('#refence_no').val();
+    	var vendor_sku=$j('#vendor_sku_'+id).val();
     	var key=Allure.ViewPurchaseOrderFormKey;
         var comment=$j('#comment_'+id).val();
         var store=$j('#store').val();
@@ -27,7 +28,7 @@ $j(document).ready(function (){
 	        	totalAmount=totalAmount + (qty * cost);
 	        	var include = 1;
 	        	var item ={
-	        			id,qty,cost,comment,include,store,is_custom
+	        			id,qty,cost,comment,include,store,is_custom,vendor_sku
 	        	};
 	        	$j.ajax({
 	    	        url: Allure.AddPurchaseItem,
@@ -41,6 +42,7 @@ $j(document).ready(function (){
 	    	            $j('#max_qty_'+id).prop('disabled', true);
 	    	            $j('#cost_'+id).prop('disabled', true);
 	    	            $j('#comment_'+id).prop('disabled', true);
+	    	            $j('#vendor_sku_'+id).prop('disabled', true);
 	    	        }
 	    	    });
 	        }
@@ -48,7 +50,7 @@ $j(document).ready(function (){
         	totalAmount= totalAmount -(qty * cost);
         	var include = 0;
         	var item ={
-        			id,qty,cost,comment,include,store,is_custom
+        			id,qty,cost,comment,include,store,is_custom,vendor_sku
         	};
         	$j.ajax({
     	        url: Allure.AddPurchaseItem,
@@ -62,6 +64,7 @@ $j(document).ready(function (){
     	        	 $j('#max_qty_'+id).prop('disabled', false);
     	        	 $j('#cost_'+id).prop('disabled', false);
     	             $j('#comment_'+id).prop('disabled', false);
+    	             $j('#vendor_sku_'+id).prop('disabled', false);
     	        	
     	        }
     	    });
@@ -184,6 +187,8 @@ function updateTotal(data){
 	    $j('#comment_'+value['item_id']).prop('disabled', true);
 	    $j('#cost_'+value['item_id']).val(value['cost']);
 	    $j('#cost_'+value['item_id']).prop('disabled', true);
+	    $j('#vendor_sku_'+value['item_id']).val(value['vendor_sku']);
+	    $j('#vendor_sku_'+value['item_id']).prop('disabled', true);
 	});
 	/*console.log(data.length);
 	var sum = 0;
@@ -206,7 +211,7 @@ function updateTotal(data){
 		if(data[key].include)
 		$j("#"+key).prop( "checked", true );
 	}*/
-	$j('#order_total').val(sum)
+	$j('#order_total').val(sum);
 	return sum;
 }	
 
@@ -227,7 +232,27 @@ function updateReceivingTotalQty(e){
     var value =parseInt(e.value);
     var prevQty=parseInt(jQuery('#current_'+id).val());
     var qty = value+ prevQty;
-    jQuery("#total_"+id).text(qty);
+    if(!isNaN(qty)){
+    	jQuery("#total_"+id).text(qty);
+    	updateTotalReciving(id,value);
+    }
+}
+function updateTotalReciving(id,qty){
+ 	var currcost=parseInt(jQuery('#currentcost_'+id).val());
+    var cost = currcost*qty;
+    if(!isNaN(cost))
+    	jQuery("#total_cost_"+id).text(cost);
+}
+function updateTotalCost(e){
+    var id = e; // get the value.
+    var value =parseInt(jQuery('#currentcost_'+id).val());
+    var qty=parseInt(jQuery('.addedQty_'+id).val());
+    
+    //alert(value);
+    var cost = value*qty;
+    //alert(cost);
+    if(!isNaN(cost))
+    	jQuery("#total_cost_"+id).text(cost);
 }
 function resetSearch(){
 	var url ="";
@@ -237,6 +262,10 @@ function resetSearch(){
 }
  function getStoredData(){
     var store=$j('#store').val();
+    if(Allure.currentStore == store){
+    	return;
+    }
+    Allure.currentStore = store;
 	var key=Allure.ViewPurchaseOrderFormKey;
 	$j.ajax({
         url: Allure.GetStoredInfo,
@@ -253,4 +282,159 @@ function resetSearch(){
         }
     });
 }
+ function removeSelected(productId,store){
+	 var orderId=$j('#order_id').val();
+	 var key=Allure.ViewPurchaseOrderFormKey;
+	// alert("order:"+orderId+'Store:'+store+'product:'+productId);
+	 if(confirm("Are you sure ?")){
+		 $j.ajax({
+		        url: Allure.InventoryPurchaseItemRemove,
+		        dataType : 'json',
+				type : 'POST',
+				data: {'form_key':key,'store':store,'product':productId,'order':orderId},
+				beforeSend: function() { $j('#loading-mask').show(); },
+		        complete: function() { $j('#loading-mask').hide(); },
+		        success: function(data) {
+		        	//console.log(data.data);
+		        	location.reload() 
+		        }
+		    });
+	   }
+	}
+	
+	
+$j(document).ready(function (){
+    var data=getDraftSelectedItems();
+	$j(".include_product").change(function(){
+	
+		var ischeckEnable= $j(this).is(':checked');
+        var id=parseInt($j(this).attr('id'));
+        var qty=parseInt($j('#requested_qty_'+id).val());
+        var is_custom=parseInt($j('#is_custom_'+id).val());
+        var cost=parseFloat($j('#cost_'+id).val());
+    	var refence_no=$j('#refence_no').val();
+    	var vendor_sku=$j('#vendor_sku_'+id).val();
+    	var key=Allure.ViewPurchaseOrderFormKey;
+        var comment=$j('#admin_comment_'+id).val();
+        var store=$j('#store').val();
+        var po_id=$j('#po_id').val();
+        //alert("id:"+id+" Qty::"+qty+" Cost::"+cost+" vendor_sku::"+vendor_sku+"comment:"+comment);
+        var totalAmount = parseInt($j('#order_total').val());
+        //alert(store);
+        //alert(isOneChecked());
+        //console.log("check");
+        //console.log(isOneChecked());
+        if(typeof po_id == 'undefined')
+    		po_id=Allure.PoId;
+    	if(typeof store == 'undefined')
+    		store=Allure.Store;
+        
+        if(ischeckEnable){
+	        if(qty<=0 || cost <=0){
+	        	 alert('Please Enter Qty or Cost Greater than 0.');
+	        	 $j(this).removeAttr('checked');
+	        }
+	        else{ 
+	        	if(!isOneChecked())
+	        		totalAmount=0;
+	        	totalAmount=totalAmount + (qty * cost);
+	        	var include = 1;
+	        	var item ={
+	        			id,qty,cost,comment,include,store,vendor_sku,po_id,is_custom
+	        	};
+	        	$j.ajax({
+	    	        url: Allure.AddConfirmProduct,
+	    	        dataType : 'json',
+	    			type : 'POST',
+	    			data: {'item':item,'form_key':key,'refence_no':refence_no,'order_total':totalAmount},
+	    			beforeSend: function() { $j('#loading-mask').show(); },
+	    	        complete: function() { $j('#loading-mask').hide(); },
+	    	        success: function(data) {
+	    	            $j('#order_total').val(totalAmount);
+	    	            $j('#requested_qty_'+id).prop('disabled', true);
+	    	            $j('#cost_'+id).prop('disabled', true);
+	    	            $j('#admin_comment_'+id).prop('disabled', true);
+	    	            $j('#vendor_sku_'+id).prop('disabled', true);
+	    	        }
+	    	    });
+	        }
+        }else{
+        
+        	totalAmount= totalAmount -(qty * cost);
+        	var include = 0;
+        	var item ={
+        			id,qty,cost,comment,include,store,vendor_sku,po_id,is_custom
+        	};
+        	$j.ajax({
+    	        url: Allure.AddConfirmProduct,
+    	        dataType : 'json',
+    			type : 'POST',
+    			data: {'item':item,'form_key':key,'refence_no':refence_no,'order_total':totalAmount},
+    			beforeSend: function() { $j('#loading-mask').show(); },
+    	        complete: function() { $j('#loading-mask').hide(); },
+    	        success: function(data) {
+    	        	 $j('#order_total').val(totalAmount);
+    	        	 $j('#requested_qty_'+id).prop('disabled', false);
+    	        	 $j('#cost_'+id).prop('disabled', false);
+    	             $j('#admin_comment_'+id).prop('disabled', false);
+    	             $j('#vendor_sku_'+id).prop('disabled', false);
+    	        	
+    	        }
+    	    });
+        	
+         }
+        
+	});
+})
+function getDraftSelectedItems(){
+    var store=$j('#store').val();
+    var po_id=$j('#po_id').val();
 
+	$status=Allure.OrderStatus;
+	if($status=="draft"){
+	   if(typeof po_id == 'undefined')
+	    	po_id=Allure.PoId;
+	    if(typeof store == 'undefined')
+	    	store=Allure.Store;
+	    	
+	    Allure.currentStore = store;
+		var key=Allure.ViewPurchaseOrderFormKey;
+		$j.ajax({
+	        url: Allure.GetDraftSelectedItems,
+	        dataType : 'json',
+			type : 'POST',
+			data: {'form_key':key,'store':store,'po_id':po_id},
+			beforeSend: function() { $j('#loading-mask').show(); },
+	        complete: function() { $j('#loading-mask').hide(); },
+	        success: function(data) {
+	        	//console.log(data.data);
+	        	if(data.data){
+	        			updateDraft(data.data);
+		        	}
+	        }
+	    });
+	 }
+}
+
+function isOneChecked() {
+	//console.log($j(".include_product:checked").length);
+    return ($j(".include_product:checked").length > 1);
+}
+function updateDraft(data){
+	var sum = 0;
+	data.forEach(function(value) {
+		sum += value['cost'] * value['qty'];
+	    $j('#'+value['item_id']).prop( "checked", true );
+	    $j('#requested_qty_'+value['item_id']).val(value['qty']);
+	    $j('#requested_qty_'+value['item_id']).prop('disabled', true);
+	    $j('#admin_comment_'+value['item_id']).val(value['comment']);
+	    $j('#admin_comment_'+value['item_id']).prop('disabled', true);
+	    $j('#cost_'+value['item_id']).val(value['cost']);
+	    $j('#cost_'+value['item_id']).prop('disabled', true);
+	    $j('#vendor_sku_'+value['item_id']).val(value['vendor_sku']);
+	    $j('#vendor_sku_'+value['item_id']).prop('disabled', true);
+	});
+	if(sum >0 )
+		$j('#order_total').val(sum);
+	return sum;
+}	

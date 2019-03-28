@@ -83,12 +83,14 @@ if (count($_options) || $this->getProduct()->isConfigurable()):
             this.reloadPrice();
         },
         reloadPrice : function(){
+            console.log('In reload price');
             price = new Number();
             config = this.config;
             skipIds = [];
             $$('.product-custom-option').each(function(element){
                 var optionId = 0;
                 element.name.sub(/[0-9]+/, function(match){
+                    console.log(match[0]);
                     optionId = match[0];
                 });
                 if (this.config[optionId]) {
@@ -113,8 +115,30 @@ if (count($_options) || $this->getProduct()->isConfigurable()):
                         if (element.options) {
                             $A(element.options).each(function(selectOption){
                                 if (selectOption.selected) {
-                                    if (this.config[optionId][selectOption.value]) {
-                                        	price += parseFloat(this.config[optionId][selectOption.value]);
+                                    //allure code  start
+                                    //parent child code
+                                    var flagF = true;
+                                    if(jQuery('#parent-child-product').length){
+                                        var checkParentChild = jQuery('#parent-child-product').val();
+                                        if(checkParentChild == 1){
+                                            flagF = true;
+                                        }
+                                    }
+
+                                    if(flagF){
+                                        if (this.config[optionId][selectOption.value]) {
+                                            if (this.config[optionId][selectOption.value].price!="NaN"
+                                                || this.config[optionId][selectOption.value].price!="undefined")
+                                                price += parseFloat(this.config[optionId][selectOption.value].price);
+                                            else
+                                                price += parseFloat(this.config[optionId][selectOption.value]);
+                                        }
+                                    }else {
+                                        //non parent child code
+                                        //existing code
+                                        if (this.config[optionId][selectOption.value]) {
+                                            price += parseFloat(this.config[optionId][selectOption.value]);
+                                        }
                                     }
                                 }
                             });

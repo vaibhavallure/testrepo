@@ -18,12 +18,12 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Columns
         $fields = array();
         $hidden = array();
         $removeFields = array('has_options', 'required_options', 'category_ids', 'minimal_price');
-        if ($this->getProfile()->getProfileType()=='import') {
+        if ($this->getProfile()->getProfileType() === 'import') {
             $removeFields = array_merge($removeFields, array('created_at', 'updated_at'));
         }
-        foreach ($attrs as $k=>$a) {
+        foreach ($attrs as $k => $a) {
             $attr = $a->toArray();
-            if ($attr['frontend_input']=='gallery' || in_array($attr['attribute_code'], $removeFields)) {
+            if ($attr['frontend_input'] === 'gallery' || in_array($attr['attribute_code'], $removeFields)) {
                 continue;
             }
             if (empty($attr['frontend_label'])) {

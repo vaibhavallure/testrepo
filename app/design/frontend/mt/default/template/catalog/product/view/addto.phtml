@@ -111,23 +111,27 @@ if($_product->isConfigurable()){
             if (jQuery('.ajax-error-messages')) {
                 jQuery('.ajax-error-messages').remove();
             }
-
-            jQuery('.required-entry:not(.selectboxit)').each(function () {
+            jQuery('#product_addtocart_form .required-entry:not(.selectboxit)').each(function () {
                 if (!jQuery(this).val()) {
                     hasErrors = true;
                     jQuery('<div class="ajax-error-messages"><?php echo $this->__('This field is required!'); ?></div>').insertAfter(jQuery(this).parent());
                 }
             });
-
             if (hasErrors) {
                 return false;
             }
 			var pid = jQuery('#pid-hidden').val();
-            if (typeof spConfig<?php echo $_product->getId(); ?> == 'undefined') {
-				wishlistForm.submitAjaxWishlist(this, '<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>cpid/<?php echo $_product->getId()?>/product/'+pid +'/', '<?php echo $_product->getId()?>');
-            } else {
-                wishlistForm.submitAjaxWishlist(this, faveArray[spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct()], spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct());
-            }
+
+			//comment by allure
+            //if (typeof spConfig<?php echo $_product->getId(); ?> == 'undefined') {
+			//	wishlistForm.submitAjaxWishlist(this, '<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>cpid/<?php echo $_product->getId()?>/product/'+pid +'/', '<?php echo $_product->getId()?>');
+            //} else {
+            //    wishlistForm.submitAjaxWishlist(this, faveArray[spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct()], spConfig<?php echo $_product->getId(); ?>.getIdOfSelectedProduct());
+            //}
+
+            //allure code
+			wishlistForm.submitAjaxWishlist(this,'<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>product/<?php echo $_product->getId()?>/', '<?php echo $_product->getId()?>' , jQuery('input[name="product"]').val());
+            
 		}
 	</script>
 <?php endif; ?>

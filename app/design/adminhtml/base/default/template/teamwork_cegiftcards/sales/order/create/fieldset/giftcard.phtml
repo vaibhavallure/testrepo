@@ -1,0 +1,162 @@
+<?php
+$_product = $this->getProduct();
+$_skipSaleableCheck = Mage::helper('catalog/product')->getSkipSaleableCheck();
+$_amounts = $this->getAmountList($_product);
+$_defaultAmount = $this->getDefaultValue('giftcard_amount');
+?>
+
+<div id="catalog_product_composite_configure_fields_downloadable" class="giftcard-form <?php echo $this->getIsLastFieldset() ? 'last-fieldset' : '' ?>">
+<?php if (!$_product->isAvailable() && !$_skipSaleableCheck): ?>
+    <p class="availability out-of-stock"><?php echo $this->helper('catalog')->__('Availability:') ?> <span><?php echo $this->helper('catalog')->__('Out of stock') ?></span></p>
+<?php endif; ?>
+    <div class="product-options">
+<?php if (($_product->isSaleable() || $_skipSaleableCheck) && ($this->isEmailAvailable($_product) || !$this->isAmountLikePrice())): ?>
+        <div class="giftcard-send-form">
+            <ul class="form-list">
+                <?php if (!$this->isAmountLikePrice()): ?>
+                <li class="fields" id="giftcard_amount_container">
+                    <div class="field">
+                    <?php if ($this->isAmountAvailable($_product)): ?>
+                        <label for="giftcard_amount" id="giftcard_amount_label" class="required"><span><em>*</em><?php echo Mage::helper('teamwork_cegiftcards')->__('Amount'); ?></span></label>
+                    <?php endif; ?>
+                    <?php if ($this->isOpenAmountAvailable($_product)): ?>
+                        <label for="giftcard_amount_custom" id="giftcard_amount_custom_label" class="required"><span><em>*</em><?php echo Mage::helper('teamwork_cegiftcards')->__('Amount in %s', $this->getCurrentCurrency()); ?></span></label>
+                    <?php endif; ?>
+                    <?php if ($this->isOpenAmountAvailable($_product)): ?>
+                        <div id="giftcard_custom_amount_box" class="input-box">
+                            <input type="text" id="giftcard_amount_custom" name="giftcard_amount_custom" class="validate-number required-entry input-text giftcard-amount-entry giftcard-min-amount giftcard-max-amount" value="<?php echo $this->escapeHtml($this->getDefaultValue('giftcard_amount_custom')) ?>" />
+                            <?php if ($_product->getGiftcardAmountMin() || $_product->getGiftcardAmountMax()): ?>
+                                <?php $_min = Mage::helper('core')->currency($_product->getGiftcardAmountMin(), true, false); ?>
+                                <?php $_max = Mage::helper('core')->currency($_product->getGiftcardAmountMax(), true, false); ?>
+                                <p class="notice">
+                                    <?php if ($_product->getGiftcardAmountMax() && $_product->getGiftcardAmountMin()): ?>
+                                    <span><?php echo Mage::helper('teamwork_cegiftcards')->__('Minimum: %s', $_min); ?></span>
+                                    <span><?php echo Mage::helper('teamwork_cegiftcards')->__('Maximum: %s', $_max); ?></span>
+                                    <?php elseif ($_product->getGiftcardAmountMin()): ?>
+                                    <span><?php echo Mage::helper('teamwork_cegiftcards')->__('Minimum: %s', $_min); ?></span>
+                                    <?php elseif ($_product->getGiftcardAmountMax()): ?>
+                                    <span><?php echo Mage::helper('teamwork_cegiftcards')->__('Maximum: %s', $_max); ?></span>
+                                    <?php endif; ?>
+                                </p>
+                                <script type="text/javascript">
+                                //<![CDATA[
+                                    minAllowedAmount = <?php echo Mage::helper('core')->currency($_product->getGiftcardAmountMin(), false, false) ?>;
+                                    maxAllowedAmount = <?php echo Mage::helper('core')->currency($_product->getGiftcardAmountMax(), false, false) ?>;
+
+                                    function parsePrice(value) {
+                                        value = value.replace('\'', '').replace(' ', '');
+                                        separatorComa = value.indexOf(',');
+                                        separatorDot  = value.indexOf('.');
+
+                                        if (separatorComa != -1 && separatorDot != -1) {
+                                            if (separatorComa > separatorDot) {
+                                                value = value.replace('.', '').replace(',', '.');
+                                            } else {
+                                                    value = value.replace(',', '');
+                                            }
+                                        } else if (separatorComa != -1) {
+                                            value = value.replace(',', '.');
+                                        }
+                                        return parseFloat(value);
+                                    }
+
+                                    Validation.add('giftcard-min-amount', '<?php echo Mage::helper('teamwork_cegiftcards')->__('Entered amount is too low'); ?>', function(v) {
+                                        return (parsePrice(v) >= minAllowedAmount);
+                                    });
+                                    Validation.add('giftcard-max-amount', '<?php echo Mage::helper('teamwork_cegiftcards')->__('Entered amount is too high'); ?>', function(v) {
+                                        if (maxAllowedAmount == 0) {return true;}
+                                        return (parsePrice(v) <= maxAllowedAmount);
+                                    });
+                                //]]>
+                                </script>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($this->isAmountAvailable($_product)):?>
+                    <div id="giftcard_amount_box" class="input-box">
+                        <select name="giftcard_amount" id="giftcard_amount" class="required-entry giftcard-amount-entry">
+                            <option value=""><?php echo Mage::helper('teamwork_cegiftcards')->__('Choose an Amount...') ?></option>
+                            <?php foreach ($_amounts as $value): ?>
+                                <option value="<?php echo $value; ?>" <?php echo (($_defaultAmount == $value) ? 'selected' : '')?>><?php echo Mage::helper('core')->currency($value, true, false); ?></option>
+                            <?php endforeach; ?>
+                            <?php if ($_product->getGiftcardOpenAmount()):?>
+                            <option value="custom" <?php echo (($_defaultAmount == 'custom') ? 'selected' : '')?>><?php echo Mage::helper('teamwork_cegiftcards')->__('Other Amount...') ?></option>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+
+                        <?php if ($this->isOpenAmountAvailable($_product)): ?>
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        Event.observe($('giftcard_amount'), 'change', switchGiftCardInputs);
+                        function switchGiftCardInputs() {
+                            var value = $('giftcard_amount').options[$('giftcard_amount').selectedIndex].value;
+                            if (value == 'custom') {
+                                //$('giftcard_amount_custom_label').show();
+                                $('giftcard_amount_custom_label').show();
+                                $('giftcard_custom_amount_box').show();
+                                $('giftcard_amount_label').hide();
+                                $('giftcard_amount_custom').disabled = false;
+                            } else {
+                                $('giftcard_amount_custom_label').hide();
+                                $('giftcard_custom_amount_box').hide();
+                                $('giftcard_amount_label').show();
+                                $('giftcard_amount_custom').disabled = true;
+                            }
+                        }
+                        switchGiftCardInputs();
+                    //]]>
+                    </script>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    </div>
+                </li>
+                <?php endif; ?>
+
+                <?php if ($this->isEmailAvailable($_product)): ?>
+                <li class="fields">
+                    <div class="field">
+                        <label for="giftcard_sender_name" class="required"><em>*</em><?php echo Mage::helper('teamwork_cegiftcards')->__('Sender Name'); ?></label>
+                        <div class="input-box">
+                            <input type="text" id="giftcard_sender_name" name="giftcard_sender_name" class="required-entry input-text" value="<?php echo $this->escapeHtml($this->getDefaultValue('giftcard_sender_name')) ?>" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="giftcard_sender_email" class="required"><em>*</em><?php echo Mage::helper('teamwork_cegiftcards')->__('Sender Email'); ?></label>
+                        <div class="input-box">
+                            <input type="text" id="giftcard_sender_email" name="giftcard_sender_email" class="validate-email required-entry input-text" value="<?php echo $this->escapeHtml($this->getDefaultValue('giftcard_sender_email')) ?>"/>
+                        </div>
+                    </div>
+                </li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="giftcard_recipient_name" class="required"><em>*</em><?php echo Mage::helper('teamwork_cegiftcards')->__('Recipient Name'); ?></label>
+                        <div class="input-box">
+                            <input type="text" id="giftcard_recipient_name" name="giftcard_recipient_name" class="required-entry input-text" value="<?php echo $this->escapeHtml($this->getDefaultValue('giftcard_recipient_name')) ?>" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="giftcard_recipient_email" class="required"><em>*</em><?php echo Mage::helper('teamwork_cegiftcards')->__('Recipient Email'); ?></label>
+                        <div class="input-box">
+                            <input type="text" id="giftcard_recipient_email" name="giftcard_recipient_email" class="validate-email required-entry input-text" value="<?php echo $this->escapeHtml($this->getDefaultValue('giftcard_recipient_email')) ?>" />
+                        </div>
+                    </div>
+                </li>
+                    <?php if ($this->isMessageAvailable($_product)): ?>
+                <li>
+                    <div class="field">
+                        <label for="giftcard_message"><?php echo Mage::helper('teamwork_cegiftcards')->__('Message'); ?></label>
+                        <div class="input-box">
+                            <textarea name="giftcard_message" id="giftcard_message" class="input-text giftcard-message-max-length" cols="5" rows="3"><?php echo $this->escapeHtml($this->getDefaultValue('giftcard_message')) ?></textarea>
+                        </div>
+                    </div>
+                </li>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+    </div>
+</div>

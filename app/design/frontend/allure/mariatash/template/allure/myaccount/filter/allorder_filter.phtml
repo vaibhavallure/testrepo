@@ -1,0 +1,171 @@
+<?php
+$currentFilterStore = $this->getCurrentFilterStore();
+$currentSort        = $this->getCurrentFilterSortOrder();
+$currentOrderStatus = $this->getCurrentFilterAllOrderStatus();
+$stores             = $this->getAllStores();
+$storeArr           = $this->getStoreListArray();
+$sortOderArr        = $this->getSortOrderArray();
+$helper             = Mage::helper("myaccount");
+$orderStatus        = $this->getOrderFilterStatusArray($helper::ALL_ORDER);
+?>
+
+<div id="mt-filter-toolbar">
+	<div class="toolbar-top">
+	   <div class="toolbar">
+	      <div class="sorter">
+	          <span class="mt-a_sortby filter_by" href="#">
+	          	  <img src="/skin/frontend/allure/mariatash/images/filter.png" 
+	          	  	height="100%" alt="Show Filters" class="v-top"> Filter 
+	          	  <span class="glyphicon glyphicon-triangle-bottom"></span>
+	          </span>
+	       </div>
+		</div>
+	</div>
+
+	<div id="narrow-by-list" style="display: none; z-index: 1">
+		<div class="block-layered-nav-bg"><i class="glyphicon glyphicon-remove"></i></div>
+		<ul class="mt-mb-filter-ul">
+			<li class="mt-mb-filter-li">
+		        <div class="optionfilter" style="display: block;overflow: hidden">
+		            <dt class="odd"><?php echo ($currentFilterStore!='all')?$storeArr[$currentFilterStore]:"ALL STORES"?></dt>
+		            <dd class="odd" style="display:none">
+						<div class="filter_name">ALL STORES</div>
+						<ul class="mt-mb-filter-stores">
+			    			<li>
+			    			<dd value="all" <?php echo ($currentFilterStore=='all')?"class='selected-store'":""?> ><?php echo $this->__('All Stores');?></dd>
+						<?php
+							$stores = Mage::app ()->getStores ();
+							foreach ($stores as $store) :
+						?>
+    						
+							<dd value="<?php echo $store->getId()?>"
+								<?php echo ($currentFilterStore==$store->getId())?"class='selected-store'":""?>>
+							<?php echo $store->getName()?>
+							</dd>
+            				
+            			<?php endforeach;?>
+			               </li>
+						</ul>
+					</dd>
+		        </div>
+		    </li>
+		    
+		    <li class="mt-mb-filter-li">
+		     <div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
+		        <dt class="odd"><?php echo ($currentSort!='')?$sortOderArr[$currentSort]:"SORT BY"?></dt>
+		        <dd class="odd" style="display: none;">
+					<div class="filter_name">SORT BY</div>
+					<ul class="mt-mb-filter-sort">
+						<li>
+							<?php foreach ($sortOderArr as $key=>$name):?>
+							<dd value="<?php echo $key?>" <?php echo ($currentSort==$key)?"class='selected-sort-type'":""?>><?php echo $name?></dd>
+							<?php endforeach;?>
+			            </li>
+					</ul>
+				</dd>
+		     </div>
+  			</li>
+  			
+  			<li class="mt-mb-filter-li">
+		    	<div class="optionfilter" style="display: block;overflow: hidden;cursor: pointer;">
+		        	<dt class="odd"><?php echo ($currentOrderStatus != "all")? $orderStatus[$currentOrderStatus] :"ALL STATUS"?></dt>
+		           	<dd class="odd" style="display: none;">
+				   		<div class="filter_name">ALL STATUS</div>
+						<ul class="mt-mb-filter-all-order-status">
+							<li>
+								<?php foreach ($orderStatus as $key=>$name):?>
+            					<dd value="<?php echo $key?>" <?php echo ($currentOrderStatus==$key)?"class='selected-sort-type'":""?>><?php echo $name?></dd>
+            					<?php endforeach;?>
+			            	</li>
+						</ul>
+					</dd>
+		        </div>
+  			</li>
+		    
+		</ul>
+	</div>
+
+</div>
+
+
+<script>
+	jQuery(document).ready(function(){
+		jQuery('#mt-filter-toolbar .sorter').on('click',function(){
+			var uri = window.location;
+			var hash = uri.hash;
+			<?php if(0):?>
+    		if(hash=="#purchase" || hash=="#receipt" || hash=="#openorders"){
+        		console.log(jQuery('#narrow-by-list').innerHeight());
+   				if(jQuery('#mt-purchase-item-tab .no-purchase-item').length){
+   					jQuery('#mt-filter-toolbar #narrow-by-list').css({"position":"relative","margin-top":"-39px"});
+   					//jQuery('#mt-purchase-item-tab .cart-mt').css({"height":"245px"});
+   				}
+   				if(jQuery('#mt-report-tab .no-order-msg').length){
+   					jQuery('#mt-filter-toolbar #narrow-by-list').css({"position":"relative","margin-top":"-39px"});
+   					//jQuery('#mt-report-tab .box').css({"height":"245px"});
+   				}
+   				if(jQuery('#mt-openorders-tab .no-order-msg').length){
+   					jQuery('#mt-filter-toolbar #narrow-by-list').css({"position":"relative","margin-top":"-39px"});
+   					//jQuery('#mt-openorders-tab .box').css({"height":"245px"});
+   				}
+    		}
+    		<?php endif;?>
+    		jQuery('#mt-filter-toolbar #narrow-by-list').show();
+		});
+
+		jQuery('#mt-filter-toolbar #narrow-by-list .glyphicon-remove').on('click',function(){
+			jQuery('#mt-filter-toolbar #narrow-by-list').hide();
+			<?php if(0):?>
+			if(jQuery('#mt-purchase-item-tab .no-purchase-item').length){
+				jQuery('#mt-filter-toolbar #narrow-by-list').css({"position":"","margin-top":""});
+				//jQuery('#mt-purchase-item-tab .cart-mt').css({"height":""});
+			}
+			if(jQuery('#mt-report-tab .no-order-msg').length){
+				jQuery('#mt-filter-toolbar #narrow-by-list').css({"position":"","margin-top":""});
+				//jQuery('#mt-report-tab .box').css({"height":""});
+			}
+			if(jQuery('#mt-openorders-tab .no-order-msg').length){
+				jQuery('#mt-filter-toolbar #narrow-by-list').css({"position":"","margin-top":""});
+				//jQuery('#mt-openorders-tab .box').css({"height":""});
+			}
+			<?php endif;?>
+		});
+
+
+		jQuery('ul.mt-mb-filter-stores li dd').click(function(){
+            var mval = jQuery(this).attr('value');//val();
+			 var uri = window.location;
+			 var host = uri.origin;
+			 var params = getParams('m_store',mval);
+			 var path = uri.pathname + params;
+			 var hash = uri.hash;
+			 var url = host + path + hash;
+			 window.location.href = url;
+        });
+
+        jQuery('ul.mt-mb-filter-sort li dd').click(function(){
+            var mval = jQuery(this).attr('value');//val();
+			 var uri = window.location;
+			 var host = uri.origin;
+			 var params = getParams('m_sort',mval);
+			 var path = uri.pathname + params;
+			 var hash = uri.hash;
+			 var url = host + path + hash;
+			 window.location.href = url;
+        });
+
+        jQuery('ul.mt-mb-filter-all-order-status li dd').click(function(){
+            var mval = jQuery(this).attr('value');//val();
+			 var uri = window.location;
+			 var host = uri.origin;
+			 var params = getParams('m_aorder',mval);
+			 var path = uri.pathname + params;
+			 var hash = uri.hash;
+			 var url = host + path + hash;
+			 window.location.href = url;
+        });
+
+		
+	});
+</script>
+

@@ -1,0 +1,5 @@
+[submodule "release"]
+	recurse = true
+	path = release
+	url = ../release-form.git
+	branch = production

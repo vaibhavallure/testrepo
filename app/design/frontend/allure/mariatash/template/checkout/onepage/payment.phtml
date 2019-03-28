@@ -60,9 +60,9 @@
 <p class="required"><?php echo $this->__('* Required Fields') ?></p>
 <div class="buttons-set" id="payment-buttons-container">
         <a id="btnBack" href="#checkoutSteps" onclick="checkout.back(); return false;" class="button"><span><?php echo $this->__('Back') ?></span></a>
-    <button type="button" class="button" onclick="payment.save()"><span><span><?php echo $this->__('Continue') ?></span></span></button>
+    <button type="button" class="button payment-continue-button" onclick="payment.save()"><span><span><?php echo $this->__('Continue') ?></span></span></button>
     <span class="please-wait" id="payment-please-wait" style="display:none;">
-        <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Loading next step...') ?>" title="<?php echo $this->__('Loading next step...') ?>" class="v-middle" /> <?php echo $this->__('Loading next step...') ?>
+        <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Loading Payment Review...') ?>" title="<?php echo $this->__('Loading next step...') ?>" class="v-middle" /> <?php echo $this->__('Loading next step...') ?>
     </span>
 </div>
 </div>

@@ -76,8 +76,16 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 
 					// Selected date
 					var selected = new Date(cyear, cmonth - 1, sdate);
-					if ((that.minDate && selected < min) || (that.maxDate && selected > max)) return;
-
+					
+					var nextDate1 = cyear+""+that.today.getMonth()+""+sdate;
+					var currDate1 = that.today.getFullYear()+""+that.today.getMonth()+""+that.today.getDate();
+					
+					if(nextDate1 == currDate1){
+						
+					}else{
+						if ((that.minDate && selected <= min) || (that.maxDate && selected >= max)) return;
+					}
+					
 					that.selected = cmonth + '/' + sdate + '/' + cyear;
 
 					if(that.options.mode === 'datepicker') {
@@ -483,10 +491,19 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				    that.trigger($.Event('dateselected', {date: e.date, elem: that}));
 					selectedDate = true;					
 					
+					$('#currDay').css({"color":"#3f4048"});
 					
 					//ajax start to pass the selected date to get the time
 					var qty = document.getElementById("count").value;
-					var storeid = document.getElementById("store-id").value;
+                    if(qty==0)
+                    {
+                        alert("Please select the number of people in your party to see available appointment times");
+                        return;
+                    }
+                    jQuery('#pick_ur_time_div').find('input:hidden').val('');
+                    jQuery("#time_blocks").empty();
+
+                    var storeid = document.getElementById("store-id").value;
 					var request = {
 				 				"qty":qty,
 				 				"store":storeid,
@@ -497,6 +514,14 @@ if (typeof jQuery === 'undefined') { throw new Error('DCalendar.Picker: This plu
 				        	dataType : 'json',
 				 			type : 'POST',
 				 			data: {request:request},
+                         beforeSend: function() { $('#appointment_loader').show(); },
+                         complete: function() { $('#appointment_loader').hide(); },
+                         timeout: 30000,
+                         error: function(jqXHR) {
+                             if(jqXHR.status==0) {
+                                 alert(" fail to connect, please check your internet connection");
+                             }
+                         },
 				 			success : function(response){
 				 				$("#pick_ur_time_div").html(response.output);
 				 				window.sample = 30;

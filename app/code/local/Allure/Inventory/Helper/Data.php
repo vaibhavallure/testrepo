@@ -1,5 +1,5 @@
 <?php
-define('ENCRYPTION_KEY', 'd0a7e7997b6d5fcd55f4b5c32611b87cd923e88837b63bf2941ef819dc8ca283');
+if (!defined('ENCRYPTION_KEY')) define('ENCRYPTION_KEY', 'd0a7e7997b6d5fcd55f4b5c32611b87cd923e88837b63bf2941ef819dc8ca283');
 class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
 
     const ORDER_STATUS_NEW="new";
@@ -11,6 +11,17 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     const ORDER_STATUS_ACCEPT="accept";
     const ORDER_STATUS_PARTIALLY_SHIPPED="partially_shipped";
     const ORDER_STATUS_FULLY_SHIPPED="fully_shipped";
+    
+    const XML_PARENT_CATEGORY_ID = "inventory/category/parent_category_id";
+    const XML_CHILD_CATEGGORY_ID = "inventory/category/child_category_id";
+    
+    public function getParentCategoryId(){
+        return Mage::getStoreConfig(self::XML_PARENT_CATEGORY_ID);
+    }
+    
+    public function getChildCategoryId(){
+        return Mage::getStoreConfig(self::XML_CHILD_CATEGGORY_ID);
+    }
     
 	public function getOrderStatusArray(){
 	
@@ -65,6 +76,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     	//$this->writeData($websiteId);
     	
     	$orderItems=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('po_id',$id);
+    	$orderItems->getSelect()->order('main_table.product_id DESC');
     	
     	$fp = fopen($file, 'w');
     	$csvHeader = array(
@@ -72,12 +84,11 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
             "Vendor Code",
             "Item Desciption",
             "Requested Qty",
-            "Proposed Qty",
+          /*   "Proposed Qty", */
             "VMT Comment",
             "Vendor Comment",
-            "Requested Delivery Date",
-            "Proposed Delivery Date",
-            "Total Cost"
+            "Proposed Delivery Date"
+           
             );
     	fputcsv( $fp, $csvHeader,",");
     	foreach ($orderItems as $item){
@@ -91,14 +102,15 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
     		$vendorCode = $_product->getVendorItemNo();
     		$name = $_product->getName();
     		$qty = $item->getRequestedQty();
-    		$pqty = $item->getProposedQty();
+    	//	$pqty = $item->getProposedQty();
     		$comment = $item->getAdminComment();
     		$Vcomment = $item->getVendorComment();
 //    		$status = $item->getStatus();
-    		$reqdelivery = $item->getRequestedDeliveryDate();
+    		//$reqdelivery = $item->getRequestedDeliveryDate();
     		$propdelivery = $item->getProposedDeliveryDate();
-    		$total = $item->getTotalAmount();
-    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$pqty,$comment,$Vcomment,$reqdelivery,$propdelivery,$total), ",");
+    		//$total = $item->getTotalAmount();
+    		
+    		fputcsv($fp, array($id,$vendorCode,$name,$qty,$comment,$Vcomment,$propdelivery), ",");
     	}
     	fclose($fp);
     }
@@ -129,21 +141,67 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
         }
         return $vendorName;
     }
-    public function sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,$attachment=FALSE){
+    public function sendEmail($po_id, $vendorEmail,$templateId,$adminEmail,$attachment=FALSE,$diffArray=array()){
         if($attachment)
             $this->createPOAttachment($po_id);
         $path = Mage::getBaseDir('var') . DS . 'export' . DS;
         $name   = 'purchase_order_'.$po_id.'.csv';
         $file = $path . DS . $name;
         //$vendorEmail =  explode(',', $vendorEmail);
+        $emailVariables = array();
+        $detailsTable="";
+        if(!empty($diffArray)){
+        $detailsTable = "
+				<table cellspacing='0' cellpadding='0' border='0' width='650'><tr>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Product Name</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Admin Comment</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Admin Comment</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Vendor Comment</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Vendor Comment</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Delivery Date</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Delivery Date</th>
+                <th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>Old Qty</th>
+				<th style='background-color:#EAEAEA; border:1px solid; padding:4px;'>New Qty</th></tr>";
+                foreach ($diffArray as $key=>$val)
+                {
+                    if($val['is_custom']){
+                        $_product=Mage::getModel('inventory/customitem')->load($key);
+                    }else {
+                        $_product = Mage::getModel ( 'catalog/product' )->load ($key);
+                    }
+                    
+                    $prodName = $_product->getName();
+                    $oldAdminComment=($val['admin_comment_old'])?$val['admin_comment_old']:'-';
+                    $newAdminComment=($val['admin_comment'])?$val['admin_comment']:'-';
+                    $oldVendorComment=($val['vendor_comment_old'])?$val['vendor_comment_old']:'-';
+                    $newVendorComment=($val['vendor_comment'])?$val['vendor_comment']:'-';
+                    $oldDeliveryDate=($val['proposed_delivery_date_old'])?$val['proposed_delivery_date_old']:'-';
+                    $newDeliveryDate=($val['proposed_delivery_date'])?$val['proposed_delivery_date']:'-';
+                    $oldQty=($val['qty_old'])?$val['qty_old']:'-';
+                    $qty=($val['qty'])?$val['qty']:'-';
+                    
+                   $rowColor = '#7ecc84';
+                               
+                   $detailsTable .= "<tr style='background-color:$rowColor'>
+        				<td style='border:1px solid; padding:4px;'>".$prodName."</td>
+        				<td style='border:1px solid; padding:4px;'>".$oldAdminComment."</td>
+        				<td style='border:1px solid; padding:4px;'>".$newAdminComment."</td>
+        				<td style='border:1px solid; padding:4px;'>".$oldVendorComment."</td>
+        			    <td style='border:1px solid; padding:4px;'>".$newVendorComment."</td>
+                        <td style='border:1px solid; padding:4px;'>".$oldDeliveryDate."</td>
+        				<td style='border:1px solid; padding:4px;'>".$newDeliveryDate."</td>
+                        <td style='border:1px solid; padding:4px;'>".$oldQty."</td>
+                        <td style='border:1px solid; padding:4px;'>".$qty."</td></tr>";
+                 } //End of Foreach
+        }
        
-        
+        $emailVariables['detail_table'] = $detailsTable;
         $orderData=Mage::getModel("inventory/purchaseorder")->load($po_id);
         $storeId=$orderData->getStoreId();
         $orderItems=Mage::getModel('inventory/orderitems')->getCollection()->addFieldToFilter('po_id',$po_id);
         $order_url="";
   
-        $emailVariables = array();
+       
         $emailVariables['items_ordered'] = count($orderItems);
         $emailVariables['order_id'] = $po_id;
         $emailVariables['order_status'] = $this->getOrderStatus($orderData->getStatus());
@@ -176,6 +234,7 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
             $sendEmail = $vendorEmail;
         else 
             $sendEmail = $adminEmail;
+        
         
         $copyMethod = Mage::getStoreConfig('allure_vendor/general/copy_method');
        
@@ -218,13 +277,13 @@ class Allure_Inventory_Helper_Data extends Mage_Core_Helper_Abstract {
                 $emailVariables
                 );
         } catch (Exception $e) {
-            Mage::log("Exception Occured".$e->getMessage(), Zend_Log::DEBUG,'mylogs',true);
+            Mage::log("Exception Occured".$e->getMessage(), Zend_Log::DEBUG,'PO_order.log',true);
         }
         if (!$emailTemplate->getSentSuccess()) {
             Mage::log('Mail Exception:', Zend_Log::DEBUG, 'PO_order.log', true);
         }
         else {
-            Mage::log('Email Sucess', Zend_Log::DEBUG, 'PO_order.log', true);
+            Mage::log('Email Sucess:'.$po_id, Zend_Log::DEBUG, 'PO_order.log', true);
         }
     } 
 }

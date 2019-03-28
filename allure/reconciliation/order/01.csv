@@ -1,0 +1,8 @@
+,Time,Till,Transaction,Operator No,Employee,Customer No,Item,Comment,Retail Value,Sales,Promotion Amount,Discount %,Discretionary Discount,Quantity,M. Order No.
+1,14:54:17,68,95879,903434,Maulini Mattia,100505979,505486538823,care,6,6,,,,1,
+1/1/2018,Transaction 95879 Total,,,,,,,,6,6,,,,1,,ORDER ID NA,EB-95879,ORDER:1,EB-95879,ORDER:1,EB-95879,ORDER:1
+2,17:03:17,68,95892,903306,Dineen Zach,,505486538823,xhccm8 yg,-483,-483,,,,-1,
+,17:03:17,68,95892,903306,Dineen Zach,,505486538823,xr8 yg,-212,-212,,,,-2,
+1/1/2018,Transaction 95892 Total,,,,,,,,-695,-695,,,,-3,,ORDER ID NA,EB-95892,ORDER:2,EB-95892,ORDER:2,EB-95892,ORDER:2
+3,17:53:57,92,103539,903003,Beard Rosa,100356097,505486538823,care,6,6,,,,1,
+1/1/2018,Transaction 103539 Total,,,,,,,,6,6,,,,1,,ORDER ID NA,EB-103539,ORDER:3,EB-103539,ORDER:3,EB-103539,ORDER:3

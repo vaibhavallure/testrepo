@@ -8,10 +8,30 @@
 
         		<methods>
 			    	<list translate="title" module="allure_counterpoint">
-			            <title>List of events</title>
+			            <title>List of counterpoint order</title>
 			            <method>test</method>
 				    	<acl>allure_counterpoint/order</acl>
 			         </list>
+			         <addPayment translate="title" module="sales">
+                        <title>Add payment to order</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </addPayment>
+                    <addShipment translate="title" module="sales">
+                        <title>Add shipment to order</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </addShipment>
+                    <updateTicketByOrignalTicket>
+                    	<title>update order id by orignal ticket</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </updateTicketByOrignalTicket>
+                    <addOrignalTicket>
+                    	<title>add orignal ticket</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </addOrignalTicket>
+                    <addCustomer>
+                    	<title>add customer</title>
+                        <acl>allure_counterpoint/order</acl>
+                    </addCustomer>
 			    </methods>
 			</counterpoint_order>
 		</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<config>
+	<modules>
+		<Allure_Oldstores>
+			<version>0.1.0</version>
+		</Allure_Oldstores>
+	</modules>
+	<global>
+		<resources>
+			<allure_oldstores_setup>
+				<setup>
+                    <module>Allure_Oldstores</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+			</allure_oldstores_setup>
+		</resources>
+		<models>
+			<allure_oldstores>
+				<class>Allure_Oldstores_Model</class>
+				<resourceModel>allure_oldstores_resource</resourceModel>
+			</allure_oldstores>
+			<allure_oldstores_resource>
+				<class>Allure_Oldstores_Model_Resource</class>
+				<entities>
+					<oldstores>
+						<table>allure_oldstores</table>
+					</oldstores>
+				</entities>
+			</allure_oldstores_resource>
+		</models>
+	</global>
+	
+	
+</config>

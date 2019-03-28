@@ -17,7 +17,7 @@ $installer = $this;
 $installer->startSetup();
 
 $installer->run(
-    " 
+    "
     DROP TABLE IF EXISTS {$this->getTable('searchanise_config')};
     CREATE TABLE IF NOT EXISTS {$this->getTable('searchanise_config')} (
         `config_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Config Id',

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Teamwork_TransferMariatash>
+            <version>5.0.6</version>
+        </Teamwork_TransferMariatash>
+    </modules>
+    <global>
+        <models>
+            <teamwork_transfermariatash>
+                <class>Teamwork_TransferMariatash_Model</class>
+            </teamwork_transfermariatash>
+            <teamwork_transfer>
+                <rewrite>
+                    <class_item>Teamwork_TransferMariatash_Model_Class_Item</class_item>
+					<class_quantity>Teamwork_TransferMariatash_Model_Class_Quantity</class_quantity>
+                    <webstaging>Teamwork_TransferMariatash_Model_Webstaging</webstaging>
+                    <media>Teamwork_TransferMariatash_Model_Media</media>
+                    <class_price>Teamwork_TransferMariatash_Model_Class_Price</class_price>
+					<class_specialattribute_sku>Teamwork_TransferMariatash_Model_Class_Specialattribute_Sku</class_specialattribute_sku>
+                </rewrite>
+            </teamwork_transfer>
+        </models>
+    </global>
+</config>

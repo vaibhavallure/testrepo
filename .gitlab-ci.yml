@@ -1,82 +1,73 @@
 before_script:
   - echo 'Start Deployment'
 stages:
-  - develop
-  - staging
   - alpha
-  - bugfix
-  - upgrade
+  - beta
+  - appointments
   - deploy
-develop:
-  environment: development
-  stage: develop
-  tags:
-    - development
-  only:
-    - development
-  script:
-    - mage-deploy mariatash
-    - echo 'Deployed on Allure Local Dev'
-staging:
+cloud_alpha:
   environment: staging
-  stage: staging
-  tags:
-    - staging
-  only:
-    - staging
-  script:
-    - mage_deploy_stage mariatash
-    - echo 'Deployed on Staging'
-alpha:
-  environment: alpha
   stage: alpha
   tags:
-    - staging
-  only:
-    - master
-  script:
-    - mage-deploy mt
-    - echo 'Deployed on Staging'
-bugfix:
-  environment: bugfixes
-  stage: bugfix
-  tags:
-    - staging
+    - cloud-alpha
   only:
     - bugfixes
   script:
-    - mage-deploy mt-bugfixes
-    - echo 'Deployed on Bugfixes Staging'
-upgrade:
-  environment: upgrade
-  stage: upgrade
-  tags:
-    - staging
-  only:
-    - upgrade
-  script:
-    - mage-deploy upgrade.mariatash
-    - echo 'Deployed on Upgrade Staging'
-    
-staging_new:
-  environment: staging
-  stage: staging
-  tags:
-    - staging
-  only:
-    - staging
-  script:
-    - mage-deploy stage-mariatash
+    - mage-deploy mt
     - echo 'Deployed on Staging'
+
+beta_teamwork:
+  environment: teamwork
+  stage: beta
+  tags:
+    - alpha
+  only:
+    - teamwork
+  script:
+    - deploy-magento mariatash
+    - rm -f media && ln -s /var/www/shared/mariatash/media media
+    - rm -f var && ln -s /var/www/shared/mariatash/var var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/etc/local.xml app/etc/local.xml
+    - echo 'Deployed on Teamwork Staging'
     
+beta_staging:
+  environment: beta_staging
+  stage: beta
+  tags:
+    - beta
+  only:
+    - master
+  script:
+    - deploy-magento mt-staging
+    - rm -f media && ln -s /var/www/shared/mt-staging/media media
+    - rm -f var && ln -s /var/www/shared/mt-staging/var var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/mt-staging/etc/local.xml app/etc/local.xml
+    - echo 'Deployed on Beta Staging'
     
-deploy:
+beta_appointments:
+  environment: appointments
+  stage: appointments
+  tags:
+    - beta
+  only:
+    - staging
+  script:
+    - mage-deploy mt-appointments
+    - echo 'Deployed on Beta Staging'
+
+deploy-cloud:
   environment: production
   stage: deploy
   tags:
     - production
   only:
     - production
+  before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
   script:
+    - ln -s /usr/share/owncloud cloud
+    - ln -s /var/www/shared/sitemaps
     - mage-deploy
     - echo 'Deployed on Production'
+

@@ -146,80 +146,12 @@ $typeId = $_item->getProduct()->getTypeId();
                 <span>Qty <?php echo $_item->getQty() ?></span>
             </div>
 
-    <div class="a-right item-msg div-qty" style="font-size:10px;margin:5px 0">
-        <?php if(0):  //commenting existing code for parent child?>
-        <?php 
-	        $stockQty = intval($_item->getProduct()->getStockItem()->getQty());
-	        $manageStock = $_item->getProduct()->getStockItem()->getManageStock();
-	        
-	        $isInStock = $_item->getProduct()->getStockItem()->getIsInStock();
-	        
-	        $isBackordered = false;
-	        
-	        $backorderedQty = $_item->getQty();
-	        
-	        if ($stockQty < $backorderedQty && $isInStock) {
-	        	$isBackordered = true;
-	        	
-	        	if ($stockQty >= 0) {
-	        		$backorderedQty = $_item->getQty() - $stockQty;
-	        	}
-	        }
-        //if ($manageStock == 1 && $stock_qty < $_item->getQty() && $_item->getProduct()->getStockItem()->getIsInStock() ) :
-       //mt-allure code 
-	        if ($isBackordered && $_item->getProduct()->getStockItem()->getManageStock()==1) : ?>
-        	<?php //allure code
-                $message = "";
-                $stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_item->getProduct());
-                if(!empty($stockMsg))
-                	$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-                else 
-                	$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
-              ?>
-            <p><?php echo $message; ?></p>
-        <?php else : ?>
-        	<p>In Stock: Ships Within 24 hours (Mon-Fri).</p><?php //add by allure?>
-        <?php endif; ?>   
-        <?php endif; //commented code for parent child?>
-        
-        	
-				<?php //Parent child code starts
-                $storeId=Mage::app()->getStore()->getStoreId();
-                $_product = Mage::getModel('catalog/product')->setStoreId($storeId)->loadByAttribute('sku',$_item->getProduct()->getSku());
-                $stock=Mage::getModel('cataloginventory/stock_item')->loadByProductAndStock($_product,$storeId);
-                $stockQty = intval($stock->getQty());
-                $manageStock =$stock->getManageStock();
-                $isInStock = $stock->getIsInStock();
-                     
-                $isBackordered = false;
-                $backorderedQty = $_item->getQty();
-                     
-                if ($stockQty < $backorderedQty) {
-                	$isBackordered = true;
-                    
-                    if ($stockQty >= 0) {
-                    	$backorderedQty = $_item->getQty() - $stockQty;
-                    }
-                }
-				?>
-				
-				<?php if ($isBackordered && $manageStock==1) :?> 
-				<?php
-                	$message = "";
-                	$stockMsg = Mage::helper('amstockstatus')->getCustomStockMessage($_product);
-                	if(!empty($stockMsg))
-                		$message = "The metal color or length combination you selected is backordered. Order now and It will ship ".$stockMsg.".";
-                	else 
-                		$message = "This product is not available in the requested quantity.".$backorderedQty." of the items will be backordered.";
-                ?>
-                <p><?php echo $message ?></p>
-				<?php else : ?> 
-					<p>* In Stock: Ships Within 24 hours (Mon-Fri).</p>
-				<?php endif; ?>
-				<?php //allure Parent child code end?>   
-				
-             
-    </div>
+	<?php $message = Mage::helper('amstockstatus')->getStockMessage($_item);?>
+    <?php if(!empty($message)): ?>
+      <div class="a-right item-msg div-qty" style="font-size:10px;margin:5px 0">
+      	 <p><?php echo $message ?></p>
+      </div>     
+	<?php endif; ?>
 
     <?php if (($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()) && !$_item->getNoSubtotal()): ?>
     <div class="a-right">

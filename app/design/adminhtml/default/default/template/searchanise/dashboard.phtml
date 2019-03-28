@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
 *                                                                          *
 *   (c) 2004 Vladimir V. Kalynyak, Alexey V. Vinokurov, Ilya M. Shalnev    *
@@ -23,18 +23,18 @@
 
 <?php
     $searchaniseOptions = Mage::helper('searchanise/ApiSe')->getAddonOptions();
-    
+
     $searchaniseOptions['options_link'] = $this->getUrl(Mage::helper('searchanise/ApiSe')->getOptionsLink());
     $searchaniseOptions['re_sync_link'] = $this->getUrl(Mage::helper('searchanise/ApiSe')->getReSyncLink());
     $searchaniseOptions['connect_link'] = $this->getUrl(Mage::helper('searchanise/ApiSe')->getConnectLink());
-    
+
     $seServiceUrl = Mage::helper('searchanise/ApiSe')->getServiceUrl(false);
 ?>
 
 <script type="text/javascript">
 //<![CDATA[
     SearchaniseAdmin = {};
-    
+
     SearchaniseAdmin.host        = '<?php echo $seServiceUrl;?>';
     SearchaniseAdmin.PrivateKey  = '<?php echo $searchaniseOptions['parent_private_key'];?>';
     SearchaniseAdmin.OptionsLink = '<?php echo $searchaniseOptions['options_link'];?>';
@@ -50,20 +50,20 @@
     SearchaniseAdmin.Platform = 'magento';
     SearchaniseAdmin.PlatformEdition = '<?php echo $searchaniseOptions['core_edition'];?>';
     SearchaniseAdmin.PlatformVersion = '<?php echo $searchaniseOptions['core_version'];?>';
-    
+
     SearchaniseAdmin.Engines = [];
-    
+
     <?php
         if (!empty($searchaniseOptions['parent_private_key'])) {
             $stores = Mage::helper('searchanise/ApiSe')->getStores();
-            
+
             if (!empty($stores)) {
                 foreach($stores as $keyStore => $store) {
                     $priceFormat = Mage::helper('searchanise/ApiSe')->getPriceFormat($store);
                     $privateKey = $searchaniseOptions['private_key'][$store->getId()];
                     $exportStatus = empty($searchaniseOptions['export_status'][$store->getId()]) ? 'none' : $searchaniseOptions['export_status'][$store->getId()];
                     $priceFormat['after'] = $priceFormat['after'] ? 'true' : 'false';
-                    
+
                     echo 'SearchaniseAdmin.Engines.push({';
                         echo 'Name:"' . addslashes($store->getName()) . '",';
                         echo "PrivateKey:   '{$privateKey}',";
@@ -73,7 +73,7 @@
                             echo "decimals_separator:  '" . addslashes($priceFormat['decimals_separator'])  . "',";
                             echo "thousands_separator: '" . addslashes($priceFormat['thousands_separator']) . "',";
                             echo 'symbol:              "' . addslashes($priceFormat['symbol']) . '",';
-                            
+
                             echo "decimals: '{$priceFormat['decimals']}',";
                             echo "rate:     '{$priceFormat['rate']}',";
                             echo "after:     {$priceFormat['after']}";

@@ -128,7 +128,7 @@ class ParadoxLabs_TokenBase_Model_Method extends Mage_Payment_Model_Method_Cc
 			$this->_gateway->init(array(
 				'login'			=> $this->getConfigData('login'),
 				'password'		=> $this->getConfigData('trans_key'),
-				'secret_key'	=> $this->getConfigData('secrey_key'),
+				'secret_key'	=> $this->getConfigData('secret_key'),
 				'test_mode'		=> $this->getConfigData('test'),
 				'verify_ssl'	=> $this->getConfigData('verify_ssl'),
 			));
@@ -346,6 +346,40 @@ class ParadoxLabs_TokenBase_Model_Method extends Mage_Payment_Model_Method_Cc
 				}
 			}
 		}
+		
+		return $this;
+	}
+	
+    /**
+     * Checkout with payment action set to 'save only'. Save payment info, but do not authorize or capture.
+     */
+    public function order(Varien_Object $payment, $amount)
+    {
+		$this->_log( sprintf( 'order(%s %s, %s)', get_class( $payment ), $payment->getId(), $amount ) );
+		
+		$this->_loadOrCreateCard( $payment );
+		$this->_resyncStoredCard( $payment );
+		
+		/**
+		 * There is no transaction ID, no transaction info, and no transaction. So...yeah.
+		 */
+		$paymentData = array(
+			'profile_id' => $this->getCard()->getProfileId(),
+			'payment_id' => $this->getCard()->getPaymentId(),
+		);
+		
+		$payment->setTransactionAdditionalInfo( Mage_Sales_Model_Order_Payment_Transaction::RAW_DETAILS, $paymentData );
+		
+		if( $payment->getOrder()->getStatus() != $this->getConfigData('order_status') ) {
+			$payment->getOrder()->setStatus( $this->getConfigData('order_status') );
+		}
+		
+		$payment->setAdditionalInformation( Mage::helper('tokenbase')->replaceArray( $payment->getAdditionalInformation(), $paymentData ) )
+				->setIsTransactionClosed(0);
+		
+		$this->getCard()->updateLastUse()->save();
+		
+		$this->_log( json_encode( $paymentData ) );
 		
 		return $this;
 	}
@@ -835,6 +869,7 @@ class ParadoxLabs_TokenBase_Model_Method extends Mage_Payment_Model_Method_Cc
 				
 				$this->getCard()->save();
 				
+				Mage::unregister('tokenbase_ensure_checkout_card_save');
 				Mage::register( 'tokenbase_ensure_checkout_card_save', $this->getCard() );
 			}
 		}

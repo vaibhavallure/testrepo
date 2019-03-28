@@ -135,7 +135,7 @@ class Ebizmarts_BakerlooReports_Helper_Data extends Mage_Core_Helper_Data
         $columns = $this->getConfigData();
         $selectedColumns = array();
         $columnConfig = array();
-
+	
         foreach ($columns['mandatory'] as $_colname => $_coldef) {
             $selectedColumns[$_colname] = $_coldef['definition'];
             $columnConfig[$_colname] = $_coldef['source'];
@@ -149,6 +149,11 @@ class Ebizmarts_BakerlooReports_Helper_Data extends Mage_Core_Helper_Data
 
             $selectedColumns[$_select] = $optional[$_select]['definition'];
             $columnConfig[$_select] = $optional[$_select]['source'];
+
+            if (isset($optional[$_select . '_refunds'])) {
+                $selectedColumns[$_select . '_refunds'] = $optional[$_select . '_refunds']['definition'];
+                $columnConfig[$_select . '_refunds'] = $optional[$_select . '_refunds']['source'];
+            }
         }
 
         return array($selectedColumns, $columnConfig);
@@ -339,6 +344,24 @@ class Ebizmarts_BakerlooReports_Helper_Data extends Mage_Core_Helper_Data
                 'hidden' => false,
                 'type' => 'currency'
             );
+
+            if ($this->shouldAddCreditNotes()) {
+                $config[$_colname . '_refunds'] = array(
+                    'name' => $_coldef['value'] . '_refunds',
+                    'label' => $label . ' Refunds',
+                    'definition' => "decimal(12,4) default '0.0000'",
+                    'source' => array(
+                        'model' => 'jsonPayload',
+                        'field' => array('path' => array('payment', 'refunds', 'amountToRefund')),
+                        'condition' => array(
+                            'path' => array('payment', 'refunds', 'method'),
+                            'cond' => array('eq', $_colname)
+                        )
+                    ),
+                    'hidden' => false,
+                    'type' => 'currency'
+                );
+            }
         }
 
         return $config;
@@ -365,5 +388,10 @@ class Ebizmarts_BakerlooReports_Helper_Data extends Mage_Core_Helper_Data
         );
 
         return $cols;
+    }
+
+    private function shouldAddCreditNotes()
+    {
+        return Mage::getStoreConfig('bakerloorestful/reports_update/report_creditnotes');
     }
 }

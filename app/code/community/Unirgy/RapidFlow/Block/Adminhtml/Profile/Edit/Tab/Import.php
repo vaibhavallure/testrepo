@@ -65,11 +65,18 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Import extends Mage_Admi
         ));
 
         $fieldset->addField('import_same_as_default', 'select', array(
-            'label'     => $this->__('If store values the same as default'),
+            'label'     => $this->__('If store values the same as global values'),
             'name'      => 'options[import][store_value_same_as_default]',
             'values'    => $source->setPath('store_value_same_as_default')->toOptionArray(),
             'value'     => $profile->getData('options/import/store_value_same_as_default'),
             'comment'   => $this->__('Affects only updated values'),
+        ));
+
+        $fieldset->addField('import_empty_value_strategy', 'select', array(
+            'label'     => $this->__('Empty values strategy'),
+            'name'      => 'options[import][empty_value_strategy]',
+            'values'    => $source->setPath('empty_value_strategy')->toOptionArray(),
+            'value'     => $profile->getData('options/import/empty_value_strategy'),
         ));
 
         $fieldset->addField('import_stock_zero_out', 'select', array(
@@ -77,6 +84,13 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Import extends Mage_Admi
             'name'      => 'options[import][stock_zero_out]',
             'values'    => $source->setPath('yesno')->toOptionArray(),
             'value'     => $profile->getData('options/import/stock_zero_out'),
+        ));
+        $fieldset->addField('increment_url_key', 'select', array(
+            'label'     => $this->__('Try to auto increment duplicate url_key'),
+            'name'      => 'options[import][increment_url_key]',
+            'values'    => $source->setPath('yesno')->toOptionArray(),
+            'value'     => $profile->getData('options/import/increment_url_key'),
+            'comment'   => $this->__("Has any effect only for Magento EE 1.13 and up.")
         ));
 
         if (Mage::helper('urapidflow')->hasMageFeature('indexer_1.4')) {
@@ -133,6 +147,14 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Import extends Mage_Admi
             'name'      => 'options[import][image_missing_file]',
             'values'    => $source->setPath('import_image_missing_file')->toOptionArray(),
             'value'     => $profile->getData('options/import/image_missing_file'),
+        ));
+
+        $fieldset->addField('import_image_existing_file', 'select', array(
+            'label'     => $this->__('Action on existing image file'),
+            'name'      => 'options[import][image_existing_file]',
+            'values'    => $source->setPath('import_image_existing_file')->toOptionArray(),
+            'value'     => $profile->getData('options/import/image_existing_file'),
+            'note' => $this->__('Select what to do when imported image has same name as existing image.'),
         ));
 
         $fieldset->addField('import_image_source_dir', 'text', array(

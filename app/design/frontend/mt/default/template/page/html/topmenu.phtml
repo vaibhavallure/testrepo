@@ -65,7 +65,7 @@
             }
         ?>
         <li class="<?php echo $first?><?php echo ($showMenu)?' sub-menu':'' ?><?php echo ($i==$count)?' last':'' ?><?php echo ($child->getIsActive())?' current':'' ?>">
-            <a <?php echo (strlen(strstr($child->getUrl(),"jewelry.html"))) ? 'style = "cursor:default;" onclick="return false;"' : '';?> href='<?php echo $child->getUrl() ?>'><span><?php echo $this->escapeHtml($child->getName()) ?></span></a>
+            <a <?php echo (strlen(strstr($child->getUrl(),"jewelry.html"))) ? 'style = "cursor:default;" onclick="return false;"' : '';?> href='<?php echo $child->getUrl() ?>'><span><?php echo $this->__($this->escapeHtml($child->getName()))?></span></a>
 
             <?php if ($showMenu): ?>
                 <div class="sub" style="display:none">

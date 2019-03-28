@@ -20,7 +20,7 @@ class Unirgy_RapidFlow_Model_Profile_Catalog_Product extends Unirgy_RapidFlow_Mo
 
     public function isFieldUsed($code, $all=false)
     {
-        if (is_array(v)) {
+        if (is_array($code)) {
             $found = 0;
             foreach ($code as $a) {
                 if ($this->isAttributeUsed($a)) {

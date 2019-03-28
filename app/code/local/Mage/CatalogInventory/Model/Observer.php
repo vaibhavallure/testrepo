@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_CatalogInventory
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -303,6 +303,16 @@ class Mage_CatalogInventory_Model_Observer
     public function checkQuoteItemQty($observer)
     {
         $quoteItem = $observer->getEvent()->getItem();
+        
+        // allow gitcard product for purchase when its out of stock - start
+        if(Mage::helper('core')->isModuleEnabled('Amasty_Stockstatus')){
+            $amstockHelper = Mage::helper("amstockstatus");
+            if ($amstockHelper->isGiftcardProduct($quoteItem->getSku())) {
+                return $this;
+            }
+        }
+        //end
+        
         /* @var $quoteItem Mage_Sales_Model_Quote_Item */
         if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote()
             || $quoteItem->getQuote()->getIsSuperMode()) {
@@ -382,17 +392,17 @@ class Mage_CatalogInventory_Model_Observer
                 $increaseOptionQty = ($quoteItem->getQtyToAdd() ? $quoteItem->getQtyToAdd() : $qty) * $optionValue;
 
                 $stockItem = $option->getProduct()->getStockItem();
-                
-                /* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
-                if (!$stockItem instanceof Mage_CatalogInventory_Model_Stock_Item) {
-                	Mage::throwException(
-                		Mage::helper('cataloginventory')->__('The stock item for Product in option is not valid.')
-                		);
-                }
 
                 if ($quoteItem->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) {
                     $stockItem->setParentItem($quoteItem);
                     $stockItem->setProductName($quoteItem->getName());
+                }
+
+                /* @var $stockItem Mage_CatalogInventory_Model_Stock_Item */
+                if (!$stockItem instanceof Mage_CatalogInventory_Model_Stock_Item) {
+                    Mage::throwException(
+                        Mage::helper('cataloginventory')->__('The stock item for Product in option is not valid.')
+                    );
                 }
 
                 /**

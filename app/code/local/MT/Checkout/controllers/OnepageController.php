@@ -197,9 +197,9 @@ class MT_Checkout_OnepageController extends Mage_Checkout_OnepageController
      * Checkout status block
      */
     public function progressAction() {
-        if ($this->_expireAjax()) {
-            return;
-        }
+//         if ($this->_expireAjax()) {
+//             return;
+//         }
         $this->loadLayout(false);
         $this->renderLayout();
     }

@@ -42,7 +42,7 @@ class Allure_Inventory_Block_Purchaseorder_Receive extends Mage_Page_Block_Html_
 		parent::_prepareLayout();
 
 		$pager = $this->getLayout()->createBlock('page/html_pager', 'custom.pager');
-		$pager->setAvailableLimit(array(20=>20,50=>50,100=>100,'all'=>'all'));
+		$pager->setAvailableLimit(array(1000=>1000,'all'=>'all'));
 		$pager->setCollection($this->getCollection());
 		$this->setChild('pager', $pager);
 		$this->getCollection()->load();

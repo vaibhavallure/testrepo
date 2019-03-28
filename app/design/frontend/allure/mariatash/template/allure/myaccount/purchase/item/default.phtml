@@ -1,100 +1,143 @@
-<?php 
+<?php
   $storeList = array();
   $stores = Mage::app()->getStores();
   $storeColorConfig = Mage::helper('myaccount')->getStoreColorConfig();
-  foreach ($stores as $store) {
+  $vstores=Mage::getModel('allure_virtualstore/store')->getCollection();
+  foreach ($vstores as $store) {
     $storeList[$store->getId()] = $store->getName();
   }
 ?>
 <?php $i = 0; $prices = array(); $skus = array(); ?>
 <?php foreach ($this->getPurchaseOrderCollection() as $_item): ?>
-<?php 
+<?php
+
+$metal=explode('|', $_item->getSku());
+    if(count($metal)>=2){
+        $metal='?metal=' . $metal[1];
+    }else{
+        $metal='';
+    }
      $productId = Mage::getModel('catalog/product')->getIdBySku($_item->getSku());
      $product = Mage::getModel('catalog/product')->load($productId);
-                        
+
      $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($_item->getProduct()->getId());
      $parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-     $url = $product->getProductUrl();
+     $configSku=explode('|', $product->getSku());
+     $configSku=$configSku[0];
+     $configId = Mage::getModel('catalog/product')->getIdBySku($configSku);
+     $config = Mage::getModel('catalog/product')->load($configId);
+     $url = $config->getProductUrl();
+
      if(!is_null($parentId)){
         $parentProduct = Mage::getModel("catalog/product")->load($parentId);
         $url = $parentProduct->getProductUrl();
      }
-                        
+     $firstLetter = substr($product->getSku(),0,1);
+     if($firstLetter=='C' ||$firstLetter=='c'){
+         $sku=explode('|', $product->getSku());
+         $sku=$sku[0];
+         $NEW_START_CHAR = "X";
+         $newSku = $NEW_START_CHAR . substr($sku, 1);
+         $productParentId = Mage::getModel('catalog/product')->getIdBySku($newSku);
+
+         if ($productParentId){
+             $productParent = Mage::getModel('catalog/product')->load($productParentId);
+         }
+         else {
+             $productParentId = Mage::getModel('catalog/product')->getIdBySku($product->getParentItemNumber());
+             $productParent = Mage::getModel('catalog/product')->load($productParentId);
+
+         }
+        if (! empty($productParent))
+            $url = $productParent->getProductUrl();
+
+     }
+
      $productName = $product->getName();
      $typeId = $product->getTypeId();
      $productNotAvailableClass = "";
-                        
+
      if(!$product->getId()){
         $productName = $_item->getName();
         $productNotAvailableClass = "current-item-not-available";
         $productDescr = $_item->getDescription();
      }
-                        
-     $receiptUrl = Mage::getUrl("sales/order/print")."order_id/".$_item->getOrderId()."/";
+     if(!empty($url) && !empty($metal)){
+         $url=$url.$metal;
+     }
+     $receiptUrl = Mage::getUrl("sales/order/view")."order_id/".$_item->getOrderId()."/";
      $reorderUrl = Mage::getUrl("sales/order/reorderItem")."item_id/".$_item->getId()."/";
-                        
+
      $storeColor = '';
-     $storeName = $storeList[$_item->getStoreId()];
-     if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
+    $_order = Mage::getModel('sales/order')->load($_item->getOrderId());
+    $storeName = $storeList[$_order->getOldStoreId()];
+     /*if(array_key_exists($_item->getStoreId(),$storeColorConfig)){
          $storeColor .= 'style="';
          $frontColor = $storeColorConfig[$_item->getStoreId()]['front_color'];
          if(!empty($frontColor))
-             $storeColor .= 'color:'.$frontColor.';'; 
+             $storeColor .= 'color:'.$frontColor.';';
          $backColor = $storeColorConfig[$_item->getStoreId()]['back_color'];
          if(!empty($backColor))
              $storeColor .= 'background:'.$backColor.';';
          $storeColor .= '"';
          $storeName = $storeColorConfig[$_item->getStoreId()]['store_label'];
-      }
-      
+      }*/
+
       $_order = Mage::getModel('sales/order')->load($_item->getOrderId());
 ?>
- 
+
 <tr class="purchase-tr">
-	<td class="table-product-image"> 
+	<td class="table-product-image">
 		<a <?php echo ($product->getId())? "href='".$url."'":""?> title="<?php echo $productName?>" class="product-image">
 			<img src="<?php echo Mage::helper('catalog/image')
-					->init($product, 'thumbnail')->resize(74,96)?>" 
+					->init($product, 'thumbnail')->resize(74,96)?>"
 					width="74" height="96" alt="<?php echo $productName?>">
 	   </a>
 	</td>
-					
+
 	<td class="table-product-info">
 		<h2 class="product-name">
-			<a <?php echo ($product->getId())? "href='".$url."'":""?>><?php echo $productName?></a>
+			<a <?php echo ($product->getId())? "href='".$url."'":""?>><?php echo (strtolower($productName))?></a>
 		</h2>
 	</td>
-					   
+
 	<td class="table-tax a-right">
 		<span class="price">
-			Price:<?php echo Mage::helper('checkout')->formatPrice($_item->getPrice())?>
-		</span>    
+			Price:<?php echo Mage::helper('core')->currency($_item->getPrice())?>
+		</span>
 	</td>
-					    
+
 	<td class="table-qty a-center">
 		<div class="qty-wrap">
 			 <span>Qty:</span><input  value="<?php echo number_format($_item->getQtyOrdered())?>" size="4" title="Qty" class="input-text qty" maxlength="12">
 		</div>
 	</td>
-					    
+
 	<td class="table-price-subtotal">
-    	<label <?php echo $storeColor?> class="purchase-store-name"><?php echo $storeName?></label>
-    	<span style="display: block;" class="mt-purchase-added-at">Purchased: <?php echo date('M d, Y H:i a',strtotime($_item->getCreatedAt()))?></span>
+    	<span style="display: block;float:left;" class="mt-purchase-added-at">Purchase Location: <?php echo $storeName;?></span>
+    	<?php if($_item->getPurchasedFrom()):?>
+		<span style="display: block;float:left" class="mt-purchase-added-at">Purchased From: <?php echo $_item->getPurchasedFrom();?></span>
+		<?php endif;?>
+        <?php
+
+        $diffZone=Mage::getModel('backorderrecord/cron')->getDiffTimezone();
+        ?>
+    	<span style="display: block;float:left" class="mt-purchase-added-at">Purchased: <?php echo Mage::getModel('core/date')->date('M d, Y h:i a',strtotime($_order->getCreatedAt()));?></span>
     </td>
-					    
+
 	<td class="table-remove a-center last">
 		<?php  if ($_order->getTracksCollection()->count()) : ?>
 			<div class="mt-purchase-btn">
 				<a class="" onclick="openTrackOrder('<?php echo Mage::helper('myaccount')->getTrackingPopupUrlBySalesModel($_order) ?>')"><?php echo $this->__('Track')?></a>
 			</div>
 		<?php endif;?>
-		
+
 		<div class="mt-purchase-btn">
 			 <a data-url="<?php echo $receiptUrl?>" class=""
 				onclick="openPurchaseWindow(this)"><?php echo $this->__('See Receipts')?>
 			</a>
 		</div>
-		
+
 		<?php if($product->getId()):?>
 			<div class="mt-purchase-btn">
 				 <a data-item-id="<?php echo $_item->getId()?>"
@@ -103,7 +146,6 @@
 			</div>
 		<?php endif;?>
 	</td>
-	
+
 </tr>
 <?php endforeach ?>
-	

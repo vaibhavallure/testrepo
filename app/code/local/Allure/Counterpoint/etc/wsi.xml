@@ -13,10 +13,87 @@
                     <xsd:sequence>
                         <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
                     	<xsd:element minOccurs="1" maxOccurs="1" name="counterpoint_data" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="memory_limit" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="is_memory_limit" type="xsd:int" />
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
             <xsd:element name="counterpointOrderListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddPaymentRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="payment_data" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddPaymentResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddShipmentRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="shipment_data" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddShipmentResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderUpdateTicketByOrignalTicketRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="order_data" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderUpdateTicketByOrignalTicketResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddOrignalTicketRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="ticket_data" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddOrignalTicketResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddCustomerRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                    	<xsd:element minOccurs="1" maxOccurs="1" name="customer_data" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="counterpointOrderAddCustomerResponseParam">
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:int" />
@@ -31,16 +108,141 @@
     <wsdl:message name="counterpointOrderListResponse">
         <wsdl:part name="parameters" element="typens:counterpointOrderListResponseParam" />
     </wsdl:message>
+    <wsdl:message name="counterpointOrderAddPaymentRequest">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddPaymentRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderAddPaymentResponse">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddPaymentResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderAddShipmentRequest">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddShipmentRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderAddShipmentResponse">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddShipmentResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderUpdateTicketByOrignalTicketRequest">
+        <wsdl:part name="parameters" element="typens:counterpointOrderUpdateTicketByOrignalTicketRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderUpdateTicketByOrignalTicketResponse">
+        <wsdl:part name="parameters" element="typens:counterpointOrderUpdateTicketByOrignalTicketResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderAddOrignalTicketRequest">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddOrignalTicketRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderAddOrignalTicketResponse">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddOrignalTicketResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderAddCustomerRequest">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddCustomerRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="counterpointOrderAddCustomerResponse">
+        <wsdl:part name="parameters" element="typens:counterpointOrderAddCustomerResponseParam" />
+    </wsdl:message>
     <wsdl:portType name="{{var wsdl.handler}}PortType">
          <wsdl:operation name="counterpointOrderList">
-            <wsdl:documentation>Create new product and return product id</wsdl:documentation>
+            <wsdl:documentation>create order by counterpoint</wsdl:documentation>
             <wsdl:input message="typens:counterpointOrderListRequest" />
             <wsdl:output message="typens:counterpointOrderListResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+         <wsdl:operation name="counterpointOrderAddPayment">
+            <wsdl:documentation>Add payments</wsdl:documentation>
+            <wsdl:input message="typens:counterpointOrderAddPaymentRequest" />
+            <wsdl:output message="typens:counterpointOrderAddPaymentResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+         <wsdl:operation name="counterpointOrderAddShipment">
+            <wsdl:documentation>Add shipments</wsdl:documentation>
+            <wsdl:input message="typens:counterpointOrderAddShipmentRequest" />
+            <wsdl:output message="typens:counterpointOrderAddShipmentResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+         <wsdl:operation name="counterpointOrderUpdateTicketByOrignalTicket">
+            <wsdl:documentation>update order id by orignal ticket</wsdl:documentation>
+            <wsdl:input message="typens:counterpointOrderUpdateTicketByOrignalTicketRequest" />
+            <wsdl:output message="typens:counterpointOrderUpdateTicketByOrignalTicketResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+         <wsdl:operation name="counterpointOrderAddOrignalTicket">
+            <wsdl:documentation>add orignal ticket</wsdl:documentation>
+            <wsdl:input message="typens:counterpointOrderAddOrignalTicketRequest" />
+            <wsdl:output message="typens:counterpointOrderAddOrignalTicketResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+         <wsdl:operation name="counterpointOrderAddCustomer">
+            <wsdl:documentation>add orignal ticket</wsdl:documentation>
+            <wsdl:input message="typens:counterpointOrderAddCustomerRequest" />
+            <wsdl:output message="typens:counterpointOrderAddCustomerResponse" />
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
          <wsdl:operation name="counterpointOrderList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+         <wsdl:operation name="counterpointOrderAddPayment">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+         <wsdl:operation name="counterpointOrderAddShipment">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+         <wsdl:operation name="counterpointOrderUpdateTicketByOrignalTicket">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+         <wsdl:operation name="counterpointOrderAddOrignalTicket">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+         <wsdl:operation name="counterpointOrderAddCustomer">
             <soap:operation soapAction="" />
             <wsdl:input>
                 <soap:body use="literal" />

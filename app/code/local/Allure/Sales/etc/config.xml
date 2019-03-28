@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Allure_Sales>
+            <name>Allure - Sales</name>
+            <version>0.0.1</version>
+        </Allure_Sales>
+    </modules>
+
+    <global>
+        <models>
+            <allure_sales>
+                <class>Allure_Sales_Model</class>
+            </allure_sales>
+        </models>
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Allure_Sales before="Mage_Adminhtml">Allure_Sales_Adminhtml</Allure_Sales>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>

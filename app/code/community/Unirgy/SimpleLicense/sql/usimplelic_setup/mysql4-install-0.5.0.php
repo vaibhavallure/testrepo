@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `{$this->getTable('usimplelic_license')}` (
   `signature` TEXT,
   PRIMARY KEY (`license_id`),
   UNIQUE KEY `IDX_license_key` (`license_key`)
-) ENGINE=MYISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1
+) ENGINE=MYISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8
 
 ");
 

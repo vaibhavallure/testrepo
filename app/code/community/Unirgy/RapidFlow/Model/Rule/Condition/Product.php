@@ -27,6 +27,9 @@ class Unirgy_RapidFlow_Model_Rule_Condition_Product extends Mage_CatalogRule_Mod
     {
         parent::_addSpecialAttributes($attributes);
         $attributes['type_id'] = Mage::helper('urapidflow')->__('Product Type (system)');
+        $attributes['created_at'] = Mage::helper('urapidflow')->__('Created At (system)');
+        $attributes['updated_at'] = Mage::helper('urapidflow')->__('Updated At (system)');
+        $attributes['entity_id'] = Mage::helper('urapidflow')->__('Product Id (system)');
     }
 
     public function getJsFormObject()
@@ -46,13 +49,13 @@ class Unirgy_RapidFlow_Model_Rule_Condition_Product extends Mage_CatalogRule_Mod
     public function loadAttributeOptions()
     {
         $productAttributes = Mage::getResourceSingleton('catalog/product')
-            ->loadAllAttributes()
-            ->getAttributesByCode();
+                                 ->loadAllAttributes()
+                                 ->getAttributesByCode();
 
         $attributes = array();
         foreach ($productAttributes as $attribute) {
 #var_dump($attribute->debug());
-            if ($attribute->getFrontendLabel()!='' && ($attribute->getIsVisible() || $attribute->getIsUsedForPromoRules())) {
+            if ($attribute->getFrontendLabel() != '' && ($attribute->getIsVisible() || $attribute->getIsUsedForPromoRules())) {
                 $attributes[$attribute->getAttributeCode()] = $attribute->getFrontendLabel();
             }
         }
@@ -67,30 +70,38 @@ class Unirgy_RapidFlow_Model_Rule_Condition_Product extends Mage_CatalogRule_Mod
 
     public function getInputType()
     {
-        if ($this->getAttribute()==='type_id') {
+        $attributeCode = $this->getAttribute();
+        if ($attributeCode === 'type_id') {
             return 'multiselect';
+        } else if ($attributeCode === 'created_at' || $attributeCode === 'updated_at') {
+            return 'date';
         }
         return parent::getInputType();
     }
 
     public function getValueElementType()
     {
-        if ($this->getAttribute()==='type_id') {
+        $attributeCode = $this->getAttribute();
+        if ($attributeCode === 'type_id') {
             return 'multiselect';
+        } else if ($attributeCode === 'created_at' || $attributeCode === 'updated_at') {
+            return 'date';
         }
         return parent::getValueElementType();
     }
 
     public function getValueSelectOptions()
     {
-        if ($this->getAttribute()==='type_id') {
-            $arr = Mage::getSingleton('catalog/product_type')->getOptionArray();
+        if ($this->getAttribute() === 'type_id') {
+            $arr     = Mage::getSingleton('catalog/product_type')->getOptionArray();
             $options = array();
-            foreach ($arr as $k=>$v) {
-                $options[] = array('value'=>$k, 'label'=>$v);
+            foreach ($arr as $k => $v) {
+                $options[] = array('value' => $k, 'label' => $v);
             }
+
             return $options;
         }
+
         return parent::getValueSelectOptions();
     }
 
@@ -109,13 +120,14 @@ class Unirgy_RapidFlow_Model_Rule_Condition_Product extends Mage_CatalogRule_Mod
             $ve = addslashes($v);
         }
 
-
-        if ($a=='category_ids') {
-            $res = Mage::getSingleton('core/resource');
+        if ($a === 'category_ids') {
+            $res  = Mage::getSingleton('core/resource');
             $read = $res->getConnection('catalog_read');
-            $sql = $read->quoteInto("select product_id from `{$res->getTableName('catalog_category_product')}` where category_id in (?)", explode(',',$v));
+            $sql  = $read->quoteInto("select product_id from `{$res->getTableName('catalog_category_product')}` where category_id in (?)",
+                explode(',', $v));
             switch ($o) {
-            case '==': case '()':
+                case '==':
+                case '()':
                 $w = "e.entity_id in ({$sql})";
                 break;
 
@@ -129,12 +141,17 @@ class Unirgy_RapidFlow_Model_Rule_Condition_Product extends Mage_CatalogRule_Mod
         } else {
             $attr = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $a);
 
-            if ($attr->getId() && $attr->getBackendType()=='datetime' && !is_int($ve)) {
-                $ve = strtotime($ve);
+            if ($attr->getId() && $attr->getBackendType() === 'datetime') {
+                if (!is_int($ve)) {
+                    $timestamp = strtotime($ve);
+                } else {
+                    $timestamp = $ve;
+                }
+                $ve = date('Y-m-d H:i:s', $timestamp);
             }
 
             // whether attribute is multivalue
-            $m = $attr->getId() && ($attr->getFrontendInput() == 'multiselect');
+            $m = $attr->getId() && ($attr->getFrontendInput() === 'multiselect');
 
             switch ($o) {
             case '==': case '!=':
@@ -166,7 +183,7 @@ class Unirgy_RapidFlow_Model_Rule_Condition_Product extends Mage_CatalogRule_Mod
                 return false;
             }
 
-            if ($attr->getId() && $attr->getBackendType()!='static') {
+            if ($attr->getId() && $attr->getBackendType() !== 'static') {
                 $collection->addAttributeToJoin($a);
                 $sql = $collection->getSelect();
                 $attrTable = $collection->getAttributeTableAlias($a);

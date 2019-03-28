@@ -29,10 +29,13 @@
 <?php
     $methods = $this->getMethods();
     $oneMethod = count($methods) <= 1;
+    
+    $methodsList = array();
 ?>
 <?php
     foreach ($methods as $_method):
         $_code = $_method->getCode();
+        $methodsList[] = $_code;
 ?>
     <dt>
     <?php if(!$oneMethod): ?>
@@ -41,7 +44,7 @@
         <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
         <?php $oneMethod = $_code; ?>
     <?php endif; ?>
-        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+        <label id="label-<?php echo $_code;?>" <?php if($this->getSelectedMethodCode()==$_code): ?> class="radio payment-checked"<?php endif; ?> for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
     </dt>
     <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
     <dd>
@@ -57,6 +60,26 @@
 <?php echo $this->getChildChildHtml('scripts'); ?>
 //payment.init();
 payment.singleMethod = true;
+
+<?php if (in_array('authnetapplepay',$methodsList)) :?>
+	<?php /** We have to load our scripts dynamically as such, because opc will not load them otherwise. Injecting via layout would only cause compatibility problems. **/ ?>
+	if ( typeof AllureApplePay == 'undefined' ) {
+		var AllureApplePay = {};
+
+		AllureApplePay.BaseUrl = '<?php echo Mage::getUrl('applepay/process'); ?>';
+		AllureApplePay.MerchantId = '<?php $_method->getConfigData('merchant_id') ?>';
+		AllureApplePay.MerchantName = '<?php $_method->getConfigData('merchant_name') ?>';
+		
+		var s = document.createElement('script');
+		s.type = "text/javascript";
+		s.src = "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'allure/authnetapplepay.js'; ?>";
+		var fs = document.getElementsByTagName('script')[1];
+		fs.parentNode.insertBefore(s, fs);
+
+		AllureApplePay.Initialised = true;
+	}
+<?php endif;?>
+
 <?php if (is_string($oneMethod)): ?>
     payment.switchMethod('<?php echo $oneMethod ?>');
     payment.singleMethod = '<?php echo $oneMethod ?>';
@@ -133,6 +156,9 @@ payment.singleMethod = true;
                      		payment.switchMethod(payment.singleMethod);
                      	 }
                       }
+                    <?php //aws02-start?>
+                            showPaymentForm();
+                            <?php //aws02-end?>
                 }
               });
               new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
@@ -216,6 +242,9 @@ payment.singleMethod = true;
                                 });
                             });
                         }
+                        <?php //aws02-start?>
+                                showPaymentForm();
+                                <?php //aws02-end?>
                     }
                 });
                 new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
@@ -246,15 +275,18 @@ payment.singleMethod = true;
                       var payment = jQuery(this).val(); 
                       if(payment){
                         if(jQuery(this).is(':checked')){                        
-                           jQuery(this).attr('class','payment-checked');
+                           jQuery(this).attr('class','radio payment-checked');
                            if(payment == 'authorizenet'){
                                jQuery('#payment_form_'+payment).show();
                            }
                         }
                         jQuery('#label-'+payment).click(function(){                         
                             uncheckPayment();
-                            jQuery(this).attr('class','payment-checked');
+                            jQuery(this).attr('class','radio payment-checked');
                         });
+                        <?php //aws02-start?>
+                                showPaymentForm();
+                                <?php //aws02-end?>
                       }
                       
                 }); 
@@ -268,14 +300,18 @@ payment.singleMethod = true;
                     var payment = jQuery(this).val();
                     if(payment){
                         if(jQuery(this).is(':checked')){
-                            jQuery(this).attr('class','payment-checked');
+                            jQuery(this).attr('class','radio payment-checked');
                             if(payment == 'authorizenet'){
                             }
                         }
                         jQuery('#label-'+payment).click(function(){
                             uncheckPayment();
-                            jQuery(this).attr('class','payment-checked');
+                            jQuery(this).attr('class','radio payment-checked');
                         });
+
+                        <?php //aws02-start?>
+                                showPaymentForm();
+                                <?php //aws02-end?>
                     }
 
                 });
@@ -361,4 +397,18 @@ function removeCardClass(method){
 	if(jQuery('#'+method+'_saved_cc_cid').length)
 		jQuery('#'+method+'_saved_cc_cid').removeClass('required-entry');
 }
+
+<?php //aws02 -start?>
+function showPaymentForm(){
+	jQuery('input[name="payment[method]"]').each(function () {
+		var paymentM = jQuery(this).val();
+		if(paymentM){
+		   if(jQuery(this).is(':checked')){
+		       jQuery('#payment_form_'+paymentM).show();
+		       payment.switchMethod(paymentM);
+		   }
+		}
+	});
+}
+<?php //aws02 -end?>
 </script>

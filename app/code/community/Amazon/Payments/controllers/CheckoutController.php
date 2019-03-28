@@ -12,6 +12,9 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
 {
     protected $_amazonOrderReferenceId;
     protected $_checkoutUrl = 'checkout/amazon_payments';
+    private   $_methodType  = 'amazon_payments';
+
+    const COUPON_CODE_MAX_LENGTH = 255;
 
     /**
      * Checkout page
@@ -127,7 +130,24 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
         }
 
         $this->_saveShipping();
-        $this->_getCheckout()->getQuote()->collectTotals()->save();
+
+        $quote = $this->_getCheckout()->getQuote();
+
+        if ($quote->isVirtual()) {
+            $quote->getBillingAddress()->setPaymentMethod($this->_methodType);
+        } else {
+            $quote->getShippingAddress()->setPaymentMethod($this->_methodType);
+        }
+
+        // shipping totals may be affected by payment method
+        if (!$quote->isVirtual() && $quote->getShippingAddress()) {
+            $quote->getShippingAddress()->setCollectShippingRates(true);
+        }
+
+        $payment = $quote->getPayment();
+        $payment->importData(array('method' => $this->_methodType));
+
+        $quote->collectTotals()->save();
 
         $shipping_block = 'checkout_amazon_payments_shippingmethod';
 
@@ -147,7 +167,12 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
 
         // Validate country
         if (!$this->isCountryAllowed($this->_getCheckout()->getQuote()->getShippingAddress()->getCountry())) {
-            $result['shipping_method'] = $this->__('This order cannot be shipped to the selected country. Please use a different shipping address.');
+            $result['review'] = $result['shipping_method'] = $this->__('This order cannot be shipped to the selected country. Please use a different shipping address.');
+        }
+
+        // Check if state is blocked by config
+        if ($quote->getShippingAddress()->getCountry() == 'US' && in_array($quote->getShippingAddress()->getRegionCode(), $this->_getConfig()->getBlockStates())) {
+            $result['review'] = $result['shipping_method'] = $this->__('This order cannot be shipped to the selected state. Please use a different shipping address.');
         }
 
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
@@ -274,6 +299,12 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
 
         $result = array();
 
+        // Edge-case for undefined store
+        $store = Mage::app()->getStore();
+        if (!isset($store)) {
+            Mage::app()->setCurrentStore($this->_getCheckout()->getQuote()->getStoreId());
+        }
+
         try {
             $requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds();
             if ($requiredAgreements) {
@@ -314,7 +345,7 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
             }
 
             $this->_getCheckout()->savePayment(array(
-                'method' => 'amazon_payments',
+                'method' => $this->_methodType,
                 'additional_information' => $additional_information,
             ));
 
@@ -329,6 +360,7 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
             if (!empty($message)) {
                 $result['error_messages'] = $message;
             }
+
             $result['goto_section'] = 'payment';
             $result['update_section'] = array(
                 'name' => 'payment-method',
@@ -340,6 +372,14 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
             $result['success'] = false;
             $result['error'] = true;
             $result['error_messages'] = $e->getMessage();
+
+            if (strpos($result['error_messages'], 'AmazonRejected') !== false) {
+                $result['amazonLogout'] = true;
+                $this->clearSession();
+                Mage::getSingleton('checkout/session')->addError($this->__('Amazon Payments could not process your payment. Please proceed to checkout and use a different payment option.'));
+                $redirectUrl = Mage::getUrl('checkout/cart');
+            }
+
 
             $gotoSection = $this->_getCheckout()->getCheckout()->getGotoSection();
             if ($gotoSection) {
@@ -391,7 +431,14 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
 
         try {
             $codeLength = strlen($couponCode);
-            $isCodeLengthValid = $codeLength && $codeLength <= Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH;
+
+            //Add support for Magento < 1.8
+            if(defined('Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH')){
+                $isCodeLengthValid = $codeLength && $codeLength <= Mage_Checkout_Helper_Cart::COUPON_CODE_MAX_LENGTH;
+            }
+            else{
+                $isCodeLengthValid = $codeLength && $codeLength <= self::COUPON_CODE_MAX_LENGTH;
+            }
 
             $this->_getQuote()->getShippingAddress()->setCollectShippingRates(true);
             $this->_getQuote()->setCouponCode($isCodeLengthValid ? $couponCode : '')
@@ -450,6 +497,13 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
     protected function _getCart()
     {
         return Mage::getSingleton('checkout/cart');
+    }
+
+    /**
+     * Get Payments config
+     */
+    protected function _getConfig() {
+        return Mage::getModel('amazon_payments/config');
     }
 
     /**

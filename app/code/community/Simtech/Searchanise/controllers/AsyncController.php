@@ -11,20 +11,21 @@
 * PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
 * "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
 ****************************************************************************/
+
 class Simtech_Searchanise_AsyncController extends Mage_Core_Controller_Front_Action
 {
     protected $_notUseHttpRequestText = null;
     protected $_flShowStatusAsync = null;
-    
+
     public function getNotUseHttpRequestText()
     {
         if (is_null($this->_notUseHttpRequestText)) {
             $this->_notUseHttpRequestText = $this->getRequest()->getParam(Simtech_Searchanise_Helper_ApiSe::NOT_USE_HTTP_REQUEST);
         }
-        
+
         return $this->_notUseHttpRequestText;
     }
-    
+
     public function checkNotUseHttpRequest()
     {
         return ($this->getNotUseHttpRequestText() == Simtech_Searchanise_Helper_ApiSe::NOT_USE_HTTP_REQUEST_KEY) ? true : false;
@@ -35,7 +36,7 @@ class Simtech_Searchanise_AsyncController extends Mage_Core_Controller_Front_Act
         if (is_null($this->_flShowStatusAsync)) {
             $this->_flShowStatusAsync = $this->getRequest()->getParam(Simtech_Searchanise_Helper_ApiSe::FL_SHOW_STATUS_ASYNC);
         }
-        
+
         return $this->_flShowStatusAsync;
     }
 
@@ -52,13 +53,13 @@ class Simtech_Searchanise_AsyncController extends Mage_Core_Controller_Front_Act
     public function preDispatch()
     {
         // Do not start standart session
-        $this->setFlag('', self::FLAG_NO_START_SESSION, 1); 
+        $this->setFlag('', self::FLAG_NO_START_SESSION, 1);
         $this->setFlag('', self::FLAG_NO_CHECK_INSTALLATION, 1);
         $this->setFlag('', self::FLAG_NO_COOKIES_REDIRECT, 0);
         $this->setFlag('', self::FLAG_NO_PRE_DISPATCH, 1);
 
         // Need for delete the "PDOExceptionPDOException" error
-        $this->setFlag('', self::FLAG_NO_POST_DISPATCH, 1); 
+        $this->setFlag('', self::FLAG_NO_POST_DISPATCH, 1);
 
         parent::preDispatch();
 
@@ -93,11 +94,9 @@ class Simtech_Searchanise_AsyncController extends Mage_Core_Controller_Front_Act
             $result = Mage::helper('searchanise/ApiSe')->async($flIgnoreProcessing);
 
             if ($this->checkShowSatusAsync()) {
-                echo 'Searchanise status sync: ';
-                echo $result;
+                $this->getResponse()->appendBody('Searchanise status sync: ');
+                $this->getResponse()->appendBody($result);
             }
-
-            exit();
         }
 
         return $this;

@@ -22,9 +22,10 @@
 		<?php if( $this->getMethod()->getAdvancedConfigData('require_ccv') ): ?>
 			<li>
 				<div class="input-box">
+					<a href="#" onclick="toggleToolTip(this);" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
 					<label for="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" class="left"><?php echo $this->__('Card Code'); ?></label>&nbsp;
-					<input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text <?php echo $this->getMethodCode(); ?>_require required-entry validate-digits-range digits-range-001-9999" id="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" name="payment[saved_cc_cid]" autocomplete="off" value="" style="width:4em;" maxlength="4" />
-					<a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
+					<input type="password" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text <?php echo $this->getMethodCode(); ?>_require required-entry validate-digits-range digits-range-001-9999" id="<?php echo $this->getMethodCode(); ?>_saved_cc_cid" name="payment[saved_cc_cid]" autocomplete="off" value="" style="width:70px!important;" maxlength="4" />
+					
 				</div>
 			</li>
 		<?php endif; ?>
@@ -37,7 +38,7 @@
 	<li <?php if( $this->haveStoredCards() ): ?>style="display:none"<?php endif; ?> class="<?php echo $newClass; ?>">
 		<label for="<?php echo $this->getMethodCode(); ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type') ?></label>
 		<div class="input-box">
-			<select id="<?php echo $this->getMethodCode(); ?>_cc_type" name="payment[cc_type]" class="<?php echo $requireClass; ?>">
+			<select id="<?php echo $this->getMethodCode(); ?>_cc_type" name="payment[cc_type]" class="<?php echo $requireClass; ?> validate-cc-type-select">
 				<option value=""><?php echo $this->__('-- Select One --')?></option>
 				<?php foreach( $this->getCcAvailableTypes() as $k => $v ): ?>
 					<option value="<?php echo $k; ?>" <?php if( $k == $this->getInfoData('cc_type') ): ?>selected="selected"<?php endif ?>><?php echo $v; ?></option>
@@ -76,7 +77,7 @@
 			<label for="<?php echo $this->getMethodCode(); ?>_cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number') ?></label>
 			<div class="input-box">
 				<div class="v-fix">
-					<input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text cvv <?php echo $requireClass; ?> <?php if( !$this->haveStoredCards() ): ?>validate-cc-cvn<?php endif; ?>" id="<?php echo $this->getMethodCode(); ?>_cc_cid" name="payment[cc_cid]" autocomplete="off" value="" maxlength="4" />
+					<input type="password" title="<?php echo $this->__('Card Verification Number') ?>" class="input-text cvv <?php echo $requireClass; ?> <?php if( !$this->haveStoredCards() ): ?>validate-cc-cvn<?php endif; ?>" id="<?php echo $this->getMethodCode(); ?>_cc_cid" name="payment[cc_cid]" autocomplete="off" value="" maxlength="4" />
 				</div>
 				<a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
 			</div>

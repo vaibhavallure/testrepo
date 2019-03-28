@@ -57,6 +57,19 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
                 <span>*</span>
                 <span id="msg-country" class="validation-advice"></span>
             </div>
+            
+            <div class="mt-terms-condtions-policy">
+            <label for="mt-newsl-terms"  class="mt-custom-checkbox">
+            	<input  type="checkbox" name="mt-newsl-terms"
+        		 id="mt-newsl-terms" value="1" class="checkbox">
+        		 <span class="checkmark"></span>
+            Yes, I want to sign up for Maria Tash emails.  
+            By clicking the submit button I agree to receive Maria Tash emails and I agree to the Maria Tash 
+            <a href="/privacy-policy/">privacy policy</a> for this website.
+            </label>
+        </div>
+        
+            
         </div>
         <div class="loader" style="display:none; width: 20px;">
             <img src="<?php echo Mage::getBaseUrl('media') . 'loading.gif' ?>" />
@@ -85,6 +98,17 @@ $newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormAction
         jQuery('#msg-email').text('');
         jQuery('#msg-name').text('');
         jQuery('#msg-lastname').text('');
+
+        var newsletterPrivacySelector = jQuery("#newsletter-validate-detail #mt-newsl-terms");
+        var ischeck = newsletterPrivacySelector.prop('checked');
+        if(ischeck == false){
+        	newsletterPrivacySelector.addClass("checkbox-error-validate");
+        	newsletterPrivacySelector.parent().addClass("label-error-validate");
+			return;
+		 }else{
+			 newsletterPrivacySelector.removeClass("checkbox-error-validate");
+			 newsletterPrivacySelector.parent().removeClass("label-error-validate");
+		 }
                     
         var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
         jQuery('.loader').css({display:'inline-block'});

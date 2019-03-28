@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Sales
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -1256,7 +1256,11 @@ class Mage_Sales_Model_Order extends Mage_Sales_Model_Abstract
         if (!$asObject) {
             return $shippingMethod;
         } else {
-            list($carrierCode, $method) = explode('_', $shippingMethod, 2);
+            $segments = explode('_', $shippingMethod, 2);
+            if (!isset($segments[1])) {
+                $segments[1] = $segments[0];
+            }
+            list($carrierCode, $method) = $segments;
             return new Varien_Object(array(
                 'carrier_code' => $carrierCode,
                 'method'       => $method
@@ -1340,7 +1344,7 @@ class Mage_Sales_Model_Order extends Mage_Sales_Model_Abstract
         $mailer->setStoreId($storeId);
         $mailer->setTemplateId($templateId);
         $mailer->setTemplateParams(array(
-        	'order'        => $this,
+            'order'        => $this,
             'billing'      => $this->getBillingAddress(),
             'payment_html' => $paymentBlockHtml,
             'highlighted'  => $this->isHighlighted(),
@@ -2024,7 +2028,12 @@ class Mage_Sales_Model_Order extends Mage_Sales_Model_Abstract
      */
     public function hasShipments()
     {
-        return $this->getShipmentsCollection()->count();
+        $result = false;
+        $shipmentsCollection = $this->getShipmentsCollection();
+        if ($shipmentsCollection) {
+            $result = (bool)$shipmentsCollection->count();
+        }
+        return $result;
     }
 
     /**
@@ -2034,7 +2043,12 @@ class Mage_Sales_Model_Order extends Mage_Sales_Model_Abstract
      */
     public function hasCreditmemos()
     {
-        return $this->getCreditmemosCollection()->count();
+        $result = false;
+        $creditmemosCollection = $this->getCreditmemosCollection();
+        if ($creditmemosCollection) {
+            $result = (bool)$creditmemosCollection->count();
+        }
+        return $result;
     }
 
 
@@ -2085,7 +2099,7 @@ class Mage_Sales_Model_Order extends Mage_Sales_Model_Abstract
      */
     public function getCreatedAtFormated($format)
     {
-        return Mage::helper('core')->formatDate($this->getCreatedAtStoreDate(), $format, false);
+        return Mage::helper('core')->formatDate($this->getCreatedAtStoreDate(), $format, true);
     }
 
     public function getEmailCustomerNote()

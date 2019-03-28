@@ -45,6 +45,12 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Payment_Methods extends Mage_C
                 if ($this->_canUseMethod($method) && $method->isApplicableToQuote($quote,
                         Mage_Payment_Model_Method_Abstract::CHECK_ZERO_TOTAL)) {
                     if ($this->getPaymentMethodsByCustomerRoles($method->getCode())) {
+
+                        /*-----temporary paypal payement method disabled for two ship method  */
+
+                        if($this->isDeleiveryMethodTwoShipment() && $method->getCode()=="paypal_express")
+                            continue;
+
                         $this->_assignMethod($method);
                         $methods[] = $method;
                     }
@@ -95,5 +101,11 @@ class Allure_MultiCheckout_Block_Checkout_Onepage_Payment_Methods extends Mage_C
         endforeach;
         
         return $isBackorderAvailable;
+    }
+    public  function isDeleiveryMethodTwoShipment(){
+        if($this->getQuote()->getDeliveryMethod()=='two_ship')
+            return TRUE;
+        else 
+            return FALSE;
     }
 }

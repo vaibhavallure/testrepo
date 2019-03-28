@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ebizmarts_BakerlooRestful>
-            <version>2.0.13</version>
+            <version>2.0.18</version>
         </Ebizmarts_BakerlooRestful>
     </modules>
     <default>
@@ -64,6 +64,9 @@
                 <template>bakerloorestful_new_customer_account_template</template>
                 <confirmation_template>bakerloorestful_new_customer_account_confirmation_template</confirmation_template>
             </new_customer_account>
+            <share_product_email>
+                <template>bakerloorestful_share_product_template</template>
+            </share_product_email>
             <order_emails>
                 <enabled>1</enabled>
             </order_emails>
@@ -222,10 +225,6 @@
                         <class>bakerloo_restful/observer_catalog</class>
                         <method>inventoryNewOrder</method>
                     </bakerloo_restful_inventory_monitor>
-                    <!--<bakerloo_restful_session_clear>-->
-                        <!--<class>bakerloo_restful/observer_sales</class>-->
-                        <!--<method>clearCheckoutSession</method>-->
-                    <!--</bakerloo_restful_session_clear>-->
                 </observers>
             </sales_order_place_after>
             <sales_order_creditmemo_refund>
@@ -305,6 +304,11 @@
                     <file>pos/customer_welcome_confirmation.html</file>
                     <type>html</type>
                 </bakerloorestful_new_customer_account_confirmation_template>
+                <bakerloorestful_share_product_template>
+                    <label>POS Product Share</label>
+                    <file>pos/product_share.html</file>
+                    <type>html</type>
+                </bakerloorestful_share_product_template>
             </email>
         </template>
     </global>

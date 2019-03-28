@@ -52,7 +52,7 @@ class Simtech_Searchanise_Model_Config extends Mage_Core_Model_Abstract
     public function getConfig($path, $scope = 'default', $scopeId = 0)
     {
         $path = rtrim($path, '/');
-        
+
         $collection = $this->getCollection()
             ->addFieldToFilter('path', $path)
             ->addFieldToFilter('scope', $scope)

@@ -1,0 +1,55 @@
+<?php
+$column = $this->getColumn();
+$_idx = $this->getId();
+$orderUrl = Mage::getModel('adminhtml/url')->getUrl('*/advr_order/plain');
+$invoiceUrl = Mage::getModel('adminhtml/url')->getUrl('*/advr_order/invoices');
+?>
+<div class="advr-filter-<?php echo $_idx ?>">
+    <input type="hidden" name="orders" id="advr-filter-orders_<?= $_idx ?>" value="<?php  echo $column->getOrders(); ?>"/>
+</div>
+
+<input type="hidden" name="country_id" class="country_id_<?= $_idx ?>" value="<?php echo $this->getData()['column']->getData()['country_id'] ?>"/>
+<input type="hidden" name="payment_method" class="payment_method_<?= $_idx ?>" value="<?php echo $this->getData()['column']->getData()['payment_method'] ?>"/>
+
+<a href="javascript:void(0);" onclick="window.open(advnGridJsObject._addVarToUrl('<?php echo $orderUrl ?>', advnGridJsObject.filterVar, getFilterValues(<?php echo $_idx ?>)), '_blank');"><?php echo Mage::helper('advr')->__('View orders') ?>
+
+</a>
+<br>
+<?php if ($column->getInvoices()): ?>
+    <div class="advr-filter-<?php echo $_idx ?>">
+        <input type="hidden" name="invoices" value="<?php  echo $column->getInvoices(); ?>"/>
+    </div>
+    <a href="javascript:void(0);" onclick="window.open(advnGridJsObject._addVarToUrl('<?php echo $invoiceUrl ?>', advnGridJsObject.filterVar, getFilterValues(<?php echo $_idx ?>)), '_blank');"><?php echo Mage::helper('advr')->__('View invoices') ?></a>
+<?php endif ?>
+
+
+
+
+<?php
+$inputs="";
+if($this->getData()['column']->getData()['country_id'])
+   $inputs=",.country_id_";
+
+if($this->getData()['column']->getData()['payment_method'])
+    $inputs=",.payment_method_";
+
+if(!$this->getData()['column']->getData()['country_id'] && !$this->getData()['column']->getData()['payment_method'])
+    $inputs=",.advr-filter-orders_";
+
+
+?>
+
+<script type="text/javascript">
+    function getFilterValues(idx)
+    {
+        var inputs = $$('.advr-widget-toolbar input, .advr-widget-toolbar select, .advr-extended-filter input, .advr-extended-filter select <?= $inputs ?>'+idx); //.advr-filter-'+idx + ' input'
+        var values = [];
+
+        for(var i in inputs) {
+            if(inputs[i].value && inputs[i].value.length) {
+                values.push(inputs[i]);
+            }
+        }
+        return encode_base64(Form.serializeElements(values));
+    }
+</script>

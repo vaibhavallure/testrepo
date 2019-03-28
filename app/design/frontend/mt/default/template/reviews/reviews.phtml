@@ -85,11 +85,11 @@
             </form>
 
         </div>
-		 <?php  echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml(); ?>
+		<?php  echo $this->getLayout()->createBlock('ecp_reviews/cityyelp')->setTemplate('reviews/cityyelp.phtml')->toHtml(); ?>
+		 
+        <a class="fancybox" style="display:none;" href="#confirmation"></a>
+        <div id="confirmation" style="display:none;">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('reviews-confirm')->toHtml();?>
+        </div>
     </div>
-</div>
-
-<a class="fancybox" style="display:none;" href="#confirmation"></a>
-<div id="confirmation" style="display:none;">
-    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('reviews-confirm')->toHtml();?>
 </div>

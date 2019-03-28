@@ -8,13 +8,16 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
 		->addNameToSelect()
 		->addAttributeToSelect('email')
 		->addAttributeToSelect('customer_type')  //add status to counterpoint
+		->addAttributeToSelect('fb_login_count') 
+		->addAttributeToSelect('google_login_count') 
 		->addAttributeToSelect('created_at')
 		->addAttributeToSelect('group_id')
 		->joinAttribute('billing_postcode', 'customer_address/postcode', 'default_billing', null, 'left')
 		->joinAttribute('billing_city', 'customer_address/city', 'default_billing', null, 'left')
 		->joinAttribute('billing_telephone', 'customer_address/telephone', 'default_billing', null, 'left')
 		->joinAttribute('billing_region', 'customer_address/region', 'default_billing', null, 'left')
-		->joinAttribute('billing_country_id', 'customer_address/country_id', 'default_billing', null, 'left');
+		->joinAttribute('billing_country_id', 'customer_address/country_id', 'default_billing', null, 'left')
+		->joinAttribute('billing_company', 'customer_address/company', 'default_billing', null, 'left');
 		
 		$this->setCollection($collection);
 		
@@ -119,6 +122,18 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
             'width'     => '100',
             'index'     => 'billing_region',
         ));
+        
+        $this->addColumn('billing_city', array(
+            'header'    => Mage::helper('customer')->__('City'),
+            'width'     => '100',
+            'index'     => 'billing_city',
+        ));
+        
+        $this->addColumn('billing_company', array(
+            'header'    => Mage::helper('customer')->__('Company Name'),
+            'width'     => '100',
+            'index'     => 'billing_company',
+        ));
 
         $this->addColumn('customer_since', array(
             'header'    => Mage::helper('customer')->__('Customer Since'),
@@ -139,14 +154,33 @@ class Allure_Counterpoint_Block_Adminhtml_Customer_Grid extends Mage_Adminhtml_B
             ));
         }
 
-        $this->addColumn('customer_type', array(
-        		'header'    => Mage::helper('customer')->__('Customer Create From'),
+        $this->addColumn('fb_login_count', array(
+        		'header'    => Mage::helper('customer')->__('FB Login Count'),
         		'align'     => 'center',
         		'width'     => '80px',
-        		'type'      => 'options',
-                'options'   => array(0=>'Website',1=>'CounterPoint',2=>'Sugar CRM'),
-        		'index'     => 'customer_type',
+        		'index'     => 'fb_login_count',
         ));
+        
+        $this->addColumn('google_login_count', array(
+            'header'    => Mage::helper('customer')->__('Google Login Count'),
+            'align'     => 'center',
+            'width'     => '80px',
+            'index'     => 'google_login_count',
+        ));
+        
+        
+        
+        $this->addColumn('customer_type', array(
+            'header'    => Mage::helper('customer')->__('Customer Create From'),
+            'align'     => 'center',
+            'width'     => '80px',
+            'type'      => 'options',
+            'options'   => array(0=>'Website',1=>'CounterPoint',2=>'Sugar CRM',15=>'Facebook',16=>'Google',20=>'Teamwork'),
+            'index'     => 'customer_type',
+        ));
+        
+        
+        
         
         $this->addColumn('action',
             array(

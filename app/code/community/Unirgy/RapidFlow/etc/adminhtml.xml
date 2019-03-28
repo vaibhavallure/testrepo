@@ -6,7 +6,8 @@
                 <urapidflow translate="title" module="urapidflow">
                     <title>RapidFlow</title>
                     <sort_order>45</sort_order>
-                    <action>urapidflowadmin/adminhtml_profile</action>
+                    <action>adminhtml/profile</action>
+                    <!--<action>urapidflowadmin/adminhtml_profile</action>-->
                     <!--
                     <children>
                         <batch module="urapidflow">

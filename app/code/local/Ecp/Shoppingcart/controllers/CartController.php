@@ -105,6 +105,28 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
     		}
     	}
     }
+    private  function storePurchasedFromCategory($purchasedFrom){
+        $product = $this->_initProduct();
+        $quote = $this->_getCart()->getQuote();
+        
+        if ($quote && $quote->getId()) {
+          
+            $quoteItem = null;
+            foreach ($quote->getAllItems() as $item) {
+                if ($item->getProductId()==$product->getId()) {
+                    $quoteItem =  $item;
+                }
+            }
+            if ($purchasedFrom != '') {
+                try {
+                    $quoteItem->setPurchasedFrom($purchasedFrom)->save();
+                }
+                catch (Exception $e) {
+                    Mage::log("Exception".$e->getMessage(),Zend_log::DEBUG,'excpetion.log',true);
+                }
+            }
+        }
+    }
     
     /**
      * Add product to shopping cart action
@@ -114,8 +136,8 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
         $cart   = $this->_getCart();
         $params = $this->getRequest()->getParams();  
         $ajax = $this->getRequest()->isXmlHttpRequest();
-        
         $specialInstruction = (isset($params['gift-special-instruction']) && !empty($params['gift-special-instruction'])) ? trim($params['gift-special-instruction']) : false;
+        $purchasedFrom = (isset($params['purchased_from_cat']) && !empty($params['purchased_from_cat'])) ? trim($params['purchased_from_cat']) : false;
         
         try {
             if (isset($params['qty'])) {
@@ -150,6 +172,9 @@ class Ecp_Shoppingcart_CartController extends Mage_Checkout_CartController
 
             if ($specialInstruction) {
             	$this->storeGiftMessage($specialInstruction);
+            }
+            if ($purchasedFrom) {
+                $this->storePurchasedFromCategory($purchasedFrom);
             }
             
             $this->_getSession()->setCartWasUpdated(true);

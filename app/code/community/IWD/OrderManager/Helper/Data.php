@@ -39,6 +39,7 @@ class IWD_OrderManager_Helper_Data extends Mage_Core_Helper_Data
 
     public function CheckTableEngine($table)
     {
+        return true;
         try {
             $dbname = (string)Mage::getConfig()->getResourceConnectionConfig('default_setup')->dbname;
             $sql = "SELECT engine FROM `information_schema`.`tables` WHERE `table_schema`='{$dbname}' AND `table_name`='{$table}'";

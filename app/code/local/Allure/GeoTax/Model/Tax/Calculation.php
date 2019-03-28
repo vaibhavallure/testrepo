@@ -155,7 +155,9 @@ class Allure_GeoTax_Model_Tax_Calculation extends Mage_Tax_Model_Calculation
                     if ($geoAddress) {
                         $address = $geoAddress;
                         $geolocation = Mage::getSingleton('allure_geolocation/geoLocation');
-                        Mage::log(sprintf("IP::%s, COUNTRY:: %s, TAXCLASS:: %s",$geolocation->getIpAddress(), $geolocation->getCountryCode(), $customerTaxClass), Zend_Log::DEBUG, 'allure_geotax.log', $this->_geoTaxHelper->getDebugMode());
+                        if($this->_geoTaxHelper->getDebugMode()){
+                             Mage::log(sprintf("IP::%s, COUNTRY:: %s, TAXCLASS:: %s",$geolocation->getIpAddress(), $geolocation->getCountryCode(), $customerTaxClass), Zend_Log::DEBUG, 'allure_geotax.log', $this->_geoTaxHelper->getDebugMode());
+                        }
                     }
                 }
 
@@ -170,4 +172,104 @@ class Allure_GeoTax_Model_Tax_Calculation extends Mage_Tax_Model_Calculation
                 ->setCustomerClassId($customerTaxClass);
                 return $request;
     }
+    
+    
+    /**
+     * custom method
+     * get tax rate object data
+     */
+    public function getTaxPercentOfProduct($request, $tax, $price){
+        $resource     = Mage::getSingleton('core/resource');
+        $readAdapter  = $resource->getConnection('core_read');
+        $writeAdapter = $resource->getConnection('core_write');
+        
+        $countryId  = $request->getCountryId();
+        $regionId   = $request->getRegionId();
+        $postcode   = $request->getPostcode();
+        
+        $select = $readAdapter->select()
+        ->from(array('rate' => Mage::getSingleton('core/resource')->getTableName('tax/tax_calculation_rate')))
+        ->where('rate.tax_country_id = ?', $countryId)
+        ->where("rate.tax_region_id IN(?)", array(0, (int)$regionId));
+        
+        $expr = $writeAdapter->getCheckSql(
+            'zip_is_range is NULL',
+            $writeAdapter->quoteInto(
+                "rate.tax_postcode IS NULL OR rate.tax_postcode IN('*', '', ?)",
+                $this->createSearchPostCodeTemplates($postcode)
+                ),
+            $writeAdapter->quoteInto('? BETWEEN rate.zip_from AND rate.zip_to', $postcode)
+            );
+        $select->where($expr);
+        
+        $rateInfo = $readAdapter->fetchAll($select);
+        
+        if(count($rateInfo)){
+            $rateObj = $rateInfo[0];
+            if($rateObj["is_min_tax_amount"]){
+                $minAmountTax = $rateObj["min_tax_amount"];
+                if($price <= $minAmountTax){
+                    return 0;
+                }
+            }
+        }
+        return $tax;
+    }
+    
+    
+    
+    public function getTaxRateObject($request){
+        $resource     = Mage::getSingleton('core/resource');
+        $readAdapter  = $resource->getConnection('core_read');
+        $writeAdapter = $resource->getConnection('core_write');
+        
+        $countryId  = $request->getCountryId();
+        $regionId   = $request->getRegionId();
+        $postcode   = $request->getPostcode();
+        
+        $select = $readAdapter->select()
+        ->from(array('rate' => Mage::getSingleton('core/resource')->getTableName('tax/tax_calculation_rate')))
+        ->where('rate.tax_country_id = ?', $countryId)
+        ->where("rate.tax_region_id IN(?)", array(0, (int)$regionId));
+        
+        $expr = $writeAdapter->getCheckSql(
+            'zip_is_range is NULL',
+            $writeAdapter->quoteInto(
+                "rate.tax_postcode IS NULL OR rate.tax_postcode IN('*', '', ?)",
+                $this->createSearchPostCodeTemplates($postcode)
+                ),
+            $writeAdapter->quoteInto('? BETWEEN rate.zip_from AND rate.zip_to', $postcode)
+            );
+        $select->where($expr);
+        
+        $rateInfo = $readAdapter->fetchAll($select);
+        
+        if(count($rateInfo)){
+            return $rateInfo[0];
+        }
+        return null;
+    }
+    
+    
+    
+    /**
+     * custom method
+     */
+    protected  function createSearchPostCodeTemplates($postcode){
+        $len = Mage::helper('tax')->getPostCodeSubStringLength();
+        $strlen = strlen($postcode);
+        if ($strlen > $len) {
+            $postcode = substr($postcode, 0, $len);
+            $strlen = $len;
+        }
+        
+        $strArr = array((string)$postcode, $postcode . '*');
+        if ($strlen > 1) {
+            for ($i = 1; $i < $strlen; $i++) {
+                $strArr[] = sprintf('%s*', substr($postcode, 0, - $i));
+            }
+        }
+        return $strArr;
+    }
+    
 }

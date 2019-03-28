@@ -120,6 +120,18 @@ class ParadoxLabs_AuthorizeNetCim_Model_Method extends ParadoxLabs_TokenBase_Mod
 	 */
 	protected function _loadOrCreateCard( Varien_Object $payment )
 	{
+		// Check for stale Accept.js token
+		$acceptJsValue = $this->getInfoInstance()->getAdditionalInformation('acceptjs_value');
+		$acceptCardId  = Mage::registry( 'authnetcim-acceptjs-' . $acceptJsValue );
+		if( !empty( $acceptJsValue ) && $acceptCardId !== null ) {
+			// If we already stored the current token as a card and recorded it as such (via arbitrary registry key),
+			// we can't reuse it -- swap the card ID in and use that instead.
+			$payment->setTokenbaseId( $acceptCardId );
+			$payment->unsAdditionalInformation('acceptjs_key');
+			$payment->unsAdditionalInformation('acceptjs_value');
+		}
+		
+		// Handle legacy cases
 		if( !is_null( $this->_card ) ) {
 			$this->_log( sprintf( '_loadOrCreateCard(%s %s)', get_class( $payment ), $payment->getId() ) );
 			

@@ -104,7 +104,7 @@
 		<li class="<?php echo $code; ?>_add"<?php echo $style; ?>>
 			<label for="<?php echo $code; ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type'); ?></label>
 			<div class="input-box">
-				<select id="<?php echo $code; ?>_cc_type" name="payment[cc_type]" class="<?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
+				<select id="<?php echo $code; ?>_cc_type" name="payment[cc_type]" class="<?php echo $code; ?>_require validate-cc-type-select <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
 					<option value=""><?php echo $this->__('--Please Select--')?></option>
 					<?php foreach( Mage::helper('tokenbase')->getCcAvailableTypes( $code ) as $k => $v ): ?>
 						<option value="<?php echo $k ?>" <?php if( $k == $this->getCard()->getAdditional('cc_type') ): ?>selected="selected"<?php endif; ?>><?php echo $v ?></option>

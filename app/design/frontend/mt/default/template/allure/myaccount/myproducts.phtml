@@ -46,15 +46,15 @@
 	</div>
 	
 	<div id="new-mt-myproduct-receipts" class="tabcontent tab4">
-	  <div class="mt-my-orders">
-	  		<?php echo $this->getChildHtml("myaccount_filter");?>
+	  <div class="mt-my-orders" style="min-height: 70px">
+	  		<?php echo $this->getChildHtml("myaccount_filter_allorder");?>
 	  		<?php echo $this->getChildHtml('sales.order.history_list')?>
 	  </div>
 	</div>
 	
 	<div id="new-mt-myproduct-openorders" class="tabcontent tab5" style="overflow: inherit;">
 	  <div class="mt-my-openorders" style="min-height: 70px">
-	  		<?php echo $this->getChildHtml("myaccount_filter");?>
+	  		<?php echo $this->getChildHtml("myaccount_filter_openorder");?>
 	  		<?php echo $this->getChildHtml('sales.order.openorder_list')?>
 	  </div>
 	</div>
@@ -78,9 +78,17 @@
 	var Filter_Store = '<?php echo $_GET['m_store']?>';
 	jQuery(document).ready(function(){
 		var type = window.location.hash.substr(1);
+		var typeArr = type.split("#");
+		type = typeArr[0];
 		if(type!="" && type!="undefined" && type!=null){
 			var element = jQuery('.mt-myaccount-page .tab').find('button[data-link='+type+']')
 			changeTab(element);
+			if(typeArr.length >=2 ){
+				var info_typ = typeArr[1];
+				var order_no = typeArr[2];
+				autoLoadOrderData(type,info_typ,order_no);
+			}
+			
 		}else{
 			var element = jQuery('.mt-myaccount-page .tab .tablinks.active');
 			changeTab(element);
@@ -111,6 +119,38 @@
 		});
 			
 	});
+
+	function autoLoadOrderData(type,info_typ,ord_no){
+		var order_typ = "open";
+		if(type == "receipt"){
+			order_typ = "complete";
+		}
+
+		showLoadingFancybox();
+		jQuery.ajax({
+	        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/loadOrderView';?>',
+	        dataType : 'json',
+			type : 'POST',
+			data: {'order_id':ord_no,'order_type':order_typ},
+	        success: function(data) {
+	        	if(type == "receipt"){
+    	            jQuery('#load-complete-order-data').html(data.data.html);
+    	            jQuery('#new-mt-myproduct-receipts .block-layered-nav-bg').hide();
+    	            jQuery('.complete-order-view').hide();
+    	            jQuery('#load-complete-order-data').show();
+    	            jQuery('#load-complete-order-data #custom-order-info-tabs li[data-key="'+info_typ+'"]').trigger('click');
+	        	}else{
+	        		jQuery('#load-open-order-data').html(data.data.html);
+	                jQuery('#new-mt-myproduct-openorders .block-layered-nav-bg').hide();
+	                jQuery('.open-order-view').hide();
+	                jQuery('#load-open-order-data').show();
+	                jQuery('#load-open-order-data #custom-order-info-tabs li[data-key="'+info_typ+'"]').trigger('click');
+	        	}
+	        	window.location.hash = type+"#"+info_typ+"#"+ord_no;
+	        	hideLoadingFancybox();
+	        }
+	    });
+	}
 
 	function getParams(mkey,mval){
 		var uri = window.location;
@@ -175,85 +215,69 @@
 		}
 	}
 
+	function getFilterUrl(filter_name , filter_value){
+		var uri = window.location;
+		var host = uri.origin;
+		var params = getParams(filter_name , filter_value);
+		var path = uri.pathname + params;
+		var hash = uri.hash;
+		var url = host + path + hash;
+		window.location.href = url;
+	}
+
+	function configSelectorOfFilter(class_selector1,class_selectore2){
+		var configSelector = {            
+			over: function(){
+		    	//jQuery('.myaccount-filter-store').slideDown(300);                
+		    },            
+		    timeout: 200,            
+		    out: function(){  
+		    	jQuery("."+class_selectore2).removeClass('show');
+		    	jQuery("."+class_selectore2).slideUp(300);                
+		    }            
+		};
+
+		jQuery("."+class_selector1).hoverIntent(configSelector );
+		jQuery("."+class_selector1).click(function(){
+            var showOrHide = jQuery('.myaccount-filter-store').hasClass('show');
+            if(!showOrHide){
+            	jQuery("."+class_selectore2).addClass('show');
+            	jQuery("."+class_selectore2).slideDown(300);
+            }
+        });  
+	}
+
 	
 </script>
 
 
 
 <script type="text/javascript"> 
-	jQuery(document).ready(function(){        
-	    var config_store_selector = {            
-	         over: function(){
-	             //jQuery('.myaccount-filter-store').slideDown(300);                
-	         },            
-	         timeout: 200,            
-	         out: function(){  
-	         	jQuery('.myaccount-filter-store').removeClass('show');
-	            jQuery('.myaccount-filter-store').slideUp(300);                
-	         }            
-	     };   
+	jQuery(document).ready(function(){
+		var $jj = jQuery;        
+	    configSelectorOfFilter("myaccount-filter-store-list","myaccount-filter-store");
+        configSelectorOfFilter("myaccount-filter-sort-order-list","myaccount-filter-sort-order");
+        configSelectorOfFilter("myaccount-filter-order-status-list","myaccount-filter-order-status");
 
-         jQuery(".myaccount-filter-store-list").hoverIntent(config_store_selector );
-         jQuery('.myaccount-filter-store-list').click(function () {
-            var showOrHide = jQuery('.myaccount-filter-store').hasClass('show');
-               if(!showOrHide) {
-                   jQuery('.myaccount-filter-store').addClass('show');
-                   jQuery('.myaccount-filter-store').slideDown(300);
-               }
-               else {
-                     //jQuery('.myaccount-filter-store').removeClass('show');
-                     //jQuery('.myaccount-filter-store').slideUp(300); 
-               }
-         });
+        jQuery('.myaccount-filter-store-list .myaccount-filter-item li dd').click(function(){
+             var mval = jQuery(this).attr('value');
+             getFilterUrl('m_store', mval);
+        });
 
+        jQuery('.myaccount-filter-sort-order-list .myaccount-filter-item li dd').click(function(){
+             var mval = jQuery(this).attr('value');
+             getFilterUrl('m_sort', mval);
+        });
 
-         var config_sort_order_selector = {            
-    	         over: function(){
-    	             //jQuery('.myaccount-filter-store').slideDown(300);                
-    	         },            
-    	         timeout: 200,            
-    	         out: function(){  
-    	         	jQuery('.myaccount-filter-sort-order').removeClass('show');
-    	            jQuery('.myaccount-filter-sort-order').slideUp(300);                
-    	         }            
-    	     };   
+        jQuery('.myaccount-filter-order-status-list.open-order-filter .myaccount-filter-item li dd').click(function(){
+        	 var mval = jQuery(this).attr('value');
+        	 getFilterUrl('m_order', mval);
+        });
 
-             jQuery(".myaccount-filter-sort-order-list").hoverIntent(config_sort_order_selector );
-             jQuery('.myaccount-filter-sort-order-list').click(function () {
-                var showOrHide = jQuery('.myaccount-filter-store').hasClass('show');
-                   if(!showOrHide) {
-                       jQuery('.myaccount-filter-sort-order').addClass('show');
-                       jQuery('.myaccount-filter-sort-order').slideDown(300);
-                   }
-                   else {
-                         //jQuery('.myaccount-filter-store').removeClass('show');
-                         //jQuery('.myaccount-filter-store').slideUp(300); 
-                   }
-             });
-             
-
-         jQuery('.myaccount-filter-store-list .myaccount-filter-item li dd').click(function(){
-             var mval = jQuery(this).attr('value');//jQuery(this).val();
- 			 var uri = window.location;
- 			 var host = uri.origin;
- 			 var params = getParams('m_store',mval);
- 			 var path = uri.pathname + params;
- 			 var hash = uri.hash;
- 			 var url = host + path + hash;
- 			 window.location.href = url;
-         });
-
-         jQuery('.myaccount-filter-sort-order-list .myaccount-filter-item li dd').click(function(){
-             var mval = jQuery(this).attr('value');//jQuery(this).val();
- 			 var uri = window.location;
- 			 var host = uri.origin;
- 			 var params = getParams('m_sort',mval);
- 			 var path = uri.pathname + params;
- 			 var hash = uri.hash;
- 			 var url = host + path + hash;
- 			 window.location.href = url;
-         });
-                            
+        jQuery('.myaccount-filter-order-status-list.all-order-filter .myaccount-filter-item li dd').click(function(){
+        	 var mval = jQuery(this).attr('value');
+ 			 getFilterUrl('m_aorder', mval);
+        });
      });
 </script>
 

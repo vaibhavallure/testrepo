@@ -26,9 +26,9 @@ class Simtech_Searchanise_Model_Resource_Layer_Filter_Attribute extends Mage_Cat
         if (!Mage::helper('searchanise/ApiSe')->checkSearchaniseResult(true)) {
             return parent::getCount($filter);
         }
-        
+
         $collection = $filter->getLayer()->getProductCollection();
-        
+
         if ((!method_exists($collection, 'checkSearchaniseResult')) || (!$collection->checkSearchaniseResult())) {
             return parent::getCount($filter);
         }
@@ -61,14 +61,14 @@ class Simtech_Searchanise_Model_Resource_Layer_Filter_Attribute extends Mage_Cat
         if (!Mage::helper('searchanise/ApiSe')->checkSearchaniseResult(true)) {
             return parent::applyFilterToCollection($filter, $value);
         }
-        
+
         $collection = $filter->getLayer()->getProductCollection();
-        
+
         if ((!method_exists($collection, 'checkSearchaniseResult')) || (!$collection->checkSearchaniseResult())) {
             return parent::applyFilterToCollection($filter, $value);
         }
         // Disable internal attribute filter.
-        
+
         return $this;
     }
 }

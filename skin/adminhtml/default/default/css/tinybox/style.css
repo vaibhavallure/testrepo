@@ -6,3 +6,8 @@ body {height:100%; margin:0px; padding:0}
 
 .button {margin-bottom:10px; padding:8px 10px 9px; border:1px solid #ccc; background:#eee; cursor:pointer}
 .button:hover {border:1px solid #bbb; background:#e3e3e3}
+
+.custom_options_iwd{
+    font-style: unset !important;
+    font-weight: normal  !important;
+}

@@ -59,6 +59,7 @@ class Ebizmarts_BakerlooRestful_Block_Adminhtml_Bakerlooorders_Grid extends Mage
             )
         );
        
+        // START Allure Fixes
         $this->addColumn('store_id', array(
             'header'    =>$helper->__('Store'),
             'sortable'  =>True,
@@ -67,6 +68,7 @@ class Ebizmarts_BakerlooRestful_Block_Adminhtml_Bakerlooorders_Grid extends Mage
             'options'   => Mage::getModel('core/store')->getCollection()->toOptionHash()
             
         ));
+        // END Allure Fixes
 
         $this->addColumn(
             'order_payment_method',

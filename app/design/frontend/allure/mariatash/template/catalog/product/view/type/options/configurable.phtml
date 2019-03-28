@@ -37,6 +37,7 @@ if ($_product->getSizeSample() == 1) {
         </dd>
     <?php endforeach; ?>
     </dl>
+    <input type="hidden" id="direction_id" name="direction_id" value="">
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
             //call priceHtml via ajax, to avoid varnish caching
@@ -49,7 +50,17 @@ if ($_product->getSizeSample() == 1) {
             })
             .done(function(response) {
             var spConfig = new Product.Config(JSON.parse(response.jsonconfigtest));
-            var id = 'amconf-image-<?php echo $this->getRequest()->getParam("optionId"); ?>';        
+
+            <?php
+                    $optionHelper=Mage::helper('allure_catalog');
+                    $metal=$this->getRequest()->getParam("metal");
+                    if($metal){
+                        $selectedColor=$optionHelper->getOptionNumber($metal);
+                    }elseif($this->getRequest()->getParam("optionId")){
+                        $selectedColor=$this->getRequest()->getParam("optionId");
+                    }
+                    ?>
+               var id = 'amconf-image-<?php echo $selectedColor; ?>';
                 if($(id)){
                     $(id).simulate('click');
                     //document.getElementsByClassName("t_Tooltip t_Tooltip_customTiny")[0].hide();
@@ -267,4 +278,9 @@ jQuery(document).ready(function () {
         }
 
     });
+
+
+
+
+
 </script>

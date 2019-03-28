@@ -34,4 +34,66 @@ class Amasty_Stockstatus_Model_Rewrite_Sales_Quote_Item extends Mage_Sales_Model
             }
         return parent::getMessage($string);
     }
+    
+    /**
+     * Adding quantity to quote item
+     *
+     * @param float $qty
+     * @return Mage_Sales_Model_Quote_Item
+     */
+    public function addQtyasNew($qty)
+    {
+        $oldQty = $this->getQty();
+        //$qty = $this->_prepareQtyasNew($qty);
+        if($qty < 0){
+            $qty = $qty * (-1);
+        }
+        
+        /**
+         * We can't modify quontity of existing items which have parent
+         * This qty declared just once duering add process and is not editable
+         */
+        if (!$this->getParentItem() || !$this->getId()) {
+            $this->setQtyToAdd($qty);
+            $this->setQtyasNew($oldQty + $qty);
+        }
+        return $this;
+    }
+    
+    /**
+     * Declare quote item quantity
+     *
+     * @param float $qty
+     * @return Mage_Sales_Model_Quote_Item
+     */
+    public function setQtyasNew($qty)
+    {
+        //$qty = $this->_prepareQty($qty);
+        $oldQty = $this->_getData('qty');
+        $this->setData('qty', $qty);
+        
+        Mage::dispatchEvent('sales_quote_item_qty_set_after', array('item' => $this));
+        
+        if ($this->getQuote() && $this->getQuote()->getIgnoreOldQty()) {
+            return $this;
+        }
+        if ($this->getUseOldQty()) {
+            $this->setData('qty', $oldQty);
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * Prepare quantity
+     *
+     * @param float|int $qty
+     * @return int|float
+     */
+    protected function _prepareQtyasNew($qty)
+    {
+        $qty = Mage::app()->getLocale()->getNumber($qty);
+        $qty = ($qty > 0) ? $qty : 1;
+        return $qty;
+    }
 }

@@ -4,7 +4,10 @@
   		<update handle="customer_account"/>
 	    <reference name="my.account.wrapper">   
 	      <block type="myaccount/myproducts" name="my_products" as="my_products" template="allure/myaccount/myproducts.phtml">
-	      	<block type="core/template" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />
+	      	<block type="myaccount/filter" name="myaccount_filter" template="allure/myaccount/filter/filter.phtml" />
+	      	<block type="myaccount/filter" name="myaccount_filter_openorder" template="allure/myaccount/filter/openorder_filter.phtml" />
+	      	<block type="myaccount/filter" name="myaccount_filter_allorder" template="allure/myaccount/filter/allorder_filter.phtml" />
+	      	
 	      	<!-- Sales order history template -->
 	      	<block type="myaccount/order_history" name="sales.order.history_list" template="allure/myaccount/historylist.phtml">
 	      		<block type="myaccount/order_history" name="sales.order.history" template="allure/myaccount/history.phtml" />
@@ -226,5 +229,90 @@
             <block type="shipping/tracking_popup" name="shipping.tracking.popup" template="shipping/tracking/popup.phtml" />
         </reference>
   	</myaccount_index_track>
+  	
+  	
+  	<sales_order_view translate="label"> 
+          <reference name="order_items">  
+              <action method="setTemplate">
+                  <template>allure/myaccount/sales/order/view/items.phtml</template>
+              </action>          
+        </reference>   
+    </sales_order_view> 
+    
+    
+    <myaccount_sales_order_view>
+    		<block type="myaccount/orderview" name="myaccount.order_view" template="allure/myaccount/orderview.phtml">
+	    		<!-- sales order view -->
+	    		<block type="core/text_list" name="sales_order_view_info" template="allure/myaccount/orderview/orderinfo.phtml">
+	    			<block type="sales/order_info" as="info" name="sales.order.info">
+                		<block type="sales/order_info_buttons" as="buttons" name="sales.order.info.buttons" />
+            		</block>
+		            <block type="sales/order_view" name="sales.order.view">
+		                <block type="sales/order_items" name="order_items" template="allure/myaccount/sales/order/view/items.phtml">
+		                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>sales/order/items/renderer/default.phtml</template></action>
+		                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/items/renderer/default.phtml</template></action>
+		                    <block type="sales/order_totals" name="order_totals" template="sales/order/totals.phtml">
+		                        <action method="setLabelProperties"><value>colspan="4" class="a-right"</value></action>
+		                        <action method="setValueProperties"><value>class="last a-right"</value></action>
+		                        <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml" />
+		                    </block>
+		                </block>
+            		</block>
+                </block>
+                
+                <!-- sales order invoice -->
+                <block type="core/text_list" name="sales_order_invoice_info" template="allure/myaccount/orderview/order_invoice.phtml">
+	                <block type="sales/order_info" as="info" name="sales.order.info.invoice">
+	                	<block type="sales/order_info_buttons" as="buttons" name="sales.order.info.buttons" />
+	            	</block>
+		            <block type="sales/order_invoice" name="sales.order.invoice">
+		                <block type="sales/order_invoice_items" name="invoice_items" template="sales/order/invoice/items.phtml">
+		                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>sales/order/invoice/items/renderer/default.phtml</template></action>
+		                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/invoice/items/renderer/default.phtml</template></action>
+		                    <block type="sales/order_invoice_totals" name="invoice_totals" template="sales/order/totals.phtml">
+		                        <action method="setLabelProperties"><value>colspan="4" class="a-right"</value></action>
+		                        <action method="setValueProperties"><value>class="last a-right"</value></action>
+		                        <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml" />
+		                    </block>
+		                    <block type="sales/order_comments" name="invoice_comments" template="sales/order/comments.phtml" />
+		                </block>
+		            </block>
+	            </block>
+	            
+	            <!-- sales order shipment -->
+	            <block type="core/text_list" name="sales_order_shipment_info" template="allure/myaccount/orderview/order_shipment.phtml">
+		            <block type="sales/order_info" as="info" name="sales.order.info.shipment">
+	                	<block type="sales/order_info_buttons" as="buttons" name="sales.order.info.buttons" />
+	            	</block>
+		            <block type="sales/order_shipment" name="sales.order.shipment">
+		                <block type="sales/order_shipment_items" name="shipment_items" template="sales/order/shipment/items.phtml">
+		                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>sales/order/shipment/items/renderer/default.phtml</template></action>
+		                    <block type="sales/order_comments" name="shipment_comments" template="sales/order/comments.phtml" />
+		                </block>
+		            </block>
+	            </block>
+	            
+	            <!-- sales order creditmemo -->
+	            <block type="core/text_list" name="sales_order_creditmemo_info" template="allure/myaccount/orderview/order_creditmemo.phtml">
+		            <block type="sales/order_info" as="info" name="sales.order.info.creditmemo">
+	                	<block type="sales/order_info_buttons" as="buttons" name="sales.order.info.buttons" />
+	            	</block>
+		            <block type="sales/order_creditmemo" name="sales.order.creditmemo">
+		                <block type="sales/order_creditmemo_items" name="creditmemo_items" template="sales/order/creditmemo/items.phtml">
+		                    <action method="addItemRender"><type>default</type><block>sales/order_item_renderer_default</block><template>sales/order/creditmemo/items/renderer/default.phtml</template></action>
+		                    <action method="addItemRender"><type>grouped</type><block>sales/order_item_renderer_grouped</block><template>sales/order/creditmemo/items/renderer/default.phtml</template></action>
+		                    <block type="sales/order_creditmemo_totals" name="creditmemo_totals" template="sales/order/totals.phtml">
+		                        <action method="setLabelProperties"><value>colspan="6" class="a-right"</value></action>
+		                        <action method="setValueProperties"><value>class="a-right"</value></action>
+		                        <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml"/>
+		                    </block>
+		                    <block type="sales/order_comments" name="creditmemo_comments" template="sales/order/comments.phtml" />
+		                </block>
+		            </block>
+	            </block>
+                
+	    	</block>
+    </myaccount_sales_order_view>
+  	
   	
 </layout>

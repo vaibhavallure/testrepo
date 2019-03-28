@@ -32,10 +32,8 @@
 		$points .= '<div id="fs_overlink_'.$productId.'" class="fs-overlink" ';
 		$points .= ' data-link-id="'.$productId.'" ';
 		$points .= ' style="position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/$option->imgH).'%; left:'.(($option->left*100)/$option->imgW).'%;">';
-		$points .= '<div>'.$numberOfProducts.'</div>';
-		$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
-		$points .= '<div class="fs-arrow-up"></div>';
-		$points .= 'Shop it // " '.$productName.'</div></div></a>';
+		//$points .= '<div>'.$numberOfProducts.'</div>';
+		$points .= '</div></a>';
 		
 		$productsLinks .= '<div class="fs-text-link-container ">';
 		$productsLinks .= '<a class="fs-text-product fs-link-list" ';
@@ -52,35 +50,10 @@
 				data-resource-url="<?php echo $feedModel->getUsername()?>">
 				<div class="fs-detail-content">
 				
-				<div class="fs-detail-nav-bar-arrows">
-						<?php if(0):?>
-							<span class="fs-detail-nav-button fs-button-inactive"> <!--?xml version="1.0"?-->
-								<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-									xmlns:svg="http://www.w3.org/2000/svg">
-									<g>
-									<path class="fs-arrow" fill="none" stroke-width="1px"
-										d="m22.5,0l-15,15l15,15" id="fs-left-path" stroke="#ddd"></path></g></svg>
-							</span>
-							 <a class="fs-detail-nav-button" id="fs-next-post"> <!--?xml version="1.0"?-->
-								<svg width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-									xmlns:svg="http://www.w3.org/2000/svg">
-									<g>
-									<path class="fs-arrow" stroke="#222" id="fs-left-path"
-										d="m7.5,0l15,15l-15,15" fill="none"></path></g></svg>
-							</a>
-							<?php endif;?>
-							<div class="fs-detail-nav-bar-close">
-								<a class="fs-detail-nav-button" id="fs-detail-close" onclick="closeView(this);"><svg
-										width="30" height="30" xmlns="http://www.w3.org/2000/svg"
-										xmlns:svg="http://www.w3.org/2000/svg"> <g id="layer1"
-											stroke="#222" class="fs-arrow" stroke-width="1px" fill="none">   <path
-											d="m0,0l30,30"></path>   <path d="m30,0l-30,30"></path></g></svg></a>
-							</div>
-							<div style="clear: both;"></div>
-						</div>
+		
 				
 					<div class="fs-detail-left">
-						<div class="fs-image-container" style="position: relative;">
+						<div class="fs-image-container">
 							<img class="fs-detail-image" id="fs_main_image"
 								src="<?php echo $feedModel->getStandardResolution()
 //$feedModel->getImage()?>">
@@ -97,7 +70,7 @@
 						
 						<div class="fs-divider"></div>
 						<div style="clear: both;"></div>
-						<div class="fs-detail-title"><?php echo $feedModel->getText()?></div>
+						<div class="fs-detail-title"><?php echo json_decode($feedModel->getText())?></div>
 						
 						<div class="fs-post-info">
 							<a href="<?php echo $feedModel->getUsername()?>"
@@ -136,7 +109,48 @@
 				</div>
 			</div>
 			<div class="fs-buy-container fs-unslid"></div>
-		
+<style>
+span.fs-link-text-all {
+    line-height: 20px;
+    font-size: 14px;
+}
+.fs-divider{
+   
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top: 1px solid #ccc;
+}
+.fs-text-product {
+font-weight: bold;
+    font-size: 14px;
+    clear: both;
+    float: none;
+    line-height: 25px;
+    display: block;
+    padding: 5px 15px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-decoration: none;
+    color: #222;
+    display: inline;
+    transition: color 0.25s, background-color 0.25s;
+}
+.fs-detail-title {
+    font-family: Times New Roman, serif;
+    font-style: italic;
+    font-size: 13pt;
+    line-height: 19.5pt;
+    font-weight: 300;
+    text-align: left;
+    letter-spacing: 0.01em;
+    word-wrap: break-word;
+    word-break: break-word;
+    padding: 15px 30px;
+    color: #222;
+}
+.fs-detail-left {
+    margin-top: 20px;
+}
+</style>		
 
 <script>
 	jQuery(document).ready(function(){

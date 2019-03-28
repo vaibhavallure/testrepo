@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Api
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -212,7 +212,9 @@ abstract class Mage_Api_Model_Server_Handler_Abstract
      */
     public function login($username, $apiKey = null)
     {
-        Mage::log("LOGIN: $username",Zend_Log::DEBUG, 'api.log', true);
+        if(Mage::getStoreConfig("api/logs/enable_logs")){
+            Mage::log("LOGIN: $username",Zend_Log::DEBUG, 'api.log', true);
+        }
         if (empty($username) || empty($apiKey)) {
             return $this->_fault('invalid_request_param');
         }
@@ -223,7 +225,9 @@ abstract class Mage_Api_Model_Server_Handler_Abstract
         } catch (Exception $e) {
             return $this->_fault('access_denied');
         }
-        Mage::log("LOGIN: $username : OK",Zend_Log::DEBUG, 'api.log', true);
+        if(Mage::getStoreConfig("api/logs/enable_logs")){
+            Mage::log("LOGIN: $username : OK",Zend_Log::DEBUG, 'api.log', true);
+        }
         return $this->_getSession()->getSessionId();
     }
 
@@ -238,10 +242,10 @@ abstract class Mage_Api_Model_Server_Handler_Abstract
     public function call($sessionId, $apiPath, $args = array())
     {
         $this->_startSession($sessionId);
-        
-        Mage::log("CALL: $apiPath",Zend_Log::DEBUG, 'api.log', true);
-        Mage::log("ARGS: ".json_encode($args),Zend_Log::DEBUG, 'api.log', true);
-
+        if(Mage::getStoreConfig("api/logs/enable_logs")){
+            Mage::log("CALL: $apiPath",Zend_Log::DEBUG, 'api.log', true);
+            Mage::log("ARGS: ".json_encode($args),Zend_Log::DEBUG, 'api.log', true);
+        }
         if (!$this->_getSession()->isLoggedIn($sessionId)) {
             return $this->_fault('session_expired');
         }

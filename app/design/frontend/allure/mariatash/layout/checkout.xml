@@ -5,7 +5,7 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Academic Free License (AFL 3.0)
+ * This source le is subject to the Academic Free License (AFL 3.0)
  * that is bundled with this package in the file LICENSE_AFL.txt.
  * It is also available through the world-wide-web at this URL:
  * http://opensource.org/licenses/afl-3.0.php
@@ -20,7 +20,7 @@
  * needs please refer to http://www.magentocommerce.com for more information.
  *
  * @category    design
- * @package     base_default
+ * @package     default_modern
  * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -33,7 +33,6 @@ Default layout, loads most of the pages
 -->
 
     <default>
-
         <!-- Mage_Checkout -->
         <reference name="top.links">
             <block type="checkout/links" name="checkout_cart_link">
@@ -491,4 +490,11 @@ One page checkout order review block
         </reference>
     </checkout_onepage_failure>
     <block type="core/list" name="additional.product.info"/>
+    
+    
+    <checkout_cart_refreshtotals>
+        <block type="checkout/cart_totals" template="checkout/cart/totals.phtml" name="root" output="toHtml" >
+            <block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml" />
+        </block>
+    </checkout_cart_refreshtotals>
 </layout>

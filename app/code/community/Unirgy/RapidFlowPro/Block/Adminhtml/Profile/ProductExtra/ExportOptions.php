@@ -51,7 +51,13 @@ class Unirgy_RapidFlowPro_Block_Adminhtml_Profile_ProductExtra_ExportOptions
             'values'    => $source->setPath('yesno')->toOptionArray(),
             'value'     => $profile->getData('options/export/image_files'),
         ));
-
+        $fieldset->addField('export_image_retain_folders', 'select', array(
+            'label'     => $this->__('Export Image Retain Folder Structure'),
+            'name'      => 'options[export][image_retain_folders]',
+            'values'    => $source->setPath('yesno')->toOptionArray(),
+            'value'     => $profile->getData('options/export/image_retain_folders'),
+            'note'      => $this->__('When exporting images keep folder structure as stored in database or export flat folder with images.')
+        ));
         return parent::_prepareForm();
     }
 }

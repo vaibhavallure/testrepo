@@ -2,9 +2,9 @@
 <config>
     <modules>
         <Unirgy_SimpleLicense>
-            <version>1.0.3</version>
-            <usimpleup remote="http://download.unirgy.com/simple/client_api/version/"
-                changelog="http://unirgy.com/support/portal/announcements"/>
+            <version>1.1.7</version>
+            <usimpleup remote="https://download.unirgy.com/simple/client_api/version/"
+                changelog="https://unirgy.com/release-notes"/>
         </Unirgy_SimpleLicense>
     </modules>
 
@@ -35,9 +35,10 @@
       </blocks>
       <resources>
          <usimplelic_setup>
-            <setup>
-               <module>Unirgy_SimpleLicense</module>
-            </setup>
+             <setup>
+                 <module>Unirgy_SimpleLicense</module>
+                 <class>Unirgy_SimpleLicense_Model_Resource_Setup</class>
+             </setup>
             <connection>
                <use>core_setup</use>
             </connection>
@@ -108,13 +109,13 @@
    </adminhtml>
    <admin>
       <routers>
-         <usimplelicadmin>
-            <use>admin</use>
+         <adminhtml>
             <args>
-               <module>Unirgy_SimpleLicense</module>
-               <frontName>usimplelicadmin</frontName>
+               <modules>
+                  <usimplelicadmin after="Mage_Adminhtml">Unirgy_SimpleLicense</usimplelicadmin>
+               </modules>
             </args>
-         </usimplelicadmin>
+         </adminhtml>
       </routers>
    </admin>
 </config>

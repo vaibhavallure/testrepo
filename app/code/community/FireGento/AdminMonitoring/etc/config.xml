@@ -1,0 +1,213 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * This file is part of a FireGento e.V. module.
+ *
+ * This FireGento e.V. module is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * This script is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * @category  FireGento
+ * @package   FireGento_AdminMonitoring
+ * @author    FireGento Team <team@firegento.com>
+ * @copyright 2014 FireGento Team (http://www.firegento.com)
+ * @license   http://opensource.org/licenses/gpl-3.0 GNU General Public License, version 3 (GPLv3)
+ */
+-->
+<config>
+    <modules>
+        <FireGento_AdminMonitoring>
+            <version>1.2.2</version>
+        </FireGento_AdminMonitoring>
+    </modules>
+    <global>
+        <blocks>
+            <firegento_adminmonitoring>
+                <class>FireGento_AdminMonitoring_Block</class>
+            </firegento_adminmonitoring>
+        </blocks>
+        <models>
+            <firegento_adminmonitoring>
+                <class>FireGento_AdminMonitoring_Model</class>
+                <resourceModel>firegento_adminmonitoring_resource</resourceModel>
+            </firegento_adminmonitoring>
+            <firegento_adminmonitoring_resource>
+                <class>FireGento_AdminMonitoring_Model_Resource</class>
+                <entities>
+                    <history>
+                        <table>firegento_adminmonitoring_history</table>
+                    </history>
+                </entities>
+            </firegento_adminmonitoring_resource>
+        </models>
+        <resources>
+            <firegento_adminmonitoring>
+                <setup>
+                    <module>FireGento_AdminMonitoring</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </firegento_adminmonitoring>
+        </resources>
+        <helpers>
+            <firegento_adminmonitoring>
+                <class>FireGento_AdminMonitoring_Helper</class>
+            </firegento_adminmonitoring>
+        </helpers>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <firegento_adminmonitoring>
+                    <file>firegento_adminmonitoring.xml</file>
+                </firegento_adminmonitoring>
+            </updates>
+        </layout>
+        <events>
+            <model_save_after>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_model_save</class>
+                        <method>modelAfter</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </model_save_after>
+            <model_save_before>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_model_save</class>
+                        <method>modelBefore</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </model_save_before>
+            <model_delete_after>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_model_delete</class>
+                        <method>modelAfter</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </model_delete_after>
+            <category_move>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_category_move</class>
+                        <method>catalogCategoryMove</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </category_move>
+            <catalog_product_attribute_update_before>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_product_attribute_update</class>
+                        <method>catalogProductAttributeUpdateBefore</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </catalog_product_attribute_update_before>
+            <catalog_product_import_finish_before>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_product_import</class>
+                        <method>catalogProductImportFinishBefore</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </catalog_product_import_finish_before>
+            <firegento_adminmonitoring_rowurl>
+                <observers>
+                    <catalog_product>
+                        <class>firegento_adminmonitoring/rowUrl_model_product</class>
+                        <method>setRowUrl</method>
+                    </catalog_product>
+                    <cms_page>
+                        <class>firegento_adminmonitoring/rowUrl_model_page</class>
+                        <method>setRowUrl</method>
+                    </cms_page>
+                    <sales_order>
+                        <class>firegento_adminmonitoring/rowUrl_model_order</class>
+                        <method>setRowUrl</method>
+                    </sales_order>
+                    <customer_customer>
+                        <class>firegento_adminmonitoring/rowUrl_model_customer</class>
+                        <method>setRowUrl</method>
+                    </customer_customer>
+                </observers>
+            </firegento_adminmonitoring_rowurl>
+            <firegento_adminmonitoring_log>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_log</class>
+                        <method>log</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </firegento_adminmonitoring_log>
+            <admin_session_user_login_success>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_login</class>
+                        <method>logSuccess</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </admin_session_user_login_success>
+            <admin_session_user_login_failed>
+                <observers>
+                    <firegento_adminmonitoring>
+                        <class>firegento_adminmonitoring/observer_login</class>
+                        <method>logFailure</method>
+                    </firegento_adminmonitoring>
+                </observers>
+            </admin_session_user_login_failed>
+        </events>
+        <translate>
+            <modules>
+                <FireGento_AdminMonitoring>
+                    <files>
+                        <default>FireGento_AdminMonitoring.csv</default>
+                    </files>
+                </FireGento_AdminMonitoring>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <firegento_adminmonitoring before="Mage_Adminhtml">FireGento_AdminMonitoring_Adminhtml</firegento_adminmonitoring>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <crontab>
+        <jobs>
+            <firegento_adminmonitoring>
+                <schedule>
+                    <cron_expr>0 3 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>firegento_adminmonitoring/clean::scheduledCleanAdminMonitoring</model>
+                </run>
+            </firegento_adminmonitoring>
+        </jobs>
+    </crontab>
+    <default>
+        <admin>
+            <firegento_adminmonitoring>
+                <enable_cleaning>1</enable_cleaning>
+                <interval>30</interval>
+                <product_import_logging>0</product_import_logging>
+                <product_mass_update_logging>0</product_mass_update_logging>
+            </firegento_adminmonitoring>
+        </admin>
+    </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <FireGento_AdminMonitoring/>
+            </modules>
+        </suite>
+    </phpunit>
+</config>

@@ -21,18 +21,18 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
 
     const DEBUG_VAR_NAME = 'debug_module_searchanise';
     const DEBUG_KEY      = 'Y';
-    
+
     const TEXT_FIND          = 'TEXT_FIND';
     const TEXT_ADVANCED_FIND = 'TEXT_ADVANCED_FIND';
-    
+
     protected $_disableText;
     protected $_debugText;
-    
+
     protected static $_searchaniseTypes = array(
         self::TEXT_FIND,
         self::TEXT_ADVANCED_FIND,
     );
-    
+
     /**
      * Searchanise request
      *
@@ -41,11 +41,11 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
     protected $_searchaniseRequest = null;
 
     protected $_searchaniseCurentType = null;
-    
+
     public function initSearchaniseRequest()
     {
         $this->_searchaniseRequest = Mage::getModel('searchanise/request');
-        
+
         return $this;
     }
 
@@ -53,12 +53,12 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::helper('searchanise/ApiSe')->checkSearchaniseResult($this->_searchaniseRequest);
     }
-    
+
     public function setSearchaniseRequest($request)
     {
         $this->_searchaniseRequest = $request;
     }
-    
+
     public function getSearchaniseRequest()
     {
         return $this->_searchaniseRequest;
@@ -73,16 +73,16 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->_searchaniseCurentType;
     }
-    
+
     public function getDisableText()
     {
         if (!isset($this->_disableText)) {
             $this->_disableText = $this->_getRequest()->getParam(self::DISABLE_VAR_NAME);
         }
-        
+
         return $this->_disableText;
     }
-    
+
     public function checkEnabled()
     {
         return ($this->getDisableText() != self::DISABLE_KEY) ? true : false;
@@ -93,10 +93,10 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
         if (!isset($this->_debugText)) {
             $this->_debugText = $this->_getRequest()->getParam(self::DEBUG_VAR_NAME);
         }
-        
+
         return $this->_debugText;
     }
-    
+
     public function checkDebug($checkPrivateKey = false)
     {
         $checkDebug = ($this->getDebugText() == self::DEBUG_KEY) ? true : false;
@@ -114,8 +114,8 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
 
         if (!isset($check)) {
             $parentPrivateKey = $this->_getRequest()->getParam(self::PARENT_PRIVATE_KEY);
-            
-            if ((empty($parentPrivateKey)) || 
+
+            if ((empty($parentPrivateKey)) ||
                 (Mage::helper('searchanise/ApiSe')->getParentPrivateKey() !== $parentPrivateKey)) {
                 $check = false;
             } else {
@@ -160,14 +160,14 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $this;
     }
-    
+
     protected function getUrlSuggestion($suggestion)
     {
         $query = array(
             'q' => $suggestion,
             Mage::getBlockSingleton('page/html_pager')->getPageVarName() => null // exclude current page from urls
         );
-        
+
         return Mage::getUrl('*/*/*', array('_current'=>true, '_use_rewrite'=>true, '_query'=>$query));
     }
 
@@ -187,7 +187,7 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $check;
     }
-    
+
     public function execute($type = null, $controller = null, $blockToolbar = null, $data = null)
     {
         $this->setSearchaniseCurentType(); // init value
@@ -212,7 +212,7 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
         } else {
             $params['restrictBy']['is_in_stock'] = '1';
         }
-        
+
         if ($type == self::TEXT_FIND) {
             $params['q'] = Mage::helper('catalogsearch')->getQueryText();
             if ($params['q'] != '') {
@@ -320,10 +320,10 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
                     foreach ($attributes as $id => $attr) {
                         $arrAttributes[$attr->getName()] = $attr;
                     }
-                    
+
                     if (!empty($arrAttributes)) {
                         $requestParams = $controller->getRequest()->getParams();
-                        
+
                         if (!empty($requestParams)) {
                             foreach ($requestParams as $name => $val) {
                                 if (!empty($arrAttributes[$name])) {
@@ -338,7 +338,7 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
                                     } elseif ($inputType == 'price') {
                                         $params['union'][$name]['min'] = Mage::helper('searchanise/ApiSe')->getCurLabelForPricesUsergroup();
                                         $valPrice = Mage::helper('searchanise/ApiSe')->getPriceValueFromRequest($val);
-                                        
+
                                         if ($valPrice != '') {
                                             $params['restrictBy'][$name] = $valPrice;
                                         }
@@ -388,15 +388,15 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
             ->setSearchParams($params)
             ->sendSearchRequest()
             ->getSearchResult();
-        
+
         //add suggestions
         $suggestionsMaxResults = Mage::helper('searchanise/ApiSe')->getSuggestionsMaxResults();
         if (!empty($suggestionsMaxResults) && $type == self::TEXT_FIND) {
             $res = Mage::helper('searchanise')->getSearchaniseRequest();
-            
+
             if ($res->getTotalProduct() == 0) {
                 $sugs = Mage::helper('searchanise')->getSearchaniseRequest()->getSuggestions();
-                
+
                 if ((!empty($sugs)) && (count($sugs) > 0)) {
                     $message = Mage::helper('searchanise')->__('Did you mean: ');
                     $link = '';
@@ -404,13 +404,13 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
                     $count_sug = 0;
 
                     foreach ($sugs as $k => $sug) {
-                        if ((!empty($sug)) && ($sug != $textFind)) {    
+                        if ((!empty($sug)) && ($sug != $textFind)) {
                             $link .= '<a href="' . self::getUrlSuggestion($sug). '">' . $sug .'</a>';
-                            
-                            if (end($sugs) == $sug) { 
-                                $link .= '?'; 
-                            } else { 
-                                $link .= ', '; 
+
+                            if (end($sugs) == $sug) {
+                                $link .= '?';
+                            } else {
+                                $link .= ', ';
                             }
                             $count_sug++;
                         }
@@ -418,7 +418,7 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
                             break;
                         }
                     }
-                    
+
                     if ($link != '') {
                         Mage::helper('catalogsearch')->addNoteMessage($message . $link);
                     }
@@ -426,7 +426,7 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
             }
         }
     }
-    
+
     /**
      * Get specified products limit display per page
      *
@@ -438,14 +438,14 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
         //~ if ($limit) {
             //~ return $limit;
         //~ }
-        
+
         $limits = $this->getAvailableLimit();
         $defaultLimit = $this->getDefaultPerPageValue();
         if (!$defaultLimit || !isset($limits[$defaultLimit])) {
             $keys = array_keys($limits);
             $defaultLimit = $keys[0];
         }
-        
+
         $limit = $this->getRequest()->getParam($this->getLimitVarName());
         if ($limit && isset($limits[$limit])) {
             if ($limit == $defaultLimit) {
@@ -463,7 +463,7 @@ class Simtech_Searchanise_Helper_Data extends Mage_Core_Helper_Abstract
         $this->setData('_current_limit', $limit);
         return $limit;
     }
-    
+
     /**
      * Retrieve available limits for current view mode
      *

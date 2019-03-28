@@ -24,12 +24,12 @@ class Simtech_Searchanise_Model_Resource_Store extends Mage_Core_Model_Resource_
     protected function _beforeSave(Mage_Core_Model_Abstract $model)
     {
         $ret = parent::_beforeSave($model);
-        
+
         Mage::dispatchEvent('searchanise_core_save_store_before', array('store' => $model));
-        
+
         return $ret;
     }
-    
+
     /**
      * Update Store Group data after save store
      *
@@ -39,12 +39,12 @@ class Simtech_Searchanise_Model_Resource_Store extends Mage_Core_Model_Resource_
     protected function _afterSave(Mage_Core_Model_Abstract $object)
     {
         $ret = parent::_afterSave($object);
-        
+
         Mage::dispatchEvent('searchanise_core_save_store_after', array('store' => $object));
-        
+
         return $ret;
     }
-    
+
     /**
      * Remove core configuration data after delete store
      *
@@ -54,9 +54,9 @@ class Simtech_Searchanise_Model_Resource_Store extends Mage_Core_Model_Resource_
     protected function _afterDelete(Mage_Core_Model_Abstract $model)
     {
         $ret = parent::_afterDelete($model);
-        
+
         Mage::dispatchEvent('searchanise_core_delete_store_after', array('store' => $model));
-        
+
         return $ret;
     }
 }

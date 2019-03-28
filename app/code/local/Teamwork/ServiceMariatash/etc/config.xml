@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Teamwork_ServiceMariatash>
+            <version>1.0.6</version>
+        </Teamwork_ServiceMariatash>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <teamworkservicemariatash after="Mage_Adminhtml">Teamwork_ServiceMariatash_Adminhtml</teamworkservicemariatash>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <global>
+        <helpers>
+            <teamwork_servicemariatash>
+                <class>Teamwork_ServiceMariatash_Helper</class>
+            </teamwork_servicemariatash>
+        </helpers>
+		<blocks>
+            <teamwork_servicemariatash>
+                <class>Teamwork_ServiceMariatash_Block</class>
+            </teamwork_servicemariatash>
+        </blocks>
+        <models>
+            <teamwork_servicemariatash>
+                <!-- <class>Teamwork_ServiceMariatash_Model</class> -->
+                <class>Teamwork_Service_Model</class>
+                <resourceModel>servicemariatash_resource</resourceModel>
+            </teamwork_servicemariatash>
+            <teamwork_service>
+                <rewrite>
+					<weborder>Teamwork_ServiceMariatash_Model_Weborder</weborder>
+                    <dam>Teamwork_ServiceMariatash_Model_Dam</dam>
+                </rewrite>
+            </teamwork_service>
+            <service_resource>
+                <rewrite>
+                    <dam_style>Teamwork_ServiceMariatash_Model_Resource_Dam_Style</dam_style>
+                </rewrite>
+            </service_resource>
+            <servicemariatash_resource>
+				<class>Teamwork_ServiceMariatash_Model_Resource</class>
+                <entities>
+					<service_fee_mapping>
+                        <table>service_fee_mapping</table>
+                    </service_fee_mapping>
+                </entities>
+            </servicemariatash_resource>
+        </models>
+		<resources>
+            <teamwork_servicemariatash_setup>
+                <setup>
+                    <module>Teamwork_ServiceMariatash</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </teamwork_servicemariatash_setup>
+        </resources>
+        <!-- <resources>
+            <servicemariatash_setup>
+                <setup>
+                    <module>Teamwork_ServiceMariatash</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </servicemariatash_setup>
+            <servicemariatash_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </servicemariatash_write>
+            <servicemariatash_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </servicemariatash_read>
+        </resources> -->
+    </global>
+    <adminhtml>
+        <menu>
+            <teamwork_service module="teamwork_service">
+                <title>Teamwork</title>
+                <sort_order>90</sort_order>
+                <children>
+					<fee_mapping translate="title" module="teamwork_service">
+                        <title>Mapping for Shipping Methods</title>
+                        <sort_order>50</sort_order>
+                        <action>adminhtml/teamworkservicemariatash_feemapping</action>
+                    </fee_mapping>
+                </children>
+            </teamwork_service>
+        </menu>
+    </adminhtml>
+</config>

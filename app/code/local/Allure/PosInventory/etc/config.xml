@@ -24,6 +24,18 @@
 			<allure_posinventory>
 				<class>Allure_PosInventory_Model</class>
 			</allure_posinventory>
+			<sales>
+	            	<rewrite>
+	                    <quote>Allure_PosInventory_Model_Quote</quote>
+	             </rewrite>
+            </sales>
+            
+            <bakerloo_restful>
+                <rewrite>
+            		<orderManagement>Allure_PosInventory_Model_OrderManagement</orderManagement>
+            	</rewrite>
+            </bakerloo_restful>
+            
 		</models>
 		<blocks>
 			<allure_posinventory>

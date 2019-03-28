@@ -40,7 +40,7 @@ class Unirgy_SimpleLicense_Block_Adminhtml_License_Grid extends Mage_Adminhtml_B
             $this->getLayout()->createBlock('adminhtml/widget_button')
                 ->setData(array(
                     'label'     => Mage::helper('usimpleup')->__('Refresh Licenses'),
-                    'onclick'   => "location.href = '{$this->getUrl('usimplelicadmin/adminhtml_license/checkUpdates')}'",
+                    'onclick'   => "location.href = '{$this->getUrl('adminhtml/usimplelicadmin_license/checkUpdates')}'",
                     'class'     => 'save',
                 ))
         );
@@ -48,7 +48,7 @@ class Unirgy_SimpleLicense_Block_Adminhtml_License_Grid extends Mage_Adminhtml_B
             $this->getLayout()->createBlock('adminhtml/widget_button')
                 ->setData(array(
                     'label'     => Mage::helper('usimpleup')->__('Send Server Info'),
-                    'onclick'   => "location.href = '{$this->getUrl('usimplelicadmin/adminhtml_license/serverInfo')}'",
+                    'onclick'   => "location.href = '{$this->getUrl('adminhtml/usimplelicadmin_license/serverInfo')}'",
                     'class'     => 'save',
                 ))
         );
@@ -88,8 +88,18 @@ class Unirgy_SimpleLicense_Block_Adminhtml_License_Grid extends Mage_Adminhtml_B
         ));
 
         $this->addColumn('server_restriction', array(
-            'header'    => Mage::helper('usimpleup')->__('Server Restrictions'),
+            'header'    => Mage::helper('usimpleup')->__('Dev Servers'),
             'index'     => 'server_restriction',
+            'renderer'  => 'usimpleup/adminhtml_module_nl2br',
+        ));
+        $this->addColumn('server_restriction1', array(
+            'header'    => Mage::helper('usimpleup')->__('Live Servers 1'),
+            'index'     => 'server_restriction1',
+            'renderer'  => 'usimpleup/adminhtml_module_nl2br',
+        ));
+        $this->addColumn('server_restriction2', array(
+            'header'    => Mage::helper('usimpleup')->__('Live Servers 2'),
+            'index'     => 'server_restriction2',
             'renderer'  => 'usimpleup/adminhtml_module_nl2br',
         ));
 
@@ -130,7 +140,7 @@ class Unirgy_SimpleLicense_Block_Adminhtml_License_Grid extends Mage_Adminhtml_B
         */
         $this->getMassactionBlock()->addItem('remove', array(
              'label'=> Mage::helper('usimpleup')->__('Remove'),
-             'url'  => $this->getUrl('usimplelicadmin/adminhtml_license/massRemove'),
+             'url'  => $this->getUrl('adminhtml/usimplelicadmin_license/massRemove'),
              'confirm' => Mage::helper('usimpleup')->__('Removing selected licenses(s). Are you sure?')
         ));
 
@@ -139,6 +149,6 @@ class Unirgy_SimpleLicense_Block_Adminhtml_License_Grid extends Mage_Adminhtml_B
 
     public function getGridUrl()
     {
-        return $this->getUrl('usimplelicadmin/adminhtml_license/grid', array('_current'=>true));
+        return $this->getUrl('adminhtml/usimplelicadmin_license/grid', array('_current'=>true));
     }
 }

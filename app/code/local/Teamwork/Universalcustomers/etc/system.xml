@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<teamwork_universalcustomers translate="label" module="teamwork_universalcustomers">
+            <label>Universal Customers</label>
+            <tab>teamwork</tab>
+            <sort_order>1200</sort_order>
+            <frontend_type>text</frontend_type>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+            
+			<groups>
+                <options translate="label" module="teamwork_universalcustomers">
+                    <label>General Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    
+                    <fields>
+                        <path translate="label" module="teamwork_universalcustomers">
+                            <label>Server Host Url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[<strong style="color:green">Example: </strong>  https://cloudwksvs.appspot.com/ ]]></comment>
+                        </path>
+                        <access_token translate="label" module="teamwork_universalcustomers">
+                            <label>SVS Access Token</label>
+                            <frontend_type>obscure</frontend_type>
+                            <sort_order>20</sort_order>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>
+                                <model>teamwork_universalcustomers/comment_token</model>
+                            </comment>
+                        </access_token>
+                    </fields>
+                </options>
+			</groups>
+		</teamwork_universalcustomers>
+	</sections>
+</config>

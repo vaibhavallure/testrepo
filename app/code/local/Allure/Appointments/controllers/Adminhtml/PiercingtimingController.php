@@ -90,6 +90,10 @@ class Allure_Appointments_Adminhtml_PiercingtimingController extends Mage_Adminh
     			->setId($this->getRequest()
     					->getParam("id"))
     					->save();
+    			
+    		    //add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
     
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Piercing Timing saved sucessfully"));
@@ -125,6 +129,11 @@ class Allure_Appointments_Adminhtml_PiercingtimingController extends Mage_Adminh
     			$model->setId($this->getRequest()
     					->getParam("id"))
     					->delete();
+    			
+    			//add logs
+    			$helperLogs = $this->getLogsHelper();
+    			$helperLogs->saveLogs("admin");
+    					
     					Mage::getSingleton("adminhtml/session")->addSuccess(
     							Mage::helper("adminhtml")->__("Item was successfully deleted"));
     					$this->_redirect("*/*/");
@@ -157,6 +166,13 @@ class Allure_Appointments_Adminhtml_PiercingtimingController extends Mage_Adminh
     	$fileName = 'piercingtiming.xml';
     	$grid = $this->getLayout()->createBlock('appointments/adminhtml_piercingtiming_grid');
     	$this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
+    }
+    
+    /**
+     * return logs helper object
+     */
+    private function getLogsHelper(){
+        return Mage::helper("appointments/logs");
     }
     
 }

@@ -671,7 +671,6 @@ class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function customerAttributesValues($customer, $whichAttributes = array())
     {
-
         Varien_Profiler::start('POS::' . __METHOD__);
 
         $result = array();
@@ -684,8 +683,10 @@ class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
                     if (!strlen($_attributeCode)) {
                         continue;
                     }
-
+		    
+                    $_attr = $customer->getAttribute($_attributeCode);
                     $_attributeValue = $customer->getData($_attributeCode);
+
                     if (!$_attributeValue) {
                         $method = 'get' . uc_words($_attributeCode, '');
                         if (is_callable(array($customer, $method))) {
@@ -698,14 +699,24 @@ class Ebizmarts_BakerlooRestful_Helper_Data extends Mage_Core_Helper_Abstract
                         }
                     }
 
-                    $_attr = $customer->getAttribute($_attributeCode);
-
-                    $result []= array(
-                        'name'  => $_attributeCode,
-                        'label' => $_attr->getFrontendLabel(),
-                        'type'  => $_attr->getFrontendInput(),
-                        'value' => $_attributeValue,
+                    $attr_result = array(
+                        'name'     => $_attributeCode,
+                        'label'    => $_attr->getFrontendLabel(),
+                        'type'     => $_attr->getFrontendInput(),
+                        'value'    => $_attributeValue,
+                        'required' => false,
+                        'options'  => array()
                     );
+
+                    if ($_attr->getFrontendInput() == 'select') {
+                        /* Loads options */
+                        $attr_result ['options'] = Mage::getModel('customer/attribute')
+                            ->loadByCode(Mage::getSingleton('eav/config')
+                            ->getEntityType('customer'), $_attributeCode)->getSource()
+                            ->getAllOptions(false);
+                    }
+
+                    $result[] = $attr_result;
                 }
             }
         }

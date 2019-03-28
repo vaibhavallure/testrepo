@@ -408,6 +408,10 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
             $name= $store->getName();
 //            $viewName = Mage::getModel(""); XXX
             $customersCollection->addFieldToFilter('store_id', array('eq' => $mage_store_view_id)); //$mage_store_id));
+            
+            //teamwork  customer filter added
+            $customersCollection->addFieldToFilter('email', array('nlike' => '%customers.mariatash.com%'));
+            
             if ($updated_at_min != null) {
                 $customersCollection->addAttributeToFilter('updated_at', array('gt' => $updated_at_min));
             }

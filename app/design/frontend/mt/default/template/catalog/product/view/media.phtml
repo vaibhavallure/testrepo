@@ -62,80 +62,91 @@ $_cpid =  $this->getRequest()->getParam("cpid") ? $this->getRequest()->getParam(
 $configProduct = Mage::getModel('catalog/product')->load($_cpid);
 $childId = null;
 if($configProduct->isConfigurable()){
-    $check_option_color = false;
+    $check_option_color = true;
     $allowAttrs   = array();
     $allAtributes = $configProduct->getTypeInstance(true)->getConfigurableAttributes($configProduct);
     foreach ($allAtributes as $attribute) {
         $productAttribute = $attribute->getProductAttribute();
+
+        if (is_null($productAttribute)) {
+            Mage::log("Issue with Product::".$_cpid,Zend_log::DEBUG,'product_errors.log',true);
+			continue;
+        }
         $attrid = $productAttribute->getId();
-        $allowAttrs[] = $productAttribute->getAttributeCode();         
+        $allowAttrs[] = $productAttribute->getAttributeCode();
+
     }
     $colors = Mage::getStoreconfig('ecp_color/color_attr');
     $colors = explode(",", $colors);
-    foreach($allowAttrs as $cd){
-        if( in_array($cd,$colors)){
+
+    foreach ($allowAttrs as $cd){
+        if ( in_array($cd,$colors)){
             $check_option_color = true;
             break;
         }
     }
-    
-    $colorOptionId = $this->getRequest()->getParam("optionId");  
-    
+
+    $colorOptionId = $this->getRequest()->getParam("optionId");
+
     $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $configProduct);
-    $config_attr = null;   
-    if(count($allowAttrs) == 1){
-        $config_attr = $allowAttrs[0];           
-    }
-    else{           
-       
-        foreach($colors as $code){
-            if(in_array($code, $allowAttrs)){
-                $config_attr = $code; 
+    $config_attr = null;
+
+    if (count($allowAttrs) == 1){
+        $config_attr = $allowAttrs[0];
+    } else {
+
+        foreach ($colors as $code) {
+            if (in_array($code, $allowAttrs)) {
+                $config_attr = $code;
                 break;
             }
         }
+
         $realAttribute = @array_diff($config_attr,$colors);
-        if(count($realAttribute)) $config_attr   = $realAttribute[0];            
+
+        if ($realAttribute && count($realAttribute)) {
+			$config_attr   = $realAttribute[0];
+		}
     }
-   
+
     if($colorOptionId){
-        foreach($childProducts as $prod){     
+        foreach($childProducts as $prod){
             $method = 'get'.ucfirst($config_attr);
-            $attribute_code = $prod->$method();                             
+            $attribute_code = $prod->$method();
             if($colorOptionId == $attribute_code){
                 $childId = $prod->getEntityId();
                 break;
             }
         }
-        foreach($childProducts as $prod){     
+        foreach($childProducts as $prod){
             $method = 'get'.ucfirst($config_attr);
-            $attribute_code = $prod->$method();                             
+            $attribute_code = $prod->$method();
             if($colorOptionId == $attribute_code){
                 if($prod->getVideo()) {
                         $_cpid = $prod->getEntityId();
                         $configProduct = Mage::getModel('catalog/product')->load($_cpid);
                         break;
-                } 
+                }
             }
         }
     }
     // Non color attribute
     else{
-        foreach($childProducts as $prod){     
+        foreach($childProducts as $prod){
             $method = 'get'.ucfirst($config_attr);
-            $attribute_code = $prod->$method();                             
+            $attribute_code = $prod->$method();
             $colorOptionId  = $attribute_code;
             $childId = $prod->getEntityId();
             break;
-        }       
-    } 
+        }
+    }
 }
 
 $_helper = $this->helper('catalog/output');
 ?>
-<?php 
+<?php
 if($childId){
-    $_product = Mage::getModel('catalog/product')->load($childId);      
+    $_product = Mage::getModel('catalog/product')->load($childId);
 }
 $gallery = $_product->getMediaGalleryImages();
 $typeId   = $_product->getTypeId();
@@ -170,9 +181,9 @@ if (!$videoUrl && $secondVideoUrl)
 
 <script type="text/javascript">
 
-function setFacebook(){   
+function setFacebook(){
     var url = "http://www.facebook.com/plugins/like.php?href=<?php echo urlencode( $this->helper('core/url')->getCurrentUrl());?>%3Fproductviewfb%3D1%26fb%3D1%26productid%3D<?php echo $_product->getId();?>%26image%3D"+jQuery('.containerImage img').attr('data')+"&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;font&colorscheme=light&amp;action=like&amp;height=21";
-    jQuery('#facepv').html('<iframe id="likefb" src="'+url+'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:96px; height:21px;" allowTransparency="true"></iframe>'); 
+    jQuery('#facepv').html('<iframe id="likefb" src="'+url+'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:96px; height:21px;" allowTransparency="true"></iframe>');
 }
 
 function loadImage(numImage){
@@ -208,18 +219,28 @@ function loadBaseImage(){
 
 var loadTimes=0;
 function loadVideo(video){
+	jQuery('.containerImage img').hide();
      var player = document.getElementById('video_' + video);
      if(player){
-         var src = player.src;     
+         var src = player.src;
+
+         //allure code ws02 start
+         if(src.indexOf(':/') != -1){
+         	var newUrl = src.slice( src.indexOf(':/') + 1 );
+         	src = newUrl;
+         }
+       	//allure code end
+
          if(src.search("autoplay=0") != -1){
             src = src.replace("autoplay=0","autoplay=1");
-         }        
-         player.src = src;         
+         }
+         player.src = src;
      }
      jQuery('.containerVideo_' + video).show();
 }
 
 function closeVideo(){
+	jQuery('.containerImage img').show();
     var player = jQuery('[id^="video-"] iframe');
     if(player){
         player.each(function(index,iframe) {
@@ -276,12 +297,12 @@ function windOpn(url){
 
 function sharePinit(){
     jQuery('#pinit').click(function(){
-        windOpn('http://pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl();?>&media='+jQuery(".containerImage img").attr("src")+'&description=<?php echo htmlspecialchars($_product->getName(),ENT_QUOTES);?>');
+        windOpn('//pinterest.com/pin/create/button/?url=<?php echo $this->helper('core/url')->getCurrentUrl();?>&media='+jQuery(".containerImage img").attr("src")+'&description=<?php echo htmlspecialchars($_product->getName(),ENT_QUOTES);?>');
     });
 }
 
 function shareLikeTwitter(){
-    //TWITTER                    
+    //TWITTER
     jQuery('#twitter').sharrre({
         share: { twitter: true },
         enableHover: false,
@@ -295,9 +316,8 @@ function shareLikeTwitter(){
     });
 }
 
-
-jQuery(document).ready(function(){
-    /*********************************************************/
+	jQuery(document).ready(function(){
+	    /*********************************************************/
     /*Gallery View*/
     jQuery('.containerImage,.btnFullscreen').mouseover(function() {
        jQuery('.btnFullscreen').show();
@@ -320,7 +340,7 @@ jQuery(document).ready(function(){
                     if(numImages < 5)
                         jQuery('.thumb').eq(counterJs).html('<a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><div class="url-caption">VIEW ON MODEL</div><img src="'+jQuery(this).attr('src')+'" /></a>');
                     else {
-                        jQuery('.thumb').eq(3).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="'+jQuery(this).attr('src')+'" /></a>');                        
+                        jQuery('.thumb').eq(3).html('<div class="url-caption">VIEW ON MODEL</div><a href="javascript:;" onclick="closeVideo();loadImage('+counterJs+');"><img src="'+jQuery(this).attr('src')+'" /></a>');
                     }
                     counterJs++;
                 } else {
@@ -338,7 +358,7 @@ jQuery(document).ready(function(){
                          }
                     }
                }
-                
+
             });
             if( videoCounter  == 0 ){
                 <?php //if ( $count == 0 ): ?>
@@ -368,12 +388,15 @@ jQuery(document).ready(function(){
 
     <?php endif; ?>
 
-    <?php if ( $count == 1 ): ?>      
-        loadBaseImage();       
+    <?php if ( $count == 1 ): ?>
+        loadBaseImage();
         if (videoCounter == 0) {
             if (urlCounter > 0) {
                 jQuery('.thumb').eq(0).html('<a href="<?php echo $_product->getUrl();?>"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
-            }
+            }else{
+            	        <?php $_img = $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(74,96); ?>
+            	        jQuery('.thumb').eq(0).html('<img src="<?php echo $_helper->productAttribute($_product, $_img, 'thumbnail');?>"  data="0"/>');
+                }
         } else {
             <?php if($_product->getVideoThumb() == 'thumbnail/video/')
                     $_product->setVideoThumb('thumbnail/video/galleryThumb-video.png');
@@ -421,22 +444,24 @@ jQuery(document).ready(function(){
     <?php endif; ?>
 });
 
+
+
 </script>
 <input type="hidden" name="reloadmedia" id="reloadmedia" value="v"/>
 <input type="hidden" name="check_option_color" id="check_option_color" value="<?php echo $check_option_color;?>"/>
 
-<div class="gallery">    
+<div class="gallery">
     <?php if($videoUrl):?><!-- Check video url-->
     <?php
      $videoUrl = str_replace('&autoplay=1', '', $videoUrl);
      $videoUrl = str_replace('&amp;autoplay=1', '', $videoUrl);
-     if (strpos($videoUrl, 'youtube.com') != false) {                     
+     if (strpos($videoUrl, 'youtube.com') != false) {
             $videoUrl = str_replace('watch?v=', 'embed/', $configProduct->getVideo());
-     }  
+     }
      if(strpos($videoUrl,'?')!= false) {
          $videoUrl.= '&autoplay=0';
      }else{
-         $videoUrl.= '?autoplay=0';   
+         $videoUrl.= '?autoplay=0';
      }
     ?>
      <div class="containerVideo containerVideo_first" id="video-<?php echo $_product->getTypeId(); ?>">
@@ -482,7 +507,7 @@ if ($isAjaxCall) {
     $_pinlink['url'] = $_product->getProductUrl();
     $_pinlink['media'] = $this->helper('catalog/image')->init($_product, 'image')->__toString();
     $_pinlink['description'] = $_helper->productAttribute($_product, $_product->getName(), 'name') . " - " . strip_tags($_product->getDescription());
-    $_pinlinkHref = 'http://pinterest.com/pin/create/button/?' . http_build_query($_pinlink);
+    $_pinlinkHref = '//pinterest.com/pin/create/button/?' . http_build_query($_pinlink);
 }
  ?>
 <script>
@@ -490,7 +515,7 @@ if ($isAjaxCall) {
 		onYouTubeIframeAPIReady();
 	<?php else: ?>
       		var tag = document.createElement('script');
-      		tag.src = "http://www.youtube.com/iframe_api";
+      		tag.src = "//www.youtube.com/iframe_api";
       		var firstScriptTag = document.getElementsByTagName('script')[0];
       		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -498,7 +523,7 @@ if ($isAjaxCall) {
 	<?php endif; ?>
 
 	      function onYouTubeIframeAPIReady() {
-                  
+
 	      }
 
       var done = false;
@@ -518,33 +543,33 @@ if ($isAjaxCall) {
 
     </script>
     <div style="display: none;" id="current_option_id"><?php echo $colorOptionId ;?></div>
-    <script type="text/javascript">   
+    <script type="text/javascript">
     jQuery(document).ready(function(){
         <?php if ($isAjaxCall): ?>
         // re-render pint it button
         jQuery('#pinterest-button-load').html('<a href="<?php echo $_pinlinkHref ?>" class="pin-it-button"></a>');
-        jQuery.ajax({ url: 'http://assets.pinterest.com/js/pinit.js', dataType: 'script', cache: true});
+        jQuery.ajax({ url: '//assets.pinterest.com/js/pinit.js', dataType: 'script', cache: true});
         <?php endif; ?>
-        var id = 'amconf-image-<?php echo $colorOptionId ;?>';        
+        var id = 'amconf-image-<?php echo $colorOptionId ;?>';
         if($(id)){
-            //$(id).simulate('click');            
-        }  
+            //$(id).simulate('click');
+        }
         /* Add tooltip for color icon*/
         jQuery('.amconf-images-container').each(function(){
                 jQuery(this).find('img').each(function(){
-                    var imgid  = jQuery(this).attr('id'),  
-                        imgalt = jQuery(this).attr('alt'); 
+                    var imgid  = jQuery(this).attr('id'),
+                        imgalt = jQuery(this).attr('alt');
                     Tipped.create(jQuery("#"+imgid), imgalt, {
                             skin: 'customTiny',
                             showOn: ['click', 'mouseover'],
                             background: { color: '#fff', opacity: .7 }
                         });
                 });
-            });   
-         
+            });
+
         /* Attribute Post Length */
         if(jQuery('#attribute189').html()){
-            var optionId = '<?php echo $colorOptionId;?>';            
+            var optionId = '<?php echo $colorOptionId;?>';
             if(optionId){
                 jQuery('#attribute189 option').each(function(){
                     if(jQuery(this).attr('value') == optionId){

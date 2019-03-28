@@ -150,7 +150,7 @@ Checkout.prototype = {
         if (($('billing:use_for_shipping_yes')) && ($('billing:use_for_shipping_yes').checked)) {
             shipping.syncWithBilling();
             $('opc-shipping').addClassName('allow');
-            //this.gotoSection('shipping_method');
+          //  this.gotoSection('shipping_method');
             this.gotoSection('delivery_option');
         } else if (($('billing:use_for_shipping_no')) && ($('billing:use_for_shipping_no').checked)) {
             $('shipping:same_as_billing').checked = false;
@@ -179,8 +179,8 @@ Checkout.prototype = {
     setShipping: function() {
         //console.log('setshipping');
         //this.nextStep();
-        //this.gotoSection('shipping_method');
-    	this.gotoSection('delivery_option');
+       // this.gotoSection('shipping_method');
+        this.gotoSection('delivery_option');
         //this.accordion.openNextSection(true);
     },
 
@@ -671,7 +671,7 @@ ShippingMethod.prototype = {
                 return true;
             }
         }
-        alert(Translator.translate('Please specify shipping method.').stripTags());
+        alert(Translator.translate('Please specify shipping method').stripTags());
         return false;
     },
 
@@ -690,7 +690,6 @@ ShippingMethod.prototype = {
                     parameters: Form.serialize(this.form)
                 }
             );
-
         }
     },
 
@@ -833,6 +832,7 @@ Delivery.prototype = {
 
 
 
+
 // payment
 var Payment = Class.create();
 Payment.prototype = {
@@ -903,6 +903,13 @@ Payment.prototype = {
         if (method) {
             this.lastUsedMethod = method;
         }
+        
+        if (method == 'applepay'){
+          	jQuery('.payment-continue-button').hide();
+          } else {
+        	  	jQuery('.payment-continue-button').show();
+          }
+        
         this.currentMethod = method;
     },
 
@@ -1000,7 +1007,6 @@ Payment.prototype = {
                     parameters: Form.serialize(this.form)
                 }
             );
-
         }
     },
 

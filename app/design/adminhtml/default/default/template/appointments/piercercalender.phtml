@@ -1,12 +1,13 @@
-<?php 
+<?php
 /*
- * 
+ *
  * Calender Events
- * 
- * 
+ *
+ *
  */
 ?>
 <?php  echo Mage::app()->getLayout()->createBlock('appointments/adminhtml_switcher')->toHtml();
+
 //echo Mage::app()->getLayout()->createBlock('appointments/registration','appointment_store',array('template' => 'appointments/appointment_store.phtml'))->toHtml();?>
 
 <div class="content-header">
@@ -26,27 +27,49 @@
 
 <script src="<?php echo $this->getSkinUrl('js/jQuery/noconflict.js');?>"></script>
 
-<link href="<?php echo $this->getSkinUrl('css/calender/fullcalendar.css');?>"  rel="stylesheet" />
-<link href='<?php echo $this->getSkinUrl('css/calender/fullcalendar.print.css');?>' rel='stylesheet' media='print' />
 <script src="<?php echo $this->getSkinUrl('js/calender/moment.min.js');?>"></script>
-<script src="<?php //echo $this->getSkinUrl('js/calender/fullcalendar.js');?>"></script>
-<script src="<?php echo $this->getSkinUrl('js/calender/fullcalendar.min.js');?>"></script>
 
+<link href="<?php echo $this->getSkinUrl('css/calender/core/main.min.css');?>"  rel="stylesheet" />
+<link href="<?php echo $this->getSkinUrl('css/calender/daygrid/main.min.css');?>"  rel="stylesheet" />
+<link href="<?php echo $this->getSkinUrl('css/calender/timegrid/main.min.css');?>"  rel="stylesheet" />
+<link href="<?php echo $this->getSkinUrl('css/calender/list/main.min.css');?>"  rel="stylesheet" />
+
+<script src="<?php echo $this->getSkinUrl('js/calender/core/main.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/interaction/main.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/daygrid/main.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/timegrid/main.min.js');?>"></script>
+<script src="<?php echo $this->getSkinUrl('js/calender/list/main.min.js');?>"></script>
+<style type="text/css">
+.fc-button-group>.fc-button {
+    background: #2c2c2c;
+}
+.fc-button-primary:not(:disabled).fc-button-active, .fc-button-primary:not(:disabled):active {
+    color: #fff;
+    background-color: #ffac47;
+    border-color: #ffac47;
+}
+.fc-button-primary:disabled {
+    background: #2C3E50;
+}
+.fc-toolbar>*>:not(:first-child) {
+    margin-left: .75em;
+    background: #2C3E50;
+}
+</style>
 
 <script>
 	$j(document).ready(function() {
-		
+
 		var initialLangCode = 'en';
 		$j('#loading-mask').show();
 
 		var convertDate = function (dateString) {
-			var dateArray = dateString.split(/[^0-9]/);
-			//for (i=0;i<a.length;i++) { alert(a[i]); }
-			return new Date (dateArray[0], dateArray[1]-1, dateArray[2], dateArray[3], dateArray[4], dateArray[5]);
+			return new Date(dateString);
 		}
 
  		<?php $k = Mage::getSingleton('core/session')->getFormKey(); ?>
 		$j('#loading-indicator-calender').show();
+
 		$j.ajax({
 			url : '<?php echo $this->getUrl('*/*/calenderevents',array('_secure' => true));?>',
 	 		dataType : 'json',
@@ -67,47 +90,93 @@
 					var startDate = convertDate(data[i].start);
 
 					var endDate = convertDate(data[i].end);
+
 					var color = data[i].color;
 
 					events[i] =  {
-		 					title: data[i].title,
-		                    start: startDate,
-		                    end: endDate,
-		                    allDay: false,
-		                    url : data[i].url,
-		                    backgroundColor: color
-		                   
-		                    
+	 					title: data[i].title,
+	                    start: startDate,
+	                    end: endDate,
+	                    allDay: false,
+	                    url : data[i].url,
+	                    backgroundColor: color
 		 			};
 		 		}
 
-		 		
+				console.log(events);
+
 		 		$j('#loading-mask').hide();
-			 		$j('#calendar').fullCalendar({
-			 			header: {
-							left: 'prev,next today',
-							center: 'title',
-							right: 'month,agendaWeek,agendaDay,listMonth'
 
-						},
+				loadCalendar(events);
+				return;
 
-						// customize the button names,
-						// otherwise they'd all just say "list"
-						slotDuration: '00:30:01',
-						lang: initialLangCode,
-						defaultDate: new Date(),
-						navLinks: true, // can click day/week names to navigate views
-						editable: true,
-						eventLimit: true, // allow "more" link when too many events
-						events: events,
-						defaultView: 'agendaWeek',
-					    aspectRatio: 1.5
-						
-					});
+		 		$j('#calendar').fullCalendar({
+		 			header: {
+						left: 'prev,next today',
+						center: 'title',
+						right: 'month,agendaWeek,agendaDay,listMonth'
+					},
+
+					// customize the button names,
+					// otherwise they'd all just say "list"
+					slotDuration: '00:30:01',
+					lang: initialLangCode,
+					defaultDate: new Date(),
+					navLinks: true, // can click day/week names to navigate views
+					editable: true,
+					eventLimit: true, // allow "more" link when too many events
+					events: events,
+					defaultView: 'agendaWeek',
+				    aspectRatio: 1.5
+				});
 	 		}
 		});
 	});
-			//jQuery(".appointments-adminhtml-appointments-viewcalender .myacc-heading").prepend(jQuery('#store_switcher :selected').text());
+
+	function loadCalendar(events) {
+		var calendarEl = document.getElementById('calendar');
+
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+			//timeZone: 'UTC',
+			defaultView: 'dayGridMonth',
+			header: {
+			  left: 'prev,next today',
+			  center: 'title',
+			  right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+			},
+			editable: true,
+			navLinks: true,
+			eventLimit: true,
+			slotDuration: '00:30:01',
+
+			// JSON FEED INSTRUCTIONS
+			//
+			// 1. Open a new browser tab. Go to codepen.io
+			//
+			// 2. Create a new pen (Create > New Pen)
+			//
+			// 3. Paste your JSON into the JS pane
+			//
+			// 4. Hit the "Save" button
+			//
+			// 5. The page's URL will change. It will look like this:
+			//    https://codepen.io/anon/pen/eWPBOx
+			//
+			// 6. Append ".js" to it. Will become like this:
+			//    https://codepen.io/anon/pen/eWPBOx.js
+			//
+			// 7. Paste this URL below.
+			//
+			events: events//'https://fullcalendar.io/demo-events.json'
+
+			// 8. Then, enter a date for defaultDate that best displays your events.
+			//
+			// defaultDate: 'XXXX-XX-XX'
+		});
+
+		calendar.render();
+	}
 </script>
 <style>
 

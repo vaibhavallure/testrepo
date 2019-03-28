@@ -32,15 +32,17 @@
 <link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon"/>
 <meta name="viewport" content="width=device-height, user-scalable=yes"/>
 <link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon"/>
-<meta name="google-site-verification" content="rIH9RmxNp4bJQ601Cmxe7IVD59ZhokU85NyfGmHWD4Y" /> 
+<meta name="google-site-verification" content="rIH9RmxNp4bJQ601Cmxe7IVD59ZhokU85NyfGmHWD4Y" />
 <meta name="google-site-verification" content="FyCBtJHrnBYJlB3vzz23QnzmKfJCnxd1zzdhCW-QDMI" />
 <?php
 
-$title = 'MT Title';
+$title = $this->getTitle();
 $url = $this->helper('core/url')->getCurrentUrl();
 $image = Mage::getBaseUrl('media') . DS . 'logo' . DS . Mage::getStoreConfig('design/header/logo_src');
-$description = 'Description';
+$description = htmlspecialchars($this->getDescription());
 $type = 'product';
+
+
 
 if ($this->getRequest()->getParam('fb', false)) {
     if ($this->getRequest()->getParam('imgpressfb', false)) {
@@ -208,12 +210,42 @@ if(Mage::app()->getRequest()->getModuleName() == 'ecppiercinggallery'
     $image = $currentLook['img'];
 endif;
 ?>
+<?php
+$currenturl = Mage::helper('core/url')->getCurrentUrl();
+$urlData=explode("/",$currenturl);
+$metaCollection=Mage::getModel("metadata/metadata")->getCollection();
+
+$site_name='Maria Tash';
+
+foreach ($metaCollection as $meta){
+
+    if(in_array($meta->getTerm(), $urlData)){
+        $title = $meta->getTitle();
+
+        if($meta->getUrl())
+            $url=$meta->getUrl();
+
+        if($meta->getType())
+            $type=$meta->getType();
+
+        if($meta->getImage())
+            $image=$meta->getImage();
+
+        if($meta->getDescription())
+            $description = $meta->getDescription();
+
+        if($meta->getSiteName())
+            $site_name=$meta->getSiteName();
+    }
+}
+?>
+
 <meta property="og:title" content="<?=htmlentities($title, ENT_COMPAT | ENT_HTML401, 'UTF-8');?>"/>
 <meta property="og:url" content="<?php echo htmlentities($url) ?>"/>
 <meta property="og:type" content="<?php echo htmlentities($type) ?>"/>
 <meta property="og:image" content="<?php echo $image ?>"/>
 <meta property="og:description" content="<?=htmlentities(strip_tags($description), ENT_COMPAT | ENT_HTML401, 'UTF-8');?>"/>
-<meta property="og:site_name" content="Maria Tash"/>
+<meta property="og:site_name" content='<?php echo $site_name ?>'/>
 
 <!--[if lt IE 7]>
 <script type="text/javascript">
@@ -223,7 +255,6 @@ endif;
 //]]>
 </script>
 <![endif]-->
-
 
 <!--[if gte IE 9]>
   <style type="text/css">
@@ -283,11 +314,11 @@ jQuery(document).ready(function() {
 });
 </script>
 <?php
- $wholesale=false;
-		$login = Mage::getSingleton( 'customer/session' )->isLoggedIn(); 
-			//Check if User is Logged In
-            if($login){
-				$_myGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-				if($_myGroupId==2) $wholesale=true;
-			}
+$wholesale=false;
+$login = Mage::getSingleton( 'customer/session' )->isLoggedIn();
+	//Check if User is Logged In
+    if($login){
+		$_myGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+		if($_myGroupId==2) $wholesale=true;
+	}
 ?>

@@ -1,0 +1,460 @@
+<?xml version="1.0"?>
+
+<config>
+	<modules>
+		<Allure_Teamwork>
+			<version>2.0.2</version>
+		</Allure_Teamwork>
+	</modules>
+	<global>
+		<resources>
+			<allure_teamwork_setup>
+				<setup>
+                    <module>Allure_Teamwork</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+			</allure_teamwork_setup>
+		</resources>
+
+		<blocks>
+			<allure_teamwork>
+				<class>Allure_Teamwork_Block</class>
+			</allure_teamwork>
+			<adminhtml>
+				<rewrite>
+					<dashboard_sales>Allure_Teamwork_Block_Adminhtml_Dashboard_Sales</dashboard_sales>
+					<dashboard_totals>Allure_Teamwork_Block_Adminhtml_Dashboard_Totals</dashboard_totals>
+					<dashboard_orders_grid>Allure_Teamwork_Block_Adminhtml_Dashboard_Orders_Grid</dashboard_orders_grid>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+
+		<helpers>
+			<allure_teamwork>
+				<class>Allure_Teamwork_Helper</class>
+			</allure_teamwork>
+		</helpers>
+
+		<models>
+			<allure_teamwork>
+				<class>Allure_Teamwork_Model</class>
+				<resourceModel>allure_teamwork_resource</resourceModel>
+			</allure_teamwork>
+			<allure_teamwork_resource>
+				<class>Allure_Teamwork_Model_Resource</class>
+				<entities>
+					<teamwork>
+						<table>allure_teamwork_customer</table>
+					</teamwork>
+					<customer>
+						<table>allure_customer_counterpoint</table>
+					</customer>
+					<log>
+						<table>allure_teamwork_log_table</table>
+					</log>
+					<cpcustomer>
+						<table>allure_teamwork_ar_cust_cp</table>
+					</cpcustomer>
+					<duplcustomer>
+						<table>allure_teamwork_duplicate_customer</table>
+					</duplcustomer>
+					<temp>
+						<table>allure_teamwork_temp_update</table>
+					</temp>
+					<tmproduct>
+						<table>allure_teamwork_product_data</table>
+					</tmproduct>
+					<tmorder>
+						<table>allure_teamwork_sync_data</table>
+					</tmorder>
+				</entities>
+			</allure_teamwork_resource>
+		</models>
+
+		<fieldsets>
+			<sales_convert_quote>
+				<teamwork_receipt_id>
+					<to_order>*</to_order>
+				</teamwork_receipt_id>
+				<other_sys_currency>
+					<to_order>*</to_order>
+				</other_sys_currency>
+				<other_sys_currency_symbol>
+					<to_order>*</to_order>
+				</other_sys_currency_symbol>
+				<other_sys_currency_code>
+					<to_order>*</to_order>
+				</other_sys_currency_code>
+				<other_sys_extra_info>
+					<to_order>*</to_order>
+				</other_sys_extra_info>
+				<teamwork_orig_receipt_id>
+					<to_order>*</to_order>
+				</teamwork_orig_receipt_id>
+				<teamwork_gift_amount>
+					<to_order>*</to_order>
+				</teamwork_gift_amount>
+				<teamwork_deposit_amount>
+					<to_order>*</to_order>
+				</teamwork_deposit_amount>
+			</sales_convert_quote>
+
+			<sales_convert_quote_item>
+                <other_sys_qty>
+                    <to_order_item>*</to_order_item>
+                </other_sys_qty>
+                <tw_item_id>
+                    <to_order_item>*</to_order_item>
+                </tw_item_id>
+                <exchange_qty>
+                	<to_order_item>*</to_order_item>
+                </exchange_qty>
+                <teamwork_orig_receipt_id>
+                	<to_order_item>*</to_order_item>
+                </teamwork_orig_receipt_id>
+                <teamwork_reason>
+                	<to_order_item>*</to_order_item>
+                </teamwork_reason>
+                <teamwork_reason_code>
+                	<to_order_item>*</to_order_item>
+                </teamwork_reason_code>
+                <teamwork_gift_deposit_data>
+                	<to_order_item>*</to_order_item>
+                </teamwork_gift_deposit_data>
+            </sales_convert_quote_item>
+		</fieldsets>
+		<events>
+			<sent_in_chq>
+				<observers>
+					<allure_teamwork_changeorderstatus>
+						<class>allure_teamwork/observer</class>
+						<method>changeOrderStatus</method>
+					</allure_teamwork_changeorderstatus>
+				</observers>
+			</sent_in_chq>
+			
+			<salesrule_validator_process>
+				<observers>
+					<allure_teamwork_salesrule>
+						<class>allure_teamwork/observer</class>
+						<method>removeSalesRuleForTeamworkOrder</method>
+					</allure_teamwork_salesrule>
+				</observers>
+			</salesrule_validator_process>
+		</events>
+	</global>
+
+	<crontab>
+		<jobs>
+			<allure_teamwork>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::syncTeamworkCustomer</model>
+				</run>
+			</allure_teamwork>
+
+			<allure_teamwork_live>
+					<schedule>
+						<config_path>allure_teamwork/teamwork_salesforce_settings/cron_time</config_path>
+					</schedule>
+					<run>
+						<model>allure_teamwork/tmobserver::synkTeamwokLiveOrders</model>
+					</run>
+			</allure_teamwork_live>
+
+			<!-- <allure_teamwork>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::addCustomers</model>
+				</run>
+			</allure_teamwork> -->
+		<!--	<allure_teamwork_update>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::updateCustomers</model>
+				</run>
+			</allure_teamwork_update>-->
+
+			<!--	<allure_teamwork_ord_cust>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::addCustomerDataUsingOrder</model>
+				</run>
+			</allure_teamwork_ord_cust>-->
+
+			<!--	<allure_teamwork_cp_cust>
+				<schedule>
+					<cron_expr>*/5 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_teamwork/observer::addCpCustomerIntoMagento</model>
+				</run>
+			</allure_teamwork_cp_cust>-->
+		</jobs>
+	</crontab>
+
+
+	<default>
+
+		<carriers>
+			<tm_storepickupshipping>
+				<active>1</active>
+				<model>allure_teamwork/shipping_carrier_Storepickupshipping</model>
+				<name>Store Pickup</name>
+				<price>0.00</price>
+				<title>Store Pickup</title>
+                <sallowspecific>0</sallowspecific>
+                <showmethod>0</showmethod>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+			</tm_storepickupshipping>
+		</carriers>
+
+		<payment>
+			<tm_pay_liberty_till>
+                <active>1</active>
+                <model>allure_teamwork/payment_libertytill</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>LIBERTY TILL</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_liberty_till>
+
+            <tm_pay_wire_transfer>
+                <active>1</active>
+                <model>allure_teamwork/payment_wiretransfer</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>WIRE TRANSFER</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_wire_transfer>
+
+            <tm_pay_cc_refund>
+                <active>1</active>
+                <model>allure_teamwork/payment_ccrefund</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CC REFUND</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_cc_refund>
+
+            <tm_pay_store_credit>
+                <active>1</active>
+                <model>allure_teamwork/payment_storecredit</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>STORE CREDIT</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_store_credit>
+
+            <tm_pay_genius_charge>
+                <active>1</active>
+                <model>allure_teamwork/payment_geniuscharge</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>GENIUS CHARGE</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_genius_charge>
+
+            <tm_pay_gift_card>
+                <active>1</active>
+                <model>allure_teamwork/payment_giftcard</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>GIFT CARD</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_gift_card>
+
+            <tm_pay_cash>
+                <active>1</active>
+                <model>allure_teamwork/payment_cash</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CASH</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_cash>
+
+            <tm_pay_casheuro>
+                <active>1</active>
+                <model>allure_teamwork/payment_casheuro</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CASHEURO</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_casheuro>
+
+            <tm_pay_authrize>
+                <active>1</active>
+                <model>allure_teamwork/payment_authorizenet</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AUTHORIZE.NET</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_authrize>
+
+            <tm_pay_genius_refund>
+                <active>1</active>
+                <model>allure_teamwork/payment_geniusrefund</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>GENIUS REFUND</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_genius_refund>
+
+            <tm_pay_deposit>
+                <active>1</active>
+                <model>allure_teamwork/payment_deposit</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>DEPOSIT</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_deposit>
+
+            <tm_pay_offline_credit_card>
+                <active>1</active>
+                <model>allure_teamwork/payment_offlinecreditcard</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>OFFLINE CREDIT CARD</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_offline_credit_card>
+
+            <tm_pay_credit_card>
+                <active>1</active>
+                <model>allure_teamwork/payment_creditcard</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CREDIT CARD</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_credit_card>
+
+            <tm_pay_paypal>
+                <active>1</active>
+                <model>allure_teamwork/payment_paypal</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>PAYPAL</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_paypal>
+
+            <tm_pay_cashuk>
+                <active>1</active>
+                <model>allure_teamwork/payment_cashuk</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CASHUK</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_cashuk>
+
+            <bakerloo_cash>
+	            <active>1</active>
+	            <model>allure_teamwork/payment_barkcash</model>
+	            <order_status>pending</order_status>
+	            <payment_action>authorize_capture</payment_action>
+	            <title>Cash</title>
+	            <allowspecific>0</allowspecific>
+            </bakerloo_cash>
+
+            <bakerloo_free>
+	            <active>1</active>
+	            <model>allure_teamwork/payment_barkfree</model>
+	            <order_status>pending</order_status>
+	            <payment_action>authorize_capture</payment_action>
+	            <title>Free</title>
+	            <allowspecific>0</allowspecific>
+            </bakerloo_free>
+            
+            <tm_pay_aedcash>
+                <active>1</active>
+                <model>allure_teamwork/payment_aedcash</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AED Cash</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_aedcash>
+            
+            <tm_pay_aedcredit>
+                <active>1</active>
+                <model>allure_teamwork/payment_aedcredit</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AED Credit</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_aedcredit>
+            
+            <tm_pay_aedcreditcard>
+                <active>1</active>
+                <model>allure_teamwork/payment_aedcreditcard</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AED Credit Card</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_aedcreditcard>
+            
+            <tm_pay_aedrefund>
+                <active>1</active>
+                <model>allure_teamwork/payment_aedrefund</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>AED Refund</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_aedrefund>
+            
+            <tm_pay_brownthomastill>
+                <active>1</active>
+                <model>allure_teamwork/payment_brownthomastill</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>BROWN THOMAS TILL</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_brownthomastill>
+            
+            <tm_pay_checkus>
+                <active>1</active>
+                <model>allure_teamwork/payment_checkus</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>CHECK US</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_checkus>
+            
+            <tm_pay_harrodstill>
+                <active>1</active>
+                <model>allure_teamwork/payment_harrodstill</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>HARRODS TILL</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_harrodstill>
+            
+            <tm_pay_houseaccount>
+                <active>1</active>
+                <model>allure_teamwork/payment_houseaccount</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>HOUSE ACCOUNT</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_houseaccount>
+            
+            <tm_pay_square>
+                <active>1</active>
+                <model>allure_teamwork/payment_square</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>SQUARE</title>
+                <allowspecific>0</allowspecific>
+            </tm_pay_square>
+
+        </payment>
+	</default>
+
+</config>

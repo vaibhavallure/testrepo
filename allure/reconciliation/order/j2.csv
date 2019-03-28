@@ -1,0 +1,27 @@
+,Time,Till,Transaction,Operator No,Employee,Customer No,Item,Comment,Retail Value,Sales,Promotion Amount,Discount %,Discretionary Discount,Quantity,M. Order No.,,
+,12:14:47,68,80461,902962,Markman Ekaterina,,505486538823,spike stud yg,142,142,,,,1,,,
+,12:14:47,68,80461,902962,Markman Ekaterina,,505486538824,,15,15,,,,1,,,
+07/02/2017,Transaction 80461 Total,,,,,,,,157,157,,,,2,,,
+,15:50:55,68,80485,902563,Lopez Udinsky Daniela,100616383,505486538822,,15,14.6,-0.4,,,1,,,
+,15:50:55,68,80485,902563,Lopez Udinsky Daniela,100616383,505486538823,xsnpa10rb rg,547,532.4,-14.6,,,1,,,
+07/02/2017,Transaction 80485 Total,,,,,,,,562,547,-15,,,2,,,not found
+,16:53:54,68,80494,902413,Bottaro Alana,,505486538823,xet8d22 wg,474,474,,,,1,,,
+,16:53:54,68,80494,902413,Bottaro Alana,,505486538823,xstar458d bg,-593,-593,,,,-1,,,
+07/02/2017,Transaction 80494 Total,,,,,,,,-119,-119,,,,0,,,not found
+,17:21:02,68,80500,902563,Lopez Udinsky Daniela,7770172581,505486538822,,30,30,,,,2,,,
+,17:21:02,68,80500,902563,Lopez Udinsky Daniela,7770172581,505486538823,xsc2d yg,446,446,,,,2,,,
+07/02/2017,Transaction 80500 Total,,,,,,,,476,476,,,,4,,,not found
+,12:07:19,92,86224,902962,Markman Ekaterina,100592849,505486538823,xpaisrd wg,128,128,,,,1,,,
+,12:07:19,92,86224,902962,Markman Ekaterina,100592849,505486538824,,45,45,,,,3,,,
+07/02/2017,Transaction 86224 Total,,,,,,,,173,173,,,,4,,,
+,12:28:36,92,86227,902962,Markman Ekaterina,,505486538822,,15,15,,,,1,,,
+,12:28:36,92,86227,902962,Markman Ekaterina,,505486538823,x3dtrd wg,201,201,,,,1,,,
+07/02/2017,Transaction 86227 Total,,,,,,,,216,216,,,,2,,,not found
+,15:03:28,92,86249,902563,Lopez Udinsky Daniela,100616362,505486538823,XMNSPAD WG,546,531.78,-14.22,,,2,,,
+,15:03:28,92,86249,902563,Lopez Udinsky Daniela,100616362,505486538824,,30,29.22,-0.78,,,2,,,
+07/02/2017,Transaction 86249 Total,,,,,,,,576,561,-15,,,4,,,price mismatch
+,16:01:43,92,86259,902563,Lopez Udinsky Daniela,100616386,505486538822,,15,15,,,,1,,,
+,16:01:43,92,86259,902563,Lopez Udinsky Daniela,100616386,505486538823,xr65 yg,100,100,,,,1,,,
+07/02/2017,Transaction 86259 Total,,,,,,,,115,115,,,,2,,,
+,17:33:29,92,86277,902563,Lopez Udinsky Daniela,10222979,505486538823,x3dtrd wg,200,200,,,,1,,,
+07/02/2017,Transaction 86277 Total,,,,,,,,200,200,,,,1,,,

@@ -3,10 +3,10 @@
  * Paradox Labs, Inc.
  * http://www.paradoxlabs.com
  * 717-431-3330
- * 
+ *
  * Need help? Open a ticket in our support system:
  *  http://support.paradoxlabs.com
- * 
+ *
  * Want to customize or need help with your store?
  *  Phone: 717-431-3330
  *  Email: sales@paradoxlabs.com
@@ -24,16 +24,16 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 	 *
 	 * @var string
 	 */
-	const SOLUTION_ID			= 'A1000133';
-	
+	const SOLUTION_ID			= 'AAA170414';
+
 	protected $_code			= 'authnetcim';
-	
+
 	protected $_endpointLive	= 'https://api2.authorize.net/xml/v1/request.api';
 	protected $_endpointTest	= 'https://apitest.authorize.net/xml/v1/request.api';
-	
+
 	/**
 	 * $_fields sets validation for each input.
-	 * 
+	 *
 	 * key => array(
 	 *    'maxLength' => int,
 	 *    'noSymbols' => true|false,
@@ -68,7 +68,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		'customerShippingAddressId'	=> array(  ),
 		'customerType'				=> array( 'enum' => array( 'individual', 'business' ) ),
 		'dataDescriptor'			=> array( 'noSymbols' => true ),
-		'dataValue'					=> array( 'noSymbols' => true ),
+		'dataValue'					=> array( 'charMask' => 'a-zA-Z0-9+\/\\=' ),
 		'description'				=> array( 'maxLength' => 255 ),
 		'duplicateWindow'           => array( 'charMask' => '\d' ),
 		'dutyAmount'				=> array(  ),
@@ -78,6 +78,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		'email'						=> array( 'maxLength' => 255 ),
 		'emailCustomer'             => array( 'enum' => array( 'true', 'false' ) ),
 		'expirationDate'			=> array( 'maxLength' => 7 ),
+		'includeIssuerInfo'         => array( 'enum' => array( 'true', 'false' ) ),
 		'invoiceNumber'				=> array( 'maxLength' => 20, 'noSymbols' => true ),
 		'itemName'					=> array( 'maxLength' => 31, 'noSymbols' => true ),
 		'loginId'					=> array( 'maxLength' => 20 ),
@@ -125,6 +126,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			),
 		),
 		'transId'					=> array( 'charMask' => '\d' ),
+		'unmaskExpirationDate'      => array( 'enum' => array( 'true', 'false' ) ),
 		'validationMode'			=> array( 'enum' => array( 'liveMode', 'testMode', 'none' ) ),
 	);
 
@@ -136,22 +138,22 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		'refundTransaction'           => 'credit',
 		'voidTransaction'             => 'void',
 	);
-	
+
 	/**
 	 * Set the API credentials so they go through validation.
 	 */
 	public function clearParameters()
 	{
 		parent::clearParameters();
-		
+
 		if( isset( $this->_defaults['login'] ) && isset( $this->_defaults['password'] ) ) {
 			$this->setParameter( 'loginId', $this->_defaults['login'] );
 			$this->setParameter( 'transactionKey', $this->_defaults['password'] );
 		}
-		
+
 		return $this;
 	}
-	
+
 	/**
 	 * Send the given request to Authorize.Net and process the results.
 	 */
@@ -166,24 +168,24 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'transactionKey'			=> $this->getParameter('transactionKey'),
 			)
 		);
-		
+
 		$xml = $this->_arrayToXml( $request, $auth + $params );
-		
+
 		$this->_lastRequest = $xml;
-		
+
 		$curl = curl_init();
 		curl_setopt( $curl, CURLOPT_URL, $this->_endpoint );
 		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
 		curl_setopt( $curl, CURLOPT_HTTPHEADER, array("Content-Type: text/xml") );
 		curl_setopt( $curl, CURLOPT_HEADER, 0 );
 		curl_setopt( $curl, CURLOPT_POSTFIELDS, $xml );
-		
+
 		if( !in_array( $request, array( 'createTransactionRequest', 'createCustomerProfileTransactionRequest' ) ) ) {
 			curl_setopt( $curl, CURLOPT_TIMEOUT, 15 );
 		}
-		
+
 		curl_setopt( $curl, CURLOPT_CAINFO, Mage::getModuleDir( '', 'ParadoxLabs_AuthorizeNetCim' ) . '/resources/authorizenet-cert.pem' );
-		
+
 		if( $this->_verifySsl === true ) {
 			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, true );
 			curl_setopt( $curl, CURLOPT_SSL_VERIFYHOST, 2 );
@@ -191,19 +193,19 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		else {
 			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
 		}
-		
+
 		$this->_lastResponse = curl_exec( $curl );
-		
+
 		if( $this->_lastResponse && !curl_errno( $curl ) ) {
 			$this->_log .= 'REQUEST: ' . $this->_sanitizeLog( $xml ) . "\n";
 			$this->_log .= 'RESPONSE: ' . $this->_sanitizeLog( $this->_lastResponse ) . "\n";
-			
+
 			$this->_lastResponse = $this->_xmlToArray( $this->_lastResponse );
 
 			if( $this->_testMode === true ) {
 				Mage::helper('tokenbase')->log( $this->_code . '-debug', $this->_log, true );
 			}
-			
+
 			/**
 			 * Check for basic errors.
 			 */
@@ -211,34 +213,34 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				$errorCode		= $this->_getArrayValue( $this->_lastResponse, 'messages/message/code' );
 				$errorText		= $this->_getArrayValue( $this->_lastResponse, 'messages/message/text' );
 				$errorText2		= $this->_getArrayValue( $this->_lastResponse, 'transactionResponse/errors/error/errorText' );
-				
+
 				/**
 				 * Log and spit out generic error. Skip certain warnings we can handle.
 				 */
 				$okayErrorCodes	= array( 'E00039', 'E00040' );
 				$okayErrorTexts	= array( 'The referenced transaction does not meet the criteria for issuing a credit.', 'The transaction cannot be found.' );
-				
+
 				if( !empty($errorCode) && !in_array( $errorCode, $okayErrorCodes ) && !in_array( $errorText, $okayErrorTexts ) && !in_array( $errorText2, $okayErrorTexts ) ) {
 					Mage::helper('tokenbase')->log( $this->_code, sprintf( "API error: %s: %s\n%s", $errorCode, $errorText, $this->_log ) );
-					
+
 					if( $errorText == 'Invalid OTS Token.' ) {
 						$errorText = 'Invalid token. Please re-enter your payment info.';
 					}
-					
+
 					throw Mage::exception( 'Mage_Payment_Model_Info', Mage::helper('tokenbase')->__( sprintf( 'Authorize.Net CIM Gateway: %s (%s)', $errorText, $errorCode ) ) );
 				}
 			}
-			
+
 			curl_close($curl);
 		}
 		else {
 			Mage::helper('tokenbase')->log( $this->_code, sprintf( 'CURL Connection error: ' . curl_error($curl) . ' (' . curl_errno($curl) . ')' . "\n" . 'REQUEST: ' . $this->_sanitizeLog( $xml ) ) );
 			Mage::throwException( Mage::helper('tokenbase')->__( sprintf( 'Authorize.Net CIM Gateway Connection error: %s (%s)', curl_error($curl), curl_errno($curl) ) ) );
 		}
-		
+
 		return $this->_lastResponse;
 	}
-	
+
 	/**
 	 * Mask certain values in the XML for secure logging purposes.
 	 */
@@ -246,24 +248,24 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 	{
 		$maskAll	= array( 'cardCode' );
 		$maskFour	= array( 'cardNumber', 'name', 'transactionKey', 'routingNumber', 'accountNumber' );
-		
+
 		foreach( $maskAll as $val ) {
 			$string	= preg_replace( '#' . $val . '>(.+?)</' . $val . '#', $val . '>XXX</' . $val, $string );
 		}
-		
+
 		foreach( $maskFour as $val ) {
 			$start	= strpos( $string, '<' . $val . '>' );
 			$end	= strpos( $string, '</' . $val . '>', $start );
 			$tagLen	= strlen( $val ) + 2;
-			
+
 			if( $start !== false && $end > ( $start + $tagLen + 4 ) ) {
 				$string = substr_replace( $string, 'XXXX', $start + $tagLen, $end - 4 - ($start + $tagLen) );
 			}
 		}
-		
+
 		return $string;
 	}
-	
+
 	/**
 	 * Convert XML string to array. See tokenbase/gateway_xml
 	 */
@@ -271,10 +273,10 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 	{
 		// Strip bad namespace out before we try to parse it. ...
 		$xml = str_replace( ' xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"', '', $xml );
-		
+
 		return parent::_xmlToArray( $xml );
 	}
-	
+
 	/**
 	 * Turn transaction results and directResponse into a usable object.
 	 */
@@ -287,7 +289,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		if( $transactionResult['messages']['resultCode'] != 'Ok' ) {
 			$errorCode		= $transactionResult['messages']['message']['code'];
 			$errorText		= $transactionResult['messages']['message']['text'];
-			
+
 			if( $errorCode == 'E00040' && $errorText == 'Customer Profile ID or Customer Payment Profile ID not found.' ) {
 				if( $this->getCard() ) {
 					/**
@@ -298,7 +300,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 					Mage::unregister('queue_card_deletion');
 					Mage::register( 'queue_card_deletion', $this->getCard() );
 				}
-				
+
 				Mage::helper('tokenbase')->log( $this->_code, sprintf( "API error: %s: %s\n%s", $errorCode, $errorText, $this->_log ) );
 				throw Mage::exception( 'Mage_Payment_Model_Info', Mage::helper('tokenbase')->__( sprintf( 'Sorry, we were unable to find your payment record. Please re-enter your payment info and try again.' ) ) );
 			}
@@ -310,7 +312,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				Mage::throwException( Mage::helper('tokenbase')->__( sprintf( 'Authorize.Net CIM Gateway: %s Please contact support, or delete your shipping address in My Account and try again.', $errorText ) ) );
 			}
 		}
-		
+
 		/**
 		 * Turn response into a consistent data object, as best we can
 		 */
@@ -324,26 +326,26 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			Mage::helper('tokenbase')->log( $this->_code, sprintf( "Authorize.Net CIM Gateway: Transaction failed; no response.\n%s", $this->_log ) );
 			throw Mage::exception( 'Mage_Payment_Model_Info', Mage::helper('tokenbase')->__( 'Authorize.Net CIM Gateway: Transaction failed; no response. Please re-enter your payment info and try again.' ) );
 		}
-		
+
 		$response = new Varien_Object();
 		$response->setData( $data );
-		
+
 		if( $response->getResponseCode() == 4 ) {
 			$response->setIsFraud( true );
 		}
-		
+
 		if( !in_array( $response->getResponseReasonCode() , array( 16, 54 ) ) ) { // Response 54 is 'can't refund; txn has not settled.' 16 is 'cannot find txn' (expired). We deal with them.
 			if( $transactionResult['messages']['resultCode'] != 'Ok' 							// Error result
 				|| in_array( $response->getResponseCode(), array( 2, 3 ) )						// OR error/decline response code
-				|| ( !in_array( $response->getTransactionType(), array( 'credit', 'void' ) )	// OR no transID or auth code on a charge txn
-					&& ( $response->getTransactionId() == '' || ( $response->getAuthCode() == '' && $response->getMethod() != 'ECHECK' ) ) ) ) {
+				|| ( !in_array( $response->getTransactionType(), array( 'credit', 'void' ) )	// OR no transID or auth code on a non-held charge txn
+					&& ( $response->getTransactionId() == '' || ( $response->getAuthCode() == '' && $response->getMethod() != 'ECHECK' && $response->getResponseCode() != 4 ) ) ) ) {
 				$response->setIsError( true );
-				
+
 				Mage::helper('tokenbase')->log( $this->_code, sprintf( "Transaction error: %s\n%s\n%s", $response->getResponseReasonText(), json_encode( $response->getData() ), $this->_log ) );
 				throw Mage::exception( 'Mage_Payment_Model_Info', Mage::helper('tokenbase')->__( 'Authorize.Net CIM Gateway: Transaction failed. ' . $response->getResponseReasonText() ) );
 			}
 		}
-		
+
 		return $response;
 	}
 
@@ -471,7 +473,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 
 		return $data;
 	}
-	
+
 	/**
 	 * Force a consistent data interface for the transaction data store.
 	 * The data returned by API call getTransactionDetails does not match _getDataFromTransactionResponse.
@@ -485,10 +487,10 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			Mage::helper('tokenbase')->log( $this->_code, sprintf( "Authorize.Net CIM Gateway: Transaction failed; no response.\n%s", $this->_log ) );
 			throw Mage::exception( 'Mage_Payment_Model_Info', Mage::helper('tokenbase')->__('Authorize.Net CIM Gateway: Transaction failed; no response.') );
 		}
-		
+
 		$txn	= $response['transaction'];
 		$eCheck	= $this->_getArrayValue( $txn, 'payment/bankAccount', false ) !== false ? true : false;
-		
+
 		// Map data.
 		$data	= array(
 			'response_code'            => (int)$this->_getArrayValue( $txn, 'responseCode' ),
@@ -526,17 +528,17 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			'fraud_filter_action'      => $this->_getArrayValue( $txn, 'FDSFilterAction' ),
 			'fraud_filter'             => $this->_getArrayValue( $txn, 'FDSFilters' ),
 		);
-		
+
 		// Clean out empties.
 		foreach( $data as $key => $value ) {
 			if( $value === '' ) {
 				unset( $data[ $key ] );
 			}
 		}
-		
+
 		return $data;
 	}
-	
+
 	/**
 	 * Magento-exposed actions
 	 */
@@ -547,41 +549,41 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		$this->setParameter( 'customerProfileId', $card->getProfileId() );
 		$this->setParameter( 'customerPaymentProfileId', $card->getPaymentId() );
 		$this->setParameter( 'customerIp', $card->getCustomerIp() );
-		
+
 		return parent::setCard( $card );
 	}
-	
+
 	public function authorize( $payment, $amount )
 	{
 		$this->setParameter( 'transactionType', 'authOnlyTransaction' );
 		$this->setParameter( 'amount', $amount );
 		$this->setParameter( 'invoiceNumber', $payment->getOrder()->getIncrementId() );
-		
+
 		if( $this->getIsReauthorize() !== true ) {
 			if( $payment->getOrder()->getBaseTaxAmount() ) {
 				$this->setParameter( 'taxAmount', $payment->getOrder()->getBaseTaxAmount() );
 			}
-			
+
 			if( $payment->getBaseShippingAmount() ) {
 				$this->setParameter( 'shipAmount', $payment->getBaseShippingAmount() );
 			}
 		}
-		
+
 		if( $payment->hasCcCid() && $payment->getCcCid() != '' ) {
 			$this->setParameter( 'cardCode', $payment->getCcCid() );
 		}
-		
+
 		$result		= $this->createTransaction();
 		$response	= $this->_interpretTransaction( $result );
-		
+
 		return $response;
 	}
-	
+
 	public function capture( $payment, $amount, $realTransactionId=null )
 	{
 		if( $this->getHaveAuthorized() ) {
 			$this->setParameter( 'transactionType', 'priorAuthCaptureTransaction' );
-			
+
 			if( !is_null( $realTransactionId ) ) {
 				$this->setParameter( 'transId', $realTransactionId );
 			}
@@ -592,20 +594,20 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		else {
 			$this->setParameter( 'transactionType', 'authCaptureTransaction' );
 		}
-		
+
 		$this->setParameter( 'amount', $amount );
 		$this->setParameter( 'invoiceNumber', $payment->getOrder()->getIncrementId() );
-		
+
 		if( $this->hasAuthCode() ) {
 			$this->setParameter( 'approvalCode', $this->getAuthCode() );
 		}
-		
+
 		// Grab shipping and tax info from the invoice if possible. Should always be true.
 		if( $payment->hasInvoice() && $payment->getInvoice() instanceof Mage_Sales_Model_Order_Invoice ) {
 			if( $payment->getInvoice()->getBaseTaxAmount() ) {
 				$this->setParameter( 'taxAmount', $payment->getInvoice()->getBaseTaxAmount() );
 			}
-			
+
 			if( $payment->getInvoice()->getBaseShippingAmount() ) {
 				$this->setParameter( 'shipAmount', $payment->getInvoice()->getBaseShippingAmount() );
 			}
@@ -614,60 +616,60 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			if( $payment->getOrder()->getBaseTaxAmount() ) {
 				$this->setParameter( 'taxAmount', $payment->getOrder()->getBaseTaxAmount() );
 			}
-			
+
 			if( $payment->getBaseShippingAmount() ) {
 				$this->setParameter( 'shipAmount', $payment->getBaseShippingAmount() );
 			}
 		}
-		
+
 		if( $payment->hasCcCid() && $payment->getCcCid() != '' ) {
 			$this->setParameter( 'cardCode', $payment->getCcCid() );
 		}
-		
+
 		$result		= $this->createTransaction();
 		$response	= $this->_interpretTransaction( $result );
-		
+
 		/**
 		 * Check for and handle 'transaction not found' error (expired authorization).
 		 */
 		if( $response->getResponseReasonCode() == 16 && $this->getParameter('transId') != '' ) {
 			Mage::helper('tokenbase')->log( $this->_code, sprintf( "Transaction not found. Attempting to recapture.\n%s", json_encode( $response->getData() ) ) );
-			
+
 			$this->unsAuthCode()
 				 ->unsHaveAuthorized()
 				 ->clearParameters()
 				 ->setCard( $this->getCard() );
-			
+
 			$response = $this->capture( $payment, $amount, '' );
 		}
-		
+
 		return $response;
 	}
-	
+
 	public function refund( $payment, $amount, $realTransactionId=null )
 	{
 		$this->setParameter( 'transactionType', 'refundTransaction' );
 		$this->setParameter( 'amount', $amount );
 		$this->setParameter( 'invoiceNumber', $payment->getOrder()->getIncrementId() );
-		
+
 		if( $payment->getCreditmemo()->getBaseTaxAmount() ) {
 			$this->setParameter( 'taxAmount', $payment->getCreditmemo()->getBaseTaxAmount() );
 		}
-		
+
 		if( $payment->getCreditmemo()->getBaseShippingAmount() ) {
 			$this->setParameter( 'shipAmount', $payment->getCreditmemo()->getBaseShippingAmount() );
 		}
-		
+
 		if( !is_null( $realTransactionId ) ) {
 			$this->setParameter( 'transId', $realTransactionId );
 		}
 		elseif( $this->hasTransactionId() ) {
 			$this->setParameter( 'transId', $this->getTransactionId() );
 		}
-		
+
 		$result		= $this->createTransaction();
 		$response	= $this->_interpretTransaction( $result );
-		
+
 		/**
 		 * Check for 'transaction unsettled' error.
 		 */
@@ -677,73 +679,73 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			 */
 			if( $amount == $payment->getCreditmemo()->getInvoice()->getBaseGrandTotal() ) {
 				$transactionId = $this->getParameter('transId');
-				
+
 				return $this->clearParameters()->setCard( $this->getCard() )->void( $payment, $transactionId );
 			}
 			else {
 				$response->setIsError( true );
-				
+
 				Mage::helper('tokenbase')->log( $this->_code, sprintf( "Transaction error: %s\n%s\n%s", $response->getResponseReasonText(), json_encode( $response->getData() ), $this->_log ) );
 				Mage::throwException( Mage::helper('tokenbase')->__( 'Authorize.Net CIM Gateway: Transaction failed. ' . $response->getResponseReasonText() ) );
 			}
 		}
-		
+
 		return $response;
 	}
-	
+
 	public function void( $payment, $realTransactionId=null )
 	{
 		$this->setParameter( 'transactionType', 'voidTransaction' );
-		
+
 		if( !is_null( $realTransactionId ) ) {
 			$this->setParameter( 'transId', $realTransactionId );
 		}
 		elseif( $this->hasTransactionId() ) {
 			$this->setParameter( 'transId', $this->getTransactionId() );
 		}
-		
+
 		$result		= $this->createTransaction();
 		$response	= $this->_interpretTransaction( $result );
-		
+
 		return $response;
 	}
-	
+
 	public function fraudUpdate( $payment, $transactionId )
 	{
 		$this->setParameter( 'transId', $transactionId );
-		
+
 		$result		= $this->getTransactionDetails();
-		
+
 		foreach( $result as $k => $v ) {
 			if( is_array( $v ) ) {
 				foreach( $v as $l => $u ) {
 					if( is_array( $u ) ) {
 						$u = json_encode( $u );
 					}
-					
+
 					$result[ $k . '_' . $l ] = $u;
-					
+
 					unset( $result[ $k ][ $l ] );
 				}
-				
+
 				if( empty( $result[ $k ] ) ) {
 					unset( $result[ $k ] );
 				}
 			}
 		}
-		
+
 		$response	= new Varien_Object( $result + array( 'is_approved' => false, 'is_denied' => false ) );
-		
+
 		if( $response->getResponseReasonCode() == 254 || $response->getTransactionStatus() == 'voided' ) { // Transaction pending review -> denied
 			$response->setIsDenied( true );
 		}
 		elseif( $response->getResponseCode() == 1 ) {
 			$response->setIsApproved( true );
 		}
-		
+
 		return $response;
 	}
-	
+
 	/**
 	 * API methods: See the Authorize.Net CIM XML documentation.
 	 */
@@ -756,11 +758,11 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'email'						=> $this->getParameter('email'),
 			),
 		);
-		
+
 		$result = $this->_runTransaction( 'createCustomerProfileRequest', $params );
-		
+
 		$text	= $this->_getArrayValue( $result, 'messages/message/text' );
-		
+
 		if( isset( $result['customerProfileId'] ) ) {
 			return $result['customerProfileId'];
 		}
@@ -769,11 +771,11 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		}
 		else {
 			$this->logLogs();
-			
+
 			Mage::throwException( Mage::helper('tokenbase')->__( 'Authorize.Net CIM Gateway: Unable to create customer profile. %s', $result['messages']['message']['text'] ) );
 		}
 	}
-	
+
 	public function createCustomerPaymentProfile()
 	{
 		$params = array(
@@ -795,13 +797,13 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			),
 			'validationMode'			=> $this->getParameter('validationMode'),
 		);
-		
+
 		if( $this->hasParameter('customerType') ) {
 			$params['paymentProfile'] = array(
 				'customerType'				=> $this->getParameter('customerType')
 			) + $params['paymentProfile'];
 		}
-		
+
 		if( $this->hasParameter('cardNumber') ) {
 			$params['paymentProfile']['payment'] = array(
 				'creditCard'				=> array(
@@ -809,7 +811,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 					'expirationDate'			=> $this->getParameter('expirationDate'),
 				),
 			);
-			
+
 			if( $this->hasParameter('cardCode') ) {
 				$params['paymentProfile']['payment']['creditCard']['cardCode'] = $this->getParameter('cardCode');
 			}
@@ -834,26 +836,26 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				),
 			);
 		}
-		
+
 		$result = $this->_runTransaction( 'createCustomerPaymentProfileRequest', $params );
-		
+
 		$paymentId = null;
-		
+
 		if( isset( $result['customerPaymentProfileId'] ) ) {
 			$paymentId = $result['customerPaymentProfileId'];
 		}
-		
+
 		$text	= $this->_getArrayValue( $result, 'messages/message/text' );
-		
+
 		if( strpos( $text, 'duplicate' ) !== false ) {
 			/**
 			 * Handle duplicate card errors. Painful process.
 			 */
-			
+
 			if( empty( $paymentId ) ) {
 				$paymentId = preg_replace( '/[^0-9]/', '', $text );
 			}
-			
+
 			/**
 			 * If we still have no payment ID, try to match the duplicate manually.
 			 * Authorize.Net does not return the ID in this duplicate error message, contrary to documentation.
@@ -861,25 +863,25 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			if( empty( $paymentId ) ) {
 				$paymentId = $this->findDuplicateCard();
 			}
-			
+
 			if( !empty( $paymentId ) ) {
 				// Update the card record to ensure expiry is up to date.
 				$this->setParameter( 'customerPaymentProfileId', $paymentId );
-				
+
 				// Handle Accept.js nonce (which would now be expired). Card number won't have changed, but exp might.
 				// TODO: This will need to be adjusted when Accept.js adds ACH support.
 				if( $this->hasParameter('dataValue') ) {
 					$this->setParameter( 'cardNumber', 'XXXX' . $this->getCard()->getAdditional('cc_last4') );
 					$this->setParameter( 'expirationDate', date( "Y-m", strtotime( $this->getCard()->getExpires() ) ) );
 				}
-				
+
 				$this->updateCustomerPaymentProfile();
 			}
 		}
-		
+
 		return $paymentId;
 	}
-	
+
 	public function createCustomerShippingAddress()
 	{
 		$params = array(
@@ -897,11 +899,11 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'faxNumber'					=> $this->getParameter('shipToFaxNumber'),
 			),
 		);
-		
+
 		$result = $this->_runTransaction( 'createCustomerShippingAddressRequest', $params );
-		
+
 		$text 	= $this->_getArrayValue( $result, 'messages/message/text' );
-		
+
 		if( isset( $result['customerAddressId'] ) ) {
 			return $result['customerAddressId'];
 		}
@@ -910,7 +912,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			 * Handle duplicate address errors. blah.
 			 */
 			$profile	= $this->getCustomerProfile();
-			
+
 			if( isset( $profile['profile']['shipToList'] ) && count( $profile['profile']['shipToList'] ) > 0 ) {
 				if( isset( $profile['profile']['shipToList']['customerAddressId'] ) ) {
 					return $profile['profile']['shipToList']['customerAddressId'];
@@ -919,14 +921,14 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 					foreach( $profile['profile']['shipToList'] as $address ) {
 						$isDuplicate	= true;
 						$fields			= array( 'firstName', 'lastName', 'address', 'zip', 'phoneNumber' );
-						
+
 						foreach( $fields as $field ) {
 							if( $address[ $field ] != $params['address'][ $field ] ) {
 								$isDuplicate = false;
 								break;
 							}
 						}
-						
+
 						if( $isDuplicate === true ) {
 							return $address['customerAddressId'];
 						}
@@ -936,11 +938,11 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		}
 		else {
 			$this->logLogs();
-			
+
 			Mage::throwException( Mage::helper('tokenbase')->__( 'Authorize.Net CIM Gateway: Unable to create shipping address record.' ) );
 		}
 	}
-	
+
 	/**
 	 * Find a duplicate CIM record matching the one we just tried to create.
 	 */
@@ -948,7 +950,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 	{
 		$profile	= $this->getCustomerProfile();
 		$lastFour	= substr( $this->getParameter('cardNumber'), -4 );
-		
+
 		if( isset( $profile['profile']['paymentProfiles'] ) && count( $profile['profile']['paymentProfiles'] ) > 0 ) {
 			// If there's only one, just stop. It has to be the match.
 			if( isset( $profile['profile']['paymentProfiles']['billTo'] ) ) {
@@ -964,10 +966,10 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Run a CIM transaction with Authorize.Net with stored data.
 	 *
@@ -977,7 +979,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 	public function createCustomerProfileTransaction()
 	{
 		$type = $this->getParameter('transactionType');
-		
+
 		$params = array(
 			'transaction'				=> array(
 				$type						=> array(
@@ -985,16 +987,16 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			),
 			'extraOptions'				=> array( '@cdata' => 'x_duplicate_window=15' ),
 		);
-		
+
 		if( $this->hasParameter('amount') ) {
 			$params['transaction'][ $type ]['amount'] = $this->formatAmount( $this->getParameter('amount') );
 		}
-		
+
 		// Add customer IP?
 		if( $this->hasParameter('customerIp') ) {
 			$params['extraOptions']['@cdata'] .= '&x_customer_ip=' . $this->getParameter('customerIp');
 		}
-		
+
 		// Add tax amount?
 		if( $this->hasParameter('taxAmount') ) {
 			$params['transaction'][ $type ]['tax'] = array(
@@ -1003,7 +1005,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'description'			=> $this->getParameter('taxDescription'),
 			);
 		}
-		
+
 		// Add shipping amount?
 		if( $this->hasParameter('shipAmount') ) {
 			$params['transaction'][ $type ]['shipping'] = array(
@@ -1012,7 +1014,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'description'			=> $this->getParameter('shipDescription'),
 			);
 		}
-		
+
 		// Add duty amount?
 		if( $this->hasParameter('dutyAmount') ) {
 			$params['transaction'][ $type ]['duty'] = array(
@@ -1021,32 +1023,32 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'description'			=> $this->getParameter('dutyDescription'),
 			);
 		}
-		
+
 		// Add line items?
 		if( !is_null( $this->_lineItems ) && count( $this->_lineItems ) > 0 ) {
 			$params['transaction'][ $type ]['lineItems'] = array();
-			
+
 			$count = 0;
 			foreach( $this->_lineItems as $item ) {
 				if( $item instanceof Varien_Object == false ) {
 					continue;
 				}
-				
+
 				if( $item->getQty() > 0 ) {
 					$qty = $item->getQty();
 				}
 				else {
 					$qty = $item->getQtyOrdered();
 				}
-				
+
 				if( $qty <= 0 || $item->getPrice() <= 0 || $item->getSku() == '' ) {
 					continue;
 				}
-				
+
 				if( ++$count > 30 ) {
 					break;
 				}
-				
+
 				$params['transaction'][ $type ]['lineItems'][] = array(
 					'itemId'				=> $this->setParameter( 'itemName', $item->getSku() )->getParameter('itemName'),
 					'name'					=> $this->setParameter( 'itemName', $item->getName() )->getParameter('itemName'),
@@ -1054,20 +1056,20 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 					'unitPrice'				=> $this->formatAmount( max( 0, $item->getPrice() - ( $item->getDiscountAmount() / $qty ) ) ),
 				);
 			}
-			
+
 			if( count( $params['transaction'][ $type ]['lineItems'] ) < 1 ) {
 				unset( $params['transaction'][ $type ]['lineItems'] );
 			}
 		}
-		
+
 		$params['transaction'][ $type ]['customerProfileId']		= $this->getParameter('customerProfileId');
 		$params['transaction'][ $type ]['customerPaymentProfileId']	= $this->getParameter('customerPaymentProfileId');
-		
+
 		// Various other optional or conditional fields
 		if( $this->hasParameter('customerShippingAddressId') ) {
 			$params['transaction'][ $type ]['customerShippingAddressId'] = $this->getParameter('customerShippingAddressId');
 		}
-		
+
 		if( $this->hasParameter('invoiceNumber') && $type != 'profileTransPriorAuthCapture' ) {
 			$params['transaction'][ $type ]['order'] = array(
 				'invoiceNumber'			=> $this->getParameter('invoiceNumber'),
@@ -1075,27 +1077,27 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'purchaseOrderNumber'	=> $this->getParameter('purchaseOrderNumber'),
 			);
 		}
-		
+
 		if( $this->hasParameter('taxExempt') && $type != 'profileTransPriorAuthCapture' ) {
 			$params['transaction'][ $type ]['taxExempt'] = $this->getParameter('taxExempt');
 		}
-		
+
 		if( $this->hasParameter('cardCode') && $type != 'profileTransPriorAuthCapture' ) {
 			$params['transaction'][ $type ]['cardCode'] = $this->getParameter('cardCode');
 		}
-		
+
 		if( $this->hasParameter('transId') && $type != 'profileTransAuthOnly' ) {
 			$params['transaction'][ $type ]['transId'] = $this->getParameter('transId');
 		}
-		
+
 		if( $this->hasParameter('splitTenderId') ) {
 			$params['transaction'][ $type ]['splitTenderId'] = $this->getParameter('splitTenderId');
 		}
-		
+
 		if( $this->hasParameter('approvalCode') && strlen( $this->getParameter('approvalCode') ) == 6 && !in_array( $type, array( 'profileTransRefund', 'profileTransPriorAuthCapture', 'profileTransAuthOnly' ) ) ) {
 			$params['transaction'][ $type ]['approvalCode'] = $this->getParameter('approvalCode');
 		}
-		
+
 		return $this->_runTransaction( 'createCustomerProfileTransactionRequest', $params );
 	}
 
@@ -1124,7 +1126,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		else {
 			$isNewCard = true;
 		}
-		
+
 		if( $type == 'refundTransaction' ) {
 			$isRefund = true;
 		}
@@ -1141,7 +1143,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 		if( $this->hasParameter('amount') ) {
 			$params['amount'] = $this->formatAmount( $this->getParameter('amount') );
 		}
-		
+
 		// profile must be above refTransId. Placeholder to enforce that.
 		$params['profile'] = array();
 
@@ -1224,14 +1226,14 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 					$params['profile']['shippingProfileId'] = $this->hasParameter('customerShippingAddressId');
 				}
 			}
-			
+
 			if( $isRefund !== true ) {
 				// Set order identifiers!
 				$params['solution'] = array(
 					'id' => self::SOLUTION_ID,
 				);
 			}
-			
+
 			if( $this->hasParameter('invoiceNumber') && $type != 'priorAuthCaptureTransaction' ) {
 				$params['order'] = array(
 					'invoiceNumber' => $this->getParameter('invoiceNumber'),
@@ -1364,7 +1366,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			if( $this->hasParameter('customerIp') ) {
 				$params['customerIP'] = $this->getParameter('customerIp');
 			}
-			
+
 			// Add 3D Secure token?
 			if( $this->hasParameter('centinelAuthIndicator') && $this->hasParameter('centinelAuthValue') ) {
 				$params['cardholderAuthentication'] = array(
@@ -1393,88 +1395,92 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'settingValue' => $this->getParameter('emailCustomer', 'false'),
 			);
 		}
-		
+
 		if( empty( $params['profile'] ) ) {
 			unset( $params['profile'] );
 		}
 
 		return $this->_runTransaction( 'createTransactionRequest', array( 'transactionRequest' => $params ) );
 	}
-	
+
 	public function deleteCustomerProfile()
 	{
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
 		);
-		
+
 		return $this->_runTransaction( 'deleteCustomerProfileRequest', $params );
 	}
-	
+
 	public function deleteCustomerPaymentProfile()
 	{
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
 			'customerPaymentProfileId'	=> $this->getParameter('customerPaymentProfileId'),
 		);
-		
+
 		return $this->_runTransaction( 'deleteCustomerPaymentProfileRequest', $params );
 	}
-	
+
 	public function deleteCustomerShippingAddress()
 	{
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
 			'customerShippingAddressId'	=> $this->getParameter('customerShippingAddressId'),
 		);
-		
+
 		return $this->_runTransaction( 'deleteCustomerShippingAddressRequest', $params );
 	}
-	
+
 	public function getCustomerProfileIds()
 	{
 		return $this->_runTransaction( 'getCustomerProfileIdsRequest', array() );
 	}
-	
+
 	public function getCustomerProfile()
 	{
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
+			'unmaskExpirationDate'		=> $this->getParameter('unmaskExpirationDate', 'false'),
+			'includeIssuerInfo'			=> $this->getParameter('includeIssuerInfo', 'false'),
 		);
-		
+
 		return $this->_runTransaction( 'getCustomerProfileRequest', $params );
 	}
-	
+
 	public function getCustomerPaymentProfile()
 	{
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
 			'customerPaymentProfileId'	=> $this->getParameter('customerPaymentProfileId'),
+			'unmaskExpirationDate'		=> $this->getParameter('unmaskExpirationDate', 'false'),
+			'includeIssuerInfo'			=> $this->getParameter('includeIssuerInfo', 'false'),
 		);
-		
+
 		return $this->_runTransaction( 'getCustomerPaymentProfileRequest', $params );
 	}
-	
+
 	public function getCustomerShippingAddress()
 	{
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
 			'customerShippingAddressId'	=> $this->getParameter('customerShippingAddressId'),
 		);
-		
+
 		return $this->_runTransaction( 'getCustomerShippingAddressRequest', $params );
 	}
-	
+
 	public function getTransactionDetails()
 	{
 		$params = array(
 			'transId'					=> $this->getParameter('transId'),
 		);
-		
+
 		$details = $this->_runTransaction( 'getTransactionDetailsRequest', $params );
-		
+
 		return $this->_mapTransactionDetails( $details );
 	}
-	
+
 	public function updateCustomerProfile()
 	{
 		$params = array(
@@ -1485,10 +1491,10 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'customerProfileId'			=> $this->getParameter('customerProfileId'),
 			),
 		);
-		
+
 		return $this->_runTransaction( 'updateCustomerProfileRequest', $params );
 	}
-	
+
 	public function updateCustomerPaymentProfile()
 	{
 		$params = array(
@@ -1511,7 +1517,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 			),
 			'validationMode'			=> $this->getParameter('validationMode', 'testMode'),
 		);
-		
+
 		if( $this->hasParameter('cardNumber') ) {
 			$params['paymentProfile']['payment'] = array(
 				'creditCard'				=> array(
@@ -1519,7 +1525,7 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 					'expirationDate'			=> $this->getParameter('expirationDate'),
 				),
 			);
-			
+
 			if( $this->hasParameter('cardCode') ) {
 				$params['paymentProfile']['payment']['creditCard']['cardCode'] = $this->getParameter('cardCode');
 			}
@@ -1544,14 +1550,14 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				),
 			);
 		}
-		
+
 		if( empty( $params['paymentProfile']['payment'] ) ) {
 			unset( $params['paymentProfile']['payment'] );
 		}
-		
+
 		return $this->_runTransaction( 'updateCustomerPaymentProfileRequest', $params );
 	}
-	
+
 	public function updateCustomerShippingAddress()
 	{
 		$params = array(
@@ -1570,23 +1576,23 @@ class ParadoxLabs_AuthorizeNetCim_Model_Gateway extends ParadoxLabs_TokenBase_Mo
 				'customerShippingAddressId'	=> $this->getParameter('customerShippingAddressId'),
 			),
 		);
-		
+
 		return $this->_runTransaction( 'updateCustomerShippingAddressRequest', $params );
 	}
-	
+
 	public function validateCustomerPaymentProfile()
 	{
 		$params = array(
 			'customerProfileId'			=> $this->getParameter('customerProfileId'),
 			'customerPaymentProfileId'	=> $this->getParameter('customerPaymentProfileId'),
 		);
-		
+
 		if( $this->hasParameter('customerShippingAddressId') ) {
 			$params['customerShippingAddressId'] = $this->getParameter('customerShippingAddressId');
 		}
-		
+
 		$params['validationMode'] = $this->getParameter('validationMode');
-		
+
 		return $this->_runTransaction( 'validateCustomerPaymentProfileRequest', $params );
 	}
 }

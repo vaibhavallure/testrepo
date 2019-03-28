@@ -1484,6 +1484,85 @@
                         </sort_order>
                     </fields>
                 </bakerloo_cod>
+                <bakerloo_cayan translate="label">
+                    <label>Cayan</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>61</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_cayan/active</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <config_path>payment/bakerloo_cayan/title</config_path>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <invoice translate="label">
+                            <label>Create Invoice</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_cayan/invoice</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoice>
+                        <ship translate="label">
+                            <label>Create Shipment</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_cayan/ship</config_path>
+                            <source_model>bakerloo_payment/source_shipyesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><invoice>1</invoice></depends>
+                        </ship>
+                        <open_cash_drawer translate="label">
+                            <label>Open cash drawer</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_cayan/open_cash_drawer</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </open_cash_drawer>
+                        <requires_signature translate="label">
+                            <label>Requires Signature</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_cayan/requires_signature</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </requires_signature>
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <config_path>payment/bakerloo_cayan/sort_order</config_path>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </bakerloo_cayan>
                 <bakerloo_paypalhere translate="label">
                     <label>PayPal Here</label>
                     <frontend_type>text</frontend_type>
@@ -1508,7 +1587,7 @@
                             <config_path>payment/bakerloo_paypalhere/use_sideloading</config_path>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>12</sort_order>
-                            <comment><![CDATA[Set to Yes if your PayPal Here terminal has Chip&Pin capabilities.]]></comment>
+                            <comment><![CDATA[We recommend you set this to "No".]]></comment>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -2753,6 +2832,96 @@
                         </sort_order>
                     </fields>
                 </bakerloo_square_connect>
+                <bakerloo_pay_at_till translate="label">
+                    <label>Pay at till</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>135</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_pay_at_till/active</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <config_path>payment/bakerloo_pay_at_till/title</config_path>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <transaction_types translate="label">
+                            <label>Transaction types</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <config_path>payment/bakerloo_pay_at_till/transaction_types</config_path>
+                            <source_model>bakerloo_payment/source_transactiontype</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </transaction_types>
+                        <invoice translate="label">
+                            <label>Create Invoice</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_pay_at_till/invoice</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoice>
+                        <ship translate="label">
+                            <label>Create Shipment</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_pay_at_till/ship</config_path>
+                            <source_model>bakerloo_payment/source_shipyesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><invoice>1</invoice></depends>
+                        </ship>
+                        <open_cash_drawer translate="label">
+                            <label>Open cash drawer</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_pay_at_till/open_cash_drawer</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </open_cash_drawer>
+                        <requires_signature translate="label">
+                            <label>Requires Signature</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_pay_at_till/requires_signature</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </requires_signature>
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <config_path>payment/bakerloo_pay_at_till/sort_order</config_path>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </bakerloo_pay_at_till>
                 <bakerloo_payment_express translate="label">
                     <label>Payment Express</label>
                     <frontend_type>text</frontend_type>
@@ -2832,6 +3001,85 @@
                         </sort_order>
                     </fields>
                 </bakerloo_payment_express>
+                <bakerloo_transaction_junction translate="label">
+                    <label>Transaction Junction</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>998</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_transaction_junction/active</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <config_path>payment/bakerloo_transaction_junction/title</config_path>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <invoice translate="label">
+                            <label>Create Invoice</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_transaction_junction/invoice</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </invoice>
+                        <ship translate="label">
+                            <label>Create Shipment</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_transaction_junction/ship</config_path>
+                            <source_model>bakerloo_payment/source_shipyesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><invoice>1</invoice></depends>
+                        </ship>
+                        <open_cash_drawer translate="label">
+                            <label>Open cash drawer</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_transaction_junction/open_cash_drawer</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </open_cash_drawer>
+                        <requires_signature translate="label">
+                            <label>Requires Signature</label>
+                            <frontend_type>select</frontend_type>
+                            <config_path>payment/bakerloo_transaction_junction/requires_signature</config_path>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </requires_signature>
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <config_path>payment/bakerloo_transaction_junction/sort_order</config_path>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </bakerloo_transaction_junction>
                 <bakerloo_wigroup translate="label">
                     <label>wiGroup</label>
                     <frontend_type>text</frontend_type>

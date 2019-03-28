@@ -67,8 +67,9 @@ CREATE TABLE IF NOT EXISTS `{$this->getTable('urapidflow_profile')}` (
 */
 
 // fixing issues with Mage_Eav_Model_Config::_createAttribute():641 until it's fixed in Magento core
-$this->run("
-update {$this->getTable('eav_attribute')} set attribute_model=null where attribute_model='';
-");
+// refactored in Unirgy_RapidFlow_Adminhtml_ProfileController::_fixEavAttributeIssue
+//$this->run("
+//update {$this->getTable('eav_attribute')} set attribute_model=null where attribute_model='';
+//");
 
 $this->endSetup();

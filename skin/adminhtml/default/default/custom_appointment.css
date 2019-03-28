@@ -1,0 +1,32 @@
+.appointments-setting-custom_column{width: 1010px ! important;}
+.appointment-setting-common {padding-bottom: 10px;}
+.appointment-setting-common.apt-row-1{width: 50%;}
+.appointment-setting-common label{
+	width: 40%;
+    float: left; 
+}
+.appointment-setting-hr{margin-bottom: 10px;}
+.appointment-setting-select{width: 250px;}
+.appointment-setting-input{width: 276px;}
+.appointment-setting-textarea{
+	width: 276px! important;
+	height: 40px! important;
+}
+.customer-email-container,
+.piercer-email-container,
+.admin-email-container
+{display: none;}
+
+.customer-email-container.active,
+.piercer-email-container.active,
+.admin-email-container.active
+{display: block;}
+
+.enable-store-container{display: none;}
+.enable-store-container.active{display: block;}
+
+.enable-store-hr{display: none;}
+.enable-store-hr.active{display: block;}
+#appointmentblocker_container .entry-edit-head a{text-decoration: none;}
+.appointment-fieldset.unopen{display: none;}
+.appointment-collapse > a{cursor: pointer;}

@@ -14,6 +14,7 @@ class Ebizmarts_BakerlooRestful_Helper_Email extends Mage_Core_Helper_Abstract
     const XML_PATH_WELCOME_CONFIRMATION_EMAIL_TEMPLATE  = 'bakerloorestful/new_customer_account/confirmation_template';
 
     const PRICE_OVERRIDE_EMAIL_TEMPLATE = 'bakerloorestful_pos_customprice_template';
+    const XML_PATH_PRODUCT_SHARE_TEMPLATE = 'share_product_email/template';
 
     private $_emailSent = false;
 
@@ -165,6 +166,11 @@ class Ebizmarts_BakerlooRestful_Helper_Email extends Mage_Core_Helper_Abstract
         $this->_emailInfo->unsetData();
         $this->_emailInfo->addTo($customer->getEmail(), $customer->getName());
 
+        if ($customer->getId()) {
+            $newResetPasswordLinkToken =  $this->getCustomerHelper()->generateResetPasswordLinkToken();
+            $customer->changeResetPasswordLinkToken($newResetPasswordLinkToken);
+        }
+
         $this->_template
             ->setDesignConfig(array('area' => 'frontend', 'store' => $storeId))
             ->sendTransactional(
@@ -202,5 +208,62 @@ class Ebizmarts_BakerlooRestful_Helper_Email extends Mage_Core_Helper_Abstract
         $this->_template->setSenderName($adminName);
         $this->_template->setSenderEmail($adminEmail);
         $this->_template->send($adminEmail, null, $emailTemplateVars);
+    }
+
+    public function sendProduct($data, $product, $storeId)
+    {
+        if ($product->getId()) {
+            /** @var Mage_Catalog_Helper_Image $imageHelper */
+            $imageHelper = Mage::helper('catalog/image')->init($product, 'small_image');
+            $template = $this->_helper->config(self::XML_PATH_PRODUCT_SHARE_TEMPLATE, $storeId);
+            $sender = array(
+                'email' => $data->getSenderEmail(),
+                'name'  => $data->getSenderName()
+            );
+
+            $templateVars = array(
+                'product_url'     => $product->getUrlInStore(),
+                'product_name'    => $product->getName(),
+                'product_image'   => $imageHelper->resize(75),
+                'sender_name'     => $data->getSenderName(),
+                'sender_email'    => $data->getSenderEmail(),
+                'message'         => $data->getMessage(),
+                'product'         => $product
+            );
+
+            $templateVars = new Varien_Object($templateVars);
+            Mage::dispatchEvent('pos_send_product_email', array('email_data' => $data, 'template_vars' => $templateVars, 'product' => $product));
+
+            $recipients = $data->getRecipients();
+            foreach ($recipients as $recipient) {
+                try {
+                    $templateVars['recipient_name'] = $recipient['recipient_name'];
+                    $templateVars['recipient_email'] = $recipient['recipient_email'];
+
+                    $this->_template->setDesignConfig(array('area' => 'frontend', 'store' => $storeId));
+                    $this->_template->sendTransactional(
+                            $template,
+                            $sender,
+                            $recipient['recipient_email'],
+                            $recipient['recipient_name'],
+                            $templateVars->getData(),
+                            $storeId
+                        );
+                    $this->setEmailSent((bool)$this->_template->getSentSuccess());
+                } catch (Exception $e) {
+                    Mage::logException($e);
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Mage_Core_Helper_Abstract
+     */
+    protected function getCustomerHelper()
+    {
+        return Mage::helper('customer');
     }
 }

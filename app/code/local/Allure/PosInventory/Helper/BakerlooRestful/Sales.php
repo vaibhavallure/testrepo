@@ -120,6 +120,13 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
         
         //var_dump($data);die;
 
+        //allure-02 start 
+        if(count($data['returns']) > 0){
+            $data['products'] = array_merge($data['products'],$data['returns']);   
+        }
+        //allure-02 end
+        
+        
         $this->_addProductsToQuote($data['products']);
         //Adding products to Quote
 
@@ -198,19 +205,18 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
                     ->setPaymentMethod($data['payment']['method']);
             } else {
                 $this->getQuote()->getShippingAddress()
-                    ->setPaymentMethod($data['payment']['method'])
-                    ->setShippingMethod($data['shipping']);
+                    ->setPaymentMethod($data['payment']['method']);
+                    $this->getQuote()->getShippingAddress()->setShippingMethod($data['shipping']);
             }
         }
-
         $billingAddress  = $this->_getAddress($data['customer']['billing_address'], $data['customer']['email']);
         $this->getQuote()
             ->getBillingAddress()
             ->addData($billingAddress);
 
         //Apply coupon if present
-        $checkCouponOK = $this->checkAndSetCoupon($data);
-
+        $checkCouponOK = $this->checkAndSetCoupon($data); 
+        
         //Apply gift cards if present
         $giftCards = isset($data['gift_card']) ? $data['gift_card'] : array();
         $this->setGiftCardsToQuote($storeId, $giftCards);
@@ -237,6 +243,8 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
 
         //Commented on January, 6 2015 to fix issue with coupons applied twice on bundle products.
         //$this->getQuote()->collectTotals()->save();
+        if(empty($this->getQuote()->getShippingAddress()->getShippingMethod()))
+            $this->getQuote()->getShippingAddress()->setShippingMethod($data['shipping']);
         $this->getQuote()->save();
 
         //If coupon was provided and does not validate, throw error.
@@ -245,7 +253,8 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
         }
 
         Varien_Profiler::stop('POS::' . __METHOD__);
-
+        
+        $this->getQuote()->collectTotals()->save(); //allure-02
         return $this->getQuote();
     }
 
@@ -314,7 +323,28 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
                         $product->setSpecialPrice('');
                     }
 
-                    $quoteItem = $this->getQuote()->addProduct($product, new Varien_Object($buyInfo));
+                    //allure-02 start 
+                   /*  if(array_key_exists("options", $buyInfo)){
+                        if(count($buyInfo['options']) > 0){
+                            if(array_key_exists("super_attribute", $buyInfo)){
+                                foreach ($buyInfo['super_attribute'] as $keyC => $valueC){
+                                    if($keyC != 209){
+                                        unset($buyInfo['super_attribute'][$keyC]);
+                                    }
+                                }
+                            }
+                        }
+                    } */
+                    if($buyInfo['qty'] > 0){
+                        $quoteItem = $this->getQuote()->addProduct($product, new Varien_Object($buyInfo));
+                    }else{
+                        $quoteItem = $this->getQuote()->addProductAsNew($product, new Varien_Object($buyInfo));
+                    }
+                    //allure-02 end 
+                    
+                    //old code
+                    //$quoteItem = $this->getQuote()->addProduct($product, new Varien_Object($buyInfo));
+                    
                     //Rewards integrations
                     $this->applyRewardsToQuoteItem($_product, $product, $quoteItem);
 
@@ -355,6 +385,7 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
         }//foreach
 
         foreach ($this->getQuote()->getAllItems() as $item) {
+            $item->setRowTotalWithDiscount($item->getRowTotal());
             $item->save();
         }
 
@@ -381,4 +412,50 @@ class Allure_PosInventory_Helper_BakerlooRestful_Sales extends Ebizmarts_Bakerlo
         return $products;
     }
     
+    public function processFailedOrder($id){
+        if(Mage::registry('failed_ebiz_order'))
+            Mage::unregister('failed_ebiz_order');
+        Mage::register('failed_ebiz_order', $id);
+        
+        $orderProcessor = new POS_Order();
+        $orderProcessor->place($id);
+        
+    }
+    
+    /**
+     * @param $data
+     * @return bool
+     */
+    protected function checkAndSetCoupon($data)
+    {
+        if (isset($data['coupon_code']) && !empty($data['coupon_code'])) {
+            $couponCode = $data['coupon_code'];
+            //allure-02 start
+            if(preg_match("/POS/", $couponCode)){
+                return false;
+            }
+            //allure-02 end
+            $this->getQuote()->setCouponCode(strlen($couponCode) ? $couponCode : '');
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private function _applyCustomPrice($quoteItem, $price)
+    {
+        
+        //Cannot apply custom price on dynamic bundle, Magento does not allow it.
+        
+        if ($quoteItem->getParentItem()) {
+            $quoteItem->getParentItem()->setCustomPrice($price);
+            $quoteItem->getParentItem()->setOriginalCustomPrice($price);
+            $quoteItem->getParentItem()->setBaseRowTotal($price);
+        } else {
+            $quoteItem->setCustomPrice($price);
+            $quoteItem->setOriginalCustomPrice($price);
+            $quoteItem->setBaseRowTotal($price);
+        }
+    }
 }

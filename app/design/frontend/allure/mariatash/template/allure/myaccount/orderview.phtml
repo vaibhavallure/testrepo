@@ -1,0 +1,80 @@
+
+<?php $_links       = $this->getOrderLinks();?>
+<?php $orderType    = $this->getOrderType();?>
+
+<dl class="order-info">
+	<dd>
+		<a class="order-info-tab-back button" 
+			onclick="<?php if($orderType == "open"):?>closeOpenOrderView()<?php else:?>closeOrderView()<?php endif;?>">Back</a>
+        	
+        <ul id="custom-order-info-tabs">
+        		<li onclick="changeOrderView(this)" data-order-id="<?php echo $this->getOrderId()?>" data-order-type="<?php echo $orderType?>" data-key="info" class="current first <?php echo $orderType?>-custom-order-info-tabs active">Order Information</li>
+        	<?php  $i   = 1;
+        	       $cnt = count($_links);
+        	       foreach ($_links as $key => $link):?>
+            	<li class="custom-tab-hr-bar <?php echo ($i==$cnt)?"last-l":""?>">|</li>
+            	<li onclick="changeOrderView(this)" data-order-id="<?php echo $this->getOrderId()?>" data-order-type="<?php echo $orderType?>" data-key="<?php echo $key?>" class="<?php echo $orderType?>-custom-order-info-tabs">  <?php echo $link?> </li>
+            <?php $i++; endforeach;?>
+       </ul>
+   </dd>
+</dl>
+
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-info" style="display: block;"><?php echo $this->getChildHtml("sales_order_view_info");//$this->getOrderInfoHtml()?></div>
+
+<?php if($this->getIsInvoice()):?>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-invoice" style="display: none;"><?php echo $this->getChildHtml("sales_order_invoice_info");//$this->getInvoiceInfoHtml()?></div>
+<?php endif;?>
+
+<?php if($this->getIsShipment()):?>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-shipment" style="display: none;"><?php echo $this->getChildHtml("sales_order_shipment_info");//$this->getShipmentInfoHtml()?></div>
+<?php endif;?>
+
+<?php if($this->getIsCreditmemo()):?>
+<div class="<?php echo $orderType?>-section" id="<?php echo $orderType?>-order-creditmemo" style="display: none;"><?php echo $this->getChildHtml("sales_order_creditmemo_info");//$this->getCreditmemoInfoHtml()?></div>
+<?php endif;?>
+
+<script>
+jQuery(document).ready(function(){
+	
+});
+
+function closeOpenOrderView(){
+	jQuery('#mt-openorders-tab #mt-filter-toolbar').show();
+	 jQuery('.open-order-view').show();
+     jQuery('#load-open-order-data').hide();
+     jQuery('.mt-myaccount-new').removeClass('sales-order-view');
+     changeHashOfOrder();
+}
+
+function closeOrderView(){
+	 jQuery('#mt-report-tab #mt-filter-toolbar').show();
+	 jQuery('.complete-order-view').show();
+     jQuery('#load-complete-order-data').hide();
+     jQuery('.mt-myaccount-new').removeClass('sales-order-view');
+     changeHashOfOrder();
+}
+
+function changeHashOfOrder(){
+	var type = window.location.hash.substr(1);
+	var typeArr = type.split("#");
+	type = typeArr[0];
+    window.location.hash = type;
+}
+
+function changeOrderView(evt){
+	var order_type = jQuery(evt).attr("data-order-type");
+	var order_key  = jQuery(evt).attr("data-key");
+	var order_id   = jQuery(evt).attr("data-order-id");
+	jQuery('.'+order_type+'-section').css({"display":"none"});
+	jQuery('#'+order_type+'-order-'+order_key).show();
+	jQuery('.'+order_type+'-custom-order-info-tabs').css({"font-weight":"normal"});
+	jQuery('.'+order_type+'-custom-order-info-tabs').removeClass('active');
+	jQuery(evt).addClass('active');
+	var type = window.location.hash.substr(1);
+	var typeArr = type.split("#");
+	type = typeArr[0];
+    window.location.hash = type+"#"+order_key+"#"+order_id;
+}
+	
+</script>
+  

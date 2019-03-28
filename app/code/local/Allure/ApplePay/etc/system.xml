@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<payment>
+			<groups>
+				<applepay translate="label" module="allure_applepay">
+					<label>Apple Pay</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>780</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<active translate="label">
+							<label>Enabled</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>10</sort_order>
+						</active>
+						<title translate="label">
+							<label>Title</label>
+							<frontend_type>text</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>11</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+						</title>
+						<merchant_id translate="label">
+							<label>Merchant ID</label>
+							<frontend_type>text</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>12</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+						</merchant_id>
+						<merchant_name translate="label">
+							<label>Merchant Name</label>
+							<frontend_type>text</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>13</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+						</merchant_name>
+	                    <sandbox translate="label">
+	                    	<label>Sandbox Mode</label>
+	                      	<frontend_type>select</frontend_type>
+	                      	<source_model>adminhtml/system_config_source_yesno</source_model>
+	                      	<show_in_default>1</show_in_default>
+	                      	<show_in_website>1</show_in_website>
+	                      	<show_in_store>1</show_in_store>
+	                      	<sort_order>14</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+	                    </sandbox>
+						<order_status translate="label">
+							<label>Order Status</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_order_status</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<sort_order>15</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+						</order_status>
+						<allowspecific translate="label">
+							<label>Payment from applicable countries</label>
+							<frontend_type>allowspecific</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>16</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+						</allowspecific>
+						<specificcountry translate="label">
+							<label>Payment from Specific countries</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>adminhtml/system_config_source_country</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>17</sort_order>
+							<depends>
+								<active>1</active>
+								<allowspecific>1</allowspecific>
+							</depends>
+						  </specificcountry>
+						<secure_cart translate="label">
+							<label>Secure Cart Page</label>
+							<comment><![CDATA[HTTPS is required to use the Apple Pay button on the cart page.]]></comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+	                      	<sort_order>18</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+						</secure_cart>
+	                    <show_pay_cart translate="label">
+	                        <label>Show Pay with Apple Pay Button on Cart</label>
+	                        <comment><![CDATA[Only applies when OnePage Checkout is used, otherwise button is always shown.]]></comment>
+	                        <frontend_type>select</frontend_type>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>0</show_in_store>
+	                      	<sort_order>19</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+	                    </show_pay_cart>
+	                    <use_in_checkout translate="label">
+	                        <label>Display as Payment Option</label>
+	                        <comment><![CDATA[Add Apple Pay button under "Payment Information" during checkout. (Recommended flow is to display button before user enters billing and shipping information.)]]></comment>
+	                        <frontend_type>select</frontend_type>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>0</show_in_store>
+	                      	<sort_order>20</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+	                    </use_in_checkout>
+	                    <visible_on_product translate="label">
+	                        <label>Shortcut on Product View</label>
+	                        <comment><![CDATA[Pop-up must be set to "No" under "Pay with Apple Pay" below.]]></comment>
+	                        <frontend_type>select</frontend_type>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                      	<sort_order>21</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+	                    </visible_on_product>
+						<restrict_by_ips translate="label">
+							<label>Restrict by IPs</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+	                      	<sort_order>22</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+						</restrict_by_ips>
+						<ip_whitelist translate="label">
+							<label>IP Whitelist</label>
+							<frontend_type>text</frontend_type>
+							<comment>List of comma seperated IP addresses</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+	                      	<sort_order>23</sort_order>
+							<depends>
+								<restrict_by_ips>1</restrict_by_ips>
+								<active>1</active>
+							</depends>
+							<sort_order>13</sort_order>
+						</ip_whitelist>
+						<proxy_mode translate="label">
+							<label>Proxy Mode</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+	                      	<sort_order>24</sort_order>
+							<depends>
+								<active>1</active>
+								<restrict_by_ips>1</restrict_by_ips>
+							</depends>
+						</proxy_mode>
+						<proxy_ip translate="label">
+							<label>Proxy IP</label>
+							<frontend_type>text</frontend_type>
+							<comment>IPv4 Address.</comment>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+	                      	<sort_order>25</sort_order>
+							<depends>
+								<active>1</active>
+								<proxy_mode>1</proxy_mode>
+							</depends>
+						</proxy_ip>
+						<debug translate="label">
+							<label>Debug Mode</label>
+							<comment>
+							  <![CDATA[Save API responses to Magento log]]>
+							</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+	                      	<sort_order>30</sort_order>
+							<depends>
+								<active>1</active>
+							</depends>
+						</debug>
+					</fields>
+				</applepay>
+			</groups>
+		</payment>
+	</sections>
+</config>

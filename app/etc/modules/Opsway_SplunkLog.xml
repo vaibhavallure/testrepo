@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Opsway_SplunkLog>
-			<active>true</active>
+			<active>false</active>
 			<codePool>community</codePool>
 		</Opsway_SplunkLog>
 	</modules>

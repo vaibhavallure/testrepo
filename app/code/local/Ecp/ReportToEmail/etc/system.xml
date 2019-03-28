@@ -65,8 +65,62 @@
                             <show_in_store>0</show_in_store>
                             <comment>From now</comment>
                         </count_days>
+
+                        <run_script translate="label">
+                            <label>Script</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ecp_reporttoemail/script</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Choose Script To Run</comment>
+                        </run_script>
+
+                        <debug_enabled translate="label">
+                            <label>Debug Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </debug_enabled>
+
+                        <enable_updown translate="title">
+                            <label>Enable Up/Down Indications</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>ecp_reporttoemail/record</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Compared with previous Day Record</comment>
+                        </enable_updown>
                     </fields>
                 </scheduled_reports>
+
+
+                <refund_report translate="label">
+                    <label>Refund Report Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <emails translate="label">
+                            <label>List of emails</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Comma separate</comment>
+                        </emails>
+                    </fields>
+                </refund_report>
+
             </groups>
         </report>
     </sections>

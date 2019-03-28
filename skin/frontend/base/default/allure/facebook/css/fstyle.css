@@ -1,0 +1,21 @@
+.facebook-login .buttons-set a{
+	cursor: pointer;
+}
+
+.facebook-login .fb-img{
+	width: 250px;
+}
+
+.facebook-login-checkout .fb-img,
+.mt-facebookconnect-btn .fb-img{
+	width: 200px;
+}
+
+.checkout-amazon-step .mt-amazon-brtag,
+.checkout-amazon-step p.mt-amazon-ptag{
+	display: none;
+}
+
+.checkout-amazon-step #AmazonPayButtonBefore{
+	margin-bottom: 12px;
+}

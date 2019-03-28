@@ -222,7 +222,8 @@
                     <apply_to><col>14</col></apply_to>
                     <is_visible_in_advanced_search><col>15</col></is_visible_in_advanced_search>
                     <position><col>16</col></position>
-                    <is_wysiwyg_enabled><col>17</col></is_wysiwyg_enabled>
+                    <frontend_input_renderer><col>17</col></frontend_input_renderer>
+                    <is_wysiwyg_enabled><col>18</col></is_wysiwyg_enabled>
                 </columns>
             </EAXP>
 

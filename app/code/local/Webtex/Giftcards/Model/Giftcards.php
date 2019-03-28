@@ -97,6 +97,25 @@ class Webtex_Giftcards_Model_Giftcards extends Mage_Core_Model_Abstract
          }
 
          $this->_send($post, 'giftcards/email/email_template', $mail, $storeId);
+         
+         //aws02 - start
+         $fromEmail = trim($this->getMailFromEmail());
+         if(!empty($fromEmail)){
+             
+             $postData = array(
+                 'amount'        => $this->_addCurrencySymbol($amount,$this->getCardCurrency()),
+                 'code'          => $this->getCardCode(),
+                 'email-to'      => $this->getMailTo(),
+                 'email-from'    => $this->getMailFrom(),
+                 'recipient'     => $this->getMailToEmail(),
+                 'email-message' => nl2br($this->getMailMessage()),
+                 'store-phone'   => Mage::getStoreConfig('general/store_information/phone'),
+                 'picture'       => $picture,
+             );
+             
+             $this->sendEmailToGiftCardFromEmailer($postData, 'giftcards/from_email/email_template', $fromEmail, $storeId);
+         }
+         //aws02 - end
     }
 
     protected function _sendPrintCard($storeId)
@@ -212,6 +231,7 @@ class Webtex_Giftcards_Model_Giftcards extends Mage_Core_Model_Abstract
         }
         if ($this->getCardType() == 'email') {
             $this->_sendEmailCard($storeId);
+            $this->setLog();
         } else if ($this->getCardType() == 'print') {
             $this->_sendPrintCard($storeId);
         } else if ($this->getCardType() == 'offline') {
@@ -259,4 +279,44 @@ class Webtex_Giftcards_Model_Giftcards extends Mage_Core_Model_Abstract
         }
         return $currencySymbol.$amount;
    }
+   
+   /**
+    * aws02 - send email to gift card from email address
+    */
+   protected function sendEmailToGiftCardFromEmailer($post, $template, $email, $storeId)
+   {
+       if ($email) {
+           $translate = Mage::getSingleton('core/translate');
+           $translate->setTranslateInline(false);
+           $postObject = new Varien_Object();
+           $postObject->setData($post);
+           $postObject->setStoreId($storeId);
+           $mailTemplate = Mage::getModel('core/email_template');
+           $pdfGenerator = new Webtex_Giftcards_Model_Email_Pdf();
+           //$this->_addAttachment($mailTemplate, $pdfGenerator->getPdf($postObject), 'giftcard.pdf');
+           $mailTemplate->setDesignConfig(array('area' => 'frontend', 'store' => $storeId))
+           ->sendTransactional(
+               Mage::getStoreConfig($template, $storeId),
+               'general',
+               $email,
+               null,
+               array('data' => $postObject)
+               );
+           $translate->setTranslateInline(true);
+       } else {
+           throw new Exception('Invalid from email address.');
+       }
+   }
+    public function setLog()
+    {
+        $output = implode(', ', array_map(
+            function ($v, $k) { return sprintf("%s==>'%s'", $k, $v); },
+            $this->getData(),
+            array_keys($this->getData())
+        ));
+
+        Mage::log("Mail sent",Zend_Log::DEBUG,'gift_card_email.log','true');
+        Mage::log($output,Zend_Log::DEBUG,'gift_card_email.log','true');
+
+    }
 }

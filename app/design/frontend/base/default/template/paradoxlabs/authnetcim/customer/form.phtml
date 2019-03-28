@@ -109,7 +109,7 @@
 		<li class="<?php echo $code; ?>_add"<?php echo $style; ?>>
 			<label for="<?php echo $code; ?>_cc_type" class="required"><em>*</em><?php echo $this->__('Credit Card Type'); ?></label>
 			<div class="input-box">
-				<select id="<?php echo $code; ?>_cc_type" name="payment[cc_type]" class="<?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
+				<select id="<?php echo $code; ?>_cc_type" name="payment[cc_type]" class="<?php echo $code; ?>_require validate-cc-type-select <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>" autocomplete="cc-type">
 					<option value=""><?php echo $this->__('--Please Select--')?></option>
 					<?php foreach( Mage::helper('tokenbase')->getCcAvailableTypes( $code ) as $k => $v ): ?>
 						<option value="<?php echo $k ?>" <?php if( $k == $this->getCard()->getAdditional('cc_type') ): ?>selected="selected"<?php endif; ?>><?php echo $v ?></option>
@@ -120,14 +120,14 @@
 		<li class="<?php echo $code; ?>_add"<?php echo $style; ?>>
 			<label for="<?php echo $code; ?>_cc_number" class="required"><em>*</em><?php echo $this->__('Credit Card Number'); ?></label>
 			<div class="input-box">
-				<input type="text" id="<?php echo $code; ?>_cc_number" autocomplete="off" name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number'); ?>" class="input-text <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-number<?php endif; ?>" value="" />
+				<input type="text" id="<?php echo $code; ?>_cc_number" autocomplete="cc-number" name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number'); ?>" class="input-text <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-number<?php endif; ?>" value="" />
 			</div>
 		</li>
 		<li id="<?php echo $code; ?>_cc_type_exp_div" class="<?php echo $code; ?>_add sp-methods"<?php echo $style; ?>>
 			<label for="<?php echo $code; ?>_expiration" class="required"><em>*</em><?php echo $this->__('Expiration Date'); ?></label>
 			<div class="input-box">
 				<div class="v-fix">
-					<select id="<?php echo $code; ?>_cc_exp_month" name="payment[cc_exp_month]" class="month <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
+					<select id="<?php echo $code; ?>_cc_exp_month" name="payment[cc_exp_month]" class="month <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>" autocomplete="cc-exp-month">
 						<option value=""><?php echo $this->__('Month'); ?></option>
 						<?php $_ccExpMonth = $this->getCard()->getAdditional('cc_exp_month'); ?>
 						<?php foreach( Mage::helper('tokenbase')->getCcMonths() as $k=>$v ): ?>
@@ -136,7 +136,7 @@
 					</select>
 				</div>
 				<div class="v-fix">
-					<select id="<?php echo $code; ?>_cc_exp_year" name="payment[cc_exp_year]" class="year <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>">
+					<select id="<?php echo $code; ?>_cc_exp_year" name="payment[cc_exp_year]" class="year <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry<?php endif; ?>" autocomplete="cc-exp-year">
 						<option value=""><?php echo $this->__('Year'); ?></option>
 						<?php $_ccExpYear = $this->getCard()->getAdditional('cc_exp_year'); ?>
 						<?php foreach( Mage::helper('tokenbase')->getCcYears() as $k=>$v ): ?>
@@ -152,9 +152,20 @@
 				<label for="<?php echo $code; ?>_cc_cid" class="required"><em>*</em><?php echo $this->__('Card Verification Number'); ?></label>
 				<div class="input-box">
 					<div class="v-fix">
-						<input type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="off" class="input-text cvv <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
+						<input type="text" title="<?php echo $this->__('Card Verification Number'); ?>" autocomplete="cc-csc" class="input-text cvv <?php echo $code; ?>_require <?php if( !$this->getCard()->getId() ): ?>required-entry validate-cc-cvn<?php elseif( $requireCvv ): ?>required-entry<?php endif; ?>" id="<?php echo $code; ?>_cc_cid" name="payment[cc_cid]" value="" />
 					</div>
 				</div>
+			</li>
+		<?php endif; ?>
+		<?php if( $method->isAcceptJsEnabled() === true ): ?>
+			<li class="please-wait" id="<?php echo $code; ?>_processing" style="display:none">
+				<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Processing, please wait...') ?>" title="<?php echo $this->__('Processing, please wait...') ?>" class="v-middle" /> <?php echo $this->__('Processing, please wait...'); ?>
+			</li>
+			<li class="please-wait" id="<?php echo $code; ?>_complete" style="display:none">
+				<?php echo $this->__('&#128077; Okay, ready to continue!'); ?>
+			</li>
+			<li class="please-wait" id="<?php echo $code; ?>_failed" style="display:none">
+				<?php echo $this->__('&#10060; Please fix your payment info before continuing.'); ?> <span class="error-text"></span>
 			</li>
 		<?php endif; ?>
 		<li class="buttons-set">

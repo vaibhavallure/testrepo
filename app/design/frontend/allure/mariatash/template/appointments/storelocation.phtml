@@ -1,41 +1,41 @@
 <?php
 	$model = Mage::registry('apt_modify_data');
-	//$fetch_storeId = $model->getStoreId();
+
+	$storeId = Mage::helper('appointments')->getStoreId();
+
 	if($model){
-	$fetch_storeId = $model->getStoreId();
+		$fetch_storeId = $model->getStoreId();
 	}
 ?>
 <label for="store_location">Store Location:</label>
-	<?php 
-	$storeId = $this->getRequest()->getParam('store');
+	<?php
 	$storeId_arr = explode(",", $storeId);
 	$activeStores = $this->getActiveStore();
-	 
 	$multi_stores=array();
-	
+
 	if(count($storeId_arr) >= 1){
-		
+
 		if($storeId):
 			foreach($storeId_arr as $st_key => $st_value){
 				foreach ($activeStores as $key=>$store){
 					if($st_value == $key){
 						$requestStoreName = $store;
-						$requestStoreId = $key;	
-						
-						$multi_stores[$requestStoreId]= $requestStoreName;					
+						$requestStoreId = $key;
+
+						$multi_stores[$requestStoreId]= $requestStoreName;
 					}
-				}				
+				}
 			}
-			
-		else:			
-			foreach ($activeStores as $key=>$store){	
+
+		else:
+			foreach ($activeStores as $key=>$store){
 				$requestStoreName = $store;
 				$requestStoreId = $key;
 				$multi_stores[$key]= $store;
 			}
-		endif;		
+		endif;
 	}
-	
+
 	if(count($multi_stores) <= 1):
 	?>
 		<p><b><?php echo $requestStoreName;?></b></p>

@@ -29,10 +29,13 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Export_Condition extends
 
         // conditions
         $fieldset = $form->addFieldset('conditions_fieldset', array(
-            'legend'=>Mage::helper('urapidflow')->__('Export only products matching the following conditions (leave blank for all products)')
-        ))->setRenderer($this->getLayout()->createBlock('adminhtml/widget_form_renderer_fieldset')
-            ->setTemplate('promo/fieldset.phtml')
-            ->setNewChildUrl($this->getUrl('urapidflowadmin/adminhtml_profile/newConditionHtml', array('form'=>'conditions')))
+            'legend' => Mage::helper('urapidflow')
+                            ->__('Export only products matching the following conditions (leave blank for all products)')
+        ))->setRenderer(
+            $this->getLayout()
+                ->createBlock('adminhtml/widget_form_renderer_fieldset')
+                ->setTemplate('promo/fieldset.phtml')
+                ->setNewChildUrl($this->getUrl('adminhtml/urapidflowadmin_profile/newConditionHtml', array('form' => 'conditions')))
         );
 
         $fieldset->addField('conditions_post', 'text', array(
@@ -50,14 +53,14 @@ class Unirgy_RapidFlow_Block_Adminhtml_Profile_Edit_Tab_Export_Condition extends
             'values'    => $source->setPath('yesno')->toOptionArray(),
             'value'     => $model->getData('options/export/skip_out_of_stock'),
         ));
-        
+
         $fieldset->addField('export_skip_configurable_simples', 'select', array(
             'label'     => $this->__('Do not export simple products that are used in configurable'),
             'name'      => 'options[export][skip_configurable_simples]',
             'values'    => $source->setPath('yesno')->toOptionArray(),
             'value'     => $model->getData('options/export/skip_configurable_simples'),
         ));
-        
+
         $fieldset->addField('export_websites_filter', 'multiselect', array(
             'label'     => $this->__('Websites filter'),
             'name'      => 'options[export][websites_filter]',

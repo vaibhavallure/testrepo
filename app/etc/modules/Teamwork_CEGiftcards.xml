@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Teamwork_CEGiftcards>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Teamwork_Service />
+            </depends>
+        </Teamwork_CEGiftcards>
+    </modules>
+</config>

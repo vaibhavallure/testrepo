@@ -23,9 +23,10 @@ class Allure_CurrencyManager_CurrencyController extends Mage_Directory_CurrencyC
                 'from' => $oldCurrency,
                 'to' => $curency
             );
-            
-            Mage::log(json_encode($info), Zend_Log::DEBUG, 'allure_currencymanager.log', true);
-            
+            $flag=Mage::getStoreConfigFlag('currencymanager/logs/log_status');
+            if($flag){
+                Mage::log(json_encode($info), Zend_Log::DEBUG, 'allure_currencymanager.log', true);
+            }
             Mage::getSingleton('customer/session')->setCurrencyChangeInformation($info);
         }
         $webmode = $this->getRequest()->getParam('webs');

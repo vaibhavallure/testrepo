@@ -1,19 +1,28 @@
 <?php
 $fetch_model = Mage::registry('apt_modify_data');
 
+
 if($fetch_model){
-    
-    $f_pickurday = $fetch_model->getAppointmentStart();
-    $timestamp = strtotime($f_pickurday);
-    $fetch_starttime = date('H:i', $timestamp);
-    
-    $f_pickurendtime = $fetch_model->getAppointmentEnd();
-    $timestamp = strtotime($f_pickurendtime);
-    $fetch_endtime = date('H:i', $timestamp);
+
+	$f_pickurday = $fetch_model->getAppointmentStart();
+	$timestamp = strtotime($f_pickurday);
+	$fetch_starttime = date('H:i', $timestamp);
+
+	$f_pickurendtime = $fetch_model->getAppointmentEnd();
+	$timestamp = strtotime($f_pickurendtime);
+	$fetch_endtime = date('H:i', $timestamp);
 }
+
+$no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
+
+
 ?>
 <div class="pickur_time_main_container">
 	<label class="pickurtimeLable" for="pick_your_time" >Pick Your Time:</label><br/>
+
+    <?php
+    if($no_of_people>0):
+    ?>
 
 <?php if (!$this->getData("timing")):?>
 
@@ -25,36 +34,36 @@ if($fetch_model){
 	<input type = "hidden" class="" value="<?php if($fetch_endtime): echo $fetch_endtime; endif;?>" name="appointment_end" id="endtime_hidden">
 	<input type = "hidden" value="" name="piercer_id" id="piercer_id">
 		<?php
-		
+        $notfreepeiercer_show=0;
 		$interval =10;
 		$timeslot_col_size = 7;
 		$time_pref = 24;
 		$helper=Mage::helper('appointments');
-		$storeSerializeData = Mage::getStoreConfig("appointments/general/storemapping");
+		//$storeSerializeData = Mage::getStoreConfig("appointments/general/storemapping");
+		$configData = Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
 		$selectedStoreId = intval($this->getData("store_id"));
-		if($storeSerializeData){
-			$storeUnSerializeData = unserialize($storeSerializeData);
-		
-			
-		
-			$selectedStoreId = intval($selectedStoreId);
-			
-			if($selectedStoreId){
-				foreach($storeUnSerializeData as $de){
-					//$allStores = Mage::app()->getStores();
-					$storeId = intval($de['store']);
-					//echo "STORE= ".$storeId . "  ".$selectedStoreId;
-					if($storeId == $selectedStoreId){
-						
-						$time_pref = intval($de['time']);			//24 or 12	hrs		
-					}
-				}
-			}
+
+		$selectedStoreId = intval($this->getData("store_id"));
+		//if($storeSerializeData){
+		//	$storeUnSerializeData = unserialize($storeSerializeData);
+		$storeKey = array_search ($selectedStoreId, $configData['stores']);
+
+		if (count($configData) > 0) {
+
+		    $selectedStoreId = intval($selectedStoreId);
+		    $storeKey = array_search ($selectedStoreId, $configData['stores']);
+
+		    if($selectedStoreId){
+		        $time_pref = intval($configData['time_pref'][$storeKey]);
+		    }
 		}
+
+		//$time_pref = 12;
+
 		$intervalTime=$helper->getTimeByStoreAndPeople(1,$selectedStoreId);
-		
+
 		if($this->getData("timing")) $interval = $this->getData("timing");
-		
+
 		if($this->getData("id")) $appointmentId = $this->getData("id");
 		//$selectedTime = "9:00";
 		if(isset($appointmentId)){
@@ -65,80 +74,90 @@ if($fetch_model){
 		    $old_app_piercer=$oldApp->getPiercerId();
 		    $old_app_date= date('m/d/Y',strtotime($oldApp->getAppointmentStart()));
 		}
-		Mage::log($appointmentId,Zend_log::DEBUG,'mylogs',true);
-		
-		$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
-		
+
+		//$startTime = Mage::getStoreConfig("appointments/general/working_start_time",$selectedStoreId);
+		$startTime = $configData['start_work_time'][$storeKey];
+		$storeCurrentTime = $this->getData("store_current_time");
+
+		if(!empty($storeCurrentTime)){
+		    if($storeCurrentTime >= $startTime)
+		        $startTime = $storeCurrentTime;
+		}
 		//echo $startTime." isd sajofasf";
-		
+
 		//$selectedTime = sprintf('%02d', $startTime ).":00";
 		$selectedTime = $helper->getTimeByValue($startTime);
-		
-		
-		$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time",$selectedStoreId);
-		
-		
+
+
+		//$endTimeSystem = Mage::getStoreConfig("appointments/general/working_end_time",$selectedStoreId);
+		$endTimeSystem = $configData['end_work_time'][$storeKey];
+
 		$selectedStartTime = strtotime($selectedTime);
-	
+
 		$endTimeSystem=$helper->getTimeByValue($endTimeSystem);
 		$selectedEndTime = strtotime($endTimeSystem);
-		
+
 		//echo $startTime."wq,koeow eomkqw"; die;
 		$dateDiff = intval(($selectedEndTime-$selectedStartTime)/60);
-		
+
 		$hours = intval($dateDiff/60)*60;
-	
+
 		$minutes = $dateDiff%60;
-		
+
 		$totalMinutes = $hours + $minutes;
-		
-		
+
 		$totalSlot = (int) $totalMinutes/$intervalTime;
 		//echo $totalSlot;
-		
+
 		/* logic for getting workday Piercer */
 		$storeId= $this->getData("store_id");
 		$collection = Mage::getModel('appointments/piercers')->getCollection()->addFieldToFilter('store_id', array('eq' => $storeId))
 			->addFieldToFilter('is_active', array('eq' => '1'));
-		
+
+		$specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+
+		$specialStore = false;
+
+		if ($specialStoreId == $storeId) {
+			$specialStore = true;
+		}
+
 		if($this->getData("date")) :
 		$date = $this->getData("date");
-		Mage::log("default Date",Zend_log::DEBUG,'mylogs',true);
-		Mage::log($date,Zend_log::DEBUG,'mylogs',true);
-		
+
+
+
 		$dayOfWeek = date("d", strtotime($date));
 		$day = date('l', strtotime($date));
 		if($date){
 			//$storeId= $this->getData("store_id");
 			//$collection = Mage::getModel('appointments/piercers')->getCollection();
 			$collection->addFieldToFilter('working_days', array('like' => '%'.$date.'%'));
-			Mage::log($collection->getData(),Zend_Log::DEBUG, 'appointments', true );
 			/* If piercer is not free logic start*/
-			if(!$collection->count()){
-			
+			if(empty($collection->getData())){
+
 				echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
+                $notfreepeiercer_show=1;
 			}
 			/* If piercer is not free logic end*/
 		}
 		endif;
 		/*EO Piercer Logic */
-		
-		
-		
-		echo "<div class='image_carousel'>";
+
+		$timeContainerClass = "image_carousel time_format_" . ($time_pref == 24 ? 'short' : 'long');
+
+		echo "<div class='$timeContainerClass'    id='time_blocks'>";
 		echo "<div style=''>";
 		echo " <ul id='foo2' class='jcarosel_main_ul' style='overflow: hidden;'>";
-		
+
 		$isFour = 0;
 		$countSlot = 0;
 		$noSlot=true;
 		for($i=0;$i< $totalSlot;$i++)
-		{	
+		{
 		    $newStartTime = strtotime("+$intervalTime minutes", strtotime($selectedTime));
 			$endTime = strtotime("+$interval minutes", strtotime($selectedTime));
-			//Mage::log("Start time:".$selectedTime,Zend_log::DEBUG,'mylogs',true);
-			//Mage::log("End time:".$endTime,Zend_log::DEBUG,'mylogs',true);
-			
+
 			$slotval ="`". "time_slot_".$i ."`";
 			//echo '<br>'.$slotval;
 			$endTime = date('H:i', $endTime);
@@ -146,7 +165,7 @@ if($fetch_model){
 			//echo $endTime;
 			$show=false;
 			$allocatedApps = null;
-			
+
 			foreach ($collection as $piercer)
 			{
 				/*  To check if piercer already has allocated an appointment */
@@ -154,15 +173,19 @@ if($fetch_model){
 				$endTo = date('H:i:s', $endTo);
 				$fromTime = date("Y-m-d", strtotime($date))." " .$selectedTime.":00";
 				$toTime = date("Y-m-d", strtotime($date))." " .$endTo;
-					
+
 				$appCollection = Mage::getModel('appointments/appointments')->getCollection();
+
 				$appCollection->addFieldToFilter(array('appointment_start', 'appointment_end'), array(array('from'=>$fromTime, 'to'=>$toTime), array('from'=>$fromTime, 'to'=>$toTime)))
 					->addFieldToFilter('app_status', array('eq' => Allure_Appointments_Model_Appointments::STATUS_ASSIGNED))
 					->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
+
 				if(isset($appointmentId))
 				    $appCollection->addFieldToFilter('id', array('neq' => $appointmentId));
+
 				$appCollection2=null;
-				if(!count($appCollection)){
+
+				if ($appCollection && !count($appCollection)){
 				    $appCollection2 = Mage::getModel('appointments/appointments')->getCollection();
 				    $appCollection2->addFieldToFilter('appointment_start', array('lteq'=>$fromTime))
 				    ->addFieldToFilter("appointment_end",array('gteq'=>$toTime))
@@ -171,48 +194,64 @@ if($fetch_model){
 				    if(isset($appointmentId))
 				        $appCollection2->addFieldToFilter('id', array('neq' => $appointmentId));
 				}
-				
+
 				//echo count($appCollection)." for ".$fromTime." - ".$toTime." piercer".$piercer->getId()."<br/>";
-			    if(count($appCollection2))
-					    continue;
-				if(count($appCollection))
+				if ($appCollection2 && count($appCollection2))
 					continue;
-			 
-				/* End of check */	
-						
+
+				if ($appCollection && count($appCollection))
+					continue;
+
+				/* End of check */
+
 				$workingHours = $piercer->getWorkingHours();
 				$workingHours = unserialize($workingHours);
-				
-				//Mage::log($workingHours,Zend_Log::DEBUG, 'appointments', true );
+
 				foreach ($workingHours as $workSlot)
 				{
 					//$workStart = $workSlot['start'].":00";
-					
+
 					if($workSlot['day']!=$day){
 						continue;
-						
 					}
-					
-					$workStart = $helper->getTimeByValue($workSlot['start']);
-					//$workEnd = $workSlot['end'].":00";
-					$workEnd = $helper->getTimeByValue($workSlot['end']);
-					
-					//Break
-					$breakStart = $helper->getTimeByValue($workSlot['break_start']);
-					$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
-					
-					Mage::log($day,Zend_Log::DEBUG, 'appointments', true );
+
+					$workStart = $workSlot['start'];
+					if(!empty($storeCurrentTime)){
+					    if($storeCurrentTime >= $workStart)
+					        $workStart = $storeCurrentTime;
+					}
+
+					if ($specialStore) {
+						$workStart = $helper->getBreakTimeByValue($workStart);
+					} else {
+						$workStart = $helper->getTimeByValue($workStart);
+					}
+
+					if ($specialStore) {
+						$workEnd = $helper->getBreakTimeByValue($workSlot['end']);
+					} else {
+						$workEnd = $helper->getTimeByValue($workSlot['end']);
+					}
+
+					if ($specialStore) {
+						$breakStart = $helper->getBreakTimeByValue($workSlot['break_start']);
+					} else {
+						$breakStart = $helper->getTimeByValue($workSlot['break_start']);
+					}
+
+					if ($specialStore) {
+						$breakEnd = $helper->getBreakTimeByValue($workSlot['break_end']);
+					} else {
+						$breakEnd = $helper->getTimeByValue($workSlot['break_end']);
+					}
+
 					if((strtotime($workStart)<=strtotime($selectedTime) && strtotime($breakStart)>=strtotime($endTime)) ||
 							(strtotime($breakEnd)<=strtotime($selectedTime) && strtotime($workEnd)>=strtotime($endTime)))
 					{
-						
-						
-						//Mage::log($country_data,Zend_Log::DEBUG, 'store', true );
-						//$value = $connection->fetchRow($sql, array($item->getProductId(),$countryCode->getWarehouseId()));
-						
+
 						/* Logic to get most available piercer */
 						/* This logic count number of allocated appointments on that day for particular piercer*/
-					    
+
 						$fromDate = date('Y-m-d', strtotime($date))." 00:00:00";
 						$toDate = date('Y-m-d', strtotime($date))." 23:59:00";
 						$appCount = Mage::getModel('appointments/appointments')->getCollection();
@@ -220,12 +259,12 @@ if($fetch_model){
 						->addFieldToFilter('piercer_id', array('eq' => $piercer->getId()));
 						if(isset($appointmentId))
 						   $appCount->addFieldToFilter('id', array('neq' => $appointmentId));
-						
+
 						if($allocatedApps==null)
 						{
 							$allocatedApps = count($appCount);
 						}
-						
+
 						if(count($appCount)==0)
 						{
 							$show = true;
@@ -241,11 +280,11 @@ if($fetch_model){
 							$piercerAllocated = $piercer->getId();
 						}
 					}
-				 
+
 				}
-				
+
 			}
-			
+
 			if($show==true) :
 				$countSlot++;
 				if((($countSlot - 1) % $timeslot_col_size == 0) || $countSlot==1 ){
@@ -257,9 +296,9 @@ if($fetch_model){
 				echo "<ul>";
 				$isFour = 0;
 			}
-			
+
 			$isFour = $isFour + 1;
-			
+
 			/* echo "<li class='timeslot' id='time_slot_$i' */
 			//if($fetch_starttime):$sel = "selected";endif;
 			$htmlsel="";
@@ -267,13 +306,13 @@ if($fetch_model){
 			    if(($selectedTime==$old_app_start)&&($old_app_piercer==$piercerAllocated)&&($old_app_end==$endTime)&&($old_app_date==$date))
 			        $htmlsel = "selectedTime";
 			}
-			
-			
+
+
 			echo "<li class='timeslot $htmlsel' id='time_slot_$i'
 			data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
 			data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)' >";
-			
-			
+
+
 			echo "<span >";
 			if($time_pref == 12){
 				if($time_pref <= $selectedTime)
@@ -283,24 +322,24 @@ if($fetch_model){
 					$hrs = date('H', $endTime1);
 					$hrsconvert = sprintf('%02d', ($hrs%$time_pref) );
 					$hrsconvert=($hrsconvert=="00") ? "12": $hrsconvert;
-					$selectedTime = $hrsconvert.":".$mins_only." PM"; 
+					$selectedTime = $hrsconvert.":".$mins_only." PM";
 				}
-				else{				
-					$selectedTime = $selectedTime." AM";						
-				}			
-			}			
+				else{
+					$selectedTime = $selectedTime." AM";
+				}
+			}
 			echo "<span >";
 			echo $selectedTime ;
-			echo "</span>";			
+			echo "</span>";
 			echo "</li>";
-			
-			
+
+
 			if($isFour == $timeslot_col_size) {
 			echo "</ul>";
 			echo "</li>";
 			$isFour = 0;
 			}
-			
+
 			endif;
 			if($isFour != $timeslot_col_size && $i == ($totalSlot - 1)) {
 				echo "</ul>";
@@ -312,22 +351,26 @@ if($fetch_model){
 			/* if($noSlot)
 			    echo "<li class='timeslot' id='time_slot_17' data-start_time_slot='18:30' data-end_time_slot='19:00' data-pos='17' data-piercer='5' onclick='slotSelected(`time_slot_17`)'><span><span>18:30</span></span></li>"; */
 		}
-		
+
 		if($noSlot){
+		    if(!$notfreepeiercer_show)
 			echo "<div class='notfreepeiercer validation-advice'>".$this->__('Walk-ins are welcome but currently all appointments are booked for the selected date.')."</div>";
 		}
 		echo "</ul>";
-		echo "<div class='clearfix'></div> <a class='prev apt-prev' id='foo2_prev' href='#'><span>prev</span></a> 
-					<a class='next apt-next' id='foo2_next' href='#'><span>next</span></a> 
+		echo "<div class='clearfix'></div> <a class='prev apt-prev' id='foo2_prev' href='#'><span>prev</span></a>
+					<a class='next apt-next' id='foo2_next' href='#'><span>next</span></a>
 					<div class='pagination' id='foo2_pag'></div>";
 		echo "</div>";
 		echo "</div>";
 		//echo "<br/>";
-		
+
 		?>
 	</div>
 
-<?php endif;?> 
+<?php endif;?>
+    <?php else: ?>
+        <div class="notfreepeiercer validation-advice">Please select the number of people in your party to see available appointment times</div>
+    <?php endif; ?>
 </div>
 
 
@@ -347,7 +390,7 @@ if($fetch_model){
                     });
 
                     jQuery(window).resize();
-                    
+
                 function mycarousel_initCallbackProd2(carousel) {
                     jQuery('#foo2_prev').bind('click', function() {
                         carousel.prev();
@@ -408,10 +451,10 @@ if($fetch_model){
 	//		    jQuery("#"+id).css("background-color","palegoldenrod");
 				jQuery(".timeslot").removeClass("selectedTime");
 				jQuery("#"+id).addClass("selectedTime");
-			
+
 			}
-		
-		
-			
+
+
+
 		//});
 </script>

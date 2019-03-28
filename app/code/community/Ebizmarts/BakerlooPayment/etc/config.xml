@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Ebizmarts_BakerlooPayment>
-            <version>1.4.3</version>
+            <version>1.4.7</version>
         </Ebizmarts_BakerlooPayment>
     </modules>
     <global>
@@ -191,6 +191,18 @@
                 <open_cash_drawer>1</open_cash_drawer>
                 <requires_signature>0</requires_signature>
             </bakerloo_cash>
+            <bakerloo_cayan>
+                <active>1</active>
+                <model>bakerloo_payment/cayan</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>Cayan</title>
+                <allowspecific>0</allowspecific>
+                <invoice>1</invoice>
+                <ship>1</ship>
+                <open_cash_drawer>1</open_cash_drawer>
+                <requires_signature>0</requires_signature>
+            </bakerloo_cayan>
             <bakerloo_sagepay>
                 <active>0</active>
                 <model>bakerloo_payment/sagepay</model>
@@ -251,6 +263,22 @@
                 <open_cash_drawer>0</open_cash_drawer>
                 <requires_signature>0</requires_signature>
             </bakerloo_payment_express>
+            <bakerloo_pay_at_till translate="label">
+                <active>0</active>
+                <model>bakerloo_payment/payAtTill</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>POS Pay at till</title>
+                <invoice>1</invoice>
+                <ship>1</ship>
+                <open_cash_drawer>0</open_cash_drawer>
+                <requires_signature>0</requires_signature>
+                <types>
+                	<cash><![CDATA[Cash]]></cash>
+                	<credit_card><![CDATA[Credit Card]]></credit_card>
+                	<debit_card><![CDATA[Debit Card]]></debit_card>
+                </types>
+            </bakerloo_pay_at_till>
             <bakerloo_creditcard>
                 <active>0</active>
                 <model>bakerloo_payment/cc</model>
@@ -597,6 +625,17 @@
                 <open_cash_drawer>0</open_cash_drawer>
                 <requires_signature>0</requires_signature>
             </bakerloo_alipay>
+            <bakerloo_transaction_junction>
+                <active>0</active>
+                <model>bakerloo_payment/transactionJunction</model>
+                <order_status>pending</order_status>
+                <payment_action>authorize_capture</payment_action>
+                <title>POS Transaction Junction</title>
+                <invoice>1</invoice>
+                <ship>1</ship>
+                <open_cash_drawer>0</open_cash_drawer>
+                <requires_signature>0</requires_signature>
+            </bakerloo_transaction_junction>
             <bakerloo_wigroup>
                 <active>0</active>
                 <model>bakerloo_payment/wigroup</model>

@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Catalog
- * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -382,9 +382,9 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     public function getUsedProductCollection($product = null)
     {
         $collection = Mage::getResourceModel('catalog/product_type_configurable_product_collection')
-            ->setFlag('require_stock_items', true)
+            ->setFlag('require_stock_items', FALSE)
             ->setFlag('product_children', true)
-            ->setProductFilter($this->getProduct($product));
+            ->setProductFilter($this->getProduct($product))->addAttributeToSort('order');
         if (!is_null($this->getStoreFilter($product))) {
             $collection->addStoreFilter($this->getStoreFilter($product));
         }
@@ -397,7 +397,7 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     	->setFlag('require_stock_items', true)
     	->setFlag('product_children', true)
     	->setCategoryFilter($categoryId);
-    	
+
     	return $collection;
     }
 
@@ -508,9 +508,9 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     {
         return $this->isSalable($product);
     }
-    
+
     public function getIsSalable2($product = null) {
-        
+
         //Mage::log(__METHOD__,null,'mylog.log');
         $salable = parent::isSalable($product);
         if ($salable !== false) {
@@ -527,7 +527,7 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
             }
             Varien_Profiler::stop('DTN::getUsedProducts2');
         }
-        
+
         return $salable;
     }
     public function getUsedProducts2($product = null)
@@ -632,6 +632,7 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
     protected function _prepareProduct(Varien_Object $buyRequest, $product, $processMode)
     {
         $attributes = $buyRequest->getSuperAttribute();
+		
         if ($attributes || !$this->_isStrictProcessMode($processMode)) {
             if (!$this->_isStrictProcessMode($processMode)) {
                 if (is_array($attributes)) {
@@ -703,7 +704,16 @@ class Mage_Catalog_Model_Product_Type_Configurable extends Mage_Catalog_Model_Pr
                         ->addCustomOption('parent_product_id', $product->getId());
                     if ($this->_isStrictProcessMode($processMode)) {
                         $_result[0]->setCartQty(1);
+
                     }
+                    else if($_result[0]->getTypeId()=="simple")
+                    {
+                        /*when process mode is not equal to full -- to avoid quantity issue for simple items in quote*/
+                        $_result[0]->setCartQty(1);
+                        $quoteid= Mage::helper('checkout/cart')->getCart()->getQuote()->getId();
+                        Mage::log("process mode not full--- quote id ".$quoteid,Zend_Log::DEBUG,'quantitycheck.log',true);
+                    }
+
                     $result[] = $_result[0];
                     return $result;
                 } else if (!$this->_isStrictProcessMode($processMode)) {

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Allure_ProductUpdatesReport>
+      <active>true</active>
+      <codePool>local</codePool>
+    </Allure_ProductUpdatesReport>
+  </modules>
+</config>

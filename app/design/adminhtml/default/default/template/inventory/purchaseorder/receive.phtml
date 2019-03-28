@@ -3,6 +3,13 @@
 	$helper = Mage::helper("inventory");
 ?>
 <?php $order=Mage::getModel('inventory/purchaseorder')->load($collection->getFirstItem()->getPoId())?>		
+<?php $updatedInfo=Mage::getModel('inventory/orderlogs')->getCollection();
+$updatedInfo->addFieldToFilter('po_id',$collection->getFirstItem()->getPoId());
+$updatedInfo->getSelect()->joinLeft('admin_user', 'admin_user.user_id = main_table.user_id', array('username','firstname','lastname'));
+//$updatedInfo->getSelect();
+$updatedInfo->setOrder('date', 'DESC');
+$updatedInfo=$updatedInfo->getFirstItem();?>
+<?php ?>
 <?php $orderTotal=$order->getTotalAmount()?>
 
 <div class="content-header">
@@ -41,6 +48,11 @@
 			<label><span><?php echo $helper->__('Order Status:'); ?></span>
 			<?php echo Mage::helper('inventory')->getOrderStatus($order->getStatus())?>
 			</label>
+			<?php if(!empty($updatedInfo->getUsername())):?>
+			<label><span><?php echo $helper->__('Last Updated By:'); ?></span>
+			<?php echo $updatedInfo->getFirstname()." ".$updatedInfo->getLastname().'('.$updatedInfo->getDate().')';?>
+			</label>
+			<?php endif;?>
 		</div>
 	</div>
 </div>
@@ -51,7 +63,6 @@
 	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 	<table class="iventory-product table" style="width: 100%">
 		<th><?php echo $helper->__('Image')?></th>
-		<th><?php echo $helper->__('SKU')?></th>
 		<th><?php echo $helper->__('PRODUCT NAME')?></th>
 		<th><?php echo $helper->__('Qty Ordered')?></th>
 		<th><?php echo $helper->__('VMT Comment')?></th>
@@ -74,15 +85,18 @@
 							src="<?php  echo Mage::helper('catalog/image')->init($product, 'thumbnail')->resize(100);?>"/>
 					<?php endif;?>
 				</td>	
-				<td><?php echo $product->getSku();?></td>
 						
-				<td><?php echo $product->getName();?></td>
+				<td style="padding-left:20px;text-align:left">
+						<p><?php echo $product->getName();?></p>
+						<p><strong>SKU:</strong> <?php echo $product->getSku();?></p>
+				</td>
 						
 				<td>
 					<input id="requested_qty_<?php  echo $_product->getProductId() ?>" style="width:50px"  
 						name="order[<?php echo $_product->getProductId() ?>][<?php echo "requested_qty" ?>]" type="text" 
 						value="<?php echo round($_product->getRequestedQty())?>"/>
 				</td>
+				
 				<td><textarea name="order[<?php echo $_product->getProductId() ?>][<?php echo "admin_comment" ?>]" cols="15" rows="7" ><?php echo $_product->getAdminComment()?></textarea></td>
 				<td>
 					<input id="proposed_qty_<?php  echo $_product->getProductId() ?>" style="width:50px" 

@@ -77,10 +77,6 @@ class ParadoxLabs_TokenBase_Model_Gateway_Xml
 	 */
 	private static function &convertArrayToXml( $node_name, $arr=array() )
 	{
-
-		Mage::log("Request Json",Zend_Log::DEBUG,'authcim_allure',true);
-		Mage::log(json_encode($arr),Zend_Log::DEBUG,'authcim_allure',true);
-		
 		$xml = self::_getXMLRoot();
 		$node = $xml->createElement($node_name);
 		
@@ -150,8 +146,6 @@ class ParadoxLabs_TokenBase_Model_Gateway_Xml
 	 */
 	public static function &createArray( $input_xml )
 	{
-		Mage::log("Response - xml",Zend_Log::DEBUG,'authcim_allure',true);
-		Mage::log($input_xml,Zend_Log::DEBUG,'authcim_allure',true);
 		$xml = self::_getXMLRoot();
 		if(is_string($input_xml)) {
 			$parsed = @$xml->loadXML($input_xml);

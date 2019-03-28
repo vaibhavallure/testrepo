@@ -35,15 +35,27 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Maria Tash">
 <link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon"/>
-<meta name="google-site-verification" content="rIH9RmxNp4bJQ601Cmxe7IVD59ZhokU85NyfGmHWD4Y" /> 
+<meta name="google-site-verification" content="rIH9RmxNp4bJQ601Cmxe7IVD59ZhokU85NyfGmHWD4Y" />
 <meta name="google-site-verification" content="FyCBtJHrnBYJlB3vzz23QnzmKfJCnxd1zzdhCW-QDMI" />
 <?php
 
-$title = 'MT Title';
+$title = $this->getTitle();
 $url = $this->helper('core/url')->getCurrentUrl();
 $image = Mage::getBaseUrl('media') . DS . 'logo' . DS . Mage::getStoreConfig('design/header/logo_src');
-$description = 'Description';
+$description = htmlspecialchars($this->getDescription());
 $type = 'product';
+
+
+$currenturl = Mage::helper('core/url')->getCurrentUrl();
+$urlData=explode("/",$currenturl);
+$metaCollection=Mage::getModel("metadata/metadata")->getCollection();
+foreach ($metaCollection as $meta){
+    if(in_array($meta->getTerm(), $urlData)){
+        $title = $meta->getTitle();
+        $description = $meta->getDescription();
+        // $description="Test Test";
+    }
+}
 
 if ($this->getRequest()->getParam('fb', false)) {
     if ($this->getRequest()->getParam('imgpressfb', false)) {
@@ -211,12 +223,43 @@ if(Mage::app()->getRequest()->getModuleName() == 'ecppiercinggallery'
     $image = $currentLook['img'];
 endif;
 ?>
+
+<?php
+$currenturl = Mage::helper('core/url')->getCurrentUrl();
+$urlData=explode("/",$currenturl);
+$metaCollection=Mage::getModel("metadata/metadata")->getCollection();
+
+$site_name = 'Maria Tash';
+
+foreach ($metaCollection as $meta){
+
+    if(in_array($meta->getTerm(), $urlData)){
+        $title = $meta->getTitle();
+
+        if($meta->getUrl())
+            $url=$meta->getUrl();
+
+        if($meta->getType())
+            $type=$meta->getType();
+
+        if($meta->getImage())
+            $image=$meta->getImage();
+
+        if($meta->getDescription())
+            $description = $meta->getDescription();
+
+        if($meta->getSiteName())
+            $site_name=$meta->getSiteName();
+    }
+}
+?>
+
 <meta property="og:title" content="<?=htmlentities($title, ENT_COMPAT | ENT_HTML401, 'UTF-8');?>"/>
 <meta property="og:url" content="<?php echo htmlentities($url) ?>"/>
 <meta property="og:type" content="<?php echo htmlentities($type) ?>"/>
 <meta property="og:image" content="<?php echo $image ?>"/>
 <meta property="og:description" content="<?=htmlentities(strip_tags($description), ENT_COMPAT | ENT_HTML401, 'UTF-8');?>"/>
-<meta property="og:site_name" content="Maria Tash"/>
+<meta property="og:site_name" content='<?php echo $site_name ?>'/>
 
 <!--[if lt IE 7]>
 <script type="text/javascript">
@@ -296,5 +339,3 @@ jQuery(document).ready(function() {
     })
 });
 </script>
-
-<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS);echo $wholesale?'findify/findify_wholesale.js':'findify/findify.js'?>"></script>

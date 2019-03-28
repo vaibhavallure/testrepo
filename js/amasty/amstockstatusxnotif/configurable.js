@@ -42,18 +42,34 @@ StockStatus.prototype =
 
     onConfigure : function(key, settings)
     {
+
         this.hideStockAlert();
         this._removeStockStatus();
         if (null == this.configurableStatus && $$('p.availability span')[0])
         {
             this.configurableStatus = $$('p.availability span')[0].innerHTML;
         }
+
         if ('undefined' != typeof(this.options[key]))
         {
             if ('undefined' != typeof(changeConfigurableStatus) && changeConfigurableStatus && $$('p.availability span')[0])
-            {
+            {   
                 if (this.options[key]['custom_status'])
                 {
+                    /*
+                    this if (this.options[key]['hideAddToCart_button']) to hide add to cart button if status is out of stock
+                    Added by aws12.
+                    */
+                    if (this.options[key]['hideAddToCart_button']) {
+                        jQuery('#addtocart').addClass('hideaddToCart');
+                    }else{
+                        jQuery('#addtocart').removeClass('hideaddToCart');
+                    }
+                    /*
+                    * end aws12
+                    */
+
+
                     if(this.options[key]['custom_status_icon_only'] == 1){
                             $$('p.availability span')[0].innerHTML = this.options[key]['custom_status_icon'];
                     }

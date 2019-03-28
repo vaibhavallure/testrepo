@@ -171,8 +171,15 @@ class OnTap_Merchandiser_Block_Category_List extends Mage_Core_Block_Template
             ->getProductCollection()
             ->addAttributeToSelect('*');
         
-            //Added by Allure #MT-247 
-        if($this->getCategoryId()==64)  //Filter only for New Arivals  #MT-471
+        //Added by Allure #MT-247 ,MT-548
+        
+        $catIds=Mage::getStoreConfig("merchandiser/options/hide_simple_products");
+        if(isset($catIds))
+            $catIds=explode(',', $catIds);
+            
+        //$catIds=array(64,4,13,14,15,16,17,18,19);
+        
+        if (in_array($this->getCategoryId(), $catIds))
             $products->addAttributeToFilter('type_id', array('neq' => 'simple'));
         
         $heroProducts = Mage::getModel('merchandiser/merchandiser')

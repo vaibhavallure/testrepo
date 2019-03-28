@@ -115,46 +115,53 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                     $first       = ' first';
                 }
 
-        		$htmlSeparated = ''; 
-        	
+        		$htmlSeparated = '';
+
                 foreach ($children as $child) {
-                   
-                    $this->categoryIds[] = $this->getCategoryId($child);
+					$categoryId = $this->getCategoryId($child);
+
+                    $this->categoryIds[] = $categoryId;
                     $subHtml             = $this->getSubCategoryHtml($child, TRUE);
+
                     $i += 1 + (int)$this->rows;
-                    $category=Mage::getModel('catalog/category')->load($this->getCategoryId($child));
-                    if($category->getIsWholesale()){
-                        if($this->checkUserRole()==0)
-                            continue;
+
+                    $category = Mage::getModel('catalog/category')->load($categoryId);
+
+                    if ($category->getIsWholesale()){
+                        if ($this->checkUserRole() == 0) {
+							continue;
+						}
                     }
-	            	if($this->_itemSeparated($this->getCategoryId($child))){
-	                        $htmlSeparated .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
-	                                        ' . (($boo)?'':'') . '
-	                                            <a href="' . $child->getUrl() . '">
-	                                                ' . $this->escapeHtml($child->getName()) . '
-	                                            </a>
-	                                        ' . (($boo)?'':'') . '
-	                                    </li>';
-	            	}else{
-	                        $html .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
-	                                        ' . (($boo)?'':'') . '
-	                                            <a href="' . $child->getUrl() . '">
-	                                                ' . $this->escapeHtml($child->getName()) . '
-	                                            </a>
-	                                        ' . (($boo)?'':'') . '
-	                                    </li>';
-	                        $html .= $subHtml;
+
+	            	if ($this->_itemSeparated($categoryId)) {
+                        $htmlSeparated .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
+                            ' . (($boo)?'':'') . '
+                                <a href="' . $child->getUrl() . '">
+                                    ' . $this->__($this->escapeHtml($child->getName())) . '
+                                </a>
+                            ' . (($boo)?'':'') . '
+                        </li>';
+	            	} else {
+                        $html .= '<li class="' . $first . (($child->getIsActive())?' current':'') . '">
+                                ' . (($boo)?'':'') . '
+                                    <a href="' . $child->getUrl() . '">
+                                        ' . $this->__($this->escapeHtml($child->getName())) . '
+                                    </a>
+                                ' . (($boo)?'':'') . '
+                            </li>';
+                        $html .= $subHtml;
 	            	}
 
                     $first       = '';
                 }
 
                 if ($boo) {
-            		if(!empty($htmlSeparated)){
-						$html .= $this->__getWholesaleCategories($child);
+            		if (!empty($htmlSeparated)) {
+						//$html .= $this->__getWholesaleCategories($child);
                         $html .= '<hr />';
                         $html .= $htmlSeparated;
                     }
+
                     $html       .= '</ul>';
                 }
             }
@@ -176,11 +183,11 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
     {
         $html       = false;
         $first      = '';
-        
+
         if ($this->maxRows) {
             $children   = $child->getChildren();
             $i          = 0;
-            
+
             if ($children->count()) {
                 if ($begin) {
                     $html       .= '<ul class="dropdown-menu">';
@@ -188,30 +195,36 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                     $first       = ' first';
                 }
 
-        		$htmlSeparated = ''; 
+        		$htmlSeparated = '';
 
                 foreach ($children as $child) {
-                    $this->categoryIds[] = $this->getCategoryId($child);
+					$categoryId = $this->getCategoryId($child);
+
+                    $this->categoryIds[] = $categoryId;
                     $subHtml             = $this->getMobileCategoryHtml($child, true);
                     $dropdown = $subHtml ? ' dropdown dropdown-submenu' : '';
                     $curate = $subHtml ? '<span class="caret"></span>' : '';
                     $i += 1 + (int)$this->rows;
-                    $category=Mage::getModel('catalog/category')->load($this->getCategoryId($child));
-                    if($category->getIsWholesale()){
-                        if($this->checkUserRole()==0)
-                            continue;
+
+                    $category = Mage::getModel('catalog/category')->load($categoryId);
+
+                    if ($category->getIsWholesale()) {
+                        if ($this->checkUserRole() == 0) {
+							continue;
+						}
                     }
-            		if ($this->_itemSeparated($this->getCategoryId($child))) {
+
+            		if ($this->_itemSeparated($categoryId)) {
                         $htmlSeparated .= '<li class="menu-item menu-item-separated' . $first . $dropdown . (($child->getIsActive())?' current':'') . '">
                                             <a href="' . $child->getUrl() . '">
-                                                ' . $this->escapeHtml($child->getName()) . $curate . '
+                                                ' . $this->__($this->escapeHtml($child->getName())) . $curate . '
                                             </a>
-                                        	' . (($subHtml)? $subHtml :'') . '
+                                        	' . (($subHtml) ? $subHtml :'') . '
                                     	</li>';
             		} else {
                         $html .= '<li class="menu-item ' . $first . $dropdown . (($child->getIsActive())?' current':'') . '">
                                             <a href="' . $child->getUrl() . '">
-                                                ' . $this->escapeHtml($child->getName()) . $curate . '
+                                                ' . $this->__($this->escapeHtml($child->getName())). $curate . '
                                             </a>
                                         	' . (($subHtml)? $subHtml :'') . '
                                   </li>';
@@ -222,7 +235,7 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
 
                 if ($begin) {
             		if(!empty($htmlSeparated)){
-		        		$htmlSeparated .= $this->__getWholesaleCategories($child,TRUE);
+		        		//$htmlSeparated .= $this->__getWholesaleCategories($child,TRUE);
                         $html .= $htmlSeparated;
                     }
                     $html       .= '</ul>';
@@ -234,41 +247,30 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
 
         return $html;
     }
-    
-    private function __getWholesaleCategories($child, $mobile = FALSE) {
-    	
-    	if ($child) {
-    		$roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+
+    private function checkUserRole() {
+		$isWholeSaleChecked = Mage::getSingleton('customer/session')->getIsWholesaleChecked();
+
+		$isWholeSale = Mage::getSingleton('customer/session')->getIsWholesale();
+
+		if (!$isWholeSaleChecked) {
+			$isWholeSaleChecked = true;
+
+	        $roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
 	        $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
+
 	        $role = strtolower($role);
-	        if ($role == 'wholesale') :
-                 return '
-                 <li><a href="'.Mage::getBaseUrl('web').'jewelry/frontals-only.html ">
-                             Frontals Only / Ends
-                            </a></li>
-                        <li><a href="'.Mage::getBaseUrl('web').'jewelry/wholesale-rings.html">
-                            Seamless / Fixed Rings
-                            </a></li>
-                        <li><a href="'.Mage::getBaseUrl('web').'jewelry/wholesale-parts-posts.html">
-                               Posts Only
-                            </a></li>
-                        <li><a href="'.Mage::getBaseUrl('web').'jewelry/titanium-jewelry.html">
-                              Titanium
-                        </a></li>';
-    		endif;
-    	}
-    	
-    	return NULL;
-    }
-    private function checkUserRole(){
-        $roleId = Mage::getSingleton('customer/session')->getCustomerGroupId();
-        $role = Mage::getSingleton('customer/group')->load($roleId)->getData('customer_group_code');
-        $role = strtolower($role);
-        if ($role == 'wholesale')
-            return 1;
-        else 
-            return 0;
-        
+
+	        if ($role == 'wholesale') {
+	            $isWholeSale = true;
+	        } else {
+	            $isWholeSale = false;
+			}
+
+			Mage::getSingleton('customer/session')->setIsWholesale($isWholeSale);
+		}
+
+		return $isWholeSale;
     }
 
     /**
@@ -279,6 +281,7 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
     public function searchCategoriesForLastProduct($child)
     {
         $children = $child->getChildren();
+
         foreach ($children as $child) {
             $this->categoryIds[] = $this->getCategoryId($child);
         }
@@ -308,6 +311,5 @@ class Belvg_Ddmenu_Block_Navigation17 extends Mage_Page_Block_Html_Topmenu
                 ->addAttributeToFilter('separated_jewelry',1)
                 ->addFieldToFilter('entity_id',$cat)
                 ->getSize();
-    }   
-
+    }
 }

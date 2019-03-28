@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Allure_Catalog>
+			<name>Allure - Catalog Updates</name>
+			<version>0.0.1</version>
+			<depends>
+				<Allure_Core />
+			</depends>
+		</Allure_Catalog>
+	</modules>
+
+	<global>
+
+		<blocks>
+			<allure_catalog>
+				<class>Allure_Catalog_Block</class>
+			</allure_catalog>
+		</blocks>
+
+		<models>
+			<allure_catalog>
+				<class>Allure_Catalog_Model</class>
+			</allure_catalog>
+		</models>
+
+		<helpers>
+			<allure_catalog>
+				<class>Allure_Catalog_Helper</class>
+			</allure_catalog>
+		</helpers>
+
+	</global>
+
+	<adminhtml>
+		<events>
+			<adminhtml_block_html_before>
+				<observers>
+					<allure_catalog_prepare_adminhtml_grid>
+						<type>singleton</type>
+						<class>allure_catalog/adminhtml_observer</class>
+						<method>prepareGrid</method>
+					</allure_catalog_prepare_adminhtml_grid>
+				</observers>
+			</adminhtml_block_html_before>
+
+			<core_block_abstract_prepare_layout_after>
+				<observers>
+					<allure_catalog_add_adminhtml_grid_column>
+						<type>singleton</type>
+						<class>allure_catalog/adminhtml_observer</class>
+						<method>addGridColumn</method>
+					</allure_catalog_add_adminhtml_grid_column>
+				</observers>
+			</core_block_abstract_prepare_layout_after>
+			<catalog_product_flat_prepare_indexes>
+			    <observers>
+			        <allure_catalog_product_flat_prepare_indexes>
+			            <type>singleton</type>
+			            <class>allure_catalog/observer</class>
+			            <method>catalogProductFlatPrepareIndexes</method>
+			        </allure_catalog_product_flat_prepare_indexes>
+			    </observers>
+			</catalog_product_flat_prepare_indexes>
+		</events>
+	</adminhtml>
+  <crontab>
+		<jobs>
+			<gtin_schedule>
+				<schedule>
+					<cron_expr>0 8 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>allure_catalog/cron::autoProcessGTINNumber</model>
+				</run>
+			</gtin_schedule>
+		</jobs>
+	</crontab>
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<Allure_Catalog before="Mage_Adminhtml">Allure_Catalog_Adminhtml</Allure_Catalog>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+
+
+</config>

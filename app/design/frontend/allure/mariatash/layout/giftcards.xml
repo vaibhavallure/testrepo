@@ -61,4 +61,9 @@
 
         <block type="giftcards/coupon" name="gc" output="toHtml" template="webtex/giftcards/checkout/onepage/coupon.phtml" />
     </giftcard_onepage_coupon>
+     <giftcards_giftcards_confirmmessage>
+        <reference name="content">
+            <block type="core/template" name="confirmmessage" template="webtex/giftcards/confirm.phtml"/>
+        </reference>
+    </giftcards_giftcards_confirmmessage>
 </layout>
