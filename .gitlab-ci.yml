@@ -30,6 +30,7 @@ beta_teamwork:
     - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/etc/local.xml app/etc/local.xml
     - echo 'Deployed on Teamwork Staging'
     
+    
 beta_staging:
   environment: beta_staging
   stage: beta
