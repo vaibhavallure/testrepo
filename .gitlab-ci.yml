@@ -65,6 +65,9 @@ deploy-cloud:
   before_script:
     - git submodule sync --recursive
     - git submodule update --init --recursive
+    - rm -f digital-release/config/app.php && ln -s /var/www/shared/etc/app.php digital-release/config/
+    - rm -f digital-release/tmp && ln -s /var/www/shared/tmp digital-release/tmp
+    - rm -f digital-release/logs && ln -s /var/www/shared/logs digital-release/logs
   script:
     - ln -s /usr/share/owncloud cloud
     - ln -s /var/www/shared/sitemaps
