@@ -16,6 +16,10 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
     private function modelData() {
         return Mage::getModel("brownthomas/data");
     }
+    public function modelPrice()
+    {
+        return Mage::getModel('brownthomas/price');
+    }
 
     public function add_log($message) {
 		if (!$this->config()->getDebugStatus()) {
