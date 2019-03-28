@@ -75,4 +75,3 @@ deploy-cloud:
     - ln -s /var/www/shared/sitemaps
     - mage-deploy
     - echo 'Deployed on Production'
-
