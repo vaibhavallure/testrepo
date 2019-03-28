@@ -69,7 +69,7 @@ deploy-cloud:
     - rm -f digital-release/config/app.php && ln -s /var/www/shared/etc/digital-release/cofig/app.php digital-release/config/
     - rm -f digital-release/tmp && ln -s /var/www/shared/digital-release/tmp digital-release/
     - rm -f digital-release/logs && ln -s /var/www/shared/digital-release/logs digital-release/
-    - rm -f digital-release/webroot/media && ln -s /var/www/shared/digital-release/webroot/media webroot/
+    - rm -f digital-release/webroot/media && ln -s /var/www/shared/digital-release/webroot/media digital-release/webroot/
   script:
     - ln -s /usr/share/owncloud cloud
     - ln -s /var/www/shared/sitemaps
