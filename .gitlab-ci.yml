@@ -50,7 +50,7 @@ beta_appointments:
   tags:
     - beta
   only:
-    - la_popup
+    - staging
   script:
     - mage-deploy mt-appointments
     - echo 'Deployed on Beta Staging'
