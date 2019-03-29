@@ -76,6 +76,10 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
         $fudos=$FITEM_FUDAS['FUDAS'];
         foreach ($fudos as $data) {$file->streamWrite($this->getWritableString($data));}
 
+        /*------------write PRICE-----------------------------*/
+        $PRICE_DATA = $this->modelData()->getPriceData();
+        foreach ($PRICE_DATA as $data){$file->streamWrite($this->getWritableString($data));}
+
         return $this->file;
 
     }
