@@ -226,7 +226,7 @@ class Allure_BrownThomas_Model_Data
         $this->add_log('In Brown Thomas Get Price Data Model');
         $priceModel = Mage::helper('brownthomas')->modelPrice();
         $collection = $priceModel->getCollection();
-        $collection->getSelect()->reset(Zend_Db_Select::COLUMNS)->columns('product_id')->where("updated_date > last_sent_date OR last_sent_date IS NULL");
+        $collection->getSelect()->reset(Zend_Db_Select::COLUMNS)->columns('product_id')->columns('row_id')->where("updated_date > last_sent_date OR last_sent_date IS NULL");
 
         $priceData = array();
         $index = 0;
@@ -243,8 +243,8 @@ class Allure_BrownThomas_Model_Data
             $price = (float)$_product->getDublinPrice();
             $priceData[$index]['unit_retail'] = $this->formatString(number_format($price,2,'.',''),21,0, STR_PAD_LEFT);
             $priceData[$index]['clearance_indicator'] = $this->formatString('Y',1);
-            $id = $product->getProductId();
-            $productDetails['last_sent_date']=$updatedDate;
+            $id = $product->getRowId();
+            $productDetails['last_sent_date']=$_product->getUpdatedAt();
             $priceModel->load($id)->addData($productDetails)->save();
             $this->add_log('Brown Thomas Updated in Price Table ID='.$id);
             $index++;
@@ -254,5 +254,8 @@ class Allure_BrownThomas_Model_Data
 
         return $priceData;
 
+    }
+    public function add_log($message) {
+        Mage::helper("brownthomas/data")->add_log($message);
     }
 }
