@@ -22,6 +22,8 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
         header("Access-Control-Allow-Origin:*");
         header("Access-Control-Allow-Headers:*");
         $requestData = $this->getRequest()->getParams();
+        Mage::log("--------- Request Paramas ------",Zend_log::DEBUG,'release_form.log',true);
+        Mage::log($requestData,Zend_log::DEBUG,'release_form.log',true);
         $response = array("success" => false);
         try{
             if(isset($requestData["email"]) && !empty($requestData["email"])){
@@ -44,11 +46,16 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
                         ->setCustomerType(25)   //release-form customer
                         ->save();
                     
+                        $customer->sendNewAccountEmail();
+                    
                     $response["success"] = true;
                     $response["message"] = $email . " has account created successfully.";
+                    Mage::log($email . " has account created successfully.",Zend_log::DEBUG,'release_form.log',true);
                 }else{
                     $response["success"] = true;
                     $response["message"] = $email . " customer already exists.";
+                    Mage::log($email . " customer already exists.",Zend_log::DEBUG,'release_form.log',true);
+                    
                 }
                 
                 $response["customer_id"] = $customer->getId();
@@ -59,10 +66,7 @@ class Allure_Customer_PiercingController extends Mage_Core_Controller_Front_Acti
             Mage::log("Exception : ".$e->getMessage(),Zend_log::DEBUG,'release_form.log',true);
             $response["message"] = $e->getMessage();
         }
-       /*  echo "<pre>";
-        print_r($response);
-        die; */
-        Mage::log($response,Zend_log::DEBUG,'release_form.log',true);
+       
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
     }
     
