@@ -30,6 +30,7 @@ beta_teamwork:
     - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/etc/local.xml app/etc/local.xml
     - echo 'Deployed on Teamwork Staging'
     
+    
 beta_staging:
   environment: beta_staging
   stage: beta
@@ -65,9 +66,12 @@ deploy-cloud:
   before_script:
     - git submodule sync --recursive
     - git submodule update --init --recursive
+    - rm -f digital-release/config/app.php && ln -s /var/www/shared/digital-release/config/app.php digital-release/config/
+    - rm -f digital-release/tmp && ln -s /var/www/shared/digital-release/tmp digital-release/
+    - rm -f digital-release/logs && ln -s /var/www/shared/digital-release/logs digital-release/
+    - rm -f digital-release/webroot/media && ln -s /var/www/shared/digital-release/webroot/media digital-release/webroot/
   script:
     - ln -s /usr/share/owncloud cloud
     - ln -s /var/www/shared/sitemaps
     - mage-deploy
     - echo 'Deployed on Production'
-
