@@ -92,11 +92,26 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $sr_no=1;
 
             $_products = Mage::getModel('catalog/product')->getCollection()
-                ->addFieldToFilter(array(
-                    array('attribute'=>'harrods_online_flag','eq'=>1),
-                    array('attribute'=>'status','eq'=>1),
-                    array('attribute'=>'harrods_inventory','neq'=>'NULL')
-                ));
+                ->addAttributeToFilter(
+                    array(
+                    array('attribute'=>'harrods_online_flag','eq'=>1)
+                    )
+                )
+                ->addAttributeToFilter(
+                    array(
+                        array('attribute'=>'type_id','eq'=>'simple')
+                    )
+                )
+                ->addAttributeToFilter(
+                    array(
+                        array('attribute'=>'status','eq'=>1)
+                    )
+                )
+                ->addAttributeToFilter(
+                    array(
+                        array('attribute'=>'harrods_inventory','neq'=>'NULL')
+                    )
+                );
 
 
                 $_products->getSelect()->joinLeft(array('ahp' => 'allure_harrodsinventory_product'), 'ahp.productid = e.entity_id');
