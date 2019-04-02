@@ -5,9 +5,9 @@ Mage::app();
 
 Mage::helper("harrodsinventory/cron")->generateHarrodsFiles();
 
-/*Mage::helper("harrodsinventory/data")->generateReport();
-Mage::helper("harrodsinventory/data")->generateSTKReport();
-Mage::helper("harrodsinventory/data")->generatePPCReport();*/
+//Mage::helper("harrodsinventory/data")->generateReport();
+//Mage::helper("harrodsinventory/data")->generateSTKReport();
+//Mage::helper("harrodsinventory/data")->generatePPCReport();
 
 
 

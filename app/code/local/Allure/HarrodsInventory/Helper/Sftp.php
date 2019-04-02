@@ -54,11 +54,29 @@ class Allure_HarrodsInventory_Helper_Sftp extends Mage_Core_Helper_Abstract
                 $filedata=$file->read($localfilepath);
                 $sftp->write($remotefilepath,$filedata);
                 $this->add_log("File Transfer Successfully=>".$remotefilepath);
+
+                $this->sendEmail("File Transfer Successfully=>".$remotefilepath);
             }catch (Exception $e)
             {
                 $this->add_log("transferFile => Exception:".$e->getMessage());
             }
         }
+    }
+
+
+    public function sendEmail($msg)
+    {
+        $templateId = $this->harrodsConfig()->getDebugEmailsTemp();
+
+        $mailSubject="Harrods Inventory Debug";
+        $sender         = 'harrodsinv@mariatash.com';
+        $email = $this->harrodsConfig()->getDebugEmails();
+        $name='';
+        $vars = array('message' => $msg);
+
+        Mage::getModel('core/email_template')
+            ->setTemplateSubject($mailSubject)
+            ->sendTransactional($templateId,$sender,$email,$name,$vars);
     }
 
 }

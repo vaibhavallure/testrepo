@@ -10,8 +10,12 @@ class Allure_HarrodsInventory_Model_Observer {
     public function checkHarrodsPrice($observer) {
         $product = $observer->getEvent()->getProduct();
 
+
+        if($product->getHarrodsOnlineFlag()):
+
         $productId=$product->getId();
         $harrodsprice=(float)$product->getHarrodsPrice();
+
 
         $resource = Mage::getSingleton('core/resource');
         $writeAdapter = $resource->getConnection('core_write');
@@ -26,13 +30,11 @@ class Allure_HarrodsInventory_Model_Observer {
         {
             if((float)$savedPrice!=$harrodsprice) {
 
-                $updateQuery = "UPDATE `allure_harrodsinventory_price` SET `price`={$harrodsprice},`updated_date`=(now()) WHERE `productid`={$productId}";
+                $updateQuery = "UPDATE `allure_harrodsinventory_price` SET `price`={$harrodsprice},`file_generated`=0,`updated_date`=(now()) WHERE `productid`={$productId}";
 
                 try {
                     $writeAdapter->query($updateQuery);
                     $writeAdapter->commit();
-
-
                 } catch (Exception $e) {
                     Mage::helper("harrodsinventory")->add_log("Exception -:" . $e->getMessage());
                 }
@@ -57,6 +59,6 @@ class Allure_HarrodsInventory_Model_Observer {
             }
         }
 
-
+      endif;
     }
 }
