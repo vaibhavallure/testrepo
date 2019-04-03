@@ -17,6 +17,9 @@ if($fetch_model){
 }
 $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 $storeId= $this->getData("store_id");
+
+$noSlotAvlbForDay=false;
+
 ?>
 
     <?php
@@ -140,6 +143,7 @@ $storeId= $this->getData("store_id");
                             echo "<input type='hidden' id='noslot' value='no'>";
                             echo "<input type='text' name='selectTimeSlot' readonly class='input-box' value='No Slots Available'/>";
                             $errprint=true;
+                            $noSlotAvlbForDay=true;
                         }
                         $notfreepeiercer_show=1;
                     }
@@ -281,6 +285,10 @@ $storeId= $this->getData("store_id");
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
      }
+     else
+     {
+         $noSlot=true;
+     }
  }
  else if(($checkDate!='04/07/2019')&&($selectedTime!='19:40')) {
 
@@ -293,6 +301,9 @@ else if(($checkDate=='04/07/2019')&&($selectedTime!='18:40')&&($selectedTime!='1
     echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
+}
+else{
+                        $noSlot=true;
 }
 
 
@@ -327,6 +338,7 @@ else if(($checkDate=='04/07/2019')&&($selectedTime!='18:40')&&($selectedTime!='1
                         echo "<input type='hidden' id='noslot' value='no'>";
                         echo "<input type='text' readonly name='selectTimeSlot' class=' input-box ' value='No Slots Available'>";
                     $errprint=true;
+                     $noSlotAvlbForDay=true;
                     }
                 }
             }
@@ -335,7 +347,6 @@ else if(($checkDate=='04/07/2019')&&($selectedTime!='18:40')&&($selectedTime!='1
             ?>
             </select>
         </div>
-
     <?php endif;?>
     <?php else:
         echo "<div id='time-wrapper'><input type='text' name='selectTimeSlot' readonly class='input-box' value='TIME'/></div>";
@@ -344,6 +355,13 @@ else if(($checkDate=='04/07/2019')&&($selectedTime!='18:40')&&($selectedTime!='1
 <div id="loaderAppointmentTime" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
 <script type="text/javascript">
+<?php if($noSlotAvlbForDay): ?>
+jQuery(".slot_msg").html("<p class='p-center'> Walk-ins are welcome!  There are no open appointments for this date. </p>");
+jQuery("#selectTime").hide();
+<?php else: ?>
+jQuery(".slot_msg").html("");
+ <?php endif;?>
+
     jQuery("#selectTime").change(function(){
         var values =jQuery('#selectTime :selected');
         var starttime = values[0].getAttribute('data-start_time_slot');
