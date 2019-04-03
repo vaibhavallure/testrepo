@@ -9,7 +9,7 @@ Mage::app();
 if(isset($_GET['stk']))
     $file=Mage::helper("brownthomas/data")->generateStockFile();
 elseif(isset($_GET['enrich']))
-  Mage::helper("brownthomas/data")->generateEnrichFile();
+    $file= Mage::helper("brownthomas/data")->generateEnrichFile();
 else
     $file=Mage::helper("brownthomas/data")->generateFoundationFile();
 

@@ -33,14 +33,8 @@ class Allure_BrownThomas_Model_Data
 
     public function getFITEM_FUDAS()
     {
-        $readConnection = $this->readConnection();
-        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
-        $barcode_attr_id=$this->data()->getAttributeId('barcode');
 
-        $whr = 'WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)';
-        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id ' . $whr;
-
-        $products = $readConnection->fetchCol($sql);
+        $products=$this->getProducts();
         $data = array();
         $dataFudas=array();
 
@@ -93,13 +87,9 @@ class Allure_BrownThomas_Model_Data
 
     public function getStock()
     {
-        $readConnection = $this->readConnection();
-        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
-        $barcode_attr_id=$this->data()->getAttributeId('barcode');
+        $products=$this->getProducts();
 
-        $whr = 'WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)';
-        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id ' . $whr;
-        $products = $readConnection->fetchCol($sql);
+        $data = array();
 
         foreach ($products as $product_id) {
             $_product = Mage::getSingleton("catalog/product")->load($product_id);
@@ -163,14 +153,8 @@ class Allure_BrownThomas_Model_Data
 
     public function getEnrichData()
     {
-        $readConnection = $this->readConnection();
-        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
-        $barcode_attr_id=$this->data()->getAttributeId('barcode');
+        $products=$this->getProducts();
 
-        $whr = 'WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)';
-        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id ' . $whr;
-
-        $products = $readConnection->fetchCol($sql);
         $data = array();
 
         foreach ($products as $product_id) {
@@ -257,5 +241,26 @@ class Allure_BrownThomas_Model_Data
     }
     public function add_log($message) {
         Mage::helper("brownthomas/data")->add_log($message);
+    }
+
+    public function getProducts()
+    {
+        $readConnection = $this->readConnection();
+        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
+        $barcode_attr_id=$this->data()->getAttributeId('barcode');
+        $online=$this->data()->getAttributeId('brown_thomas_online');
+
+        $whr = 'WHERE cpe.type_id="simple" 
+        AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) 
+        AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)
+        AND (online.attribute_id=' . $online . ' AND online.value=1)';
+
+        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe 
+                JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id 
+                JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id
+                JOIN catalog_product_entity_int online on online.entity_id=cpe.entity_id ' . $whr;
+
+
+       return $readConnection->fetchCol($sql);
     }
 }
