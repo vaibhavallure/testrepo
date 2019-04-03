@@ -19,6 +19,7 @@ $no_of_people=Mage::app()->getRequest()->getParams()['request']['qty'];
 $storeId= $this->getData("store_id");
 
 $noSlotAvlbForDay=false;
+$check3count=0;
 
 ?>
 
@@ -284,11 +285,9 @@ $noSlotAvlbForDay=false;
          echo "<option class='timeslot $htmlsel'  id='time_slot_$i'
  data-start_time_slot='$selectedTime' data-end_time_slot='$endTime'
  data-pos='$i' data-piercer='$piercerAllocated' onclick='slotSelected($slotval)'>$selectedTime</option>";
+     $check3count++;
      }
-     else
-     {
-         $noSlot=true;
-     }
+
  }
  else if(($checkDate!='04/07/2019')&&($selectedTime!='19:40')) {
 
@@ -331,6 +330,10 @@ else{
                 /* if($noSlot)
                     echo "<li class='timeslot' id='time_slot_17' data-start_time_slot='18:30' data-end_time_slot='19:00' data-pos='17' data-piercer='5' onclick='slotSelected(`time_slot_17`)'><span><span>18:30</span></span></li>"; */
             }
+
+            if(($checkDate=='04/03/2019') && $check3count==0)
+                $noSlot=true;
+
 
             if($noSlot){
                 if(!$notfreepeiercer_show) {
