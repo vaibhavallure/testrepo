@@ -16,6 +16,10 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
     private function modelData() {
         return Mage::getModel("brownthomas/data");
     }
+    public function modelPrice()
+    {
+        return Mage::getModel('brownthomas/price');
+    }
 
     public function add_log($message) {
 		if (!$this->config()->getDebugStatus()) {
@@ -71,6 +75,10 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
         /*------------write FUDOS-----------------------------*/
         $fudos=$FITEM_FUDAS['FUDAS'];
         foreach ($fudos as $data) {$file->streamWrite($this->getWritableString($data));}
+
+        /*------------write PRICE-----------------------------*/
+        $PRICE_DATA = $this->modelData()->getPriceData();
+        foreach ($PRICE_DATA as $data){$file->streamWrite($this->getWritableString($data));}
 
         return $this->file;
 

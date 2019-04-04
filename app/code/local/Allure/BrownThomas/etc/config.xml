@@ -16,7 +16,24 @@
       </brownthomas>
     </routers>    
   </frontend>
+
   <global>
+
+    <models>
+      <brownthomas>
+        <class>Allure_BrownThomas_Model</class>
+        <resourceModel>allure_brownthomas_resource</resourceModel>
+      </brownthomas>
+      <allure_brownthomas_resource>
+        <class>Allure_BrownThomas_Model_Resource</class>
+        <entities>
+          <price>
+            <table>allure_brownthomas_price</table>
+          </price>
+        </entities>
+      </allure_brownthomas_resource>
+    </models>
+
     <resources>
       <allure_brownthomas_setup>
         <setup>
@@ -42,11 +59,20 @@
       <brownthomas>
         <class>Allure_BrownThomas_Helper</class>
       </brownthomas>
-    </helpers>    
-    <models>
+    </helpers>
+
+    <events>
+      <catalog_product_save_after>
+        <observers>
           <brownthomas>
-            <class>Allure_BrownThomas_Model</class>
+            <type>singleton</type>
+            <class>brownthomas/observer</class>
+            <method>checkPrice</method>
           </brownthomas>
-    </models>
+        </observers>
+      </catalog_product_save_after>
+    </events>
+
   </global>
+
 </config> 
