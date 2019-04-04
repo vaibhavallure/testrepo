@@ -83,8 +83,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Comme chaque ann&Eacute;e, l'int&Eacute;gralit&Eacute; des vins que Mill&Eacute;sima vous propose en primeur a &Eacute;t&Eacute; achet&Eacute;e directement &Agrave; la propri&Eacute;t&Eacute;.";
 		
-		$titreprimeur="Primeurs 2017";
-		$phraseprimeur="Livraison <strong>D&eacute;but&nbsp;2020</strong>";
+		$titreprimeur="Primeurs 2018";
+		$phraseprimeur="Livraison <strong>D&eacute;but&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Nouvelles sorties Primeurs Bordeaux";
 		$sortiebordeaux="Nouvelles sorties <strong>Primeurs Bordeaux</strong>";
@@ -100,7 +100,7 @@ switch ($country) {
 		$site_court="www.millesima.fr";
 		$caisse12=" Caisse ou carton de 12 bouteilles";
 		$caisse6=" Caisse ou carton de 6 bouteilles";
-		$pdf_phraseprimeur="Livraison Début 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Livraison Début 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Ces prix sont valables jusqu'&agrave; la prochaine offre, dans la limite des stocks disponibles";
 		$newsorties="Nouvelles sorties";
 		$allsorties="Toutes les sorties";
@@ -185,8 +185,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Comme chaque ann&Eacute;e, l'int&Eacute;gralit&Eacute; des vins que Mill&Eacute;sima vous propose en primeur a &Eacute;t&Eacute; achet&Eacute;e directement &Agrave; la propri&Eacute;t&Eacute;.";
 		
-		$titreprimeur="Primeurs 2017";
-		$phraseprimeur="Livraison <strong>D&eacute;but&nbsp;2020</strong>";
+		$titreprimeur="Primeurs 2018";
+		$phraseprimeur="Livraison <strong>D&eacute;but&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Nouvelles sorties Primeurs Bordeaux";
 		$sortiebordeaux="Nouvelles sorties <strong>Primeurs Bordeaux</strong>";
@@ -201,7 +201,7 @@ switch ($country) {
 		$site_court="www.millesima.be";
 		$caisse12=" Caisse ou carton de 12 bouteilles";
 		$caisse6=" Caisse ou carton de 6 bouteilles";
-		$pdf_phraseprimeur="Livraison Début 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Livraison Début 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Ces prix sont valables jusqu'&agrave; la prochaine offre, dans la limite des stocks disponibles";
 		$newsorties="Nouvelles sorties";
 		$allsorties="Toutes les sorties";
@@ -288,8 +288,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Comme chaque ann&Eacute;e, l'int&Eacute;gralit&Eacute; des vins que Mill&Eacute;sima vous propose en primeur a &Eacute;t&Eacute; achet&Eacute;e directement &Agrave; la propri&Eacute;t&Eacute;.";
 		
-		$titreprimeur="Primeurs 2017";
-		$phraseprimeur="Livraison <strong>D&eacute;but&nbsp;2020</strong>";
+		$titreprimeur="Primeurs 2018";
+		$phraseprimeur="Livraison <strong>D&eacute;but&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Nouvelles sorties Primeurs Bordeaux";
 		$sortiebordeaux="Nouvelles sorties <strong>Primeurs Bordeaux</strong>";
@@ -304,7 +304,7 @@ switch ($country) {
 		$site_court="www.millesima.lu";
 		$caisse12=" Caisse/carton de 12 blles";
 		$caisse6=" Caisse/carton de 6 blles";
-		$pdf_phraseprimeur="Livraison Début 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Livraison Début 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Ces prix sont valables jusqu'&agrave; la prochaine offre, dans la limite des stocks disponibles";
 		$newsorties="Nouvelles sorties";
 		$allsorties="Toutes les sorties";
@@ -387,8 +387,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Wie jedes Jahr wurde die Gesamtheit der von Mill&eacute;sima als Primeurs angebotenen Weine direkt beim Hersteller eingekauft.";
 		
-		$titreprimeur="Primeurweine 2017";
-		$phraseprimeur="Auslieferung <strong>Fr&uuml;hjahr&nbsp;2020</strong>";
+		$titreprimeur="Primeurweine 2018";
+		$phraseprimeur="Auslieferung <strong>Fr&uuml;hjahr&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Neuzug&auml;nge Primeurs Bordeaux";
 		$sortiebordeaux="Neuzug&auml;nge <strong>Primeurs Bordeaux</strong>";
@@ -404,7 +404,7 @@ switch ($country) {
 		$site_court="www.millesima.de";
 		$caisse12=" Kiste oder Karton mit 12 Fl.";
 		$caisse6=" Kiste oder Karton mit 6 Fl.";
-		$pdf_phraseprimeur="Auslieferung Frühjahr 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Auslieferung Frühjahr 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Diese Preise sind bis zum Erscheinen eines neuen Angebots g&uuml;ltig, solange der Vorrat reicht.";
 		$newsorties="Neuzugänge Primeurs";
 		$allsorties="Alle verfügbaren Primeurweine ";
@@ -487,8 +487,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Wie jedes Jahr wurde die Gesamtheit der von Mill&Eacute;sima als Primeurs angebotenen Weine direkt beim Hersteller eingekauft.";
 		
-		$titreprimeur="Primeurweine 2017";
-		$phraseprimeur="Auslieferung <strong>Fr&uuml;hjahr&nbsp;2020</strong>";
+		$titreprimeur="Primeurweine 2018";
+		$phraseprimeur="Auslieferung <strong>Fr&uuml;hjahr&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Neuzug&auml;nge Primeurs Bordeaux";
 		$sortiebordeaux="Neuzug&auml;nge <strong>Primeurs Bordeaux</strong>";
@@ -503,7 +503,7 @@ switch ($country) {
 		$site_court="www.millesima.at";
 		$caisse12=" Kiste oder Karton mit 12 Fl.";
 		$caisse6=" Kiste oder Karton mit 6 Fl.";
-		$pdf_phraseprimeur="Auslieferung Frühjahr 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Auslieferung Frühjahr 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Diese Preise sind bis zum Erscheinen eines neuen Angebots gültig, solange der Vorrat reicht.";
 		$newsorties="Neuzugänge Primeurs";
 		$allsorties="Alle verfügbaren Primeurweine ";
@@ -590,8 +590,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Wie jedes Jahr wurde die Gesamtheit der von Mill&Eacute;sima als Primeurs angebotenen Weine direkt beim Hersteller eingekauft.";
 		
-		$titreprimeur="Primeurweine 2017";
-		$phraseprimeur="Auslieferung <strong>Fr&uuml;hjahr&nbsp;2020</strong>";
+		$titreprimeur="Primeurweine 2018";
+		$phraseprimeur="Auslieferung <strong>Fr&uuml;hjahr&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Neuzug&auml;nge Primeurs Bordeaux";
 		$sortiebordeaux="Neuzug&auml;nge <strong>Primeurs Bordeaux</strong>";
@@ -606,7 +606,7 @@ switch ($country) {
 		$site_court="de.millesima.ch";
 		$caisse12=" Kiste oder Karton mit 12 Fl.";
 		$caisse6=" Kiste oder Karton mit 6 Fl.";
-		$pdf_phraseprimeur="Auslieferung Frühjahr 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Auslieferung Frühjahr 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Diese Preise sind bis zum Erscheinen eines neuen Angebots gültig, solange der Vorrat reicht.";
 		$newsorties="Neuzugänge Primeurs";
 		$allsorties="Alle verfügbaren Primeurweine ";
@@ -688,8 +688,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Comme chaque ann&Eacute;e, l'int&Eacute;gralit&Eacute; des vins que Mill&Eacute;sima vous propose en primeur a &Eacute;t&Eacute; achet&Eacute;e directement &Agrave; la propri&Eacute;t&Eacute;.";
 		
-		$titreprimeur="Primeurs 2017";	
-		$phraseprimeur="Livraison <strong>D&eacute;but&nbsp;2020</strong>";
+		$titreprimeur="Primeurs 2018";	
+		$phraseprimeur="Livraison <strong>D&eacute;but&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Nouvelles sorties Primeurs Bordeaux";
 		$sortiebordeaux="Nouvelles sorties <strong>Primeurs Bordeaux</strong>";
@@ -704,7 +704,7 @@ switch ($country) {
 		$site_court="fr.millesima.ch";
 		$caisse12=" Caisse ou carton de 12 bouteilles";
 		$caisse6=" Caisse ou carton de 6 bouteilles";
-		$pdf_phraseprimeur="Livraison Début 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Livraison Début 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Ces prix sont valables jusqu'&agrave; la prochaine offre, dans la limite des stocks disponibles";
 		$newsorties="Nouvelles sorties";
 		$allsorties="Toutes les sorties";
@@ -787,8 +787,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="This year, as every year, all of Mill&Eacute;sima&acute;s en primeur wines are bought exclusively from each property.";
 		
-		$titreprimeur="2017 En-Primeur wine";
-		$phraseprimeur="Delivery <strong>by early&nbsp;2020</strong>";
+		$titreprimeur="2018 En-Primeur wine";
+		$phraseprimeur="Delivery <strong>by early&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="En-Primeur Bordeaux New releases";
 		$sortiebordeaux=" <strong>En-Primeur Bordeaux</strong> New releases";
@@ -803,7 +803,7 @@ switch ($country) {
 		$site_court="www.millesima.co.uk";
 		$caisse12=" 12 bottles case or box";
 		$caisse6="  6 bottles case or box";
-		$pdf_phraseprimeur="Delivery by early 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Delivery by early 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="These prices are valid till the next offer, according to availability";
 		$newsorties="New releases";
 		$allsorties="All the releases";
@@ -886,8 +886,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="This year, as every year, all of Mill&Eacute;sima&acute;s en primeur wines are bought exclusively from each property.";
 		
-		$titreprimeur="2017 En-Primeur wine";
-		$phraseprimeur="Delivery <strong>by early&nbsp;2020</strong>";
+		$titreprimeur="2018 En-Primeur wine";
+		$phraseprimeur="Delivery <strong>by early&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="En-Primeur Bordeaux New releases";
 		$sortiebordeaux=" <strong>En-Primeur Bordeaux</strong> New releases";
@@ -902,7 +902,7 @@ switch ($country) {
 		$site_court="www.millesima.ie";
 		$caisse12=" 12 bottles case or box";
 		$caisse6="  6 bottles case or box";
-		$pdf_phraseprimeur="Delivery by early 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Delivery by early 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="These prices are valid till the next offer, according to availability";
 		$newsorties="New releases";
 		$allsorties="All the releases";
@@ -986,8 +986,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Come sempre tutti i vini che Mill&eacute;sima vi propone provengono direttamente dalla propriet&agrave;";
 		
-		$titreprimeur="Vini in-primeur 2017";
-		$phraseprimeur="Consegna <strong>inizio&nbsp;2020</strong>";
+		$titreprimeur="Vini in-primeur 2018";
+		$phraseprimeur="Consegna <strong>inizio&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Nuovi In-Primeur di Bordeaux";
 		$sortiebordeaux=" <strong>Nuovi In-Primeur</strong> di Bordeaux";
@@ -1003,7 +1003,7 @@ switch ($country) {
 		$site_court="www.millesima.it";
 		$caisse12=" Cassa/cartone di 12 bott.";
 		$caisse6=" Cassa/cartone di 6 bott.";
-		$pdf_phraseprimeur="Consegna inizio 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Consegna inizio 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Questi prezzi sono validi fino alla prossima offerta, nel limite degli stock disponibili";
 		$newsorties="Nuovi In-Primeur";
 		$allsorties="Tutti i In-Primeur";
@@ -1086,8 +1086,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="Como siempre, todos los vinos que Mill&Eacute;sima le ofrece provienen directamente de la propiedad.";
 		
-		$titreprimeur="En-Primeur 2017";
-		$phraseprimeur="Entrega <strong>inicios&nbsp;de&nbsp;2020</strong>";
+		$titreprimeur="En-Primeur 2018";
+		$phraseprimeur="Entrega <strong>inicios&nbsp;de&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Nuevos En-Primeur de Burdeos";
 		$sortiebordeaux=" <strong>Nuevos En-Primeur</strong> de Burdeos";
@@ -1102,7 +1102,7 @@ switch ($country) {
 		$site_court="www.millesima.es";
 		$caisse12=" Caja de 12 bot.";
 		$caisse6=" Caja de 6 bot.";
-		$pdf_phraseprimeur="Entrega inicios de 2020 "; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Entrega inicios de 2021 "; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Estos precios están válidos hasta la próxima oferta, en el límite de las existencias disponibles";
 		$newsorties="Nuevos En-Primeur";
 		$allsorties="Todos los nuevos En-Primeur";
@@ -1189,12 +1189,12 @@ switch ($country) {
 			sem se preocupar em n&atilde;o conseguir encontrar, quando estiverem esgotados ou com pre&ccedil;os mais altos. Tem a certeza de os ter comprado em condi&ccedil;&otilde;es de pre&ccedil;o mais favor&agrave;veis.</br>";
 		$acheterenprimeur=
 			"<strong>Comprar em primeur:</strong> S&atilde;o grandes vinhos que se encontram durante o seu per&iacute;odo de estagio, que corresponde a 18 meses, entre a vindima e o engarrafamento. 
-			Os vinhos Primeurs, s&atilde;o comercializados antes de serem postos no mercado e ser&atilde;o entregues no principio de 2020.</br></br>";
+			Os vinhos Primeurs, s&atilde;o comercializados antes de serem postos no mercado e ser&atilde;o entregues no principio de 2021.</br></br>";
 			
-		$titreprimeur="Primeurs 2017";
-		$phraseprimeur="Entrega <strong>in&iacute;cio&nbsp;2020</strong>";
+		$titreprimeur="Primeurs 2018";
+		$phraseprimeur="Entrega <strong>in&iacute;cio&nbsp;2021</strong>";
 		
-		$titrerecapbordeaux="Recapitulativo Primeurs Bordeaux 2017";
+		$titrerecapbordeaux="Recapitulativo Primeurs Bordeaux 2018";
 		$titresortiebordeaux="Estreia Primeurs Bordeaux";
 		$sortiebordeaux="Estreia <strong>Primeurs Bordeaux</strong>";
 		$recapsortiebordeaux="Recapitulativo das sa&iacute;das <strong>Primeurs Bordeaux</strong>";
@@ -1207,7 +1207,7 @@ switch ($country) {
 		$site_court="www.millesima.pt";
 		$caisse12=" Caixa ou cartão de 12 gar.";
 		$caisse6=" Caixa ou cartão de 6 gar.";
-		$pdf_phraseprimeur="Entrega início 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Entrega início 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="Estes preços são válidos até a próxima oferta, de acordo com o stock disponível";
 		$newsorties="Últimas saídas";
 		$allsorties="Todos os Primeurs";
@@ -1291,8 +1291,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="This year, as every year, all of Mill&Eacute;sima&acute;s en primeur wines are bought exclusively from each property.";
 		
-		$titreprimeur="2017 En-Primeur wine";
-		$phraseprimeur="Delivery <strong>by early&nbsp;2020</strong>";
+		$titreprimeur="2018 En-Primeur wine";
+		$phraseprimeur="Delivery <strong>by early&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="En-Primeur Bordeaux New releases";
 		$sortiebordeaux=" <strong>En-Primeur Bordeaux</strong> New releases";
@@ -1307,7 +1307,7 @@ switch ($country) {
 		$site_court="www.millesima.com.hk";
 		$caisse12=" 12 bottles case or box";
 		$caisse6="  6 bottles case or box";
-		$pdf_phraseprimeur="Delivery by early 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Delivery by early 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="These prices are valid till the next offer, according to availability";
 		$newsorties="New releases";
 		$allsorties="All the releases";
@@ -1391,8 +1391,8 @@ switch ($country) {
 		
 		$phraseprimeurdirectfrom="This year, as every year, all of Mill&Eacute;sima&acute;s en primeur wines are bought exclusively from each property.";
 		
-		$titreprimeur="2017 En-Primeur wine";
-		$phraseprimeur="Delivery <strong>by early&nbsp;2020</strong>";
+		$titreprimeur="2018 En-Primeur wine";
+		$phraseprimeur="Delivery <strong>by early&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="En-Primeur Bordeaux New releases";
 		$sortiebordeaux=" <strong>En-Primeur Bordeaux</strong> New releases";
@@ -1407,7 +1407,7 @@ switch ($country) {
 		$site_court="www.millesima.com.hk";
 		$caisse12=" 12 bottles case or box";
 		$caisse6="  6 bottles case or box";
-		$pdf_phraseprimeur="Delivery by early 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Delivery by early 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="These prices are valid till the next offer, according to availability";
 		$newsorties="New releases";
 		$allsorties="All the releases";
@@ -1491,8 +1491,8 @@ switch ($country) {
 		$primeur="Future";
 		$phraseprimeurdirectfrom="This year, as every year, all of Millesima&acute;s en primeur wines are bought exclusively from each property.";
 		
-		$titreprimeur="2017 Futures wine";
-		$phraseprimeur="Delivery <strong>early&nbsp;2020</strong>";
+		$titreprimeur="2018 Futures wine";
+		$phraseprimeur="Delivery <strong>early&nbsp;2021</strong>";
 		
 		$titresortiebordeaux="Bordeaux Futures New releases";
 		$sortiebordeaux=" <strong>Bordeaux Futures</strong> New releases";
@@ -1507,7 +1507,7 @@ switch ($country) {
 		$site_court="www.millesima-usa.com";
 		$caisse12=" 12 bottles case or box";
 		$caisse6="  6 bottles case or box";
-		$pdf_phraseprimeur="Delivery early 2020"; // Doublon non encodé + sans balises
+		$pdf_phraseprimeur="Delivery early 2021"; // Doublon non encodé + sans balises
 		$pdf_phraseprix="These prices are valid till the next offer, according to availability";
 		$newsorties="New releases";
 		$allsorties="All the releases";

@@ -187,32 +187,32 @@ function verifTextarea(this_select, to_change){
 function ajouteDatePrimeur(idParent){
 	// Test si les années existent et si ce n'est pas un autre contenu
 	infos = document.getElementById(idParent);
-	primeurs = document.getElementById("prim_2017");
+	primeurs = document.getElementById("prim_2018");
 	if(primeurs == null){
 		if(infos != null){
 			effaceContenu(idParent);
 		}
-		// Ajout de l'année en cours : 2017
+		// Ajout de l'année en cours : 2018
 		var newCheckbox = document.createElement('input');
 		newCheckbox.name = 'cgv_prim_actuelle';
 		newCheckbox.type = "checkbox";
 		newCheckbox.defaultChecked = true;
 		
 		var newLabel = document.createElement('label');
-		newLabel.id = "prim_2017";	
+		newLabel.id = "prim_2018";	
 		newLabel.appendChild(newCheckbox);
-		newLabel.innerHTML = newLabel.innerHTML + " 2017<br />";
+		newLabel.innerHTML = newLabel.innerHTML + " 2018<br />";
 		document.getElementById(idParent).appendChild(newLabel);
 		
-		// Ajout de l'année précedente : 2016
+		// Ajout de l'année précedente : 2017
 		var newCheckbox = document.createElement('input');
 		newCheckbox.name = 'cgv_prim_prec';
 		newCheckbox.type = "checkbox";
 		
 		var newLabel = document.createElement('label');
-		newLabel.id = "prim_2016";		
+		newLabel.id = "prim_2017";		
 		newLabel.appendChild(newCheckbox);
-		newLabel.innerHTML = newLabel.innerHTML + " 2016<br />";
+		newLabel.innerHTML = newLabel.innerHTML + " 2017<br />";
 		document.getElementById(idParent).appendChild(newLabel);
 	}
 }
