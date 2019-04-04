@@ -120,6 +120,14 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $_products->getSelect()->where("ahp.row_id IS NULL");
 
 
+            $this->add_log("PLU number of products=>".$_products->getSize());
+
+            if(!$_products->getSize()) {
+                echo "empty";
+                $this->add_log("empty PLU file so return False");
+                return false;
+            }
+
             $some_attr_code = "metal";
             $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
 
@@ -243,17 +251,9 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             $this->add_log("PLU.ok file generated");
 
-
-            if(count($_products->getSize())) {
                 $files['txt'] = $file;
                 $files['ok'] = $file2;
                 return $files;
-            }
-            else
-            {
-                $this->add_log("empty PLU file so return False");
-                return false;
-            }
 
         }catch (Exception $e)
         {
