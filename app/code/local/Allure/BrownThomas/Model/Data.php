@@ -33,14 +33,8 @@ class Allure_BrownThomas_Model_Data
 
     public function getFITEM_FUDAS()
     {
-        $readConnection = $this->readConnection();
-        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
-        $barcode_attr_id=$this->data()->getAttributeId('barcode');
 
-        $whr = 'WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)';
-        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id ' . $whr;
-
-        $products = $readConnection->fetchCol($sql);
+        $products=$this->getProducts();
         $data = array();
         $dataFudas=array();
 
@@ -50,7 +44,7 @@ class Allure_BrownThomas_Model_Data
             $data[$product_id]['action_type'] = 'N';
             $data[$product_id]['UPC'] = $this->formatString($_product->getBarcode(), 13);
             $data[$product_id]['UPC_TYPE'] = 'EAN13';
-            $formatedSKU = strtolower(preg_replace("/[^a-zA-Z0-9]+/", "", $_product->getSKU()));
+            $formatedSKU = $this->formatSKU($_product->getSKU());
             $data[$product_id]['WC_Product_ID'] = $this->formatString(SELF::DEPARTMENT . "x" . SELF::SUPPLIER . "x" . $formatedSKU, 45);
             $data[$product_id]['VPN'] = $this->formatString($_product->getSKU(), 30);
             $data[$product_id]['department'] = self::DEPARTMENT;
@@ -58,12 +52,12 @@ class Allure_BrownThomas_Model_Data
             $data[$product_id]['short_description'] = $this->formatString(str_replace(',', '',$_product->getName()), 20);
             $data[$product_id]['packing_method'] = $this->formatString("FLAT", 6);
             $data[$product_id]['unit_of_measure'] = $this->formatString("EA", 4);
-            $data[$product_id]['size_group_1'] = $this->formatString("", 10);
+            $data[$product_id]['size_group_1'] = $this->formatString("ONE SIZE", 10);
             $data[$product_id]['size_group_2'] = $this->formatString("", 10);
             $data[$product_id]['size_system'] = $this->formatString("", 4);
             $splitsku=$this->splitSku($_product->getSku());
             $data[$product_id]['size_1'] = $this->formatString($splitsku['p_size'], 10);
-            $data[$product_id]['size_2'] = $this->formatString("N/A", 10);
+            $data[$product_id]['size_2'] = $this->formatString("", 10);
             $data[$product_id]['color'] = $this->formatString("GOLD", 10);
             $data[$product_id]['supplier_color'] = $this->formatString(strtoupper($this->getVendorColor($_product)), 24);
             $data[$product_id]['color_group'] = $this->formatString("ARN_COLORS", 10);
@@ -93,13 +87,9 @@ class Allure_BrownThomas_Model_Data
 
     public function getStock()
     {
-        $readConnection = $this->readConnection();
-        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
-        $barcode_attr_id=$this->data()->getAttributeId('barcode');
+        $products=$this->getProducts();
 
-        $whr = 'WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)';
-        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id ' . $whr;
-        $products = $readConnection->fetchCol($sql);
+        $data = array();
 
         foreach ($products as $product_id) {
             $_product = Mage::getSingleton("catalog/product")->load($product_id);
@@ -163,14 +153,8 @@ class Allure_BrownThomas_Model_Data
 
     public function getEnrichData()
     {
-        $readConnection = $this->readConnection();
-        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
-        $barcode_attr_id=$this->data()->getAttributeId('barcode');
+        $products=$this->getProducts();
 
-        $whr = 'WHERE cpe.type_id="simple" AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)';
-        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id ' . $whr;
-
-        $products = $readConnection->fetchCol($sql);
         $data = array();
 
         foreach ($products as $product_id) {
@@ -208,5 +192,75 @@ class Allure_BrownThomas_Model_Data
         );
     }
 
+    public function formatSKU($sku)
+    {
+        $searchVal = array("yellow","rose","black","white","rhodium","gold");
+        $replaceVal = array("y","r","b","w","r","g");
 
+        $newsku =strtolower($sku);
+        $newsku = str_replace($searchVal, $replaceVal,$newsku);
+        $formattedSKU=preg_replace("/[^a-zA-Z0-9]+/", "", $newsku);
+
+        return $formattedSKU;
+    }
+
+
+    public function getPriceData()
+    {
+        $this->add_log('In Brown Thomas Get Price Data Model');
+        $priceModel = Mage::helper('brownthomas')->modelPrice();
+        $collection = $priceModel->getCollection();
+        $collection->getSelect()->reset(Zend_Db_Select::COLUMNS)->columns('product_id')->columns('row_id')->where("updated_date > last_sent_date OR last_sent_date IS NULL");
+
+        $priceData = array();
+        $index = 0;
+        foreach ($collection as $product)
+        {
+            $this->add_log('Inserting :'.$product->getProductId());
+            $_product = Mage::getSingleton("catalog/product")->load($product->getProductId());
+            $priceData[$index]['record_type'] = $this->formatString('FPCHG',5);
+            $priceData[$index]['action_type'] = $this->formatString('N',1);
+            $barcode = $_product->getBarcode();
+            $priceData[$index]['primary_upc'] = $this->formatString($barcode, 13);
+            $updatedDate = date('Ymd',strtotime($_product->getUpdatedAt()));
+            $priceData[$index]['effective_date'] =$this->formatString($updatedDate, 13);
+            $price = (float)$_product->getDublinPrice();
+            $priceData[$index]['unit_retail'] = $this->formatString(number_format($price,2,'.',''),21,0, STR_PAD_LEFT);
+            $priceData[$index]['clearance_indicator'] = $this->formatString('Y',1);
+            $id = $product->getRowId();
+            $productDetails['last_sent_date']=$_product->getUpdatedAt();
+            $priceModel->load($id)->addData($productDetails)->save();
+            $this->add_log('Brown Thomas Updated in Price Table ID='.$id);
+            $index++;
+
+        }
+        $this->add_log('Total Inserted Records'.$index-1);
+
+        return $priceData;
+
+    }
+    public function add_log($message) {
+        Mage::helper("brownthomas/data")->add_log($message);
+    }
+
+    public function getProducts()
+    {
+        $readConnection = $this->readConnection();
+        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
+        $barcode_attr_id=$this->data()->getAttributeId('barcode');
+        $online=$this->data()->getAttributeId('brown_thomas_online');
+
+        $whr = 'WHERE cpe.type_id="simple" 
+        AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) 
+        AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)
+        AND (online.attribute_id=' . $online . ' AND online.value=1)';
+
+        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe 
+                JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id 
+                JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id
+                JOIN catalog_product_entity_int online on online.entity_id=cpe.entity_id ' . $whr;
+
+
+       return $readConnection->fetchCol($sql);
+    }
 }
