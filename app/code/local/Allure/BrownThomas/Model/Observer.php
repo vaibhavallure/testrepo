@@ -26,7 +26,7 @@ class Allure_BrownThomas_Model_Observer
 
 
         try {
-            if (isset($productDetails['product_id']) && isset($productDetails['price']) && $brownthomasInventory!=null && $barcode!=null) {
+            if (isset($productDetails['product_id']) && isset($productDetails['price']) && isset($brownthomasInventory) && isset($barcode)) {
 
                 $productId = $productDetails['product_id'];
 
@@ -63,10 +63,7 @@ class Allure_BrownThomas_Model_Observer
                 }
 
             }
-            else
-            {
-                Mage::log('Not Inseted Record barcode '.$barcode.'inventory'.$brownthomasInventory.' Price'.$productDetails['price'],Zend_Log::DEBUG,'myLog.log',true);
-            }
+           
         } catch (Exception $ex) {
             $this->add_log('Exception'.$ex->getMessage());
 
