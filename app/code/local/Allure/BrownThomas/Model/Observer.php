@@ -21,11 +21,12 @@ class Allure_BrownThomas_Model_Observer
         $productDetails['product_id'] = $product->getEntityId();
         $productDetails['price'] = $product->getDublinPrice();
         $productDetails['updated_date'] = $product->getUpdatedAt();
-        $productDetails['last_sent_date']   = NULL;
+        $brownthomasInventory = $product->getBrownThomasInventory();
+        $barcode = $product->getBarcode();
 
 
         try {
-            if (isset($productDetails['product_id'])) {
+            if (isset($productDetails['product_id']) && isset($productDetails['price']) && $brownthomasInventory!=null && $barcode!=null) {
 
                 $productId = $productDetails['product_id'];
 
@@ -53,12 +54,18 @@ class Allure_BrownThomas_Model_Observer
 
                 } else {
                     /*If Product not in table then insert in table*/
+                    $productDetails['last_sent_date']   = NULL;
                     $this->add_log('Insert Request Product Id='.$productId);
                     $rowId = $priceModel->setData($productDetails)->save()->getRowId();
                     $this->add_log('Inserted ID='.$rowId);
 
 
                 }
+
+            }
+            else
+            {
+                Mage::log('Not Inseted Record barcode '.$barcode.'inventory'.$brownthomasInventory.' Price'.$productDetails['price'],Zend_Log::DEBUG,'myLog.log',true);
             }
         } catch (Exception $ex) {
             $this->add_log('Exception'.$ex->getMessage());
