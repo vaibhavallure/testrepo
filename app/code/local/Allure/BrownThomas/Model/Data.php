@@ -58,7 +58,7 @@ class Allure_BrownThomas_Model_Data
             $data[$product_id]['short_description'] = $this->formatString(str_replace(',', '',$_product->getName()), 20);
             $data[$product_id]['packing_method'] = $this->formatString("FLAT", 6);
             $data[$product_id]['unit_of_measure'] = $this->formatString("EA", 4);
-            $data[$product_id]['size_group_1'] = $this->formatString("", 10);
+            $data[$product_id]['size_group_1'] = $this->formatString("ONE SIZE", 10);
             $data[$product_id]['size_group_2'] = $this->formatString("", 10);
             $data[$product_id]['size_system'] = $this->formatString("", 4);
             $splitsku=$this->splitSku($_product->getSku());
