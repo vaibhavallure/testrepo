@@ -221,4 +221,31 @@ class Allure_BrownThomas_Model_Data
     }
 
 
+    public function getPriceData()
+    {
+        $priceModel = Mage::helper('brownthomas')->modelPrice();
+        $collection = $priceModel->getCollection();
+        $collection->getSelect()->reset(Zend_Db_Select::COLUMNS)->columns('product_id')->where("updated_date > last_sent_date OR last_sent_date IS NULL");
+
+        $priceData = array();
+        $index = 0;
+        foreach ($collection as $product)
+        {
+            $_product = Mage::getSingleton("catalog/product")->load($product->getProductId());
+            $priceData[$index]['record_type'] = $this->formatString('FPCHG',5);
+            $priceData[$index]['action_type'] = $this->formatString('N',1);
+            $barcode = $_product->getBarcode();
+            $priceData[$index]['primary_upc'] = $this->formatString($barcode, 13);
+            $updatedDate = date('Ymd',strtotime($_product->getUpdatedAt()));
+            $priceData[$index]['effective_date'] =$this->formatString($updatedDate, 13);
+            $price = (float)$_product->getDublinPrice();
+            $priceData[$index]['unit_retail'] = $this->formatString(number_format($price,2,'.',''),21,0, STR_PAD_LEFT);
+            $priceData[$index]['clearance_indicator'] = $this->formatString('Y',1);
+            $index++;
+
+        }
+
+        return $priceData;
+
+    }
 }

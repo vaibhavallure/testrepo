@@ -10,7 +10,7 @@ $installer = $this;
 $installer->startSetup();
 
 $table = $installer->getConnection()
-    ->newTable($installer->getTable('brownthomas/brownthomas_price'))
+    ->newTable($installer->getTable('brownthomas/price'))
     ->addColumn('row_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
         'identity'  => true,
         'unsigned'  => true,
@@ -27,7 +27,7 @@ $table = $installer->getConnection()
         'nullable'  => false,
     ),'Updated Date')
     ->addColumn('last_sent_date', Varien_Db_Ddl_Table::TYPE_DATETIME,null,array(
-        'nullable'  => false,
+        'nullable'  => true,
     ),'Last Sent Date');
 $installer->getConnection()->createTable($table);
 

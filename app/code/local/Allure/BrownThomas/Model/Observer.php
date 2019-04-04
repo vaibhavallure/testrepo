@@ -12,16 +12,16 @@ class Allure_BrownThomas_Model_Observer
     public function checkPrice($observer)
     {
 
-        $this->add_log('In Brown Thomas Observer');
+        $this->add_log('In Brown Thomas Price Observer');
 
         $product = $observer->getEvent()->getProduct();
 
         $productDetails = array();
 
         $productDetails['product_id'] = $product->getEntityId();
-        $productDetails['price'] = $product->getPrice();
+        $productDetails['price'] = $product->getDublinPrice();
         $productDetails['updated_date'] = $product->getUpdatedAt();
-//        $productDetails['last_sent_date']   = date('Y/m/d h:i:s a', time());
+        $productDetails['last_sent_date']   = NULL;
 
 
         try {
