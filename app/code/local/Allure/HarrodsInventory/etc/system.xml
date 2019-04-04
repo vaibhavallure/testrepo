@@ -70,7 +70,7 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                 </group_emails>
-                <email_template>
+                <!--<email_template>
                     <label>Email template for product price</label>
                     <frontend_type>select</frontend_type>
                     <source_model>adminhtml/system_config_source_email_template</source_model>
@@ -78,7 +78,7 @@
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                </email_template>
+                </email_template>-->
             </fields>
             </email_group>
                 <sftp_details translate="label">

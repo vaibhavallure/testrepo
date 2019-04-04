@@ -13,6 +13,8 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             return;
         }
         Mage::log($message,Zend_log::DEBUG,"harrods_files.log",true);
+        Mage::log($message,Zend_log::DEBUG,"harrods_files2.log",true);
+
     }
 
     public function  charEncode($str)
