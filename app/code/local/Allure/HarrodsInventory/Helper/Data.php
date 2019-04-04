@@ -123,7 +123,6 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $this->add_log("PLU number of products=>".$_products->getSize());
 
             if(!$_products->getSize()) {
-                echo "empty";
                 $this->add_log("empty PLU file so return False");
                 return false;
             }
