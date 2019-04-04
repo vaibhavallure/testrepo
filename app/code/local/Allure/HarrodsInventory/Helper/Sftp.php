@@ -66,17 +66,19 @@ class Allure_HarrodsInventory_Helper_Sftp extends Mage_Core_Helper_Abstract
 
     public function sendEmail($msg)
     {
-        $templateId = $this->harrodsConfig()->getDebugEmailsTemp();
+        try{
+            $mailSubject="Harrods Inventory Debug";
+            $sender         = 'harrodsinv@mariatash.com';
+            $emails = $this->harrodsConfig()->getDebugEmails();
 
-        $mailSubject="Harrods Inventory Debug";
-        $sender         = 'harrodsinv@mariatash.com';
-        $email = $this->harrodsConfig()->getDebugEmails();
-        $name='';
-        $vars = array('message' => $msg);
+            $header="from: Harrods INV <".$sender.">";
+            mail($emails,$mailSubject,$msg,$header);
 
-        Mage::getModel('core/email_template')
-            ->setTemplateSubject($mailSubject)
-            ->sendTransactional($templateId,$sender,$email,$name,$vars);
+        }catch(Exception $e)
+        {
+            $this->add_log("Exception:".$e->getMessage());
+        }
+
     }
 
 }

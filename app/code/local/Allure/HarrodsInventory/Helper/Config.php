@@ -15,9 +15,9 @@ class Allure_HarrodsInventory_Helper_Config extends Mage_Core_Helper_Abstract
     public function getDebugEmails(){
         return Mage::getStoreConfig('harrodsinventory/email_group/group_emails');
     }
-    public function getDebugEmailsTemp(){
+    /*public function getDebugEmailsTemp(){
         return Mage::getStoreConfig('harrodsinventory/email_group/email_template');
-    }
+    }*/
 
     public function getModuleStatus(){
         return Mage::getStoreConfig(self::XML_PATH_MODULE_ENABLED);
