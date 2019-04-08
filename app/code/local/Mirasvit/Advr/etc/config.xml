@@ -118,7 +118,7 @@
             </updates>
         </layout>
     </adminhtml>
-    <crontab>
+    <!-- <crontab>
         <jobs>
             <advr_geo_copy_unknown>
                 <schedule>
@@ -138,7 +138,7 @@
                 </run>
             </advr_geo_update>
         </jobs>
-    </crontab>
+    </crontab> -->
     <default>
         <advr>
             <report>
