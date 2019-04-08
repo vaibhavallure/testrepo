@@ -12,6 +12,8 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         if (!$this->harrodsConfig()->getDebugStatus()) {
             return;
         }
+        $message=" Date=>".date("Y-m-d h:i:sa",$this->cron()->getCurrentDatetime())." => ".$message;
+
         Mage::log($message,Zend_log::DEBUG,"harrods_files.log",true);
         Mage::log($message,Zend_log::DEBUG,"harrods_files2.log",true);
 
@@ -124,6 +126,8 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             if(!$_products->getSize()) {
                 $this->add_log("empty PLU file so return False");
+                Mage::getModel("harrodsinventory/data")->fileTransfer("Empty PLU FILE");
+
                 return false;
             }
 
@@ -291,7 +295,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $readConnection = $resource->getConnection('core_read');
 
 
-            $query='SELECT productid FROM `allure_harrodsinventory_product` WHERE updated_date <= DATE_SUB(CURDATE(),INTERVAL 3 day)';
+            $query='SELECT productid FROM `allure_harrodsinventory_product` WHERE updated_date <= DATE_SUB(CURDATE(),INTERVAL 1 day)';
             $parentPro = $readConnection->fetchCol($query);
 
 
@@ -510,8 +514,6 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             }
         }
     }
-
-
 
 
 }
