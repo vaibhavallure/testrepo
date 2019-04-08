@@ -10,6 +10,9 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     private function sftp() {
         return Mage::helper("harrodsinventory/sftp");
     }
+    private function model_data() {
+        return Mage::getModel("harrodsinventory/data");
+    }
     public function add_log($message) {
         Mage::helper("harrodsinventory/data")->add_log($message);
     }
@@ -33,6 +36,12 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
         if ($this->harrodsConfig()->getHourProductCron() != $this->getHour($this->getCurrentDatetime()) /*|| $this->harrodsConfig()->getMinuteProductCron() != $this->getMinute($this->getCurrentDatetime())*/)
             return;
 
+        if($this->model_data()->checkFileTransferred("PLU"))
+        {
+            $this->add_log("PLU File Already sent Or Empty");
+            return;
+        }
+
             if (!$this->harrodsConfig()->isEnabledProductCron()) {
             $this->add_log("productReport=> product report cron disabled from backend setting");
             return;
@@ -44,6 +53,14 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     {
         if ($this->harrodsConfig()->getHourStockCron() != $this->getHour($this->getCurrentDatetime()) /*|| $this->harrodsConfig()->getMinuteStockCron() != $this->getMinute($this->getCurrentDatetime()*/)
             return;
+
+        if($this->model_data()->checkFileTransferred("STK"))
+        {
+            $this->add_log("STK File Already sent");
+            return;
+        }
+
+
         if (!$this->harrodsConfig()->isEnabledStockCron()) {
             $this->add_log("stockReport=> stock report cron disabled from backend setting");
             return;
@@ -54,8 +71,17 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     }
     public function PPC_Report()
     {
+
         if ($this->harrodsConfig()->getHourPriceCron() != $this->getHour($this->getCurrentDatetime()) /*|| $this->harrodsConfig()->getMinutePriceCron() != $this->getMinute($this->getCurrentDatetime())*/)
             return;
+
+        if($this->model_data()->checkFileTransferred("PPC"))
+        {
+            $this->add_log("PPC File Already sent");
+            return;
+        }
+
+
         if (!$this->harrodsConfig()->isEnabledPriceCron()) {
             $this->add_log("priceReport=> price report cron disabled from backend setting");
             return;
