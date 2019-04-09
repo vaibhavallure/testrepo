@@ -57,7 +57,7 @@ class Allure_HarrodsInventory_Helper_Sftp extends Mage_Core_Helper_Abstract
                 $this->add_log("File Transfer Successfully=>".$remotefilepath);
 
                 $this->sendEmail("File Transfer Successfully=>".$remotefilepath);
-                Mage::getModel("harrodsinventory")->fileTransfer($remotefilepath);
+                Mage::getModel("harrodsinventory/data")->fileTransfer($remotefilepath);
 
             }catch (Exception $e)
             {

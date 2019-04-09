@@ -256,7 +256,9 @@ class Allure_Reports_Block_Adminhtml_Report_Filter_Form extends Mage_Adminhtml_B
     private function getCreateOrderMethods(){
         $locations = array(
             array('label'=>'Website' ,'value' => 0),
-            array('label'=>'Counterpoint' ,'value' => 1)
+            array('label'=>'Counterpoint' ,'value' => 1),
+            array('label'=>'EBIZ' ,'value' => 4)
+
         );
         
         $user = Mage::getSingleton('admin/session')->getUser();
