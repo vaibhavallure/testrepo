@@ -12,6 +12,8 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
         if (!$this->harrodsConfig()->getDebugStatus()) {
             return;
         }
+        $message=" Date=>".date("Y-m-d h:i:sa",$this->cron()->getCurrentDatetime())." => ".$message;
+
         Mage::log($message,Zend_log::DEBUG,"harrods_files.log",true);
         Mage::log($message,Zend_log::DEBUG,"harrods_files2.log",true);
 
@@ -119,6 +121,15 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
                 $_products->getSelect()->joinLeft(array('ahp' => 'allure_harrodsinventory_product'), 'ahp.productid = e.entity_id');
                 $_products->getSelect()->where("ahp.row_id IS NULL");
 
+
+            $this->add_log("PLU number of products=>".$_products->getSize());
+
+            if(!$_products->getSize()) {
+                $this->add_log("empty PLU file so return False");
+                Mage::getModel("harrodsinventory/data")->fileTransfer("Empty PLU FILE");
+
+                return false;
+            }
 
             $some_attr_code = "metal";
             $attribute = Mage::getSingleton('eav/config')->getAttribute(Mage_Catalog_Model_Product::ENTITY, $some_attr_code);
@@ -243,17 +254,9 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
 
             $this->add_log("PLU.ok file generated");
 
-
-            if(count($_products->getSize())) {
                 $files['txt'] = $file;
                 $files['ok'] = $file2;
                 return $files;
-            }
-            else
-            {
-                $this->add_log("empty PLU file so return False");
-                return false;
-            }
 
         }catch (Exception $e)
         {
@@ -292,7 +295,7 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             $readConnection = $resource->getConnection('core_read');
 
 
-            $query='SELECT productid FROM `allure_harrodsinventory_product` WHERE updated_date <= DATE_SUB(CURDATE(),INTERVAL 3 day)';
+            $query='SELECT productid FROM `allure_harrodsinventory_product` WHERE updated_date <= DATE_SUB(CURDATE(),INTERVAL 1 day)';
             $parentPro = $readConnection->fetchCol($query);
 
 
@@ -511,8 +514,6 @@ class Allure_HarrodsInventory_Helper_Data extends Mage_Core_Helper_Abstract
             }
         }
     }
-
-
 
 
 }

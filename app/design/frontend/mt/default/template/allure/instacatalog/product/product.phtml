@@ -59,7 +59,7 @@ $childProductArr = $this->getChildProductArray();
 
             // $product = Mage::getSingleton('catalog/product')->loadByAttribute('sku',$sku);
 
-            if (!$product && count($product) <= 0) {
+            if (!isset($product) || count($product) <= 0) {
                 $product = $temp_product;
             }
 
