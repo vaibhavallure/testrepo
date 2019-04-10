@@ -328,7 +328,7 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract
     /**
      *generate csv file of particular magento object
      */
-    public function generateCsv($objectType, $pageNum, $size, $header, $tableHeader)
+    public function generateCsv($objectType, $pageNum, $size, $header, $tableHeader,$filterField,$filterArr)
     {
         try {
             $filePath = $this->getFilePath($objectType, $pageNum);
@@ -341,8 +341,14 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract
             $message = "";
             $response = array();
             if ($objectType == "account") {
-                $collection = Mage::getModel("customer/customer")->getCollection()
-                    ->addAttributeToSelect("*");
+                if(!empty($filterField) && !empty($filterArr)){
+                    $collection = Mage::getModel("customer/customer")->getCollection()
+                        ->addAttributeToSelect("*")
+                        ->addAttributeToFilter($filterField, array('in' => array($filterArr)));
+                }else{
+                    $collection = Mage::getModel("customer/customer")->getCollection()
+                        ->addAttributeToSelect("*");
+                }
             }
             if ($objectType == "contact") {
                 $collection = Mage::getModel("customer/customer")->getCollection()
