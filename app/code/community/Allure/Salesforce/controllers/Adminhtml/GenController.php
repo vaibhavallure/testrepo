@@ -33,6 +33,11 @@ class Allure_Salesforce_Adminhtml_GenController extends Mage_Adminhtml_Controlle
         $pageNum  = $formData["page"];
         $size     = $formData["size"];
         $fields   = $formData["fields"];
+        $filterField = $formData["filterField"];
+        $filterArr = $formData["filterArr"];
+        if(!empty($filterArr)){
+            $filterArr = explode(",",$filterArr);
+        }
         $objectType = $formData["object_type"];
         $subFields = explode(",", $fields);
         $header      = array();
@@ -71,7 +76,7 @@ class Allure_Salesforce_Adminhtml_GenController extends Mage_Adminhtml_Controlle
         
         try{
             $helper = Mage::helper("allure_salesforce/csv");
-            $result = $helper->generateCsv($objectType, $pageNum, $size, $header, $tableHeader);
+            $result = $helper->generateCsv($objectType, $pageNum, $size, $header, $tableHeader, $filterField, $filterArr);
             if($result["success"]){
                 $filename = $result["filename"];
                 $filePath = $result["path"];

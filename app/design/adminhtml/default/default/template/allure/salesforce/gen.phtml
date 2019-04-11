@@ -86,6 +86,24 @@ $_objectColumnList  = $_helper->getObjectColumnList();
 				<input name="size" value="10" />
 			</div>
 		</div>
+
+        <div class="allure-salesforce-div">
+            <div>
+                <label><strong><?php echo $this->__("Filter Field")?></strong></label>
+            </div>
+            <div>
+                <input name="filterField" value="" />
+            </div>
+        </div>
+
+        <div class="allure-salesforce-div">
+            <div>
+                <label><strong><?php echo $this->__("Filter Array")?></strong></label>
+            </div>
+            <div>
+                <input name="filterArr" value="" />
+            </div>
+        </div>
 		
 		<div class="allure-salesforce-div" style="display: none;">
 			<textarea id="tarea-object" rows="20" cols="15" name="fields" style="width: 35%;">
