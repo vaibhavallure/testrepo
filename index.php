@@ -825,6 +825,8 @@ function createCampaign(){
         $type = $data['creation'];
         $segSend = '';
         $messageIds = $data["checkbox-message"];
+        $doctype = $campaignClass->getDoctype();
+        
         foreach ($messageIds as $messageId){
             //get information mail
             $tmp = explode('-',$messageId, 2);
@@ -900,7 +902,7 @@ function createCampaign(){
                 if($type == 'reel' && ($segSend == '' || $segSend['status'] == 'local') ){
                     $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a échouer car le segment n'est pas valide.</b><br/>";
                 } else {
-                    $campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segSend['selligente_id'],$dateObj,$type);
+                    $campaignResponse = $campaignClass->create($message[0],$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$brief['theme'],$segSend['selligente_id'],$dateObj,$type,$doctype);
                     if($campaignResponse['success']){
                         $html .= "<b>La demande d'envoi de campagne ".$data['creation']." pour le message ".$message[0]['name']." a été prise en compte.</b><br/>";
                         $html .= $campaignResponse['value']."<br/>";

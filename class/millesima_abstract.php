@@ -13,6 +13,7 @@
 
 class Millesima_Abstract{
 
+    const DOCTYPE = "<!DOCTYPE html>";
 
     public function getInfoMessage($name,$objet){
         $store = substr($name, 0 ,2 );
@@ -787,6 +788,14 @@ class Millesima_Abstract{
             $return = 'BAT '.$data['id'];
         }
         return $return;
+    }
+
+    /**
+     * Function to get doctype of emails
+     * @return string $return
+     */
+    public function getDoctype(){
+      return self::DOCTYPE;  
     }
 
 }

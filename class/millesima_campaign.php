@@ -121,7 +121,7 @@ class Millesima_Campaign extends Millesima_Abstract
      * @param $type
      * @return mixed
      */
-    public function create($message,$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$theme,$segment,$dateObj,$type){
+    public function create($message,$name,$fromMail,$fromName,$replyMail,$replyName,$subject,$theme,$segment,$dateObj,$type,$doctype){
         //$segment = 7748; //segment test
         //$codeCampaign = $name.'-'.rand(1,6500); //'FIOSLIV18-204-'.rand(1,6500);
         $codeCampaign = $name; //'FIOSLIV18-204-'.rand(1,6500);
@@ -136,8 +136,8 @@ class Millesima_Campaign extends Millesima_Abstract
         $writer = $this->setCampaignWriter($writer,$codeCampaign,$theme,$dateObj,$type);
 
         //set email info to xml
-        $writer = $this->setEmailWriter($writer,$codeCampaign,$message,$fromMail,$fromName,$replyMail,$replyName,$subject,$segment,$type);
-
+        $writer = $this->setEmailWriter($writer,$codeCampaign,$message,$fromMail,$fromName,$replyMail,$replyName,$subject,$segment,$type,$doctype);
+        
         //close elm api
         $writer->endElement();
 
@@ -231,7 +231,7 @@ class Millesima_Campaign extends Millesima_Abstract
      * @param $type
      * @return mixed
      */
-    public function setEmailWriter($writer,$codeCampaign,$message,$fromMail,$fromName,$replyMail,$replyName,$subject,$segment,$type){
+    public function setEmailWriter($writer,$codeCampaign,$message,$fromMail,$fromName,$replyMail,$replyName,$subject,$segment,$type,$doctype){
         $writer->startElement('EMAILS');
         $writer->startElement('EMAIL');
         $writer->writeAttribute('NAME', $codeCampaign);
@@ -259,6 +259,7 @@ class Millesima_Campaign extends Millesima_Abstract
         $writer->writeAttribute('HYPERLINKS_TO_SENSORS' , 1);
         $writer = $this->startElmCdata($writer,'HTML',$message['html']);
         $writer = $this->startElmCdata($writer,'TEXT',$message['text']);
+        $writer = $this->startElmCdata($writer,'DOCTYPE',$doctype);
         $writer = $this->startElmCdata($writer,'FROM_ADDR',$fromMail);
         $writer = $this->startElmCdata($writer,'FROM_NAME',$fromName);
         $writer = $this->startElmCdata($writer,'TO_ADDR','~MAIL~');
