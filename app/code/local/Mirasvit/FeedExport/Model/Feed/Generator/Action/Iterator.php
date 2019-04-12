@@ -103,8 +103,10 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
 
         /*New code for configurable product variations*/
         $id = Mage::app()->getRequest()->getParam('id');
+        $mode = Mage::app()->getRequest()->getParam('mode');
         $feed_custom = Mage::getModel('feedexport/feed')->load($id);
         $feedName =strtolower($feed_custom->getName());
+        if($mode =='new'){
         if(strpos($feedName, 'custom') !== false) {
 
             switch ($this->getType()) {
@@ -123,6 +125,10 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                     break;
 
             }
+        }
+        else{
+            $iteratorModel->save($result);
+        }
         } else{
 
         $iteratorModel->save($result);
