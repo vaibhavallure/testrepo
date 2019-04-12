@@ -19,6 +19,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
 {
     public function process()
     {
+
         switch ($this->getType()) {
             case 'rule':
                 $iteratorModel = Mage::getModel('feedexport/feed_generator_action_iterator_rule');
@@ -100,13 +101,141 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
             }
         }
 
-        $iteratorModel->save($result);
+        /*New code for configurable product variations*/
+        $id = Mage::app()->getRequest()->getParam('id');
+        $feed_custom = Mage::getModel('feedexport/feed')->load($id);
+        $feedName =strtolower($feed_custom->getName());
+        if(strpos($feedName, 'custom') !== false) {
 
+            switch ($this->getType()) {
+                case 'product':
+                    try {
+                        $this->log('Feed' . $id);
+                        $this->log('Product Result');
+                        $this->log($result);
+                        $this->log('creating custome array');
+                        $result = $this->getCustomResult($result,$feed_custom);
+                        $this->log($result);
+                        $iteratorModel->save($result);
+                    } catch (Exception $ex) {
+                        $this->log('Exceptions' . $ex->getMessage());
+                    }
+                    break;
+
+            }
+        } else{
+
+        $iteratorModel->save($result);
+        }
 
         if ($idx >= $size) {
             $iteratorModel->finish();
             $this->finish();
             $this->setIteratorType($this->getKey());
         }
+    }
+    public  function log($msg)
+    {
+        Mage::log($msg, Zend_Log::DEBUG, 'search.log', true);
+    }
+
+    public function getCustomResult($result,$feed_custom)
+    {
+        $mapping = $feed_custom->getMapping();
+        $headers = $mapping['header'];
+        $delimitter = $feed_custom->getDelimiter();
+        $separator="";
+        switch ($delimitter){
+            case 'tab':
+                $separator="/[\t]/";
+                break;
+            default:
+                $separator= $delimitter;
+        }
+
+        $colorIndex = array_search('color', $headers);
+        $imageIndex = array_search('image_link', $headers);
+       try {
+           $newResultArray = array();
+           foreach ($result as $product) {
+               $newProducts = array();
+               $dataArr = preg_split($separator, $product);
+               $index = array_search('give_color', $dataArr);
+
+               if ($index) {
+                   $dataArr[$index] = 'new_color';
+               }
+               $product = Mage::getModel('catalog/product')->load($dataArr[0]);
+
+
+               $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
+               foreach ($childProducts as $child) {
+                   $color = $imgSource = '';
+                   $metal = $child->getAttributeText('metal');
+                   if (isset($metal)) {
+                       $color = $metal;
+                       if($child->getThumbnail()){
+                       $imgSource = Mage::getModel('catalog/product_media_config')->getMediaUrl($child->getThumbnail());
+                       }
+                       else
+                       {
+                           $imgSource = $dataArr[$imageIndex];
+                       }
+                       $newItem = array('color' => $color, 'image' => $imgSource);
+                       array_push($newProducts, $newItem);
+
+                   } else {
+                       $new_product = $dataArr;
+                       $new_product[$colorIndex] = '';
+                       $new_product_string = implode("\t", $new_product);
+                       array_push($newResultArray, $new_product_string);
+                   }
+               }
+               $newProducts = $this->unique_multidim_array($newProducts, 'color');
+               foreach ($newProducts as $new_product) {
+                   $color = $new_product['color'];
+                   $imageUrl = $new_product['image'];
+                   $new_product = $dataArr;
+                   $new_product[0] = $new_product[0] . '-' . $this->getColorIntials($color);
+                   $new_product[$colorIndex] = $color;
+                   $new_product[$imageIndex] = $imageUrl;
+                   $new_product_string = implode("\t", $new_product);
+                   array_push($newResultArray, $new_product_string);
+               }
+               $newProducts = "";
+
+           }
+           return $newResultArray;
+       }
+       catch (Exception $ex)
+       {
+           $this->log('Exceptions'.$ex->getMessage());
+       }
+    }
+
+
+    public function unique_multidim_array($array, $key) {
+        $temp_array = array();
+        $i = 0;
+        $key_array = array();
+
+        foreach($array as $val) {
+            if (!in_array($val[$key], $key_array)) {
+                $key_array[$i] = $val[$key];
+                $temp_array[$i] = $val;
+            }
+            $i++;
+        }
+        return $temp_array;
+    }
+
+    public function getColorIntials($color)
+    {
+        $words = explode(" ", $color);
+        $acronym = "";
+        foreach ($words as $w) {
+            $acronym .= $w[0];
+        }
+        return $acronym;
     }
 }

@@ -353,6 +353,8 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Pattern_Product
                         $value = $product->getData($pattern['key']);
                     }
                 }
+
+
         }
 
         $this->dynamicAttributeValue($pattern, $value, $product);
@@ -368,6 +370,19 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Pattern_Product
         }
 
         $value = $this->applyFormatters($pattern, $value);
+        $id = Mage::app()->getRequest()->getParam('id');
+        $feed = Mage::getModel('feedexport/feed')->load($id);
+        $feedName =strtolower($feed->getName());
+        if(strpos($feedName, 'custom') !== false){
+        if($pattern['key'] == 'metal')
+        {
+            $testProduct = Mage::getModel('catalog/product')->load($product->getId());
+            if($testProduct->getTypeId() == Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE){
+                $value = 'give_color';
+            }
+
+        }
+        }
 
         return $value;
     }
