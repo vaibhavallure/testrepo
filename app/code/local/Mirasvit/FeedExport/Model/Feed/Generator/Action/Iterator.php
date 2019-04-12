@@ -113,6 +113,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                 case 'product':
                     try {
                         $this->log('Feed' . $id);
+                        $this->log('Feed Name' . $feedName);
                         $this->log('Product Result');
                         $this->log($result);
                         $this->log('creating custome array');
@@ -147,29 +148,31 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
 
     public function getCustomResult($result,$feed_custom)
     {
+        $this->log('In Custom Result');
         $mapping = $feed_custom->getMapping();
         $headers = $mapping['header'];
-        $delimitter = $feed_custom->getDelimiter();
-        $separator="";
-        switch ($delimitter){
-            case 'tab':
-                $separator="/[\t]/";
-                break;
-            default:
-                $separator= $delimitter;
-        }
+//        $delimitter = $feed_custom->getDelimiter();
+//        $separator="";
+//        switch ($delimitter){
+//            case 'tab':
+//                $separator="/[\t]/";
+//                break;
+//            default:
+//                $separator= $delimitter;
+//        }
 
         $colorIndex = array_search('color', $headers);
         $imageIndex = array_search('image_link', $headers);
        try {
            $newResultArray = array();
            foreach ($result as $product) {
-               $newProducts = array();
-               $dataArr = preg_split($separator, $product);
-               $index = array_search('give_color', $dataArr);
 
-               if ($index) {
-                   $dataArr[$index] = 'new_color';
+               $newProducts = array();
+               $dataArr = preg_split("/[\t]/", $product);
+
+               $this->log('Working on'.$dataArr[0]);
+               if ($colorIndex) {
+                   $dataArr[$colorIndex] = 'new_color';
                }
                $product = Mage::getModel('catalog/product')->load($dataArr[0]);
 
@@ -211,6 +214,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                $newProducts = "";
 
            }
+           $this->log('Custome Result'.$newResultArray);
            return $newResultArray;
        }
        catch (Exception $ex)
