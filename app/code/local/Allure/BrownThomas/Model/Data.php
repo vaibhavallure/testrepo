@@ -52,11 +52,11 @@ class Allure_BrownThomas_Model_Data
             $data[$product_id]['short_description'] = $this->formatString(str_replace(',', '',$_product->getName()), 20);
             $data[$product_id]['packing_method'] = $this->formatString("FLAT", 6);
             $data[$product_id]['unit_of_measure'] = $this->formatString("EA", 4);
-            $data[$product_id]['size_group_1'] = $this->formatString("ONE SIZE", 10);
+            $data[$product_id]['size_group_1'] = $this->formatString("BT215", 10);
             $data[$product_id]['size_group_2'] = $this->formatString("", 10);
-            $data[$product_id]['size_system'] = $this->formatString("", 4);
+            $data[$product_id]['size_system'] = $this->formatString("5", 4);
             $splitsku=$this->splitSku($_product->getSku());
-            $data[$product_id]['size_1'] = $this->formatString($splitsku['p_size'], 10);
+            $data[$product_id]['size_1'] = $this->formatString("1 SIZE", 10);
             $data[$product_id]['size_2'] = $this->formatString("", 10);
             $data[$product_id]['color'] = $this->formatString("GOLD", 10);
             $data[$product_id]['supplier_color'] = $this->formatString(strtoupper($this->getVendorColor($_product)), 24);
@@ -161,16 +161,17 @@ class Allure_BrownThomas_Model_Data
             $_product = Mage::getSingleton("catalog/product")->load($product_id);
 
             $formatedSKU = strtolower(preg_replace("/[^a-zA-Z0-9 ]+/", "", $_product->getSKU()));
-            $data[$product_id]['WC_Product_ID'] = $this->formatString(SELF::DEPARTMENT . "x" . SELF::SUPPLIER . "x" . $formatedSKU, 45);
+//            $data[$product_id]['WC_Product_ID'] = $this->formatString(SELF::DEPARTMENT . "x" . SELF::SUPPLIER . "x" . $formatedSKU, 45);
             $data[$product_id]['Barcode'] = $this->formatString($_product->getBarcode(), 13);
             $data[$product_id]['department'] = self::DEPARTMENT;
             $data[$product_id]['brand'] = 'Maria Tash';
-            $data[$product_id]['VPN'] = $this->formatString($formatedSKU, 30);
+//            $data[$product_id]['VPN'] = $this->formatString($formatedSKU, 30);
             $data[$product_id]['color_shade'] = $this->formatString(strtoupper($this->getVendorColor($_product)), 24);;
             $data[$product_id]['color_family']='GOLD';
             $data[$product_id]['product_name']=$_product->getName();
             $data[$product_id]['copy']=$_product->getShortDescription();
             $data[$product_id]['product_detail']="";
+            $data[$product_id]['product_type']=$this->getCategoryName($_product->getId());
 
         }
 
@@ -179,16 +180,17 @@ class Allure_BrownThomas_Model_Data
     public function getEnrichTitles()
     {
         return array(
-            1=>"WCID",
+//            1=>"WCID",
             2=>"Barcode",
             3=>"Department",
             4=>"Brand",
-            5=>"VPN",
+//            5=>"VPN",
             6=>"Colour Shade",
             7=>"Colour Family",
             8=>"Product Name",
             9=>"Copy",
-            10=>"Product Details"
+            10=>"Product Details",
+            11=>"Product Type"
         );
     }
 
@@ -262,5 +264,24 @@ class Allure_BrownThomas_Model_Data
 
 
        return $readConnection->fetchCol($sql);
+    }
+
+    public function getCategoryName($product_id)
+    {
+        $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product_id);
+        $parentProduct=Mage::getSingleton("catalog/product")->load(current($parentIds));
+        $categoryIds = $parentProduct->getCategoryIds();
+        $category=Mage::getModel('catalog/category')->load(current($categoryIds));
+        return $this->checkForEarrings($category->getName());
+    }
+
+    public function checkForEarrings($cat_name)
+    {
+        $EaringsArr=array("Earrings","Ear Cartilage","Helix Jewelry","Tragus Jewelry","Tash Rook Jewelry","Ear Head Jewelry","Conch Jewelry","Rook Jewelry","Daith Jewelry","Large Earrings");
+
+        if(in_array("$cat_name",$EaringsArr))
+            return "Earrings";
+        else
+            return $cat_name;
     }
 }

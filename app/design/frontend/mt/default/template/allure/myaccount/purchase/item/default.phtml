@@ -155,8 +155,10 @@
 							<td class="cart_col3">
 								<span class="price_multi"></span>
 								<span class="price">
-									<?php echo Mage::helper('core')->currency($_item->getPrice())?>
-								</span>
+								<?php
+                                $ord=Mage::getSingleton('sales/order')->load($_item->getOrderId());
+                                echo Mage::app()->getLocale()->currency($ord->getOrderCurrencyCode())->toCurrency($_item->getPrice()); ?>
+                                </span>
 							</td>
 
 							<td class="cart_col6">

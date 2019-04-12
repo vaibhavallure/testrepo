@@ -5,7 +5,6 @@ umask(0);
 Mage::app();
 
 
-
 if(isset($_GET['stk']))
     $file=Mage::helper("brownthomas/data")->generateStockFile();
 elseif(isset($_GET['enrich']))
@@ -15,7 +14,7 @@ else
 
 
 
-
+/*
 if (file_exists($file)) {
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
@@ -26,7 +25,7 @@ if (file_exists($file)) {
     header('Content-Length: ' . filesize($file));
     readfile($file);
     exit;
-}
+}*/
 
 echo "DONE";
 
