@@ -625,15 +625,8 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
         }
 
 
-        /*allure code to check customer created from teamwork*/
-        if($this->getCustomerType())
-            $teamworkCustomer=true;
-        else
-            $teamworkCustomer=false;
-
-
         $this->_sendEmailTemplate($types[$type], self::XML_PATH_REGISTER_EMAIL_IDENTITY,
-            array('customer' => $this, 'back_url' => $backUrl, 'teamworkCustomer' => $teamworkCustomer), $storeId,null,Mage::getStoreConfig(SELF::XML_PATH_EMAIL_BCC));
+            array('customer' => $this, 'back_url' => $backUrl), $storeId,null,Mage::getStoreConfig(SELF::XML_PATH_EMAIL_BCC));
         $this->cleanPasswordsValidationData();
 
         return $this;
