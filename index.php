@@ -298,15 +298,17 @@ function actionBrief(){
                 $html .= $briefClass->delete($id);
             } else if($btnaction == 'copier'){
                 $data["dateenvoi"] = date("d/m/Y");
-
+                $yearbrief = date('y');
                 if($data['typebrief'] == 'livrable_eu'){
                     $typebrief = 'iosliv';
                 }else if($data['typebrief'] == 'primeur_eu'){
                     $typebrief = 'iosprim';
+                    $yearbrief =$yearbrief - 1;
                 }else if($data['typebrief'] == 'livrable_us'){
                     $typebrief = 'uiosliv';
                 }else if($data['typebrief'] == 'primeur_us'){
                     $typebrief = 'uiosprim';
+                    $yearbrief =$yearbrief - 1;
                 }else if($data['typebrief'] == 'edv'){
                     $typebrief = 'edv';
                 }else if($data['typebrief'] == 'staff_pick'){
@@ -315,7 +317,10 @@ function actionBrief(){
                     $typebrief = 'iospart';
                 }
                 $codeBrief= $bddClass->selectone("SELECT * FROM config Where name = ?", array($typebrief),'value');
-                $codeBrief = date('y').'-'.$codeBrief;
+                if($codeBrief < 10){
+                    $codeBrief = "0".$codeBrief;
+                }
+                $codeBrief = $yearbrief.'-'.$codeBrief;
                 $data['code'] = $codeBrief;
 
                 $return = $briefClass->create($data, true);
