@@ -199,7 +199,9 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                    $imageUrl = $new_product['image'];
                    $new_product = $dataArr;
                    $new_product[0] = $new_product[0] . $this->getColorIntials($color);
-                   $new_product[$titleIndex] = $new_product[$titleIndex].' '.$color;
+                   if($color!='NO VARIANTS') {
+                       $new_product[$titleIndex] = $new_product[$titleIndex] . ' ' . $color;
+                   }
                    $new_product[$colorIndex] = $color;
                    $new_product[$imageIndex] = $imageUrl;
                    $new_product_string = implode("\t", $new_product);
@@ -227,7 +229,9 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                    }
                    $new_product = $dataArr;
                    $new_product[0] = $new_product[0] . $this->getColorIntials($color);
-                   $new_product[$titleIndex] = $new_product[$titleIndex].' '.$color;
+                   if($color!='NO VARIANTS') {
+                       $new_product[$titleIndex] = $new_product[$titleIndex] . ' ' . $color;
+                   }
                    $new_product[$colorIndex] = $color;
                    $new_product[$imageIndex] = $imgSource;
                    $new_product_string = implode("\t", $new_product);
