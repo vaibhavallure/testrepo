@@ -70,18 +70,14 @@ class Teamwork_Universalcustomers_Model_Universalcustomers extends Mage_Core_Mod
             $customer=Mage::getModel("customer/customer")->setWebsiteId( Mage::app()->getStore()->getWebsiteId() )->loadByEmail($profile['email']);
             Mage::log("searching customer by email id =>".$profile['email'], Zend_Log::DEBUG, "tw_guid_changes.log", true);
             if($customer->getId()) {
-                Mage::log("customer found for email id =>" . $profile['email'] . " customer id=> " . $customer->getId(), Zend_Log::DEBUG, "tw_guid_changes.log", true);
-                if($customer->getId()==$profile['entity_id']) {
-                    Mage::log("entity id match" . $profile['email'] . " customer id=> " . $customer->getId(), Zend_Log::DEBUG, "tw_guid_changes.log", true);
+
+                    Mage::log("customer found for email id =>" . $profile['email'] . " customer id=> " . $customer->getId(), Zend_Log::DEBUG, "tw_guid_changes.log", true);
                     Mage::log(" " . $profile['email'] . " customer id=> " . $customer->getId() . " old guid => " . $customer->getTwUcGuid(), Zend_Log::DEBUG, "tw_guid_changes.log", true);
+                    Mage::log("customer magento_entity_id=>".$customer->getId()." tw_entity_id =>".$profile['entity_id'], Zend_Log::DEBUG, "tw_guid_changes.log", true);
+
                         $customer->setTwUcGuid($profile['customer_id']);
                         $customer->setTeamworkCustomerId($profile['customer_id']);
-                }
-                else{
-                    Mage::log("customer found but different entity id magento_entity_id=>".$customer->getId()." tw_entity_id =>".$profile['entity_id'], Zend_Log::DEBUG, "tw_guid_changes.log", true);
-                }
             }
-            Mage::log("email=> ".$customer->getEmail(), Zend_Log::DEBUG, "tw_guid_changes.log", true);
         }
         /*--------------------------------------------------------------------------------------------------*/
         /*allure code end------------------------------------------------------------------------------------*/
