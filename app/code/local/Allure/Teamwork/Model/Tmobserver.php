@@ -300,6 +300,7 @@ class Allure_Teamwork_Model_Tmobserver{
                         ->setPasswordCreatedAt(time())
                         ->setCustomerType(20)  //teamwork db - 20
                         ->setTeamworkCustomerId($customerDetails["CustomerId"])
+                        ->setTwUcGuid($customerDetails["CustomerId"])
                         ->setIsTeamworkCustomer(1)
                         ->setTwAcceptMarketing($customerDetails["AcceptMarketing"])
                         ->setTwAcceptTransactional($customerDetails["AcceptTransactional1"])
