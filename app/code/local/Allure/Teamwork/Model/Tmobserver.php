@@ -38,6 +38,81 @@ class Allure_Teamwork_Model_Tmobserver{
         Mage::log($data,Zend_Log::DEBUG,$logFile,true);
     }
     
+    /**
+     * sync order data by day at particular time in once per day
+     */
+    public function syncOrdersByDay(){
+        $this->addLog("Teamwork day sync request - ".gmdate("Y-m-d h:i:s")); 
+        try{
+            $helper = Mage::helper("allure_teamwork");
+            if(!$helper->getTeamworkSyncStatus()){
+                $this->addLog("Teamwork live data sync disabled.");
+                return;
+            }
+            
+            if(!$helper->isEnableCronPerDayOnce()){
+                $this->addLog("Teamwork live data sync once per day cron disabled.");
+                return;
+            }
+            
+            $urlPath = $helper->getTeamworkSyncDataUrl();
+            $requestURL = $urlPath . self::TM_URL;
+            $token = trim($helper->getTeamworkSyncDataToken());
+            $sendRequest = curl_init($requestURL);
+            curl_setopt($sendRequest, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+            curl_setopt($sendRequest, CURLOPT_HEADER, false);
+            curl_setopt($sendRequest, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($sendRequest, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($sendRequest, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($sendRequest, CURLOPT_FOLLOWLOCATION, 0);
+            curl_setopt($sendRequest, CURLOPT_HTTPHEADER, array(
+                "Content-Type: application/json",
+                "Authorization: Bearer ".$token
+            ));
+            
+            $operation = self::TEAMWORK_LIVE_ORDER_OPTR;
+            $logModel = Mage::getModel("allure_teamwork/log")
+                ->load($operation,'operation');
+            
+            if(!$logModel->getId()){
+                $this->addLog("live order teamwork operation not set.");
+                return;
+            }
+            
+            $currentTime = gmdate("Y-m-d h:i:s");
+            
+            $queryTime = $helper->getTeamworkQueryTime();
+            if(!isset($queryTime)){
+                $queryTime = 5;
+            }
+            
+            $prevQueryTime = $queryTime * (-1);
+            
+            $startTime = $logModel->getPage();
+            
+            $prevTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($startTime)));
+            $endTime = $currentTime;
+            $this->addLog("query start time - ".$prevTime);
+            $this->addLog("query end time - ".$endTime);
+            
+            $logModel->setPage($endTime)->save();
+            
+            $requestArgs = array(
+                "start_time" => $prevTime,
+                "end_time"   => $startTime
+            );
+            // convert requestArgs to json
+            if ($requestArgs != null) {
+                $json_arguments = json_encode($requestArgs);
+                curl_setopt($sendRequest, CURLOPT_POSTFIELDS, $json_arguments);
+            }
+            $response  = curl_exec($sendRequest);
+            $this->addDataIntoSystem($response);
+        }catch(Exception $e){
+            $this->addLog("Exception: ".$e->getMessage());
+        }
+    }
+    
     public function synkTeamwokLiveOrders(){
         $this->addLog("Teamwork sync request call at - ".gmdate("Y-m-d h:i:s"));
         try{
