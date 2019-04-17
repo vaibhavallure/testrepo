@@ -3,7 +3,7 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
     const FOUNDATION_FILE="conc_upld_f";
-    const STOCK_FILE="inv_upload";
+    const STOCK_FILE="inv_upload_1";
 
     var $file="";
 

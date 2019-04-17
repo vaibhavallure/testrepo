@@ -95,14 +95,14 @@ class Allure_BrownThomas_Model_Data
             $_product = Mage::getSingleton("catalog/product")->load($product_id);
             $data[$product_id]['BARCODE'] = $_product->getBarcode();
             $data[$product_id]['supplier'] = self::SUPPLIER;
-            $data[$product_id]['Concession_Name'] = "VENUS BY MARIA TASH";
-            $data[$product_id]['Business_Type'] = "CONCESSIONS";
+            $data[$product_id]['Concession_Name'] = "VENUS BY MARIA TASH LIMITED";
+            $data[$product_id]['Business_Type'] = "CONCESSION";
             $data[$product_id]['Location_Name'] ="BROWN_THOMAS_DUBLIN";
             $data[$product_id]['Quantity'] =$this->formatString($_product->getBrownThomasInventory(),9,0,STR_PAD_LEFT);
             $data[$product_id]['blank1'] ="";
             $data[$product_id]['blank2'] ="";
             $data[$product_id]['blank3'] ="";
-
+            $data[$product_id]['blank4'] ="";
         }
 
         return $data;
