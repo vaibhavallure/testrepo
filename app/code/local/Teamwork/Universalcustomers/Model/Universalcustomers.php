@@ -60,7 +60,30 @@ class Teamwork_Universalcustomers_Model_Universalcustomers extends Mage_Core_Mod
         }
         
         $customer = Mage::getModel('customer/customer')->setWebsiteId( Mage::app()->getStore()->getWebsiteId() )->loadByTwUcGuid( $profile['customer_id'] );
-        
+
+
+        /*allure code start--------------------------------------------------------------------------------------*/
+        /*-------------------------------set tw_uc_guid if not present-------------------------------------------------*/
+        if(!$customer->getId())
+        {
+            Mage::log("customer not found for this guid =>".$profile['customer_id'], Zend_Log::DEBUG, "tw_guid_changes.log", true);
+            $customer=Mage::getModel("customer/customer")->setWebsiteId( Mage::app()->getStore()->getWebsiteId() )->loadByEmail($profile['email']);
+            Mage::log("searching customer by email id =>".$profile['email'], Zend_Log::DEBUG, "tw_guid_changes.log", true);
+            if($customer->getId()) {
+
+                    Mage::log("customer found for email id =>" . $profile['email'] . " customer id=> " . $customer->getId(), Zend_Log::DEBUG, "tw_guid_changes.log", true);
+                    Mage::log(" " . $profile['email'] . " customer id=> " . $customer->getId() . " old guid => " . $customer->getTwUcGuid(), Zend_Log::DEBUG, "tw_guid_changes.log", true);
+                    Mage::log("customer magento_entity_id=>".$customer->getId()." tw_entity_id =>".$profile['entity_id'], Zend_Log::DEBUG, "tw_guid_changes.log", true);
+
+                        $customer->setTwUcGuid($profile['customer_id']);
+                        $customer->setTeamworkCustomerId($profile['customer_id']);
+            }
+        }
+        /*--------------------------------------------------------------------------------------------------*/
+        /*allure code end------------------------------------------------------------------------------------*/
+
+
+
         $addressModel = Mage::getModel('teamwork_universalcustomers/address');
         $addressModel->updateAddressesAfterLogin($customerData, $customer, $profile);
         
