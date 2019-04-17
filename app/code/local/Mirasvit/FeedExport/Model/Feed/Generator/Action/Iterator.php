@@ -155,6 +155,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
         $colorIndex = array_search('color', $headers);
         $titleIndex = array_search('title', $headers);
         $imageIndex = array_search('image_link', $headers);
+        $priceIndex = array_search('price',$headers);
        try {
            $newResultArray = array();
            foreach ($result as $product) {
@@ -162,7 +163,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                $newProducts = array();
                $dataArr = preg_split("/[\t]/", $product);
                $index = array_search('give_color', $dataArr);
-
+               $dataArr[$priceIndex] = $dataArr[$priceIndex].' USD';
                if ($index) {
                    $dataArr[$index] = 'new_color';
                }
@@ -187,7 +188,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
 
                    } else {
                        $new_product = $dataArr;
-                       $new_product[$colorIndex] = '';
+                       $new_product[$colorIndex] = 'NO VARIANTS';
                        $new_product_string = implode("\t", $new_product);
                        array_push($newResultArray, $new_product_string);
                    }
@@ -214,7 +215,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                        $color = $metal;
                    }
                    else{
-                       $color="";
+                       $color="NO VARIANTS";
                    }
 
                    if($product->getThumbnail()){
