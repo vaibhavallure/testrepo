@@ -103,10 +103,10 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
 
         /*New code for configurable product variations*/
         $id = Mage::app()->getRequest()->getParam('id');
-        $mode = Mage::app()->getRequest()->getParam('mode');
         $feed_custom = Mage::getModel('feedexport/feed')->load($id);
         $feedName =strtolower($feed_custom->getName());
-        if($mode =='new'){
+
+
         if(strpos($feedName, 'custom') !== false) {
 
             switch ($this->getType()) {
@@ -116,7 +116,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                         $this->log('Feed Name' . $feedName);
                         $this->log('Product Result');
                         $this->log($result);
-                        $this->log('creating custome array');
+                        $this->log('creating custom array');
                         $result = $this->getCustomResult($result,$feed_custom);
                         $this->log($result);
                         $iteratorModel->save($result);
@@ -124,16 +124,16 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                         $this->log('Exceptions' . $ex->getMessage());
                     }
                     break;
+                default:
+                    $iteratorModel->save($result);
+                    break;
 
             }
         }
         else{
             $iteratorModel->save($result);
         }
-        } else{
 
-        $iteratorModel->save($result);
-        }
 
         if ($idx >= $size) {
             $iteratorModel->finish();
@@ -151,16 +151,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
         $this->log('In Custom Result');
         $mapping = $feed_custom->getMapping();
         $headers = $mapping['header'];
-//        $delimitter = $feed_custom->getDelimiter();
-//        $separator="";
-//        switch ($delimitter){
-//            case 'tab':
-//                $separator="/[\t]/";
-//                break;
-//            default:
-//                $separator= $delimitter;
-//        }
-
+        $this->log($headers);
         $colorIndex = array_search('color', $headers);
         $imageIndex = array_search('image_link', $headers);
        try {
@@ -169,14 +160,14 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
 
                $newProducts = array();
                $dataArr = preg_split("/[\t]/", $product);
+               $index = array_search('give_color', $dataArr);
 
-               $this->log('Working on'.$dataArr[0]);
-               if ($colorIndex) {
-                   $dataArr[$colorIndex] = 'new_color';
+               if ($index) {
+                   $dataArr[$index] = 'new_color';
                }
                $product = Mage::getModel('catalog/product')->load($dataArr[0]);
 
-
+               if($product->getTypeId() == Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE){
                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
                foreach ($childProducts as $child) {
                    $color = $imgSource = '';
@@ -205,13 +196,39 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                    $color = $new_product['color'];
                    $imageUrl = $new_product['image'];
                    $new_product = $dataArr;
-                   $new_product[0] = $new_product[0] . '-' . $this->getColorIntials($color);
+                   $new_product[0] = $new_product[0] . $this->getColorIntials($color);
                    $new_product[$colorIndex] = $color;
                    $new_product[$imageIndex] = $imageUrl;
                    $new_product_string = implode("\t", $new_product);
                    array_push($newResultArray, $new_product_string);
                }
                $newProducts = "";
+               }
+               else{
+                   $color=$imgSource='';
+                   $metal = $product->getAttributeText('metal');
+                   if($metal)
+                   {
+                       $color = $metal;
+                   }
+                   else{
+                       $color="";
+                   }
+
+                   if($product->getThumbnail()){
+                       $imgSource = Mage::getModel('catalog/product_media_config')->getMediaUrl($product->getThumbnail());
+                   }
+                   else
+                   {
+                       $imgSource = $dataArr[$imageIndex];
+                   }
+                   $new_product = $dataArr;
+                   $new_product[0] = $new_product[0] . $this->getColorIntials($color);
+                   $new_product[$colorIndex] = $color;
+                   $new_product[$imageIndex] = $imgSource;
+                   $new_product_string = implode("\t", $new_product);
+                   array_push($newResultArray, $new_product_string);
+               }
 
            }
            $this->log('Custome Result'.$newResultArray);
@@ -245,6 +262,9 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
         $acronym = "";
         foreach ($words as $w) {
             $acronym .= $w[0];
+        }
+        if($acronym!=""){
+            return '-'.$acronym;
         }
         return $acronym;
     }
