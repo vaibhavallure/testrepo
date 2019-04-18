@@ -22,6 +22,13 @@ class Allure_Appointments_Model_Appointments extends Mage_Core_Model_Abstract
     	return $status;
     }
 
+    public function getReminderType($key=null)
+    {
+        $status =array('nd' => 'Regular', 'day' => 'Day Reminder', 'week' => 'Week Reminder');
+        if($key)
+            return $status[$key];
+        return $status;
+    }
 
     protected function _beforeSave() {
         parent::_beforeSave();

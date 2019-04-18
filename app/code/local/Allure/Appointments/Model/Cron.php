@@ -109,28 +109,29 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 
 
 
-            $templateId = $configData['email_template_appointment_remind'][$storeKey];
 
             $storeaddress=$configData['store_address'][$storeKey];
 
-            $specialStoreId = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
 
-            if($storeId==$specialStoreId)
-            {
                 if($type=="day")
                     $templateId = $configData['email_template_appointment_remind_day'][$storeKey];
                 elseif ($type=="week")
                     $templateId = $configData['email_template_appointment_remind_week'][$storeKey];
+                else
+                    $templateId = $configData['email_template_appointment_remind'][$storeKey];
+
+                if(empty($templateId))
+                    $templateId = $configData['email_template_appointment_remind'][$storeKey];
 
 
-                if($type!="nd")
+            if($type!="nd")
                 {
                     $addressAr=explode(",",$configData['store_address'][$storeKey]);
                     $addressAr[0]="";
                     $storeaddress=implode($addressAr);
 
                 }
-            }
+
 
 
 
@@ -264,14 +265,16 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
 
 
 
-                $smsText = $configData['reminder_sms_message'][$storeKey];
-
-                if($storeId==$specialStoreId) {
                     if ($type == "day")
                         $smsText = $configData['day_reminder_sms_message'][$storeKey];
                     elseif ($type == "week")
                         $smsText = $configData['week_reminder_sms_message'][$storeKey];
-                }
+                    else
+                        $smsText = $configData['reminder_sms_message'][$storeKey];
+
+
+                    if(empty($smsText))
+                        $smsText = $configData['reminder_sms_message'][$storeKey];
 
 
 
