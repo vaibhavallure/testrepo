@@ -141,10 +141,11 @@ if (window.ApplePaySession) {
 
 		var shippingContact = event.payment.shippingContact;
 
-		/*validation code for last name---*/
+        /*validation code for last name---*/
         if(shippingContact.familyName=="") {
             Allure.ApplePay.session.abort();
             alert('Error: Last name is required');
+            Allure.ApplePay.flag.active = false;
             return false;
         }
         /*----validation code ended-------*/
