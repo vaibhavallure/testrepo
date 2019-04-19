@@ -26,6 +26,10 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     const XML_TEAMWORK_CRON_EXPR = "allure_teamwork/teamwork_salesforce_settings/cron_time";
     
     const XML_TEAMWORK_QUERY_TIME = "allure_teamwork/teamwork_salesforce_settings/query_time";
+    
+    const XML_TEAMWORK_ENABLE_CRON_PER_DAY_ONCE = "allure_teamwork/teamwork_salesforce_settings/is_enable_cron_perday";
+    const XML_TEAMWORK_PER_DAY_CRON_EXPR = "allure_teamwork/teamwork_salesforce_settings/perday_cron_time";
+    
     /**
      * @return teamwork module status
      */
@@ -98,5 +102,9 @@ class Allure_Teamwork_Helper_Data extends Mage_Core_Helper_Data
     
     public function getTeamworkQueryTime(){
         return Mage::getStoreConfig(self::XML_TEAMWORK_QUERY_TIME);
+    }
+    
+    public function isEnableCronPerDayOnce(){
+        return Mage::getStoreConfig(self::XML_TEAMWORK_ENABLE_CRON_PER_DAY_ONCE);
     }
 }
