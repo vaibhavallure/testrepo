@@ -141,6 +141,15 @@ if (window.ApplePaySession) {
 
 		var shippingContact = event.payment.shippingContact;
 
+        /*validation code for last name---*/
+        if(shippingContact.familyName=="") {
+            Allure.ApplePay.session.abort();
+            alert('Error: Last name is required');
+            Allure.ApplePay.flag.active = false;
+            return false;
+        }
+        /*----validation code ended-------*/
+
 		console.log('START ACTION: sendPaymentToken');
 		var promise = Allure.ApplePay.action.sendPaymentToken(event.payment.token, shippingContact);
 		console.log('END ACTION: sendPaymentToken');
