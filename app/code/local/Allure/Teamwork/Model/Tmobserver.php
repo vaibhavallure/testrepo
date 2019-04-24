@@ -91,6 +91,7 @@ class Allure_Teamwork_Model_Tmobserver{
             $startTime = $logModel->getPage();
             
             $prevTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($startTime)));
+            $currentTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($currentTime)));
             $endTime = $currentTime;
             $this->addLog("query start time - ".$prevTime);
             $this->addLog("query end time - ".$endTime);
@@ -152,9 +153,12 @@ class Allure_Teamwork_Model_Tmobserver{
             
             $prevQueryTime = $queryTime * (-1);
             
+            $currentTime = gmdate("Y-m-d h:i:s");
+            
             $startTime = $logModel->getPage();
             $prevTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($startTime)));
-            $endTime = date('Y-m-d H:i:s', strtotime("{$queryTime} minutes", strtotime($startTime)));
+            //$endTime = date('Y-m-d H:i:s', strtotime("{$queryTime} minutes", strtotime($startTime)));
+            $endTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($currentTime)));
             $this->addLog("query start time - ".$prevTime);
             $this->addLog("query end time - ".$startTime);
             
