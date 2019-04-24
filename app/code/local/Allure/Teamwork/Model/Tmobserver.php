@@ -160,7 +160,7 @@ class Allure_Teamwork_Model_Tmobserver{
             //$endTime = date('Y-m-d H:i:s', strtotime("{$queryTime} minutes", strtotime($startTime)));
             $endTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($currentTime)));
             $this->addLog("query start time - ".$prevTime);
-            $this->addLog("query end time - ".$startTime);
+            $this->addLog("query end time - ".$endTime);
             
             $logModel->setPage($endTime)->save();
             
