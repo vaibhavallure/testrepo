@@ -4,6 +4,9 @@ require_once('../../app/Mage.php');
 umask(0);
 Mage::app();
 
+Mage::getModel("brownthomas/data")->getUpdatedProducts()
+    ;
+die();
 
 if(isset($_GET['stk']))
     $file=Mage::helper("brownthomas/data")->generateStockFile();
