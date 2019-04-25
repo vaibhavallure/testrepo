@@ -6,6 +6,9 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
     const STOCK_FILE="inv_upload_1";
 
     var $file="";
+    var $fileObj="";
+    var $newProducts="";
+
 
     private function config() {
         return Mage::helper("brownthomas/config");
@@ -51,6 +54,7 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
         $ioo->open(array('path' => $path));
         $ioo->streamOpen($file, 'w+');
         $ioo->streamLock(true);
+        $this->fileObj=$ioo;
         return $ioo;
     }
     public function getWritableString($data)
@@ -61,26 +65,31 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function generateFoundationFile()
     {
-        $file=$this->createFile(self::FOUNDATION_FILE);
-        $FITEM_FUDAS=$this->modelData()->getFITEM_FUDAS();
+        $this->add_log("generatedd file");
+        $this->createFile(self::FOUNDATION_FILE);
+
+        $this->newProducts=$this->modelData()->getNewProducts();
+        $FITEM_FUDAS_NewProduct=$this->modelData()->getFITEM_FUDAS($this->newProducts,'N');
+        $FITEM_FUDAS_UpdatedProduct=$this->modelData()->getFITEM_FUDAS($this->modelData()->getUpdatedProducts(),'U');
+
 
         /*-----------write header------------------------------*/
         $data=$this->modelData()->getFoundationHeader();
-        $file->streamWrite($this->getWritableString($data));
+        $this->fileObj->streamWrite($this->getWritableString($data));
 
         /*------------write FITEM----------------------------*/
-        $fitem=$FITEM_FUDAS['FITEM'];
-        foreach ($fitem as $data) { $file->streamWrite($this->getWritableString($data)); }
+        $this->writeFile($FITEM_FUDAS_NewProduct['FITEM']);
+        $this->writeFile($FITEM_FUDAS_UpdatedProduct['FITEM']);
 
         /*------------write FUDOS-----------------------------*/
-        $fudos=$FITEM_FUDAS['FUDAS'];
-        foreach ($fudos as $data) {$file->streamWrite($this->getWritableString($data));}
+        $this->writeFile($FITEM_FUDAS_NewProduct['FUDAS']);
+        $this->writeFile($FITEM_FUDAS_UpdatedProduct['FUDAS']);
 
         /*------------write PRICE-----------------------------*/
         $PRICE_DATA = $this->modelData()->getPriceData();
-        foreach ($PRICE_DATA as $data){$file->streamWrite($this->getWritableString($data));}
+        $this->writeFile($PRICE_DATA);
 
-        return $this->file;
+        return array('foundation_file'=>$this->file,'enrich_file'=>$this->generateEnrichFile());
 
     }
 
@@ -111,7 +120,7 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($cl,1,$titles);
             $cl++;
           }
-           $enrich_data=$this->modelData()->getEnrichData();
+           $enrich_data=$this->modelData()->getEnrichData($this->newProducts);
            $rw=2;
 
            foreach ($enrich_data as $data)
@@ -129,6 +138,11 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
             $objWriter->save($filepath);
 
             return $filepath;
+    }
+
+    public function writeFile($data)
+    {
+        foreach ($data as $row) { $this->fileObj->streamWrite($this->getWritableString($row)); }
     }
 
 }

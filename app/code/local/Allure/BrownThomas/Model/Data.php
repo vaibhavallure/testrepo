@@ -31,17 +31,16 @@ class Allure_BrownThomas_Model_Data
         return $data;
     }
 
-    public function getFITEM_FUDAS()
+    public function getFITEM_FUDAS($products=null,$action_type)
     {
 
-        $products=$this->getProducts();
         $data = array();
         $dataFudas=array();
 
         foreach ($products as $product_id) {
             $_product = Mage::getSingleton("catalog/product")->load($product_id);
             $data[$product_id]['record_type'] = 'FITEM';
-            $data[$product_id]['action_type'] = 'N';
+            $data[$product_id]['action_type'] = $action_type;
             $data[$product_id]['UPC'] = $this->formatString($_product->getBarcode(), 13);
             $data[$product_id]['UPC_TYPE'] = 'EAN13';
             $formatedSKU = $this->formatSKU($_product->getSKU());
@@ -71,12 +70,12 @@ class Allure_BrownThomas_Model_Data
 
             /*---------------------------------fudas data----------------------------------------------*/
             $dataFudas[$product_id]['record_type'] = 'FUDAS';
-            $dataFudas[$product_id]['action_type'] = 'N';
+            $dataFudas[$product_id]['action_type'] = $action_type;
             $dataFudas[$product_id]['UPC'] = $this->formatString($_product->getBarcode(), 13);
             $dataFudas[$product_id]['UDA_name'] = $this->formatString('web_enabled_uda', 16);
             $dataFudas[$product_id]['UDA_value'] = $this->formatString(1, 250);
 
-
+            $this->productUsed($product_id);
         }
 
         return array("FITEM"=>$data,"FUDAS"=>$dataFudas);
@@ -87,7 +86,8 @@ class Allure_BrownThomas_Model_Data
 
     public function getStock()
     {
-        $products=$this->getProducts();
+        $collection = Mage::getModel('brownthomas/product')->getCollection();
+        $products=$collection->getAllIds();
 
         $data = array();
 
@@ -151,10 +151,8 @@ class Allure_BrownThomas_Model_Data
         return $data;
     }
 
-    public function getEnrichData()
+    public function getEnrichData($products)
     {
-        $products=$this->getProducts();
-
         $data = array();
 
         foreach ($products as $product_id) {
@@ -228,7 +226,7 @@ class Allure_BrownThomas_Model_Data
             $priceData[$index]['effective_date'] =$this->formatString($updatedDate, 13);
             $price = (float)$_product->getDublinPrice();
             $priceData[$index]['unit_retail'] = $this->formatString(number_format($price,2,'.',''),21,0, STR_PAD_LEFT);
-            $priceData[$index]['clearance_indicator'] = $this->formatString('Y',1);
+            $priceData[$index]['clearance_indicator'] = $this->formatString('N',1);
             $id = $product->getRowId();
             $productDetails['last_sent_date']=$_product->getUpdatedAt();
             $priceModel->load($id)->addData($productDetails)->save();
@@ -245,25 +243,26 @@ class Allure_BrownThomas_Model_Data
         Mage::helper("brownthomas/data")->add_log($message);
     }
 
-    public function getProducts()
+    public function getNewProducts()
     {
-        $readConnection = $this->readConnection();
-        $attrbute_id = $this->data()->getAttributeId('brown_thomas_inventory');
-        $barcode_attr_id=$this->data()->getAttributeId('barcode');
-        $online=$this->data()->getAttributeId('brown_thomas_online');
+        $_products = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToFilter(array(array('attribute' => 'brown_thomas_online', 'eq' => 1)))
+            ->addAttributeToFilter(array(array('attribute' => 'type_id', 'eq' => 'simple')))
+            ->addAttributeToFilter(array(array('attribute' => 'status', 'eq' => 1)))
+            ->addAttributeToFilter(array(array('attribute' => 'barcode', 'neq' => 'NULL')))
+            ->addAttributeToFilter(array(array('attribute' => 'brown_thomas_inventory', 'neq' => 'NULL')));
 
-        $whr = 'WHERE cpe.type_id="simple" 
-        AND (cpv.attribute_id=' . $attrbute_id . ' AND cpv.value IS NOT NULL AND cpv.value >=0 ) 
-        AND (bar.attribute_id=' . $barcode_attr_id . ' AND bar.value IS NOT NULL)
-        AND (online.attribute_id=' . $online . ' AND online.value=1)';
+        $_products->getSelect()->joinLeft(array('abp' => 'allure_brownthomas_product'), 'abp.product_id = e.entity_id');
+        $_products->getSelect()->where("abp.row_id IS NULL");
 
-        $sql = 'SELECT cpv.entity_id from catalog_product_entity cpe 
-                JOIN catalog_product_entity_varchar cpv on cpv.entity_id=cpe.entity_id 
-                JOIN catalog_product_entity_varchar bar on bar.entity_id=cpe.entity_id
-                JOIN catalog_product_entity_int online on online.entity_id=cpe.entity_id ' . $whr;
+        return $_products->getAllIds();
+    }
+    public function getUpdatedProducts()
+    {
+        $_products = Mage::getModel('brownthomas/product')->getCollection();
+        $_products->getSelect()->where("updated_date>last_sent_date");
+        return $_products->getAllIds();
 
-
-       return $readConnection->fetchCol($sql);
     }
 
     public function getCategoryName($product_id)
@@ -283,5 +282,26 @@ class Allure_BrownThomas_Model_Data
             return "Earrings";
         else
             return $cat_name;
+    }
+
+    public function productUsed($product_id)
+    {
+        $model = Mage::getModel('brownthomas/product');
+        $product=$model->load($product_id, 'product_id');
+
+        try {
+            if ($product->getRowId()) {
+                $data['last_sent_date'] = Varien_Date::now();
+                $product->addData($data)->save();
+            } else {
+                $data['product_id'] = $product_id;
+                $data['last_sent_date'] = Varien_Date::now();
+                $model->setData($data)->save();
+            }
+        }
+        catch (Exception $e)
+        {
+            $this->add_log("Exceptions:". $e->getMessage());
+        }
     }
 }

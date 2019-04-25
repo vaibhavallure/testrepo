@@ -11,7 +11,6 @@ class Allure_BrownThomas_Model_Observer
 
     public function checkPrice($observer)
     {
-
         $this->add_log('In Brown Thomas Price Observer');
 
         $product = $observer->getEvent()->getProduct();
@@ -24,6 +23,12 @@ class Allure_BrownThomas_Model_Observer
         $brownthomasInventory = $product->getBrownThomasInventory();
         $barcode = $product->getBarcode();
 
+
+
+        if(!$product->getBrownThomasOnline())
+            return "";
+
+        $this->add_log('brown thomas product updated'.$product->getEntityId());
 
         try {
             if (isset($productDetails['product_id']) && isset($productDetails['price']) && isset($brownthomasInventory) && isset($barcode)) {
@@ -58,9 +63,15 @@ class Allure_BrownThomas_Model_Observer
                     $this->add_log('Insert Request Product Id='.$productId);
                     $rowId = $priceModel->setData($productDetails)->save()->getRowId();
                     $this->add_log('Inserted ID='.$rowId);
-
-
                 }
+
+                /*-----check if product present in allure_brownthomas_product if yes then change updated date*/
+                $prod=Mage::getModel("brownthomas/product")->load($productDetails['product_id'],"product_id");
+                if($prod->getRowId()) {
+                    $prod->addData(array("product_id" => $productDetails['product_id']));
+                    $prod->save();
+                }
+                /*----------------------------------------------------------------------------------------*/
 
             }
            
