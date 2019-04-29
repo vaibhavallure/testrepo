@@ -87,6 +87,7 @@ class Allure_BrownThomas_Model_Data
     public function getStock()
     {
         $collection = Mage::getModel('brownthomas/product')->getCollection();
+        $collection->getSelect()->where('updated_date <= DATE_SUB(CURDATE(),INTERVAL 14 day)');
         $products=$collection->getAllIds();
 
         $data = array();
@@ -304,4 +305,19 @@ class Allure_BrownThomas_Model_Data
             $this->add_log("Exceptions:". $e->getMessage());
         }
     }
+
+    public function fileTransferred($file)
+    {
+        try {
+            $model = Mage::getModel('brownthomas/filetransfer');
+            $model->setFile($file);
+            $model->save();
+        }catch (Exception $e)
+        {
+            $this->add_log("Exception=>".$e->getMessage());
+        }
+
+    }
+
+
 }
