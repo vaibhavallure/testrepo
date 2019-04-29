@@ -145,4 +145,14 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
         foreach ($data as $row) { $this->fileObj->streamWrite($this->getWritableString($row)); }
     }
 
+
+    public function checkFileTransferred($file)
+    {
+        $collection = Mage::getModel('brownthomas/filetransfer')->getCollection();
+        $collection->getSelect()->where('file LIKE "%'.$file.'%" AND DATE(transfer_date) = CURDATE()');
+        if($collection->getSize())
+            return true;
+        else
+            return false;
+    }
 }

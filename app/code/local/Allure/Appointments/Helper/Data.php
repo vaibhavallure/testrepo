@@ -374,7 +374,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 						$breakStart = $this->getSpecialTimeByValue($workSlot['break_start']);
 						$breakEnd = $this->getSpecialTimeByValue($workSlot['break_end']);
 					} else {
-						$workStart = $this->getTimeByValue($workStart);
+						$workStart = $this->getTimeByValue($workSlot['start']);
 						$workEnd = $this->getTimeByValue($workSlot['end']);
 						$breakStart = $this->getTimeByValue($workSlot['break_start']);
 						$breakEnd = $this->getTimeByValue($workSlot['break_end']);

@@ -4,8 +4,8 @@ require_once('../../app/Mage.php');
 umask(0);
 Mage::app();
 
-Mage::getModel("brownthomas/data")->getUpdatedProducts()
-    ;
+Mage::helper("brownthomas/cron")->generateBrownthomasFiles();
+
 die();
 
 if(isset($_GET['stk']))

@@ -54,11 +54,31 @@ class Allure_BrownThomas_Helper_Sftp extends Mage_Core_Helper_Abstract
                 $filedata=$file->read($localfilepath);
                 $sftp->write($remotefilepath,$filedata);
                 $this->add_log("File Transfer Successfully=>".$remotefilepath);
+                Mage::getModel("brownthomas/data")->fileTransferred($remotefilepath);
+                $this->sendEmail($remotefilepath);
             }catch (Exception $e)
             {
                 $this->add_log("transferFile => Exception:".$e->getMessage());
             }
         }
     }
+
+    public function sendEmail($msg)
+    {
+        try{
+            $mailSubject="Brown Thomas Inventory Debug";
+            $sender         = 'brownthomas@mariatash.com';
+            $emails = $this->config()->getDebugEmails();
+
+            $header="from: Brown Thomas INV <".$sender.">";
+            mail($emails,$mailSubject,$msg,$header);
+
+        }catch(Exception $e)
+        {
+            $this->add_log("Exception:".$e->getMessage());
+        }
+
+    }
+
 
 }
