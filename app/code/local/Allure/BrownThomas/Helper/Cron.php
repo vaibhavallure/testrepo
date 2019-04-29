@@ -14,6 +14,50 @@ class Allure_BrownThomas_Helper_Cron extends Mage_Core_Helper_Abstract
         Mage::helper("brownthomas/data")->add_log($message);
     }
 
+    public function generateBrownthomasFiles()
+    {
+        if (!$this->config()->getModuleStatus()) {
+            $this->add_log("generateBrownthomasFiles => Module Disabled----");
+            return;
+        }
+
+        $this->callStockFile();
+    }
+
+    public function callStockFile()
+    {
+        if ($this->config()->getHourStockCron() != $this->getHour($this->getCurrentDatetime()))
+            return;
+
+        if (!$this->config()->isEnabledStockCron()) {
+            $this->add_log("callStockFile=> stock report cron disabled from backend setting");
+            return;
+        }
+
+        if($this->data()->checkFileTransferred($this->data()->STOCK_FILE))
+        {
+            $this->add_log($this->data()->STOCK_FILE." File Already sent");
+            return;
+        }
+
+
+        $file = $this->data()->generateStockFile();
+        $this->fileTransfer($file);
+    }
+
+
+
+    public function fileTransfer($file)
+    {
+        if($file)
+        {
+            $localFilePath=$file;
+            $remoteFilePath= $this->config()->getLocationSFTP()."".pathinfo($file)['basename'];
+            $this->sftp()->transferFile($localFilePath,$remoteFilePath);
+        }
+
+    }
+
 
     public function getDiffUtc()
     {
