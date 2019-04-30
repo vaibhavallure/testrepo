@@ -1,4 +1,3 @@
-
 //<![CDATA[
 if(Validation) {
     Validation.addAllThese([
@@ -13,6 +12,10 @@ if(Validation) {
                 }
 
             }
-        ]])};
-var dataForm = new VarienForm('form-validate', true);
+        ]])
+};
+
+if (document.getElementsByClassName("validate-mobileno").length) {
+    var dataForm = new VarienForm('form-validate', true);
+}
 //]]>
