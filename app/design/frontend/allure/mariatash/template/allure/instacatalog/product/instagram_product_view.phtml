@@ -84,7 +84,8 @@ if($_product->getTypeId()=="configurable"){
          $str .= 'FIND_IN_SET(('.$productId.'),`product_ids`)';
     	//->addFieldToFilter('product_ids',array('finset'=> array($productId)))
         // $collection->addFieldToFilter('status', 1);
-    	$collection->getSelect()->where( 'status = 1 AND ('.$str.')');
+    	$collection->getSelect()->where( 'status = 1 AND ('.$str.') ');
+    	$collection->getSelect()->order('created_timestamp desc');//Feeds Descending Order
 
         //var_dump($collection->getSelect()->__toString());
     ?>

@@ -214,7 +214,13 @@ function createOrder($order,$order_date,$time,$transaction_id,$_otherSysCurCode,
         }
         //To Identify Ebiz Order
         if($transaction_id){
+            $d = date_parse_from_format("m/d/Y", $order_date);
+           if(!empty($d["month"])){
+            $transaction_id = "EB-".$transaction_id.'-'.$d["month"];
+           }
+           else{
             $transaction_id = "EB-".$transaction_id;
+           }
 //            echo "<br>Transaction ID".$transaction_id."<br>";
             $quoteObj->setReservedOrderId($transaction_id);
         }

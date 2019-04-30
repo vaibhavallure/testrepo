@@ -624,6 +624,7 @@ class Mage_Customer_Model_Customer extends Mage_Core_Model_Abstract
             $this->setPassword($password);
         }
 
+
         $this->_sendEmailTemplate($types[$type], self::XML_PATH_REGISTER_EMAIL_IDENTITY,
             array('customer' => $this, 'back_url' => $backUrl), $storeId,null,Mage::getStoreConfig(SELF::XML_PATH_EMAIL_BCC));
         $this->cleanPasswordsValidationData();

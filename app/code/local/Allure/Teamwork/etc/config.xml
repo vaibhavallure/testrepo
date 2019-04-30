@@ -158,13 +158,22 @@
 			</allure_teamwork>
 
 			<allure_teamwork_live>
-					<schedule>
-						<config_path>allure_teamwork/teamwork_salesforce_settings/cron_time</config_path>
-					</schedule>
-					<run>
-						<model>allure_teamwork/tmobserver::synkTeamwokLiveOrders</model>
-					</run>
+				<schedule>
+					<config_path>allure_teamwork/teamwork_salesforce_settings/cron_time</config_path>
+				</schedule>
+				<run>
+					<model>allure_teamwork/tmobserver::synkTeamwokLiveOrders</model>
+				</run>
 			</allure_teamwork_live>
+			
+			<allure_teamwork_live_byday_once>
+				<schedule>
+					<config_path>allure_teamwork/teamwork_salesforce_settings/perday_cron_time</config_path>
+				</schedule>
+				<run>
+					<model>allure_teamwork/tmobserver::syncOrdersByDay</model>
+				</run>
+			</allure_teamwork_live_byday_once>
 
 			<!-- <allure_teamwork>
 				<schedule>

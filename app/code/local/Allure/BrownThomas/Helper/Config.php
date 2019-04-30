@@ -12,6 +12,10 @@ class Allure_BrownThomas_Helper_Config extends Mage_Core_Helper_Abstract
     public function getDebugStatus(){
         return Mage::getStoreConfig(self::XML_PATH_ALERT_DEBUG_ENABLED);
     }
+    public function getDebugEmails(){
+        return Mage::getStoreConfig("brownthomas/email_group/debug_emails");
+    }
+
 
     public function getModuleStatus(){
         return Mage::getStoreConfig(self::XML_PATH_MODULE_ENABLED);

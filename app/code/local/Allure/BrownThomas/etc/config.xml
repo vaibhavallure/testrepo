@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Allure_BrownThomas>
-      <version>1.0.0</version>
+      <version>2.0.1</version>
     </Allure_BrownThomas>
   </modules>
   <frontend>
@@ -30,6 +30,12 @@
           <price>
             <table>allure_brownthomas_price</table>
           </price>
+          <product>
+            <table>allure_brownthomas_product</table>
+          </product>
+          <filetransfer>
+            <table>allure_brownthomas_file_transfer</table>
+          </filetransfer>
         </entities>
       </allure_brownthomas_resource>
     </models>
@@ -74,5 +80,18 @@
     </events>
 
   </global>
+
+  <crontab>
+    <jobs>
+      <harrods_inventory_generate_files>
+        <schedule>
+          <cron_expr>*/5 * * * *</cron_expr>
+        </schedule>
+        <run>
+          <model>brownthomas/cron::generateBrownthomasFiles</model>
+        </run>
+      </harrods_inventory_generate_files>
+    </jobs>
+  </crontab>
 
 </config> 

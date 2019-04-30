@@ -1,6 +1,8 @@
 <?php
 $_product = Mage::registry('current_product');
 $collection = $this->getInstagramPostCollection();
+$collection->getSelect()->order('created_timestamp desc');//Feeds Descending Order
+
 $childProductArr = $this->getChildProductArray();
 ?>
 
