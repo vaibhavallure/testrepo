@@ -1274,3 +1274,11 @@ width: 94%;
 div#advice-required-entry-authnetcim_cc_cid {
     margin-top: 25px;
 }
+
+
+.product-options-bottom .add-to-cart-left .ajax-error-messages {
+    left: 150px;
+}
+.cart-mt ul.messages{
+    position: static;
+}
