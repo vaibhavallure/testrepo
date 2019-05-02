@@ -25,9 +25,9 @@
  */
 
 
-/**  
+/**
  *  PHP Simple HTML DOM Parser
- * 
+ *
  *  Official site: http://sourceforge.net/projects/simplehtmldom/
  *  Acknowledge: Jose Solorzano (https://sourceforge.net/projects/php-html/)
  *  Contributions by:
@@ -35,11 +35,11 @@
  *      Vadim Voituk (Negative indexes supports of "find" method)
  *      Antcs (Constructor with automatically load contents either text or file/url)
  *  Redistributions of files must retain the above copyright notice.
- *  
- *  @version: 1.11   
+ *
+ *  @version: 1.11
  *  @author: S.C. Chen <me578022@gmail.com>
  *  @license The MIT License
- * 
+ *
  */
 
 define('HDOM_TYPE_ELEMENT', 1);
@@ -61,7 +61,7 @@ define('HDOM_INFO_OUTER',   6);
 define('HDOM_INFO_ENDSPACE',7);
 
 
-class AW_Ajaxcatalog_Helper_Tools_Simpledom extends Mage_Core_Helper_Abstract 
+class AW_Ajaxcatalog_Helper_Tools_Simpledom extends Mage_Core_Helper_Abstract
 {
     public function file_get_html() {
         $dom = new simple_html_dom;
@@ -140,9 +140,9 @@ class simple_html_dom_node {
         $this->dom = null;
         $this->nodes = null;
         $this->parent = null;
-        $this->children = null;                        
+        $this->children = null;
     }
-    
+
     // dump node's tree
     function dump($show_attr=true) {
         dump_html_tree($this, $show_attr);
@@ -172,7 +172,7 @@ class simple_html_dom_node {
         return null;
     }
 
-    // returns the next sibling of node    
+    // returns the next sibling of node
     function next_sibling() {
         if ($this->parent===null) return null;
         $idx = 0;
@@ -249,7 +249,7 @@ class simple_html_dom_node {
             $ret .= $n->text();
         return $ret;
     }
-    
+
     function xmltext() {
         $ret = $this->innertext();
         $ret = str_ireplace('<![CDATA[', '', $ret);
@@ -327,7 +327,7 @@ class simple_html_dom_node {
 
         // return nth-element or array
         if (is_null($idx)) return $found;
-		else if ($idx<0) $idx = count($found) + $idx;
+        else if ($idx<0) $idx = count($found) + $idx;
         return (isset($found[$idx])) ? $found[$idx] : null;
     }
 
@@ -345,7 +345,7 @@ class simple_html_dom_node {
                         return;
                     }
                 }
-            } 
+            }
             return;
         }
 
@@ -415,7 +415,7 @@ class simple_html_dom_node {
 
     protected function parse_selector($selector_string) {
         // pattern of CSS selectors, modified from mootools
-        $pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
+        $pattern = "/([\w\-:\*]*)(?:\#([\w\-]+)|\.([\w\-]+))?(?:\[@?(!?[\w\-]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
         preg_match_all($pattern, trim($selector_string).' ', $matches, PREG_SET_ORDER);
         $selectors = array();
         $result = array();
@@ -469,7 +469,7 @@ class simple_html_dom_node {
                 return $this->_[HDOM_INFO_INNER] = $value;
         }
         if (!isset($this->attr[$name])) {
-            $this->_[HDOM_INFO_SPACE][] = array(' ', '', ''); 
+            $this->_[HDOM_INFO_SPACE][] = array(' ', '', '');
             $this->_[HDOM_INFO_QUOTE][] = HDOM_QUOTE_DOUBLE;
         }
         $this->attr[$name] = $value;
@@ -543,8 +543,8 @@ class simple_html_dom {
 
     function __construct($str=null) {
         if ($str) {
-            if (preg_match("/^http:\/\//i",$str) || is_file($str)) 
-                $this->load_file($str); 
+            if (preg_match("/^http:\/\//i",$str) || is_file($str))
+                $this->load_file($str);
             else
                 $this->load($str);
         }
@@ -617,7 +617,7 @@ class simple_html_dom {
         unset($this->doc);
         unset($this->noise);
     }
-    
+
     function dump($show_attr=true) {
         $this->root->dump($show_attr);
     }
@@ -751,7 +751,7 @@ class simple_html_dom {
             return true;
         }
 
-        if (!preg_match("/^[\w-:]+$/", $tag)) {
+        if (!preg_match("/^[\w\-:]+$/", $tag)) {
             $node->_[HDOM_INFO_TEXT] = '<' . $tag . $this->copy_until('<>');
             if ($this->char==='<') {
                 $this->link_nodes($node, false);
