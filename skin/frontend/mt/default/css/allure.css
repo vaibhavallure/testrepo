@@ -641,7 +641,7 @@ img.snize-item-image[src^=data]::after {
 .popupLoginModel > div {
 	width: 320px;
     position: relative;
-    margin: 10% auto;
+    margin: 5% auto;/*10% to 5% changed*/
     /* padding: 5px 20px 13px 20px; */
     padding: 20px;
     /* border-radius: 10px; */
