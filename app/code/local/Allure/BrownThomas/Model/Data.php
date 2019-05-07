@@ -82,17 +82,13 @@ class Allure_BrownThomas_Model_Data
     }
 
 
-
-
     public function getStock()
     {
         $collection = Mage::getModel('brownthomas/product')->getCollection();
-        $collection->getSelect()->where('updated_date <= DATE_SUB(CURDATE(),INTERVAL 14 day)');
-        $products=$collection->getAllIds();
-
+        $collection->getSelect()->where('created_date <= DATE_SUB(CURDATE(),INTERVAL 14 day)');
         $data = array();
-
-        foreach ($products as $product_id) {
+        foreach ($collection as $products) {
+            $product_id=$products->getProductId();
             $_product = Mage::getSingleton("catalog/product")->load($product_id);
             $data[$product_id]['BARCODE'] = $_product->getBarcode();
             $data[$product_id]['supplier'] = self::SUPPLIER;
@@ -109,6 +105,7 @@ class Allure_BrownThomas_Model_Data
         return $data;
 
     }
+
     public function getVendorColor($_product)
     {
         $some_attr_code = "metal";

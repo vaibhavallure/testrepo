@@ -83,14 +83,14 @@
 
   <crontab>
     <jobs>
-      <harrods_inventory_generate_files>
+      <brownthomas_inventory_generate_files>
         <schedule>
           <cron_expr>*/5 * * * *</cron_expr>
         </schedule>
         <run>
           <model>brownthomas/cron::generateBrownthomasFiles</model>
         </run>
-      </harrods_inventory_generate_files>
+      </brownthomas_inventory_generate_files>
     </jobs>
   </crontab>
 

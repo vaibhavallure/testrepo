@@ -19762,11 +19762,16 @@ input.giftcard-radio1 {
 	background-size:10px ! important;
 }
 
-.mt-terms-condtions-policy #mt-newsl-terms{
+.mt-terms-condtions-policy {
+	display: -webkit-inline-box;
+}
+.mt-terms-condtions-policy #mt-newsl-terms {
 	left: 25px;
 	width: 18px;
 	height: 17px;
 }
+
+
 .mt-terms-condtions-policy label {
 	font-size: 12px;
 	text-align: left;
