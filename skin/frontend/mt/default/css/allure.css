@@ -1282,3 +1282,17 @@ div#advice-required-entry-authnetcim_cc_cid {
 .cart-mt ul.messages{
     position: static;
 }
+
+#popup-login-form .pop-title h2{
+    font-weight: normal;
+    color: #303136;
+    text-transform: uppercase;
+    font-size: 17px;
+    line-height: 1.285714286;
+    font-family: dinmittelschriftregular;
+    background: transparent;
+    float: none;
+    width: auto;
+    height: auto;
+    padding-left: initial;
+}
