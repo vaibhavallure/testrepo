@@ -39,6 +39,7 @@ class Allure_BrownThomas_Helper_Sftp extends Mage_Core_Helper_Abstract
 
     public function transferFile($localfilepath,$remotefilepath)
     {
+
         $sftp=$this->connectSFTP();
 
         if($sftp)
