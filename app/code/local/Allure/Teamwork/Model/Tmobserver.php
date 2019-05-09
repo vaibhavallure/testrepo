@@ -166,7 +166,7 @@ class Allure_Teamwork_Model_Tmobserver{
             
             $requestArgs = array(
                 "start_time" => $prevTime,
-                "end_time"   => $startTime
+                "end_time"   => $endTime
             );
             // convert requestArgs to json
             if ($requestArgs != null) {
