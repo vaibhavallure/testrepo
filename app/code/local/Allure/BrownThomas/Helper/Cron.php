@@ -22,6 +22,8 @@ class Allure_BrownThomas_Helper_Cron extends Mage_Core_Helper_Abstract
         }
 
         $this->callStockFile();
+        $this->callFoundationFile();
+        $this->callEnrichFile();
     }
 
     public function callStockFile()
@@ -34,28 +36,75 @@ class Allure_BrownThomas_Helper_Cron extends Mage_Core_Helper_Abstract
             return;
         }
 
-        if($this->data()->checkFileTransferred($this->data()->STOCK_FILE))
+        if($this->data()->checkFileTransferred(Allure_BrownThomas_Helper_Data::STOCK_FILE))
         {
-            $this->add_log($this->data()->STOCK_FILE." File Already sent");
+            $this->add_log(Allure_BrownThomas_Helper_Data::STOCK_FILE." File Already sent");
             return;
         }
 
 
         $file = $this->data()->generateStockFile();
-        $this->fileTransfer($file);
+        $location=$this->getFileWriteLocation('stock');
+        $this->fileTransfer($file,$location);
     }
 
+    public function callFoundationFile()
+    {
+        if ($this->config()->getHourDataFileCron() != $this->getHour($this->getCurrentDatetime()))
+            return;
+
+        if (!$this->config()->isEnabledDataFileCron()) {
+            $this->add_log("callFoundationFile=> Foundation report cron disabled from backend setting");
+            return;
+        }
+
+        if($this->data()->checkFileTransferred(Allure_BrownThomas_Helper_Data::FOUNDATION_FILE))
+        {
+            $this->add_log(Allure_BrownThomas_Helper_Data::FOUNDATION_FILE." File Already sent");
+            return;
+        }
 
 
-    public function fileTransfer($file)
+        $file = $this->data()->generateFoundationFile();
+
+        if($this->data()->checkFileTransferred(Allure_BrownThomas_Helper_Data::FOUNDATION_FILE))
+        {
+            $this->add_log(Allure_BrownThomas_Helper_Data::FOUNDATION_FILE." File Already sent");
+            return;
+        }
+
+        $location=$this->getFileWriteLocation('data');
+        $this->fileTransfer($file,$location);
+    }
+
+    public function callEnrichFile()
+    {
+        if ($this->config()->getHourEnrichmentCron() != $this->getHour($this->getCurrentDatetime()))
+            return;
+
+        if (!$this->config()->isEnabledEnrichmentCron()) {
+            $this->add_log("callFoundationFile=> Foundation report cron disabled from backend setting");
+            return;
+        }
+
+        if($this->data()->checkFileTransferred(Allure_BrownThomas_Helper_Data::ENRICHMENT_FILE))
+        {
+            $this->add_log(Allure_BrownThomas_Helper_Data::ENRICHMENT_FILE." File Already sent");
+            return;
+        }
+
+        $location=$this->getFileWriteLocation('Enrich');
+        $this->fileTransfer($this->data()->getEnrichmentFilePath(),$location);
+    }
+
+    public function fileTransfer($file,$location)
     {
         if($file)
         {
             $localFilePath=$file;
-            $remoteFilePath= $this->config()->getLocationSFTP()."".pathinfo($file)['basename'];
+            $remoteFilePath= $location."".pathinfo($file)['basename'];
             $this->sftp()->transferFile($localFilePath,$remoteFilePath);
         }
-
     }
 
 
@@ -100,6 +149,18 @@ class Allure_BrownThomas_Helper_Cron extends Mage_Core_Helper_Abstract
     public function getMinute($datetime)
     {
         return date('i',  $datetime);
+    }
+
+    public function getFileWriteLocation($file_type)
+    {
+       $fileLocationFun="getFileLocation".ucfirst($file_type);
+
+       $location=$this->config()->$fileLocationFun();
+
+       if(!empty($location))
+           return $location;
+       else
+           return $this->config()->getLocationSFTP();
     }
 
 

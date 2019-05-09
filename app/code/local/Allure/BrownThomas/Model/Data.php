@@ -11,6 +11,9 @@ class Allure_BrownThomas_Model_Data
     private function data() {
         return Mage::helper("brownthomas/data");
     }
+    private function cron() {
+        return Mage::helper("brownthomas/cron");
+    }
 
     private function readConnection()
     {
@@ -95,15 +98,19 @@ class Allure_BrownThomas_Model_Data
             $data[$product_id]['Concession_Name'] = "VENUS BY MARIA TASH LIMITED";
             $data[$product_id]['Business_Type'] = "CONCESSION";
             $data[$product_id]['Location_Name'] ="BROWN_THOMAS_DUBLIN";
-            $data[$product_id]['Quantity'] =$this->formatString($_product->getBrownThomasInventory(),9,0,STR_PAD_LEFT);
+
+            /*check if negative inventory and change to zero*/
+            $inv=$_product->getBrownThomasInventory();
+            if((float)$inv<0)
+                $inv=0;
+
+            $data[$product_id]['Quantity'] =$this->formatString($inv,9,0,STR_PAD_LEFT);
             $data[$product_id]['blank1'] ="";
             $data[$product_id]['blank2'] ="";
             $data[$product_id]['blank3'] ="";
             $data[$product_id]['blank4'] ="";
         }
-
         return $data;
-
     }
 
     public function getVendorColor($_product)
@@ -202,40 +209,25 @@ class Allure_BrownThomas_Model_Data
         return $formattedSKU;
     }
 
-
-    public function getPriceData()
+    public function getPriceData($products=null,$action_type)
     {
-        $this->add_log('In Brown Thomas Get Price Data Model');
-        $priceModel = Mage::helper('brownthomas')->modelPrice();
-        $collection = $priceModel->getCollection();
-        $collection->getSelect()->reset(Zend_Db_Select::COLUMNS)->columns('product_id')->columns('row_id')->where("updated_date > last_sent_date OR last_sent_date IS NULL");
-
         $priceData = array();
         $index = 0;
-        foreach ($collection as $product)
+        foreach ($products as $product)
         {
-            $this->add_log('Inserting :'.$product->getProductId());
-            $_product = Mage::getSingleton("catalog/product")->load($product->getProductId());
+            $_product = Mage::getSingleton("catalog/product")->load($product);
             $priceData[$index]['record_type'] = $this->formatString('FPCHG',5);
-            $priceData[$index]['action_type'] = $this->formatString('N',1);
-            $barcode = $_product->getBarcode();
-            $priceData[$index]['primary_upc'] = $this->formatString($barcode, 13);
-            $updatedDate = date('Ymd',strtotime($_product->getUpdatedAt()));
-            $priceData[$index]['effective_date'] =$this->formatString($updatedDate, 13);
-            $price = (float)$_product->getDublinPrice();
-            $priceData[$index]['unit_retail'] = $this->formatString(number_format($price,2,'.',''),21,0, STR_PAD_LEFT);
+            $priceData[$index]['action_type'] = $this->formatString($action_type,1);
+            $priceData[$index]['primary_upc'] = $this->formatString($_product->getBarcode(), 13);
+            $priceData[$index]['effective_date'] =$this->formatString(date('Ymd',$this->cron()->getCurrentDatetime()), 13);
+            $priceData[$index]['unit_retail'] = $this->formatString(number_format((float)$_product->getDublinPrice(),2,'.',''),21,0, STR_PAD_LEFT);
             $priceData[$index]['clearance_indicator'] = $this->formatString('N',1);
-            $id = $product->getRowId();
             $productDetails['last_sent_date']=$_product->getUpdatedAt();
-            $priceModel->load($id)->addData($productDetails)->save();
-            $this->add_log('Brown Thomas Updated in Price Table ID='.$id);
-            $index++;
 
+            $index++;
         }
-        $this->add_log('Total Inserted Records'.$index-1);
 
         return $priceData;
-
     }
     public function add_log($message) {
         Mage::helper("brownthomas/data")->add_log($message);

@@ -4,10 +4,13 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 
     const FOUNDATION_FILE="conc_upld_f";
     const STOCK_FILE="inv_upload_1";
+    const ENRICHMENT_FILE="Concession Enrichment Requirements_Maria Tash.xlsx";
+
 
     var $file="";
     var $fileObj="";
     var $newProducts="";
+    var $updateProducts="";
 
 
     private function config() {
@@ -65,13 +68,24 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function generateFoundationFile()
     {
-        $this->add_log("generatedd file");
         $this->createFile(self::FOUNDATION_FILE);
 
         $this->newProducts=$this->modelData()->getNewProducts();
-        $FITEM_FUDAS_NewProduct=$this->modelData()->getFITEM_FUDAS($this->newProducts,'N');
-        $FITEM_FUDAS_UpdatedProduct=$this->modelData()->getFITEM_FUDAS($this->modelData()->getUpdatedProducts(),'U');
+        $this->updateProducts=$this->modelData()->getUpdatedProducts();
 
+        $FITEM_FUDAS_NewProduct=$this->modelData()->getFITEM_FUDAS($this->newProducts,'N');
+        $FITEM_FUDAS_UpdatedProduct=$this->modelData()->getFITEM_FUDAS($this->updateProducts,'U');
+
+        if(count($this->newProducts)==0)
+        {
+            $this->modelData()->fileTransferred(self::ENRICHMENT_FILE." no new product found");
+        }
+
+        if(count($this->newProducts)==0 && count($this->updateProducts)==0)
+        {
+            $this->modelData()->fileTransferred(self::FOUNDATION_FILE." no new or updated product found");
+            return "";
+        }
 
         /*-----------write header------------------------------*/
         $data=$this->modelData()->getFoundationHeader();
@@ -86,11 +100,16 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
         $this->writeFile($FITEM_FUDAS_UpdatedProduct['FUDAS']);
 
         /*------------write PRICE-----------------------------*/
-        $PRICE_DATA = $this->modelData()->getPriceData();
-        $this->writeFile($PRICE_DATA);
+        $this->writeFile($this->modelData()->getPriceData($this->newProducts,'N'));
+        $this->writeFile($this->modelData()->getPriceData($this->updateProducts,'U'));
 
-        return array('foundation_file'=>$this->file,'enrich_file'=>$this->generateEnrichFile());
+        $this->add_log("foundation file generated file");
 
+
+        /*call to enrichment file*/
+        $this->generateEnrichFile();
+
+        return $this->file;
     }
 
     public function generateStockFile()
@@ -107,9 +126,9 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function generateEnrichFile()
     {
-        $path = Mage::getBaseDir('var') . DS . 'brownthomasfiles';
-        $filenm="Concession Enrichment Requirements_Maria Tash.xlsx";
-        $filepath = $path . DS . $filenm;
+
+       $filepath=$this->getEnrichmentFilePath();
+
         include_once Mage::getBaseDir('lib') . "/PHPExcel/Classes/PHPExcel.php";
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);
@@ -136,6 +155,7 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
 
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             $objWriter->save($filepath);
+             $this->add_log("enrichment file generated file");
 
             return $filepath;
     }
@@ -154,5 +174,12 @@ class Allure_BrownThomas_Helper_Data extends Mage_Core_Helper_Abstract
             return true;
         else
             return false;
+    }
+
+    public function getEnrichmentFilePath()
+    {
+        $path = Mage::getBaseDir('var') . DS . 'brownthomasfiles';
+        $filenm="Concession Enrichment Requirements_Maria Tash.xlsx";
+        return $path . DS . $filenm;
     }
 }
