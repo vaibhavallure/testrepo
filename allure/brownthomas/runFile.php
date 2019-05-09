@@ -5,7 +5,6 @@ umask(0);
 Mage::app();
 
 Mage::helper("brownthomas/cron")->generateBrownthomasFiles();
-
 die();
 
 if(isset($_GET['stk']))

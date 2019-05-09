@@ -11,7 +11,7 @@ class Allure_BrownThomas_Model_Observer
 
     public function checkPrice($observer)
     {
-        $this->add_log('In Brown Thomas Price Observer');
+//        $this->add_log('In Brown Thomas Price Observer');
 
         $product = $observer->getEvent()->getProduct();
 
@@ -28,7 +28,7 @@ class Allure_BrownThomas_Model_Observer
         if(!$product->getBrownThomasOnline())
             return "";
 
-        $this->add_log('brown thomas product updated'.$product->getEntityId());
+//        $this->add_log('brown thomas product updated'.$product->getEntityId());
 
         try {
             if (isset($productDetails['product_id']) && isset($productDetails['price']) && isset($brownthomasInventory) && isset($barcode)) {
@@ -48,21 +48,21 @@ class Allure_BrownThomas_Model_Observer
                     $oldPrice = (float)$data->getPrice();
                     $newPrice = (float)$productDetails['price'];
 
-                    $this->add_log('Update Request Product Id='.$productId);
-                    $this->add_log('Old Price '.$oldPrice. ' New Price '.$newPrice);
+//                    $this->add_log('Update Request Product Id='.$productId);
+//                    $this->add_log('Old Price '.$oldPrice. ' New Price '.$newPrice);
 
                     /*Check for new price & old price are different or not if different then update*/
                     if ($oldPrice != $newPrice) {
                         $priceModel->load($id)->addData($productDetails)->save();
-                        $this->add_log('Updated ID='.$id);
+//                        $this->add_log('Updated ID='.$id);
                     }
 
                 } else {
                     /*If Product not in table then insert in table*/
                     $productDetails['last_sent_date']   = NULL;
-                    $this->add_log('Insert Request Product Id='.$productId);
+//                    $this->add_log('Insert Request Product Id='.$productId);
                     $rowId = $priceModel->setData($productDetails)->save()->getRowId();
-                    $this->add_log('Inserted ID='.$rowId);
+//                    $this->add_log('Inserted ID='.$rowId);
                 }
 
                 /*-----check if product present in allure_brownthomas_product if yes then change updated date*/

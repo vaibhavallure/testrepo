@@ -64,6 +64,10 @@ class Allure_BrownThomas_Helper_Config extends Mage_Core_Helper_Abstract
     public function getContentTypePLU(){
         return Mage::getStoreConfig('brownthomas/product_cron/file_content');
     }
+
+    public function getFileLocationData(){
+        return Mage::getStoreConfig('brownthomas/product_cron/location');
+    }
     /*------------------------------------------------------------------------*/
 
 
@@ -77,6 +81,9 @@ class Allure_BrownThomas_Helper_Config extends Mage_Core_Helper_Abstract
    /* public function getMinuteStockCron(){
         return Mage::getStoreConfig('brownthomas/stock_cron/minute');
     }*/
+    public function getFileLocationStock(){
+        return Mage::getStoreConfig('brownthomas/stock_cron/location');
+    }
     /*------------------------------------------------------------------------*/
 
 
@@ -93,6 +100,10 @@ class Allure_BrownThomas_Helper_Config extends Mage_Core_Helper_Abstract
     public function getContentTypePPC(){
         return Mage::getStoreConfig('brownthomas/enrichment_cron/file_content');
     }
+    public function getFileLocationEnrich(){
+        return Mage::getStoreConfig('brownthomas/enrichment_cron/location');
+    }
     /*------------------------------------------------------------------------*/
+
 
 }

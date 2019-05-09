@@ -188,6 +188,15 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>
                     </file_content>
+                    <location translate="label">
+                        <label>Write Location</label>
+                        <comment>example: for test folder write test/</comment>
+                        <frontend_type>text</frontend_type>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>0</show_in_website>
+                        <show_in_store>0</show_in_store>
+                        <sort_order>80</sort_order>
+                    </location>
                 </fields>
             </product_cron>
 
@@ -227,6 +236,16 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </minute>-->
+
+                        <location translate="label">
+                            <label>Write Location</label>
+                            <comment>example: for test folder write test/</comment>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>80</sort_order>
+                        </location>
                     </fields>
                 </stock_cron>
 
@@ -275,6 +294,16 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </file_content>
+
+                        <location translate="label">
+                            <label>Write Location</label>
+                            <comment>example: for test folder write test/</comment>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <sort_order>80</sort_order>
+                        </location>
                     </fields>
                 </enrichment_cron>
 
