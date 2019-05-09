@@ -42,7 +42,7 @@ class Allure_Teamwork_Model_Tmobserver{
      * sync order data by day at particular time in once per day
      */
     public function syncOrdersByDay(){
-        $this->addLog("Teamwork day sync request - ".gmdate("Y-m-d h:i:s")); 
+        $this->addLog("Teamwork day sync request - ".gmdate("Y-m-d H:i:s")); 
         try{
             $helper = Mage::helper("allure_teamwork");
             if(!$helper->getTeamworkSyncStatus()){
@@ -79,7 +79,7 @@ class Allure_Teamwork_Model_Tmobserver{
                 return;
             }
             
-            $currentTime = gmdate("Y-m-d h:i:s");
+            $currentTime = gmdate("Y-m-d H:i:s");
             
             $queryTime = $helper->getTeamworkQueryTime();
             if(!isset($queryTime)){
@@ -115,7 +115,7 @@ class Allure_Teamwork_Model_Tmobserver{
     }
     
     public function synkTeamwokLiveOrders(){
-        $this->addLog("Teamwork sync request call at - ".gmdate("Y-m-d h:i:s"));
+        $this->addLog("Teamwork sync request call at - ".gmdate("Y-m-d H:i:s"));
         try{
             $helper = Mage::helper("allure_teamwork");
             if(!$helper->getTeamworkSyncStatus()){
@@ -153,7 +153,7 @@ class Allure_Teamwork_Model_Tmobserver{
             
             $prevQueryTime = $queryTime * (-1);
             
-            $currentTime = gmdate("Y-m-d h:i:s");
+            $currentTime = gmdate("Y-m-d H:i:s");
             
             $startTime = $logModel->getPage();
             $prevTime = date('Y-m-d H:i:s', strtotime("{$prevQueryTime} minutes", strtotime($startTime)));
