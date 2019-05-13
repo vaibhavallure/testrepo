@@ -85,7 +85,7 @@ class Allure_AlertServices_Model_Alerts
 		
 	}
 
-	public function alertSalesOfSix(){
+	public function alertSalesOfSix($debug = false){
 		/* Get the collection */
 		try{
 			$helper = Mage::helper('alertservices');
@@ -107,6 +107,16 @@ class Allure_AlertServices_Model_Alerts
 						  ->setPageSize(1)
 						  ->setOrder('created_at', 'desc');
 					    /*echo $orders->getSelect()->__toString();*/
+                if ($debug) {
+                    $orderDate = $orders->getFirstItem()->getCreatedAt();
+                    echo $orders->getSelect()->__toString();
+                    echo "<br>order count : ".count($orders);
+                    echo "<br>6 hour for testing for sale<br>";
+                    echo "<br>Order Date :".$orderDate;
+                    if($orderDate != null)
+                        echo "<br>Last Order Date :".Mage::getModel('core/date')->date("F j, Y \a\\t g:i a",$orderDate);
+
+                }
 					if (count($orders)<=0) {
 						$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
