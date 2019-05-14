@@ -200,7 +200,7 @@ class Millesima_Segment extends Millesima_Abstract
             //Si fichier DML USA
         }elseif ($country == "U") {
             $line.="U14044"."\r\n";//"hobernard@millesima.com"."\r\n";
-            $line.="U44291"."\r\n";//"imiossec@millesima.com"."\r\n";
+            $line.="1510621"."\r\n";//"imiossec@millesima.com"."\r\n";
             $line.="1116188"."\r\n";//"lanton@millesima.com"."\r\n";
             $line.="1009006"."\r\n";//"mdutoya@millesima.com"."\r\n";
             $line.="1455164"."\r\n";//"braphanel@millesima.com"."\r\n";
@@ -269,14 +269,19 @@ class Millesima_Segment extends Millesima_Abstract
                 $bddClass = new Millesima_Bdd();
                 $segmentBdd = $this->getSegmentByNameAndStatus($segment->Name,'local');
                 if($segmentBdd){
-                  $bddClass->update("UPDATE segment_selligente SET status = ?, selligente_id = ?, type = ? WHERE id = ?",array('selligente',(int) $segment->ID,$segment->Type,$segmentBdd['id']));
-                  $return[] = $segment->Name;
                   $memberCount = $this->segmentCount($segment->ID);
-                  $html .= "Le segment ".$segment->Name." a ete mis a jour, nb contact ".$memberCount."<br />";
-               }
+                  if((int) $memberCount > 0) {
+                      $bddClass->update("UPDATE segment_selligente SET status = ?, selligente_id = ?, type = ? WHERE id = ?",array('selligente',(int) $segment->ID,$segment->Type,$segmentBdd['id']));
+                      $return[] = $segment->Name;
+                      $html .= "Le segment ".$segment->Name." a ete mis a jour, nb contact ".$memberCount."<br />";
+                  }
+
+                }
+
 
             }
         }
+
         return $html;
     }
 
