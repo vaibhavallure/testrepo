@@ -1,7 +1,7 @@
 <?php
 //require_once Mage::getBaseDir().'/allure/alrGoogleAnalytics.php';
 require_once Mage::getBaseDir().'/lib/ALRGoogleAnalytics/vendor/autoload.php';
-
+require_once $_SERVER['DOCUMENT_ROOT'].'/app/code/local/Allure/InstaCatalog/Model/Instagramclient.php';
 class Allure_AlertServices_Model_Alerts
 {	
 	private function getConfigHelper(){
@@ -476,6 +476,31 @@ class Allure_AlertServices_Model_Alerts
     	}
 		
 	}
+    public  function  instaTokenAlert($debug = false){
+
+		    try{
+		        $helper = Mage::helper('alertservices');;
+		        $status =	$this->getConfigHelper()->getInstagramTokenStatus();
+		        $email_status =	$this->getConfigHelper()->getInstagramTokenEmailStatus();
+		        if (!$email_status) {
+		            return;
+		        }
+
+		        if($status) {
+                    $response = $helper->instaTokenCheck();
+                    if($response['message']!='done'){
+                        $helper->sendInstagramErrorEmail($response);
+                    }
+                    if ($debug) {
+                    print_r($response);
+                    }
+                }
+		    }
+		    catch (Exception $ex){
+                $helper->alr_alert_log($ex->getMessage(),'allureAlerts.log');
+            }
+
+    }
 		/*$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
 										->setCurPage(1)

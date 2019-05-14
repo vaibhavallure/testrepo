@@ -171,7 +171,6 @@
                                 <show_in_website>1</show_in_website>
                                 <show_in_store>1</show_in_store>
                             </pageloadalert>
-
                             <enabled_product_price translate="label">
                                 <label>Product price Email Enabled</label>
                                 <frontend_type>select</frontend_type>
@@ -219,7 +218,8 @@
                                 <show_in_default>1</show_in_default>
                                 <show_in_website>1</show_in_website>
                                 <show_in_store>1</show_in_store>
-                            </enabled_debug_alert>  
+                            </enabled_debug_alert>
+
 
                         </fields>
                    </email_group> 
@@ -258,7 +258,61 @@
                                 <show_in_store>1</show_in_store>
                             </avg_page_load> 
                         </fields>
-                   </alr_analytics>               
+                   </alr_analytics>
+            <alr_instatoken translate="label">
+                <label>Instagram Token Setting</label>
+                <frontend_type>text</frontend_type>
+                <sort_order>4</sort_order>
+                <show_in_default>1</show_in_default>
+                <show_in_website>1</show_in_website>
+                <show_in_store>1</show_in_store>
+                <fields>
+                    <alr_enabled translate="label">
+                        <label>Instagram Token Alert Enabled</label>
+                        <frontend_type>select</frontend_type>
+                        <source_model>adminhtml/system_config_source_yesno</source_model>
+                        <sort_order>0</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </alr_enabled>
+                    <insta_group_emails>
+                        <label>Email's (Please enter coma',' Seperated values) : </label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>1</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </insta_group_emails>
+
+                    <insta_group_names>
+                        <label>Name's (Please enter coma',' Seperated values) : </label>
+                        <frontend_type>text</frontend_type>
+                        <sort_order>2</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </insta_group_names>
+                    <enabled_instatoken_email translate="label">
+                        <label>Instagram Token Email Alert Enabled</label>
+                        <frontend_type>select</frontend_type>
+                        <source_model>adminhtml/system_config_source_yesno</source_model>
+                        <sort_order>14</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </enabled_instatoken_email>
+                    <instatoken_template>
+                        <label>Instagram Token Alert Email Template</label>
+                        <frontend_type>select</frontend_type>
+                        <source_model>adminhtml/system_config_source_email_template</source_model>
+                        <sort_order>9</sort_order>
+                        <show_in_default>1</show_in_default>
+                        <show_in_website>1</show_in_website>
+                        <show_in_store>1</show_in_store>
+                    </instatoken_template>
+                </fields>
+            </alr_instatoken>
             </groups>                   
         </allure_alert>
     </sections>

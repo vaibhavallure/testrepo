@@ -398,6 +398,65 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
        }
         Mage::log($message,Zend_log::DEBUG,$filename,true);
       
-    }   
+    }
+    public function instaTokenCheck()
+    {
+        $user_id = Mage::getStoreConfig('allure_instacatalog/feed/user_id');
+        $access_token = Mage::getStoreConfig('allure_instacatalog/feed/access_token');
+        $limit = 1;
+
+        $instagram = new Instagramclient('');
+        $instagram->setAccessToken($access_token);
+        $response = $instagram->getUserMedia($user_id,$limit);
+        $responseJSON =json_encode($response,true);
+        $responseArr = json_decode($responseJSON,true);
+
+        if(isset($responseArr['meta'])){
+            if(isset($responseArr['meta']['error_message'])){
+                $result = array('message'=>'error',
+                    'type'=>$responseArr['meta']['error_type'],
+                    'error_message'=>$responseArr['meta']['error_message']);
+                return $result;
+            }
+            else{
+               return array("message"=>'done');
+            }
+        }
+    }
+    public function sendInstagramErrorEmail($response){
+        try{
+            $templateId = $this->getConfigHelper()->getInstagramTokenEmailTemplate();
+            $storeId = Mage::app()->getStore()->getId();
+            $emailTemplate = Mage::getModel('core/email_template');
+            $senderName = $this->getConfigHelper()->getAlertSenderName();
+            $senderEmail = $this->getConfigHelper()->getAlertSenderEmail();
+
+            $sender = array('name' => $senderName,
+                'email' => $senderEmail);
+
+                $recieverEmails = $this->getConfigHelper()->getInstaEmailsGroup();
+                $recieverNames = $this->getConfigHelper()->getInstaEmailGroupNames();
+
+            $recipientEmails = explode(',',$recieverEmails);
+            $recipientNames = explode(',',$recieverNames);
+
+            $emailTemplateVariables['type'] = $response['type'];
+            $emailTemplateVariables['error_message'] = $response['error_message'];
+
+            if ($templateId) {
+                $emailTemplate->sendTransactional(
+                    $templateId,
+                    $sender,
+                    $recipientEmails, //here comes recipient emails
+                    $recipientNames, // here comes recipient names
+                    $emailTemplateVariables,
+                    $storeId
+                );
+            }
+
+        }catch(Exception $e){
+            $this->alr_alert_log($e->getMessage(),'allureAlerts.log');
+        }
+    }
 
 }
