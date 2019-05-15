@@ -249,9 +249,14 @@ class Allure_BrownThomas_Model_Data
     }
     public function getUpdatedProducts()
     {
+        $data=array();
         $_products = Mage::getModel('brownthomas/product')->getCollection();
         $_products->getSelect()->where("updated_date>last_sent_date");
-        return $_products->getAllIds();
+        foreach($_products as $prod)
+        {
+            $data[]=$prod->getProductId();
+        }
+        return $data;
 
     }
 
