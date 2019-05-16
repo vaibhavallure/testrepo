@@ -203,7 +203,6 @@ class Millesima_Segment extends Millesima_Abstract
             $line.="1510621"."\r\n";//"imiossec@millesima.com"."\r\n";
             $line.="1116188"."\r\n";//"lanton@millesima.com"."\r\n";
             $line.="1009006"."\r\n";//"mdutoya@millesima.com"."\r\n";
-            $line.="1455164"."\r\n";//"braphanel@millesima.com"."\r\n";
         }
 
         $fileName = $country.$nameSegment.'.csv'; //nom du fichier de commande .csv
@@ -269,16 +268,15 @@ class Millesima_Segment extends Millesima_Abstract
                 $bddClass = new Millesima_Bdd();
                 $segmentBdd = $this->getSegmentByNameAndStatus($segment->Name,'local');
                 if($segmentBdd){
-                  $memberCount = $this->segmentCount($segment->ID);
-                  if((int) $memberCount > 0) {
-                      $bddClass->update("UPDATE segment_selligente SET status = ?, selligente_id = ?, type = ? WHERE id = ?",array('selligente',(int) $segment->ID,$segment->Type,$segmentBdd['id']));
-                      $return[] = $segment->Name;
-                      $html .= "Le segment ".$segment->Name." a ete mis a jour, nb contact ".$memberCount."<br />";
-                  }
+					$memberCount = 0;
+					$memberCount = $this->segmentCount($segment->ID);
+					if((int) $memberCount > 0) {
+						$bddClass->update("UPDATE segment_selligente SET status = ?, selligente_id = ?, type = ? WHERE id = ?",array('selligente',(int) $segment->ID,$segment->Type,$segmentBdd['id']));
+						$return[] = $segment->Name;
+						$html .= "Le segment ".$segment->Name." a ete mis a jour, nb contact ".$memberCount."<br />";
+					}
 
                 }
-
-
             }
         }
 
