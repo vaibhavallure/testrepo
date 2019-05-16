@@ -108,6 +108,14 @@
 					<model>alertservices/alerts::alertPageNotFound</model>
 				</run>
 			</alert_page_not_found>
+			<alert_instagram_token>
+				<schedule>
+					<cron_expr>0 6 * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>alertservices/alerts::instaTokenAlert</model>
+				</run>
+			</alert_instagram_token>
 			<!-- <alert_avg_page_load>
 				<schedule>
 					<cron_expr>*/1 * * * *</cron_expr>

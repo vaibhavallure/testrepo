@@ -24,7 +24,12 @@ class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
     const XML_PATH_TEST_EMAILS_ENABLED ='allure_alert/alr_alert_test/test_emails_enable';
     const XML_PATH_GROUP_TEST_EMAILS   ='allure_alert/alr_alert_test/group_test_emails';
     const XML_PATH_GROUP_TEST_EMAILS_NAMES = 'allure_alert/alr_alert_test/group_test_names';
-
+    /*INSTAGRAM ALERT SETTINGS*/
+    const XML_PATH_INSTA_ENABLE = 'allure_alert/alr_instatoken/alr_enabled';
+    const XML_PATH_INSTA_EMAIL_TEMPLATE = 'allure_alert/alr_instatoken/instatoken_template';
+    const XML_PATH_INSTA_EMAIL_ENABLE = 'allure_alert/alr_instatoken/enabled_instatoken_email';
+    const XML_PATH_INSTA_GROUP_EMAILS  		= 'allure_alert/alr_instatoken/insta_group_emails';
+    const XML_PATH_INSTA_GROUP_EMAILS_NAMES  	= 'allure_alert/alr_instatoken/insta_group_names';
     public function getAlertDebugStatus(){
         return Mage::getStoreConfig(self::XML_PATH_ALERT_DEBUG_ENABLED);
     }
@@ -115,5 +120,20 @@ class Allure_AlertServices_Helper_Config extends Mage_Core_Helper_Abstract
     public function getAvgLoadTimePath(){
         return self::XML_PATH_AVG_PAGE_LOAD;
     }
+    public function getInstagramTokenStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_INSTA_ENABLE);
+    }
+    public function getInstagramTokenEmailStatus(){
+        return Mage::getStoreConfig(self::XML_PATH_INSTA_EMAIL_ENABLE);
+    }
+    public function getInstagramTokenEmailTemplate(){
+        return Mage::getStoreConfig(self::XML_PATH_INSTA_EMAIL_TEMPLATE);
+    }
+    public function getInstaEmailsGroup(){
+        return Mage::getStoreConfig(self::XML_PATH_INSTA_GROUP_EMAILS);
+    }
 
+    public function getInstaEmailGroupNames(){
+        return Mage::getStoreConfig(self::XML_PATH_INSTA_GROUP_EMAILS_NAMES);
+    }
 }
