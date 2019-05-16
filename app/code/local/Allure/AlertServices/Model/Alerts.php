@@ -1,7 +1,7 @@
 <?php
 //require_once Mage::getBaseDir().'/allure/alrGoogleAnalytics.php';
 require_once Mage::getBaseDir().'/lib/ALRGoogleAnalytics/vendor/autoload.php';
-
+require_once $_SERVER['DOCUMENT_ROOT'].'/app/code/local/Allure/InstaCatalog/Model/Instagramclient.php';
 class Allure_AlertServices_Model_Alerts
 {	
 	private function getConfigHelper(){
@@ -85,7 +85,7 @@ class Allure_AlertServices_Model_Alerts
 		
 	}
 
-	public function alertSalesOfSix(){
+	public function alertSalesOfSix($debug = false){
 		/* Get the collection */
 		try{
 			$helper = Mage::helper('alertservices');
@@ -107,6 +107,16 @@ class Allure_AlertServices_Model_Alerts
 						  ->setPageSize(1)
 						  ->setOrder('created_at', 'desc');
 					    /*echo $orders->getSelect()->__toString();*/
+                if ($debug) {
+                    $orderDate = $orders->getFirstItem()->getCreatedAt();
+                    echo $orders->getSelect()->__toString();
+                    echo "<br>order count : ".count($orders);
+                    echo "<br>6 hour for testing for sale<br>";
+                    echo "<br>Order Date :".$orderDate;
+                    if($orderDate != null)
+                        echo "<br>Last Order Date :".Mage::getModel('core/date')->date("F j, Y \a\\t g:i a",$orderDate);
+
+                }
 					if (count($orders)<=0) {
 						$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
@@ -466,6 +476,31 @@ class Allure_AlertServices_Model_Alerts
     	}
 		
 	}
+    public  function  instaTokenAlert($debug = false){
+
+		    try{
+		        $helper = Mage::helper('alertservices');;
+		        $status =	$this->getConfigHelper()->getInstagramTokenStatus();
+		        $email_status =	$this->getConfigHelper()->getInstagramTokenEmailStatus();
+		        if (!$email_status) {
+		            return;
+		        }
+
+		        if($status) {
+                    $response = $helper->instaTokenCheck();
+                    if($response['message']!='done'){
+                        $helper->sendInstagramErrorEmail($response);
+                    }
+                    if ($debug) {
+                    print_r($response);
+                    }
+                }
+		    }
+		    catch (Exception $ex){
+                $helper->alr_alert_log($ex->getMessage(),'allureAlerts.log');
+            }
+
+    }
 		/*$lastOrderDate = Mage::getModel("sales/order")
 										->getCollection()
 										->setCurPage(1)

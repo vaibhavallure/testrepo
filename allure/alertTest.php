@@ -13,8 +13,10 @@ Mage::getModel('alertservices/alerts')->alertPageNotFound();
 Mage::getModel('alertservices/alerts')->alertNullUsers();
 Mage::getModel('alertservices/alerts')->alertProductPrice();
 Mage::getModel('alertservices/alerts')->alertCheckoutIssue();*/
-//Mage::getModel('alertservices/alerts')->alertSalesOfSix();
-Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
+Mage::getModel('alertservices/alerts')->instaTokenAlert(true);
+
+//Mage::getModel('alertservices/alerts')->alertSalesOfFour(true);
+//Mage::getModel('alertservices/alerts')->alertSalesOfSix(true);
 //Mage::getModel('alertservices/alerts')->alertSalesOfTwo(true);
 
 
