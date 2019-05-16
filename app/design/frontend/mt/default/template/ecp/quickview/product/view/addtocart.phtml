@@ -52,9 +52,11 @@
         <?php echo $this->getChildHtml('', true, true) ?>
 <?php endif; ?>
 <script type="text/javascript">
-    function addToCart($this,$form){
-        parent.jQuery('#m-wait').show(); 
-        productAddToCartForm.submit($this,$form);
-        return false;
-    }
+        function addToCart($this, $form) {
+            if (productAddToCartForm.validator.validate()) {
+                parent.jQuery('#m-wait').show();
+                productAddToCartForm.submit($this, $form);
+            }
+            return false;
+        }
 </script>
