@@ -27,6 +27,7 @@ examples on what kind of actions can be applied to referenced blocks.
 		</reference>
 		<reference name="head">
 			<action method="addCss"><stylesheet>css/mana_filters.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/timeslider/appointments.css</stylesheet></action>
 		</reference>
         <reference name="mana.catalog.leftnav">
             <action method="setTemplate" ifconfig="mana_filters/advanced/enabled"><template>manapro/filteradvanced/view.phtml</template></action>
