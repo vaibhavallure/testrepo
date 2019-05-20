@@ -200,7 +200,7 @@ class Millesima_Segment extends Millesima_Abstract
             //Si fichier DML USA
         }elseif ($country == "U") {
             $line.="U14044"."\r\n";//"hobernard@millesima.com"."\r\n";
-            $line.="1510621"."\r\n";//"imiossec@millesima.com"."\r\n";
+            $line.="1385813"."\r\n";//"imiossec@millesima.com"."\r\n";
             $line.="1116188"."\r\n";//"lanton@millesima.com"."\r\n";
             $line.="1009006"."\r\n";//"mdutoya@millesima.com"."\r\n";
         }
