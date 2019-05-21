@@ -173,7 +173,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                foreach ($childProducts as $child) {
                    $color = $imgSource = '';
                    $metal = $child->getAttributeText('metal');
-                   if (isset($metal)) {
+                   if (!empty($metal)) {
                        $color = $metal;
                        if($child->getThumbnail()){
                        $imgSource = Mage::getModel('catalog/product_media_config')->getMediaUrl($child->getThumbnail());
@@ -211,7 +211,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                else{
                    $color=$imgSource='';
                    $metal = $product->getAttributeText('metal');
-                   if($metal)
+                   if(!empty($metal))
                    {
                        $color = $metal;
                    }
