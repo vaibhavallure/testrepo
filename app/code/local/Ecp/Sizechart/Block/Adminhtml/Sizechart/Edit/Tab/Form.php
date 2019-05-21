@@ -22,14 +22,14 @@ class Ecp_Sizechart_Block_Adminhtml_Sizechart_Edit_Tab_Form extends Mage_Adminht
       
      $wysiwygConfig = Mage::getSingleton('cms/wysiwyg_config')->getConfig();
      
-      $wysiwygConfig->setDirectivesUrl(str_replace('ecpsizechart','admin',$wysiwygConfig->getDirectivesUrl()));
+      $wysiwygConfig->setDirectivesUrl(str_replace('ecpsizechart','MariaTashGOadmin',$wysiwygConfig->getDirectivesUrl()));
       $plugins = $wysiwygConfig->getPlugins();
       $plugins[0]['options']['onclick']['subject'] = str_replace('ecpsizechart','admin',$plugins[0]['options']['onclick']['subject']);
-      $plugins[0]['options']['url'] = str_replace('ecpsizechart','admin',$plugins[0]['options']['url']);
+      $plugins[0]['options']['url'] = str_replace('ecpsizechart','MariaTashGOadmin',$plugins[0]['options']['url']);
       $wysiwygConfig->setPlugins($plugins);
-      $wysiwygConfig->setDirectivesUrlQuoted(str_replace('ecpsizechart','admin',$wysiwygConfig->getDirectivesUrlQuoted()));
-      $wysiwygConfig->setFilesBrowserWindowUrl(str_replace('ecpsizechart','admin',$wysiwygConfig->getFilesBrowserWindowUrl()));
-      $wysiwygConfig->setWidgetWindowUrl(str_replace('ecpsizechart','admin',$wysiwygConfig->getWidgetWindowUrl()));
+      $wysiwygConfig->setDirectivesUrlQuoted(str_replace('ecpsizechart','MariaTashGOadmin',$wysiwygConfig->getDirectivesUrlQuoted()));
+      $wysiwygConfig->setFilesBrowserWindowUrl(str_replace('ecpsizechart','MariaTashGOadmin',$wysiwygConfig->getFilesBrowserWindowUrl()));
+      $wysiwygConfig->setWidgetWindowUrl(str_replace('ecpsizechart','MariaTashGOadmin',$wysiwygConfig->getWidgetWindowUrl()));
       
       $fieldset->addField('block_content', 'editor', array(
           'name'      => 'block_content',
