@@ -33,8 +33,7 @@
     color: #fff;
     background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
 }
-margin-left: 25px;
-}
+
 .pop-link .new_account{
     text-align: center;
     margin-top: 10px;
@@ -60,6 +59,7 @@ margin-left: 25px;
 .facebook-login-checkout .fb-img, .mt-facebookconnect-btn .fb-img {
     width: 200px;
     float: right;
+}
 .mt-wishlist-table #wishlist-table td {
     padding: 8px 5px 8px 8px !important;
 }
@@ -68,4 +68,8 @@ margin-left: 25px;
 }
 .quickview-index-index .product-view select{
     position:absolute;
+}
+
+#productsContainer {
+    margin-bottom: auto
 }
