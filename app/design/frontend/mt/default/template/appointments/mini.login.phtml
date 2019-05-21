@@ -12,7 +12,7 @@
 			</label>
 		</div>
 		<br />
-		<span id="login-msg">&nbsp;</span>
+		<span id="login-msg-span">&nbsp;</span>
 		<button type="button" id="signin-btn" class="button">Sign-In</button>
 	</div>
 </div>
@@ -47,13 +47,13 @@ jQuery.ajax({
 	data: {request:request},
 	success : function(data){
 		if(data.success){
-			 jQuery('#login-msg').html(data.msg);
+			 jQuery('#login-msg-span').html(data.msg);
 			 jQuery('#reg_form').html(data.output);
 			 jQuery(".modalDialog").css({"opacity":"0","pointer-events":"none"});
             location.reload();
 
 		}else{
-		 jQuery('#login-msg').html(data.error);
+		 jQuery('#login-msg-span').html(data.error);
 		}
 		}
 	});
