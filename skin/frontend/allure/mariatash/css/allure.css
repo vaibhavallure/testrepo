@@ -464,7 +464,7 @@ color: #666;
   padding: 7.5px;
   background-color: transparent;
   border-color: #ccc;
-  color: #505152;
+  color: white;/*#505152;*/
     margin: 0 10px;
     font-size:22px;
     vertical-align:top;
@@ -1124,7 +1124,8 @@ a.forgotpwd {
   padding-top: 10px;
   padding-bottom: 10px;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #767881eb;/*rgba(0, 0, 0, 0.2)*/;
+  position: relative;/*new added*/
   color: #fff;
 }
 
