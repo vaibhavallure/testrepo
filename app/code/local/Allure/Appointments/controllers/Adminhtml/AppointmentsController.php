@@ -625,7 +625,6 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     {
         $data=$post_data = $this->getRequest()->getPost();
 
-
         if (count($data['allure_appointments_ids']) > 0) {
 
                 foreach ($data['allure_appointments_ids'] as $id) {
@@ -638,7 +637,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                 }
 
 
-            Mage::getModel('appointments/cron')->sendNotification($appointments,"manual");
+            Mage::getModel('appointments/cron')->sendNotification($appointments,"manual",$data['reminder_type']);
 
             Mage::getSingleton("adminhtml/session")->addSuccess(
                 Mage::helper("adminhtml")->__("Reminder sent to selected appointments"));

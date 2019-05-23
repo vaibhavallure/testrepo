@@ -156,7 +156,15 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
             'label' => Mage::helper('appointments')->__('Send Reminder'),
             'url' => Mage::helper('adminhtml')->getUrl('*/adminhtml_appointments/sendReminder', array('redirect' => 'allure_appointments')),
             'confirm' => Mage::helper('appointments')->__('send reminder to selected appointments'),
-
+            'additional' => array(
+                'visibility' => array(
+                    'name' => 'reminder_type',
+                    'type' => 'select',
+                    'class' => 'required-entry',
+                    'label' => Mage::helper('appointments')->__('Reminder Type '),
+                    'values' => Mage::getModel('appointments/appointments')->getReminderType()
+                )
+            )
         ));
 
         return $this;
