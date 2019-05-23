@@ -94,4 +94,13 @@ class Allure_HarrodsInventory_Helper_Config extends Mage_Core_Helper_Abstract
     }*/
     /*------------------------------------------------------------------------*/
 
+
+
+    /*---------------------------daily sales report----------------------------*/
+    /*enabled,location.perday_cron_time*/
+    public function getDailySales($of)
+    {
+        return Mage::getStoreConfig('harrodsinventory/daily_sales/'.$of);
+    }
+
 }

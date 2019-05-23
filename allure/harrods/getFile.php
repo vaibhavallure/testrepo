@@ -3,7 +3,7 @@ require_once('../../app/Mage.php');
 umask(0);
 Mage::app();
 
-Mage::helper("harrodsinventory/cron")->generateHarrodsFiles();
+Mage::helper("harrodsinventory/cron")->sendDailySales();
 
 //Mage::helper("harrodsinventory/data")->generateReport();
 //Mage::helper("harrodsinventory/data")->generateSTKReport();
