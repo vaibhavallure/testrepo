@@ -99,7 +99,10 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
         }
 
         $file=$this->sftp()->readFile($this->getPath(),$this->getPath('write'));
-        $this->sendEmail($file);
+        if(file_exists($file))
+            $this->sendEmail($file);
+        else
+            $this->add_log("File Not Found to Sent");
     }
 
 
