@@ -66,6 +66,28 @@ class Allure_HarrodsInventory_Helper_Sftp extends Mage_Core_Helper_Abstract
         }
     }
 
+    public function readFile($remotefilepath,$localfilepath)
+    {
+
+        $sftp=$this->connectSFTP();
+
+        if($sftp)
+        {
+            try{
+                $file = new Varien_Io_File();
+                $sftp->read($remotefilepath,$localfilepath);
+
+                if(file_exists($localfilepath))
+                $this->add_log("File Downloaded On Server=>".$remotefilepath);
+
+            }catch (Exception $e)
+            {
+                $this->add_log("readFile => Exception:".$e->getMessage());
+            }
+        }
+    }
+
+
 
     public function sendEmail($msg)
     {
