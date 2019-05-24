@@ -77,9 +77,10 @@ class Allure_HarrodsInventory_Helper_Sftp extends Mage_Core_Helper_Abstract
                 $file = new Varien_Io_File();
                 $sftp->read($remotefilepath,$localfilepath);
 
-                if(file_exists($localfilepath))
-                $this->add_log("File Downloaded On Server=>".$remotefilepath);
-
+                if(file_exists($localfilepath)) {
+                    $this->add_log("File Downloaded On Server=> " . $remotefilepath);
+                    return $localfilepath;
+                }
             }catch (Exception $e)
             {
                 $this->add_log("readFile => Exception:".$e->getMessage());
