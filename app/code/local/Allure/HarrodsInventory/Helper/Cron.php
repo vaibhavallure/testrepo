@@ -90,6 +90,20 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
         $this->fileTransfer($files);
     }
 
+
+    public function sendDailySales()
+    {
+        if (!$this->harrodsConfig()->getDailySales('enabled')) {
+            $this->add_log("sendDailySales=> daily sales report cron disabled from backend setting");
+            return;
+        }
+
+        $file=$this->sftp()->readFile($this->getPath(),$this->getPath('write'));
+        $this->sendEmail($file);
+    }
+
+
+
     /*-----------------------reports trigger end-------------------------------*/
 
 
@@ -110,6 +124,20 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
 
     }
 
+    public function getPath($operation='read')
+    {
+        $tag='<date>';
+        $path = Mage::getBaseDir('var') . DS . 'harrodsFiles';
+        $remoteFile=$this->harrodsConfig()->getDailySales('location');
+        $dateFormat = $this->get_string_between($remoteFile, $tag, $tag);
+        $date =date($dateFormat, $this->getCurrentDatetime('yesterday'));
+        $remoteFile=str_replace($tag.''.$dateFormat.''.$tag,$date,$remoteFile);
+
+        if($operation=='write')
+            return  $path . DS .pathinfo($remoteFile)['basename'];
+        else
+            return $remoteFile;
+    }
 
     public function getDiffUtc()
     {
@@ -134,10 +162,10 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
 
     }
 
-    public function getCurrentDatetime()
+    public function getCurrentDatetime($day='now')
     {
         $user_tz = new DateTimeZone($this->harrodsConfig()->getTimeZone());
-        $user = new DateTime('now', $user_tz);
+        $user = new DateTime($day, $user_tz);
         $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
         $ar=(array)$usersTime;
         $date = $ar['date'];
@@ -152,6 +180,76 @@ class Allure_HarrodsInventory_Helper_Cron extends Mage_Core_Helper_Abstract
     public function getMinute($datetime)
     {
         return date('i',  $datetime);
+    }
+
+    public function get_string_between($string, $start, $end){
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return '';
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    }
+
+
+
+
+    public function sendEmail($file)
+    {
+
+            $templateId = $this->harrodsConfig()->getDailySales('email_temp');
+
+            $mailTemplate = Mage::getModel('core/email_template');
+            $storeId = Mage::app()->getStore()->getId();
+            $senderName = 'harrods daily sales report';
+            $senderEmail = 'harrodsinv@mariatash.com';
+
+            $sender = array('name' => $senderName,
+                'email' => $senderEmail);
+            $recieverEmails = $this->harrodsConfig()->getDailySales('group_emails');
+            $recieverNames = $this->harrodsConfig()->getDailySales('group_names');
+
+            $recipientEmails = explode(',',$recieverEmails);
+            $recipientNames = explode(',',$recieverNames);
+
+
+            $emailTemplateVariables['store_name'] = Mage::app()->getStore()->getName();
+            $emailTemplateVariables['store_url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+
+            if(file_exists($file)){
+                    $name = pathinfo($file)['basename'];
+                    $mailTemplate->getMail()->createAttachment(
+                        file_get_contents($file),
+                        Zend_Mime::TYPE_OCTETSTREAM,
+                        Zend_Mime::DISPOSITION_ATTACHMENT,
+                        Zend_Mime::ENCODING_BASE64,
+                        $name
+                    );
+            }
+
+
+            try {
+                $mailTemplate
+                    ->sendTransactional(
+                        $templateId,
+                        $sender,
+                        $recipientEmails, //here comes recipient emails
+                        $recipientNames, // here comes recipient names
+                        $emailTemplateVariables,
+                        $storeId
+                    );
+
+                if ($mailTemplate->getSentSuccess()) {
+                    $this->add_log("daily sales report email sent");
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception $e){
+                    $this->add_log('send email daily sales report exception=>'.$e->getMessage());
+            }
+
     }
 
 

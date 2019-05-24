@@ -70,6 +70,14 @@
           <model>harrodsinventory/cron::generateHarrodsFiles</model>
         </run>
       </harrods_inventory_generate_files>
+      <harrods_inventory_daily_sales>
+          <schedule>
+          <config_path>harrodsinventory/daily_sales/perday_cron_time</config_path>
+          </schedule>
+          <run>
+              <model>harrodsinventory/cron::sendDailySales</model>
+          </run>
+      </harrods_inventory_daily_sales>
     </jobs>
   </crontab>
 </config> 
