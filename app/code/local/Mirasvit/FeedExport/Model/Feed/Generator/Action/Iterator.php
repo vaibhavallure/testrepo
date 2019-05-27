@@ -155,6 +155,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
         $titleIndex = array_search('title', $headers);
         $imageIndex = array_search('image_link', $headers);
         $priceIndex = array_search('price',$headers);
+        $urlIndex = array_search('link',$headers);
        try {
            $newResultArray = array();
            foreach ($result as $product) {
@@ -166,7 +167,20 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                if ($index) {
                    $dataArr[$index] = 'new_color';
                }
+
                $product = Mage::getModel('catalog/product')->load($dataArr[0]);
+
+               /*CHECK FOR PRODUCT URL IF CONTAIS CATALOG/PRODUCT/VIEW the get url_path*/
+               $productUrlNew='';
+               if(isset($dataArr[$urlIndex]))
+               {
+                   $productUrlNew = $dataArr[$urlIndex];
+                   if(strpos($productUrlNew, '/catalog/product/view/') !== false){
+                       $baseUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+                       $productUrlNew=$baseUrl.$product->getUrlPath().'?fee='.$feed_custom->getId()."&fep".$product->getId();
+                       $dataArr[$urlIndex] = $productUrlNew;
+                   }
+               }
 
                if($product->getTypeId() == Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE){
                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
