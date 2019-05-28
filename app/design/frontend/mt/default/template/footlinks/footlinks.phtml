@@ -49,16 +49,23 @@
         <?php
         foreach ($links as $link):
             if ($link->getStatus() == 1):
+
+                /*temporary disable translation except Italy */
+                if(Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode()=='IT')
+                    $footer_title=$this->__($link->getTitle());
+                else
+                    $footer_title=$link->getTitle();
+
+
                 ?>
                 <li id="link_<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
                     <?php if ($link->getType() == 1 || $link->getType() == 0): ?>
-
                         <div class='popbox' data-tooltip-id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
                             <?php if ($link->getLink() != ""): ?>
-                                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $link->getLink() ?>"><?php echo $this->__($link->getTitle()) ?></a>
+                                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $link->getLink() ?>"><?php echo $footer_title ?></a>
                                 <?php
                             else:
-                                echo $this->__($link->getTitle());
+                                echo $footer_title;
                             endif;
                             ?>
                         </div>
@@ -181,10 +188,10 @@
                                 <div>
                                 <?php endif; ?>
                                 <?php if ($link->getLink() != ""): ?>
-                                    <a href="<?php echo $link->getLink() ?>"><?php echo $this->__($link->getTitle()) ?></a>
+                                    <a href="<?php echo $link->getLink() ?>"><?php echo $footer_title ?></a>
                                     <?php
                                 else:
-                                echo $this->__($link->getTitle());
+                                echo $footer_title;
                                 endif;
                                 ?>
                             </div>
