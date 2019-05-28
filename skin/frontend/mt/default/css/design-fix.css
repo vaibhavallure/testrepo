@@ -73,3 +73,6 @@
 #productsContainer {
     margin-bottom: auto
 }
+.checkout-onepage-index .facebook-login-checkout img.fb-img {
+    float: left;
+}
