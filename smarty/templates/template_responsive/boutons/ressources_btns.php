@@ -204,20 +204,20 @@ $dvid = array ("F" => "<strong>D&eacute;couvrez</strong>&nbsp;la&nbsp;vid&eacute
  * Texte bouton Je réserve
  */
 
-$jrsv = array ("F" => "<strong>Je&nbsp;r&eacute;serve<strong>",
-						"B" => "<strong>Je&nbsp;r&eacute;serve<strong>",
-						"L" => "<strong>Je&nbsp;r&eacute;serve<strong>",
-						"D" => "<strong>Jetzt&nbsp;reservieren</strong>",
-						"O" => "<strong>Jetzt&nbsp;reservieren</strong>",
-						"SA" =>"<strong>Jetzt&nbsp;reservieren</strong>",
-						"SF" => "<strong>Je&nbsp;r&eacute;serve<strong>",
-						"G" => "<strong>Discover&nbsp;Now</strong>",
-						"I" => "<strong>Discover&nbsp;Now</strong>",
-						"H" => "<strong>Discover&nbsp;Now</strong>",
-						"SG" => "<strong>Discover&nbsp;Now</strong>",
-						"Y" => "<strong>Prenoto&nbsp;il&nbsp;vino</strong>",
-						"E" => "<strong>Reservo&nbsp;el&nbsp;vino</strong>",
-						"P" => "<strong>Encomendo</strong>",
+$jrsv = array ("F" => "<strong>D&eacute;couvrez&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2<strong>",
+						"B" => "<strong>D&eacute;couvrez&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2<strong>",
+						"L" => "<strong>D&eacute;couvrez&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2<strong>",
+						"D" => "<strong>Jetzt&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2&nbsp;entdecken</strong>",
+						"O" => "<strong>Jetzt&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2&nbsp;entdecken</strong>",
+						"SA" =>"<strong>Jetzt&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2&nbsp;entdecken</strong>",
+						"SF" => "<strong>D&eacute;couvrez&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2<strong>",
+						"G" => "<strong>Discover&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
+						"I" => "<strong>Discover&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
+						"H" => "<strong>Discover&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
+						"SG" => "<strong>Discover&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
+						"Y" => "<strong>Scopri&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
+						"E" => "<strong>Descubra&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
+						"P" => "<strong>Descubra&nbsp;o&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
 						"U" => "<strong>Discover&nbsp;Now</strong>"
 						);
 
