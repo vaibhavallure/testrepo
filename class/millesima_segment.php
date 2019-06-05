@@ -89,6 +89,22 @@ class Millesima_Segment extends Millesima_Abstract
             return false;
         }
     }
+	
+	/**
+     * Function to get one segment by name and status
+     * @param string $name
+     * @return mixed
+     */
+    public function getSegmentWithoutContactByName($name){
+        $bddClass = new Millesima_Bdd();
+        $res = $bddClass->selectAll("SELECT * FROM segment_selligente WHERE name = '".$name."' AND nb_contact is null ORDER BY id DESC");
+        if(count($res)>0){
+            $segment = $res[0];
+            return $res[0];
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Function to import segment file  in db
@@ -266,7 +282,7 @@ class Millesima_Segment extends Millesima_Abstract
             $segmentList = $results->segments->SegmentInfo;
             foreach($segmentList as $segment){
                 $bddClass = new Millesima_Bdd();
-                $segmentBdd = $this->getSegmentByNameAndStatus($segment->Name,'local');
+                $segmentBdd = $this->getSegmentWithoutContactByName($segment->Name);
                 if($segmentBdd){
 					$memberCount = 0;
 					$memberCount = $this->segmentCount($segment->ID);

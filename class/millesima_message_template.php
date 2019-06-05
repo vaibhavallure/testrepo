@@ -688,9 +688,17 @@ class Millesima_Message_Template extends Millesima_Abstract
 
         $article->quantite=$data["quantite"];
         $article->boiscarton=$data["BoisCarton"];
-        if($article->pays == 'P'){
+		if($article->pays == 'F' || $article->pays == 'B' || $article->pays == 'L' || $article->pays == 'SF' ){
+            $article->boiscarton = str_replace('Une', 'La', $article->boiscarton);
+            $article->boiscarton = str_replace('Un', 'Le', $article->boiscarton);
+        }
+        if($article->pays == 'Y'){
+            $article->boiscarton = str_replace('Una', 'La', $article->boiscarton);
+        }
+		if($article->pays == 'P'){
             $article->boiscarton = str_replace('cartao', 'cart&atilde;o', $article->boiscarton);
         }
+		
         $article->conditionnementpluriel=utf8_encode($data["Libelle_Cond_pluriel"]);
         $article->conditionnementsingulier=utf8_encode($data["Libelle_Cond_singulier"]);
         if($article->quantite == 1){
