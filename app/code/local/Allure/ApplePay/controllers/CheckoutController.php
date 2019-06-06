@@ -1441,7 +1441,7 @@ XML;
      */
     protected function _initProduct()
     {
-        $productId = (int) $this->getRequest()->getParam('product');
+        $productId = (int) $this->getRequest()->getParam('pconfig');
         if ($productId) {
             $product = Mage::getModel('catalog/product')
             ->setStoreId(Mage::app()->getStore()->getId())

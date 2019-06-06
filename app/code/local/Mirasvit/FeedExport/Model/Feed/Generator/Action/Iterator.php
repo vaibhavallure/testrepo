@@ -163,13 +163,21 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                $newProducts = array();
                $dataArr = preg_split("/[\t]/", $product);
                $index = array_search('give_color', $dataArr);
-               $dataArr[$priceIndex] = $dataArr[$priceIndex].' USD';
+
                if ($index) {
                    $dataArr[$index] = 'new_color';
                }
 
                $product = Mage::getModel('catalog/product')->load($dataArr[0]);
-
+               if($product->getId() == '43282'){
+                   Mage::log(json_encode($product->getData(),true),Zend_Log::DEBUG,'adi.log',true);
+               }
+               if($dataArr[$priceIndex]!=0) {
+                   $dataArr[$priceIndex] = $dataArr[$priceIndex] . ' USD';
+               }
+               else{
+                   $dataArr[$priceIndex] = round($product->getData('price'),2) . ' USD';
+               }
                /*CHECK FOR PRODUCT URL IF CONTAIS CATALOG/PRODUCT/VIEW the get url_path*/
                $productUrlNew='';
                if(isset($dataArr[$urlIndex]))
