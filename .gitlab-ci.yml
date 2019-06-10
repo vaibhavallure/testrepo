@@ -1,9 +1,25 @@
 before_script:
   - echo 'Start Deployment'
 stages:
+  - development
   - alpha
   - beta
   - deploy
+
+development:
+  environment: development
+  stage: development
+  tags:
+    - development
+  only:
+    - development
+  script:
+    - deploy-magento mariatash
+    - rm -f media && ln -s /var/www/shared/mariatash/media media
+    - rm -f var && ln -s /var/www/shared/mariatash/var var
+    - rm -f app/etc/local.xml && ln -s /var/www/shared/mariatash/app/etc/local.xml app/etc/local.xml
+    - echo 'Deployed on Development'
+    
 cloud_alpha:
   environment: staging
   stage: alpha
