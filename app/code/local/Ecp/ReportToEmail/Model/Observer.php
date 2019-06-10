@@ -116,10 +116,10 @@ class Ecp_ReportToEmail_Model_Observer
                       -(IFNULL(base_total_refunded,0)-IFNULL(base_tax_refunded,0)-IFNULL(base_shipping_refunded,0))
                       )) total_revenue_amount')
 
-                      ->columns('sum(
-                        (IFNULL(base_total_paid,0)-IFNULL(base_total_refunded,0))
-                       -(IFNULL(base_tax_invoiced,0)-(IFNULL(base_tax_refunded,0))
-                       -(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_invoiced,0))
+                    ->columns('sum(
+                        (IFNULL(base_grand_total,0)-IFNULL(base_total_refunded,0))
+                       -(IFNULL(base_tax_amount,0)-(IFNULL(base_tax_canceled,0))
+                       -(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_refunded,0))
                        -IFNULL(base_total_invoiced_cost,0))) total_profit_amount
                      ')
                      ->columns('sum(IFNULL(base_total_invoiced,0)) total_invoiced_amount')
@@ -163,7 +163,7 @@ class Ecp_ReportToEmail_Model_Observer
                 }
                 $mail = new Zend_Mail();
 
-                $getdata=$this->getSalesCollection($storeId,$from,$to);
+                $getdata=$collection->getFirstItem()->getTotalProfitAmount();
 
 
 
@@ -212,7 +212,7 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '</tr>';
                 $mailbody .= '<tr>';
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
-                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata['total_profit'].'</span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata.'</span></span></td>';
                 $mailbody .= '</tr>';
                 $mailbody .= '</tbody>';
                 $mailbody .= '</table>';
