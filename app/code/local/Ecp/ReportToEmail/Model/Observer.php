@@ -119,7 +119,7 @@ class Ecp_ReportToEmail_Model_Observer
                     ->columns('sum(
                         (IFNULL(base_grand_total,0)-IFNULL(base_total_refunded,0))
                        -(IFNULL(base_tax_amount,0)-(IFNULL(base_tax_canceled,0))
-                       -(IFNULL(base_shipping_invoiced,0)-IFNULL(base_shipping_refunded,0))
+                       -(IFNULL(base_shipping_amount,0)-IFNULL(base_shipping_canceled,0))
                        -IFNULL(base_total_invoiced_cost,0))) total_profit_amount
                      ')
                      ->columns('sum(IFNULL(base_total_invoiced,0)) total_invoiced_amount')
