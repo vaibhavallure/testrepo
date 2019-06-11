@@ -314,8 +314,8 @@ class Mage_CatalogInventory_Model_Observer
         //end
         
         /* @var $quoteItem Mage_Sales_Model_Quote_Item */
-        if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote()
-            || $quoteItem->getQuote()->getIsSuperMode()) {
+        if (!$quoteItem || !$quoteItem->getProductId() || !$quoteItem->getQuote() /* || $quoteItem->getQuote()->getIsSuperMode()*/
+           ) {
             return $this;
         }
 
