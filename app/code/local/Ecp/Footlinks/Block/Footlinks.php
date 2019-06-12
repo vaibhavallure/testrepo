@@ -10,6 +10,9 @@ class Ecp_Footlinks_Block_Footlinks extends Mage_Core_Block_Template {
             'cache_tags'    => array(Mage_Core_Model_Store::CACHE_TAG, Mage_Cms_Model_Block::CACHE_TAG)
         ));        
 
+        /*to resolve footer cache issue */
+        Mage::app()->getCacheInstance()->cleanType(block_html);
+
     }
 
     public function getCacheKeyInfo()

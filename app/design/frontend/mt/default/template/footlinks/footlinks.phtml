@@ -50,11 +50,13 @@
         foreach ($links as $link):
             if ($link->getStatus() == 1):
 
+                $footer_title=$this->__($link->getTitle());
+        
                 /*temporary disable translation except Italy */
-                if(Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode()=='IT')
+                /*if(Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode()=='IT')
                     $footer_title=$this->__($link->getTitle());
                 else
-                    $footer_title=$link->getTitle();
+                    $footer_title=$link->getTitle();*/
 
 
                 ?>
