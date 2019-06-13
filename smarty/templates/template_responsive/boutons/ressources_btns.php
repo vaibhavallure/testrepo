@@ -204,21 +204,21 @@ $dvid = array ("F" => "<strong>D&eacute;couvrez</strong>&nbsp;la&nbsp;vid&eacute
  * Texte bouton Je réserve
  */
 
-$jrsv = array ("F" => "<strong>D&eacute;couvrez&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2<strong>",
-						"B" => "<strong>D&eacute;couvrez&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2<strong>",
-						"L" => "<strong>D&eacute;couvrez&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2<strong>",
-						"D" => "<strong>Jetzt&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2&nbsp;entdecken</strong>",
-						"O" => "<strong>Jetzt&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2&nbsp;entdecken</strong>",
-						"SA" =>"<strong>Jetzt&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2&nbsp;entdecken</strong>",
-						"SF" => "<strong>D&eacute;couvrez&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2<strong>",
-						"G" => "<strong>Discover&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
-						"I" => "<strong>Discover&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
-						"H" => "<strong>Discover&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
-						"SG" => "<strong>Discover&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
-						"Y" => "<strong>Scopri&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
-						"E" => "<strong>Descubra&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
-						"P" => "<strong>Descubra&nbsp;o&nbsp;Vintage&nbsp;2002&nbsp;Pl&eacute;nitude&nbsp;2</strong>",
-						"U" => "<strong>Discover&nbsp;Now</strong>"
+$jrsv = array ("F" => "<strong>Voir&nbsp;l&rsquo;offre<strong>",
+						"B" => "<strong>Voir&nbsp;l&rsquo;offre<strong>",
+						"L" => "<strong>Voir&nbsp;l&rsquo;offre<strong>",
+						"D" => "<strong>zum&nbsp;Angebot</strong>",
+						"O" => "<strong>zum&nbsp;Angebot</strong>",
+						"SA" =>"<strong>zum&nbsp;Angebot</strong>",
+						"SF" => "<strong>Voir&nbsp;l&rsquo;offre<strong>",
+						"G" => "<strong>View&nbsp;offer</strong>",
+						"I" => "<strong>View&nbsp;offer</strong>",
+						"H" => "<strong>View&nbsp;offer</strong>",
+						"SG" => "<strong>View&nbsp;offer</strong>",
+						"Y" => "<strong>Vedi&nbsp;l&rsquo;offerta</strong>",
+						"E" => "<strong>Ver&nbsp;oferta</strong>",
+						"P" => "<strong>Consultar&nbsp;a&nbsp;oferta</strong>",
+						"U" => "<strong>View&nbsp;offer</strong>"
 						);
 
 /* 
