@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @extension   Remmote_Facebookproductcatalog
+ * @author      Remmote    
+ * @copyright   2016 - Remmote.com
+ * @descripion  Module config for Facebook Product Catalog
+ */
+-->
+<config>
+    <modules>
+        <Remmote_Facebookproductcatalog>
+            <version>1.5.0</version>
+        </Remmote_Facebookproductcatalog>
+    </modules>
+
+    <global>
+        <helpers>
+            <remmote_facebookproductcatalog>
+                <class>Remmote_Facebookproductcatalog_Helper</class>
+            </remmote_facebookproductcatalog>
+        </helpers>
+        <models>
+            <remmote_facebookproductcatalog>
+                <class>Remmote_Facebookproductcatalog_Model</class>
+            </remmote_facebookproductcatalog>
+        </models>
+        <resources>
+            <remmote_facebookproductcatalog_setup>
+                <setup>
+                    <module>Remmote_Facebookproductcatalog</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+            </remmote_facebookproductcatalog_setup>
+        </resources>
+    </global>
+
+     <!-- Setting up cronjobs -->
+    <crontab>
+        <jobs>
+            <remmote_facebookproductcatalog_exportcatalog>
+                <run><model>remmote_facebookproductcatalog/observer::export_catalog</model></run>
+            </remmote_facebookproductcatalog_exportcatalog>
+        </jobs>
+    </crontab>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Remmote_Facebookproductcatalog before="Mage_Adminhtml">Remmote_Facebookproductcatalog_Adminhtml</Remmote_Facebookproductcatalog>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <!-- Admin panel sections -->
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <remmote_facebookproductcatalog>
+                                            <title>Facebook Product Catalog</title>
+                                        </remmote_facebookproductcatalog>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+</config>
