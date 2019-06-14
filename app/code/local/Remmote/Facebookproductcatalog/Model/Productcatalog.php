@@ -292,7 +292,7 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
                 'productUrl'=>$productUrl,
                 'availability'=>$availability
             );
-            $customProducts = $this->getCustomProductResult($oldProduct);
+            $customProducts = $this->getCustomProductResult($oldProduct,$websiteId);
             foreach ($customProducts as $singleProduct) {
                 $product_attributes = array($singleProduct['id'], $itemGroupId, $singleProduct['title'], $googleProductCategory, $description, $singleProduct['productUrl'], $singleProduct['image_link'], $condition, $singleProduct['availability'], $price, $sale_price, $brand, $singleProduct['color']);
                 if ($extra_attributes) {
@@ -305,80 +305,68 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
         }
         fclose($fopen);
     }
-    public function getCustomProductResult($oldProduct){
+
+    function getCustomProductResult($oldProduct,$websiteId){
         try {
 
+            $product = null;
+            $newProducts = array();
 
+            if(Mage::helper('remmote_facebookproductcatalog')->useProductId($websiteId) && is_numeric($oldProduct['id'])){
+                $product = Mage::getModel('catalog/product')->load( $oldProduct['id']);
+            }else {
+                $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $oldProduct['id']);
+            }
+
+            /*CHECK FOR PRODUCT URL IF CONTAIS CATALOG/PRODUCT/VIEW the get url_path*/
+            if ($product->getTypeId() == Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE) {
+                $simple_products = Mage::getModel('catalog/product_type_configurable')
+                    ->getUsedProductCollection($product)
+                    ->addAttributeToSelect('*');
                 $newProducts = array();
-                $product = Mage::getModel('catalog/product')->load($oldProduct['id']);
+                if ($simple_products->getSize() > 0) {
+                    foreach ($simple_products as $simpleProduct) {
+                        $newProduct = array();
+                        $imgSource = $oldProduct['image_link'];
+                        if ($simpleProduct->getThumbnail() && $simpleProduct->getThumbnail() != 'no_selection') {
+                            $imgSource = Mage::getModel('catalog/product_media_config')->getMediaUrl($simpleProduct->getThumbnail());
+                        }
 
-                /*CHECK FOR PRODUCT URL IF CONTAIS CATALOG/PRODUCT/VIEW the get url_path*/
-                if($product->getTypeId() == Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE){
-                    $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
-                    foreach ($childProducts as $child) {
-                        $color = $imgSource = '';
-                        $metal = $child->getAttributeText('metal');
-                        $availability   = $product->getIsInStock() ? 'in stock' : 'out of stock';
-                        $newProducts['availability'] = $availability;
+                        $availability = $simpleProduct->getIsInStock() ? 'in stock' : 'out of stock';
+
+                        $metal = '';
+                        if ($simpleProduct->getAttributeText('metal')) {
+                            $metal = $simpleProduct->getAttributeText('metal');
+                        }
+                        $newProduct['availability'] = $availability;
+                        $newProduct['image_link'] = $imgSource;
+                        $newProduct['id'] = $oldProduct['id'] . getColorIntials($metal);
+                        $newProduct['color'] = $metal;
                         if (!empty($metal)) {
-                            $color = $metal;
-                            if($child->getThumbnail()){
-                                $imgSource = Mage::getModel('catalog/product_media_config')->getMediaUrl($child->getThumbnail());
-                            }
-                            else
-                            {
-                                $imgSource = $oldProduct['image_link'];
-                            }
-                            $newItem = array('color' => $color, 'image_link' => $imgSource);
-                            array_push($newProducts, $newItem);
-
+                            $newProduct['productUrl'] = $oldProduct['productUrl'] . '?metal=' . str_replace(' ', '%20', $metal);
                         } else {
-                            $new_product = $oldProduct;
-                            $new_product['color'] = '';
-                            array_push($newResultArray, $new_product);
+                            $newProduct['productUrl'] = $oldProduct['productUrl'];
                         }
+
+                        $newProduct['title'] = $simpleProduct->getName() ? $simpleProduct->getName() . ' ' . $metal : $oldProduct['title'];
+                        array_push($newProducts, $newProduct);
+
                     }
-                    $newProducts = $this->unique_multidim_array($newProducts, 'color');
-                    foreach ($newProducts as $new_product) {
-                        $color = $new_product['color'];
-                        $imageUrl = $new_product['image_link'];
-                        $new_product = $oldProduct;
-                        $new_product['id'] = $new_product['id'] . $this->getColorIntials($color);
-                        if($color!='') {
-                            $new_product['title'] = $new_product['title'] . ' ' . $color;
-                            $new_product['productUrl'] =$oldProduct['productUrl'].'?metal='.$color;
-                        }
-                        $new_product['color'] = $color;
-                        $new_product['image_link'] = $imageUrl;
-                        array_push($newResultArray, $new_product);
-                    }
-                    $newProducts = "";
+                    return $newProducts;
+                } else {
+                    return $oldProduct;
                 }
-                else{
-                   return $oldProduct;
-                }
-            return $newResultArray;
+            } else {
+                return $oldProduct;
+            }
+
         }
         catch (Exception $ex){
             Mage::log($ex->getMessage(),Zend_Log::DEBUG,'facebookfeed.log',true);
         }
     }
-    public function unique_multidim_array($array, $key) {
-        $temp_array = array();
-        $i = 0;
-        $key_array = array();
 
-        foreach($array as $val) {
-            if (!in_array($val[$key], $key_array)) {
-                $key_array[$i] = $val[$key];
-                $temp_array[$i] = $val;
-            }
-            $i++;
-        }
-        return $temp_array;
-    }
-
-    public function getColorIntials($color)
+    function getColorIntials($color)
     {
         $words = explode(" ", $color);
         $acronym = "";
@@ -390,5 +378,6 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
         }
         return $acronym;
     }
+
 
 }
