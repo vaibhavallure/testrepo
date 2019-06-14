@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -44,15 +44,7 @@
     <?php endif; ?>
     <?php if ((float) $_item->getQtyRefunded()): ?>
     <tr>
-        <td>
-        <?php if($_item->getTeamworkReason()):?>
-    		<?php echo Mage::helper('sales')->__($_item->getTeamworkReason()) ?>
-    	<?php elseif($_item->getOtherSysQty() < 0):?>
-        <?php echo Mage::helper('sales')->__('Return') ?>
-        <?php else:?>
-        <?php echo Mage::helper('sales')->__('Refunded') ?>
-        <?php endif;?>
-        </td>
+        <td><?php echo Mage::helper('sales')->__('Refunded') ?></td>
         <td><strong><?php echo $_item->getQtyRefunded()*1 ?></strong></td>
     </tr>
     <?php endif; ?>

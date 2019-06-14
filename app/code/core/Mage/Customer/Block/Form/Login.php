@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Customer
- * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -37,6 +37,7 @@ class Mage_Customer_Block_Form_Login extends Mage_Core_Block_Template
 
     protected function _prepareLayout()
     {
+        $this->getLayout()->getBlock('head')->setTitle(Mage::helper('customer')->__('Customer Login'));
         return parent::_prepareLayout();
     }
 
