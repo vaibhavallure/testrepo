@@ -163,8 +163,13 @@ class Ecp_ReportToEmail_Model_Observer
                 }
                 $mail = new Zend_Mail();
 
+                $getdata=$this->getSalesCollection($storeId,$from,$to);
 
-                $mailbody = '<style type="text/css">';
+
+
+
+
+        $mailbody = '<style type="text/css">';
                 $mailbody .= '.ExternalClass *{line-height:0;}';
                 $mailbody .= 'div,p,a,li,td {-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none;-ms-text-size-adjust:none;}';
                 $mailbody .= '</style><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
@@ -205,6 +210,10 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Total Discount Amount</strong></span></span></span></td>';
                 $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$data['total_discount_amount']. '</span></span></td>';
                 $mailbody .= '</tr>';
+                $mailbody .= '<tr>';
+                $mailbody .= '<td style="text-align: right;"><span style="color:#FFFFFF"><span style="font-size:16px"><span style="font-size:14px"><strong>Net Revenue</strong></span></span></span></td>';
+                $mailbody .= '<td style="text-align: left;"><span style="color:#FFFFFF"><span style="font-size:16px">'.'<label>'.utf8_decode($symbol).'</label>'.$getdata['total_profit'].'</span></span></td>';
+                $mailbody .= '</tr>';
                 $mailbody .= '</tbody>';
                 $mailbody .= '</table>';
                 $mailbody .= '</div>';
@@ -212,6 +221,8 @@ class Ecp_ReportToEmail_Model_Observer
                 $mailbody .= '</table>';
                 $mailbody .= '</div>';
                 $mailbody .= '</div>';
+
+
 
                 // $mailbody = '<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="5"><img src="images/back_01.jpg" alt=""></td></tr><tr><td bgcolor="#374254"></td><td width="227" height="107" bgcolor="#374254"><span>';
                 // $mailbody .= '<center><p style="text-decoration:underline; font-size: 21px;color:white;font-family:arial;">Yesterday</p><span style="float:left;" width="20"></span>';
