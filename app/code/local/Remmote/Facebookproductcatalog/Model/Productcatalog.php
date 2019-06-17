@@ -342,7 +342,7 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
                         }
                         $newProduct['availability'] = $availability;
                         $newProduct['image_link'] = $imgSource;
-                        $newProduct['id'] = $oldProduct['id'] . $this->getColorIntials($metal);
+                        $newProduct['id'] = $simpleProduct->getId() . $this->getColorIntials($metal);
                         $newProduct['color'] = $metal;
                         if (!empty($metal)) {
                             $newProduct['productUrl'] = $oldProduct['productUrl'] . '?metal=' . str_replace(' ', '%20', $metal);
