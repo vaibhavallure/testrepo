@@ -16,7 +16,7 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
      * @date   2016-11-29
      */
     public function exportCatalog($websiteCode = "") {
-
+        Mage::log('In Export Catalog',Zend_Log::DEBUG,'fbtest.log',true);
         $_mediaBasePath     = Mage::getBaseDir('media');
         $catalog_path       = $_mediaBasePath . DS . 'facebook_productcatalog';
         $currency_code      = Mage::app()->getStore()->getCurrentCurrencyCode(); 
@@ -68,6 +68,7 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
      * @date   2017-06-01
      */
     private function _generateStoreCsvFile($websiteId, $website, $store, $currency_code, $catalog_path) {
+        Mage::log('In Local Productcatalog',Zend_Log::DEBUG,'fbtest.log',true);
         $current_date = date('Y-m-d');
 
         //Define product catalog filename
@@ -106,7 +107,7 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
         $configurableProductsCollection->addAttributeToFilter('type_id', array('eq' => 'configurable'));
         $configurableProductsCollection->addAttributeToSelect('*');
         $childProducts = array();
-        foreach ($configurableProductsCollection as $configurableProduct) {
+        foreach ($configurableProductsCollection as $configurableProduct){
             $_children          = $configurableProduct->getTypeInstance()->getUsedProducts($configurableProduct);
             foreach ($_children as $child){
                 $childProducts[$child->getId()] = array(
@@ -115,8 +116,6 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
                 );
             }
         }
-
-        //Including extra attributes
         $attributes_to_select = array('sku', 'type_id', 'name', 'short_description', 'description', 'facebook_product_description', 'image', 'url_path', 'status', 'price', 'price_type', 'special_price', 'special_from_date', 'special_to_date', 'final_price', 'tax_class_id', 'brand', 'manufacturer', 'color');
         if($extra_attributes) {
             $attributes_to_select = array_merge($attributes_to_select, $extra_attributes);
@@ -125,7 +124,11 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
         $products->addAttributeToSelect($attributes_to_select);
         $products->joinTable('cataloginventory/stock_item','product_id=entity_id', array('qty', 'is_in_stock'));
         $products->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
-        
+        $products->addFieldToFilter('visibility', array(
+                                                        array('eq' =>Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH),
+                                                        array('eq'=>Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG)
+                                                        )
+                                    );
         //Filter by visibility
         if(Mage::helper('remmote_facebookproductcatalog')->exportProductsNotVisibleIndividually($websiteId)) {
             $products->addAttributeToFilter('visibility', array('in' => array(1, 4))); //Not visible individually and Catalog, Search
@@ -146,8 +149,8 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
         }
         
         fputcsv($fopen, $csvHeader, ",");
-
         foreach ($products as $product){
+//            Mage::log('Product ID :'.$product->getId(),Zend_Log::DEBUG,'fbtest.log',true);
             //Skip products with no price
             if(!$product->getPrice()){ //grouped products
                 continue;
@@ -308,7 +311,6 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
 
     function getCustomProductResult($oldProduct,$websiteId){
         try {
-
             $product = null;
             $newProducts = array();
 
@@ -340,7 +342,7 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
                         }
                         $newProduct['availability'] = $availability;
                         $newProduct['image_link'] = $imgSource;
-                        $newProduct['id'] = $oldProduct['id'] . getColorIntials($metal);
+                        $newProduct['id'] = $oldProduct['id'] . $this->getColorIntials($metal);
                         $newProduct['color'] = $metal;
                         if (!empty($metal)) {
                             $newProduct['productUrl'] = $oldProduct['productUrl'] . '?metal=' . str_replace(' ', '%20', $metal);
@@ -348,7 +350,7 @@ class Remmote_Facebookproductcatalog_Model_Productcatalog
                             $newProduct['productUrl'] = $oldProduct['productUrl'];
                         }
 
-                        $newProduct['title'] = $simpleProduct->getName() ? $simpleProduct->getName() . ' ' . $metal : $oldProduct['title'];
+                        $newProduct['title'] = $simpleProduct->getName() ? $simpleProduct->getName() : $oldProduct['title'];
                         array_push($newProducts, $newProduct);
 
                     }
