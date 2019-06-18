@@ -290,7 +290,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
        return $hr.":".$min.':00';
 	}
 	public function getShortUrl($url){
-	    $apiKey = '';
+	    /*$apiKey = '';
 	    $apiKey = Mage::getStoreConfig('appointments/general/google_api_key');
 	    if (!$apiKey)
 	        $apiKey = 'AIzaSyCZ3hFq9zcuXks44WNSdpwtr4Zz1kRi6BI';
@@ -307,7 +307,17 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 	    $response = curl_exec($curlObj);
 	    $json = json_decode($response);
 	    curl_close($curlObj);
-	    return $json->id;
+	    return $json->id;*/
+
+
+        $ch = curl_init();
+        $timeout = 5;
+        curl_setopt($ch,CURLOPT_URL,'http://tinyurl.com/api-create.php?url='.$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
 	}
 	public function getAvailablePiercers($id)
 	{
