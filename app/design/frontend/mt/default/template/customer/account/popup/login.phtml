@@ -36,7 +36,7 @@
             <?php if (Mage::helper('core')->isModuleEnabled('Allure_GoogleConnect')):?>
                 <?php $isEnableGoogleSign = Mage::helper("allure_googleconnect")->_isEnabled();?>
                 <?php if($isEnableGoogleSign):?>
-                    <div class="mt-googleconnect-btn" style="float: left">
+                    <div class="mt-googleconnect-btn" >
                         <?php echo $this->getLayout()->createBlock('allure_googleconnect/button')
                             ->setTemplate("allure/googleconnect/button.phtml")->toHtml(); ?>
                     </div>
