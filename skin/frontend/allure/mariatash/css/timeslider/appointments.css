@@ -771,3 +771,9 @@ a#foo2_next {
 	}
 
 }
+
+
+
+br.hide-on-mobile {
+	display: none;
+}
