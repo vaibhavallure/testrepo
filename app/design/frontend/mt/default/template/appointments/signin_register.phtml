@@ -1,56 +1,56 @@
 <?php
-	$fetch_model = Mage::registry('apt_modify_data');
+$fetch_model = Mage::registry('apt_modify_data');
 
-	if($fetch_model){
-		$f_custId = $fetch_model->getCustomerId();
-		$f_firstName = $fetch_model->getFirstname();
-		$f_lastName = $fetch_model->getLastname();
-		$f_email = $fetch_model->getEmail();
-		$f_telephone = $fetch_model->getPhone();
-		$f_street = $fetch_model->getStreet();
-		$f_city = $fetch_model->getCity();
-		$f_cntry = $fetch_model->getCountry();
-		$f_state = $fetch_model->getState();
-		$f_postcode = $fetch_model->getPostalCode();
-		$f_special_notes = $fetch_model->getSpecialNotes();
-		$f_notification_pref = $fetch_model->getNotificationPref();
-	}
-	/* else{
-		$f_custId = '';
-		$f_firstName = '';
-		$f_lastName = '';
-		$f_email = '';
-		$f_telephone = '';
-		$f_street = '';
-		$f_city = '';
-		$f_cntry = '';
-		$f_state = '';
-		$f_postcode = '';
-	} */
+if($fetch_model){
+    $f_custId = $fetch_model->getCustomerId();
+    $f_firstName = $fetch_model->getFirstname();
+    $f_lastName = $fetch_model->getLastname();
+    $f_email = $fetch_model->getEmail();
+    $f_telephone = $fetch_model->getPhone();
+    $f_street = $fetch_model->getStreet();
+    $f_city = $fetch_model->getCity();
+    $f_cntry = $fetch_model->getCountry();
+    $f_state = $fetch_model->getState();
+    $f_postcode = $fetch_model->getPostalCode();
+    $f_special_notes = $fetch_model->getSpecialNotes();
+    $f_notification_pref = $fetch_model->getNotificationPref();
+}
+/* else{
+    $f_custId = '';
+    $f_firstName = '';
+    $f_lastName = '';
+    $f_email = '';
+    $f_telephone = '';
+    $f_street = '';
+    $f_city = '';
+    $f_cntry = '';
+    $f_state = '';
+    $f_postcode = '';
+} */
 ?>
 <?php
 $session = Mage::getSingleton('customer/session');
 /* If the cust is logged in and Modifying record */
 if ($session->isLoggedIn()) {
-	$customer = Mage::getSingleton('customer/session')->getCustomer();
-	$customerModel = Mage::getModel('customer/customer')->load($customer->getId());
+    $customer = Mage::getSingleton('customer/session')->getCustomer();
+    $customerModel = Mage::getModel('customer/customer')->load($customer->getId());
 
-	/* Fetching Data */
-	$custId = $customer->getId();
-	$firstName = $customerModel->getFirstname();
-	$lastName = $customerModel->getLastname();
-	$email = $customerModel->getEmail();
-	$addressId = $customerModel->getDefaultBilling();
-	if($addressId)
-	{
-		$address = Mage::getModel('customer/address')->load($addressId);
-		$telephone = $address->getTelephone();
-		$street = $address->getStreet();
-		$city = $address->getCity();
-		$cntry = $address->getCountry();
-		$state = $address->getRegion();
-		$postcode = $address->getPostcode();
-	}
+    /* Fetching Data */
+    $custId = $customer->getId();
+    $firstName = $customerModel->getFirstname();
+    $lastName = $customerModel->getLastname();
+    $email = $customerModel->getEmail();
+    $addressId = $customerModel->getDefaultBilling();
+    if($addressId)
+    {
+        $address = Mage::getModel('customer/address')->load($addressId);
+        $telephone = $address->getTelephone();
+        $street = $address->getStreet();
+        $city = $address->getCity();
+        $cntry = $address->getCountry();
+        $state = $address->getRegion();
+        $postcode = $address->getPostcode();
+    }
 }
 ?>
 <link href="<?php echo $this->getSkinUrl('css/contact/intlTelInput.css');?>"  rel="stylesheet" />
@@ -72,175 +72,175 @@ if ($session->isLoggedIn()) {
 </style>
 
 <?php if (!$session->isLoggedIn()) :?>
-	<div class="field signin-field" >
-		<button type="button" name="sign_in" href="#" id="signin-maria" class="button signin">Sign In With Mariatash</button>
-	</div>
+    <div class="field signin-field" >
+        <button type="button" name="sign_in" href="#" id="signin-maria" class="button signin">Sign In With Mariatash</button>
+    </div>
 <?php endif;?>
 
-		<div class="field" id="reg_form">
-			  <div class="regDiv" >
-				  	<input type="hidden" name="customer_id" value="<?php echo $custId?>">
-					  	<div class="fieldDiv">
-					  	   	<label>First Name*:</label><br/>
-					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php //echo $firstName?>" />-->
-					    	<input class="ele_width required-entry" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
-					    </div>
+<div class="field" id="reg_form">
+    <div class="regDiv" >
+        <input type="hidden" name="customer_id" value="<?php echo $custId?>">
+        <div class="fieldDiv">
+            <label><?= $this->__('First Name')?>*:</label><br/>
+            <!-- <input class="ele_width required-entry validate-alpha" type="text" name="firstname" value="<?php //echo $firstName?>" />-->
+            <input class="ele_width required-entry" type="text" name="firstname" value="<?php if($f_firstName):echo $f_firstName;else: echo $firstName; endif;?>" />
+        </div>
 
-						<div class="fieldDiv">
-					    	<label>Last Name*:</label><br/>
-					    	<!-- <input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php //echo $lastName?>" />-->
-					    	<input class="ele_width required-entry"  type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
-					    </div>
+        <div class="fieldDiv">
+            <label><?= $this->__('Last Name')?>*:</label><br/>
+            <!-- <input class="ele_width required-entry validate-alpha" type="text" name="lastname" value="<?php //echo $lastName?>" />-->
+            <input class="ele_width required-entry"  type="text" name="lastname" value="<?php if($f_lastName): echo $f_lastName;else:echo $lastName;endif;?>" />
+        </div>
 
-					  	<div class="fieldDiv">
-					  	   	<label>Email*:</label><br/>
-					    	<!-- <input class="ele_width required-entry validate-email" type="text" name="email" value="<?php //echo $email?>" />-->
-					    	<input class="ele_width required-entry validate-email"  type="text" name="email" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" />
-					    </div>
-						<div class="fieldDiv appt_ph">
-					    	<label>Phone Number*:</label><br/>
-                            <input id="phone" name="phone" type="text" class="input-text ele_width validate-intl-telephone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
-					    </div>
+        <div class="fieldDiv">
+            <label><?= $this->__('Email')?>*:</label><br/>
+            <!-- <input class="ele_width required-entry validate-email" type="text" name="email" value="<?php //echo $email?>" />-->
+            <input class="ele_width required-entry validate-email"  type="text" name="email" value="<?php if($f_email):echo $f_email;else:echo $email;endif;?>" />
+        </div>
+        <div class="fieldDiv appt_ph">
+            <label><?= $this->__('Phone Number')?>*:</label><br/>
+            <input id="phone" name="phone" type="text" class="input-text ele_width validate-intl-telephone" value="<?php if($f_telephone):echo $f_telephone;else:echo $telephone;endif;?>">
+        </div>
 
-						<div class="fieldDiv">
-						  	<label>Address:</label><br/>
-						    <!-- <input class="ele_width" type="text" name="street" value="<?php //echo $street['0']?>">-->
-						    <input class="ele_width" type="text" name="street" value="<?php if($f_street):echo $f_street;else: echo $street['0'];endif;?>" >
-						</div>
+        <div class="fieldDiv">
+            <label><?= $this->__('Address')?>:</label><br/>
+            <!-- <input class="ele_width" type="text" name="street" value="<?php //echo $street['0']?>">-->
+            <input class="ele_width" type="text" name="street" value="<?php if($f_street):echo $f_street;else: echo $street['0'];endif;?>" >
+        </div>
 
-						<div class="fieldDiv appt_country">
-					    	<?php
-					    	$countryList = Mage::getResourceModel('directory/country_collection')
-							        ->loadData()
-							        ->toOptionArray("Please Select Country");
-							?>
-						    <label for="country"><?php echo Mage::helper('appointments')->__('Country') ?>:</label>
-						    <div class="">
-						        <select name="country" class="ele_width countrySelect" onchange="getstate(this.value);">
-						            <?php foreach ($countryList as $country) { ?>
-						                <option	<?php if ($country['value']==$cntry || $country['value']==$f_cntry) echo 'selected' ; ?>
-						                  value="<?php echo $country['value']; ?>" >
-						                <?php echo $country['label']; ?></option>
-						            <?php } ?>
-						        </select>
-						    </div>
-					    </div>
-					    <div class="fieldDiv">
-						    <label for="state"><?php echo Mage::helper('appointments')->__('State') ?>:</label>
-						    <div class="input-box1" id='statediv'>
-						    <?php
+        <div class="fieldDiv appt_country">
+            <?php
+            $countryList = Mage::getResourceModel('directory/country_collection')
+                ->loadData()
+                ->toOptionArray(Mage::helper('appointments')->__("Please Select Country"));
+            ?>
+            <label for="country"><?php echo Mage::helper('appointments')->__('Country') ?>:</label>
+            <div class="">
+                <select name="country" class="ele_width countrySelect" onchange="getstate(this.value);">
+                    <?php foreach ($countryList as $country) { ?>
+                        <option	<?php if ($country['value']==$cntry || $country['value']==$f_cntry) echo 'selected' ; ?>
+                                value="<?php echo $country['value']; ?>" >
+                            <?php echo $country['label']; ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+        <div class="fieldDiv">
+            <label for="state"><?php echo Mage::helper('appointments')->__('State') ?>:</label>
+            <div class="input-box1" id='statediv'>
+                <?php
 
-						    $statearray = array();
-						    if ($cntry) {
-						    	$statearray = Mage::getModel('directory/region')->getResourceCollection()->addCountryFilter($cntry)->load();
-						    }
+                $statearray = array();
+                if ($cntry) {
+                    $statearray = Mage::getModel('directory/region')->getResourceCollection()->addCountryFilter($cntry)->load();
+                }
 
-						    if(count($statearray) > 0) :
-						    	$html .= "<select name='state' class='ele_width stateSelect'><option value=''>--Please Select--</option>";
-						    	foreach ($statearray as $_state) {
-						    		$selected = ($state == $_state->getDefaultName()) ? "selected" : "";
-						    		$html .= "<option value='" . $_state->getCode() . "' $selected>" . $_state->getDefaultName() . "</option>";
-						    	}
-						    	$html .= "</select>";
-						    	echo $html;
-						    else :
-						    ?>
-                    			<input name="state" id="state"  title="<?php echo Mage::helper('appointments')->__('State') ?>" value="<?php if($f_state): echo $f_state; else: echo $state; endif;?>" class="ele_width" type="text" />
- 							<?php endif;?>
-                			</div>
-					    </div>
-					    <div class="fieldDiv">
-					  	   	<label>City:</label><br/>
-					    	<!--<input class="ele_width" type="text" name="city" value="<?php //echo $city?>"/>  -->
-					    	<input class="ele_width" type="text" name="city" value="<?php if($f_city):echo $f_city;else: echo $city;endif;?>"/>
-					    </div>
-					    <div class="fieldDiv">
-					    	<label>Postal Code:</label><br/>
-					    	<!-- <input class="ele_width" type="text" name="postal_code" value="<?php //echo $postcode?>" /> -->
-					    	<input class="ele_width" type="text" name="postal_code"  value="<?php if($f_postcode):echo $f_postcode;else: echo $postcode;endif;?>" />
-					    </div>
+                if(count($statearray) > 0) :
+                    $html .= "<select name='state' class='ele_width stateSelect'><option value=''>--Please Select--</option>";
+                    foreach ($statearray as $_state) {
+                        $selected = ($state == $_state->getDefaultName()) ? "selected" : "";
+                        $html .= "<option value='" . $_state->getCode() . "' $selected>" . $_state->getDefaultName() . "</option>";
+                    }
+                    $html .= "</select>";
+                    echo $html;
+                else :
+                    ?>
+                    <input name="state" id="state"  title="<?php echo Mage::helper('appointments')->__('State') ?>" value="<?php if($f_state): echo $f_state; else: echo $state; endif;?>" class="ele_width" type="text" />
+                <?php endif;?>
+            </div>
+        </div>
+        <div class="fieldDiv">
+            <label><?= $this->__('City')?>:</label><br/>
+            <!--<input class="ele_width" type="text" name="city" value="<?php //echo $city?>"/>  -->
+            <input class="ele_width" type="text" name="city" value="<?php if($f_city):echo $f_city;else: echo $city;endif;?>"/>
+        </div>
+        <div class="fieldDiv">
+            <label><?= $this->__('Postal Code')?>:</label><br/>
+            <!-- <input class="ele_width" type="text" name="postal_code" value="<?php //echo $postcode?>" /> -->
+            <input class="ele_width" type="text" name="postal_code"  value="<?php if($f_postcode):echo $f_postcode;else: echo $postcode;endif;?>" />
+        </div>
 
-					    <div class="fieldDiv splnotesDiv">
-    				  	   	<label>Special Notes:</label>
-    				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced" ?>" rows="4" ><?php if($f_special_notes):
-    				    	echo $f_special_notes;
-    				    	endif;?></textarea>
-				    	</div>
+        <div class="fieldDiv splnotesDiv">
+            <label><?= $this->__('Special Notes')?>:</label>
+            <textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo Mage::helper('appointments')->__("Optional:Please specify names of people being pierced.") ?>" rows="4" ><?php if($f_special_notes):
+                    echo $f_special_notes;
+                endif;?></textarea>
+        </div>
 
-					    <div class="fieldDiv">
-				    		<label>Notify Me:</label><br/>
-				    		<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked"; endif?>  <?php if($f_notification_pref==null):echo "checked";endif?>><p>By Email</p></div>
-				    		<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message - Message and Data Rates May Apply</p></div>
-				    	</div>
-				    	<div class="fieldDiv " id="app_create_account">
-    				    	<?php if(!$session->isLoggedIn()):?>
-    						 <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;">Create Account:
-    						 <div class="pwdBlock">
-    							 <div class="fieldDiv">
-    							 	<label>Password:</label><br/>
-    								<input class="pass pwdele_width input-text validate-password " type="password" name="password" id="password" value="" />
-    							 </div><!-- validate-password validate-both-passwords -->
-    							 <div class="fieldDiv">
-    							 	<label>Confirm Password:</label><br/>
-    								<input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
-    							 </div>
-    						</div>
-    						<?php endif;?>
-						</div>
+        <div class="fieldDiv">
+            <label><?= $this->__('Notify Me')?>:</label><br/>
+            <div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked"; endif?>  <?php if($f_notification_pref==null):echo "checked";endif?>><p><?= $this->__('By Email')?></p></div>
+            <div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p><?= $this->__('By Text Message - Message and Data Rates May Apply')?></p></div>
+        </div>
+        <div class="fieldDiv " id="app_create_account">
+            <?php if(!$session->isLoggedIn()):?>
+                <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;"><?= $this->__('Create Account')?>:
+                <div class="pwdBlock">
+                    <div class="fieldDiv">
+                        <label><?= $this->__('Password')?>:</label><br/>
+                        <input class="pass pwdele_width input-text validate-password " type="password" name="password" id="password" value="" />
+                    </div><!-- validate-password validate-both-passwords -->
+                    <div class="fieldDiv">
+                        <label><?= $this->__('Confirm Password')?>:</label><br/>
+                        <input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
+                    </div>
+                </div>
+            <?php endif;?>
+        </div>
 
-					    <div class="fieldDiv">
-					     <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit')?>
-					    </div>
+        <div class="fieldDiv">
+            <?php echo $this->getChildHtml('studioforty9.recaptcha.explicit')?>
+        </div>
 
-					    <div class="">
-						<input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
-					</div><!-- field end -->
-		  	</div>
-		  	<div class="createaccDiv" >
-		  			<div id="piercer_schedule" class="fieldDiv">
+        <div class="">
+            <input type="submit" Value="CONFIRM" class="submitbtn" id="submitappt">
+        </div><!-- field end -->
+    </div>
+    <div class="createaccDiv" >
+        <div id="piercer_schedule" class="fieldDiv">
 
-		  			</div>
+        </div>
 
-		  			<?php if(0):?>
-			  	  	<div class="fieldDiv splnotesDiv">
-				  	   	<label>Special Notes:</label>
-				    	<textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced or desired piercer for appointment" ?>" rows="4" ><?php if($f_special_notes):
-				    	echo $f_special_notes;
-				    	endif;?></textarea>
-				    </div>
+        <?php if(0):?>
+            <div class="fieldDiv splnotesDiv">
+                <label><?= $this->__('Special Notes')?>:</label>
+                <textarea class="splnotesTxtarea" name="special_notes" placeholder="<?php  echo "Optional:Please specify names of people being pierced or desired piercer for appointment" ?>" rows="4" ><?php if($f_special_notes):
+                        echo $f_special_notes;
+                    endif;?></textarea>
+            </div>
 
 
-    					<div class="fieldDiv">
-    				    	<label>Notify Me:</label><br/>
-    				    	<div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p>By Email</p></div>
-    				    	<div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p>By Text Message - Message and Data Rates May Apply</p></div>
-    				    </div>
-    				    <div class="fieldDiv " id="app_create_account">
-    				    	<?php if(!$session->isLoggedIn()):?>
-    						 <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;">Create Account:
-    						 <div class="pwdBlock">
-    							 <div class="fieldDiv">
-    							 	<label>Password:</label><br/>
-    								<input class="pwdele_width input-text validate-password pass" type="password" name="password" id="password" value="" />
-    							 </div><!-- validate-password validate-both-passwords -->
-    							 <div class="fieldDiv">
-    							 	<label>Confirm Password:</label><br/>
-    								<input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
-    							 </div>
-    						</div>
-    						<?php endif;?>
-    					</div>
-					<?php endif;?>
+            <div class="fieldDiv">
+                <label><?= $this->__('Notify Me')?>:</label><br/>
+                <div><input type="radio" name="notification_pref" title="" value="1" class="notifyRadio" <?php if($f_notification_pref=='1'):echo "checked";else: echo checked; endif?> ><p><?= $this->__('By Email')?></p></div>
+                <div><input type="radio" name="notification_pref" title="" value="2" class="notifyRadio" <?php if($f_notification_pref=='2'):echo "checked";endif?>><p><?= $this->__('By Text Message - Message and Data Rates May Apply')?></p></div>
+            </div>
+            <div class="fieldDiv " id="app_create_account">
+                <?php if(!$session->isLoggedIn()):?>
+                    <input type="checkbox" id="createaccCheck" name="create_acc" value="create_acc" style="position:inherit;"><?= $this->__('Create Account')?>:
+                    <div class="pwdBlock">
+                        <div class="fieldDiv">
+                            <label><?= $this->__('Password')?>:</label><br/>
+                            <input class="pwdele_width input-text validate-password pass" type="password" name="password" id="password" value="" />
+                        </div><!-- validate-password validate-both-passwords -->
+                        <div class="fieldDiv">
+                            <label><?= $this->__('Confirm Password')?>:</label><br/>
+                            <input class="pwdele_width input-text validate-cpassword" type="password" name="confirmpassword" id="confirmpassword" value="" />
+                        </div>
+                    </div>
+                <?php endif;?>
+            </div>
+        <?php endif;?>
 
-					<div id="appointment-pricing">
-					<?php echo $this->getChildHtml('appointments_piercing_pricing')?>
-					</div>
+        <div id="appointment-pricing">
+            <?php echo $this->getChildHtml('appointments_piercing_pricing')?>
+        </div>
 
-			</div>
-		</div>
+    </div>
+</div>
 
-	<script type="text/javascript">
-	jQuery(document).ready(function(){
+<script type="text/javascript">
+    jQuery(document).ready(function(){
         Allure.UtilPath = "<?= Mage::getDesign()->getSkinUrl(); ?>js/phone_validation/utils.js";
 
         //initialize itel tel input
@@ -265,20 +265,20 @@ if ($session->isLoggedIn()) {
 
             if (country_code == undefined || country_code == null || country_code == "") {
                 country_code = "us"
-			}
+            }
 
             iti.setCountry(country_code.toLowerCase());
         } else if (phone.charAt(0) != '+') {
 
-			<?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
-				var country_code = '<?php echo $f_cntry;?>';
-				iti.setCountry(country_code.toLowerCase());
-			<?php } ?>
+            <?php if ((isset($f_cntry) && !empty($f_cntry))) { ?>
+            var country_code = '<?php echo $f_cntry;?>';
+            iti.setCountry(country_code.toLowerCase());
+            <?php } ?>
 
-			<?php if ((isset($cntry) && !empty($cntry))) { ?>
-				var country_code = '<?php echo $cntry;?>';
-				iti.setCountry(country_code.toLowerCase());
-			<?php } ?>
+            <?php if ((isset($cntry) && !empty($cntry))) { ?>
+            var country_code = '<?php echo $cntry;?>';
+            iti.setCountry(country_code.toLowerCase());
+            <?php } ?>
         }
 
         //custom validator for itel tel input
@@ -286,23 +286,23 @@ if ($session->isLoggedIn()) {
         allureIntlTelValidate(jQuery("#phone"),iti);
         jQuery(".flag-container").css("height","29px");
 
-		jQuery.noConflict();
-		/* jQuery("#createaccCheck").live('click',function(event){
-			jQuery(".pwdBlock").toggle("show");
-		}); */
+        jQuery.noConflict();
+        /* jQuery("#createaccCheck").live('click',function(event){
+            jQuery(".pwdBlock").toggle("show");
+        }); */
 
-		jQuery("#createaccCheck").change(function (){
-			 if(jQuery(this).is(":checked")){
-				 jQuery(".pwdBlock").show();
-				 jQuery(".pwdBlock input").addClass('required-entry');
-			}
-			 else{
-				 jQuery(".pwdBlock input").removeClass('required-entry');
-				 jQuery(".pwdBlock").hide();
+        jQuery("#createaccCheck").change(function (){
+            if(jQuery(this).is(":checked")){
+                jQuery(".pwdBlock").show();
+                jQuery(".pwdBlock input").addClass('required-entry');
+            }
+            else{
+                jQuery(".pwdBlock input").removeClass('required-entry');
+                jQuery(".pwdBlock").hide();
 
-			 }
+            }
 
-		});
+        });
 
         jQuery( "#submitappt" ).click(function() {
             var password=jQuery('.pass').val();
@@ -316,16 +316,16 @@ if ($session->isLoggedIn()) {
 
     });
 
-function getstate(countryValue) {
-    var reloadurl = '<?php echo $this->getUrl('*/index/state',array('_secure' => true)); ?>' + 'country/' + countryValue;
-    jQuery.ajax({
-        url: reloadurl, //Relative or absolute path to response.php file
-        method: 'get',
-        success: function (data) {
-            jQuery('#statediv').html(data);
-        }
-    });
-}
+    function getstate(countryValue) {
+        var reloadurl = '<?php echo $this->getUrl('*/index/state',array('_secure' => true)); ?>' + 'country/' + countryValue;
+        jQuery.ajax({
+            url: reloadurl, //Relative or absolute path to response.php file
+            method: 'get',
+            success: function (data) {
+                jQuery('#statediv').html(data);
+            }
+        });
+    }
 </script>
 <script type="text/javascript">
     function isNumber(event){
