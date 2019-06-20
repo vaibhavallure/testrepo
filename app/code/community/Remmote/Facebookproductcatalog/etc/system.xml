@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @extension   Remmote_Facebookproductcatalog
+ * @author      Remmote    
+ * @copyright   2016 - Remmote.com
+ * @descripion  Module admin panel settings
+ */
+-->
+<config>
+    <tabs>
+        <remmote_extensions translate="label" module="remmote_facebookproductcatalog">
+          <label>Remmote Extensions</label>
+          <sort_order>250</sort_order>
+        </remmote_extensions>
+    </tabs>
+    <sections>
+        <remmote_facebookproductcatalog translate="label" module="remmote_facebookproductcatalog">
+            <label>Facebook Product Catalog </label>
+            <tab>remmote_extensions</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>255</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <info>
+                    <frontend_model>Remmote_Facebookproductcatalog_Block_Adminhtml_System_Config_Fieldset_Info</frontend_model>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                </info>
+                <general translate="label">
+                    <label>General Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[
+                        This extension will help you to configure product catalogs in Facebook. Only products with the attibute "Use for Facebook Product Catalog" set to YES will be exported. </br>
+                        If you want to export all the products and ignore this product attribute, set the option "Export all products" to YES and save the configurations. </br>
+                        You can learn more about Facebook Product Catalogs <a href="https://www.facebook.com/business/help/1397294963910848" target="_blank">here</a>.
+                        ]]>
+                    </comment>
+                    <fields>
+                        <productcatalogurl translate="label">
+                            <label>Product Catalog URL</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>Remmote_Facebookproductcatalog_Block_Adminhtml_System_Config_Fields_Productcatalogurl</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[This is the URL of your product catalog. You can use this to access your product catalog or use it when you schedule dynamic product uploads in Facebook. <br/><br/><b>NOTE:</b><br>If you are using any third party service such as CloudFlare or another that caches your media files, make sure to ignore this file to be cached, otherwise your CSV file won't be updated everytime you generate a new one.]]></comment>
+                        </productcatalogurl>    
+                        <export_all translate="label">
+                            <label>Export all products</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>Choose YES to export all products (attribute 'Use for Facebook Product Catalog' will be ignored). Click 'Save Config' before exporting again. </comment>
+                        </export_all>
+                        <use_product_id translate="label">
+                            <label>Use Product ID instead Product SKU</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>Select YES to export the Product ID instead of the Product SKU. This is useful if you are tracking your product views using the Product ID instead of the Product SKU.</comment>
+                        </use_product_id>
+                        <use_description translate="label">
+                            <label>Use Product Description instead of Short Description</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>Choose whether you prefer to export the product description instead of the short description. </comment>
+                        </use_description>
+                        <export_not_visible_individually translate="label">
+                            <label>Export products Not Visible Individually</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>By default only Simple Products and Configurable Products are exported. Child products of configurable products are not exported because they are not visible individually and they don't have a public link associated to them. If you see that the number of produts in your catalog does not match the number of products in the CSV file, this is the reason. Select YES if you also want to export products not visible individually. If you are running retargeting campaigns (Product Catalog Campaigns) in Facebook, you don't need to export products that are not visible individually.</comment>
+                        </export_not_visible_individually>
+                        <product_category_assignation translate="label">
+                            <label>Product category assignation </label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>remmote_facebookproductcatalog/config_categoryassignationdropdown</source_model>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>You can only assign one category when exporting product feeds. Choose how to assign categories to your products.</comment>
+                        </product_category_assignation>
+                        <extra_attributes translate="label">
+                            <label>Extra attributes</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>Include extra attributes that you want to export. Separate each attribute by commas. (Example: weight, meta_description, msrp). This is a Beta feature, If your CSV file is empty or you are getting any error, just set this field to empty.</comment>
+                        </extra_attributes>
+                        <include_tax translate="label">
+                            <label>Include Tax in product prices</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>If 'Yes', product prices are exported including tax.</comment>
+                        </include_tax>     
+                        <exportcatalog translate="label">
+                            <label>Export Product Catalog</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>Remmote_Facebookproductcatalog_Block_Adminhtml_System_Config_Fields_Button</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </exportcatalog>
+
+                        <facebook_recurring_uploads translate="label">
+                            <label>Facebook Scheduled Recurring Uploads</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </facebook_recurring_uploads>     
+                        <enabled translate="label">
+                            <label>Enable Recurring Uploads</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>Enable this option if you want to setup automatic updates of your facebook product catalog. A new product catalog file will be generated depending on your scheduled configurations.</comment>
+                        </enabled> 
+                        <frequency translate="label">
+                            <label>Select Frequency</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>remmote_facebookproductcatalog/config_frequencydropdown</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <comment>Define the frequency</comment>
+                        </frequency>
+                        <time translate="label">
+                            <label>Select Time</label>
+                            <frontend_type>time</frontend_type>
+                            <backend_model>remmote_facebookproductcatalog/system_config_backend_cron</backend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <comment>Define the time (Make sure to choose a time before the time you have configured on your product catalog in Facebook.</comment>
+                        </time>
+                        <time_lastexport translate="label">
+                            <label>Last Export Time</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <comment>The last time that the product catalog file was generated.</comment>
+                        </time_lastexport>
+                    </fields>
+                </general>
+            </groups>
+        </remmote_facebookproductcatalog> 
+    </sections>
+</config>
