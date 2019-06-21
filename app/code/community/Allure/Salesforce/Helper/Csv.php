@@ -385,16 +385,20 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract
                     ->addAttributeToSelect("*");
             } elseif ($objectType == "order" || $objectType == "order-item") {
                 $collection = Mage::getResourceModel("sales/order_collection")
-                    ->addAttributeToSelect("*");
+                    ->addAttributeToSelect("*")
+                    ->addAttributeToFilter($filterField, array('in' => array($filterArr)));
             } elseif ($objectType == "shipment" || $objectType == "shipment-track") {
                 $collection = Mage::getResourceModel("sales/order_shipment_collection")
-                    ->addAttributeToSelect("*");
+                    ->addAttributeToSelect("*")
+                    ->addAttributeToFilter($filterField, array('in' => array($filterArr)));
             } elseif ($objectType == "invoice") {
                 $collection = Mage::getResourceModel("sales/order_invoice_collection")
-                    ->addAttributeToSelect("*");
+                    ->addAttributeToSelect("*")
+                    ->addAttributeToFilter($filterField, array('in' => array($filterArr)));
             } elseif ($objectType == "creditmemo" || $objectType == "creditmemo-item") {
                 $collection = Mage::getResourceModel("sales/order_creditmemo_collection")
-                    ->addAttributeToSelect("*");
+                    ->addAttributeToSelect("*")
+                    ->addAttributeToFilter($filterField, array('in' => array($filterArr)));
             }
 
             //get old stores list
@@ -411,7 +415,6 @@ class Allure_Salesforce_Helper_Csv extends Mage_Core_Helper_Abstract
                 ->setOrder('entity_id', 'asc');
 
             $extraArray = array("order-item", "shipment-track", "creditmemo-item");
-
             if (!in_array($objectType, $extraArray)) {
                 foreach ($collection as $object) {
                     $tempArray = array();
