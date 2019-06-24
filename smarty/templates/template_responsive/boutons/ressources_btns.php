@@ -183,21 +183,21 @@ $savr = array ("F" => "<strong>En&nbsp;savoir&nbsp;plus<strong>",
  * Texte bouton Découvrez la vidéo
  */
 
-$dvid = array ("F" => "<strong>D&eacute;couvrez</strong>&nbsp;la&nbsp;vid&eacute;o",
-						"B" => "<strong>D&eacute;couvrez</strong>&nbsp;la&nbsp;vid&eacute;o",
-						"L" => "<strong>D&eacute;couvrez</strong>&nbsp;la&nbsp;vid&eacute;o",
-						"D" => "<strong>Entdecken&nbsp;Sie&nbsp;mehr</strong>&nbsp;im&nbsp;Video",
-						"O" => "<strong>Entdecken&nbsp;Sie&nbsp;mehr</strong>&nbsp;im&nbsp;Video",
-						"SA" =>"<strong>Entdecken&nbsp;Sie&nbsp;mehr</strong>&nbsp;im&nbsp;Video",
-						"SF" => "<strong>D&eacute;couvrez</strong>&nbsp;la&nbsp;vid&eacute;o",
-						"G" => "<strong>Discover</strong>&nbsp;the&nbsp;video",
-						"I" => "<strong>Discover</strong>&nbsp;the&nbsp;video",
-						"H" => "<strong>Discover</strong>&nbsp;the&nbsp;video",
-						"SG" => "<strong>Discover</strong>&nbsp;the&nbsp;video",
-						"Y" => "<strong>Scopra</strong>&nbsp;il&nbsp;video",
-						"E" => "<strong>Descubra</strong>&nbsp;en&nbsp;video",
-						"P" => "<strong>Visite&nbsp;gra&ccedil;as</strong>&nbsp;a&nbsp;v&iacute;deo",
-						"U" => "<strong>Discover</strong>&nbsp;the&nbsp;video"
+$dvid = array ("F" => "<strong>Voir&nbsp;le&rsquo;PDF<strong>",
+						"B" => "<strong>Voir&nbsp;le&rsquo;PDF<strong>",
+						"L" => "<strong>Voir&nbsp;le&rsquo;PDF<strong>",
+						"D" => "<strong>PDF&nbsp;einsehen</strong>",
+						"O" => "<strong>PDF&nbsp;einsehen</strong>",
+						"SA" =>"<strong>PDF&nbsp;einsehen</strong>",
+						"SF" => "<strong>Voir&nbsp;le&rsquo;PDF<strong>",
+						"G" => "<strong>View&nbsp;PDF</strong>",
+						"I" => "<strong>View&nbsp;PDF</strong>",
+						"H" => "<strong>View&nbsp;PDF</strong>",
+						"SG" => "<strong>View&nbsp;PDF</strong>",
+						"Y" => "<strong>Vedere&nbsp;il&rsquo;PDF</strong>",
+						"E" => "<strong>Ver&nbsp;el&nbsp;PDF</strong>",
+						"P" => "<strong>Ver&nbsp;o&nbsp;PDF</strong>",
+						"U" => "<strong>View&nbsp;PDF</strong>"
 						);
 
 /* 
