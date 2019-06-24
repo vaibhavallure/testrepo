@@ -148,7 +148,7 @@
 
 	<crontab>
 		<jobs>
-			<allure_teamwork>
+			<!--<allure_teamwork>
 				<schedule>
 					<cron_expr>*/5 * * * *</cron_expr>
 				</schedule>
@@ -173,7 +173,7 @@
 				<run>
 					<model>allure_teamwork/tmobserver::syncOrdersByDay</model>
 				</run>
-			</allure_teamwork_live_byday_once>
+			</allure_teamwork_live_byday_once>-->
 
 			<!-- <allure_teamwork>
 				<schedule>
