@@ -405,6 +405,8 @@ class Allure_AlertServices_Helper_Data extends Mage_Core_Helper_Abstract
         $access_token = Mage::getStoreConfig('allure_instacatalog/feed/access_token');
         $limit = 1;
 
+        require_once "Instagramclient.php";
+
         $instagram = new Instagramclient('');
         $instagram->setAccessToken($access_token);
         $response = $instagram->getUserMedia($user_id,$limit);
