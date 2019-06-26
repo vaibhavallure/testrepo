@@ -183,13 +183,13 @@ $savr = array ("F" => "<strong>En&nbsp;savoir&nbsp;plus<strong>",
  * Texte bouton Découvrez la vidéo
  */
 
-$dvid = array ("F" => "<strong>Voir&nbsp;le&rsquo;PDF<strong>",
-						"B" => "<strong>Voir&nbsp;le&rsquo;PDF<strong>",
-						"L" => "<strong>Voir&nbsp;le&rsquo;PDF<strong>",
+$dvid = array ("F" => "<strong>Voir&nbsp;le&nbsp;PDF<strong>",
+						"B" => "<strong>Voir&nbsp;le&nbsp;PDF<strong>",
+						"L" => "<strong>Voir&nbsp;le&nbsp;PDF<strong>",
 						"D" => "<strong>PDF&nbsp;einsehen</strong>",
 						"O" => "<strong>PDF&nbsp;einsehen</strong>",
 						"SA" =>"<strong>PDF&nbsp;einsehen</strong>",
-						"SF" => "<strong>Voir&nbsp;le&rsquo;PDF<strong>",
+						"SF" => "<strong>Voir&nbsp;le&nbsp;PDF<strong>",
 						"G" => "<strong>View&nbsp;PDF</strong>",
 						"I" => "<strong>View&nbsp;PDF</strong>",
 						"H" => "<strong>View&nbsp;PDF</strong>",
