@@ -194,7 +194,7 @@ $dvid = array ("F" => "<strong>Voir&nbsp;le&nbsp;PDF<strong>",
 						"I" => "<strong>View&nbsp;PDF</strong>",
 						"H" => "<strong>View&nbsp;PDF</strong>",
 						"SG" => "<strong>View&nbsp;PDF</strong>",
-						"Y" => "<strong>Vedere&nbsp;il&rsquo;PDF</strong>",
+						"Y" => "<strong>Vedere&nbsp;il&nbsp;PDF</strong>",
 						"E" => "<strong>Ver&nbsp;el&nbsp;PDF</strong>",
 						"P" => "<strong>Ver&nbsp;o&nbsp;PDF</strong>",
 						"U" => "<strong>View&nbsp;PDF</strong>"
