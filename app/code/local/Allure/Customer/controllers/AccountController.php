@@ -119,6 +119,13 @@ class Allure_Customer_AccountController extends Mage_Core_Controller_Front_Actio
             }
         }
 
+        /*
+         * code added to log customer login
+         * */
+        Mage::helper('customerloginmonitor')->addLoginInfo($result,$customerOb);
+        /*end---------------------------------*/
+
+
         $this->getResponse()->clearHeaders()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
