@@ -247,6 +247,7 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
         if ($this->getRequest()->isPost()) {
             $login = $this->getRequest()->getPost('login');
             if (!empty($login['username']) && !empty($login['password'])) {
+                $message="";
                 try {
                     $session->login($login['username'], $login['password']);
                     if ($session->getCustomer()->getIsJustConfirmed()) {
@@ -269,6 +270,23 @@ class Ecp_Customer_AccountController extends Mage_Customer_AccountController
                 } catch (Exception $e) {
                     // Mage::logException($e); // PA DSS violation: this exception log can disclose customer password
                 }
+
+                /* customer login monitoring code added by allure
+                 * */
+                if($message)
+                {
+                    $result['success']=false;
+                    $result['error']=$message;
+                }
+                else{
+                    $result['success']=true;
+                }
+
+                Mage::helper('customerloginmonitor')->addLoginInfo($result);
+
+                /*allure code ended---------------------------------------------------
+                * */
+
             } else {
                 $session->addError($this->__('Login and password are required.'));
             }
