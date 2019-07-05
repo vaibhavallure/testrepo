@@ -35,7 +35,7 @@ class Allure_CustomerLoginMonitor_Helper_Data extends Mage_Core_Helper_Abstract
         $data['customer_email'] = ($customer->getEmail())? $customer->getEmail() : $this->getUsername();
         $data['customer_name'] = $customer->getFirstname() . " " . $customer->getLastname();
         $data['remote_ip'] = $this->get_client_ip();
-        $data['browser'] = $this->getClientSoftwareInfo();
+        $data['browser'] = $this->getClientSoftwareInfo('browser');
         $data['status'] = $result['success'] == true ? 'Success' : 'Failed';
         $data['additional_info'] = $result['success'] == false ? $result['error'] : '';
 
@@ -75,9 +75,12 @@ class Allure_CustomerLoginMonitor_Helper_Data extends Mage_Core_Helper_Abstract
         return $ipaddress;
     }
 
-    private function getClientSoftwareInfo()
+    private function getClientSoftwareInfo($key)
     {
-        return $_SERVER ['HTTP_USER_AGENT'];
+        $data=get_browser(null, true);
+
+        if($data)
+        return $data[$key];
     }
 
     private function getCustomer()
