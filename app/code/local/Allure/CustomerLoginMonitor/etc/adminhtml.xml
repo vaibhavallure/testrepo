@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <allure>
+            <children>
+                <customerloginmonitor module="customerloginmonitor">
+                    <title>Login Monitor</title>
+                    <sort_order>3</sort_order>
+                    <action>adminhtml/loginMonitor</action>
+                </customerloginmonitor>
+            </children>
+        </allure>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <customerloginmonitor translate="title" module="customerloginmonitor">
+                                        <title>Customer Login Monitor</title>
+                                    </customerloginmonitor>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
