@@ -5,7 +5,8 @@
  * @author allure
  */
 class Allure_Teamwork_Model_Tmobserver{	
-    const TM_URL = "/services/orders";
+    //const TM_URL = "/services/orders";
+    const TM_URL = "/services/ordersNew";
     const TOKEN = "OUtNUUhIV1V2UjgxR0RwejV0Tmk0VllneEljNTRZWHdLNHkwTERwZXlsaz0=";
     
     const NEW_YORK_OFFSET = 5;
