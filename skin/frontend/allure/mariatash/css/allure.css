@@ -2888,3 +2888,9 @@ allure-amazon-connect-login .account-login .content{
 .account-login .content {
    min-height: auto;
 }
+iframe#OffAmazonPaymentsWidgets0IFrame, iframe#OffAmazonPaymentsWidgets1IFrame {
+  z-index: auto !important;
+}
+#OffAmazonPaymentsWidgets0 > h1, #OffAmazonPaymentsWidgets1 > h1{
+  z-index:auto !important;
+}
