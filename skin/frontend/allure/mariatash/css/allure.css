@@ -2221,6 +2221,7 @@ input.special-inst-product {
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
 	background: rgba(0,0,0,0.8);
+    overflow: scroll;
 }
 .popupLoginModel:target {
 	opacity:1;
