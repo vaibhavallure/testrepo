@@ -2221,6 +2221,7 @@ input.special-inst-product {
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
 	background: rgba(0,0,0,0.8);
+    overflow: scroll;
 }
 .popupLoginModel:target {
 	opacity:1;
@@ -2498,7 +2499,7 @@ width: 100%;
   padding-bottom: 10px;
 }
 
-#reload_payment .loading-div {margin-bottom: 10px};
+#reload_payment .loading-div {margin-bottom: 10px;}
 
 .gift-confirm .gift-confirm-msg{
 	margin-top: 20px;
@@ -2638,7 +2639,7 @@ width: 100%;
 
 .mt-facebookconnect-btn{
   float: left;
-  width:69%;
+  width:100%;
 }
 .mt-googleconnect-btn{
   float: left;
@@ -2653,7 +2654,7 @@ width: 100%;
 }
 
 .popupLoginModel .mt-facebookconnect-btn{
-	margin: -2px 0px 0 12px;
+	/*margin: -2px 0px 0 12px;*/
 }
 
 .popupLoginModel .pop-link{
@@ -2870,4 +2871,26 @@ body.catalog-product-view .container-fluid{
   cursor: pointer;
   background: white url(../images/formelements-select.png) no-repeat center right;
   font-weight: normal !important;
+}
+
+allure-amazon-connect-login .account-login .content{
+  min-height: 0;
+}
+
+.allure-amazon-connect-login #amazon-buttons-wrapper .col-1 {
+  padding: 0px;
+
+}
+.allure-amazon-connect-login #amazon-buttons-wrapper .col-1  button.amazon-login-button
+{
+  float: left;
+}
+.account-login .content {
+   min-height: auto;
+}
+iframe#OffAmazonPaymentsWidgets0IFrame, iframe#OffAmazonPaymentsWidgets1IFrame {
+  z-index: auto !important;
+}
+#OffAmazonPaymentsWidgets0 > h1, #OffAmazonPaymentsWidgets1 > h1{
+  z-index:auto !important;
 }

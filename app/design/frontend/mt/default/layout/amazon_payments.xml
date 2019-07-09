@@ -488,11 +488,11 @@
             <block type="amazon_payments/script" name="amazon_payments.script.async" template="amazon_payments/script_async.phtml" />
         </reference>
 
-        <block type="amazon_payments/login_button" name="amazon_login.button_create" template="amazon_payments/login/button.phtml" before="content" />
+        <block type="amazon_payments/login_button" name="amazon_login.button_create" template="amazon_payments/login/login.phtml" />
 
         <!-- ifconfig only works with action -->
         <reference name="content">
-            <action method="insert" ifconfig="payment/amazon_payments/active">
+            <action method="append" ifconfig="payment/amazon_payments/active">
                 <block>amazon_login.button_create</block>
             </action>
         </reference>
