@@ -28,7 +28,7 @@
 
             <?php else : // Use Amazon Payments embed method ?>
 
-                <div id="amazon-login-button"></div>
+                <div id="amazon-login-button-cust"></div>
 
                 <script type="text/javascript">
                   var authRequest;
@@ -56,7 +56,7 @@
                           }
                       };
 
-                      OffAmazonPayments.Button("amazon-login-button", "<?php echo $this->getSellerId(); ?>", AmazonButtonOptions);
+                      OffAmazonPayments.Button("amazon-login-button-cust", "<?php echo $this->getSellerId(); ?>", AmazonButtonOptions);
                   }
 
                 </script>

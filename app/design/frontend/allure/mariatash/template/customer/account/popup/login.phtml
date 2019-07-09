@@ -1,74 +1,82 @@
 <div id="openModal" class="popupLoginModel">
-	<div id="login-modal-container" class="modal-container">
-		<form class="form-signin" action="<?php echo $this->getPostActionUrl() ?>" method="post" id="popup-login-form">
-    		<div class="pop-title">
-    			<a href="#close" title="Close" class="close">X</a>
-    			<h2><?php echo $this->__("Log In ")?></h2>
-    		</div>
-    		<div class="pop-content">
-    			<div id="login_msg_div">
-    				<span id="login-msg"></span>
-    			</div>
-    			<div class="form-group">
-    	 		    <label class="popup-login-lbl" for="email"><em>*</em> <?php echo $this->__("Email Address")?></label>
-    	  		    <input id='username-login' type="text" name='login[username]' class="ele_width form-control required-entry validate-email"/>
-    			</div>
-    			<div class="form-group">
-    	 		    <label class="popup-login-lbl" for="password"><em>*</em> <?php echo $this->__("Password")?></label>
-    	  		    <input id='passwd-login' type="password" name='login[password]' class="ele_width form-control required-entry"/>
+    <div id="login-modal-container" class="modal-container">
+        <form class="form-signin" action="<?php echo $this->getPostActionUrl() ?>" method="post" id="popup-login-form">
+            <div class="pop-title">
+                <a href="#close" title="Close" class="close">X</a>
+                <h2><?php echo $this->__("Log In ")?></h2>
+            </div>
+            <div class="pop-content">
+                <div id="login_msg_div">
+                    <span id="login-msg"></span>
+                </div>
+                <div class="form-group">
+                    <label class="popup-login-lbl" for="email"><em>*</em> <?php echo $this->__("Email Address")?></label>
+                    <input id='username-login' type="text" name='login[username]' class="ele_width form-control required-entry validate-email"/>
+                </div>
+                <div class="form-group">
+                    <label class="popup-login-lbl" for="password"><em>*</em> <?php echo $this->__("Password")?></label>
+                    <input id='passwd-login' type="password" name='login[password]' class="ele_width form-control required-entry"/>
 
-					<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+                    <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 
-    			</div>
-    		</div>
-    	    <div class="pop-link">
-    			<div class="submit-login">
-    				<a onclick="openRestPasswordModal()"><?php echo $this->__("Forgot Password")?></a>
-    			</div>
-    			<button type="button" id="signin-btn-popup" class="button"><?php echo $this->__("Log In")?></button>
+                </div>
+            </div>
+            <div class="pop-link">
+                <div class="submit-login">
+                    <a onclick="openRestPasswordModal()"><?php echo $this->__("Forgot Password")?></a>
+                </div>
+                <button type="button" id="signin-btn-popup" class="button"><?php echo $this->__("Log In")?></button>
 
-				<?php //google connect code?>
-				<?php if (Mage::helper('core')->isModuleEnabled('Allure_GoogleConnect')):?>
-				<?php $isEnableGoogleSign = Mage::helper("allure_googleconnect")->_isEnabled();?>
-				<?php if($isEnableGoogleSign):?>
-				<div class="mt-googleconnect-btn">
-					<?php echo $this->getLayout()->createBlock('allure_googleconnect/button')
-					  ->setTemplate("allure/googleconnect/button.phtml")->toHtml(); ?>
-				</div>
-				<?php endif;?>
-				<?php endif;?>
+                <?php //google connect code?>
+                <?php if (Mage::helper('core')->isModuleEnabled('Allure_GoogleConnect')):?>
+                    <?php $isEnableGoogleSign = Mage::helper("allure_googleconnect")->_isEnabled();?>
+                    <?php if($isEnableGoogleSign):?>
+                        <div class="mt-googleconnect-btn" style="float: left">
+                            <?php echo $this->getLayout()->createBlock('allure_googleconnect/button')
+                                ->setTemplate("allure/googleconnect/button.phtml")->toHtml(); ?>
+                        </div>
+                    <?php endif;?>
+                <?php endif;?>
 
-				<?php //facebook connect code?>
-				<?php if (Mage::helper('core')->isModuleEnabled('Allure_Facebook')):?>
-				<?php $isEnableFacebook = Mage::getModel("facebook/config")->isEnabled();?>
-				<?php if($isEnableFacebook):?>
-				<div class="mt-facebookconnect-btn">
-					<?php echo $this->getLayout()->createBlock('facebook/button')
-					  ->setTemplate("allure/facebook/button.phtml")->toHtml(); ?>
-				</div>
-				<?php endif;?>
-				<?php endif;?>
-    			<div class="benifits">
-    				<p><strong><?php echo $this->__("Create an account to access these benifits:")?></strong></p>
-    				<ul class="popup-benifits">
-    				  <li><?php echo $this->__("Keep track of your jewelry sizes")?></li>
-    				  <li><?php echo $this->__("See your purchase history")?></li>
-    				  <li><?php echo $this->__("Faster Checkout")?></li>
-    				  <li><?php echo $this->__("Share your wishlist")?></li>
-    				  <li><?php echo $this->__("Receive  persionalized online service")?></li>
-    				  <li><?php echo $this->__("$20 off your next purchase if you subscribe to our newsletter")?></li>
-    				</ul>
-    			</div>
-    			<div class="new_account">
-    				<a onclick="openRegisterModal()"><?php echo $this->__("Click here to create new account!")?></a>
-    			</div>
-    		</div>
-    	</form>
-	</div>
+
+                <div class="mt-amazon" style="float: right;">
+                    <?php
+                  if(Mage::app()->getRequest()->getControllerName() != 'account' &&  Mage::app()->getRequest()->getActionName()!='login')
+                    echo $this->getLayout()->createBlock('amazon_payments/login_button')->setTemplate('amazon_payments/login/popup_button.phtml')->toHtml();
+                    ?>
+                </div>
+
+                <?php //facebook connect code?>
+                <?php if (Mage::helper('core')->isModuleEnabled('Allure_Facebook')):?>
+                    <?php $isEnableFacebook = Mage::getModel("facebook/config")->isEnabled();?>
+                    <?php if($isEnableFacebook):?>
+                        <div class="mt-facebookconnect-btn">
+                            <?php echo $this->getLayout()->createBlock('facebook/button')
+                                ->setTemplate("allure/facebook/button.phtml")->toHtml(); ?>
+                        </div>
+                    <?php endif;?>
+                <?php endif;?>
+                <div class="benifits">
+                    <p><strong><?php echo $this->__("Create an account to access these benifits:")?></strong></p>
+                    <ul class="popup-benifits">
+                        <li><?php echo $this->__("Keep track of your jewelry sizes")?></li>
+                        <li><?php echo $this->__("See your purchase history")?></li>
+                        <li><?php echo $this->__("Faster Checkout")?></li>
+                        <li><?php echo $this->__("Share your wishlist")?></li>
+                        <li><?php echo $this->__("Receive  persionalized online service")?></li>
+                        <li><?php echo $this->__("$20 off your next purchase if you subscribe to our newsletter")?></li>
+                    </ul>
+                </div>
+                <div class="new_account">
+                    <a onclick="openRegisterModal()"><?php echo $this->__("Click here to create new account!")?></a>
+                </div>
+            </div>
+        </form>
+    </div>
 
     <script type="text/javascript">
         if (typeof Allure == "undefined") {
-             var Allure = {};
+            var Allure = {};
         }
         Allure.LoginFormKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
         Allure.LoginUrlAjax = '<?php echo Mage::getBaseUrl('web').'customers/account/ajaxLogin';?>';

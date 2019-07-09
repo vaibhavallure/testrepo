@@ -128,6 +128,12 @@
 
         <reference name="root">
 			<block type="core/template" name="account.popups" as="account_popups" template="customer/account/popup/container.phtml">
+				<reference name="head">
+					<block type="amazon_payments/script" name="amazon_payments.script" template="amazon_payments/script.phtml" />
+				</reference>
+				<reference name="before_body_end">
+					<block type="amazon_payments/script" name="amazon_payments.script.async" template="amazon_payments/script_async.phtml" />
+				</reference>
 				<block type="customer/form_login" name="account.popup.login" as="account_popup_login" template="customer/account/popup/login.phtml"/>
 				<block type="core/template" name="account.popup.register" as="account_popup_register" template="customer/account/popup/register.phtml"/>
 				<block type="core/template" name="account.popup.resetpassword" as="account_popup_resetpassword" template="customer/account/popup/reset_password.phtml"/>

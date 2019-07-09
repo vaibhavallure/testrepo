@@ -1,0 +1,22 @@
+<div class="allure-amazon-connect-login">
+    <div class="account-login">
+        <div class="col2-set">
+            <div class="col-1 new-users">
+                <div class="content">
+                    <h2><?php echo $this->__('Amazon Connect'); ?></h2>
+                    <p><?php echo $this->__('You can also log into our shop using your <strong>Amazon</strong> account credentials.'); ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="col2-set">
+            <div class="col-1">
+                <div class="buttons-set">
+                    <?php
+                    echo $this->getLayout()->createBlock('amazon_payments/login_button')
+                        ->setTemplate('amazon_payments/login/button.phtml')->toHtml();
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
