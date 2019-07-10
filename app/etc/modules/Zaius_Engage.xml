@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Zaius_Engage>
-      <active>true</active>
+      <active>false</active>
       <codePool>community</codePool>
     </Zaius_Engage>
   </modules>
