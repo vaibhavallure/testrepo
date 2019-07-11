@@ -60,7 +60,7 @@ class Ecp_PiercingGallery_Block_PiercingGallery extends Mage_Core_Block_Template
         $piercingSubCat = Mage::getModel('catalog/category')->getCollection()
                 ->addAttributeToSelect('name')->addFieldToFilter('parent_id',$piercingCat[0]['entity_id'])
                 ->addFieldToFilter('is_active', array('eq'=>'0'))
-                ->addFieldToFilter('name',array('nlike'=>'%services%'))
+                ->addFieldToFilter('name',array('nlike'=>'%piercing%'))
                 ->addAttributeToSort('position', 'ASC')
                 ->getData();
 
