@@ -113,7 +113,8 @@ class Allure_Salesforce_Model_Observer_Order{
                 
         $subtotal = $order->getSubtotal() * $currencyRate;
         $baseSubtotal = $order->getBaseSubtotal() * $currencyRate;
-        $grandTotal = $order->getGrandTotal() * $currencyRate;
+        //$grandTotal = $order->getGrandTotal() * $currencyRate;
+        $grandTotal = $order->getGrandTotal();
         $baseGrandTotal = $order->getBaseGrandTotal() * $currencyRate;
         $discountAmount = $order->getDiscountAmount() * $currencyRate;
         $baseDiscountAmount = $order->getBaseDiscountAmount() * $currencyRate;
@@ -270,7 +271,7 @@ class Allure_Salesforce_Model_Observer_Order{
             $itemArray = array(
                 "attributes"        => array("type" => "OrderItem"),
                 "PricebookEntryId"  => $salesforcePricebkEntryId,//"01u290000037WAR",
-                "quantity"          => ($isTeamworkOrder) ? $item->getOtherSysQty() : $item->getQtyOrdered(),
+                "quantity"          => ($isTeamworkOrder) ? ($item->getOtherSysQty()?$item->getOtherSysQty():1) : $item->getQtyOrdered(),
                 "UnitPrice"         => $unitPrice,
                 "Post_Length__c"    => $postLength,
                 "Magento_Order_Item_Id__c" => $item->getItemId(),
@@ -1536,7 +1537,8 @@ class Allure_Salesforce_Model_Observer_Order{
                 "Sub_Total__c"                  => $baseSubtotal * $currencyRate,
                 "Discount__c"                   => $discountAmount * $currencyRate,
                 "Discount_Base__c"              => $baseDiscountAmount * $currencyRate,
-                "Grant_Total__c"                => $grandTotal * $currencyRate,
+                //"Grant_Total__c"                => $grandTotal * $currencyRate,
+                "Grant_Total__c"                => $grandTotal,
                 "Grand_Total_Base__c"           => $baseGrandTotal * $currencyRate,
                 
                 "Total_Paid__c"                 => $baseTotalPaid * $currencyRate,
