@@ -94,7 +94,8 @@ class Allure_Salesforce_Model_Observer_Update
         $helper->salesforceUpdateLog("getUpdatedOrders request.");
 
         $orders = Mage::getModel('sales/order')->getCollection()
-            ->addAttributeToFilter('updated_at', array('from' => $lastRunTime));
+            ->addAttributeToFilter('updated_at', array('from' => $lastRunTime))
+            ->addAttributeToFilter('salesforce_order_id', array('neq' => null));
 
         $orderList = array();
         foreach ($orders as $order) {
@@ -470,7 +471,8 @@ class Allure_Salesforce_Model_Observer_Update
         $oldStoreArr[0] = "Admin";
 
         $customers = Mage::getModel('customer/customer')->getCollection()
-            ->addAttributeToFilter('created_at', array('from' => $lastRunTime));
+            ->addAttributeToFilter('created_at', array('from' => $lastRunTime))
+            ->addAttributeToFilter('salesforce_customer_id', array('neq' => null));
 
         $customerList = array();
 
@@ -643,7 +645,8 @@ class Allure_Salesforce_Model_Observer_Update
         }
 
         $invoiceCollection = Mage::getModel("sales/order_invoice")->getCollection()
-            ->addFieldToFilter('updated_at', array('from' => $lastRunTime));
+            ->addFieldToFilter('updated_at', array('from' => $lastRunTime))
+            ->addAttributeToFilter('salesforce_invoice_id', array('neq' => null));
         $invoiceList = array();
         foreach ($invoiceCollection as $invoice) {
 
@@ -742,7 +745,8 @@ class Allure_Salesforce_Model_Observer_Update
         }
 
         $creditMemoCollection = Mage::getResourceModel('sales/order_creditmemo_collection')
-            ->addFieldToFilter('updated_at', array('from' => $lastRunTime));
+            ->addFieldToFilter('updated_at', array('from' => $lastRunTime))
+            ->addAttributeToFilter('salesforce_creditmemo_id', array('neq' => null));
 
         //$creditMemo = $observer->getEvent()->getCreditmemo();
         $creditMemoList = array();
@@ -754,13 +758,12 @@ class Allure_Salesforce_Model_Observer_Update
             if ($order->getCreateOrderMethod() == 2) {
                 return;
             }
-
+            $salesforceCreditmemoId = $creditMemo->getSalesforceCreditmemoId();
             $salesforceOrderId = $order->getSalesforceOrderId();
             $helper->salesforceUpdateLog("salesforc order id :" . $salesforceOrderId);
             if (!$salesforceOrderId && !$salesforceCreditmemoId) {
                 return;
             }
-            $salesforceCreditmemoId = $creditMemo->getSalesforceCreditmemoId();
 
             $incrementId = $creditMemo->getIncrementId();
             $orderIncrementId = $order->getIncrementId();
@@ -824,7 +827,8 @@ class Allure_Salesforce_Model_Observer_Update
 
         //$shipment = $observer->getEvent()->getShipment();
         $shipmentCollection = Mage::getResourceModel('sales/order_shipment_collection')
-            ->addFieldToFilter('updated_at', array('from' => $lastRunTime));
+            ->addFieldToFilter('updated_at', array('from' => $lastRunTime))
+            ->addAttributeToFilter('salesforce_shipment_id', array('neq' => null));
 
         $shipmentList = array();
         foreach ($shipmentCollection as $shipment) {
@@ -896,7 +900,8 @@ class Allure_Salesforce_Model_Observer_Update
 
 
         $shipmentTrackCollection = Mage::getResourceModel('sales/order_shipment_track_collection')
-            ->addFieldToFilter('updated_at', array('from' => $lastRunTime));
+            ->addFieldToFilter('updated_at', array('from' => $lastRunTime))
+            ->addAttributeToFilter('salesforce_shipment_track_id', array('neq' => null));;
 
         $shipmentTrackList = array();
         foreach ($shipmentTrackCollection as $track) {
