@@ -46,7 +46,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
     const CONTENTVERSION_URL                = "/services/data/v43.0/sobjects/ContentVersion";
     //invoice pdf link using document object
     const DOCUMENTLINK_URL                  = "/services/data/v43.0/sobjects/ContentDocumentLink";
-    
+
     //Salesforce object's type
     const PRODUCT_OBJECT            = "PRODUCT";
     const PRODUCT_PRICEBOOK_OBJECT  = "PRODUCT_PRICE_BOOK";
@@ -81,6 +81,14 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
      */
     public function salesforceLog($logData){
         $logFile = "salesforce_".date("Y_m_d").".log";
+        Mage::log($logData,Zend_Log::DEBUG,$logFile,true);
+    }
+
+    /**
+     * keep track of salesforce update log data
+     */
+    public function salesforceUpdateLog($logData){
+        $logFile = "salesforce_update".date("Y_m_d").".log";
         Mage::log($logData,Zend_Log::DEBUG,$logFile,true);
     }
     

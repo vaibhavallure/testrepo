@@ -107,6 +107,15 @@
                             <show_in_store>1</show_in_store>
                             <depends><enabled>1</enabled></depends>
                         </wholesale_pricebook>
+                        <bulk_update_time>
+                            <label>Bulk API Time</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enabled>1</enabled></depends>
+                        </bulk_update_time>
 					</fields>
 				</general>
 			</groups>
