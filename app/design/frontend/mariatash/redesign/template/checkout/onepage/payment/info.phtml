@@ -1,0 +1,61 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+
+<?php if($this->isWholesellerCustomer()):?>
+<ul class="form-list" id="wholeseller-payment-methods" style="border-bottom: 1px solid #ccc;margin-bottom:10px;">
+	<li class="control pay_now_li">
+    	<input class="pay_now" id="payment-pay-now" value="pay_now" type="radio" name="method_option" checked="checked"  class="radio"  />
+    	<label>Pay Now(recommended)</label>
+    </li>
+    <li class="control">
+    	<input class="pay_as_ship" id="payment-pay-credit-card" value="pay_as_ship" type="radio" name="method_option" class="radio"  />
+    	<label>Pay as you ship(credit card required)</label>
+    </li>
+</ul>
+<?php endif;?>
+
+<dl class="sp-methods" id="checkout-payment-method-load">
+   <!-- Content dynamically loaded. Content from the methods.phtml is loaded during the ajax call -->
+</dl>
+
+<script>
+$j(document).ready(function(){
+	$j('#wholeseller-payment-methods li').click(function(){
+		$j(this).find('input').attr('checked',true);
+		if($j(this).hasClass('pay_now_li')){
+			$j('#checkout-payment-method-load dt').css('display','block');
+			$j('#checkout-payment-method-load dd').css('display','block');
+		}else{
+			$j('#checkout-payment-method-load dt').css('display','none');
+			$j('#checkout-payment-method-load dd').css('display','none');
+			$j('#dt_method_ccsave').css('display','block');
+			$j('#dd_method_ccsave').css('display','block');
+		}
+	});
+});
+</script>

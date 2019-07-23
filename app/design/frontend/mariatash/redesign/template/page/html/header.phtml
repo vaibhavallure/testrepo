@@ -1,0 +1,223 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<div id="fb-root"></div>
+<script type="text/javascript">
+(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+jQuery(document).ajaxComplete(function(){
+    try{
+        FB.XFBML.parse();
+        twttr.widgets.load();
+    }catch(ex){}
+});
+</script>
+
+<script type="text/javascript">
+	var MariaTash = {};
+	MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
+</script>
+
+<header>
+        <nav class="homepage-menu navbar navbar-expand-lg navbar-light mariatash-header d-lg-flex flex-lg-column justify-content-lg-center pb-0 pt-0">
+          <div class="container-fluid row">
+              <div class="col-12">
+                <div class="row">
+                    <div class="position-absolute maria-left-menus">
+                      <div class="row">
+                        <h1 class="mt-logo">
+                          <a class="navbar-brand d-none ml-3 logo" id="scroll-logo" href="<?php echo $this->getUrl('') ?>"  alt="MARIA TASH" title="MARIA TASH"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
+                        </h1>
+                        <ul class="col-12 main-nav-link nav-links-left">
+                          <li class="icon-item"><?php echo $this->getChildHtml('store_currency_selector') ?></li>
+                            <?php $giftcard=Mage::getModel('ecp_menu/menu')->load(2); ?>
+                          <li class="icon-item">
+                              <a href="<?= $giftcard->getUrl() ?>"><span><?= $giftcard->getTitle() ?></span></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="row align-items-center flex-column justify-content-center">
+                          <div class="text-center ml-0 ml-lg-0">
+                            <h1 class="mt-logo">
+                              <a class="navbar-brand" id="main-logo" href="<?php echo $this->getUrl('') ?>" ><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
+                            </h1>
+                          </div>
+                          <div class="collapse navbar-collapse mt-1" id="navbarNavDropdown">
+                              <?php echo $this->getChildHtml('topMenu') ?>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="position-absolute maria-right-menus">
+                      <ul class="main-nav-link nav-links-right mt-1">
+                        <li class="icon-item">
+                            <?php echo $this->getChildHtml('topSearch') ?>
+                        </li>
+                              <?php $location=Mage::getModel('ecp_menu/menu')->load(1); ?>
+                        <li class="icon-item">
+                          <a class="icon-link" href="<?= $location->getUrl() ?>"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-bitmap.png'; ?>"></a>
+                        </li>
+                        <li class="icon-item"><div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div></li>
+                          <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
+                        <li>
+                          <a href="<?php echo Mage::getBaseUrl();?>customer/account"><img src="<?php echo Mage::getBaseUrl('media').wysiwyg/nav-user.png?>"></a>
+                        </li>
+                          <?php else: ?>
+                        <li class="icon-item" id="sign_in_label"><a href="#"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-user.png';?>"></a></li>
+                          <?php endif; ?>
+                      </ul>
+                    </div>
+                </div>
+              </div>
+          </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" onclick="myFunction(this)">
+                    <div class="hamburger" >
+                            <div class="bar bar1"></div>
+                            <div class="bar bar2"></div>
+                            <div class="bar bar3"></div>
+                    </div>
+            </button>
+        </nav>
+
+        <!-- <div class="open-navigation">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="row">
+                    <div class="col-lg-3 py-5 px-3">
+                        <h6>Place holder</h6>
+                        <ul>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                        </ul><br>
+                        <h6>Place holder</h6>
+                        <ul>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 py-5 px-3">
+                        <h6>Place holder</h6>
+                        <ul>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                        </ul>
+                        <br>
+                        <h6>Place holder</h6>
+                        <ul>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 py-5 px-3">
+                        <h6>Place holder</h6>
+                        <ul>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                            <li><a href="detail.html">Place holder</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 py-5 px-3">
+                        <h6>Place holder</h6>
+                        <img class="img-fluid gray" src="images/item1.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </header>
+
+
+
+
+
+<script type="text/javascript">
+var pathname = window.location.pathname;
+if (pathname.toLowerCase().indexOf("account/login") < 0) document.cookie = "from_page=2;path=/;domain=." + window.location.hostname;
+else document.cookie = "from_page=1;path=/;domain=." + window.location.hostname;
+var SKIN_URL = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN); ?>';
+jQuery( document ).ready(function() {
+    jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+});
+jQuery( window ).resize(function() {
+    jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+});
+</script>
+
+<?php echo $this->getChildHtml('account_popups'); ?>
+<?php echo $this->getChildHtml('account.popups'); ?>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<?php
+$alr_status = Mage::helper("alertservices/config")->getAlrStatus();
+if ($alr_status) { ?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125115574-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-125115574-1');
+</script>
+<?php } ?>
+
+
+<!-- added by AWS12 -->
+<?php
+    $collection = Mage::getModel('catalog/product')->getCollection()
+                  ->addAttributeToSelect('id')
+                  ->addAttributeToFilter(array(array("attribute"=>"sku","in"=>array('gift','STORECARD'))))
+                  ->addAttributeToFilter(array(array("attribute"=>"status","eq"=>1)));
+        $prodIds = array();
+         foreach ($collection as $key => $product) {
+           $prodIds[]=$product->getId();
+         }
+if(count($prodIds)):
+      echo "<style type='text/css'>";
+    foreach ($prodIds as $key => $prodId) {
+        echo '#snize-product-'.$prodId.' .snize-price-list {
+                display: none;
+            }';
+        echo '#snize-ac-product-'.$prodId.' .snize-price-list {
+                display: none;
+            }';
+    }
+    echo "</style>";
+endif;
+?>

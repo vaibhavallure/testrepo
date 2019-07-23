@@ -1,0 +1,203 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
+
+<?php 
+	/* $status = $this->checkGiftCardInQuotes();
+	$firstShipMethodStatus = $status['first_ship_method'];
+	$secondShipMethodStatus = $status['second_ship_method'];
+	$bothShipMethodStatus = $status['both']; */
+?>
+
+<?php //if(!$firstShipMethodStatus):?>
+<?php $helper = Mage::helper('checkoutstep');
+ $isWholeSale = $helper->checkWholeSaleCustomer(); 
+ $freeMethod = $helper->getFedexFreeShippingMethod();
+ $orderTotalArr = $this->getOrderTotal();
+ $orderTotal = $orderTotalArr['two_ship']['in_stock_total'];
+ Mage::log($orderTotal,Zend_log::DEBUG,'mylogs',true);
+ $orderTotal1 = $orderTotalArr['two_ship']['out_stock_total'];
+ Mage::log($orderTotal1,Zend_log::DEBUG,'mylogs',true);
+?>
+
+<dl class="sp-methods mt-shipping-methods <?php //echo (!$bothShipMethodStatus)?($secondShipMethodStatus)?"mt-gift-card-present":"":"" ?>" >
+    <dt class="mt-shipment-title">For 1st Shipment:<br><span class="mt-shipment-message">(Ready to ship now)</span></dt>
+<?php $_shippingRateGroups = $this->getShippingRatesForTwoShipInStockProducts(); ?>
+<?php if (!$_shippingRateGroups): ?>
+    <p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
+<?php else: ?>
+    
+    <?php $shippingCodePrice = array(); ?>
+    <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
+        
+        <?php 
+        
+        //Allure code to hide usps method for order over $400
+        	$shipcode_class = "class='allure_ship_".$code."' ";
+        	if(preg_match('/usps/', $code)){
+        		if($orderTotal>400){
+        			$shipcode_class .="  style='display:none;'";
+        		}
+        	}
+        ?>
+        <dt <?php echo $shipcode_class?>><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
+        <dd <?php echo $shipcode_class?>>
+            <ul <?php echo $shipcode_class?> >
+            <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
+                <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
+                <li style="display:<?php echo (strpos($_rate->getCode(),$freeMethod) && $isWholeSale)  ? 'none':'block' ?>" class="mt-shipping-methods-list">
+                   <?php if ($_rate->getErrorMessage()): ?>
+                    <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
+                   <?php else: ?>
+                        <?php if ($_sole) : ?>
+                        <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
+                        <?php else: ?>
+                        <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+
+                        <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                                lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
+                            //]]>
+                        </script>
+                        <?php endif; ?>
+
+                        <?php endif; ?>
+                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                        <?php echo $_excl; ?>
+                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                        <?php endif; ?>
+                        </label>
+                   <?php endif ?>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+        </dd>
+    <?php endforeach; ?>
+    
+<script type="text/javascript">
+//<![CDATA[
+    <?php if (!empty($shippingCodePrice)): ?>
+        var shippingCodePrice = {<?php echo implode(',',$shippingCodePrice); ?>};
+    <?php endif; ?>
+
+    $$('input[type="radio"][name="shipping_method"]').each(function(el){
+        Event.observe(el, 'click', function(){
+            if (el.checked == true) {
+            	if(accordion.currentSection!='opc-shipping_method'){
+		            var getShippingCode = el.getValue();
+		            <?php if (!empty($shippingCodePrice)): ?>
+		                var newPrice = shippingCodePrice[getShippingCode];
+		                if (!lastPrice) {
+		                    lastPrice = newPrice;
+		                    quoteBaseGrandTotal += newPrice;
+		                }
+		                if (newPrice != lastPrice) {
+		                    quoteBaseGrandTotal += (newPrice-lastPrice);
+		                    lastPrice = newPrice;
+		                }
+		            <?php endif; ?>
+		            checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+		            $('totalsDivRightNav').innerHTML = '<div class="loading-div">Loading</div>';
+		            new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>?shipping_method=' + getShippingCode, { method: 'get' });  
+		            return false;
+		        }
+            }
+       });
+    });
+//]]>
+jQuery('#totalsDivRightNav').html('<div class="loading-div">Loading</div>');
+new Ajax.Updater('totalsDivRightNav', '<?php echo $this->getUrl('checkout/cart/refreshtotals', array('_secure'=>true)) ?>', { method: 'get' });
+</script>
+<?php endif; ?>
+
+</dl>
+<?php //endif; ?>
+
+
+<?php //if(!$secondShipMethodStatus):?>
+<dl class="sp-methods mt-shipping-methods <?php //echo (!$bothShipMethodStatus)?($firstShipMethodStatus)?"mt-gift-card-present":"":"" ?>" >
+   <dt class="mt-shipment-title">For 2nd Shipment:<br><span class="mt-shipment-message">(Shipped when items available)</span></dt>
+<?php $_shippingRateGroups = $this->getShippingRatesForTwoShipOutOfStockProducts(); ?>
+<?php if (!$_shippingRateGroups): ?>
+    <p><?php echo $this->__('The information you entered does not match any known address with Fedex. Please check your shipping addresses for any errors.') ?></p>
+<?php else: ?>
+
+    <?php $shippingCodePrice = array(); ?>
+    <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
+        <?php 
+        	$shipcode_class = "class='allure_ship_".$code."' ";
+        	if(preg_match('/usps/', $code)){
+        		if($orderTotal1>400){
+        			$shipcode_class .="  style='display:none;'";
+        		}
+        	}
+        ?>
+        <dt <?php echo $shipcode_class?>><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
+        <dd <?php echo $shipcode_class?>>
+            <ul <?php echo $shipcode_class?>>
+            <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
+                <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
+                <li style="display:<?php echo (strpos($_rate->getCode(),$freeMethod) && $isWholeSale)  ? 'none':'block' ?>"  class="mt-shipping-methods-list">
+                   <?php if ($_rate->getErrorMessage()): ?>
+                    <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
+                   <?php else: ?>
+                        <?php if ($_sole) : ?>
+                        <span class="no-display"><input name="mt_shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="mt_s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
+                        <?php else: ?>
+                        <input name="mt_shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="mt_s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+
+                        <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                                lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
+                            //]]>
+                        </script>
+                        <?php endif; ?>
+
+                        <?php endif; ?>
+                        <label for="mt_s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                        <?php echo $_excl; ?>
+                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                        <?php endif; ?>
+                        </label>
+                   <?php endif ?>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+        </dd>
+    <?php endforeach; ?>
+    <?php endif; ?>
+    
+    </dl>
+    <?php //endif; ?>

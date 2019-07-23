@@ -1,0 +1,87 @@
+<?php
+$text = Mage::getStoreConfig('currency/options/currency_symbol');
+$configArr = explode( ';',$text);
+foreach ($configArr as $_arr) {
+    $_arrTmp = explode(' ',trim($_arr));
+    $tmpCurrencies[] = $_arrTmp[0];
+
+	if (count($_arrTmp) > 1) {
+    	$tmpSymbol[] = $_arrTmp[1];
+	} else {
+		$tmpSymbol[] = '';
+	}
+}
+?>
+<?php $arrayCurrencies = array();
+
+if($this->getCurrencyCount()>0): ?>
+<div class="block-currency">
+    <div class="block-content-currency">
+        <?php foreach ($this->getCurrencies() as $_code => $_name): ?>
+            <?php if($_code==$this->getCurrentCurrencyCode()) { ?>
+                <div class="select-currency main-nav-link-dropdown">
+                    <span><?php
+                    $file = Mage::getBaseUrl('media').'wysiwyg/flags/'.$_code.'.png';
+                    if($this->helper('ecp_category')->checkRemoteFile($file)) { ?><img src="<?php echo $file ?>"/>
+                  <?php } ?>
+                    <?php echo $_code ?></span>
+                  <img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/downward-arrow.png'; ?>">
+                </div>
+                <div class="arrow-down"></div>
+            <?php }
+            $arrayCurrencies[$_code] = $_name;
+            ?>
+        <?php endforeach;
+
+        if(!empty($arrayCurrencies)):?>
+        <?php
+            foreach($tmpCurrencies as $key => $value)
+                if(!empty($value) && isset($arrayCurrencies[$value])) {
+                    $_arrayCurrencies[$value] = $arrayCurrencies[$value];
+                    $_symbolCurrencies[$value] = $tmpSymbol[$key];
+                }
+        ?>
+
+        <div id="currency-selector" class="display_none">
+            <ul class="icon-bar d-none d-lg-block usd-account">
+            <?php foreach ($_arrayCurrencies as $_code => $_name): ?>
+                <li class="icon-item"><a href="<?php echo $this->getUrl('currencymanager/currency/switch/to/'.$_code); ?>" >
+                    <?php echo '<i>'. $_symbolCurrencies[$_code] . '</i><span>'.$_code.'</span>' ?>
+                </a></li>
+            <?php endforeach; ?>
+            </ul>
+        <?php endif;?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+    jQuery.noConflict();
+    jQuery(document).ready(function(){
+        var currency_symbol = '<?php echo $_symbolCurrencies[$this->getCurrentCurrencyCode()]?>';
+        jQuery('#last_product_currency').html(currency_symbol);
+        var config_currency_selector = {
+            over: function(){
+                //jQuery('#currency-selector').slideDown(300);
+            },
+            timeout: 200,
+            out: function(){
+                jQuery('#currency-selector').removeClass('show');
+                jQuery('#currency-selector').slideUp(300);
+            }
+        };
+
+        jQuery(".block-currency").hoverIntent( config_currency_selector );
+        jQuery('.block-currency').click(function () {
+            var showOrHide = jQuery('#currency-selector').hasClass('show');
+            if(!showOrHide) {
+                jQuery('#currency-selector').addClass('show');
+                jQuery('#currency-selector').slideDown(300);
+            } else {
+                jQuery('#currency-selector').removeClass('show');
+                jQuery('#currency-selector').slideUp(300);
+            }
+        });
+    });
+</script>

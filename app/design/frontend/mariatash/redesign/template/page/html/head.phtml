@@ -1,0 +1,325 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>"/>
+<title><?php echo $this->getTitle() ?></title>
+<meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>"/>
+<meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>"/>
+<meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>"/>
+<link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon"/>
+<link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon"/>
+<meta name="google-site-verification" content="rIH9RmxNp4bJQ601Cmxe7IVD59ZhokU85NyfGmHWD4Y" />
+<meta name="google-site-verification" content="FyCBtJHrnBYJlB3vzz23QnzmKfJCnxd1zzdhCW-QDMI" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<?php
+
+$title = $this->getTitle();
+$url = $this->helper('core/url')->getCurrentUrl();
+$image = Mage::getBaseUrl('media') . DS . 'logo' . DS . Mage::getStoreConfig('design/header/logo_src');
+$description = htmlspecialchars($this->getDescription());
+$type = 'product';
+
+
+
+if ($this->getRequest()->getParam('fb', false)) {
+    if ($this->getRequest()->getParam('imgpressfb', false)) {
+        $pressimgTmp = explode('-', $this->getRequest()->getParam('imgpressfb'));
+        $pressimg = Mage::getModel('ecp_press/press')->load($pressimgTmp[2]); //
+        if ($pressimg) {
+            switch ($pressimgTmp[1] + 1) {
+                case 1:
+                    $fbImage = $pressimg->getImageOne();
+                    break;
+                case 2:
+                    $fbImage = $pressimg->getImageTwo();
+                    break;
+                case 3:
+                    $fbImage = $pressimg->getImageTree();
+                    break;
+                case 4:
+                    $fbImage = $pressimg->getImageFour();
+                    break;
+            }
+            $title = 'Venus by Maria Tash in '.$pressimg->getTitle();
+            $image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'press/' . $fbImage;
+            $url = Mage::helper('core/url')->getCurrentUrl(); //$url= Mage::getBaseUrl().'discover-maria-tash/press.html';
+            $description = 'Venus by Maria Tash was featured in '.$pressimg->getTitle().'. Check out what jewelry they used.';
+        }
+    } elseif ($this->getRequest()->getParam('datafb', false)) {
+        $url = $this->helper('core/url')->getCurrentUrl();
+        $image = $this->getRequest()->getParam('imagefb');
+        $title = "About Designer";
+        $description = "Maria Tash";
+    } elseif ($this->getRequest()->getParam('productviewfb', false)) {
+        $productId = $this->getRequest()->getParam('productid');
+        $imageId = $this->getRequest()->getParam('image');
+        $wtProduct = Mage::getModel('catalog/product')->load($productId);
+
+        if ($imageId == 0) {
+            $_img = $this->helper('catalog/image')->init($wtProduct, 'image');
+            $_helper = $this->helper('catalog/output');
+            $image = $_helper->productAttribute($wtProduct, $_img, 'image');
+        } else {
+
+            $wtProductImages = $wtProduct->getMediaGalleryImages();
+
+            foreach ($wtProductImages as $wtImage) {
+                if ($imageId == $wtImage['id']) {
+                    $image = $wtImage['url'];
+                }
+            }
+        }
+        $url = $this->helper('core/url')->getCurrentUrl();
+        $title = $wtProduct->getName();
+        $description = $wtProduct->getDescription();
+    }  elseif ($celeboutfitid = $this->getRequest()->getParam('celebrityoutfitid', false)) {
+        $celebrityoutfit = Mage::getModel('ecp_celebrities/outfits')->load($celeboutfitid);
+        $celebrity = Mage::getModel('ecp_celebrities/celebrities')->load($celebrityoutfit->getCelebrityId());
+        $title = $celebrity->getCelebrityName()." is wearing Venus by Maria Tash.";
+        $image = ($this->getRequest()->getParam('iscelebrity') == 0)
+            ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities/'.$celebrityoutfit->getOutfitImage()
+            : Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities/'.$celebrity->getDefaultImage();
+        $url = $this->helper('core/url')->getCurrentUrl();
+        $description = "See the jewelry that ".$celebrity->getCelebrityName()." is wearing and find your look at Venus by Maria Tash. #mariatash";
+    }
+} elseif ($current_location = Mage::registry('current_piercing_location')) {
+        $categories = $this->getCategoriesArray();
+        $pg = Mage::getModel('catalog/category')->load($current_location);
+        $url = Mage::helper('core/url')->getCurrentUrl();
+        $title = $pg->getName() . " PIERCING STYLES";
+        $image = "";
+        $type = 'product';
+        $description = $pg->getName();
+    } elseif ($celeb = Mage::registry('celebrities')) {
+        $title = $celeb->getCelebrityName()." is wearing Venus by Maria Tash.";
+        $image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'celebrities/' . $celeb->getDefaultImage();
+        $url = $this->helper('core/url')->getCurrentUrl();
+        $description = "See the jewelry that ".$celeb->getCelebrityName()." is wearing and find your look at Venus by Maria Tash. #mariatash";
+
+        if ($celeboutfitid = $this->getRequest()->getParam('celebrityoutfitid', false)) {
+            $celebrityoutfit = Mage::getModel('ecp_celebrities/outfits')->load($celeboutfitid);
+            $celebrity = Mage::getModel('ecp_celebrities/celebrities')->load($celebrityoutfit->getCelebrityId());
+            $title = $celebrity->getCelebrityName()." is wearing Venus by Maria Tash.";
+            $image = ($this->getRequest()->getParam('iscelebrity') == 0)
+                ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities/'.$celebrityoutfit->getOutfitImage()
+                : Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities/'.$celebrity->getDefaultImage();
+            $url = $this->helper('core/url')->getCurrentUrl();
+            $description = "See the jewelry that ".$celebrity->getCelebrityName()." is wearing and find your look at Venus by Maria Tash. #mariatash";
+    }
+} elseif ($tattooer = Mage::registry('tattoo_artist')) {
+    $url = $this->helper('core/url')->getCurrentUrl();
+    $title = "Tattoos by " . $tattooer->getName() . " at Venus Body Arts";
+    $image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $tattooer->getImage();
+    $workId = (int) $this->getRequest()->getParam('tattoo-img');
+    if ($workId) {
+        $title = "Tattoo by " . $tattooer->getName() . " at Venus Body Arts";
+        $work = Mage::getModel('ecp_tattoo/tattoo_artist_work')->load($workId);
+        if ($work->getId()) {
+            $image = $work->getImage();
+        }
+    }
+    // $description = strip_tags($tattooer->getDescription());
+    $description = "Venus Body Arts offers custom tattoo work in the heart of the East Village in NYC.";
+} elseif ($_product = Mage::registry('current_product')) {
+    $url = Mage::helper('core/url')->getCurrentUrl();
+    $image = $_product->getImageUrl();
+    $title = $_product->getName();
+    $image = $this->helper('catalog/image')->init($_product, 'small_image')->resize(200,200);
+    $description = htmlentities($_product->getDescription());
+}
+
+// ECP Piering Gallery: Facebook Sharing
+// Лучше, конечно, сделать добавление мета-тегов из модуля, но тут похоже
+// другие завязаны на тэгах в шапке. Можно было бы избавиться от дублирования кода.
+if(Mage::app()->getRequest()->getModuleName() == 'ecppiercinggallery'
+    || Mage::app()->getRequest()->getRequestString() == '/piercing/piercing-styles.html'):
+    $locationId = Mage::app()->getRequest()->getParam('locationtype', null);
+    if(empty($locationId)) {
+        $piercingCat = Mage::getModel('catalog/category')->getCollection()->addAttributeToFilter('name','PIERCING')->getData();
+        $piercingSubCat = Mage::getModel('catalog/category')->getCollection()
+            ->addAttributeToSelect('name')->addFieldToFilter('parent_id',$piercingCat[0]['entity_id'])
+            ->addFieldToFilter('is_active', array('eq'=>'0'))
+            ->addAttributeToSort('position', 'ASC')
+            ->getData();
+        $subcategory = Mage::getModel('catalog/category')->getCollection()
+            ->addAttributeToSelect('name')->addFieldToFilter('parent_id',$piercingSubCat[0]['entity_id'])
+            ->addFieldToFilter('is_active', array('eq'=>'0'))
+            ->addAttributeToSort('position', 'ASC')
+            ->getData();
+        $locationId = $subcategory[0]['entity_id'];
+    }
+    $looks = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addFieldToFilter('parent_id',$locationId)
+        ->addFieldToFilter('include_in_menu',1)->addAttributeToSort('position','asc');
+    foreach($looks as $look){
+        $productsLooks = array();
+
+        $productsLooks['name'] = $look->getName();
+        $productsLooks['img'] = $look->getImageUrl();
+        $productsLooks['id'] = $look->getId();
+        $productsLooks['description'] = $look->getDescription();
+
+        $products = $look->getProductCollection()
+            ->addAttributeToFilter('visibility' , array('neq'=>Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE));
+        $arrayProducts = array();
+
+        foreach ($products as $product) {
+            $arrayProducts[] = $product;
+        }
+
+        $productsLooks['products'] = $arrayProducts;
+        $array[] = $productsLooks;
+    }
+    $looks = $array;
+    $url = explode('?', trim($url));
+    $slide = preg_replace('/\D/', '', $url[1]);
+    $slidePos = -1;
+
+    if(!empty($slide) && !empty($looks)):
+        foreach($looks AS $key=>$look):
+            if($look['id'] == $slide) $slidePos = $key;
+        endforeach;
+    endif;
+    if($slidePos < 0) $slide = $slidePos = 0;
+    $url = $url[0].(($slide>0) ? '?look-'.$slide : '');
+    $currentLook = $looks[$slidePos];
+    $title = $currentLook['name'];
+    $description = $currentLook['description'];
+    $image = $currentLook['img'];
+endif;
+?>
+<?php
+$currenturl = Mage::helper('core/url')->getCurrentUrl();
+$urlData=explode("/",$currenturl);
+$metaCollection=Mage::getModel("metadata/metadata")->getCollection();
+
+$site_name='Maria Tash';
+
+foreach ($metaCollection as $meta){
+
+    if(in_array($meta->getTerm(), $urlData)){
+        $title = $meta->getTitle();
+
+        if($meta->getUrl())
+            $url=$meta->getUrl();
+
+        if($meta->getType())
+            $type=$meta->getType();
+
+        if($meta->getImage())
+            $image=$meta->getImage();
+
+        if($meta->getDescription())
+            $description = $meta->getDescription();
+
+        if($meta->getSiteName())
+            $site_name=$meta->getSiteName();
+    }
+}
+?>
+
+<meta property="og:title" content="<?=htmlentities($title, ENT_COMPAT | ENT_HTML401, 'UTF-8');?>"/>
+<meta property="og:url" content="<?php echo htmlentities($url) ?>"/>
+<meta property="og:type" content="<?php echo htmlentities($type) ?>"/>
+<meta property="og:image" content="<?php echo $image ?>"/>
+<meta property="og:description" content="<?=htmlentities(strip_tags($description), ENT_COMPAT | ENT_HTML401, 'UTF-8');?>"/>
+<meta property="og:site_name" content='<?php echo $site_name ?>'/>
+
+<!--[if lt IE 7]>
+<script type="text/javascript">
+    //<![CDATA[
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+//]]>
+</script>
+<![endif]-->
+
+<!--[if gte IE 9]>
+  <style type="text/css">
+    .gradient {
+       filter: none;
+    }
+    .product-shop .product-collateral .product-options div.styled select {
+        width:326px;
+        padding-right:31px !important;
+        padding-left:2px !important;
+    }
+  </style>
+<![endif]-->
+<!--[if gt IE 9]>
+  <style type="text/css">
+    .product-shop .product-collateral .product-options div.styled select {
+        padding-right:37px !important;
+        padding-left:3px !important;
+    }
+  </style>
+<![endif]-->
+<!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->getUrl(); ?>skin/frontend/mt/default/css/IE8_styles.css" media="all">
+<![endif]-->
+
+
+
+<script type="text/javascript">
+var globalVar = 0;
+var sample_already = false;
+</script>
+
+<?php echo $this->getCssJsHtml() ?>
+<?php echo $this->getChildHtml() ?>
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+<?php echo $this->getIncludes() ?>
+
+<script type="text/javascript" >
+function adapt_to_orientation() {
+    window.location.reload(true);
+}
+
+jQuery(document).ready(function() {
+    jQuery('body').bind('orientationchange', adapt_to_orientation);
+    if (navigator.userAgent.indexOf('Chrome') >= 0){
+        jQuery('body').addClass("chrome");
+    }
+    if (navigator.userAgent.indexOf('Macintosh') >= 0){
+        jQuery('body').addClass("mac");
+    }
+    if (navigator.userAgent.indexOf('MSIE 10') >= 0){
+        jQuery('body').addClass("ie-10");
+    }
+    if (navigator.userAgent.indexOf('rv:11') >= 0 && navigator.userAgent.indexOf('Windows') >= 0){
+        jQuery('body').addClass("ie-11");
+    }
+});
+</script>
+<?php
+$wholesale=false;
+$login = Mage::getSingleton( 'customer/session' )->isLoggedIn();
+	//Check if User is Logged In
+    if($login){
+		$_myGroupId = Mage::getSingleton('customer/session')->getCustomerGroupId();
+		if($_myGroupId==2) $wholesale=true;
+	}
+?>

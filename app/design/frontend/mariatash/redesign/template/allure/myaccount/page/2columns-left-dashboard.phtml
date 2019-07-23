@@ -1,0 +1,104 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>"> <!--<![endif]-->
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+<body<?php echo $this->getBodyClass()?' class="mt-myaccount-new '.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+<div class="wrapper">
+    <?php echo $this->getChildHtml('global_notices') ?>
+    <div class="page layout-grid">
+        <?php echo $this->getChildHtml('header') ?>        
+        <div class="main-container col2-left-layout">
+            <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+            <div class="page-title myaccount-page-tilte">
+            	<h1>
+                <?php
+                $isSidebar = true;
+                $request = Mage::app()->getRequest();
+                if(Mage::app()->getRequest()->getModuleName() == 'wishlist')
+                { 
+                    echo $this->__('My Wishlist');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesorderview'){
+                    echo $this->__('My Orders');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesorderinvoice'){
+                    echo $this->__('My Orders');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesorderhistory'){
+                    echo $this->__('My Orders');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'salesordershipment'){
+                    echo $this->__('My Orders');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customeraccountedit'){
+                    echo $this->__('Account Information');
+                }elseif($request->getModuleName().$request->getControllerName() == 'customeraddress'){
+                    echo $this->__('Address Book');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'newslettermanageindex'){
+                    echo $this->__('Newsletter');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customerpaymentinfoindex'){
+                    echo $this->__('My Saved Cards');
+                }elseif($request->getModuleName().$request->getControllerName().$request->getActionName() == 'myaccountindexindex'){
+                	$isSidebar = true;
+                }else{
+                	$session = Mage::getSingleton('customer/session');
+                	$name = "Guest";
+                	if($session->isLoggedIn()){
+                		$customer = $session->getCustomer();
+                		$name = $customer->getFirstname();
+                	}
+                	echo "Hello ".$name;
+                	$isSidebar = false;
+                } ?>
+                </h1></div>
+            <div class="main">
+                <?php echo $this->getChildHtml('breadcrumbs') ?>
+                <?php echo $this->getChildHtml('global_messages') ?>
+                <div class="col-main <?php echo ($isSidebar)?"":"mt-no-sidebar"?>">
+                    <?php echo $this->getChildHtml('content') ?>
+                </div>
+                
+                <?php if($isSidebar):?>
+                <div class="col-left sidebar"><?php echo $this->getChildHtml('left') ?></div>
+                <?php endif;?>
+                
+            </div>
+        </div>
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+    </div>
+</div>
+<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>

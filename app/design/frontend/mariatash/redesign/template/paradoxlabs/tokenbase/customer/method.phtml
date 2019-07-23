@@ -1,0 +1,87 @@
+<?php if(0):?>
+<div class="col2-set addresses-list">
+	<div class="col-1">
+		<?php echo $this->getChildHtml('tokenbase_customer_method_left'); ?>
+	</div>
+	 <div class="col-2">
+		<?php echo $this->getChildHtml('tokenbase_customer_method_right'); ?>
+	</div> 
+</div>
+<?php endif;?>
+
+<div class="tab">
+  <button id="mt-save-card" data-tab="tab1" class="tablinks active" onclick="changeTab(this);">Saved Cards</button>
+  <button id="mt-add-card" data-tab="tab2" class="tablinks" onclick="changeTab(this);">Add New Payment Method</button>
+</div>
+
+<div id="new-mt-saved-card" class="tabcontent tab1 active">
+  <!-- <h3>Your credit and debit cards</h3> -->
+  <div class="mt-new-payment">
+  		<?php echo $this->getChildHtml('tokenbase_customer_method_left'); ?>
+  		<?php echo $this->getChildHtml('allure_tokenbase_customer_method_edit'); ?>
+   </div>
+</div>
+
+<div id="new-mt-add-payment-method" class="tabcontent tab2">
+  <div class="myaccount-add-payment-form">
+  		<?php echo $this->getChildHtml('allure_tokenbase_customer_method_add'); ?>
+  </div>
+</div>
+
+<script>
+	var addMain;
+	var editMain; 
+	jQuery(document).ready(function(){
+		jQuery('li.mt-payment-item').click(function(){
+			var cardId = jQuery(this).find('.mt-icon').attr('data-card-id');
+			var selector = jQuery('.mt-payment-details.card-details-'+cardId);
+			selector.toggle();
+			if(selector.is(":visible")){
+				jQuery(this).find('.mt-arrow').removeClass('arrow-down');
+				jQuery(this).find('.mt-arrow').addClass('arrow-up');
+			}else{
+				jQuery(this).find('.mt-arrow').removeClass('arrow-up');
+				jQuery(this).find('.mt-arrow').addClass('arrow-down');
+			}
+
+			jQuery('.mt-payment-details').each(function(){
+				var cardIdData = jQuery(this).attr('data-card-id');
+				if(cardId!=cardIdData){
+					jQuery(this).hide();
+					jQuery("#mt-payment-item-"+cardIdData).find('.mt-arrow').removeClass('arrow-up');
+					jQuery("#mt-payment-item-"+cardIdData).find('.mt-arrow').addClass('arrow-down');
+				}
+			});
+		});
+
+		//addMain = jQuery('#add-main').html();
+		//editMain = jQuery('#edit-main').html();
+
+		/* var name = jQuery('#form-validate').attr('data-edit');
+		if(name=="edit"){
+			jQuery('#add-main').remove();
+		}else{
+			jQuery('#edit-main').remove();
+		}
+		 */
+	});
+	
+	function changeTab(event){
+		var element = jQuery(event);
+		var currentTab = element.attr('data-tab');
+		 if(currentTab=="tab1"){
+			 //nothing
+		}else{
+			jQuery('#form-validate-mt').find('.authnetcim_add').show();
+			jQuery('#form-validate-mt').find('#authnetcim_cc_type_exp_div').show();
+			jQuery('#form-validate-mt').find('#authnetcim_cc_type_cvv_div').show();
+			//jQuery('#form-validate-mt').find('#authnetcim_cc_exp_year').show();
+		//	jQuery('#form-validate-mt').find('#authnetcim_cc_cid').show();
+		} 
+		jQuery('.tablinks').removeClass('active');
+		element.addClass('active');
+		jQuery('.tabcontent').removeClass('active');		
+		jQuery('.tabcontent.'+currentTab).addClass('active');
+	}
+</script>
+  

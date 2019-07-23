@@ -1,0 +1,14 @@
+.product-view .tabs { background: #d1d1d1; margin:31px 0 10px; overflow:hidden; zoom: 1; width:100%; }
+.product-view .tabs li { float:left; font-size:14px; line-height:0.8em; padding:4px 2px 0; margin-right: -2px; }
+.product-view .tabs li.first { }
+.product-view .tabs li.last { }
+.product-view .tabs a { display:block; padding:10px 14px; color:#3f4048; text-decoration: none; width: auto; font-size:14px; }
+.product-view .tabs a:hover{cursor:pointer;font-size:14px;	}
+.product-view .tabs li.active a,
+.product-view .tabs li.active a:hover { background:#dedede; -moz-box-shadow: 0px 0px 3px 0px #666; -webkit-box-shadow: 0px 0px 3px 0px #666; box-shadow: 0px 0px 3px 0px #666; text-decoration:none; font-size:14px; }
+
+#product_tabs_tags_tabbed_contents.input-box input	{ width: 300px; }
+#product_tabs_tags_tabbed_contents .input-box	{ width: 300px; float:left; margin-right: 10px;}
+#product_tabs_related_tabbed_contents li	{ float:left; margin-right: 10px;}
+#product_tabs_related_tabbed_contents ol	{ clear: both;}
+.product-collateral:after { content:"."; display:block; clear:both; font-size:0; line-height:0; height:0; overflow:hidden; zoom: 1}

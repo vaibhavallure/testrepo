@@ -1,0 +1,184 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Temlate for Mage_Customer_Block_Address_Book block
+ * @var $test Mage_Customer_Block_Address_Book
+ */
+?>
+<div class="col2-set addresses-list">
+    <div class="box">
+<div class="box-title title-buttons">
+    <h3><?php echo $this->__('Addresses ') //Address Book?></h3>
+    <?php 
+        $request = Mage::app()->getRequest();
+        if($request->getModuleName().$request->getControllerName().$request->getActionName() == 'customeraccountindex'): ?>
+            <a href="<?php echo $this->getBaseUrl()."customer/address/" ?>"><?php echo $this->__('Edit') ?></a>
+        <?php else: ?>
+            <a href="<?php echo $this->getAddAddressUrl() ?>"><?php echo $this->__('Add New Address') ?></a>
+        <?php endif; ?>   
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<div class="mt-myaccount-add-new-address-btn-div">
+	<button id="add-new-addresss" type="button" title="<?php echo $this->__('Add New Address') ?>" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>'" class="button"><span><?php echo $this->__('Add New Address') ?></span></button>
+</div>
+
+<div class="mt-myaccount-address-primary-div">
+    <div class="col-1 addresses-primary">
+        <ol>
+        <?php $_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()?>
+        <?php $billAddrId = Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId();?>
+        <?php if($billAddrId): ?>
+            <li class="item">
+                <h3><?php echo $this->__('Primary Billing Address ') ?></h3>
+                <address>
+                    <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
+                </address>
+                <p>
+                	<a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
+                	<a href="#" class="link-remove mt-default-addr-delete-link" onclick="confirmBox('<?php echo $this->__("Are you sure you want to delete this address?") ?>',function() {
+                            deleteAddress('<?php echo $billAddrId ?>');
+                	},'DELETE')"><?php echo $this->__('Delete') ?></a>
+                </p>
+           </li>
+        <?php else: ?>
+            <li class="item">
+                <h3><?php echo $this->__('Billing Address ') ?></h3>
+                <?php echo $this->__('You have no default billing address in your address book.') ?>
+            </li>
+        <?php endif ?>
+        </ol>
+    </div>
+    <div class="col-2 addresses-primary">
+       <ol> 
+        <?php $_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultShipping();?>
+       	<?php $shipAddrId = Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getId();?>
+        <?php if($shipAddrId): ?>
+            <li class="item">
+                <h3><?php echo $this->__('Primary Shipping Address ') ?></h3>
+                <address>
+                    <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
+                </address>
+                <p>
+                	<a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Edit') ?></a>
+                	<a href="#" class="link-remove mt-default-addr-delete-link" onclick="
+                           confirmBox('<?php echo $this->__("Are you sure you want to delete this address?") ?>',function() {
+                             deleteAddress('<?php echo $shipAddrId ?>');
+                             },'DELETE')
+                            "><?php echo $this->__('Delete') ?></a>
+                </p>
+            </li>
+        <?php else: ?>
+            <li class="item empty">
+                <h3><?php echo $this->__('Primary Shipping Address ') ?></h3>
+                <?php echo $this->__('You have no default shipping address in your address book.') ?>
+            </li>
+        <?php endif ?>
+        </ol>
+    </div> 
+   </div>       
+    </div>
+</div>
+<?php if($request->getModuleName().$request->getControllerName().$request->getActionName() != 'customeraccountindex'): ?>
+<div class="mt-addresses-additional ">
+    <h2><?php echo $this->__('Additional Addresses') ?></h2>
+    <ul id="additional-addresses">
+    <?php if($_pAddsses = $this->getAdditionalAddresses()): ?>
+        <?php $contador = 0; foreach($_pAddsses as $_address): ?>
+            <li class="item">
+                <div class="item-inner-container">
+                    <address>
+                        <?php echo $this->getAddressHtml($_address) ?>
+                    </address>
+                    
+                    <div class="mt-additional-address-btns">
+                    	<button onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_billing');" type="button" title="Make Primary Billing Address" class="button btn-1"><span class="mt-btn-name">Make Primary Billing Address</span></button>
+                    	<button onclick="setDefaultBilling(<?php echo $_address->getId() ?>,'default_shipping');" type="button" title="Make Primary Shipping Address" class="button btn-2"><span class="mt-btn-name">Make Primary Shipping Address</span></button>
+                    </div>
+                    
+                    <p class="additional-address-links">
+                        <a href="<?php echo $this->getUrl('customer/address/edit', array('id'=>$_address->getId())) ?>"><?php echo $this->__('Edit') ?></a><!-- <span class="separator">|</span> -->
+                        <a href="#" class="link-remove"
+                        onclick="
+                           confirmBox('<?php echo $this->__("Are you sure you want to delete this address?") ?>',function() {
+                             deleteAddress('<?php echo $_address->getId() ?>');
+                             },'DELETE')"
+                        ><?php echo $this->__('Delete') ?></a>
+                    </p>
+                </div>
+            </li>
+        
+        <?php endforeach; ?>
+    <?php else: ?>
+    	<?php if(0):?>
+            <li class="item empty">
+                <p><?php echo $this->__('You have no additional address entries in your address book.') ?></p>
+            </li>
+        <?php endif ?>
+    <?php endif ?>
+    </ul>
+    </div>
+<?php endif; ?>
+
+ <input id="customer-address-form-key" type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+<script type="text/javascript">
+//<![CDATA[
+    function deleteAddress(addressId) {
+//        if(confirm('<//?php //echo $this->__('Are you sure you want to delete this address?') ?>//')) {
+            window.location='<?php echo $this->getDeleteUrl() ?>id/'+addressId;
+//        }
+     return false;
+    }
+//]]>
+</script>
+
+<script>
+function setDefaultBilling(id,type){
+	var form_key = jQuery('#customer-address-form-key').val();
+	var flag = 1;
+	jQuery.fancybox.showLoading();
+    jQuery.fancybox.helpers.overlay.open({parent: $('body'),closeClick : false});
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'customer/address/setDefaultAddressAjax';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'id':id,type:type,'form_key':form_key},
+        success: function(data) {
+            if(data.success){
+                window.location.reload();
+            }
+            jQuery.fancybox.hideLoading();
+        	jQuery('.fancybox-overlay.fancybox-overlay-fixed').hide();
+        }
+    });
+}
+
+function setDefaultShipping(flag){
+	
+}
+</script>

@@ -1,0 +1,90 @@
+<?php 
+	$feedModel = $this->getFeed();
+?>
+<?php if(!is_null($feedModel->getId())):?>
+<?php 
+	$instagramObj = unserialize($feedModel->getInstagramData());
+	$createDate = $feedModel->getCreatedTimestamp();
+	if($createDate!=null){
+		$createDate = date('d M Y', $createDate);
+	}
+	
+	$_options = json_decode($feedModel->getHotspots());
+	$points = "";
+	$productsLinks = "";
+	$numberOfProducts = 0;
+	foreach ($_options as $option){
+		$sku = $option->text;
+		$numberOfProducts += 1;
+		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+		$productName = $product->getName();
+		$productId = $product->getId();
+		
+		$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+		$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+		$productUrl = $product->getProductUrl();
+		if(!is_null($parentId)){
+			$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+		}
+		
+		$points .=  '<a href="'.$productUrl.'" class="fs-link fs-link-a" data-link-id="'.$productId.'">
+                  <div id="fs_overlink_'.$productId.'" class="fs-overlink fs-right"  style="top:'. (($option->top*100)/$option->imgH).'%; left:'.(($option->left*100)/$option->imgW).'%;">
+                    <div style="color:#000;" class="circle-number">'.$numberOfProducts.'</div>
+                    <div class="fs-overlink-text">
+                      <div class="fs-arrow-up"></div>
+                      Shop it // '.$productName.'
+                    </div>
+                  </div>
+                </a>';
+		
+		$productsLinks .=  '<div class="fs-text-link-container">
+                <a class="fs-link fs-text-product fs-link-list" data-link-id="'.$productId.'" href="'.$productUrl.'">
+                  Shop it // '.$productName.'
+                  <div class="fs-text-product-cta"></div>
+                </a>
+              </div>';
+	}
+?>
+
+<div class="fs-timeline-detail fs-single-post">
+      <div class="fs-detail-container">
+        <div class="fs-detail-content">
+          <div class="fs-detail-left">
+            <div class="fs-image-container">
+                <?php echo $points;?>
+              <img class="fs-detail-image" id="fs_main_image" data-src="<?php echo $feedModel->getStandardResolution() ?>" 
+              src="<?php echo $feedModel->getStandardResolution() ?>">
+            </div>
+          </div>
+          <div class="fs-detail-right">
+                        
+            <div class="spacey"></div>            
+             <?php echo $productsLinks;?>
+            <div class="fs-divider-container">
+              <div class="fs-divider">
+              </div>
+            </div>
+            <div class="fs-detail-title" style="clear:both;">
+             <?php echo $feedModel->getText()?>
+            </div>            
+            <div class="fs-divider-container">
+              <div class="fs-divider">
+              </div>
+            </div>
+            <div class="fs-post-info">
+              <a href="<?php echo $feedModel->getUsername()?>" target="_blank">
+                <span class="fs-service-username">
+                  MARIA_TASH</span>
+                <span class="fs-slashes">//</span> 
+                INSTAGRAM 
+                <span class="fs-slashes">//</span> 
+                <span class="fs-detail-date"><?php echo $createDate?></span> 
+              </a>
+            </div>      
+          </div>
+        </div>
+      </div>      
+    </div>
+  
+  <?php endif;?> 
+    

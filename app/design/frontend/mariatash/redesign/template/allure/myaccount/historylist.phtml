@@ -1,0 +1,111 @@
+<?php  $_orders = $this->getOrders();?>
+<input id="sales-order-count" type="hidden" value="<?php echo count($this->getOrders())?>" />
+<input page-size="<?php echo $this->getOrders()->getLastPageNumber()?>" current-page="2" 
+	data-url="<?php echo Mage::getBaseUrl('web').'myaccount/index/getOrderHistory';?>"
+	 data-limit="10" type="hidden" id="receipt-type" 
+	data-count="<?php echo count($this->getOrders())?>" >
+	 
+    <div id="box-history" class="box <?php echo ($_orders->getSize())?"":"box-no-order"?>">
+                <?php
+                    $request = Mage::app()->getRequest();
+                ?>
+        <?php if($_orders->getSize()): ?>
+        
+        <div id="load-complete-order-data" style="width: 100%;position: absolute; display: none;"></div>
+        
+        <div class="box-content complete-order-view">
+            <table class="data-table" id="my-orders-table">
+                <thead>
+                    <tr>
+                        <th><div class="mt-myaccount-th" style="width:130px; padding-left:10px;"><?php echo $this->__('Order number') ?></div></th>
+                        <th class="a-left" style="padding-left: 25px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Date') ?></div></th>
+                        <th class="a-left" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Ship To') ?></div></th>
+                        <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:100px;"><?php echo $this->__('Order Total') ?></div></th>
+                        <th class="a-left" style="padding-left: 0;"><div class="mt-myaccount-th" style="width:110px;"><?php echo $this->__('Order Status') ?></div></th>
+                        <th class="a-center" style="padding-left: 0px;"><div class="mt-myaccount-th" style="width:110px;"><?php //echo $this->__('Actions') ?></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo $this->getChildHtml('sales.order.history')?>
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript">decorateTable('my-orders-table');</script>
+        <?php // echo $this->getPagerHtml(); ?>
+        <?php else: ?>
+            <p class="no-order-msg"><?php echo $this->__('No orders found in your account.'); ?></p>
+        <?php endif; ?>
+        <?php if(0 && $request->getModuleName() != 'customer'): ?>
+            <div class="box-title">
+			</div>
+		<?php endif;?>
+		<?php $totalPageSize = $this->getOrders()->getLastPageNumber()?>
+    </div>
+
+
+<script>
+var xhr = null;
+var page = 2;
+var totalPages = <?php echo $totalPageSize?>;
+jQuery(function($){
+	$('.my-account .mt-my-orders #box-history .box-content').bind('scroll', function(){
+		if($(this).scrollTop() + $(this).innerHeight()>=$(this)[0].scrollHeight){
+			
+			if(page<=totalPages){
+				 if( xhr == null ) {
+				    //xhr.abort();
+				    //xhr = null;
+				    showLoadingFancybox1('box-history');
+				    var count = jQuery("#sales-order-count").val();
+				 	xhr =	jQuery.ajax({
+						//async: false,
+				        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/getOrderHistory';?>',
+				        dataType : 'json',
+						type : 'POST',
+						data: {'page':page,'limit':10,'count':count,'m_store':'<?php echo $_GET['m_store']?>','m_sort':'<?php echo $_GET['m_sort']?>'},
+				        success: function(data) {
+				        	jQuery('#my-orders-table tbody').append(data.data.html);
+				        	jQuery("#total-orders-count").text(data.data.order_count);
+				        	jQuery("#sales-order-count").val(data.data.order_count);
+				        	hideLoadingFancybox1('box-history');
+				        }
+				    });
+				 	xhr = null;
+				 	page ++;
+				}
+		    }else{
+		    	hideLoadingFancybox();
+		    }
+		}
+ 	});
+
+
+	var odrCount =  jQuery("#receipt-type").attr('data-count');
+	jQuery("#total-orders-count").text(odrCount);
+	jQuery("#total-orders-count").attr('data-count',odrCount);
+	jQuery("#total-orders-count").show();
+});
+
+
+function loadOrderView(evt){
+	var orderId = jQuery(evt).attr("data-order-id");
+	showLoadingFancybox1('box-history');
+	jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl('web').'myaccount/index/loadOrderView';?>',
+        dataType : 'json',
+		type : 'POST',
+		data: {'order_id':orderId,'order_type':'complete'},
+        success: function(data) {
+            jQuery('#load-complete-order-data').html(data.data.html);
+            jQuery('#new-mt-myproduct-receipts .block-layered-nav-bg').hide();
+            jQuery('.complete-order-view').hide();
+            jQuery('#load-complete-order-data').show();
+            hideLoadingFancybox1('box-history');
+            var type = window.location.hash.substr(1);
+            var order_id   = jQuery(evt).attr("data-order-id");
+            window.location.hash = type+"#info#"+order_id;
+        }
+    });
+}
+
+</script>

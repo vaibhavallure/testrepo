@@ -1,0 +1,228 @@
+<?php
+$_product = $this->getProduct();
+$_currency = Mage::app()->getStore()->getCurrentCurrency();
+$_currency_usd = Mage::app()->getStore()->getBaseCurrency();
+$baseCurrencyCode = Mage::app()->getStore()->getBaseCurrencyCode();
+$currentCurrencyCode = Mage::app()->getStore()->getCurrentCurrencyCode(); 
+$_from = Mage::getStoreConfig('giftcards/default/min_card_value') ? Mage::getStoreConfig('giftcards/default/min_card_value') : 0;
+$_to = Mage::getStoreConfig('giftcards/default/max_card_value') ? Mage::getStoreConfig('giftcards/default/max_card_value') : 0;
+?>
+<script type="text/javascript">
+    jQuery.noConflict();
+    jQuery('body').addClass('product-gift-card');
+    Validation.add('validate-float-range', "The value is not within the specified range.", function(v, element) {
+        var result = Validation.get('IsEmpty').test(v) || !/[^\d\.\,]/.test(v);
+        var reRange = new RegExp(/^float-range-[\d\.\,]+-[\d\.\,]+$/);
+        $w(element.className).each(function(name, index) {
+            if (name.match(reRange) && result) {
+                var min = parseFloat(name.split('-')[2]);
+                var max = parseFloat(name.split('-')[3]);
+                var val = parseFloat(v);
+                result = !((v < min && min > 0) || (v > max && max > 0));
+            }
+        }); 
+        return result;
+    });
+</script>
+<div class="giftcard-info"> 
+    <?php /*?><fieldset class="giftt" style="height: 100%;" >
+        <div class="field-label"><?php echo $this->__('Choose the type of Gift Card') ?>:</div>
+        <div>
+            <?php if($this->helper('giftcards')->isShowEmailType()): ?>
+            <label for="email-radio"><?php echo $this->__('E-mail Gift Card (to someone or yourself)') ?></label><input type="radio" id="email-radio" name="card_type" value="email" checked="checked" onclick="changeFieldset('email')" />&nbsp;<br>
+            <?php endif; ?>
+            <?php if($this->helper('giftcards')->isShowPrintType()): ?>
+            <label for="print-radio"><?php echo $this->__('Print-Out Gift Card') ?></label><input type="radio" id="print-radio" name="card_type" value="print" onclick="changeFieldset('print')" />&nbsp;<br>
+            <?php endif; ?>
+            <?php if($this->helper('giftcards')->isShowOfflineType()): ?>
+            <label for="offline-radio"><?php echo $this->__('Send by post office') ?></label><input type="radio" id="offline-radio" name="card_type" value="offline" onclick="changeFieldset('offline')" />&nbsp;
+            <?php endif; ?>
+        </div>
+    </fieldset><?php */?>
+    <fieldset id="giftcard-fieldset" class="giftcard-fieldset">
+        <div class="giftcard-left-form">
+            <?php if ($this->getPriceStatus() == 1) : ?>
+            <div class="field">
+                <label for="card-amount" class="required"><?php echo $this->__('Amount') ?><em>*</em></label><br/>&nbsp;(<?php echo $_currency->format($_from) ?> - <?php echo $_currency->format($_to) ?>)
+                <input style="width:100px;" type="text" id="card-amount" name="card_amount" class="input-text required-entry validate-float-range float-range-<?php echo $_from;?>-<?php echo $_to;?>"/>
+            </div>
+            <?php elseif($this->getPriceStatus() == 2) : ?>
+            <br/>
+            <div class="field-amount">
+                <label for="card-amount" class="required"><?php echo $this->__('Choose an amount') ?></label><br/>
+                <div class="cart-amount styled">
+                    <select id="cart-amount" name="card_amount" class="validate-select cart-amount" style="width:207px;" onChange="checkSelected()">
+                        <?php if($currentCurrencyCode!='USD'):?>
+                            <?php foreach($this->aAdditionalPrices as $additionalPrice) : ?>
+                            <option value="<?php echo $additionalPrice;?>"><?php echo $_currency_usd->format($additionalPrice)." (".$_currency->format(Mage::helper('directory')->currencyConvert($additionalPrice,$baseCurrencyCode, $currentCurrencyCode)).")";?></option>
+                            <?php endforeach; ?>
+                        <?php else:?>
+                            <?php foreach($this->aAdditionalPrices as $additionalPrice) : ?>
+                            <option value="<?php echo $additionalPrice;?>"><?php echo $_currency->format($additionalPrice);?></option>
+                            <?php endforeach; ?>
+                        <?php endif;?>
+                    </select>
+                </div>
+            </div>
+            <div class="field" id="amount">
+                <label for="card-amount" class="required"><?php echo $this->__('Amount') ?><em>*</em><span class="smaller-text">(<?php echo $_currency->format($_from) ?> - <?php echo $_currency->format($_to) ?>)</span></label>
+                <input style="width:100px;" type="text" id="card-amount" name="card_amount" class="input-text required-entry validate-float-range float-range-<?php echo $_from;?>-<?php echo $_to;?>"/>
+            </div>
+            <!--<div class="currency-code"><?php // echo Mage::app()->getStore()->getCurrentCurrencyCode() ?></div>-->
+            <?php else: ?>
+            <?php echo $this->getPriceHtml($_product) ?>
+            <?php endif; ?>
+            <div class="field">
+                <label for="mail-from"><?php echo $this->__('Sender\'s Name') ?><em>*</em></label><br/>
+                <input style="width:200px;" type="text" id="mail-from" name="mail_from" class="input-text required-entry"/>
+            </div>
+            <div class="field">
+                <label for="mail-from-email"><?php echo $this->__('Sender\'s Email') ?><em>*</em></label><br/>
+                <input style="width:200px;" type="text" id="mail-from-email" name="mail_from_email" class="input-text required-entry validate-email" value="<?php echo $this->escapeHtml($this->getUsername()) ?>" />
+            </div>
+            <div class="field">
+                <label for="mail-to"><?php echo $this->__('Recipient\'s Name') ?><em>*</em></label><br/>
+                <input style="width:200px;" type="text" id="mail-to" name="mail_to" class="input-text required-entry"/>
+            </div>
+            <div class="field">
+                <label for="mail-to-email" class="required"><?php echo $this->__('Recipient\'s Email') ?><em>*</em></label><br/>
+                <input style="width:200px;" type="text" id="mail-to-email" name="mail_to_email" class="input-text required-entry validate-email"/>
+            </div>
+            <!-- Personalizacion -->
+            <div class="field" >
+                <label for="date-input" class="required"><?php echo $this->__('Date to be delivered') ?></label><br/>
+                <input type="text" name="date" id="date-input" class="date_input" /> 
+            </div>
+            <!-- Personalizacion -->
+        </div>
+        <div class="giftcard-rigth-form">
+        <div class="field">
+            <label for="mail-message"><?php echo $this->__('Message to Recipient') ?></label><br/>
+            <textarea id="mail-message" name="mail_message" onKeyUp="maxLong(this,300)"></textarea>            
+        </div>
+        <div id="mail-message-characters-info"><span>0</span> out of 300 characters</div>
+        <div class="field">
+            <label for="offline-country"><?php echo $this->__('Country') ?><em>*</em>:</label><br/>
+            <input style="width:200px;" type="text" id="offline-country" name="offline_country" class="input-text required-entry"/>
+        </div>
+        <div class="field">
+            <label for="offline-state"><?php echo $this->__('State/Province') ?><em>*</em>:</label><br/>
+            <input style="width:200px;" type="text" id="offline-state" name="offline_state" class="input-text required-entry"/>
+        </div>
+        <div class="field">
+            <label for="offline-city"><?php echo $this->__('City') ?><em>*</em>:</label><br/>
+            <input style="width:200px;" type="text" id="offline-city" name="offline_city" class="input-text required-entry"/>
+        </div>
+        <div class="field">
+            <label for="offline-street"><?php echo $this->__('Street Address') ?><em>*</em>:</label><br/>
+            <input style="width:200px;" type="text" id="offline-street" name="offline_street" class="input-text required-entry"/>
+        </div>
+        <div class="field">
+            <label for="offline-zip"><?php echo $this->__('Zip/Postcode') ?><em>*</em>:</label><br/>
+            <input style="width:200px;" type="text" id="offline-zip" name="offline_zip" class="input-text required-entry"/>
+        </div>
+        <div class="field">
+            <label for="offline-phone"><?php echo $this->__('Telephone') ?><em>*</em>:</label><br/>
+            <input style="width:200px;" type="text" id="offline-phone" name="offline_phone" class="input-text required-entry"/>
+        </div>
+    </fieldset>
+</div>
+<script type="text/javascript">
+    function changeFieldset(type) {
+        var mapEmail = new Array('card-amount', 'mail-from', 'mail-from-email', 'mail-to', 'mail-to-email', 'mail-message', 'date-input','mail_delivery_option');
+        var mapPrint = new Array('card-amount', 'mail-from', 'mail-to', 'mail-message','mail_delivery_option');
+        var mapOffline = new Array('card-amount', 'mail-from', 'mail-to', 'mail-message', 'offline-country', 'offline-state', 'offline-city', 'offline-street', 'offline-zip', 'offline-phone','mail_delivery_option');
+        $('giftcard-fieldset').select('.field').invoke('hide');
+        var map = mapEmail;
+        if (type == 'email') {
+            jQuery(".add-to-box").removeClass('printing');
+            map = mapEmail
+        } else if (type == 'print') {
+            jQuery(".add-to-box").addClass('printing');
+            map = mapPrint
+        } else if (type == 'offline') {
+            jQuery(".add-to-box").addClass('printing');
+            map = mapOffline
+        }
+        map.each(function(field) {
+            if ($(field)) {
+                $(field).up('.field').show();
+            }
+        });
+        if(jQuery('#cart-amount').val() != 'other') {
+            jQuery("div#amount").hide();
+        }
+    }
+    changeFieldset('email');
+    
+    jQuery.noConflict();
+    jQuery(document).ready(function(){
+        jQuery('.date_input').inputToSelect({
+            hasEmpty: true,
+            years: 1,
+            yearsOverToday: 5,
+            defaultToday: true
+        });
+//        jQuery('select').customStyle();
+        
+        jQuery("div#amount").hide();
+        
+        jQuery("div.add-to-box div.add-to-cart label").text("Qty");
+    });
+
+    function maxLong(texto,maxlong) {
+        var in_value, out_value;
+        
+        if (jQuery(texto).val().length > maxlong) {
+            in_value = jQuery(texto).val();
+            out_value = in_value.substring(0,maxlong);
+            jQuery(texto).val(out_value);
+        }
+        var textAreaContent = jQuery(texto).val();
+        textAreaContent=textAreaContent.replace(/\n/g," ");
+        jQuery(texto).val(textAreaContent);
+        jQuery('div#mail-message-characters-info span').html(jQuery(texto).val().length);
+    }
+    
+    
+    //jQuery('select#cart-amount').append('<option value="other">Other</option>');
+    
+    /*function checkSelected(){
+        var selected = jQuery("select#cart-amount option:selected").val();
+        if(selected == 'other'){
+            jQuery("div#amount").show();
+            jQuery("select#cart-amount").attr("name","card_amount_select");
+        }else{
+            jQuery("div#amount").hide();
+            jQuery("select#cart-amount").attr("name","card_amount");
+        }
+    }*/
+
+    
+    <?php if(Mage::helper('customer')->isLoggedIn()):?>
+        jQuery('.giftcard-info input#mail-from').val('<?php echo Mage::helper('customer')->getCustomerName() ?>');
+        jQuery('.giftcard-info input#mail-from-email').val('<?php echo Mage::helper('customer')->getCustomer()->getEmail() ?>');
+    <?php endif; ?>
+        
+</script>
+
+<?php if(Mage::helper('customer')->isLoggedIn()): ?>
+<div id='addToFavDiv' style="display:none">
+    <!--ul class="add-to-links">
+        <li--><a href="<?php echo Mage::getUrl('wishlist/index/add',array('qty'=>1,'product'=>$_product->getId())) ?>" class="link-wishlist">Save to Favorites</a><!--/li>
+    </ul-->
+</div>
+
+<script>
+    jQuery.noConflict();
+    
+    jQuery.ajax({
+        url: '<?php echo Mage::getBaseUrl(); ?>checkout/cart/getemail/'
+    }).done(function(data) {mmediately
+        jQuery('#mail-from-email').val(data);
+    });
+    jQuery(document).ready(function(){
+        jQuery('input#qty').after( jQuery('div#addToFavDiv a') );
+    });
+</script>
+<?php endif; ?> 

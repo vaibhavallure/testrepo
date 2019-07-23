@@ -1,0 +1,50 @@
+<?php //$collection = $this->getPricingCollection();?>
+
+<div class="appointment-storemap">
+<?php //echo $this->getStoreMap()?>
+</div>
+
+<div>
+	<?php echo $this->getLayout()->createBlock('cms/block')
+	->setBlockId($this->getCmsBlockId())->toHtml();?>
+</div>
+
+<?php if(false /* $collection->getSize() > 0 */):?>
+
+	<div class="piercing_block">
+		<h3><?php echo $this->__('PRICING')?></h3>
+	</div>
+
+    <div class="appointments-piercing-pricing fieldDiv">
+    	<table class="piercing-pricing-table">
+    		<thead>
+    			<tr>
+    				<th class="pricing-th pricing-type-th"><?php echo $this->__('Type of Piercing')?></th>
+    				<th class="pricing-th service-cost"><?php echo $this->__('Service Cost Each')?></th>
+    				<th class="pricing-th"><?php echo $this->__('Jewelry Starts At each')?></th>
+    			</tr>
+    		</thead>
+    		
+    		<tbody>
+    			<?php foreach ($collection as $item):?>
+    			<tr>
+    				<td class="pricing-td">
+    					<div class="piercer-type">
+    						<?php echo $item->getType()?>
+    					</div>
+    				</td>
+    				<td class="pricing-td service-cost"><?php echo $item->getServiceCost()?></td>
+    				<td class="pricing-td jewelry-at"><?php echo $item->getJewelryStartAt()?></td>
+    			</tr>
+    			<?php endforeach;?>
+    		</tbody>
+    	</table>
+    	
+    	<div class="piercing-pricing-note">
+    	<p >Service cost does not include jewellery 
+    	Piercing will only be performed with the purchase of
+    	Maria Tash jewellery</p>
+    	<p>You must be aged 16 or over to he pierced</p>
+    	</div>
+    </div>
+ <?php endif;?>

@@ -1,0 +1,48 @@
+<div class="customer-care-body">
+    <div class="page-title"><h1><?php echo $this->__('CUSTOMER CARE') ?></h1></div>
+    <div class="customer-care-navigation-left">
+        <h4><?php echo $this->__('CUSTOMER CARE') ?></h4>
+        <ul>
+    <?php                                
+        $cms_pages = $this->getCustomercarenavleft();
+        foreach($cms_pages as $page): ?>
+            <li><a href="<?php echo Mage::getBaseUrl().$page->getIdentifier() ?>"><?php echo $page->getTitle()?></a></li>
+    <?php endforeach; ?>
+        </ul>
+    </div>
+    <div class="customer-care-content">
+        <div class="my-ordres-section">
+            <h2>MY ORDERS</h2>
+            <p><a href="<?php echo Mage::getBaseUrl().'sales/order/history/' ?>">Order Status and Tracking</a></p>
+            <p><a href="<?php echo Mage::getBaseUrl().'faqs' ?>">Order Questions</a></p>
+            <p><a href="<?php echo Mage::getBaseUrl().'sales/order/history/' ?>">My Order History</a></p>
+        </div>
+        <div class="my-account-section">
+            <h2>MY ACCOUNT</h2>
+            <p><a href="<?php echo Mage::getBaseUrl().'customer/account/' ?>">My Profile</a></p>
+            <p><a href="<?php echo Mage::getBaseUrl().'customer/address/' ?>">My Address book</a></p>
+            <p>Return Authorization Number</p>
+        </div>
+        <div class="contact-us-section">
+            <h2>CONTACT US</h2>
+            Comments or Questions?We are here to help.
+        </div>
+        <div class="return-policy-section">
+            <h2>RETURN POLICY</h2>
+            Our Return Policy
+        </div>
+        <div class="our-products-section">
+            <h2>OUR PRODUCTS</h2>
+            Finding Items and Searching tips
+            Handle and Care
+        </div>
+        <div class="faqs-section">
+            <h2>FAQ'S</h2>
+            Have a question? We might already have the answer for you
+        </div>
+        <div class="shipping-section">
+            <h2>SHIPPING INFORMATION</h2>
+            Shipping Costs and Times
+        </div>
+    </div>
+</div> 

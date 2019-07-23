@@ -1,0 +1,21 @@
+<?php $items = $this->getMenu(); ?>
+<div class="discover-mt-navigation-menu">
+    <ul>
+    <?php foreach($items as $item): ?>    
+    <?php if(strtolower($item->getName()) == 'celebrity clientele'): ?>
+        <li class="discover-mt-navigation current-active">
+        <?php echo $item->getName() ?>
+        </li>
+    <?php else: ?>
+        <li class="discover-mt-navigation" onclick="setLocation('<?php echo $item->getUrl() ?>') ">
+        <?php /*<li class="discover-mt-navigation" onclick="setLocation('<?php echo $this->getUrl('ecpdiscovernavigation/index/',array('content_id'=>$item->getCategoryId()))?>') "> */ ?>
+            <?php echo $item->getName()?>
+        </li>
+    <?php endif; ?>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+</div>
+<div id="category-title" class="page-title category-title">
+        <h1>CELEBRITY CLIENTELE</h1>
+</div>

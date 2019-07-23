@@ -1,0 +1,350 @@
+<?php
+$_optionId = $this->getRequest()->getParam('optionId','');
+$_product    = $this->getProduct();
+$_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
+$attribute_label='';
+//echo "<pre>";
+//print_r($_attributes->getData());
+?>
+<?php
+$showSampleForm = false;
+if ($_product->getSizeSample() == 1) {
+    $showSampleForm = true;
+    $sampleProduct = Mage::getModel('catalog/product')->getCollection()
+        ->addAttributeToFilter('type_id', 'customproduct')
+        ->getFirstItem();
+    $sampleProduct = Mage::getModel('catalog/product')->load($sampleProduct->getEntityId());
+}
+?>
+<?php if ($_product->isSaleable() && count($_attributes)):?>
+    <input type="hidden" name="optionid" id="optionid" value="<?php echo $_optionId;?>"/>
+    <input type="hidden" name="count_attriute" id="count_attriute" value="<?php echo count($_attributes);?>"/>
+    <dl>
+        <?php foreach($_attributes as $_attribute): ?>
+            <?php  $label = Mage::helper('ecp_color')->getAttributeLabel($_attribute->getAttributeId());?>
+            <dd<?php if ($_attribute->decoratedIsLast){?> class="last"<?php }?>>
+                <div class="input-box">
+                    <label class="required"><?php echo ($label)? $label: $_attribute->getLabel() ?>: </label>
+                    <?php  if (Mage::getModel('amconf/attribute')->load($_attribute->getAttributeId(), 'attribute_id')->getUseImage()): ?>
+                        <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 170px !important">
+                            <option><?php echo $this->__('Select an Option') ?></option>
+                        </select>
+                    <?php else:?>
+                        <div class="styled attribute_select_default" id="<?php echo $_attribute->getAttributeId() ?>" style="width: 150px !important">
+                            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select" style="width: 170px !important">
+                                <option><?php echo $this->__('Select an Option') ?></option>
+                            </select>
+                        </div>
+                    <?php endif;?>
+                </div>
+            </dd>
+        <?php endforeach; ?>
+    </dl>
+    <input type="hidden" id="direction_id" name="direction_id" value="">
+    <script type="text/javascript">
+        var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
+
+        //call priceHtml via ajax, to avoid varnish caching
+        jQuery.ajax({
+            type: "POST",
+            dataType : "json",
+            url: '<?php echo Mage::getBaseUrl('web');//Mage::getUrl('', array('_secure' =>  true)); ?>index.php/ecpcolor/index/getPrice',
+            data: {productId: '<?php echo $_product->getId(); ?>', form_key: MariaTash.formKey}
+        })
+            .done(function(response) {
+                var spConfig = new Product.Config(JSON.parse(response.jsonconfigtest));
+                <?php
+                $optionHelper=Mage::helper('allure_catalog');
+                $metal=$this->getRequest()->getParam("metal");
+                if($metal){
+                    $selectedColor=$optionHelper->getOptionNumber($metal);
+                }elseif($this->getRequest()->getParam("optionId")){
+                    $selectedColor=$this->getRequest()->getParam("optionId");
+                }
+
+                $core_ses=Mage::getSingleton('core/session');
+
+                $selVal1=$core_ses->getData("selAtr1");
+                $selectValue1="";
+                if($selVal1)
+                {
+                    $selectValue1=$core_ses->getData("selectValue1");
+                }
+                $selVal2=$core_ses->getData("selAtr2");
+                $selectValue2="";
+                if($selVal2)
+                {
+                    $selectValue2=$core_ses->getData("selectValue2");
+                }
+                ?>
+                var id = 'amconf-image-<?php echo $selectedColor; ?>';
+
+
+
+                if($(id)){
+                    $(id).simulate('click');
+                    // document.getElementsByClassName("t_Tooltip t_Tooltip_customTiny")[0].hide();
+                }
+
+                var ele1 = parseInt(<?php echo ($selectValue1)?$selectValue1:'' ?>);
+                if(ele1){
+                    jQuery("#attribute<?php echo $selVal1?>").val(ele1).trigger('change');
+
+                }
+
+
+                var ele2 = parseInt(<?php echo ($selectValue2)?$selectValue2:''?>);
+                if(ele2){
+
+                    jQuery("#attribute<?php echo $selVal2?>").val(ele2).trigger('change');
+                }
+
+
+                <?php if(isset($selVal1) && $selVal1=="262"):?>
+                     $(id).simulate('click');
+                <?php endif; ?>
+
+                <?php
+                if($core_ses->getData("child")):
+                $childproduct=Mage::getSingleton('catalog/product')->load($core_ses->getData("child"));
+                $status=Mage::helper('amstockstatus')->getCustomStockStatusText($childproduct);
+
+                ?>
+
+                jQuery('.availability.in-stock span').html("<?= $status ?>");
+
+
+                <?php
+
+                /*$productdetail=json_decode($this->getJsonConfig());
+                $child=(array)$productdetail->childProducts;
+                $finalPrice=round($child[$this->getRequest()->getParam("child")]->finalPrice);
+                $cur=substr($productdetail->template,0,1);
+             */   ?>
+//                jQuery('#product-price-<?//= $_product->getId() ?>//').html("<?//= $productdetail->template."".$finalPrice?>//");
+                <?php
+
+                endif;
+                ?>
+
+
+            });
+    </script>
+<?php endif;?>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        var default_attribute = jQuery('.attribute_select_default').html();
+        var count_attribute   = jQuery('#count_attriute').val();
+        if((count_attribute != '')&& (count_attribute == '1')){
+            var default_id = 'attribute'+ jQuery('.attribute_select_default').attr('id');
+            var option_id  = '<?php echo $_optionId;?>';
+            // default_id=333;
+
+            if(option_id){
+                jQuery('#'+ default_id).val(option_id);
+            }else{
+
+                jQuery("#"+ default_id).val(jQuery("#"+ default_id + " option:eq(1)").val());
+
+                //Allure code for change first time attribute when page is reload
+                //  $(default_id).simulate('change');
+            }
+        }
+    });
+</script>
+
+<?php if (1 == 1): ?>
+    <script type="text/javascript">
+        Validation.add('greatherzerocustom', '<?php echo $this->__('Please enter a valid quantity');?>', function (myInput) {
+            if (/^\d+$/.test(myInput)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        Validation.add('emptycustomvalidation', '<?php echo $this->__('This is a required field');?>', function (myInput) {
+            if (myInput != '') {
+                return true;
+            }
+            return false;
+        });
+
+        jQuery.noConflict();
+
+        //                (function ($) {
+        //                    $.extend(Tipped.Skins, {
+        //                        'customTiny': $.extend(true, { }, Tipped.Skins.tiny, {
+        //                            background: {
+        //                                color: [
+        //                                    { position: 0, color: '#FFF'}
+        //                                ], opacity: .9
+        //                            },
+        //                            radius: { size: 0, position: 'border' }
+        //                        })
+        //                    });
+        //                })(jQuery);
+
+        jQuery(document).ready(function () {
+            Tipped.create(jQuery(".sample"), jQuery(".content-sample")[0], {
+                skin: 'customTiny',
+                showOn: ['click', 'mouseover']
+            });
+
+        });
+
+        jQuery(".various").fancybox({
+            fitToView: true,
+            autoSize: true,
+            closeClick: false,
+            openEffect: 'none',
+            closeEffect: 'none'
+        });
+
+        function doClick() {
+            jQuery('#cart-sidebar li').each(function () {
+                if(jQuery(this).hasClass('customproduct') && !sample_already)  {
+                    Tipped.create(jQuery("#button-sample"), jQuery(".content-sample-already-in-cart")[0], {
+                        skin: 'customTiny',
+                        showOn: 'click',
+                        target: 'button-sample'
+                    });
+                    sample_already = true;
+                }
+            });
+            if(!sample_already) {
+                jQuery('#sample-button').trigger('click');
+            }
+        }
+    </script>
+    <div class="size-links__container cf">
+        <?php
+        if (!Mage::registry('sizeChartDisplay')) {
+            $_product = Mage::registry('current_product');
+            $showSizeChart = false;
+            if ($_product->getSizeChart() != 0) {
+                $showSizeChart = true;
+                $sizeChartModel = Mage::getModel('ecp_sizechart/sizechart')->load($_product->getSizeChart());
+            }
+            ?>
+            <?php if (!empty($sizeChartModel)): ?>
+                <script type="text/javascript">
+                    jQuery.noConflict();
+                    jQuery(document).ready(function(){
+                        jQuery(".size_chart_link").fancybox({
+                            fitToView	: true,
+                            scrolling   : 'visible',
+                            closeClick	: false,
+                            openEffect	: 'none',
+                            autoSize    : true,
+                            closeEffect	: 'none',
+                            afterLoad   : function() {
+                                jQuery('div.fancybox-wrap').wrap('<div class="fancybox-sizechart" />');
+                            },
+                            afterShow   : function () {
+                                //if (jQuery('#inline_sample img').length > 0) {
+                                if (1 == 0) {
+                                    var imgHeight = jQuery('#inline_sample img:first').height();
+                                    var viewportHeight = jQuery(window).height();
+                                    var fancyboxTop = jQuery('.fancybox-wrap').position().top;
+                                    var overflowHeight = fancyboxTop + imgHeight + 35 - viewportHeight;
+                                    if (overflowHeight > 0) {
+                                        imgHeight = imgHeight - overflowHeight - fancyboxTop;
+                                        jQuery('#inline_sample img:first').attr('height', imgHeight);
+                                        jQuery.fancybox.update();
+                                    }
+                                }
+                            }
+                        });
+
+                        var check_option_color = jQuery('#check_option_color').val();
+                        if(!check_option_color){
+                            jQuery('.various_sample').addClass('non-color');
+                        }
+                    });
+                </script>
+                <div id="print_content"  style="display: none;">
+                    <?php
+                    $helper = Mage::helper('cms');
+                    $processor = $helper->getBlockTemplateProcessor();
+                    echo $processor->filter($sizeChartModel->getBlockContent()); ?>
+                </div>
+                <div id="inline_sample" style="display: none;">
+                    <?php
+                    $helper = Mage::helper('cms');
+                    $processor = $helper->getBlockTemplateProcessor();
+                    echo $processor->filter($sizeChartModel->getBlockContent()); ?>
+                    <?php if($sizeChartModel->getFilename() != '') {  ?><a onclick="javascript:void();" target="_blank" href="<?php echo ($sizeChartModel->getFilename() != '') ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA). $sizeChartModel->getFilename() : '#'; ?>"><img src="<?php echo $this->getSkinUrl('images/print-icon-fancy-chart.png');?>" id="imgPrint"></a><?php } ?>
+                </div>
+            <?php if($this->getRequest()->getModuleName() != 'quickview'): ?>
+                <div class="size_chart"><a class="size_chart_link" href="#inline_sample">Size Chart</a></div>
+            <?php endif; ?>
+            <?php
+            endif;
+            Mage::register('sizeChartDisplay', true);
+        }?>
+        <?php if ($showSampleForm): ?>
+            <div class="sampleAlreadyInCart">
+                <div class="content-sample-already-in-cart display_none">You can only add one sample to your cart</div>
+            </div>
+            <div class="get_size_sample">
+                <a class="fancybox fancybox.iframe size_sample_quickview" id='product-quickview-<?php echo Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS') ?>' href="<?php echo $this->getUrl('quickview/index/index', array('id' => Mage::getModel("catalog/product")->getIdBySku('SAMPLERINGS'))) ?>" title="<?php echo $this->__('quick view') ?>" ><span>Get Size Samples</span></a>
+            </div>
+
+            <div id="inline" style="display: none;">
+                <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('size_sample_info')->toHtml(); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+    var win=null;
+    function printIt(printThis)
+    {
+        win = window.open();
+        self.focus();
+        win.document.open();
+        win.document.write('<'+'html'+'><'+'head'+'><'+'style'+'>');
+        win.document.write('body, td { font-family: Verdana; font-size: 10pt;}');
+        win.document.write('<'+'/'+'style'+'><'+'/'+'head'+'><'+'body'+'>');
+        win.document.write(printThis.html());
+        win.document.write('<'+'/'+'body'+'><'+'/'+'html'+'>');
+        win.document.close();
+        win.print();
+        win.close();
+    }
+
+    jQuery('a.size_sample_quickview').attr('rel', 'gallery').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        nextEffect: 'none',
+        prevEffect: 'none',
+        padding: 0,
+        mouseWheel: false,
+        scrolling: 'no',
+        loop: false,
+        wrapCSS: 'fancybox-sample-size',
+        helpers: {
+            title: null
+        },
+        margin: [20, 60, 20, 60], // Increase left/right margin
+        width: 785,
+        minWidth: 785,
+        maxWidth: 785,
+        minHeight: 510,
+        height: 510,
+        afterLoad: function(current, previous) {
+
+            jQuery('.fancybox-iframe')
+                .attr('scrolling', 'no')
+                .contents().find('.product-view.sample-size')
+                .addClass('sample-rings');
+            if (current.href == jQuery("div.category-products ul li:first-child div.actions a.btn-quickview").attr('href')) {
+                jQuery('.fancybox-outer').append('<a href="javascript: void(0);" style="opacity: 0.5" class="fancybox-nav fancybox-prev first_preview" title=""><span></span></a>');
+            } else if (current.href == jQuery("div.category-products ul li:last-child div.actions a.btn-quickview").attr('href')) {
+                jQuery('.fancybox-outer').append('<a href="javascript: void(0);" style="opacity: 0.5 " class="fancybox-nav fancybox-next last_next" title=""><span></span></a>');
+            }
+        }
+
+    });
+</script>

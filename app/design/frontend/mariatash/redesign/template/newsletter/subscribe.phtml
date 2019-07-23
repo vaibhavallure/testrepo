@@ -1,0 +1,164 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_modern
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+$newsletterFormURL = preg_replace('|http(s)?\:\/\/|', '//', $this->getFormActionUrl());
+?>
+<div id="newsletter-form" >
+    <form action="<?= $newsletterFormURL ?>" method="post" id="newsletter-validate-detail">
+        <div class="form-subscribe-mt">
+            <div class="newsletter-mt">Newsletter</div>
+            <div id="errors" class="validation-advice" style="display:none"></div>
+            <ul id="tld_r_ul">
+                <li title="us">United States</li>
+                <li title="mx">Mexico</li>
+                <li title="jp">Japan</li>
+                <li title="cn">Canada</li>
+                <li title="sp">Spain</li>	
+            </ul>
+            <div class="input-box">
+                <input type="text" autocomplete="off" name="email" id="email" class="input-text required-entry validate-email" />
+                <span>*</span>
+                <span id="msg-email" class="validation-advice"></span>
+            </div>
+            <div class="input-box">
+                <input type="text" autocomplete="off" name="name" id="first_name" class="input-text required-entry" />
+                <span>*</span>
+                <span id="msg-name" class="validation-advice"></span>
+            </div>
+            <div class="input-box">
+                <input type="text" autocomplete="off" name="lastname" id="last_name" class="input-text required-entry" />
+                <span>*</span>
+                <span id="msg-lastname" class="validation-advice"></span>
+            </div>
+            <div class="select-box display_none">
+                <input type="text" autocomplete="off" name="country_subscribe" id="country_subscribe" class="tld_static input-text required-entry" />
+                <span>*</span>
+                <span id="msg-country" class="validation-advice"></span>
+            </div>
+            
+            <div class="mt-terms-condtions-policy">
+            <label for="mt-newsl-terms"  class="mt-custom-checkbox">
+            	<input  type="checkbox" name="mt-newsl-terms"
+        		 id="mt-newsl-terms" value="1" class="checkbox">
+        		 <span class="checkmark"></span>
+            Yes, I want to sign up for Maria Tash emails.  
+            By clicking the submit button I agree to receive Maria Tash emails and I agree to the Maria Tash 
+            <a href="/privacy-policy/">privacy policy</a> for this website.
+            </label>
+        </div>
+        
+            
+        </div>
+        <div class="loader" style="display:none; width: 20px;">
+            <img src="<?php echo Mage::getBaseUrl('media') . 'loading.gif' ?>" />
+        </div>
+        <button type="button" onclick="sendNewsletterSubscription(this.form)" title="<?php echo $this->__('Sign up') ?>" class="button">
+            <span><span><?php echo $this->__('Sign up!') ?></span></span>
+        </button>
+</form>
+</div>
+<div id="success"></div>
+<script type="text/javascript">
+    jQuery.noConflict(); 
+	
+
+	
+	jQuery(document).ready(function() {
+		jQuery('.t_Tooltip.t_visible').css('bottom' , '30px');
+	});  
+	jQuery(window).resize(function() {
+		jQuery('.t_Tooltip.t_visible').css('top' , '');
+	}); 
+    
+    function sendNewsletterSubscription(form){
+        
+        jQuery('#msg-country').text('');
+        jQuery('#msg-email').text('');
+        jQuery('#msg-name').text('');
+        jQuery('#msg-lastname').text('');
+
+        var newsletterPrivacySelector = jQuery("#newsletter-validate-detail #mt-newsl-terms");
+        var ischeck = newsletterPrivacySelector.prop('checked');
+        if(ischeck == false){
+        	newsletterPrivacySelector.addClass("checkbox-error-validate");
+        	newsletterPrivacySelector.parent().addClass("label-error-validate");
+			return;
+		 }else{
+			 newsletterPrivacySelector.removeClass("checkbox-error-validate");
+			 newsletterPrivacySelector.parent().removeClass("label-error-validate");
+		 }
+                    
+        var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+        jQuery('.loader').css({display:'inline-block'});
+        jQuery('.form-subscribe-mt .button').hide();
+        jQuery('#success').hide();
+        jQuery('#errors').hide();
+        
+        jQuery('#first_name').val(jQuery.trim(jQuery('#first_name').val()));	
+        jQuery('#last_name').val(jQuery.trim(jQuery('#last_name').val()));	
+        jQuery('#email').val(jQuery.trim(jQuery('#email').val()));	
+        var stringJSON='{"email":"'+jQuery('#email').val()+'","first_name":"'+jQuery('#first_name').val()+'","last_name":"'+jQuery('#last_name').val()+'","country":"Canada"}';
+        var dataSend = JSON.parse(stringJSON);
+
+        jQuery.getJSON(form.action,dataSend,function(data){
+            jQuery('.loader').hide();
+            jQuery('.form-subscribe-mt .button').show();
+            if(data.success){
+                jQuery('#newsletter-form').hide();
+                jQuery('#success').show();
+                jQuery('#success').html(data.thankyou);
+				jQuery('.t_Tooltip.t_Tooltip_dark').css('height' , '120px');
+				jQuery('.t_Shadow').css('height' , '120px');
+				jQuery('.t_Skin').css('height' , '115px');
+				jQuery('.t_Bubble').css('height' , '115px');
+				jQuery('.t_ShadowBubble').css('height' , '115px');
+				jQuery('.t_ShadowBubble canvas').css('height' , '120px');
+				jQuery('.t_Tooltip.t_Tooltip_dark').css('bottom' , '30px');
+				jQuery('.t_Tooltip.t_Tooltip_dark').css('background' , '#000');
+				jQuery('.t_Tooltip.t_Tooltip_dark').css('top' , '');
+				jQuery(window).resize(function() {
+					jQuery('.t_Tooltip.t_visible').css('top' , '');
+				}); 
+            }else{
+                if(data.message.country){
+                    jQuery('#msg-country').text(data.message.country);
+                }
+                if(data.message.email){
+                    jQuery('#msg-email').text(data.message.email);
+                }
+                if(data.message.first){
+                    jQuery('#msg-name').text(data.message.first);
+                }
+                if(data.message.last){
+                    jQuery('#msg-lastname').text(data.message.last);
+                }
+
+                //jQuery('#errors').show();
+                //jQuery('#errors').html(data.message);
+            }
+        });
+        
+    }    
+</script>

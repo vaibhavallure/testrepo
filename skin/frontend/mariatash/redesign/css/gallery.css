@@ -1,0 +1,183 @@
+/*******************************************************************************************************************************************************************************/
+/* GALLERY PRODUCT VIEW */
+.gallery{
+	height:512px;
+	position:relative;
+	width:475px;
+}
+.containerImage{
+	width:392px;
+	height:512px;
+	float: left;
+	margin: 0 8px 0 0;	
+}
+.containerImage img {
+	width:392px;
+	height:512px;	
+	/*background:url(../../../../../media/wysiwyg/background/img_product_bg.jpg) repeat-x top left;	*/
+	text-align:center;	
+}
+.containerImage img,
+.thumb img {
+	background: #757881; /* Old browsers */
+    background: -moz-linear-gradient(top,  #757881 13%, #b5bbc9 49%, #b5bbc9 99%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(13%,#757881), color-stop(49%,#b5bbc9), color-stop(99%,#b5bbc9)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* IE10+ */
+    background: linear-gradient(to bottom,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#757881', endColorstr='#b5bbc9',GradientType=0 ); /* IE6-9 */
+}
+.containerThumb{
+	width:74px;
+	height:512px;
+	border:none;
+	float: left;
+}
+.thumb{
+	width:74px;
+	height:96px;
+	margin: 0 0 8px;
+}
+.thumb img{
+	/*ackground: url(../../../../../media/wysiwyg/background/img_product_add_bg.jpg) repeat-x top left;*/
+	text-align:center;	
+	}
+#imageRepo, #thumbRepo, #imageRepoFull, #thumbRepoFull{
+	display:none;
+}
+.containerVideo_first, .containerVideo_second {
+	display:none;
+	height: 512px;
+    width: 392px;
+	left: 0;
+    position: absolute;
+}
+.btnClose{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.videoFrame{
+	width:100%;
+	height:100%;
+}
+.btnFullscreen{
+    right:92px;
+    position: absolute;
+    top:7px;
+}
+#foo{
+	background:#FFBB00;
+	display:none;
+}
+/*******************************************************************************************************************************************************************************/
+/* FULLSCREEN */
+.fullscreen-slide,
+.thumbFull a {
+	background: #757881; /* Old browsers */
+	background: -moz-linear-gradient(top,  #757881 13%, #b5bbc9 49%, #b5bbc9 99%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(13%,#757881), color-stop(49%,#b5bbc9), color-stop(99%,#b5bbc9)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* IE10+ */
+	background: linear-gradient(to bottom,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#757881', endColorstr='#b5bbc9',GradientType=0 ); /* IE6-9 */
+}
+#coverContainerImage{
+    position: relative;
+}
+.btnExitfull{
+    position: absolute;
+	right:8px;
+    top:8px;
+}
+.lt-ie9 .galleryFull .btnExitfull {position: absolute !important}
+.containerImageFull{
+	width:86%;
+	height:100%;
+	float: left;
+	margin: 0 10px 0 0;
+}
+ #coverContainerImage{
+	width:86%;
+	height:100%;
+	float: left;
+	margin: 0 10px 0 0;
+    text-align: center;
+}		
+
+.containerImageFull img { margin: 0 auto 0;}
+.containerThumbFull{
+	height:100%;
+	float: left;
+	border:none;
+	
+}
+.thumbFull{
+	margin: 0 0 8px;
+
+}
+.thumbFull a {
+	display:block;
+	opacity:0.5;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);	
+}
+.thumbFull.selected-thumbFull a,
+.thumbFull:hover a {
+	opacity:1;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=100);
+}
+
+.productInfoFull {
+	position:absolute;
+	width:300px;
+    top: 25px;
+    left: 25px;
+    text-align: left;
+    font-family:Arial, sans-serif;
+}
+.productInfoFull h1 {
+	text-transform:capitalize;
+	font-family: Arial, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	line-height:20px;
+}
+.productInfoFull p,
+.productInfoFull .price-box {
+	font-size:13px;
+	font-family:Arial, sans-serif;
+	line-height:22px;
+}
+.productInfoFull .price-box {
+	margin:1px 0 0 0;
+}
+.productInfoFull .price-box .old-price {
+	margin:0;
+}
+
+
+.controls{
+	height:35px;
+	top:50%;
+	margin-top:-18px;	
+    position: absolute;
+    width: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+        display: none;
+}
+.controls .prev{ 
+	left:180px;
+}
+.controls .next{
+	right: 373px;
+}
+
+.opaque{
+	opacity:0.2;
+        filter: alpha(opacity=20);
+}
+

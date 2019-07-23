@@ -1,0 +1,203 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs plese refer to http://www.magentocommerce.com for mo
+  you did not receive a copy of the license and are unable tore information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+*/
+?>
+
+<?php /** @var $this Mage_Checkout_Block_Cart_Shipping */ ?>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/placeholder.js') ?>"></script>
+<script type="text/javascript">
+    jQuery.noConflict();
+    var fancyboxOptions = {
+        fitToView	: true,
+        centerOnScroll : true, 
+        autoSize	: true,
+        closeClick	: false,
+        openEffect	: 'none',
+        closeEffect	: 'none',
+        afterShow: jQuery('#ProductShipping').html()
+    };
+
+    jQuery('#various-fancybox').fancybox(fancyboxOptions);
+    jQuery('#mt-shipping-price-fancybox').fancybox(fancyboxOptions);
+    jQuery("#mt-shipping-method-fancybox").fancybox(fancyboxOptions);
+</script>
+<?php if(($this->getRequest()->getControllerName() == 'cart') && !$this->getRequest()->isXmlHttpRequest()): ?>
+<tr id="estimate-shipping">
+    <td class="cart-subtotals-left" >Shipping</td>
+    <td class="cart-subtotals-right" >
+        <a id="various-fancybox" class="various" href="#inline">Estimate Shipping</a>
+    </td>
+</tr>
+<?php endif; ?>
+<div class="shipping-cart-mt">
+<div id="inline" class="shipping" style="display:none;">
+    <div class="forgot-p"><?php echo $this->__('Calculate Shipping Prices') ?></div>
+    <div class="shipping-form">
+        <form action="<?php echo $this->getUrl('checkout/cart/estimatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())) ?>" method="post" id="shipping-zip-form">
+            <ul class="form-list">
+                <li>
+                    <div class="input-box">
+                        <?php echo Mage::getBlockSingleton('directory/data')->getCountryHtmlSelect($this->getEstimateCountryId()) ?>
+                    </div>
+                </li>
+                <?php //if($this->getStateActive()): ?>
+                <li>
+                    <?php /*?><label for="region_id"<?php if ($this->isStateProvinceRequired()) echo ' class="required"' ?>><?php if ($this->isStateProvinceRequired()) echo '<em>*</em>' ?><?php echo $this->__('State/Province') ?></label><?php */?>
+                    <div class="input-box">
+                        <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" style="display:none;"<?php //echo ($this->isStateProvinceRequired() ? ' class="validate-select"' : '')  ?>>
+                            <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+                        </select>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            $('region_id').setAttribute('defaultValue',  "<?php echo $this->getEstimateRegionId() ?>");
+                            //]]>
+                        </script>
+                        <input type="text" id="region" name="region" placeholder="Region" value="<?php echo $this->escapeHtml($this->getEstimateRegion()); ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-text" style="display:none;" />
+                    </div>
+                </li>
+                <?php //endif; ?>
+                <?php //if ($this->getCityActive()): ?>
+                    <!--<li>
+                        <?php /*?><label for="city"<?php if ($this->isCityRequired()) echo ' class="required"' ?>><?php if ($this->isCityRequired()) echo '<em>*</em>' ?><?php echo $this->__('City') ?></label><?php */?>
+                        <div class="input-box">
+                            <input class="input-text<?php if ($this->isCityRequired()): ?> required-entry <?php endif; ?>" id="city" type="text" name="estimate_city" placeholder="City" value="<?php echo $this->escapeHtml($this->getEstimateCity()) ?>" />
+                        </div>
+                    </li>
+					-->
+                <?php //endif; ?>
+                <li class="postcode">
+                    <?php /*?><label for="postcode" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label><?php */?>
+                    <div class="input-box" style="float: left; margin-bottom:10px;">
+                        <input class="input-text validate-postcode required-entry" type="text" id="postcode" name="estimate_postcode" placeholder="Zip Code/Postal Code" value="<?php echo $this->escapeHtml($this->getEstimatePostcode()) ?>" />
+                        <div style="display:none" class="validation-advice" id="advice-required-entry-zip-code" ></div>
+                    </div>
+                    
+                </li>
+				<li><div class="buttons-set">
+                        <button id="getQuote" onclick="getQuoteClick()" type="button" title="<?php echo $this->__('Apply') ?>" class="button"><span><span><?php echo $this->__('Apply') ?></span></span></button>
+                    </div></li>
+            </ul>
+        </form>
+        <script type="text/javascript">
+            //<![CDATA[
+            var regions = new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>);
+            //]]>
+        </script>
+        <?php $loader = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . '/loading.gif'; ?>
+        <div id="loader" style="display:none;">
+            <img alt ="loading" src="<?php echo $loader ?>" />
+        </div>       
+    </div>
+
+    <?php $url = $this->getUrl('checkout/cart/estimatePost', array('_secure' =>  (bool) Mage::app()->getFrontController()->getRequest()->isSecure())); ?>
+    <script type="text/javascript">
+        jQuery.noConflict();       
+        function getQuoteClick (){ 
+            if(jQuery('select#country').val() == 'US'){
+                if(jQuery('#postcode').val()==''){
+                    jQuery('#advice-required-entry-zip-code').text('Zip Code is required');
+                    jQuery('#advice-required-entry-zip-code').show();
+                    return;
+                }else if(!(/^\d{5}(-\d{4})?$/.test(jQuery('#postcode').val()))){
+                    if(jQuery('#postcode').val()){
+                        jQuery('#advice-required-entry-zip-code').text('Please enter a valid zip code. For example 90602 or 90602-1234.');
+                        jQuery('#advice-required-entry-zip-code').show();
+                        return;
+                    }                    
+                }
+                jQuery('#advice-required-entry-zip-code').hide();
+            } else {
+                    jQuery('#advice-required-entry-zip-code').hide();
+                    if(jQuery('#postcode').val()==''){
+                    jQuery('#advice-required-entry-zip-code').text('Zip Code is required');
+                    jQuery('#advice-required-entry-zip-code').show();
+                    return;
+                }
+			}
+
+            jQuery('#loader').show();
+            jQuery('#estimate-result').css('display','none');
+            jQuery('#respuesta').load("<?php echo $url ?>",
+            {
+                country_id: jQuery('#country').val(),
+                estimate_postcode: jQuery('#postcode').val(),
+                estimate_city: jQuery('#city').val(),
+                region_id: jQuery('#region_id').val(),
+                region: jQuery('#region').val()
+            },function(){
+                jQuery('#loader').hide();
+                jQuery(".sp-methods").mCustomScrollbar({
+                        scrollButtons:{
+                                enable:true
+                        }
+                });
+            });
+            return false;
+        };
+
+        jQuery('select#country').change(function(){
+            if(jQuery(this).val() == 'US'){
+                jQuery('#postcode').parent().show();
+                jQuery("#postcode").removeAttr('disabled');
+            }else{
+				jQuery('#advice-required-entry-zip-code').hide();
+                //jQuery('#postcode').parent().hide();
+                //jQuery("#postcode").attr('disabled','disabled');
+            }
+
+            // Update regions
+            regions.update();
+            var sbRegionId = jQuery("#region_id").selectBoxIt({aggressiveChange: true}).data("selectBox-selectBoxIt");
+            sbRegionId.refresh();
+
+            if(jQuery('#region').is(":visible")){
+                jQuery('#region_idSelectBoxItContainer').hide();
+            }
+
+        });
+        jQuery(document).ready(function () {
+            if(jQuery('#mt-shipping').html()){
+                jQuery('#estimate-shipping').hide();
+            }
+            jQuery("#country").selectBoxIt({aggressiveChange: true});
+            jQuery("#region_id").selectBoxIt({aggressiveChange: true});
+            
+            if(jQuery.placeholder != undefined) //allure code
+            	jQuery.placeholder.shim();
+        	
+            var region_length = jQuery('#region_id option').length;
+            if(region_length == 1){
+                jQuery('#region_idSelectBoxItContainer').remove();
+                //jQuery('#postcode').remove();
+            }
+        });
+    </script>
+    <div id="respuesta"></div>
+    <div>
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('calculate-shipping-prices')->toHtml(); ?>
+    </div>
+</div>
+</div>

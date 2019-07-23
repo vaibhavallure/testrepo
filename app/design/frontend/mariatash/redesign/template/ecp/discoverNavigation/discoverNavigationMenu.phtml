@@ -1,0 +1,22 @@
+<?php $items = $this->getMenu(); $current = $this->getCurrent(); ?>
+<div class="discover-mt-navigation-menu">
+    <ul>
+    <?php foreach($items as $item) { ?>    
+    <?php if($current->getId() == $item->getId()) { ?>
+        <li class="discover-mt-navigation current-active">
+        <?php echo $item->getName() ?>
+        </li>
+    <?php } else { ?>
+	<?php if ($item->getName() != 'Blog') { ?>
+        <li class="discover-mt-navigation" onclick="document.location.href ='<?php echo Mage::getUrl($item->getUrl()) ?>'">
+        <?php /*<li class="discover-mt-navigation" onclick="setLocation('<?php echo $this->getUrl('ecpdiscovernavigation/index/',array('content_id'=>$item->getCategoryId()))?>') "> */ ?>
+            <?php echo $item->getName()?>
+        </li>
+	<?php } else { ?>
+		<li class="discover-mt-navigation" onclick="window.open('<?php echo Mage::getStoreConfig('ecp_menu/menu/blog_link') ?>', '_blank')"><?php echo $this->__('Blog') ?></li>
+    <?php } ?>
+	<?php } ?>
+    <?php } ?>
+	
+    </ul>
+</div>

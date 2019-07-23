@@ -1,0 +1,97 @@
+<script type="text/javascript" language="javascript">
+jQuery.noConflict();
+
+jQuery(document).ready(function() {
+
+    jQuery('#foo3').jcarousel({
+        initCallback: mycarousel_initCallback,
+        buttonNextCallback: mycarousel_buttonNextCallback,
+        buttonPrevCallback: mycarousel_buttonPrevCallback,
+        // This tells jCarousel NOT to autobuild prev/next buttons
+        buttonNextHTML: null,
+        buttonPrevHTML: null,
+        scroll: 1,
+        itemFallbackDimension: 175,
+//        initCallback: function(data){
+//            size = data.options.size;
+//        },        
+        setupCallback: function(data){
+            if(parseInt(jQuery('li.active').attr('id')) == data.options.size){
+                setTimeout(function(){jQuery('div#prev3').trigger('click')},100);
+//                jQuery('div#prev3').trigger('click');
+            }
+        },                
+        start: parseInt(jQuery('li.active').attr('id'))
+    });
+    
+    jQuery(window).resize();
+    
+    jQuery('div.main div.col-main div.category-title').remove();
+ 
+});
+
+function mycarousel_initCallback(carousel) {
+    jQuery('#prev3').bind('click', function() {
+        carousel.next();
+        return false;
+    });
+
+    jQuery('#next3').bind('click', function() {
+        carousel.prev();
+        return false;
+    });
+};
+
+function mycarousel_buttonNextCallback(carousel, button, enabled) {
+    if(enabled){
+        jQuery("#prev3").css('opacity',1);
+    }else{
+        jQuery("#prev3").css('opacity',0.13);
+    }
+};
+
+function mycarousel_buttonPrevCallback(carousel, button, enabled) {
+    if(enabled){
+        jQuery("#next3").css('opacity',1);
+    }else{
+        jQuery("#next3").css('opacity',0.13);
+    }
+};
+
+jQuery(window).resize(function() {
+        var wi = 0;
+        jQuery('ul#foo3 li').each(function(key,element){
+           wi += jQuery(element).width();
+        });
+        
+        if(wi >= document.body.offsetWidth){
+                jQuery('#next3, #prev3').show();
+        }else{  
+                jQuery('#next3, #prev3').hide();
+        }
+});
+function setCelebrity(element) {
+	jQuery('ul#foo3 li').each(function(key,element){
+	   jQuery(element).removeClass('active');
+	   jQuery(element).find('h3').removeClass('active');
+	});
+	jQuery(element).addClass('active');
+	jQuery(element).find('h3').addClass('active');
+	jQuery(document).attr("title", jQuery(element).attr("data-title"));
+	history.pushState(null, "Mariatash", jQuery(element).attr("data-url"));
+}
+</script>
+<div class="caroufredsel_wrapper" style='overflow:hidden'>
+    <ul id="foo3">
+        <?php $counter=1; foreach($this->getCelebrities() as $celebrity): 
+            if($celebrity->getStatus()==1):?>
+        <?php $active = ($this->getCurrentCelebrityId() == $celebrity->getId()) ? 'class="active"' : '' ?>
+            <li data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" onclick="setCelebrity(this);" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>>
+                <a onclick="jQuery('.celeb_wrapper').load('<?php echo Mage::getUrl('celebrities/index/ajax/').'id/'.$celebrity->getId()?>');"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $celebrity->getDefaultImage() ; ?>" alt="<?php echo $celebrity->getCelebrityName(); ?>" /></a>
+                <a onclick="jQuery('.celeb_wrapper').load('<?php echo Mage::getUrl('celebrities/index/ajax/').'id/'.$celebrity->getId()?>');"><h3 <?php echo $active ?>><?php echo $celebrity->getCelebrityName(); ?></h3></a>
+            </li>
+        <?php endif; endforeach; ?>
+    </ul>
+</div>
+<div id="prev3"></div>
+<div id="next3"></div>

@@ -1,0 +1,249 @@
+<script type="text/javascript">
+    function toggleCountrySelect() {
+        jQuery('#tld_r_ul').toggle(200);
+    }
+    jQuery.noConflict();
+    jQuery(document).ready(function(){
+        jQuery('.popbox').each(function() {
+            var selector = '#' + jQuery(this).data('tooltip-id');
+            Tipped.create(this, jQuery(selector)[0],{ skin: 'dark_subscribe', offset: { y: -4 }});
+        });
+
+        Tipped.create('.popbox_ajax',{
+            skin: 'dark_subscribe',
+			fadeIn: 0,
+			fadeOut: 0,
+            hideOn: 'click-outside',
+            ajax: true,//{type: 'post',cache: false},
+            hook: 'topmiddle',
+            onShow: function(content, element) {
+                //<![CDATA[
+                var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+                new Varien.searchForm('newsletter-validate-detail', 'email', '<?php echo $this->__('EMAIL ADDRESS') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'first_name', '<?php echo $this->__('FIRST NAME') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'last_name', '<?php echo $this->__('LAST NAME') ?>');
+                new Varien.searchForm('newsletter-validate-detail', 'country_subscribe', '<?php echo $this->__('Country') ?>');
+                //]]>
+
+//                jQuery("#country").click(function(){
+//                    jQuery("#tld_r_ul").show(200);
+//                });
+                // prevent bind event multiple times
+                jQuery('#country_subscribe').unbind('click', toggleCountrySelect);
+                jQuery('#country_subscribe').bind('click', toggleCountrySelect);
+
+                jQuery("#tld_r_ul li").click(function(){
+                    var tld=jQuery(this).text();
+                    jQuery("#tld_field").val(tld);
+                    jQuery("#country_subscribe").val(tld);
+                    jQuery("#tld_r_ul").hide(200);
+                });
+            }
+        });
+    });
+</script>
+<?php $links = $this->getAllCustomLinks(); ?>
+
+<div class="container-footlinks row">
+    <ul class="footlinks col-lg-10 col-12">
+        <?php
+        foreach ($links as $link):
+            if ($link->getStatus() == 1):
+
+                $footer_title=$this->__($link->getTitle());
+
+                /*temporary disable translation except Italy */
+                /*if(Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode()=='IT')
+                    $footer_title=$this->__($link->getTitle());
+                else
+                    $footer_title=$link->getTitle();*/
+
+
+                ?>
+                <li class="footer-item-list">
+                <div id="link_<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
+                    <?php if ($link->getType() == 1 || $link->getType() == 0): ?>
+                        <div class='popbox' data-tooltip-id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
+                            <?php if ($link->getLink() != ""): ?>
+                                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $link->getLink() ?>"><?php echo $footer_title ?></a>
+                                <?php
+                            else:
+                                echo '<a href="#">'.$footer_title.'</a>';
+                            endif;
+                            ?>
+                        </div>
+                        <?php if ($link->getUseForSeoText()): ?>
+                            <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style="display:none">
+                                <?php
+                                $current_category = Mage::registry('current_category');
+                                $homeUrl = str_replace("index.php/", "", Mage::helper('core/url')->getHomeUrl());
+                                $currentUrl = $this->helper('core/url')->getCurrentUrl();
+                                if (!empty($current_category)) {
+                                    if (!Mage::helper('ecp_seo')->getSeoCategory($current_category->getData('entity_id'))) {
+                                        $content = $this->getBlock($link->getBlockForSeoDefault());
+                                    } else {
+                                        $content = Mage::helper('ecp_seo')->getSeoCategory($current_category->getData('entity_id'));
+                                    }
+                                } elseif (!strcasecmp($homeUrl, $currentUrl)) {
+                                    $content = $this->getBlock($link->getBlockForHomeSeo());
+                                } else {
+                                    $content = $this->getBlock($link->getBlockForSeoDefault());
+                                }
+                                $contentInBlocks = Mage::helper('ecp_seo')->prepareContent($content);
+                                ?>
+
+                                <div id="container">
+                                    <div id="slider-wrapper">
+                                        <?php foreach ($contentInBlocks as $content): ?>
+                                            <div class="slide">
+                                                <?php echo $content; ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0)" onclick="PreviousSlide()" class="previous-content-block-seo" id="PreviousButton" style="margin-right: 10px;">Previous</a>
+                                <a href="javascript:void(0)" onclick="NextSlide()" class="next-content-block-seo" id="NextButton">Next</a>
+
+                            </div>
+                            <script>
+
+                                /*Slider para SEO text configuration*/
+                                jQuery.noConflict();
+                                var SlideWidth = 300;
+                                var SlideSpeed = 500;
+
+                                jQuery(document).ready(function () {
+                                    var wrapperWidth = jQuery('div#container div#slider-wrapper div.slide').size()*SlideWidth;
+                                    // set the prev and next buttons display
+                                    jQuery("#slider-wrapper").css({width: wrapperWidth});
+                                    SetNavigationDisplay();
+                                });
+
+                                function CurrentMargin() {
+                                    // get current margin of slider
+                                    var currentMargin = jQuery("#slider-wrapper").css("margin-left");
+
+                                    // first page load, margin will be auto, we need to change this to 0
+                                    if (currentMargin == "auto") {
+                                        currentMargin = 0;
+                                    }
+
+                                    // return the current margin to the function as an integer
+                                    return parseInt(currentMargin);
+                                }
+
+                                function SetNavigationDisplay() {
+                                    // get current margin
+                                    var currentMargin = CurrentMargin();
+
+                                    // if current margin is at 0, then we are at the beginning, hide previous
+                                    if (currentMargin == 0) {
+                                        jQuery("#PreviousButton").hide();
+                                    }
+                                    else {
+                                        jQuery("#PreviousButton").show();
+                                    }
+
+                                    // get wrapper width
+                                    var wrapperWidth = jQuery('div.slide').size()*SlideWidth;
+                                    //var wrapperWidth = jQuery("#slider-wrapper").width();
+
+                                    // turn current margin into postive number and calculate if we are at last slide, if so, hide next button
+                                    if ((currentMargin * -1) == (wrapperWidth - SlideWidth)) {
+                                        jQuery("#NextButton").hide();
+                                    }
+                                    else {
+                                        jQuery("#NextButton").show();
+                                    }
+                                }
+
+                                function NextSlide() {
+                                    // get the current margin and subtract the slide width
+                                    var newMargin = CurrentMargin() - SlideWidth;
+
+                                    // slide the wrapper to the left to show the next panel at the set speed. Then set the nav display on completion of animation.
+                                    jQuery("#slider-wrapper").animate({ marginLeft: newMargin }, SlideSpeed, function () { SetNavigationDisplay() });
+                                }
+
+                                function PreviousSlide() {
+                                    // get the current margin and subtract the slide width
+                                    var newMargin = CurrentMargin() + SlideWidth;
+
+                                    // slide the wrapper to the right to show the previous panel at the set speed. Then set the nav display on completion of animation.
+                                    jQuery("#slider-wrapper").animate({ marginLeft: newMargin }, SlideSpeed, function () { SetNavigationDisplay() });
+                                }
+                            </script>
+                        <?php else: ?>
+                            <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style='<?php echo (strtolower(str_replace(" ", "-", $link->getTitle())) == 'customer-care') ? 'width:164px; height:187px; ' : ' '?> display:none'>
+                                <?php echo $this->getBlock($link->getBlockValue(), false); ?>
+                            </div>
+                        <?php endif ?>
+
+                        <?php
+                    elseif ($link->getType() == 2):
+                        foreach (Mage::getConfig()->getNode('global/footlinks/addvalueToUrl/footerLinkMenu') as $key => $value) {
+                            $appendToUrl = "?" . $key . "=" . $value;
+                        }
+                        if ($link->getUrlValue() != ""):
+                            ?>
+                            <div class='popbox_ajax' data-tipped="<?php echo $link->getUrlValue() . $appendToUrl; ?> ">
+                            <?php else: ?>
+                                <div>
+                                <?php endif; ?>
+                                <?php if ($link->getLink() != ""): ?>
+                                    <a href="<?php echo $link->getLink() ?>"><?php echo $footer_title ?></a>
+                                    <?php
+                                else:
+                                echo '<a href="#">'.$footer_title.'</a>';
+                                endif;
+                                ?>
+                            </div>
+
+                        <?php endif; ?>
+
+                </li>
+
+            <?php
+            endif;
+        endforeach;
+        ?>
+        </ul>
+        <div class="col-lg-2 col-12 social-media">
+          <div class="row justify-content-end">
+        <ul>
+            <!-- <div class="sm-qr">
+                <a href="<//?php echo $this->validURL(Mage::getStoreConfig('ecp_yelp/yelp/yelpurl')); ?>" target="_blank"> Y </a>
+            </div> -->
+            <li class="sm-pr" style="text-align: left;">
+                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/pinteresturl')); ?>" target="_blank"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/social-media/instagram.png';?>"></a>
+            </li>
+            <!-- <div class="sm-tw">
+                <a href="<//?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/twitterurl')); ?>" target="_blank"> TW </a>
+            </div> -->
+            <li class="sm-fb">
+                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/facebookurl')); ?>" target="_blank"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/social-media/facebook.png';?>"></a>
+            </li>
+            <li class="sm-insta">
+                <a href="<?php echo $this->validURL(Mage::getStoreConfig('ecp_footlinks/footlinks/instaurl')); ?>" target="_blank"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/social-media/pinterest.png';?>"></a>
+            </li>
+        </ul>
+      </div>
+      </div>
+    </div>
+</div>
+<style>
+    #container
+    {
+        width: 300px;
+        overflow: hidden;
+    }
+
+    /* THESE ARE THE INDIVIDUAL SLIDE PROPERTIES */
+    .slide
+    {
+        width: 300px;
+        height: 70px;
+        overflow: hidden;
+        float: left;
+    }
+</style>

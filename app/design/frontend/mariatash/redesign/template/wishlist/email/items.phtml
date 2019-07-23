@@ -1,0 +1,101 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/* @var $this Mage_Wishlist_Block_Share_Email_Items */
+?>
+<?php $l = $this->getWishlistItemsCount() ?>
+<table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse:collapse; border-spacing:0px; border-color:#dedede; background:#dedede;">
+    <tr>
+    <?php $i = 0; foreach ($this->getWishlistItems() as $item): $i++ ?>
+        <?php /* @var $item Mage_Wishlist_Model_Item */ ?>
+        <?php /* @var $_product Mage_Catalog_Model_Product */ ?>
+        <?php
+
+        $_product = $item->getProduct();
+        $productUrl = $this->getProductUrl($_product);
+        if($_product->getTypeId() == "simple"){
+            $parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($item->getProduct()->getId());
+                if(is_array($parentIds) && isset($parentIds[0]) && (int)$parentIds[0] > 0) {
+                    $parentProduct = Mage::getModel('catalog/product')->load($parentIds[0]);
+                    $productUrl = $parentProduct->getProductUrl();
+                }
+        }
+        $continueUrl = Mage::helper('core')->urlEncode(Mage::getUrl('checkout/cart/'));
+        $urlParamName   = Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED;
+        $routeParams = array(
+                $urlParamName   => $continueUrl,              
+                'product'       => $_product->getEntityId()
+            );          
+        $addToCartUrl = Mage::getUrl('checkout/cart/eadd', $routeParams);
+        
+        $superAttribute = $item->getBuyRequest()->getSuperAttribute();
+        
+        $simpleproduct = $_product;
+
+        $optionsId = null;
+        $arr_att=array();
+
+        if(count($superAttribute)){ 
+                       
+            foreach($superAttribute as $code => $id){
+                switch ($code) {
+                    case 209:
+                        $arr_att[]='optionId='. $id;
+                        break;
+                    case 191:
+                        $arr_att[]='df='. $id;
+                        break;
+                default: break;
+                }
+
+            }
+            if(count($arr_att))
+                {
+                    $productUrl=$productUrl.'?'.implode("&", $arr_att);
+                }
+            array_push($routeParams, array('sp'=>serialize($superAttribute))); 
+        }
+        
+        ?>
+        <td width="24%" style="border:0; vertical-align:top;">
+            <p align="center" style="font-size:12px;"><a href="<?php echo $productUrl; ?>"><img src="<?php echo $this->helper('catalog/image')->init($simpleproduct, 'thumbnail')->resize(234,305); ?>" style="border:1px solid #ccc;" width="234" height="305" alt="" /></a></p>
+            <p align="center" style="font-size:12px;"><a href="<?php echo $productUrl; ?>" style="color:#3F3F47;"><strong><?php echo $this->escapeHtml($_product->getName()) ?></strong></a></p>
+            <?php if($this->hasDescription($item)): ?><p align="center" style="font-size:12px;"><?php echo $this->__('Comment') ?>:<br /><?php echo $this->getEscapedDescription($item) ?></p><?php endif; ?>
+            <p align="center" style="font-size:12px;"><a href="<?php echo $productUrl; ?>" style="color:#3F3F47;"><?php echo $this->__('View Product') ?></a> <small>
+            <?php if ($_product->getIsSalable()): ?>|</small> <a href="<?php echo $addToCartUrl; ?>" style="color:#3F3F47;"><?php echo $this->__('Add to Cart') ?></a><?php endif;?>
+            </p></td>
+        <?php if ($i%4!=0): ?>
+            <td width="1%"></td>
+        <?php else: ?>
+           </tr>
+            <tr>
+                <td colspan="7" height="1" style="border-bottom:1px solid #d1d1d1;"></td>
+            </tr>
+            <?php if ($i<$l): ?>
+               <tr>
+            <?php endif ?>
+        <?php endif ?>
+    <?php endforeach ?>
+</table>

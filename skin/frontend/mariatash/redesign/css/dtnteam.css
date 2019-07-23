@@ -1,0 +1,33 @@
+.display-none {
+ 	display:none !important;
+}
+.grand-total .price {
+    padding-left: 20px;
+}
+
+/* Quick fix css for tattoo, need css team to update styling */
+.category-tattoos .col1-layout .col-main {
+    position: initial !important;
+}
+#checkoutSteps label.payment-checked  {
+	background: url(../images/radio-button-checked.png) no-repeat left;
+}
+
+.size-links__container {
+  margin: -9px 0 6px;
+}
+
+.size_chart{
+    float: left;
+    /*margin: 0 26px 0 0;*/
+    margin: 10px 10px 0 0;
+}
+.size_chart a{ text-decoration: underline;}
+.get_size_sample{
+    margin: 10px 10px 0 0;
+    float: left;
+}
+.get_size_sample a{ text-decoration: underline;cursor: pointer; }
+.product-shop .product-collateral .sample{ float:left;}
+
+

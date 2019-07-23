@@ -1,0 +1,34 @@
+@media (max-width:1023px){
+  .main-nav-title li {
+      margin-right: 0;
+      text-align: center;
+      margin-top: 25px;
+  }
+  .maria-left-menus, .maria-right-menus{
+    display: none;
+  }
+  .homepage-menu {
+    padding-top: 18px !important;
+  }
+  .footer ul .footer-item-list{
+    display: block;
+    margin-top: 20px;
+  }
+  .footlinks, .social-media > .row {
+    text-align: center;
+    justify-content: center !important;
+  }
+  .container-footlinks, .homepage-menu.mariatash-header {
+    background: rgb(41, 41, 41);
+  }
+  .footer .footlinks li,.social-media ul{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .footer .social-media li:last-child{
+    margin-right: 0;
+  }
+  .social-media ul {
+    margin-bottom: 40px;
+  }
+}

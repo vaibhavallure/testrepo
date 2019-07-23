@@ -1,0 +1,283 @@
+<div class="two-shipment-billing-payment-mt">
+<?php  
+ $mainQuote = Mage::getSingleton('checkout/session')->getQuote();
+ ?>
+<div class="checkout-two-shipment-billing-address-mt">
+<h4>Billing Address</h4>
+<?php
+$billing = $mainQuote->getBillingAddress();
+echo '<p>' . $billing->getFormated('html') . '</p>';
+?>
+<?php if(0&& $this->helper('customer')->isLoggedIn() ): ?>
+        <span><a href="javascript: accordion.openSection('opc-billing');">Edit</a></span>
+<?php endif; ?>
+</div>
+
+<div class="checkout-two-shipment-payment-method-mt">
+<?php
+$payment = $mainQuote->getPayment();
+echo "<h4>Payment method</h4>";
+switch ($payment->getMethod()) {
+    case 'authorizenet':
+        $cardTypes = Mage::getModel('payment/config')->getCcTypes();
+        $cardTypeName = $cardTypes[$payment->getCcType()];
+        $cardLast4 = $payment->getCcLast4();
+        echo '<p>' . $cardTypeName . ' XXX XXX XXX ' . $cardLast4 . '</p>';
+        break;
+    default:
+        echo '<p>' . $payment->getMethodInstance()->getTitle() . '</p>';
+        break;
+}
+?>
+</div>
+
+</div>
+
+
+<?php 
+	$count = 0;
+	$one_ship = Mage::getSingleton('allure_multicheckout/ordered_session')->getOrdered();
+	if(isset($one_ship) && !empty($one_ship)):
+?>
+
+<?php
+		$count = $count+1; 
+        $quote = Mage::getSingleton("allure_multicheckout/ordered_session")->getQuote();
+        $quote->collectTotals()->save();
+        
+        ?>
+
+<div id="ordered-two-ship">
+<h2 class="shipment-title">Shipment <?php echo $count;?></h2>
+<p class="shipment-message">
+<span class="shipment-ref-number"><?php echo "Ref. #".$quote->getId();?></span>
+<span class="shipment-notice-sp"><span class="shipment-color">This</span><span class="shipment-notice"> order will ship within 24 hours (Mon-Fri).</span></span>
+</p>
+<?php //echo $this->getChildHtml('items_before'); ?>
+
+
+<?php echo $this->getChildHtml('items_after'); ?>
+
+<div id="checkout-review-table-wrapper">
+    <table class="data-table cart-table-items" id="checkout-review-table">
+        <?php //echo $this->getChildHtml('totals_ordered'); ?>
+        <thead>
+            <tr>
+                <th><?php echo $this->__('Product Name') ?></th>
+                <th class="a-right"><?php echo $this->__('Price') ?></th>
+                <th class="a-right"><?php echo $this->__('Qty') ?></th>
+                <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+            </tr>
+        </thead>
+        
+        <?php foreach($this->getOrderedItems() as $_item): ?>
+            <?php echo $this->getItemHtml($_item)?>
+        <?php endforeach ?>
+    </table>
+</div>
+
+
+<div class="checkout-two-shipment-shipping-address-mt">
+<?php 
+echo "<h4>Shipping address</h4>";
+ 
+$shipping = $quote->getShippingAddress();
+echo '<p>' . $shipping->getFormated('html') . '</p>';
+?>
+
+<?php if(0&& $this->helper('customer')->isLoggedIn() ): ?>
+    <span><a href="javascript: accordion.openSection('opc-shipping');">Edit</a></span>
+<?php endif; ?>
+</div>
+
+
+<div class="checkout-two-shipment-shipping-method-mt">
+<?php 
+echo "<h4>Shipping method</h4>";
+$shippingAddress = $quote->getShippingAddress();
+
+echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
+?>
+
+
+<form method="post" id="shipping_method_form_1" action="<?php echo $this->escapeHtml($this->getShippingMethodSubmitUrl()) ?>">
+	  <?php if ($groups = $this->getShippingRateGroups()):?>
+	      <?php $currentRate = $this->getCurrentShippingRate(); ?>
+	          <input class="mt-data-type" style="display: none;" id="data-type-1" value="1" />
+	          <fieldset>
+	               <select name="shipping_method_1" id="shipping_method_1" style="width:250px;" class="required-entry">
+	               <?php if (!$currentRate):?>
+	                    <option value=""><?php echo $this->__('Please select a shipping method...') ?></option>
+	                <?php endif;?>
+	                <?php foreach ($groups as $code => $rates):?>
+	                		<optgroup label="<?php echo $this->escapeHtml($this->getCarrierName($code)) ?>" style="font-style:normal;">
+	                      <?php foreach ($rates as $rate):?>
+	                            <option value="<?php echo $this->renderShippingRateValue($rate)?>"<?php echo ($currentRate === $rate) ? ' selected="selected"' : '' ;?>>
+	                            <?php echo $this->renderShippingRateOption($rate)?>
+	                            </option>
+	                      <?php endforeach;?>
+	                        </optgroup>
+	                <?php endforeach;?>
+	             </select>
+	         </fieldset>
+	    <?php else: ?>
+	          <p><strong><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></strong></p>
+	   <?php endif;?>
+</form>
+
+</div>
+
+</div>
+<?php endif;?>
+
+
+
+
+<?php 
+	$two_ship = Mage::getSingleton('allure_multicheckout/backordered_session')->getBackorder();
+	if(isset($two_ship) && !empty($two_ship)):
+?>
+
+ <?php 
+ 		$count = $count+1; 
+        $quote1 = Mage::getSingleton("allure_multicheckout/backordered_session")->getQuote();
+        $quote1->collectTotals()->save();
+        ?>
+
+
+<div id="backordered-two-ship">
+<h2 class="shipment-title">Shipment <?php echo $count;?></h2>
+<p class="shipment-message"><span class="shipment-ref-number"><?php echo "Ref. #".$quote1->getId();?></span>
+<span class="shipment-notice-sp"><span class="shipment-color">This</span><span class="shipment-notice"> order will ship once the remaining items are in stock.</span></span></p>
+<?php //echo $this->getChildHtml('items_before'); ?>
+
+
+<?php echo $this->getChildHtml('items_after'); ?>
+
+<div id="checkout-review-table-wrapper">
+    <table class="data-table cart-table-items" id="checkout-review-table">
+        <?php //echo $this->getChildHtml('totals_backordered'); ?>
+        <thead>
+            <tr>
+                <th><?php echo $this->__('Product Name') ?></th>
+                <th class="a-right"><?php echo $this->__('Price') ?></th>
+                <th class="a-right"><?php echo $this->__('Qty') ?></th>
+                <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+            </tr>
+        </thead>
+        
+        <?php foreach($this->getBackorderedItems() as $_item): ?>
+            <?php echo $this->getItemHtml($_item)?>
+        <?php endforeach ?>
+    </table>
+</div>
+
+
+<div class="checkout-two-shipment-shipping-address-mt">
+<?php 
+echo "<h4>Shipping address</h4>";
+ 
+$shipping = $quote1->getShippingAddress();
+echo '<p>' . $shipping->getFormated('html') . '</p>';
+?>
+
+<?php if(0&& $this->helper('customer')->isLoggedIn() ): ?>
+    <span><a href="javascript: accordion.openSection('opc-shipping');">Edit</a></span>
+<?php endif; ?>
+</div>
+
+
+<div class="checkout-two-shipment-shipping-method-mt">
+<?php 
+echo "<h4>Shipping method</h4>";
+$shippingAddress = $quote1->getShippingAddress();
+
+echo '<p>'.$shippingAddress->getShippingDescription() .'</p>';
+?>
+
+
+<form method="post" id="shipping_method_form_2" action="<?php echo $this->escapeHtml($this->getShippingMethodSubmitUrl()) ?>">
+	  <?php if ($groups = $this->getShippingRateGroups2()):?>
+	      <?php $currentRate = $this->getCurrentShippingRate2(); ?>
+	          <input class="mt-data-type" style="display: none;" id="data-type-2" value="2" />
+	          <fieldset>
+	               <select name="shipping_method_2" id="shipping_method_2" style="width:250px;" class="required-entry">
+	               <?php if (!$currentRate):?>
+	                    <option value=""><?php echo $this->__('Please select a shipping method...') ?></option>
+	                <?php endif;?>
+	                <?php foreach ($groups as $code => $rates):?>
+	                		<optgroup label="<?php echo $this->escapeHtml($this->getCarrierName($code)) ?>" style="font-style:normal;">
+	                      <?php foreach ($rates as $rate):?>
+	                            <option value="<?php echo $this->renderShippingRateValue($rate)?>"<?php echo ($currentRate === $rate) ? ' selected="selected"' : '' ;?>>
+	                            <?php echo $this->renderShippingRateOption2($rate)?>
+	                            </option>
+	                      <?php endforeach;?>
+	                        </optgroup>
+	                <?php endforeach;?>
+	             </select>
+	         </fieldset>
+	    <?php else: ?>
+	          <p><strong><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></strong></p>
+	   <?php endif;?>
+</form>
+
+
+</div>
+
+</div>
+<?php endif;?>
+
+<div class="mt-paypal-total">
+	<?php echo $this->getChildHtml('two_totals')?>
+</div>
+
+<script>
+	jQuery(document).ready(function(){
+		var billingHeight = jQuery('.checkout-two-shipment-billing-address-mt').height();
+		if(billingHeight)
+			jQuery('.checkout-two-shipment-payment-method-mt').css('height',billingHeight+'px');
+		
+		var shippindAddrHeight = jQuery('.checkout-two-shipment-shipping-address-mt').height();
+		if(shippindAddrHeight)
+			jQuery('.checkout-two-shipment-shipping-method-mt').css('height',shippindAddrHeight+'px');
+	});
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+    decorateTable('checkout-review-table');
+    truncateOptions();
+//]]>
+
+    jQuery('#shipping_method_1').on('change',function(){
+    	var shippingMethod = jQuery('#shipping_method_1').val();
+    	jQuery('#review-please-wait').show();
+    	jQuery.ajax({
+	        url: urlS,
+	        dataType : 'json',
+			type : 'POST',
+			data: {isAjax:true, shipping_method:shippingMethod,type:1},
+	        success: function(data) {
+	        	jQuery('#review-please-wait').hide();
+	        	jQuery('#mt-details-reload').html(data.data.html);
+	        }
+	    });
+    });
+    
+    jQuery('#shipping_method_2').on('change',function(){
+    	var shippingMethod = jQuery('#shipping_method_2').val();
+    	jQuery('#review-please-wait').show();
+    	jQuery.ajax({
+	        url: urlS,
+	        dataType : 'json',
+			type : 'POST',
+			data: {isAjax:true, shipping_method:shippingMethod,type:2},
+	        success: function(data) {
+	        	jQuery('#review-please-wait').hide();
+	        	jQuery('#mt-details-reload').html(data.data.html);
+	        }
+	    });
+    });
+
+</script>
+

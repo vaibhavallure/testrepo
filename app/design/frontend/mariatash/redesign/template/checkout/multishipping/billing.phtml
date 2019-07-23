@@ -1,0 +1,149 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Multishipping checkout billing information
+ *
+ * @see Mage_Checkout_Block_Multishipping_Billing
+ */
+$quote = Mage::getModel('checkout/cart')->getQuote();
+$codeExists = ($quote->getCouponCode())
+    ? true
+    : false;
+?>
+<div class="page-title">
+    <h1>Secure Checkout  - ship to multiple addresses</h1>
+</div>
+<ol id="checkoutSteps" class="opc">
+    <?php $steps = Mage::getSingleton('checkout/type_multishipping_state')->getSteps();
+    $cont = 1;
+    foreach ($steps as $_step): ?>
+        <?php if($_step->getLabel()=='Billing Information'): ?>
+            <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section allow active" >
+                <div class="step-title">
+                    <span class="number"><?php echo $cont ?></span>
+                    <h2><?php echo $_step->getLabel() ?></h2>
+                </div>
+                <div class="multiple-checkout">
+                    <!--<div class="page-title">
+                        <h1><?php // echo $this->__('Billing Information') ?></h1>
+                    </div>-->
+                    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+                    <script src="<?php echo Mage::getBaseUrl('js') ?>varien/payment.js" type="text/javascript"></script>
+                    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="multishipping-billing-form">
+                        <div class="col2-set">
+                            <div class="col-1 col-narrow">
+                                <div class="box">
+                                    <div class="box-title">
+                                        <h2><?php echo $this->__('Billing Address') ?> <span class="separator">|</span> <a href="<?php echo $this->getSelectAddressUrl() ?>"><?php echo $this->__('Change') ?></a></h2>
+                                    </div>
+                                    <div class="box-content">
+                                        <?php $_address=$this->getAddress() ?>
+                                        <address><?php echo $_address->format('html') ?></address>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 col-wide">                                
+                                <div class="box">
+                                    <div class="box-title">
+                                        <h2><?php echo $this->__('Payment Method') ?></h2>
+                                    </div>
+                                    <div class="box-content">
+                                        <div class="tool-tip" id="payment-tool-tip" style="display:none;">
+                                            <div class="btn-close"><a href="#" id="payment-tool-tip-close" title="<?php echo $this->__('Close') ?>"><?php echo $this->__('Close') ?></a></div>
+                                            <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo $this->__('Card Verification Number Visual Reference') ?>" title="<?php echo $this->__('Card Verification Number Visual Reference') ?>" /></div>
+                                        </div>
+                                        <!-- Payment methods forms list -->                                       
+                                        <?php echo $this->getChildHtml('methods') ?>                                        
+                                        <?php echo $this->getChildHtml('checkout_billing_items') ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons-set">
+                            <p class="back-link"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Shipping Information') ?></a></p>
+                            <button class="button continue" type="submit" title="<?php echo $this->__('Continue') ?>" class="button"><span><span><?php echo $this->__('Continue') ?></span></span></button>
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        var payment = new paymentForm('multishipping-billing-form');
+                        function toggleToolTip(event){
+                            if($('payment-tool-tip')){
+                                /*$('payment-tool-tip').setStyle({
+                                    top: (Event.pointerY(event)-510)+'px',
+                                    left: (Event.pointerX(event)-800)+'px'
+                                })*/
+                                $('payment-tool-tip').toggle();
+                            }
+                            Event.stop(event);
+                        }
+                        if($('payment-tool-tip-close')){
+                            Event.observe($('payment-tool-tip-close'), 'click', toggleToolTip);
+                        }
+                        $$('.cvv-what-is-this').each(function(element){
+                            Event.observe(element, 'click', toggleToolTip);
+                        });  
+                        jQuery(document).ready(function(){
+                            jQuery('#p_method_paypal_express').parent().hide();
+                            //Enable giftcart
+                            jQuery('#button-giftcart').removeAttr('disabled');
+                            jQuery('#giftcard_code').removeAttr('disabled');
+                            jQuery('#giftcard_use').removeAttr('disabled');
+                            //Enable promotion code
+                            jQuery('#promoCode').removeAttr('disabled');
+                        })
+                        //]]>
+                    </script>
+                </div>
+            </li>
+        <?php else: ?>
+            <?php if($_step->getLabel() == 'Select Addresses'):?>
+                <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section" >
+                    <a href="<?php echo $this->getBaseUrl() .'checkout/multishipping/addresses/' ?>"><div class="step-title">
+                            <span class="number"><?php echo $cont ?></span>
+                            <h2><?php echo $this->__('Select Address') ?></h2>
+                </li>
+            <?php else:?>
+            <li id="opc-billing" title="<?php echo $_step->getLabel() ?>" class="section" >
+                <?php if($cont < 3) { ?>
+                <a href="<?php echo ($cont == 1) ? $this->getBaseUrl() .'checkout/multishipping/addresses/' : $this->getBaseUrl().'checkout/multishipping/shipping/'; ?>"><div class="step-title">
+                    <span class="number"><?php echo $cont ?></span>
+                    <h2><?php echo ($_step->getLabel()!='Shipping Information')? $_step->getLabel() : $this->__('SHIPPING METHOD AND GIFT OPTIONS'); ?></h2>
+                </div></a>
+                <?php } else { ?>
+                <div class="step-title">
+                    <span class="number"><?php echo $cont ?></span>
+                    <h2><?php echo $_step->getLabel() ?></h2>
+                </div>
+                <?php } ?>
+            </li>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php $cont+=1; ?>
+    <?php endforeach; ?>
+</ol>

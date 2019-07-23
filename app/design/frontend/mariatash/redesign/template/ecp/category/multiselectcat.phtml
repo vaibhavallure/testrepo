@@ -1,0 +1,58 @@
+<?php
+$code = 'category';
+?>
+<div class="attribute-<?php echo $code ?>">
+    <span id="<?php echo $code ?>-btn"><?php echo 'Category' ?></span>
+    <ul id="<?php echo $code ?>-options" style='display:none'>
+        <?php foreach ($this->getItems() as $option): ?>
+            <li>
+                <input class="<?php echo $code ?>-option" type="checkbox" id="<?php echo $code . '-' . $option->getValue() ?>" label="<?php echo $option->getLabel() ?>" name="<?php echo $code ?>" value="<?php echo $option->getValue() ?>" />
+                <label for="<?php echo $option->getLabel() ?>"><?php echo $option->getLabel() ?></label>
+            </li>
+        <?php endforeach; ?>
+        <div id="<?php echo $code ?>CloseDiv"><a href="javascript:;">Close</a></div>
+    </ul>
+    <!--<div id="<?php // echo $code ?>-filters"></div>-->
+</div>
+<script>
+    jQuery(document).ready(function(){
+        jQuery('div.filters-selected').append(jQuery('<div id="<?php echo $code ?>-filters"/>'));
+    })
+    
+    
+    jQuery('div#<?php echo $code ?>CloseDiv a, #<?php echo $code ?>-btn').click(function(){
+        jQuery('#<?php echo $code ?>-options').toggle();
+    });
+    /*
+    jQuery('input.<?php echo $code ?>-option').click(function(){
+        jQuery('div#clearAll').show();
+        jQuery('#<?php echo $code ?>-filters').append(jQuery('<span class="attribute-selected" onClick="javascript:removeMe(this)" />').attr('value',jQuery(this).attr('id')).text(jQuery(this).attr('label')));
+<?php echo $this->getReloadFunction() . '()' ?>
+    })
+     */
+       
+            jQuery('input[class^="<?php echo $code ?>-option"]').click(
+            function() {
+                if(jQuery(this).is(':checked')) {  
+                    jQuery('div#clearAll').show();
+                    jQuery('#<?php echo $code ?>-filters').append(jQuery('<span class="attribute-selected" onClick="javascript:removeMe(this)" />').attr('value',jQuery(this).attr('id')).text(jQuery(this).attr('label')));
+<?php echo $this->getReloadFunction() . '()' ?>
+                         }
+                         else {  
+                             id = jQuery(this).attr('id');
+                             jQuery('span[value^="'+id+'"]').remove();  
+                             if( jQuery('.attribute-selected').length == 0 ){
+                                 jQuery('#clearAll').hide();
+                             }
+                             //alert(jQuery('.attribute-selected').length);
+                         }
+<?php echo $this->getReloadFunction() . '()' ?>
+                }
+            );       
+           
+                /*function removeMe(obj){
+        jQuery('#'+jQuery(obj).attr('value')).attr('checked',false);
+        jQuery(obj).remove();
+<?php echo $this->getReloadFunction() . '()' ?>
+    }*/
+</script>

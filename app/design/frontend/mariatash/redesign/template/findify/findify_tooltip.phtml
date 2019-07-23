@@ -1,0 +1,13 @@
+<script type="text/javascript">
+ var icons = new Array();  
+
+</script>
+<?php
+$icons=Mage::helper('findify')->getAllIcons();
+?>
+<script type="text/javascript">
+<?php foreach ($icons['value'] as $icon){?>
+ icons[<?php echo $icon['metal_color']?>] = "<?php echo $icon['metal_color_value']?>";  
+<?php } ?>
+</script>
+

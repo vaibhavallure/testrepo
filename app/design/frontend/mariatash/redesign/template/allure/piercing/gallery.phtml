@@ -1,0 +1,611 @@
+
+<?php
+
+$main = $this->getGalleryList();
+
+$categories = $this->getCategoriesArray();
+$current_location = Mage::registry('current_piercing_location');
+$looks = $this->getLooksByLocation($current_location);
+$baseUrl = preg_replace('|https?\:\/\/|', '//', Mage::getBaseUrl());
+
+$currentUrl = Mage::getSingleton('core/url')->parseUrl(Mage::helper('core/url')->getCurrentUrl());
+$path = $currentUrl->getPath();
+if(substr($path, 0, 1) == '/') {
+    $path = substr($path, 1);
+}
+
+//if ($current_location) {
+//    $url = Mage::getBaseUrl() . 'ecppiercinggallery/index/index/locationtype/' . $current_location .'/';
+//} else {
+    $url = $this->helper('core/url')->getCurrentUrl();
+//}
+
+$url = explode('?', trim($url));
+
+$slide = 0;
+if (isset($url[1])) {
+	$slide = preg_replace('/\D/', '', $url[1]);
+}
+
+$slidePos = -1;
+
+if(!empty($slide) && !empty($looks)):
+    foreach($looks AS $key=>$look):
+        if($look['id'] == $slide) $slidePos = $key;
+    endforeach;
+endif;
+if($slidePos < 0) $slide = $slidePos = 0;
+$url = $url[0];
+$currentLook = $looks[$slidePos];
+?>
+
+<script>
+    jQuery(document).ready(function(){
+        //jQuery('select').not('select+span').customStyle();
+        jQuery('p.note-msg').remove();
+
+        jQuery('div#carousel').click(function(){
+            jQuery('a#play').trigger('click');
+        }); 
+
+        jQuery('#prev, #next').click(function(){
+            jQuery('#prev, #next').removeClass('currentAction');
+            jQuery(this).addClass('currentAction');
+        });
+
+        jQuery("#accordion").accordion({
+            collapsible: true,
+            active: <?php echo $this->getCurrentLevel() ?>
+        });
+
+        <?php if(count($main)>0): ?>
+        carrioul();
+        
+        <?php endif; ?>
+        jQuery('.caroufredsel_wrapper').addClass('caroufredsel_wrapper2').removeClass('caroufredsel_wrapper');
+        jQuery('a.iframemail').fancybox({
+            'transitionIn': 'elastic',
+            'transitionOut': 'elastic',
+            'type': 'iframe',
+            'scrolling': 'no',
+            'speedIn': 600,
+            'speedOut': 200,
+            'minHeight': 510,
+            'maxHeight': 510,
+            'height': 510,
+            'width': 450,
+            'overlayShow': false,
+            'wrapCSS': 'send-email-popup',
+            'overflow': 'hidden'
+        });
+    });
+    var productAddToCartForm = new Array();
+
+    function send(){
+    <?php $url2send = str_replace(Mage::getBaseUrl(),'',Mage::helper('core/url')->getCurrentUrl()); ?>
+    emailWindow = window.open("<?php echo Mage::getUrl('ecpcelebrities/index/send'); ?>?page=<?php echo $url2send; ?>", "mywindow", "location=1,status=1,scrollbars=1,width=700,height=600");
+        //emailWindow = window.open("<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($this) ?>", "mywindow", "location=1,status=1,scrollbars=1,width=700,height=600");
+        //emailWindow.moveTo(0, 0);
+    }
+
+</script>
+
+<?php //allure script #### start?>
+<script>
+jQuery(document).ready(function(){
+	jQuery('.product_addtocart_celebrities_form').hover(function(){
+			var itemId = jQuery(this).attr('data-product-id');
+			var selector = jQuery('.shop-look-product-mark #fs_overlink_'+itemId);
+			var parentId = selector.attr('data-parent-id');
+			jQuery('#product-marker-'+parentId).addClass('active');
+			selector.css("opacity", "1");
+			selector.find(".fs-overlink-text").css(
+					{"opacity":"1","display":"block"});
+	    }, function(){
+	    	var itemId = jQuery(this).attr('data-product-id');
+			var selector = jQuery('.shop-look-product-mark #fs_overlink_'+itemId);
+			var parentId = selector.attr('data-parent-id');
+			jQuery('#product-marker-'+parentId).removeClass('active');
+			selector.css("opacity", "1");
+			selector.find(".fs-overlink-text").css(
+					{"opacity":"","display":""});
+	});
+
+
+	jQuery('.carrousel-images').hover(function(){
+		var id = jQuery(this).attr('data-item-id');
+		jQuery('#product-marker-'+id).addClass('active');
+	},function(){
+		var id = jQuery(this).attr('data-item-id');
+		jQuery('#product-marker-'+id).removeClass('active');
+	});
+
+
+	jQuery('.fs-overlink').hover(function(){
+		var id = jQuery(this).attr('data-parent-id');
+		jQuery('#product-marker-'+id).addClass('active');
+		jQuery(this).find('.fs-overlink-text').css("display","block");
+	},function(){
+		var id = jQuery(this).attr('data-parent-id');
+		jQuery('#product-marker-'+id).removeClass('active');
+		jQuery(this).find('.fs-overlink-text').css("display","none");
+	});
+	
+
+	jQuery('.accordtion-sub-menu').click(function(){
+		var menu=jQuery(this).attr('id');
+		jQuery('.accordtion-sub-menu').removeClass('menu-active');
+		jQuery(this).addClass('menu-active');
+		jQuery('.carrousel-images').css("display","none");
+		jQuery('.pier-shop-look-'+menu).css("display","block");
+
+		changeLinks();
+	}); 
+
+	jQuery('.ui-accordion-header').click(function(){
+		var menu=jQuery(this).attr('data-menu');
+		jQuery('.accordtion-sub-menu').removeClass('menu-active');
+		jQuery('.carrousel-images').css("display","none");
+		jQuery('.pier-shop-look-'+menu).css("display","block");
+
+		changeLinks();
+		
+	}); 
+});
+
+var changeLinks = function(){
+	var selector = jQuery("#carousel>img:visible");
+	var id = selector.attr('data-item-id');
+	console.log("id-"+id);
+	jQuery('.shop-look-product-mark').removeClass('active');
+	jQuery('#product-marker-'+id).addClass('active');
+	jQuery(".gallery-looks .products-look").addClass('inactive');
+	jQuery(".gallery-looks .products-look").removeClass('active');
+	jQuery("#look-products-"+id).removeClass('inactive');
+	jQuery("#look-products-"+id).addClass('active');
+	
+	carrioul();
+}
+
+var carrioul = function(){
+	jQuery('#carousel').carouFredSel({
+    prev: '#prev',
+    next: '#next',
+    circular: true,
+    infinite: true,
+    auto: {
+        button: '#play',
+        timeoutDuration: <?= Mage::getStoreConfig('ecp_piercinggallery/piercinggallery/timing')*1000 ?>,
+        pauseOnEvent: 'resume',
+        progress: {
+            updater: function(){
+                console.log('Progress');
+            }
+        }
+    },
+    items: {
+        start : <?=$slidePos;?>
+    },
+    onCreate: function (data) {
+        // var newImageUrl = jQuery('#carousel img:first-child').attr('src');
+        // jQuery('meta[property=og\\:image]').attr('content', newImageUrl);
+//        jQuery('#inner #prev').css({ opacity: 0.5 });
+//           
+            try {
+                FB.XFBML.parse();
+            }
+            catch(ex){}
+    },
+    scroll: {
+        fx: 'fade',
+        onBefore: function () {
+            var currentAction = jQuery('a.currentAction');
+            jQuery('#prev, #next').removeClass('currentAction');
+            
+            var lookId = jQuery('div#carousel img.carrousel-images').first().next().attr('data-item-id');
+            //allure
+            var itemIdx = jQuery('div#carousel img.carrousel-images').first().attr('index');
+			var totalCount = jQuery('div#carousel img.carrousel-images').first().attr('data-total-count');
+            if(currentAction.attr('id') == 'prev') {
+                lookId = jQuery('div#carousel img.carrousel-images').first().attr('data-item-id');
+				//allure 
+                itemIdx = jQuery('div#carousel img.carrousel-images').first().attr('index');
+                var totalCount = jQuery('div#carousel img.carrousel-images').first().attr('data-total-count');
+                
+            }
+
+          //allure code start ####
+           if(itemIdx!=null && itemIdx!="undefined"){
+        	   jQuery('#slide-count').html(itemIdx + ' of '+totalCount);
+           }
+            changeOptions(lookId);
+          //allure code end ####
+            
+            jQuery('div.gallery-looks div.products-look').each(function () {
+                jQuery(this).addClass('inactive');
+                jQuery(this).removeClass('active');
+            });
+            setTimeout(function() {
+                jQuery("div#look-products-" + lookId).addClass('active');
+                jQuery("div#look-products-" + lookId).removeClass('inactive');
+            }, 300);
+        },
+        onAfter: function (data) {
+            var itemID = jQuery(data.items.visible[0]).attr('data-item-id');
+            var itemIdx = jQuery(data.items.visible[0]).attr('index');
+            var imgTitle = jQuery(data.items.visible[0]).attr('data-item-name');
+            var imgSrc = data.items.visible[0].src;
+            var slidePath = '<?=$url;?>?look-' + itemID;
+
+            //allure
+            var totalCount = jQuery('div#carousel img.carrousel-images').first().attr('data-total-count');
+                
+            if(itemIdx!=null && itemIdx!="undefined")
+            jQuery('#slide-count').html(itemIdx + ' of '+totalCount);
+            //jQuery('#slide-count').html(itemIdx + ' of <?//=count($looks);?>');
+            history.pushState(null, null, slidePath);
+
+            //allure code start ####
+            changeOptions(itemID);
+            //allure code end ####
+
+            var fbIframePath = jQuery('#fb-share_pierce iframe').attr('src');
+            if(!!fbIframePath){
+                fbIframePath = fbIframePath.replace(/href=.*?\&/i, 'href=' + encodeURIComponent(slidePath) + '&');
+                jQuery('#fb-share_pierce iframe').attr('src', fbIframePath);
+            }
+
+            var twIframePath = jQuery('#tw-share').attr('src');
+            twIframePath = twIframePath.replace(/url=.*?\&/i, 'url=' + encodeURIComponent(slidePath) + '&');
+            twIframePath = twIframePath.replace(/text=.*?\&/i, 'text=' + imgTitle + '&');
+            jQuery('#tw-share').attr('src', twIframePath);
+
+            var mailLinkUrl = slidePath.replace('<?= $baseUrl ?>', '');
+                mailLinkUrl = mailLinkUrl.replace('http:', '');
+                mailLinkUrl = mailLinkUrl.replace('https:', '');
+
+            jQuery('.pinterest-share-btn').attr('href', '//pinterest.com/pin/create/button/?url=' + slidePath + '&description=' + encodeURIComponent(imgTitle) + '&media=' + encodeURIComponent(imgSrc));
+            jQuery('#mail>.mail>a').attr('href', '<?= $baseUrl ?>celebrities/index/send/?type=piercing&page=' + mailLinkUrl + '&img=' + encodeURIComponent(imgSrc));
+        }
+    }
+
+});
+}
+
+function changeOptions(itemID){
+	if(itemID !=null && itemID != "undefined"){
+	//new code allure product-marker #### start
+	    var productMark = jQuery('#product-marker-'+itemID).html();
+		//jQuery('#shop-look-product-marker').html(productMark);
+
+		var menu = jQuery('#carrousel-item-'+itemID).attr('data-menu-name');
+		jQuery('.accordtion-sub-menu').removeClass('menu-active');
+		jQuery('#'+menu).addClass('menu-active');
+		
+		jQuery('div.gallery-looks div.products-look').each(function () {
+	        jQuery(this).addClass('inactive');
+	        jQuery(this).removeClass('active');
+	    });
+	
+		jQuery("div#look-products-" + itemID).addClass('active');
+	    jQuery("div#look-products-" + itemID).removeClass('inactive');
+	}
+}
+</script>
+<?php //allure script #### end?>
+
+<?php if (!Mage::registry('current_category')): ?>
+    <div class="top-bar"><?php echo $this->getBreadcrumbs(); ?></div>
+    <script>
+        jQuery.noConflict();
+        jQuery('div.header-container').append(jQuery('div.top-bar'));               
+    </script>
+<?php endif; ?>
+<div class="piercing-gallery-mt1">
+    <?php if (!Mage::registry('current_category')): ?>
+        <h3><?php echo Mage::getModel('catalog/category')->load(Mage::getStoreConfig('ecp_piercinggallery/piercinggallery/piercing_gallery_category_id'))->getName(); ?></h3>
+    <?php endif; ?>
+
+    <div id="messages_product_view"></div>
+
+    
+    <div class="navigation-menu">
+        <div id="accordion">
+            <?php foreach ($main as $cat2=>$cat1): ?>
+            <?php foreach ($cat1 as $key1=>$value1): ?>
+                <H3 data-menu="<?php echo str_replace(' ', '-', $key1)?>"><?php echo strtoupper($key1); ?></H3>
+                <div>
+                    <?php 
+                        foreach ($value1 as $location=>$ar1):
+                            ?>
+                            <div class="accordtion-sub-menu" id="<?php echo str_replace(' ', '-', $location);?>" <?php //if ($current_location == $location['id']) echo "class='current_location'" ?> >
+                                <a href="javascript:void(0);">
+                                    <?php echo strtoupper($location); ?>
+                                </a>
+                            </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
+        <div style="display: none;" class="banner-c-code"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('piercing_message_block')->toHtml(); ?></div>
+    </div>
+    
+
+    <?php if(count($main)>0): ?>
+    <div class="content" >
+        <div id="wrapper">
+            <div class="carousel-content">
+                <div id="inner">
+                    <a id="prev" href="#">PREV</a>
+                    <div id="carousel" >
+                        <?php $x = 1; ?>
+                        
+                        <?php $arrrr = array();
+                        	 $pnt = "";
+                        	 $size = 0;
+                        ?>
+                        <?php $firstCat = true;?>
+                        <?php foreach ($main as $aa=>$bb): ?>
+                        <?php foreach ($bb as $cc=>$dd): ?>
+                         <?php foreach ($dd as $ee=>$ff): ?>
+                          <?php 
+                          $x = 1;
+                          foreach ($ff as $gg=>$hh):
+                          		$arrrr = $hh;
+                          		
+                          		$size  = count($ff);
+                          		$_options = json_decode($hh['hotspots']);
+                          		$points = "";
+                          		$productsLinks = "";
+                          		$numberOfProducts = 0;
+                          		foreach ($_options as $option){
+                          			$sku = $option->text;
+                          			$numberOfProducts += 1;
+                          			$product1 = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+                          			$productName = $product1->getName();
+                          			$productId = $product1->getId();
+                          		
+                          			$arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($productId);
+                          			$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+                          			$productUrl = $product1->getProductUrl();
+                          			if(!is_null($parentId)){
+                          				$productUrl = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+                          			}
+                          		
+                          			$points .= '<a data-original-url="'.$productUrl.'"';
+                          			$points .= ' href="'.$productUrl.'" target="_blank">';
+                          			$points .= '<div id="fs_overlink_'.$productId."_".$hh['entity_id'].'" class="fs-overlink" ';
+                          			$points .= ' data-link-id="'.$productId.'" data-parent-id="'.$hh['entity_id'].'"';
+                          			$points .= ' style="opacity:1;position: absolute; color: rgb(34, 34, 34); top:'. (($option->top*100)/640).'%; left:'.(($option->left*100)/640).'%;">';
+                          			$points .= '<div>'.$numberOfProducts.'</div>';
+                          			$points .= '<div class="fs-overlink-text fs-overlink-text-right">';
+                          			$points .= '<div class="fs-arrow-up"></div>';
+                          			$points .= 'Shop it // " '.$productName.'</div></div></a>';
+                          		
+                          			$productsLinks .=  '<div class="fs-text-link-container">
+                										<a class="fs-link fs-text-product fs-link-list" data-link-id="'.$productId.'" href="'.$productUrl.'">
+                  										Shop it // '.$productName.'
+                  										<div class="fs-text-product-cta"></div>
+               											</a>
+              											</div>';
+                          		}
+                          ?>
+	                       <img data-total-count="<?php echo $size?>" id="carrousel-item-<?php echo $hh['entity_id']?>" src="<?=$hh['standard_resolution'];?>" class="carrousel-images <?php echo " pier-shop-look-".str_replace(' ', '-', $cc)." pier-shop-look-".str_replace(' ', '-', $ee)?>" index="<?=$x;?>" 
+	                       	data-item-id="<?=$hh['entity_id'];?>" data-item-name="<?=$hh['entity_id'];?>" data-menu-name="<?php echo str_replace(' ', '-', $ee)?>"
+	                       	alt="" title="" width="640" height="640" border="0" style="display:<?php echo ($firstCat)?"block":"none"?>"/>
+	                       
+	                       
+	                       <?php 
+	                       		$pnt .= '<span class="shop-look-product-mark" id="product-marker-'.$hh["entity_id"].'">'.$points.'</span>';
+	                       ?>
+	                       
+	                       <?php $x++; ?>
+	                    <?php endforeach; ?>
+	                    <?php endforeach; ?>
+	                    <?php 
+	                    $firstCat = false;
+	                    endforeach; ?>
+	                    <?php endforeach; ?>
+                        
+                    </div>
+                    <input type="hidden" id="carouselcount" name="carouselcount" value="<?=count($arrrr);?>" />
+                    <a id="play" href="#">PLAY</a>
+                    <a id="next" href="#">NEXT</a>
+                    <span id="slide-count"><?=($slidePos>0)?$slidePos:1;?> <!-- of --> <?//=count($arrrr);?></span>
+                	
+                	<span id="shop-look-product-marker">
+                		<?php echo $pnt;?>
+                	</span>
+                	
+                </div>
+
+                <div class="social-media-try-on">
+                    <div id="shareme-look-products-<?php //echo $look['id'] ?>" class="social-media-divs" data-url="" data-id="" data-title="" data-descr="" data-url-tmp="" data-text="">
+
+                        <div data-width="450" data-href="<?=$url;?><?=(!empty($slide))?'?look-'.$slide:'';?>" class="fb-share-button" id="fb-share_pierce" data-width="450"></div>
+
+                        <iframe
+                            id="tw-share"
+                            src="https://platform.twitter.com/widgets/tweet_button.html?url=<?=$url;?><?=(!empty($slide))?'?look-'.$slide:'';?>&text=<?=$currentLook['name']?>&hashtags=mariatash&via=venus_mariatash&count=none"
+                            width="55"
+                            height="20"
+                            title="Twitter Tweet Button"
+                            style="border: 0; overflow: hidden;">
+                        </iframe>
+
+                        <a href="//pinterest.com/pin/create/button/?url=<?=$url;?><?=(!empty($slide))?'?look-'.$slide:'';?>&description=<?=urlencode($currentLook['name']);?>&media=<?=$currentLook['img'];?>" target="_blank" data-pin-do="buttonPin" data-pin-config="above" class="pinterest-share-btn">
+                            <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
+                        </a>
+
+                        <div id="mail">
+                            <div class="button mail">
+                                <a href="<?=$baseUrl;?>celebrities/index/send/?type=piercing&page=<?=$path;?>&img=<?=$currentLook['img'];?>" class="iframemail">
+                                    <div class="emailBtn">
+                                        <img id="imgMail" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/email_32.png');?>" />
+                                        <span class="share">Email</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="print">
+                            <div class="button print">
+                                <a href="#" onclick="javascript:print();">
+                                    <div class="printBtn">
+                                        <img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg');?>" />
+                                        <span class="share">Print</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-looks">
+                <div class="title-products-looks"><h3><?php echo $this->__('PURCHASE THIS LOOK') ?></h3></div>
+                    <?php $first = true;
+                  //  foreach ($looks as $look): ?>
+                  
+                  
+                   <?php foreach ($main as $aa=>$bb): ?>
+                        <?php foreach ($bb as $cc=>$dd): ?>
+                         <?php foreach ($dd as $ee=>$ff): ?>
+                          <?php foreach ($ff as $gg=>$hh):
+                          $points = json_decode($hh['hotspots']);
+                          ?>
+                  
+                  
+                  
+                    <div class="products-look <?php echo $first ? 'active' : 'inactive' ?>" id="look-products-<?php echo $hh['entity_id'] ?>">
+                        <?php if (empty($points)): ?>
+                        <p class="products-look-msg"><!--<span id="remove-look-msg" onclick="jQuery('.products-look-msg').fadeOut()" title="<?php echo $this->__('Remove') ?>">x</span>-->
+                        	<?php echo $hh['caption']//$this->__('There are no products matching the selection') ?></p>
+                        <?php endif; ?>
+                        <?php foreach ($points as $products1): ?>
+                            <?php
+                            $showSampleForm = false;
+                           /*  if ($product->getSizeSample() == 1) {
+                                $showSampleForm = true;
+                                $sampleProduct = Mage::getModel('catalog/product')->getCollection()
+                                        ->addAttributeToFilter('type_id', 'customproduct')
+                                        ->getFirstItem();
+                                $sampleProduct = Mage::getModel('catalog/product')->load($sampleProduct->getEntityId());
+                            } */
+                            ?>
+        <?php if ($showSampleForm): ?>
+                                <div style="display: none;">
+                                    <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($sampleProduct) ?>" method="post" id="product_addtocart_form_sample_<?php echo $sampleProduct->getId() . '_' . $look['id']; ?>" <?php if ($sampleProduct->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                                        <input type="hidden" name="product_sample" value="<?php echo $sampleProduct->getId() ?>" />
+                                        <input type="hidden" name="related_product" id="related-products-field" value="" />
+                                        <input type="hidden" value="1" />
+                                        <input type="hidden" name="qty_sample" id="qty_sample" maxlength="12" value="1" />
+                                        <button type="button" title="SIZE SAMPLE" class="button" id="sample-button" onclick="addToShoppingCart(this,this.form)"><span><span>SIZE SAMPLE</span></span></button>
+                                    </form>
+                                </div>
+        <?php endif; ?>
+        
+        <?php
+        	$sku = $products1->text;
+        	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku); ?>
+                            <form action="<?php echo $this->helper('checkout/cart')->getAddUrl($product); ?>" method="post" id="product_addtocart_form_<?php echo $product->getId() . '_' . $hh['entity_id']; ?>" 
+                              data-product-id="<?php echo $product->getId()."_".$hh['entity_id']?>" class="product_addtocart_celebrities_form" <?php if ($product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?> >
+        <?php //$product = Mage::getModel('catalog/product')->load($product->getId()) ?>
+                                <div class="image_thumb_celeb">
+                                    <a href="<?php echo $product->getProductUrl() ?>">
+                                        <img src="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(74, 96) ?>"/>
+                                    </a>
+                                </div>
+                                <div class="product-shop">
+                                    <div class="product-name">
+                                    
+                                    <?php 
+                                    $arrayOfParentIds = Mage::getSingleton('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+                                    $parentId1 = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+                                    $productUrl = $product->getProductUrl();
+                                    if(!is_null($parentId1)){
+                                    	$productUrl = Mage::getModel("catalog/product")->load($parentId1)->getProductUrl();
+                                    }
+                                    
+                                    ?>
+                                    
+                                        <a href="<?php echo $productUrl ?>">
+                                            <h1><?php echo $product->getName() ?></h1>
+                                        </a>
+                                    </div>
+                                    <?php echo $this->getProductPriceBlock($product)->toHtml() ?>
+                                    <?php if ($product->getTypeId() == 'configurable' && 1==2): ?>
+                                        <script type="text/javascript">
+                                            var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig($product) ?>);
+                                        </script>
+                                        <div class="product-collateral">
+                                            <div id="product-options-wrapper" class="product-options">
+                                            <?php echo $this->getAttributesBlocks($product)->toHtml() ?>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                    <div class="product-options-bottom">
+                                        <?php // echo $this->getAddToCartBlock($product)->toHtml()  ?>
+                                        <?php $quickviewUrl = $this->getUrl('quickview/index/index', array('id' => $product->getId())); ?>
+                                        <?php $quickviewUrl = preg_replace('|http(s)?\:|', '', $quickviewUrl); ?>
+                                        <button class="fancybox fancybox.iframe button piercing-gallery-btn-quickview" id='product-quickview-<?php echo $product->getId() . '_' . $hh['entity_id']; ?>' href="<?= $quickviewUrl ?>"><span><span>BUY</span></span></button>
+                                    </div>
+                                </div>
+                            </form>
+                            <script type="text/javascript">
+                                jQuery.noConflict();
+                                jQuery('#product-quickview-<?php echo $product->getId() . '_' . $hh['entity_id']; ?>').attr('rel', 'gallery').fancybox({
+                                    openEffect  : 'none',
+                                    closeEffect : 'none',
+                                    nextEffect  : 'none',
+                                    prevEffect  : 'none',
+                                    padding     : 0,
+                                    mouseWheel  : false,
+                                    loop        : false,
+                                    helpers     : {
+                                        title   : null
+                                    },
+                                    margin      : [20, 60, 20, 60], // Increase left/right margin
+                                    width       : 785,
+                                    height      : 515
+                                });
+
+                                jQuery("#product_addtocart_form_<?php echo $product->getId() . '_' . $hh['entity_id']; ?> .add-to-cart .button").attr('onclick',"productAddToCartForm[<?php echo $product->getId() ?>].submit(this,this.form)");
+                                jQuery("#product_addtocart_form_<?php echo $product->getId() . '_' . $hh['entity_id']; ?> .add-to-cart #button-sample").attr('onclick',"doClick()");
+                                //<![CDATA[
+                                productAddToCartForm[<?php echo $product->getId() ?>] = new VarienForm('product_addtocart_form_<?php echo $product->getId() . '_' . $hh['entity_id']; ?>');
+                                productAddToCartForm[<?php echo $product->getId() ?>].submit = function(button, form) {
+                                    if (this.validator.validate()) {
+                                        addToShoppingCart(button,form);
+                                    }
+                                }.bind(productAddToCartForm[<?php echo $product->getId() ?>]);
+                                //]]
+                            </script>
+
+                            <script type="text/javascript">
+                                jQuery(document).ready(function(){
+                                    jQuery('.price-box').css('display','block');
+                                });
+                            </script>
+    <?php endforeach; ?>
+                    </div>
+    <?php $first = false;
+//endforeach; ?>
+
+ <?php endforeach; ?>
+  <?php endforeach; ?>
+   <?php endforeach; ?>
+    <?php endforeach; ?>
+
+            </div>
+        </div>
+    </div>
+    <?php else: ?>
+    <div class="content" >
+        <div id="wrapper">
+         <p class="products-look-msg"><!--<span id="remove-look-msg" onclick="jQuery('.products-look-msg').fadeOut()" title="<?php echo $this->__('Remove') ?>">x</span>--><?php echo $this->__('There are no products matching the selection') ?></p>
+            
+        </div>
+    </div>
+    <?php endif ?>
+</div>
