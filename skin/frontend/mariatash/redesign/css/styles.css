@@ -1248,7 +1248,7 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	padding: 0px !important;
 }
 
-.main {
+/* .main {
 	padding: 0px 20px;
 } /* QUITE PADDING TOP Y BOTTOM DE 18PX A 0PX - ARG */
 /*.wishlist-index-index .col2-left-layout .col-left { margin-top:18px; }*/
@@ -1283,10 +1283,10 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	padding-top: 305px;
 }
 
-.col1-layout .col-main {
+/* .col1-layout .col-main {
 	float: none; /*width:97%; padding:0 25px;*/
-	margin-bottom: 115px;
-}
+	/* margin-bottom: 115px;
+} */
 
 .cms-home .col1-layout .col-main {
 	float: none; /*width:97%; padding:0 25px;*/
@@ -3390,12 +3390,12 @@ p.required {
 }
 
 /* Page Heading */
-.page-title {
-	/*height: 38px;*/
+/* .page-title {
+	height: 38px;
 	margin: 7px 0 0px;
 	width: 100%;
 	overflow: hidden;
-}
+} */
 
 .page-title h1, .page-title h2 {
 	color: #38393D;
@@ -6326,12 +6326,12 @@ textarea:focus, input:focus {
 
 }
 
-.category-image {
+/* .category-image {
 	width: 100%;
 	overflow: hidden;
 	margin: 0 0 9px;
 	text-align: center;
-}
+} */
 
 .category-image img {
 	max-width: 100%;
@@ -6779,7 +6779,7 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 }
 
 .products-grid2 .three-in-row .item {
-	width: 32.3%;
+	width: 33.3%;
 	padding: 0.5%;
 }
 
@@ -6802,14 +6802,14 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 }
 
 /* Five in row for small images grid */
-.products-grid .five-in-row {
+/* .products-grid .five-in-row {
 	width: 100%;
 	float: left;
 	clear: both;
-}
+} */
 
 .products-grid .five-in-row .item {
-	width: 19%;
+	width: 20%;
 	padding: 0.5%;
 }
 
@@ -8628,12 +8628,12 @@ ul.product-tabs {
 /* ======================================================================================= */
 
 /* Content Styles ================================================================= */
-.product-name {
+/* .product-name {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 	line-height: 1.5;
-}
+} */
 /*.product-name a { color:#444; }*/
 
 /* Product Tags */

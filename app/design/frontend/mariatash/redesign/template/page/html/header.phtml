@@ -50,14 +50,14 @@ jQuery(document).ajaxComplete(function(){
 </script>
 
 <header>
-        <nav class="homepage-menu navbar navbar-expand-lg navbar-light mariatash-header d-lg-flex flex-lg-column justify-content-lg-center pb-0 pt-0">
+        <nav class="homepage-menu navbar fixed-top navbar-expand-lg mariatash-header d-lg-flex flex-lg-column justify-content-lg-center pb-0 pt-0">
           <div class="container-fluid row">
               <div class="col-12">
                 <div class="row">
                     <div class="position-absolute maria-left-menus">
                       <div class="row">
-                        <h1 class="mt-logo">
-                          <a class="navbar-brand d-none ml-3 logo" id="scroll-logo" href="<?php echo $this->getUrl('') ?>"  alt="MARIA TASH" title="MARIA TASH"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
+                        <h1 class="mt-logo-onscroll">
+                          <a class="navbar-brand d-none ml-3 logo p-0" id="scroll-logo" href="<?php echo $this->getUrl('') ?>"> <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
                         </h1>
                         <ul class="col-12 main-nav-link nav-links-left">
                           <li class="icon-item"><?php echo $this->getChildHtml('store_currency_selector') ?></li>
@@ -109,58 +109,8 @@ jQuery(document).ajaxComplete(function(){
                             <div class="bar bar3"></div>
                     </div>
             </button>
+            <?php echo $this->getChildHtml('submenu') ?>
         </nav>
-
-        <!-- <div class="open-navigation">
-            <div class="col-lg-8 offset-lg-2">
-                <div class="row">
-                    <div class="col-lg-3 py-5 px-3">
-                        <h6>Place holder</h6>
-                        <ul>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                        </ul><br>
-                        <h6>Place holder</h6>
-                        <ul>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 py-5 px-3">
-                        <h6>Place holder</h6>
-                        <ul>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                        </ul>
-                        <br>
-                        <h6>Place holder</h6>
-                        <ul>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 py-5 px-3">
-                        <h6>Place holder</h6>
-                        <ul>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                            <li><a href="detail.html">Place holder</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 py-5 px-3">
-                        <h6>Place holder</h6>
-                        <img class="img-fluid gray" src="images/item1.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </header>
 
 

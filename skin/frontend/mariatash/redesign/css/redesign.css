@@ -177,7 +177,6 @@ span {
 .homepage-menu.mariatash-header {
     /* background: linear-gradient(180deg, #2f2f2fee 15%, #2f2f2f66 70%, #9991 100%);  */
     background: linear-gradient(to bottom, #25211e 0%, rgba(37, 33, 30, 0) 100%);
-    z-index: 1;
 }
 
 /* .homepage-menu.mariatash-header:hover {
@@ -460,6 +459,7 @@ font-size: 11px;
     .header-height {
         transition: 500ms ease;
         height: 70px!important;
+        background: rgba(41,41,41,0.90) !important;
     }
 }
 
@@ -1215,7 +1215,7 @@ input[type="checkbox"]:checked+label:before {
 } */
 
 /*Header*/
-.nav-item span {
+.nav-item span, .level-top span {
     font-size: 13px;
     color: #fff;
     letter-spacing: 0.5px;
@@ -1256,7 +1256,7 @@ input[type="checkbox"]:checked+label:before {
     padding: 0px 0 14px 0;
 }
 #top-nav {
-    padding-bottom: 81px;
+    padding-bottom: 31px;
 }
 .mariatash-header:hover #top-nav {
     padding-bottom: 31px;
@@ -1313,91 +1313,80 @@ input[type="checkbox"]:checked+label:before {
     left: 0 !important;
 }
 
-/*Mobile Navigation*/
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: white;
-    overflow-x: hidden;
-    transition: 0.5s;
-    top: 61px;
-    border-top: 1px solid #d8d8d8;
-}
-
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-.nav-icon-mobile{
-    font-size:30px;cursor:pointer;
-}
-
-.close a {
-    font-size: 45px;
-    color: #000;
-    position: absolute;
-    top: 2px;
-    font-weight: 100;
-    left: 22px;
-}
-
-li.nav-item-mobile a {
-    border-bottom: 2px solid #cbccc7;
-    color: #000;
-    font-weight: 500;
-    font-size: 13px;
-    padding-top: 35px;
-    letter-spacing: 1px;
-    line-height: 21px;
-}
-
-li.nav-item-mobile a {
-    border-bottom: 2px solid #cbccc7;
-    color: #000;
-    font-weight:3500;
-    font-size: 12px;
-    padding-top: 35px;
-}
-
-.nav-options-mobile button {
-    background: transparent;
-}
-
-.nav-options-mobile i.glyphicon.glyphicon-search {
-    font-size: 17px;
-}
-
-.mobile-nav {
-    background: #fff;
-    border: 1px solid #d8d8d8;
-}
-
-.mobile-nav img.small {
-    margin-top: 12px !important;
-}
-
 .mariatash-header-nav li a{
     color: #4a4a4a;
     font-weight: 500;
+}
+.sub ul li {
+    width: 20%;
+}
+.sub ul {
+    display: flex;
+}
+/*Sub menus*/
+.menu-common-section {
+    margin-top: 48px;
+    margin-bottom: 28px;
+}
+.head-child li a {
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 13px;
+}
+.menu-head span {
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+.inner-box {
+    width: 624px;
+    margin-left: 141px;
+}
+.right-section a:last-child {
+    margin-left: 9px;
+}
+.menu-head {
+    margin-bottom: 8px;
+}
+.sub-menu {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    top: 138px;
+    overflow-x: hidden;
+}
+#piercing_appointments {
+    padding: 48px 9px;
+}
+#piercing_appointments .col {
+    width: 14.28%;
+    padding: 0;
+    text-align: center;
+}
+.image-text {
+    position: absolute;
+    bottom: 15px;
+    width:100%;
+}
+.image-text h6{
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-family: Din-Regular;
+}
+.head-child {
+    line-height: 25px;
+}
+.right-section a {
+    margin-left: 4px;
+}
+/* Mobile Navigation */
+#side-navigation {
+    width: 30%;
+    background: rgb(41, 41, 41);
+}
+.side-nav-link{
+		color: #fff !important;
+}
+.nav-item-mobile {
+    padding: 20px 0;
+    border-bottom: 1px solid #fff;
 }

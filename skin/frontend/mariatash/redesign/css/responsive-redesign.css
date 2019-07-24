@@ -31,4 +31,25 @@
   .social-media ul {
     margin-bottom: 40px;
   }
+  .inner-box {
+    width: 100%;
+    margin-left: 0;
+  }
+  .head-child {
+    display: none;
+  }
+  .right-section a {
+    width: 100%;
+    margin-left: 30px !important;
+  }
+  .sub-menu{
+    width: 50% !important;
+  }
+  #piercing_appointments .col{
+    width: 100%;
+    margin-bottom: 9px;
+  }
+  #piercing_appointments{
+    padding: 48px 15px;
+  }
 }
