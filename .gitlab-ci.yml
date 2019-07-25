@@ -2,6 +2,7 @@ before_script:
   - echo 'Start Deployment'
 stages:
   - development
+  - redesign
   - alpha
   - beta
   - deploy
@@ -30,6 +31,17 @@ alpha_teamwork:
   script:
     - mage-deploy mariatash-teamwork
     - echo 'Deployed on Teamwork Staging'
+    
+alpha_redesign:
+  environment: redesign
+  stage: redesign
+  tags:
+    - beta
+  only:
+    - redesign
+  script:
+    - mage-deploy mt-redesign
+    - echo 'Deployed on Nascense Staging'
     
 alpha_elasticsearch:
   environment: elasticsearch
