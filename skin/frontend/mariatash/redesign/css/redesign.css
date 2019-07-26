@@ -67,6 +67,7 @@ button:focus {
 a {
     color: #666;
     letter-spacing: 0.5px;
+    text-decoration: none !important;
 }
 
 a:hover {
@@ -1218,7 +1219,10 @@ input[type="checkbox"]:checked+label:before {
 .nav-item span, .level-top span {
     font-size: 13px;
     color: #fff;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+}
+.main-nav-title li:last-child {
+    margin-right: 0;
 }
 .block-currency, #currency-selector{
   z-index: 1;
@@ -1246,11 +1250,14 @@ input[type="checkbox"]:checked+label:before {
 }
 .form-search input.input-text{
     float: left;
-    width: 250px;
+    width: 285px;
     border: none;
     background: none;
     border-bottom: 1px solid #fff;
     color:#fff;
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 0px 0 10px 0;
 }
 .mt-logo {
     padding: 0px 0 14px 0;
@@ -1273,12 +1280,13 @@ input[type="checkbox"]:checked+label:before {
 .maria-left-menus{
     left: 3px;
     z-index: 1;
+    top: 2px;
 }
 .maria-right-menus{
     right: 0px;
 }
 .main-nav-title li {
-    margin-right: 61.5px;
+    margin-right: 54px;
 }
 .last.nav-item, .main-nav-link li:last-child {
     margin-right: 0;
@@ -1330,8 +1338,9 @@ input[type="checkbox"]:checked+label:before {
 }
 .head-child li a {
     font-size: 13px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     line-height: 13px;
+    font-family: Din;
 }
 .menu-head span {
     font-size: 13px;
@@ -1339,13 +1348,13 @@ input[type="checkbox"]:checked+label:before {
 }
 .inner-box {
     width: 624px;
-    margin-left: 141px;
+    margin-left: 137px;
 }
 .right-section a:last-child {
     margin-left: 9px;
 }
 .menu-head {
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 }
 .sub-menu {
     z-index: 1;
@@ -1375,9 +1384,14 @@ input[type="checkbox"]:checked+label:before {
 .head-child {
     line-height: 25px;
 }
-.right-section a {
-    margin-left: 4px;
+.menu-head a {
+    font-family: Din-Regular;
+    letter-spacing: 2px;
 }
+.right-section {
+    padding-left: 3px;
+}
+
 /* Mobile Navigation */
 #side-navigation {
     width: 30%;
@@ -1389,4 +1403,25 @@ input[type="checkbox"]:checked+label:before {
 .nav-item-mobile {
     padding: 20px 0;
     border-bottom: 1px solid #fff;
+}
+#cross-icon {
+    right: 0;
+}
+#search::placeholder {
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+/* Catalog Page CSS */
+.catalog-category-view .mariatash-header:hover {
+    background: transparent;
+}
+.five-col{
+  width: 20%;
+}
+.products-grid li.item{
+  padding: 4px;
+}
+.catalog-common-grid{
+  padding: 34px;
 }

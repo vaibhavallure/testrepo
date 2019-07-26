@@ -134,15 +134,15 @@ $mode  = $this->getMode();
                             ->addAttributeToFilter('visibility', 4);
                 if($products->getSize() > 30) : ?>
                     <div class="toolbar">
-                        <span style="float:right; padding: 5px;"><?php echo $products->getSize(); ?> Items</span>
+                        <span><?php echo $products->getSize(); ?> Items</span>
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
             <?php echo $this->getToolbarHtml() ?>
         </div>
         <div id="loaderProducts" class="hideLoader"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>"></div>
-        <div id="productsContainer-wrapper">
-            <div id="productsContainer">
+        <div id="productsContainer-wrapper" class="row">
+            <div id="productsContainer col-12">
                 <?php // List mode ?>
                 <?php if ($this->getMode() != 'grid'): ?>
                     <?php // Grid Mode ?>
@@ -150,8 +150,7 @@ $mode  = $this->getMode();
                     <?php $_collectionSize = $_productCollection->count() ?>
                     <?php $_columnCount = $this->getColumnCount(); ?>
                     <?php $_iterator = 0; ?>
-                    <ul class="products-grid2"  style="text-align:left;">
-                        <div class="three-in-row">
+                    <ul class="products-grid2 catalog-common-grid row">
                         <?php $i = 1;
                         foreach ($_productCollection as $_product): ?>
                             <?php
@@ -161,7 +160,7 @@ $mode  = $this->getMode();
                             $simples = $this->getIcons($currentProductId);
                             $firstOption = null;
                             ?>
-                            <li class="item" id="item-<?php echo $_product->getId() ?>">
+                            <li class="item col-lg-4" id="item-<?php echo $_product->getId() ?>">
                                 <a id="<?php echo $_product->getId() ?>"
                                    href="<?php echo $productUrl; ?>"
                                    class="product-image"><img id="img-<?php echo $_product->getId() ?>" class="productimg"
@@ -241,10 +240,9 @@ $mode  = $this->getMode();
                                 </div>
                             </li>
                             <?php if($i % 3 == 0 && $i!= 0) : ?>
-                                </div><div class="three-in-row">
                             <?php endif; $i++; ?>
                         <?php endforeach ?>
-                        </div><!--/three-in-row-->
+                      <!--/three-in-row-->
                     </ul>
                     <script type="text/javascript">
                         jQuery(document).ready(function(){
@@ -259,8 +257,8 @@ $mode  = $this->getMode();
                     <?php $_collectionSize = $_productCollection->count() ?>
                     <?php $_columnCount = $this->getColumnCount(); ?>
                         <?php $_iterator = 0; ?>
-                    <ul class="products-grid" style="text-align:left;">
-                        <div class="five-in-row">
+                    <ul class="products-grid row catalog-common-grid">
+
                         <?php
                         $i = 1;
                         foreach ($_productCollection as $_product):
@@ -271,7 +269,7 @@ $mode  = $this->getMode();
                             $currentProductId = $_product->getId();
                             $simples = $this->getIcons($currentProductId);
                             ?>
-                            <li class="item" id="item-<?php echo $_product->getId() ?>">
+                            <li class="item five-col" id="item-<?php echo $_product->getId() ?>">
                                 <a id="<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
                                    class="product-image"><img id="img-<?php echo $_product->getId() ?>"
                                                            src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(376, 490); ?>"
@@ -355,10 +353,10 @@ $mode  = $this->getMode();
                                 </div>
                             </li>
                             <?php if($i % 5 == 0 && $i!= 0) : ?>
-                                </div><div class="five-in-row">
+
                             <?php endif; $i++; ?>
                         <?php endforeach ?>
-                        </div><!--/five-in-row-->
+                        <!--/five-in-row-->
                     </ul>
                     <script type="text/javascript">
                         productItemHoverBinding('ul.products-grid');

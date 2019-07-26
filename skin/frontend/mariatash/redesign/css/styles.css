@@ -581,25 +581,25 @@ a, object, embed {
 	outline: 0;
 }
 
-a {
+/* a {
 	text-decoration: none;
 	color: inherit;
 	color: #906E39;
-}
+} */
 
 a:hover {
 	text-decoration: underline;
-	color: #ecc388;
+
 }
 
 a:focus {
 	outline: 0;
-	color: #ecc388;
+	/* color: #ecc388; */
 }
 
 .account-login a, .my-account  a {
-	text-decoration: underline;
-	color: #3f4048;
+	/* text-decoration: underline;
+	color: #3f4048; */
 	font-size: 12px;
 }
 
@@ -1293,21 +1293,18 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	margin-bottom: 0;
 }
 
-.col1-layout .col-main a:visited, .col1-layout .col-main a {
+/* .col1-layout .col-main a:visited, .col1-layout .col-main a {
 	font-size: 13px;
-}
+} */
 
-.col1-layout .col-main a:hover {
 
-}
-
-.col1-layout .registered-users a:hover {
+/* .col1-layout .registered-users a:hover {
 	font-size: 11px;
 }
 
 .paypal-express-review .col1-layout .col-main a {
 	font-size: 12px;
-}
+} */
 
 .col1-layout .col-main a .tattoo-image-holder {
 	display: block;
@@ -3727,10 +3724,10 @@ p.category-image-bleed img {
 }
 
 /* Sorter */
-.sorter {
+/* .sorter {
 	font-size: 11px;
-	line-height: 1.63636; /*padding: 9px 8px 8px;*/
-}
+	line-height: 1.63636;
+} */
 
 .sorter .grid {
 	background: url(../images/grid1.jpg);
@@ -3764,14 +3761,10 @@ p.category-image-bleed img {
 	background: url(../images/grid2-h.jpg);
 }
 
-.sorter .view-mode {
+/* .sorter .view-mode {
 	float: right;
 	margin: 0 0 10px 0;
-}
-
-.toolbar .sorter .view-mode {
-
-}
+} */
 
 .sorter .limiter {
 	float: right;
@@ -3828,18 +3821,15 @@ p.category-image-bleed img {
 } /**/
 
 /* Toolbar */
-.toolbar {
+/* .toolbar {
 	margin: 9px 0;
-}
+} */
 
-.toolbar .pager {
 
-}
-
-.toolbar .sorter {
+/* .toolbar .sorter {
 	float: right;
 	margin-top: -29px;
-}
+} */
 
 .catalogsearch-result-index .toolbar .sorter {
 	margin-top: -35px;
@@ -3865,11 +3855,11 @@ p.category-image-bleed img {
 	display: none;
 }
 
-.toolbar label {
+/* .toolbar label {
 	float: left;
 	margin: 1px 5px 3px 3px;
 	font-size: 13px;
-}
+} */
 
 .toolbar-bottom-container {
 	position: absolute;
@@ -5737,21 +5727,10 @@ textarea:focus, input:focus {
 	width: 100%;
 }
 /* Block: Layered Navigation */
-.block-layered-nav {
 
-}
-
-.block-layered-nav .block-title {
-
-}
-
-.block-layered-nav .block-content {
+/* .block-layered-nav .block-content {
 	float: left;
-}
-
-.block-layered-nav .block-subtitle {
-
-}
+} */
 
 .block-layered-nav p.block-subtitle {
 	margin-bottom: 0;
@@ -5777,21 +5756,11 @@ textarea:focus, input:focus {
 	filter: alpha(opacity = 60); /* For IE8 and earlier */
 }
 
-.block-layered-nav dd li {
-
-}
 
 .block-layered-nav dd a {
 	color: #444;
 }
 
-.block-layered-nav .currently ol {
-
-}
-
-.block-layered-nav .currently li {
-
-}
 
 .block-layered-nav .currently .label {
 	font-weight: bold;
@@ -5801,15 +5770,15 @@ textarea:focus, input:focus {
 
 }
 
-.block-layered-nav .actions {
+/* .block-layered-nav .actions {
 	margin: 0;
-}
+} */
 
-.block-layered-nav .actions a {
+/* .block-layered-nav .actions a {
 	float: none;
 	font-size: 12px;
 	display: inline-block;
-}
+} */
 
 /* Block: Cart */
 .top-links {
@@ -6297,9 +6266,9 @@ textarea:focus, input:focus {
 	top: 280px;
 }
 
-.with-category-image .mb-mana-catalog-leftnav .block-layered-nav {
+/* .with-category-image .mb-mana-catalog-leftnav .block-layered-nav {
 	top: 270px;
-}
+} */
 
 .category-ear-cartilage-jewelry .category-title {
 	margin: 0px 0 3px;
@@ -6409,39 +6378,39 @@ textarea:focus, input:focus {
 	margin-right: 40px;
 }
 
-#productsContainer {
+/* #productsContainer {
 	position: relative;
 	z-index: 0;
 	text-align: left;
 	margin-bottom: 85px;
-}
+} */
 
-#productsContainer ul {
+/* #productsContainer ul {
 	font-size: 0;
 	clear: both;
-}
+} */
 
 .lt-ie9 #productsContainer {
 	padding-top: 7px;
 }
 /* View Type: Grid */
-.products-grid {
+/* .products-grid {
 	position: relative;
-}
+} */
 
-.products-grid.last {
+/* .products-grid.last {
 	border-bottom: 0;
-}
+} */
 
-ul.products-grid {
+/* ul.products-grid {
 	margin: 5px -20px 18px;
 	text-align: left;
-}
+} */
 /*.products-grid li.item:nth-of-type(6) { clear:both; display:block; }*/
 .products-grid li.item .list-mt-w {
-	background: #3f4048;
-	display: none;
-	min-height: 100px;
+	/* background: #3f4048; */
+	/* display: none; need to uncomment later*/
+	/* min-height: 100px; */
 }
 
 .products-grid li.item .list-mt-w p {
@@ -6482,24 +6451,24 @@ ul.products-grid {
 }
 
 /*.products-grid li.item:hover .list-mt-w .actions a:hover { color:#3f4048; }*/
-.products-grid li.item {
+/* .products-grid li.item {
 	display: inline-block;
 	vertical-align: top;
 	width: 234px;
 	padding: 4px;
 	color: #CCCCCC;
 	position: relative;
-}
+} */
 
-.products-grid li.over {
+/* .products-grid li.over {
 	background: #3f4048;
 	position: relative;
 	padding: 8px;
 	margin: -4px;
-}
+} */
 /*.products-grid li.item:hover { background:#3f4048; position:relative; padding:8px; margin:-5px;  }*/
 /* View Type: grid new styles*/
-.products-grid li.over .list-mt-w {
+/* .products-grid li.over .list-mt-w {
 	color: #dedede;
 	z-index: 9999;
 	display: block;
@@ -6535,7 +6504,7 @@ ul.products-grid {
 .products-grid li.over .list-mt-w .actions {
 	text-align: center;
 	position: relative;
-}
+} */
 
 .products-grid li.over .list-mt-w .button {
 	font-family: dinmittelschriftregular;
@@ -6603,23 +6572,23 @@ ul.products-grid {
 	border-bottom: 0;
 }
 
-ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
+/* ul.products-grid2 { margin:0 auto 0; max-width:1240px;
 	text-align: left;
-}
+} */
 
 .products-grid2 li.item {
-	display: inline-block;
+	/* display: inline-block;
 	vertical-align: top;
 	width: 314px;
-	padding: 5px;
 	color: #CCCCCC;
 	position: relative;
+	padding: 5px;*/
 }
 
-.products-grid2 li.item .grid-mt-w {
+/* .products-grid2 li.item .grid-mt-w {
 	background: #3f4048;
 	display: none;
-}
+} */
 
 .products-grid2 li.item .grid-mt-w p {
 	text-align: center;
@@ -6630,14 +6599,14 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 .products-grid2 li.item:hover .grid-mt-w .button { font-family:dinmittelschriftregular; text-transform:uppercase; color:#3f4048; text-decoration:none; font-weight:normal; font-size:14px; width:100px; padding:3px 0; }
 .products-grid2 li.item:hover .grid-mt-w .button:hover { font-family:dinmittelschriftregular; text-transform:uppercase; color:#3f4048; text-decoration:none; font-weight:normal; font-size:14px; width:100px; padding:3px 0; }
 .products-grid2 li.item:hover .grid-mt-w a:hover { color:#ecc388; }*/
-.products-grid2 li.over {
+/* .products-grid2 li.over {
 	background: #3f4048;
 	position: relative;
 	padding: 10px;
 	margin: -5px;
-}
+} */
 
-.products-grid2 li.over .grid-mt-w {
+/* .products-grid2 li.over .grid-mt-w {
 	position: absolute;
 	z-index: 9999;
 	display: block;
@@ -6648,8 +6617,8 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 	margin-left: -10px;
 	padding: 15px 23px;
 	text-align: center;
-	color: #dedede; /*background:#3f4048;*/
-}
+	color: #dedede;
+} */
 
 .products-grid2 li.over .grid-mt-w a, visited {
 	font-family: Arial, Helvetica, sans-serif;
@@ -6690,9 +6659,9 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 	margin-right: 0;
 }
 
-.products-grid .product-image {
+/* .products-grid .product-image {
 	display: block;
-}
+} */
 
 .products-grid2 .product-image img, .products-grid .product-image img {
 	display: block;
@@ -6723,9 +6692,9 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 
 }
 
-.products-grid.first .product-image {
+/* .products-grid.first .product-image {
 	border-top: 0;
-}
+} */
 
 .products-grid li.last .product-image {
 	color: #3f4048;
@@ -6761,25 +6730,22 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 	bottom: 0;
 }
 
-.col2-left-layout .products-grid, .col2-right-layout .products-grid {
 
-}
-
-.col1-layout .products-grid, .page-empty .products-grid, .col1-layout .products-grid2,
+/* .col1-layout .products-grid, .page-empty .products-grid, .col1-layout .products-grid2,
 .page-empty .products-grid2 {
 	text-align: left !important;
-	padding: 0; /*max-width:1215px; margin:0 auto 0;*/
-}
+	padding: 0;*max-width:1215px; margin:0 auto 0;
+} */
 
 /* Three in row for big images grid */
-.products-grid2 .three-in-row {
+/* .products-grid2 .three-in-row {
 	width: 100%;
 	float: left;
 	clear: both;
-}
+} */
 
 .products-grid2 .three-in-row .item {
-	width: 33.3%;
+	/* width: 33.3%; */
 	padding: 0.5%;
 }
 
@@ -6808,15 +6774,15 @@ ul.products-grid2 { /*margin:0 auto 0; max-width:1240px;*/
 	clear: both;
 } */
 
-.products-grid .five-in-row .item {
+ .products-grid .five-in-row .item {
 	width: 20%;
 	padding: 0.5%;
 }
 
-.products-grid .five-in-row .item a, .products-grid .five-in-row .item img
+/* .products-grid .five-in-row .item a, .products-grid .five-in-row .item img
 {
 	width: 100%;
-}
+} */
 
 .products-grid .five-in-row li.over {
 	padding: 0.5%;
@@ -16944,33 +16910,33 @@ li.item h2.product-name {text-align: center;}
 	min-width: 220px;
 }
 
-.toolbar-top {
+/* .toolbar-top {
 	position: absolute;
 	z-index: 100;
 	z-index: 9999;
 	top: 56px;
 	right: 0;
 	width: 100%;
-}
+} */
 
 .lt-ie9 .toolbar-top {
 	top: 14px;
 }
 
-.toolbar-bottom {
+/* .toolbar-bottom {
 	position: absolute;
 	z-index: 100;
 	bottom: 0;
 	width: 100%;
 	right: 0;
-}
+} */
 
-.toolbar-top .toolbar {
+/* .toolbar-top .toolbar {
 	margin: 0;
 	position: absolute;
 	right: 0;
 	top: 22px;
-}
+} */
 
 .product-view .product-shop .product-name {
 	margin: 0 -1px 8px;
@@ -17008,7 +16974,7 @@ li.item h2.product-name {text-align: center;}
 	overflow: hidden;
 }
 
-ul.products-grid {
+/* ul.products-grid {
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -17016,7 +16982,7 @@ ul.products-grid {
 ul.products-grid2 {
 	margin-left: auto;
 	margin-right: auto;
-}
+} */
 
 .banner-c-code p strong {
 	font-size: 17px !important;
@@ -18379,17 +18345,9 @@ h2.products-look-msg {
 	padding-top: 7px;
 }
 
-.cart_header {
-
-}
-
-.cart_header #topcart-popup .content_cart {
-
-}
-
-#narrow-by-list li {
+/* #narrow-by-list li {
 	position: relative;
-}
+} */
 
 #narrow-by-list li div  dt {
 	z-index: 1;
@@ -18596,9 +18554,9 @@ h2.products-look-msg {
 	top: -58px;
 }
 
-.with-category-image .toolbar-top .toolbar {
+/* .with-category-image .toolbar-top .toolbar {
 	top: -74px;
-}
+} */
 
 .lt-ie9 .with-category-image .toolbar-top .toolbar {
 	top: -80px;
@@ -19118,18 +19076,14 @@ h2.products-look-msg {
 	float: left;
 }
 
-.mb-mana-catalog-leftnav {
+/* .mb-mana-catalog-leftnav {
 	position: relative;
-}
+} */
 
-.catalog-category-view .block-layered-nav {
+/* .catalog-category-view .block-layered-nav {
 	z-index: 100;
 	margin-top: 8px !important;
-}
-
-.lt-ie9 .block-layered-nav {
-
-}
+} */
 
 .catalogsearch-result-index .block-layered-nav {
 	top: 232px;
@@ -19226,10 +19180,10 @@ ol.m-filter-css-checkboxes li a.m-checkbox-unchecked, ol.m-filter-css-checkboxes
 	top: 2px;
 }
 
-ul#narrow-by-list {
+/* ul#narrow-by-list {
 	margin: 0 20px 0 0;
 	padding: 0;
-}
+} */
 
 ul#narrow-by-list li {
 	float: left;
@@ -19326,22 +19280,22 @@ ul#narrow-by-list li dd .m-more-less a.m-show-more-action {
 	float: left;
 }
 
-#selected_filters_actives {
+/* #selected_filters_actives {
 	overflow: hidden;
-}
+} */
 
-#selected_filters_actives li {
+/* #selected_filters_actives li {
 	float: left;
 	color: #38393c;
 	margin-right: 15px;
-}
+} */
 
 .block-layered-nav .currently #selected_filters_actives .btn-remove,
 .block-layered-nav .currently #selected_filters_actives span {
 	float: left;
 }
 
-.mb-category-products .toolbar, .mb-search-result .toolbar {
+/* .mb-category-products .toolbar, .mb-search-result .toolbar {
 	position: absolute;
 	right: 0px;
 	top: -84px;
@@ -19351,7 +19305,7 @@ ul#narrow-by-list li dd .m-more-less a.m-show-more-action {
 
 .mb-search-result .toolbar {
 	top: -77px;
-}
+} */
 /*
 .category-ear-lobe-jewelry-and-earrings .mb-category-products .toolbar {
     top:-84px;
@@ -19375,13 +19329,9 @@ ul#narrow-by-list li dd .m-more-less a.m-show-more-action {
 	z-index: 100;
 }
 
-#productsContainer-wrapper {
+/* #productsContainer-wrapper {
 	margin-top: 56px;
-}
-
-.lt-ie9 #productsContainer-wrapper {
-
-}
+} */
 
 .mb-mana-catalogsearch-leftnav .currently {
 	float: left;
@@ -19394,9 +19344,9 @@ ul#narrow-by-list li dd .m-more-less a.m-show-more-action {
 	z-index: -1;
 }
 
-.mb-mana-catalogsearch-leftnav .actions {
+/* .mb-mana-catalogsearch-leftnav .actions {
 	float: left;
-}
+} */
 /**
  * @category    Mana
  * @package     ManaPro_FilterColors

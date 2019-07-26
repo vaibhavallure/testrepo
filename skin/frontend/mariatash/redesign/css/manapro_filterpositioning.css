@@ -188,4 +188,4 @@
 .m-radios {} /* Radio buttons */
 .m-slider {} /* Slider */
 
-#narrow-by-list:after { display:block; content:"."; clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }
+#narrow-by-list:after { display:block; content:"."; clear: both; font-size:0; line-height:0; height:0; overflow:hidden; }
