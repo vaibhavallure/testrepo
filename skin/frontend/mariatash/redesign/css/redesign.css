@@ -1440,18 +1440,66 @@ input[type="checkbox"]:checked+label:before {
   background: #fff;
 }
 .mobile-main_menu{
-  background: gray none repeat scroll 0% 0%;
-  width: 200px;
-  left: -200px;
-  top: 73px;
+  background: #292929;
+  width: 290px;
+  left: -320px;
+  top: 68px;
   position: absolute;
   z-index: 999;
   display: block;
   overflow: hidden;
   transition:.3s;
 }
+.mobile-main_menu .main-nav-title li {
+  text-align: left;
+  border-bottom: 1px solid #fff;
+  width: 93%;
+  padding: 15px 0px;
+  text-transform: uppercase;
+}
+.mobile-main_menu ul {
+    padding-left: 10px;
+}
+.mobile-main_menu li:after {
+    background: url(../images/redesign/arrow-down-bk-right.png);
+    content: '';
+}
 .mobile-main_menu.active{
   left:0;
+}
+.mobile-main_menu .main-nav-title{
+  padding-bottom: 71px;
+}
+.mobile-sub_menu .sub-menu {
+  left: 0;
+  width: 290px !important;
+  top: 63px;
+}
+.close-section {
+  margin: 10px;
+}
+.menu-common-section{
+  margin-top: 20px;
+}
+.mobile-sub_menu .right-section img {
+  display: none;
+}
+.mobile-sub_menu .image-text{
+  position: relative;
+  bottom: 0;
+  text-align: left;
+}
+.mobile-sub_menu .right-section {
+  padding-left: 16px;
+}
+.mobile-sub_menu .special-menu {
+  margin-top: 3px;
+  margin-bottom: 13px;
+}
+.mobile-sub_menu .image-text h6{
+  color: #666 !important;
+  font-family: urw-din-regular;
+  letter-spacing: 2px;
 }
 .catalog-category-view .actions .super_attribute ul li, .catalogsearch-result-index .actions .super_attribute ul li{
   border-radius: 100%;
