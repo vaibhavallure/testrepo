@@ -125,24 +125,27 @@ $mode  = $this->getMode();
     </div>
 <?php else: ?>
     <div class="category-products">
-        <div class="toolbar-top">
+        <div class="toolbar-top text-right float-right col-1">
+          <?php echo $this->getToolbarHtml() ?>
             <?php if(Mage::helper('aw_ajaxcatalog')->isEnabled()) : ?>
                 <?php $catId = $this->getLayer()->getCurrentCategory()->getId();
                 $products = Mage::getModel('catalog/category')->load($catId)->getProductCollection()
                             ->addAttributeToSelect('entity_id')
                             ->addAttributeToFilter('status', 1)
                             ->addAttributeToFilter('visibility', 4);
+
                 if($products->getSize() > 30) : ?>
                     <div class="toolbar">
                         <span><?php echo $products->getSize(); ?> Items</span>
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <?php echo $this->getToolbarHtml() ?>
+
         </div>
         <div id="loaderProducts" class="hideLoader"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>"></div>
-        <div id="productsContainer-wrapper" class="row">
-            <div id="productsContainer col-12">
+        <div class="col-12">
+        <div id="productsContainer-wrapper" class="row w-100 m-0">
+            <div id="productsContainer " class="col-12 p-1">
                 <?php // List mode ?>
                 <?php if ($this->getMode() != 'grid'): ?>
                     <?php // Grid Mode ?>
@@ -163,27 +166,40 @@ $mode  = $this->getMode();
                             <li class="item col-lg-4" id="item-<?php echo $_product->getId() ?>">
                                 <a id="<?php echo $_product->getId() ?>"
                                    href="<?php echo $productUrl; ?>"
-                                   class="product-image"><img id="img-<?php echo $_product->getId() ?>" class="productimg"
+                                   class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>" class="productimg"
                                                            src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(450, 585); ?>"
                                                            width="314" height="409"
                                                            alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
-                                <div class="grid-mt-w">
-                                    <h2 id="<?php echo $_product->getId() ?>" class="product-name">
-                                        <a  id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
-                                            title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
-                                    </h2>
+                                <div class="grid-mt-w col-12">
+                                  <div class="row">
+                                    <div class="col-9">
+                                      <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
+                                          <a  id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
+                                              title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
+                                      </h6>
+                                    </div>
                                     <div style="display:none;">
                                         <span id="link-qv-<?php echo $_product->getId(); ?>"><?php echo $quickViewUrl; ?></span>
                                         <span id="link-pv-<?php echo $_product->getId(); ?>"><?php echo $productUrl; ?></span>
                                     </div>
-                                    <div class="actions">
-                                        <div class="priceCategory default " id="default-price-<?php echo $_product->getEntityId(); ?>">
-                                            <p><?= $this->getPriceHtml($_product) ?></p>
-                                        </div>
+                                    <div class="col-3">
+                                      <div class="priceCategory default " id="default-price-<?php echo $_product->getEntityId(); ?>">
+                                          <p><?= $this->getPriceHtml($_product) ?></p>
+                                      </div>
+                                  </div>
+                                    <div class="actions col-12">
+                                      <div class="row justify-content-between">
                                         <?php if ($_product->getIsSalable()): ?>
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
+                                              <div class="col">
+                                                <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm"
+                                                   id='product-quickview-<?php echo $_product->getId() ?>'
+                                                   href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
+                                                   title="<?php echo $this->__('quick view') ?>"><span class="text-white"><?php echo $this->__('quick view') ?></span>
+                                                 </a>
+                                               </div>
                                                <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
-                                                <div class="super_attribute" id="super-attribute-<?php echo $_product->getId() ?>">
+                                                <div class="super_attribute col" id="super-attribute-<?php echo $_product->getId() ?>">
                                                     <?php
                                                     $productId = $_product->getId();
                                                     $optionsValues = $this->getIcons($productId);
@@ -198,7 +214,7 @@ $mode  = $this->getMode();
                                                                 <?php echo $attribute_label; ?>:
                                                             </span>
                                                         </div>
-                                                        <ul id="color-icons-<?php echo $productId;?>">
+                                                        <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
                                                             <?php
                                                             $j=0;
                                                             foreach ($optionsValues['value'] as $option): ?>
@@ -222,10 +238,6 @@ $mode  = $this->getMode();
                                                         </ul>
                                                     <?php endif;?>
                                                 </div>
-                                                <a class="fancybox fancybox.iframe button btn-quickview"
-                                                   id='product-quickview-<?php echo $_product->getId() ?>'
-                                                   href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
-                                                   title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
                                             <?php else: ?>
                                                 <a class="fancybox fancybox.iframe button btn-quickview"
                                                 id='product-quickview-<?php echo $_product->getId() ?>'
@@ -236,7 +248,9 @@ $mode  = $this->getMode();
                                             <p class="availability out-of-stock">
                                             <span><?php echo $this->__('Out of stock') ?></span></p>
                                         <?php endif; ?>
+                                      </div>
                                     </div>
+                                  </div>
                                 </div>
                             </li>
                             <?php if($i % 3 == 0 && $i!= 0) : ?>
@@ -271,21 +285,35 @@ $mode  = $this->getMode();
                             ?>
                             <li class="item five-col" id="item-<?php echo $_product->getId() ?>">
                                 <a id="<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
-                                   class="product-image"><img id="img-<?php echo $_product->getId() ?>"
+                                   class="product-image"><img class="catalog-grid-image" id="img-<?php echo $_product->getId() ?>"
                                                            src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(376, 490); ?>"
                                                            width="376" height="490"
                                                            alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>"/></a>
-                                <div class="list-mt-w">
-                                    <h2 id="<?php echo $_product->getId() ?>" class="product-name">
-                                        <a id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
-                                           title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
-                                    </h2>
-                                    <div style="display:none;">
-                                        <span id="link-qv-<?php echo $_product->getId(); ?>" ><?php echo $quickViewUrl; ?></span>
-                                        <span id="link-pv-<?php echo $_product->getId(); ?>" ><?php echo $productUrl; ?></span>
+
+
+                                <div class="list-mt-w p-1">
+                                  <div class="row justify-content-between">
+                                        <div class="col-12">
+                                          <div class="row list-mt-upper">
+                                            <div class="col-9">
+                                              <h6 id="<?php echo $_product->getId() ?>" class="product-name text-left">
+                                                  <a id="product-name-<?php echo $_product->getId() ?>" href="<?php echo $productUrl; ?>"
+                                                     title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a>
+                                              </h6>
+                                            </div>
+                                            <!-- <div style="display:none;">
+                                                <span id="link-qv-<?php echo $_product->getId(); ?>" ><?php echo $quickViewUrl; ?></span>
+                                                <span id="link-pv-<?php echo $_product->getId(); ?>" ><?php echo $productUrl; ?></span>
+                                            </div> -->
+                                            <div class="col-3">
+                                              <div class="priceCategory default" id="default-price-<?php echo $_product->getEntityId(); ?>">
+                                                <p class="m-0"><?= $this->getPriceHtml($_product) ?></p>
+                                              </div>
+                                            </div>
+                                      </div>
                                     </div>
-                                    <div class="actions">
-                                        <div class="priceCategory default" id="default-price-<?php echo $_product->getEntityId(); ?>"><p><?= $this->getPriceHtml($_product) ?></p></div>
+                                    <div class="actions col-12">
+                                      <div class="row justify-content-between">
                                         <?php
                                                $check = true;
                                                if($_test == 1)
@@ -296,7 +324,14 @@ $mode  = $this->getMode();
                                         <?php if ($check): ?>
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
                                                 <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
-                                                <div class="super_attribute" id="super-attribute-<?php echo $_product->getId() ?>">
+                                                <div class="col">
+                                                  <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm"
+                                                     id='product-quickview-<?php echo $_product->getId() ?>'
+                                                     href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
+                                                     title="<?php echo $this->__('quick view') ?>"><span class="text-white"><?php echo $this->__('quick view') ?></span>
+                                                   </a>
+                                               </div>
+                                                <div class="super_attribute col" id="super-attribute-<?php echo $_product->getId() ?>">
                                                     <?php
                                                     $productId = $_product->getId();
                                                     $optionsValues = $this->getIcons($productId);
@@ -311,7 +346,7 @@ $mode  = $this->getMode();
                                                             <?php echo $attribute_label; ?>:
                                                         </span>
                                                     </div>
-                                                    <ul id="color-icons-<?php echo $productId;?>">
+                                                    <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
                                                         <?php
                                                         $j=0;
                                                         $firstOption = '';
@@ -324,7 +359,7 @@ $mode  = $this->getMode();
                                                             $j++;
                                                             ?>
                                                             <li id="<?php echo $simple_id ?>"
-                                                                style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;"
+                                                                style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');"
                                                                 class="colorSelector tipped-create" value="<?php echo $optionId ?>"
                                                                 title="<?php echo $optionLb ?>" >
                                                                 <div style="display: none">
@@ -336,10 +371,7 @@ $mode  = $this->getMode();
                                                     </ul>
                                                     <?php endif;?>
                                                 </div>
-                                                <a class="fancybox fancybox.iframe button btn-quickview"
-                                                   id='product-quickview-<?php echo $_product->getId() ?>'
-                                                   href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
-                                                   title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
+
                                             <?php else: ?>
                                                 <a class="fancybox fancybox.iframe button btn-quickview"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
@@ -349,7 +381,9 @@ $mode  = $this->getMode();
                                         <?php else: ?>
                                             <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
                                         <?php endif; ?>
+                                      </div>
                                     </div>
+                                  </div>
                                 </div>
                             </li>
                             <?php if($i % 5 == 0 && $i!= 0) : ?>
@@ -369,6 +403,7 @@ $mode  = $this->getMode();
                 </div>
             </div>
         </div>
+      </div>
     </div>
 <?php endif; ?>
 <script>

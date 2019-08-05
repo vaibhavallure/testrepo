@@ -48,11 +48,11 @@ jQuery(document).ajaxComplete(function(){
 	var MariaTash = {};
 	MariaTash.formKey = '<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>';
 </script>
-<style type="text/css"> html,body{ overflow-x:hidden; } </style>
+
 <header>
         <nav class="homepage-menu navbar fixed-top navbar-expand-lg mariatash-header d-lg-flex flex-lg-column justify-content-lg-center pb-0 pt-0">
-          <div class="container-fluid row">
-              <div class="col-12">
+          <div class="container-fluid row p-lg-0">
+              <div class="col-12 p-lg-0">
                 <div class="row">
                     <div class="position-absolute maria-left-menus">
                       <div class="row">
@@ -60,10 +60,15 @@ jQuery(document).ajaxComplete(function(){
                           <a class="navbar-brand d-none ml-3 logo p-0" id="scroll-logo" href="<?php echo $this->getUrl('') ?>"> <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId(Mage::helper('ecp_storelogo/data')->getConfigCmsBlock())->toHtml() ?></a>
                         </h1>
                         <ul class="col-12 main-nav-link nav-links-left">
-                          <li class="icon-item"><?php echo $this->getChildHtml('store_currency_selector') ?></li>
+                          <li class="icon-item"><?php echo $this->getChildHtml('store_currency_selector') ?>
+                          </li>
                             <?php $giftcard=Mage::getModel('ecp_menu/menu')->load(2); ?>
                           <li class="icon-item">
                               <a href="<?= $giftcard->getUrl() ?>"><span><?= $giftcard->getTitle() ?></span></a>
+                          </li>
+                            <?php $location=Mage::getModel('ecp_menu/menu')->load(1); ?>
+                          <li class="icon-item d-lg-none d-block mt-1">
+                            <a class="icon-link" href="<?= $location->getUrl() ?>"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-bitmap.png'; ?>"></a>
                           </li>
                         </ul>
                       </div>
@@ -77,11 +82,13 @@ jQuery(document).ajaxComplete(function(){
                           </div>
                           <div class="collapse navbar-collapse mt-1" id="navbarNavDropdown">
                               <?php echo $this->getChildHtml('topMenu') ?>
+                              <?php echo $this->getChildHtml('submenu') ?>
+
                           </div>
                       </div>
                     </div>
                     <div class="position-absolute maria-right-menus">
-                      <ul class="main-nav-link nav-links-right mt-1">
+                      <ul class="main-nav-link nav-links-right mt-lg-1 mt-2">
                         <li class="icon-item">
                             <?php echo $this->getChildHtml('topSearch') ?>
                         </li>
@@ -102,15 +109,22 @@ jQuery(document).ajaxComplete(function(){
                 </div>
               </div>
           </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" onclick="myFunction(this)">
+            <button class="navbar-toggler" type="button" id="menu-btn">
                     <div class="hamburger" >
                             <div class="bar bar1"></div>
                             <div class="bar bar2"></div>
                             <div class="bar bar3"></div>
                     </div>
             </button>
-            <?php echo $this->getChildHtml('submenu') ?>
         </nav>
+        <div class="mobile-main_menu" >
+<?php echo $this->getChildHtml('topMenu') ?>
+        </div>
+        <div class="mobile-sub_menu">
+
+          <?php echo $this->getChildHtml('submenu') ?>
+
+        </div>
     </header>
 
 
@@ -127,6 +141,26 @@ jQuery( document ).ready(function() {
 });
 jQuery( window ).resize(function() {
     jQuery(".cms-index-index.cms-home").css({'height':(jQuery(window).height()+'px')});
+});
+
+
+jQuery( document ).ready(function() {
+  jQuery(".mobile-main_menu li.parent a").attr("href","#");
+jQuery("#menu-btn").on("click",function(){
+  if(jQuery('.mobile-main_menu').hasClass('active'))
+        jQuery('section.sub-menu').hide();
+
+  jQuery('.mobile-main_menu').toggleClass('active');
+  jQuery(this).toggleClass("change");
+});
+jQuery('.main_menu').click(function(){
+  var section_id='.'+jQuery(this).attr('data-id');
+  jQuery('section.sub-menu').hide();
+  jQuery(section_id).show();
+});
+jQuery('.close-section').click(function(){
+  jQuery('section.sub-menu').hide();
+});
 });
 </script>
 

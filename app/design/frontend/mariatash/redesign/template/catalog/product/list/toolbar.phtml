@@ -31,25 +31,33 @@
  * @see Mage_Catalog_Block_Product_List_Toolbar
  */
 ?>
+<?php
+$img['grid']=$this->getSkinUrl('images/redesign/multi-grids.png');
+$img['list']=$this->getSkinUrl('images/redesign/four-grids.png');
+ ?>
 <?php if($this->getCollection()->getSize()): ?>
-<div class="toolbar">
+<div class="toolbar text-right">
     <?php if( $this->isExpanded() ): ?>
-        <div class="sorter">
+        <div class="sorter text-right">
             <?php if( $this->isEnabledViewSwitcher() ): ?>
                 <p class="view-mode">
                     <?php $_modes = $this->getModes(); ?>
                     <?php if($_modes && count($_modes)>1): ?>
-                        <label><?php echo $this->__('Image Size') ?>:</label>
+                        <!-- <label><//?php echo $this->__('Image Size') ?>:</label> -->
                         <?php foreach ($this->getModes() as $_code=>$_label): ?>
                             <?php if($this->isModeActive($_code)): ?>
-                                <strong title="Small Images" class="<?php echo strtolower($_code); ?>"><?php /*echo $_label*/ ?></strong>
+                                <strong title="Small Images" class="<?php echo strtolower($_code); ?> catalog-grid-option mr-2"><?php /*echo $_label*/ ?>
+                                  <img src="<?php echo $img[$_code] ?>">
+                                </strong>
                             <?php else: ?>
                                 <?php
                 //                $url = Mage::helper('mana_filters')->getGridModeUrl($this->getModeUrl($_code), $_code);
 								$block = Mage::app()->getLayout()->getBlockSingleton('Mage_Catalog_Block_Product_List_Toolbar');
 								$url = $block->getModeUrl($_code);
                                 ?>
-                                <a href="<?php echo $url; ?>" title="<?php if($_code=="grid"): ?><?php echo" Small Images" ?><?php elseif($_code=="list"): echo "Large Images";  ?><?php endif;?>" class="<?php echo strtolower($_code); ?>"><?php /*echo $_label*/ ?></a>
+                                <a href="<?php echo $url; ?>" title="<?php if($_code=="grid"): ?><?php echo" Small Images" ?><?php elseif($_code=="list"): echo "Large Images";  ?><?php endif;?>" class="<?php echo strtolower($_code); ?> catalog-grid-option"><?php /*echo $_label*/ ?>
+                                  <img src="<?php echo $img[$_code] ?>">
+                                </a>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -67,8 +75,8 @@
                 <strong><?php echo $this->__('%s Item(s)', $this->getTotalNum()) ?></strong>
             <?php endif; ?>
         </p>
-        <?php 
-        
+        <?php
+
         $currentUrl = $this->helper('core/url')->getCurrentUrl();
         $isCatalogsearch =  strpos($currentUrl, 'catalogsearch');
 
@@ -88,7 +96,7 @@
             $urlLimitAll = $this->getLimitUrl('all');
             $urlLimit200 = $this->getLimitUrl('200');
             $urlLimit20 = $this->getLimitUrl('20');
-        } 
+        }
         $size = $this->getCollection()->getSize();
         ?>
         <div class="limiter">
@@ -97,14 +105,14 @@
             <?php if($size> 20):?>
                   <?php if($size < 200 && ($limit == 'all') ): ?>
                     <a href="<?php echo $urlLimit20; ?>">View Less</a>
-                  <?php elseif($size < 200 && ($limit != 'all')):?> 
+                  <?php elseif($size < 200 && ($limit != 'all')):?>
                      <a href="<?php echo $urlLimitAll; ?>">View All <?php echo $this->__('%s Items', $this->getTotalNum()) ?> </a>
-                  <?php elseif($size >= 200 && (($limit == 'all') || ($limit < 200))):?>   
+                  <?php elseif($size >= 200 && (($limit == 'all') || ($limit < 200))):?>
                      <a href="<?php echo $urlLimitAll; ?>">View All <?php echo $this->__('%s Items', $this->getTotalNum()) ?> </a>
-                  <?php elseif($size >= 200 && ($limit == 200)):?>   
+                  <?php elseif($size >= 200 && ($limit == 200)):?>
                      <a href="<?php echo $urlLimit20; ?>">View Less</a>
                   <?php endif; ?>
-                    
+
             <?php endif;?><?php //End >20 ?>
         <?php else:?>
                 <?php if($this->getCollection()->getSize() > 20):  ?>
@@ -120,8 +128,8 @@
                     <a href="<?php echo $urlLimit20; ?>">View Less</a>
                 <?php endif; ?>
             <?php endif;?>
-        <?php endif;?>   
-        </div>       
+        <?php endif;?>
+        </div>
         <?php echo $this->getPagerHtml() ?>
     </div>
 </div>

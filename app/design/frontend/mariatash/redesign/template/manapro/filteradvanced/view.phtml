@@ -44,12 +44,19 @@
         <strong><span><//?php echo $this->__('Narrow by:') ?></span></strong>
     </div> -->
     <div class="block-content">
+      <div class="selected-filters">
+      <?php echo $this->getStateHtml() ?>
+
+      <?php if ($this->getLayer()->getState()->getFilters()): ?>
+          <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+      <?php endif; ?>
+      </div>
 
 
         <?php if($this->canShowOptions()): ?>
             <input type="hidden" value="" name="selectedfilter" id="selectedfilter" />
             <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
-            <ul id="narrow-by-list">
+            <ul id="narrow-by-list" class="mb-0">
                 <?php $_filters = $this->getFilters(); $i = 0; ?>
                 <?php foreach ($_filters as $_filter): ?>
                 <?php
@@ -61,7 +68,7 @@
                 ?>
                 <?php //echo (get_class($_filter));?>
 				<?php if($_filter->getItemsCount() && 'price' == $_filter->getCode()): ?>
-                    <li class="filtru-<?php echo $_filter->getCode(); ?>">
+                    <li class="common-filter filtru-<?php echo $_filter->getCode(); ?>">
                         <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
                             <dt><?php echo $this->__($_filter->getName()) ?></dt>
                             <dd><?php echo $_filter->getHtml() ?></dd>
@@ -69,11 +76,11 @@
                     </li>
                 <?php endif; ?>
                 <?php if($_filter->getItemsCount() && 'price' != $_filter->getCode()): ?>
-                    <li class="filtru-<?php echo $_filter->getCode().'-dtn'; ?>">
+                    <li class="common-filter filtru-<?php echo $_filter->getCode().'-dtn'; ?>">
                         <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
                             <dt><?php echo $this->__($_filter->getName()) ?></dt>
                             <dd class="filtru-<?php echo $_filter->getCode().'-content-dtn'; ?>" style ="display:none">
-							<div class="filter_name"><?php echo $this->__($_filter->getName()) ?></div>
+							<!-- <div class="filter_name"><//?php echo $this->__($_filter->getName()) ?></div> -->
 							<?php echo $_filter->getHtml() ?>
 							</dd>
                         </div>
@@ -112,13 +119,6 @@
             <script type="text/javascript">decorateDataList('narrow-by-list')</script>
         <?php endif; ?>
 
-        <div class="selected-filters">
-        <?php echo $this->getStateHtml() ?>
-
-        <?php if ($this->getLayer()->getState()->getFilters()): ?>
-            <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
-        <?php endif; ?>
-        </div>
 
     </div>
 </div>

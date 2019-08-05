@@ -189,10 +189,10 @@ Product view
             <action method="addJs"><script>varien/product_options.js</script></action>
             <action method="addJs"><script>varien/configurable.js</script></action>
             <action method="addJs"><script>jquery/jquery.jcarousel.min.js</script></action>
-            
+
             <action method="addJs"><script>jquery/facybox/facybox.js</script></action>
 
-            
+
 
             <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/><!--<if/><condition>can_load_calendar_js</condition>--></action>
 
@@ -284,15 +284,15 @@ Product view
     </catalog_product_view>
     <!--
     <catalog_product_recent translate="label">
-        <label>Catalog Product View (Any)</label>       
+        <label>Catalog Product View (Any)</label>
         <reference name="root">
             <action method="setTemplate"><template>page/recent.phtml</template></action>
-        </reference>   
+        </reference>
         <remove name="head"/>
         <remove name="header"/>
         <reference name="content">
-            <block type="catalog/product_view" name="product.info" template="catalog/product/recent.phtml">   
-                <block type="reports/product_viewed" name="product.recently.viewed" as="product_recently_viewed" template="reports/product_viewed.phtml"/>              
+            <block type="catalog/product_view" name="product.info" template="catalog/product/recent.phtml">
+                <block type="reports/product_viewed" name="product.recently.viewed" as="product_recently_viewed" template="reports/product_viewed.phtml"/>
             </block>
         </reference>
         <remove name="left"/>

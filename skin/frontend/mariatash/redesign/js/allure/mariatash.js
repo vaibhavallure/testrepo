@@ -221,5 +221,5 @@ jQuery(document).ready(function() {
 
 function myFunction(x) {
     x.classList.toggle("change");
-    jQuery('.mariatash-header').toggleClass('black-bg');
+    //jQuery('.mariatash-header').toggleClass('black-bg');
 }

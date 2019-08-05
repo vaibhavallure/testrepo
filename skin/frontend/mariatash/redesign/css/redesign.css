@@ -1,30 +1,26 @@
+
+
+
+
+
 @font-face {
     font-family: 'Din-Bold';
     src: url('../fonts/mariatash/D-DIN-Bold.otf');
 }
-@font-face {
-    font-family: 'Din';
-    src: url('../fonts/mariatash/D-DIN.otf');
-}
-@font-face {
-    font-family: 'Din-Regular';
-    src: url('../fonts/mariatash/DIN-regular.otf');
-}
-@font-face {
-    font-family: 'Din-Regular';
-    src: url('../fonts/mariatash/DIN-regular.ttf');
-}
-@font-face {
-	font-family: 'dinmittelschriftregular';
-	src: url('../fonts/mt/din1451alt-webfont.eot');
-	src: url('../fonts/mt/din1451alt-webfont.eot?#iefix')
-	format('embedded-opentype'),
-	url('../fonts/mt/din1451alt-webfont.woff') format('woff'),
-	url('../fonts/mt/din1451alt-webfont.ttf') format('truetype'),
-	url('../fonts/mt/din1451alt-webfont.svg#dinmittelschriftregular')
-	format('svg');
-	font-weight: normal;
-	font-style: normal;
+
+
+/* Standard CSS bu MT */
+#narrow-by-list li div dt{
+    cursor: pointer;
+    background: url(../images/redesign/arrow-down-bk.png) no-repeat right 12px center !important;
+    font-family: urw-din-xlight;
+    font-size: 13px;
+    color: rgba(41,41,41,0.90);
+    letter-spacing: 0;
+    border: 1px solid rgba(41,41,41,0.60);
+    height: 30px;
+    width: 181px;
+    padding: 3px 0 10px 24px;
 }
 body{
   overflow-x: hidden !important;
@@ -418,6 +414,15 @@ font-size: 11px;
     text-align: left;
 }
 
+.products-grid .product-name a {
+    font-size: 13px;
+    color: #333;
+}
+.catalog-common-grid .price-box {
+    text-align: right;
+    margin-right: 3px;
+}
+
 @media (max-width: 576px) {
     .catalog .item,
     .insta-item {
@@ -466,14 +471,6 @@ font-size: 11px;
 
 .catalog .item:hover {
     background-color: #fff;
-}
-
-.catalog .item .details {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0px;
 }
 
 .catalog .item:hover .details {
@@ -1239,11 +1236,11 @@ input[type="checkbox"]:checked+label:before {
     right: 0;
     bottom: 0;
     left: 14px;
-    font-family: Din-Bold;
+    font-family: urw-din-bold;
     font-size: 9px;
 }
 #top-nav > li{
-  font-family: dinmittelschriftregular;
+  font-family: urw-din-medium;
 }
 .navbar-brand{
   margin: 0;
@@ -1278,12 +1275,12 @@ input[type="checkbox"]:checked+label:before {
     margin-right: 5px;
 }
 .maria-left-menus{
-    left: 3px;
+    left: 17px;
     z-index: 1;
     top: 2px;
 }
 .maria-right-menus{
-    right: 0px;
+    right: 15px;
 }
 .main-nav-title li {
     margin-right: 54px;
@@ -1299,7 +1296,7 @@ input[type="checkbox"]:checked+label:before {
     text-transform: uppercase;
     font-size: 11px;
     letter-spacing: 1px;
-    font-family: Din;
+    font-family: urw-din-light;
 }
 .select-currency img {
     margin: 0 0 5px 3px;
@@ -1340,7 +1337,7 @@ input[type="checkbox"]:checked+label:before {
     font-size: 13px;
     letter-spacing: 2px;
     line-height: 13px;
-    font-family: Din;
+    font-family: urw-din-xlight;
 }
 .menu-head span {
     font-size: 13px;
@@ -1357,11 +1354,12 @@ input[type="checkbox"]:checked+label:before {
     margin-bottom: 7px;
 }
 .sub-menu {
-    z-index: 1;
+    z-index: 999/* changed by aditya 1 */;
     position: absolute;
     width: 100%;
-    top: 138px;
+    top: 111px;
     overflow-x: hidden;
+    right:0;
 }
 #piercing_appointments {
     padding: 48px 9px;
@@ -1379,13 +1377,13 @@ input[type="checkbox"]:checked+label:before {
 .image-text h6{
     font-size: 13px;
     letter-spacing: 1px;
-    font-family: Din-Regular;
+    font-family: urw-din-regular;
 }
 .head-child {
     line-height: 25px;
 }
 .menu-head a {
-    font-family: Din-Regular;
+    font-family: urw-din-regular;
     letter-spacing: 2px;
 }
 .right-section {
@@ -1413,6 +1411,10 @@ input[type="checkbox"]:checked+label:before {
 }
 
 /* Catalog Page CSS */
+.products-grid li.item .list-mt-w, .grid-mt-w{
+    position: absolute;
+    bottom: 0;
+}
 .catalog-category-view .mariatash-header:hover {
     background: transparent;
 }
@@ -1421,7 +1423,126 @@ input[type="checkbox"]:checked+label:before {
 }
 .products-grid li.item{
   padding: 4px;
+  position: relative;
 }
 .catalog-common-grid{
-  padding: 34px;
+  /* padding: 19px; */
+  margin-top: 13px;
+}
+.catalog-common-grid .product-image img{
+  width: 100%;
+  height: auto;
+}
+.catalog-grid-image{
+  background: #eee;
+}
+.catalog-grid-image:hover{
+  background: #fff;
+}
+.mobile-main_menu{
+  background: gray none repeat scroll 0% 0%;
+  width: 200px;
+  left: -200px;
+  top: 73px;
+  position: absolute;
+  z-index: 999;
+  display: block;
+  overflow: hidden;
+  transition:.3s;
+}
+.mobile-main_menu.active{
+  left:0;
+}
+.catalog-category-view .actions .super_attribute ul li, .catalogsearch-result-index .actions .super_attribute ul li{
+  border-radius: 100%;
+  margin-left: 7px;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+}
+.swatches{
+  padding: 2px 4px 0 0px;
+}
+.swatches li{
+  width: 18px !important;
+  height: 18px !important;
+}
+.colorSelector.tipped-create.active::after {
+  content: '';
+  border: 1px solid #ccc !important;
+  width: 26px !important;
+  height: 26px;
+  border-radius: 100%;
+  position: absolute;
+  left: -5px;
+  top: -5px;
+}
+.regular-price .price, .old-price .price, .special-price .price{
+  font-size: 13px;
+  font-family: Din-Bold;
+  white-space: nowrap !important;
+  letter-spacing: 1px;
+}
+.old-price .price{
+  text-decoration: line-through;
+}
+.availability {
+  margin: 7px auto;
+}
+.list-mt-upper {
+  min-height: 39px;
+}
+.products-grid2 li.item{
+  padding: 5px;
+}
+div#narrow-by-list {
+  position: absolute;
+  top: 330px;
+}
+#narrow-by-list{
+  margin-left: 106px;
+}
+.catalog-grid-option img{
+  opacity: 0.5;
+}
+.catalog-grid-option:hover img{
+  opacity: 1;
+}
+.view-mode {
+  margin: 20px 0 0;
+}
+.toolbar-top {
+  z-index: 1;
+}
+#narrow-by-list li div dd{
+  position: absolute;
+  top: 29px;
+  left: 8px;
+  height: auto;
+  cursor: pointer;
+  z-index: 2;
+  background-color: #fff;
+  opacity: 0.9;
+  width: 181px;
+  border: 1px solid #7f7f7f;
+}
+.block-layered-nav dd a, .block-layered-nav label {
+  font-family: urw-din-xlight !important;
+  font-size: 13px !important;
+  color: rgba(41,41,41,0.90) !important;
+  letter-spacing: 0 !important;
+}
+#narrow-by-list li div dd ol{
+  padding: 3px;
+}
+.m-filter-checkboxes li {
+    width: 100%;
+}
+::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+/* Temperory */
+#narrow-by-list .filtru-price dd{
+  display: none;
 }

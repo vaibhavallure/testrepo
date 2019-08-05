@@ -1,14 +1,15 @@
+/* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
   .main-nav-title li {
       margin-right: 0;
       text-align: center;
       margin-top: 25px;
   }
-  .maria-left-menus, .maria-right-menus{
+  .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
     display: none;
   }
-  .homepage-menu {
-    padding-top: 18px !important;
+  .nav-links-right li:nth-child(4), .nav-links-right li:nth-child(2) {
+    display: none;
   }
   .footer ul .footer-item-list{
     display: block;
@@ -52,4 +53,86 @@
   #piercing_appointments{
     padding: 48px 15px;
   }
+  .maria-right-menus{
+    right: 0;
+  }
+  .main-nav-link li:nth-child(3){
+    margin-right: 0;
+  }
+}
+
+/* till ipad (all mobiles and ipads) */
+@media (max-width:1024px){
+
+}
+
+/*All ipads*/
+@media (min-width:767px) and (max-width:1024px){
+  #narrow-by-list li div dt{
+    width: 104px;
+  }
+  .five-col{
+    width: 50%;
+  }
+}
+/* ipad portrait */
+@media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
+  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
+    top: 198px;
+  }
+  #narrow-by-list {
+    margin-left: 0;
+  }
+  .navbar-toggler{
+    top: 25px;
+  }
+  .maria-left-menus{
+    left: 77px;
+  }
+  .nav-links-right{
+    margin-right: 0px;
+  }
+}
+
+
+/* ipad landscape */
+@media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
+  .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
+    top: 250px;
+  }
+}
+
+/* ALl Mobiles */
+@media (max-width:767px) {
+  .five-col{
+    width: 100%;
+  }
+  .homepage-menu {
+    padding-top: 18px !important;
+    padding: 0;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width:767px) and (orientation:portrait) {
+  .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid{
+    margin: 0;
+  }
+  .main-nav-link li{
+    margin-right: 14px;
+  }
+  .navbar-toggler{
+    left:0;
+  }
+  .maria-left-menus {
+    left: 50px;
+  }
+  .mt-logo img {
+    width: 130px;
+  }
+}
+
+/* Mobile landscape */
+@media (max-width:767px) and (orientation:landscape) {
+
 }

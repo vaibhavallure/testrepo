@@ -38,7 +38,7 @@
         <!--menu>
             <ecp_color module="ecp_color">
                 <title>Color</title>
-                <sort_order>71</sort_order>               
+                <sort_order>71</sort_order>
                 <children>
                     <items module="ecp_color">
                         <title>Manage Items</title>
@@ -70,7 +70,7 @@
                 </ecp_color>
             </updates>
         </layout>
-    </adminhtml>   
+    </adminhtml>
     <global>
         <models>
             <ecp_color>
@@ -114,7 +114,7 @@
                 <rewrite>
                     <catalog_product_attribute_edit_tab_options>Ecp_Color_Block_Adminhtml_Catalog_Product_Attribute_Edit_Tab_Options</catalog_product_attribute_edit_tab_options>
                 </rewrite>
-            </adminhtml>	
+            </adminhtml>
         </blocks>
         <helpers>
             <ecp_color>
@@ -144,7 +144,7 @@
     </global>
     <default>
         <ecp_color>
-            <color_attr>metal_color,color_apparel,diamond_color</color_attr>
+            <color_attr>metal_color,color_apparel,diamond_color,metal</color_attr>
         </ecp_color>
     </default>
 </config>

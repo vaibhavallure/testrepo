@@ -39,12 +39,16 @@
 <?php endif ?>
 
 <script type="text/javascript">
+
+  jQuery( document ).ready(function() {
+
   jQuery('.main_menu').mouseover(function(){
     var section_id='#'+jQuery(this).attr('data-id');
     jQuery('section.sub-menu').hide();
     jQuery(section_id).show();
   });
-  jQuery('.allure-menu').mouseleave(function(){
+  jQuery('#navbarNavDropdown').mouseleave(function(){
       jQuery('section.sub-menu').hide();
   })
+  });
 </script>

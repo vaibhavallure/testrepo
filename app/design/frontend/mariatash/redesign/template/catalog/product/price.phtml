@@ -162,7 +162,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                 <?php endif; ?>
             <?php else: ?>
                 <div class="s-single old-price">
-                    <span class="price-label"><?php echo $this->__('Price:') ?></span>
+                    <!-- <span class="price-label"><//?php echo $this->__('Price:') ?></span> -->
                     <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>" style="display: none"></span>
                 </div>
                 <?php if ($_weeeTaxAmount && $_weeeHelper->typeOfDisplay($_product, 0)): // including ?>
@@ -227,7 +227,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
 
                 <?php if ($_taxHelper->displayBothPrices()): ?>
                     <p class="special-price">
-                        <span class="price-label"><?php echo $this->__('Price:') ?></span>
+                        <!-- <span class="price-label"><//?php echo $this->__('Price:') ?></span> -->
                         <span class="price-excluding-tax">
                         <span class="label"><?php echo $this->helper('tax')->__('Excl. Tax:') ?></span>
                         <span class="price" id="price-excluding-tax-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
@@ -243,7 +243,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                     </p>
                 <?php else: ?>
                     <p class="special-price">
-                        <span class="price-label"><?php echo $this->__('Price:') ?></span>
+                        <!-- <span class="price-label"><//?php echo $this->__('Price:') ?></span> -->
                         <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->currency($_finalPrice + $_weeeTaxAmountInclTaxes, true, false) ?>
                 </span>
@@ -259,7 +259,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                 </p>
 
                 <p class="special-price">
-                    <span class="price-label"><?php echo $this->__('Price:') ?></span>
+                    <!-- <span class="price-label"><//?php echo $this->__('Price:') ?></span> -->
                     <span class="price-excluding-tax">
                     <span class="label"><?php echo $this->helper('tax')->__('Excl. Tax:') ?></span>
                     <span class="price" id="price-excluding-tax-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
@@ -289,7 +289,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                 </p>
 
                 <p class="special-price">
-                    <span class="price-label"><?php echo $this->__('Price:') ?></span>
+                    <!-- <span class="price-label"><//?php echo $this->__('Price:') ?></span> -->
                     <span class="price-excluding-tax">
                     <span class="label"><?php echo $this->helper('tax')->__('Excl. Tax:') ?></span>
                     <span class="price" id="price-excluding-tax-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
@@ -319,7 +319,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                 </p>
 
                 <p class="special-price">
-                    <span class="price-label"><?php echo $this->__('Price:') ?></span>
+                    <!-- <span class="price-label"><//?php echo $this->__('Price:') ?></span> -->
                     <span class="price-excluding-tax">
                     <span class="label"><?php echo $this->helper('tax')->__('Excl. Tax:') ?></span>
                     <span class="price" id="price-excluding-tax-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
@@ -340,7 +340,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                 </p>
             <?php else: // excl. ?>
                 <div class="s-both_discounted old-price">
-                    <span class="price-label"><?php echo $this->__('Price:') ?></span>
+                    <!-- <span class="price-label"><//?php echo $this->__('Price:') ?></span> -->
                     <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->currency($_regularPrice, true, false) ?>
                 </span>
@@ -348,7 +348,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
 
                 <?php if ($_taxHelper->displayBothPrices()): ?>
                     <p class="s-both_discounted special-price">
-                        <span class="price-label"><?php echo $this->__(' ') ?></span>
+                        <span class="price-label"><//?php echo $this->__(' ') ?></span>
                         <span class="price-excluding-tax">
                         <span class="label"><?php echo $this->helper('tax')->__('Excl. Tax:') ?></span>
                         <span class="price" id="price-excluding-tax-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
@@ -364,7 +364,7 @@ $_minimalPrice = $_taxHelper->getPrice($_product, $_minimalPriceValue, $_simpleP
                     </p>
                 <?php else: ?>
                     <div class="s-both_discounted special-price">
-                        <span class="price-label"><?php echo $this->__('  ') ?></span>
+                        <!-- <span class="price-label"><//?php echo $this->__('  ') ?></span> -->
                         <span class="price" id="product-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->currency($_finalPrice, true, false) ?>
                 </span>
