@@ -455,7 +455,7 @@ class Allure_Salesforce_Model_Observer_Update
         if (!$create) {
             $products = Mage::getModel('catalog/product')->getCollection()
                 ->addFieldToFilter('updated_at', array('from' => $lastRunTime))
-                ->addAttributeToFilter('salesforce_shipment_track_id', array('neq' => null));;
+                ->addAttributeToFilter('salesforce_product_id', array('neq' => null));;
                 //var_dump($products->getData());die;
             $helper->salesforceLog("BULK Update: in getProductUpdateData collection size = ".$products->getSize(),true);
         } else if (!empty($list)) {
