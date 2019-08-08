@@ -36,9 +36,9 @@
     width: 100%;
     margin-left: 0;
   }
-  /* .head-child {
+  .head-child {
     display: none;
-  } */
+  }
   .right-section a {
     width: 100%;
     margin-left: 30px !important;
