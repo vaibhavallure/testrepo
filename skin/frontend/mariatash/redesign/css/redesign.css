@@ -2,14 +2,7 @@
 
 
 
-
-@font-face {
-    font-family: 'Din-Bold';
-    src: url('../fonts/mariatash/D-DIN-Bold.otf');
-}
-
-
-/* Standard CSS bu MT */
+/* Standard CSS by MT */
 #narrow-by-list li div dt{
     cursor: pointer;
     background: url(../images/redesign/arrow-down-bk.png) no-repeat right 12px center !important;
@@ -1351,7 +1344,7 @@ input[type="checkbox"]:checked+label:before {
     margin-left: 9px;
 }
 .menu-head {
-    margin-bottom: 7px;
+    margin-bottom: 17px;
 }
 .sub-menu {
     z-index: 999/* changed by aditya 1 */;
@@ -1494,12 +1487,13 @@ input[type="checkbox"]:checked+label:before {
 }
 .mobile-sub_menu .special-menu {
   margin-top: 3px;
-  margin-bottom: 13px;
+  margin-bottom: 20px;
 }
 .mobile-sub_menu .image-text h6{
   color: #666 !important;
   font-family: urw-din-regular;
   letter-spacing: 2px;
+  text-align: left;
 }
 .catalog-category-view .actions .super_attribute ul li, .catalogsearch-result-index .actions .super_attribute ul li{
   border-radius: 100%;

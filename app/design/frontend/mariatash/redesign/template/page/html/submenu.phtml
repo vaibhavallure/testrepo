@@ -12,13 +12,13 @@ if($this->isthumbnailCat($pc->getName())){
                         <span>Back</span>
                         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 mt-4">
                 <div class="row">
 
 <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
                                     if (!$child->getIsActive())
                                         continue; ?>
-    <div class="col"> <a href="<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
+    <div class="col-lg col-12 piercing_options"> <a href="<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
     <div class="image-text text-center">
       <h6 class="text-uppercase text-white"><?= $child->getName()?></h6>
     </div>

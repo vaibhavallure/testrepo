@@ -36,7 +36,7 @@
     width: 100%;
     margin-left: 0;
   }
-  .head-child {
+  .head-child, #piercing_appointments img {
     display: none;
   }
   .right-section a {
@@ -49,6 +49,7 @@
   #piercing_appointments .col{
     width: 100%;
     margin-bottom: 9px;
+    flex: 0 0 100%;
   }
   #piercing_appointments{
     padding: 0;
@@ -58,6 +59,25 @@
   }
   .main-nav-link li:nth-child(3){
     margin-right: 0;
+  }
+  .mobile-main_menu {
+    height: 493px;
+  }
+  .mobile-sub_menu .sub-menu{
+    height: 498px;
+  }
+  .piercing_options .image-text {
+    padding-left: 15px;
+    margin-bottom: 17px;
+  }
+  #search-input {
+    z-index: 2;
+  }
+  .form-search input.input-text{
+    background: #292929;
+  }
+  .form-search input.input-text{
+    padding-bottom: 2px;
   }
 }
 
@@ -73,6 +93,9 @@
   }
   .five-col{
     width: 50%;
+  }
+  .form-search input.input-text{
+    width: 200px;
   }
 }
 /* ipad portrait */
@@ -136,5 +159,8 @@
 @media (max-width:767px) and (orientation:landscape) {
   .maria-left-menus{
     left:85px;
+  }
+  .form-search input.input-text{
+    width: 150px;
   }
 }
