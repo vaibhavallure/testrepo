@@ -1041,6 +1041,35 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
          return $request;
     }
 
+    public function getOrderItemUpdateDataForCreditMemo($creditMemoIds) {
+        $request = array();
+
+        foreach ($creditMemoIds as $creditMemoId){
+            $creditMemo = Mage::getModel('sales/order_creditmemo')->load($creditMemoId);
+            $salesforceCreditmemoId = $creditMemo->getSalesforceCreditmemoId();
+            $items      = $creditMemo->getAllItems();
+
+            foreach ($items as $item){
+                $orderItemId = $item->getOrderItemId();
+                $orderItem = Mage::getModel("sales/order_item")->load($orderItemId);
+                if(!$orderItem){
+                    continue;
+                }
+                $salesforceItemId = $orderItem->getSalesforceItemId();
+                if(!$salesforceItemId){
+                    continue;
+                }
+                $tempArr = array(
+                    "attributes"        => array("type" => "OrderItem"),
+                    "id"                => $salesforceItemId,
+                    "Credit_Memo__c"    => $salesforceCreditmemoId
+                );
+                array_push($request,$tempArr);
+            }
+        }
+        return $request;
+    }
+
     public function getShipmentRequestData($shipment,$create,$isFromEvent)
     {
         $isEnable = Mage::helper("allure_salesforce")->isEnabled();
@@ -1401,7 +1430,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
             $results = $responseArr["results"];
             $sql = "";
-
+            $creditMemoIds = array();
             //if (!$create) {
             if ($modelName === "customers" || $modelName === "contact") {
                 foreach ($results as $res) {
@@ -1450,6 +1479,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
                     $modelName = $refArr[0];
                     $refId = $refArr[1];
+                    array_push($creditMemoIds,$refId);
+
                     $tableName = $responseMapping[$modelName][0];
                     $fieldName = $responseMapping[$modelName][1];
                     $sql .= "UPDATE " . $tableName . " SET " . $fieldName . "='" . $res["id"] . "' WHERE entity_id ='" . $refId . "';";
@@ -1458,7 +1489,22 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 }
                 $this->executeQuery($sql);
             }
-            //}
+            if($modelName === "credit_memo"){
+                $requestData = $this->getOrderItemUpdateDataForCreditMemo($creditMemoIds);
+                $cRequest = array("allOrNone"=>false);
+                $cRequest["records"] = $requestData;
+                $requestMethod = "PATCH";
+                $urlPath = $this::UPDATE_COMPOSITE_OBJECT_URL;
+                $response = $this->sendRequest($urlPath,$requestMethod,$cRequest);
+                $responseArr1 = json_decode($response,true);
+                if($responseArr1[0]["success"]){
+                    $this->salesforceLog("creditmemo items updated into salesforce.",true);
+                }else{
+                    if($responseArr == "") {
+                        $this->salesforceLog("creditmemo items not updated into salesforce.",true);
+                    }
+                }
+            }
         }
         $this->salesforceLog("BULK Update: processResponse END ",true);
     }
