@@ -192,7 +192,7 @@
 					<config_path>allure_salesforce/general/bulk_cron_time</config_path>
 				</schedule>
 				<run>
-					<model>allure_salesforce/observer/update::syncDataToSalesforce</model>
+					<model>allure_salesforce/observer_update::syncDataToSalesforce</model>
 				</run>
 			</allure_salesforce_bulk_update>
 		</jobs>
