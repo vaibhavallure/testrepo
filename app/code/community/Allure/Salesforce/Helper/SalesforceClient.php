@@ -1404,11 +1404,11 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
             //if (!$create) {
             if ($modelName === "customers" || $modelName === "contact") {
-                $attribute_id = $modelName === "customer" ? '378' : '384';
-
                 foreach ($results as $res) {
                     $ref = $res["referenceId"];
                     $refArr = explode("-", $ref);
+                    $modelName = $refArr[0];
+                    $attribute_id = $modelName === "customers" ? '384' : '402';
                     $refId = $refArr[1];
 
                     $tableName = $responseMapping[$modelName][0];
