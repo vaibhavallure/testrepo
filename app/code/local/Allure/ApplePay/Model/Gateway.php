@@ -572,7 +572,7 @@ class Allure_ApplePay_Model_Gateway extends ParadoxLabs_TokenBase_Model_Gateway
 		return $response;
 	}
 
-	public function capture( $payment, $amount, $realTransactionId=null, $ )
+	public function capture( $payment, $amount, $realTransactionId=null)
 	{
 		if( $this->getHaveAuthorized() ) {
 			$this->setParameter( 'transactionType', 'priorAuthCaptureTransaction' );
