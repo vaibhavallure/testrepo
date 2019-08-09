@@ -148,7 +148,10 @@ jQuery( document ).ready(function() {
   jQuery(".mobile-main_menu li.parent a").attr("href","#");
 jQuery("#menu-btn").on("click",function(){
   if(jQuery('.mobile-main_menu').hasClass('active'))
+  {
         jQuery('section.sub-menu').hide();
+  }
+  jQuery('body').toggleClass("overflow-hidden");
 
   jQuery('.mobile-main_menu').toggleClass('active');
   jQuery(this).toggleClass("change");

@@ -246,20 +246,6 @@ nav.mariatash-header {
     color: #fff;
     position: relative;
 }
-
-/* .navbar-light .navbar-nav .nav-link {
-    color: #fff;
-    font-size: 12px;
-    position: relative;
-    letter-spacing: 1px;
-    text-align: center;
-    font-weight: 600;
-} */
-
-/* .mariatash-header .row.w-100 {
-    flex-grow: 1;
-} */
-
 .icon-bar .icon-item {
     float: left;
 }
@@ -267,15 +253,6 @@ nav.mariatash-header {
 .icon-bar .icon-item:last-child {
     margin-left: 34px;
 }
-
-
-/* .icon-bar .icon-item a {
-color: #fff;
-text-transform: uppercase;
-letter-spacing: 1px;
-font-size: 11px;
-} */
-
 .icon-bar .icon-item .icon-link img {
     width: 18px;
 }
@@ -1355,7 +1332,7 @@ input[type="checkbox"]:checked+label:before {
     right:0;
 }
 #piercing_appointments {
-    padding: 48px 9px;
+    padding: 48px 21px;
 }
 #piercing_appointments .col {
     width: 14.28%;
@@ -1454,7 +1431,7 @@ input[type="checkbox"]:checked+label:before {
 .mobile-main_menu ul {
     padding-left: 10px;
 }
-.mobile-main_menu li:after {
+.mobile-main_menu li.nav-item:after {
   background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
   content: '';
   height: 18px;
@@ -1467,13 +1444,14 @@ input[type="checkbox"]:checked+label:before {
   position: relative;
 }
 .close-section span:before{
-  background: url(../images/redesign/down-black.png) no-repeat;
+  background: url(../images/redesign/arrow-down-bk.png) no-repeat;
   content: '';
-  height: 18px;
-  width: 18px;
+  height: 14px;
+  width: 19px;
   background-position: right;
   position: absolute;
-  /* right: 0; */
+  right: 31px;
+  transform: rotate(90deg);
 }
 .mobile-main_menu.active{
   left:0;
@@ -1505,7 +1483,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .mobile-sub_menu .special-menu {
   margin-top: 3px;
-  margin-bottom: 20px;
+  margin-bottom: 23px;
 }
 .mobile-sub_menu .image-text h6{
   color: #666 !important;
@@ -1601,8 +1579,23 @@ div#narrow-by-list {
 ::-webkit-scrollbar {
   width: 0 !important;
 }
-
+.overflow-hidden{
+  overflow: hidden;
+}
+.piercing_options{
+  text-align: center;
+  padding: 0;
+}
+.catalog-category-view .mobile-main_menu{
+  top: 86px;
+}
+.catalog-category-view .mobile-sub_menu .sub-menu{
+  top: 86px;
+}
 /* Temperory */
 #narrow-by-list .filtru-price dd{
   display: none;
+}
+#slidecaption{
+  visibility: hidden;
 }

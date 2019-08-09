@@ -67,6 +67,14 @@ jQuery(document).ready(function() {
         jQuery('#insta-carousel').trigger('prev.owl.carousel');
     });
 
+    jQuery("#jewelry .menu-head.jwl-head span a").attr("href","#");
+
+    jQuery(".menu-head").click(function(){
+        jQuery(this).find("a").toggleClass('active');
+        jQuery(this).parent().find(".head-child").toggle();
+    });
+
+
     var defaultcolrSwatch = 'silver';
     var defaultorientation = 'left';
     var defaultNumber = '1';

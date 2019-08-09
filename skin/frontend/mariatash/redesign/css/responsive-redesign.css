@@ -3,7 +3,7 @@
   .main-nav-title li {
       margin-right: 0;
       text-align: center;
-      margin-top: 25px;
+      margin-top: 15px;
   }
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
     display: none;
@@ -38,6 +38,7 @@
   }
   .head-child, #piercing_appointments img {
     display: none;
+    padding-left: 10px;
   }
   .right-section a {
     width: 100%;
@@ -52,7 +53,7 @@
     flex: 0 0 100%;
   }
   #piercing_appointments{
-    padding: 0;
+    padding: 0 0 0 15px;
   }
   .maria-right-menus{
     right: 0;
@@ -61,10 +62,10 @@
     margin-right: 0;
   }
   .mobile-main_menu {
-    height: 493px;
+    height: 448px;
   }
   .mobile-sub_menu .sub-menu{
-    height: 498px;
+    height: 454px;
   }
   .piercing_options .image-text {
     padding-left: 15px;
@@ -79,11 +80,48 @@
   .form-search input.input-text{
     padding-bottom: 2px;
   }
+  #jewelry .menu-head span a:after {
+    background: url(../images/redesign/plus.png) no-repeat;
+    content: '';
+    height: 19px;
+    width: 19px;
+    background-position: right;
+    position: absolute;
+    right: 15px;
+    transition: 0.5s;
+  }
+  #jewelry .menu-head span a.active:after {
+    background: url(../images/redesign/minus.png) no-repeat;
+    content: '';
+    height: 19px;
+    width: 19px;
+    background-position: right;
+    position: absolute;
+    right: 15px;
+    transition: 0.5s;
+  }
+  .menu-head {
+    margin-bottom: 9px;
+  }
+  .common-option-div{
+    margin-bottom: 10px;
+  }
+  .menu-head span a, .mobile-sub_menu .image-text h6 {
+    color: #000 !important;
+  }
+  .catalog-category-view nav.homepage-menu.navbar {
+    background: transparent;
+  }
+  #narrow-by-list{
+    display: none;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
 @media (max-width:1024px){
-
+  .toolbar-top {
+    display: none;
+  }
 }
 
 /*All ipads*/
@@ -165,5 +203,12 @@
   }
   .form-search input.input-text{
     width: 150px;
+  }
+}
+
+
+@media (min-width:1024px){
+  .close-section{
+    display: none;
   }
 }
