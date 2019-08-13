@@ -1,6 +1,6 @@
 <?php
 	$model = Mage::registry('apt_modify_data');
-    $storeIdNone = Mage::helper('allure_virtualstore')->getStoreId('nordstrom_la');
+    $storeIdNone = Mage::helper('appointments/data')->getPopupStoreId();
 	$storeId = Mage::helper('appointments')->getStoreId();
 
 	$fetch_storeId=	Mage::helper('appointments')->getReqStoreId();

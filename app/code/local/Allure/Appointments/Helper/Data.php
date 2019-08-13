@@ -812,4 +812,9 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $date = $ar['date'];
         return $date = strtotime($date);
     }
+
+    public function getPopupStoreId() {
+        $popupStoreId=Mage::getStoreConfig('appointments/popup_setting/store');
+        return $popupStoreId;
+    }
 }
