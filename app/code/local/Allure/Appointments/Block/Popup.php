@@ -30,18 +30,25 @@ class Allure_Appointments_Block_Popup extends Mage_Core_Block_Template{
     {
         return $this->getUrl('*/popup/ajaxSupportDetails', array('_secure' => true));
     }
+    public function getAvailableSlotsActionUrl()
+    {
+        return $this->getUrl('*/popup/getAvailableSlots', array('_secure' => true));
+    }
 
     public function getStoreId() {
+        $popupStoreId=Mage::getStoreConfig('appointments/popup_setting/store');
+        return $popupStoreId;
+    }
 
-        $storeId = "";
+    public function getStoreShortUrl() {
+        if($this->getRequest()->getParam('user')=="admin")
+            return Mage::getBaseUrl()."appointments/popup/index/user/admin";
 
-        $storeCode = 'nordstrom_la';
+        if(!empty(Mage::getStoreConfig('appointments/popup_setting/popup_url')))
+            return Mage::getBaseUrl().Mage::getStoreConfig('appointments/popup_setting/popup_url');
+        else
+            return Mage::getBaseUrl()."appointments/popup/";
 
-        if (!$storeId && $storeCode) {
-            $storeId = Mage::helper('allure_virtualstore')->getStoreId($storeCode);
-        }
-
-        return $storeId;
     }
 
     public function getStoreCode() {
@@ -72,6 +79,10 @@ class Allure_Appointments_Block_Popup extends Mage_Core_Block_Template{
         }
         return $activeStores;
     }
+    public function getSlotTimeJson()
+    {
+        return json_encode((Mage::getModel('appointments/slots'))::SLOTS);
+    }
 
     /**
      * return array of store mapping
@@ -85,5 +96,18 @@ class Allure_Appointments_Block_Popup extends Mage_Core_Block_Template{
    public function getSubscribeUrl()
    {
        return $this->getUrl('*/popup/subscribe', array('_secure' => true));
+   }
+
+
+   public function isAdmin()
+   {
+       if($this->getRequest()->getParam('user')=="admin")
+             return true;
+       else
+             return false;
+   }
+   public function isReleaseSubmitted($flag)
+   {
+     echo  ($flag) ? 'disabled title="You already submitted your release form! you can not edit this information"': '';
    }
 }

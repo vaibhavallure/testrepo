@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Allure_Appointments>
-			<version>0.2.0</version>
+			<version>0.2.5</version>
 		</Allure_Appointments>
 	</modules>
 	<frontend>
@@ -56,6 +56,9 @@
                     <pricing>
                         <table>allure_piercing_price</table>
                     </pricing>
+					<customers>
+						<table>allure_appointment_customers</table>
+					</customers>
                 </entities>
             </appointments_resource>
         </models>

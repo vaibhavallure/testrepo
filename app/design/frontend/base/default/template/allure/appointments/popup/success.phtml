@@ -1,62 +1,30 @@
 <?php
 $model = Mage::getSingleton("core/session")->getData('appointment_submitted');
-Mage::getSingleton("core/session")->setData('appointment_submitted',false);
+$isPiercingAppointment=Mage::getSingleton("core/session")->getData('isPiercingAppointment');
 ?>
 <div class="modal fade bd-example-modal-lg modal-confirm-appointment" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title detailofapt" id="exampleModalLongTitle"><?php echo $this->__('Appointment Details') ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div id="popupConfirmAppointment" class="modal-body">
                 <div id="wrapperConfirmAppointment" class="row">
-                    <div class="checkout-success col-md-12">
-                        <div class="success-field row">
-                            <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Name') ?></span>
-                            <span class="apt-summary col-md-6 col-6" ><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
-                        </div>
-                        <div class="success-field row">
-                            <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Email') ?></span>
-                            <span class="apt-summary col-md-6 col-6" ><?php echo $model->getEmail() ?></span>
-                        </div>
-                        <div class="success-field row">
-                            <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Phone') ?></span>
-                            <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPhone() ?></span>
-                        </div>
-                        <div class="success-field row">
-                            <span class="apt-summary col-md-6 col-6"><?php echo $this->__('No of People in Group') ?></span>
-                            <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPiercingQty() ?></span>
-                        </div>
-                        <div class="success-field row">
-                            <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Booking Location') ?></span>
-                            <span class="apt-summary col-md-6 col-6" ><?php echo"Nordstrom LA";//echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
-                        </div>
-                        <?php if( $model->getPiercingLoc()):?>
-                            <div class="success-field row">
-                                <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Piercing Location') ?></span>
-                                <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPiercingLoc() ?></span>
-                            </div>
+                    <div class="checkout-success col-md-12 text-white text-center">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </button>
+
+                        <span class="translate-popup">Your Appointment on</span> <span class="translate-popup app-confirm"><?= date("d M Y",strtotime($model->getAppointmentStart())); ?> </span><span class="translate-popup">at</span> <?= date("H:i",strtotime($model->getAppointmentStart())); ?> <span class="translate-popup">is confirmed!</span> <br>
+                        <?php if($isPiercingAppointment):?>
+                        <span class="translate-popup">You will receive a confirmation via email as well as a link to complete your release form.</span><br>
+                        <span class="translate-popup">Please complete the form prior to your appointment.</span><br>
+                        <?php else:?>
+                        <span class="translate-popup">You will receive a confirmation via email.</span><br>
                         <?php endif;?>
-                        <div class="success-field row">
-                            <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Appointment Start') ?></span>
-                            <span class="apt-summary col-md-6 col-6" ><?php
-                                /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
-                                $appStartDate = $appStartDate->toString(); */
-                                $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-                                if($model->getStoreId())
-                                    $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
-                                else
-                                    $format = "EST";
-
-                                echo  $appStartDate." ".$format?></span>
-                        </div>
-
+                        <span class="translate-popup">Thanks!</span>
+                        </span>
                         <div id="btnContinue" class="buttons-set apt-buttons-set row">
                             <button type="button" class="input-box b" data-dismiss="modal" aria-label="Book Another Piercing">
-                              <span aria-hidden="true">Book Another Piercing</span>
+                                <span aria-hidden="true" class="translate-popup">Book Another Piercing</span>
                             </button>
                         </div>
                     </div>

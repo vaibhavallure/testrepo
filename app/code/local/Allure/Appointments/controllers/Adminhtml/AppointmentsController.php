@@ -183,6 +183,18 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     	
     	
     }
+
+
+    public function newSpecialAction()
+    {
+
+        Mage::getSingleton("adminhtml/session")->setAppointmentModifyId($this->getRequest()->getParam('id'));
+        $this->loadLayout();
+        $this->_title('Create Appointment');
+        $this->renderLayout();
+
+
+    }
     
     public function saveAction ()
     {
@@ -253,7 +265,15 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model = Mage::getModel('appointments/appointments')->load($this->getRequest()->getParam("id"));
     			$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_CANCELLED);
     			$model->save();
-                $this->notifyCancel($model);
+
+                if($model->getSpecialStore())
+                {
+                    Mage::helper('appointments/notification')->sendEmailNotification($model, "cancel");
+                    Mage::helper('appointments/notification')->sendSmsNotification($model, "cancel");
+                }
+                else {
+                    $this->notifyCancel($model);
+                }
 
 
     			//add logs
@@ -289,9 +309,15 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     			$model->setAppStatus(Allure_Appointments_Model_Appointments::STATUS_ASSIGNED);
     			$model->save();
 
-                $status_changed=" From Cancel To Assigned";
-                $this->notifyModify($old_appointment,$model,$status_changed);
-    			
+                if($model->getSpecialStore())
+                {
+                    Mage::helper('appointments/notification')->sendEmailNotification($model, "modify",$old_appointment);
+                    Mage::helper('appointments/notification')->sendSmsNotification($model, "modify");
+                }
+                else {
+                    $status_changed = " From Cancel To Assigned";
+                    $this->notifyModify($old_appointment, $model, $status_changed);
+                }
     			//add logs
     			$helperLogs = $this->getLogsHelper();
     			$helperLogs->saveLogs("admin");
@@ -586,12 +612,26 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                     $status_changed_flag=true;
 
                     if($data['status']=="4") {
-                        $this->notifyCancel($model);
+                        if($model->getSpecialStore())
+                        {
+                            Mage::helper('appointments/notification')->sendEmailNotification($model, "cancel");
+                            Mage::helper('appointments/notification')->sendSmsNotification($model, "cancel");
+                        }
+                        else {
+                            $this->notifyCancel($model);
+                        }
                     }
                     else if($data['status']=="2")
                     {
-                        $status_changed=" From ".$this->getStatus($oldstatus)." To ".$this->getStatus($data['status']);
-                        $this->notifyModify($old_appointment,$model,$status_changed);
+                        if($model->getSpecialStore())
+                        {
+                            Mage::helper('appointments/notification')->sendEmailNotification($model, "modify",$old_appointment);
+                            Mage::helper('appointments/notification')->sendSmsNotification($model, "modify");
+                        }
+                        else {
+                            $status_changed=" From ".$this->getStatus($oldstatus)." To ".$this->getStatus($data['status']);
+                            $this->notifyModify($old_appointment,$model,$status_changed);
+                        }
                     }
                     else
                     {
@@ -624,6 +664,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
     public function sendReminderAction()
     {
         $data=$post_data = $this->getRequest()->getPost();
+        $Popupappointments=array();
 
         if (count($data['allure_appointments_ids']) > 0) {
 
@@ -633,11 +674,18 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
                     if($appointment->getAppStatus()!=2)
                         continue;
 
-                    $appointments[]=$appointment;
+                    if($appointment->getSpecialStore())
+                        $Popupappointments[]=$appointment;
+                    else
+                        $appointments[]=$appointment;
                 }
 
 
             Mage::getModel('appointments/cron')->sendNotification($appointments,"manual",$data['reminder_type']);
+            Mage::getModel('appointments/cron')->sendPopupNotification($Popupappointments,"reminder_".$data['reminder_type']);
+            Mage::getModel('appointments/cron')->sendPopupNotification($Popupappointments,"release_reminder_".$data['reminder_type']);
+
+
 
             Mage::getSingleton("adminhtml/session")->addSuccess(
                 Mage::helper("adminhtml")->__("Reminder sent to selected appointments"));

@@ -1,10 +1,16 @@
 <div id="datetime-box" class="datetime-box form-group col-md-12">
+    <div class="row text-white form-group total_time_box">
+        <div class="col-lg-6 col-12 pl-lg-3 p-0 mb-3" id="total_time">Total Time: <span>00:00 Hour</span></div>
+    </div>
     <div class="row">
-        <div class="date-box col-md-6 col-6" id="pick_ur_date_div">
+        <div class="date-box col-md-12 col-12" id="pick_ur_date_div">
             <?php echo $this->getChildHtml("appointments_popup_pickdate");?>
         </div>
-        <div class="time-box col-md-6 col-6" id="pick_ur_time_div">
-            <?php echo $this->getChildHtml("appointments_popup_picktime");?>
+       <!-- <div class="time-box col-md-6 col-6" id="pick_ur_time_div">
+            <//?php /*echo $this->getChildHtml("appointments_popup_picktime");*/?>
+        </div>-->
+        <div class="time-box col-12 mt-4" id="pick_ur_slot">
+            <?php echo $this->getChildHtml("appointments_popup_pickslot");?>
         </div>
         <div class="slot_msg" style="margin: auto"></div>
     </div>

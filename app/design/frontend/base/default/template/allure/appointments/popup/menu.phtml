@@ -1,6 +1,8 @@
 <!--MENU BAR-->
 <nav id="navbar" class="navbar navbar-expand-sm navbar-dark mt-bg sticky-top navbar-toggleable-sm nav-dropdown-sm">
-    <a class="navbar-brand d-md-block" href="#top">MARIA TASH</a>
+    <a class="navbar-brand d-md-block mb-2" href="#top">
+      <img src="<?php echo $this->getSkinUrl("images/allure/popup/popup-nav-logo.png")?>">
+    </a>
     <a id="navbar-icon" class="navbar-close navbar-icon" href="#navbar-menu" data-target="#navbar-menu">
         <i class="fa fa-bars"></i>
         <i class="fa fa-close"></i>
@@ -10,14 +12,14 @@
         <a id="close-nav" class="close-nav d-md-none d-block"><i class="fa fa-close" style="font-size: 30px;color: #ffffff"></i></a>
 
         <li class="nav-item">
-            <a class="nav-link d-md-block d-none" href="#top" id="top-nav">POP-UP INFO</a>
-            <a class="nav-link d-sm-none d-block" href="#top" id="top-nav">POP-UP INFORMATION</a>
+            <a class="nav-link d-md-block d-none translate-popup" href="#top" id="top-nav"><?php echo $this->__('POP-UP INFO') ?></a>
+            <a class="nav-link d-sm-none d-block translate-popup" href="#top" id="top-nav"><?php echo $this->__('POP-UP INFORMATION') ?></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#booking" id="booking-nav">BOOKING & PRICING</a>
+            <a class="nav-link translate-popup" href="#booking" id="booking-nav"><?php echo $this->__('BOOKING & PRICING') ?></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#about-maria" id="about-maria-nav">ABOUT MARIA TASH</a>
+            <a class="nav-link translate-popup" href="#about-maria" id="about-maria-nav"><?php echo $this->__('ABOUT MARIA TASH') ?></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#faq" id="faq-nav">FAQ</a>

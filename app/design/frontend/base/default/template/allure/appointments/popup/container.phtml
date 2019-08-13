@@ -4,25 +4,42 @@
  */
 ?>
 <div id="appointments-popup-wrapper">
+    <div class="form-disable-overlay">
+        <div id="slotloader"  class="lds-ellipsis col-12 text-center">
+            <div></div><div></div><div></div><div></div>
+        </div>
+    </div>
     <?php
-        if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
-            echo $this->getChildHtml('appointments_popup_success');
-        endif;
+    if(Mage::getSingleton("core/session")->getData('appointment_submitted')):
+        echo $this->getChildHtml('appointments_popup_success');
+    endif;
     ?>
-    <?php echo $this->getChildHtml("appointments_popup_top");?>
-    <?php echo $this->getChildHtml("appointments_popup_menu");?>
+    <?php if(Mage::app()->getRequest()->getParam('user')=="admin"):?>
+        <div id="adminside"></div>
+        <?php echo $this->getChildHtml("appointments_popup_register");?>
+    <?php else:?>
+        <?php echo $this->getChildHtml("appointments_popup_top");?>
+        <?php echo $this->getChildHtml("appointments_popup_menu");?>
 
-    <?php echo $this->getChildHtml("appointments_popup_register");?>
-    <?php echo $this->getChildHtml("appointments_popup_about");?>
-    <?php echo $this->getChildHtml("appointments_popup_faq");?>
-    <?php echo $this->getChildHtml("appointments_popup_footer");?>
+        <?php echo $this->getChildHtml("appointments_popup_register");?>
+        <?php echo $this->getChildHtml("appointments_popup_about");?>
+        <?php echo $this->getChildHtml("appointments_popup_faq");?>
+        <?php echo $this->getChildHtml("appointments_popup_footer");?>
+    <?php endif;?>
 </div>
 
 <script type="text/javascript">
     if (typeof Allure == "undefined") {
         var Allure = {};
     }
-    Allure.appointmentId = '<?php echo $this->getRequest()->getParam('id')?>';
+    <?php
+    if($this->getRequest()->getParam('user')=="admin")
+         $appointment_id=$this->getRequest()->getParam('id');
+    else
+         $appointment_id=Mage::getModel('core/encryption')->decrypt($this->getRequest()->getParam('id'));
+    ?>
+
+    Allure.appointmentId = '<?php echo $appointment_id?>';
 
     Allure.ajaxGetTimeUrl = '<?php echo $this->getTimeActionUrl()?>';
     Allure.ajaxGetWorkingDaysUrl = '<?php echo $this->getWorkingDaysActionUrl()?>';
@@ -33,101 +50,128 @@
 
     Allure.isProcessing = false;
 
-    function formatDate(date) {
-        var monthNames = [
-            "Jan", "Feb", "Mar",
-            "Apr", "May", "Jun", "Jul",
-            "Aug", "Sep", "Oct",
-            "Nov", "Dec"
-        ];
 
-        var day = date.getDate();
-        var monthIndex = date.getMonth();
-        var year = date.getFullYear();
-
-        return monthNames[monthIndex] + ' ' +  day + ', ' + year;
-    }
 </script>
 <script type="text/javascript">
-<?php
+    <?php
     if ((Mage::getSingleton('core/session')->getSlotInvalid() == "true") && (!Mage::getSingleton("core/session")->getData('appointment_submitted'))) {
         echo "alert('This appointment time is no longer available. <br> Please select another time.');";
-        Mage::getSingleton('core/session')->setSlotInvalid("false");
     }
+    if ((Mage::getSingleton('core/session')->getSomethingWrong() == "true") && (!Mage::getSingleton("core/session")->getData('appointment_submitted'))) {
+        echo "alert('Sorry Something Went Wrong Please Try Again!');";
+    }
+
+
 
     ?>
     var isSuccess=false;
-        //jQuery('#appointemnet_form').validate();
+    //jQuery('#appointemnet_form').validate();
     jQuery(document).ready(function() {
+
         var $ = jQuery;
 
+        $('.form-disable-overlay').fadeOut();
+
+
         $("#appointemnet_form").validate({
-                submitHandler: function(form) {
-                    if (!Allure.isProcessing) {
-                        Allure.isProcessing = true
-                        $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text("PROCESSING ...");
-                        form.submit();
+            submitHandler: function(form) {
+
+                var number_of_people=$('select[name=piercing_qty]').val();
+                console.log("number people",number_of_people);
+                for(var i=1;i<=number_of_people;i++)
+                {
+                    for (var j=i+1;j<=number_of_people;j++)
+                    {
+                        if($.trim($('#firstname'+i).val())==$.trim($('#firstname'+j).val()) && $.trim($('#lastname'+i).val())==$.trim($('#lastname'+j).val()) && $.trim($('#email'+i).val())==$.trim($('#email'+j).val()))
+                        {
+                            alert("same details filled for customer #"+i+" and customer #"+j);
+                            return;
+//                                console.log("same details "+i+" AND "+j);
+                        }
+                        else {
+//                                console.log("different name"+i+" AND "+j);
+                        }
                     }
+                }
+
+
+
+
+                if (!Allure.isProcessing) {
+                    Allure.isProcessing = true
+                    $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text("PROCESSING ...");
+                    form.submit();
+                }
+            },
+            ignore: "",
+            /*rules: {
+                firstname:  {
+                    required: true,
+                    nospace: true
                 },
-				rules: {
-					firstname:  {
-						required: true,
-						nospace: true
-					},
-					lastname:  {
-						required: true,
-						nospace: true
-					},
-					email: {
-						required: true,
-						email: true
-					},
-					phone: {
-						required: true,
-						phone: true
-					},
-                    piercing_qty: 'required',
-                    app_date: {
-						required: true,
-						date: true
-					},
-                    selectTimeSlot:  {
-						required: true,
-						notEqualTo: 'No Slots Available'
-					},
-                    selectTime: {
-                        required:true,
-                        notEqualTo:'TIME'
-                    }
-				},
-				messages: {
-					firstname: "Please enter your firstname",
-					lastname: "Please enter your lastname",
-					email: "Please enter a valid email address",
-					phone: "Please enter a valid phone number",
-                    piercing_qty: "Please enter people in the group",
-                    app_date: "Please select a booking date",
-                    selectTime: "Please select a booking time",
-                    selectTimeSlot: "Please select a booking time"
-				},
-				errorElement: "em",
-				errorPlacement: function ( error, element ) {
-					// Add the `invalid-feedback` class to the error element
-					error.addClass( "invalid-feedback" );
-					if ( element.prop( "type" ) === "checkbox" ) {
-						error.insertAfter( element.next( "label" ) );
-					} else {
-						error.insertAfter( element );
-					}
-				},
-				highlight: function ( element, errorClass, validClass ) {
-                    $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
-                    isSuccess = false;
-				},
-				unhighlight: function (element, errorClass, validClass) {
-                    $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
-                    isSuccess = true;
-				}
-			});
+                lastname:  {
+                    required: true,
+                    nospace: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: {
+                    required: true,
+                    phone: true
+                },
+                piercing_qty: 'required',
+                app_date: {
+                    required: true,
+                    date: true
+                },
+                selectTimeSlot:  {
+                    required: true,
+                    notEqualTo: 'No Slots Available'
+                },
+                selectTime: {
+                    required:true,
+                    notEqualTo:'TIME'
+                },
+            },
+            messages: {
+                firstname: "Please enter your firstname",
+                lastname: "Please enter your lastname",
+                email: "Please enter a valid email address",
+                phone: "Please enter a valid phone number",
+                piercing_qty: "Please enter people in the group",
+                app_date: "Please select a booking date",
+                selectTime: "Please select a booking time",
+                selectTimeSlot: "Please select a booking time"
+            },*/
+            errorElement: "em",
+            errorPlacement: function ( error, element ) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass( "invalid-feedback translate-popup" );
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.next( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+                isSuccess = false;
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+                isSuccess = true;
+            }
         });
+
+        validateForm();
+
+    });
+
+    <?php
+    Mage::getSingleton('core/session')->unsSlotInvalid();
+    Mage::getSingleton('core/session')->unsSomethingWrong();
+    Mage::getSingleton("core/session")->unsetData('appointment_submitted');
+    ?>
 </script>

@@ -63,7 +63,13 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
         $allAppointments->addFieldToFilter('store_id', array('eq' => $storeId));
         if(count($allAppointments) > 0){
             Mage::log("appointments found =>".count($allAppointments),Zend_Log::DEBUG,'notify_cron.log',true);
-            $this->sendNotification($allAppointments,"cron","day");
+           if($storeId=Mage::getStoreConfig('appointments/popup_setting/store')) {
+               $this->sendPopupNotification($allAppointments,"reminder_day");
+               $this->sendPopupNotification($allAppointments,"release_reminder_day");
+           }
+           else {
+               $this->sendNotification($allAppointments, "cron", "day");
+           }
         }
         else
         {
@@ -83,7 +89,13 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
         if(count($allAppointments) > 0){
             Mage::log(" diff is greater than 7 days",Zend_Log::DEBUG,'notify_cron.log',true);
             Mage::log("appointments found =>".count($allAppointments),Zend_Log::DEBUG,'notify_cron.log',true);
-            $this->sendNotification($allAppointments,"cron","week");
+            if($storeId=Mage::getStoreConfig('appointments/popup_setting/store')) {
+                $this->sendPopupNotification($allAppointments,"reminder_week");
+                $this->sendPopupNotification($allAppointments,"release_reminder_week");
+            }
+            else {
+                $this->sendNotification($allAppointments,"cron","week");
+            }
         }
         else
         {
@@ -309,6 +321,15 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
         }
 
 
+    }
+
+    public function sendPopupNotification($appCollection,$reminder_type)
+    {
+            foreach ($appCollection as $app)
+            {
+                Mage::helper('appointments/notification')->sendEmailNotification($app, $reminder_type);
+                Mage::helper('appointments/notification')->sendSmsNotification($app, $reminder_type);
+            }
     }
 
 
