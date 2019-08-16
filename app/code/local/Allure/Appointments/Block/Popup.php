@@ -108,6 +108,6 @@ class Allure_Appointments_Block_Popup extends Mage_Core_Block_Template{
    }
    public function isReleaseSubmitted($flag)
    {
-     echo  ($flag) ? 'disabled title="You already submitted your release form! you can not edit this information"': '';
+     echo  ($flag) ? 'disabled title="Your release form has been submitted and is unable to be changed on line.  You may edit the form when you arrive for your appointment."': '';
    }
 }

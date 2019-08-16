@@ -84,7 +84,8 @@
                     {
                         if($.trim($('#firstname'+i).val())==$.trim($('#firstname'+j).val()) && $.trim($('#lastname'+i).val())==$.trim($('#lastname'+j).val()) && $.trim($('#email'+i).val())==$.trim($('#email'+j).val()))
                         {
-                            alert("same details filled for customer #"+i+" and customer #"+j);
+                            //alert("same details filled for customer #"+i+" and customer #"+j);
+                           alert("Customer information cannot be the same.  Please provide unique information for each customer.");
                             return;
 //                                console.log("same details "+i+" AND "+j);
                         }
