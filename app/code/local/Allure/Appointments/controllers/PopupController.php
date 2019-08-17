@@ -4,7 +4,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 {
     private $currentDateFlag = false;
 
-    static $appSavingFlag = 0;
+
 
     public function indexAction()
     {
@@ -39,8 +39,6 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
     public function saveAction()
     {
 
-        $rand_value = rand(100, 20000);
-        usleep($rand_value);
 
         $post_data = $this->getFormattedPostData();
 
@@ -58,26 +56,16 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         /*------------notification setting end------------------------------*/
 
 
-        Mage::log("init static value=" . self::$appSavingFlag, Zend_Log::DEBUG, 'adi.log', true);
-
-        while (self::$appSavingFlag) {
-            $this->log()->addStoreWiseLog('while waiting', $post_data['store_id']);
-            Mage::log("while waiting data", Zend_Log::DEBUG, 'adi.log', true);
-        }
-        self::$appSavingFlag = 1;
-        Mage::log("changed static value=" . self::$appSavingFlag, Zend_Log::DEBUG, 'adi.log', true);
-
-
         if (!$this->helper()->validatePostData($post_data, "user")) {
             $this->log()->addStoreWiseLog('Sorry Something Went Wrong Please Try Again! validation error please check save_appointment_customer.log for more detail', $post_data['store_id']);
             Mage::getSingleton('core/session')->setSomethingWrong("true");
             // Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
             $this->_redirectReferer();
-            self::$appSavingFlag = 0;
             return;
         }
 
 
+        $this->taskStart();
         if ($this->helper()->validateSlotBeforeBookAppointment($post_data)) {
 
             $this->log()->addStoreWiseLog('Err => Sorry This Slot Has Been Already Taken', $post_data['store_id']);
@@ -93,15 +81,13 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
             } else {
                 $this->log()->addStoreWiseLog('no piercer available for this slot', $post_data['store_id']);
+                $this->taskEnd();
                 Mage::getSingleton('core/session')->setSlotInvalid("true");
                 $this->_redirectReferer();
-                self::$appSavingFlag = 0;
-                Mage::log("inside valid slot changed static value=" . self::$appSavingFlag, Zend_Log::DEBUG, 'adi.log', true);
                 return;
             }
         }
-        self::$appSavingFlag = 0;
-        Mage::log("out side valid slot changed static value=" . self::$appSavingFlag, Zend_Log::DEBUG, 'adi.log', true);
+        $this->taskEnd();
 
         try {
 
@@ -711,5 +697,58 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
     {
         return Mage::helper("appointments/storemapping")->getStoreMappingConfiguration();
     }
+
+
+
+    /*------------------code to queue appointment request----------------------------*/
+    private function read()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        return $resource->getConnection('core_read');
+    }
+    private function write()
+    {
+        $resource = Mage::getSingleton('core/resource');
+        return $resource->getConnection('core_write');
+    }
+    private function getAppFlag()
+    {
+        $results = $this->read()->fetchAll('SELECT `allure_appointment_flag` FROM flag');
+        return $results[0]['flag'];
+    }
+    private function enableAppFlag()
+    {
+        $this->write()->query("UPDATE `allure_appointment_flag` SET flag = 1");
+
+    }
+    private function disableAppFlag()
+    {
+        $this->write()->query("UPDATE `allure_appointment_flag` SET flag = 0");
+    }
+    private function taskStart()
+    {
+        $rand_value = rand(10000, 1000000);
+        usleep($rand_value);
+        while ($this->getAppFlag()==1) {
+            usleep(rand(1000000, 2000000));
+        }
+        $this->enableAppFlag();
+//        Mage::log("task start----------".date('H:i:s'), Zend_Log::DEBUG, 'adi.log', true);
+
+    }
+    private function taskEnd()
+    {
+//        Mage::log("task end----------".date('H:i:s'), Zend_Log::DEBUG, 'adi.log', true);
+        $this->disableAppFlag();
+    }
+
+    public function testAction()
+    {
+        $this->taskStart();
+
+        $this->taskEnd();
+    }
+
+
 
 }
