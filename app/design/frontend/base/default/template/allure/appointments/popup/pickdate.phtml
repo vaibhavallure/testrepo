@@ -28,30 +28,50 @@ if ($fetch_model) {
     jQuery("#appointment_date").val(currentDateString);
     <?php endif;?>
 
-    jQuery.fn.datepicker.dates['en'] = {
-        ...jQuery.fn.datepicker.dates['en'],
-        daysMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
-        titleFormat: 'MM'
+    const initializeDatePicker = function () {
+        //console.log('initializeDatePicker',jQuery('#appointment_date').datepicker);
+        jQuery.fn.datepicker.dates['fr'] = {
+            days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+            daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+            daysMin: ["D", "L", "Ma", "Me", "J", "V", "S", "D"],
+            months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+            monthsShort: ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+            titleFormat: 'MM'
+        };
+
+        jQuery.fn.datepicker.dates['en'] = {
+            days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            daysMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
+            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            titleFormat: 'MM'
+        };
+
+        const locale = sessionStorage.getItem('popupLocale');
+
+        jQuery('#appointment_date').datepicker({
+            format:'d  M  yyyy',
+            startDate: currentDateString,
+            language: locale==='en'?'en':'fr',
+            endDate: '',
+            beforeShowDay: function (date) {
+                var enabled = false;
+                var currentDate = parseInt(1 + date.getMonth()).pad(2) + '/' + date.getDate().pad(2) + '/' + date.getFullYear();
+
+                if (datesAvailable.indexOf(currentDate) != -1) {
+                    enabled = true;
+                }
+                return {
+                    enabled: enabled
+                }
+            }
+        }).on('changeDate', function (e) {
+            getAvailableSlots();
+        });
     };
 
-    jQuery('#appointment_date').datepicker({
-        format:'d  M  yyyy',
-        startDate: currentDateString,
-        endDate: '',
-        beforeShowDay: function (date) {
-            var enabled = false;
-            var currentDate = parseInt(1 + date.getMonth()).pad(2) + '/' + date.getDate().pad(2) + '/' + date.getFullYear();
-
-            if (datesAvailable.indexOf(currentDate) != -1) {
-                enabled = true;
-            }
-            return {
-                enabled: enabled
-            }
-        }
-    }).on('changeDate', function (e) {
-        getAvailableSlots();
-    });
+    initializeDatePicker();
 
     jQuery(document).ready(function () {
         calculateTime();

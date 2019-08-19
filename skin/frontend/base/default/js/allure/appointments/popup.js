@@ -101,7 +101,7 @@ const translation = {
         "Language: English": "Langue: English",
         "Language: French": "Langue:  Français",
         "Maria Tash x Le Bon Marché Pop-up": "Maria Tash x Le Bon Marché Boutique Éphémère",
-        "Number of People in Group": "Nombre de personne dans votre groupe",
+        "No of People in Group": "Nombre de personne dans votre groupe",
         "Customer information cannot be the same.  Please provide unique information for each customer.": "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente.",
         "Number of Piercings:": "Nombre de piercings:"
 
@@ -188,7 +188,7 @@ const translation = {
         "Langue: English":"Language: English",
         "Langue:  Français": "Language: French",
         "Maria Tash x Le Bon Marché Boutique Éphémère": "Maria Tash x Le Bon Marché Pop-up",
-        "Nombre de personne dans votre groupe": "Number of People in Group",
+        "Nombre de personne dans votre groupe": "No of People in Group",
         "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente." : "Customer information cannot be the same.  Please provide unique information for each customer.",
         "Nombre de piercings:": "Number of Piercings:"
     }
@@ -290,7 +290,9 @@ const getSessionLocale = function () {
 let translatePopUp = function () {
     const translatedElems = jQuery('.translate-popup');
     const elementLength = translatedElems.length;
-
+    let datePickerOb = jQuery('#appointment_date');
+    datePickerOb.datepicker('destroy');
+    initializeDatePicker();
     for(let i = 0; i<elementLength; i++){
         const sourceText = jQuery(translatedElems[i]).text();
         const tagName = jQuery(translatedElems[i]).prop("tagName");
@@ -334,7 +336,7 @@ let __ = function (sourceString) {
             return sourceString;
         }
     }
-}
+};
 
 if (typeof Allure == "undefined") {
     var Allure = {};
