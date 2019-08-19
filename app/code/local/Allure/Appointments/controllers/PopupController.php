@@ -713,7 +713,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
     }
     private function getAppFlag()
     {
-        $results = $this->read()->fetchAll('SELECT `allure_appointment_flag` FROM flag');
+        $results = $this->read()->fetchAll('SELECT `flag` FROM allure_appointment_flag');
         return $results[0]['flag'];
     }
     private function enableAppFlag()
