@@ -104,7 +104,9 @@ const translation = {
         "Maria Tash x Le Bon Marché Pop-up": "Maria Tash x Le Bon Marché Boutique Éphémère",
         "No of People in Group": "Nombre de personne dans votre groupe",
         "Customer information cannot be the same.  Please provide unique information for each customer.": "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente.",
-        "Number of Piercings:": "Nombre de piercings:"
+        "Number of Piercings:": "Nombre de piercings:",
+        "For any question about piercings and appointments, do not hesitate to contact us:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
+        "Appointments are recommended for piercings but are not necessary for jewelry installations. Piercings without appointments are limited depending on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités."
 
     },
     "en": {
@@ -192,7 +194,10 @@ const translation = {
         "Maria Tash x Le Bon Marché Boutique Éphémère": "Maria Tash x Le Bon Marché Pop-up",
         "Nombre de personne dans votre groupe": "No of People in Group",
         "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente." : "Customer information cannot be the same.  Please provide unique information for each customer.",
-        "Nombre de piercings:": "Number of Piercings:"
+        "Nombre de piercings:": "Number of Piercings:",
+        "Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :":"For any question about piercings and appointments, do not hesitate to contact us:",
+        "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for jewelry installations. Piercings without appointments are limited depending on availability."
+
     }
 };
 
