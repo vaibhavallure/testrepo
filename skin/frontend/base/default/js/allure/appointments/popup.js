@@ -86,7 +86,7 @@ const translation = {
         "Price List": "Liste de prix",
         "Availability": "Disponibilité",
         "Total Time:": "Temps estimé :",
-        "For parties more than 4,please call customer service": "Pour des groupes de plus de 5 personnes, veuillez contacter notre service clientèle.",
+        "For parties more than 4,please call customer service": "Pour des groupes de plus de 4 personnes, veuillez contacter notre service clientèle.",
         "CUSTOMER": "CLIENT",
         "Type of Appointment:": "Type de rendez-vous:",
         "Checkup": "Examination du piercing",
@@ -475,7 +475,7 @@ var addCustomerJob = function (srno) {
                     <input type="checkbox" class="piercing_select" data-no="${srno}" id="piercing_select_${srno}" onchange="displayPiercing(\'${'#piercing-wrapper' + srno}\')" name="customer[${srno}][piercing_select]">
                     <label class="label translate-popup" for="piercing_select_${srno}">${__('Piercing')}</label>
                 </div>
-                <div class="col-md-6 col-4">
+                <div class="col-md-6 col-8">
                     <input type="checkbox" class="checkup_select" data-no="${srno}" id="checkup_select_${srno}" value="1" name="customer[${srno}][checkup]">
                     <label class="label translate-popup" for="checkup_select_${srno}">${__('Checkup')}</label>
                 </div>

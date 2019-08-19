@@ -16,7 +16,7 @@ button#btnBooking,
 button#btnConfirm
 {
 	min-width: 119px;
-	padding: 3px!important;
+	padding: 3px 10px!important;
 	margin-bottom: 35px;
 	text-transform: uppercase;
 }
@@ -246,9 +246,9 @@ input#selectDate {
 }
 .pop-up-div {
 	position: relative;
-	left: 64%;
+	left: 61%;
 	/*margin-top: 50px;*/
-	width: 393px;
+	width: 430px;
 	background: #2c2c2c;
 	/*top: 45px;*/
 	/*transform: translate(0,-50%);*/
