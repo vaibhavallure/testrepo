@@ -71,9 +71,10 @@ const translation = {
         "Please select slot": "Sélectionnez l'emplacement",
         "Please enter your": "Saisissez votre",
         "Spaces Not Allowed": "Espaces non autorisés",
-        "This appointment time is no longer available.  Please select another time.": "Ce créneau n'est plus disponible. Choisissez un autre créneau.",
+        'This appointment time is no longer available. <br> Please select another time.': "Ce créneau n'est plus disponible. Choisissez un autre créneau.",
         "Sorry Something Went Wrong. Please Try Again!": "Désolé, quelque chose s'est mal passé. Veuillez réessayer !",
         "Please enter a valid email address.": "Saisissez une adresse email valide",
+        "Please Enter Valid Email Id": "Saisissez une adresse email valide",
         "Book Another Piercing": "Réservez un autre piercing",
         "Booking Location": "Lieu de la réservation",
         "Appointment Start": "Début du rendez-vous",
@@ -82,7 +83,6 @@ const translation = {
         "Sorry,Record not found !": "Désolé, ce fichier est introuvable",
         "Are you sure you want to cancel an scheduled appointment?": "Êtes-vous sûre de vouloir annuler votre rendez-vous ?",
         "Fail to connect, please check your internet connection": "Problème de connexion, veuillez vérifier votre connexion Internet et réessayer",
-        //asd
         "Price List": "Liste de prix",
         "Availability": "Disponibilité",
         "Total Time:": "Temps estimé :",
@@ -100,7 +100,11 @@ const translation = {
         "Dermal": "Dermique",
         "Language: English": "Langue: English",
         "Language: French": "Langue:  Français",
-        "Maria Tash x Le Bon Marché Pop-up": "Maria Tash x Le Bon Marché Boutique Éphémère"
+        "Maria Tash x Le Bon Marché Pop-up": "Maria Tash x Le Bon Marché Boutique Éphémère",
+        //asd
+        "Number of People in Group": "Nombre de personne dans votre groupe",
+        "Customer information cannot be the same.  Please provide unique information for each customer.": "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente.",
+
     },
     "en": {
         "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.": "Join the Maria Tash team of global experts in Los Angeles for four days only.",
@@ -576,7 +580,7 @@ var getAvailableSlots = function () {
         timeout: 30000,
         error: function (jqXHR) {
             if (jqXHR.status == 0) {
-                alert(__("fail to connect, please check your internet connection"));
+                alert(__("Fail to connect, please check your internet connection"));
             }
         },
         success: setAvailableSlots
