@@ -2,9 +2,9 @@ const translation = {
     "fr": {
         "Join the Maria Tash team of global experts in Los Angeles for four days only.": "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.",
         "FIRST NAME*": "Prénom*",
-        "LAST NAME*": "Nom de famille*",
-        "Text Message (Message and data rates may apply)": "Message texte <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
-        "Text Message (<em>Message and data rates may apply</em>)": "Message texte <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
+        "LAST NAME*": "Nom*",
+        "Text Message (Message and data rates may apply)": "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
+        "Text Message (<em>Message and data rates may apply</em>)": "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
         "Maria Tash x Le Bon<br> Marché Pop-up": "En exclusivité au Bon Marché",
         "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of jewelry combined to best flatter the wearer. The brand’s unique approach to piercing and styling looks makes it one of the most coveted brands today. Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grace notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.",
         "Monday": "Lundi",
@@ -17,7 +17,7 @@ const translation = {
         "October": "Octobre",
         "August": "Août",
         "Booking & Pricing": "réservation et prix",
-        "BOOK NOW": "Reserve maintenant",
+        "BOOK NOW": "RESERVEZ UN RENDEZ-VOUS DÈS",
         "POP-UP INFORMATION": "Informations sur l'événement",
         "POP UP INFORMATION": "Informations sur l'événement",
         "POP-UP INFO": "Informations sur l'événement",
@@ -43,8 +43,8 @@ const translation = {
         "sign up": "s'inscrire",
 //        "Text Message (<em>Message and data rates may apply</em>)": "Message texte(<em>Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages</em>)",
         "First Name*": "Prénom*",
-        "Last Name*": "Nom de famille*",
-        "Phone Number": "TÉLÉPHONE",
+        "Last Name*": "Nom*",
+        "Phone Number": "Numéro de téléphone",
         "I would like to be notified by:": "J'aimerais être averti par:",
         "Jewelry starts at": "le prix des bijoux commence a:",
         "jewelry starts at": "le prix des bijoux commence a:",
@@ -61,11 +61,11 @@ const translation = {
         "Appointment Details": "Rendez-Vous Détails",
         "Please enter your First Name*": "Saisissez votre Prénom*",
         "Please enter your Email*": "Saisissez votre Email*",
-        "Please enter your Last Name*": "Saisissez votre Nom de famille*",
+        "Please enter your Last Name*": "Saisissez votre Nom*",
         "Please enter your FIRST NAME*": "Saisissez votre Prénom*",
         "Please enter your EMAIL": "Saisissez votre Email",
-        "Please enter your LAST NAME*": "Saisissez votre Nom de famille*",
-        "Choose type of Appointment to get available time slots": "Choisissez votre type de rendez-vous pour obtenir les créneaux disponibles",
+        "Please enter your LAST NAME*": "Saisissez votre Nom*",
+        '"Choose type of Appointment to get available time slots"': '"Choisissez votre type de rendez-vous pour obtenir les créneaux disponibles"',
         "No Slot Available": "Aucun créneau disponible",
         "Please select one of the above options": "Choisissez une des options ci-dessus",
         "Please select slot": "Sélectionnez l'emplacement",
@@ -73,7 +73,7 @@ const translation = {
         "Spaces Not Allowed": "Espaces non autorisés",
         "This appointment time is no longer available.  Please select another time.": "Ce créneau n'est plus disponible. Choisissez un autre créneau.",
         "Sorry Something Went Wrong. Please Try Again!": "Désolé, quelque chose s'est mal passé. Veuillez réessayer !",
-        "Please Enter Valid Email Id": "Saisissez une adresse email valide",
+        "Please enter a valid email address.": "Saisissez une adresse email valide",
         "Book Another Piercing": "Réservez un autre piercing",
         "Booking Location": "Lieu de la réservation",
         "Appointment Start": "Début du rendez-vous",
@@ -81,15 +81,34 @@ const translation = {
         "Modify Appointment": "Modifier votre rendez-vous",
         "Sorry,Record not found !": "Désolé, ce fichier est introuvable",
         "Are you sure you want to cancel an scheduled appointment?": "Êtes-vous sûre de vouloir annuler votre rendez-vous ?",
-        "Fail to connect, please check your internet connection": "Problème de connexion, veuillez vérifier votre connexion Internet et réessayer"
+        "Fail to connect, please check your internet connection": "Problème de connexion, veuillez vérifier votre connexion Internet et réessayer",
+        //asd
+        "Price List": "Liste de prix",
+        "Availability": "Disponibilité",
+        "Total Time:": "Temps estimé :",
+        "For parties more than 4,please call customer service": "Pour des groupes de plus de 5 personnes, veuillez contacter notre service clientèle.",
+        "CUSTOMER": "CLIENT",
+        "Type of Appointment:": "Type de rendez-vous:",
+        "Checkup": "Examination du piercing",
+        "FAQ": "QUESTIONS FRÉQUEMMENT POSÉES",
+        "For over two decades, Maria Tash has been revolutionizing the fine jewelry and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and jewelry, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.": "Depuis plus de deux décennies, Maria Tash révolutionne l'industrie de la bijouterie fine et du piercing en créant des designs innovants sous son label éponyme basé à New York. Avec une perspective unique qui vit au carrefour de la beauté, de la mode et des bijoux, Tash s'est taillé une position unique en tant que fondatrice et designer. Elle a développé une technique grâce à laquelle le style et l'anatomie uniques de chaque cliente déterminent sa combinaison idéale de clous et de boucles, combinés pour complémenter au mieux leur porteuse. L'art croise la science avec l'approche de Tash pour un design et un piercing guidés par son désir primordial de livrer non seulement le meilleur look mais un sentiment de beauté.",
+        "Earlobe": "Lobe de l’oreille",
+        "Helix": "Hélix",
+        "Nostril": "Narine",
+        "Nipple": "Téton",
+        "Navel": "Nombril",
+        "Dermal": "Dermique",
+        "Language: English": "Langue: English",
+        "Language: French": "Langue:  Français",
+        "Maria Tash x Le Bon Marché Pop-up": "Maria Tash x Le Bon Marché Boutique Éphémère"
     },
     "en": {
         "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.": "Join the Maria Tash team of global experts in Los Angeles for four days only.",
         "Prénom*": "FIRST NAME*",
-        "Nom de famille*": "LAST NAME*",
-        "Message texte <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)": "Text Message (Message and data rates may apply)",
-        "Message texte <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie  de messages)": "Text Message (Message and data rates may apply)",
-        "Message texte (Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)": "Text Message (Message and data rates may apply)",
+        "Nom*": "LAST NAME*",
+        "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)": "Text Message (Message and data rates may apply)",
+        "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie  de messages)": "Text Message (Message and data rates may apply)",
+        "SMS (Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)": "Text Message (Message and data rates may apply)",
         "En exclusivité au Bon Marché": "Maria Tash x Le Bon<br> Marché Pop-up",
         "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grace notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.": "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of jewelry combined to best flatter the wearer. The brand’s unique approach to piercing and styling looks makes it one of the most coveted brands today. Shop the fine jewelry collections and experience Luxury Piercing and custom styling.",
         "Lundi": "Monday",
@@ -102,7 +121,7 @@ const translation = {
         "Octobre": "October",
         "Août": "August",
         "réservation et prix": "BOOKING & PRICING",
-        "Reserve maintenant": "BOOK NOW",
+        "RESERVEZ UN RENDEZ-VOUS DÈS": "BOOK NOW",
         "Informations sur l'événement": "POP-UP INFO",
         "À PROPOS DE MARIA TASH": "ABOUT MARIA TASH",
         "Nombre de personne dans votre groupe:": "Number of people in your party:",
@@ -122,14 +141,14 @@ const translation = {
         "Pour de raisons de santé et de sécurité, nous vous demandons de ne pas consommer d’alcool avant votre rendez-vous chez Maria Tash.": "If you are being pierced by us may we politely request that you refrain from consuming alcohol until after your appointment for health and safety reasons.",
         "INSCRIVEZ-VOUS À NOTRE NEWSLETTER": "Sign Up for Our Newsletter",
         "s'inscrire": "sign up",
-        "TÉLÉPHONE": "Phone Number",
+        "Numéro de téléphone": "Phone Number",
         "Prendre Rendez-vous": "Book Your Appointment",
         "J'aimerais être averti par:": "I would like to be notified by:",
         "le prix des bijoux commence a:": "Jewelry starts at",
         "QUESTIONS FRÉQUEMMENT POSÉES": "Frequently Asked Questions",
         "Saisissez votre Prénom*": "Please enter your First Name*",
         "Saisissez votre Email*": "Please enter your Email*",
-        "Saisissez votre Nom de famille*": "Please enter your Last Name*",
+        "Saisissez votre Nom*": "Please enter your Last Name*",
         "Aucun créneau disponible": "No Slot Available",
         "Choisissez une des options ci-dessus": "Please select one of the above options",
         "Sélectionnez l'emplacement": "Please select slot",
@@ -146,7 +165,25 @@ const translation = {
         "Désolé, ce fichier est introuvable": "Sorry,Record not found !",
         "Êtes-vous sûre de vouloir annuler votre rendez-vous ?": "Are you sure you want to cancel an scheduled appointment?",
         "Problème de connexion, veuillez vérifier votre connexion Internet et réessayer": "Fail to connect, please check your internet connection",
-        "Choisissez votre type de rendez-vous pour obtenir les créneaux disponibles": "Choose type of Appointment to get available time slots"
+        '"Choisissez votre type de rendez-vous pour obtenir les créneaux disponibles"': '"Choose type of Appointment to get available time slots"',
+        "Liste de prix": "Price List",
+        "Disponibilité": "Availability",
+        "Temps estimé :": "Total Time:",
+        "Pour des groupes de plus de 5 personnes, veuillez contacter notre service clientèle.": "For parties more than 4,please call customer service",
+        "CLIENT": "CUSTOMER",
+        "Type de rendez-vous:": "Type of Appointment:",
+        "Examination du piercing": "Checkup",
+        "QUESTIONS FRÉQUEMMENT POSÉES": "FAQ",
+        "Depuis plus de deux décennies, Maria Tash révolutionne l'industrie de la bijouterie fine et du piercing en créant des designs innovants sous son label éponyme basé à New York. Avec une perspective unique qui vit au carrefour de la beauté, de la mode et des bijoux, Tash s'est taillé une position unique en tant que fondatrice et designer. Elle a développé une technique grâce à laquelle le style et l'anatomie uniques de chaque cliente déterminent sa combinaison idéale de clous et de boucles, combinés pour complémenter au mieux leur porteuse. L'art croise la science avec l'approche de Tash pour un design et un piercing guidés par son désir primordial de livrer non seulement le meilleur look mais un sentiment de beauté.": "For over two decades, Maria Tash has been revolutionizing the fine jewelry and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and jewelry, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.",
+        "Lobe de l’oreille": "Earlobe",
+        "Hélix": "Helix",
+        "Narine": "Nostril",
+        "Téton": "Nipple",
+        "Nombril": "Navel",
+        "Dermique": "Dermal",
+        "Langue: English":"Language: English",
+        "Langue:  Français": "Language: French",
+        "Maria Tash x Le Bon Marché Boutique Éphémère": "Maria Tash x Le Bon Marché Pop-up"
     }
 };
 
@@ -686,6 +723,15 @@ var validateForm = function () {
         }
     });
 
+    jQuery('.email').each(function() {
+        //var placeholder=jQuery(this).attr("placeholder");
+        jQuery(this).rules('add', {
+            email: true,
+            messages: {
+                email:  __("Please enter a valid email address.")
+            }
+        });
+    });
 
 };
 
