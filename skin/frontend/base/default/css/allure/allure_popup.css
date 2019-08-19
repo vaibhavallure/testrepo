@@ -1721,6 +1721,13 @@ div#btnBookTop {
 
 /*---------new css--------------------*/
 
+.allure-sticky{
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+
 #slots_section div.active, #slots_section div:hover{
 	box-shadow: 2px 2px 8px black;
 	background: white;
