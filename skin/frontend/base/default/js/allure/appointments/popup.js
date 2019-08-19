@@ -46,8 +46,8 @@ const translation = {
         "Last Name*": "Nom*",
         "Phone Number": "Numéro de téléphone",
         "I would like to be notified by:": "J'aimerais être averti par:",
-        "Jewelry starts at": "le prix des bijoux commence a:",
-        "jewelry starts at": "le prix des bijoux commence a:",
+        "Jewelry starts at": "le prix des bijoux commence à ",
+        "jewelry starts at": "le prix des bijoux commence à ",
         "Frequently Asked Questions": "QUESTIONS FRÉQUEMMENT POSÉES",
         "Your Appointment on": "Votre demande de rendez-vous au",
         "at": "à ",
@@ -151,7 +151,7 @@ const translation = {
         "Numéro de téléphone": "Phone Number",
         "Prendre Rendez-vous": "Book Your Appointment",
         "J'aimerais être averti par:": "I would like to be notified by:",
-        "le prix des bijoux commence a:": "Jewelry starts at",
+        "le prix des bijoux commence à": "Jewelry starts at",
         "QUESTIONS FRÉQUEMMENT POSÉES": "Frequently Asked Questions",
         "Saisissez votre Prénom*": "Please enter your First Name*",
         "Saisissez votre Email*": "Please enter your Email*",
@@ -625,7 +625,7 @@ var setAvailableSlots = function (response) {
    // jQuery('#slotloader').hide();
 
     html=`<p class="col-12 p-1 m-1 text-center">
-        ${__('No Slot Available')}
+        <span class="translate-popup">${__('No Slot Available')}</span>
         </p>`;
 
     if(response.success==true)
