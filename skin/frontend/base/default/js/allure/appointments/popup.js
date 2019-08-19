@@ -6,7 +6,7 @@ const translation = {
         "Text Message (Message and data rates may apply)": "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
         "Text Message (<em>Message and data rates may apply</em>)": "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
         "Maria Tash x Le Bon<br> Marché Pop-up": "En exclusivité au Bon Marché",
-        "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of jewelry combined to best flatter the wearer. The brand’s unique approach to piercing and styling looks makes it one of the most coveted brands today. Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grace notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.",
+        "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of jewelry combined to best flatter the wearer. The brand’s unique approach to piercing and styling  makes it one of the most coveted brands today. Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grace notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.",
         "Monday": "Lundi",
         "Tuesday": "Mardi",
         "Wednesday": "Mercredi",
@@ -86,7 +86,7 @@ const translation = {
         "Price List": "Liste de prix",
         "Availability": "Disponibilité",
         "Total Time:": "Temps estimé :",
-        "For parties more than 4,please call customer service": "Pour des groupes de plus de 4 personnes, veuillez contacter notre service clientèle.",
+        "For parties of 5 or more, contact customer service": "Pour des groupes de plus de 4 personnes, veuillez contacter notre service clientèle.",
         "CUSTOMER": "CLIENT",
         "Type of Appointment:": "Type de rendez-vous:",
         "Checkup": "Examination du piercing",
@@ -105,8 +105,8 @@ const translation = {
         "No of People in Group": "Nombre de personne dans votre groupe",
         "Customer information cannot be the same.  Please provide unique information for each customer.": "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente.",
         "Number of Piercings:": "Nombre de piercings:",
-        "For any question about piercings and appointments, do not hesitate to contact us:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
-        "Appointments are recommended for piercings but are not necessary for jewelry installations. Piercings without appointments are limited depending on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.",
+        "For any question about piercings and appointments, do not hesitate to Contact us anytime:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
+        "Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.",
         "Appointment Id": "Rendez-vous"
     },
     "en": {
@@ -117,7 +117,7 @@ const translation = {
         "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie  de messages)": "Text Message (Message and data rates may apply)",
         "SMS (Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)": "Text Message (Message and data rates may apply)",
         "En exclusivité au Bon Marché": "Maria Tash x Le Bon<br> Marché Pop-up",
-        "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grace notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.": "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of jewelry combined to best flatter the wearer. The brand’s unique approach to piercing and styling looks makes it one of the most coveted brands today. Shop the fine jewelry collections and experience Luxury Piercing and custom styling.",
+        "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grace notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.": "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of jewelry combined to best flatter the wearer. The brand’s unique approach to piercing and styling  makes it one of the most coveted brands today. Shop the fine jewelry collections and experience Luxury Piercing and custom styling.",
         "Lundi": "Monday",
         "Mardi": "Tuesday",
         "Mercredi": "Wednesday",
@@ -176,7 +176,7 @@ const translation = {
         "Liste de prix": "Price List",
         "Disponibilité": "Availability",
         "Temps estimé :": "Total Time:",
-        "Pour des groupes de plus de 5 personnes, veuillez contacter notre service clientèle.": "For parties more than 4,please call customer service",
+        "Pour des groupes de plus de 4 personnes, veuillez contacter notre service clientèle.": "For parties of 5 or more, contact customer service",
         "CLIENT": "CUSTOMER",
         "Type de rendez-vous:": "Type of Appointment:",
         "Examination du piercing": "Checkup",
@@ -195,8 +195,8 @@ const translation = {
         "Nombre de personne dans votre groupe": "No of People in Group",
         "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente." : "Customer information cannot be the same.  Please provide unique information for each customer.",
         "Nombre de piercings:": "Number of Piercings:",
-        "Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :":"For any question about piercings and appointments, do not hesitate to contact us:",
-        "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for jewelry installations. Piercings without appointments are limited depending on availability.",
+        "Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :":"For any question about piercings and appointments, do not hesitate to Contact us anytime:",
+        "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.",
         "Rendez-vous": "Appointment Id"
     }
 };
