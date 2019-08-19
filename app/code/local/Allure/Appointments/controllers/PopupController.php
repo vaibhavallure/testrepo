@@ -232,6 +232,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
             Mage::getSingleton("core/session")->setData('appointment_availablity', false);
         }
         $this->loadLayout();
+        $this->getLayout()->getBlock('head')->setTitle($this->__('Maria Tash'));
         $this->renderLayout();
 
     }
