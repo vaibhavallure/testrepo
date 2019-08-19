@@ -106,8 +106,8 @@ const translation = {
         "Customer information cannot be the same.  Please provide unique information for each customer.": "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente.",
         "Number of Piercings:": "Nombre de piercings:",
         "For any question about piercings and appointments, do not hesitate to contact us:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
-        "Appointments are recommended for piercings but are not necessary for jewelry installations. Piercings without appointments are limited depending on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités."
-
+        "Appointments are recommended for piercings but are not necessary for jewelry installations. Piercings without appointments are limited depending on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.",
+        "Appointment Id": "Rendez-vous"
     },
     "en": {
         "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.": "Join the Maria Tash team of global experts in Los Angeles for four days only.",
@@ -196,8 +196,8 @@ const translation = {
         "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente." : "Customer information cannot be the same.  Please provide unique information for each customer.",
         "Nombre de piercings:": "Number of Piercings:",
         "Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :":"For any question about piercings and appointments, do not hesitate to contact us:",
-        "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for jewelry installations. Piercings without appointments are limited depending on availability."
-
+        "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for jewelry installations. Piercings without appointments are limited depending on availability.",
+        "Rendez-vous": "Appointment Id"
     }
 };
 
@@ -305,7 +305,19 @@ let translatePopUp = function () {
         const tagName = jQuery(translatedElems[i]).prop("tagName");
 
         // if tag not INPUT then take innerText/text
-        if(tagName!=='INPUT' && sourceText){
+        if(tagName === 'INPUT'){                              // if tag INPUT take placeholder
+            const sourceText = jQuery(translatedElems[i]).attr('placeholder');
+            if(sourceText){
+                const translatedText = __(sourceText);
+                jQuery(translatedElems[i]).attr('placeholder',translatedText);
+            }
+        }else if(tagName ==='BUTTON'){
+            const title = jQuery(translatedElems[i]).attr('title');
+            if(title){
+                const translatedText = __(title);
+                jQuery(translatedElems[i]).attr('title',translatedText);
+            }
+        } else if(tagName!=='INPUT' && sourceText){
             const trimmedSourceText = sourceText.trim();
             let translatedText = __(trimmedSourceText);
             //console.log('tagName',tagName);
@@ -318,12 +330,6 @@ let translatePopUp = function () {
                 })
             }
             jQuery(translatedElems[i]).html(translatedText.trim());
-        }else if(tagName === 'INPUT'){                              // if tag INPUT take placeholder
-            const sourceText = jQuery(translatedElems[i]).attr('placeholder');
-            if(sourceText){
-                const translatedText = __(sourceText);
-                jQuery(translatedElems[i]).attr('placeholder',translatedText);
-            }
         }
     }
 }
