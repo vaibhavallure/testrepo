@@ -297,9 +297,9 @@ const getSessionLocale = function () {
 let translatePopUp = function () {
     const translatedElems = jQuery('.translate-popup');
     const elementLength = translatedElems.length;
-    let datePickerOb = jQuery('#appointment_date');
-    datePickerOb.datepicker('destroy');
-    initializeDatePicker();
+    // let datePickerOb = jQuery('#appointment_date');
+    // datePickerOb.datepicker('destroy');
+    // initializeDatePicker();
     for(let i = 0; i<elementLength; i++){
         const sourceText = jQuery(translatedElems[i]).text();
         const tagName = jQuery(translatedElems[i]).prop("tagName");
