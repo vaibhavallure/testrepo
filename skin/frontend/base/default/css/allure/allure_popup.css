@@ -1018,11 +1018,16 @@ input#appointment_date {
 }
 
 div#btnContinue {
-    width: 200px;
+    /*width: 200px;*/
+   width: 100%;
     overflow: hidden;
     margin: 30px auto 0;
 }
-
+div#btnContinue button{
+	width: auto;
+	min-width: 200px;
+	margin: auto;
+}
 div#wrapperConfirmAppointment {
     background-color: #2c2c2c;
     padding: 20px 0;
