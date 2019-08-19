@@ -69,7 +69,7 @@ if ($model) {
                                     $customer_count = 1;
                                     foreach ($customers as $customer):?>
                                         <div id="customer<?= $customer_count ?>job" class="form-group">
-                                            <h6 class="text-white">CUSTOMER <?= $customer_count ?>:</h6>
+                                            <h6 class="text-white"><span class="translate-popup">CUSTOMER</span> <?= $customer_count ?>:</h6>
                                             <div class="row ">
                                                 <div class="col-md-3">
                                                     <input type="checkbox" class="piercing_select" id="piercing_select_<?= $customer_count ?>"
@@ -84,7 +84,7 @@ if ($model) {
                                                            value="1" name="customer[<?= $customer_count ?>][checkup]"
                                                         <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
                                                     >
-                                                    <label class="label" for="checkup_select_<?= $customer_count ?>">Checkup</label>
+                                                    <label class="label translate-popup" for="checkup_select_<?= $customer_count ?>">Checkup</label>
                                                 </div>
                                             </div>
                                             <div id="piercing-wrapper<?= $customer_count ?>"
@@ -122,8 +122,8 @@ if ($model) {
                                     endforeach; ?>
                                 <?php else: ?>
                                     <div id="customer1job" class="form-group">
-                                        <h6 class="text-white">CUSTOMER 1:</h6>
-                                        <label class="label">Type of Appointment:</label>
+                                        <h6 class="text-white"><span class="translate-popup">CUSTOMER</span> 1:</h6>
+                                        <label class="label translate-popup">Type of Appointment:</label>
                                         <div class="row ">
                                             <div class="col-md-3">
                                                 <input type="checkbox" class="piercing_select" id="piercing_select_1"
@@ -134,7 +134,7 @@ if ($model) {
                                             <div class="col-md-6">
                                                 <input type="checkbox" class="checkup_select" value="1" id="checkup_select_1"
                                                        name="customer[1][checkup]">
-                                                <label class="label" for="checkup_select_1">Checkup</label>
+                                                <label class="label translate-popup" for="checkup_select_1">Checkup</label>
                                             </div>
                                         </div>
                                         <div id="piercing-wrapper1" class="job-wrapper col-12" style="display:none">
@@ -177,7 +177,7 @@ if ($model) {
 
                                             <div id="customer<?= $customer_count ?>">
                                                 <div class="col">
-                                                    <h6 class="text-white">CUSTOMER <?= $customer_count ?>:</h6>
+                                                    <h6 class="text-white"><span class="translate-popup">CUSTOMER</span> <?= $customer_count ?>:</h6>
                                                 </div>
                                                 <div id="name-box" class="col-md-12 name-box">
                                                     <div class="row">
@@ -230,7 +230,7 @@ if ($model) {
                                     <?php else: ?>
                                         <div id="customer1">
                                             <div class="col">
-                                                <h6 class="text-white">CUSTOMER 1:</h6>
+                                                <h6 class="text-white"><span class="translate-popup">CUSTOMER</span> 1:</h6>
                                             </div>
                                             <div id="name-box" class="col-md-12 name-box">
                                                 <div class="row">
@@ -285,7 +285,7 @@ if ($model) {
                 </div>
                 <div class="col-md-6 booking-box">
                     <div class="col-md-12">
-                        <p class="xpaces">Availability</p>
+                        <p class="xpaces translate-popup">Availability</p>
                     </div>
                     <?php echo $this->getChildHtml("appointments_popup_pickdatetime"); ?>
 
