@@ -586,7 +586,7 @@ var getAvailableSlots = function () {
     var request = {
         "slottime": time_in_min,
         "storeid": jQuery('#store_id').val(),
-        "date": getTranslatedDateWithMonth(jQuery('#appointment_date').val()),
+        "date": jQuery('#appointment_date').val(),
         "appointment_id":Allure.appointmentId,
     };
 
