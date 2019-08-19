@@ -16,20 +16,20 @@ if ($fetch_model) {
        value="<?php if ($fetch_date):echo $fetch_date;endif; ?>">
 
 <script type="text/javascript">
-    slots = '<?=json_encode((Mage::getModel("appointments/slots"))::SLOTS)?>';
-    Allure.getAvlblSlotsUrl = '<?php echo $this->getUrl('*/popup/getAvailableSlots', array('_secure' => true)) ?>';
-    var getWorkingDaysUrl = "<?php echo $this->getWorkingDaysActionUrl();?>";
-    var storeid ='<?= $this->getStoreId() ?>';
-    var workingDays = loadWorkingDays(getWorkingDaysUrl, storeid);
-    var datesAvailable = workingDays['dates'];
-    var currentDateString=workingDays['today'];
-
-    <?php if(empty($fetch_date)):?>
-    jQuery("#appointment_date").val(currentDateString);
-    <?php endif;?>
-
     const initializeDatePicker = function () {
         //console.log('initializeDatePicker',jQuery('#appointment_date').datepicker);
+        slots = '<?=json_encode((Mage::getModel("appointments/slots"))::SLOTS)?>';
+        Allure.getAvlblSlotsUrl = '<?php echo $this->getUrl('*/popup/getAvailableSlots', array('_secure' => true)) ?>';
+        var getWorkingDaysUrl = "<?php echo $this->getWorkingDaysActionUrl();?>";
+        var storeid ='<?= $this->getStoreId() ?>';
+        var workingDays = loadWorkingDays(getWorkingDaysUrl, storeid);
+        var datesAvailable = workingDays['dates'];
+        var currentDateString=workingDays['today'];
+
+        <?php if(empty($fetch_date)):?>
+        jQuery("#appointment_date").val(currentDateString);
+        <?php endif;?>
+
         jQuery.fn.datepicker.dates['fr'] = {
             days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
             daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
@@ -67,7 +67,7 @@ if ($fetch_model) {
                 }
             }
         }).on('changeDate', function (e) {
-            getAvailableSlots();
+            //getAvailableSlots();
         });
     };
 
