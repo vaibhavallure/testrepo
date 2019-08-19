@@ -84,19 +84,19 @@ $apt_email = $model->getEmail();
                     <?php if ($apt_id): ?>
                         <div class="checkout-success col-md-12">
                             <div class="success-field row row">
-                                <span class="apt-summary col-md-6 col-6 text-right translate-popup"><?php echo $this->__('Appointment Id') ?>:</span>
+                                <span class="apt-summary col-md-6 col-6 text-right"><span class="translate-popup"><?php echo $this->__('Appointment Id') ?><span>:</span>
                                 <span class="apt-summary col-md-6 col-6"><?php echo $model->getId() ?></span>
                             </div>
                             <div class="success-field row">
-                                <span class="apt-summary col-md-6 col-6 text-right translate-popup"><?php echo $this->__('No of People in Group') ?>:</span>
+                                <span class="apt-summary col-md-6 col-6 text-right "><span class="ranslate-popup"><?php echo $this->__('No of People in Group') ?></span>:</span>
                                 <span class="apt-summary col-md-6 col-6"><?php echo $model->getPiercingQty() ?></span>
                             </div>
                             <div class="success-field row">
-                                <span class="apt-summary col-md-6 col-6 text-right translate-popup"><?php echo $this->__('Booking Location') ?>:</span>
+                                <span class="apt-summary col-md-6 col-6 text-right"><span class="translate-popup"><?php echo $this->__('Booking Location') ?></span>:</span>
                                 <span class="apt-summary col-md-6 col-6"><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
                             </div>
                             <div class="success-field row">
-                                <span class="apt-summary col-md-6 col-6 text-right translate-popup"><?php echo $this->__('Appointment Start') ?>:</span>
+                                <span class="apt-summary col-md-6 col-6 text-right"><span class="translate-popup"><?php echo $this->__('Appointment Start') ?></span>:</span>
                                 <span class="apt-summary col-md-6 col-6"><?php
                                     /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
                                     $appStartDate = $appStartDate->toString(); */
