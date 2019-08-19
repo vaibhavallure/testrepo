@@ -313,10 +313,15 @@ let translatePopUp = function () {
             }
         }else if(tagName ==='BUTTON'){
             const title = jQuery(translatedElems[i]).attr('title');
+            const trimmedSourceText = sourceText.trim();
+            let translatedText = __(trimmedSourceText);
+
             if(title){
-                const translatedText = __(title);
-                jQuery(translatedElems[i]).attr('title',translatedText);
+                const translatedTitleText = __(title);
+                jQuery(translatedElems[i]).attr('title',translatedTitleText);
             }
+
+            jQuery(translatedElems[i]).html(translatedText.trim());
         } else if(tagName!=='INPUT' && sourceText){
             const trimmedSourceText = sourceText.trim();
             let translatedText = __(trimmedSourceText);
