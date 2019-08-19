@@ -328,6 +328,24 @@ let translatePopUp = function () {
     }
 }
 
+const getTranslatedDateWithMonth = function (sourceText) {
+    const frMonthMapping = {
+        "Août": "Aug",
+        "Septembre": "Sep",
+        "Octobre": "Oct",
+    };
+    let translatedText = sourceText;
+    if(currentLanguage === 'fr'){
+        const months = Object.keys(frMonthMapping);
+        months.forEach(function (month) {
+            if(sourceText.includes(month))
+                translatedText = sourceText.replace(month,frMonthMapping[month])
+        })
+    }
+
+    return translatedText;
+};
+
 //function for translation
 // which will lookup in json and will return translation
 let __ = function (sourceString) {
@@ -568,7 +586,7 @@ var getAvailableSlots = function () {
     var request = {
         "slottime": time_in_min,
         "storeid": jQuery('#store_id').val(),
-        "date": jQuery('#appointment_date').val(),
+        "date": getTranslatedDateWithMonth(jQuery('#appointment_date').val()),
         "appointment_id":Allure.appointmentId,
     };
 
