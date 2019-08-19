@@ -98,6 +98,7 @@ const translation = {
         "Nipple": "Téton",
         "Navel": "Nombril",
         "Dermal": "Dermique",
+        "hour": "heure",
         "Language: English": "Langue: English",
         "Language: French": "Langue:  Français",
         "Maria Tash x Le Bon Marché Pop-up": "Maria Tash x Le Bon Marché Boutique Éphémère",
@@ -185,6 +186,7 @@ const translation = {
         "Téton": "Nipple",
         "Nombril": "Navel",
         "Dermique": "Dermal",
+        "heure": "hour",
         "Langue: English":"Language: English",
         "Langue:  Français": "Language: French",
         "Maria Tash x Le Bon Marché Boutique Éphémère": "Maria Tash x Le Bon Marché Pop-up",
@@ -518,7 +520,7 @@ var calculateTime = function () {
 
 
     timeSpan.slideUp("slow",function () {
-        timeSpan.html(__('Total Time: '+hours + ":" + minutes+' Hour'));
+        timeSpan.html('<span class="translate-popup">'+__('Total Time:')+'</span> '+hours +' <span class="translate-popup">'+ __('hour')+'</span> '+ minutes+' <span class="translate-popup">'+__('minutes')+'</span>');
     });
     timeSpan.slideDown("slow");
 
