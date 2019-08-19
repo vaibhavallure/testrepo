@@ -204,7 +204,10 @@ const translation = {
 const monthMapping = {
     "Aug": "Aout",
     "Sep": "Septembre",
-    "Oct": "Octobre"
+    "Oct": "Octobre",
+    "August": "Aout",
+    "September": "Septembre",
+    "October": "Octobre",
 }
 
 let currentLanguage = 'en';

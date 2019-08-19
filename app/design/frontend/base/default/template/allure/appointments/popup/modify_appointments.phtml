@@ -97,7 +97,7 @@ $apt_email = $model->getEmail();
                             </div>
                             <div class="success-field row">
                                 <span class="apt-summary col-md-6 col-6 text-right"><span class="translate-popup"><?php echo $this->__('Appointment Start');?></span>:</span>
-                                <span class="apt-summary col-md-6 col-6"><?php
+                                <span class="apt-summary col-md-6 col-6 app-confirm"><?php
                                     /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
                                     $appStartDate = $appStartDate->toString(); */
                                     $appStartDate = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
