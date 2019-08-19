@@ -30,7 +30,7 @@ const translation = {
         "Do I need to book an appointment?": "Dois-je prendre rendez-vous ?",
         "Appointments are preferred for piercings but walk-ins are always welcome.  Appointments are not required for fittings and installs.": "Les rendez-vous pour les piercings sont recommandés mais pas obligatoires. Pensez à vous présenter quelques temps avant votre rendez-vous afin de vous laisser le temps de choisir votre style et vos bijoux. Les installations et ajustements se font sans rendez-vous.",
         "Can I be pierced with my own jewelry?": "Puis-je me faire percer avec mes propres bijoux ?",
-        "Due to sterilization needs, we do not pierce with jewelry that is not Maria Tash.<br> The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.": "En raison des besoins de stérilisation, nous n’utilisons pas d’autres bijoux que ceux de Maria Tash. La meilleure sélection de notre collection sera disponible pour les installations et les piercings. Tous nos bijoux sont en or et se déclinent en différente couleur : jaune, blanc, rose et noir.",
+        "Due to sterilization needs, we do not pierce with jewelry that is not Maria Tash. The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.": "En raison des besoins de stérilisation, nous n’utilisons pas d’autres bijoux que ceux de Maria Tash. La meilleure sélection de notre collection sera disponible pour les installations et les piercings. Tous nos bijoux sont en or et se déclinent en différente couleur : jaune, blanc, rose et noir.",
         "How many piercings can I get in one session?": "Combien de piercings puis-je me faire faire en une séance ?",
         "We recommend up to 3 per session, but this is dependant on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.": "Nous recommandons un maximum de 3 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.",
         "Can I be pierced if I am under 18?": "Puis-je me faire percer si j’ai moins de 18 ans ?",
@@ -101,9 +101,9 @@ const translation = {
         "Language: English": "Langue: English",
         "Language: French": "Langue:  Français",
         "Maria Tash x Le Bon Marché Pop-up": "Maria Tash x Le Bon Marché Boutique Éphémère",
-        //asd
         "Number of People in Group": "Nombre de personne dans votre groupe",
         "Customer information cannot be the same.  Please provide unique information for each customer.": "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente.",
+        "Number of Piercings:": "Nombre de piercings:"
 
     },
     "en": {
@@ -187,7 +187,10 @@ const translation = {
         "Dermique": "Dermal",
         "Langue: English":"Language: English",
         "Langue:  Français": "Language: French",
-        "Maria Tash x Le Bon Marché Boutique Éphémère": "Maria Tash x Le Bon Marché Pop-up"
+        "Maria Tash x Le Bon Marché Boutique Éphémère": "Maria Tash x Le Bon Marché Pop-up",
+        "Nombre de personne dans votre groupe": "Number of People in Group",
+        "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente." : "Customer information cannot be the same.  Please provide unique information for each customer.",
+        "Nombre de piercings:": "Number of Piercings:"
     }
 };
 
