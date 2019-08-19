@@ -1239,7 +1239,9 @@ div#btnBookTop {
 }
 .pop-up-title {
     padding-top: 20px;
-	width:100%
+	width:100%;
+	max-width:380px;
+	margin: auto;
 }
 
 @media (min-width: 768px) {
