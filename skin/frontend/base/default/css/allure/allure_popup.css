@@ -218,7 +218,7 @@ input#selectDate {
   background-repeat: no-repeat;
   height: 100%;
   padding-bottom: 49px;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 
 /* #about-maria #maria-cover {
@@ -1537,7 +1537,7 @@ div#btnBookTop {
     .pop-up-div {
         position: relative;
         left: 0;
-        top: 350px;
+        top: 400px;
         max-width: 100%;
 				width: 100%;
         clear: both;
@@ -1558,7 +1558,7 @@ div#btnBookTop {
     }
 
     div#booking {
-        padding-top: 181px;
+        padding-top: 231px;
     }
 
     .down-arrow-maria,
@@ -1879,7 +1879,7 @@ div#page-wrapper{
 	.pop-up-div {
 		position: relative;
 		left: 0;
-		top: 570px;
+		top: 515px;
 		max-width: 90%;
 		width: 100%;
 		clear: both;
@@ -1896,7 +1896,7 @@ div#page-wrapper{
     background-size: 100% !important;
 	}
 .pop-up-div{
-		top: 740px;
+		top: 670px;
 	}
 .hero-image{
 		height: 1668px;
