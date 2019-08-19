@@ -17,6 +17,12 @@ if ($fetch_model) {
 
 <script type="text/javascript">
     const initializeDatePicker = function () {
+        const monthMapping = {
+            "Aug": "Août",
+            "Sep": "Septembre",
+            "Oct": "Octobre"
+        };
+
         //console.log('initializeDatePicker',jQuery('#appointment_date').datepicker);
         slots = '<?=json_encode((Mage::getModel("appointments/slots"))::SLOTS)?>';
         Allure.getAvlblSlotsUrl = '<?php echo $this->getUrl('*/popup/getAvailableSlots', array('_secure' => true)) ?>';
@@ -26,8 +32,20 @@ if ($fetch_model) {
         var datesAvailable = workingDays['dates'];
         var currentDateString=workingDays['today'];
 
+        const locale = sessionStorage.getItem('popupLocale');
+        if(locale === 'fr'){
+            const months = Object.keys(monthMapping);
+            months.forEach(function (month) {
+                if(currentDateString.includes(month))
+                    translatedCurrentDateString = currentDateString.replace(month,monthMapping[month])
+            })
+        }else{
+            translatedCurrentDateString = currentDateString
+        }
+
         <?php if(empty($fetch_date)):?>
-        jQuery("#appointment_date").val(currentDateString);
+
+        jQuery("#appointment_date").val(translatedCurrentDateString);
         <?php endif;?>
 
         jQuery.fn.datepicker.dates['fr'] = {
@@ -47,13 +65,13 @@ if ($fetch_model) {
             monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             titleFormat: 'MM'
         };
-
-        const locale = sessionStorage.getItem('popupLocale');
+        // console.log(monthMapping,locale)
+        //console.log('currentDateString',translatedCurrentDateString);
 
         jQuery('#appointment_date').datepicker({
             format:'d  M  yyyy',
-            startDate: currentDateString,
             language: locale==='en'?'en':'fr',
+            startDate: translatedCurrentDateString,
             endDate: '',
             beforeShowDay: function (date) {
                 var enabled = false;
