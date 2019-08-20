@@ -364,12 +364,13 @@ const getTranslatedDateWithMonth = function (sourceText) {
 // which will lookup in json and will return translation
 let __ = function (sourceString) {
     //console.log(currentLanguage)
+    const locale = getSessionLocale();
     if(sourceString === undefined)
         return "";
 
     else {
-        if(translation[currentLanguage]){
-            let translatedString = translation[currentLanguage][sourceString];
+        if(translation[locale]){
+            let translatedString = translation[locale][sourceString];
             return translatedString?translatedString:sourceString;
         }else {
             return sourceString;
