@@ -1,6 +1,6 @@
 const translation = {
     "fr": {
-        "Join the Maria Tash team of global experts in Los Angeles for four days only.": "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.",
+        "Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash",
         "FIRST NAME*": "Prénom*",
         "LAST NAME*": "Nom*",
         "Text Message (Message and data rates may apply)": "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
@@ -111,7 +111,7 @@ const translation = {
         "Your scheduled Appointment is Cancelled successfully.": "Rendez-vous annulé avec succès."
     },
     "en": {
-        "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.": "Join the Maria Tash team of global experts in Los Angeles for four days only.",
+        "Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash":"Shop the fine jewelry collections and experience Luxury Piercing and custom styling.",
         "Prénom*": "FIRST NAME*",
         "Nom*": "LAST NAME*",
         "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)": "Text Message (Message and data rates may apply)",
