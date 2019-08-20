@@ -1843,7 +1843,7 @@ div#page-wrapper{
 		padding: 0px !important;
 	}
 	.pop-up-title{
-		margin: 0px 11px;
+		margin: 16px auto;
 	}
 }
 
@@ -1869,7 +1869,7 @@ div#page-wrapper{
 
 @media (min-width:767px) and (max-width:1024px){
 	.half-div-left.fill{
-		background: url(../../images/allure/popup/maria-mobile2.png) no-repeat !important;
+		background: url(../../images/allure/popup/MT_Portrait_ipad.jpg) no-repeat !important;
 		height: 1116px;
 		background-size: cover !important;
 	}
