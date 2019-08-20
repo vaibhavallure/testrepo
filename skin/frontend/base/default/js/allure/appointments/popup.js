@@ -330,7 +330,7 @@ let translatePopUp = function () {
             let translatedText = __(trimmedSourceText);
             //console.log('tagName',tagName);
 
-            if(jQuery(translatedElems[i]).attr("class").includes("app-confirm")){
+            if(jQuery(translatedElems[i]).attr("class").includes("app-confirm") && currentLanguage === 'fr'){
                 const months = Object.keys(monthMapping);
                 months.forEach(function (month) {
                     if(sourceText.includes(month))
