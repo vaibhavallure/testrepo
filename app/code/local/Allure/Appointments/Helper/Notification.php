@@ -61,7 +61,6 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             $oldAppointmentArray = $this->getAppointmentArray($oldAppointment);
             $oldAppointmentCustomerArray = $oldAppointmentCustomers;
 
-            Mage::log($oldAppointmentArray['language_pref'],Zend_Log::DEBUG,'adi.log',true);
 
             $appointmentArray['pre_apt_starttime'] = $this->getDateTime($oldAppointmentArray['appointment_start'],$oldAppointmentArray['language_pref']);
             $appointmentArray['pre_apt_endtime'] = $this->getDateTime($oldAppointmentArray['appointment_end'],$oldAppointmentArray['language_pref']);
