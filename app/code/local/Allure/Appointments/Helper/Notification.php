@@ -57,8 +57,12 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
 
         /*If Old Appointment Data Exist Then  Take it.*/
         if($oldAppointment != null) {
+
             $oldAppointmentArray = $this->getAppointmentArray($oldAppointment);
             $oldAppointmentCustomerArray = $oldAppointmentCustomers;
+
+            Mage::log($oldAppointmentArray['language_pref'],Zend_Log::DEBUG,'adi.log',true);
+
             $appointmentArray['pre_apt_starttime'] = $this->getDateTime($oldAppointmentArray['appointment_start'],$oldAppointmentArray['language_pref']);
             $appointmentArray['pre_apt_endtime'] = $this->getDateTime($oldAppointmentArray['appointment_end'],$oldAppointmentArray['language_pref']);
 
@@ -96,7 +100,6 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 $cnt_old_cust++;
             }
 
-            Mage::log($oldCustomerListHtml,Zend_Log::DEBUG,'adi.log',true);
 
         }
 
@@ -113,7 +116,6 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
         $customerListHtml ='';
         $cnt = 0;
 
-        Mage::log($appointmentArray,Zend_Log::DEBUG,'adi.log',true);
 
 /*To create customers list in appointment to use in email*/
 
@@ -161,7 +163,6 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             if($type != 'cancel'){
                 $appointmentArray['apt_modify_link'] = $this->getModifyLink($appointmentCustomer);
             }
-            Mage::log( $appointmentArray['apt_modify_link'],Zend_Log::DEBUG,'adi.log',true);
 
 
             $emailVariables= array();
