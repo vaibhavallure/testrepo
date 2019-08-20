@@ -229,7 +229,7 @@ if ($model) {
                                                            type="text" name="customer[<?= $customer_count ?>][phone]"
                                                            id="phonenumber<?= $customer_count ?>"
                                                            placeholder="<?php echo $this->__('Phone Number') ?>"
-                                                           value="<?= $customer->getPhone() ?>" required autocomplete="off">
+                                                           value="<?= $customer->getPhone() ?>" required autocomplete="off" Try ="disabled" autocorrect="off">
                                                 </div>
                                                 <div id="notify-box" class="col-md-12 form-group">
                                                     <p class="label notify-label translate-popup"><?php echo $this->__('I would like to be notified by:') ?></p>
@@ -294,7 +294,7 @@ if ($model) {
                                                        type="text" name="customer[1][phone]" id="phonenumber1"
                                                        placeholder="<?php echo $this->__('Phone Number') ?>"
                                                        value=""
-                                                       required autocomplete="off">
+                                                       required autocomplete="off" Try ="disabled" autocorrect="off">
                                             </div>
                                             <div id="notify-box" class="col-md-12 form-group">
                                                 <p class="label notify-label translate-popup"><?php echo $this->__('I would like to be notified by:') ?></p>
