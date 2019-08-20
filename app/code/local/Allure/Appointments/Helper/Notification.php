@@ -24,6 +24,17 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     const BCC_EMAILS = "appointments/app_bcc/emails";//VMT
     const NOTIFICATION_LOG = 'appointmentNotfication.log';
 
+    var $month=array("fr"=>array(
+    "January"=>"janvier", "February"=>"février", "March"=>"mars", "April"=>"avril", "May"=>"mai",
+    "June"=>"juin",
+    "July"=>"juillet",
+    "August"=>"aout",
+    "September"=>"septembre",
+    "October"=>"octobre",
+    "November"=>"novembre",
+    "December"=>"décembre"
+    ));
+
     public function sendEmailNotification( $appointment = null,$type = null, $oldAppointment = null, $oldAppointmentCustomers = null)
     {
         $bcc_emails = $this->getBccMails();
@@ -48,11 +59,11 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
         if($oldAppointment != null) {
             $oldAppointmentArray = $this->getAppointmentArray($oldAppointment);
             $oldAppointmentCustomerArray = $oldAppointmentCustomers;
-            $appointmentArray['pre_apt_starttime'] = $this->getDateTime($oldAppointmentArray['appointment_start']);
-            $appointmentArray['pre_apt_endtime'] = $this->getDateTime($oldAppointmentArray['appointment_end']);
+            $appointmentArray['pre_apt_starttime'] = $this->getDateTime($oldAppointmentArray['appointment_start'],$oldAppointmentArray['language_pref']);
+            $appointmentArray['pre_apt_endtime'] = $this->getDateTime($oldAppointmentArray['appointment_end'],$oldAppointmentArray['language_pref']);
 
-            $appointmentArray['pre_apt_date'] = $this->getDate($appointmentArray['appointment_start']);
-            $appointmentArray['pre_apt_time'] = $this->getTime($appointmentArray['appointment_start']);
+            $appointmentArray['pre_apt_date'] = $this->getDate($appointmentArray['appointment_start'],$oldAppointmentArray['language_pref']);
+            $appointmentArray['pre_apt_time'] = $this->getTime($appointmentArray['appointment_start'],$oldAppointmentArray['language_pref']);
 
             $cnt = 0;
 
@@ -94,11 +105,11 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
 
         $appointmentCustomers = $this->getAppointmentCustomerArray($appointment);
 
-        $appointmentArray['apt_starttime'] = $this->getDateTime($appointmentArray['appointment_start']);
-        $appointmentArray['apt_endtime'] = $this->getDateTime($appointmentArray['appointment_end']);
+        $appointmentArray['apt_starttime'] = $this->getDateTime($appointmentArray['appointment_start'],$appointmentArray['language_pref']);
+        $appointmentArray['apt_endtime'] = $this->getDateTime($appointmentArray['appointment_end'],$appointmentArray['language_pref']);
 
-        $appointmentArray['apt_date'] = $this->getDate($appointmentArray['appointment_start']);
-        $appointmentArray['apt_time'] = $this->getTime($appointmentArray['appointment_start']);
+        $appointmentArray['apt_date'] = $this->getDate($appointmentArray['appointment_start'],$appointmentArray['language_pref']);
+        $appointmentArray['apt_time'] = $this->getTime($appointmentArray['appointment_start'],$appointmentArray['language_pref']);
         $customerListHtml ='';
         $cnt = 0;
 
@@ -391,14 +402,24 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             'store_map' => $configData['store_map'][$store_id]
         );
     }
-    public function getDateTime($date){
-        return date("F j, Y H:i", strtotime($date));
+    public function getDateTime($date,$lang='en'){
+        $date=date("j F Y H:i", strtotime($date));
+        if($lang!='en') {
+        $monthName=date("F", strtotime($date));
+            $date=str_replace($monthName, $this->month[$lang][$monthName],$date);
+       }
+        return $date;
     }
     public function getTime($date){
-       return date('h:i A', strtotime($date));
+       return date('H:i', strtotime($date));
     }
-    public function getDate($date){
-        return date("F j, Y ", strtotime($date));
+    public function getDate($date,$lang='en'){
+        $date= date(" j F Y ", strtotime($date));
+        if($lang!='en') {
+            $monthName=date("F", strtotime($date));
+            $date=str_replace($monthName, $this->month[$lang][$monthName],$date);
+        }
+        return $date;
     }
     public function getSenderName($store_id){
 
@@ -417,7 +438,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     public function getLanguageMapping($language = 'en'){
         if($language == 'fr'){
             return array(
-                'customer' => 'Customer',
+                'customer' => 'client',
                 'name'     => 'Nom',
                 'email'    => 'Email',
                 'phone'    => 'Tel',
