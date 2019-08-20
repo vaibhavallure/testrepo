@@ -12,37 +12,25 @@
     display: none;
   }
   .footer ul .footer-item-list{
-    max-width: 45%;
-    flex: 0 0 45%;
-    border-bottom: 1px solid #fff;
-    padding: 20px 0 10px 0;
-    margin: 20px auto 0 !important
+    display: block;
+    margin-top: 20px;
   }
-  .footer-item-list:after {
-    background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
-    content: '';
-    height: 18px;
-    width: 18px;
-    background-position: right;
-    position: absolute;
-    right: 0;
-    transform: rotate(90deg);
+  .footlinks, .social-media > .row {
+    text-align: center;
+    justify-content: center !important;
   }
   .container-footlinks, .homepage-menu.mariatash-header {
     background: rgb(41, 41, 41);
   }
   .footer .footlinks li,.social-media ul{
-    position: relative;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
   .footer .social-media li:last-child{
     margin-right: 0;
   }
   .social-media ul {
     margin-bottom: 40px;
-    padding-left: 20px;
-  }
-  .container-footlinks {
-    padding-left: 30px;
   }
   .inner-box {
     width: 100%;
@@ -127,9 +115,6 @@
   #narrow-by-list{
     display: none;
   }
-  .footer .footlinks li:first-child{
-    margin-left: 0;
-  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -208,13 +193,6 @@
   }
   .mt-logo img {
     width: 130px;
-  }
-  .footer ul .footer-item-list{
-    max-width: 100%;
-    flex: 0 0 100%;
-  }
-  .social-media ul{
-    padding-left: 5px;
   }
 }
 

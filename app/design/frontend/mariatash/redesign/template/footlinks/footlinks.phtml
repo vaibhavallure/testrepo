@@ -45,7 +45,7 @@
 <?php $links = $this->getAllCustomLinks(); ?>
 
 <div class="container-footlinks row">
-    <ul class="footlinks col-lg-10 col-12 nav">
+    <ul class="footlinks col-lg-10 col-12">
         <?php
         foreach ($links as $link):
             if ($link->getStatus() == 1):
@@ -60,7 +60,7 @@
 
 
                 ?>
-                <li class="footer-item-list nav-item">
+                <li class="footer-item-list">
                 <div id="link_<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
                     <?php if ($link->getType() == 1 || $link->getType() == 0): ?>
                         <div class='popbox' data-tooltip-id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
@@ -209,7 +209,7 @@
         ?>
         </ul>
         <div class="col-lg-2 col-12 social-media">
-          <div class="row justify-content-lg-end">
+          <div class="row justify-content-end">
         <ul>
             <!-- <div class="sm-qr">
                 <a href="<//?php echo $this->validURL(Mage::getStoreConfig('ecp_yelp/yelp/yelpurl')); ?>" target="_blank"> Y </a>
