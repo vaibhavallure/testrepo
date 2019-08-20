@@ -431,7 +431,7 @@ var addCustomer = function (srno) {
                     <input class="input-box required-entry email translate-popup"  type="email" name="customer[${srno}][email]" id="email${srno}" placeholder="${__('Email*')}" value="" required>
                </div>
                <div id="phone-box" class="col-md-12 form-group">
-                   <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup" type="text" name="customer[${srno}][phone]" id="phonenumber${srno}" placeholder="${__('Phone Number')}" value="" required>
+                   <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup" type="text" name="customer[${srno}][phone]" id="phonenumber${srno}" placeholder="${__('Phone Number')}" value="" required autocomplete="off">
                </div>
                <div id="notify-box" class="col-md-12 form-group">
                     <p class="label notify-label translate-popup">${__('I would like to be notified by:')}</p>
