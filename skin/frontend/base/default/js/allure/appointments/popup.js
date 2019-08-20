@@ -107,7 +107,8 @@ const translation = {
         "Number of Piercings:": "Nombre de piercings:",
         "Contact us anytime:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
         "Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.",
-        "Appointment Id": "Rendez-vous"
+        "Appointment Id": "Rendez-vous",
+        "Your scheduled Appointment is Cancelled successfully.": "Rendez-vous annulé avec succès."
     },
     "en": {
         "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.": "Join the Maria Tash team of global experts in Los Angeles for four days only.",
