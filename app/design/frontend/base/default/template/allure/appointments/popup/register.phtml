@@ -20,7 +20,7 @@ if ($model) {
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
 
-<form class="" action="<?php echo $this->getActionUrl() ?>" method="post" id="appointemnet_form">
+<form class="" autocomplete="on" action="<?php echo $this->getActionUrl() ?>" method="post" id="appointemnet_form">
     <input type="hidden" name="language_pref" value="">
     <?php if($this->isAdmin()):?>
         <input type="hidden" name="user" value="admin">
@@ -294,7 +294,7 @@ if ($model) {
                                                        type="text" name="customer[1][phone]" id="phonenumber1"
                                                        placeholder="<?php echo $this->__('Phone Number') ?>"
                                                        value=""
-                                                       required>
+                                                       required autocomplete="off">
                                             </div>
                                             <div id="notify-box" class="col-md-12 form-group">
                                                 <p class="label notify-label translate-popup"><?php echo $this->__('I would like to be notified by:') ?></p>
