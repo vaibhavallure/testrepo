@@ -1296,6 +1296,10 @@ div#btnBookTop {
 	}
 }
 @media (max-width: 767px) {
+
+	.pop-up-title{
+		max-width: 363px;
+	}
 	td.td-piercing-name,
 	td.td-price {
 		padding-bottom: 5px;
@@ -1435,7 +1439,7 @@ div#btnBookTop {
     }
 
     a.navbar-close {
-        position: fixed;
+        position: absolute;
         left: 20px;
         color: #fff;
         font-size: 26px;
