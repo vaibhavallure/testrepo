@@ -271,7 +271,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                         $url = $this->getModifyLink($appointmentCustomer);
                     }
 
-                    $date = $this->getDate($appointment->getAppointmentStart());
+                    $date = $this->getDate($appointment->getAppointmentStart(),$appointment->getLanguagePref());
                     $time = $this->getTime($appointment->getAppointmentStart());
 
                     $smsText = str_replace("(apt_id)", $appointmentCustomer['appointment_id'], $smsText);
@@ -438,7 +438,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
     public function getLanguageMapping($language = 'en'){
         if($language == 'fr'){
             return array(
-                'customer' => 'client',
+                'customer' => 'Client',
                 'name'     => 'Nom',
                 'email'    => 'Email',
                 'phone'    => 'Tel',
