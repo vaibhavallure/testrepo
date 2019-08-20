@@ -107,7 +107,8 @@ const translation = {
         "Number of Piercings:": "Nombre de piercings:",
         "Contact us anytime:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
         "Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.",
-        "Appointment Id": "Rendez-vous"
+        "Appointment Id": "Rendez-vous",
+        "processing":"En traitement"
     },
     "en": {
         "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.": "Join the Maria Tash team of global experts in Los Angeles for four days only.",
@@ -583,7 +584,7 @@ var getAvailableSlots = function () {
 
     if(time_in_min<1)
     {
-        html=`<p class="col-12  p-1 m-1 text-center">
+        html=`<p class="col-12  p-1 m-1 text-center translate-popup">
             ${__('Choose type of Appointment to get available time slots')}
             </p>`;
         jQuery("#slots_section").slideUp("fast",function () {

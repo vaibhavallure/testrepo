@@ -100,7 +100,15 @@
 
                 if (!Allure.isProcessing) {
                     Allure.isProcessing = true
-                    $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text("PROCESSING ...");
+
+                    var btnLbl="PROCESSING";
+
+                    if($('input[name=language_pref]').val()=="fr")
+                    {
+                        btnLbl="En traitement";
+                    }
+
+                    $("#btnConfirm").addClass('disabled').attr('disabled', 'disabled').text(btnLbl+" ...");
                     form.submit();
                 }
             },
