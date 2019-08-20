@@ -66,7 +66,7 @@ if ($model) {
                                     </div>
                                 </div>
                                 <div class="col-12 message">
-                                    <p class="translate-popup"><?php echo $this->__('For parties more than 4,please call customer service') ?></p>
+                                    <p class="translate-popup"><?php echo $this->__('For parties of 5 or more, contact customer service') ?></p>
                                 </div>
                             </div>
 
@@ -86,7 +86,7 @@ if ($model) {
                                                     >
                                                     <label class="label translate-popup" for="piercing_select_<?= $customer_count ?>"><?php echo $this->__('Piercing') ?></label>
                                                 </div>
-                                                <div class="col-md-6 col-4">
+                                                <div class="col-md-6 col-8">
                                                     <input type="checkbox" data-no="<?= $customer_count ?>" class="checkup_select" id="checkup_select_<?= $customer_count ?>"
                                                            value="1" name="customer[<?= $customer_count ?>][checkup]"
                                                         <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
@@ -141,7 +141,7 @@ if ($model) {
                                                        name="customer[1][piercing_select]">
                                                 <label class="label translate-popup translate-popup" for="piercing_select_1"><?php echo $this->__('Piercing') ?></label>
                                             </div>
-                                            <div class="col-md-6  col-4">
+                                            <div class="col-md-6  col-8">
                                                 <input type="checkbox" class="checkup_select clschk" value="1" data-no="1" id="checkup_select_1"
                                                        name="customer[1][checkup]">
                                                 <label class="label translate-popup" for="checkup_select_1"><?php echo $this->__('Checkup') ?></label>

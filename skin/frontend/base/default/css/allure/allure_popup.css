@@ -16,7 +16,7 @@ button#btnBooking,
 button#btnConfirm
 {
 	min-width: 119px;
-	padding: 3px!important;
+	padding: 3px 10px!important;
 	margin-bottom: 35px;
 	text-transform: uppercase;
 }
@@ -246,9 +246,9 @@ input#selectDate {
 }
 .pop-up-div {
 	position: relative;
-	left: 64%;
+	left: 61%;
 	/*margin-top: 50px;*/
-	width: 393px;
+	width: 430px;
 	background: #2c2c2c;
 	/*top: 45px;*/
 	/*transform: translate(0,-50%);*/
@@ -1239,7 +1239,9 @@ div#btnBookTop {
 }
 .pop-up-title {
     padding-top: 20px;
-	width:100%
+	width:100%;
+	max-width:380px;
+	margin: auto;
 }
 
 @media (min-width: 768px) {
@@ -1841,7 +1843,7 @@ div#page-wrapper{
 		padding: 0px !important;
 	}
 	.pop-up-title{
-		margin: 0px 11px;
+		margin: 16px auto;
 	}
 }
 
@@ -1867,7 +1869,7 @@ div#page-wrapper{
 
 @media (min-width:767px) and (max-width:1024px){
 	.half-div-left.fill{
-		background: url(../../images/allure/popup/maria-mobile2.png) no-repeat !important;
+		background: url(../../images/allure/popup/MT_Portrait_ipad.jpg) no-repeat !important;
 		height: 1116px;
 		background-size: cover !important;
 	}
