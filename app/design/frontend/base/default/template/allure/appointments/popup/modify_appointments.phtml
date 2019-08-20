@@ -180,7 +180,7 @@ else:
             url: reloadurl, //Relative or absolute path to response.php file
             method: 'get',
             success: function (data) {
-                jQuery('#exampleModalLongTitle').html(data);
+                jQuery('#exampleModalLongTitle').html(__(data));
                 //jQuery('.checkout-success .success-field').empty();
                 jQuery('.checkout-success .apt-cancel-buttons-set').empty();
                 jQuery('.checkout-success .apt-modify-buttons-set').empty();

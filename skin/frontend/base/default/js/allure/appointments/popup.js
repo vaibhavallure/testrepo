@@ -108,7 +108,7 @@ const translation = {
         "Contact us anytime:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
         "Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.",
         "Appointment Id": "Rendez-vous",
-        "processing":"En traitement"
+        "Your scheduled Appointment is Cancelled successfully.": "Rendez-vous annulé avec succès."
     },
     "en": {
         "Rejoignez l'équipe d'experts mondiaux Maria Tash à Los Angeles pour seulement quatre jours.": "Join the Maria Tash team of global experts in Los Angeles for four days only.",
@@ -365,12 +365,13 @@ const getTranslatedDateWithMonth = function (sourceText) {
 // which will lookup in json and will return translation
 let __ = function (sourceString) {
     //console.log(currentLanguage)
+    const locale = getSessionLocale();
     if(sourceString === undefined)
         return "";
 
     else {
-        if(translation[currentLanguage]){
-            let translatedString = translation[currentLanguage][sourceString];
+        if(translation[locale]){
+            let translatedString = translation[locale][sourceString];
             return translatedString?translatedString:sourceString;
         }else {
             return sourceString;
