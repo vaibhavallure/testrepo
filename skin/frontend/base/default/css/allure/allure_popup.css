@@ -218,7 +218,7 @@ input#selectDate {
   background-repeat: no-repeat;
   height: 100%;
   padding-bottom: 49px;
-  background-size: 100% 100%;
+  background-size: cover;
 }
 
 /* #about-maria #maria-cover {
@@ -242,7 +242,7 @@ input#selectDate {
 #about-maria .half-div-left {
 	background-image: url(../../images/allure/popup/maria.jpg);
 	background-repeat: no-repeat;
-	background-size: 100% 100%;
+	background-size: cover;
 }
 .pop-up-div {
 	position: relative;
@@ -383,8 +383,14 @@ input#subscribe_email {
     font-size: 11px;
     color: #D8D8D8;
     font-family: urw-din-light;
+	color: #838483;
+	text-align: center;
+	font-style: italic;
 }
+.message{
+	margin: 10px 0em 10px;
 
+}
 select {
     border-radius: 0 !important;
     -webkit-appearance: none;
@@ -1744,12 +1750,7 @@ div#btnBookTop {
 	border: 1px solid #020202 ! important;
 	cursor: pointer;
 }
-.people .message{
-	margin: 10px 0em 10px;
-	color: #838483;
-	text-align: center;
-	font-style: italic;
-}
+
 .people-wrapper, #pick_ur_slot{
 	border-bottom: 2px solid #838483;
 }
