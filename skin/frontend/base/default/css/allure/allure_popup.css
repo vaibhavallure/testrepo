@@ -876,7 +876,7 @@ td.td-price {
 }
 
 input[type="checkbox"] {
-	visibility: hidden;
+	display: none;
 }
 
 label {
