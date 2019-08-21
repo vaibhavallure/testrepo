@@ -683,7 +683,7 @@ class Allure_Appointments_Adminhtml_AppointmentsController extends Mage_Adminhtm
 
             Mage::getModel('appointments/cron')->sendNotification($appointments,"manual",$data['reminder_type']);
             Mage::getModel('appointments/cron')->sendPopupNotification($Popupappointments,"reminder_".$data['reminder_type']);
-            Mage::getModel('appointments/cron')->sendPopupNotification($Popupappointments,"release_reminder_".$data['reminder_type']);
+//            Mage::getModel('appointments/cron')->sendPopupNotification($Popupappointments,"release_reminder_".$data['reminder_type']);
 
 
 
