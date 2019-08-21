@@ -61,7 +61,6 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             $oldAppointmentArray = $this->getAppointmentArray($oldAppointment);
             $oldAppointmentCustomerArray = $oldAppointmentCustomers;
 
-
             $appointmentArray['pre_apt_starttime'] = $this->getDateTime($oldAppointmentArray['appointment_start'],$appointmentArray['language_pref']);
             $appointmentArray['pre_apt_endtime'] = $this->getDateTime($oldAppointmentArray['appointment_end'],$appointmentArray['language_pref']);
 
@@ -79,7 +78,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 if($create_rows != 0){
                     $oldCustomerListHtml.='<tr>';
                 }
-                $language = $customer['language_pref'];
+                $language = $appointmentArray['language_pref'];
                 if($language != 'en') {
                     $listLabelArray = $this->getLanguageMapping($language);
                 }
