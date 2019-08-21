@@ -20,8 +20,8 @@ if ($model) {
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.min.js'); ?>"></script>
 <script src="<?php echo $this->getSkinUrl('js/contact/intlTelInput.js'); ?>"></script>
 
-<form class="" autocomplete="on" action="<?php echo $this->getActionUrl() ?>" method="post" id="appointemnet_form">
-    <input type="hidden" name="language_pref" value="">
+<form class="" autocomplete="off" action="<?php echo $this->getActionUrl() ?>" method="post" id="appointemnet_form">
+    <input autocomplete="off" type="hidden" name="language_pref" value="">
     <?php if($this->isAdmin()):?>
         <input type="hidden" name="user" value="admin">
         <div class="form-disable-overlay">
@@ -226,7 +226,7 @@ if ($model) {
                                                 </div>
                                                 <div id="phone-box" class="col-md-12 form-group">
                                                     <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup"
-                                                           type="text" name="customer[<?= $customer_count ?>][phone]"
+                                                           type="search" name="customer[<?= $customer_count ?>][phone]"
                                                            id="phonenumber<?= $customer_count ?>"
                                                            placeholder="<?php echo $this->__('Phone Number') ?>"
                                                            value="<?= $customer->getPhone() ?>" required autocomplete="off" Try ="disabled" autocorrect="off">
@@ -291,7 +291,7 @@ if ($model) {
                                             </div>
                                             <div id="phone-box" class="col-md-12 form-group">
                                                 <input class="input-box required-entry validate-intl-telephone phonenumber translate-popup"
-                                                       type="text" name="customer[1][phone]" id="phonenumber1"
+                                                       type="search" name="customer[1][phone]" id="phonenumber1"
                                                        placeholder="<?php echo $this->__('Phone Number') ?>"
                                                        value=""
                                                        required autocomplete="off" Try ="disabled" autocorrect="off">
