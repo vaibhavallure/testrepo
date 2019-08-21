@@ -354,6 +354,12 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
         }
 
         $currentDate = $this->getCurrentDate();
+
+        if(strtotime("08/31/2019")>strtotime($currentDate))
+        {
+            $currentDate="08/31/2019";
+        }
+
         $available_wdays = array_filter(array_map(function ($dateTime) use ($currentDate) {
             $time1 = strtotime($dateTime);
             $time2 = strtotime($currentDate);
