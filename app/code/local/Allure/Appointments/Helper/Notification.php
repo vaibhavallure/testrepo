@@ -62,10 +62,10 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             $oldAppointmentCustomerArray = $oldAppointmentCustomers;
 
 
-            $appointmentArray['pre_apt_starttime'] = $this->getDateTime($oldAppointmentArray['appointment_start'],$oldAppointmentArray['language_pref']);
-            $appointmentArray['pre_apt_endtime'] = $this->getDateTime($oldAppointmentArray['appointment_end'],$oldAppointmentArray['language_pref']);
+            $appointmentArray['pre_apt_starttime'] = $this->getDateTime($oldAppointmentArray['appointment_start'],$appointmentArray['language_pref']);
+            $appointmentArray['pre_apt_endtime'] = $this->getDateTime($oldAppointmentArray['appointment_end'],$appointmentArray['language_pref']);
 
-            $appointmentArray['pre_apt_date'] = $this->getDate($appointmentArray['appointment_start'],$oldAppointmentArray['language_pref']);
+            $appointmentArray['pre_apt_date'] = $this->getDate($appointmentArray['appointment_start'],$appointmentArray['language_pref']);
             $appointmentArray['pre_apt_time'] = $this->getTime($appointmentArray['appointment_start']);
 
             $cnt = 0;
