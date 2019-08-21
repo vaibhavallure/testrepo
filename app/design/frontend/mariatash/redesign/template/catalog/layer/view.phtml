@@ -35,7 +35,7 @@
 <?php if($this->getRequest()->getModuleName() == 'catalogsearch') { ?>
 <div class="m-block mb-mana-catalogsearch-leftnav">
 <?php } ?>
-<div class="block-layered-nav-bg">
+<div class="block-layered-nav-bg filter-common-div">
 <div class="block block-layered-nav mb-mana-catalogsearch-leftnav">
     <div class="block-title">
         <strong><span><?php echo $this->__('Narrow by:') ?></span></strong>
@@ -47,7 +47,7 @@
             <ul id="narrow-by-list">
                 <?php $_filters = $this->getFilters(); $i = 0; ?>
                 <?php foreach ($_filters as $_filter): ?>
-                <?php 
+                <?php
                 		if (!$_filter->getCode()) {
                 			$_filterCode = iconv('utf-8', 'us-ascii//TRANSLIT', $_filter->getName());
    							$_filterCode = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '_', $_filterCode));
@@ -72,18 +72,18 @@
 							</dd>
                         </div>
                     </li>
-                    <script type="text/javascript"> 
-                        jQuery(document).ready(function(){        
-                            var config_currency_selector_<?php echo $_filter->getCode() ?> = {            
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            var config_currency_selector_<?php echo $_filter->getCode() ?> = {
                                 over: function(){
-                                    //jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);                
-                                },            
-                                timeout: 200,            
-                                out: function(){  
+                                    //jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideDown(300);
+                                },
+                                timeout: 200,
+                                out: function(){
                                     jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
-                                    jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);                
-                                }            
-                            };   
+                                    jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
+                                }
+                            };
 
                             jQuery(".filtru-<?php echo $_filter->getCode() . '-dtn'; ?>").hoverIntent( config_currency_selector_<?php echo $_filter->getCode() ?> );
                             jQuery('.filtru-<?php echo $_filter->getCode() . '-dtn'; ?>').click(function () {
@@ -94,7 +94,7 @@
                                 }
                                 else {
                                     //jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').removeClass('show');
-                                    //jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300); 
+                                    //jQuery('.filtru-<?php echo $_filter->getCode() . '-content-dtn'; ?>').slideUp(300);
                                 }
                             });
                         });
@@ -105,10 +105,10 @@
             </ul>
             <script type="text/javascript">decorateDataList('narrow-by-list')</script>
         <?php endif; ?>
-		
+
         <div class="selected-filters">
         <?php echo $this->getStateHtml() ?>
-        
+
         <?php if ($this->getLayer()->getState()->getFilters()): ?>
             <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
         <?php endif; ?>

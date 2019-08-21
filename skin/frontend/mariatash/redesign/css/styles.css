@@ -3544,9 +3544,6 @@ p.category-image-bleed {
 
 p.category-image-bleed img {
 	width: 100%;
-	min-width: 1480px;
-	height: auto;
-	min-height: 460px;
 }
 
 /* filters mt wzr */
@@ -6252,14 +6249,14 @@ textarea:focus, input:focus {
 	margin-top: -80px;
 }
 
-.with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg
+/* .with-category-image-bleed .mb-mana-catalog-leftnav .block-layered-nav-bg
 {
-	top: 300px !important;
+	top: 322px !important;
 }
 
 .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg {
-	top: 340px;
-}
+	top: 322px;
+} */
 
 /* .with-category-image .mb-mana-catalog-leftnav .block-layered-nav {
 	top: 270px;
@@ -6306,9 +6303,9 @@ textarea:focus, input:focus {
 	display: none;
 }
 
-.category-products {
+/* .category-products {
 	position: relative;
-}
+} */
 
 .category-products .pager {
 	margin-top: 5px;

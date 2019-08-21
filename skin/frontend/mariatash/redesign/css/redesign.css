@@ -294,6 +294,18 @@ nav.mariatash-header {
     margin-top: 5px;
 }
 
+.catalog-category-view .for-space-to-bottom{
+  height:300px;
+}
+
+.for-space-to-bottom{
+  height: 200px;
+}
+
+.category-image {
+    position: absolute;
+    top: 0;
+}
 
 /* footer */
 
@@ -942,46 +954,55 @@ ul.swatch .swatch-item a {
     opacity: 1;
 }
 
+.filter-common-div{
+  top:341px;
+}
+
+.category-products {
+  position: relative;
+  margin-top: 20px;
+}
+
 .dropdown-menu {
-    padding: 5px 10px 10px;
+  padding: 5px 10px 10px;
 }
 
 input[type="checkbox"] {
-    display: none;
+  display: none;
 }
 
 input[type="checkbox"]+label:before {
-    content: "";
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    cursor: pointer;
-    left: 0;
-    top: 0px;
-    border: 1px solid #000;
+  content: "";
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  cursor: pointer;
+  left: 0;
+  top: 0px;
+  border: 1px solid #000;
 }
 
 input[type="checkbox"]+label {
-    cursor: pointer;
-    font-size: 13px;
-    color: var(--light-black);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--light-black);
 }
 
 input[type="checkbox"]:checked+label:before {
-    background-image: url('../images/checked.png');
-    background-size: 18px;
-    background-position: center;
+  background-image: url('../images/checked.png');
+  background-size: 18px;
+  background-position: center;
 }
 
 .dropdown-menu {
-    border-radius: 0;
+  border-radius: 0;
 }
 
 
 /*quick view modal */
 
 .modal-lg-custom {
-    max-width: 96%;
+  max-width: 96%;
 }
 
 @media(min-width:1200px) {
