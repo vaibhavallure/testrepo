@@ -65,7 +65,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
             Mage::log("appointments found =>".count($allAppointments),Zend_Log::DEBUG,'notify_cron.log',true);
            if($storeId=Mage::getStoreConfig('appointments/popup_setting/store')) {
                $this->sendPopupNotification($allAppointments,"reminder_day");
-               $this->sendPopupNotification($allAppointments,"release_reminder_day");
+//               $this->sendPopupNotification($allAppointments,"release_reminder_day");
            }
            else {
                $this->sendNotification($allAppointments, "cron", "day");
@@ -91,7 +91,7 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
             Mage::log("appointments found =>".count($allAppointments),Zend_Log::DEBUG,'notify_cron.log',true);
             if($storeId=Mage::getStoreConfig('appointments/popup_setting/store')) {
                 $this->sendPopupNotification($allAppointments,"reminder_week");
-                $this->sendPopupNotification($allAppointments,"release_reminder_week");
+//                $this->sendPopupNotification($allAppointments,"release_reminder_week");
             }
             else {
                 $this->sendNotification($allAppointments,"cron","week");
