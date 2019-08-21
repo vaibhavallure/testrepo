@@ -1238,10 +1238,10 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 /* Baseline images overlay
 
 .page {  background: url("../images/baseline18px.png") repeat scroll 0 0 #FFF;  }*/
-.cms-index-noroute .col-main, .cms-page-view .col-main {
+/* .cms-index-noroute .col-main, .cms-page-view .col-main {
 	width: 960px;
 	margin: 0 auto 0;
-}
+} */
 
 .sendfriend-product-send .main, .ecp-tattoo-index-send .main,
 .ecp-celebrities-index-send .main {
