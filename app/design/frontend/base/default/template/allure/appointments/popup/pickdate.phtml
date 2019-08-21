@@ -2,103 +2,99 @@
 //To modify the appointment get the data from registry start
 $fetch_model = Mage::registry('apt_modify_data');;
 
-if($fetch_model){
+if ($fetch_model) {
 
     $f_pickurday = $fetch_model->getAppointmentStart();
     $timestamp = strtotime($f_pickurday);
-    $fetch_date = date('m/d/Y', $timestamp);
+    $fetch_date = date('d M Y', $timestamp);
+
 }
-//To get the ajax call block
-//$workingdays = $this->getData("workingdays");
-//$workingdaysArray=json_decode($workingdays);
-//Mage::log('working '.$workingdaysArray,Zend_Log::DEBUG,'myLog.log',true);
-//$arr = array('11-01-2012', '01-01-2014', '01-01-2015', '09-02-2013', '01-01-2013');
-//function date_sort($a, $b) {
-//    return strtotime($a) - strtotime($b);
-//}
-//usort($workingdaysArray, "date_sort");
-//Mage::log('Working Days'.$workingdaysArray,Zend_Log::DEBUG,'myLog.log',true);
-//
-//if (!$fetch_date){
-//    //   $dateCurrent=Mage::getModel('core/date')->date('m/d/Y');
-//    foreach ($workingdaysArray as $value){
-//        if($dateCurrent<=$value){
-//            $fetch_date =$value ;
-//            break;
-//        }
-//    }
-//}
+
 ?>
 
-<input name="app_date" id="appointment_date" type="text" class="input-box required-entry" value="<?php if($fetch_date):echo $fetch_date;endif;?>">
+<input name="app_date" id="appointment_date" type="text" class="input-box required-entry"
+       value="<?php if ($fetch_date):echo $fetch_date;endif; ?>" readonly>
 
 <script type="text/javascript">
-    var subscribeUrl ="<?php echo $this->getWorkingDaysActionUrl();?>" ;
-   // var datesAvailable = loadWorkingDays(subscribeUrl);
+    const initializeDatePicker = function () {
+        const monthMapping = {
+            "Aug": "Août",
+            "Sep": "Septembre",
+            "Oct": "Octobre"
+        };
 
-    /* console.log('datesAvailable::');
-    console.log(datesAvailable);
-    var currentDate = new Date('04/03/2019');*/
-    <?php
-    date_default_timezone_set('America/Los_Angeles');
-    $current_date = date("Y-m-d");
-    ?>
-    console.log("Current Time "+"<?= date("Y-m-d H:i:s")?>");
-    var currentDate = new Date('<?= $current_date ?>');
+        //console.log('initializeDatePicker',jQuery('#appointment_date').datepicker);
+        slots = '<?=json_encode((Mage::getModel("appointments/slots"))::SLOTS)?>';
+        Allure.getAvlblSlotsUrl = '<?php echo $this->getUrl('*/popup/getAvailableSlots', array('_secure' => true)) ?>';
+        var getWorkingDaysUrl = "<?php echo $this->getWorkingDaysActionUrl();?>";
+        var storeid ='<?= $this->getStoreId() ?>';
+        var workingDays = loadWorkingDays(getWorkingDaysUrl, storeid);
+        var datesAvailable = workingDays['dates'];
+        var currentDateString=workingDays['today'];
 
-    var currentDateString = parseInt(1 + currentDate.getMonth()).pad(2)+'/'+currentDate.getDate().pad(2)+'/'+currentDate.getFullYear();
+        // const locale = sessionStorage.getItem('popupLocale');
+        // if(locale === 'fr'){
+        //     const months = Object.keys(monthMapping);
+        //     months.forEach(function (month) {
+        //         if(currentDateString.includes(month))
+        //             translatedCurrentDateString = currentDateString.replace(month,monthMapping[month])
+        //     })
+        // }else{
+        //     translatedCurrentDateString = currentDateString
+        // }
 
-    var datesAvailable = ["04/03/2019","04/04/2019", "04/05/2019", "04/06/2019", "04/07/2019"];
-    var datesDisabled = ['04/02/2019','03/22/2019'];
+        <?php if(empty($fetch_date)):?>
 
-    //datesAvailable.push('04/07/2019');
-    //datesAvailable.push('05/12/2019');
+        jQuery("#appointment_date").val(currentDateString);
+        <?php endif;?>
 
-    jQuery("#appointment_date").val(currentDateString);
+        // jQuery.fn.datepicker.dates['fr'] = {
+        //     days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+        //     daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+        //     daysMin: ["D", "L", "Ma", "Me", "J", "V", "S", "D"],
+        //     months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+        //     monthsShort: ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+        //     titleFormat: 'MM'
+        // };
 
-    jQuery('#appointment_date').datepicker({
-        startDate: currentDateString,
-        endDate: '',
-        //datesDisabled: datesDisabled,
-        beforeShowDay: function(date) {
-            var enabled = false;
+        jQuery.fn.datepicker.dates['en'] = {
+            days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            daysMin: ["S", "M", "T", "W", "T", "F", "S", "S"],
+            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            titleFormat: 'MM'
+        };
+        // console.log(monthMapping,locale)
+        //console.log('currentDateString',translatedCurrentDateString);
 
-            var currentDate = parseInt(1 + date.getMonth()).pad(2)+'/'+date.getDate().pad(2)+'/'+date.getFullYear();
+        jQuery('#appointment_date').datepicker({
+            format:'d  M  yyyy',
+            //language: locale==='en'?'en':'fr',
+            startDate: currentDateString,
+            endDate: '',
+            beforeShowDay: function (date) {
+                var enabled = false;
+                var currentDate = parseInt(1 + date.getMonth()).pad(2) + '/' + date.getDate().pad(2) + '/' + date.getFullYear();
 
-            //console.log(currentDate);
-
-            if (datesAvailable.indexOf(currentDate) != -1) {
-                enabled = true;
+                if (datesAvailable.indexOf(currentDate) != -1) {
+                    enabled = true;
+                }
+                return {
+                    enabled: enabled
+                }
             }
+        }).on('changeDate', function (e) {
+            getAvailableSlots();
+        });
+    };
 
-            return {
-                enabled: enabled
-            }
-        }
-    }).on('changeDate', function(e) {
-        // `e` here contains the extra attributes
-        console.log(jQuery(this).val())
-        loadSlotAvailability(jQuery(this).val());
-    });;
+    initializeDatePicker();
+
+    jQuery(document).ready(function () {
+        calculateTime();
+    });
+
+
 </script>
 
-<?php return; ?>
-
-<!--<strong id="availablewdays" data-original='--><?php //echo $workingdays;?><!--'></strong>-->
-
-<!--<input  name="app_date"  class="input-box"  id="datepicker-13_hidden"  value="--><?php //if($fetch_date):echo $fetch_date;endif;?><!--" />-->
-
-<script>
-    //Pick ur day updated with custom calendar code
-    jQuery('#datepicker-13_hidden').dcalendarpicker();
-</script>
-<script>
-    var mod_date = '<?php echo $fetch_date?>';
-    if(!mod_date) {
-        var date = new Date();
-        var val = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-        document.getElementById("#appointment_date").value = val;
-    }
-    document.getElementById("#appointment_date").value = mod_date;
-    jQuery(#app)
-</script>

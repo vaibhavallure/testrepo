@@ -6,6 +6,16 @@ Mage::app();
 Mage::app()->setCurrentStore(0);
 ini_set('memory_limit', '-1');
 
+
+
+
+
+
+
+var_dump(Mage::helper("appointments/notification")->getDate("2019/09/23",'fr'));
+//var_dump(Mage::helper("appointments/notification")->getDateTime("2019/09/23 14:33:11","fr"));
+
+die();
 $resource = Mage::getSingleton('core/resource');
 $writeAdapter = $resource->getConnection('core_write');
 $readConnection = $resource->getConnection('core_read');

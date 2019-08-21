@@ -238,22 +238,48 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
             . $this->getElement()->getName() . '[store_hours_operation][]" value="'
                 . $this->_getValue('store_hours_operation/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('store_hours_operation/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="appointments_limit_popup_message">Limit Popup Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[limit_message][]" value="'
+            . $this->_getValue('limit_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('limit_message/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
         
         
-        
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_store_map">Store Map </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[store_map][]" value="" ' . $this->_getDisabled() . '>'.$this->_getValue('store_map/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<label for="digital_form_url">Digital Release URL </label>';
+        $html .= '<input class="appointment-setting-input" name="'
+            . $this->getElement()->getName() . '[digital_form_url][]" value="'
+            . $this->_getValue('digital_form_url/' . $rowIndex) . '" ' . $this->_getDisabled() . '/> ';
+        $html .= '</div>';
+
+
+
+        $html .= '<hr class="appointment-setting-hr">';
+        $html .= '<div style="text-align:center"><h3>SMS body for First Language</h3></div>';
+
+        /*SMS 1st Language START*/
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="appointments_book_sms_message">Book Sms Message </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
             . $this->getElement()->getName() . '[book_sms_message][]" value="'
-                . $this->_getValue('book_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('book_sms_message/' . $rowIndex).'</textarea> ';
+            . $this->_getValue('book_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('book_sms_message/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
-                
-                
+
+
         $html .= '<div class="appointment-setting-common apt-row-1 right">';
         $html .= '<label for="appointments_reminder_sms_message">Reminder Sms Message </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
-                    . $this->getElement()->getName() . '[reminder_sms_message][]" value="'
-                        . $this->_getValue('reminder_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('reminder_sms_message/' . $rowIndex).'</textarea> ';
+            . $this->getElement()->getName() . '[reminder_sms_message][]" value="'
+            . $this->_getValue('reminder_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('reminder_sms_message/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
 
 
@@ -274,44 +300,124 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '</div>';
 
 
-
-
-                        
-                        
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="appointments_modified_sms_message">Modified Sms Message </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
-                            . $this->getElement()->getName() . '[modified_sms_message][]" value="'
-                                . $this->_getValue('modified_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('modified_sms_message/' . $rowIndex).'</textarea> ';
+            . $this->getElement()->getName() . '[modified_sms_message][]" value="'
+            . $this->_getValue('modified_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('modified_sms_message/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
-                                
-                                
+
+
         $html .= '<div class="appointment-setting-common apt-row-1 right">';
         $html .= '<label for="appointments_cancel_sms_message">Cancel Sms Message </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
-                                    . $this->getElement()->getName() . '[cancel_sms_message][]" value="'
-                                        . $this->_getValue('cancel_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('cancel_sms_message/' . $rowIndex).'</textarea> ';
+            . $this->getElement()->getName() . '[cancel_sms_message][]" value="'
+            . $this->_getValue('cancel_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('cancel_sms_message/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
 
 
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
-        $html .= '<label for="appointments_limit_popup_message">Limit Popup Message </label>';
+        $html .= '<label for="release_sms_message">Release Sms Message </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
-            . $this->getElement()->getName() . '[limit_message][]" value="'
-            . $this->_getValue('limit_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('limit_message/' . $rowIndex).'</textarea> ';
+            . $this->getElement()->getName() . '[release_sms_message][]" value="'
+            . $this->_getValue('release_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('release_sms_message/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
-        
-        
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="week_release_sms_message">Release Week Reminder Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[week_release_sms_message][]" value="'
+            . $this->_getValue('week_release_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('week_release_sms_message/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
         $html .= '<div class="appointment-setting-common apt-row-1">';
-        $html .= '<label for="appointments_store_map">Store Map </label>';
+        $html .= '<label for="day_release_sms_message">Release Day Reminder Sms Message </label>';
         $html .= '<textarea class="appointment-setting-textarea" name="'
-            . $this->getElement()->getName() . '[store_map][]" value="" ' . $this->_getDisabled() . '>'.$this->_getValue('store_map/' . $rowIndex).'</textarea> ';
+            . $this->getElement()->getName() . '[day_release_sms_message][]" value="'
+            . $this->_getValue('day_release_sms_message/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('day_release_sms_message/' . $rowIndex).'</textarea> ';
         $html .= '</div>';
-        
-        
+
+/*SMS 1st Language End*/
+
         $html .= '<hr class="appointment-setting-hr">';
-        
-        
+        $html .= '<div style="text-align:center"><h3>SMS body for Second Language</h3></div>';
+        /*SMS 2nd Language START*/
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="appointments_book_sms_message_second">Book Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[book_sms_message_second][]" value="'
+            . $this->_getValue('book_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('book_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_reminder_sms_message_second">Reminder Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[reminder_sms_message_second][]" value="'
+            . $this->_getValue('reminder_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('reminder_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_week_reminder_sms_message_second">Week Before Reminder Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[week_reminder_sms_message_second][]" value="'
+            . $this->_getValue('week_reminder_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('week_reminder_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_day_reminder_sms_message_second">Day Before Reminder Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[day_reminder_sms_message_second][]" value="'
+            . $this->_getValue('day_reminder_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('day_reminder_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="appointments_modified_sms_message_second">Modified Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[modified_sms_message_second][]" value="'
+            . $this->_getValue('modified_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('modified_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="appointments_cancel_sms_message_second">Cancel Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[cancel_sms_message_second][]" value="'
+            . $this->_getValue('cancel_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('cancel_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="release_sms_message_second">Release Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[release_sms_message_second][]" value="'
+            . $this->_getValue('release_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('release_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="week_release_sms_message_second">Release Week Reminder Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[week_release_sms_message_second][]" value="'
+            . $this->_getValue('week_release_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('week_release_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $html .= '<label for="day_release_sms_message_second">Release Day Reminder Sms Message </label>';
+        $html .= '<textarea class="appointment-setting-textarea" name="'
+            . $this->getElement()->getName() . '[day_release_sms_message_second][]" value="'
+            . $this->_getValue('day_release_sms_message_second/' . $rowIndex) . '" ' . $this->_getDisabled() . '>'.$this->_getValue('day_release_sms_message_second/' . $rowIndex).'</textarea> ';
+        $html .= '</div>';
+
+        /*SMS 2nd Language End*/
+
+        $html .= '<hr class="appointment-setting-hr">';
+
+        $html .= '<div style="text-align:center"><h3>Email template settings for First Language</h3></div>';
+        /*1st Language EMAIL SETTINGS*/
         $html .= '<div class="appointment-setting-common apt-row-1">';
         $timeOptArr = array("0"=>"No","1"=>"Yes");
         $custEmailEnableOpt = '';
@@ -333,7 +439,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         
         $html .= '<div class="appointment-setting-common apt-row-1 left">';
         $html .= '<label for="customer_eamil_template_appointment">Customer Email Temaplate Appointment </label>';
-        $html .= $this->prepareEmailTemplate($rowIndex);
+        $html .= $this->prepareEmailTemplate($rowIndex,null,'');
         $html .= '</div>';
         
         $html .= '<div class="appointment-setting-common apt-row-1 right">';
@@ -364,10 +470,101 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         $html .= '<label for="customer_eamil_template_appointment_modify">Customer Email Temaplate Appointment Modify </label>';
         $html .= $this->prepareEmailTemplate($rowIndex,"modify");
         $html .= '</div>';
-        
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="customer_email_template_release">Customer Email : Release</label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"release");
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_email_template_release_remind_week">Customer Email : Release Reminder Week </label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"release_reminder_week");
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_email_template_release_remind_day">Customer Email : Release Reminder Day</label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"release_reminder_day");
         $html .= '</div>';
         
+        $html .= '</div>';
+        /*End of 1st Language Email Settings*/
+
         $html .= '<hr class="appointment-setting-hr">';
+
+        /*2nd Language EMAIL SETTINGS*/
+        $html .= '<div style="text-align:center"><h3>Email template settings for Second Language</h3></div>';
+        $html .= '<div class="appointment-setting-common apt-row-1">';
+        $timeOptArr = array("0"=>"No","1"=>"Yes");
+        $custEmailEnableOptSecond = '';
+        foreach ($timeOptArr as $key=>$name){
+            $selectOpt = "";
+            if($this->_getValue('customer_email_enable_second/' . $rowIndex) == $key){
+                $selectOpt = "selected='selected'";
+            }
+            $custEmailEnableOptSecond .= '<option '.$selectOpt.' value="'.$key.'">'.$name.'</option>';
+        }
+        $html .= '<label for="appointments_customer_email_enable_second">Enable Customer Email </label>';
+        $html .= '<select onclick="enableCustomerEmail(this,'.$rowIndex.')" class="appointment-setting-select" name="'. $this->getElement()->getName().'[customer_email_enable_second][]'.'" style="">'.$custEmailEnableOptSecond.'</select>';
+        $html .= '</div>';
+
+        $isCustomerEmailActiveSecond = $this->_getValue('customer_email_enable_second/' . $rowIndex);
+        $customerEmailContainerClassSecond = ($isCustomerEmailActiveSecond)?"active":"";
+
+        $html .= '<div id="customer-email-container-'.$rowIndex.'_second" class="customer-email-container '.$customerEmailContainerClassSecond.'">';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="customer_email_template_appointment_second">Customer Email Temaplate Appointment </label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,null,"_second");
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_email_template_appointment_remind_second">Customer Email Temaplate Appointment Reminder </label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"remind","_second");
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_email_template_appointment_remind_day_second">Customer Email Temaplate Appointment Reminder Day</label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"remind_day","_second");
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_email_template_appointment_remind_second">Customer Email Temaplate Appointment Reminder Week</label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"remind_week","_second");
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="customer_email_template_appointment_cancel_second">Customer Email Temaplate Appointment Cancel </label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"cancel","_second");
+        $html .= '</div>';
+
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_email_template_appointment_modify_second">Customer Email Temaplate Appointment Modify </label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"modify","_second");
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 left">';
+        $html .= '<label for="customer_email_template_release">Customer Email : Release</label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"release","_second");
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_email_template_release_remind_week_second">Customer Email : Release Reminder Week </label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"release_reminder_week","_second");
+        $html .= '</div>';
+
+        $html .= '<div class="appointment-setting-common apt-row-1 right">';
+        $html .= '<label for="customer_email_template_release_remind_day_second">Customer Email : Release Reminder Day</label>';
+        $html .= $this->prepareEmailTemplate($rowIndex,"release_reminder_day","_second");
+        $html .= '</div>';
+
+        $html .= '</div>';
+//        /*End of 2nd Language Email Settings*/
+        $html .= '<hr class="appointment-setting-hr">';
+
         
         $html .= '<div class="appointment-setting-common apt-row-1">';
         $timeOptArr = array("0"=>"No","1"=>"Yes");
@@ -580,7 +777,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         }else{
             $allStores = Mage::app()->getStores();
         }
-        
+
         foreach ($allStores as $_eachStoreId => $val)
         {
             $_storeName = $val->getName();
@@ -618,7 +815,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         if($wh == 2){
             $work_state = "end_work_time";
         }
-        
+
         foreach ($arr as $val)
         {
             $selectedClass = "";
@@ -632,23 +829,29 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
     }
     
     
-    private function prepareEmailTemplate($rowIndex,$state = null){
+    private function prepareEmailTemplate($rowIndex,$state = null,$type = null){
         $arr = Mage::getSingleton("adminhtml/system_config_source_email_template")->toOptionArray();
         
-        $email_template = "email_template_appointment";
+        $email_template = "email_template_appointment".$type;
         if($state == "cancel"){
-            $email_template = "email_template_appointment_cancel";
+            $email_template = "email_template_appointment_cancel".$type;
         }elseif($state == "modify"){
-            $email_template = "email_template_appointment_modify";
+            $email_template = "email_template_appointment_modify".$type;
         }elseif($state == "remind"){
-            $email_template = "email_template_appointment_remind";
+            $email_template = "email_template_appointment_remind".$type;
         }elseif($state == "remind_day"){
-            $email_template = "email_template_appointment_remind_day";
+            $email_template = "email_template_appointment_remind_day".$type;
         }elseif($state == "remind_week"){
-            $email_template = "email_template_appointment_remind_week";
+            $email_template = "email_template_appointment_remind_week".$type;
+        }elseif($state == "release"){
+            $email_template = "email_template_release".$type;
+        }elseif($state == "release_reminder_week"){
+            $email_template = "email_template_release_remind_week".$type;
+        }elseif($state == "release_reminder_day"){
+            $email_template = "email_template_release_remind_day".$type;
         }
 
-        
+
         foreach ($arr as $val)
         {
             $selectedClass = "";
@@ -673,7 +876,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         }elseif($state == "welcome"){
             $email_template = "piercer_email_template_welcome";
         }
-        
+
         foreach ($arr as $val)
         {
             $selectedClass = "";
@@ -696,7 +899,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
         }elseif($state == "modify"){
             $email_template = "admin_email_template_modify";
         }
-        
+
         foreach ($arr as $val)
         {
             $selectedClass = "";
@@ -711,7 +914,7 @@ class Allure_Appointments_Block_Adminhtml_CustomStoreInformation extends Mage_Ad
     
     
     private function getCmsBlock($rowIndex){
-                
+
         $collection = Mage::getModel('cms/block')->getCollection()
         ->addFieldToFilter('identifier',array('like'=>'%appointment%'));
         foreach ($collection as $block) {
