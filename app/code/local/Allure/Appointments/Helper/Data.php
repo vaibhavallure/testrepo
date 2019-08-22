@@ -745,6 +745,12 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         return true;
     }
 
+
+    public function isPopupStore($store_id)
+    {
+        return ($this->getPopupStoreId()==$store_id);
+    }
+
     public function validateSlotBeforeBookAppointment($data)
     {
         /*If Already Booked then Check for Same Slot Selected or Not*/

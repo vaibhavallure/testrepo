@@ -156,6 +156,13 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $this->getRequest()->getParam('store');
+
+        if($this->helper()->isPopupStore($post_data['store_id']))
+        {
+            Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
+            $this->_redirect("admin_appointments/adminhtml_appointments/new");
+            return;
+        }
         
         if ($embeded == '1')
             $appendUrl = "?embedded=" . $embeded;

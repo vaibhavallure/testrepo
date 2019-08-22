@@ -1,7 +1,9 @@
 <?php
 	$model = Mage::registry('apt_modify_data');
 	//$fetch_storeId = $model->getStoreId();
-	if($model){
+$storeIdNone = Mage::helper('appointments/data')->getPopupStoreId();
+
+if($model){
 	$fetch_storeId = $model->getStoreId();
 	}
 ?>
@@ -28,10 +30,12 @@
 			}
 			
 		else:			
-			foreach ($activeStores as $key=>$store){	
-				$requestStoreName = $store;
-				$requestStoreId = $key;
-				$multi_stores[$key]= $store;
+			foreach ($activeStores as $key=>$store){
+                if($key!=$storeIdNone) {
+                    $requestStoreName = $store;
+                    $requestStoreId = $key;
+                    $multi_stores[$key] = $store;
+                }
 			}
 		endif;		
 	}
