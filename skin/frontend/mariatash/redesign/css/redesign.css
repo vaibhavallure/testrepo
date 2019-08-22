@@ -582,7 +582,6 @@ nav.mariatash-header {
     bottom: 0;
     height: 60px;
     z-index: 1;
-    padding: 0;
 }
 .footer .footer-item-list a {
     color: #fff;
@@ -1557,7 +1556,7 @@ input[type="checkbox"]:checked+label:before {
 .select-currency img {
     margin: 0 0 5px 3px;
 }
-.main-nav-link li:nth-child(3) {
+.main-nav-link li:nth-child(2) {
     margin-right: 16px;
 }
 
@@ -1886,7 +1885,7 @@ div#narrow-by-list {
 .about-designer {
   margin-top: 32px;
   padding: 0 146px;
-  margin-bottom: 78px;
+  margin-bottom: 138px;
 }
 .about-designer h1 {
   font-size: 30px;
@@ -1898,6 +1897,38 @@ div#narrow-by-list {
   margin-bottom: 20px;
   letter-spacing: 0.5px;
 }
+/* About Jewelry Page  */
+.about-jewelry h1{
+  font-size: 30px;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 42px;
+}
+.about-jewelry h3{
+  font-family: urw-din-bold;
+	font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.61px;
+}
+.about-jewelry {
+  padding: 0 146px;
+  margin-bottom: 47px;
+}
+.jewelry-copy-odd{
+  padding: 0 34px;
+}
+.jewelry-copy-even{
+  text-align: right;
+  padding: 0 29px 0 27px;
+}
+.jewelry-container {
+  margin-top: 32px;
+  margin-bottom: 96px;
+}
+.about-jewelry .para-normal{
+  margin-top: 14px;
+}
+
 /* Temperory */
 #narrow-by-list .filtru-price dd{
   display: none;

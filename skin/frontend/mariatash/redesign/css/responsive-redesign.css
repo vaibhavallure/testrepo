@@ -8,7 +8,7 @@
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
     display: none;
   }
-  .nav-links-right li:nth-child(4), .nav-links-right li:nth-child(2) {
+  .nav-links-right li:nth-child(3), .nav-links-right li:nth-child(4) {
     display: none;
   }
   .footer ul .footer-item-list{
@@ -130,6 +130,33 @@
   .footer .footlinks li:first-child{
     margin-left: 0;
   }
+  .main-nav-link li:nth-child(2){
+    margin-right: 0px;
+  }
+  .second-header-image{
+    display: none;
+  }
+  .footer{
+    padding: 0 15px;
+  }
+  .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover{
+    background: rgba(41,41,41)
+  }
+  .responsive-direction{
+    flex-direction: column-reverse;
+  }
+  .jewelry-copy-even{
+    text-align: left;
+  }
+  .image-section, .copy-section{
+    padding: 0;
+  }
+  .jewelry-container{
+    margin-top: 0;
+  }
+  .designer-copy{
+    margin: 30px 0 115px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -171,6 +198,27 @@
   .mobile-sub_menu .sub-menu{
     top: 83px;
   }
+  .about-designer{
+    padding: 0 45px;
+  }
+  .about-jewelry{
+    padding: 0 60px;
+  }
+  .about-designer h1{
+    margin-bottom: 0px;
+  }
+  .about-designer{
+    margin-bottom: 0;
+  }
+  .for-space-to-bottom{
+    height: 130px !important;
+  }
+  .copy-section{
+    margin: 30px 0 30px;
+  }
+  .about-jewelry h1{
+    margin-bottom: 0;
+  }
 }
 
 
@@ -178,6 +226,21 @@
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
     top: 250px;
+  }
+  .about-designer{
+    padding: 0 26px;
+  }
+  .about-designer h1{
+    margin-bottom: 20px;
+  }
+  .catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom{
+    height: 240px;
+  }
+  .about-jewelry{
+    padding: 0 26px;
+  }
+  .jewelry-copy-odd {
+    padding: 0 15px;
   }
 }
 
@@ -189,6 +252,26 @@
   .homepage-menu {
     padding-top: 18px !important;
     padding: 0;
+  }
+  .about-designer{
+    padding: 0 21px;
+    margin: 0;
+  }
+  .about-designer h1{
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+  .about-jewelry{
+    padding: 0 36px;
+  }
+  .for-space-to-bottom{
+    height: 90px !important;
+  }
+  .copy-section{
+    margin: 30px 0 0;
+  }
+  .about-jewelry h1{
+    margin-bottom: 20px;
   }
 }
 
