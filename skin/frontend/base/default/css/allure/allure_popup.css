@@ -1363,7 +1363,7 @@ div#btnBookTop {
         background-size: contain;
     }
 
-    .datepicker {width: auto;}
+    .datepicker {width: 90%;}
 
     .navbar .navbar-brand {
         width: 100%;
@@ -1857,6 +1857,9 @@ div#page-wrapper{
 	}
 	.pop-up-title{
 		margin: 16px auto;
+	}
+	.datepicker table{
+		width:100%;
 	}
 }
 

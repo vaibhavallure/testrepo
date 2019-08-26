@@ -9,6 +9,10 @@ ini_set('memory_limit', '-1');
 
 
 
+var_dump(Mage::helper("appointments/data")->isPopupStore(1));
+
+
+die();
 
 
 

@@ -1,3 +1,4 @@
+
 const translation = {
     "fr": {
         "Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash",
@@ -16,6 +17,8 @@ const translation = {
         "Sunday": "Dimanche",
         "October": "Octobre",
         "August": "Août",
+        "20th October":"20 Octobre",
+        "31st August":"31 Août",
         "Booking & Pricing": "réservation et prix",
         "BOOK NOW": "RESERVEZ UN RENDEZ-VOUS DÈS",
         "POP-UP INFORMATION": "Informations sur l'événement",
@@ -32,7 +35,7 @@ const translation = {
         "Can I be pierced with my own jewelry?": "Puis-je me faire percer avec mes propres bijoux ?",
         "Due to sterilization needs, we do not pierce with jewelry that is not Maria Tash. The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.": "En raison des besoins de stérilisation, nous n’utilisons pas d’autres bijoux que ceux de Maria Tash. La meilleure sélection de notre collection sera disponible pour les installations et les piercings. Tous nos bijoux sont en or et se déclinent en différente couleur : jaune, blanc, rose et noir.",
         "How many piercings can I get in one session?": "Combien de piercings puis-je me faire faire en une séance ?",
-        "We recommend up to 3 per session, but this is dependant on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.": "Nous recommandons un maximum de 3 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.",
+        "We recommend up to 4 per session, but this is dependant on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.": "Nous recommandons un maximum de 4 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.",
         "Can I be pierced if I am under 18?": "Puis-je me faire percer si j’ai moins de 18 ans ?",
         "Yes, we pierce lobes over the age of 8 and cartilage over the age of 16 but you must be accompanied by a parent or guardian and you both must bring ID with you.": "Oui, nous perçons les lobes des oreilles à partir de 8 ans et le cartilage à partir de 16 ans, mais vous devez être accompagné d’un parent ou d’un tuteur légal et munis d’une pièce d’identité.",
         "What size jewelry works best for me?": "Quelle taille de bijoux me conviens le mieux ?",
@@ -108,7 +111,9 @@ const translation = {
         "Contact us anytime:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
         "Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.",
         "Appointment Id": "Rendez-vous",
-        "Your scheduled Appointment is Cancelled successfully.": "Rendez-vous annulé avec succès."
+        "Your scheduled Appointment is Cancelled successfully.": "Rendez-vous annulé avec succès.",
+        "CANCEL":"ANNULER",
+        "OK": "TERMINÉ"
     },
     "en": {
         "Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash":"Shop the fine jewelry collections and experience Luxury Piercing and custom styling.",
@@ -128,6 +133,8 @@ const translation = {
         "Dimanche": "Sunday",
         "Octobre": "October",
         "Août": "August",
+        "20 Octobre": "20th October",
+        "31 Août": "31st August",
         "réservation et prix": "BOOKING & PRICING",
         "RESERVEZ UN RENDEZ-VOUS DÈS": "BOOK NOW",
         "Informations sur l'événement": "POP-UP INFO",
@@ -140,7 +147,7 @@ const translation = {
         "Puis-je me faire percer avec mes propres bijoux ?": "Can I be pierced with my own jewelry?",
         "En raison des besoins de stérilisation, nous n’utilisons pas d’autres bijoux que ceux de Maria Tash. La meilleure sélection de notre collection sera disponible pour les installations et les piercings. Tous nos bijoux sont en or et se déclinent en différente couleur : jaune, blanc, rose et noir.": "Due to sterilization needs, we do not pierce with jewelry that is not Maria Tash.<br> The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.",
         "Combien de piercings puis-je me faire faire en une séance ?": "How many piercings can I get in one session?",
-        "Nous recommandons un maximum de 3 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.": "We recommend up to 3 per session, but this is dependant on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.",
+        "Nous recommandons un maximum de 4 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.": "We recommend up to 4 per session, but this is dependant on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.",
         "Puis-je me faire percer si j’ai moins de 18 ans ?": "Can I be pierced if I am under 18?",
         "Oui, nous perçons les lobes des oreilles à partir de 8 ans et le cartilage à partir de 16 ans, mais vous devez être accompagné d’un parent ou d’un tuteur légal et munis d’une pièce d’identité.": "Yes, we pierce lobes over the age of 8 and cartilage over the age of 16 but you must be accompanied by a parent or guardian and you both must bring ID with you.",
         "Quelle taille de bijoux me conviens le mieux ?": "What size jewelry works best for me?",
@@ -198,7 +205,9 @@ const translation = {
         "Nombre de piercings:": "Number of Piercings:",
         "Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :":"Contact us anytime:",
         "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.",
-        "Rendez-vous": "Appointment Id"
+        "Rendez-vous": "Appointment Id",
+        "ANNULER":"CANCEL",
+        "TERMINÉ":"OK",
     }
 };
 

@@ -166,7 +166,7 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             $emailVariables= array();
             $language = $appointmentCustomer['language_pref'];
             $email = $appointmentCustomer['email'];
-            $customer_name = ucfirst($appointmentCustomer['firstname']) . ' ' . ucfirst($appointmentCustomer['lastname']);
+            $customer_name = ucfirst($appointmentCustomer['firstname']);/*. ' ' . ucfirst($appointmentCustomer['lastname'])*/
             $appointmentCustomer['customer_name'] = $customer_name;
             $secondLanguage = '';
             if ($language != 'en') {
