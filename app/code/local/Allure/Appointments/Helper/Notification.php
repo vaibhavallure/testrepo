@@ -84,11 +84,11 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
                 }
                     $customer_name = ucfirst($customer['firstname']) . ' ' . ucfirst($customer['lastname']);
                     $oldCustomerListHtml .= '<td style="padding: 20px 0px 10px 0px;"><h3>'.$listLabelArray['customer'].' #' . $cnt . '</h3>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].':</b>' . $customer_name . '</p>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].':</b>' . $customer['email'] . '</p>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].':</b>' . $customer['phone'] . '</p>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].':</b>' . $customer['piercing'] . '</p>';
-                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].':</b>' . $customer['checkup'] . '</p>';
+                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].': </b>' . $customer_name . '</p>';
+                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
+                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
+                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+                    $oldCustomerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
                     $oldCustomerListHtml .= '</td>';
 
                 if($create_rows == 0){
@@ -130,11 +130,11 @@ class Allure_Appointments_Helper_Notification extends Mage_Core_Helper_Abstract{
             }
                 $customer_name = ucfirst($customer['firstname']) . ' ' . ucfirst($customer['lastname']);
                 $customerListHtml .= '<td style="padding: 20px 0px 10px 0px;"><h3>'.$listLabelArray['customer'].'#' . $cnt . '</h3>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].':</b>' . $customer_name . '</p>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].':</b>' . $customer['email'] . '</p>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].':</b>' . $customer['phone'] . '</p>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].':</b>' . $customer['piercing'] . '</p>';
-                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].':</b>' . $customer['checkup'] . '</p>';
+                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['name'].': </b>' . $customer_name . '</p>';
+                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['email'].': </b>' . $customer['email'] . '</p>';
+                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['phone'].': </b>' . $customer['phone'] . '</p>';
+                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_piercing'].': </b>' . $customer['piercing'] . '</p>';
+                $customerListHtml .= '<p style="margin: 10px 0px;padding: 0px"><b>'.$listLabelArray['no_of_checkup'].': </b>' . $customer['checkup'] . '</p>';
                 $customerListHtml .= '</td>';
 
 
