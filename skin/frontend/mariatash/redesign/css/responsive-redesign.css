@@ -157,6 +157,26 @@
   .designer-copy{
     margin: 30px 0 115px;
   }
+  .faq-main > .row{
+    flex-direction: column-reverse;
+  }
+  .faq-image-section img {
+    padding-right: 0px;
+    width: 100%;
+  }
+  .faq-main{
+    margin-top: 0 !important;
+  }
+  div#category-title{
+    margin: 16px 0 20px;
+    padding: 0;
+  }
+  .content-customer {
+    margin: 15px 0 115px;
+  }
+  .customer-care-page .faq-question span:after{
+    margin-top: 0;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -219,6 +239,10 @@
   .about-jewelry h1{
     margin-bottom: 0;
   }
+  .custom-container{
+    max-width: 650px;
+    margin: 0 auto;
+  }
 }
 
 
@@ -241,6 +265,10 @@
   }
   .jewelry-copy-odd {
     padding: 0 15px;
+  }
+  .custom-container {
+    max-width: 1000px;
+    margin: 0 auto;
   }
 }
 
@@ -299,6 +327,10 @@
   .social-media ul{
     padding-left: 5px;
   }
+  .custom-container {
+    max-width: 380px;
+    margin: 0 auto;
+  }
 }
 
 /* Mobile landscape */
@@ -309,6 +341,13 @@
   .form-search input.input-text{
     width: 150px;
   }
+  .custom-container {
+    max-width: 1000px !important;
+    margin: 0 auto;
+  }
+  .faq-main {
+    padding: 0 40px;
+  }
 }
 
 
@@ -316,4 +355,10 @@
   .close-section{
     display: none;
   }
+}
+
+@media (min-width: 1200px){
+.custom-container {
+    max-width: 1178px !important;
+    margin: 0 auto;
 }

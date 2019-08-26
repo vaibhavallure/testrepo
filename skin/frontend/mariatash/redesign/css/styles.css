@@ -1252,19 +1252,19 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	padding: 0px 20px;
 } /* QUITE PADDING TOP Y BOTTOM DE 18PX A 0PX - ARG */
 /*.wishlist-index-index .col2-left-layout .col-left { margin-top:18px; }*/
-.customer-care-page .col2-left-layout .col-left {
+/* .customer-care-page .col2-left-layout .col-left {
 	margin-top: 7px;
-}
+} */
 
 .col2-left-layout .col-left {
 	float: left;
 	width: 18%;
 }
 
-.col2-left-layout .col-main {
+/* .col2-left-layout .col-main {
 	float: right;
 	width: 80%;
-}
+} */
 .mt-myaccount-new .col2-left-layout .col-main {
 	width: 81% !important;
 }

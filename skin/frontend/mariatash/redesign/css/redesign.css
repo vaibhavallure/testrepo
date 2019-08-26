@@ -8,6 +8,12 @@ h1{
 	text-align: Left;
 }
 
+.cms-page-view h1{
+  font-size: 30px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 h2, h3, h4{
 	font-family: urw-din;
 }
@@ -1513,6 +1519,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .mt-logo {
     padding: 0px 0 14px 0;
+    font-size: 22px !important;
 }
 #top-nav {
     padding-bottom: 31px;
@@ -1929,6 +1936,61 @@ div#narrow-by-list {
   margin-top: 14px;
 }
 
+/* FAQ PAGE CSS */
+.customer-care-page .faq-question span:after{
+  background: url(../images/redesign/plus.png) no-repeat;
+  content: '';
+  height: 30px;
+  width: 26px;
+  background-position: right;
+  position: absolute;
+  right: 19px;
+  transition: 0.5s;
+  cursor: pointer;
+  margin-top: 5px;
+}
+.customer-care-page .faq-question.active span:after{
+  background: url(../images/redesign/minus.png) no-repeat;
+  background-position: right;
+  content: '';
+  transition: 0.5s;
+}
+.faq-copy-section h1 {
+  margin-bottom: 33px;
+  line-height: 0.7;
+}
+.faq.faq-answer p {
+  font-family: urw-din-light;
+  font-size: 13px;
+  color: rgba(41,41,41,0.90);
+  letter-spacing: 0.5px;
+  line-height: 20px;
+  margin-top: 20px;
+}
+.faq.faq-answer p:first-child{
+  margin-top: 6px;
+}
+.faq.faq-answer p:last-child {
+  margin-bottom: 4px;
+}
+.faq-question.active span{
+  font-family: urw-din-medium;
+}
+.faq-question span{
+  font-family: urw-din-xlight;
+  font-size: 18px;
+}
+.faq-question {
+  border-bottom: 1px solid #D8D8D8;
+  padding: 15px 0 18px;
+}
+.faq-main {
+  margin-top: 40px !important;
+  margin-bottom: 32px !important;
+}
+.faq-image-section img {
+  padding-right: 20px;
+}
 /* Temperory */
 #narrow-by-list .filtru-price dd{
   display: none;
@@ -1940,5 +2002,8 @@ div#narrow-by-list {
     display: none;
 }
 .footer-item-list:last-child {
+    display: none;
+}
+.cms-faqs .col-left.sidebar {
     display: none;
 }

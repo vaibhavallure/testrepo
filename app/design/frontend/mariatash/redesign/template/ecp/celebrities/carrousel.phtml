@@ -14,20 +14,20 @@ jQuery(document).ready(function() {
         itemFallbackDimension: 175,
 //        initCallback: function(data){
 //            size = data.options.size;
-//        },        
+//        },
         setupCallback: function(data){
             if(parseInt(jQuery('li.active').attr('id')) == data.options.size){
                 setTimeout(function(){jQuery('div#prev3').trigger('click')},100);
 //                jQuery('div#prev3').trigger('click');
             }
-        },                
+        },
         start: parseInt(jQuery('li.active').attr('id'))
     });
-    
+
     jQuery(window).resize();
-    
+
     jQuery('div.main div.col-main div.category-title').remove();
- 
+
 });
 
 function mycarousel_initCallback(carousel) {
@@ -63,10 +63,10 @@ jQuery(window).resize(function() {
         jQuery('ul#foo3 li').each(function(key,element){
            wi += jQuery(element).width();
         });
-        
+
         if(wi >= document.body.offsetWidth){
                 jQuery('#next3, #prev3').show();
-        }else{  
+        }else{
                 jQuery('#next3, #prev3').hide();
         }
 });
@@ -82,16 +82,16 @@ function setCelebrity(element) {
 }
 </script>
 <div class="caroufredsel_wrapper" style='overflow:hidden'>
-    <ul id="foo3">
-        <?php $counter=1; foreach($this->getCelebrities() as $celebrity): 
+    <div id="foo3" class="row">
+        <?php $counter=1; foreach($this->getCelebrities() as $celebrity):
             if($celebrity->getStatus()==1):?>
         <?php $active = ($this->getCurrentCelebrityId() == $celebrity->getId()) ? 'class="active"' : '' ?>
-            <li data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" onclick="setCelebrity(this);" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>>
-                <a onclick="jQuery('.celeb_wrapper').load('<?php echo Mage::getUrl('celebrities/index/ajax/').'id/'.$celebrity->getId()?>');"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $celebrity->getDefaultImage() ; ?>" alt="<?php echo $celebrity->getCelebrityName(); ?>" /></a>
+            <div class="col-4" data-title="<?php echo $celebrity->getCelebrityName(); ?>" data-url="<?php echo $celebrity->getUrl()?>" onclick="setCelebrity(this);" id="<?php echo $counter; $counter++ ?>" <?php echo $active ?>>
+                <a onclick="jQuery('.celeb_wrapper').load('<?php echo Mage::getUrl('celebrities/index/ajax/').'id/'.$celebrity->getId()?>');"><img width="320px" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'celebrities' . DS . $celebrity->getDefaultImage() ; ?>" alt="<?php echo $celebrity->getCelebrityName(); ?>" /></a>
                 <a onclick="jQuery('.celeb_wrapper').load('<?php echo Mage::getUrl('celebrities/index/ajax/').'id/'.$celebrity->getId()?>');"><h3 <?php echo $active ?>><?php echo $celebrity->getCelebrityName(); ?></h3></a>
-            </li>
+            </div>
         <?php endif; endforeach; ?>
-    </ul>
+    </div>
 </div>
-<div id="prev3"></div>
-<div id="next3"></div>
+<!-- <div id="prev3"></div>
+<div id="next3"></div> -->
