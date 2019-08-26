@@ -1,3 +1,4 @@
+
 const translation = {
     "fr": {
         "Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash",
