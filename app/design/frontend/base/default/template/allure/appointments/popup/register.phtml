@@ -91,7 +91,7 @@ if ($model) {
                                                            value="1" name="customer[<?= $customer_count ?>][checkup]"
                                                         <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
                                                     >
-                                                    <label class="label translate-popup" for="checkup_select_<?= $customer_count ?>"><?php echo $this->__('Checkup') ?></label>
+                                                    <label class="label translate-popup" for="checkup_select_<?= $customer_count ?>"><?php echo $this->__('Checkup/downsize') ?></label>
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="customer_select" value="<?= (($customer->getPiercing() > 0) || $customer->getCheckup()>0)? '1':'';?>" id="customer_select_<?= $customer_count ?>"
@@ -144,7 +144,7 @@ if ($model) {
                                             <div class="col-md-6  col-8">
                                                 <input type="checkbox" class="checkup_select clschk" value="1" data-no="1" id="checkup_select_1"
                                                        name="customer[1][checkup]">
-                                                <label class="label translate-popup" for="checkup_select_1"><?php echo $this->__('Checkup') ?></label>
+                                                <label class="label translate-popup" for="checkup_select_1"><?php echo $this->__('Checkup/downsize') ?></label>
                                             </div>
                                             <div class="col-12">
                                             <input type="text" class="customer_select" value="" id="customer_select_1"

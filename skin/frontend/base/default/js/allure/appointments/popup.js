@@ -93,7 +93,7 @@ const translation = {
         "For parties of 5 or more, contact customer service": "Pour des groupes de plus de 4 personnes, veuillez contacter notre service clientèle.",
         "CUSTOMER": "CLIENT",
         "Type of Appointment:": "Type de rendez-vous:",
-        "Checkup": "Examination du piercing",
+        "Checkup/downsize": "Examination du piercing",
         "FAQ": "QUESTIONS FRÉQUEMMENT POSÉES",
         "For over two decades, Maria Tash has been revolutionizing the fine jewelry and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and jewelry, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.": "Depuis plus de deux décennies, Maria Tash révolutionne l'industrie de la bijouterie fine et du piercing en créant des designs innovants sous son label éponyme basé à New York. Avec une perspective unique qui vit au carrefour de la beauté, de la mode et des bijoux, Tash s'est taillé une position unique en tant que fondatrice et designer. Elle a développé une technique grâce à laquelle le style et l'anatomie uniques de chaque cliente déterminent sa combinaison idéale de clous et de boucles, combinés pour complémenter au mieux leur porteuse. L'art croise la science avec l'approche de Tash pour un design et un piercing guidés par son désir primordial de livrer non seulement le meilleur look mais un sentiment de beauté.",
         "Earlobe": "Lobe de l’oreille",
@@ -191,7 +191,7 @@ const translation = {
         "Pour des groupes de plus de 4 personnes, veuillez contacter notre service clientèle.": "For parties of 5 or more, contact customer service",
         "CLIENT": "CUSTOMER",
         "Type de rendez-vous:": "Type of Appointment:",
-        "Examination du piercing": "Checkup",
+        "Examination du piercing": "Checkup/downsize",
         "QUESTIONS FRÉQUEMMENT POSÉES": "FAQ",
         "Depuis plus de deux décennies, Maria Tash révolutionne l'industrie de la bijouterie fine et du piercing en créant des designs innovants sous son label éponyme basé à New York. Avec une perspective unique qui vit au carrefour de la beauté, de la mode et des bijoux, Tash s'est taillé une position unique en tant que fondatrice et designer. Elle a développé une technique grâce à laquelle le style et l'anatomie uniques de chaque cliente déterminent sa combinaison idéale de clous et de boucles, combinés pour complémenter au mieux leur porteuse. L'art croise la science avec l'approche de Tash pour un design et un piercing guidés par son désir primordial de livrer non seulement le meilleur look mais un sentiment de beauté.": "For over two decades, Maria Tash has been revolutionizing the fine jewelry and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and jewelry, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.",
         "Lobe de l’oreille": "Earlobe",
@@ -277,7 +277,7 @@ jQuery(document).ready(function () {
                 if (!jQuery(this).hasClass('allure_only_number'))
                     jQuery(this).addClass('allure_only_number');
             }
-            if (key == 35 || key==187 || key == 36 || key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 9 || key == 46) { // end / home/Left / Up / Right / Down Arrow, Backspace,Tab, Delete keys
+            if (key == 35 || key==187 || key == 36 || key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 9 || key == 46 || (key >= 96 && key <= 105)) { // end / home/Left / Up / Right / Down Arrow, Backspace,Tab, Delete keys
                 return;
             }
 
@@ -494,7 +494,7 @@ var addCustomerJob = function (srno) {
                 </div>
                 <div class="col-md-6 col-8">
                     <input type="checkbox" class="checkup_select" data-no="${srno}" id="checkup_select_${srno}" value="1" name="customer[${srno}][checkup]">
-                    <label class="label translate-popup" for="checkup_select_${srno}">${__('Checkup')}</label>
+                    <label class="label translate-popup" for="checkup_select_${srno}">${__('Checkup/downsize')}</label>
                 </div>
                 <div class="col-12">
                 <input type="text" class="customer_select required-entry" value="" id="customer_select_${srno}"
