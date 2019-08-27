@@ -591,23 +591,21 @@ nav.mariatash-header {
 }
 .footer .footer-item-list a {
     color: #fff;
-    font-size: 13pt;
-    text-transform: capitalize;
+    font-size: 12px;
+		font-family: urw-din-medium;
+    letter-spacing: 0;
 }
 .footer ul li {
     display: inline-flex;
 }
 .footer ul .footer-item-list{
-    margin-right: 21px;
+    margin-right: 19px;
 }
 .footer .social-media li{
-    margin-right: 28px;
+    margin-right: 26px;
 }
 .footer .footlinks li:first-child {
-    margin-left: 24px;
-}
-.social-media ul {
-    margin-right:6px;
+    margin-left: 40px;
 }
 .footer-items a {
     color: #fff;
@@ -616,12 +614,11 @@ nav.mariatash-header {
     font-weight: 600;
     font-size: 12px;
 }
-.footlinks, .social-media ul {
-    margin: 22px 0 14px 0;
+.footlinks{
+    margin: 20px 0 18px 0;
 }
-
 .social-media ul {
-    margin-right:6px;
+    margin: 18px 12px 14px 0;
 }
 
 @media (min-width: 992px) {
@@ -675,7 +672,7 @@ nav.mariatash-header {
     margin-right: 3px;
 }
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
     .catalog .item,
     .insta-item {
         width: 100%;
@@ -719,7 +716,7 @@ nav.mariatash-header {
         height: 70px!important;
         background: rgba(41,41,41,0.90) !important;
     }
-}
+} */
 
 .catalog .item:hover {
     background-color: #fff;
@@ -1922,7 +1919,7 @@ div#narrow-by-list {
   margin-bottom: 47px;
 }
 .jewelry-copy-odd{
-  padding: 0 34px;
+  padding: 0 58px 0 13px;
 }
 .jewelry-copy-even{
   text-align: right;
@@ -1975,6 +1972,7 @@ div#narrow-by-list {
 }
 .faq-question.active span{
   font-family: urw-din-medium;
+  cursor: pointer;
 }
 .faq-question span{
   font-family: urw-din-xlight;
@@ -1999,9 +1997,6 @@ div#narrow-by-list {
   visibility: hidden;
 }
 .select-currency.main-nav-link-dropdown img:first-child {
-    display: none;
-}
-.footer-item-list:last-child {
     display: none;
 }
 .cms-faqs .col-left.sidebar {

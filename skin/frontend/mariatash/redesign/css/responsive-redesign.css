@@ -177,6 +177,9 @@
   .customer-care-page .faq-question span:after{
     margin-top: 0;
   }
+  .footer-item-list:last-child{
+    display: none;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
