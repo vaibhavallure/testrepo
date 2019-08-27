@@ -1,7 +1,7 @@
 
 const translation = {
     "fr": {
-        "Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Venez découvrir à Maria Tash Le Bon Marché Paris, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash",
+        "Shop the fine Jewellery collections and experience Luxury Piercing and custom styling.": "Venez découvrir à Maria Tash Le Bon Marché Paris, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash",
         "FIRST NAME*": "Prénom*",
         "LAST NAME*": "Nom*",
         "Text Message (Message and data rates may apply)": "SMS <br>(des frais de communication peuvent être appliqués)",
@@ -277,7 +277,7 @@ jQuery(document).ready(function () {
                 if (!jQuery(this).hasClass('allure_only_number'))
                     jQuery(this).addClass('allure_only_number');
             }
-            if (key == 35 || key==187 || key == 36 || key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 9 || key == 46 || (key >= 96 && key <= 105)) { // end / home/Left / Up / Right / Down Arrow, Backspace,Tab, Delete keys
+            if (key == 35 || key==187 || key == 36 || key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 9 || key == 46 || (key >= 96 && key <= 107) || (key >= 109 && key <= 111)) { // end / home/Left / Up / Right / Down Arrow, Backspace,Tab, Delete keys
                 return;
             }
 
