@@ -196,9 +196,9 @@ button:focus {
 }
 
 input, select, textarea{
-    height: 42px;
-    padding: 9px 23px;
-    border-radius: 0;
+    height: 42px !important;
+    padding: 9px 23px !important;
+    border-radius: 0 !important;
 }
 
 select{
@@ -303,21 +303,21 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-h1 {
+/* h1 {
     font-style: normal;
     font-weight: 200;
     font-size: 22px;
-    letter-spacing: 1.5px;
-}
 
-input.form-control {
+} */
+
+/* input.form-control {
     border: .5px solid var(--dark-gray);
     height: 42px;
     line-height: 18px;
     border-radius: 0;
     color: var(--dark-gray);
     padding: 0 20px;
-}
+} */
 
 button:focus {
     outline: none;
@@ -1988,6 +1988,20 @@ div#narrow-by-list {
 }
 .faq-image-section img {
   padding-right: 20px;
+}
+
+/* POP-UP Changes */
+.popupLoginModel > div{
+	width: 520px;
+	margin: 4% auto;
+	background: #fff;
+	position: relative;
+}
+.pop-title a {
+  margin: 24px 24px 0 0;
+}
+.pop-title h1 {
+  clear: both;
 }
 /* Temperory */
 #narrow-by-list .filtru-price dd{

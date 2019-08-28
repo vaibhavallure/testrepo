@@ -638,20 +638,20 @@ img.snize-item-image[src^=data]::after {
 	pointer-events: auto;
 }
 
-.popupLoginModel > div {
-	width: 320px;
+/* .popupLoginModel > div {
+	width: 520px;
     position: relative;
     margin: 4% auto;/*10% to 5% changed*/
     /* padding: 5px 20px 13px 20px; */
-    padding: 20px;
+    /* padding: 20px; */
     /* border-radius: 10px; */
-    background: #fff;
+    /* background: #fff;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
     background: #dcdcdc;
-    box-shadow: 0px 0px 6px
-}
+    box-shadow: 0px 0px 6px */
+} */
 .popupLoginModel #login-msg{
 	color:#830000;
 	margin-left: 20px;
@@ -661,7 +661,7 @@ img.snize-item-image[src^=data]::after {
 
 }
 
-.close {
+/* .close {
 	background: #606061;
 	color: #FFFFFF;
 	line-height: 25px;
@@ -680,7 +680,7 @@ img.snize-item-image[src^=data]::after {
 	box-shadow: 1px 1px 3px #000;
 }
 
-.close:hover { background: #00d9ff; }
+.close:hover { background: #00d9ff; } */
 
 #signin-btn{
 	float:right;
@@ -746,42 +746,42 @@ img.snize-item-image[src^=data]::after {
 	pointer-events: auto;
 }
 
-.popupRegisterModel > div {
+/* .popupRegisterModel > div {
 	width: 320px;
     position: relative;
     margin: 10% auto;
     /* padding: 5px 20px 13px 20px; */
-    padding: 20px;
+    /* padding: 20px; */
     /* border-radius: 10px; */
-    background: #fff;
+    /* background: #fff;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
-    background: #dcdcdc;
-    box-shadow: 0px 0px 6px
+    background: #dcdcdc; */
+    /* box-shadow: 0px 0px 6px */
 }
-.popupRegisterModel #register-msg{
+/* .popupRegisterModel #register-msg{
 	color:#830000;
 	margin-left: 20px;
 	font-size: 12px;
   /*   font-weight: bold; */
-    line-height: 1.63636363636;
-}
+    /* line-height: 1.63636363636;
+} */
 
-.pop-title{
+/* .pop-title{
 	border-bottom: 1px solid #999;
 	margin-bottom: 10px;
 }
 .pop-title h2{
    	margin: 0 0 10px
-}
-label.popup-login-lbl{
+} */
+/* label.popup-login-lbl{
    width: 100%;
    float: left;
    font-size: 12px;
 	margin: 10px 0 5px;
-}
-.popupLoginModel input{
+} */
+/* .popupLoginModel input{
 	width: calc(100% - 10px);
 	height: 25px !important;
 	margin: 2px 0 10px;
@@ -790,9 +790,9 @@ label.popup-login-lbl{
 	border-left: 0px;
 	border-right: 0;
 	padding: 5px;
-}
+} */
 
-.popupResetPasswordModel input{
+/* .popupResetPasswordModel input{
    width: 96%;
    margin: 2px 0 10px;
    border-top: 1px solid #b2b2b2;
@@ -817,8 +817,8 @@ label.popup-login-lbl{
 }
 .popupRegisterModel .news-letter{
 	display: inline-block;
-}
-.pop-link a{
+} */
+/* .pop-link a{
 	outline: 0;
 	text-decoration: underline;
 	color: #000;
@@ -830,12 +830,11 @@ label.popup-login-lbl{
 .pop-link p{
 	clear: both;
 	letter-spacing: 0.7px;
-}
-.popupRegisterModel .pop-link{
+} */
+/* .popupRegisterModel .pop-link{
 	margin-top: 15px;
-
-}
-.pop-link a:hover{
+} */
+/* .pop-link a:hover{
    outline: 0;
    text-decoration: none;
    color: #000;
@@ -845,13 +844,13 @@ label.popup-login-lbl{
    margin: 10px 0 10px;
    color: #fff;
    background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
-}
-.popupResetPasswordModel #reset_pass_btn{
+} */
+/* .popupResetPasswordModel #reset_pass_btn{
    float: right;
    margin: 10px 0 10px;
    color: #fff;
    background: -webkit-linear-gradient(top, #646469 13%, #3b3b3b 99%);
-}
+} */
 #popup_is_subscribed{
 	width: 20px;
     height: 20px;
@@ -868,7 +867,7 @@ label.popup-login-lbl{
     padding-right: 5px;
 }
 
-#signup-btn-popup{
+/* #signup-btn-popup{
 	 background: transparent url(../images/bkg_black_btn.png) repeat-x;
     height: 26px;
     color: #fff;
@@ -877,15 +876,15 @@ label.popup-login-lbl{
     padding-top: 0px;
     padding-bottom: 0px;
     line-height: normal;
-}
-.popup-benifits{
+} */
+/* .popup-benifits{
     list-style-type: disc;
     margin-left: 25px;
-}
-.pop-link .new_account{
+} */
+/* .pop-link .new_account{
 	text-align: right!important;
     margin-top: 10px;
-}
+} */
 #reg_msg_div{
 	text-align: left;
     margin-bottom: 5px;
@@ -922,17 +921,17 @@ label.popup-login-lbl{
    /*  font-weight: bold; */
     line-height: 1.63636363636;
 }
-.popupLoginModel .submit-login{
+/* .popupLoginModel .submit-login{
     float: right;
 }
 .popupResetPasswordModel .submit-login{
     float: right;
-}
-.please-wait-popup{
+} */
+/* .please-wait-popup{
     float: left;
     margin-top: 16px;
     margin-right: 15px;
-}
+} */
 .please-wait-popup-register{
     margin-top: 16px;
     margin-left: 15px;
@@ -1283,7 +1282,7 @@ div#advice-required-entry-authnetcim_cc_cid {
     position: static;
 }
 
-#popup-login-form .pop-title h2{
+/* #popup-login-form .pop-title h2{
     font-weight: normal;
     color: #303136;
     text-transform: uppercase;
@@ -1295,24 +1294,24 @@ div#advice-required-entry-authnetcim_cc_cid {
     width: auto;
     height: auto;
     padding-left: initial;
-}
+} */
 
 .pop-link .mt-amazon{
     float: right;
 }
-.pop-link .mt-googleconnect-btn
+/* .pop-link .mt-googleconnect-btn
 {
     float: right;
 }
 .pop-link .mt-googleconnect-btn a
 {
     margin: 0;
-}
-.pop-link .soc-login-btn{
+} */
+/* .pop-link .soc-login-btn{
     clear: left !important;
     float: left !important;
-}
-.facebook-login-checkout .fb-img, .mt-facebookconnect-btn .fb-img {
+} */
+/* .facebook-login-checkout .fb-img, .mt-facebookconnect-btn .fb-img {
     width: 200px;
     float: right;
 }
@@ -1325,4 +1324,4 @@ div#advice-required-entry-authnetcim_cc_cid {
 
 .allure-amazon-connect-login .account-login .content{
     min-height: 0;
-}
+} */

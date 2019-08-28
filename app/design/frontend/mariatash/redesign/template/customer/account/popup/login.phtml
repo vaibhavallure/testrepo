@@ -2,27 +2,29 @@
     <div>
         <form class="form-signin" action="<?php echo $this->getPostActionUrl() ?>" method="post" id="popup-login-form">
             <div class="pop-title">
-                <a href="#close" title="Close" class="close">X</a>
-                <h2><?php echo $this->__("Log In to Your Account")?></h2>
+                <a href="#close" title="Close" class="close">
+                  <img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
+                </a>
+                <h1><?php echo $this->__("Log In to Your Account")?></h1>
             </div>
             <div class="body">
                 <div id="login_msg_div">
                     <span id="login-msg"></span>
                 </div>
                 <div class="form-group">
-                    <label class="popup-login-lbl" for="email"><em>*</em> <?php echo $this->__("Email Address")?></label>
-                    <input id='username-login' type="text" name='login[username]' class="ele_width form-control required-entry validate-email"/>
+                    <!-- <label class="popup-login-lbl" for="email"><em>*</em> <//?php echo $this->__("Email Address")?></label> -->
+                    <input id='username-login' type="text" name='login[username]' placeholder="Email*" class="ele_width required-entry validate-email"/>
                 </div>
                 <div class="form-group">
-                    <label class="popup-login-lbl" for="password"><em>*</em> <?php echo $this->__("Password")?></label>
-                    <input id="passwd-login" type="password" name="login[password]" class="ele_width form-control required-entry"/>
+                    <!-- <label class="popup-login-lbl" for="password"><em>*</em> <//?php echo $this->__("Password")?></label> -->
+                    <input id="passwd-login" type="password" name="login[password]" placeholder="Password*" class="ele_width required-entry"/>
 
                     <input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
 
                 </div>
             </div>
             <div class="pop-link">
-                <div class="forget-password" style="float: left">
+                <div class="forget-password">
                     <a onclick="openRestPasswordModal()"><?php echo $this->__("Forgot Password")?></a>
                 </div>
                 <div class="new_account">
@@ -39,7 +41,7 @@
                     <?php if (Mage::helper('core')->isModuleEnabled('Allure_GoogleConnect')):?>
                         <?php $isEnableGoogleSign = Mage::helper("allure_googleconnect")->_isEnabled();?>
                         <?php if($isEnableGoogleSign):?>
-                            <div class="mt-googleconnect-btn" style="float: left">
+                            <div class="mt-googleconnect-btn">
                                 <?php echo $this->getLayout()->createBlock('allure_googleconnect/button')
                                     ->setTemplate("allure/googleconnect/button.phtml")->toHtml(); ?>
                             </div>
@@ -62,17 +64,17 @@
 
                 </div>
 
-                <div class="benifits">
-                    <p><strong><?php echo $this->__("Create an account to access these benefits:")?></strong></p>
+                <!-- <div class="benifits">
+                    <p><strong><//?php echo $this->__("Create an account to access these benefits:")?></strong></p>
                     <ul class="popup-benifits">
-                        <li><?php echo $this->__("Keep track of your jewelry sizes")?></li>
-                        <li><?php echo $this->__("See your purchase history")?></li>
-                        <li><?php echo $this->__("Faster Checkout")?></li>
-                        <li><?php echo $this->__("Share your wishlist")?></li>
-                        <li><?php echo $this->__("Receive  personalized online service")?></li>
-                        <li><?php echo $this->__("$20 off your next purchase if you subscribe to our newsletter")?></li>
+                        <li><//?php echo $this->__("Keep track of your jewelry sizes")?></li>
+                        <li><//?php echo $this->__("See your purchase history")?></li>
+                        <li><//?php echo $this->__("Faster Checkout")?></li>
+                        <li><//?php echo $this->__("Share your wishlist")?></li>
+                        <li><//?php echo $this->__("Receive  personalized online service")?></li>
+                        <li><//?php echo $this->__("$20 off your next purchase if you subscribe to our newsletter")?></li>
                     </ul>
-                </div>
+                </div> -->
 
             </div>
         </form>

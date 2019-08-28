@@ -18,7 +18,7 @@ if($this->isthumbnailCat($pc->getName())){
 <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
                                     if (!$child->getIsActive())
                                         continue; ?>
-    <div class="col-lg col-12 piercing_options"> <a href="<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
+    <div class="col-lg col-12 piercing_options"> <a href="/<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
     <div class="image-text text-center">
       <h6 class="text-uppercase text-white"><?= $child->getName()?></h6>
     </div>
@@ -51,7 +51,7 @@ if($this->isthumbnailCat($pc->getName())){
                                     ?>
                                     <div class="col-lg col-12 common-option-div" id="c-<?= $child->getId() ?>">
                                         <div class="menu-head jwl-head text-uppercase">
-                                            <span><a href="<?= $child->getRequestPath() ?>"><?= $child->getName(); ?></a></span>
+                                            <span><a href="/<?= $child->getRequestPath() ?>"><?= $child->getName(); ?></a></span>
                                         </div>
                                         <div class="head-child">
                                             <ul class="p-0">
@@ -60,7 +60,7 @@ if($this->isthumbnailCat($pc->getName())){
                                                         continue;
                                                     ?>
                                                     <li class=""><a
-                                                                href="<?= $child2->getRequestPath() ?>"><?= $child2->getName() ?></a>
+                                                                href="/<?= $child2->getRequestPath() ?>"><?= $child2->getName() ?></a>
                                                     </li>
                                                 <?php } ?>
                                             </ul>
