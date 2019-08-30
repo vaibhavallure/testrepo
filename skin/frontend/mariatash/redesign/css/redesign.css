@@ -196,6 +196,11 @@ textarea:-webkit-autofill:active{
 }
 .form-control:focus, button:focus{
 	 border-color: #D8D8D8;
+	 outline:0;
+}
+img{
+	border: none;
+	outline: 0;
 }
 button, a{
 	cursor: pointer;
@@ -2034,13 +2039,14 @@ button#signin-btn-popup {
   margin-right: 21px;
 }
 .amazon-login-button-wrapper img {
+	max-height: 40px !important;
   height: 40px;
 }
 .option-text p {
 	margin: 57px 0 18px;
 }
 .new_account a{
-	margin: 42px 0 30px;
+	margin: 42px 0 45px;
 }
 .eye-image {
   position: absolute;
