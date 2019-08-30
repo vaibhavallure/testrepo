@@ -11,8 +11,8 @@
 
 <?php if ($this->isAmazonLoginEnabled()) : ?>
 
-    <div id="amazon-buttons-wrapper" class="col2-set">
-        <div class="col-1">
+    <div id="amazon-buttons-wrapper" class="">
+        <div class="">
             <div class="amazon-login-button-wrapper">
 
                 <?php if ($this->getNameInLayout() == 'amazon_login.button_login') : ?>
@@ -22,13 +22,15 @@
 
                 <?php if (!$this->isAmazonPaymentsEnabled()) : // Old embed method (does not require seller id) ?>
 
-                    <button class="amazon-login-button" style="cursor:pointer; background:none; border:0;">
-                        <img src="<?php echo $this->getButtonImage(); ?>" alt="<?php echo $this->__('Login with Amazon'); ?>" border="0" />
+                    <button class="amazon-login-button">
+                        <img src="<?php echo $this->getSkinUrl("images/redesign/pop-up/amazon.jpg")?>" alt="<?php echo $this->__('Login with Amazon'); ?>" border="0" />
                     </button>
 
                 <?php else : // Use Amazon Payments embed method ?>
 
-                    <div id="amazon-login-button"></div>
+                    <div id="amazon-login-button">
+                      <!-- <img class="amz-img" alt="" src="<//?php echo $this->getSkinUrl("images/redesign/pop-up/amazon.jpg")?>" /> -->
+                    </div>
 
                     <script type="text/javascript">
                         var authRequest;

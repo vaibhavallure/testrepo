@@ -26,7 +26,7 @@ div.allure-google-connect-inner a{
     margin: 0 !important;
     text-decoration: none !important;
     line-height: 24px !important;
-}  
+}
 
 
 .allure-google-connect-link{
@@ -34,18 +34,18 @@ div.allure-google-connect-inner a{
     background: transparent url(../images/google-sign-in-btn.png) repeat-x top left !important;
     padding: 0 5px !important;
     border: 1px solid #d1d1d1;
-}  
+}
 
 
 .checkout-onepage-index #checkout-step-login .mt-googleconnect-btn{
 	margin-bottom: 10px;
-}  
+}
 
-.popupLoginModel .mt-googleconnect-btn a{
+/* .popupLoginModel .mt-googleconnect-btn a{
 	float: right;
 	clear: both;
-}
+} */
 
-.mt-googleconnect-btn .gle-img{
+/* .mt-googleconnect-btn .gle-img{
 	border: 1px solid #d1d1d1;
-}
+} */

@@ -5,11 +5,11 @@
 *===================================================
 */
 
-.customer-account-index .col-main, 
-.customer-account-edit .col-main, 
-.customer-address-index .col-main, 
-.sales-order-history .col-main, 
-.wishlist-index-index .col-main, 
+.customer-account-index .col-main,
+.customer-account-edit .col-main,
+.customer-address-index .col-main,
+.sales-order-history .col-main,
+.wishlist-index-index .col-main,
 .newsletter-manage-index .col-main {
     width: 80% ! important;
 }
@@ -29,7 +29,7 @@
 .my-account .page-title,
 .my-account .box .box-title{
 	/*background:none;*/
-	margin-bottom: 19px;   
+	margin-bottom: 19px;
 }
 
 .my-account .page-title h1,
@@ -59,7 +59,7 @@
 /* My account customer address */
 
 .my-account .box .box-title a{
-	display: none;	
+	display: none;
 }
 
 .mt-addresses-additional h2{
@@ -144,7 +144,7 @@
 }
 .customer-account-edit .my-account li.control label{
 	padding: 4px 0 3px 30px;
-	
+
 }
 
 
@@ -270,14 +270,14 @@ div.tab button.active {
 
 /*add new payments*/
 .manage-payment-method  #billing-new-address-form{
-	width: 100%;	
+	width: 100%;
 	border-right:none;
 	padding-right: 0px;
 	min-height: auto;
 }
 
 .manage-payment-method #mt-credit-card-info{
-	width: 100%;	
+	width: 100%;
 }
 
 #billing-new-address-form .input-box input.input-text{
@@ -395,7 +395,7 @@ div.tab button.active {
     position: relative;
 }
 
-.myaccount-index-index .my-account .box .pager .pages, 
+.myaccount-index-index .my-account .box .pager .pages,
 .myaccount-index-index .my-account .box .box-title a {
     display: block;
 }
@@ -467,7 +467,7 @@ div.tab button.active {
 .myaccount-index-index .my-account #my-orders-table {
     font-size: 13px;
     line-height: 18px;
-    
+
     /* height: 200px;
     display: block;
     overflow-y: scroll; */
@@ -527,12 +527,12 @@ div.tab button.active {
 
 .myaccount-index-index .coupons-mt{
 	width: 100%;
-	margin-left: 0px ! important;	
+	margin-left: 0px ! important;
 }
 
 .myaccount-index-index .coupons{
 	width: 50%;
-	margin-left: 0px;	
+	margin-left: 0px;
 }
 
 .myaccount-index-index .cart-mt .totals {
@@ -607,18 +607,18 @@ div.tab button.active {
 }
 
 .myaccount-index-index .my-wishlist .data-table tr{
-	border-bottom: 1px solid #ccc;	
+	border-bottom: 1px solid #ccc;
 }
 
 .myaccount-index-index #wishlist-table .ad-wish-mt{
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 .myaccount-index-index #wishlist-table .ad-wish-mt textarea {
 	width: 100px;
     margin-top: 0px;
     background: #dedede;
-    
+
 }
 
 .myaccount-index-index .mt-my-cart .mt-cart-added-at,
@@ -756,7 +756,7 @@ div.a-column.a-span-last {
 
 
 .myaccount-index-index  #myaccount-shopping-cart-table thead{
-	border-bottom: 1px solid #000;	
+	border-bottom: 1px solid #000;
 	display: none;
 }
 
@@ -781,9 +781,9 @@ div.a-column.a-span-last {
     display: inline-block;
 }
 
-#myaccount-shopping-cart-table .cart_col3, 
-#myaccount-shopping-cart-table .cart_col4, 
-#myaccount-shopping-cart-table .cart_col5, 
+#myaccount-shopping-cart-table .cart_col3,
+#myaccount-shopping-cart-table .cart_col4,
+#myaccount-shopping-cart-table .cart_col5,
 #myaccount-shopping-cart-table .cart_col6 {
     /* vertical-align: middle; */
     padding: 8px 8px 0px 0px;
@@ -796,7 +796,7 @@ div.a-column.a-span-last {
 
 #myaccount-shopping-cart-table tr td img {
 	width: 116px;
-	height: 150px;	
+	height: 150px;
 }
 
 
@@ -823,7 +823,7 @@ div.a-column.a-span-last {
 }
 
 .block-account .block-content ul {
-	padding: 0px;	
+	padding: 0px;
 }
 
 .customer-paymentinfo-index .page-title > h1,
@@ -849,7 +849,7 @@ div.a-column.a-span-last {
 }
 
 .customer-account-edit .my-account .fieldset {
-	margin-top: 10px;	
+	margin-top: 10px;
 }
 .customer-account-edit .my-account .form-list label {
     padding: 5px 5px 5px 0;
@@ -868,7 +868,7 @@ div.a-column.a-span-last {
     float: left;
     padding-left: 20px
 }
-	
+
 .mt-myaccount-filter .mt-myaccount-sort{
 	width: 30%;
     float: right;
@@ -934,12 +934,12 @@ div.a-column.a-span-last {
 
 .mt-my-wishlist .data-table#wishlist-table tbody tr:last-child {
 	background: none ! important;
-	border-bottom: none ! important;	
+	border-bottom: none ! important;
 }
 
 .mt-my-wishlist .myaccount-update-wishlist-btn{
 	width: 100%;
-    text-align: center ! important;	
+    text-align: center ! important;
     margin-bottom: 10px;
 }
 
@@ -956,9 +956,9 @@ div.a-column.a-span-last {
 
 .mt-my-cart .cart-empty,
 .mt-new-purchase .no-purchase-item{
-	padding: 10px;	
+	padding: 10px;
 }
-	
+
 .my-account .mt-my-orders .box.box-no-order {
     overflow-y: hidden;
     height: auto;
@@ -1045,7 +1045,7 @@ bottom: 35px;
     padding-left: 6px;
 }
 .label.required em{
-     float: left; 
+     float: left;
 }
 
 #wishlist-table th.a-left {
@@ -1210,7 +1210,7 @@ width: 63%;
    background-color: transparent;
    margin: 0;
    padding: 0;
-} 
+}
 
 
 /*Allure DPK end*/
@@ -1395,7 +1395,7 @@ width: 63%;
 .my-account #box-history .box-content {padding: 0}
 
 #purchase-history .allure-fancybox-overlay {
-	margin-top: 22px;	
+	margin-top: 22px;
 }
 
 
@@ -1412,7 +1412,7 @@ width: 63%;
 }
 
 .mt-my-openorders .allure-fancybox-overlay {
-	top: 0px;	
+	top: 0px;
 }
 
 #allure-fancybox-loading {
@@ -1433,7 +1433,7 @@ width: 63%;
 #allure-fancybox-loading div {
     width: 100%;
     height: 100%;
-    background-image: url(../css/fancybox/fancybox_loading.gif);   
+    background-image: url(../css/fancybox/fancybox_loading.gif);
     background-repeat: no-repeat;
     background-size: 78%;
     background-position: 5px;
@@ -1451,7 +1451,7 @@ width: 63%;
 } */
 
 .mt-cc-number{
-	
+
 }
 
 #mt-credit-card-info .mt-card-info{
@@ -1478,19 +1478,19 @@ ul#additional-addresses{
 	justify-content:space-around;
 }
 
-ul#primary-address-list li,	
+ul#primary-address-list li,
 ul#additional-addresses li{
 	display: flex;
 	margin-bottom: 20px;
 }
 
-ul#primary-address-list li .item-inner-container,	
+ul#primary-address-list li .item-inner-container,
 ul#additional-addresses li .item-inner-container{
  margin-bottom: 10px;
  position: relative;
 }
-	
-ul#primary-address-list li .item-inner-container address,	
+
+ul#primary-address-list li .item-inner-container address,
 ul#additional-addresses li .item-inner-container address{
 	 height: 80%;
 	 line-height: 20px;
@@ -1504,7 +1504,7 @@ ul#additional-addresses li .item-inner-container address{
 #add-new-addresss{
 margin-right: 10px;
 }
-	
+
 #additional-addresses .additional-address-links a {
 	display: inline-block;
 	margin-right: 13px;
@@ -1589,11 +1589,11 @@ margin-right: 10px;
 }
 
 .manage-payment-method #billing-new-address-form .input-box select{
-  padding: 2px 0 2px 2px; 
+  padding: 2px 0 2px 2px;
 }
 
 .manage-payment-method #edit-main .box-title{
- padding: 7px 0px;	
+ padding: 7px 0px;
 }
 
 .my-account .input-box select {
@@ -1633,7 +1633,7 @@ width: 245px;
     float: left;
 }
 
-@-moz-document url-prefix() { 
+@-moz-document url-prefix() {
 	.minus_icon {
 	   margin-top: 2px;
 	}
@@ -1654,13 +1654,13 @@ width: 245px;
 #my-openorders-table tbody td a{
 	text-decoration: none;
 }
-	
+
 #new-mt-myproduct-openorders #box-history{
 	margin-top: -10px;
-}	
+}
 
 .mt-my-wishlist #wishlist-table-overlay .mt-wishlist-extra-cls{
-	overflow: hidden; 
+	overflow: hidden;
 	padding: 8px;
 }
 
@@ -1669,7 +1669,7 @@ width: 245px;
 }
 
 .mt-my-wishlist .mt-wishlist-share-form{
-	padding: 10px;	
+	padding: 10px;
 }
 
 .mt-my-wishlist .mt-wishlist-share-form .fieldset ul li textarea{
@@ -1763,7 +1763,7 @@ width: 245px;
 	overflow: hidden;
 }
 #my-openorders-table{
-	margin-top: -12px;	
+	margin-top: -12px;
 }
 
 .myaccount-loader-div{
@@ -1838,19 +1838,19 @@ width: 245px;
 #new-mt-myproduct-cart .cart-empty{
 	margin-top: -20px;
 }
-.register-back-link{
-	display: block;
-}
+  /* .register-back-link{
+  	display: block;
+  } */
 
-.popupRegisterModel .amazon-pay-button{
+/* .popupRegisterModel .amazon-pay-button{
     margin-top: 0px ! important;
     margin-right: 55px;
-}
+} */
 
-.popupResetPasswordModel #resetpass-back-link{
+/* .popupResetPasswordModel #resetpass-back-link{
 	position: absolute;
 	margin-top: 10px;
-}
+} */
 
 .mt-myaccount-new .messages{
 	width: 80%;

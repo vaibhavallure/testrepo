@@ -1,65 +1,85 @@
 <div id="openModal" class="popupRegisterModel">
-	<div>
+	<div class="pop-up-cover">
 	<form class="form-signup" method="post" id="popup-register-form">
-		<div class="pop-title">
-			<a href="#close" title="Close" class="close">X</a>
-			<h2><?php echo $this->__("create a new account")?></h2>
+		<div class="pop-title modal-header">
+			<a href="#close" title="Close" class="close exit-large">
+				<img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
+			</a>
+			<h1><?php echo $this->__("Create a New Account")?></h1>
 
 		</div>
-		<div>
-			<div id="reg_msg_div">
-				<span id="register-msg"></span>
+		<div class="modal-body">
+			<div class="input-set">
+				<div id="reg_msg_div">
+					<span id="register-msg"></span>
+				</div>
+				<div class="input-form">
+		  		    <input id='firstname' placeholder="First Name*" type="text" name='firstname' class="ele_width required-entry"/>
+				</div>
+				<div class="input-form">
+		  		    <input id='lastname' placeholder="Last Name" type="text" name='lastname' class="ele_width required-entry"/>
+				</div>
+				<div class="input-form">
+		  		    <input id='email-register' placeholder="Email*" type="text" name='email' class="ele_width required-entry validate-email"/>
+				</div>
+				<div class="input-form">
+		  		    <input id='password' placeholder="Password*" type="password" name='password' class="ele_width   input-text required-entry validate-password"/>
+							<div class="">
+								<img class="eye-image show-hide-on-click" src="<?php echo $this->getSkinUrl("images/redesign/eye.png")?>" alt="">
+							</div>
+				</div>
+				<div class="input-form">
+		  		    <input id='confirmation' placeholder="Confirm Password*" type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
+							<div class="">
+								<img class="eye-image show-hide-on-click" src="<?php echo $this->getSkinUrl("images/redesign/eye.png")?>" alt="">
+							</div>
+				</div>
+				<div class="news-letter agreement">
+		  		    <label for="popup_is_privacy_agree" class="mt-custom-checkbox custom-checkbox mt-privacy-label-register para-normal text-left"><?php echo $this->__("I understand the terms and conditions of the Maria Tash <a href='/privacy-policy' class='link-button' target='_blank'>privacy policy</a>.")?>
+		  		    <input type="checkbox" name="popup_is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox checkout-privacy-policy">
+	  				<span class="checkmark"></span>
+		  		    </label>
+				</div>
+				<div class="news-letter mt-subscribe-register">
+		  		    <label class="mt-custom-checkbox custom-checkbox para-normal text-left"><?php echo $this->__("Sign me up for the Maria Tash newsletter.")?>
+		  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
+		  		    <span class="checkmark mt-checkmark-reg"></span>
+		  		    </label>
+				</div>
 			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="firstname"><em>*</em><?php echo $this->__(" First Name")?></label>
-	  		    <input id='firstname' type="text" name='firstname' class="ele_width required-entry"/>
-			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="lastname"><em>*</em><?php echo $this->__(" Last Name")?></label>
-	  		       <input id='lastname' type="text" name='lastname' class="ele_width required-entry"/>
-			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="email"><em>*</em><?php echo $this->__(" Email Address")?></label>
-	  		    <input id='email-register' type="text" name='email' class="ele_width required-entry validate-email"/>
-			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Password")?></label>
-	  		    <input id='password' type="password" name='password' class="ele_width   input-text required-entry validate-password"/>
-			</div>
-			<div class="row">
-	 		    <label class="popup-login-lbl" for="password"><em>*</em><?php echo $this->__(" Confirm Password")?></label>
-	  		    <input id='confirmation' type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
-			</div>
-
-			<div class="row">
-	 		    <label for="required fields"><em>*</em><?php echo $this->__(" Required Fields")?></label>
-			</div>
-			<div class="row news-letter ">
-	  		    <label for="popup_is_privacy_agree" class="mt-custom-checkbox mt-privacy-label-register"><?php echo $this->__("* I understand the terms and conditions of the Maria Tash <a href='/privacy-policy'  target='_blank' >privacy policy</a>.")?>
-	  		    <input type="checkbox" name="popup_is_privacy_agree" title="Agree for Privacy policy"  id="popup_is_privacy_agree" class="checkbox checkout-privacy-policy">
-  				<span class="checkmark"></span>
-	  		    </label>
-			</div>
-			<div class="row news-letter mt-subscribe-register">
-	  		    <label class="mt-custom-checkbox"><?php echo $this->__("Sign me up for the Maria Tash newsletter!")?>
-	  		    <input type="checkbox" name="is_subscribed" title="Sign Up for Newsletter"  id="popup_is_subscribed" class="checkbox">
-	  		    <span class="checkmark mt-checkmark-reg"></span>
-	  		    </label>
-			</div>
-
 		</div>
-		<div class="pop-link">
-
-            <button type="button" id="signup-btn-popup" class="button"><?php echo $this->__("Register")?></button>
-			<label class="popuporlbl"><?php echo $this->__("OR")?></label>
-			<button type="button"  onclick="gotoLoginPage();" id="signup-btn-popup"  class="button"><?php echo $this->__("Back to Login")?></button>
+		<div class="pop-link modal-footer">
+			<div class="pop-up-button-set row">
+				<div class="back-to-login col">
+						<button type="button"  onclick="gotoLoginPage();" id="signup-btn-popup"  class="button light-button pop-up-button"><?php echo $this->__("Cancel")?></button>
+				</div>
+				<div class="submit-login col">
             <span id="popup_loader_register" class="please-wait-popup-register" style="display: none;">
                 <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="Loading next step..." title="Loading next step..." class="v-middle"></span>
-
+						<button type="button" id="signup-btn-popup" class="button dark-button pop-up-button"><?php echo $this->__("Register")?></button>
+				</div>
+			</div>
         </div>
     </form>
 	</div>
 </div>
+
+
+<!-- Notifiaction Popup -->
+<div id="openModal" class="popupResetPasswordModel">
+	<div class="pop-up-cover">
+		<div class="pop-title modal-header">
+			<a href="#close" title="Close" class="close">
+				<img src="<?php echo $this->getSkinUrl('images/redesign/login-cross.png'); ?>" alt="">
+			</a>
+			<h1><?php echo $this->__("New Account Confirmation")?></h1>
+		</div>
+		<div class="body modal-body">
+			<p class="para-normal">Thank you for joining Maria Tash!</p>
+		</div>
+	</div>
+</div>
+
 
 
 <script type="text/javascript">

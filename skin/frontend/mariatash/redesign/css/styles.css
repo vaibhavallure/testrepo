@@ -2690,9 +2690,9 @@ a.various_sample.non-color {
 	margin-right: 4px;
 }
 
-button.button {
+/* button.button {
 	border: none;
-}
+} */
 
 /* button.button:hover, .btn-quickview:hover, .form-subscribe-mt button.button:hover,
 .gallery .btnFullscreen:hover, .gallery .btnClose:hover, .galleryFull .btnExitfull:hover,
@@ -2907,7 +2907,7 @@ p.back-link {
 	margin-right: 5px;
 }
 
-.buttons-set p.required, .buttons-set a,
+/* .buttons-set p.required, .buttons-set a,
 .checkout-multishipping-address-editbilling .buttons-set p.required,
 .buttons-set a {
 	color: #3F4048;
@@ -2917,7 +2917,7 @@ p.back-link {
 
 .back-link a {
 	text-decoration: underline;
-}
+} */
 
 .coupons .buttons-set a {
 	margin: 0 0 10px 0;
@@ -19759,10 +19759,10 @@ input.giftcard-radio1 {
 	user-select: none;
 }
 
-.mt-custom-checkbox a{
+/* .mt-custom-checkbox a{
 	font-size: 12px ! important;
 	color: #906E39 ! important;
-}
+} */
 
 .mt-custom-checkbox input {
 	position: absolute;
@@ -19770,7 +19770,7 @@ input.giftcard-radio1 {
 	cursor: pointer;
 }
 
-.checkmark {
+/* .checkmark {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -19779,7 +19779,7 @@ input.giftcard-radio1 {
 	background-color: #eee;
 	border: 1px solid #d1d1d1;
 	cursor: pointer;
-}
+} */
 
 .mt-custom-checkbox input:checked ~ .checkmark {
 	/* background-color: #2196F3; */
@@ -19795,17 +19795,7 @@ input.giftcard-radio1 {
 	display: block;
 }
 
-.mt-custom-checkbox .checkmark:after {
-	left: 8px;
-	top: 3px;
-	width: 3px;
-	height: 10px;
-	border: solid #000;
-	border-width: 0 2px 2px 0;
-	-webkit-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	transform: rotate(45deg);
-}
+
 
 .mt-custom-checkbox.label-error-validate{
 	color: #830000;
@@ -19908,21 +19898,21 @@ input.giftcard-radio1 {
 	text-decoration: none ! important;
 }
 
-.popupRegisterModel .mt-custom-checkbox.mt-privacy-label-register .checkmark{
+/* .popupRegisterModel .mt-custom-checkbox.mt-privacy-label-register .checkmark{
 	top: 7px;
-}
+} */
 
-.popupRegisterModel .mt-subscribe-register{
+/* .popupRegisterModel .mt-subscribe-register{
 	top: -3px;
-}
+} */
 
-.popupRegisterModel .mt-checkmark-reg{
+/* .popupRegisterModel .mt-checkmark-reg{
 	top: -3px ! important;
 }
 
 #checkout-step-login .col2-set .col-2.checkout-amazon-step {
 	height: auto;
-}
+} */
 
 .custom-options-univaersal{
 	margin-left: 25px !important;

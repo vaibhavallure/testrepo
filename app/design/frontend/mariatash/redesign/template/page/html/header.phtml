@@ -98,7 +98,7 @@ jQuery(document).ajaxComplete(function(){
                         </li>
                           <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
                         <li>
-                          <a href="<?php echo Mage::getBaseUrl();?>customer/account"><img src="<?php echo Mage::getBaseUrl('media').wysiwyg/nav-user.png?>"></a>
+                          <a href="<?php echo Mage::getBaseUrl();?>customer/account"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-user.png';?>"></a>
                         </li>
                           <?php else: ?>
                         <li class="icon-item" id="sign_in_label"><a href="#"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-user.png';?>"></a></li>
