@@ -194,7 +194,7 @@ textarea:-webkit-autofill:active{
   -webkit-box-shadow: 0 0 0 30px #fff inset !important;
   -webkit-text-fill-color: rgba(41,41,41,0.9) !important;
 }
-.form-control:focus, button:focus{
+.form-control:focus, button:focus, .input-form:focus{
 	 border-color: #D8D8D8;
 	 outline:0;
 }
@@ -253,12 +253,20 @@ input, select, textarea{
 	font-size: 13px;
   letter-spacing: 0;
   font-family: urw-din-light;
+	box-shadow: 0 0 0 0 !important;
 }
 
 select{
 	-webkit-appearance:none;
 }
-
+.validation-advice {
+	clear: both;
+	font-size: 10px;
+	color: #906E39;
+	font-weight: bold;
+	float: left;
+	text-align: right;
+}
 .form-checkbox{
 	position: absolute;
 	margin-top: -8px;

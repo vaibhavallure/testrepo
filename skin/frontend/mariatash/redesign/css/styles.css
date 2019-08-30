@@ -3076,7 +3076,7 @@ p.back-link {
 	width: auto;
 }
 
-.validation-advice {
+/* .validation-advice {
 	clear: both;
 	margin: 3px 0 0 0;
 	font-size: 11px;
@@ -3085,7 +3085,7 @@ p.back-link {
 	font-weight: bold;
 	float: right;
 	text-align: right;
-}
+} */
 
 .product-gift-card .giftcards .add-to-cart-left #advice-validate-greater-than-zero-qty,
 .product-gift-card .giftcards .add-to-cart-left #advice-required-entry-qty
