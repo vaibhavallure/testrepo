@@ -1,4 +1,3 @@
-
 const translation = {
     "fr": {
         "Shop the fine Jewellery collections and experience Luxury Piercing and custom styling.": "Venez découvrir à Maria Tash Le Bon Marché Paris, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash",
@@ -114,8 +113,8 @@ const translation = {
         "Appointments are recommended for piercings but are not necessary for Jewellery installations. Walk-ins welcome, based on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendez-vous sont limités en fonction des disponibilités.",
         "Appointment Id": "Rendez-vous",
         "Your scheduled Appointment is Cancelled successfully.": "Rendez-vous annulé avec succès.",
-        "CANCEL":"ANNULER",
-        "OK": "TERMINÉ"
+        "CANCEL":"NON",
+        "OK": "OUI"
     },
     "en": {
         "Venez découvrir à Maria Tash Le Bon Marché Paris, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash":"Shop the fine Jewellery collections and experience Luxury Piercing and custom styling.",
@@ -212,8 +211,8 @@ const translation = {
         "Pour toute question concernant les piercings et les prises de rendez-vous, n’hésitez pas à nous contacter :":"Contact us anytime:",
         "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendez-vous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for Jewellery installations. Walk-ins welcome, based on availability.",
         "Rendez-vous": "Appointment Id",
-        "ANNULER":"CANCEL",
-        "TERMINÉ":"OK",
+        "NON":"CANCEL",
+        "OUI":"OK",
     }
 };
 
