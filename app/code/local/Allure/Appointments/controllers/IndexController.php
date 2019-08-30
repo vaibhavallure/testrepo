@@ -209,6 +209,13 @@ class Allure_Appointments_IndexController extends Mage_Core_Controller_Front_Act
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $this->getRequest()->getParam('store');
 
+        if($this->helper()->isPopupStore($post_data['store_id']))
+        {
+            Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
+            $this->_redirectReferer();
+            return;
+        }
+
         if ($embeded == '1')
             $appendUrl = "?embedded=" . $embeded;
         if ($storep) {

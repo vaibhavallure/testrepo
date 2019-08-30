@@ -4,6 +4,7 @@ stages:
   - development
   - redesign
   - alpha
+  - popup
   - beta
   - deploy
 
@@ -53,6 +54,17 @@ alpha_elasticsearch:
   script:
     - mage-deploy mariatash-elasticsearch
     - echo 'Deployed on ElasticSearch Staging'
+    
+alpha_parispopup:
+  environment: popup
+  stage: alpha
+  tags:
+    - alpha
+  only:
+    - paris_popup
+  script:
+    - mage-deploy mt-popup
+    - echo 'Deployed on Nascense Staging'
 
 alpha_bugfixes:
   environment: bugfixes

@@ -156,6 +156,13 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         
         $embeded = $this->getRequest()->getParam('embedded');
         $storep = $this->getRequest()->getParam('store');
+
+        if($this->helper()->isPopupStore($post_data['store_id']))
+        {
+            Mage::getSingleton("core/session")->addError("Sorry Something Went Wrong Please Try Again!");
+            $this->_redirect("admin_appointments/adminhtml_appointments/new");
+            return;
+        }
         
         if ($embeded == '1')
             $appendUrl = "?embedded=" . $embeded;
@@ -793,7 +800,21 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
             {
                 $model = Mage::getModel('appointments/appointments')->load($post_data);
                 $storeId=$model->getStoreId();
-                
+
+
+                /*special popup store code ---------------*/
+
+                if($model->getSpecialStore())
+                {
+                    Mage::helper('appointments/notification')->sendEmailNotification($model, "new");
+                    Mage::helper('appointments/notification')->sendSmsNotification($model, "new");
+                    Mage::helper('appointments/notification')->sendEmailNotification($model, "release");
+                    Mage::helper('appointments/notification')->sendSmsNotification($model, "release");
+                    Mage::getSingleton("adminhtml/session")->addSuccess(Mage::helper("appointments")->__("Confirmation send successfully "));
+                    $this->_redirect("admin_appointments/adminhtml_appointments/");
+                    return;
+                }
+                /*---------------------------------------------*/
                 $configData = $this->getAppointmentStoreMapping();
                 $storeKey = array_search ($storeId, $configData['stores']);
                 
@@ -937,6 +958,41 @@ class Allure_Appointments_Adminhtml_IndexController extends Mage_Adminhtml_Contr
 
 
 
+/*
+ * functions for special store
+ * */
 
+    public function saveSpecialAction(){
+        $post_data = $this->getRequest()->getPost();
+        try {
+            if(isset($post_data['id'])){
+
+                extract($post_data['customer'][1]);
+
+                $post_data['firstname'] = $firstname;
+                $post_data['lastname'] = $lastname;
+                $post_data['email'] = $email;
+                $post_data['phone'] = $phone;
+
+                Mage::getModel('appointments/appointments')->addData($post_data)->save();
+
+                foreach ($post_data['customer'] as $customer) {
+                    Mage::getModel('appointments/customers')->addData($customer)->save();
+                }
+                //add logs
+                $helperLogs = $this->getLogsHelper();
+                $helperLogs->saveLogs("admin");
+
+                Mage::getSingleton("adminhtml/session")->addSuccess(Mage::helper("appointments")->__("Appointment details updated successfully"));
+                $this->_redirect("admin_appointments/adminhtml_appointments/view/id",array('id'=>$post_data['id']));
+            }else {
+                Mage::getSingleton("adminhtml/session")->addError(Mage::helper("appointments")->__("Unable to update appointment details"));
+                $this->_redirect("admin_appointments/adminhtml_appointments/");
+            }
+        } catch (Exception $e) {
+            Mage::getSingleton("adminhtml/session")->addError(Mage::helper("appointments")->__($e->getMessage()));
+            $this->_redirect("admin_appointments/adminhtml_appointments/");
+        }
+    }
 
 }

@@ -77,6 +77,14 @@ class Allure_Appointments_Helper_Logs extends Mage_Core_Helper_Abstract
                 Mage::log($action."=>".$string,Zend_Log::DEBUG,'appointment_notification.log',true);
             endif;
     }
+
+    public function addStoreWiseLog($string,$store_id)
+    {
+        $store_name=str_replace(' ','_',Mage::helper('appointments')->storeAppearName($store_id));
+        if(Mage::getStoreConfig('appointments/debug/debug_enabled')):
+            Mage::log($string,Zend_Log::DEBUG,'appointment_log_'.$store_name.'.log',true);
+        endif;
+    }
 	
 }
 	 

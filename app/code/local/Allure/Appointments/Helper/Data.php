@@ -198,16 +198,22 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
 			Mage::log(" Exception Occured :".$e->getMessage(),Zend_Log::DEBUG,'appointments_sms_log.log',true);
 		}
 	}
-	public function getTimezoneForeStore($storeId){
-		$timezone="";
-
+	/*return abbreviation*/
+	public function getTimezoneStore($storeId){
 		$configData     = $this->getAppointmentStoreMapping();
-		$currentStoreId = Mage::app()->getStore()->getId();
-		$storeKey = array_search ($currentStoreId, $configData['stores']);
+		$storeKey = array_search ($storeId, $configData['stores']);
 		$timezone = $configData['timezone_abbr'][$storeKey];
 
 		return $timezone;
 	}
+	/*return actual timezone*/
+    public function getStoreTimezone($storeId){
+        $configData     = $this->getAppointmentStoreMapping();
+        $storeKey = array_search ($storeId, $configData['stores']);
+        $timezone = $configData['timezones'][$storeKey];
+
+        return $timezone;
+    }
 	public function getTimezoneShortCodeForeStore($storeId){
 		$timezone="EST";
 
@@ -623,8 +629,16 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
                     $collection->addFieldToFilter('piercer_id', array('eq' => $p->getId()));
                     $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
                     $collection->addFieldToFilter('app_status', array('eq' => 2));
-                    $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
-                    $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+                    if ($piercer=="same") {
+                        $collection->addFieldToFilter('id', array('neq' => $data['id']));
+                    }
+
+//                    $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
+//                    $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+                    $collection->getSelect()->where("(((`appointment_start` <= '{$data['appointment_start']}') AND (`appointment_end` >= '{$data['appointment_start']}')) OR ((`appointment_start` <= '{$data['appointment_end']}') AND (`appointment_end` >= '{$data['appointment_end']}')))");
+
 
                     if (!$collection->getSize()) {
                         $this->addLog("checking piercer slot open => id =".$p->getId(),"save");
@@ -686,18 +700,19 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $date= $post['app_date'];
         $ap_start= $post['appointment_start'];
         $ap_end= $post['appointment_end'];
+        $email=$post['email'];
 
         /*check store id and piercer id */
 
         if (empty($store_id) || empty($piercer_id)) {
-            $this->addLog("error store id or piercer id empty","save");
+            $this->addLog("error store id or piercer id empty ".$email,"save");
             return false;
         }
 
         $piercer= Mage::getModel('appointments/piercers')->load($piercer_id);
 
         if ($piercer->getStoreId()!=$store_id) {
-            $this->addLog("store id and piercer id does not match","save");
+            $this->addLog("store id and piercer id does not match ".$email,"save");
             return false;
         }
         /* ----------------------------       */
@@ -707,10 +722,15 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         else
             $no_of_people=Mage::getStoreConfig('appointments/no_of_people/user_side');
 
+        $popupStoreId=Mage::getStoreConfig('appointments/popup_setting/store');
 
+        if($popupStoreId==$store_id)
+        {
+            $no_of_people=4;
+        }
         /* check no of people  */
         if (empty($qty) || $qty<1 || (!empty($no_of_people) && $qty > $no_of_people)) {
-            $this->addLog("invalid no of people qty=".$qty,"save");
+            $this->addLog("invalid no of people qty=".$qty." ".$email,"save");
             return false;
         }
         /*-----------------------*/
@@ -718,11 +738,17 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         /*check date and time*/
 
         if(empty($ap_start) || empty($ap_end) || empty($date)) {
-            $this->addLog("empty date or time","save");
+            $this->addLog("empty date or time ".$email,"save");
             return false;
         }
 
         return true;
+    }
+
+
+    public function isPopupStore($store_id)
+    {
+        return ($this->getPopupStoreId()==$store_id);
     }
 
     public function validateSlotBeforeBookAppointment($data)
@@ -736,7 +762,7 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
             {
                 $this->addLog("same time and date","modify");
                 Mage::log('Same date',Zend_Log::DEBUG,'myLog.log',true);//It's Temp Log do not remove it
-                return true;
+                return false;
             }
             else
             {
@@ -750,8 +776,15 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
         $collection->addFieldToFilter('piercer_id', array('eq' => $data['piercer_id']));
         $collection->addFieldToFilter('store_id', array('eq' => $data['store_id']));
         $collection->addFieldToFilter('app_status', array('eq' => 2));
-        $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
-        $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+        if($data['id'])
+        $collection->addFieldToFilter('id', array('neq' => $data['id']));
+
+
+//        $collection->addFieldToFilter('appointment_start', array('lteq' => $data['appointment_start']));
+//        $collection->addFieldToFilter('appointment_end', array('gteq' => $data['appointment_start']));
+
+        $collection->getSelect()->where("(((`appointment_start` <= '{$data['appointment_start']}') AND (`appointment_end` >= '{$data['appointment_start']}')) OR ((`appointment_start` <= '{$data['appointment_end']}') AND (`appointment_end` >= '{$data['appointment_end']}')))");
 
         if ($collection->getSize()) {
             return true;
@@ -771,5 +804,23 @@ class Allure_Appointments_Helper_Data extends Mage_Core_Helper_Abstract
      */
     private function addLog($data,$action){
         Mage::helper("appointments/logs")->addCustomerLog($data,$action);
+    }
+
+
+    /*new functions for popup stores*/
+
+    public function getCurrentDatetime($store_id)
+    {
+        $user_tz = new DateTimeZone($this->getStoreTimezone($store_id));
+        $user = new DateTime('now', $user_tz);
+        $usersTime = new DateTime($user->format('Y-m-d H:i:s'));
+        $ar=(array)$usersTime;
+        $date = $ar['date'];
+        return $date = strtotime($date);
+    }
+
+    public function getPopupStoreId() {
+        $popupStoreId=Mage::getStoreConfig('appointments/popup_setting/store');
+        return $popupStoreId;
     }
 }

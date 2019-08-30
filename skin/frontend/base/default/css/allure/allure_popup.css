@@ -7,7 +7,6 @@ em {
 	font-size: 12px;
 }
 p.p-white.d-none.d-sm-block {
-    margin-top: 25px;
 	padding: 0px 20px;
 }
 div#btnBookBottom {
@@ -16,18 +15,23 @@ div#btnBookBottom {
 button#btnBooking,
 button#btnConfirm
 {
-	width: 150px;
+	min-width: 119px;
+	padding: 3px 10px!important;
+	margin-bottom: 35px;
+	text-transform: uppercase;
 }
 body {
 	font-family: urw-din-medium;
 	font-weight: normal;
 	overflow-x: hidden;
+	-webkit-font-smoothing: antialiased;
 }
 p.notify-label {
     margin-bottom: 0;
+		line-height: 18px;
 }
-.notify-label .label {
-	padding: .2em 0.4em .3em;
+ .notify-label .label {
+	 width:98%;
 }
 
 .name-box .row,
@@ -39,6 +43,7 @@ p.notify-label {
     padding: 0 5px;
 	position: relative;
 }
+
 .dialogBg.popupid21,
 .mbdialog{
     display: none !important;
@@ -46,11 +51,16 @@ p.notify-label {
 .intl-tel-input .selected-flag .iti-flag {
     left:12px !important;
 }
-div#people-box {
-    margin-bottom: 2em;
+#people-box {
+    margin-bottom: 40px;
+		margin-top: 10px;
 }
 
-div#appointments-popup-wrapper,
+#name-box {
+    margin-top: 19px;
+}
+
+#appointments-popup-wrapper,
 .checkout-success ,.btns-setDiv{
 	background-color: #2c2c2c;
 }
@@ -77,9 +87,9 @@ button.input-box.b {
 	border: 0.75px solid #d8d8d8;
 	background: #2C2C2C;
 	color: #fff;
-    border-radius: 0;
-    text-transform: uppercase;
-    text-align: center
+  border-radius: 0;
+  text-transform: uppercase;
+  text-align: center
 }
 
 #closeBtn:hover{
@@ -126,24 +136,24 @@ button.input-box.b {
 }
 /*NAV BAR*/
 li.nav-item {
-	margin-right: 36px;
+	margin-right: 19px;
 }
 
 a.navbar-brand {
 	font-size: 30px;
-    padding-left: 30px;
-	padding-right: 40px;
-    padding-bottom: 0.5125rem;
+  padding-left: 26px;
+	padding-right: 18px;
+  padding-bottom: 0.5125rem;
 }
 
 .row.footer-links {
-    max-width: 768px;
+    /* max-width: 768px; */
     margin: 0 auto;
 }
 
 .row.footer-links > div > div {
-    display: block;
-    text-align: center;
+    /* display: block;
+    text-align: center; */
     padding: 0 0 1em;
 }
 div#footer{
@@ -154,10 +164,10 @@ a.footer-subtitle-small:hover {
     text-decoration: none;
 }
 
-a#footer-link-main {
+/* a#footer-link-main {
     margin-top: 14px;
     display: inline-block;
-}
+} */
 
 .footer a {
     color: #2c2c2c;
@@ -182,6 +192,8 @@ a#footer-link-main {
 .appointments-popup-index .navbar-dark .nav-link {
     color: #fff;
     padding-bottom: 0;
+		font-size: 14px;
+	text-transform: uppercase;
 }
 .appointments-popup-index .navbar-dark .nav-link:hover,
 .appointments-popup-index .navbar-dark .nav-link:focus {
@@ -196,20 +208,20 @@ a#footer-link-main {
 	position: relative;
 }
 
+
 input#selectDate {
 	margin-right: 15px;
 }
 
 .hero-image {
-	background-image: url("../../images/allure/popup/banner.jpg");
-	background-repeat: no-repeat;
-	background-position: 92%;
-	height: 100%;
-	padding-bottom: 80px;
-	background-size: cover;
+	background-image: url(../../images/allure/popup/front-30.jpg);
+  background-repeat: no-repeat;
+  height: 100%;
+  padding-bottom: 49px;
+  background-size: cover;
 }
 
-#about-maria #maria-cover {
+/* #about-maria #maria-cover {
     background-image: url("../../images/allure/popup/MT_Portrait-mobile.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -220,27 +232,31 @@ input#selectDate {
     right: 15px;
     top: 0;
     bottom: 0;
-}
+} */
 
 #about-maria .half-div-left img {
 	width: 100%;
 	height: auto;
 	padding: 15px 0;
 }
-
+#about-maria .half-div-left {
+	background-image: url(../../images/allure/popup/maria.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 .pop-up-div {
 	position: relative;
-	left: 50px;
+	left: 65%;
 	/*margin-top: 50px;*/
-	width: 400px;
+	width: 430px;
 	background: #2c2c2c;
-	/*top: 50%;*/
+	/*top: 45px;*/
 	/*transform: translate(0,-50%);*/
 }
 
-.pop-up-content {
+/* .pop-up-content {
 	padding: 30px 20px;
-}
+} */
 
 
 /*DOWN ARROWS*/
@@ -248,15 +264,15 @@ input#selectDate {
 .down-arrow {
 	z-index: 200;
 	position: absolute;
-	padding-top: 30px;
 	right: 50%;
+	bottom: 0px;
 }
 
 .down-arrowfrm {
 	z-index: 200;
 	position: absolute;
 	margin-top: -50px;
-	right: 50%;
+	right: 49%;
 }
 
 .down-arrow-maria {
@@ -271,14 +287,16 @@ input#selectDate {
 }
 
 a#footer-top-link {
-    margin-top: 4em;
+    /* margin-top: 4em; */
     background: #2c2c2c;
-    padding: 10px;
-    display: inline-block;
+    padding: 10px 14px;
+    /* display: inline-block; */
+		margin-bottom: 2px;
 }
 
-a#footer-top-link img {
-    width: 25px
+#footer-top-link img {
+    width: 30px;
+		transform: rotate(180deg);
 }
 
 
@@ -287,14 +305,41 @@ a#footer-top-link img {
 p.xpaces,
 p.faq-title {
 	text-align: center;
-	color: #FFFFFF;
-	font-size: 30px;
-	line-height: 43px;
-	font-family: urw-din-medium;
+  color: #FFF;
+  font-size: 30px;
+  line-height: 43px;
+  font-family: urw-din-xlight;
+  -webkit-font-smoothing: antialiased;
+}
+/* Shruti CSS */
+.first-paragraph{
+	font-family: urw-din-light;
+	-webkit-font-smoothing: antialiased;
+	margin-bottom: 21px;
+	text-align: center;
+}
+
+.second-paragraph, .third-paragraph {
+    margin-bottom: 24px;
+}
+
+.forth-paragraph {
+    margin-bottom: 29px;
+	padding: 0px 10px;
+}
+
+.arrow-div{
+	position: relative;
 }
 
 p.faq-title {
 	padding-top: 75px;
+}
+
+.faq-title{
+	padding-top: 70px;
+	margin-bottom: 23px;
+	font-family: urw-din-xlight;
 }
 
 .faq {
@@ -309,35 +354,126 @@ p.faq-title {
 .faq-answer {
 	font-family: urw-din-light;
 	font-size: 14px;
-	line-height: 22px;
+	line-height: 30px;
 	color: #fff;
 	text-align: center;
+	padding: 0 7px;
 }
 
 div#faq {
     background-color: #2c2c2c;
+		padding: 0 97px;
 }
 
+.footer-redirections{
+	margin-right: 56px;
+	text-transform: uppercase;
+}
+
+input#subscribe_email {
+    width: 400px;
+		height: 40px;
+}
+
+.links-section {
+    margin-top: 44px;
+}
+
+.message p {
+    font-size: 11px;
+    color: #D8D8D8;
+    font-family: urw-din-light;
+	color: #838483;
+	text-align: center;
+	font-style: italic;
+}
+.message{
+	margin: 10px 0em 10px;
+
+}
+select {
+    border-radius: 0 !important;
+    -webkit-appearance: none;
+		width: 71px !important;
+		height: 33px ;
+		padding: 0 13px !important;
+}
+
+.job-wrapper .input-box {
+    width: 71px;
+    height: 33px;
+    padding: 0 0 0 13px;
+}
+
+select:after {
+    background-image: url('../../images/allure/popup/dropdown-arrow.png');
+		content: '';
+}
+
+button#btnBooking{
+	height: 40px;
+	padding: 0;
+}
+
+button#btnConfirm{
+	height:42px;
+	padding: 0;
+	margin-top: 12px;
+}
+
+#name-box .form-group, #email-box {
+  margin-bottom: 13px !important;
+}
+
+
+
+@media (max-width:1023px){
+	div#faq{
+		padding: 0 27px;
+	}
+	#faq .faq-answer.collapse{
+		padding: 0;
+	}
+	.links-section{
+		display: none;
+	}
+	input#subscribe_email{
+		width: 100%;
+	}
+	.half-div-left.fill img {
+    display: none;
+	}
+	.half-div-left.fill {
+		background: url(../../images/allure/popup/maria-mobile2.png) no-repeat !important;
+    height: 536px;
+		background-size: 100% !important;
+	}
+	#pick_ur_date_div {
+    padding: 0;
+	}
+}
+
+/* Shruti CSS Ends here */
 p.faq-question,
 h4.faq-question {
-	font-size: 16px;
+	font-size: 14px;
 	font-family: urw-din-medium;
 	text-align: center;
 	color: #FFFFFF;
 	line-height: 22px;
-    margin-bottom: 1rem;
+  margin-bottom: 2px;
 }
 
 .div-question {
-    padding: 20px 40px 0;
+    padding: 20px 39px 0;
 }
 
 .faq-first {
-	padding-top: 50px;
+	padding-top: 14px;
 }
 
 .faq-last {
-	padding-bottom: 70px;
+	padding-bottom: 52px;
 }
 
 .appointment-input-box {
@@ -389,7 +525,7 @@ button.input-box.btn {
 }
 
 input::placeholder {
-	color: #BBB;
+	color: #fff;
 }
 
 
@@ -405,10 +541,10 @@ p.subtitle {
 }
 
 p.black-subtitle {
-	padding-top: 100px;
+	padding-top: 71px;
 	font-size: 30px;
 	font-family: urw-din-medium;
-	text-align: left;
+	text-align: center;
 	color: #000000;
 	letter-spacing: 1px;
 	line-height: 22px;
@@ -416,31 +552,42 @@ p.black-subtitle {
 }
 
 p.p-white {
-	margin: 35px 0px;
+	/* margin: 35px 0px; */
 	font-size: 14px;
-	font-family: urw-din-medium;
-	text-align: justify;
 	color: #FFFFFF;
 	line-height: 22px;
 }
 
 p.p-black {
 	font-size: 14px;
-	font-family: urw-din-medium;
+	font-family: urw-din-light;
 	text-align: left;
 	color: #000000;
 	line-height: 30px;
-	padding-right: 85px;
-	padding-top: 20px;
+	/* padding-right: 85px; */
+	/* padding-top: 10px; */
+	text-align: center;
+	line-height: 24px;
 }
 
+.about-maria-txt-one{
+	padding-top: 10px;
+}
+
+.about-maria-txt-two{
+	padding-top: 0px;
+	padding-bottom: 45px;
+}
+
+
 p.p-center {
-	margin: 35px 0px;
+	/* margin-bottom: 21px; */
 	font-size: 14px;
 	font-family: urw-din-medium;
 	text-align: center;
 	color: #FFFFFF;
 	line-height: 22px;
+	-webkit-font-smoothing: antialiased;
 }
 
 option {
@@ -470,7 +617,7 @@ p.label + div.box {
 }
 
 .booking-box {
-	margin-top: 70px;
+	margin-top: 100px;
 	margin-bottom: 70px;
 	padding: 0px 30px;
 }
@@ -481,7 +628,7 @@ p.label + div.box {
 
 .price-list-box {
 	display: flex;
-	padding-top: 30px;
+	padding-top: 10px;
 	padding-left: 50px;
 }
 
@@ -497,10 +644,30 @@ p.label + div.box {
 .people-wrapper {
     display: inline-block;
     float: none;
-    padding-top: 2em;
+    /*padding-top: 2em;*/
+}
+/* .job-wrapper
+{
+	display: inline-block;
+	float: none;
+} */
+.job{
+	padding-top: 1px;
+	text-align: left;
+}
+.job h6,.customer_section h6{
+	text-align: left;
+	font-family: urw-din;
+  font-weight: 700;
+	margin-bottom: 9px;
 }
 
-.people-wrapper > * {
+.job {
+    border-bottom: 2px solid #838483;
+}
+
+
+.job-wrapper > *, .people-wrapper > * {
     display: inline-block;
 }
 
@@ -513,7 +680,7 @@ input#datepicker-13 {
 	margin-right: 10px;
 }
 
-input#count {
+input.count {
 	margin-top: 0px;
 	width: 50px;
 	font-size: 14px;
@@ -655,15 +822,19 @@ td.td-price {
 	line-height: 30px;
 }
 
+#piercing-wrapper1 label,#piercing-wrapper2 label,#piercing-wrapper3 label,#piercing-wrapper4 label {
+    font-size: 16px;
+}
+
 .box .label {
 	padding-top: 0px;
 	line-height: 15px;
 }
 
-p.label {
+/* p.label {
 	padding-top: 30px;
-    padding-left: 0.75rem;
-}
+	padding-left: 0.75rem;
+} */
 
 
 /*ABOUT MARIA*/
@@ -673,7 +844,7 @@ p.label {
 }
 
 .div-about-maria {
-	padding: 0px 60px;
+	padding: 0px 48px;
 }
 
 /*.fill {*/
@@ -705,7 +876,7 @@ p.label {
 }
 
 input[type="checkbox"] {
-	visibility: hidden;
+	display: none;
 }
 
 label {
@@ -717,21 +888,26 @@ label {
 }
 
 input[type="checkbox"]+label:before {
-    border: 0.75px solid #d8d8d8;
-    content: "\00a0";
+    outline: 0.75px solid #d8d8d8;
+    content: "";
     display: inline-block;
     font: 12px/1em sans-serif;
     height: 12px;
+	width: 12px;
     margin: 0 .75em 0 0;
     padding: 0;
-    width: 12px;
-    margin-bottom: 2px;
+
+	transition: 0.5s ease all;
+	-moz-transition: 0.5s ease all;
+	-webkit-transition: 0.5s ease all;
+    /*margin-bottom: 2px;*/
 }
 
 input[type="checkbox"]:checked+label:before {
-	background: #2c2c2c;
+	background: white;
+	border: 2px solid gray;
 	color: #fff;
-	content: "\2713";
+	content: "";
 	text-align: center;
 }
 
@@ -749,9 +925,10 @@ input[type="checkbox"]:focus+label::before {
 
 button#btnSubscribe {
 	color: #2c2c2c;
-	width: 150px;
+	width: 119px;
 	text-transform: uppercase;
 	line-height: 30px;
+	height: 40px;
 }
 
 input#subscribe_email {
@@ -762,10 +939,9 @@ input#subscribe_email {
 p.footer-subtitle-medium {
 	font-size: 16px;
 	font-family: urw-din-medium;
-	text-align: right;
 	color: #2C2C2C;
 	line-height: 43px;
-	text-transform: uppercase;
+	margin-bottom: 11px;
 }
 
 p.footer-subtitle-small {
@@ -782,8 +958,8 @@ p.footer-subtitle-small {
 }
 
 .footer-frm {
-    padding-bottom: 3em;
-    padding-top: 5em;
+    padding-bottom: 6px;
+    padding-top: 3px;
 }
 
 .desk {
@@ -818,6 +994,7 @@ a#navbar-icon {
     background-color: #2c2c2c;
     margin: 0;
     border-radius: 0;
+		padding-top: 18px;
 }
 
 ul#navbar-menu {
@@ -842,17 +1019,22 @@ input#appointment_date {
     -webkit-appearance: none;
 	-moz-appearance: none;
   	appearance: none;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23FFFFFF'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+    background: url(../../images/allure/popup/dropdown-arrow.png) no-repeat;
     background-size: 12px;
     background-position: 95% 17px;
 }
 
 div#btnContinue {
-    width: 200px;
+    /*width: 200px;*/
+   width: 100%;
     overflow: hidden;
     margin: 30px auto 0;
 }
-
+div#btnContinue button{
+	width: auto;
+	min-width: 200px;
+	margin: auto;
+}
 div#wrapperConfirmAppointment {
     background-color: #2c2c2c;
     padding: 20px 0;
@@ -926,14 +1108,15 @@ a#icon-price-close {display: none;}
 .navbar-main.navbar-close {
 	display: none;
 }
-div#datetime-box {
-    margin-bottom: 3em;
+#datetime-box {
+    margin-bottom: 33px;
 }
 
 .invalid-feedback {
     font-style: normal;
-    color: #fff;
+    color: #e1b711;
     font-family: urw-din-medium;
+	text-transform: lowercase;
 }
 
 /*-------------------new alert box--------------------------*/
@@ -1062,7 +1245,9 @@ div#btnBookTop {
 }
 .pop-up-title {
     padding-top: 20px;
-	width:100%
+	width:100%;
+	max-width:380px;
+	margin: auto;
 }
 
 @media (min-width: 768px) {
@@ -1098,7 +1283,7 @@ div#btnBookTop {
         padding-right: 20px;
     }
     li.nav-item {
-        margin-right: 5px;
+        margin-right: 17px;
     }
 
 	p.p-black
@@ -1111,6 +1296,10 @@ div#btnBookTop {
 	}
 }
 @media (max-width: 767px) {
+
+	.pop-up-title{
+		max-width: 363px;
+	}
 	td.td-piercing-name,
 	td.td-price {
 		padding-bottom: 5px;
@@ -1143,10 +1332,10 @@ div#btnBookTop {
 	{
 		font-size: 0.7em;
 	}
-	.row.footer-links.hidden-xs
+	/* .row.footer-links.hidden-xs
 	{
 		display: none;
-	}
+	} */
 	.navbar-main.navbar-close {
 		display: none;
 	}
@@ -1161,20 +1350,20 @@ div#btnBookTop {
 	}
 
 	.pop-up-content {
-	    border-bottom: 0.75px solid #d8d8d8;
+	  /* border-bottom: 0.75px solid #d8d8d8; */
 		padding-bottom: 10px;
-		background-color: #2c2c2c;
+		/* background-color: #2c2c2c; */
 		padding: 18px;
 		margin:10px;
 	}
 
     .hero-image {
-        background-image: url(../../images/allure/popup/topBgMobile.jpg);
+        background-image: url(../../images/allure/popup/Ipad.jpg);
         background-position: top left;
         background-size: contain;
     }
 
-    .datepicker {width: auto;}
+    .datepicker {width: 90%;}
 
     .navbar .navbar-brand {
         width: 100%;
@@ -1250,7 +1439,7 @@ div#btnBookTop {
     }
 
     a.navbar-close {
-        position: fixed;
+        position: absolute;
         left: 20px;
         color: #fff;
         font-size: 26px;
@@ -1291,7 +1480,8 @@ div#btnBookTop {
 
     p.footer-subtitle-medium {
         text-align: center;
-		margin-bottom: 0;
+				margin-bottom: 0;
+				margin-top: 30px;
     }
     .div-question {
 		padding-left: 0;
@@ -1299,11 +1489,11 @@ div#btnBookTop {
 		padding-top: 0.5em;
     }
     p.faq-question, h4.faq-question {
-        text-align: left;
+    text-align: left;
 		padding-top: 0.5em;
 		padding-right: 20px;
-	    border-top: 0.75px solid #d8d8d8;
-	    margin-bottom: 0.5em;
+    border-top: 0.75px solid #d8d8d8;
+    margin-bottom: 0.5em;
     }
     p.faq-answer {
         text-align: left;
@@ -1349,20 +1539,24 @@ div#btnBookTop {
 	}
 
     .booking-box {
-		margin-top:45px;
+		margin-top:60px;
         padding: 0;
     }
+
+		#desktop-slot{
+			margin-top: 0;
+		}
 
     .pop-up-div {
         position: relative;
         left: 0;
-        top: 320px;
+        top: 350px;
         max-width: 100%;
-		width: 100%;
+				width: 100%;
         clear: both;
         margin-bottom: 0;
         z-index: 999;
-		background: transparent;
+				background: #2c2c2c;
     }
     a#btnPriceList {
         text-align: center;
@@ -1372,12 +1566,12 @@ div#btnBookTop {
         font-size: 18px;
         text-transform: uppercase;
         text-decoration: underline;
-        line-height: 43px;
+        line-height: 10px;
         font-family: urw-din-medium;
     }
 
     div#booking {
-        padding-top: 250px;
+        padding-top: 231px;
     }
 
     .down-arrow-maria,
@@ -1406,11 +1600,11 @@ div#btnBookTop {
     }
 
     .footer-frm {
-        margin: 0 -15px;
+        margin: 0;
     }
 
     a#icon-price-close {
-        margin: 15px 0px;
+        margin: 4px 0px;
         display: block;
     }
 
@@ -1425,6 +1619,7 @@ div#btnBookTop {
         background-color: #2c2c2c;
         z-index: 9999;
         display: none;
+		overflow: auto;
     }
 
     div#booking-wrapper {
@@ -1454,11 +1649,11 @@ div#btnBookTop {
 	    margin-bottom: 3em;
 	}
 
-	.people-wrapper {
+	/* .job-wrapper, .people-wrapper {
 		border-top: 0.75px solid #d8d8d8;
-	}
+	} */
 
-    .people-wrapper label.label {
+	.job-wrapper, .people-wrapper label.label {
 		margin-bottom: 25px;
 		clear: both;
 		display: block;
@@ -1534,3 +1729,230 @@ div#btnBookTop {
         /*padding-top: 0px;*/
     /*}*/
 /*}*/
+
+
+
+
+
+
+
+
+
+/*---------new css--------------------*/
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+	display: none;
+}
+
+
+.allure-sticky{
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+
+#slots_section div.active, #slots_section div:hover{
+	box-shadow: 2px 2px 8px black;
+	background: white;
+	color: black;
+	transition: .3s;
+	border: 1px solid #020202 ! important;
+	cursor: pointer;
+}
+
+.people-wrapper, #pick_ur_slot{
+	border-bottom: 2px solid #838483;
+}
+@keyframes blink {
+	50% { border-color: white; }
+}
+#pick_ur_slot.loading{
+	animation: blink .5s step-end infinite alternate;
+}
+#slots_section{
+	padding-bottom: 20px;
+}
+.slot-width{
+	width: 31%;
+}
+.datepicker{
+	z-index: 9999!important;
+}
+
+.zopim{
+	display: none!important;
+}
+.lds-ellipsis{
+	position: absolute;
+	top:50%;
+	left:48%
+}
+.form-disable-overlay{
+	position: fixed;
+	background: #80808094;
+	z-index:9999;width: 100%;
+	height: 100%;
+	display: block
+}
+
+select.input-box {
+	background-image: url(../../images/allure/popup/dropdown-arrow.png);
+	background-repeat: no-repeat;
+	background-position: 80% 50%;
+}
+
+.language select {
+	width: 150px!important;
+	border: 0.75px solid #d8d8d8;
+	border-radius: 0;
+	background: none;
+	text-align: left;
+	color: #FFFFFF;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-family: urw-din-medium;
+	-webkit-box-align: center;
+	font-weight: 400;
+	padding: .375rem .75rem;
+	line-height: 30px;
+	outline-color: #fff;
+	background-image: url(../../images/allure/popup/dropdown-arrow.png);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+.language select:focus {
+	outline: none;
+}
+.language select option {
+	color: black;
+	background: white;
+	padding: 3px;
+}
+.close {
+	right: 10px;
+	top: -20px;
+	color: white;
+	position: absolute;
+}
+div#page-wrapper{
+	overflow-x:hidden !important;
+}
+
+
+/*@media--------------------*/
+@media (max-width: 768px) {
+	.slot-width{
+		width: 30%;
+	}
+	.lds-ellipsis{
+		position: absolute;
+		top:50%;
+		left:45%
+	}
+	.time-box{
+		padding: 0px !important;
+	}
+	.pop-up-title{
+		margin: 16px auto;
+	}
+	.datepicker table{
+		width:100%;
+	}
+}
+
+@media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
+
+	.faq-last {
+    padding-bottom: 0;
+	}
+	#faq-right .faq-last {
+    padding-bottom: 80px;
+	}
+	#desktop-slot{
+		margin-top: 0;
+		padding: 0;
+	}
+
+
+	li.nav-item{
+		margin-right: 10px;
+	}
+}
+
+
+@media (min-width:767px) and (max-width:1024px){
+	.half-div-left.fill{
+		background: url(../../images/allure/popup/MT_Portrait_ipad.jpg) no-repeat !important;
+		height: 1116px;
+		background-size: cover !important;
+	}
+	.hero-image {
+		background-image: url(../../images/allure/popup/Ipad.jpg);
+		background-position: top left;
+		background-size: cover;
+		height: 1468px;
+	}
+	.pop-up-div {
+		position: relative;
+		left: 0;
+		top: 515px;
+		max-width: 90%;
+		width: 100%;
+		clear: both;
+		margin-bottom: 0;
+		z-index: 999;
+		background: #2c2c2c;
+		margin: auto;
+	}
+}
+
+@media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
+.half-div-left.fill{
+		height: 725px;
+    background-size: 100% !important;
+	}
+.pop-up-div{
+		top: 670px;
+	}
+.hero-image{
+		height: 1668px;
+	}
+.ipad-lands {
+  max-width: 30%;
+  flex: 0 0 30%;
+	}
+#faq{
+	padding: 0 !important;
+	}
+}
+
+/* Border top,bottom for Calander day name*/
+.table-condensed thead tr:nth-child(3){
+	border-top: 2px solid #b7b7b7;
+	border-bottom: 1px solid #b7b7b7;
+}
+
+@media(min-width: 1920px){
+
+	p.black-subtitle{
+		padding-top: 130px;
+	}
+
+	p.p-black{
+		padding-top: 30px;
+	}
+
+	.div-about-maria{
+		padding: 0px 118px;
+	}
+
+	p.black-subtitle{
+		padding-top: 172px;
+	}
+	.about-maria-txt-two{padding-bottom: 155px;}
+	.pop-up-div{left: 66%;}
+
+}

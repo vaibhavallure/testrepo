@@ -1,6 +1,11 @@
 <div class="modal fade bd-example-modal-lg modal-confirm-appointment" tabindex="-1" role="dialog" aria-labelledby="modalConfirmAppointment" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
+            <style>
+                .zopim{
+                    display: none;
+                }
+            </style>
 <?php
 /**
  *
@@ -8,87 +13,148 @@
  *
  */
 
+if(Mage::app()->getRequest()->getParam('user')=="admin")
+    $user="admin";
+else
+    $user="";
+
 if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
-    $model = Mage::registry('appointment_modified');
-    $apt_id = $model->getId();
-    $apt_email = $model->getEmail();
-    //$encryptedId = Mage::helper('core')->encrypt($apt_id)->toString();
-    //$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();
-
-    ?>
-    <div class="modal-header">
-        <h5 class="modal-title detailofapt" id="exampleModalLongTitle"><?php echo $this->__('Appointment Details') ?></h5>
-    </div>
-    <div id="popupConfirmAppointment" class="modal-body">
-        <div id="wrapperConfirmAppointment" class="row">
-    <?php if($apt_id):?>
-            <div class="checkout-success col-md-12">
-                <div class="success-field row row">
-                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Name') ?></span>
-                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getFirstname()." ".$model->getLastname() ?></span>
-                </div>
-                <div class="success-field row">
-                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Email') ?></span>
-                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getEmail() ?></span>
-                </div>
-                <div class="success-field row">
-                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Phone') ?></span>
-                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPhone() ?></span>
-                </div>
-                <div class="success-field row">
-                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('No of People in Group') ?></span>
-                    <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPiercingQty() ?></span>
-                </div>
-                <div class="success-field row">
-                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Booking Location') ?></span>
-                    <span class="apt-summary col-md-6 col-6" ><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
-                </div>
-                <?php if($model->getPiercingLoc()):?>
-                    <div class="success-field row">
-                        <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Piercing Location') ?></span>
-                        <span class="apt-summary col-md-6 col-6" ><?php echo $model->getPiercingLoc() ?></span>
-                    </div>
-                <?php endif;?>
-                <div class="success-field row">
-                    <span class="apt-summary col-md-6 col-6"><?php echo $this->__('Appointment Start') ?></span>
-                    <span class="apt-summary col-md-6 col-6" ><?php
-                        /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
-                        $appStartDate = $appStartDate->toString(); */
-                        $appStartDate=date("F j, Y H:i", strtotime($model->getAppointmentStart()));
-                        if($model->getStoreId())
-                            $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
-                        else
-                            $format = "EST";
-
-                        echo  $appStartDate." ".$format?></span>
-                </div>
-
-                <div class="btns-setDiv row mt-4">
-                    <div class="apt-cancel-buttons-set col-md-4 col-6 form-group">
-                        <button type="button" class="button input-box b" title="<?php echo $this->__('Cancel Appointment') ?>" onclick="confirmCancelApt();"><span><span><?php echo $this->__('Cancel') ?></span></span></button>
-                    </div>
-                    <div class="apt-modify-buttons-set col-md-4 col-6 form-group">
-                        <button type="button" class="button input-box b"  title="<?php echo $this->__('Modify Appointment') ?>" onclick="window.location.href='<?php echo $this->getUrl('*/popup',array('_secure' => true,'id'=>$apt_id,'email'=>$apt_email)); ?>'"><span><span><?php echo $this->__('Modify') ?></span></span></button>
-                    </div>
-
-                    <div class="apt-buttons-set col-md-4 col-12">
-                        <button type="button" class="button input-box b" title="<?php echo $this->__('Book Another Piercing') ?>" onclick="window.location.href='<?php echo $this->getUrl('LA',array('_secure' => true));?>'"><span><span><?php echo $this->__('Book Another Piercing') ?></span></span></button>
-                    </div>
-                </div>
+if(Mage::getSingleton("core/session")->getData('appointment_expired'))
+{ ?>
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center translate-popup"
+                    id="exampleModalLongTitle"><?php echo $this->__('Appointment No Longer Available For Modify') ?></h5>
             </div>
-<?php endif;?>
-    <!--  If the id or email not correct  -->
+            <div id="popupConfirmAppointment" class="modal-body">
+                <div id="wrapperConfirmAppointment" class="row">
+                 <div class="apt-buttons-set w-100 text-center">
+                                    <button type="button" class="button input-box b translate-popup" style="width: 200px"
+                                            title="<?php echo $this->__('Book Another Piercing') ?>"
+                                            onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
+                                        <span><span class="translate-popup"><?php echo $this->__('Book Another Piercing') ?></span></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+<?php
+}
+else
+{
+$model = Mage::registry('appointment_modified');
+if(Mage::app()->getRequest()->getParam('user')=="admin")
+    $apt_id =  $model->getId();
+else
+    $apt_id =  urlencode(Mage::getModel('core/encryption')->encrypt($model->getId()));
 
-<?php else:?>
-    <div class="col-md-12">
-        <h1><p class="detailofapt"><?php echo $this->__('Sorry,Record not found to cancel the appointment!') ?></p></h1>
-    </div><hr/>
-    <div id="btnContinue" class="buttons-set apt-buttons-set">
-        <a class="input-box b" href="/LA">
-          <span aria-hidden="true">Book Another Piercing</span>
-      </a>
-    </div>
+    $customer = Mage::getModel('appointments/customers')->getCollection()
+        ->addFieldToFilter(
+            'appointment_id' ,array('eq'=>$model->getId())
+        )->getFirstItem();
+    $language = ($this->isAdmin())? "en" :$customer->getLanguagePref();
+    $cancel_apt_id =  $model->getId();
+
+
+
+
+$apt_email = $model->getEmail();
+//$encryptedId = Mage::helper('core')->encrypt($apt_id)->toString();
+//$encryptedEmail = Mage::helper('core')->encrypt($apt_email)->toString();
+
+?>
+
+        <script>
+            jQuery(document).ready(function () {
+                let locale = "<?php echo $language;?>";
+                if(locale !== "")
+                    currentLanguage = locale;
+
+                setSessionLocale(locale);
+                translatePopUpWithLoader();
+            })
+        </script>
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100 translate-popup"
+                    id="exampleModalLongTitle"><?php echo $this->__('Appointment Details') ?></h5>
+            </div>
+
+            <div id="popupConfirmAppointment" class="modal-body">
+                <div id="wrapperConfirmAppointment" class="row">
+                    <?php if ($apt_id): ?>
+                        <div class="checkout-success col-md-12">
+                            <div class="success-field row row">
+                                <span class="apt-summary col-md-6 col-6 text-right"><span class="translate-popup"><?php echo $this->__('Appointment Id');?></span>:</span>
+                                <span class="apt-summary col-md-6 col-6"><?php echo $model->getId() ?></span>
+                            </div>
+                            <div class="success-field row">
+                                <span class="apt-summary col-md-6 col-6 text-right "><span class="translate-popup"><?php echo $this->__('No of People in Group');?></span>:</span>
+                                <span class="apt-summary col-md-6 col-6"><?php echo $model->getPiercingQty() ?></span>
+                            </div>
+                            <div class="success-field row">
+                                <span class="apt-summary col-md-6 col-6 text-right"><span class="translate-popup"><?php echo $this->__('Booking Location') ?></span>:</span>
+                                <span class="apt-summary col-md-6 col-6"><?php echo Mage::helper('appointments')->storeAppearName($model->getStoreId()); ?></span>
+                            </div>
+                            <div class="success-field row">
+                                <span class="apt-summary col-md-6 col-6 text-right"><span class="translate-popup"><?php echo $this->__('Appointment Start');?></span>:</span>
+                                <span class="apt-summary col-md-6 col-6 translate-popup app-confirm"><?php
+                                    /* $appStartDate= new Zend_Date(strtotime($model->getAppointmentStart()));
+                                    $appStartDate = $appStartDate->toString(); */
+                                    $appStartDate = date("F j, Y H:i", strtotime($model->getAppointmentStart()));
+                                    if ($model->getStoreId())
+                                        $format = Mage::helper('appointments')->getTimezoneShortCodeForeStore($model->getStoreId());
+                                    else
+                                        $format = "EST";
+
+                                    echo $appStartDate . " " . $format ?></span>
+                            </div>
+
+                            <div class="btns-setDiv row mt-4">
+                                <div class="apt-cancel-buttons-set col-md-4 col-6 form-group">
+                                    <button type="button" class="button input-box b translate-popup"
+                                            title="<?php echo $this->__('Cancel Appointment') ?>"
+                                            onclick="confirmCancelApt();">
+                                        <?php echo $this->__('Cancel') ?></button>
+                                </div>
+                                <div class="apt-modify-buttons-set col-md-4 col-6 form-group">
+                                    <button type="button" class="button input-box b translate-popup"
+                                            title="<?php echo $this->__('Modify Appointment') ?>"
+                                            onclick="window.location.href='<?php echo $this->getUrl('*/popup/', array('_secure' => true,'_query'=>'id='.$apt_id ,'user' => $user)); ?>'">
+                                        <?php echo $this->__('Modify') ?></button>
+                                </div>
+
+                                <div class="apt-buttons-set col-md-4 col-12">
+                                    <button type="button" class="button input-box b translate-popup"
+                                            title="<?php echo $this->__('Book Another Piercing') ?>"
+                                            onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
+                                        <?php echo $this->__('Book Another Piercing') ?>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <!--  If the id or email not correct  -->
+
+                    <?php
+                    }
+else:
+    ?>
+                    <div class="modal-header">
+                        <h5 class="modal-title w-100 text-center translate-popup"
+                            id="exampleModalLongTitle"><?php echo $this->__('Sorry,Record not found !') ?></h5>
+                    </div>
+                    <div id="popupConfirmAppointment" class="modal-body">
+                        <div id="wrapperConfirmAppointment" class="row">
+                            <div class="apt-buttons-set w-100 text-center">
+                                <button type="button" class="button input-box b translate-popup" style="width: 200px"
+                                        title="<?php echo $this->__('Book Another Piercing') ?>"
+                                        onclick="window.location.href='<?= $this->getStoreShortUrl() ?>'">
+                                    <span><span class="translate-popup"><?php echo $this->__('Book Another Piercing') ?></span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 <?php endif;?>
 
 <script type="text/javascript">
@@ -104,17 +170,17 @@ if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
         if (!conf)
         {
-            createCustomConfirm("Are you sure you want to cancel an scheduled appointment?");
+            createCustomConfirm(__("Are you sure you want to cancel an scheduled appointment?"));
             return false;
         }
 
         //Logic to cancel the apt
-        var reloadurl = '<?php echo $this->getUrl('*/popup/cancelapt',array('id'=>$apt_id,'email'=>$apt_email,'_secure' => true)); ?>';
+        var reloadurl = '<?php echo $this->getUrl('*/popup/cancelapt',array('id'=>$cancel_apt_id,'_secure' => true)); ?>';
         jQuery.ajax({
             url: reloadurl, //Relative or absolute path to response.php file
             method: 'get',
             success: function (data) {
-                jQuery('.detailofapt').html(data);
+                jQuery('#exampleModalLongTitle').html(__(data));
                 //jQuery('.checkout-success .success-field').empty();
                 jQuery('.checkout-success .apt-cancel-buttons-set').empty();
                 jQuery('.checkout-success .apt-modify-buttons-set').empty();
@@ -145,7 +211,7 @@ if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
         btnc = alertObj.appendChild(d.createElement("a"));
         btnc.id = "cancelConfirm";
-        btnc.appendChild(d.createTextNode("CANCEL"));
+        btnc.appendChild(d.createTextNode(__("CANCEL")));
         btnc.href = "#";
 
 
@@ -157,7 +223,7 @@ if (Mage::getSingleton("core/session")->getData('appointment_availablity')):
 
         btn = alertObj.appendChild(d.createElement("a"));
         btn.id = "okConfirm";
-        btn.appendChild(d.createTextNode("OK"));
+        btn.appendChild(d.createTextNode(__("OK")));
         btn.href = "#";
         btn.focus();
         btn.onclick = function() {

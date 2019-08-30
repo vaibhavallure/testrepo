@@ -1,3 +1,62 @@
 <div id="faq" class="container-fluid">
-<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('nordstrom-faq')->toHtml();?>
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('nordstrom-faq')->toHtml();?>
+
+    <p class="xpaces faq-title translate-popup"> <?php echo $this->__('Frequently Asked Questions') ?></p>
+    <div class="row">
+        <!--FAQ 1st PART-->
+        <div class="col-sm-12 col-lg-6" id="faq-left">
+            <div class="div-question faq-first">
+                <h4 class="faq-question translate-popup" id="question-1" data-target="#answer-1" aria-expanded="false" aria-controls="answer-1">
+                    <?php echo $this->__('Do I need to book an appointment?') ?>
+                </h4>
+                <p class="faq-answer collapse in translate-popup" id="answer-1" aria-labelledby="question-1" aria-expanded="false" data-parent="#faq-left">
+                    <?php echo $this->__('Appointments are preferred for piercings but walk-ins are always welcome.  Appointments are not required for fittings and installs.') ?>
+                </p>
+            </div>
+            <div class="div-question">
+                <h4 class="faq-question translate-popup" id="question-2" data-target="#answer-2" aria-expanded="false" aria-controls="answer-2">
+                    <?php echo $this->__('Can I be pierced with my own Jewellery?') ?>
+                </h4>
+                <p class="faq-answer collapse in translate-popup" id="answer-2" aria-labelledby="question-2" aria-expanded="false" data-parent="#faq-left">
+                    <?php echo $this->__('Due to sterilization needs, we do not pierce with Jewellery that is not Maria Tash.<br> The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.') ?>
+                </p>
+            </div>
+            <div class="div-question faq-last">
+                <h4 class="faq-question translate-popup" id="question-3" data-target="#answer-3" aria-expanded="false" aria-controls="answer-3">
+                    <?php echo $this->__('How many piercings can I get in one session?') ?>
+                </h4>
+                <p class="faq-answer collapse in translate-popup" id="answer-3" aria-labelledby="question-3" aria-expanded="true" data-parent="#faq-left">
+                    <?php echo $this->__('We recommend up to 4 per session, but this is dependent on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.') ?>
+                </p>
+            </div>
+
+        </div>
+        <!--FAQ 2nd PART-->
+        <div class="col-sm-12 col-lg-6" id="faq-right">
+            <div class="div-question faq-first">
+                <h4 class="faq-question translate-popup" id="question-7" data-target="#answer-7" aria-expanded="false" aria-controls="answer-7">
+                    <?php echo $this->__('Can I be pierced if I am under 18?') ?>
+                </h4>
+                <p class="faq-answer collapse in translate-popup" id="answer-7" aria-labelledby="question-7" aria-expanded="false" data-parent="#faq-right">
+                    <?php echo $this->__('Yes, we pierce lobes over the age of 8 and cartilage over the age of 16 but you must be accompanied by a parent or guardian and you both must bring ID with you.') ?>
+                </p>
+            </div>
+            <div class="div-question">
+                <h4 class="faq-question translate-popup" id="question-6" data-target="#answer-6" aria-expanded="false" aria-controls="answer-6">
+                    <?php echo $this->__('What size Jewellery works best for me?') ?>
+                </h4>
+                <p class="faq-answer collapse in translate-popup" id="answer-6" aria-labelledby="question-6" aria-expanded="false" data-parent="#faq-right">
+                    <?php echo $this->__('Our experience involves you pairing one-on-one with our stylists to completely guide you through your styling and piercing. There are multiple sizes to our Jewellery, but our team will make sure that you are properly sized and confident.') ?>
+                </p>
+            </div>
+            <div class="div-question faq-last">
+                <h4 class="faq-question translate-popup" id="question-5" data-target="#answer-5" aria-expanded="false" aria-controls="answer-5">
+                    <?php echo $this->__('Can I be pierced if I’ve been drinking?') ?>
+                </h4>
+                <p class="faq-answer collapse in translate-popup" id="answer-5" aria-labelledby="question-5" aria-expanded="false" data-parent="#faq-right">
+                    <?php echo $this->__('If you are being pierced by us may we politely request that you refrain from consuming alcohol until after your appointment for health and safety reasons.') ?>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
