@@ -1703,7 +1703,7 @@ input[type="checkbox"]:checked+label:before {
   width: 290px;
   left: -320px;
   top: 68px;
-  position: absolute;
+  position: fixed;
   z-index: 999;
   display: block;
   overflow: hidden;
