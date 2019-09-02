@@ -76,6 +76,7 @@ h3{
 	color: rgba(41,41,41,0.90);
 	letter-spacing: 1.5px;
 	text-align: center;
+	background: #fff;
 }
 
 .dark-button{
@@ -2100,6 +2101,26 @@ button#signin-btn-popup {
 .back-to-login .pop-up-button {
     width: 142px;
 }
+
+
+
+/*Old Css*/
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel  {
+	position: fixed;
+	top:-20px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	background: rgba(0,0,0,0.4);
+}
+
 /* Temperory */
 #narrow-by-list .filtru-price dd{
   display: none;

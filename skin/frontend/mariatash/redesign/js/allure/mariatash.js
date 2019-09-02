@@ -231,3 +231,18 @@ function myFunction(x) {
     x.classList.toggle("change");
     //jQuery('.mariatash-header').toggleClass('black-bg');
 }
+
+jQuery(document).ready(function(){
+  jQuery(".eye-image").click(function(){
+    var pass_field=jQuery(this).parent().parent().find('.consistent-password');
+    if(pass_field.hasClass("show"))
+    {
+      pass_field.attr("type","password");
+      pass_field.removeClass("show");
+    }
+    else {
+      pass_field.attr("type","text");
+      pass_field.addClass("show");
+    }
+  });
+});

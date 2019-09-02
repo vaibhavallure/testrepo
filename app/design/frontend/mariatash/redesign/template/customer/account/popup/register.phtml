@@ -23,13 +23,13 @@
 		  		    <input id='email-register' placeholder="Email*" type="text" name='email' class="ele_width required-entry validate-email"/>
 				</div>
 				<div class="input-form">
-		  		    <input id='password' placeholder="Password*" type="password" name='password' class="ele_width   input-text required-entry validate-password"/>
+		  		    <input id='password' placeholder="Password*" type="password" name='password' class="ele_width input-text required-entry validate-password consistent-password"/>
 							<div class="">
 								<img class="eye-image show-hide-on-click" src="<?php echo $this->getSkinUrl("images/redesign/eye.png")?>" alt="">
 							</div>
 				</div>
 				<div class="input-form">
-		  		    <input id='confirmation' placeholder="Confirm Password*" type="password" title="Confirm Password" name='confirmation' class="ele_width  input-text required-entry validate-cpassword"/>
+		  		    <input id='confirmation' placeholder="Confirm Password*" type="password" title="Confirm Password" name='confirmation' class="ele_width input-text required-entry validate-cpassword consistent-password"/>
 							<div class="">
 								<img class="eye-image show-hide-on-click" src="<?php echo $this->getSkinUrl("images/redesign/eye.png")?>" alt="">
 							</div>
@@ -51,7 +51,7 @@
 		<div class="pop-link modal-footer">
 			<div class="pop-up-button-set row">
 				<div class="back-to-login col">
-						<button type="button"  onclick="gotoLoginPage();" id="signup-btn-popup"  class="button light-button pop-up-button"><?php echo $this->__("Cancel")?></button>
+						<button type="button"  onclick="gotoLoginPage();" id="" class="button light-button pop-up-button"><?php echo $this->__("Cancel")?></button>
 				</div>
 				<div class="submit-login col">
             <span id="popup_loader_register" class="please-wait-popup-register" style="display: none;">

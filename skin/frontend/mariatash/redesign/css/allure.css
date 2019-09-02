@@ -617,7 +617,7 @@ img.snize-item-image[src^=data]::after {
 
 
 
-.popupLoginModel {
+/* .popupLoginModel {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
 	top:-20px;
@@ -632,11 +632,11 @@ img.snize-item-image[src^=data]::after {
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
 	background: rgba(0,0,0,0.45);
-}
-.popupLoginModel:target {
+} */
+/* .popupLoginModel:target {
 	opacity:1;
 	pointer-events: auto;
-}
+} */
 
 /* .popupLoginModel > div {
 	width: 520px;
@@ -650,16 +650,16 @@ img.snize-item-image[src^=data]::after {
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
     background: #dcdcdc;
-    box-shadow: 0px 0px 6px */
+    box-shadow: 0px 0px 6px;
 } */
-.popupLoginModel #login-msg{
+/* .popupLoginModel #login-msg{
 	color:#830000;
 	margin-left: 20px;
 	font-size: 12px;
     font-weight: bold;
     line-height: 1.63636363636;
 
-}
+} */
 
 /* .close {
 	background: #606061;
@@ -682,26 +682,11 @@ img.snize-item-image[src^=data]::after {
 
 .close:hover { background: #00d9ff; } */
 
-#signin-btn{
+/* #signin-btn{
 	float:right;
-}
+} */
 
-.popupResetPasswordModel {
-	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
-	top:-20px;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(0,0,0,0.8);
-	z-index: 99999;
-	opacity:0;
-	-webkit-transition: opacity 400ms ease-in;
-	-moz-transition: opacity 400ms ease-in;
-	transition: opacity 400ms ease-in;
-	pointer-events: none;
-	background: rgba(0,0,0,0.8);
-}
+
 /* .popupResetPasswordModel:target {
 	opacity:1;
 	pointer-events: auto;
@@ -725,7 +710,7 @@ img.snize-item-image[src^=data]::after {
 
 
 
-.popupRegisterModel {
+/* .popupRegisterModel {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
 	top: -20px;;
@@ -740,7 +725,7 @@ img.snize-item-image[src^=data]::after {
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
 	background: rgba(0,0,0,0.8);
-}
+} */
 /* .popupRegisterModel:target {
 	opacity:1;
 	pointer-events: auto;
