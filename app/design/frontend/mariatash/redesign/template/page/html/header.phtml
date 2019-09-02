@@ -68,7 +68,7 @@ jQuery(document).ajaxComplete(function(){
                           </li>
                             <?php $location=Mage::getModel('ecp_menu/menu')->load(1); ?>
                           <li class="icon-item d-lg-none d-block mt-1">
-                            <a class="icon-link" href="<?= $location->getUrl() ?>"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-bitmap.png'; ?>"></a>
+                            <a class="icon-link" href="<?= $location->getUrl() ?>"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-bitmap.png'); ?>"></a>
                           </li>
                         </ul>
                       </div>
@@ -94,14 +94,14 @@ jQuery(document).ajaxComplete(function(){
                         <li class="icon-item"><div id="topcart-popup"><?php echo $this->getChildHtml('cart_sidebar') ?></div></li>
                         <?php $location=Mage::getModel('ecp_menu/menu')->load(1); ?>
                         <li class="icon-item">
-                          <a class="icon-link" href="<?= $location->getUrl() ?>"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-bitmap.png'; ?>"></a>
+                          <a class="icon-link" href="<?= $location->getUrl() ?>"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-bitmap.png'); ?>"></a>
                         </li>
                           <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
                         <li>
-                          <a href="<?php echo Mage::getBaseUrl();?>customer/account"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-user.png';?>"></a>
+                          <a href="<?php echo Mage::getBaseUrl();?>customer/account"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a>
                         </li>
                           <?php else: ?>
-                        <li class="icon-item" id="sign_in_label"><a href="#"><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-user.png';?>"></a></li>
+                        <li class="icon-item" id="sign_in_label"><a href="#"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a></li>
                           <?php endif; ?>
                       </ul>
                     </div>

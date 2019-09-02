@@ -897,18 +897,18 @@ img.snize-item-image[src^=data]::after {
   /*   font-weight: bold; */
     line-height: 1.63636363636;
 }
-#login_msg_div{
+/* #login_msg_div{
 	text-align: left;
     margin-bottom: 5px;
     display: none;
-}
-#login_msg_div #login-msg{
+} */
+/* #login_msg_div #login-msg{
 	margin: auto;
 	color: #830000;
     font-size: 12px;
     font-weight: bold;
     line-height: 1.63636363636;
-}
+} */
 #resetpassword_msg_div{
     text-align: left;
     margin-bottom: 5px;

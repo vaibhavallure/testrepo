@@ -41,7 +41,7 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
 
    <?php if ($_cartQty>0): ?>
         <div class="summary">
-                <p class="amount"><a href="<?php echo $this->getUrl('checkout/cart')?>"><span><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-shopping-bag.png';?>"><div class="number-circle"><span><?= $_cartQty ?></span></div></span></a></p>
+                <p class="amount"><a href="<?php echo $this->getUrl('checkout/cart')?>"><span><img src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>"><div class="number-circle"><span><?= $_cartQty ?></span></div></span></a></p>
         </div>
     <?php endif ?>
 
@@ -92,7 +92,7 @@ $checkout_cart = (Mage::app()->getRequest()->getModuleName()== 'checkout' ) ? ' 
 		</div>
     <?php else: ?>
 	    <div class="summary">
-			<p class="amount"><a href="<?php echo $this->getUrl('checkout/cart')?>"><span><img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/nav-shopping-bag.png';?>"><div class="number-circle"><span>0</span></div></span></a></p>
+			<p class="amount"><a href="<?php echo $this->getUrl('checkout/cart')?>"><span><img src="<?php echo $this->getSkinUrl('images/redesign/nav-shopping-bag.png'); ?>"><div class="number-circle"><span>0</span></div></span></a></p>
 		</div>
     <?php endif ?>
 	<div class="cart_sidebar display_none" id="just_added">

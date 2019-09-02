@@ -1993,9 +1993,11 @@ div#narrow-by-list {
 /* POP-UP Changes */
 .pop-up-cover{
 	width: 520px;
-	margin: 4% auto;
 	background: #fff;
-	position: relative;
+	position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 .pop-title a {
   margin: 24px 24px 0 0;
@@ -2060,6 +2062,17 @@ button#signin-btn-popup {
   position: absolute;
   top: 14.5px;
   right: 14.5px;
+}
+.invalid-login{
+	position: absolute;
+  top: -25px;
+	color: #830000;
+	font-size: 12px;
+	font-weight: bold;
+}
+#login_msg_div{
+	position: relative;
+	margin-bottom: 5px;
 }
 /*Forget Password*/
 .popupResetPasswordModel .input-form {

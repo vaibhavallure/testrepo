@@ -25,7 +25,7 @@ if($this->getCurrencyCount()>0): ?>
                     if($this->helper('ecp_category')->checkRemoteFile($file)) { ?><img src="<?php echo $file ?>"/>
                   <?php } ?>
                     <?php echo $_code ?></span>
-                  <img src="<?php echo Mage::getBaseUrl('media').'wysiwyg/downward-arrow.png'; ?>">
+                  <img src="<?php echo $this->getSkinUrl('images/redesign/downward-arrow.png') ?>">
                 </div>
                 <div class="arrow-down"></div>
             <?php }
