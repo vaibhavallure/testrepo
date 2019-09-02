@@ -225,7 +225,7 @@ const monthMapping = {
     "October": "Octobre",
 }
 
-let currentLanguage = 'en';
+let currentLanguage = 'fr';
 
 jQuery(document).ready(function () {
     jQuery(window).bind('orientationchange', function (event) {
@@ -233,13 +233,17 @@ jQuery(document).ready(function () {
     });
     const sessionLocale =  getSessionLocale();
     jQuery( "input[name='language_pref']" ).attr("value",currentLanguage);
-    if(sessionLocale !== undefined){
+    if(sessionLocale !== null){
         currentLanguage = sessionLocale;
         if(currentLanguage !== 'en' && sessionLocale !== null){
             jQuery('#translate').val(currentLanguage).change();
             jQuery( "input[name='language_pref']" ).attr("value",currentLanguage);
             translatePopUp();
         }
+    }
+    else{
+        setSessionLocale('fr');
+        translatePopUp();
     }
 
     peopleCount = jQuery('#count').attr('value');
