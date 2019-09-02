@@ -168,15 +168,12 @@ h3{
 }
 
 .checkmark:after{
-	left: 8px;
+	content: '';
+  width: 16px;
+  height: 16px;
+  left: 3px;
   top: 3px;
-  width: 3px;
-  height: 10px;
-  border: solid #000;
-  border-width: 0 2px 2px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+  background: rgba(41,41,41,.60);
 }
 
 input:-webkit-autofill,
@@ -335,7 +332,6 @@ select:after{
 }
 
 
-/* Standard CSS by MT */
 #narrow-by-list li div dt{
     cursor: pointer;
     background: url(../images/redesign/arrow-down-bk.png) no-repeat right 12px center !important;
@@ -352,12 +348,12 @@ body{
   overflow-x: hidden !important;
 }
 /*Aditya CSS_____Start*/
-:root {
+/* :root {
     --dark-black: rgb(41, 41, 41);
     --light-black: #3e3e3e;
     --dark-gray: #7f7f7f;
     --light-gray: #f2f2f2;
-}
+} */
 
 body {
     font-family: urw-din, sans-serif;
@@ -386,11 +382,11 @@ button:focus {
     outline: none;
 }
 
-a {
+/* a {
     color: #666;
     letter-spacing: 0.5px;
     text-decoration: none !important;
-}
+} */
 
 a:hover {
     color: #000;
@@ -411,24 +407,24 @@ html {
     font-size: 14px;
 }
 
-hr {
+/* hr {
     margin-top: 0.6rem;
     margin-bottom: 0.6rem;
-}
+} */
 
-.btn {
+/* .btn {
     border-radius: 0;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     text-align: center;
-}
+} */
 
-.btn-outline-dark:focus,
+/* .btn-outline-dark:focus,
 .btn-outline-dark:active,
 .btn-dark:focus {
     box-shadow: none!important;
-}
-
+} */
+/*
 .btn-primary {
     background-color: #999;
     border-color: #999;
@@ -439,18 +435,18 @@ hr {
 .btn-outline-dark:hover {
     background-color: #000;
     border-color: #000;
-}
+} */
 
-.btn-dark {
+/* .btn-dark {
     font-style: normal;
     font-weight: 600;
     background-color: var(--light-black);
     padding: 13px 25px;
     min-width: 150px;
     font-size: 15px;
-}
+} */
 
-.btn-outline-dark {
+/* .btn-outline-dark {
     color: var(--light-black);
     font-style: normal;
     font-weight: 700;
@@ -465,19 +461,19 @@ hr {
     font-style: normal;
     line-height: normal;
     color: var(--light-black);
-}
+} */
 
-.anchor-link-underline {
+/* .anchor-link-underline {
     font-size: 13px;
     text-decoration: underline;
     font-weight: 300;
     font-style: normal;
     line-height: normal;
     letter-spacing: 1px;
-}
+} */
 
-span {
-    color: var(--light-black);
+/* span {
+    color: var(--light-black); */
     /* font-size: 13px;
     font-weight: 300;
     font-style: normal;
