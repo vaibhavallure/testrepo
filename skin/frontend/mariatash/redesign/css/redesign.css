@@ -2004,8 +2004,8 @@ div#narrow-by-list {
 }
 .pop-title h1 {
   clear: both;
-	margin-top: 99px;
-	margin-bottom: 44px;
+	margin-top: 79px;
+	margin-bottom: 34px;
 	letter-spacing: 0;
 }
 .input-form input{
@@ -2076,7 +2076,7 @@ button#signin-btn-popup {
     margin-bottom: 47px;
 }
 .pop-up-button-set{
-	margin-bottom: 96px;
+	margin-bottom: 76px;
 }
 .popupResetPasswordModel .pop-up-button-set{
 	margin-bottom: 108px;
@@ -2086,10 +2086,10 @@ button#signin-btn-popup {
 }
 /* Register Pop-up */
 .input-set {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 .agreement {
-	margin: 42px 0 18px;
+	margin: 32px 0 18px;
 }
 .agreement .link-button{
 	color: rgba(41,41,41,0.90);
