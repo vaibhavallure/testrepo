@@ -1,15 +1,18 @@
 /* ipad - portrait, iphone - landscape,portrait */
 @media (max-width:1023px){
   .main-nav-title li {
-      margin-right: 0;
-      text-align: center;
-      margin-top: 15px;
+    margin-right: 0;
+    text-align: center;
+    margin-top: 15px;
   }
   .maria-left-menus li:first-child, .maria-left-menus li:nth-child(2){
     display: none;
   }
-  .nav-links-right li:nth-child(3), .nav-links-right li:nth-child(4) {
+  .nav-links-right li:nth-child(3){
     display: none;
+  }
+  .main-nav-link li:nth-child(2) {
+    margin-right: 18px;
   }
   .footer ul .footer-item-list{
     max-width: 45%;
@@ -129,9 +132,6 @@
   }
   .footer .footlinks li:first-child{
     margin-left: 0;
-  }
-  .main-nav-link li:nth-child(2){
-    margin-right: 0px;
   }
   .second-header-image{
     display: none;
@@ -333,6 +333,37 @@
   .custom-container {
     max-width: 380px;
     margin: 0 auto;
+  }
+  .main-nav-link li:nth-child(2) {
+    margin-right: 10px;
+  }
+  .pop-up-cover{
+    width: 92%;
+  }
+  .input-form input{
+    width: 100%;
+  }
+  .modal-body, .modal-header{
+    padding: 0 18px;
+  }
+  .pop-title h1{
+    margin-top: 70px;
+    margin-bottom: 24px;
+  }
+  #signin-btn-popup{
+    margin: 30px 0 30px;
+  }
+  .option-text p {
+    margin: 30px 0 18px;
+  }
+  .new_account a {
+    margin: 22px 0 45px;
+  }
+  .popupResetPasswordModel .pop-up-button-set{
+    margin-bottom: 78px;
+  }
+  .pop-up-button-set .col {
+    padding: 0 9px;
   }
 }
 
