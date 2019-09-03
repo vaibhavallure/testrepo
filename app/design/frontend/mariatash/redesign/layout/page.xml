@@ -102,7 +102,7 @@ Default layout, loads most of the pages
                 <action method="addCss"><stylesheet>css/giftcardpage.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/tashtv.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/styles_celeb.css</stylesheet></action>
-                <action method="addCss"><stylesheet>css/press.css</stylesheet></action>
+                <!-- <action method="addCss"><stylesheet>css/press.css</stylesheet></action> -->
                 <action method="addCss"><stylesheet>css/piercing-service.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/customer_care.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/reviews.css</stylesheet></action>

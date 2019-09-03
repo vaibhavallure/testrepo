@@ -37,12 +37,12 @@
         var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
         return iOS;
     }
-    
+
     function hideEmailToFriendPopup() {
         jQuery('iframe#send-mail').hide();
         jQuery('#emailToFriendOverlay').hide();
     }
-    
+
     function windowOpn(url) {
         window.open(url, "mywindow", "menubar=1,resizable=1,width=700,height=450");
     }
@@ -72,7 +72,7 @@
          //console.info( '.pressGallery'+jQuery(this).attr('data') );
          imageSrc = jQuery('.pressGallery'+jQuery(this).attr('data')+' :eq(0) img').attr('src');
          jQuery('#publishImage').text( imageSrc );
-         
+
          //console.info('------ '+jQuery('.pressGallery'+jQuery(this).attr('data')).length);
          if( jQuery('.pressGallery'+jQuery(this).attr('data')).length >= 1 ){
          //            fancyboxBeforeUpdate(jQuery(this).attr('data'), 0);
@@ -189,7 +189,7 @@ if (!empty($pressId)) {
     function updateImageNum(press, num) {
         jQuery('#presspopup-title-' + press + ' span:first').text(num);
     }
-    
+
     function fancyboxBeforeUpdate(press, itemIndex) {
         var imgWidth = jQuery('.pressGallery' + press + ' :eq(' + itemIndex + ') img').width();
         if (imgWidth) {
@@ -298,7 +298,7 @@ if (!empty($pressId)) {
     }
 
     function shareLikeTwitter(press, sheet) {
-        //TWITTER                    
+        //TWITTER
         jQuery('#twitter' + press + '-' + sheet).sharrre({
             share: {twitter: true},
             url: jQuery(this).attr('data-url'),
@@ -332,144 +332,157 @@ if (!empty($pressId)) {
     }
 
 </script>
-<?php $collection = Mage::getModel('ecp_press/press')->getCollection()->addFilter('status', 1)->setOrder('publish_date'); ?>
-<div class="ecp-press-index-index">
-    <div class="press-list">
-        <ul class="images-press" style="display:none;">
-            <?php $i = 0; ?>  
-            <?php foreach ($collection as $item) {
-                $numImages = 1; ?>   
-                <li><a class="fancybox" href="#data<?php echo $i; ?>" id="fancybox<?php echo $i; ?>" data="<?php echo $i; ?>"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageOne(); ?>"/></a></li>
-                <div id="data<?php echo $i; ?>" class="press" style="display:none">
-                <p style="text-align:left;"><?php echo $item->getTitle() . ' ' . $item->getDescription() .' ';
-                
-                $date = date_create($item->getPublishDate());
-                echo date_format($date, 'd/M/Y'); ?></p>
-                <?php if(!empty($item->getOriginalLink())):?>
-                <p style="text-align:left; margin-bottom: 10px;"><a target="_blank" href='<?php echo $item->getOriginalLink()?>'><?php echo $item->getOriginalName() ?></a></p>
-                <?php endif;?>
-                    <div class="navi">
-                        <a href="#" id="foo3_prev<?php echo $i; ?>" onclick="prevImage(<?php echo $i; ?>);" class="prev disabled" style="display: none;"><span>prev</span></a>
-                        <ul class="gallery" id="gallery<?php echo $i; ?>">
-                            <?php if ($item->getImageOne() != '' && $item->getImageTwo() == '') { ?>
-                                <li class="pressGallery<?php echo $i; ?> re-set" style="text-align:center;">
-                                    <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageOne(); ?>" data="1"/>
-                                </li>
-    <?php } else { ?>
-                                <?php if ($item->getImageTwo() != '') {
-                                    $numImages++; ?>   
-                                    <li class="pressGallery<?php echo $i; ?> re-set" style="text-align:center;"><!-- re-set -->
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTwo(); ?>" data="2"/>
-                                    </li>
-                                <?php } ?>
-                                <?php if ($item->getImageTree() != '') {
-                                    $numImages++; ?>
-                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTree(); ?>" data="3"/>
-                                    </li><!-- 666,868-->         
-                                <?php } ?>
-                                <?php if ($item->getImageFour() != '') {
-                                    $numImages++; ?>
-                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageFour(); ?>" data="4"/>
-                                    </li>
-                               <?php } ?>
-                               <?php if ($item->getImageFive() != '') {
-                                    $numImages++; ?>
-                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageFive(); ?>" data="5"/>
-                                    </li>
-                                <?php } ?>
-                                <?php if ($item->getImageSix() != '') {
-                                    $numImages++; ?>
-                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageSix(); ?>" data="6"/>
-                                    </li>
-                                <?php } ?>
-                                <?php if ($item->getImageSeven() != '') {
-                                    $numImages++; ?>
-                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageSeven(); ?>" data="7"/>
-                                    </li>
-                                <?php } ?>
-                                <?php if ($item->getImageEight() != '') {
-                                    $numImages++; ?>
-                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageEight(); ?>" data="8"/>
-                                    </li>
-                                <?php } ?>
-                                <?php if ($item->getImageNine() != '') {
-                                    $numImages++; ?>
-                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageNine(); ?>" data="9"/>
-                                    </li>
-                                <?php } ?>
-                                <?php if ($item->getImageTen() != '') {
-                                    $numImages++; ?>
-                                    <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
-                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTen(); ?>" data="10"/>
-                                    </li>
-                                <?php } ?>
-    <?php } ?>
-                        </ul>
-                        <a href="#" id="foo3_next<?php echo $i; ?>" onclick="nextImage(<?php echo $i; ?>);" class="next" style="display: none;"><span>next</span></a>
-                    </div>
-                    <!--p style="text-align:center;"><?php echo $item->getDescription(); ?></p-->  
-                    <script type="text/javascript">
-       //vertical align gallery buttons
-       var top = ((jQuery('.pressGallery' + '<?php echo $i; ?> img').eq(0).height()) / 2) - 25;
-       jQuery('.pressGallery' + '<?php echo $i; ?> img').css('top', top);
-                    </script>
-                    <div class="presspopup-bottom">
-                            <span class="number_img" id="presspopup-title-<?php echo $i ?>"><span></span> of <?php echo ($numImages - 1) <= 1 ? '1 Image' : ($numImages - 1) . ' Images' ?></span>
-                            <?php for ($counter = 0; $counter < $numImages; $counter++) { ?>
-                            <div class="social-mt" id="social-mt<?php echo $i; ?>-<?php echo $counter; ?>" style="display:none;">
-                                <div id="fb<?php echo $i; ?>-<?php echo $counter; ?>" class="fb-share-button" data-layout="button" data-href="<?=$this->helper('core/url')->getCurrentUrl().'?fb=1&imgpressfb='.$i.'-'.$counter.'-'.$item->getId();?>" data-width="450"></div>
-                                <div id="twitter<?php echo $i; ?>-<?php echo $counter; ?>" data-url="<?php echo $this->helper('core/url')->getCurrentUrl(); ?>?imgpressfb=<?php echo $i; ?>-<?php echo $counter; ?>-<?php echo $item->getId(); ?>&fb=1" data-text="Venus by Maria Tash was featured in <?=$item->getTitle();?>" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none"></div>
 
-                                <?php
-                                switch ($counter) {
-                                    case 0: $_image = $item->getImageOne();
-                                        break;
-                                    case 1: $_image = $item->getImageTwo();
-                                        break;
-                                    case 2: $_image = $item->getImageTree();
-                                        break;
-                                    case 3: $_image = $item->getImageFour();
-                                        break;
-                                }
-                                ?>
-
-                                <div id="pinit<?php echo $i . '-' . $counter; ?>">
-                                    <a id='pinBtn' data-pin-config='beside' data-pin-do="buttonPin" href="//pinterest.com/pin/create/button/?url=<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $_image; ?>&media=<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $_image; ?>&description=Venus by Maria Tash featured in <?=$item->getTitle();?>">Pin it</a>
-                                </div>
-
-                               <!--div id="pinit<?php echo $i; ?>-<?php echo $counter; ?>">
-                                   <a data-pin-config="above" href="javascript:;"  data-pin-do="buttonPin"/>
-                                       <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png"/>
-                                   </a>
-                               </div-->
-                                <!-- <a class="iframe" href="<?php echo Mage::getUrl('tattoo/index/send');?>?page=<?=urlencode($this->helper('core/url')->getCurrentUrl().'?fb=1&imgpressfb='.$i.'-'.$counter.'-'.$item->getId());?>&img=<?=urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."/press/".$_image);?>&type=tattoo"> -->
-                                <div id="mail">
-                                    <div class="button mail">
-                                        <a href="javascript:;">
-                                            <div class="emailBtn" rel="<?=urlencode($this->helper('core/url')->getCurrentUrl()).'%3Fimgpressfb%3D'.$i.'-'.$counter.'-'.$item->getId();?>|<?=urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."/press/".$_image);?>">
-                                                <img id="imgMail" src="<?=$this->getSkinUrl('images/social_networking_iconpack/email_32.png');?>" />
-                                                <span class="share">Email</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div id="print"><div class="button print"><a href="#" onclick="javascript:print();"><div class="printBtn"><img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>" /><span class="share">Print</span></div></a></div></div>
-                            </div>
-    <?php } ?>
-                    </div>
-                    <p id="counterClick<?php echo $i; ?>" style="display: none">0</p>
-                </div>
-    <?php $i++; ?>
-<?php } ?>             
-        </ul>
+<div class="press-custom-container">
+  <div class="second-header-image">
+    <img class="w-100" src="https://mariatash-design.allureinc.dev/media/wysiwyg/catalog.jpg" alt="">
+  </div>
+  <div class="press-title col-12 text-center">
+    <div class="row justify-content-center">
+      <h1 class="">Press Features</h1>
     </div>
+  </div>
+  <?php $collection = Mage::getModel('ecp_press/press')->getCollection()->addFilter('status', 1)->setOrder('publish_date'); ?>
+  <div class="ecp-press-index-index col-12">
+      <div class="press-list row">
+        <div class="col-12">
+          <ul class="images-press row" style="display:none;">
+              <?php $i = 0; ?>
+              <?php foreach ($collection as $item) {
+                  $numImages = 1; ?>
+                  <li class="col text-center"><a class="fancybox" href="#data<?php echo $i; ?>" id="fancybox<?php echo $i; ?>" data="<?php echo $i; ?>"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageOne(); ?>"/></a></li>
+                  <div id="data<?php echo $i; ?>" class="press" style="display:none">
+                  <p style="text-align:left;"><?php echo $item->getTitle() . ' ' . $item->getDescription() .' ';
+
+                  $date = date_create($item->getPublishDate());
+                  echo date_format($date, 'd/M/Y'); ?></p>
+                  <?php if(!empty($item->getOriginalLink())):?>
+                  <p style="text-align:left; margin-bottom: 10px;"><a target="_blank" href='<?php echo $item->getOriginalLink()?>'><?php echo $item->getOriginalName() ?></a></p>
+                  <?php endif;?>
+                      <div class="navi">
+                          <a href="#" id="foo3_prev<?php echo $i; ?>" onclick="prevImage(<?php echo $i; ?>);" class="prev disabled" style="display: none;"><span>prev</span></a>
+                          <ul class="gallery" id="gallery<?php echo $i; ?>">
+                              <?php if ($item->getImageOne() != '' && $item->getImageTwo() == '') { ?>
+                                  <li class="pressGallery<?php echo $i; ?> re-set" style="text-align:center;">
+                                      <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageOne(); ?>" data="1"/>
+                                  </li>
+      <?php } else { ?>
+                                  <?php if ($item->getImageTwo() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?> re-set" style="text-align:center;"><!-- re-set -->
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTwo(); ?>" data="2"/>
+                                      </li>
+                                  <?php } ?>
+                                  <?php if ($item->getImageTree() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTree(); ?>" data="3"/>
+                                      </li><!-- 666,868-->
+                                  <?php } ?>
+                                  <?php if ($item->getImageFour() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageFour(); ?>" data="4"/>
+                                      </li>
+                                 <?php } ?>
+                                 <?php if ($item->getImageFive() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageFive(); ?>" data="5"/>
+                                      </li>
+                                  <?php } ?>
+                                  <?php if ($item->getImageSix() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageSix(); ?>" data="6"/>
+                                      </li>
+                                  <?php } ?>
+                                  <?php if ($item->getImageSeven() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageSeven(); ?>" data="7"/>
+                                      </li>
+                                  <?php } ?>
+                                  <?php if ($item->getImageEight() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageEight(); ?>" data="8"/>
+                                      </li>
+                                  <?php } ?>
+                                  <?php if ($item->getImageNine() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageNine(); ?>" data="9"/>
+                                      </li>
+                                  <?php } ?>
+                                  <?php if ($item->getImageTen() != '') {
+                                      $numImages++; ?>
+                                      <li class="pressGallery<?php echo $i; ?>" style="display:none;text-align:center;">
+                                          <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageTen(); ?>" data="10"/>
+                                      </li>
+                                  <?php } ?>
+      <?php } ?>
+                          </ul>
+                          <a href="#" id="foo3_next<?php echo $i; ?>" onclick="nextImage(<?php echo $i; ?>);" class="next" style="display: none;"><span>next</span></a>
+                      </div>
+                      <!--p style="text-align:center;"><?php echo $item->getDescription(); ?></p-->
+                      <script type="text/javascript">
+         //vertical align gallery buttons
+         var top = ((jQuery('.pressGallery' + '<?php echo $i; ?> img').eq(0).height()) / 2) - 25;
+         jQuery('.pressGallery' + '<?php echo $i; ?> img').css('top', top);
+                      </script>
+                      <div class="presspopup-bottom">
+                              <span class="number_img" id="presspopup-title-<?php echo $i ?>"><span></span> of <?php echo ($numImages - 1) <= 1 ? '1 Image' : ($numImages - 1) . ' Images' ?></span>
+                              <?php for ($counter = 0; $counter < $numImages; $counter++) { ?>
+                              <div class="social-mt" id="social-mt<?php echo $i; ?>-<?php echo $counter; ?>" style="display:none;">
+                                  <div id="fb<?php echo $i; ?>-<?php echo $counter; ?>" class="fb-share-button" data-layout="button" data-href="<?=$this->helper('core/url')->getCurrentUrl().'?fb=1&imgpressfb='.$i.'-'.$counter.'-'.$item->getId();?>" data-width="450"></div>
+                                  <div id="twitter<?php echo $i; ?>-<?php echo $counter; ?>" data-url="<?php echo $this->helper('core/url')->getCurrentUrl(); ?>?imgpressfb=<?php echo $i; ?>-<?php echo $counter; ?>-<?php echo $item->getId(); ?>&fb=1" data-text="Venus by Maria Tash was featured in <?=$item->getTitle();?>" data-via="venus_mariatash" data-hashtags="mariatash" data-count="none"></div>
+
+                                  <?php
+                                  switch ($counter) {
+                                      case 0: $_image = $item->getImageOne();
+                                          break;
+                                      case 1: $_image = $item->getImageTwo();
+                                          break;
+                                      case 2: $_image = $item->getImageTree();
+                                          break;
+                                      case 3: $_image = $item->getImageFour();
+                                          break;
+                                  }
+                                  ?>
+
+                                  <div id="pinit<?php echo $i . '-' . $counter; ?>">
+                                      <a id='pinBtn' data-pin-config='beside' data-pin-do="buttonPin" href="//pinterest.com/pin/create/button/?url=<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $_image; ?>&media=<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $_image; ?>&description=Venus by Maria Tash featured in <?=$item->getTitle();?>">Pin it</a>
+                                  </div>
+
+                                 <!--div id="pinit<?php echo $i; ?>-<?php echo $counter; ?>">
+                                     <a data-pin-config="above" href="javascript:;"  data-pin-do="buttonPin"/>
+                                         <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png"/>
+                                     </a>
+                                 </div-->
+                                  <!-- <a class="iframe" href="<?php echo Mage::getUrl('tattoo/index/send');?>?page=<?=urlencode($this->helper('core/url')->getCurrentUrl().'?fb=1&imgpressfb='.$i.'-'.$counter.'-'.$item->getId());?>&img=<?=urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."/press/".$_image);?>&type=tattoo"> -->
+                                  <div id="mail">
+                                      <div class="button mail">
+                                          <a href="javascript:;">
+                                              <div class="emailBtn" rel="<?=urlencode($this->helper('core/url')->getCurrentUrl()).'%3Fimgpressfb%3D'.$i.'-'.$counter.'-'.$item->getId();?>|<?=urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."/press/".$_image);?>">
+                                                  <img id="imgMail" src="<?=$this->getSkinUrl('images/social_networking_iconpack/email_32.png');?>" />
+                                                  <span class="share">Email</span>
+                                              </div>
+                                          </a>
+                                      </div>
+                                  </div>
+                                  <div id="print"><div class="button print"><a href="#" onclick="javascript:print();"><div class="printBtn"><img id="imgPrint" src="<?php echo $this->getSkinUrl('images/social_networking_iconpack/print_icon.jpg'); ?>" /><span class="share">Print</span></div></a></div></div>
+                              </div>
+      <?php } ?>
+                      </div>
+                      <p id="counterClick<?php echo $i; ?>" style="display: none">0</p>
+                  </div>
+      <?php $i++; ?>
+  <?php } ?>
+          </ul>
+        </div>
+      </div>
+  </div>
 </div>
 <!--script type="text/javascript" src="<?php echo $this->getSkinUrl('js/pinit.js'); ?>"></script-->
 
