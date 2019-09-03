@@ -88,6 +88,7 @@ h3{
 	text-align: center;
 	outline: none;
 	border: transparent;
+	border-radius: 0;
 }
 
 .input-patern{
@@ -731,6 +732,13 @@ nav.mariatash-header {
     margin-right: 3px;
 }
 
+.btn-quickview{
+	   text-transform: uppercase;
+}
+
+.list-mt-w .actions {
+    margin-bottom: 10px;
+}
 /* @media (max-width: 576px) {
     .catalog .item,
     .insta-item {
@@ -1683,7 +1691,8 @@ input[type="checkbox"]:checked+label:before {
 }
 .catalog-common-grid{
   /* padding: 19px; */
-  margin-top: 13px;
+  /* margin-top: 13px; */
+	margin-bottom: 0;
 }
 .catalog-common-grid .product-image img{
   width: 100%;
