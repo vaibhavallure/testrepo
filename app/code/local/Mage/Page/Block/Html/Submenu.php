@@ -48,6 +48,20 @@ class Mage_Page_Block_Html_Submenu extends Mage_Core_Block_Template
         else
             return array();
     }
+    public function wholesaleCheck($id)
+    {
+        $_category = Mage::getModel('catalog/category')->load($id);
+
+        if($_category->getIsWholesale()) {
+            if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+                $customer = Mage::getSingleton('customer/session')->getCustomer();
+                if($customer->getGroupId()==2)
+                    return true;
+            }
+            return false;
+        }
+            return true;
+    }
 
     public function jwRightSectionCat()
     {
