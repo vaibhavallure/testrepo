@@ -68,7 +68,7 @@ jQuery(document).ready(function() {
     });
 
 
-    jQuery(".menu-head").click(function(){
+    jQuery(".mobile-sub_menu .menu-head").click(function(){
         jQuery(this).find("a").toggleClass('active');
         jQuery(this).parent().find(".head-child").toggle();
     });
