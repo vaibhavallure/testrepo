@@ -67,7 +67,6 @@ jQuery(document).ready(function() {
         jQuery('#insta-carousel').trigger('prev.owl.carousel');
     });
 
-    jQuery("#jewelry .menu-head.jwl-head span a").attr("href","#");
 
     jQuery(".menu-head").click(function(){
         jQuery(this).find("a").toggleClass('active');
@@ -225,6 +224,61 @@ jQuery(document).ready(function() {
         jQuery("#product-image").attr("src", "images/product" + defaultNumber + '-' + defaultcolrSwatch + '-' + defaultorientation + '.png');
     }
 
+
+
+
+    /*-----------------------------new js code-----------------------------*/
+
+    jQuery('.main_menu').mouseover(function(){
+        var section_id='#'+jQuery(this).attr('data-id');
+        jQuery('section.sub-menu').hide();
+        jQuery(section_id).show();
+    });
+    jQuery('#navbarNavDropdown').mouseleave(function(){
+        jQuery('section.sub-menu').hide();
+    })
+
+    jQuery(".eye-image").click(function(){
+        var pass_field=jQuery(this).parent().parent().find('.consistent-password');
+        if(pass_field.hasClass("show"))
+        {
+            pass_field.attr("type","password");
+            pass_field.removeClass("show");
+        }
+        else {
+            pass_field.attr("type","text");
+            pass_field.addClass("show");
+        }
+    });
+
+
+    /*----------------mobile menu js-----------------------*/
+
+
+    jQuery("#menu-btn").on("click",function(){
+        if(jQuery('.mobile-main_menu').hasClass('active'))
+        {
+            jQuery('section.sub-menu').hide();
+        }
+        jQuery('body').toggleClass("overflow-hidden");
+
+        jQuery('.mobile-main_menu').toggleClass('active');
+        jQuery(this).toggleClass("change");
+
+
+    });
+    jQuery('.main_menu').click(function(){
+        var section_id='.'+jQuery(this).attr('data-id');
+        jQuery('section.sub-menu').hide();
+        jQuery(section_id).show();
+    });
+    jQuery('.close-section').click(function(){
+        jQuery('section.sub-menu').hide();
+    });
+
+    jQuery(".mobile-sub_menu  #jewelry .menu-head.jwl-head span a").attr("href","#");
+
+
 });
 
 function myFunction(x) {
@@ -232,17 +286,3 @@ function myFunction(x) {
     //jQuery('.mariatash-header').toggleClass('black-bg');
 }
 
-jQuery(document).ready(function(){
-  jQuery(".eye-image").click(function(){
-    var pass_field=jQuery(this).parent().parent().find('.consistent-password');
-    if(pass_field.hasClass("show"))
-    {
-      pass_field.attr("type","password");
-      pass_field.removeClass("show");
-    }
-    else {
-      pass_field.attr("type","text");
-      pass_field.addClass("show");
-    }
-  });
-});
