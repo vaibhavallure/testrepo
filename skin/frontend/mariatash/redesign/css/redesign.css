@@ -2118,7 +2118,7 @@ button#signin-btn-popup {
 
 
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel  {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel  {
 	position: fixed;
 	top:-20px;
 	right: 0;

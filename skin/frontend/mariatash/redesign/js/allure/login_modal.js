@@ -69,6 +69,10 @@ jQuery(document).ready(function(){
 		$j(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
 	});
 
+    $j(".popupSignUpConfirmationModel .close").on('click',function(){
+         location.reload();
+    });
+
 	$j("#signup-btn-popup").on('click',function(){
 		 var myForm = new VarienForm('popup-register-form');
 
@@ -112,7 +116,8 @@ jQuery(document).ready(function(){
 					if (data.success) {
 						$j('#reg_msg_div').css('display','none');
 						$j(".modalDialog").css({"opacity":"0","pointer-events":"none"});
-						 location.reload();
+                        $j(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
+                        $j(".popupSignUpConfirmationModel").css({"opacity":"1","pointer-events":"auto"});
 					} else {
 						console.log(data.error);
 						$j('#reg_msg_div').css('display','block');
