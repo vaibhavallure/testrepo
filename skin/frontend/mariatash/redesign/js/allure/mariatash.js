@@ -278,6 +278,8 @@ jQuery(document).ready(function() {
 
     jQuery(".mobile-sub_menu  #jewelry .menu-head.jwl-head span a").attr("href","#");
 
+    jQuery(".mobile-main_menu li.parent a").attr("href","#");
+
 
 });
 
