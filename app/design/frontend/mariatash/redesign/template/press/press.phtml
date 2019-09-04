@@ -352,10 +352,10 @@ if (!empty($pressId)) {
                   $numImages = 1; ?>
                   <li class="col text-center"><a class="fancybox" href="#data<?php echo $i; ?>" id="fancybox<?php echo $i; ?>" data="<?php echo $i; ?>"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "/press/" . $item->getImageOne(); ?>"/></a></li>
                   <div id="data<?php echo $i; ?>" class="press" style="display:none">
-                  <p style="text-align:left;"><?php echo $item->getTitle() . ' ' . $item->getDescription() .' ';
+                  <!-- <p style="text-align:left;"><//?php echo $item->getTitle() . ' ' . $item->getDescription() .' ';
 
                   $date = date_create($item->getPublishDate());
-                  echo date_format($date, 'd/M/Y'); ?></p>
+                  echo date_format($date, 'd/M/Y'); ?></p> -->
                   <?php if(!empty($item->getOriginalLink())):?>
                   <p style="text-align:left; margin-bottom: 10px;"><a target="_blank" href='<?php echo $item->getOriginalLink()?>'><?php echo $item->getOriginalName() ?></a></p>
                   <?php endif;?>

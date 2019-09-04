@@ -2088,6 +2088,9 @@ button#signin-btn-popup {
 	position: relative;
 	margin-bottom: 5px;
 }
+.exit-large{
+	opacity: 100%;
+}
 /*Forget Password*/
 .popupResetPasswordModel .input-form {
     margin-bottom: 47px;
@@ -2112,10 +2115,25 @@ button#signin-btn-popup {
 	color: rgba(41,41,41,0.90);
 }
 .back-to-login .pop-up-button {
-    width: 142px;
+  width: 142px;
 }
-
-
+span#popup_loader_register {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+/* Notification Popup */
+.popupSignUpConfirmationModel .modal-body{
+	margin-bottom: 87px;
+}
+.popupSignUpConfirmationModel .info-text-two{
+	font-family: urw-din-regular;
+	color: rgba(41,41,41,1.0);
+	margin-top: 5px;
+}
+.popupSignUpConfirmationModel .pop-up-cover{
+	width: 462px;
+}
 
 /*Old Css*/
 .popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel  {
@@ -2150,6 +2168,50 @@ button#signin-btn-popup {
   padding: 0;
 	margin-bottom: 54px;
 }
+.fancybox-skin{
+	background: #fff;
+}
+.fancybox-opened {
+	z-index: 10100;
+}
+/* .fancybox-inner {
+  overflow: hidden;
+} */
+.fancybox-lock {
+  overflow: hidden;
+}
+.categorypath-discover-maria-tash-press-html-w ul.gallery img {
+  float: left;
+  height: auto;
+  padding: 0 20px;
+  /* width: 666px; */
+}
+.categorypath-discover-maria-tash-press-html-w .fancybox-inner {
+  height: auto !important;
+  /*width: 666px !important;*/
+}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock ul.gallery li{
+  list-style: none outside none;
+}
+.fancybox-lock .fancybox-overlay {
+  overflow: auto;
+  overflow-y: scroll;
+}
+.fancybox-overlay-fixed {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+.fancybox-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  display: none;
+  z-index: 10001;
+  background: url(fancybox_overlay.png);
+}
+
 /* Temperory */
 #narrow-by-list .filtru-price dd{
   display: none;
