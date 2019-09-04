@@ -119,9 +119,8 @@ jQuery(document).ready(function(){
                         $j(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
                         $j(".popupSignUpConfirmationModel").css({"opacity":"1","pointer-events":"auto"});
 					} else {
-						console.log(data.error);
 						$j('#reg_msg_div').css('display','block');
-						$j('#register-msg').html(data.error);
+						$j('#register-msg').html(data.msg);
 					}
 				}
 			});
