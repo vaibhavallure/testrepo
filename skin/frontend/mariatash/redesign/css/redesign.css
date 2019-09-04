@@ -2150,6 +2150,50 @@ button#signin-btn-popup {
   padding: 0;
 	margin-bottom: 54px;
 }
+.fancybox-skin{
+	background: #fff;
+}
+.fancybox-opened {
+	z-index: 10100;
+}
+/* .fancybox-inner {
+  overflow: hidden;
+} */
+.fancybox-lock {
+  overflow: hidden;
+}
+.categorypath-discover-maria-tash-press-html-w ul.gallery img {
+  float: left;
+  height: auto;
+  padding: 0 20px;
+  /* width: 666px; */
+}
+.categorypath-discover-maria-tash-press-html-w .fancybox-inner {
+  height: auto !important;
+  /*width: 666px !important;*/
+}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock ul.gallery li{
+  list-style: none outside none;
+}
+.fancybox-lock .fancybox-overlay {
+  overflow: auto;
+  overflow-y: scroll;
+}
+.fancybox-overlay-fixed {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+.fancybox-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  display: none;
+  z-index: 10001;
+  background: url(fancybox_overlay.png);
+}
+
 /* Temperory */
 #narrow-by-list .filtru-price dd{
   display: none;
