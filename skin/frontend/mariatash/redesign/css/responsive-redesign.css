@@ -186,6 +186,12 @@
   .mobile-sub_menu .image-text h6{
     margin-bottom: 37px;
   }
+  .parent-category {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-family: urw-din-bold;
+    padding-left: 5px;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -251,6 +257,9 @@
   .custom-container{
     max-width: 650px;
     margin: 0 auto;
+  }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    width: 380px !important;
   }
 }
 
