@@ -1714,7 +1714,7 @@ input[type="checkbox"]:checked+label:before {
 .mobile-main_menu{
   background: #292929;
   width: 290px;
-  left: -320px;
+  left: -420px;
   top: 68px;
   position: fixed;
   z-index: 999;

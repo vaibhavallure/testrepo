@@ -252,6 +252,9 @@
     max-width: 650px;
     margin: 0 auto;
   }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    width: 380px !important;
+  }
 }
 
 
