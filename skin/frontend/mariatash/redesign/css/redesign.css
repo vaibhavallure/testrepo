@@ -1726,12 +1726,15 @@ input[type="checkbox"]:checked+label:before {
   text-align: left;
   border-bottom: 1px solid #fff;
   width: 93%;
-  padding: 15px 0px;
+  padding: 30px 0px 10px;
   text-transform: uppercase;
   position: relative;
 }
+.mobile-main_menu .main-nav-title li:first-child {
+    padding-top: 10px;
+}
 .mobile-main_menu ul {
-    padding-left: 10px;
+    padding-left: 15px;
 }
 .mobile-main_menu li.nav-item:after {
   background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
@@ -1741,9 +1744,6 @@ input[type="checkbox"]:checked+label:before {
   background-position: right;
   position: absolute;
   right: 0;
-}
-.close-section{
-  position: relative;
 }
 .close-section span:before{
   background: url(../images/redesign/arrow-down-bk.png) no-repeat;
@@ -1767,7 +1767,10 @@ input[type="checkbox"]:checked+label:before {
   top: 63px;
 }
 .close-section {
-  margin: 10px;
+	margin: 20px 10px;
+  border-bottom: 1px solid #292929;
+  padding: 10px 0;
+	position: relative;
 }
 .menu-common-section{
   margin-top: 20px;
@@ -1784,8 +1787,8 @@ input[type="checkbox"]:checked+label:before {
   padding-left: 16px;
 }
 .mobile-sub_menu .special-menu {
-  margin-top: 3px;
-  margin-bottom: 23px;
+  margin-top: 0;
+  margin-bottom: 35px;
 }
 .mobile-sub_menu .image-text h6{
   color: #666 !important;
@@ -2134,7 +2137,12 @@ span#popup_loader_register {
 .popupSignUpConfirmationModel .pop-up-cover{
 	width: 462px;
 }
-
+/* Cookies pop-up */
+.dialogClose{
+	background: url(../images/redesign/exit-small-wt.png) no-repeat !important;
+	height: 13px !important;
+  width: 14px !important;
+}
 /*Old Css*/
 .popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel  {
 	position: fixed;

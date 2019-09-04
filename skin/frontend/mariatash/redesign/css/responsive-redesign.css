@@ -68,7 +68,7 @@
     flex: 0 0 100%;
   }
   #piercing_appointments{
-    padding: 0 0 0 15px;
+    padding: 0;
   }
   .maria-right-menus{
     right: 0;
@@ -76,11 +76,8 @@
   .main-nav-link li:nth-child(3){
     margin-right: 0;
   }
-  .mobile-main_menu {
-    height: 448px;
-  }
-  .mobile-sub_menu .sub-menu{
-    height: 454px;
+  .mobile-main_menu, .mobile-sub_menu .sub-menu {
+    height: 100%;
   }
   .piercing_options .image-text {
     padding-left: 15px;
@@ -119,7 +116,10 @@
     margin-bottom: 9px;
   }
   .common-option-div{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .head-child ul {
+    margin-bottom: 0;
   }
   .menu-head span a, .mobile-sub_menu .image-text h6 {
     color: #000 !important;
@@ -179,6 +179,12 @@
   }
   .footer-item-list:last-child{
     display: none;
+  }
+  .piercing_options{
+    padding: 0 15px;
+  }
+  .mobile-sub_menu .image-text h6{
+    margin-bottom: 37px;
   }
 }
 
