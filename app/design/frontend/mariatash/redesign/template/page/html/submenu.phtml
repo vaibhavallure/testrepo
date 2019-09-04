@@ -9,6 +9,7 @@ if($this->isthumbnailCat($pc->getName())){
     ?>
     <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-jewelry-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
       <div class="close-section text-right">
+          <span class="parent-category float-left"><?= strtolower($pc->getName()) ?></span>
                         <span>Back</span>
                         </div>
         <div class="row">
@@ -34,6 +35,7 @@ if($this->isthumbnailCat($pc->getName())){
         <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-appointment-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
 
                                   <div class="close-section text-right">
+                                      <span class="parent-category float-left"><?= strtolower($pc->getName()) ?></span>
                                     <span>Back</span>
                                   </div>
             <div class="row">
