@@ -261,6 +261,9 @@
   .mobile-main_menu, .mobile-sub_menu .sub-menu{
     width: 380px !important;
   }
+  .mobile-main_menu{
+    top: 83px;
+  }
 }
 
 
