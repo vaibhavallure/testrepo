@@ -1731,7 +1731,7 @@ input[type="checkbox"]:checked+label:before {
   position: relative;
 }
 .mobile-main_menu .main-nav-title li:first-child {
-    padding-top: 10px;
+    padding-top: 0;
 }
 .mobile-main_menu ul {
     padding-left: 15px;
@@ -1888,9 +1888,9 @@ div#narrow-by-list {
 /* .catalog-category-view .mobile-main_menu{
   top: 86px;
 } */
-.catalog-category-view .mobile-sub_menu .sub-menu{
+/* .catalog-category-view .mobile-sub_menu .sub-menu{
   top: 86px;
-}
+} */
 /* Designer Page */
 .second-header-image{
   position: absolute;

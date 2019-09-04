@@ -195,7 +195,7 @@
     padding: 0 0 10px;
     border-bottom: 1px solid #292929;
     margin-bottom: 20px;
-    margin: 25px 15px;
+    margin: 20px 15px;
   }
   .category-image img{
     display: none;
@@ -213,9 +213,6 @@
 @media (min-width:767px) and (max-width:1024px){
   #narrow-by-list li div dt{
     width: 104px;
-  }
-  .five-col{
-    width: 50%;
   }
   .form-search input.input-text{
     width: 200px;
@@ -272,13 +269,16 @@
   .mobile-main_menu{
     top: 83px;
   }
+  .five-col{
+    width: 50%;
+  }
 }
 
 
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 250px;
+    top: 227px;
   }
   .about-designer{
     padding: 0 26px;
@@ -299,13 +299,22 @@
     max-width: 1000px;
     margin: 0 auto;
   }
+  .five-col{
+    width: 33.33%;
+  }
+  #narrow-by-list{
+    margin-left: 0;
+  }
+  #narrow-by-list li div dt {
+    width: 161.4px;
+  }
+  #narrow-by-list li div dd{
+    width: 161px;
+  }
 }
 
 /* ALl Mobiles */
 @media (max-width:767px) {
-  .five-col{
-    width: 100%;
-  }
   .homepage-menu {
     padding-top: 18px !important;
     padding: 0;
@@ -391,6 +400,9 @@
   .pop-up-button-set .col {
     padding: 0 9px;
   }
+  .five-col{
+    width: 100%;
+  }
 }
 
 /* Mobile landscape */
@@ -407,6 +419,9 @@
   }
   .faq-main {
     padding: 0 40px;
+  }
+  .five-col{
+    width: 50%;
   }
 }
 
