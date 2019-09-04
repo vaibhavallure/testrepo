@@ -2088,6 +2088,9 @@ button#signin-btn-popup {
 	position: relative;
 	margin-bottom: 5px;
 }
+.exit-large{
+	opacity: 100%;
+}
 /*Forget Password*/
 .popupResetPasswordModel .input-form {
     margin-bottom: 47px;
@@ -2112,10 +2115,25 @@ button#signin-btn-popup {
 	color: rgba(41,41,41,0.90);
 }
 .back-to-login .pop-up-button {
-    width: 142px;
+  width: 142px;
 }
-
-
+span#popup_loader_register {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+/* Notification Popup */
+.popupSignUpConfirmationModel .modal-body{
+	margin-bottom: 87px;
+}
+.popupSignUpConfirmationModel .info-text-two{
+	font-family: urw-din-regular;
+	color: rgba(41,41,41,1.0);
+	margin-top: 5px;
+}
+.popupSignUpConfirmationModel .pop-up-cover{
+	width: 462px;
+}
 
 /*Old Css*/
 .popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel  {
