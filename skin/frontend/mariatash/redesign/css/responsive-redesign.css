@@ -124,9 +124,9 @@
   .menu-head span a, .mobile-sub_menu .image-text h6 {
     color: #000 !important;
   }
-  .catalog-category-view nav.homepage-menu.navbar {
+  /* .catalog-category-view nav.homepage-menu.navbar {
     background: transparent;
-  }
+  } */
   #narrow-by-list{
     display: none;
   }
@@ -190,7 +190,15 @@
     font-size: 13px;
     text-transform: uppercase;
     font-family: urw-din-bold;
-    padding-left: 5px;
+  }
+  .submenu-upper-section {
+    padding: 0 0 10px;
+    border-bottom: 1px solid #292929;
+    margin-bottom: 20px;
+    margin: 25px 15px;
+  }
+  .category-image img{
+    display: none;
   }
 }
 

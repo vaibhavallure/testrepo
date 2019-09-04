@@ -1745,14 +1745,14 @@ input[type="checkbox"]:checked+label:before {
   position: absolute;
   right: 0;
 }
-.close-section span:before{
+.close-section:after{
   background: url(../images/redesign/arrow-down-bk.png) no-repeat;
   content: '';
   height: 14px;
   width: 19px;
   background-position: right;
   position: absolute;
-  right: 31px;
+  right: 45px;
   transform: rotate(90deg);
 }
 .mobile-main_menu.active{
@@ -1765,12 +1765,6 @@ input[type="checkbox"]:checked+label:before {
   left: 0;
   width: 290px !important;
   top: 63px;
-}
-.close-section {
-	margin: 20px 10px;
-  border-bottom: 1px solid #292929;
-  padding: 10px 0;
-	position: relative;
 }
 .menu-common-section{
   margin-top: 20px;
@@ -1891,9 +1885,9 @@ div#narrow-by-list {
   text-align: center;
   padding: 0;
 }
-.catalog-category-view .mobile-main_menu{
+/* .catalog-category-view .mobile-main_menu{
   top: 86px;
-}
+} */
 .catalog-category-view .mobile-sub_menu .sub-menu{
   top: 86px;
 }
