@@ -43,19 +43,19 @@ echo $this->getHeightwindow();
 <?php if ( $count >= 1 ): ?>
         <?php $counter = 1; ?>
         <div id="imageRepoFull">
-            <?php foreach ($this->getGalleryImages() as $_image): ?>      
+            <?php foreach ($this->getGalleryImages() as $_image): ?>
                 <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize( $this->getWidthfullimage(),$this->getHeightfullimage() ); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
             <?php $counter++; ?>
             <?php endforeach; ?>
-        </div>  
+        </div>
         <div id="thumbRepoFull">
-            <?php foreach ($this->getGalleryImages() as $_image): ?>       
+            <?php foreach ($this->getGalleryImages() as $_image): ?>
                 <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize( (($this->getHeightfullimage() - 24)*7/40),(96*(($this->getHeightfullimage() - 24)/4))*7/740 ); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>"/>
             <?php $counter++; ?>
             <?php endforeach; ?>
-        </div> 
+        </div>
 <?php endif   ?>
-              
+
 <script type="text/javascript">
 jQuery(document).ready(function() {
     jQuery('.containerThumbFull .thumbFull').first().addClass('selected-thumbFull');
@@ -71,16 +71,16 @@ function loadImageFull(numImage){
     var numImages = jQuery('#thumbRepoFull img').length;
     jQuery('.containerImageFull').html('<img class="galleryImg'+numImage+'" src="'+jQuery('#imageRepoFull img').eq(numImage).attr('src')+'" />').fadeIn(5000,function(){
         jQuery('#numOfViews').html((numImage+1)+' of '+numImages+' views');
-        
+
         if(numImage == 0){
-            jQuery('.prev').addClass('display-none'); 
+            jQuery('.prev').addClass('display-none');
             if (numImages == 1)
                 jQuery('.next').addClass('display-none');
             else
                 jQuery('.next').removeClass('display-none');
         }
         else{
-            jQuery('.prev').removeClass('display-none'); 
+            jQuery('.prev').removeClass('display-none');
             if(numImage == (numImages - 1)){
                 jQuery('.next').addClass('display-none');
             }
@@ -103,7 +103,7 @@ function prevImage(){
         loadImageFull(imgNumber-1);
         currentFullThumb.removeClass('selected-thumbFull');
         currentFullThumb.prev().addClass('selected-thumbFull');
-        
+
     }
 }
 
@@ -127,16 +127,16 @@ jQuery(document).ready(function(){
         width:'<?php echo $this->getWidthwindow();?>px',
         height:'<?php echo $this->getHeightwindow();?>px'
 //	position:'relative'
-    }); 
+    });
     jQuery('.prev').addClass('display-none');
 	if(jQuery('#thumbRepoFull img').length <= 1) { jQuery('.prev').addClass('display-none');jQuery('.next').addClass('display-none'); }
     <?php if ( $count == 1 ): ?>
         jQuery('.controls').hide();
     <?php endif; ?>
-    
+
     <?php if ( $count >= 1 ): ?>
             var counterJs = 0;
-            var numImages = jQuery('#thumbRepoFull img').length;           
+            var numImages = jQuery('#thumbRepoFull img').length;
             loadImageFull(0);
             //jQuery('#numOfViews').html('1 of '+numImages+' views');
 
@@ -147,18 +147,18 @@ jQuery(document).ready(function(){
                 }
             });
     <?php endif; ?>
-    
+
     <?php if ( $count == 0 ): ?>
             jQuery('.thumbFull').eq(0).html('<a href="javascript:;"><img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/thumbProductview.jpg');?>" /></a>');
             jQuery('.containerImageFull').html('<img src="<?php echo $this->getSkinUrl('images/catalog/product/placeholder/imageProduct.jpg');?>" />');
             jQuery('.controls').hide();
-    <?php endif; ?>    
+    <?php endif; ?>
     /*
-    jQuery('.controls').hide();*/    
+    jQuery('.controls').hide();*/
     jQuery("#coverContainerImage").hover(
         function () {
           if(jQuery('#thumbRepoFull img').length > 1) jQuery('.controls').show();
-        }, 
+        },
         function () {
           jQuery('.controls').hide();
         }
@@ -173,7 +173,7 @@ jQuery(document).ready(function(){
 
 </script>
 
-<div class="galleryFull">    
+<div class="galleryFull col-lg-2">
     <div id="coverContainerImage" style="width: <?php echo ($this->getWidthwindow() * 0.86) ?>px; height: <?php echo $this->getHeightwindow() ?>px">
         <div class="btnExitfull" onclick="closeFullGallery();">
             <span><span>Exit Fullscreen</span></span>

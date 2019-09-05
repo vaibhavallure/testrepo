@@ -97,9 +97,13 @@
                                 <a class="icon-link" href="<?= $location->getUrl() ?>"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-bitmap.png'); ?>"></a>
                             </li>
                             <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) :?>
-                                <li>
-                                    <a href="<?php echo Mage::getBaseUrl();?>customer/account"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a>
-                                </li>
+                            <li class="icon-user position-relative">
+                              <a><img src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a>
+                              <ul class="login-dropdown">
+                                <li><a href="<?php echo Mage::getBaseUrl();?>customer/account">My Account</a></li>
+                                <li><a href="<?php echo Mage::getBaseUrl();?>customer/account/logout">Log Out</a></li>
+                              </ul>
+                            </li>
                             <?php else: ?>
                                 <li class="icon-item" id="sign_in_label"><a href="#"><img src="<?php echo $this->getSkinUrl('images/redesign/nav-user.png'); ?>"></a></li>
                             <?php endif; ?>

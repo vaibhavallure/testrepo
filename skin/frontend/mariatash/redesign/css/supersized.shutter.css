@@ -13,8 +13,8 @@
 
 	/* Controls Bar
 	----------------------------*/
-	#controls-wrapper { display:block; top:50%; /*margin:200px 0 auto 0; */ /*width:305px; bottom:0px;*/ left:0; z-index:4; /*background-color:#65646A;*/ }
-		#controls { overflow:hidden; position:absolute; text-align:left; z-index:1; }
+	/* #controls-wrapper { display:block; top:50%; /*margin:200px 0 auto 0; */ /*width:305px; bottom:0px;*/ /*left:0; z-index:4;*/ /*background-color:#65646A; }*/
+		/* #controls { overflow:hidden; position:absolute; text-align:left; z-index:1; }
 			#slidecounter { float:left; color:#999; font:14px "Helvetica Neue", Helvetica, Arial, sans-serif; text-shadow:#000 0 -1px 0; margin:0px 10px 0 15px; line-height:42px; }
 			#slidecaption { overflow:hidden; float:left; color:#FFF; font:400 14px "Helvetica Neue", Helvetica, Arial, sans-serif; text-shadow:#000 1px 1px 2px; margin:0 20px 0 0; line-height:42px; width:305px; }
 			#slidecaption img { max-width:305px; }
@@ -36,7 +36,7 @@
 							ul#slide-list li a:hover{ background-position:0 -12px; cursor:pointer; }
 
 				#tray-button{ float:right; margin-top:1px; border-left:1px solid #333; background:url('../images/slider/bg-hover.png') repeat-x 0 44px; }
-					#tray-button:hover{ background-position:0 1px; cursor:pointer; }
+					#tray-button:hover{ background-position:0 1px; cursor:pointer; } */
 
 
 	/* Progress Bar

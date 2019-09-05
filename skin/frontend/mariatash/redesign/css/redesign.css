@@ -198,8 +198,8 @@ textarea:-webkit-autofill:active{
   -webkit-text-fill-color: rgba(41,41,41,0.9) !important;
 }
 .form-control:focus, button:focus, .input-form:focus{
-	 border-color: #D8D8D8;
-	 outline:0;
+	border-color: #D8D8D8;
+	outline:0;
 }
 img{
 	border: none;
@@ -217,20 +217,23 @@ a{
 a:hover{
 	text-decoration: none;
 }
+ul{
+	list-style: none;
+}
 
 /*Checkout Left Section (Steps)*/
 .checkout-step-name {
-    border-top: 1px solid #D8D8D8;
+  border-top: 1px solid #D8D8D8;
 }
 
 .checkout-step-name h3 {
-    font-size: 13px;
-    font-family: urw-din-bold;
-    text-transform: uppercase;
-    color: #292929;
-    letter-spacing: 1px;
-    padding-top: 21.3px;
-    opacity: 0.6;
+  font-size: 13px;
+  font-family: urw-din-bold;
+  text-transform: uppercase;
+  color: #292929;
+  letter-spacing: 1px;
+  padding-top: 21.3px;
+  opacity: 0.6;
 }
 
 /*Checkout Right Section (Sidebar)*/
@@ -286,12 +289,12 @@ select{
 }
 
 .next-button {
-    margin-bottom: 32.5px;
+  margin-bottom: 32.5px;
 }
 
 .product-description-section {
-    border-top: 1px solid #ccc;
-    padding: 30px 0;
+  border-top: 1px solid #ccc;
+  padding: 30px 0;
 }
 
 .gift-marked input{
@@ -304,12 +307,12 @@ select{
 }
 
 .checkout-below.summary {
-    float: right;
+  float: right;
 }
 
 .checkout-button {
-    height: 51px;
-    width: 227px;
+  height: 51px;
+  width: 227px;
 }
 
 .price-calculation{
@@ -318,13 +321,13 @@ select{
 
 .shipping-info-extend:after, .return-policy-extend:after{
 	background-image: url(../images/maria/plus.png);
-    content: '';
-    background-repeat: no-repeat;
-    position: absolute;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    margin-top: 3px;
+  content: '';
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  margin-top: 3px;
 }
 
 select{
@@ -333,30 +336,63 @@ select{
 
 select:after{
 	background-image: url(../images/maria/arrow-down-bk.png);
-    content: '';
-    background-repeat: no-repeat;
-    position: absolute;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    margin-top: 3px;
+  content: '';
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  margin-top: 3px;
 }
 
+.login-dropdown li a {
+  color: #fff;
+}
+
+.login-dropdown li a:hover {
+  color: #fff;
+}
+
+.icon-user:hover .login-dropdown,.login-dropdown:hover .login-dropdown {
+    display: block;
+}
+
+.login-dropdown{
+	display: none;
+}
+
+.login-dropdown {
+  float: none;
+}
+
+.login-dropdown {
+  position: absolute;
+  width: 137px;
+  right: -56px;
+  top: 20px;
+	padding-top: 10px;
+  line-height: 25px;
+}
 
 #narrow-by-list li div dt{
-    cursor: pointer;
-    background: url(../images/redesign/arrow-down-bk.png) no-repeat right 12px center !important;
-    font-family: urw-din-xlight;
-    font-size: 13px;
-    color: rgba(41,41,41,0.90);
-    letter-spacing: 0;
-    border: 1px solid rgba(41,41,41,0.60);
-    height: 30px;
-    width: 181px;
-    padding: 3px 0 10px 24px;
+  cursor: pointer;
+  background: url(../images/redesign/arrow-down-bk.png) no-repeat right 12px center !important;
+  font-family: urw-din-xlight;
+  font-size: 13px;
+  color: rgba(41,41,41,0.90);
+  letter-spacing: 0;
+  border: 1px solid rgba(41,41,41,0.60);
+  height: 30px;
+  width: 181px;
+  padding: 3px 0 10px 24px;
 }
 body{
   overflow-x: hidden !important;
+	height: 100%;
+}
+.wrapper{
+	min-height: 100%;
+	margin-bottom: -50px;
 }
 /*Aditya CSS_____Start*/
 /* :root {
@@ -655,8 +691,6 @@ nav.mariatash-header {
 }
 .footer {
     padding-top: 60px;
-    position: absolute;
-    bottom: 0;
     height: 60px;
     z-index: 1;
 }
@@ -2081,19 +2115,24 @@ button#signin-btn-popup {
   top: 14.5px;
   right: 14.5px;
 }
-.invalid-login{
+.invalid-login, #register-msg{
 	position: absolute;
   top: -25px;
 	color: #830000;
 	font-size: 12px;
 	font-weight: bold;
 }
-#login_msg_div{
+#login_msg_div, #reg_msg_div{
 	position: relative;
-	margin-bottom: 5px;
+	display: none;
 }
 .exit-large{
 	opacity: 100%;
+}
+span#popup_loader {
+  position: absolute;
+  top: 40px;
+  right: 120px;
 }
 /*Forget Password*/
 .popupResetPasswordModel .input-form {
@@ -2227,15 +2266,9 @@ span#popup_loader_register {
 	line-height: 13px;
 }
 
-/* Slider Caption */
-#controls{
-	width: 100%;
-	height: 550px;
-}
-ul#slide-list{
-	left: 50%;
-	bottom: 20px;
-	top: 500px;
+/* Product Details CSS */
+ul#foo4 {
+    min-width: 100%;
 }
 
 /* Temperory */

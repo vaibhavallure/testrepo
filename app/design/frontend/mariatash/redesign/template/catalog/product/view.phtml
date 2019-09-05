@@ -196,7 +196,7 @@ if ($_product->getSizeSample() == 1) {
     <?php $this->unsetChild('breadcrumbs'); ?>
 
     <div class="giftcard-static-block-message"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('giftcard_block_message')->toHtml() ?></div>
-    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post"  id="product_addtocart_giftcard_form" <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <form class="w-100" action="<?php echo $this->getSubmitUrl($_product) ?>" method="post"  id="product_addtocart_giftcard_form" <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
         <div class="no-display">
             <input type="hidden" name="product" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
@@ -286,10 +286,10 @@ if ($_product->getSizeSample() == 1) {
         $category = Mage::getModel('catalog/category')->load($cid);
         ?>
         <h1><?php //echo $category->getName(); ?></h1></div>
-    <div class="product-essential">
+    <div class="product-essential row">
     <?php if ($showSampleForm): ?>
         <div style="display: none;">
-            <form action="<?php echo $this->getSubmitUrl($sampleProduct) ?>" method="post"
+            <form class="w-100" action="<?php echo $this->getSubmitUrl($sampleProduct) ?>" method="post"
                   id="product_addtocart_form_sample"<?php if ($sampleProduct->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
                 <input type="hidden" name="product_sample" value="<?php echo $sampleProduct->getId() ?>"/>
                 <input type="hidden" name="related_product" id="related-products-field" value=""/>
@@ -301,10 +301,10 @@ if ($_product->getSizeSample() == 1) {
     <?php endif; ?>
 
     <?php if(!$isCustomOptions):?>
-    <form action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <form class="w-100" action="<?php echo $this->getSubmitUrl($_product).'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <?php else:?>
     <?php //for parent child?>
-    <form action="<?php echo $this->getSubmitUrl($_product)//.'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <form class="w-100" action="<?php echo $this->getSubmitUrl($_product)//.'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <?php endif;?>
 
         <div class="no-display">
@@ -315,7 +315,7 @@ if ($_product->getSizeSample() == 1) {
         	<input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
         </div>
 
-        <div class="product-view-left">
+        <div class="product-view-left col-8">
             <div class="product-img-box">
                 <div id="galleria" class="mediaGallery">
                     <?php echo $this->getChildHtml('media') ?>
@@ -389,20 +389,9 @@ if ($_product->getSizeSample() == 1) {
                 }
 
             </script>
-
-            <div class="product-collateral">
-                <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html): ?>
-                    <div class="box-collateral <?php echo "box-{$alias}" ?>">
-                        <?php if ($title = $this->getChildData($alias, 'title')): ?>
-                            <h2><?php echo $this->escapeHtml($title); ?></h2>
-                        <?php endif;?>
-                        <?php echo $html; ?>
-                    </div>
-                <?php endforeach;?>
-            </div>
         </div>
 
-        <div class="product-shop <?php echo $_product->getTypeId() ?>">
+        <div class="col-lg-4 product-shop <?php echo $_product->getTypeId() ?>">
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
@@ -477,7 +466,17 @@ if ($_product->getSizeSample() == 1) {
             <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
                 <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
             <?php endif;?>
+        </div>
 
+        <div class="product-collateral col-12">
+            <?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html): ?>
+                <div class="row box-collateral <?php echo "box-{$alias}" ?>">
+                    <?php if ($title = $this->getChildData($alias, 'title')): ?>
+                        <h2><?php echo $this->escapeHtml($title); ?></h2>
+                    <?php endif;?>
+                    <?php echo $html; ?>
+                </div>
+            <?php endforeach;?>
         </div>
 
         <div class="clearer"></div>

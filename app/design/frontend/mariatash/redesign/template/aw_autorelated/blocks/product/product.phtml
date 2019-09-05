@@ -85,16 +85,16 @@ if ($this->getPosition() == AW_Autorelated_Model_Source_Position::INSTEAD_NATIVE
 
 ?>
 <?php if (($collection && $collection->getSize())) : ?>
-    <div class="block-title">
+    <div class="block-title col-12">
         <strong><span><?php echo $this->__('You may also like') ?></span></strong>
     </div>
-    <div class="image_carousel">
-        <ul id="foo4" style="overflow: hidden">
+    <div class="image_carousel col-12">
+        <ul class="row" id="foo4">
             <?php foreach ($collection as $product): ?>
                 <?php
                     $product = Mage::getModel('catalog/product')->load($product->getId());
                 ?>
-                <li class="item" style="width: 92px; height: 120px; margin: 0 8px 0 0;">
+                <li class="item col">
                     <a class="fancybox fancybox.iframe quickview-youmayalsolike" id='product-quickview-<?php echo $product->getId() ?>' href="<?php echo $product->getProductUrl() ?>">
                         <img  src="<?php echo $this->helper('catalog/image')->init($product, 'thumbnail')->resize(92, 120); ?>" alt="<?php echo $this->htmlEscape($product->getName()) ?>" width="92" height="120"/>
                     </a>
