@@ -217,6 +217,9 @@ a{
 a:hover{
 	text-decoration: none;
 }
+ul{
+	list-style: none;
+}
 
 /*Checkout Left Section (Steps)*/
 .checkout-step-name {
@@ -364,7 +367,7 @@ select:after{
 
 .login-dropdown {
   position: absolute;
-  width: 105px;
+  width: 137px;
   right: -56px;
   top: 20px;
 	padding-top: 10px;
@@ -385,6 +388,11 @@ select:after{
 }
 body{
   overflow-x: hidden !important;
+	height: 100%;
+}
+.wrapper{
+	min-height: 100%;
+	margin-bottom: -50px;
 }
 /*Aditya CSS_____Start*/
 /* :root {
@@ -683,8 +691,6 @@ nav.mariatash-header {
 }
 .footer {
     padding-top: 60px;
-    position: absolute;
-    bottom: 0;
     height: 60px;
     z-index: 1;
 }
