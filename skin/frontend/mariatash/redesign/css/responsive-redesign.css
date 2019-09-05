@@ -21,7 +21,7 @@
     padding: 20px 0 10px 0;
     margin: 20px auto 0 !important
   }
-  .footer-item-list:after {
+  .footer-item-list.data-block:after {
     background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
     content: '';
     height: 18px;
@@ -30,6 +30,9 @@
     position: absolute;
     right: 0;
     transform: rotate(90deg);
+  }
+  .footer-item-list.data-block.active:after {
+    transform: rotate(270deg);
   }
   .container-footlinks, .homepage-menu.mariatash-header {
     background: rgb(41, 41, 41);
