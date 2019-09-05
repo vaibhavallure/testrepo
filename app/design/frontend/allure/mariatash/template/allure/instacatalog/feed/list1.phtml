@@ -1,14 +1,14 @@
-<?php 
+<?php
 /**
  * Allure_InstaCatalog
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the MIT License
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://opensource.org/licenses/mit-license.php
- * 
+ *
  * @category    Allure
  * @package     Allure_InstaCatalog
  * @copyright   Copyright© 2016, Allure Inc
@@ -20,7 +20,7 @@
  */
 ?>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
-<?php 
+<?php
     $post_type = Mage::getStoreConfig('allure_instacatalog/feed/feed_type');
     $user_id = Mage::getStoreConfig('allure_instacatalog/feed/user_id');
     $access_token = Mage::getStoreConfig('allure_instacatalog/feed/access_token');
@@ -35,20 +35,20 @@
     $client_id = Mage::getStoreConfig('allure_instacatalog/feed/client_id');
     $resolution = Mage::getStoreConfig('allure_instacatalog/feed_features/resolution');
     $filter_feeds = Mage::getStoreConfig('allure_instacatalog/feed/filter_feeds');
-    
+
     //Mage::getModel('allure_instacatalog/cron')->syncFeeds();
-    
+
 ?>
-<?php 	
+<?php
 	$date = Mage::getModel('allure_instacatalog/feed');
 	$collection = $date->getCollection();
 	$localData = array();
-	
+
 	foreach($collection as $date_to) {
 		$localData[$date_to->getMediaId()] = $date_to->getData();
 	}
 ?>
-<div id="shop_our_instagram">
+<div id="shop_our_instagram" class="insta-custom-container">
 	<script type="text/javascript">
 		var localData = {};
 		<?php if (isset($localData) && !empty($localData)):?>
@@ -56,7 +56,7 @@
 		<?php endif;?>
 	</script>
 	<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'allure/instacatalog/instafeed.js';?>"></script>
-	
+
 <?php if(!$filter_feeds): ?>
 	<div class="shop-instagram page-title category-title">
 		<h1>SHOP OUR INSTAGRAM</h1>
@@ -64,7 +64,7 @@
     <div id="instagram_posts" class="instacatalog_feeds instagram_posts"></div>
     <div id="load-more">Load More...</div>
     <script type="text/javascript">
-	
+
     	<?php $instagram_logo = $this->getSkinUrl('images/instacatalog/instagram-logo.png');?>
         var instagram_post = instagram_post_image = instagram_caption = instagram_shop = instagram_shop_icon = instagram_shop_button = '';
     	instagram_post_image = '<div class="instagram_post_image"><img src="{{image}}" /></div>';
@@ -72,8 +72,8 @@
         <?php if($link_posts){ ?>
             instagram_shop_button = '<a id="shop-{{id}}" class="instagram_shop_button" href="{{link}}" target="_blank"><span class="shop-it-button">SHOP IT</span></a>';
         <?php } ?>
-        <?php if($caption){?> 
-        	instagram_caption = '<div class="instagram_caption"><span class="instagram_caption_text">{{caption}}</span></div>'; 
+        <?php if($caption){?>
+        	instagram_caption = '<div class="instagram_caption"><span class="instagram_caption_text">{{caption}}</span></div>';
         <?php }?>
         instagram_shop = '<div class="instagram_shop">'+instagram_shop_icon+instagram_shop_button+'</div>';
         instagram_post = '\
@@ -130,7 +130,7 @@
     		<?php if(0):?>
             <div class="post-list-container">
                 <?php foreach ($_posts as $_post) : ?>
-                    <?php 
+                    <?php
                             $media_id = $_post->getMediaId();
                             /* Call Instagram API */
                             $url = 'https://api.instagram.com/v1/media/'.$media_id.'?access_token='.$access_token;
@@ -157,22 +157,22 @@
                 <?php endforeach;?>
             </div>
             <?php endif;?>
-            
+
             <div id="instagram_posts" class="instacatalog_feeds instagram_posts">
-            <?php foreach ($_posts as $_post) : 
+            <?php foreach ($_posts as $_post) :
             		$media_id = $_post->getMediaId();
             		$username = $_post->getUsername();
             		$class_css = "post_item_with_link";
-            		if (strpos($username,'instagram') !== false) 
+            		if (strpos($username,'instagram') !== false)
             			$class_css = "post_item_without_link";
             		$instagramObj = unserialize($_post->getInstagramData());
             ?>
             	<div id="main_<?php echo $media_id?>" class="instagram-post individual-post col-sm-4 col-xs-6 col-xxs-12 post_item <?php echo $class_css?>">
-            		<div class="instagram_post_wrapper">               		
+            		<div class="instagram_post_wrapper">
             			<div class="instagram_post_image">
             				<img src="<?php echo $instagramObj->images->$resolution->url?>">
-            			</div>               		
-            			<div class="instagram_post_overlay">               			
+            			</div>
+            			<div class="instagram_post_overlay">
             				<div class="instagram_shop">
             					<div>
             						<i onclick="instagramView.show(this);" media-id="<?php echo $media_id?>" class="fa fa-instagram"></i>
@@ -180,17 +180,17 @@
             					<a id="shop-<?php echo $media_id?>" class="instagram_shop_button" href="<?php echo $username?>" target="_blank">
             						<span class="shop-it-button">SHOP IT</span>
             					</a>
-            				</div>               		
-            			</div>               	               
-            		</div>            
-            	</div>               		
+            				</div>
+            			</div>
+            		</div>
+            	</div>
             <?php endforeach;?>
-            </div>   
-            
+            </div>
+
     <?php else : ?>
         <?php echo Mage::helper('allure_instacatalog')->__('There are no posts at this moment');?>
     <?php endif;?>
-   
+
 <?php endif; ?>
 </div>
 
