@@ -272,6 +272,12 @@
   .five-col{
     width: 50%;
   }
+  #slide-list{
+    top: 780px !important;
+  }
+  #controls{
+    height: 840px;
+  }
 }
 
 
@@ -402,6 +408,12 @@
   }
   .five-col{
     width: 100%;
+  }
+  #slide-list{
+    top: 490px !important;
+  }
+  #controls{
+    height: 517px;
   }
 }
 
