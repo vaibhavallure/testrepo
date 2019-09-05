@@ -267,7 +267,7 @@ jQuery(document).ready(function() {
 
 
     });
-    jQuery('.main_menu').click(function(){
+    jQuery('.mobile-main_menu .main_menu').click(function(){
         var section_id='.'+jQuery(this).attr('data-id');
         jQuery('section.sub-menu').hide();
         jQuery(section_id).show();
