@@ -894,7 +894,7 @@ img.snize-item-image[src^=data]::after {
     font-weight: bold;
     line-height: 1.63636363636;
 } */
-#resetpassword_msg_div{
+/* #resetpassword_msg_div{
     text-align: left;
     margin-bottom: 5px;
     display: none;
@@ -903,9 +903,9 @@ img.snize-item-image[src^=data]::after {
     margin: auto;
     color: #830000;
     font-size: 12px;
-   /*  font-weight: bold; */
+   /*  font-weight: bold;
     line-height: 1.63636363636;
-}
+} */
 /* .popupLoginModel .submit-login{
     float: right;
 }

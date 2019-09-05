@@ -2260,7 +2260,10 @@ span#popup_loader_register {
 	line-height: 13px;
 }
 
-
+/* Product Details CSS */
+ul#foo4 {
+    min-width: 100%;
+}
 
 /* Temperory */
 #narrow-by-list .filtru-price dd{

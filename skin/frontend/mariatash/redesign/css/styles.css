@@ -374,9 +374,9 @@ svg
 /*
  * Addresses margin not present in IE6/7/8/9, S5, O11
  */
-figure {
+/* figure {
 	margin: 0;
-}
+} */
 
 /* =============================================================================
    Forms
@@ -385,9 +385,9 @@ figure {
 /*
  * Corrects margin displayed oddly in IE6/7
  */
-form {
+/* form {
 	margin: 0;
-}
+} */
 
 /*
  * Define consistent border, margin, and padding
@@ -398,31 +398,31 @@ form {
  * 2. Corrects text not wrapping in FF3
  * 3. Corrects alignment displayed oddly in IE6/7
  */
-legend {
+/* legend {
 	border: 0;
 	padding: 0;
 	white-space: normal;
 	*margin-left: -7px;
-}
+} */
 
 /*
  * 1. Corrects font size not being inherited in all browsers
  * 2. Addresses margins set differently in IE6/7, FF3+, S5, Chrome
  * 3. Improves appearance and consistency in all browsers
  */
-button, input, select, textarea {
+/* button, input, select, textarea {
 	font-size: 100%;
 	margin: 0;
 	vertical-align: baseline;
 	*vertical-align: middle;
-}
+} */
 
 /*
  * Addresses FF3/4 setting line-height on 'input' using !important in the UA stylesheet
  */
-button, input {
+/* button, input {
 	line-height: normal;
-}
+} */
 
 /*
  * 1. Improves usability and consistency of cursor style between image-type 'input' and others
@@ -484,38 +484,38 @@ input[type="radio"]:checked+label {
  * 1. Addresses appearance set to searchfield in S5, Chrome
  * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)
  */
-input[type="search"] {
-	-webkit-appearance: textfield; /* 1 */
+/* input[type="search"] {
+	-webkit-appearance: textfield; /* 1
 	-moz-box-sizing: content-box;
-	-webkit-box-sizing: content-box; /* 2 */
+	-webkit-box-sizing: content-box; /* 2
 	box-sizing: content-box;
-}
+} */
 
 /*
  * Removes inner padding and search cancel button in S5, Chrome on OS X
  */
-input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button
+/* input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button
 {
 	-webkit-appearance: none;
-}
+} */
 
 /*
  * Removes inner padding and border in FF3+
  * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/
  */
-button::-moz-focus-inner, input::-moz-focus-inner {
+/* button::-moz-focus-inner, input::-moz-focus-inner {
 	border: 0;
 	padding: 0;
-}
+} */
 
 /*
  * 1. Removes default vertical scrollbar in IE6/7/8/9
  * 2. Improves readability and alignment in all browsers
  */
-textarea {
-	overflow: auto; /* 1 */
-	vertical-align: top; /* 2 */
-}
+/* textarea {
+	overflow: auto; /* 1
+	vertical-align: top; /* 2
+} */
 
 /* =============================================================================
    Tables
@@ -524,14 +524,14 @@ textarea {
 /*
  * Remove most spacing between table cells
  */
-table {
+/* table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
 
 input:-webkit-autofill {
 	background-color: #FAFFBD !important;
-}
+} */
 
 /****** END Normalization *****************************************************************************/
 
@@ -559,27 +559,27 @@ input:-webkit-autofill {
 	height: 0;
 }
 
-* html .clearfix {
+/* * html .clearfix {
 	height: 1%;
-}
+} */
 /*---- End ClearFix ---------------------------------------*/
-body {
+/* body {
 	position: relative;
-	font: 75%/1.5 /*12/18*/ Arial, Helvetica, sans-serif;
+	font: 75%/1.5 /*12/18 Arial, Helvetica, sans-serif;
 	color: #3f4048;
 	background: #dedede;
 	padding: 0;
 	margin: 0;
-}
+} */
 
-img {
+/* img {
 	border: 0;
 	vertical-align: top;
 }
 
 a, object, embed {
 	outline: 0;
-}
+} */
 
 /* a {
 	text-decoration: none;
@@ -587,21 +587,21 @@ a, object, embed {
 	color: #906E39;
 } */
 
-a:hover {
+/* a:hover {
 	text-decoration: underline;
 
 }
 
 a:focus {
 	outline: 0;
-	/* color: #ecc388; */
+	/* color: #ecc388;
 }
 
-.account-login a, .my-account  a {
-	/* text-decoration: underline;
-	color: #3f4048; */
+/*.account-login a, .my-account  a {
+	text-decoration: underline;
+	color: #3f4048;
 	font-size: 12px;
-}
+} */
 
 /* Headings */
 /* h1, h2, h3, h4, h5, h6 {
@@ -626,21 +626,21 @@ a:focus {
 	line-height: 1.285714286;
 	font-family: dinmittelschriftregular;
 } /* 36/28 */
-h3 {
+/* h3 {
 	font-size: 15px;
 	line-height: 1.636363636;
 	font-family: dinmittelschriftregular;
-} /* 36/22 */
+} /* 36/22
 h4 {
 	font-size: 18px;
 	line-height: 1;
 	font-family: Arial, Helvetica, sans-serif;
-} /* 18/18 */
+} /* 18/18
 h5 {
 	font-size: 15px;
 	line-height: 1.2;
 	font-family: Arial, Helvetica, sans-serif;
-} /* 18/15 */
+} /* 18/15
 h6 {
 	font-size: 13px;
 	line-height: 1.384615385;
@@ -693,8 +693,8 @@ h6 {
 }
 /****/
 /* Table */
-table {
-	border: 0; /*border-collapse:collapse;*/
+/* table {
+	border: 0; /*border-collapse:collapse;
 	border-spacing: 0;
 	empty-cells: show;
 	font-size: 100%;
@@ -704,18 +704,18 @@ caption, th, td {
 	vertical-align: top;
 	text-align: left;
 	font-weight: normal;
-}
+} */
 
 /* Content */
-p {
+/* p {
 	margin: 9px 0;
-}
+} */
 
-strong {
+/* strong {
 	font-weight: bold;
-}
+} */
 
-.multiple-checkout strong {
+/* .multiple-checkout strong {
 	font-weight: normal !important;
 }
 
@@ -729,11 +729,11 @@ cite {
 
 q, blockquote {
 	quotes: none;
-}
+} */
 
-q:before, q:after {
+/* q:before, q:after {
 	content: '';
-}
+} */
 
 /*
 small         { font-size:1em; }
@@ -743,11 +743,11 @@ big           { font-size:1.15em; }
  */
 
 /* Lists */
-ul, ol, dl, dt, dd {
+/* ul, ol, dl, dt, dd {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-}
+} */
 
 /* Tools */
 .hidden {
@@ -762,7 +762,7 @@ ul, ol, dl, dt, dd {
 	overflow: hidden !important;
 }
 
-.nobr {
+/* .nobr {
 	white-space: nowrap !important;
 }
 
@@ -780,9 +780,9 @@ ul, ol, dl, dt, dd {
 
 .a-center em {
 	font-style: normal !important
-}
+} */
 
-.a-right {
+/* .a-right {
 	text-align: right !important;
 }
 
@@ -792,9 +792,9 @@ ul, ol, dl, dt, dd {
 
 .v-middle {
 	vertical-align: middle;
-}
+} */
 
-.f-left, .left {
+/* .f-left, .left {
 	float: left !important;
 	margin-right: 10px;
 }
@@ -811,9 +811,9 @@ ul, ol, dl, dt, dd {
 .f-fix {
 	float: left;
 	width: 100%;
-}
+} */
 
-.f-fix ul {
+/* .f-fix ul {
 	float: left;
 	width: 100%;
 	height: 176px;
@@ -829,9 +829,9 @@ ul, ol, dl, dt, dd {
 
 .no-padding {
 	padding: 0 !important;
-}
+} */
 
-.no-bg {
+/* .no-bg {
 	background: none !important;
 }
 
@@ -842,7 +842,7 @@ ul, ol, dl, dt, dd {
 
 .cf:after {
 	clear: both;
-}
+} */
 
 /* ======================================================================================= */
 /* ===country wjzr=== */
@@ -1076,10 +1076,10 @@ ul#tld_r_ul li:hover {
 	height: auto;
 }
 
-.box-awautorelated2 .image_carousel, .block-viewed .image_carousel {
+/* .box-awautorelated2 .image_carousel, .block-viewed .image_carousel {
 	padding: 0;
 	overflow: hidden;
-}
+} */
 
 .box-awautorelated2 .image_carousel .caroufredsel_wrapper, .block-viewed .image_carousel .caroufredsel_wrapper
 {
@@ -1211,16 +1211,16 @@ px      40    100    160    220    280    340    400    460    520    580   640 
 	height: 100%
 }
 
-.page { /*min-height: 880px;*/
+/* .page { /*min-height: 880px;
 	background: none;
-	/*height:100%;*/
+	/*height:100%;
 	width: 100%;
 	padding: 0;
 	border: none;
 	/*min-height: 100%;*/
 	/*height: auto !important;*/
-	/*height: 100%;*/
-}
+	/*height: 100%;
+} */
 
 .wrapper {
 	width: 100%;
@@ -2935,9 +2935,9 @@ p.back-link {
 	width: 82px;
 }
 
-.gallery .btnFullscreen {
+/* .gallery .btnFullscreen {
 	padding: 2px 12px !important;
-}
+} */
 
 .galleryFull .btnExitfull {
 	padding: 3px 15px !important;
@@ -6861,10 +6861,10 @@ textarea:focus, input:focus {
 
 /* Product View ========================================================================== */
 /* Rating */
-.catalog-product-view .col1-layout .col-main {
+/* .catalog-product-view .col1-layout .col-main {
 	margin-bottom: 0;
 	min-height: 750px;
-}
+} */
 
 .catalog-product-view  #facybox .body {
 	background: #DEDEDE;
@@ -7510,9 +7510,9 @@ f /********** Product Prices > */
 
 }
 
-.product-collateral .box-awautorelated2 { margin-top:-25px;/* 20px; */
+/* .product-collateral .box-awautorelated2 { margin-top:-25px;/* 20px;
 	margin-bottom: 0px;
-}
+} */
 
 .product-collateral select, .add-to-cart .input-text.qty {
 	padding: 3px;
@@ -7644,17 +7644,17 @@ div.styled {
 	width: 100%; /* margin:0 auto;*/
 }
 
-.col1-layout .product-view {
+/* .col1-layout .product-view {
 	width: 964px;
 	margin: 0 auto 60px auto;
-}
+} */
 
-.col1-layout .product-view .product-img-box, .col1-layout .product-view .product-view-left
+/* .col1-layout .product-view .product-img-box, .col1-layout .product-view .product-view-left
 {
 	float: left; /*width:49%;*/
-	width: 475px;
+	/* width: 475px;
 	margin-right: 0px;
-}
+} */
 
 .col2-left-layout .product-view .product-img-box, .col2-right .product-view .product-img-box
 {
@@ -12886,7 +12886,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	text-transform: uppercase;
 }
 
-.box-awautorelated2 .block-title, .block-viewed .block-title,
+/* .box-awautorelated2 .block-title, .block-viewed .block-title,
 .my-account .box .box-title, .my-account .page-title {
 	background: #D1D1D1;
 	height: 34px;
@@ -12896,7 +12896,7 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-}
+} */
 
 .customer-account-index .box-address-book .col2-set .box .col-2 {
 	width: 230px;
@@ -12911,9 +12911,9 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	margin-top: 5px;
 }
 
-.box-awautorelated2 .block-title, .block-viewed .block-title {
+/* .box-awautorelated2 .block-title, .block-viewed .block-title {
 	text-align: left;
-}
+} */
 
 .my-account .box .box-title h3, .my-account .box .box-title h4,
 .my-account .page-title h1, .my-account .order-items h2.table-caption,
@@ -13002,17 +13002,17 @@ div.my-account form#form-validate div.fieldset ul.form-list,
 	padding: 5px 10px;
 }
 
-.box-awautorelated2 .block-title strong, .block-viewed .block-title strong
+/* .box-awautorelated2 .block-title strong, .block-viewed .block-title strong
 {
 	font: normal 13px/19.5px Arial, Helvetica, sans-serif;
 	text-transform: uppercase;
-}
+} */
 
-.box-awautorelated2 .block-title strong, .block-viewed .block-title strong
+/* .box-awautorelated2 .block-title strong, .block-viewed .block-title strong
 {
 	float: none;
 	padding: 0;
-}
+} */
 /*.my-account .box .box-title a { font-size:10px; text-decoration:underline; color:#666; }*/
 .my-account .box>p, .my-account .box .box-content {
 	padding: 0 10px;
@@ -16720,7 +16720,7 @@ px      40    100    160    220    280    340                        */
 	padding: 5px 10px 7px 10px;
 }
 
-.lt-ie9 .btn-quickview:hover, .lt-ie9 .form-subscribe-mt button.button:hover,
+/* .lt-ie9 .btn-quickview:hover, .lt-ie9 .form-subscribe-mt button.button:hover,
 .lt-ie9 .gallery .btnFullscreen:hover, .lt-ie9 .gallery .btnClose:hover,
 .lt-ie9 .galleryFull .btnExitfull:hover, .lt-ie9 .quickview-index-index button.viewProductDetailsBtn:hover,
 .lt-ie9 .customer-account-login .forgot button.button:hover, .lt-ie9 .checkout-multishipping-login .forgot button.button:hover,
@@ -16733,7 +16733,7 @@ px      40    100    160    220    280    340                        */
 .lt-ie9 .discount-form .buttons-set button.button_coupon:hover, .lt-ie9 .coupon a.button_coupon:hover
 {
 
-}
+} */
 
 .lt-ie9 .form-search button.button {
 	-pie-background: none;
@@ -16943,10 +16943,10 @@ li.item h2.product-name {text-align: center;}
 	line-height: 20px;
 }
 
-.product-collateral {
+/* .product-collateral {
 	border-top: 1px solid #d1d1d1;
 	margin-top: 12px;
-}
+} */
 
 .product-view-left .product-collateral {
 	clear: both;
@@ -16966,9 +16966,9 @@ li.item h2.product-name {text-align: center;}
 	margin: 0 auto !important;
 }
 
-.jcarousel-clip {
+/* .jcarousel-clip {
 	overflow: hidden;
-}
+} */
 
 /* ul.products-grid {
 	margin-left: auto;
@@ -17367,9 +17367,9 @@ ul.products-grid2 {
 	padding-bottom: 3px !important;
 }
 
-.catalog-product-view .page-title {
+/* .catalog-product-view .page-title {
 	margin: -5px 0 2px;
-}
+} */
 
 #print {
 	margin-right: 0 !important;
@@ -17978,26 +17978,26 @@ ul.products-grid2 {
 
 }
 
-.block-viewed li.recentview, .box-awautorelated2 .image_carousel li.item
+/* .block-viewed li.recentview, .box-awautorelated2 .image_carousel li.item
 {
-	background: #757881; /* Old browsers */
+	background: #757881; /* Old browsers 
 	background: -moz-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* FF3.6+ */
+	/* FF3.6+
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(13%, #757881),
 	color-stop(49%, #b5bbc9), color-stop(99%, #b5bbc9));
-	/* Chrome,Safari4+ */
+	/* Chrome,Safari4+
 	background: -webkit-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* Chrome10+,Safari5.1+ */
+	/* Chrome10+,Safari5.1+
 	background: -o-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* Opera 11.10+ */
+	/* Opera 11.10+
 	background: -ms-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* IE10+ */
+	/* IE10+
 	background: linear-gradient(to bottom, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
-	/* W3C */
+	/* W3C
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#757881',
-	endColorstr='#b5bbc9', GradientType=0); /* IE6-9 */
+	endColorstr='#b5bbc9', GradientType=0); /* IE6-9
 	text-align: center;
-}
+} */
 
 .cart_price {
 	line-height: 130%;
@@ -18634,9 +18634,9 @@ h2.products-look-msg {
 	list-style: decimal;
 }
 
-.catalog-product-view .product-collateral .image_carousel {
+/* .catalog-product-view .product-collateral .image_carousel {
 	min-width: 474px;
-}
+} */
 
 @media only screen and (max-width: 1180px) {
 	.toolbar .sorter .view-mode label {
@@ -19111,13 +19111,13 @@ h2.products-look-msg {
 	width: 98%;
 }
 
-.block-title strong {
+/* .block-title strong {
 	padding: 0;
-}
+} */
 
-.block-title {
+/* .block-title {
 	background: none;
-}
+} */
 /**
  * @category    Mana
  * @package     ManaPro_FilterAjax
