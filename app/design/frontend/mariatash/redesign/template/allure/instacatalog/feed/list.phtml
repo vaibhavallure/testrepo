@@ -48,7 +48,7 @@
 		$localData[$date_to->getMediaId()] = $date_to->getData();
 	} */
 ?>
-<div id="shop_our_instagram">
+<div id="shop_our_instagram" class="insta-custom-container">
 	<script type="text/javascript">
 		//var localData = {};
 		<?php //if (isset($localData) && !empty($localData)):?>
@@ -158,8 +158,8 @@
             </div>
             <?php endif;?>
 
-            <div id="fs_640691" style="" class="fs-wide-timeline  fs-desktop fs-wrapper fs-showcase_v2">
-				<div id="fs-timeline-640691" class="fs-timeline">
+            <div id="fs_640691" style="" class="fs-wide-timeline  fs-desktop fs-wrapper fs-showcase_v2 col-12">
+				<div id="fs-timeline-640691" class="fs-timeline row">
             <?php foreach ($_posts as $_post) :
             		$mediaId = $_post->getId();//getMediaId();
             		$username = $_post->getUsername();
@@ -217,7 +217,7 @@
             		}
             ?>
 
-				<div class="fs-entry-container">
+				<div class="fs-entry-container col-lg-4">
 					<div id="fs-post-<?php echo $mediaId?>" class="fs-timeline-entry" onclick="instagramView.show(this);" media-id="<?php echo $mediaId?>"
 						style="cursor: pointer; background-image: url(<?php echo $_post->getStandardResolution()?>);">
 						<div class="fs-text-container">

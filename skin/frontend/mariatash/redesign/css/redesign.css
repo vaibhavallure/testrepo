@@ -1723,12 +1723,16 @@ input[type="checkbox"]:checked+label:before {
 }
 
 /* Catalog Page CSS */
-.products-grid li.item .list-mt-w, .grid-mt-w{
-    position: absolute;
-    bottom: 0;
+.products-grid li.item .list-mt-w{
+  position: absolute;
+  bottom: 0;
 }
+.grid-mt-w{
+	bottom: 15px;
+	position: absolute;
+ }
 .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover {
-    background: transparent;
+  background: transparent;
 }
 .five-col{
   width: 20%;
@@ -1738,7 +1742,7 @@ input[type="checkbox"]:checked+label:before {
   position: relative;
 }
 .catalog-common-grid{
-  /* padding: 19px; */
+  padding: 19px 0;
   /* margin-top: 13px; */
 	margin-bottom: 0;
 }
@@ -2203,6 +2207,10 @@ span#popup_loader_register {
 /* Press Page CSS */
 .press-custom-container{
 	max-width: 1018px !important;
+  margin: 0 auto;
+}
+.insta-custom-container {
+  width: 1040px;
   margin: 0 auto;
 }
 .press-title {
