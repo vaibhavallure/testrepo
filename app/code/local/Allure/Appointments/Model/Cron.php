@@ -327,6 +327,19 @@ class Allure_Appointments_Model_Cron extends Mage_Core_Model_Abstract
     {
             foreach ($appCollection as $app)
             {
+                $date=Mage::getModel('core/date')->Date('Y-m-d H:i:s');
+
+                $dStart = new DateTime($app->getLastNotified());
+                $dEnd  = new DateTime($date);
+                $dDiff = $dStart->diff($dEnd);
+                $dDiff->format('%R'); // use for point out relation: smaller/greater
+                $dDiff->days;
+                    if ($dDiff->days <= 0)
+                        continue;
+
+                $app->setLastNotified($date);
+                $app->save();
+
                 Mage::helper('appointments/notification')->sendEmailNotification($app, $reminder_type);
                 Mage::helper('appointments/notification')->sendSmsNotification($app, $reminder_type);
             }

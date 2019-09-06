@@ -38,7 +38,7 @@ if ($model) {
                         <div class="col-md-12">
                             <p class="xpaces translate-popup"><?php echo $this->__('Book Your Appointment') ?></p>
                         </div>
-                            <a href="#" id="btnPriceList" class="text-capitalize">View Price List</a>
+                            <a href="#" id="btnPriceList" class="text-capitalize translate-popup">View Price List</a>
                         <div id="people-box" class="people form-group col-12">
                             <div id="people-wrapper" class="people-wrapper form-group col-12 p-0">
                                 <div class="col-12 p-0">
@@ -91,7 +91,7 @@ if ($model) {
                                                            value="1" name="customer[<?= $customer_count ?>][checkup]"
                                                         <?= ($customer->getCheckup() == 1) ? 'checked' : ''; ?>
                                                     >
-                                                    <label class="label translate-popup" for="checkup_select_<?= $customer_count ?>"><?php echo $this->__('Checkup') ?></label>
+                                                    <label class="label translate-popup" for="checkup_select_<?= $customer_count ?>"><?php echo $this->__('Checkup/downsize') ?></label>
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="customer_select" value="<?= (($customer->getPiercing() > 0) || $customer->getCheckup()>0)? '1':'';?>" id="customer_select_<?= $customer_count ?>"
@@ -144,7 +144,7 @@ if ($model) {
                                             <div class="col-md-6  col-8">
                                                 <input type="checkbox" class="checkup_select clschk" value="1" data-no="1" id="checkup_select_1"
                                                        name="customer[1][checkup]">
-                                                <label class="label translate-popup" for="checkup_select_1"><?php echo $this->__('Checkup') ?></label>
+                                                <label class="label translate-popup" for="checkup_select_1"><?php echo $this->__('Checkup/downsize') ?></label>
                                             </div>
                                             <div class="col-12">
                                             <input type="text" class="customer_select" value="" id="customer_select_1"
@@ -238,7 +238,7 @@ if ($model) {
                                                         <label class="label translate-popup m-0 mt-1" for="em<?= $customer_count ?>">Email</label>
                                                     </div>
                                                     <div class="col-md-12 notify-label p-0">
-                                                        <input type="checkbox" id="c<?= $customer_count ?>"
+                                                        <input type="checkbox" class="noti_sms" id="c<?= $customer_count ?>"   data-section_id="<?= $customer_count ?>"
                                                                name="customer[<?= $customer_count ?>][noti_sms]" <?= ($customer->getSmsNotification()) ? 'checked' : '' ?>>
                                                         <label class="label translate-popup" for="c<?= $customer_count ?>">Text Message (Message and data rates may apply)</label>
                                                     </div>
@@ -303,7 +303,7 @@ if ($model) {
                                                     <label class="label translate-popup m-0 mt-1" for="em1"><?php echo $this->__('Email') ?></label>
                                                 </div>
                                                 <div class="col-md-12 notify-label p-0">
-                                                    <input type="checkbox" id="c1" name="customer[1][noti_sms]">
+                                                    <input class="noti_sms" type="checkbox" id="c1" data-section_id="1" name="customer[1][noti_sms]">
                                                     <label class="label translate-popup" for="c1"><?php echo $this->__('Text Message (Message and data rates may apply)') ?></label>
                                                 </div>
                                             </div>

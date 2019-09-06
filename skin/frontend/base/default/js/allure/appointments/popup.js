@@ -1,12 +1,12 @@
 const translation = {
     "fr": {
-        "Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash",
+        "Shop the fine Jewellery collections and experience Luxury Piercing and custom styling.": "Venez découvrir à Maria Tash Le Bon Marché Paris, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash",
         "FIRST NAME*": "Prénom*",
         "LAST NAME*": "Nom*",
-        "Text Message (Message and data rates may apply)": "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
-        "Text Message (<em>Message and data rates may apply</em>)": "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)",
+        "Text Message (Message and data rates may apply)": "SMS <br>(des frais de communication peuvent être appliqués)",
+        "Text Message (<em>Message and data rates may apply</em>)": "SMS <br>(des frais de communication peuvent être appliqués)",
         "Maria Tash x Le Bon<br> Marché Pop-up": "En exclusivité au Bon Marché",
-        "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of jewelry combined to best flatter the wearer. The brand’s unique approach to piercing and styling  makes it one of the most coveted brands today. Shop the fine jewelry collections and experience Luxury Piercing and custom styling.": "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grace notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.",
+        "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of Jewellery combined to best flatter the wearer. The brand’s unique approach to piercing and styling  makes it one of the most coveted brands today. Shop the fine Jewellery collections and experience Luxury Piercing and custom styling.": "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grâce notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir à Maria Tash Le Bon Marché Paris, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.",
         "Monday": "Lundi",
         "Tuesday": "Mardi",
         "Wednesday": "Mercredi",
@@ -19,28 +19,26 @@ const translation = {
         "20th October":"20 Octobre",
         "31st August":"31 Août",
         "Booking & Pricing": "réservation et prix",
-        "BOOK NOW": "RESERVEZ UN RENDEZ-VOUS DÈS",
+        "BOOK NOW": "RESERVEZ UN RENDEZ-VOUS",
         "POP-UP INFORMATION": "Informations sur l'événement",
-        "POP UP INFORMATION": "Informations sur l'événement",
-        "POP-UP INFO": "Informations sur l'événement",
         "BOOKING & PRICING": "réservation et prix",
         "ABOUT MARIA TASH": "À PROPOS DE MARIA TASH",
-        "Book Your Appointment": "Prendre Rendez-vous",
+        "Book Your Appointment": "Prendre rendez-vous",
         "Number of people in your party:": "Nombre de personne dans votre groupe:",
         "CONFIRM": "Confirmer",
-        "A native New Yorker, Tash studied Astronomy at Columbia University before moving to study abroad in London. It was there that her love of fine jewelry, which was instilled in her at a young age by her mother, was fused with her passion for piercings. Tash began her career creating custom navel jewelry, and opened her first studio, Venus Modern Body Art, in 1993 in the East Village of New York.": "D’origine américaine, Maria Tash est née à New York, elle a commencé par étudier l’Astronomie à l’université de Columbia avant de partir faire des études dans la mode à Londres. C’est à ce moment-là qu’elle a développée son gout pour la joaillerie de luxe, une passion initiée dès son enfance par sa mère, et l’a fusionné avec son autre passion : le piercing. Maria Tash a ainsi débuté sa carrière dans la création de bijoux spécifiquement pour le nombril et a ouvert son premier atelier, Venus Modern Body Art, en 1993 dans l’East Village à New York.",
+        "A native New Yorker, Tash studied Astronomy at Columbia University before moving to study abroad in London. It was there that her love of fine Jewellery, which was instilled in her at a young age by her mother, was fused with her passion for piercings. Tash began her career creating custom navel Jewellery, and opened her first studio, Venus Modern Body Art, in 1993 in the East Village of New York.": "D’origine américaine, Maria Tash est née à New York, elle a commencé par étudier l’Astronomie à l’université de Columbia avant de partir faire des études dans la mode à Londres. C’est à ce moment-là qu’elle a développée son gout pour la joaillerie de luxe, une passion initiée dès son enfance par sa mère, et l’a fusionné avec son autre passion : le piercing. Maria Tash a ainsi débuté sa carrière dans la création de bijoux spécifiquement pour le nombril et a ouvert son premier atelier, Venus Modern Body Art, en 1993 dans l’East Village à New York.",
         "Do I need to book an appointment?": "Dois-je prendre rendez-vous ?",
         "Appointments are preferred for piercings but walk-ins are always welcome.  Appointments are not required for fittings and installs.": "Les rendez-vous pour les piercings sont recommandés mais pas obligatoires. Pensez à vous présenter quelques temps avant votre rendez-vous afin de vous laisser le temps de choisir votre style et vos bijoux. Les installations et ajustements se font sans rendez-vous.",
-        "Can I be pierced with my own jewelry?": "Puis-je me faire percer avec mes propres bijoux ?",
-        "Due to sterilization needs, we do not pierce with jewelry that is not Maria Tash. The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.": "En raison des besoins de stérilisation, nous n’utilisons pas d’autres bijoux que ceux de Maria Tash. La meilleure sélection de notre collection sera disponible pour les installations et les piercings. Tous nos bijoux sont en or et se déclinent en différente couleur : jaune, blanc, rose et noir.",
+        "Can I be pierced with my own Jewellery?": "Puis-je me faire percer avec mes propres bijoux ?",
+        "Due to sterilization needs, we do not pierce with Jewellery that is not Maria Tash. The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.": "En raison des besoins de stérilisation, nous n’utilisons pas d’autres bijoux que ceux de Maria Tash. La meilleure sélection de notre collection sera disponible pour les installations et les piercings. Tous nos bijoux sont en or et se déclinent en différente couleur : jaune, blanc, rose et noir.",
         "How many piercings can I get in one session?": "Combien de piercings puis-je me faire faire en une séance ?",
-        "We recommend up to 4 per session, but this is dependant on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.": "Nous recommandons un maximum de 4 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.",
+        "We recommend up to 4 per session, but this is dependent on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.": "Nous recommandons un maximum de 4 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.",
         "Can I be pierced if I am under 18?": "Puis-je me faire percer si j’ai moins de 18 ans ?",
         "Yes, we pierce lobes over the age of 8 and cartilage over the age of 16 but you must be accompanied by a parent or guardian and you both must bring ID with you.": "Oui, nous perçons les lobes des oreilles à partir de 8 ans et le cartilage à partir de 16 ans, mais vous devez être accompagné d’un parent ou d’un tuteur légal et munis d’une pièce d’identité.",
-        "What size jewelry works best for me?": "Quelle taille de bijoux me conviens le mieux ?",
-        "Our experience involves you pairing one-on-one with our stylists to completely guide you through your styling and piercing. There are multiple sizes to our jewelry, but our team will make sure that you are properly sized and confident.": "Afin de profiter pleinement de votre expérience à Maria Tash, nous vous proposons de vous laisser conseiller par nos stylistes et perceurs qui vous apporteront leur savoir-faire et expertise en fonction de vos gouts et de votre anatomie.",
+        "What size Jewellery works best for me?": "Quelle taille de bijoux me conviens le mieux ?",
+        "Our experience involves you pairing one-on-one with our stylists to completely guide you through your styling and piercing. There are multiple sizes to our Jewellery, but our team will make sure that you are properly sized and confident.": "Afin de profiter pleinement de votre expérience à Maria Tash, nous vous proposons de vous laisser conseiller par nos stylistes et perceurs qui vous apporteront leur savoir-faire et expertise en fonction de vos gouts et de votre anatomie.",
         "Can I be pierced if I’ve been drinking?": "Puis-je me faire percer si j’ai consommé de l’alcool?",
-        "If you are being pierced by us may we politely request that you refrain from consuming alcohol until after your appointment for health and safety reasons.": "Pour de raisons de santé et de sécurité, nous vous demandons de ne pas consommer d’alcool avant votre rendez-vous chez Maria Tash.",
+        "If you are being pierced by us may we politely request that you refrain from consuming alcohol until after your appointment for health and safety reasons.": "Pour de raisons de santé et de sécurité, nous vous demandons de ne pas consommer d’alcool avant votre rendez-vous à Maria Tash Le Bon Marché Paris.",
         "Sign Up for Our Newsletter": "INSCRIVEZ-VOUS À NOTRE NEWSLETTER",
         "sign up": "s'inscrire",
 //        "Text Message (<em>Message and data rates may apply</em>)": "Message texte(<em>Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages</em>)",
@@ -48,8 +46,8 @@ const translation = {
         "Last Name*": "Nom*",
         "Phone Number": "Numéro de téléphone",
         "I would like to be notified by:": "J'aimerais être averti par:",
-        "Jewelry starts at": "le prix des bijoux commence à ",
-        "jewelry starts at": "le prix des bijoux commence à ",
+        "Jewellery starts at": "le prix des bijoux commence à ",
+        "Jewellery starts at": "le prix des bijoux commence à ",
         "Frequently Asked Questions": "QUESTIONS FRÉQUEMMENT POSÉES",
         "Your Appointment on": "Votre demande de rendez-vous au",
         "at": "à ",
@@ -85,44 +83,48 @@ const translation = {
         "Sorry,Record not found !": "Désolé, ce fichier est introuvable",
         "Are you sure you want to cancel an scheduled appointment?": "Êtes-vous sûre de vouloir annuler votre rendez-vous ?",
         "Fail to connect, please check your internet connection": "Problème de connexion, veuillez vérifier votre connexion Internet et réessayer",
-        "Price List": "Liste de prix",
+        "Price List": "Liste des prix",
+        "View Price List": "Liste des prix",
         "Availability": "Disponibilité",
         "Total Time:": "Temps estimé :",
         "For parties of 5 or more, contact customer service": "Pour des groupes de plus de 4 personnes, veuillez contacter notre service clientèle.",
         "CUSTOMER": "CLIENT",
         "Type of Appointment:": "Type de rendez-vous:",
-        "Checkup": "Examination du piercing",
-        "FAQ": "QUESTIONS FRÉQUEMMENT POSÉES",
-        "For over two decades, Maria Tash has been revolutionizing the fine jewelry and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and jewelry, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.": "Depuis plus de deux décennies, Maria Tash révolutionne l'industrie de la bijouterie fine et du piercing en créant des designs innovants sous son label éponyme basé à New York. Avec une perspective unique qui vit au carrefour de la beauté, de la mode et des bijoux, Tash s'est taillé une position unique en tant que fondatrice et designer. Elle a développé une technique grâce à laquelle le style et l'anatomie uniques de chaque cliente déterminent sa combinaison idéale de clous et de boucles, combinés pour complémenter au mieux leur porteuse. L'art croise la science avec l'approche de Tash pour un design et un piercing guidés par son désir primordial de livrer non seulement le meilleur look mais un sentiment de beauté.",
+        "Checkup/downsize": "Examination du piercing",
+        "For over two decades, Maria Tash has been revolutionizing the fine Jewellery and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and Jewellery, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.": "Depuis plus de deux décennies, Maria Tash révolutionne l'industrie de la bijouterie fine et du piercing en créant des designs innovants sous son label éponyme basé à New York. Avec une perspective unique qui vit au carrefour de la beauté, de la mode et des bijoux, Tash s'est taillé une position unique en tant que fondatrice et designer. Elle a développé une technique grâce à laquelle le style et l'anatomie uniques de chaque cliente déterminent sa combinaison idéale de clous et de boucles, combinés pour complémenter au mieux leur porteuse. L'art croise la science avec l'approche de Tash pour un design et un piercing guidés par son désir primordial de livrer non seulement le meilleur look mais un sentiment de beauté.",
         "Earlobe": "Lobe de l’oreille",
         "Helix": "Hélix",
+        "Forward Helix":"Hélix avant",
         "Nostril": "Narine",
-        "Nipple": "Téton",
+        "Nipple": "Mamelon",
         "Navel": "Nombril",
+        "Conch":"Conque",
+        "Contraconch":"Contraconque",
         "Dermal": "Dermique",
         "hour": "heure",
+        "Eyebrow" :"Sourcil",
         "Language: English": "Langue: English",
         "Language: French": "Langue:  Français",
         "Maria Tash x Le Bon Marché Pop-up": "Maria Tash x Le Bon Marché Boutique Éphémère",
         "No of People in Group": "Nombre de personne dans votre groupe",
         "Customer information cannot be the same.  Please provide unique information for each customer.": "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente.",
         "Number of Piercings:": "Nombre de piercings:",
-        "Contact us anytime:":"Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :",
-        "Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.",
+        "Contact us anytime:":"Pour toute question concernant les piercings et les prises de rendez-vous, n’hésitez pas à nous contacter :",
+        "Appointments are recommended for piercings but are not necessary for Jewellery installations. Walk-ins welcome, based on availability.":"Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendez-vous sont limités en fonction des disponibilités.",
         "Appointment Id": "Rendez-vous",
         "Your scheduled Appointment is Cancelled successfully.": "Rendez-vous annulé avec succès.",
-        "CANCEL":"ANNULER",
-        "OK": "TERMINÉ"
+        "CANCEL":"NON",
+        "OK": "OUI"
     },
     "en": {
-        "Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash":"Shop the fine jewelry collections and experience Luxury Piercing and custom styling.",
+        "Venez découvrir à Maria Tash Le Bon Marché Paris, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash":"Shop the fine Jewellery collections and experience Luxury Piercing and custom styling.",
         "Prénom*": "FIRST NAME*",
         "Nom*": "LAST NAME*",
-        "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)": "Text Message (Message and data rates may apply)",
-        "SMS <br>(Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie  de messages)": "Text Message (Message and data rates may apply)",
-        "SMS (Vos donnés sont susceptibles d’être utilisés ainsi que l’envoie de messages)": "Text Message (Message and data rates may apply)",
+        "SMS <br>(des frais de communication peuvent être appliqués)": "Text Message (Message and data rates may apply)",
+        "SMS <br>(des frais de communication peuvent être appliqués)": "Text Message (Message and data rates may apply)",
+        "SMS (des frais de communication peuvent être appliqués)": "Text Message (Message and data rates may apply)",
         "En exclusivité au Bon Marché": "Maria Tash x Le Bon<br> Marché Pop-up",
-        "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grace notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir au Bon Marché, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.": "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of jewelry combined to best flatter the wearer. The brand’s unique approach to piercing and styling  makes it one of the most coveted brands today. Shop the fine jewelry collections and experience Luxury Piercing and custom styling.",
+        "Reconnue pour ses innovations en matière de piercing, Maria Tash a mis au point des techniques pour mettre en valeur le style, le teint, et l’anatomie de chaque personne grâce notamment à une sélection de bijoux qu’elle a elle-même crée. Cette approche unique en matière de style et de piercing, fait de Maria Tash, l’une des marques de mode les plus convoitées aujourd’hui. Venez découvrir à Maria Tash Le Bon Marché Paris, les différents styles, les piercings et la collection de bijoux de luxe de Maria Tash.": "Renowned for her innovation in piercing, Tash has developed a technique through which each client’s personal style, complexion, and anatomy guide the curation of Jewellery combined to best flatter the wearer. The brand’s unique approach to piercing and styling  makes it one of the most coveted brands today. Shop the fine Jewellery collections and experience Luxury Piercing and custom styling.",
         "Lundi": "Monday",
         "Mardi": "Tuesday",
         "Mercredi": "Wednesday",
@@ -135,30 +137,30 @@ const translation = {
         "20 Octobre": "20th October",
         "31 Août": "31st August",
         "réservation et prix": "BOOKING & PRICING",
-        "RESERVEZ UN RENDEZ-VOUS DÈS": "BOOK NOW",
-        "Informations sur l'événement": "POP-UP INFO",
+        "RESERVEZ UN RENDEZ-VOUS": "BOOK NOW",
+        "Informations sur l'événement": "POP-UP INFORMATION",
         "À PROPOS DE MARIA TASH": "ABOUT MARIA TASH",
         "Nombre de personne dans votre groupe:": "Number of people in your party:",
         "Confirmer": "CONFIRM",
-        "D’origine américaine, Maria Tash est née à New York, elle a commencé par étudier l’Astronomie à l’université de Columbia avant de partir faire des études dans la mode à Londres. C’est à ce moment-là qu’elle a développée son gout pour la joaillerie de luxe, une passion initiée dès son enfance par sa mère, et l’a fusionné avec son autre passion : le piercing. Maria Tash a ainsi débuté sa carrière dans la création de bijoux spécifiquement pour le nombril et a ouvert son premier atelier, Venus Modern Body Art, en 1993 dans l’East Village à New York.": "A native New Yorker, Tash studied Astronomy at Columbia University before moving to study abroad in London. It was there that her love of fine jewelry, which was instilled in her at a young age by her mother, was fused with her passion for piercings. Tash began her career creating custom navel jewelry, and opened her first studio, Venus Modern Body Art, in 1993 in the East Village of New York.",
+        "D’origine américaine, Maria Tash est née à New York, elle a commencé par étudier l’Astronomie à l’université de Columbia avant de partir faire des études dans la mode à Londres. C’est à ce moment-là qu’elle a développée son gout pour la joaillerie de luxe, une passion initiée dès son enfance par sa mère, et l’a fusionné avec son autre passion : le piercing. Maria Tash a ainsi débuté sa carrière dans la création de bijoux spécifiquement pour le nombril et a ouvert son premier atelier, Venus Modern Body Art, en 1993 dans l’East Village à New York.": "A native New Yorker, Tash studied Astronomy at Columbia University before moving to study abroad in London. It was there that her love of fine Jewellery, which was instilled in her at a young age by her mother, was fused with her passion for piercings. Tash began her career creating custom navel Jewellery, and opened her first studio, Venus Modern Body Art, in 1993 in the East Village of New York.",
         "Dois-je prendre rendez-vous ?": "Do I need to book an appointment?",
         "Les rendez-vous pour les piercings sont recommandés mais pas obligatoires. Pensez à vous présenter quelques temps avant votre rendez-vous afin de vous laisser le temps de choisir votre style et vos bijoux. Les installations et ajustements se font sans rendez-vous.": "Appointments are preferred for piercings but walk-ins are always welcome.  Appointments are not required for fittings and installs.",
-        "Puis-je me faire percer avec mes propres bijoux ?": "Can I be pierced with my own jewelry?",
-        "En raison des besoins de stérilisation, nous n’utilisons pas d’autres bijoux que ceux de Maria Tash. La meilleure sélection de notre collection sera disponible pour les installations et les piercings. Tous nos bijoux sont en or et se déclinent en différente couleur : jaune, blanc, rose et noir.": "Due to sterilization needs, we do not pierce with jewelry that is not Maria Tash.<br> The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.",
+        "Puis-je me faire percer avec mes propres bijoux ?": "Can I be pierced with my own Jewellery?",
+        "En raison des besoins de stérilisation, nous n’utilisons pas d’autres bijoux que ceux de Maria Tash. La meilleure sélection de notre collection sera disponible pour les installations et les piercings. Tous nos bijoux sont en or et se déclinent en différente couleur : jaune, blanc, rose et noir.": "Due to sterilization needs, we do not pierce with Jewellery that is not Maria Tash.<br> The best selections from our full collection will be available for styling and piercing. Our styles come in white, yellow, rose, and black gold.",
         "Combien de piercings puis-je me faire faire en une séance ?": "How many piercings can I get in one session?",
-        "Nous recommandons un maximum de 4 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.": "We recommend up to 4 per session, but this is dependant on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.",
+        "Nous recommandons un maximum de 4 piercings par séance, mais cela dépends des placements des piercings et de votre anatomie. Nos stylistes et perceurs sont à votre disposition pour vous conseiller lors de votre visite.": "We recommend up to 4 per session, but this is dependent on the piercings you are thinking about and your anatomy. Our stylists and piercers can best consult with you during your visit.",
         "Puis-je me faire percer si j’ai moins de 18 ans ?": "Can I be pierced if I am under 18?",
         "Oui, nous perçons les lobes des oreilles à partir de 8 ans et le cartilage à partir de 16 ans, mais vous devez être accompagné d’un parent ou d’un tuteur légal et munis d’une pièce d’identité.": "Yes, we pierce lobes over the age of 8 and cartilage over the age of 16 but you must be accompanied by a parent or guardian and you both must bring ID with you.",
-        "Quelle taille de bijoux me conviens le mieux ?": "What size jewelry works best for me?",
-        "Afin de profiter pleinement de votre expérience à Maria Tash, nous vous proposons de vous laisser conseiller par nos stylistes et perceurs qui vous apporteront leur savoir-faire et expertise en fonction de vos gouts et de votre anatomie.": "Our experience involves you pairing one-on-one with our stylists to completely guide you through your styling and piercing. There are multiple sizes to our jewelry, but our team will make sure that you are properly sized and confident.",
+        "Quelle taille de bijoux me conviens le mieux ?": "What size Jewellery works best for me?",
+        "Afin de profiter pleinement de votre expérience à Maria Tash, nous vous proposons de vous laisser conseiller par nos stylistes et perceurs qui vous apporteront leur savoir-faire et expertise en fonction de vos gouts et de votre anatomie.": "Our experience involves you pairing one-on-one with our stylists to completely guide you through your styling and piercing. There are multiple sizes to our Jewellery, but our team will make sure that you are properly sized and confident.",
         "Puis-je me faire percer si j’ai consommé de l’alcool?": "Can I be pierced if I’ve been drinking?",
-        "Pour de raisons de santé et de sécurité, nous vous demandons de ne pas consommer d’alcool avant votre rendez-vous chez Maria Tash.": "If you are being pierced by us may we politely request that you refrain from consuming alcohol until after your appointment for health and safety reasons.",
+        "Pour de raisons de santé et de sécurité, nous vous demandons de ne pas consommer d’alcool avant votre rendez-vous à Maria Tash Le Bon Marché Paris.": "If you are being pierced by us may we politely request that you refrain from consuming alcohol until after your appointment for health and safety reasons.",
         "INSCRIVEZ-VOUS À NOTRE NEWSLETTER": "Sign Up for Our Newsletter",
         "s'inscrire": "sign up",
         "Numéro de téléphone": "Phone Number",
-        "Prendre Rendez-vous": "Book Your Appointment",
+        "Prendre rendez-vous": "Book Your Appointment",
         "J'aimerais être averti par:": "I would like to be notified by:",
-        "le prix des bijoux commence à": "Jewelry starts at",
+        "le prix des bijoux commence à": "Jewellery starts at",
         "QUESTIONS FRÉQUEMMENT POSÉES": "Frequently Asked Questions",
         "Saisissez votre Prénom*": "Please enter your First Name*",
         "Saisissez votre Email*": "Please enter your Email*",
@@ -180,33 +182,37 @@ const translation = {
         "Êtes-vous sûre de vouloir annuler votre rendez-vous ?": "Are you sure you want to cancel an scheduled appointment?",
         "Problème de connexion, veuillez vérifier votre connexion Internet et réessayer": "Fail to connect, please check your internet connection",
         'Choisissez votre type de rendez-vous pour obtenir les créneaux disponibles': 'Choose type of Appointment to get available time slots',
-        "Liste de prix": "Price List",
+        "Liste des prix": "Price List",
+        "Liste des prix": "View Price List",
         "Disponibilité": "Availability",
         "Temps estimé :": "Total Time:",
         "Pour des groupes de plus de 4 personnes, veuillez contacter notre service clientèle.": "For parties of 5 or more, contact customer service",
         "CLIENT": "CUSTOMER",
         "Type de rendez-vous:": "Type of Appointment:",
-        "Examination du piercing": "Checkup",
-        "QUESTIONS FRÉQUEMMENT POSÉES": "FAQ",
-        "Depuis plus de deux décennies, Maria Tash révolutionne l'industrie de la bijouterie fine et du piercing en créant des designs innovants sous son label éponyme basé à New York. Avec une perspective unique qui vit au carrefour de la beauté, de la mode et des bijoux, Tash s'est taillé une position unique en tant que fondatrice et designer. Elle a développé une technique grâce à laquelle le style et l'anatomie uniques de chaque cliente déterminent sa combinaison idéale de clous et de boucles, combinés pour complémenter au mieux leur porteuse. L'art croise la science avec l'approche de Tash pour un design et un piercing guidés par son désir primordial de livrer non seulement le meilleur look mais un sentiment de beauté.": "For over two decades, Maria Tash has been revolutionizing the fine jewelry and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and jewelry, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.",
+        "Examination du piercing": "Checkup/downsize",
+        "Depuis plus de deux décennies, Maria Tash révolutionne l'industrie de la bijouterie fine et du piercing en créant des designs innovants sous son label éponyme basé à New York. Avec une perspective unique qui vit au carrefour de la beauté, de la mode et des bijoux, Tash s'est taillé une position unique en tant que fondatrice et designer. Elle a développé une technique grâce à laquelle le style et l'anatomie uniques de chaque cliente déterminent sa combinaison idéale de clous et de boucles, combinés pour complémenter au mieux leur porteuse. L'art croise la science avec l'approche de Tash pour un design et un piercing guidés par son désir primordial de livrer non seulement le meilleur look mais un sentiment de beauté.": "For over two decades, Maria Tash has been revolutionizing the fine Jewellery and piercing industries by creating innovative designs under her NYC based eponymous label. With a unique perspective that lives at the intersection of beauty, fashion and Jewellery, Tash has carved a unique position as a founder and designer. She has developed a technique through which each client's personal style and anatomy guide a curated combination of studs and rings, combined to best flatter the wearer. Art meets science with Tash’s approach to both design and piercing and is driven by her overriding desire to deliver not only a look but a feeling of beauty to her audience.",
         "Lobe de l’oreille": "Earlobe",
         "Hélix": "Helix",
+        "Hélix avant": "Forward Helix",
         "Narine": "Nostril",
-        "Téton": "Nipple",
+        "Mamelon": "Nipple",
         "Nombril": "Navel",
+        "Conque":"Conch",
+        "Contraconque":"Contraconch",
         "Dermique": "Dermal",
         "heure": "hour",
+        "Sourcil":"Eyebrow",
         "Langue: English":"Language: English",
         "Langue:  Français": "Language: French",
         "Maria Tash x Le Bon Marché Boutique Éphémère": "Maria Tash x Le Bon Marché Pop-up",
         "Nombre de personne dans votre groupe": "No of People in Group",
         "Les informations sur les clientes ne peuvent pas être les mêmes. Veuillez fournir des informations uniques pour chaque cliente." : "Customer information cannot be the same.  Please provide unique information for each customer.",
         "Nombre de piercings:": "Number of Piercings:",
-        "Pour toute question concernant les piercings et les prises de rendezvous, n’hésitez pas à nous contacter :":"Contact us anytime:",
-        "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendezvous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for jewelry installations. Walk-ins welcome, based on availability.",
+        "Pour toute question concernant les piercings et les prises de rendez-vous, n’hésitez pas à nous contacter :":"Contact us anytime:",
+        "Les rendez-vous sont recommandés pour les piercings mais ne sont pas nécessaires pour les installations de bijoux. Les piercings sans rendez-vous sont limités en fonction des disponibilités.":"Appointments are recommended for piercings but are not necessary for Jewellery installations. Walk-ins welcome, based on availability.",
         "Rendez-vous": "Appointment Id",
-        "ANNULER":"CANCEL",
-        "TERMINÉ":"OK",
+        "NON":"CANCEL",
+        "OUI":"OK",
     }
 };
 
@@ -219,7 +225,7 @@ const monthMapping = {
     "October": "Octobre",
 }
 
-let currentLanguage = 'en';
+let currentLanguage = 'fr';
 
 jQuery(document).ready(function () {
     jQuery(window).bind('orientationchange', function (event) {
@@ -227,13 +233,17 @@ jQuery(document).ready(function () {
     });
     const sessionLocale =  getSessionLocale();
     jQuery( "input[name='language_pref']" ).attr("value",currentLanguage);
-    if(sessionLocale !== undefined){
+    if(sessionLocale !== null){
         currentLanguage = sessionLocale;
         if(currentLanguage !== 'en' && sessionLocale !== null){
             jQuery('#translate').val(currentLanguage).change();
             jQuery( "input[name='language_pref']" ).attr("value",currentLanguage);
             translatePopUp();
         }
+    }
+    else{
+        setSessionLocale('fr');
+        translatePopUp();
     }
 
     peopleCount = jQuery('#count').attr('value');
@@ -270,7 +280,7 @@ jQuery(document).ready(function () {
                 if (!jQuery(this).hasClass('allure_only_number'))
                     jQuery(this).addClass('allure_only_number');
             }
-            if (key == 35 || key==187 || key == 36 || key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 9 || key == 46) { // end / home/Left / Up / Right / Down Arrow, Backspace,Tab, Delete keys
+            if (key == 35 || key==187 || key == 36 || key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 9 || key == 46 || (key >= 96 && key <= 107) || (key >= 109 && key <= 111)) { // end / home/Left / Up / Right / Down Arrow, Backspace,Tab, Delete keys
                 return;
             }
 
@@ -451,7 +461,7 @@ var addCustomer = function (srno) {
 
                     </div>
                     <div class="col-md-12 notify-label p-0">
-                        <input type="checkbox" id="c${srno}" name="customer[${srno}][noti_sms]">
+                        <input type="checkbox" class="noti_sms" id="c${srno}" data-section_id="${srno}" =name="customer[${srno}][noti_sms]">
                         <label class="label translate-popup" for="c${srno}">${__('Text Message (Message and data rates may apply)')}</label>
 
                     </div>
@@ -487,7 +497,7 @@ var addCustomerJob = function (srno) {
                 </div>
                 <div class="col-md-6 col-8">
                     <input type="checkbox" class="checkup_select" data-no="${srno}" id="checkup_select_${srno}" value="1" name="customer[${srno}][checkup]">
-                    <label class="label translate-popup" for="checkup_select_${srno}">${__('Checkup')}</label>
+                    <label class="label translate-popup" for="checkup_select_${srno}">${__('Checkup/downsize')}</label>
                 </div>
                 <div class="col-12">
                 <input type="text" class="customer_select required-entry" value="" id="customer_select_${srno}"
@@ -790,6 +800,23 @@ var validateForm = function () {
             }
         });
     });
+
+    jQuery(".noti_sms").change(function() {
+        if(this.checked) {
+            jQuery("#phonenumber" + jQuery(this).attr("data-section_id")).rules('add', {
+                minlength: 10,
+                messages: {
+                    minlength: __("Please enter valid phone number.")
+                }
+            });
+        }
+        else {
+            jQuery("#phonenumber" + jQuery(this).attr("data-section_id")).rules('add', {
+                minlength: false
+            });
+        }
+    });
+
 
 };
 
