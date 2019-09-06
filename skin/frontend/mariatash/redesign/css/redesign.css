@@ -1604,6 +1604,9 @@ input[type="checkbox"]:checked+label:before {
 .mariatash-header:hover, .container-footlinks:hover{
   background-color: rgba(41,41,41,0.90);
 }
+.maria-black{
+      background-color: rgba(41,41,41,0.90)!important;
+}
 .nav-links-left span {
   color: #fff;
   text-transform: uppercase;
@@ -1755,7 +1758,7 @@ input[type="checkbox"]:checked+label:before {
 .catalog-grid-image{
   background: #eee;
 }
-.catalog-grid-image:hover{
+.catalog-grid-image:hover, .products-grid li.item:hover .catalog-grid-image{
   background: #fff;
 }
 .mobile-main_menu{

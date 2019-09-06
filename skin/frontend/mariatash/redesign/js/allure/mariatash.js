@@ -87,11 +87,14 @@ jQuery(document).ready(function() {
             jQuery(".nav-links-left").addClass('header-item-hide');
             jQuery("#scroll-logo").addClass('header-item-show');
             jQuery('.mariatash-header').addClass('header-height');
+            jQuery('.mariatash-header').addClass('maria-black');
         } else {
             jQuery(".mt-logo").removeClass('header-item-hide');
             jQuery(".nav-links-left").removeClass('header-item-hide');
             jQuery("#scroll-logo").removeClass('header-item-show');
             jQuery('.mariatash-header').removeClass('header-height');
+            jQuery('.mariatash-header').removeClass('maria-black');
+
         }
 
         var productImageHeight = jQuery('#product-detail-image > div').outerHeight();

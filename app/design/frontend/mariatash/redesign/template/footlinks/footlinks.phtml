@@ -44,13 +44,14 @@
                 }
             });
         }else{
+
+            jQuery('#popup_ajax_contain').load(jQuery(".popbox_ajax").attr("data-tipped"));
             jQuery(".popbox").on("click",function () {
                jQuery('#'+jQuery(this).attr("data-tooltip-id")).slideToggle();
                jQuery(this).parent().parent().toggleClass("active");
             });
             jQuery(".popbox_ajax").on("click",function () {
                 jQuery(this).parent().parent().toggleClass("active");
-                jQuery('#popup_ajax_contain').load(jQuery(this).attr("data-tipped"));
                 jQuery('#popup_ajax_contain').slideToggle();
                 //<![CDATA[
                 var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
