@@ -1,0 +1,17 @@
+<?php
+/*
+ * My Render Extension
+ */
+class Allure_Appointments_Block_Adminhtml_Render_Checkup extends
+    Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
+{
+    public function render(Varien_Object $row)
+    {
+        $data = $row->getData();
+        if($data['special_store'] != 0) {
+            $checkup_count = Mage::helper("appointments/counts")->getCheckupCount($data);
+            return $checkup_count;
+        }
+       return '';
+    }
+}
