@@ -5653,11 +5653,11 @@ textarea:focus, input:focus {
 	height: 6px;
 }
 
-.block-currency  #currency-selector ul:after {
+/* .block-currency  #currency-selector ul:after {
 	bottom: 0;
 	height: 11px;
 	background-position: 0 -11px;
-}
+} */
 
 .block-currency  #currency-selector ul {
 	margin: 6px 0 11px 0;
@@ -5691,16 +5691,15 @@ textarea:focus, input:focus {
 
 .block-currency  #currency-selector ul li a {
 	/* position: relative; */
-	font-size: 12px;
+	/* font-size: 12px;
 	display: block;
 	text-align: left;
-	color: #3f3f47;
+	color: #3f3f47; */
 }
 
 .block-currency  #currency-selector ul li a i {
 	position: absolute;
 	right: 60px;
-	font-style: normal;
 }
 
 .block-currency  #currency-selector ul li a span {
@@ -5787,14 +5786,14 @@ textarea:focus, input:focus {
 	background: url(../images/cart_header_top.png) top center no-repeat;
 }
 
-.block-cart .tite_cart   a {
+/* .block-cart .tite_cart   a {
 	font-size: 14px;
 	color: #3f3f47;
 	font-weight: bold;
 	padding-left: 10px;
 	text-decoration: underline;
 	text-transform: uppercase;
-}
+} */
 
 .block-cart .tite_cart   a:hover {
 	color: #3f3f47;
@@ -5985,7 +5984,7 @@ textarea:focus, input:focus {
 	background: url(../images/cart_header_close.png) top center no-repeat;
 	width: 13px;
 	height: 12px;
-	top: 16px;
+	top: 5px;
 }
 
 .lt-ie9 #topcart-popup .block-cart #just_added button.cart_checkout {
@@ -17980,7 +17979,7 @@ ul.products-grid2 {
 
 /* .block-viewed li.recentview, .box-awautorelated2 .image_carousel li.item
 {
-	background: #757881; /* Old browsers 
+	background: #757881; /* Old browsers
 	background: -moz-linear-gradient(top, #757881 13%, #b5bbc9 49%, #b5bbc9 99%);
 	/* FF3.6+
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(13%, #757881),

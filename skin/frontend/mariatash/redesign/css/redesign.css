@@ -217,7 +217,7 @@ a{
 a:hover{
 	text-decoration: none;
 }
-ul{
+ul, ol{
 	list-style: none;
 }
 
@@ -1566,6 +1566,7 @@ input[type="checkbox"]:checked+label:before {
     font-size: 13px;
     letter-spacing: 1px;
     padding: 0px 0 10px 0;
+		height: 31px !important;
 }
 .mt-logo {
     padding: 0px 0 14px 0;
@@ -1604,122 +1605,123 @@ input[type="checkbox"]:checked+label:before {
   background-color: rgba(41,41,41,0.90);
 }
 .nav-links-left span {
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 11px;
-    letter-spacing: 1px;
-    font-family: urw-din-light;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-family: urw-din-light;
 }
 .select-currency img {
-    margin: 0 0 5px 3px;
+	margin: 0 0 5px 3px;
 }
 .main-nav-link li:nth-child(2) {
-    margin-right: 16px;
+  margin-right: 16px;
 }
 
 /*Navigation dropdown*/
 .main-nav-title .sub-menu .sub{
-    top: 111px;
-    width: 100% !important;
-    left: 0;
+  top: 111px;
+  width: 100% !important;
+  left: 0;
 }
 #top-nav .sub-menu .sub{
-    background: #fff;
-    position: absolute;
-    width: 100% !important;
-    left: 0 !important;
+  background: #fff;
+  position: absolute;
+  width: 100% !important;
+  left: 0 !important;
 }
 
 .mariatash-header-nav li a{
-    color: #4a4a4a;
-    font-weight: 500;
+  color: #4a4a4a;
+  font-weight: 500;
 }
 .sub ul li {
-    width: 20%;
+  width: 20%;
 }
 .sub ul {
-    display: flex;
+  display: flex;
 }
 /*Sub menus*/
 .menu-common-section {
-    margin-top: 48px;
-    margin-bottom: 28px;
+  margin-top: 48px;
+  margin-bottom: 28px;
 }
 .head-child li a {
-    font-size: 13px;
-    letter-spacing: 2px;
-    line-height: 13px;
-    font-family: urw-din-xlight;
+  font-size: 13px;
+  letter-spacing: 2px;
+  line-height: 13px;
+  font-family: urw-din-xlight;
 }
 .menu-head span {
-    font-size: 13px;
-    letter-spacing: 1px;
+  font-size: 13px;
+  letter-spacing: 1px;
 }
 .inner-box {
-    width: 624px;
-    margin-left: 137px;
+  width: 624px;
+  margin-left: 137px;
 }
 .right-section a:last-child {
-    margin-left: 9px;
+  margin-left: 9px;
 }
 .menu-head {
-    margin-bottom: 17px;
+  margin-bottom: 17px;
 }
 .sub-menu {
-    z-index: 999/* changed by aditya 1 */;
-    position: absolute;
-    width: 100%;
-    top: 111px;
-    overflow-x: hidden;
-    right:0;
+  z-index: 999/* changed by aditya 1 */;
+  position: absolute;
+  width: 100%;
+  top: 111px;
+  overflow-x: hidden;
+  right:0;
 }
 #piercing_appointments {
-    padding: 48px 21px;
+  padding: 48px 21px;
 }
 #piercing_appointments .col {
-    width: 14.28%;
-    padding: 0;
-    text-align: center;
+  width: 14.28%;
+  padding: 0;
+  text-align: center;
 }
 .image-text {
-    position: absolute;
-    bottom: 15px;
-    width:100%;
+  position: absolute;
+  bottom: 15px;
+  width:100%;
 }
 .image-text h6{
-    font-size: 13px;
-    letter-spacing: 1px;
-    font-family: urw-din-regular;
+  font-size: 13px;
+  letter-spacing: 1px;
+  font-family: urw-din-regular;
 }
 .head-child {
-    line-height: 25px;
+  line-height: 25px;
 }
 .menu-head a {
-    font-family: urw-din-regular;
-    letter-spacing: 2px;
+  font-family: urw-din-regular;
+  letter-spacing: 2px;
 }
 .right-section {
-    padding-left: 3px;
+  padding-left: 3px;
 }
 
 /* Mobile Navigation */
 #side-navigation {
-    width: 30%;
-    background: rgb(41, 41, 41);
+  width: 30%;
+  background: rgb(41, 41, 41);
 }
 .side-nav-link{
-		color: #fff !important;
+	color: #fff !important;
 }
 .nav-item-mobile {
-    padding: 20px 0;
-    border-bottom: 1px solid #fff;
+  padding: 20px 0;
+  border-bottom: 1px solid #fff;
 }
 #cross-icon {
-    right: 0;
+  right: 0;
+	top: 6px;
 }
 #search::placeholder {
-    font-size: 13px;
-    letter-spacing: 1px;
+  font-size: 13px;
+  letter-spacing: 1px;
 }
 
 /* Catalog Page CSS */
@@ -2187,6 +2189,18 @@ span#popup_loader_register {
 	height: 13px !important;
   width: 14px !important;
 }
+
+.usd-account .icon-item span {
+  color: #292929;
+}
+.block-cart .tite_cart{
+	background: #fff;
+  text-align: center;
+}
+.block-cart .cart_sidebar{
+	left: -60px;
+	width: 229px;
+}
 /*Old Css*/
 .popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel  {
 	position: fixed;
@@ -2272,6 +2286,14 @@ span#popup_loader_register {
 }
 .products-grid .availability{
 	line-height: 13px;
+}
+#currency-selector {
+  position: absolute;
+  top: 20px;
+  right: -20px;
+  z-index: 99999;
+  width: 96px;
+  height: auto;
 }
 
 /* Product Details CSS */
