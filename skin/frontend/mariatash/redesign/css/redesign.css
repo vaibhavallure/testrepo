@@ -1600,8 +1600,11 @@ input[type="checkbox"]:checked+label:before {
 .last.nav-item, .main-nav-link li:last-child {
     margin-right: 0;
 }
-.mariatash-header:hover, .container-footlinks:hover, .maria-black{
-  background-color: rgba(41,41,41,0.90)!important;
+.mariatash-header:hover, .container-footlinks:hover{
+  background-color: rgba(41,41,41,0.90);
+}
+.maria-black{
+      background-color: rgba(41,41,41,0.90)!important;
 }
 .nav-links-left span {
     color: #fff;
