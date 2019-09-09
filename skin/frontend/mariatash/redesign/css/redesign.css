@@ -2078,7 +2078,7 @@ div#narrow-by-list {
 }
 .input-form {
   position: relative;
-	margin-bottom: 24px;
+	margin-bottom: 18px;
 	text-align: center;
 }
 .buttons-set img {
@@ -2104,7 +2104,7 @@ div#narrow-by-list {
 	padding: 0;
 }
 button#signin-btn-popup {
-	margin: 30px 0 38px;
+	margin: 25px 0 38px;
 }
 .mt-amazon-btn, .mt-googleconnect-btn {
   margin-right: 21px;
@@ -2114,7 +2114,7 @@ button#signin-btn-popup {
   height: 40px;
 }
 .option-text p {
-	margin: 47px 0 18px;
+	margin: 42px 0 18px;
 }
 .new_account a{
 	margin: 32px 0 45px;
