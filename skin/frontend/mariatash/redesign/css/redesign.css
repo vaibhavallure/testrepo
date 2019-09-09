@@ -1688,7 +1688,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .sub-menu {
   z-index: 999/* changed by aditya 1 */;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top: 111px;
   overflow-x: hidden;
