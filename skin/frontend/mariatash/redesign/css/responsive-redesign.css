@@ -450,10 +450,8 @@
 /* Big Screen Laptops */
 @media (min-width:1920px){
   .inner-box{
-    width: 874px;
-  }
-  .special-menu {
-    margin-left: 70px;
+    width: 742px;
+    margin-left: 300px;
   }
   .filter-common-div {
     top: 455px;
@@ -469,5 +467,11 @@
   }
   .about-designer{
     margin-top: 90px;
+  }
+  #piercing_appointments{
+    padding: 48px 254px;
+  }
+  .footer{
+    padding: 0;
   }
 }
