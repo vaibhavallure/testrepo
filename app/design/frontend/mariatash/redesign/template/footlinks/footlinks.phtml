@@ -4,19 +4,55 @@
     }
     jQuery.noConflict();
     jQuery(document).ready(function(){
-        jQuery('.popbox').each(function() {
-            var selector = '#' + jQuery(this).data('tooltip-id');
-            Tipped.create(this, jQuery(selector)[0],{ skin: 'dark_subscribe', offset: { y: -4 }});
-        });
 
-        Tipped.create('.popbox_ajax',{
-            skin: 'dark_subscribe',
-			fadeIn: 0,
-			fadeOut: 0,
-            hideOn: 'click-outside',
-            ajax: true,//{type: 'post',cache: false},
-            hook: 'topmiddle',
-            onShow: function(content, element) {
+        var width = jQuery(window).width();
+        if ((width > 1200)) {
+            jQuery('.popbox').each(function () {
+                var selector = '#' + jQuery(this).data('tooltip-id');
+                Tipped.create(this, jQuery(selector)[0], {skin: 'dark_subscribe', offset: {y: -4}});
+            });
+
+            Tipped.create('.popbox_ajax', {
+                skin: 'dark_subscribe',
+                fadeIn: 0,
+                fadeOut: 0,
+                hideOn: 'click-outside',
+                ajax: true,//{type: 'post',cache: false},
+                hook: 'topmiddle',
+                onShow: function (content, element) {
+                    //<![CDATA[
+                    var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+                    new Varien.searchForm('newsletter-validate-detail', 'email', '<?php echo $this->__('EMAIL ADDRESS') ?>');
+                    new Varien.searchForm('newsletter-validate-detail', 'first_name', '<?php echo $this->__('FIRST NAME') ?>');
+                    new Varien.searchForm('newsletter-validate-detail', 'last_name', '<?php echo $this->__('LAST NAME') ?>');
+                    new Varien.searchForm('newsletter-validate-detail', 'country_subscribe', '<?php echo $this->__('Country') ?>');
+                    //]]>
+
+//                jQuery("#country").click(function(){
+//                    jQuery("#tld_r_ul").show(200);
+//                });
+                    // prevent bind event multiple times
+                    jQuery('#country_subscribe').unbind('click', toggleCountrySelect);
+                    jQuery('#country_subscribe').bind('click', toggleCountrySelect);
+
+                    jQuery("#tld_r_ul li").click(function () {
+                        var tld = jQuery(this).text();
+                        jQuery("#tld_field").val(tld);
+                        jQuery("#country_subscribe").val(tld);
+                        jQuery("#tld_r_ul").hide(200);
+                    });
+                }
+            });
+        }else{
+
+            jQuery('#popup_ajax_contain').load(jQuery(".popbox_ajax").attr("data-tipped"));
+            jQuery(".popbox").on("click",function () {
+               jQuery('#'+jQuery(this).attr("data-tooltip-id")).slideToggle();
+               jQuery(this).parent().parent().toggleClass("active");
+            });
+            jQuery(".popbox_ajax").on("click",function () {
+                jQuery(this).parent().parent().toggleClass("active");
+                jQuery('#popup_ajax_contain').slideToggle();
                 //<![CDATA[
                 var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
                 new Varien.searchForm('newsletter-validate-detail', 'email', '<?php echo $this->__('EMAIL ADDRESS') ?>');
@@ -24,24 +60,11 @@
                 new Varien.searchForm('newsletter-validate-detail', 'last_name', '<?php echo $this->__('LAST NAME') ?>');
                 new Varien.searchForm('newsletter-validate-detail', 'country_subscribe', '<?php echo $this->__('Country') ?>');
                 //]]>
-
-//                jQuery("#country").click(function(){
-//                    jQuery("#tld_r_ul").show(200);
-//                });
-                // prevent bind event multiple times
-                jQuery('#country_subscribe').unbind('click', toggleCountrySelect);
-                jQuery('#country_subscribe').bind('click', toggleCountrySelect);
-
-                jQuery("#tld_r_ul li").click(function(){
-                    var tld=jQuery(this).text();
-                    jQuery("#tld_field").val(tld);
-                    jQuery("#country_subscribe").val(tld);
-                    jQuery("#tld_r_ul").hide(200);
-                });
-            }
-        });
+            });
+        }
     });
 </script>
+
 <?php $links = $this->getAllCustomLinks(); ?>
 
 <div class="container-footlinks row">
@@ -52,25 +75,12 @@
 
                 $footer_title=$this->__($link->getTitle());
 
-                /*temporary disable translation except Italy */
-                /*if(Mage::getSingleton('allure_geolocation/geoLocation')->getCountryCode()=='IT')
-                    $footer_title=$this->__($link->getTitle());
-                else
-                    $footer_title=$link->getTitle();*/
-
-
                 ?>
-                <li class="footer-item-list nav-item">
-                <div id="link_<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
+                <li class="footer-item-list nav-item <?= ($link->getType() == 1 || $link->getType() == 0 || ($link->getUrlValue() != "" && $link->getType() == 2))?" data-block" : "";?>">
+                <div class="w-100" id="link_<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
                     <?php if ($link->getType() == 1 || $link->getType() == 0): ?>
-                        <div class='popbox' data-tooltip-id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>">
-                            <?php if ($link->getLink() != ""): ?>
-                                <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK) . $link->getLink() ?>"><?php echo $footer_title ?></a>
-                                <?php
-                            else:
-                                echo '<a href="#">'.$footer_title.'</a>';
-                            endif;
-                            ?>
+                        <div class='popbox w-100' data-tooltip-id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" >
+                                <?=  '<span>'.$footer_title.'</span>'; ?>
                         </div>
                         <?php if ($link->getUseForSeoText()): ?>
                             <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style="display:none">
@@ -174,7 +184,7 @@
                                 }
                             </script>
                         <?php else: ?>
-                            <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style='<?php echo (strtolower(str_replace(" ", "-", $link->getTitle())) == 'customer-care') ? 'width:164px; height:187px; ' : ' '?> display:none'>
+                            <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style='<?php echo (strtolower(str_replace(" ", "-", $link->getTitle())) == 'customer-care') ? 'width:164px; height:187px; ' : ' '?> display:none;'>
                                 <?php echo $this->getBlock($link->getBlockValue(), false); ?>
                             </div>
                         <?php endif ?>
@@ -194,12 +204,16 @@
                                     <a href="<?php echo $link->getLink() ?>"><?php echo $footer_title ?></a>
                                     <?php
                                 else:
-                                echo '<a href="#">'.$footer_title.'</a>';
+                                echo '<span>'.$footer_title.'</span>';
                                 endif;
                                 ?>
                             </div>
-
                         <?php endif; ?>
+
+                               <?php if ($link->getUrlValue() != ""): ?>
+                                   <div id="popup_ajax_contain" style="display: none">
+                                   </div>
+                               <?php endif;?>
 
                 </li>
 

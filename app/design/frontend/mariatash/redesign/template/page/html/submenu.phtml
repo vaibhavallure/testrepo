@@ -8,16 +8,18 @@ $childRightSection=array();
 if($this->isthumbnailCat($pc->getName())){
     ?>
     <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-jewelry-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
-      <div class="close-section text-right">
-                        <span>Back</span>
+      <div class="text-right submenu-upper-section d-lg-none d-block">
+          <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($pc->getName()) ?></a></span>
+                        <span class="close-section">Back</span>
                         </div>
         <div class="row">
             <div class="col-12 mt-4">
                 <div class="row">
 
 <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
-                                    if (!$child->getIsActive())
-                                        continue; ?>
+                                    if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
+                                        continue;
+                                    ?>
     <div class="col-lg col-12 piercing_options"> <a href="/<?= $child->getRequestPath() ?>"><img src="<?= $this->getCatThumbnail($child->getId())?>" alt="<?= $child->getName()?>">
     <div class="image-text text-center">
       <h6 class="text-uppercase text-white"><?= $child->getName()?></h6>
@@ -31,9 +33,9 @@ if($this->isthumbnailCat($pc->getName())){
     else{
         ?>
         <section id="<?= str_replace(" ","_",strtolower($pc->getName())) ?>" class="sub-menu maria-appointment-extend bg-white <?= str_replace(" ","_",strtolower($pc->getName())) ?>" style="display:none">
-
-                                  <div class="close-section text-right">
-                                    <span>Back</span>
+                                  <div class="text-right submenu-upper-section d-lg-none d-block">
+                                      <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($pc->getName()) ?></a></span>
+                                    <span class="close-section ">Back</span>
                                   </div>
             <div class="row">
                 <div class="col-lg-12 menu-common-section">
@@ -41,7 +43,7 @@ if($this->isthumbnailCat($pc->getName())){
                         <div class="col-lg-7 col-12 left-section">
                             <div class="row inner-box">
                                 <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
-                                    if (!$child->getIsActive())
+                                    if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
                                         continue;
 
                                     if ($this->isJwRightSectionCat($child->getName())) {
@@ -56,7 +58,7 @@ if($this->isthumbnailCat($pc->getName())){
                                         <div class="head-child">
                                             <ul class="p-0">
                                                 <?php foreach ($this->getChildCategories($child->getId()) as $child2) {
-                                                    if (!$child2->getIsActive())
+                                                    if (!$child2->getIsActive() || !$this->wholesaleCheck($child2->getId()))
                                                         continue;
                                                     ?>
                                                     <li class=""><a

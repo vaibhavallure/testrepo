@@ -8,7 +8,7 @@ h1{
 	text-align: Left;
 }
 
-.cms-page-view h1{
+.cms-page-view h1, .category-press h1{
   font-size: 30px;
   text-transform: none;
   letter-spacing: 0;
@@ -88,6 +88,11 @@ h3{
 	text-align: center;
 	outline: none;
 	border: transparent;
+	border-radius: 0;
+}
+
+.dark-button:hover {
+    background: rgba(41,41,41,0.9) !important;
 }
 
 .input-patern{
@@ -193,8 +198,8 @@ textarea:-webkit-autofill:active{
   -webkit-text-fill-color: rgba(41,41,41,0.9) !important;
 }
 .form-control:focus, button:focus, .input-form:focus{
-	 border-color: #D8D8D8;
-	 outline:0;
+	border-color: #D8D8D8;
+	outline:0;
 }
 img{
 	border: none;
@@ -204,22 +209,31 @@ button, a{
 	cursor: pointer;
 }
 button:focus {
-    outline: none;
+  outline: none;
+}
+a{
+	color: rgba(41,41,41,0.9);
+}
+a:hover{
+	text-decoration: none;
+}
+ul, ol{
+	list-style: none;
 }
 
 /*Checkout Left Section (Steps)*/
 .checkout-step-name {
-    border-top: 1px solid #D8D8D8;
+  border-top: 1px solid #D8D8D8;
 }
 
 .checkout-step-name h3 {
-    font-size: 13px;
-    font-family: urw-din-bold;
-    text-transform: uppercase;
-    color: #292929;
-    letter-spacing: 1px;
-    padding-top: 21.3px;
-    opacity: 0.6;
+  font-size: 13px;
+  font-family: urw-din-bold;
+  text-transform: uppercase;
+  color: #292929;
+  letter-spacing: 1px;
+  padding-top: 21.3px;
+  opacity: 0.6;
 }
 
 /*Checkout Right Section (Sidebar)*/
@@ -275,12 +289,12 @@ select{
 }
 
 .next-button {
-    margin-bottom: 32.5px;
+  margin-bottom: 32.5px;
 }
 
 .product-description-section {
-    border-top: 1px solid #ccc;
-    padding: 30px 0;
+  border-top: 1px solid #ccc;
+  padding: 30px 0;
 }
 
 .gift-marked input{
@@ -293,12 +307,12 @@ select{
 }
 
 .checkout-below.summary {
-    float: right;
+  float: right;
 }
 
 .checkout-button {
-    height: 51px;
-    width: 227px;
+  height: 51px;
+  width: 227px;
 }
 
 .price-calculation{
@@ -307,13 +321,13 @@ select{
 
 .shipping-info-extend:after, .return-policy-extend:after{
 	background-image: url(../images/maria/plus.png);
-    content: '';
-    background-repeat: no-repeat;
-    position: absolute;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    margin-top: 3px;
+  content: '';
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  margin-top: 3px;
 }
 
 select{
@@ -322,30 +336,63 @@ select{
 
 select:after{
 	background-image: url(../images/maria/arrow-down-bk.png);
-    content: '';
-    background-repeat: no-repeat;
-    position: absolute;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    margin-top: 3px;
+  content: '';
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  margin-top: 3px;
 }
 
+.login-dropdown li a {
+  color: #fff;
+}
+
+.login-dropdown li a:hover {
+  color: #fff;
+}
+
+.icon-user:hover .login-dropdown,.login-dropdown:hover .login-dropdown {
+    display: block;
+}
+
+.login-dropdown{
+	display: none;
+}
+
+.login-dropdown {
+  float: none;
+}
+
+.login-dropdown {
+  position: absolute;
+  width: 137px;
+  right: -56px;
+  top: 20px;
+	padding-top: 10px;
+  line-height: 25px;
+}
 
 #narrow-by-list li div dt{
-    cursor: pointer;
-    background: url(../images/redesign/arrow-down-bk.png) no-repeat right 12px center !important;
-    font-family: urw-din-xlight;
-    font-size: 13px;
-    color: rgba(41,41,41,0.90);
-    letter-spacing: 0;
-    border: 1px solid rgba(41,41,41,0.60);
-    height: 30px;
-    width: 181px;
-    padding: 3px 0 10px 24px;
+  cursor: pointer;
+  background: url(../images/redesign/arrow-down-bk.png) no-repeat right 12px center !important;
+  font-family: urw-din-xlight;
+  font-size: 13px;
+  color: rgba(41,41,41,0.90);
+  letter-spacing: 0;
+  border: 1px solid rgba(41,41,41,0.60);
+  height: 30px;
+  width: 181px;
+  padding: 3px 0 10px 24px;
 }
 body{
   overflow-x: hidden !important;
+	height: 100%;
+}
+.wrapper{
+	min-height: 100%;
+	margin-bottom: -50px;
 }
 /*Aditya CSS_____Start*/
 /* :root {
@@ -564,63 +611,63 @@ nav.mariatash-header {
 } */
 
 .mariatash-header .navbar-nav li a {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 !important;
 }
 
 .mariatash-header .navbar-nav .active>.nav-link,
 .mariatash-header a.navbar-brand:hover,
 .mariatash-header .navbar-nav .nav-link:hover {
-    color: #fff;
-    position: relative;
+  color: #fff;
+  position: relative;
 }
 .icon-bar .icon-item {
-    float: left;
+  float: left;
 }
 
 .icon-bar .icon-item:last-child {
-    margin-left: 34px;
+  margin-left: 34px;
 }
 .icon-bar .icon-item .icon-link img {
-    width: 18px;
+  width: 18px;
 }
 
 .cart-icon {
-    position: relative;
+  position: relative;
 }
 
 .cart-counter {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background-color: #fff;
-    border-radius: 50px;
-    bottom: -10px;
-    right: -8px;
-    text-align: center;
-    font-size: 12.5px;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border-radius: 50px;
+  bottom: -10px;
+  right: -8px;
+  text-align: center;
+  font-size: 12.5px;
 }
 
 .black-bg {
-    background-color: #000d!important;
-    height: 100vh!important;
-    display: block;
+  background-color: #000d!important;
+  height: 100vh!important;
+  display: block;
 }
 
 .black-bg .navbar-collapse {
-    text-align: center;
-    padding: 50px 0
+  text-align: center;
+  padding: 50px 0
 }
 
 .black-bg .navbar-collapse ul li {
-    padding: 20px;
+  padding: 20px;
 }
 
 .icon-bar {
-    list-style: none;
-    padding-left: 5px;
-    margin-top: 5px;
+  list-style: none;
+  padding-left: 5px;
+  margin-top: 5px;
 }
 
 .catalog-category-view .for-space-to-bottom, .cms-page-view .for-space-to-bottom{
@@ -632,8 +679,9 @@ nav.mariatash-header {
 }
 
 .category-image {
-    position: absolute;
-    top: 0;
+  position: absolute;
+  top: 0;
+	left: 0;
 }
 
 /* footer */
@@ -643,8 +691,6 @@ nav.mariatash-header {
 }
 .footer {
     padding-top: 60px;
-    position: absolute;
-    bottom: 0;
     height: 60px;
     z-index: 1;
 }
@@ -724,12 +770,22 @@ nav.mariatash-header {
 
 .products-grid .product-name a {
     font-size: 13px;
-    color: #333;
+		color: rgba(41,41,41,1);
+    font-family: urw-din-xlight;
 }
 .catalog-common-grid .price-box {
     text-align: right;
     margin-right: 3px;
 }
+
+.btn-quickview{
+	   text-transform: uppercase;
+}
+
+.list-mt-w .actions {
+    margin-bottom: 5px;
+}
+
 
 /* @media (max-width: 576px) {
     .catalog .item,
@@ -1510,6 +1566,7 @@ input[type="checkbox"]:checked+label:before {
     font-size: 13px;
     letter-spacing: 1px;
     padding: 0px 0 10px 0;
+		height: 31px !important;
 }
 .mt-logo {
     padding: 0px 0 14px 0;
@@ -1547,132 +1604,140 @@ input[type="checkbox"]:checked+label:before {
 .mariatash-header:hover, .container-footlinks:hover{
   background-color: rgba(41,41,41,0.90);
 }
+.maria-black{
+      background-color: rgba(41,41,41,0.90)!important;
+}
 .nav-links-left span {
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 11px;
-    letter-spacing: 1px;
-    font-family: urw-din-light;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-family: urw-din-light;
 }
 .select-currency img {
-    margin: 0 0 5px 3px;
+	margin: 0 0 5px 3px;
 }
 .main-nav-link li:nth-child(2) {
-    margin-right: 16px;
+  margin-right: 16px;
 }
 
 /*Navigation dropdown*/
 .main-nav-title .sub-menu .sub{
-    top: 111px;
-    width: 100% !important;
-    left: 0;
+  top: 111px;
+  width: 100% !important;
+  left: 0;
 }
 #top-nav .sub-menu .sub{
-    background: #fff;
-    position: absolute;
-    width: 100% !important;
-    left: 0 !important;
+  background: #fff;
+  position: absolute;
+  width: 100% !important;
+  left: 0 !important;
 }
 
 .mariatash-header-nav li a{
-    color: #4a4a4a;
-    font-weight: 500;
+  color: #4a4a4a;
+  font-weight: 500;
 }
 .sub ul li {
-    width: 20%;
+  width: 20%;
 }
 .sub ul {
-    display: flex;
+  display: flex;
 }
 /*Sub menus*/
 .menu-common-section {
-    margin-top: 48px;
-    margin-bottom: 28px;
+  margin-top: 48px;
+  margin-bottom: 28px;
 }
 .head-child li a {
-    font-size: 13px;
-    letter-spacing: 2px;
-    line-height: 13px;
-    font-family: urw-din-xlight;
+  font-size: 13px;
+  letter-spacing: 2px;
+  line-height: 13px;
+  font-family: urw-din-xlight;
 }
 .menu-head span {
-    font-size: 13px;
-    letter-spacing: 1px;
+  font-size: 13px;
+  letter-spacing: 1px;
 }
 .inner-box {
-    width: 624px;
-    margin-left: 137px;
+  width: 624px;
+  margin-left: 137px;
 }
 .right-section a:last-child {
-    margin-left: 9px;
+  margin-left: 9px;
 }
 .menu-head {
-    margin-bottom: 17px;
+  margin-bottom: 17px;
 }
 .sub-menu {
-    z-index: 999/* changed by aditya 1 */;
-    position: absolute;
-    width: 100%;
-    top: 111px;
-    overflow-x: hidden;
-    right:0;
+  z-index: 999/* changed by aditya 1 */;
+  position: absolute;
+  width: 100%;
+  top: 111px;
+  overflow-x: hidden;
+  right:0;
 }
 #piercing_appointments {
-    padding: 48px 21px;
+  padding: 48px 21px;
 }
 #piercing_appointments .col {
-    width: 14.28%;
-    padding: 0;
-    text-align: center;
+  width: 14.28%;
+  padding: 0;
+  text-align: center;
 }
 .image-text {
-    position: absolute;
-    bottom: 15px;
-    width:100%;
+  position: absolute;
+  bottom: 15px;
+  width:100%;
 }
 .image-text h6{
-    font-size: 13px;
-    letter-spacing: 1px;
-    font-family: urw-din-regular;
+  font-size: 13px;
+  letter-spacing: 1px;
+  font-family: urw-din-regular;
 }
 .head-child {
-    line-height: 25px;
+  line-height: 25px;
 }
 .menu-head a {
-    font-family: urw-din-regular;
-    letter-spacing: 2px;
+  font-family: urw-din-regular;
+  letter-spacing: 2px;
 }
 .right-section {
-    padding-left: 3px;
+  padding-left: 3px;
 }
 
 /* Mobile Navigation */
 #side-navigation {
-    width: 30%;
-    background: rgb(41, 41, 41);
+  width: 30%;
+  background: rgb(41, 41, 41);
 }
 .side-nav-link{
-		color: #fff !important;
+	color: #fff !important;
 }
 .nav-item-mobile {
-    padding: 20px 0;
-    border-bottom: 1px solid #fff;
+  padding: 20px 0;
+  border-bottom: 1px solid #fff;
 }
 #cross-icon {
-    right: 0;
+  right: 0;
+	top: 6px;
 }
 #search::placeholder {
-    font-size: 13px;
-    letter-spacing: 1px;
+  font-size: 13px;
+  letter-spacing: 1px;
 }
 
 /* Catalog Page CSS */
-.products-grid li.item .list-mt-w, .grid-mt-w{
-    position: absolute;
-    bottom: 0;
+.products-grid li.item .list-mt-w{
+  position: absolute;
+  bottom: 0;
 }
+.grid-mt-w{
+	bottom: 15px;
+	position: absolute;
+ }
 .catalog-category-view .mariatash-header:hover, .cms-page-view .mariatash-header:hover {
-    background: transparent;
+  background: transparent;
 }
 .five-col{
   width: 20%;
@@ -1682,8 +1747,9 @@ input[type="checkbox"]:checked+label:before {
   position: relative;
 }
 .catalog-common-grid{
-  /* padding: 19px; */
-  margin-top: 13px;
+  padding: 0;
+  /* margin-top: 13px; */
+	margin-bottom: 0;
 }
 .catalog-common-grid .product-image img{
   width: 100%;
@@ -1692,13 +1758,13 @@ input[type="checkbox"]:checked+label:before {
 .catalog-grid-image{
   background: #eee;
 }
-.catalog-grid-image:hover{
+.catalog-grid-image:hover, .products-grid li.item:hover .catalog-grid-image{
   background: #fff;
 }
 .mobile-main_menu{
   background: #292929;
   width: 290px;
-  left: -320px;
+  left: -420px;
   top: 68px;
   position: fixed;
   z-index: 999;
@@ -1710,12 +1776,15 @@ input[type="checkbox"]:checked+label:before {
   text-align: left;
   border-bottom: 1px solid #fff;
   width: 93%;
-  padding: 15px 0px;
+  padding: 30px 0px 10px;
   text-transform: uppercase;
   position: relative;
 }
+.mobile-main_menu .main-nav-title li:first-child {
+    padding-top: 0;
+}
 .mobile-main_menu ul {
-    padding-left: 10px;
+    padding-left: 15px;
 }
 .mobile-main_menu li.nav-item:after {
   background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
@@ -1726,17 +1795,14 @@ input[type="checkbox"]:checked+label:before {
   position: absolute;
   right: 0;
 }
-.close-section{
-  position: relative;
-}
-.close-section span:before{
+.close-section:after{
   background: url(../images/redesign/arrow-down-bk.png) no-repeat;
   content: '';
   height: 14px;
   width: 19px;
   background-position: right;
   position: absolute;
-  right: 31px;
+  right: 45px;
   transform: rotate(90deg);
 }
 .mobile-main_menu.active{
@@ -1749,9 +1815,6 @@ input[type="checkbox"]:checked+label:before {
   left: 0;
   width: 290px !important;
   top: 63px;
-}
-.close-section {
-  margin: 10px;
 }
 .menu-common-section{
   margin-top: 20px;
@@ -1768,8 +1831,8 @@ input[type="checkbox"]:checked+label:before {
   padding-left: 16px;
 }
 .mobile-sub_menu .special-menu {
-  margin-top: 3px;
-  margin-bottom: 23px;
+  margin-top: 0;
+  margin-bottom: 35px;
 }
 .mobile-sub_menu .image-text h6{
   color: #666 !important;
@@ -1785,7 +1848,7 @@ input[type="checkbox"]:checked+label:before {
   position: relative;
 }
 .swatches{
-  padding: 2px 4px 0 0px;
+  padding: 5px 4px 0 0px;
 }
 .swatches li{
   width: 18px !important;
@@ -1803,7 +1866,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .regular-price .price, .old-price .price, .special-price .price{
   font-size: 13px;
-  font-family: Din-Bold;
+  font-family: urw-din-regular;
   white-space: nowrap !important;
   letter-spacing: 1px;
 }
@@ -1872,16 +1935,17 @@ div#narrow-by-list {
   text-align: center;
   padding: 0;
 }
-.catalog-category-view .mobile-main_menu{
+/* .catalog-category-view .mobile-main_menu{
   top: 86px;
-}
-.catalog-category-view .mobile-sub_menu .sub-menu{
+} */
+/* .catalog-category-view .mobile-sub_menu .sub-menu{
   top: 86px;
-}
+} */
 /* Designer Page */
 .second-header-image{
   position: absolute;
-  top: 0
+  top: 0;
+	left: 0;
 }
 .about-designer {
   margin-top: 32px;
@@ -2004,7 +2068,7 @@ div#narrow-by-list {
 }
 .pop-title h1 {
   clear: both;
-	margin-top: 79px;
+	margin-top: 59px;
 	margin-bottom: 34px;
 	letter-spacing: 0;
 }
@@ -2014,7 +2078,7 @@ div#narrow-by-list {
 }
 .input-form {
   position: relative;
-	margin-bottom: 24px;
+	margin-bottom: 18px;
 	text-align: center;
 }
 .buttons-set img {
@@ -2040,7 +2104,7 @@ div#narrow-by-list {
 	padding: 0;
 }
 button#signin-btn-popup {
-	margin: 30px 0 48px;
+	margin: 25px 0 38px;
 }
 .mt-amazon-btn, .mt-googleconnect-btn {
   margin-right: 21px;
@@ -2050,58 +2114,98 @@ button#signin-btn-popup {
   height: 40px;
 }
 .option-text p {
-	margin: 57px 0 18px;
+	margin: 42px 0 18px;
 }
 .new_account a{
-	margin: 42px 0 45px;
+	margin: 32px 0 45px;
 }
 .eye-image {
   position: absolute;
   top: 14.5px;
   right: 14.5px;
 }
-.invalid-login{
+.invalid-login, #register-msg{
 	position: absolute;
   top: -25px;
 	color: #830000;
 	font-size: 12px;
 	font-weight: bold;
 }
-#login_msg_div{
+#login_msg_div, #reg_msg_div{
 	position: relative;
-	margin-bottom: 5px;
+	display: none;
+}
+.exit-large{
+	opacity: 100%;
+}
+span#popup_loader {
+  position: absolute;
+  top: 40px;
+  right: 120px;
 }
 /*Forget Password*/
 .popupResetPasswordModel .input-form {
     margin-bottom: 47px;
 }
 .pop-up-button-set{
-	margin-bottom: 76px;
+	margin-bottom: 66px;
 }
 .popupResetPasswordModel .pop-up-button-set{
-	margin-bottom: 108px;
+	margin-bottom: 80px;
 }
 .pop-up-button-set .col {
   padding: 0 13px;
 }
 /* Register Pop-up */
 .input-set {
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 }
 .agreement {
-	margin: 32px 0 18px;
+	margin: 27px 0 18px;
 }
 .agreement .link-button{
 	color: rgba(41,41,41,0.90);
 }
 .back-to-login .pop-up-button {
-    width: 142px;
+  width: 142px;
+}
+span#popup_loader_register {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+/* Notification Popup */
+.popupSignUpConfirmationModel .modal-body{
+	margin-bottom: 87px;
+}
+.popupSignUpConfirmationModel .info-text-two{
+	font-family: urw-din-regular;
+	color: rgba(41,41,41,1.0);
+	margin-top: 5px;
+}
+.popupSignUpConfirmationModel .pop-up-cover{
+	width: 462px;
+}
+/* Cookies pop-up */
+.dialogClose{
+	background: url(../images/redesign/exit-small-wt.png) no-repeat !important;
+	height: 13px !important;
+  width: 14px !important;
 }
 
-
-
+.usd-account .icon-item span {
+  color: #292929;
+}
+.block-cart .tite_cart{
+	background: #fff;
+  text-align: center;
+}
+.block-cart .cart_sidebar{
+	left: -60px;
+	width: 229px;
+}
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel  {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel  {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -2115,6 +2219,89 @@ button#signin-btn-popup {
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
 	background: rgba(0,0,0,0.4);
+}
+
+/* Press Page CSS */
+.press-custom-container{
+	max-width: 1018px !important;
+  margin: 0 auto;
+}
+.insta-custom-container {
+  width: 1040px;
+  margin: 0 auto;
+}
+.press-title {
+  margin: 23px 0 36px;
+}
+.images-press img {
+  width: 322px;
+	height: 433px;
+}
+.images-press li {
+  padding: 0;
+	margin-bottom: 54px;
+}
+.fancybox-skin{
+	background: #fff;
+}
+.fancybox-opened {
+	z-index: 10100;
+}
+/* .fancybox-inner {
+  overflow: hidden;
+} */
+.fancybox-lock {
+  overflow: hidden;
+}
+.categorypath-discover-maria-tash-press-html-w ul.gallery img {
+  float: left;
+  height: auto;
+  padding: 0 20px;
+  /* width: 666px; */
+}
+.categorypath-discover-maria-tash-press-html-w .fancybox-inner {
+  height: auto !important;
+  /*width: 666px !important;*/
+}
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock ul.gallery li{
+  list-style: none outside none;
+}
+.fancybox-lock .fancybox-overlay {
+  overflow: auto;
+  overflow-y: scroll;
+}
+.fancybox-overlay-fixed {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+.fancybox-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  display: none;
+  z-index: 10001;
+  background: url(fancybox_overlay.png);
+}
+.old-price {
+	margin: 0 0 0 -9px;
+}
+.products-grid .availability{
+	line-height: 13px;
+}
+#currency-selector {
+  position: absolute;
+  top: 20px;
+  right: -20px;
+  z-index: 99999;
+  width: 96px;
+  height: auto;
+}
+
+/* Product Details CSS */
+ul#foo4 {
+    min-width: 100%;
 }
 
 /* Temperory */

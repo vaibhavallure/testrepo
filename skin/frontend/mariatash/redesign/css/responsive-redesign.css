@@ -21,7 +21,7 @@
     padding: 20px 0 10px 0;
     margin: 20px auto 0 !important
   }
-  .footer-item-list:after {
+  .footer-item-list.data-block:after {
     background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
     content: '';
     height: 18px;
@@ -30,6 +30,9 @@
     position: absolute;
     right: 0;
     transform: rotate(90deg);
+  }
+  .footer-item-list.data-block.active:after {
+    transform: rotate(270deg);
   }
   .container-footlinks, .homepage-menu.mariatash-header {
     background: rgb(41, 41, 41);
@@ -68,7 +71,7 @@
     flex: 0 0 100%;
   }
   #piercing_appointments{
-    padding: 0 0 0 15px;
+    padding: 0;
   }
   .maria-right-menus{
     right: 0;
@@ -76,11 +79,8 @@
   .main-nav-link li:nth-child(3){
     margin-right: 0;
   }
-  .mobile-main_menu {
-    height: 448px;
-  }
-  .mobile-sub_menu .sub-menu{
-    height: 454px;
+  .mobile-main_menu, .mobile-sub_menu .sub-menu {
+    height: 100%;
   }
   .piercing_options .image-text {
     padding-left: 15px;
@@ -119,14 +119,17 @@
     margin-bottom: 9px;
   }
   .common-option-div{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .head-child ul {
+    margin-bottom: 0;
   }
   .menu-head span a, .mobile-sub_menu .image-text h6 {
     color: #000 !important;
   }
-  .catalog-category-view nav.homepage-menu.navbar {
+  /* .catalog-category-view nav.homepage-menu.navbar {
     background: transparent;
-  }
+  } */
   #narrow-by-list{
     display: none;
   }
@@ -167,17 +170,40 @@
   .faq-main{
     margin-top: 0 !important;
   }
+  .customer-care-page .main {
+    padding-bottom: 0;
+  }
   div#category-title{
     margin: 16px 0 20px;
     padding: 0;
   }
   .content-customer {
-    margin: 15px 0 115px;
+    margin: 15px 0 85px;
   }
   .customer-care-page .faq-question span:after{
     margin-top: 0;
   }
   .footer-item-list:last-child{
+    display: none;
+  }
+  .piercing_options{
+    padding: 0 15px;
+  }
+  .mobile-sub_menu .image-text h6{
+    margin-bottom: 37px;
+  }
+  .parent-category {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-family: urw-din-bold;
+  }
+  .submenu-upper-section {
+    padding: 0 0 10px;
+    border-bottom: 1px solid #292929;
+    margin-bottom: 20px;
+    margin: 20px 15px;
+  }
+  .category-image img{
     display: none;
   }
 }
@@ -193,9 +219,6 @@
 @media (min-width:767px) and (max-width:1024px){
   #narrow-by-list li div dt{
     width: 104px;
-  }
-  .five-col{
-    width: 50%;
   }
   .form-search input.input-text{
     width: 200px;
@@ -246,13 +269,22 @@
     max-width: 650px;
     margin: 0 auto;
   }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    width: 380px !important;
+  }
+  .mobile-main_menu{
+    top: 83px;
+  }
+  .five-col{
+    width: 50%;
+  }
 }
 
 
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 250px;
+    top: 227px;
   }
   .about-designer{
     padding: 0 26px;
@@ -273,13 +305,22 @@
     max-width: 1000px;
     margin: 0 auto;
   }
+  .five-col{
+    width: 33.33%;
+  }
+  #narrow-by-list{
+    margin-left: 0;
+  }
+  #narrow-by-list li div dt {
+    width: 161.4px;
+  }
+  #narrow-by-list li div dd{
+    width: 161px;
+  }
 }
 
 /* ALl Mobiles */
 @media (max-width:767px) {
-  .five-col{
-    width: 100%;
-  }
   .homepage-menu {
     padding-top: 18px !important;
     padding: 0;
@@ -303,6 +344,9 @@
   }
   .about-jewelry h1{
     margin-bottom: 20px;
+  }
+  .cms-page-view h1, .category-press h1{
+    font-size: 25px;
   }
 }
 
@@ -331,7 +375,7 @@
     padding-left: 5px;
   }
   .custom-container {
-    max-width: 380px;
+    max-width: 370px;
     margin: 0 auto;
   }
   .main-nav-link li:nth-child(2) {
@@ -365,6 +409,9 @@
   .pop-up-button-set .col {
     padding: 0 9px;
   }
+  .five-col{
+    width: 100%;
+  }
 }
 
 /* Mobile landscape */
@@ -381,6 +428,9 @@
   }
   .faq-main {
     padding: 0 40px;
+  }
+  .five-col{
+    width: 50%;
   }
 }
 
