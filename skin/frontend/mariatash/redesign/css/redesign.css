@@ -2068,7 +2068,7 @@ div#narrow-by-list {
 }
 .pop-title h1 {
   clear: both;
-	margin-top: 69px;
+	margin-top: 59px;
 	margin-bottom: 34px;
 	letter-spacing: 0;
 }
@@ -2104,7 +2104,7 @@ div#narrow-by-list {
 	padding: 0;
 }
 button#signin-btn-popup {
-	margin: 30px 0 48px;
+	margin: 30px 0 38px;
 }
 .mt-amazon-btn, .mt-googleconnect-btn {
   margin-right: 21px;
@@ -2114,10 +2114,10 @@ button#signin-btn-popup {
   height: 40px;
 }
 .option-text p {
-	margin: 57px 0 18px;
+	margin: 47px 0 18px;
 }
 .new_account a{
-	margin: 42px 0 45px;
+	margin: 32px 0 45px;
 }
 .eye-image {
   position: absolute;
@@ -2151,17 +2151,17 @@ span#popup_loader {
 	margin-bottom: 66px;
 }
 .popupResetPasswordModel .pop-up-button-set{
-	margin-bottom: 108px;
+	margin-bottom: 80px;
 }
 .pop-up-button-set .col {
   padding: 0 13px;
 }
 /* Register Pop-up */
 .input-set {
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 }
 .agreement {
-	margin: 32px 0 18px;
+	margin: 27px 0 18px;
 }
 .agreement .link-button{
 	color: rgba(41,41,41,0.90);
