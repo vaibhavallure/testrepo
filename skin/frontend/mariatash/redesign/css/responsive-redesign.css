@@ -220,9 +220,6 @@
   #narrow-by-list li div dt{
     width: 104px;
   }
-  .form-search input.input-text{
-    width: 200px;
-  }
 }
 /* ipad portrait */
 @media (min-width:767px) and (max-width:1024px) and (orientation:portrait){
@@ -278,6 +275,10 @@
   .five-col{
     width: 50%;
   }
+  .form-search input.input-text{
+    width: 160px;
+    height: 26px !important;
+  }
 }
 
 
@@ -316,6 +317,10 @@
   }
   #narrow-by-list li div dd{
     width: 161px;
+  }
+  .form-search input.input-text{
+    width: 200px;
+    height: 26px !important;
   }
 }
 
@@ -411,6 +416,10 @@
   }
   .five-col{
     width: 100%;
+  }
+  .form-search input.input-text{
+    width: 265px;
+    height: 25px !important;
   }
 }
 
