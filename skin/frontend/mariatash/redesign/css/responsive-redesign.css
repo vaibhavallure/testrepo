@@ -446,3 +446,22 @@
     max-width: 1178px !important;
     margin: 0 auto;
 }
+
+/* Big Screen Laptops */
+@media (min-width:1024px){
+  .inner-box{
+    width: 874px;
+  }
+  .special-menu {
+    margin-left: 70px;
+  }
+  .filter-common-div {
+    top: 455px;
+  }
+  .category-products{
+    margin-top: 133px;
+  }
+  .custom-container{
+    max-width: 1318px !important;
+  }
+}

@@ -19787,9 +19787,7 @@ input.giftcard-radio1 {
 	display: none;
 } */
 
-.custom-checkbox input:checked ~ .checkmark:after {
-	display: block;
-}
+
 
 
 
