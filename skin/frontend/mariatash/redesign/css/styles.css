@@ -450,21 +450,21 @@ button[disabled], input[disabled] {
  * 3. Removes excess padding in IE7
       Known issue: excess padding remains in IE6
  */
-input[type="checkbox"], input[type="radio"] {
+/* input[type="checkbox"], input[type="radio"] {
 	padding: 0;
 	position: absolute;
 	left: -9999px;
 	*height: 13px;
 	*width: 13px;
-}
+} */
 
-.customer-address-form input[type="checkbox"] {
+/* .customer-address-form input[type="checkbox"] {
 	top: inherit;
 }
 
 .lt-ie9 .customer-address-form input[type="checkbox"] {
 	top: -9999px;
-}
+} */
 
 input[type="radio"] {
 	position: absolute;
@@ -17785,22 +17785,22 @@ ul.products-grid2 {
 
 /* Filtes checkboxes
 *********************************/
-.m-filter-checkboxes input[type="checkbox"] {
+/* .m-filter-checkboxes input[type="checkbox"] {
 	display: none;
-}
+} */
 
-.m-filter-checkboxes input[type="checkbox"]+label span {
+/* .m-filter-checkboxes input[type="checkbox"]+label span {
 	display: inline-block;
 	width: 10px;
 	height: 9px;
 	margin-right: 3px;
 	background: url(../images/checkbox-filters.png) center bottom no-repeat;
-}
+} */
 
-.m-filter-checkboxes input[type="checkbox"]:checked+label span,
+/* .m-filter-checkboxes input[type="checkbox"]:checked+label span,
 .m-filter-checkboxes input[checked="checked"]+label span {
 	background: url(../images/checkbox-filters.png) center top no-repeat;
-}
+} */
 
 .delayed-product {
 
@@ -19167,11 +19167,11 @@ ol.m-filter-css-checkboxes li a.m-checkbox-unchecked, ol.m-filter-css-checkboxes
 	text-decoration: none;
 }
 
-.m-filter-checkboxes li input {
+/* .m-filter-checkboxes li input {
 	margin-right: 4px;
 	position: relative;
 	top: 2px;
-}
+} */
 
 /* ul#narrow-by-list {
 	margin: 0 20px 0 0;
@@ -19760,11 +19760,11 @@ input.giftcard-radio1 {
 	color: #906E39 ! important;
 } */
 
-.mt-custom-checkbox input {
+/* .mt-custom-checkbox input {
 	position: absolute;
 	opacity: 0;
 	cursor: pointer;
-}
+} */
 
 /* .checkmark {
 	position: absolute;
@@ -19781,13 +19781,13 @@ input.giftcard-radio1 {
 	/* background-color: #2196F3; */
 }
 
-.checkmark:after {
+/* .checkmark:after {
 	content: "";
 	position: absolute;
 	display: none;
-}
+} */
 
-.mt-custom-checkbox input:checked ~ .checkmark:after {
+.custom-checkbox input:checked ~ .checkmark:after {
 	display: block;
 }
 
@@ -19797,7 +19797,7 @@ input.giftcard-radio1 {
 	color: #830000;
 }
 
-.mt-custom-checkbox .checkbox-error-validate + .checkmark{
+.custom-checkbox .checkbox-error-validate + .checkmark{
 	border: 1px solid #830000;
 }
 

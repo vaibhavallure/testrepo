@@ -1003,12 +1003,12 @@ label.popup-reg-privacy-lbl {
     float: left;
     font-size: 12px;
 }
-#popup_is_privacy_agree {
+/* #popup_is_privacy_agree {
     width: 20px;
     height: 20px;
     left: 0;
     margin: 3px 20px;
-}
+} */
 .please-wait-popup-del{
 	float: left;
     margin-left: 301px;

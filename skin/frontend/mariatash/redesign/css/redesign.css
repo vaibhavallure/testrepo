@@ -179,6 +179,12 @@ h3{
   left: 3px;
   top: 3px;
   background: rgba(41,41,41,.60);
+	position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark:after {
+	display: block;
 }
 
 input:-webkit-autofill,
@@ -786,7 +792,11 @@ nav.mariatash-header {
     margin-bottom: 5px;
 }
 
-
+.m-filter-checkboxes li {
+    float: none !important;
+    display: flex;
+    margin-top: 5px;
+}
 /* @media (max-width: 576px) {
     .catalog .item,
     .insta-item {
