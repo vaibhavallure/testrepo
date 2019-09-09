@@ -484,4 +484,7 @@
   .footer{
     padding: 0;
   }
+  .sub-menu{
+    top: 138px;
+  }
 }
