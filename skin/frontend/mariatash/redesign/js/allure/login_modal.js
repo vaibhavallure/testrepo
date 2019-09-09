@@ -233,7 +233,8 @@ function openRegisterModal(){
 };
 
 function gotoLoginPage(){
-	jQuery(".close").trigger('click');
+	jQuery("#popup-resetpassword-form .close").trigger('click');
+    jQuery("#popup-register-form .close").trigger('click');
 	jQuery("#sign_in_label").trigger('click');
 }
 
