@@ -448,7 +448,7 @@
 }
 
 /* Big Screen Laptops */
-@media (min-width:1024px){
+@media (min-width:1920px){
   .inner-box{
     width: 874px;
   }
