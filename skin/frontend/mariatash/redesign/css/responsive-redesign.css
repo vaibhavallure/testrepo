@@ -446,3 +446,32 @@
     max-width: 1178px !important;
     margin: 0 auto;
 }
+
+/* Big Screen Laptops */
+@media (min-width:1920px){
+  .inner-box{
+    width: 742px;
+    margin-left: 300px;
+  }
+  .filter-common-div {
+    top: 455px;
+  }
+  .category-products{
+    margin-top: 133px;
+  }
+  .custom-container{
+    max-width: 1318px !important;
+  }
+  .jewelry-container, .faq-main{
+    margin-top: 182px !important;
+  }
+  .about-designer{
+    margin-top: 90px;
+  }
+  #piercing_appointments{
+    padding: 48px 254px;
+  }
+  .footer{
+    padding: 0;
+  }
+}

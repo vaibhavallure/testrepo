@@ -688,6 +688,11 @@ nav.mariatash-header {
   position: absolute;
   top: 0;
 	left: 0;
+	width: 100%;
+}
+
+.category-image img{
+	width: 100%;
 }
 
 /* footer */
@@ -1956,6 +1961,7 @@ div#narrow-by-list {
   position: absolute;
   top: 0;
 	left: 0;
+	width: 100%;
 }
 .about-designer {
   margin-top: 32px;
