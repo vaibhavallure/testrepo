@@ -546,8 +546,19 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
     private function formatWorkTime($time, $s = null)
     {
+        /*temporary break added for end time 20:00 and 20:30     note:Must remove after bonmarche popup*/
+        $this->addBuffer($time);
+
         $datetime = date("Y-m-d " . $time . ":00", strtotime($this->getRequestedDate()));
         return $datetime;
+    }
+
+    private function addBuffer(&$time)
+    {
+         $timeChange=array("20:00"=>"19:45","20:30"=>"20:15");
+
+         if(array_key_exists($time,$timeChange))
+             $time=$timeChange[$time];
     }
 
     private function getRequestedDate()
