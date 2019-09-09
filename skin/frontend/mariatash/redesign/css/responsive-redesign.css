@@ -354,6 +354,9 @@
   .cms-page-view h1, .category-press h1{
     font-size: 25px;
   }
+  .faq-question span{
+    font-size: 16px;
+  }
 }
 
 /* Mobile Portrait */
