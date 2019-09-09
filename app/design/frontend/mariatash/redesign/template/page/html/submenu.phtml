@@ -74,7 +74,7 @@ if($this->isthumbnailCat($pc->getName())){
                     <div class="col-lg-5 col-12 text-uppercase right-section">
                         <div class="row">
                             <?php foreach ($childRightSection  as $childR){ ?>
-                            <a href="<?= $childR->getRequestPath() ?>">
+                            <a href="/<?= $childR->getRequestPath() ?>">
                                 <div class="col-md col-12 p-0 text-center special-menu">
                                     <img width="228px" src="<?= $this->getCatThumbnail($childR->getId()) ?>">
                                     <div class="product-name image-text"><h6 class="text-uppercase text-white"><?= $childR->getName() ?></h6></div>
