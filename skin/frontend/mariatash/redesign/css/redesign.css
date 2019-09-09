@@ -1690,7 +1690,7 @@ input[type="checkbox"]:checked+label:before {
   z-index: 999/* changed by aditya 1 */;
   position: fixed;
   width: 100%;
-  top: 111px;
+  top: 138px;
   overflow-x: hidden;
   right:0;
 }
@@ -2094,6 +2094,7 @@ div#narrow-by-list {
 .input-form input{
 	width: 318px;
 	border: 1px solid #D8D8D8;
+	-webkit-appearance: none;
 }
 .input-form {
   position: relative;

@@ -2714,7 +2714,7 @@ a.various_sample.non-color {
 	background: transparent url(../images/bkg_brown_btn_hover.png) repeat-x;
 }
 
-.customer-account-login button.button, .checkout-multishipping-login button.button,
+/* .customer-account-login button.button, .checkout-multishipping-login button.button,
 .my-account button.button, .product-shop .add-to-cart button.button[title="Add to Cart"],
 .pay-caart button.button, .opc .step .buttons-set button.button,
 .multiple-checkout button.continue, .multiple-checkout button.btn-checkout, .appointments-index-index button.button
@@ -2727,9 +2727,9 @@ a.various_sample.non-color {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	line-height: normal;
-}
+} */
 
-.customer-account-login button.button:hover,
+/* .customer-account-login button.button:hover,
 .checkout-multishipping-login button.button:hover, .my-account button.button:hover,
 .product-shop .add-to-cart button.button[title="Add to Cart"]:hover,
 .pay-caart button.button:hover, .opc .step .discount-form .buttons-set  button.button:hover,
@@ -2740,8 +2740,8 @@ a.various_sample.non-color {
 
 button.button:active {
 	position: relative;
-	/*  top:1px;*/
-}
+	/*  top:1px;
+} */
 
 .checkout-onepage-index .discount-form button.button {
 	font-size: 12px !important;
