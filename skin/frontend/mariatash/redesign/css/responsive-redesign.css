@@ -464,4 +464,10 @@
   .custom-container{
     max-width: 1318px !important;
   }
+  .jewelry-container, .faq-main{
+    margin-top: 182px !important;
+  }
+  .about-designer{
+    margin-top: 90px;
+  }
 }
