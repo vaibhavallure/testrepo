@@ -1762,6 +1762,7 @@ input[type="checkbox"]:checked+label:before {
 .products-grid li.item{
   padding: 4px;
   position: relative;
+    overflow: hidden;
 }
 .catalog-common-grid{
   padding: 0;
@@ -1772,6 +1773,12 @@ input[type="checkbox"]:checked+label:before {
   width: 100%;
   height: auto;
 	background: #eee;
+    transition: transform .2s;
+}
+.catalog-common-grid .product-image img:hover{
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5);
 }
 .catalog-grid-image{
   background: #eee;
