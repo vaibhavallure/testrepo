@@ -372,7 +372,7 @@
     font-size: 25px;
   }
   .faq-question span{
-    font-size: 16px;
+    font-size: 14px;
   }
   .input-set {
     margin-bottom: 20px;
@@ -403,6 +403,9 @@
   .pop-up-button-set, .popupResetPasswordModel .pop-up-button-set {
     margin-bottom: 50px;
   }
+  .faq-main{
+    margin-bottom: 0 !important;
+  }
 }
 
 /* Mobile Portrait */
@@ -432,6 +435,7 @@
   .custom-container {
     max-width: 370px;
     margin: 0 auto;
+    padding: 0 30px;
   }
   .main-nav-link li:nth-child(2) {
     margin-right: 10px;
@@ -457,6 +461,9 @@
   }
   .popupResetPasswordModel .input-form {
     margin-bottom: 35px;
+  }
+  .faq-copy-section {
+    padding: 5px;
   }
 }
 
