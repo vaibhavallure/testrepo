@@ -180,9 +180,9 @@
   .customer-care-page .faq-question span:after{
     margin-top: 0;
   }
-  /* .footer-item-list:last-child{
+  .footer-item-list:last-child{
     display: none;
-  } */
+  }
   .piercing_options{
     padding: 0 15px;
   }
