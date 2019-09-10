@@ -331,7 +331,7 @@
     overflow-x: scroll;
   }
   #piercing_appointments {
-    padding: 0 32px;
+    padding: 5px 32px 32px 0;
   }
   .inner-box {
     width: 534px;
