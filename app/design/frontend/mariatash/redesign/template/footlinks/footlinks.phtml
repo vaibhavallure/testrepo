@@ -184,7 +184,7 @@
                                 }
                             </script>
                         <?php else: ?>
-                            <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style='<?php echo (strtolower(str_replace(" ", "-", $link->getTitle())) == 'customer-care') ? 'width:164px; height:187px; ' : ' '?> display:none;'>
+                            <div id="tooltip-id-<?php echo strtolower(str_replace(" ", "-", $link->getTitle())) ?>" style='<?php echo (strtolower(str_replace(" ", "-", $link->getTitle())) == 'customer-care') ? '' : ' '?> display:none;'><!--width:164px; height:187px; -->
                                 <?php echo $this->getBlock($link->getBlockValue(), false); ?>
                             </div>
                         <?php endif ?>
