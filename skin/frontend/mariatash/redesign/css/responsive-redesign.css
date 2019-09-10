@@ -221,7 +221,7 @@
     line-height: 35px;
   }
   .form-subscribe-mt{
-    margin-top: 25px;
+    margin-top: 20px;
   }
   .customer-care-list li span{
     font-size: 12px;
@@ -263,7 +263,6 @@
   .form-subscribe-mt input {
     width: 100%;
     margin-bottom: 20px;
-  	border: 1px solid #fff;
   }
   .form-subscribe-mt .checkmark:after{
   	background: #fff;
