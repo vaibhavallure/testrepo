@@ -323,6 +323,23 @@
     width: 200px;
     height: 26px !important;
   }
+  .menu-inner{
+    overflow-x: auto;
+  }
+  .div-row{
+    width:1500px;
+    overflow-x: scroll;
+  }
+  #piercing_appointments {
+    padding: 0 32px;
+  }
+  .inner-box {
+    width: 534px;
+    margin-left: 15px;
+  }
+  #jewelry .special-menu img {
+    width: 200px !important;
+  }
 }
 
 /* ALl Mobiles */
@@ -356,6 +373,18 @@
   }
   .faq-question span{
     font-size: 16px;
+  }
+  .input-set {
+    margin-bottom: 25px;
+  }
+  .agreement{
+    margin: 17px 0 18px;
+  }
+  .back-to-login{
+    padding-left: 0 !important;
+  }
+  .submit-login{
+    padding-right: 0 !important;
   }
 }
 
@@ -415,15 +444,15 @@
   .popupResetPasswordModel .pop-up-button-set{
     margin-bottom: 78px;
   }
-  .pop-up-button-set .col {
-    padding: 0 9px;
-  }
   .five-col{
     width: 100%;
   }
   .form-search input.input-text{
     width: 265px;
     height: 25px !important;
+  }
+  .pop-up-button-set .col{
+    padding: 0 13px;
   }
 }
 

@@ -12,9 +12,9 @@ if($this->isthumbnailCat($pc->getName())){
           <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($pc->getName()) ?></a></span>
                         <span class="close-section">Back</span>
                         </div>
-        <div class="row">
+        <div class="row menu-inner">
             <div class="col-12 mt-4">
-                <div class="row">
+                <div class="row div-row">
 
 <?php foreach ($this->getChildCategories($pc->getId()) as $child) {
                                     if (!$child->getIsActive() || !$this->wholesaleCheck($child->getId()))
@@ -37,7 +37,7 @@ if($this->isthumbnailCat($pc->getName())){
                                       <span class="parent-category float-left"><a href="/<?= $pc->getRequestPath() ?>"><?= strtolower($pc->getName()) ?></a></span>
                                     <span class="close-section ">Back</span>
                                   </div>
-            <div class="row">
+            <div class="row piercing-inner">
                 <div class="col-lg-12 menu-common-section">
                     <div class="row">
                         <div class="col-lg-7 col-12 left-section">
