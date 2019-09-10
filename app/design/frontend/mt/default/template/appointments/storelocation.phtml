@@ -1,60 +1,71 @@
 <?php
-	$model = Mage::registry('apt_modify_data');
-    $storeIdNone = Mage::helper('appointments/data')->getPopupStoreId();
-	$storeId = Mage::helper('appointments')->getStoreId();
+$model = Mage::registry('apt_modify_data');
+$storeIdNone = Mage::helper('appointments/data')->getPopupStoreId();
 
-	$fetch_storeId=	Mage::helper('appointments')->getReqStoreId();
+if(isset($storeIdNone)){
+    $popupStoreName = Mage::helper('appointments/data')->getPopupStoreName($storeIdNone);
+    $popupUrl = Mage::getStoreConfig('appointments/popup_setting/popup_url');
+}
 
-	if($model){
-		$fetch_storeId = $model->getStoreId();
-	}
+$storeId = Mage::helper('appointments')->getStoreId();
+
+$fetch_storeId=	Mage::helper('appointments')->getReqStoreId();
+
+if($model){
+    $fetch_storeId = $model->getStoreId();
+}
 
 
 ?>
 <label for="store_location">Store Location:</label>
-	<?php
-	$storeId_arr = explode(",", $storeId);
-	$activeStores = $this->getActiveStore();
-	$multi_stores=array();
+<?php
+$storeId_arr = explode(",", $storeId);
+$activeStores = $this->getActiveStore();
+$multi_stores=array();
 
 
-    if(count($storeId_arr) >= 1){
+if(count($storeId_arr) >= 1){
 
-		if($storeId):
-			foreach($storeId_arr as $st_key => $st_value){
-				foreach ($activeStores as $key=>$store){
-					if($st_value == $key){
-						$requestStoreName = $store;
-						$requestStoreId = $key;
+    if($storeId):
+        foreach($storeId_arr as $st_key => $st_value){
+            foreach ($activeStores as $key=>$store){
+                if($st_value == $key){
+                    $requestStoreName = $store;
+                    $requestStoreId = $key;
 
-						$multi_stores[$requestStoreId]= $requestStoreName;
-					}
-				}
-			}
+                    $multi_stores[$requestStoreId]= $requestStoreName;
+                }
+            }
+        }
 
-		else:
-			foreach ($activeStores as $key=>$store){
-		    if($key!=$storeIdNone) {
+    else:
+        foreach ($activeStores as $key=>$store){
+            if($key!=$storeIdNone) {
                 $requestStoreName = $store;
                 $requestStoreId = $key;
                 $multi_stores[$key] = $store;
             }
-			}
-		endif;
-	}
+        }
+    endif;
+}
 
-	if(count($multi_stores) <= 1):
-	?>
-		<p><b><?php echo $requestStoreName;?></b></p>
-		<input type="hidden" name="store_id" id="store-id" value="<?php echo $requestStoreId;?>"/>
-		<?php else:?>
-		<div>
-		<select id="store-id" name="store_id" class="storeLocationSelect">
-		<?php
-		foreach ($multi_stores as $key=>$store):
-		?>
-		<option value="<?php echo $key;?>" <?php if($fetch_storeId==$key):echo "selected";endif;?>><?php echo $store;?></option>
-		<?php endforeach;?>
-		</select>
-		</div>
+if(count($multi_stores) <= 1):
+    ?>
+    <p><b><?php echo $requestStoreName;?></b></p>
+    <input type="hidden" name="store_id" id="store-id" value="<?php echo $requestStoreId;?>"/>
+<?php else:?>
+    <div>
+        <select id="store-id" name="store_id" class="storeLocationSelect">
+            <?php
+            foreach ($multi_stores as $key=>$store):
+                ?>
+                <option value="<?php echo $key;?>" <?php if($fetch_storeId==$key):echo "selected";endif;?>><?php echo $store;?></option>
+            <?php endforeach;?>
+            <?php if(isset($storeIdNone)):?>
+            <?php if(isset($popupStoreName)):?>
+                <option value="specialStore" data-url="<?=Mage::getBaseUrl().$popupUrl?>" ><?=$popupStoreName?></option>
+            <?php endif;?>
+            <?php endif;?>
+        </select>
+    </div>
 <?php endif;?>
