@@ -170,7 +170,7 @@
   .customer-care-page .main {
     padding-bottom: 0;
   }
-  div#category-title{
+  #category-title{
     margin: 16px 0 20px;
     padding: 0;
   }
@@ -206,7 +206,7 @@
   .newsletter-mt {
     display: none;
   }
-  .popbox, #link_about-maria, .popbox_ajax {
+  .popbox, #link_about-maria > div, .popbox_ajax {
     border-bottom: 1px solid #fff;
     padding-bottom: 10px;
     text-transform: uppercase;
@@ -225,6 +225,13 @@
   }
   .customer-care-list li span{
     font-size: 12px;
+  }
+  #link_about-maria a{
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  #container{
+    height: 80px;
   }
   /*Different Footer */
   /* 1. Customer Care */
