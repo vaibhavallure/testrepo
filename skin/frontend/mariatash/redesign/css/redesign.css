@@ -1763,6 +1763,7 @@ input[type="checkbox"]:checked+label:before {
 .products-grid li.item{
   padding: 4px;
   position: relative;
+    overflow: hidden;
 }
 .catalog-common-grid{
   padding: 0;
@@ -1773,6 +1774,12 @@ input[type="checkbox"]:checked+label:before {
   width: 100%;
   height: auto;
 	background: #eee;
+    transition: transform .2s;
+}
+.catalog-common-grid .product-image img:hover{
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5);
 }
 .catalog-grid-image{
   background: #eee;
@@ -2228,7 +2235,7 @@ span#popup_loader_register {
 	width: 229px;
 }
 /*Old Css*/
-.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel  {
+.popupResetPasswordModel, .popupRegisterModel, .popupLoginModel, .popupSignUpConfirmationModel,.filterPopup  {
 	position: fixed;
 	top:-20px;
 	right: 0;
@@ -2358,3 +2365,84 @@ ul#foo4 {
 .cms-faqs .col-left.sidebar {
     display: none;
 }
+
+
+/*filter popup-----------------------------------------------------*/
+.filterPopup #narrow-by-list li div dt {
+    cursor: pointer;
+    background: #0000008c!important;
+    border: none;
+    color: white;
+    width: auto;
+}
+.filterPopup #narrow-by-list li div dd {
+ display: block!important;
+    position: relative;
+    top:auto;
+    left: auto;
+    border: none;
+}
+.filterPopup .close div{
+    background-image: url("../images/redesign/login-cross.png");
+    width: 25px;
+    height: 26px;
+    background-size: 100%;
+}
+.filterPopup #narrow-by-list{
+    display: block!important;
+    margin-left: auto;
+}
+.filterPopup ul#narrow-by-list li{
+    float: none;
+}
+.filterPopup .filtru-price .m-filter-slider {
+    margin-left: 10px;
+    margin-top: 11px;
+    margin-bottom: 50px;
+}
+.filterPopup .m-slider-selected-value{
+    width: 245px;
+}
+.filterPopup .block.block-layered-nav.mb-mana-catalogsearch-leftnav{
+    margin-top: 50px;
+}
+.filterPopup .selected-filters{
+width: 100%;
+    position: static;
+    top:auto;
+    left: auto;
+}
+.filterPopup .selected-filters .currently{
+    display: none;
+}
+.filterPopup .selected-filters .actions.current{
+    width: 50%;
+    text-align: center;
+    padding: 10px;
+    margin: auto;
+    text-align: center;
+}
+
+.filterPopup .selected-filters .actions.current a{
+    text-align: center;
+    display: block;
+    background: gray;
+    width: 100px;
+    color: white;
+}
+.filterButton:before{
+    content: '';
+    background-image: url(../images/filter.png);
+    width: 32px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 33px;
+    position: absolute;
+}
+.filterButton{
+    padding-left: 10px;
+    width: 100%;
+    height: 32px;
+    display: block;
+}
+/*filter popup end----------------------------------*/

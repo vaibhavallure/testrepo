@@ -67,15 +67,15 @@
                 		}
                 ?>
                 <?php //echo (get_class($_filter));?>
-				<?php if($_filter->getItemsCount() && 'price' == $_filter->getCode()): ?>
-                    <li class="common-filter filtru-<?php echo $_filter->getCode(); ?>">
-                        <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
-                            <dt><?php echo $this->__($_filter->getName()) ?></dt>
-                            <dd><?php echo $_filter->getHtml() ?></dd>
+				<?php /*if($_filter->getItemsCount() && 'price' == $_filter->getCode()): */?><!--
+                    <li class="common-filter filtru-<?php /*echo $_filter->getCode(); */?>">
+                        <div class="optionfilter" style="<?php /*if($_filter->getCode() != 'price') : */?><?php /*endif; */?>">
+                            <dt><?php /*echo $this->__($_filter->getName()) */?></dt>
+                            <dd><li><?php /*echo $_filter->getHtml() */?></li></dd>
                         </div>
                     </li>
-                <?php endif; ?>
-                <?php if($_filter->getItemsCount() && 'price' != $_filter->getCode()): ?>
+                --><?php /*endif; */?>
+                <?php if($_filter->getItemsCount() ): //&& 'price' != $_filter->getCode()?>
                     <li class="common-filter filtru-<?php echo $_filter->getCode().'-dtn'; ?>">
                         <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
                             <dt><?php echo $this->__($_filter->getName()) ?></dt>
