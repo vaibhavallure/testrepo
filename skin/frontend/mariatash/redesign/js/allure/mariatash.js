@@ -283,9 +283,9 @@ jQuery(document).ready(function() {
 
     jQuery(".mobile-main_menu li.parent a").attr("href","#");
 
+    /*filter popup start---------------------------------*/
     var width = jQuery(window).width();
     if ((width < 1023)) {
-        jQuery(".mobile-main_menu li.parent a").attr("href", "#");
 
         if (jQuery('.filter-common-div').length) {
             var filter_popup = '<div id="openModal" class="filterPopup">\n' +
@@ -317,6 +317,7 @@ jQuery(document).ready(function() {
             });
         }
     }
+    /*filter popup end---------------------------------*/
 });
 
 function myFunction(x) {
