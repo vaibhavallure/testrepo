@@ -71,7 +71,7 @@
                     <li class="common-filter filtru-<?php echo $_filter->getCode(); ?>">
                         <div class="optionfilter" style="<?php if($_filter->getCode() != 'price') : ?><?php endif; ?>">
                             <dt><?php echo $this->__($_filter->getName()) ?></dt>
-                            <dd><?php echo $_filter->getHtml() ?></dd>
+                            <dd><li><?php echo $_filter->getHtml() ?></li></dd>
                         </div>
                     </li>
                 <?php endif; ?>
