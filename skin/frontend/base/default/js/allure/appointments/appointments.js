@@ -235,11 +235,9 @@ var count = 0;
 	 jQuery("#store-id").on("change",function(){
          jQuery('#pick_ur_time_div').find('input:hidden').val('');
          jQuery("#time_blocks").empty();
-
-
+         
          var selectedStore = jQuery(this).children("option:selected");
 
-         console.log(selectedStore);
          if(typeof selectedStore.attr('data-url') !== "undefined"){
              window.location.replace(selectedStore.attr('data-url'));
 		 }else {

@@ -239,7 +239,7 @@ var count = 0;
 
          var selectedStore = jQuery(this).children("option:selected");
 
-         console.log(selectedStore);
+
          if(typeof selectedStore.attr('data-url') !== "undefined"){
              window.location.replace(selectedStore.attr('data-url'));
          }else {
