@@ -326,6 +326,7 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
         
         $orderId = $order->getId();
         $orderStatus = $order->getStatus();
+
         $this->salesforceLog($create?"CREATE:":"UPDATE"."Order Id {$orderId} Status - " . $orderStatus);
 
         $items = $order->getAllVisibleItems();
@@ -428,6 +429,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
 
         $billingAddr = $order->getBillingAddress();
         $shippingAddr = $order->getShippingAddress();
+        $couponCode = $order->getCouponCode();
+        $couponRuleName = $order->getCouponRuleName();
 
         $customerNote = Mage::helper('giftmessage/message')->getEscapedGiftMessage($order);
 
@@ -635,6 +638,8 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
             "Customer_Note__c" => ($customerNote) ? $customerNote : "",
             "Signature__c" => ($order->getNoSignatureDelivery()) ? "Yes" : "No",
             //"OrderItems" => $orderItem
+            "Coupon_Code__c" => $couponCode,
+            "Coupon_Rule_Name__c" => $couponRuleName
         );
 
         if (!$create) {
@@ -789,6 +794,23 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 }
             }
 
+            $isConfirmed = !$customer->getConfirmation()?"Confirmed":"Not confirmed, can login";
+
+            if ($customer->isConfirmationRequired()) {
+                $isConfirmed =  'Not confirmed, cannot login';
+            }
+
+            $subscriber = Mage::getModel('newsletter/subscriber')->loadByCustomer($customer);
+            $isSubscribed = $subscriber->isSubscribed();
+
+            $collection = Mage::getResourceModel('sales/sale_collection')
+                ->setCustomerFilter($customer)
+                ->setOrderStateFilter(Mage_Sales_Model_Order::STATE_CANCELED, true)
+                ->load();
+
+            $lifeTimeSales = $collection->getTotals()->getBaseLifetime();
+            $avgSales = $collection->getTotals()->getAvgsale();
+
             $accountRequest = array(
                 "Name" => $fullName,
                 //"AccountNumber"       => "",
@@ -821,7 +843,13 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                 "ShippingCity" => ($defaultShippingAddr) ? $defaultShippingAddr->getCity() : "",
                 "ShippingState" => ($defaultShippingAddr) ? $stateShip : "",
                 "ShippingPostalCode" => ($defaultShippingAddr) ? $defaultShippingAddr->getPostcode() : "",
-                "ShippingCountry" => ($defaultShippingAddr) ? $countryNameShip : ""
+                "ShippingCountry" => ($defaultShippingAddr) ? $countryNameShip : "",
+                "Confirmed_Email__c" => $isConfirmed,
+                "Is_Subscribed_to_Newsletter__c" => $isSubscribed,
+                "Created_At__c" => $customer->getIsCreatedAt(),
+                "Lifetime_Sale__c" => $lifeTimeSales,
+                "Average_Sale__c" => $avgSales,
+
             );
             if(!$isFromEvent)
                 $accountRequest["attributes"] = array("type" => "Account", "referenceId" => "customers-" . $customer->getData("entity_id"));
@@ -1181,6 +1209,21 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                         return;
                     }
 
+                    $_collection = Mage::getResourceModel('eav/entity_attribute_option_collection')
+                        ->setAttributeFilter(238)
+                        ->setStoreFilter(0)
+                        ->load();
+
+                    $optionArray = $_collection->toOptionArray();
+                    $customStockStatus = "";
+                    foreach($optionArray as $option) {
+                        if($option['value'] == $product->getData('custom_stock_status')) {
+                            $customStockStatus = $option['label'];
+                        }
+                    }
+
+                    $weight = $product->getData('weight');
+
                     $metalColor = $product->getMetal();
                     $taxClassId = $product->getTaxClassId();
                     $gemstone = $product->getGemstone();
@@ -1229,6 +1272,9 @@ class Allure_Salesforce_Helper_SalesforceClient extends Mage_Core_Helper_Abstrac
                         //"Tax_Class_Id__c"           => $product->getTaxClassId(),
                         "Vendor_Item_No__c" => $product->getVendorItemNo(),
                         "Location__c" => $attributeSetName,
+                        "Custom_Stock_Status__c" => $customStockStatus,
+                        "Weight__c" => $weight,
+                        // "Category__c" => //DON'T THINK SO
                     );
 
                     //var_dump($request);die;

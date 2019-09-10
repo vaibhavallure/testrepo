@@ -75,7 +75,25 @@ class Allure_Appointments_Block_Adminhtml_Appointments_Grid extends Mage_Adminht
 				'header' => $helper->__('No of People'),
 				'index'  => 'piercing_qty'
 		));
-		
+
+        $this->addColumn('no_of_piercing', array(
+            'header' => $helper->__('No of Piercings'),
+            'index'  => 'no_of_piercing',
+            'renderer' => 'appointments/adminhtml_render_piercing'
+        ));
+
+        $this->addColumn('no_of_checkup', array(
+            'header' => $helper->__('No of Checkups'),
+            'index'  => 'no_of_checkup',
+            'renderer' => 'appointments/adminhtml_render_checkup'
+        ));
+
+        $this->addColumn('last_notified', array(
+            'header' => $helper->__('Last Notifed (EST)'),
+            'type' => 'datetime',
+            'index'  => 'last_notified',
+            'renderer' => 'appointments/adminhtml_render_notified'
+        ));
 		$this->addColumn('app_status', array(
 				'header' => $helper->__('Status'),
 				'type' => 'options',
