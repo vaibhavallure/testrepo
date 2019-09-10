@@ -375,16 +375,33 @@
     font-size: 16px;
   }
   .input-set {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
   .agreement{
-    margin: 17px 0 18px;
+    margin: 0;
   }
-  .back-to-login{
-    padding-left: 0 !important;
+  .pop-title h1{
+    margin-top: 50px;
+    margin-bottom: 15px;
   }
-  .submit-login{
-    padding-right: 0 !important;
+  .pop-title a{
+    right: 15px;
+    top: 15px;
+  }
+  #signin-btn-popup {
+    margin: 15px 0 28px;
+  }
+  .option-text p {
+    margin: 10px 0 15px;
+  }
+  .new_account a {
+    margin: 17px 0 25px;
+  }
+  .input-form{
+    margin-bottom: 10px;
+  }
+  .pop-up-button-set, .popupResetPasswordModel .pop-up-button-set {
+    margin-bottom: 50px;
   }
 }
 
@@ -428,22 +445,6 @@
   .modal-body, .modal-header{
     padding: 0 18px;
   }
-  .pop-title h1{
-    margin-top: 70px;
-    margin-bottom: 24px;
-  }
-  #signin-btn-popup{
-    margin: 30px 0 30px;
-  }
-  .option-text p {
-    margin: 30px 0 18px;
-  }
-  .new_account a {
-    margin: 22px 0 45px;
-  }
-  .popupResetPasswordModel .pop-up-button-set{
-    margin-bottom: 78px;
-  }
   .five-col{
     width: 100%;
   }
@@ -452,7 +453,10 @@
     height: 25px !important;
   }
   .pop-up-button-set .col{
-    padding: 0 13px;
+    padding: 0 9px;
+  }
+  .popupResetPasswordModel .input-form {
+    margin-bottom: 35px;
   }
 }
 
