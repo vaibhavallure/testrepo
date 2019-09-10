@@ -223,6 +223,9 @@
   .form-subscribe-mt{
     margin-top: 25px;
   }
+  .customer-care-list li span{
+    font-size: 12px;
+  }
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
