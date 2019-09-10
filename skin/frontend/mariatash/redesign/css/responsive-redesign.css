@@ -15,9 +15,8 @@
     margin-right: 18px;
   }
   .footer ul .footer-item-list{
-    max-width: 45%;
-    flex: 0 0 45%;
-    border-bottom: 1px solid #fff;
+    max-width: 47%;
+    flex: 0 0 47%;
     padding: 20px 0 10px 0;
     margin: 20px auto 0 !important
   }
@@ -46,9 +45,6 @@
   .social-media ul {
     margin-bottom: 40px;
     padding-left: 20px;
-  }
-  .container-footlinks {
-    padding-left: 30px;
   }
   .inner-box {
     width: 100%;
@@ -184,9 +180,9 @@
   .customer-care-page .faq-question span:after{
     margin-top: 0;
   }
-  .footer-item-list:last-child{
+  /* .footer-item-list:last-child{
     display: none;
-  }
+  } */
   .piercing_options{
     padding: 0 15px;
   }
@@ -206,6 +202,71 @@
   }
   .category-image img{
     display: none;
+  }
+  .newsletter-mt {
+    display: none;
+  }
+  .popbox, #link_about-maria, .popbox_ajax {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+  }
+  #tooltip-id-contact, #tooltip-id-customer-care, #tooltip-id-my-account{
+    margin-top: 7px;
+  }
+  #tooltip-id-our-jewelry {
+    margin-top: 13px;
+  }
+  .contact-table, .customer-care-list {
+    line-height: 35px;
+  }
+  .form-subscribe-mt{
+    margin-top: 25px;
+  }
+  /*Different Footer */
+  /* 1. Customer Care */
+  .customer-care-list {
+      padding: 0;
+  }
+  #tooltip-id-customer-care{
+  	width: 100% !important;
+  }
+  .customer-care-list li{
+  	width: 100%;
+  }
+  /* 2. Contact and 3. Our Jewelry*/
+  .contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
+  	color: #fff;
+  	font-size: 12px;
+  	font-family: urw-din-medium;
+  	letter-spacing: 0.5px;
+  }
+  #tooltip-id-our-jewelry .slide {
+    width: 300px;
+    height: 120px;
+    overflow: hidden;
+    float: left;
+    overflow-y: auto;
+  	color: #fff;
+  }
+  /* 4.Newletter */
+  .form-subscribe-mt input {
+    width: 100%;
+    margin-bottom: 20px;
+  	border: 1px solid #fff;
+  }
+  .form-subscribe-mt .checkmark:after{
+  	background: #fff;
+  }
+  #newsletter-form .dark-button {
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 5px 20px;
+  }
+  #newsletter-form .link-button{
+  	color: #fff !important;
   }
 }
 
@@ -279,6 +340,10 @@
   .form-search input.input-text{
     width: 160px;
     height: 26px !important;
+  }
+  .footlinks {
+    margin: 20px 0 18px 0;
+    padding: 0 10px;
   }
 }
 
@@ -464,6 +529,9 @@
   }
   .faq-copy-section {
     padding: 5px;
+  }
+  .footlinks {
+    padding: 0 20px;
   }
 }
 

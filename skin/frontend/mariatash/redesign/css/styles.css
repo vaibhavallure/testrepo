@@ -2044,7 +2044,7 @@ input {
 	clear: both;
 }
 
-.input-box input.input-text {
+/* .input-box input.input-text {
 	background: #F7F7F7;
 	border: none;
 	border-top: 1px solid #ccc;
@@ -2053,7 +2053,7 @@ input {
 	padding: 0 9px;
 	width: 225px !important;
 	line-height: 20px;
-}
+} */
 
 #checkout-step-login .input-box input.input-text {
 	width: 163px !important;
@@ -3119,7 +3119,7 @@ body.checkout-onepage-index #advice-validate-email-login-email {
 	margin-right: 70px;
 }
 
-.form-subscribe-mt .validation-advice {
+/* .form-subscribe-mt .validation-advice {
 	margin-left: 21px;
 	margin-top: 21px;
 	min-height: 13px;
@@ -3128,12 +3128,12 @@ body.checkout-onepage-index #advice-validate-email-login-email {
 	color: #906E39;
 	font-size: 11px;
 	font-weight: normal;
-}
+} */
 
-#newsletter-form .button {
+/* #newsletter-form .button {
 	float: right;
 	margin-right: 7px;
-}
+} */
 
 .giftcard-left-form .validation-advice {
 	min-height: 13px;
@@ -15234,17 +15234,17 @@ body.quickview-index-index {
 	background: url(../images/sm-insta.png) no-repeat 0 -18px;
 } */
 
-#tooltip-id-our-jewelry a.previous-content-block-seo {
+/* #tooltip-id-our-jewelry a.previous-content-block-seo {
 	text-indent: -9000px;
 	background: url(../images/mini-gray_prev.png) no-repeat 0 0;
 	width: 15px;
 	height: 20px;
 	display: block;
-	float: left;
-	margin-left: 250px;
-}
+	float: right;
+	margin-right: 0 !important;
+} */
 
-#tooltip-id-our-jewelry a.previous-content-block-seo:hover {
+/* #tooltip-id-our-jewelry a.previous-content-block-seo:hover {
 	background: url(../images/mini-gray_prev.png) no-repeat 0 -20px;
 }
 
@@ -15260,7 +15260,7 @@ body.quickview-index-index {
 
 #tooltip-id-our-jewelry a.next-content-block-seo:hover {
 	background: url(../images/mini-gray_next.png) no-repeat 0 -20px;
-}
+} */
 
 .footer-container {
 	width: 100%;
@@ -15357,19 +15357,19 @@ body.quickview-index-index {
 }
 
 /*form nesletter WZR*/
-.form-subscribe-mt {
+/* .form-subscribe-mt {
 	height: auto;
 	margin: 6px 0 0 4px;
 	width: 250px;
-}
+} */
 
-.form-subscribe-mt .newsletter-mt {
+/* .form-subscribe-mt .newsletter-mt {
 	margin-bottom: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 18px;
 	text-transform: uppercase;
 	color: #38393c;
-}
+} */
 
 .form-subscribe-mt .select-box input {
 	cursor: pointer;
@@ -15386,7 +15386,7 @@ body.quickview-index-index {
 	padding-right: 39px;
 }
 
-.form-subscribe-mt .input-box input {
+/* .form-subscribe-mt .input-box input {
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	font-size: 13px;
@@ -15396,12 +15396,12 @@ body.quickview-index-index {
 	height: 22px !important;
 	color: #caced7;
 	margin-bottom: 13px;
-}
+} */
 
-.form-subscribe-mt .input-box span {
+/* .form-subscribe-mt .input-box span {
 	position: absolute;
 	padding-left: 2px;
-}
+} */
 
 .form-subscribe-mt .select-box span {
 	float: right;
@@ -15414,16 +15414,16 @@ body.quickview-index-index {
 	margin-right: 6px;
 }
 
-.form-subscribe-mt div.input-box {
+/* .form-subscribe-mt div.input-box {
 	width: 100%;
 	position: static;
-}
+} */
 
-.form-subscribe-mt div.input-box  input, .form-subscribe-mt div.select-box input
+/* .form-subscribe-mt div.input-box  input, .form-subscribe-mt div.select-box input
 {
 	width: 90%;
 	border: none;
-}
+} */
 /*#advice-validate-email-email { display:none; }*/
 /*=============================*/
 
@@ -17049,9 +17049,6 @@ ul.products-grid2 {
 	font-size: 13px;
 }
 
-.slide {
-	overflow-y: auto !important;
-}
 
 .customer-care-page .main {
 	padding-bottom: 70px;
@@ -18039,7 +18036,7 @@ ul.products-grid2 {
 	margin-top: 0;
 }
 
-#newsletter-form button.button {
+/* #newsletter-form button.button {
 	background: url(../images/button_newsletter.png) no-repeat center
 	transparent;
 	width: 80px;
@@ -18049,7 +18046,7 @@ ul.products-grid2 {
 	vertical-align: middle;
 	padding: 0;
 	border: none;
-}
+} */
 
 #tooltip-id-customer-care p {
 	display: none;
@@ -19700,20 +19697,20 @@ input.giftcard-radio1 {
 	background-size:10px ! important;
 }
 
-.mt-terms-condtions-policy {
+/* .mt-terms-condtions-policy {
 	display: -webkit-inline-box;
-}
-.mt-terms-condtions-policy #mt-newsl-terms {
+} */
+/* .mt-terms-condtions-policy #mt-newsl-terms {
 	left: 25px;
 	width: 18px;
 	height: 17px;
-}
+} */
 
 
-.mt-terms-condtions-policy label {
+/* .mt-terms-condtions-policy label {
 	font-size: 12px;
 	text-align: left;
-}
+} */
 
 
 .checkout-privacy-policy{
@@ -19878,19 +19875,19 @@ input.giftcard-radio1 {
 }
 
 
-#newsletter-form .checkmark{
+/* #newsletter-form .checkmark{
 	top: 30px;
 }
 
 .mt-custom-checkbox a:hover {
 	color: #906E39;
 	text-decoration: none;
-}
+} */
 
-.mt-magbird-checkbox a:hover {
+/* .mt-magbird-checkbox a:hover {
 	color: #906E39 ! important;
 	text-decoration: none ! important;
-}
+} */
 
 /* .popupRegisterModel .mt-custom-checkbox.mt-privacy-label-register .checkmark{
 	top: 7px;
