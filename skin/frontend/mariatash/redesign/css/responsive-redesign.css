@@ -44,7 +44,6 @@
   }
   .social-media ul {
     margin-bottom: 40px;
-    padding-left: 20px;
   }
   .inner-box {
     width: 100%;
@@ -354,6 +353,9 @@
     margin: 20px 0 18px 0;
     padding: 0 10px;
   }
+  .social-media ul {
+    padding-left: 22px;
+  }
 }
 
 
@@ -504,7 +506,7 @@
     flex: 0 0 100%;
   }
   .social-media ul{
-    padding-left: 5px;
+    padding-left: 25px;
   }
   .custom-container {
     max-width: 370px;
@@ -561,6 +563,9 @@
   }
   .five-col{
     width: 50%;
+  }
+  .social-media ul {
+    padding-left: 15px;
   }
 }
 
