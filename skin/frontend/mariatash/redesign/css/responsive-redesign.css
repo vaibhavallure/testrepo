@@ -323,6 +323,23 @@
     width: 200px;
     height: 26px !important;
   }
+  .menu-inner{
+    overflow-x: auto;
+  }
+  .div-row{
+    width:1500px;
+    overflow-x: scroll;
+  }
+  #piercing_appointments {
+    padding: 5px 32px 32px 0;
+  }
+  .inner-box {
+    width: 534px;
+    margin-left: 15px;
+  }
+  #jewelry .special-menu img {
+    width: 200px !important;
+  }
 }
 
 /* ALl Mobiles */
@@ -354,6 +371,41 @@
   .cms-page-view h1, .category-press h1{
     font-size: 25px;
   }
+  .faq-question span{
+    font-size: 14px;
+  }
+  .input-set {
+    margin-bottom: 20px;
+  }
+  .agreement{
+    margin: 0;
+  }
+  .pop-title h1{
+    margin-top: 50px;
+    margin-bottom: 15px;
+  }
+  .pop-title a{
+    right: 15px;
+    top: 15px;
+  }
+  #signin-btn-popup {
+    margin: 15px 0 28px;
+  }
+  .option-text p {
+    margin: 10px 0 15px;
+  }
+  .new_account a {
+    margin: 17px 0 25px;
+  }
+  .input-form{
+    margin-bottom: 10px;
+  }
+  .pop-up-button-set, .popupResetPasswordModel .pop-up-button-set {
+    margin-bottom: 50px;
+  }
+  .faq-main{
+    margin-bottom: 0 !important;
+  }
 }
 
 /* Mobile Portrait */
@@ -383,6 +435,7 @@
   .custom-container {
     max-width: 370px;
     margin: 0 auto;
+    padding: 0 30px;
   }
   .main-nav-link li:nth-child(2) {
     margin-right: 10px;
@@ -396,31 +449,21 @@
   .modal-body, .modal-header{
     padding: 0 18px;
   }
-  .pop-title h1{
-    margin-top: 70px;
-    margin-bottom: 24px;
-  }
-  #signin-btn-popup{
-    margin: 30px 0 30px;
-  }
-  .option-text p {
-    margin: 30px 0 18px;
-  }
-  .new_account a {
-    margin: 22px 0 45px;
-  }
-  .popupResetPasswordModel .pop-up-button-set{
-    margin-bottom: 78px;
-  }
-  .pop-up-button-set .col {
-    padding: 0 9px;
-  }
   .five-col{
     width: 100%;
   }
   .form-search input.input-text{
     width: 265px;
     height: 25px !important;
+  }
+  .pop-up-button-set .col{
+    padding: 0 9px;
+  }
+  .popupResetPasswordModel .input-form {
+    margin-bottom: 35px;
+  }
+  .faq-copy-section {
+    padding: 5px;
   }
 }
 
