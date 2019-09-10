@@ -738,6 +738,7 @@ nav.mariatash-header {
 		padding: 0;
 }
 
+
 @media (min-width: 992px) {
     .footer-box {
         height: 60px;
@@ -2248,6 +2249,24 @@ span#popup_loader_register {
 	transition: opacity 400ms ease-in;
 	pointer-events: none;
 	background: rgba(0,0,0,0.4);
+}
+#tooltip-id-our-jewelry a.previous-content-block-seo {
+	text-indent: -9000px;
+	background: url(../images/mini-gray_prev.png) no-repeat 0 0;
+	width: 15px;
+	height: 20px;
+	display: block;
+	float: right;
+	margin-right: 0 !important;
+}
+#tooltip-id-our-jewelry a.next-content-block-seo {
+	background: url(../images/mini-gray_next.png) no-repeat 0 0;
+	width: 15px;
+	height: 20px;
+	display: block;
+	float: right;
+	margin-right: 10px;
+	text-indent: -9000px;
 }
 
 /* Press Page CSS */
