@@ -2346,3 +2346,28 @@ width: 100%;
     display: block;
 }
 /*filter popup end----------------------------------*/
+
+
+
+/*product detail page-------------------------------------------*/
+.col1-layout .product-view .product-shop{
+    float: none;
+    width: auto;
+    margin-left: auto;
+}
+.catalog-product-view .containerThumb .thumb a {
+    display: block;
+    float: none;
+    width: auto;
+    height: auto;
+}
+.containerImage {
+    width: auto!important;
+    height: auto!important;
+    float: none!important;
+    margin: auto!important;
+}
+.containerImage img, .thumb img{
+    background: transparent!important;
+}
+/*----------------------------------------------------------------*/
