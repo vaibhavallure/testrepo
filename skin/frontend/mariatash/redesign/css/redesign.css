@@ -585,7 +585,9 @@ nav.mariatash-header {
 }
 
 /* footer */
-
+.footer .social-media li.sm-insta {
+    margin-right: 40px;
+}
 .container-footlinks {
     background: rgba(41, 41, 41, 0.5);
 }
@@ -610,7 +612,7 @@ nav.mariatash-header {
     margin-right: 26px;
 }
 .footer .footlinks li:first-child {
-    margin-left: 40px;
+    margin-left: 56px;
 }
 .footer-items a {
     color: #fff;
@@ -643,10 +645,12 @@ nav.mariatash-header {
 	padding: 5px 20px;
 }
 .form-subscribe-mt {
-    width: 300px;
+  width: 300px;
 }
-label.custom-checkbox {
-    margin: 10px 0;
+.footer-item-list span {
+  font-size: 12px !important;
+  font-family: urw-din-medium;
+	letter-spacing: 0 !important;
 }
 
 @media (min-width: 992px) {
