@@ -1989,6 +1989,12 @@ div#narrow-by-list {
   margin-bottom: 20px;
   letter-spacing: 0.5px;
 }
+.designer-image{
+	text-align: right;
+}
+.designer-image img{
+	 width: 463px;
+}
 /* About Jewelry Page  */
 .about-jewelry h1{
   font-size: 30px;

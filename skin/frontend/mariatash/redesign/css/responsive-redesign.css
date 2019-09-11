@@ -276,6 +276,10 @@
   #newsletter-form .link-button{
   	color: #fff !important;
   }
+  /*Different Footer Finish*/
+  .designer-image img{
+    width: 100%;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
