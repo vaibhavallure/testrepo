@@ -234,7 +234,7 @@
     height: 80px;
   }
   .form-subscribe-mt .input-box{
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
   #success {
     margin-bottom: 30px;
@@ -243,10 +243,14 @@
     margin: 15px 0px 0px 0;
     letter-spacing: 1px;
   }
+  .designer-image img{
+    width: 100%;
+  }
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
-      padding: 0;
+  	padding: 0;
+    width: 100%;
   }
   #tooltip-id-customer-care{
   	width: 100% !important;
@@ -262,34 +266,34 @@
   	letter-spacing: 0.5px;
   }
   #tooltip-id-our-jewelry .slide {
-    width: 300px;
-    height: 120px;
-    overflow: hidden;
-    float: left;
-    overflow-y: auto;
+  	width: 300px;
+  	height: 120px;
+  	overflow: hidden;
+  	float: left;
+  	overflow-y: auto;
   	color: #fff;
   }
-  /* 4.Newletter */
-  .form-subscribe-mt input {
+  #tooltip-id-our-jewelry a.next-content-block-seo{
+    margin-right: -15px;
+  }
+/*News Letter*/
+  .form-subscribe-mt{
+    margin-top: 10px;
     width: 100%;
-  }
-  .form-subscribe-mt .checkmark:after{
-  	background: #fff;
-  }
-  #newsletter-form .dark-button {
-    border: 1px solid #fff;
-    background: transparent;
-    color: #fff;
-    text-transform: uppercase;
-    padding: 5px 20px;
   }
   #newsletter-form .link-button{
   	color: #fff !important;
   }
-  /*Different Footer Finish*/
-  .designer-image img{
-    width: 100%;
+  .form-subscribe-mt .checkmark:after{
+  	background: #fff;
   }
+
+  #newsletter-form .dark-button{
+    border: 1px solid #fff;
+  	background: transparent;
+  	color: #fff;
+  }
+  /*Different Footer Finish*/
 }
 
 /* till ipad (all mobiles and ipads) */

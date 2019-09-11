@@ -285,7 +285,7 @@ select{
 .validation-advice {
 	clear: both;
 	font-size: 10px;
-	color: red;
+	color: red !important;
 	font-weight: bold;
 	float: left;
 	text-align: right;
@@ -626,7 +626,28 @@ nav.mariatash-header {
     margin: 18px 12px 14px 0;
 		padding: 0;
 }
-
+.customer-care-list{
+	width: 100px;
+}
+/* 4.Newletter */
+.form-subscribe-mt input {
+	width: 100%;
+}
+.form-subscribe-mt input {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+#newsletter-form .dark-button {
+	text-transform: uppercase;
+	padding: 5px 20px;
+}
+.form-subscribe-mt {
+    width: 300px;
+}
+label.custom-checkbox {
+    margin: 10px 0;
+}
 
 @media (min-width: 992px) {
     .footer-box {
@@ -2008,7 +2029,7 @@ div#narrow-by-list {
 }
 .input-form {
   position: relative;
-	margin-bottom: 18px;
+	margin-bottom: 20px;
 	text-align: center;
 }
 .buttons-set img {
