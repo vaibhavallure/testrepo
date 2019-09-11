@@ -2382,31 +2382,24 @@ width: 100%;
 .piercing_options a {
     position: relative;
 }
-.piercing_options a::before {
-    position: absolute;
-    top: 0;
-    left: -75%;
-    z-index: 2;
-    display: block;
-    content: '';
-    width: 50%;
-    height: 100%;
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
-    -webkit-transform: skewX(-25deg);
-    transform: skewX(-25deg);
+.piercing_options img:hover {
+    opacity: 1;
+    -webkit-animation: flash 1.5s;
+    animation: flash 1.5s;
 }
-.piercing_options a:hover::before {
-    -webkit-animation: shine .75s;
-    animation: shine .75s;
-}
-@-webkit-keyframes shine {
+@-webkit-keyframes flash {
+    0% {
+        opacity: .4;
+    }
     100% {
-        left: 125%;
+        opacity: 1;
     }
 }
-@keyframes shine {
+@keyframes flash {
+    0% {
+        opacity: .4;
+    }
     100% {
-        left: 125%;
+        opacity: 1;
     }
 }
