@@ -1135,7 +1135,7 @@ ul.swatch .swatch-item a {
     .cms-home .footer{
         padding: 0px;
         position: fixed;
-        bottom: 0px;
+        bottom: -1px;
     }
 }
 
