@@ -1856,6 +1856,10 @@ div#narrow-by-list {
 /* .catalog-category-view .mobile-sub_menu .sub-menu{
   top: 86px;
 } */
+
+.cms-page-view .top-bar {
+    display: none;
+}
 /* Designer Page */
 .second-header-image{
   position: absolute;
@@ -1865,13 +1869,13 @@ div#narrow-by-list {
 }
 .about-designer {
   margin-top: 16px;
-  padding: 0 91px;
+  padding: 0 81px;
   margin-bottom: 11px;
 }
 .about-designer h1 {
   font-size: 30px;
   text-transform: none;
-  margin-bottom: 30px;
+  margin-bottom: 38px;
   letter-spacing: 0;
 }
 .about-designer .para-normal {
@@ -1882,9 +1886,9 @@ div#narrow-by-list {
 	text-align: right;
 	overflow-x: hidden;
 }
-.designer-image img{
+/* .designer-image img{
 	 width: 469px;
-}
+} */
 /* About Jewelry Page  */
 .about-jewelry h1{
   font-size: 30px;
@@ -1903,7 +1907,7 @@ div#narrow-by-list {
 	margin-bottom: 48px;
 }
 .jewelry-copy-odd{
-  padding: 0 58px 0 13px;
+  padding: 0 58px 0 15px;
 }
 .jewelry-copy-even{
   text-align: right;
@@ -1967,8 +1971,8 @@ div#narrow-by-list {
   padding: 15px 0 18px;
 }
 .faq-main {
-  margin-top: 40px !important;
-  margin-bottom: 32px !important;
+  margin-top: 36px !important;
+  margin-bottom: 43px !important;
 }
 .faq-image-section img {
   padding-right: 20px;
