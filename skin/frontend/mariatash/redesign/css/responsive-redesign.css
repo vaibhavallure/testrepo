@@ -54,6 +54,9 @@
     display: none;
     padding-left: 10px;
   }
+  .menu-common-section{
+    margin-top: 20px;
+  }
   .right-section a {
     width: 100%;
     margin-left: 30px !important;
