@@ -1468,7 +1468,7 @@ input[type="checkbox"]:checked+label:before {
 }
 .level-top.parent span:hover {
   border-bottom: 6px solid #fff;
-  padding-bottom: 27px;
+  padding-bottom: 28px;
 }
 .main-nav-title li:last-child {
   margin-right: 0;
