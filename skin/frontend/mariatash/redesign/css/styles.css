@@ -15262,24 +15262,24 @@ body.quickview-index-index {
 	background: url(../images/mini-gray_next.png) no-repeat 0 -20px;
 } */
 
-.footer-container {
+/* .footer-container {
 	width: 100%;
 	margin-top: 35px;
-}
+} */
 
 .footer { /*border-top: 1px solid #ccc;*/
 	padding: 0;
 }
 
-.footer a {
+/* .footer a {
 	color: #444;
-}
+} */
 
-.footer strong {
+/* .footer strong {
 	color: #444;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
-}
+} */
 
 .footer-right {
 	float: right;

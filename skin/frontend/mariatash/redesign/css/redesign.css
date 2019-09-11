@@ -285,7 +285,7 @@ select{
 .validation-advice {
 	clear: both;
 	font-size: 10px;
-	color: #906E39;
+	color: red;
 	font-weight: bold;
 	float: left;
 	text-align: right;
