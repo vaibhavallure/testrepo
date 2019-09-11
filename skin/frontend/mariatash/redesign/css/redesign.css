@@ -1866,7 +1866,7 @@ div#narrow-by-list {
 .about-designer {
   margin-top: 15px;
   padding: 0 91px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 .about-designer h1 {
   font-size: 30px;
@@ -1880,9 +1880,10 @@ div#narrow-by-list {
 }
 .designer-image{
 	text-align: right;
+	overflow-x: hidden;
 }
 .designer-image img{
-	 width: 463px;
+	 width: 469px;
 }
 /* About Jewelry Page  */
 .about-jewelry h1{
