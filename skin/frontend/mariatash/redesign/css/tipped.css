@@ -16,7 +16,7 @@
 .t_Tooltip .t_Content_customcart { padding: 0; }
 
 /* Font styling for all skins */
-.t_ContentContainer { 
+.t_ContentContainer {
   color: #38393c;
   font-size: 11px;
   line-height: 17px;
@@ -46,12 +46,12 @@
   color: #917440;
   text-decoration: none;
   background: none;
-  cursor:pointer;  
+  cursor:pointer;
   border: 0;
 }
 .t_ContentContainer a:hover {
   text-decoration:none;
-  cursor:pointer;   
+  cursor:pointer;
 }
 
 /* Some skins need different link colors for visibility */
@@ -109,7 +109,7 @@
   padding: 0;
   position: absolute;
   overflow: hidden;
-  
+
   /*background:#0066FF;
   background-color: transparent;
   background:url(../images/footer-bottom-links.png) no-repeat center bottom;*/
@@ -136,7 +136,7 @@
   padding: 0;
   position: fixed;
   overflow: hidden;
-  background:url(../images/footer-bottom-links.png) no-repeat center bottom;  
+  background:url(../images/footer-bottom-links.png) no-repeat center bottom;
   /*background:#0066FF;
   background-color: transparent;*/
 /*  -webkit-transition-property: opacity;
@@ -163,7 +163,7 @@
 }
 .t_Skin * { zoom: 1; } /* IE7 */
 .t_Bubble canvas {
-	display:none; 
+	display:none;
 }
 .t_Background,
 .t_Stem { position: absolute; }
@@ -234,7 +234,7 @@
 .t_ShadowStem { position: absolute; }
 .t_ShadowBackground *, .t_ShadowStem * { float: left; }
 
- 
+
 .t_CloseButtonShadow {
   position: absolute;
   top: 0;
@@ -270,7 +270,7 @@
 	font-family:Arial, Helvetica, sans-serif;
 }
 .t_Tooltip .t_ContentContainer ul{ margin-top:5px;}
-.t_Tooltip .t_ContentContainer li { line-height:26px; text-transform:uppercase; } 
+.t_Tooltip .t_ContentContainer li { line-height:26px; text-transform:uppercase; }
 .t_Tooltip .t_ContentContainer #tooltip-id-customer-care li{float:left;width:100%;}
 .t_UpdateQueue .t_ContentContainer {
   position: absolute;
@@ -293,5 +293,5 @@
   border: 0;
 }
 .t_Tooltip_customTiny .t_Skin .t_Bubble canvas{
-    display: block;
+    display: none;
 }
