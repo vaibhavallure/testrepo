@@ -1132,6 +1132,11 @@ ul.swatch .swatch-item a {
     .offset-66 {
         margin-left: 66.666%;
     }
+    .cms-home .footer{
+        padding: 0px;
+        position: fixed;
+        bottom: 0px;
+    }
 }
 
 .product-details-flow .availabilty-span {
