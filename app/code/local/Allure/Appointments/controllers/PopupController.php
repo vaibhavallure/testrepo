@@ -555,7 +555,7 @@ class Allure_Appointments_PopupController extends Mage_Core_Controller_Front_Act
 
     private function addBuffer(&$time)
     {
-         $timeChange=array("20:00"=>"19:45","20:30"=>"20:15");
+         $timeChange=array("20:00"=>"19:45","21:00"=>"20:45");
 
          if(array_key_exists($time,$timeChange))
              $time=$timeChange[$time];
