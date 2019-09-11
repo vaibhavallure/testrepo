@@ -1864,9 +1864,9 @@ div#narrow-by-list {
 	width: 100%;
 }
 .about-designer {
-  margin-top: 15px;
+  margin-top: 16px;
   padding: 0 91px;
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 }
 .about-designer h1 {
   font-size: 30px;
@@ -1890,7 +1890,7 @@ div#narrow-by-list {
   font-size: 30px;
   text-transform: none;
   letter-spacing: 0;
-  margin-bottom: 42px;
+  margin-bottom: 30px;
 }
 .about-jewelry h3{
   font-family: urw-din-bold;
@@ -1900,7 +1900,7 @@ div#narrow-by-list {
 }
 .about-jewelry {
   padding: 0 146px;
-  margin-bottom: 47px;
+	margin-bottom: 48px;
 }
 .jewelry-copy-odd{
   padding: 0 58px 0 13px;
@@ -1911,10 +1911,10 @@ div#narrow-by-list {
 }
 .jewelry-container {
   margin-top: 32px;
-  margin-bottom: 96px;
+  margin-bottom: 40px;
 }
 .about-jewelry .para-normal{
-  margin-top: 14px;
+  margin-top: 5px;
 }
 
 /* FAQ PAGE CSS */
