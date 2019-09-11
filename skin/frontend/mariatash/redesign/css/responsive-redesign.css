@@ -249,6 +249,9 @@
   .designer-image img{
     width: 100%;
   }
+  .level-top.parent span:hover {
+    border-bottom: none;
+  }
   /*Different Footer */
   /* 1. Customer Care */
   .customer-care-list {
