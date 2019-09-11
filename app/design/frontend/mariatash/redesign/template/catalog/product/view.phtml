@@ -286,7 +286,7 @@ if ($_product->getSizeSample() == 1) {
         $category = Mage::getModel('catalog/category')->load($cid);
         ?>
         <h1><?php //echo $category->getName(); ?></h1></div>
-    <div class="product-essential row">
+    <div class="product-essential col-12">
     <?php if ($showSampleForm): ?>
         <div style="display: none;">
             <form class="w-100" action="<?php echo $this->getSubmitUrl($sampleProduct) ?>" method="post"
@@ -307,7 +307,7 @@ if ($_product->getSizeSample() == 1) {
     <form class="w-100" action="<?php echo $this->getSubmitUrl($_product)//.'cpid/'.$_product->getId().'/' ?>" method="post" id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <?php endif;?>
 
-        <div class="no-display">
+        <div class="no-display col-12">
             <input type="hidden" name="product" id="pid-hidden" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="pconfig" value="<?php echo $_product->getId() ?>"/>
             <input type="hidden" name="related_product" id="related-products-field" value=""/>
@@ -315,6 +315,7 @@ if ($_product->getSizeSample() == 1) {
         	<input type="hidden" name="is_gift_card" id="is_gift_card" value="<?php echo $isGiftCardValue?>" />
         </div>
 
+        <div class="row">
         <div class="product-view-left col-8">
             <div class="product-img-box">
                 <div id="galleria" class="mediaGallery">
@@ -391,7 +392,7 @@ if ($_product->getSizeSample() == 1) {
             </script>
         </div>
 
-        <div class="col-lg-4 product-shop <?php echo $_product->getTypeId() ?>">
+        <div class="col-4 pr-5 product-shop <?php echo $_product->getTypeId() ?>">
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
@@ -466,6 +467,7 @@ if ($_product->getSizeSample() == 1) {
             <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
                 <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
             <?php endif;?>
+        </div>
         </div>
 
         <div class="product-collateral col-12">
