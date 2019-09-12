@@ -108,7 +108,7 @@ class Mage_Catalog_Block_Product_View_Options_Type_Select
                     ));
                 }
             } else {
-                $select->addOption('', 'Select Your Post Length', '', $store, false);
+                //$select->addOption('', 'Select Your Post Length', '', $store, false);
 
                 foreach ($_option->getValues() as $_value) {
                     $priceStr = $this->_formatPrice(array(
