@@ -2449,3 +2449,7 @@ width: 100%;
         opacity: 1;
     }
 }
+
+.top-bar .breadcrumbs{
+	display: none;
+}
