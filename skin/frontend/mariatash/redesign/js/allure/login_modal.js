@@ -8,16 +8,19 @@ jQuery(document).ready(function(){
 	$j("#sign_in_label").on('click',function(){
 		$j('#wishlist_input').val('');
 		$j(".popupLoginModel").css({"opacity":"1","pointer-events":"auto"});
+		unScrollBody();
 	});
 
 	$j("#wishlist_label").on('click',function(){
 		$j('#wishlist_input').val('wishlist');
 		$j(".popupLoginModel").css({"opacity":"1","pointer-events":"auto"});
+		unScrollBody();
 	});
 
 	$j(".popupLoginModel .close").on('click',function(){
 		$j('#wishlist_input').val('');
 		$j(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
+		scrollBody();
 	});
 
 	$j('.popupLoginModel #passwd-login').keypress(function (e) {
@@ -67,6 +70,7 @@ jQuery(document).ready(function(){
 	$j(".popupRegisterModel .close").on('click',function(){
 		$j('#wishlist_input').val('');
 		$j(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
+		scrollBody();
 	});
 
     $j(".popupSignUpConfirmationModel .close").on('click',function(){
@@ -133,8 +137,9 @@ jQuery(document).ready(function(){
 	/**
 	 * Reset Password Popup Start
 	 */
-	$j(".popupResetPasswordModel .close").on('click',function(){console.log('hiee');
+	$j(".popupResetPasswordModel .close").on('click',function(){
 		$j(".popupResetPasswordModel").css({"opacity":"0","pointer-events":"none"});
+        scrollBody();
 	});
 
 	$j("#reset_pass_btn").on('click',function(){
@@ -222,6 +227,7 @@ jQuery(document).ready(function(){
 
     $j(".popupDelMyAccModel .close").on('click',function(){
     	$j(".popupDelMyAccModel").css({"opacity":"0","pointer-events":"none"});
+        scrollbody();
     });
 });
 
@@ -230,18 +236,21 @@ function openRegisterModal(){
 	jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupRegisterModel").css({"opacity":"1","pointer-events":"auto"});
 	jQuery('.popupRegisterModel .amazon-pay-button img').attr('src','https://images-na.ssl-images-amazon.com/images/G/01/EP/offAmazonPayments/us/live/prod/image/lwa/lightgray/small/LwA.png');
+    unScrollBody();
 };
 
 function gotoLoginPage(){
 	jQuery("#popup-resetpassword-form .close").trigger('click');
     jQuery("#popup-register-form .close").trigger('click');
 	jQuery("#sign_in_label").trigger('click');
+    unScrollBody();
 }
 
 function openRestPasswordModal(){
 	jQuery(".popupLoginModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupResetPasswordModel").css({"opacity":"1","pointer-events":"auto"});
+    unScrollBody();
 };
 
 function openDelMyAccountModal(){
@@ -249,4 +258,11 @@ function openDelMyAccountModal(){
 	jQuery(".popupRegisterModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupResetPasswordModel").css({"opacity":"0","pointer-events":"none"});
 	jQuery(".popupDelMyAccModel").css({"opacity":"1","pointer-events":"auto"});
+    unScrollBody();
 };
+function scrollBody() {
+    jQuery("body").css({"position":"static","overflow":"auto"});
+}
+function unScrollBody() {
+    jQuery("body").css({"position":"fixed","overflow":"hidden"});
+}
