@@ -180,9 +180,6 @@
   .content-customer {
     margin: 15px 0 85px;
   }
-  .customer-care-page .faq-question span:after{
-    margin-top: 0;
-  }
   .footer-item-list:last-child{
     display: none;
   }
@@ -478,11 +475,11 @@
     margin-bottom: 20px;
   }
   .agreement{
-    margin: 0;
+    margin: 16px 0 0;
   }
   .pop-title h1{
-    margin-top: 50px;
-    margin-bottom: 15px;
+    margin-top: 40px;
+    margin-bottom: 22px;
   }
   .pop-title a{
     right: 15px;
@@ -498,13 +495,22 @@
     margin: 17px 0 25px;
   }
   .input-form{
-    margin-bottom: 10px;
+    margin-bottom: 13px;
   }
   .pop-up-button-set, .popupResetPasswordModel .pop-up-button-set {
     margin-bottom: 50px;
   }
   .faq-main{
     margin-bottom: 0 !important;
+  }
+  .input-form input{
+    height: 35px !important;
+  }
+  .invalid-login, #register-msg{
+    top:-18px;
+  }
+  .eye-image{
+    top: 11.5px;
   }
 }
 
