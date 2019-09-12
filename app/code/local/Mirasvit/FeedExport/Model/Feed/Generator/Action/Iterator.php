@@ -188,6 +188,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                        $productUrlNew=$baseUrl.$product->getUrlPath().'?fee='.$feed_custom->getId()."&fep".$product->getId();
                        $dataArr[$urlIndex] = $productUrlNew;
                    }
+
                }
 
                if($product->getTypeId() == Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE){
@@ -222,6 +223,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                    $new_product[0] = $new_product[0] . $this->getColorIntials($color);
                    if($color!='NO VARIANTS') {
                        $new_product[$titleIndex] = $new_product[$titleIndex] . ' ' . $color;
+                       $new_product[$urlIndex] = $dataArr[$urlIndex].'&metal='.str_replace(' ','%20',$color);
                    }
                    $new_product[$colorIndex] = $color;
                    $new_product[$imageIndex] = $imageUrl;
@@ -252,6 +254,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                    $new_product[0] = $new_product[0] . $this->getColorIntials($color);
                    if($color!='NO VARIANTS') {
                        $new_product[$titleIndex] = $new_product[$titleIndex] . ' ' . $color;
+                       $new_product[$urlIndex] = $new_product[$urlIndex].'&metal='.str_replace(' ','%20',$color);
                    }
                    $new_product[$colorIndex] = $color;
                    $new_product[$imageIndex] = $imgSource;
