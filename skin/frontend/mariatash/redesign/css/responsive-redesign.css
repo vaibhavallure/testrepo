@@ -54,6 +54,9 @@
     display: none;
     padding-left: 10px;
   }
+  .menu-common-section{
+    margin-top: 20px;
+  }
   .right-section a {
     width: 100%;
     margin-left: 30px !important;
@@ -245,6 +248,9 @@
   }
   .designer-image img{
     width: 100%;
+  }
+  .level-top.parent span:hover {
+    border-bottom: none;
   }
   /*Different Footer */
   /* 1. Customer Care */

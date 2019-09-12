@@ -585,7 +585,9 @@ nav.mariatash-header {
 }
 
 /* footer */
-
+.footer .social-media li.sm-insta {
+    margin-right: 40px;
+}
 .container-footlinks {
     background: rgba(41, 41, 41, 0.5);
 }
@@ -610,7 +612,7 @@ nav.mariatash-header {
     margin-right: 26px;
 }
 .footer .footlinks li:first-child {
-    margin-left: 40px;
+    margin-left: 56px;
 }
 .footer-items a {
     color: #fff;
@@ -643,10 +645,12 @@ nav.mariatash-header {
 	padding: 5px 20px;
 }
 .form-subscribe-mt {
-    width: 300px;
+  width: 300px;
 }
-label.custom-checkbox {
-    margin: 10px 0;
+.footer-item-list span {
+  font-size: 12px !important;
+  font-family: urw-din-medium;
+	letter-spacing: 0 !important;
 }
 
 @media (min-width: 992px) {
@@ -1458,30 +1462,34 @@ input[type="checkbox"]:checked+label:before {
 
 /*Header*/
 .nav-item span, .level-top span {
-    font-size: 13px;
-    color: #fff;
-    letter-spacing: 1px;
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.level-top.parent span:hover {
+  border-bottom: 6px solid #fff;
+  padding-bottom: 28px;
 }
 .main-nav-title li:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 .block-currency, #currency-selector{
   z-index: 1;
 }
 .main-nav-link li {
-    float: left;
+  float: left;
 }
 .number-circle{
-    position: relative;
+  position: relative;
 }
 .number-circle span {
-    position: absolute;
-    top: -30px;
-    right: 0;
-    bottom: 0;
-    left: 14px;
-    font-family: urw-din-bold;
-    font-size: 9px;
+  position: absolute;
+  top: -30px;
+  right: 0;
+  bottom: 0;
+  left: 14px;
+  font-family: urw-din-bold;
+  font-size: 9px;
 }
 #top-nav > li{
   font-family: urw-din-medium;
@@ -1490,55 +1498,55 @@ input[type="checkbox"]:checked+label:before {
   margin: 0;
 }
 .form-search input.input-text{
-    float: left;
-    width: 285px;
-    border: none;
-    background: none;
-    border-bottom: 1px solid #fff;
-    color:#fff;
-    font-size: 13px;
-    letter-spacing: 1px;
-    padding: 0px 0 10px 0;
-		height: 31px !important;
+  float: left;
+  width: 285px;
+  border: none;
+  background: none;
+  border-bottom: 1px solid #fff;
+  color:#fff;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 0px 0 10px 0;
+	height: 31px !important;
 }
 .mt-logo {
-    padding: 0px 0 14px 0;
-    font-size: 22px !important;
+  padding: 0px 0 14px 0;
+  font-size: 22px !important;
 }
 #top-nav {
-    padding-bottom: 31px;
+  padding-bottom: 31px;
 }
 .mariatash-header:hover #top-nav {
-    padding-bottom: 31px;
+  padding-bottom: 31px;
 }
 .homepage-menu {
-    padding-top: 27px !important;
+  padding-top: 27px !important;
 }
 .main-nav-link li {
-    margin-right: 24px;
+  margin-right: 24px;
 }
 .nav-links-right {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 .maria-left-menus{
-    left: 17px;
-    z-index: 1;
-    top: 2px;
+  left: 17px;
+  z-index: 1;
+  top: 2px;
 }
 .maria-right-menus{
-    right: 15px;
+  right: 15px;
 }
 .main-nav-title li {
-    margin-right: 54px;
+  margin-right: 48px;
 }
 .last.nav-item, .main-nav-link li:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 .mariatash-header:hover, .container-footlinks:hover{
   background-color: rgba(41,41,41,0.90);
 }
 .maria-black{
-      background-color: rgba(41,41,41,0.90)!important;
+  background-color: rgba(41,41,41,0.90)!important;
 }
 .nav-links-left span {
   color: #fff;
@@ -1579,8 +1587,8 @@ input[type="checkbox"]:checked+label:before {
 }
 /*Sub menus*/
 .menu-common-section {
-  margin-top: 48px;
-  margin-bottom: 28px;
+  margin-top: 43px;
+  margin-bottom: 23px;
 }
 .head-child li a {
   font-size: 13px;
@@ -1593,7 +1601,7 @@ input[type="checkbox"]:checked+label:before {
   letter-spacing: 1px;
 }
 .inner-box {
-  width: 624px;
+  width: 655px;
   margin-left: 137px;
 }
 .right-section a:last-child {
@@ -1609,6 +1617,7 @@ input[type="checkbox"]:checked+label:before {
   top: 138px;
   overflow-x: hidden;
   right:0;
+	border-bottom: 1px solid #292929;
 }
 #piercing_appointments {
   padding: 48px 21px;
@@ -1756,9 +1765,6 @@ input[type="checkbox"]:checked+label:before {
   left: 0;
   width: 290px !important;
   top: 63px;
-}
-.menu-common-section{
-  margin-top: 20px;
 }
 .mobile-sub_menu .right-section img {
   display: none;
