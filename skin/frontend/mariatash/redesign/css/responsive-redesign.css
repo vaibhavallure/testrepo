@@ -15,13 +15,12 @@
     margin-right: 18px;
   }
   .footer ul .footer-item-list{
-    max-width: 45%;
-    flex: 0 0 45%;
-    border-bottom: 1px solid #fff;
+    max-width: 47%;
+    flex: 0 0 47%;
     padding: 20px 0 10px 0;
     margin: 20px auto 0 !important
   }
-  .footer-item-list:after {
+  .footer-item-list.data-block:after {
     background: url(../images/redesign/arrow-down-bk-right.png) no-repeat;
     content: '';
     height: 18px;
@@ -30,6 +29,10 @@
     position: absolute;
     right: 0;
     transform: rotate(90deg);
+  }
+  .footer-item-list.data-block.active:after {
+    transform: rotate(270deg);
+    top: 30px;
   }
   .container-footlinks, .homepage-menu.mariatash-header {
     background: rgb(41, 41, 41);
@@ -42,10 +45,6 @@
   }
   .social-media ul {
     margin-bottom: 40px;
-    padding-left: 20px;
-  }
-  .container-footlinks {
-    padding-left: 30px;
   }
   .inner-box {
     width: 100%;
@@ -54,6 +53,9 @@
   .head-child, #piercing_appointments img {
     display: none;
     padding-left: 10px;
+  }
+  .menu-common-section{
+    margin-top: 20px;
   }
   .right-section a {
     width: 100%;
@@ -68,7 +70,7 @@
     flex: 0 0 100%;
   }
   #piercing_appointments{
-    padding: 0 0 0 15px;
+    padding: 0;
   }
   .maria-right-menus{
     right: 0;
@@ -76,11 +78,9 @@
   .main-nav-link li:nth-child(3){
     margin-right: 0;
   }
-  .mobile-main_menu {
-    height: 448px;
-  }
-  .mobile-sub_menu .sub-menu{
-    height: 454px;
+  .mobile-main_menu, .mobile-sub_menu .sub-menu {
+    height: 100%;
+    overflow-y: auto;
   }
   .piercing_options .image-text {
     padding-left: 15px;
@@ -119,14 +119,17 @@
     margin-bottom: 9px;
   }
   .common-option-div{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .head-child ul {
+    margin-bottom: 0;
   }
   .menu-head span a, .mobile-sub_menu .image-text h6 {
     color: #000 !important;
   }
-  .catalog-category-view nav.homepage-menu.navbar {
+  /* .catalog-category-view nav.homepage-menu.navbar {
     background: transparent;
-  }
+  } */
   #narrow-by-list{
     display: none;
   }
@@ -167,12 +170,15 @@
   .faq-main{
     margin-top: 0 !important;
   }
-  div#category-title{
+  .customer-care-page .main {
+    padding-bottom: 0;
+  }
+  #category-title{
     margin: 16px 0 20px;
     padding: 0;
   }
   .content-customer {
-    margin: 15px 0 115px;
+    margin: 15px 0 85px;
   }
   .customer-care-page .faq-question span:after{
     margin-top: 0;
@@ -180,6 +186,120 @@
   .footer-item-list:last-child{
     display: none;
   }
+  .piercing_options{
+    padding: 0 15px;
+  }
+  .mobile-sub_menu .image-text h6{
+    margin-bottom: 37px;
+  }
+  .parent-category {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-family: urw-din-bold;
+  }
+  .submenu-upper-section {
+    padding: 0 0 10px;
+    border-bottom: 1px solid #292929;
+    margin-bottom: 20px;
+    margin: 20px 15px;
+  }
+  .category-image img{
+    display: none;
+  }
+  .newsletter-mt {
+    display: none;
+  }
+  .popbox, #link_about-maria > div, .popbox_ajax {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+  }
+  #tooltip-id-contact, #tooltip-id-customer-care, #tooltip-id-my-account{
+    margin-top: 7px;
+  }
+  #tooltip-id-our-jewelry {
+    margin-top: 13px;
+  }
+  .contact-table, .customer-care-list {
+    line-height: 35px;
+  }
+  .form-subscribe-mt{
+    margin-top: 20px;
+  }
+  .customer-care-list li span{
+    font-size: 12px;
+  }
+  #link_about-maria a{
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  #container{
+    height: 80px;
+  }
+  .form-subscribe-mt .input-box{
+    margin-bottom: 10px;
+  }
+  #success {
+    margin-bottom: 30px;
+  }
+  #success p {
+    margin: 15px 0px 0px 0;
+    letter-spacing: 1px;
+  }
+  .designer-image img{
+    width: 100%;
+  }
+  .level-top.parent span:hover {
+    border-bottom: none;
+  }
+  /*Different Footer */
+  /* 1. Customer Care */
+  .customer-care-list {
+  	padding: 0;
+    width: 100%;
+  }
+  #tooltip-id-customer-care{
+  	width: 100% !important;
+  }
+  .customer-care-list li{
+  	width: 100%;
+  }
+  /* 2. Contact and 3. Our Jewelry*/
+  .contact-table td, .contact-table td a, #tooltip-id-our-jewelry p, .form-subscribe-mt p{
+  	color: #fff;
+  	font-size: 12px;
+  	font-family: urw-din-medium;
+  	letter-spacing: 0.5px;
+  }
+  #tooltip-id-our-jewelry .slide {
+  	width: 300px;
+  	height: 120px;
+  	overflow: hidden;
+  	float: left;
+  	overflow-y: auto;
+  	color: #fff;
+  }
+  #tooltip-id-our-jewelry a.next-content-block-seo{
+    margin-right: -15px;
+  }
+/*News Letter*/
+  .form-subscribe-mt{
+    margin-top: 10px;
+    width: 100%;
+  }
+  #newsletter-form .link-button{
+  	color: #fff !important;
+  }
+  .form-subscribe-mt .checkmark:after{
+  	background: #fff;
+  }
+
+  #newsletter-form .dark-button{
+    border: 1px solid #fff;
+  	background: transparent;
+  	color: #fff;
+  }
+  /*Different Footer Finish*/
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -193,12 +313,6 @@
 @media (min-width:767px) and (max-width:1024px){
   #narrow-by-list li div dt{
     width: 104px;
-  }
-  .five-col{
-    width: 50%;
-  }
-  .form-search input.input-text{
-    width: 200px;
   }
 }
 /* ipad portrait */
@@ -246,13 +360,33 @@
     max-width: 650px;
     margin: 0 auto;
   }
+  .mobile-main_menu, .mobile-sub_menu .sub-menu{
+    width: 380px !important;
+  }
+  .mobile-main_menu{
+    top: 83px;
+  }
+  .five-col{
+    width: 50%;
+  }
+  .form-search input.input-text{
+    width: 160px;
+    height: 26px !important;
+  }
+  .footlinks {
+    margin: 20px 0 18px 0;
+    padding: 0 10px;
+  }
+  .social-media ul {
+    padding-left: 22px;
+  }
 }
 
 
 /* ipad landscape */
 @media (min-width:767px) and (max-width:1024px) and (orientation:landscape){
   .with-category-image .mb-mana-catalog-leftnav .block-layered-nav-bg{
-    top: 250px;
+    top: 227px;
   }
   .about-designer{
     padding: 0 26px;
@@ -273,13 +407,43 @@
     max-width: 1000px;
     margin: 0 auto;
   }
+  .five-col{
+    width: 33.33%;
+  }
+  #narrow-by-list{
+    margin-left: 0;
+  }
+  #narrow-by-list li div dt {
+    width: 161.4px;
+  }
+  #narrow-by-list li div dd{
+    width: 161px;
+  }
+  .form-search input.input-text{
+    width: 200px;
+    height: 26px !important;
+  }
+  .menu-inner{
+    overflow-x: auto;
+  }
+  .div-row{
+    width:1500px;
+    overflow-x: scroll;
+  }
+  #piercing_appointments {
+    padding: 5px 32px 32px 0;
+  }
+  .inner-box {
+    width: 534px;
+    margin-left: 15px;
+  }
+  #jewelry .special-menu img {
+    width: 200px !important;
+  }
 }
 
 /* ALl Mobiles */
 @media (max-width:767px) {
-  .five-col{
-    width: 100%;
-  }
   .homepage-menu {
     padding-top: 18px !important;
     padding: 0;
@@ -303,6 +467,44 @@
   }
   .about-jewelry h1{
     margin-bottom: 20px;
+  }
+  .cms-page-view h1, .category-press h1{
+    font-size: 25px;
+  }
+  .faq-question span{
+    font-size: 14px;
+  }
+  .input-set {
+    margin-bottom: 20px;
+  }
+  .agreement{
+    margin: 0;
+  }
+  .pop-title h1{
+    margin-top: 50px;
+    margin-bottom: 15px;
+  }
+  .pop-title a{
+    right: 15px;
+    top: 15px;
+  }
+  #signin-btn-popup {
+    margin: 15px 0 28px;
+  }
+  .option-text p {
+    margin: 10px 0 15px;
+  }
+  .new_account a {
+    margin: 17px 0 25px;
+  }
+  .input-form{
+    margin-bottom: 10px;
+  }
+  .pop-up-button-set, .popupResetPasswordModel .pop-up-button-set {
+    margin-bottom: 50px;
+  }
+  .faq-main{
+    margin-bottom: 0 !important;
   }
 }
 
@@ -328,11 +530,12 @@
     flex: 0 0 100%;
   }
   .social-media ul{
-    padding-left: 5px;
+    padding-left: 25px;
   }
   .custom-container {
-    max-width: 380px;
+    max-width: 370px;
     margin: 0 auto;
+    padding: 0 30px;
   }
   .main-nav-link li:nth-child(2) {
     margin-right: 10px;
@@ -346,24 +549,24 @@
   .modal-body, .modal-header{
     padding: 0 18px;
   }
-  .pop-title h1{
-    margin-top: 70px;
-    margin-bottom: 24px;
+  .five-col{
+    width: 100%;
   }
-  #signin-btn-popup{
-    margin: 30px 0 30px;
+  .form-search input.input-text{
+    width: 265px;
+    height: 25px !important;
   }
-  .option-text p {
-    margin: 30px 0 18px;
-  }
-  .new_account a {
-    margin: 22px 0 45px;
-  }
-  .popupResetPasswordModel .pop-up-button-set{
-    margin-bottom: 78px;
-  }
-  .pop-up-button-set .col {
+  .pop-up-button-set .col{
     padding: 0 9px;
+  }
+  .popupResetPasswordModel .input-form {
+    margin-bottom: 35px;
+  }
+  .faq-copy-section {
+    padding: 5px;
+  }
+  .footlinks {
+    padding: 0 20px;
   }
 }
 
@@ -382,6 +585,12 @@
   .faq-main {
     padding: 0 40px;
   }
+  .five-col{
+    width: 50%;
+  }
+  .social-media ul {
+    padding-left: 15px;
+  }
 }
 
 
@@ -395,4 +604,33 @@
 .custom-container {
     max-width: 1178px !important;
     margin: 0 auto;
+}
+
+/* Big Screen Laptops */
+@media (min-width:1920px){
+  .inner-box{
+    width: 742px;
+    margin-left: 300px;
+  }
+  .filter-common-div {
+    top: 455px;
+  }
+  .category-products{
+    margin-top: 133px;
+  }
+  .custom-container{
+    max-width: 1318px !important;
+  }
+  .jewelry-container, .faq-main{
+    margin-top: 182px !important;
+  }
+  .about-designer{
+    margin-top: 90px;
+  }
+  #piercing_appointments{
+    padding: 48px 254px;
+  }
+  .footer{
+    padding: 0;
+  }
 }

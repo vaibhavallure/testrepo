@@ -1,21 +1,21 @@
 /*******************************************************************************************************************************************************************************/
 /* GALLERY PRODUCT VIEW */
-.gallery{
+/* .gallery{
 	height:512px;
 	position:relative;
 	width:475px;
-}
+} */
 .containerImage{
 	width:392px;
 	height:512px;
 	float: left;
-	margin: 0 8px 0 0;	
+	margin: 0 8px 0 0;
 }
 .containerImage img {
 	width:392px;
-	height:512px;	
+	height:512px;
 	/*background:url(../../../../../media/wysiwyg/background/img_product_bg.jpg) repeat-x top left;	*/
-	text-align:center;	
+	text-align:center;
 }
 .containerImage img,
 .thumb img {
@@ -28,21 +28,21 @@
     background: linear-gradient(to bottom,  #757881 13%,#b5bbc9 49%,#b5bbc9 99%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#757881', endColorstr='#b5bbc9',GradientType=0 ); /* IE6-9 */
 }
-.containerThumb{
+/* .containerThumb{
 	width:74px;
 	height:512px;
 	border:none;
 	float: left;
-}
-.thumb{
+} */
+/* .thumb{
 	width:74px;
 	height:96px;
 	margin: 0 0 8px;
-}
-.thumb img{
+} */
+/* .thumb img{
 	/*ackground: url(../../../../../media/wysiwyg/background/img_product_add_bg.jpg) repeat-x top left;*/
-	text-align:center;	
-	}
+	/* text-align:center;
+	} */
 #imageRepo, #thumbRepo, #imageRepoFull, #thumbRepoFull{
 	display:none;
 }
@@ -62,11 +62,11 @@
 	width:100%;
 	height:100%;
 }
-.btnFullscreen{
+/* .btnFullscreen{
     right:92px;
     position: absolute;
     top:7px;
-}
+} */
 #foo{
 	background:#FFBB00;
 	display:none;
@@ -105,14 +105,14 @@
 	float: left;
 	margin: 0 10px 0 0;
     text-align: center;
-}		
+}
 
 .containerImageFull img { margin: 0 auto 0;}
 .containerThumbFull{
 	height:100%;
 	float: left;
 	border:none;
-	
+
 }
 .thumbFull{
 	margin: 0 0 8px;
@@ -121,7 +121,7 @@
 .thumbFull a {
 	display:block;
 	opacity:0.5;
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);	
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
 }
 .thumbFull.selected-thumbFull a,
 .thumbFull:hover a {
@@ -161,7 +161,7 @@
 .controls{
 	height:35px;
 	top:50%;
-	margin-top:-18px;	
+	margin-top:-18px;
     position: absolute;
     width: 100%;
 	-webkit-box-sizing: border-box;
@@ -169,7 +169,7 @@
 	box-sizing: border-box;
         display: none;
 }
-.controls .prev{ 
+.controls .prev{
 	left:180px;
 }
 .controls .next{
@@ -180,4 +180,3 @@
 	opacity:0.2;
         filter: alpha(opacity=20);
 }
-

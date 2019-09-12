@@ -102,7 +102,7 @@ Default layout, loads most of the pages
                 <action method="addCss"><stylesheet>css/giftcardpage.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/tashtv.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/styles_celeb.css</stylesheet></action>
-                <action method="addCss"><stylesheet>css/press.css</stylesheet></action>
+                <!-- <action method="addCss"><stylesheet>css/press.css</stylesheet></action> -->
                 <action method="addCss"><stylesheet>css/piercing-service.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/customer_care.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/reviews.css</stylesheet></action>
@@ -162,7 +162,12 @@ Default layout, loads most of the pages
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
                 <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
                     <label>Navigation Bar</label>
-                <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml"/>
+                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml"/>
+                </block>
+                <block type="page/html_wrapper" name="top.bar" as="topBar" translate="label">
+                    <label>Breadcrumbs</label>
+                    <action method="setElementClass"><value>top-bar</value></action>
+                    <block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>
                 </block>
                 <block type="page/html_wrapper" name="top.container" as="topContainer" translate="label">
                     <label>Page Header</label>
@@ -171,6 +176,8 @@ Default layout, loads most of the pages
                 <block type="page/html_welcome" name="welcome" as="welcome"/>
                 <block type="page/html_submenu" name="catalog.submenu"  as="submenu" template="page/html/submenu.phtml" />
             </block>
+
+
 
             <block type="core/text_list" name="left" as="left" translate="label">
                 <label>Left Column</label>

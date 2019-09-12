@@ -68,7 +68,7 @@
 }
 
 /* fancy box magazine*/
-/*
+
 .categorypath-discover-maria-tash-press-html.fancybox-lock .sharrre .buttons {
     float: left;
     height: 30px;
@@ -111,7 +111,7 @@
 	text-decoration:none;}
 .categorypath-discover-maria-tash-press-html-w .button.mail span, .categorypath-discover-maria-tash-press-html-w .button.print span {
     margin: 0 3px;
-}*/
+}
 .categorypath-discover-maria-tash-press-html-w .box {
     display: none;
 }
@@ -174,9 +174,9 @@
 	background: none repeat scroll 0 0 #FFFFFF;
 }
 
-.fancybox-inner {
+/* .fancybox-inner {
 	overflow: hidden;
-}
+} */
 
 .categorypath-discover-maria-tash-press-html.fancybox-lock .fancybox-inner {
 	overflow: hidden !important;
@@ -276,7 +276,7 @@ a.fancybox-nav.fancybox-next.last_next span,a.fancybox-nav.fancybox-prev.first_p
 	right: 0;
 }
 
-/*.fancybox-nav span {
+.fancybox-nav span {
 	position: absolute;
 	top: 50%;
 	width: 32px;
@@ -285,7 +285,7 @@ a.fancybox-nav.fancybox-next.last_next span,a.fancybox-nav.fancybox-prev.first_p
 	cursor: pointer;
 	z-index: 8040;
 	visibility: hidden;
-}*/
+}
 .fancybox-nav-qw span {
 	position: absolute;
 	top:218px;
@@ -422,12 +422,12 @@ a.fancybox-nav.fancybox-next.last_next span,a.fancybox-nav.fancybox-prev.first_p
 /* fancy box magazine*/
 
 
-/*.categorypath-discover-maria-tash-press-html-w.fancybox-lock .sharrre .buttons {
+.categorypath-discover-maria-tash-press-html-w.fancybox-lock .sharrre .buttons {
     float: right;
     height: 20px;
     padding-top: 2px;
     width: 350px;
-}*/
+}
 .categorypath-discover-maria-tash-press-html-w.fancybox-lock .button.pinterest {
     float: left;
     height: auto;

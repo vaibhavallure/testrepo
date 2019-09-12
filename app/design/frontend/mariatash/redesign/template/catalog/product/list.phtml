@@ -56,6 +56,7 @@ $mode  = $this->getMode();
             if (jQuery('#list-img-'+product_id).text()=='1')
                 return false;
 
+
             if(!jQuery(this).hasClass('ajax-request-sent')) {
                 jQuery(this).addClass('ajax-request-sent');
                 jQuery.ajax({
@@ -192,7 +193,7 @@ $mode  = $this->getMode();
                                         <?php if ($_product->getIsSalable()): ?>
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
                                               <div class="col">
-                                                <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm"
+                                                <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm dark-button"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
                                                    title="<?php echo $this->__('quick view') ?>"><span class="text-white"><?php echo $this->__('quick view') ?></span>
@@ -215,31 +216,32 @@ $mode  = $this->getMode();
                                                             </span>
                                                         </div>
                                                         <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
-                                                            <?php
-                                                            $j=0;
-                                                            foreach ($optionsValues['value'] as $option): ?>
+                                                           <!-- <?php
+/*                                                            $j=0;
+                                                            foreach ($optionsValues['value'] as $option): */?>
                                                                 <?php
-                                                                $optionId = $option[$attribute_code];
+/*                                                                $optionId = $option[$attribute_code];
                                                                 $optionLb = $option[$attribute_code . "_value"];
                                                                 $simple_id = $option['child_id'];
                                                                 if($j==0) $firstOption = $optionId;
                                                                 $j++;
-                                                                ?>
-                                                                <li id="<?php echo $simple_id ?>"
-                                                                    style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');width: 21px; height: 22px;"
-                                                                    class="colorSelector tipped-create" value="<?php echo $optionId ?>"
-                                                                    title="<?php echo $optionLb ?>" >
+                                                                */?>
+                                                                <li id="<?php /*echo $simple_id */?>"
+                                                                    style="background: url('<?php /*echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; */?>');width: 21px; height: 22px;"
+                                                                    class="colorSelector tipped-create" value="<?php /*echo $optionId */?>"
+                                                                    title="<?php /*echo $optionLb */?>" >
                                                                     <div style="display: none">
-                                                                          <span id="img-<?php echo $simple_id; ?>"></span>
-                                                                          <span id="price-<?php echo $simple_id; ?>"></span>
+                                                                          <span id="img-<?php /*echo $simple_id; */?>"></span>
+                                                                          <span id="price-<?php /*echo $simple_id; */?>"></span>
                                                                     </div>
                                                                 </li>
-                                                            <?php endforeach; ?>
+                                                            --><?php /*endforeach; */?>
+                                                            <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>">
                                                         </ul>
                                                     <?php endif;?>
                                                 </div>
                                             <?php else: ?>
-                                                <a class="fancybox fancybox.iframe button btn-quickview"
+                                                <a class="fancybox fancybox.iframe button btn-quickview dark-button"
                                                 id='product-quickview-<?php echo $_product->getId() ?>'
                                                 href="<?php echo $quickViewUrl; ?>"
                                                 title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
@@ -325,7 +327,7 @@ $mode  = $this->getMode();
                                             <?php if ($_product->getTypeId() == 'configurable'): ?>
                                                 <img id="loading-<?php echo $_product->getId() ?>" style="display:none;" src="<?php echo $mediaUrl . 'loading.gif'; ?>"/>
                                                 <div class="col">
-                                                  <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm"
+                                                  <a class="fancybox fancybox.iframe button btn-quickview btn btn-primary btn-sm dark-button"
                                                      id='product-quickview-<?php echo $_product->getId() ?>'
                                                      href="<?php echo $quickViewUrl; ?><?php if(isset($firstOption) && !empty($firstOption)) echo "?optionId=$firstOption";?>"
                                                      title="<?php echo $this->__('quick view') ?>"><span class="text-white"><?php echo $this->__('quick view') ?></span>
@@ -348,32 +350,33 @@ $mode  = $this->getMode();
                                                     </div>
                                                     <ul class="text-right swatches" id="color-icons-<?php echo $productId;?>">
                                                         <?php
-                                                        $j=0;
+/*                                                        $j=0;
                                                         $firstOption = '';
-                                                        foreach ($optionsValues['value'] as $option): ?>
+                                                        foreach ($optionsValues['value'] as $option): */?><!--
                                                             <?php
-                                                            $optionId = $option[$attribute_code];
+/*                                                            $optionId = $option[$attribute_code];
                                                             $optionLb = $option[$attribute_code . "_value"];
                                                             $simple_id = $option['child_id'];
                                                             if($j==0) $firstOption = $optionId;
                                                             $j++;
-                                                            ?>
-                                                            <li id="<?php echo $simple_id ?>"
-                                                                style="background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; ?>');"
-                                                                class="colorSelector tipped-create" value="<?php echo $optionId ?>"
-                                                                title="<?php echo $optionLb ?>" >
+                                                            */?>
+                                                            <li id="<?php /*echo $simple_id */?>"
+                                                                style="background: url('<?php /*echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'amconf/images/' . $optionId . '.jpg'; */?>');"
+                                                                class="colorSelector tipped-create" value="<?php /*echo $optionId */?>"
+                                                                title="<?php /*echo $optionLb */?>" >
                                                                 <div style="display: none">
-                                                                      <span id="img-<?php echo $simple_id; ?>"></span>
-                                                                      <span id="price-<?php echo $simple_id; ?>"></span>
+                                                                      <span id="img-<?php /*echo $simple_id; */?>"></span>
+                                                                      <span id="price-<?php /*echo $simple_id; */?>"></span>
                                                                 </div>
                                                             </li>
-                                                    <?php endforeach; ?>
+                                                    --><?php /*endforeach; */?>
+                                                        <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/mt/default/images/loading.gif' ?>">
                                                     </ul>
                                                     <?php endif;?>
                                                 </div>
 
                                             <?php else: ?>
-                                                <a class="fancybox fancybox.iframe button btn-quickview"
+                                                <a class="fancybox fancybox.iframe button btn-quickview dark-button"
                                                    id='product-quickview-<?php echo $_product->getId() ?>'
                                                    href="<?php echo $quickViewUrl; ?>"
                                                    title="<?php echo $this->__('quick view') ?>"><span><?php echo $this->__('quick view') ?></span></a>
