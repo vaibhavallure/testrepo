@@ -223,7 +223,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                    $new_product[0] = $new_product[0] . $this->getColorIntials($color);
                    if($color!='NO VARIANTS') {
                        $new_product[$titleIndex] = $new_product[$titleIndex] . ' ' . $color;
-                       $new_product[$urlIndex] = $dataArr[$urlIndex].'&metal='.$color;
+                       $new_product[$urlIndex] = $dataArr[$urlIndex].'&metal='.str_replace(' ','%20',$color);
                    }
                    $new_product[$colorIndex] = $color;
                    $new_product[$imageIndex] = $imageUrl;
@@ -254,7 +254,7 @@ class Mirasvit_FeedExport_Model_Feed_Generator_Action_Iterator extends Mirasvit_
                    $new_product[0] = $new_product[0] . $this->getColorIntials($color);
                    if($color!='NO VARIANTS') {
                        $new_product[$titleIndex] = $new_product[$titleIndex] . ' ' . $color;
-                       $new_product[$urlIndex] = $dataArr[$urlIndex].'&metal='.$color;
+                       $new_product[$urlIndex] = $new_product[$urlIndex].'&metal='.str_replace(' ','%20',$color);
                    }
                    $new_product[$colorIndex] = $color;
                    $new_product[$imageIndex] = $imgSource;
