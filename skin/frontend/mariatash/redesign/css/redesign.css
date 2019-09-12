@@ -2396,6 +2396,22 @@ width: 100%;
 .containerImage img, .thumb img{
     background: transparent!important;
 }
+
+
+/*select*/
+.chooseList ul li {
+    display: inline-block;
+    padding: 5px;
+    border-bottom: 1px solid gray;
+}
+.chooseList ul li.active {
+    border-bottom: 2px solid black;
+}
+
+
+
+
+
 /*----------------------------------------------------------------*/
 
 /*piercing hover effect*/
