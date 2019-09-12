@@ -2090,7 +2090,7 @@ button#signin-btn-popup {
   top: 14.5px;
   right: 14.5px;
 }
-.invalid-login, #register-msg{
+.invalid-login, #register-msg, #resetpassword_msg_div{
 	position: absolute;
   top: -25px;
 	color: #830000;
