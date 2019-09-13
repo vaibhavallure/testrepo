@@ -127,9 +127,6 @@
   .menu-head span a, .mobile-sub_menu .image-text h6 {
     color: #000 !important;
   }
-  /* .catalog-category-view nav.homepage-menu.navbar {
-    background: transparent;
-  } */
   #narrow-by-list{
     display: none;
   }
@@ -296,7 +293,10 @@
   	background: transparent;
   	color: #fff;
   }
-  /*Different Footer Finish*/
+  /* Catalog Filter CSS */
+  .filterPopup .pop-up-cover {
+    width: 100%;
+  }
 }
 
 /* till ipad (all mobiles and ipads) */
@@ -506,7 +506,7 @@
   .input-form input{
     height: 35px !important;
   }
-  .invalid-login, #register-msg{
+  .invalid-login, #register-msg, #resetpassword_msg_div{
     top:-18px;
   }
   .eye-image{

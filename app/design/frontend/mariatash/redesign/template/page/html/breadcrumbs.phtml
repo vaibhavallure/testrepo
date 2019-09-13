@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Magento
  *
@@ -37,23 +37,23 @@
     <?php endif; ?>
 <?php endif; ?>
 <?php if($crumbs && is_array($crumbs)): ?>
-<div class="breadcrumbs">
-    <ul>
+<div class="breadcrumbs col-12 offset-lg-1">
+    <ul class="row m-0">
         <?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
             <?php if($_crumbInfo['link'] && strlen(strstr($_crumbInfo['link'],"/piercing.html")))  continue;?>
             <?php if($_crumbInfo['link'] && strlen(strstr($_crumbInfo['link'],"/jewelry.html")))  continue;?>
             <li class="<?php echo $_crumbName ?>">
-            <?php if($_crumbInfo['link'] && !strlen(strstr($_crumbInfo['link'],"/jewelry.html"))): ?>                
-                <a style="color:<?php echo $bredcrumb_body ?>" href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->htmlEscape($_crumbInfo['title']) ?>"><?php echo $this->htmlEscape($_crumbInfo['label']) ?></a>
+            <?php if($_crumbInfo['link'] && !strlen(strstr($_crumbInfo['link'],"/jewelry.html"))): ?>
+                <a class="para-normal" style="color:<?php echo $bredcrumb_body ?>" href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->htmlEscape($_crumbInfo['title']) ?>"><?php echo $this->htmlEscape($_crumbInfo['label']) ?></a>
              <?php elseif($_crumbInfo['link'] && strlen(strstr($_crumbInfo['link'],"jewelry.html"))): ?>
 				<strong style="color: #7B7E87; cursor:default"><?php echo $this->htmlEscape($_crumbInfo['label']) ?></strong>
-             <?php elseif($_crumbInfo['last']): ?>   
-                <strong style="color:<?php echo $bredcrumb_curr ?>"><?php echo $this->htmlEscape($_crumbInfo['label']) ?></strong>
+             <?php elseif($_crumbInfo['last']): ?>
+                <strong class="para-two" style="color:<?php echo $bredcrumb_curr ?>"><?php echo $this->htmlEscape($_crumbInfo['label']) ?></strong>
             <?php else: ?>
                 <?php echo $this->htmlEscape($_crumbInfo['label']) ?>
             <?php endif; ?>
             <?php if(!$_crumbInfo['last']): ?>
-                <span>/ </span>
+                <span>&gt;</span>
             <?php endif; ?>
             </li>
         <?php endforeach; ?>
