@@ -619,6 +619,12 @@
   .footlinks {
     padding: 0 20px;
   }
+  #narrow-by-list ol li{
+    min-width: 50% !important;
+  }
+  #narrow-by-list{
+    padding: 0 10px !important;
+  }
 }
 
 /* Mobile landscape */
