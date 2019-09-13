@@ -543,10 +543,7 @@ class Millesima_Abstract{
                 $messageD .= 'Merci'. '<br />';
                 //mail('alopes@millesima.com', $objet, $messageD,$headers);
                 if(!$testenvoi){
-                    mail('utreptow@millesima.com', $objet, $messageD,$headers);
-                    mail('sniggl@millesima.com', $objet, $messageD,$headers);
-                    mail('ekohr@millesima.com', $objet, $messageD,$headers);
-                    mail('bteurquetil@millesima.com', $objet, $messageD,$headers);
+                    mail('contact@millesima.com', $objet, $messageD,$headers);
                     mail('pastanislas@millesima.com', $objet, $messageD,$headers);
                     mail('redacteurde@millesima.com', $objet, $messageD,$headers);
                 }
@@ -703,9 +700,7 @@ class Millesima_Abstract{
             $tabRecipiant[] = 'pvalette@millesima.com';
         }
         if(($type == 'commercial' || $type == 'messagecreate')  && array_intersect(array('D','d','O','o','SA','sa','SF','sf'),$pays) && !$isTest){
-            $tabRecipiant[] = 'utreptow@millesima.com';
-            $tabRecipiant[] = 'ekohr@millesima.com';
-            $tabRecipiant[] = 'bteurquetil@millesima.com';
+            $tabRecipiant[] = 'contact@millesima.com';
         }
         if(($type == 'commercial' || $type == 'messagecreate')  && array_intersect(array('D','d','O','o','SA','sa','SF','sf','G','g','I','i','H','h','SG','sg'),$pays) && !$isTest){
             $tabRecipiant[] = 'pastanislas@millesima.com';

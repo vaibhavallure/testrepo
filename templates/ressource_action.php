@@ -129,7 +129,7 @@ $title = $this->data['title'];
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Value</label>
-                                        <textarea id="value" name="value" class="form-control" rows="3" placeholder="Enter ..."><?php echo ((isset($data['value'])) ? utf8_encode($data['value']) : '')?></textarea>
+                                        <textarea id="value" name="value" class="form-control" rows="3" placeholder="Enter ..."><?php echo ((isset($data['value'])) ? $data['value'] : '')?></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

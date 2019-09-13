@@ -151,7 +151,7 @@ $html = $this->data['html'];
                                                 <td class=""><?php echo $ressource['id']?></td>
                                                 <td class="sorting_1"><?php echo $ressource['name']?></td>
                                                 <td class="sorting_1"><?php echo $ressource['store']?></td>
-                                                <td class="sorting_1"><?php echo htmlentities($ressource['value'])?></td>
+                                                <td class="sorting_1"><?php echo $ressource['value']?></td>
                                                 <td class="bootstrap-datepicker">
                                                     <?php 
                                                         if($ressource['start_date'] != NULL) 

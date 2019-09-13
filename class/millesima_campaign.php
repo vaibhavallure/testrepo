@@ -306,7 +306,7 @@ class Millesima_Campaign extends Millesima_Abstract
         $writer->writeAttribute('SEGMENTID' , $segment);
         $writer->writeAttribute('SCOPES' , '');
         if($type == 'reel'){
-            $writer->writeAttribute('CONSTRAINT' , '$SEGMENT_7634');
+            $writer->writeAttribute('CONSTRAINT' , '$SEGMENT_7634 AND NOT ($SEGMENT_12240)');
         }
         $writer->endElement();
 

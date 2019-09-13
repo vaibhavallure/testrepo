@@ -14,7 +14,7 @@
 <span style="text-decoration:line-through;font-size:13px;">{if $produit->pays =='G' OR $produit->pays == 'I'}{$produit->devise}&nbsp;{$produit->prix_ttc}{else}{$produit->prix_ttc}&nbsp;{$produit->devise}{/if}</span>&nbsp;&nbsp;&nbsp;
 <span style="font-size:16px;font-weight:bold"><strong>{if $produit->pays =='G' OR $produit->pays == 'I'}{$produit->devise}&nbsp;{$produit->prix_promo}{else}{$produit->prix_promo}&nbsp;{$produit->devise}{/if}</strong></span>&nbsp;{if $produit->pays != 'H'}<span style="font-size:10px;font-weight:bold;">{$ttc}</span>{/if}<br />
 {if $produit->pays == 'D' OR $produit->pays == 'O'}<span style="color:#000000; font-size:11px;">({$produit->prixlitrettc}{$produit->devise}/L)</span><br />{/if}
-<span style="color:#654337;font-size:10px;">{$produit->boiscarton|replace:'Une':'La'|replace:'Un':'Le'} {$produit->quantite} {$produit->conditionnement}</span><br />
+<span style="color:#654337;font-size:10px;">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span><br />
 <span style="color:#654337;font-size:10px;">{$promos.$promo.nbcaisses} {$produit->Packaging}</span>
 {/if}
 </td></tr>
@@ -34,7 +34,7 @@
 {else}
 <span style="font-size:16px;font-weight:bold">{if $produit->pays =='G' OR $produit->pays == 'I'}{$produit->devise}&nbsp;{$produit->prix_ttc}{else}{$produit->prix_ttc}&nbsp;{$produit->devise}{/if}</span>{if $produit->pays != 'H'}<span style="font-size:10px;font-weight:bold;">{$ttc}</span>{/if}&nbsp;&nbsp;&nbsp;<br />
 {if $produit->pays == 'D' OR $produit->pays == 'O'}<span style="color:#000000; font-size:11px;">({$produit->prixlitrettc}{$produit->devise}/L)</span><br />{/if}
-<span style="color:#654337;font-size:10px;">{$produit->boiscarton|replace:'Une':'La'|replace:'Un':'Le'} {$produit->quantite} {$produit->conditionnement}</span><br /><br />
+<span style="color:#654337;font-size:10px;">{$produit->boiscarton} {$produit->quantite} {$produit->conditionnement}</span><br /><br />
 {/if}
 </td></tr>
 <tr><td height="7" style="font-size:5px;">&nbsp;</td></tr>
@@ -81,7 +81,7 @@
     Caisse TTC  
    ----------------------------  *}
 <span style="font-size:16px;font-weight:bold"><strong>{if $produit->pays =='G' OR $produit->pays == 'I'}{$produit->devise}&nbsp;{$produit->prix_ht}{else}{$produit->prix_ht}&nbsp;{$produit->devise}{/if}</strong></span>&nbsp;<span style="font-size:10px;font-weight:bold;">{$ht}</span><br />
-<span style="color:#654337;font-size:10px;">{if $produit->pays == 'F'}{$produit->boiscarton|replace:'Une':'La'|replace:'Un':'Le'}{else}{$produit->boiscarton}{/if} {$produit->quantite} {$produit->conditionnement|lower}</span><br />
+<span style="color:#654337;font-size:10px;">{if $produit->pays == 'F'}{$produit->boiscarton}{else}{$produit->boiscarton}{/if} {$produit->quantite} {$produit->conditionnement|lower}</span><br />
 <span style="color:#654337;font-size:10px;font-weight:bold;">{if $produit->pays =='G' OR $produit->pays == 'I'}{$produit->devise}{$produit->prixhtblle}{else}{$produit->prixhtblle}{$produit->devise}{/if}{$fnpx1btlleht} - {if $produit->pays =='G' OR $produit->pays == 'I'}{$produit->devise}{$produit->prix_ttc}{else}{$produit->prix_ttc}{$produit->devise}{/if}{$fnpxcaissettc}</span><br />
 
 {* ------ Fin autres pays ------ *}
