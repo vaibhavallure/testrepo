@@ -18610,12 +18610,12 @@ h2.products-look-msg {
 	.block.block-layered-nav .block-title {
 		display: none;
 	}
-	.block-layered-nav #narrow-by-list dt {
+	/* .block-layered-nav #narrow-by-list dt {
 		font-weight: normal !important;
 		padding-left: 3px !important;
 		padding-right: 25px !important;
 		font-size: 11px !important;
-	}
+	} */
 	/* ul#narrow-by-list li {
 		padding-left: 4px !important;
 	} */
@@ -19177,9 +19177,9 @@ ol.m-filter-css-checkboxes li a.m-checkbox-unchecked, ol.m-filter-css-checkboxes
 
 ul#narrow-by-list li {
 	float: left;
-	max-width: 300px;
+	/* max-width: 300px; */
 	padding-left: 8px;
-	min-height: 20px;
+	/* min-height: 20px; */
 	position: relative;
 }
 
